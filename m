@@ -2,147 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CCAAE180AFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 22:57:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50789180C2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 00:17:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727704AbgCJV5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 17:57:53 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:45267 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727311AbgCJV5v (ORCPT
+        id S1726380AbgCJXQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 19:16:54 -0400
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:36730 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727733AbgCJXQx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 17:57:51 -0400
-Received: by mail-pl1-f195.google.com with SMTP id b22so54073pls.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 14:57:49 -0700 (PDT)
+        Tue, 10 Mar 2020 19:16:53 -0400
+Received: by mail-pj1-f66.google.com with SMTP id l41so503pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 16:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qYdxwwwpYm23LuoOol66JOS31vLZfpo3MXiCkbyPzr8=;
-        b=U+DI/gmeBVvE0NZblYAgaOZPjifrN5fk+p5gpLgDTyfGPTvgXLQ9vkTEgIGJXF4uJL
-         Fd952FkPe2/jNEyATMsvJrqqJ6kZ+XFOunzZ92lTnwRcgI7Pa8CXnOyw7Qb8CEESpM7G
-         WfgtTQ5XY2rs03J4e6y3h1z8ES9S3LYFcA/sA=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zXg9Gj7QTUwpYvOhGlvMrbNF6i7eg/pUYIjVoM9j78w=;
+        b=m1sTUdtz0IBH4T58S0Qp8F887lOMFeQ6E3LwhmSyto0/XicAZGMKH/OdcvxBS/gioj
+         hpdgTy+8k2waNEDrL7V93U+BcQrXkOtW7w1AYTphgWutJGFtTIY3zpT15dtk3Y+co1p9
+         dCqpvzXMboOTnI8q3DAmcjPcZiP2ChNuhzxOw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qYdxwwwpYm23LuoOol66JOS31vLZfpo3MXiCkbyPzr8=;
-        b=taysJ9z0Rkxdq6b6Jme7Z+NdK5h6LoEWJRGLoENiWFmQg8avhoerBFY9WteEX4vWgK
-         SdrBt4XyBGXDeXZA6PQL+oNuxtroGHZov2F9b9+hvd4VoYEF6CjvX//hN8uiDcmo0Dzs
-         bt9ZQv+P00wkcsrdtQ76eWrUnlXxcjKaAGEMhijsskGsziAYZEZ6TY71mZXZq9t138AE
-         lc7ebzHhfvv9HXNSpkcr9oVSLTHYMicNqJVVGc+krd3R7G1RGn+47vpPBg+zmoamuRPe
-         F7hvXQlb4jTZydDgH0VsSdvhmoDsrycPv1kAbJ2Fqg/oJju5gMPot6RYUGD7Ge984GlS
-         L8Jw==
-X-Gm-Message-State: ANhLgQ2z7p5i+OhcGWmv3OTX+3MsZP3/MoXRF9vfbXlq4kePws7i/ejX
-        k7gP3+yyuGWBhozj/+cPjLf8VA==
-X-Google-Smtp-Source: ADFU+vuBaEaTeYfHN/Q5va1wjqReuMLDH16k2pXg+pd13QFSJEnP/TcDz8IkAB3cuekA2ZHVICXqlg==
-X-Received: by 2002:a17:90a:8c0f:: with SMTP id a15mr58797pjo.156.1583877468981;
-        Tue, 10 Mar 2020 14:57:48 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id mr7sm3122253pjb.12.2020.03.10.14.57.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Mar 2020 14:57:48 -0700 (PDT)
-Date:   Tue, 10 Mar 2020 14:57:46 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        rojay@codeaurora.org, skakit@codeaurora.org, swboyd@chromium.org
-Subject: Re: [PATCH V4 3/3] dt-bindings: geni-se: Add binding for UART pin
- swap
-Message-ID: <20200310215746.GZ24720@google.com>
-References: <1581932212-19469-1-git-send-email-akashast@codeaurora.org>
- <1581932212-19469-4-git-send-email-akashast@codeaurora.org>
- <20200218190731.GC15781@google.com>
- <ec5de895-3e86-811e-7ffc-fb98e115f850@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zXg9Gj7QTUwpYvOhGlvMrbNF6i7eg/pUYIjVoM9j78w=;
+        b=DjJuXmwKZsnwnWfwwTdqmvK2hL2GJ2jLaa6/BbylQJpbfnissijJZzwXjeRhf4hOae
+         iAz29ghqTj434cyCi1CRBpL0EP8KPBnYBEw29qT/8+GJtKww0okeozlhFMjuYnYxvDV+
+         g1fQtGTSyNHCiD9E0MLiCiBcHkJ0lDXMy/+MawyJsJdqthWTWa5FuBV8xt79aZtooC6c
+         G4ei1M+PMKRlF6lm4tx2t5e6hkmPyV67P+BwfP99gdNIgu6wo0z4Zkcy3TiOG+spQaDY
+         /JZhiorJfCisdSvUSjEa524imar5mRbY5ZTbzQmo43B9XjBCID73nujXWIfraglXR4ZS
+         PAww==
+X-Gm-Message-State: ANhLgQ0IQvfsxlij/FiB1Ua2EJdl4wFDxWdHcfmEJh6N+hD5ol4EKLZ0
+        hlVI1NOP5Azhqs+0e/4O15umIQ==
+X-Google-Smtp-Source: ADFU+vua2DRqzHPDCg1h0WaWa5jUQRYxfdS9IEm3qlPlei+YNlP5TOn8cJF3gz2OQRyZ5zwlg/XAUQ==
+X-Received: by 2002:a17:90b:438d:: with SMTP id in13mr333664pjb.114.1583882210644;
+        Tue, 10 Mar 2020 16:16:50 -0700 (PDT)
+Received: from evgreen2.mtv.corp.google.com ([2620:15c:202:201:ffda:7716:9afc:1301])
+        by smtp.gmail.com with ESMTPSA id 15sm43071797pfp.125.2020.03.10.16.16.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 10 Mar 2020 16:16:50 -0700 (PDT)
+From:   Evan Green <evgreen@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Evan Green <evgreen@chromium.org>, Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: sc7180: Include interconnect definitions
+Date:   Tue, 10 Mar 2020 16:16:29 -0700
+Message-Id: <20200310161502.1.Ia2884ed3c8826f52fbd5dcfa7a376a2fac4f31e6@changeid>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ec5de895-3e86-811e-7ffc-fb98e115f850@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
+Re-introduce the include of the sc7180 interconnect node name
+definitions. Though this was part of v5 of the interconnect provider
+series [1], it was dropped because the DT changes went through a
+different tree than the header. Re-add that now.
 
-The patch that implements the binding landed in tty/tty-next:
+Interconnect clients being introduced can reference this patch as a
+dependency, rather than racing each other to add the include.
 
-9fa3c4b1fa379 tty: serial: qcom_geni_serial: Fix GPIO swapping with workaround
+[1] https://patchwork.kernel.org/patch/11417989/
 
-The binding needs a re-spin to match the implementation.
+Signed-off-by: Evan Green <evgreen@chromium.org>
+---
 
-Thanks
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-Matthias
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 89ba01246f95b..eb5a527da685a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -10,6 +10,7 @@
+ #include <dt-bindings/clock/qcom,gpucc-sc7180.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,videocc-sc7180.h>
++#include <dt-bindings/interconnect/qcom,sc7180.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/phy/phy-qcom-qusb2.h>
+ #include <dt-bindings/power/qcom-aoss-qmp.h>
+-- 
+2.24.1
 
-On Wed, Feb 19, 2020 at 06:51:35PM +0530, Akash Asthana wrote:
-> Hi Matthias,
-> 
-> On 2/19/2020 12:37 AM, Matthias Kaehlcke wrote:
-> > Hi Akash,
-> > 
-> > I didn't see a patch that implements the binding, did you post it?
-> 
-> We haven't posted any update on patch@
-> https://patchwork.kernel.org/cover/11313817/
-> 
-> [tty: serial: qcom_geni_serial: Configure UART_IO_MACRO_CTRL register]. We
-> will spin it ASAP.
-> 
-> > 
-> > 
-> > On Mon, Feb 17, 2020 at 03:06:52PM +0530, Akash Asthana wrote:
-> > > Add documentation to support RX/TX/CTS/RTS pin swap in HW.
-> > > 
-> > > Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> > > ---
-> > >   Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 9 +++++++++
-> > >   1 file changed, 9 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> > > index 11530df..7e4b9af 100644
-> > > --- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> > > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> > > @@ -165,6 +165,15 @@ patternProperties:
-> > >             - description: UART core irq
-> > >             - description: Wakeup irq (RX GPIO)
-> > > +      rx-tx-swap:
-> > > +        description: RX and TX pins are swap.
-> > s/swap/swapped/
-> Ok
-> > 
-> > > +
-> > > +      cts-rts-swap:
-> > > +        description: CTS and RTS pins are swap.
-> > s/swap/swapped/
-> Ok
-> > 
-> > > +
-> > > +      rx-tx-cts-rts-swap:
-> > > +        description: RX-TX and CTS-RTS both pairs are swap.
-> > I don't think this option adds much value, if both pairs are swapped
-> > the above two properties can be set.
-> 
-> Yeah ok, It is possible to derive value for rx-tx-cts-rts if above 2
-> properties are set.
-> 
-> > 
-> > > +
-> > >       required:
-> > >         - compatible
-> > >         - interrupts
-> > > -- 
-> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-> 
-> Thanks for reviewing,
-> 
-> 
-> Regards,
-> 
-> Akash
-> 
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
