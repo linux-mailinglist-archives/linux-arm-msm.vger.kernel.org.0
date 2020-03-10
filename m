@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2750180239
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 16:46:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC1F118023E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 16:46:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726535AbgCJPqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 11:46:39 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:35173 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726463AbgCJPqj (ORCPT
+        id S1726353AbgCJPqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 11:46:49 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:42297 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726492AbgCJPqt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 11:46:39 -0400
-Received: by mail-ua1-f66.google.com with SMTP id y6so2942957ual.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 08:46:38 -0700 (PDT)
+        Tue, 10 Mar 2020 11:46:49 -0400
+Received: by mail-vk1-f193.google.com with SMTP id e20so3314066vke.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 08:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=8wrf2m7hJDfuF/vGS6wihINC7WIV4sn9O+/p6IYsXB4=;
-        b=czU9hKTxIPR59ucftIhaxKyo8Y/1SH3UaybGchoYfJrblk6zJF01ph+m1+Ew05yZby
-         z4l0WBzkSEA8MzNmi3XLHmFwEF8jqrPjA/hKHkuU1FOsPkbn/xPap9vKlHLTd+4lzG58
-         o9NnUHVllPlgLeEzu1JR27/BOBQQx2cm/e8+4=
+        bh=zf61j0iV1BoTbcwhHQe3SJ8F2eJXo+6FDC8kLN28d8g=;
+        b=eN49RWB7vX6naiAn7F/nXVFP1zephsuQ4Oi4IR+RPhQXbi7iYxNk8k9d+p4NYzeYGQ
+         UIFg2YV0sx7B10UUyPTNc7fXsKFlG/yexDkIOc92nGIBK5UP7rbnAwZ4Dv6FBzzpRmEL
+         cDI6hm2FDPvVoR1WJ2K3X54r0yMYi3nHfkGY8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8wrf2m7hJDfuF/vGS6wihINC7WIV4sn9O+/p6IYsXB4=;
-        b=MlHUwvphDNHiJ9184etoXY24xYLTpb3uedmdi1VueytCTDZ2eZSYq1DtO2bKBf/hYm
-         f/+T0/Ec+kmN+BYlqf2hxFP06snHLMIJ7oNHOlh4uqTKzJtp6paKR+Z162/R227Jio+2
-         7XYEZYoIZeTRYUuT3XpFx/eGcl90431inmq9MtJJeSWdY+EkJyeE/13EnOdRQ1f6HmKW
-         Cst81Bhxq0oUNDW1ycsWtPtOnQmMU3pjA4M4yYIhp2q97489g2mJgqX9BDyI3e47uP2M
-         07x4/m/dHXlTdiaIiV+z8UFsugT0z/uRaAgIaDfN3FCGSwc0uys+rfHDfGhqITK3cvA7
-         HWLQ==
-X-Gm-Message-State: ANhLgQ3nJCLK8AJ9mgg2+ocQGBrTj80tvWGlRmUrJJl2DW9R263UwMTf
-        9GxOkuyDP+zZ147RTzjEM7F2xIJUxco=
-X-Google-Smtp-Source: ADFU+vvSkFYSDiMg+nwFOyFj+jgplJRtbn0OL8hAydvQMot/3NUKZHaZcIWKhQBAVi2EQjaY1dWa2A==
-X-Received: by 2002:a9f:3311:: with SMTP id o17mr12413497uab.30.1583855197537;
-        Tue, 10 Mar 2020 08:46:37 -0700 (PDT)
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com. [209.85.217.52])
-        by smtp.gmail.com with ESMTPSA id v22sm272689vsa.2.2020.03.10.08.46.33
+        bh=zf61j0iV1BoTbcwhHQe3SJ8F2eJXo+6FDC8kLN28d8g=;
+        b=slXTMwBrt4LpiG7u2Z84mhPga0p2rTOui/+4x6lzfzI2Vu7h/H2PZzLPvedYdBKeUe
+         guMPlj8gjXZU6VUiftPi/j5vuuNBcU1UVK6akgUxPsItHQ4oJPnj3lGWXWn7TnGOCl+3
+         MN1nvVk1HAUsvsZZsRM6RtmtjD1r8feqLq8+p0lOdvfU1HrRT32v/0uFpL8DhIRFmPcq
+         RiEVg42bcJK3Lq82NGP1NtVE86w+njKcgm0tXs1MOke4hPUX6YT/OG/zm/3KmWQlohyf
+         AH4konWLYMDTol4wezWlB/yoQ+PFDOweUBbEsCakJgD8Cye8IN2Hng2EB49D/VAyuUT5
+         aatg==
+X-Gm-Message-State: ANhLgQ3Xj0Vfgi1uwaxkrlPbkhlnjxxB4KMnW/8tUjn3pnD4deQqhvlF
+        H3Go4u1dFOGowjK6bMpjxpih9JF6ceI=
+X-Google-Smtp-Source: ADFU+vudNtBUvmdxZOWTXmds19UowrE34i+tYTRR0JPsf9vKjzKbLK7+98gdBm6gP1zTcr8z1rIeng==
+X-Received: by 2002:a1f:310d:: with SMTP id x13mr12684035vkx.38.1583855206263;
+        Tue, 10 Mar 2020 08:46:46 -0700 (PDT)
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
+        by smtp.gmail.com with ESMTPSA id c206sm2427159vkc.0.2020.03.10.08.46.43
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Mar 2020 08:46:33 -0700 (PDT)
-Received: by mail-vs1-f52.google.com with SMTP id k26so8716137vso.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 08:46:33 -0700 (PDT)
-X-Received: by 2002:a67:e98e:: with SMTP id b14mr14020534vso.106.1583855192743;
- Tue, 10 Mar 2020 08:46:32 -0700 (PDT)
+        Tue, 10 Mar 2020 08:46:43 -0700 (PDT)
+Received: by mail-vs1-f45.google.com with SMTP id o24so5234147vsp.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 08:46:43 -0700 (PDT)
+X-Received: by 2002:a05:6102:2dc:: with SMTP id h28mr13662345vsh.169.1583855202770;
+ Tue, 10 Mar 2020 08:46:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <1583238415-18686-1-git-send-email-mkshah@codeaurora.org>
- <1583238415-18686-3-git-send-email-mkshah@codeaurora.org> <CAD=FV=VOARbQzY_p-SyDFu0mzFROp8nV9E=sraNrykWiySwEpw@mail.gmail.com>
- <8e307595-7758-6eb5-ab2d-73ab1ac1029c@codeaurora.org> <CAD=FV=VzNnRdDN5uPYskJ6kQHq2bAi2ysEqt0=taagdd_qZb-g@mail.gmail.com>
- <26b17bf5-7aa0-5853-a1b5-b6f6496aea13@codeaurora.org>
-In-Reply-To: <26b17bf5-7aa0-5853-a1b5-b6f6496aea13@codeaurora.org>
+References: <1583746236-13325-1-git-send-email-mkshah@codeaurora.org>
+ <1583746236-13325-5-git-send-email-mkshah@codeaurora.org> <CAD=FV=VknUHs8R6pu3pBCR-D50ibeuSVVp9=_t7NLa4U+06XKQ@mail.gmail.com>
+ <8810b558-f552-19dc-a5dc-4e64b37f35d8@codeaurora.org>
+In-Reply-To: <8810b558-f552-19dc-a5dc-4e64b37f35d8@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 10 Mar 2020 08:46:19 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UmhdXV20Kf2TtsADs3gi7i14pH6ATmoNexkCDBMH_bhA@mail.gmail.com>
-Message-ID: <CAD=FV=UmhdXV20Kf2TtsADs3gi7i14pH6ATmoNexkCDBMH_bhA@mail.gmail.com>
-Subject: Re: [PATCH v10 2/3] soc: qcom: rpmh: Update dirty flag only when data changes
+Date:   Tue, 10 Mar 2020 08:46:27 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XajZ5V_uZryghaBkH=4jv4T-ifuQE2NKbU4RgNVho_9A@mail.gmail.com>
+Message-ID: <CAD=FV=XajZ5V_uZryghaBkH=4jv4T-ifuQE2NKbU4RgNVho_9A@mail.gmail.com>
+Subject: Re: [PATCH v13 4/5] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
 To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
@@ -77,190 +76,296 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-
-On Tue, Mar 10, 2020 at 4:03 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+On Tue, Mar 10, 2020 at 4:19 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
 >
-> On 3/6/2020 3:52 AM, Doug Anderson wrote:
+> On 3/10/2020 5:13 AM, Doug Anderson wrote:
 > > Hi,
 > >
-> > On Thu, Mar 5, 2020 at 3:10 AM Maulik Shah <mkshah@codeaurora.org> wrot=
+> > On Mon, Mar 9, 2020 at 2:31 AM Maulik Shah <mkshah@codeaurora.org> wrot=
 e:
-> >>> To summarize:
-> >>>
-> >>> a) If the only allowable use of "WAKE_ONLY" is to undo "SLEEP_ONLY"
-> >>> then we should re-think the API and stop letting callers to
-> >>> rpmh_write(), rpmh_write_async(), or rpmh_write_batch() ever specify
-> >>> "WAKE_ONLY".  The code should just assume that "wake_only =3D
-> >>> active_only if (active_only !=3D sleep_only)".  In other words, RPMH
-> >>> should programmatically figure out the "wake" state based on the
-> >>> sleep/active state and not force callers to do this.
-> >>>
-> >>> b) If "WAKE_ONLY" is allowed to do other things (or if it's not RPMH'=
-s
-> >>> job to enforce/assume this) then we should fully skip calling
-> >>> cache_rpm_request() for RPMH_ACTIVE_ONLY_STATE.
-> >>>
-> >>>
-> >>> NOTE: this discussion also makes me wonder about the is_req_valid()
-> >>> function.  That will skip sending a sleep/wake entry if the sleep and
-> >>> wake entries are equal to each other.  ...but if sleep and wake are
-> >>> both different than "active" it'll be a problem.
-> >> Hi Doug,
+> >> Add changes to invoke rpmh flush() from within cache_lock when the dat=
+a in
+> >> cache is dirty.
 > >>
-> >> To answer above points, yes in general it=E2=80=99s the understanding =
-that wake is
-> >> almost always need to be equal to active. However, there can be valid =
-reasons
-> >> for which the callers are enforced to call them differently in the fir=
-st place.
+> >> Introduce two new APIs for this. Clients can use rpmh_start_transactio=
+n()
+> >> before any rpmh transaction once done invoke rpmh_end_transaction() wh=
+ich
+> >> internally invokes rpmh_flush() if the caches has become dirty.
 > >>
-> >> At present caller send 3 types of request.
-> >> rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=3D0x10, data=3D0x99);
-> >> rpmh_write(RPMH_SLEEP_STATE, addr=3D0x10, data=3D0x0);
-> >> rpmh_write(RPMH_WAKE_ONLY_STATE, addr=3D0x10, data=3D0x99);
+> >> Add support to control this with flush_dirty flag.
 > >>
-> >> Now, Lets assume we handle this in rpmh driver since wake=3Dactive and=
- the caller
-> >> send only 2 type of request (lets call it active and sleep, since we h=
-ave assumption
-> >> of wake=3Dactive, and we don=E2=80=99t want 3rd request as its handled=
- in rpmh driver)
-> >> So callers will now invoke 2 types of request.
-> >>
-> >> rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=3D0x10, data=3D0x99);
-> >> rpmh_write(RPMH_SLEEP_STATE, addr=3D0x10, data=3D0x0);
-> >>
-> >> with first type request, it now needs to serve 2 purpose
-> >> (a)    cache ACTIVE request votes as WAKE votes
-> >> (b)    trigger it out immediately (in ACTIVE TCS) as it need to be als=
-o complete immediately.
-> >>
-> >> For SLEEP, nothing changes. Now when entering to sleep we do rpmh_flus=
-h() to program all
-> >> WAKE and SLEEP request=E2=80=A6so far so good=E2=80=A6
-> >>
-> >> Now consider a corner case,
-> >>
-> >> There is something called a solver mode in RSC where HW could be in au=
-tonomous mode executing
-> >> low power modes. For this it may want to =E2=80=9Conly=E2=80=9D progra=
-m WAKE and SLEEP votes and then controller
-> >> would be in solver mode entering and exiting sleep autonomously.
-> >>
-> >> There is no ACTIVE set request and hence no requirement to send it rig=
-ht away as ACTIVE vote.
-> >>
-> >> If we have only 2 type of request, caller again need to differentiate =
-to tell rpmh driver that
-> >> when it invoke
-> >>
-> >> rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=3D0x10, data=3D0x99);
-> >>
-> >> with this caching it as WAKE is fine  ((a) in above) but do not trigge=
-r it ((b) in above)
-> >>
-> >> so we need to again modify this API and pass another argument saying w=
-hether to do (a + b) or only (a).
-> >> but caller can already differentiate by using RPMH_ACTIVE_ONLY_STATE o=
-r RPMH_WAKE_ONLY_STATE.
-> >>
-> >> i think at least for now, leave it as it is, unless we really see any =
-impact by caller invoking all
-> >> 3 types of request and take in account all such corner cases before i =
-make any such change.
-> >> we can take it separate if needed along with optimization pointed in v=
-9 series discussions.
-> > I totally don't understand what solver mode is for and when it's used,
-> > but I'm willing to set that aside for now I guess.  From looking at
-> > what you did for v12 it looks like the way you're expecting things to
-> > function is this:
+> >> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> >> Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
+> >> ---
+> >>  drivers/soc/qcom/rpmh-internal.h |  4 +++
+> >>  drivers/soc/qcom/rpmh-rsc.c      |  6 +++-
+> >>  drivers/soc/qcom/rpmh.c          | 64 +++++++++++++++++++++++++++++++=
++--------
+> >>  include/soc/qcom/rpmh.h          | 10 +++++++
+> >>  4 files changed, 71 insertions(+), 13 deletions(-)
+> > As mentioned previously but not addressed [3], I believe your series
+> > breaks things if there are zero ACTIVE TCSs and you're using the
+> > immediate-flush solution.  Specifically any attempt to set something's
+> > "active" state will clobber the sleep/wake.  I believe this is hard to
+> > fix, especially if you want rpmh_write_async() to work properly and
+> > need to be robust to the last man going down while rpmh_write_async()
+> > is running but hasn't finished.  My suggestion was to consider it to
+> > be an error at probe time for now.
 > >
-> > * ACTIVE: set wake state and trigger active change right away.
-> >
-> > * SLEEP: set only sleep state
-> >
-> > * WAKE: set only wake state, will take effect after next sleep/wake
-> > unless changed again before that happens.
-> >
-> >
-> > ...I'll look at the code with this understanding, now.  Presumably also=
-:
-> >
-> > * We should document this.
-> Okay, i will document above.
-> > * If we see clients that are explicitly setting _both_ active and wake
-> > to the same thing then we can change the clients.  That means the only
-> > people using "WAKE" mode would be those clients that explicitly want
-> > the deferred action (presumably those using "solver" mode).
-> >
-> > Do those seem correct?
-> Correct. but i suggest to change clients only once solver mode changes go=
- in.
-> until then leave clients to call ACTIVE and WAKE request separately (even=
- with same data)
-
-If you want to leave clients to call ACTIVE and WAKE requests
-separately for now, then please change your patch ("soc: qcom: rpmh:
-Update dirty flag only when data changes"), which (from v13) has this
-in cache_rpm_request():
-
-switch (state) {
-  case RPMH_ACTIVE_ONLY_STATE:
-  case RPMH_WAKE_ONLY_STATE:
-    req->wake_val =3D cmd->data;
-
-...that bit of code is what led me to request that you document that
-setting the active-only state also sets the wake-only state, so either
-change that code or add the documentation.
-
-
-> > If that's correct, I guess one subtle corner-case bug in
-> > is_req_valid().  Specifically if it's ever valid to do this:
-> >
-> > rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=3D0x10, data=3D0x99);
-> > rpmh_write(RPMH_SLEEP_STATE, addr=3D0x10, data=3D0x0);
-> > rpmh_write(RPMH_WAKE_ONLY_STATE, addr=3D0x10, data=3D0x0);
-> This scenario will never hit in solver mode.
-> when in solver, only WAKE and SLEEP requests are allowed to go through.
-
-OK, I guess this stems from me not understanding solver mode.  I guess
-for now it's unlikely to cause problems given the current usage, so we
-can ignore for now.
-
-
-> > ...then it won't work.
-> will work out just fine, as said above.
-> > You'll transition between sleep/wake and stay
-> > with "data=3D0x99".  Since "sleep =3D=3D wake" then is_req_valid() will
-> > return "false" and we won't bother programming the commands for
-> > sleep/wake.  One simple way to solve this is remove the
-> > "req->sleep_val !=3D req->wake_val" optimization in is_req_valid().
+> > Actually, though, I'd be super surprised if the "active =3D=3D 0" case
+> > works anyway.  Aside from subtle problems of not handling -EAGAIN (see
+> > another previous message that you didn't respond to [2]), I think
+> > you'll also get failures because you never enable interrupts in
+> > RSC_DRV_IRQ_ENABLE for anything other than the ACTIVE_TCS.  Thus
+> > you'll never get interrupts saying when your transactions on the
+> > borrowed "wake" TCS finish.
 >
-> This will still need to keep check.
+> No, it shouldn=E2=80=99t effect even with "non-OSI-mode + 0 ACTIVE TCS"
 >
-> the clients may invoke with below example data...
+> i just replied on v9, pasting same on v13 as well.
 >
-> rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=3D0x10, data=3D0x99);
-> rpmh_write(RPMH_SLEEP_STATE, addr=3D0x10, data=3D0x99);
-> rpmh_write(RPMH_WAKE_ONLY_STATE, addr=3D0x10, data=3D0x99); (we assume wa=
-ke=3Dactive)
+> After taking your suggestion to do rpmh start/end transaction() in v13, r=
+pmh_end_transaction()
+> invokes rpmh_flush() only for the last client and by this time expecting =
+all of rpmh_write()
+> and rpmh_write_batch() will be already =E2=80=9Cfinished=E2=80=9D as clie=
+nt first waits for them to finish
+> and then only invokes end.
 >
-> while ACTIVE is immediatly sent, and resource already came to 0x99 level.
->
-> Now while flushing, there is no point in programming in SLEEP TCS as such=
- when cmd triggers
-> from SLEEP TCS then it won't make any real level transition since its alr=
-eady brought up to
-> 0x99 level with previous ACTIVE cmd. same reason goes for not programming=
- it in WAKE TCS.
+> So driver is good to handle rpmh_write() and rpmh_write_batch() calls.
 
-"Need" is perhaps too strong of a word if I understand things.  The
-example above would still work even if we didn't check "sleep =3D=3D wake"
-it would just program an extra (but pointless) command.  Right?
+Ah, right.  In the previous version of the patch it was a problem
+because you flushed in cache_rpm_request() and then clobbered it right
+away in __rpmh_write() when you did rpmh_rsc_send_data().  With v13
+that is not the case anymore.  So this case should be OK.
 
-...but I guess we can debate about it later.  For now I'm not aware of
-anyone setting WAKE to something other than ACTIVE.
+
+> Regarding rpmh_write_async() call, which is a fire-n-forget request from =
+SW and client driver
+> may immediately invoke rpmh_end_transaction() after this.
+>
+> this case is also handled properly=E2=80=A6
+> Lets again take an example for understanding this..
+>
+> 1.    Client invokes rpmh_write_async() to send ACTIVE cmds for targets w=
+hich has zero ACTIVE TCS
+>
+>     Rpmh driver Re-purposes one of SLEEP/WAKE TCS to use as ACTIVE, inter=
+nally this also sets
+>     drv->tcs_in_use to true for respective SLEEP/WAKE TCS.
+>
+> 2.    Client now without waiting for above to finish, goes ahead and invo=
+kes rpmh_end_transaction()
+>     which calls rpmh_flush() (in case cache become dirty)
+
+I guess we'd have to confirm that there's no way for the cache to
+_not_ become dirty but you do an "active" transaction.  Let's imagine
+this case:
+
+start transaction
+rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=3D0x10, data=3D0x99);
+rpmh_write(RPMH_SLEEP_STATE, addr=3D0x10, data=3D0x11);
+rpmh_write(RPMH_WAKE_ONLY_STATE, addr=3D0x10, data=3D0x99);
+end transaction
+
+start transaction
+rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=3D0x10, data=3D0x99);
+rpmh_write(RPMH_SLEEP_STATE, addr=3D0x10, data=3D0x11);
+rpmh_write(RPMH_WAKE_ONLY_STATE, addr=3D0x10, data=3D0x99);
+end transaction
+
+In other words the client does the same sequence twice in a row with
+no change in data.  After the first set I think you'd be fine.  ...but
+after the second set you'll be in trouble.  That's because none of the
+calls in the second set would cause the "dirty" to be set.  ...but for
+"active only" calls we don't have any sort of cache--we just fire it
+off.  When we fire off the active only we'll clobber the sleep/wake
+TCS.  ...and then nothing will write them again because the cache
+isn't dirty.
+
+
+>     Now if re-purposed TCS is still in use in HW (transaction in progress=
+), we still have
+>     drv->tcs_in_use set. So the rpmh_rsc_invalidate() (invoked from rpmh_=
+flush()) will keep on
+>     returning -EAGAIN until that TCS becomes free to use and then goes ah=
+ead to finish its job.
+
+Ah, interesting.  I still think you have problems I pointed out in
+another response because you never enable interrupts for the "WAKE
+TCS", but I can see how this could be made to work.  In this case
+"async" becomes a little silly here because the flush will essentially
+be forced to wait until the transaction is totally done (so the TCS is
+free again), but it should be able to work.  This might actually point
+out something that needs to be changed in my "clean up" series since I
+guess "tcs_in_use" could sometimes be present in a wake TCS now.
+
+
+> >> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> >> index e278fc1..b6391e1 100644
+> >> --- a/drivers/soc/qcom/rpmh-rsc.c
+> >> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> >> @@ -61,6 +61,8 @@
+> >>  #define CMD_STATUS_ISSUED              BIT(8)
+> >>  #define CMD_STATUS_COMPL               BIT(16)
+> >>
+> >> +#define FLUSH_DIRTY                    1
+> >> +
+> >>  static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int=
+ cmd_id)
+> >>  {
+> >>         return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET =
+* tcs_id +
+> >> @@ -670,13 +672,15 @@ static int rpmh_rsc_probe(struct platform_device=
+ *pdev)
+> >>         INIT_LIST_HEAD(&drv->client.cache);
+> >>         INIT_LIST_HEAD(&drv->client.batch_cache);
+> >>
+> >> +       drv->client.flush_dirty =3D device_get_match_data(&pdev->dev);
+> >> +
+> >>         dev_set_drvdata(&pdev->dev, drv);
+> >>
+> >>         return devm_of_platform_populate(&pdev->dev);
+> >>  }
+> >>
+> >>  static const struct of_device_id rpmh_drv_match[] =3D {
+> >> -       { .compatible =3D "qcom,rpmh-rsc", },
+> >> +       { .compatible =3D "qcom,rpmh-rsc", .data =3D (void *)FLUSH_DIR=
+TY },
+> > Ick.  This is just confusing.  IMO better to set
+> > 'drv->client.flush_dirty =3D true' directly in probe with a comment
+> > saying that it could be removed if we had OSI.
+> Done.
+> i will keep this bit earlier in probe with commet, so later if we detect =
+rsc to be in hierarchy
+> from [1], we can override this to be 0 within rpmh_probe_power_domain().
+>
+> [1] https://patchwork.kernel.org/patch/11391229/
+
+I don't really understand, but maybe it'll be obvious when I see the code.
+
+
+
+> > ...and while you're at it, why not fire off a separate patch (not in
+> > your series) adding the stub to 'include/linux/psci.h'.  Then when we
+> > revisit this in a year it'll be there and it'll be super easy to set
+> > the value properly.
+>
+> With above approch to set it in probe accordingly PSCI change won't be re=
+quired.
+>
+> it will be simple, cleaner and without any resistance from PSCI perspecti=
+ve.
+>
+> >
+> >>         { }
+> >>  };
+> >>
+> >> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> >> index 5bed8f4..9d40209 100644
+> >> --- a/drivers/soc/qcom/rpmh.c
+> >> +++ b/drivers/soc/qcom/rpmh.c
+> >> @@ -297,12 +297,10 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+> >>  {
+> >>         struct batch_cache_req *req;
+> >>         const struct rpmh_request *rpm_msg;
+> >> -       unsigned long flags;
+> >>         int ret =3D 0;
+> >>         int i;
+> >>
+> >>         /* Send Sleep/Wake requests to the controller, expect no respo=
+nse */
+> >> -       spin_lock_irqsave(&ctrlr->cache_lock, flags);
+> >>         list_for_each_entry(req, &ctrlr->batch_cache, list) {
+> >>                 for (i =3D 0; i < req->count; i++) {
+> >>                         rpm_msg =3D req->rpm_msgs + i;
+> >> @@ -312,7 +310,6 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+> >>                                 break;
+> >>                 }
+> >>         }
+> >> -       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> >>
+> >>         return ret;
+> >>  }
+> >> @@ -433,16 +430,63 @@ static int send_single(struct rpmh_ctrlr *ctrlr,=
+ enum rpmh_state state,
+> >>  }
+> >>
+> >>  /**
+> >> + * rpmh_start_transaction: Indicates start of rpmh transactions, this
+> >> + * must be ended by invoking rpmh_end_transaction().
+> >> + *
+> >> + * @dev: the device making the request
+> >> + */
+> >> +void rpmh_start_transaction(const struct device *dev)
+> >> +{
+> >> +       struct rpmh_ctrlr *ctrlr =3D get_rpmh_ctrlr(dev);
+> >> +       unsigned long flags;
+> >> +
+> >> +       if (!ctrlr->flush_dirty)
+> >> +               return;
+> >> +
+> >> +       spin_lock_irqsave(&ctrlr->cache_lock, flags);
+> >> +       ctrlr->active_clients++;
+> > Wouldn't hurt to have something like:
+> >
+> > /*
+> >  * Detect likely leak; we shouldn't have 1000
+> >  * people making in-flight changes at the same time.
+> >  */
+> > WARN_ON(ctrlr->active_clients > 1000)
+> Not necessary change.
+
+Yes, but it will catch buggy clients much more quickly.  What are the downs=
+ides?
+
+
+> >> +       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> >> +}
+> >> +EXPORT_SYMBOL(rpmh_start_transaction);
+> >> +
+> >> +/**
+> >> + * rpmh_end_transaction: Indicates end of rpmh transactions. All dirt=
+y data
+> >> + * in cache can be flushed immediately when ctrlr->flush_dirty is set
+> >> + *
+> >> + * @dev: the device making the request
+> >> + *
+> >> + * Return: 0 on success, error number otherwise.
+> >> + */
+> >> +int rpmh_end_transaction(const struct device *dev)
+> >> +{
+> >> +       struct rpmh_ctrlr *ctrlr =3D get_rpmh_ctrlr(dev);
+> >> +       unsigned long flags;
+> >> +       int ret =3D 0;
+> >> +
+> >> +       if (!ctrlr->flush_dirty)
+> >> +               return ret;
+> >> +
+> >> +       spin_lock_irqsave(&ctrlr->cache_lock, flags);
+> > WARN_ON(!active_clients);
+> Why? when active_clients become zero, we want to finally call rpmh_flush(=
+), i don't see a reason to warn and then flush.
+>
+> Or do you want to make a check if client really called rpmh_start_transac=
+tion() first before calling rpmh_end_transaction() then when we do
+> ctrlr->active_clients--;
+>
+> it shouldn't go to negative value at the end. in that case let me know, i=
+ will make those changes.
+
+Right, I want to warn on underflow.  AKA:
+
+WARN_ON(!ctrlr->active_clients);
+ctrlr->active_clients--;
+
+Generally it's handy to detect mismatches of start/end.  It could be
+that someone accidentally starts twice and ends once.  Starts zero
+times and ends once.  Starts once and ends twice.  All of these are
+interesting cases to warn about.
+
 
 
 -Doug
