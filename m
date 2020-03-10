@@ -2,204 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AFA318058C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 18:54:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE7F4180592
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 18:54:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726464AbgCJRyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 13:54:06 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:38022 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbgCJRyG (ORCPT
+        id S1726290AbgCJRyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 13:54:22 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:43845 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726891AbgCJRyW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 13:54:06 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id 4ACE0804CE;
-        Tue, 10 Mar 2020 18:54:01 +0100 (CET)
-Date:   Tue, 10 Mar 2020 18:53:59 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        sean@poorly.run, seanpaul@chromium.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: display: add visionox rm69299 panel
- variant
-Message-ID: <20200310175359.GD3785@ravnborg.org>
-References: <20200306103628.8998-1-harigovi@codeaurora.org>
- <20200306103628.8998-2-harigovi@codeaurora.org>
+        Tue, 10 Mar 2020 13:54:22 -0400
+Received: by mail-pl1-f195.google.com with SMTP id f8so5723698plt.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 10:54:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=9xrGyjBP9/lId96bp3b0igZ5Fq6/ehIsq8nZJf92rko=;
+        b=jayoZwrFjKOylGI+0rtBXlSDlY2LI3eMJQ9vUgbiaT7A5gbExcoxXs6kZ4H0rfpPKq
+         emu0SkdUMUaPDPNQMHeWDYB5I7e2BNz7Vx864brt4kmIZ/CYXCyKWi+0B9mD50fRESM8
+         4MSd6RAwPRlxig/I7ixHdKlIzWUOmq0/OuEeM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=9xrGyjBP9/lId96bp3b0igZ5Fq6/ehIsq8nZJf92rko=;
+        b=sM/yzOtf1oA/y0EhQ5QeGFPOQT6DseWR3iAAvVEzvIEMmfza/AgM5qQ+1MJxPkg95l
+         /9yq49cnwf0FNG0EhL+eARS4QRH44dayFvZiICtzB8J1TzT1gJTGoIiXZxjNocKxx3tG
+         AV5duQ14zZFHOTul5j5H6/94f4VqyebvY/Npo43uH4Sfe0w0dOWeZG062A8lsU3TphUn
+         z77GG/LDVfzT89nXHRXSiX9YlXQ3D/edxN/WfnRQUf9arpDllDyXtfOMLxwquKRqpHFz
+         GWUpAVAog+s0Ag1hPuXqNgVXfXWz4WqqKbMGDjPOG/mx0U5udYe23QiXK3j3GjmInhrY
+         03xg==
+X-Gm-Message-State: ANhLgQ1EN9JgwrYKBPG5nPdqToBTRF0mC950Ea7C4INeZMzfRkIkREwI
+        S0lA2UaWrI7Wz3Jbh8wKzTPgKP3p7jA=
+X-Google-Smtp-Source: ADFU+vsELhgfsIXkY//Egix35HBOFMo21WrTy/dWY0Dm1iIST3gawKKEcusOZCNKpBkodKXdPRL59Q==
+X-Received: by 2002:a17:902:8b89:: with SMTP id ay9mr21466796plb.309.1583862860685;
+        Tue, 10 Mar 2020 10:54:20 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id h6sm2792595pjk.33.2020.03.10.10.54.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2020 10:54:19 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200306103628.8998-2-harigovi@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=XpTUx2N9 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8
-        a=gEfo2CItAAAA:8 a=e5mUnYsNAAAA:8 a=qHcGuR0XRKw0n3oAY_QA:9
-        a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22 a=sptkURWiP4Gy88Gu7hUp:22
-        a=Vxmtnl_E_bksehYqCbjh:22
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200310063338.3344582-2-bjorn.andersson@linaro.org>
+References: <20200310063338.3344582-1-bjorn.andersson@linaro.org> <20200310063338.3344582-2-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v4 1/5] dt-bindings: remoteproc: Add Qualcomm PIL info binding
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 10 Mar 2020 10:54:19 -0700
+Message-ID: <158386285904.149997.9749528768955800249@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Harigovindan
-
-Thanks for the follow-up. There are still a few things to improve.
-See below.
-
-	Sam
-
-On Fri, Mar 06, 2020 at 04:06:27PM +0530, Harigovindan P wrote:
-> Add bindings for visionox rm69299 panel.
-> 
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+Quoting Bjorn Andersson (2020-03-09 23:33:34)
+> Add a devicetree binding for the Qualcomm peripheral image loader
+> relocation information region found in the IMEM.
+>=20
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-> 
-> Changes in v2:
-> 	- Removed unwanted properties from description.
-> 	- Creating source files without execute permissions(Rob Herring).
-> Changes in v3:
-> 	- Changing txt file into yaml
-> Changes in v4:
-> 	- Updating license identifier.
-> 	- Moving yaml file inside panel directory.
-> 	- Removing pinctrl entries.
-> 	- Adding documentation for reset-gpios.
-> 
->  .../display/panel/visionox,rm69299.yaml       | 85 +++++++++++++++++++
->  1 file changed, 85 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
-> new file mode 100644
-> index 000000000000..93cae431207c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
-> @@ -0,0 +1,85 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/panel/visionox,rm69299.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Visionox model RM69299 Panels Device Tree Bindings.
-> +
-> +maintainers:
-> + - Harigovindan P <harigovi@codeaurora.org>
-> +
-> +description: |
-> + This binding is for display panels using a Visionox RM692999 panel.
-> +
-> +allOf:
-> + - $ref: panel-common.yaml#
-> +
-> +patternProperties:
-> +  "^(panel|panel-dsi)@[0-9]$":
-> +    type: object
 
-This looks wrong. None of the other panels needs to specify
-a patternProperties, and neither do we need to do so for this panel.
-
-
-> +    properties:
-> +      compatible:
-> +        const: visionox,rm69299-1080p-display
-The compatible is what we use to match this binding.
-
-
-> +
-> +      reg:
-> +        maxItems: 1
-> +
-> +      vdda-supply:
-> +        description:
-> +          Phandle of the regulator that provides the vdda supply voltage.
-> +
-> +      vdd3p3-supply:
-> +        description:
-> +          Phandle of the regulator that provides the vdd3p3 supply voltage.
-> +
-> +      ports:
-> +        type: object
-> +        description:
-> +          A node containing DSI input & output port nodes with endpoint
-> +          definitions as documented in
-> +          Documentation/devicetree/bindings/media/video-interfaces.txt
-> +          Documentation/devicetree/bindings/graph.txt
-
-I think you miss as " |" after "description:"
-Again, see other panel bindings.
-
-
-> +        properties:
-> +          port@0:
-
-Please just use
-            port: true
-
-port is already documented in panel-common.yaml.
-
-> +            type: object
-> +            description:
-> +              DSI input port node.
-> +
-> +      reset-gpios:
-reset-gpios is part of panel-common.
-So specify only:
-         reset-gpios: true
-
-No description, as it is in panel-common.
-
-
-> +        description:
-> +          a GPIO spec for the reset pin.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - vdda-supply
-> +  - vdd3p3-supply
-> +  - reset-gpios
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +- |
-> +    dsi@ae94000 {
-No @ae94000 - this will warn with upcoming dt_binding_check
-improvements.
-
-> +        panel@0 {
-> +            compatible = "visionox,rm69299-1080p-display";
-> +
-> +            vdda-supply = <&src_pp1800_l8c>;
-> +            vdd3p3-supply = <&src_pp2800_l18a>;
-> +
-> +            reset-gpios = <&pm6150l_gpio 3 0>;
-reg property is required, but missing in the example.
-
-
-> +            ports {
-> +                    #address-cells = <1>;
-> +                    #size-cells = <0>;
-> +                    port@0 {
-> +                            reg = <0>;
-> +                            panel0_in: endpoint {
-> +                                remote-endpoint = <&dsi0_out>;
-> +                            };
-> +                    };
-> +            };
-> +        };
-> +    };
-> +...
-> +
-> -- 
-> 2.25.1
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
