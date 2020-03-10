@@ -2,75 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A477D1805FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 19:11:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 229B4180664
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 19:31:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726403AbgCJSLp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 14:11:45 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:39807 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726497AbgCJSLl (ORCPT
+        id S1727518AbgCJSbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 14:31:23 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:45256 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726998AbgCJSbX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 14:11:41 -0400
-Received: by mail-pg1-f196.google.com with SMTP id s2so6663195pgv.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 11:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=pN3qTpKjWmrG74+zt0MCb4nvU9mEwdxCDTu02IXOOa4=;
-        b=GCb/UeYvad1VcBxP5Le7hPBRpo0tV94ewwp+L7bfi16zLWdvY79SaKTJeXfC+TLr/G
-         6+IrD5CuLoIQrNsAfuW/T3WHsvHWPVEIuTIkXzpQO9jAnDCtKi8RhdbeFGStr02B4zcM
-         4d2syzMFkbd/GJcAUqGJmOUuuK+trg1JVAr+Y=
+        Tue, 10 Mar 2020 14:31:23 -0400
+Received: by mail-ot1-f66.google.com with SMTP id f21so14126283otp.12;
+        Tue, 10 Mar 2020 11:31:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=pN3qTpKjWmrG74+zt0MCb4nvU9mEwdxCDTu02IXOOa4=;
-        b=mPUWK5mPa44TMSsWkHl9NtK+XE0X5Xs1I4EEamdCTOmxxTFMqiYf/e1BHBZy1BZX2Z
-         wtyCQ4mGtJp08Ha68TCqtTTkjLJOZALhPvPna+dZVAWY7fEhfzp8Rq5Qfm0jCtYZGi89
-         +hYBe/BFptjTjEOVptQLsJhP2/uj5ZE4VzjZwBvJliiOLtABm2nbuf8PD3ye5WqxyP6Q
-         2zxAJgUAjmptgzZ+29f0ABGnsSm6wIT+DuYZW0IT4MGwAmpYxLJhA6CYFz4VHjooodpi
-         4X+1WeqaZW+bJpLJbr1Abe3Sesmv2R6D1PGYia1JPEI82akz1Ftsge8aevb94ah3BVT6
-         1eKg==
-X-Gm-Message-State: ANhLgQ0eeuIuy1+mhAQ9pdzJaRCQVYxDRYcF272SjHzCkRy4TYGiZz4I
-        /Gl9Hy7qB3DdIKtItCqa5DrhAOxxxxQ=
-X-Google-Smtp-Source: ADFU+vtPfd6sEmJbJPrHFLC6tR/0kN+w0z/+5OCEPiBHtC1WspD9R1DrHYTO6ADKDhsgGxgi0AJK8A==
-X-Received: by 2002:a63:6d4e:: with SMTP id i75mr10022175pgc.443.1583863900171;
-        Tue, 10 Mar 2020 11:11:40 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id d9sm2967203pjw.24.2020.03.10.11.11.39
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kE8zJYod7DGw/iirznrwm04icms4ZonrW+m7De0Huos=;
+        b=tSgqnoILJO40vmXhVI6xPFpcIjeTu1NY8MVBWwOp0dkkpGIJOvxcGOq5562QZFwxmo
+         iHTpES6+SthX0zWQ/ZtVgiGk+gfBrmRAQ4TMS/nmgr5WnacdREt3KJ8CeHVVR5r3b+gy
+         vvLAiiPd1bD+2h3s/kcAPfnmjCDEDO28tX+dcdv0XUSb8zqAKw147h2S7Osa3HXlNm9A
+         DZGkNmuLBEiay6H1WkIpffoll1j7NQb2PCcsZFKZI8vKz360HjsGmNI6C0LtMVqLPkJn
+         Gt7Gb9xWujor6y21VtgYTPYqWUlAL5qSG2At9DWA0+y/eBGvFEVVU6VYbuJNlZI14sRM
+         XjQw==
+X-Gm-Message-State: ANhLgQ3eb1sugpOt6TN+1R3xeLOzuqrA+B7SyYTVbUE3+JONbfRhyW57
+        Q9/wihhIrSbURoOOEe5LNg==
+X-Google-Smtp-Source: ADFU+vs6BXU2RhaGOMkzDNdE03Xyflh1TY7gz7r9610og46G77Jwujiyd6QdA37f1IfNWYINzkfbHg==
+X-Received: by 2002:a9d:21b4:: with SMTP id s49mr17315918otb.294.1583865080731;
+        Tue, 10 Mar 2020 11:31:20 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id e206sm4490498oia.24.2020.03.10.11.31.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2020 11:11:39 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200310063338.3344582-6-bjorn.andersson@linaro.org>
-References: <20200310063338.3344582-1-bjorn.andersson@linaro.org> <20200310063338.3344582-6-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: sdm845: Add IMEM and PIL info region
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Tue, 10 Mar 2020 11:31:19 -0700 (PDT)
+Received: (nullmailer pid 14370 invoked by uid 1000);
+        Tue, 10 Mar 2020 18:31:18 -0000
+Date:   Tue, 10 Mar 2020 13:31:18 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 10 Mar 2020 11:11:38 -0700
-Message-ID: <158386389888.149997.14127685932598676242@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Dan Murphy <dmurphy@ti.com>, linux-arm-msm@vger.kernel.org,
+        Kiran Gunda <kgunda@codeaurora.org>
+Subject: Re: [PATCH V3 1/4] backlight: qcom-wled: convert the wled bindings
+ to .yaml format
+Message-ID: <20200310183118.GA13818@bogus>
+References: <1583760362-26978-1-git-send-email-kgunda@codeaurora.org>
+ <1583760362-26978-2-git-send-email-kgunda@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1583760362-26978-2-git-send-email-kgunda@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2020-03-09 23:33:38)
-> Add a simple-mfd representing IMEM on SDM845 and define the PIL
-> relocation info region, so that post mortem tools will be able to locate
-> the loaded remoteprocs.
->=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Mon,  9 Mar 2020 18:55:59 +0530, Kiran Gunda wrote:
+> Convert the qcom-wled bindings from .txt to .yaml format.
+> 
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 > ---
+>  .../bindings/leds/backlight/qcom-wled.txt          | 154 -----------------
+>  .../bindings/leds/backlight/qcom-wled.yaml         | 184 +++++++++++++++++++++
+>  2 files changed, 184 insertions(+), 154 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+>  create mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> 
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+My bot found errors running 'make dt_binding_check' on your patch:
+
+Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml: $id: relative path/filename doesn't match actual path or filename
+	expected: http://devicetree.org/schemas/leds/backlight/qcom-wled.yaml#
+
+See https://patchwork.ozlabs.org/patch/1251567
+Please check and re-submit.
