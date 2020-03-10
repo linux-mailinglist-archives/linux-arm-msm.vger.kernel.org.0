@@ -2,100 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 00DC217F319
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 10:13:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0499317F3E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 10:42:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726271AbgCJJNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 05:13:02 -0400
-Received: from 8bytes.org ([81.169.241.247]:50586 "EHLO theia.8bytes.org"
+        id S1726315AbgCJJmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 05:42:03 -0400
+Received: from sauhun.de ([88.99.104.3]:46710 "EHLO pokefinder.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726523AbgCJJMi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 05:12:38 -0400
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 80837E0F; Tue, 10 Mar 2020 10:12:34 +0100 (CET)
-From:   Joerg Roedel <joro@8bytes.org>
-To:     iommu@lists.linux-foundation.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Hanjun Guo <guohanjun@huawei.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1726202AbgCJJmC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Mar 2020 05:42:02 -0400
+Received: from localhost (p54B33196.dip0.t-ipconnect.de [84.179.49.150])
+        by pokefinder.org (Postfix) with ESMTPSA id 6125C2C1EB6;
+        Tue, 10 Mar 2020 10:42:00 +0100 (CET)
+Date:   Tue, 10 Mar 2020 10:42:00 +0100
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 15/15] iommu: Move fwspec->iommu_priv to struct dev_iommu
-Date:   Tue, 10 Mar 2020 10:12:29 +0100
-Message-Id: <20200310091229.29830-16-joro@8bytes.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200310091229.29830-1-joro@8bytes.org>
-References: <20200310091229.29830-1-joro@8bytes.org>
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        Dilip Kota <dkota@codeaurora.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: Re: [PATCH 1/3] i2c: qcom-geni: Let firmware specify irq trigger
+ flags
+Message-ID: <20200310094159.GG1987@ninjato>
+References: <20200204193152.124980-1-swboyd@chromium.org>
+ <20200204193152.124980-2-swboyd@chromium.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="JbKQpFqZXJ2T76Sg"
+Content-Disposition: inline
+In-Reply-To: <20200204193152.124980-2-swboyd@chromium.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Joerg Roedel <jroedel@suse.de>
 
-Move the pointer for iommu private data from struct iommu_fwspec to
-struct dev_iommu.
+--JbKQpFqZXJ2T76Sg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Will Deacon <will@kernel.org> # arm-smmu
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
----
- include/linux/iommu.h | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+On Tue, Feb 04, 2020 at 11:31:50AM -0800, Stephen Boyd wrote:
+> We don't need to force IRQF_TRIGGER_HIGH here as the DT or ACPI tables
+> should take care of this for us. Just use 0 instead so that we use the
+> flags from the firmware. Also, remove specify dev_name() for the irq
+> name so that we can get better information in /proc/interrupts about
+> which device is generating interrupts.
+>=20
+> Cc: Girish Mahadevan <girishm@codeaurora.org>
+> Cc: Dilip Kota <dkota@codeaurora.org>
+> Cc: Alok Chauhan <alokc@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 056900e75758..8c4d45fce042 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -369,6 +369,7 @@ struct iommu_fault_param {
-  *
-  * @fault_param: IOMMU detected device fault reporting data
-  * @fwspec:	 IOMMU fwspec data
-+ * @priv:	 IOMMU Driver private data
-  *
-  * TODO: migrate other per device data pointers under iommu_dev_data, e.g.
-  *	struct iommu_group	*iommu_group;
-@@ -377,6 +378,7 @@ struct dev_iommu {
- 	struct mutex lock;
- 	struct iommu_fault_param	*fault_param;
- 	struct iommu_fwspec		*fwspec;
-+	void				*priv;
- };
- 
- int  iommu_device_register(struct iommu_device *iommu);
-@@ -589,7 +591,6 @@ struct iommu_group *fsl_mc_device_group(struct device *dev);
- struct iommu_fwspec {
- 	const struct iommu_ops	*ops;
- 	struct fwnode_handle	*iommu_fwnode;
--	void			*iommu_priv;
- 	u32			flags;
- 	u32			num_pasid_bits;
- 	unsigned int		num_ids;
-@@ -629,12 +630,12 @@ static inline void dev_iommu_fwspec_set(struct device *dev,
- 
- static inline void *dev_iommu_priv_get(struct device *dev)
- {
--	return dev->iommu->fwspec->iommu_priv;
-+	return dev->iommu->priv;
- }
- 
- static inline void dev_iommu_priv_set(struct device *dev, void *priv)
- {
--	dev->iommu->fwspec->iommu_priv = priv;
-+	dev->iommu->priv = priv;
- }
- 
- int iommu_probe_device(struct device *dev);
--- 
-2.17.1
+All patches look good, but this one doesn't build because dev is defined
+in the next patch only. I also can't apply patch 2 before 1, so please
+rebase and resend.
 
+> ---
+>  drivers/i2c/busses/i2c-qcom-geni.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-=
+qcom-geni.c
+> index 17abf60c94ae..3e13b54ce3f8 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -549,8 +549,8 @@ static int geni_i2c_probe(struct platform_device *pde=
+v)
+>  	init_completion(&gi2c->done);
+>  	spin_lock_init(&gi2c->lock);
+>  	platform_set_drvdata(pdev, gi2c);
+> -	ret =3D devm_request_irq(&pdev->dev, gi2c->irq, geni_i2c_irq,
+> -			       IRQF_TRIGGER_HIGH, "i2c_geni", gi2c);
+> +	ret =3D devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
+> +			       dev_name(&pdev->dev), gi2c);
+>  	if (ret) {
+>  		dev_err(&pdev->dev, "Request_irq failed:%d: err:%d\n",
+>  			gi2c->irq, ret);
+> --=20
+> Sent by a computer, using git, on the internet
+>=20
+
+--JbKQpFqZXJ2T76Sg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl5nYOQACgkQFA3kzBSg
+KbaZ1Q//bEqT5U1ii86pzp09TaBI3QzrPc5uzlHnrBieB7gZ0pkytJrO1PSXyfXk
+kozWfv5urS2U0jj2jnRAD30N7jPTxmUw/2OUTM+pXWVAg1/gMEPJ61VDMfEpl8JX
+oLSbsw3nGVWHdcdI5RvjECqBYie4V969Qy++vo4CE3+Ojcf2LhEDT3rXMoM3sLt2
+YYF+VhArh5D68UwJ+0XeP2A2XZNc08qFN+bpPcHr/vDpzfgkq5L5Es9NATAvUUww
+fNrq8qywVHlC9ylepuaqKBN/4YZVlwMSkiNZyKLhWkoWbINtnSadpHGd1oQ63J6P
+f0FTch18NjURIJchZaAeSpPsPQCAG9yl3TV0AZBv4MlzSvgOT2C+lezzDwT0oSG5
+/ZnXHr/yNNeXxYOU2Ya3cQ32Uoo3g7hICuKnOiBDR1TNPnY/ymfeeKdZAMyqcgxj
++sSs9OMf4l97luaFdoDuA0MzqdVV7ZY/n0tpsR6Zqpuz2ATW4PFc0zmaci3Kp1QZ
+2Mfma5Zn5iUl12EjS1zS/VmFcFO5cAfBPWSBymeRFZ6fhP5sSdqSgaVsDP6eq0dS
+uWlLsjNPv9XI8na981XdbD5Wggdolxzpkyn48vgbLr/PBcrKfak9eUKevqRH/M5V
+EIDZe9RakIgD2VIvm+n+L3RzhS+FZ4fU0oOdhOdgCxjoilB6tKk=
+=T8mr
+-----END PGP SIGNATURE-----
+
+--JbKQpFqZXJ2T76Sg--
