@@ -2,89 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DFBF418193D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 14:09:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1735181B80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 15:39:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729556AbgCKNJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 09:09:31 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:34292 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729320AbgCKNJa (ORCPT
+        id S1729823AbgCKOjb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 10:39:31 -0400
+Received: from mail-il1-f196.google.com ([209.85.166.196]:36380 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729738AbgCKOjb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 09:09:30 -0400
-Received: by mail-wr1-f50.google.com with SMTP id z15so2553026wrl.1;
-        Wed, 11 Mar 2020 06:09:29 -0700 (PDT)
+        Wed, 11 Mar 2020 10:39:31 -0400
+Received: by mail-il1-f196.google.com with SMTP id h3so2224210ils.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 07:39:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ellU5pOp/2uHnz6yN3yDSPmzaJ54IVdYIlW3Apzu9Qs=;
-        b=NTg7VaVEX6BOO5o/pOLHKcc4CuQbKwTLBNIC813vxD+3Nr7Mu9uAfTaDaXDsLOhoKu
-         15ZwbZcc+pG0womJxWVgEtOfoxfiiSBXl+0rAtI2Rw+TtKovn0e+6byNGzlmTS2JgTfn
-         hx+G6QVfMIed9yBbpkL83iSXSz3bGnygei4j8i/TLGw8wmHEqCy7FFpp3/M+KdRZ3OUq
-         vC9UJ8mbxSsCMyBCCcJAhBOY8Lw4qEdsUqZ7JC1efdhjI9r0qlSow4Vr/BcMQZF+RPS6
-         5NDf1+FT2vOvsLHed/jLxhuDAVaBjp/uounQFs7UBYuRtEeW2laEG5fgNPuEbmPXDB0a
-         XryQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wy+o8H7bDaEo8BGddDsCo4a2Cywi6MmVF56mviUaRRY=;
+        b=x9hyoRKSsjcNql8Vs3VDhHu71U7F4mVlz+l+9FFNuzzath0jvqI2Dy20OaCZrSbi64
+         8n7VekEx3zlK1oMbjct/nFIPRc9TFXpuqiM7kigXd5fqYqGpv3Slvldg4Qc7R6PV2xih
+         IXwB6jOdD7D/4nMP5juQIBgH4PDziLPcKEz1EJ19eD79TdJR40mzNUIX9vb1rc1gySzX
+         FIgMzmFkRKfEH0xeeyhy6d0IvS97CZP54idilKEoybizu/hSnMFoYgHv71n5Jz+4Gsts
+         0a/h8tBSKBHSlTWjvfxw6wsQQ/ddTuCD+cqE8/rZd176hzJbW+ZzVJWR67I4Jy83dI2W
+         dCZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ellU5pOp/2uHnz6yN3yDSPmzaJ54IVdYIlW3Apzu9Qs=;
-        b=mk9QlNoUWNwHAtgIsxqXWprvzEFhSw39uS+OorlQ01NCXEEDV2GBmb6ARi8fu1dwxd
-         mJSurfTsahU1dXV8HhNgPUwSwIx2ZjmVJwrfyHf9Apm33N493vGmCeN5fwr8aB5R51mq
-         tzXwT6/Q1kItvLL5u9+/5S9pCQVCwJCAhLmTlk7qmvl4mnVgwEKHi0A+onnVxoYq3Agj
-         daudCHJ7ZyiMKQ0/dSiGCxVWZs8O4Ho2N66MQmKXG+FJi1Exe9TUWvb8m5zOPStmv3Mt
-         0HXx3SLG/HAkGKBloozfhnRqtIs2aOqLsXetMo4QUFlXlMMnwBUeErcaYr0tXhA5f14r
-         C8KA==
-X-Gm-Message-State: ANhLgQ2yiBpiUzX1e8OGIksmATyrv30KfrowkopfVSUtqMizjljs4UGL
-        LBewLT88kkcueRAf3+LdHe4=
-X-Google-Smtp-Source: ADFU+vsppto8aqMNjL7HDJF95tTaGEFOwBm/yhxQzldNMaHKoCfXRE0mP4YL2et+imj3n+2XMNt9lg==
-X-Received: by 2002:adf:fa09:: with SMTP id m9mr4400451wrr.113.1583932168573;
-        Wed, 11 Mar 2020 06:09:28 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.googlemail.com with ESMTPSA id f187sm4984036wme.31.2020.03.11.06.09.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 06:09:28 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     agross@kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wy+o8H7bDaEo8BGddDsCo4a2Cywi6MmVF56mviUaRRY=;
+        b=SEB+oH89oNlLRmcACfzxQBRmjwmrKYZ587+t0JSdyF0gNGQfkyGk/JMAZkS0GDYkgp
+         ni/Tg5fXx2HjkUxd6E0+xIuSGA2wut12pl6Tyo9Fldpi29qvIzNn3tWvmDniBeg5YEGk
+         MhWfpM2UDX/h54cc2sGPPuWaKzETt192RAqy0BFNWXsliHc05zZcQjg+FQ8NTMiMc4I8
+         VrcHS8Nsc37jTkuVB1dg5/astS0u9WaHVuGtrGbpG01iF4B+XjWhJpCTWAqFJCeAvHuS
+         CynHR/ohjtBHOreLf17b80ErIf78Z2M15yanVDwfhS+IjuA99ow3WsXddkWJsW1Tc8u3
+         NPXg==
+X-Gm-Message-State: ANhLgQ1cyATO8xpIC5ihI/uzQcG35s2VLUGhs0iz3fmPjbyfD2ETvTWF
+        pt4JoJx/6/Qma0pwyvDIqd0JIA==
+X-Google-Smtp-Source: ADFU+vsoLXbHGd59x7Q6lscbF+LgH2AFuhNx/jrcSAvda5RCT92+oTo8i3ASrpHiJWGnWl/FdM3Wng==
+X-Received: by 2002:a92:d9d0:: with SMTP id n16mr3509344ilq.200.1583937570436;
+        Wed, 11 Mar 2020 07:39:30 -0700 (PDT)
+Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id h14sm8868430iow.23.2020.03.11.07.39.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2020 07:39:29 -0700 (PDT)
+Subject: Re: [PATCH v2 17/17] arm64: dts: sdm845: add IPA information
+To:     Jon Hunter <jonathanh@nvidia.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        David Miller <davem@davemloft.net>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Dan Williams <dcbw@redhat.com>,
+        Evan Green <evgreen@google.com>,
+        Eric Caruso <ejcaruso@google.com>,
+        Susheel Yadav Yadagiri <syadagir@codeaurora.org>,
+        Chaitanya Pratapa <cpratapa@codeaurora.org>,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] devicetree: bindings: firmware: add ipq806x to qcom_scm
-Date:   Wed, 11 Mar 2020 14:09:18 +0100
-Message-Id: <20200311130918.753-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200311130918.753-1-ansuelsmth@gmail.com>
-References: <20200311130918.753-1-ansuelsmth@gmail.com>
+References: <20200306042831.17827-1-elder@linaro.org>
+ <20200306042831.17827-18-elder@linaro.org>
+ <ec9776b3-ac79-8f9d-8c4d-012d62dc8f72@nvidia.com>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <4decbc8a-b0a6-8f10-b439-ade9008a4cff@linaro.org>
+Date:   Wed, 11 Mar 2020 09:39:25 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <ec9776b3-ac79-8f9d-8c4d-012d62dc8f72@nvidia.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add ipq806x to compatible list in qcom_scm Documentation
+On 3/11/20 5:49 AM, Jon Hunter wrote:
+> 
+> On 06/03/2020 04:28, Alex Elder wrote:
+>> Add IPA-related nodes and definitions to "sdm845.dtsi".
+>>
+>> Signed-off-by: Alex Elder <elder@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 51 ++++++++++++++++++++++++++++
+>>  1 file changed, 51 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> index d42302b8889b..58fd1c611849 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> @@ -675,6 +675,17 @@
+>>  			interrupt-controller;
+>>  			#interrupt-cells = <2>;
+>>  		};
+>> +
+>> +		ipa_smp2p_out: ipa-ap-to-modem {
+>> +			qcom,entry-name = "ipa";
+>> +			#qcom,smem-state-cells = <1>;
+>> +		};
+>> +
+>> +		ipa_smp2p_in: ipa-modem-to-ap {
+>> +			qcom,entry-name = "ipa";
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +		};
+>>  	};
+>>  
+>>  	smp2p-slpi {
+>> @@ -1435,6 +1446,46 @@
+>>  			};
+>>  		};
+>>  
+>> +		ipa@1e40000 {
+>> +			compatible = "qcom,sdm845-ipa";
+>> +
+>> +			modem-init;
+>> +			modem-remoteproc = <&mss_pil>;
+>> +
+>> +			reg = <0 0x1e40000 0 0x7000>,
+>> +			      <0 0x1e47000 0 0x2000>,
+>> +			      <0 0x1e04000 0 0x2c000>;
+>> +			reg-names = "ipa-reg",
+>> +				    "ipa-shared",
+>> +				    "gsi";
+>> +
+>> +			interrupts-extended =
+>> +					<&intc 0 311 IRQ_TYPE_EDGE_RISING>,
+>> +					<&intc 0 432 IRQ_TYPE_LEVEL_HIGH>,
+>> +					<&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+>> +					<&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+>> +			interrupt-names = "ipa",
+>> +					  "gsi",
+>> +					  "ipa-clock-query",
+>> +					  "ipa-setup-ready";
+>> +
+>> +			clocks = <&rpmhcc RPMH_IPA_CLK>;
+>> +			clock-names = "core";
+>> +
+>> +			interconnects =
+>> +				<&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_EBI1>,
+>> +				<&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_IMEM>,
+>> +				<&rsc_hlos MASTER_APPSS_PROC &rsc_hlos SLAVE_IPA_CFG>;
+>> +			interconnect-names = "memory",
+>> +					     "imem",
+>> +					     "config";
+>> +
+>> +			qcom,smem-states = <&ipa_smp2p_out 0>,
+>> +					   <&ipa_smp2p_out 1>;
+>> +			qcom,smem-state-names = "ipa-clock-enabled-valid",
+>> +						"ipa-clock-enabled";
+>> +		};
+>> +
+>>  		tcsr_mutex_regs: syscon@1f40000 {
+>>  			compatible = "syscon";
+>>  			reg = <0 0x01f40000 0 0x40000>;
+>>
+> 
+> 
+> This change is causing the following build error on today's -next ...
+> 
+>  DTC     arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dtb
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi:1710.15-1748.5: ERROR (phandle_references): /soc@0/ipa@1e40000: Reference to non-existent node or label "rsc_hlos"
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- Documentation/devicetree/bindings/firmware/qcom,scm.txt | 1 +
- 1 file changed, 1 insertion(+)
+This problem arises because a commit in the Qualcomm SoC tree affects
+"arch/arm64/boot/dts/qcom/sdm845.dtsi", changing the interconnect provider
+node(s) used by IPA:
+  b303f9f0050b arm64: dts: sdm845: Redefine interconnect provider DT nodes
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-index 3f29ea04b5fe..354b448fc0c3 100644
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
-@@ -10,6 +10,7 @@ Required properties:
-  * "qcom,scm-apq8064"
-  * "qcom,scm-apq8084"
-  * "qcom,scm-ipq4019"
-+ * "qcom,scm-ipq806x"
-  * "qcom,scm-msm8660"
-  * "qcom,scm-msm8916"
-  * "qcom,scm-msm8960"
--- 
-2.25.0
+I will send out a patch today that updates the IPA node in "sdm845.dtsi"
+to correct that.
+
+In the mean time, David, perhaps you should revert this change in net-next:
+  9cc5ae125f0e arm64: dts: sdm845: add IPA information
+and let me work out fixing "sdm845.dtsi" with Andy and Bjorn in the
+Qualcomm tree.
+
+Thanks.
+
+				-Alex
+
+> Cheers
+> Jon
+> 
 
