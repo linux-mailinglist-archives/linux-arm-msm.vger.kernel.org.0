@@ -2,109 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC597181C68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 16:35:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F2AB181D94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 17:17:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730009AbgCKPfI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 11:35:08 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:43884 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729994AbgCKPfI (ORCPT
+        id S1730159AbgCKQRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 12:17:32 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:41985 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729921AbgCKQRc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 11:35:08 -0400
-Received: by mail-ua1-f65.google.com with SMTP id o42so870432uad.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 08:35:07 -0700 (PDT)
+        Wed, 11 Mar 2020 12:17:32 -0400
+Received: by mail-pl1-f194.google.com with SMTP id t3so1317039plz.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 09:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8bW2b1foiADltfckt9kisNLeC6odtSToLupbG9QHAAA=;
-        b=FybwXaSquXwQKMtYBLiRXsogg7nCSFa7VunIRDICPxkTrnOiqvaiJgKBYqaTz7hIi8
-         8vEUYzdQLRD11NGkw1WojWFy1nCI3NCfjPCF/UevrHQu8Hn30+2vpznTEVxH0JmxuVvu
-         7knxdHTT5dO+BvrkY8UzEgFsAYyOTVcr9PSGTkzS1U+GCwAu9pzga8Lx3o57emoYEpVU
-         SM8Bdc6TkVT7IVUfpV5vjpP0WvYUPVkyYMXCRvy3reaEHRcXkNnJymu/0S6eaaueVYD9
-         esrQDowEXifXEM1MLJwQHYXu1oP2O2MaUOBO+ijcfXhj+SAvg/fkdu1QHMcbXR1oLrqN
-         d2Fw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eGB8HLn34Ay+oTWhql5ATheorHKXdDNb1Y38OeMfZ0w=;
+        b=V1FnRQ1L3bblXi4JseWibpSlMPHSWCCa8FQHLozbgJBRgDgqs1i34nh150UBybDfY9
+         qpz1rYB7r8IltEW2bXAEI/YQh4n3irUfxn+TD5jdeT7sggcxFuUDoHr9TSSeKip0NXWo
+         wDOPA2JYHFO211/0qHHCmU8ivE9ZRdPuIggeU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8bW2b1foiADltfckt9kisNLeC6odtSToLupbG9QHAAA=;
-        b=WfSJMAbPZsbvZAya3uBcTTAaJ5LgAOPyScxdeMCU8p0T556lAano8rxnxYLc5UIAnE
-         UQwFWQNVy2f1NdeKmjVfrebMitTF5Tz9cEpK4Q4hnWhsCF6uDMyA9Jz99Dm5jrUqo4TD
-         9yHdlQYBl7qN1GTfXJCbLHnJ183TZ5i2JBDnlwDp3T0H/E/5EtgMQqim+Tc5vqWEg/RX
-         psrbUKobl23k4qT2aGYSHFeuiUg+MK3fDTjbGYp3ak1abQ9VARVLDfrnjo8W1Wwcosxr
-         V2oQw4N9LHYCafDa6F52YeOF2/MfRoKxtDhCf2OBQ4gIooBNUdsEvqU0LZCnikZsHuRj
-         Aw+g==
-X-Gm-Message-State: ANhLgQ0xSmbkjYMgvPU3mpoefravU5XY1UuTUPBBJOHdld/nCO01KeLU
-        Y0jzZ1DURVcDeGcC+j0SIppxt8kz4sbCTXJIe4LJdg==
-X-Google-Smtp-Source: ADFU+vuNhktE123R0SxiGW+jzJjuGId9sIHLyUMXSM/ML17sf0HSN53V/yX8MdPb+v19ZJ0BTJh92KN3XImSlKFOkwg=
-X-Received: by 2002:ab0:7802:: with SMTP id x2mr2114133uaq.100.1583940906949;
- Wed, 11 Mar 2020 08:35:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <1583323250-23596-1-git-send-email-vbadigan@codeaurora.org> <1583328320-9981-1-git-send-email-vbadigan@codeaurora.org>
-In-Reply-To: <1583328320-9981-1-git-send-email-vbadigan@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 11 Mar 2020 16:34:31 +0100
-Message-ID: <CAPDyKFov_MwTjXarivgJ7+D_Oa1cgma3t1pDGQ8gkmeNJn4jDQ@mail.gmail.com>
-Subject: Re: [PATCH V2] mmc: cqhci: Update cqhci memory ioresource name
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eGB8HLn34Ay+oTWhql5ATheorHKXdDNb1Y38OeMfZ0w=;
+        b=rS/d+v5PlmN0aOwr7SK4hElXWdouY73BNOvGEt9zEMXW51z30TfjeJl87YroC6kAbI
+         M7gW/7PwJDWc8KOYp+KASxjiIXcHNPeYjRRh99AMSH6HGbXeHdEtN9TGRywUbG+Zbye4
+         7KvtJfJkXwqF9G8DJ9DMOtIff+cQ0FcLYMReVggcP2eszUWVBOWMhvnjI708t1aB/uwL
+         /a/Y18r0AK68zjPRGHmcB9MRFtgyu6vF0fuNCGH/+Av1pF4ve2zK8ERb9tf8qL+6Fvk5
+         DjaB7b/IvbCQY/Xsp/jC4nLQVHixN6tEYf1K9kCm7MGb7p3FEaBPcVmR03zlzw0Wyc4+
+         ummA==
+X-Gm-Message-State: ANhLgQ1isqx8i44ydlgdBdlLbS98iCYDiAlvbGg41YSMA0qaXS+kgW23
+        pKogBPFBAiqPdcaeKNzeJLGj4Q==
+X-Google-Smtp-Source: ADFU+vshhiwVVGqo0dONSe/FWHePlzAq5T+rk31M7o0XbB+wx4eKCGFnSPWzp/SOMGkIF+9iuxQHdA==
+X-Received: by 2002:a17:902:528:: with SMTP id 37mr3891621plf.322.1583943449493;
+        Wed, 11 Mar 2020 09:17:29 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id bb13sm6129763pjb.43.2020.03.11.09.17.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2020 09:17:28 -0700 (PDT)
+Date:   Wed, 11 Mar 2020 09:17:26 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Lina Iyer <ilina@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Doug Anderson <dianders@google.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Asutosh Das <asutoshd@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [RFT PATCH 1/9] drivers: qcom: rpmh-rsc: Clean code
+ reading/writing regs/cmds
+Message-ID: <20200311161726.GA144492@google.com>
+References: <20200306235951.214678-1-dianders@chromium.org>
+ <20200306155707.RFT.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
+ <85758e97-8c0c-5c4e-24ad-d3e8b2b01d3c@codeaurora.org>
+ <CAD=FV=X649r8qrNRZSezUBEuJbt0oZg6VBweAGjEhxOPp0zf2w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=X649r8qrNRZSezUBEuJbt0oZg6VBweAGjEhxOPp0zf2w@mail.gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Mar 2020 at 14:25, Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
->
-> Update cqhci memory ioresource name from cqhci_mem to cqhci since
-> suffix _mem is redundant.
->
-> Only sdhci-msm driver is making use of this resource as of now.
-> No other vendor's driver is using it. So this update shouldn't affect
-> any other vendor's cqhci functionality.
->
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Hi,
 
-Applied for next, thanks!
+On Wed, Mar 11, 2020 at 08:03:27AM -0700, Doug Anderson wrote:
+> Hi,
+> 
+> On Wed, Mar 11, 2020 at 1:47 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+> >
+> > Hi,
+> >
+> > On 3/7/2020 5:29 AM, Douglas Anderson wrote:
+> > > This patch makes two changes, both of which should be no-ops:
+> > >
+> > > 1. Make read_tcs_reg() / read_tcs_cmd() symmetric to write_tcs_reg() /
+> > >    write_tcs_cmd().
+> >
+> > i agree that there are two different write function doing same thing except last addition (RSC_DRV_CMD_OFFSET * cmd_id)
+> >
+> > can you please rename write_tcs_cmd() to write_tcs_reg(), add above operation in it, and then remove existing write_tcs_reg().
+> > this way we have only one read and one write function.
+> >
+> > so at the end we will two function as,
+> >
+> > static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+> > {
+> >         return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
+> >                              RSC_DRV_CMD_OFFSET * cmd_id);
+> > }
+> >
+> > static void write_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id,
+> >                           u32 data)
+> > {
+> >         writel_relaxed(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
+> >                        RSC_DRV_CMD_OFFSET * cmd_id);
+> > }
+> 
+> I can if you insist and this is still better than the existing
+> (inconsistent) code.
+> 
+> ...but I still feel that having two functions adds value here.
+> 
+> 
+> Anyone else who is CCed want to weigh in and tie break?
 
-Kind regards
-Uffe
+I agree with Doug, having two functions makes the code that calls them
+clearer. It makes it evident when a command is read/written and doesn't require
+a useless extra parameter when accessing a non-command register.
 
+> > > 2. Change the order of operations in the above functions to make it
+> > >    more obvious to me what the math is doing.  Specifically first you
+> > >    want to find the right TCS, then the right register, and then
+> > >    multiply by the command ID if necessary.
+> > With above change, i don't think you need to re-order this.
+> > specifically from tcs->base, we find right "reg" first and if it happens to be tcs then intended tcs, and then cmd inside tcs.
+> 
+> There was never any "need" to re-order.  That math works out to be the
+> same.  This is just clearer.
+> 
+> As an example, let's look at this:
+> 
+> struct point {
+>   int x;
+>   int y;
+> };
+> struct point points[10];
+> 
+> Let's say you have:
+>   void *points_base = &(points[0]);
+> 
+> ...and now you want to find &(points[5].y).  What does your math look like?
+> 
+> a) points_base + (sizeof(struct point) * 5) + 4 ;
+> 
+> ...or...
+> 
+> b) points_base + 4 + (sizeof(struct point) * 5);
+> 
+> 
+> Both calculations give the same result, but I am arguring that "a)" is
+> more intuitive.  Specifically you deal with the array access first and
+> then deal with the offset within the structure that you found.
 
-> ---
-> Corresponding binding change:
-> https://lore.kernel.org/linux-arm-msm/1582545470-11530-1-git-send-email-vbadigan@codeaurora.org/
->
-> Changes sicne V1:
->         - Updated commit text expalining this change affects *only*
->           qcom cqhci functionality.
->
-> ---
->  drivers/mmc/host/cqhci.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
-> index e2ea2c4..e24b8ff 100644
-> --- a/drivers/mmc/host/cqhci.c
-> +++ b/drivers/mmc/host/cqhci.c
-> @@ -1077,7 +1077,7 @@ struct cqhci_host *cqhci_pltfm_init(struct platform_device *pdev)
->
->         /* check and setup CMDQ interface */
->         cqhci_memres = platform_get_resource_byname(pdev, IORESOURCE_MEM,
-> -                                                  "cqhci_mem");
-> +                                                  "cqhci");
->         if (!cqhci_memres) {
->                 dev_dbg(&pdev->dev, "CMDQ not supported\n");
->                 return ERR_PTR(-EINVAL);
-> --
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
++1
