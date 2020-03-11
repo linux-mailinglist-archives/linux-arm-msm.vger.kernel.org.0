@@ -2,192 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EAEE8182174
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 20:02:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75E9B1821A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 20:14:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730962AbgCKTCc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 15:02:32 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39140 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730799AbgCKTCc (ORCPT
+        id S1731071AbgCKTOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 15:14:01 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45028 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730705AbgCKTOB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 15:02:32 -0400
-Received: by mail-pl1-f194.google.com with SMTP id j20so1518392pll.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 12:02:31 -0700 (PDT)
+        Wed, 11 Mar 2020 15:14:01 -0400
+Received: by mail-wr1-f68.google.com with SMTP id l18so4087165wru.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 12:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=KxbfSfMud1yoniFNSNDPHjvEdr8IQY+/lA6j8KGqYkE=;
-        b=rFnMjB8O/yaXQWJTv31iPzLHmOkngTSkvsoCyQZDh9v9zGj3e/5juupSZZeBSzcy6X
-         MeM2WQ1rQkbQmBnPdApv3lpAR3r6bgV+dwkiV+4hZnEQX+DmLYbOpcn3Lu2vhSnOm3Yv
-         Bvms2t5ZxOgdFRDWvhlEU65pRwEQQnvVbjfRpGOZ9E4oaL4enK35RIdiopafaF2tX+CY
-         hNAdcSl4kkimfAt8+xN5HKs1D8ae39ZVcO+FFIwZqhS93hFWLSbvEhoAHQX/jhjECYfe
-         x7wHNQmdES0rdYb3vqYbn+GbfaaMv1tHGBb+S/QAcnLo0BkbMfAoMnN8HcSPp69KXM2k
-         n74g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ER8r6kuUaQFI4Ynly9v8z6IPFmvVEI9Rxdr3ANi7+iU=;
+        b=iicUtDXArOSxEFvBdjsxJcyXboEG8KFyobEdgv9o4gZQVZio9qKETqfoMqs4VtiV2x
+         SoEFBPXyciEwmI8pH4NzWRgYl387KY0wql+SWr6rEdu+MYmg7hz1mzncJ1d/SK5iT6Rl
+         wlqOyaXrZoCJl46i308wSnFJ5OolXi9qpMjcT7ul1l6Dbmfao97kEQ4ZMss9qz+i9Pyd
+         lryNEf9QpnxxA1lWDTuazNY8zXpjgXJpyO0+PT3IXWjB1/vok8O2JuVv9Rnsv1GiWSQK
+         0Kbb4QHEX7YhGLQONvDeKxu0/0bAhc73l9LSdPZVopdk6o6Gu69+UMssHjEnWj7uk39L
+         16cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KxbfSfMud1yoniFNSNDPHjvEdr8IQY+/lA6j8KGqYkE=;
-        b=fxGMuIFilpCkc9rbI21YodeTDI1NUl9sPRO/9WyaowBqZYt3p5IbWFVTaQ7nXlPbFb
-         46Xc7T5OoHh6hSdwDkKHfTA88keF5Tbu277g+8xy0hYyKr7ZEMBqte+nEp7lFYbDH2jE
-         5tDTfCTVsKeqJ1ZuoxNIgk2G4xBiahdViZlfVKNp/V7KW5Wmi8PgMDU6/HZGwiB05xv0
-         N6uzKoWIPx+9vwQZ9O1hxc1OXpNWyROLtnamCFJA0FkD3ls/iMLqRaeMROZYnmLkJQDw
-         4fKQ42AzSdmWm71lM6dMAlmocHPweqy+bRoS4yP1pOeYom8SDpld3khtqf+i5PNHaeg7
-         BQVQ==
-X-Gm-Message-State: ANhLgQ3kITpsw07QaTOltOQZgPoSc0+a1ez8BIZMiGZ6xlY7JiTtVik+
-        BtrnFLjUac4tqeHOaAVRkKCTXg==
-X-Google-Smtp-Source: ADFU+vsgLQojMXRBdCCbQnephx0OvnBV71tIYUrd48OJ59EPglDf+HLuvIU4CMAcvoCh1tbzjD92xA==
-X-Received: by 2002:a17:90a:1b2c:: with SMTP id q41mr184860pjq.126.1583953350369;
-        Wed, 11 Mar 2020 12:02:30 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id i72sm24039102pgd.88.2020.03.11.12.02.28
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ER8r6kuUaQFI4Ynly9v8z6IPFmvVEI9Rxdr3ANi7+iU=;
+        b=JbPDSyWzGvPb8LgNx76GkCl2P199ZTsQlzEYDkxU1Vsvucn0XQjxuU1HGZtXtvV6sL
+         RlgjhS5Tm+LkutfV8SzRIMwL/hVcbTtJsYRfs+j5bPwT+MejUglZDEFXc5J8trqlZPMQ
+         7lGxn2j+Y6cxH8Kn2Lw9mAhJcjS9gQKPNFULvt8tzVnKwi0msh9sBFPPgq+rVrJsLb/U
+         3WgLfmRbK5SIHDvDyNHXA009RYNLNmd2tIsTqjnk/MCPnQGHsWBCjWSmUKyA7ciSArvf
+         UkzARCIMroRbRmHtv8lMPyhfXAWUkKG+/INjhYyildPiL1y880yFVBRWVw2spYfkxuWS
+         tNxw==
+X-Gm-Message-State: ANhLgQ1F8mQIzQsiAqM9/6l56a1htTGKQjYpV5Qrs6yBRCTxkFQ4i4UU
+        H7CkE1RjCY8PuOE4QUQDZCOleg==
+X-Google-Smtp-Source: ADFU+vtF+2GsRN9+8m8r6qqPD7Zzz4pXC2NvU1p4465LKdjjKrUCepF7L1yPBVk9/7CnhbYlxbtOAw==
+X-Received: by 2002:adf:8501:: with SMTP id 1mr6362304wrh.56.1583954039471;
+        Wed, 11 Mar 2020 12:13:59 -0700 (PDT)
+Received: from localhost.localdomain ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id v8sm69443919wrw.2.2020.03.11.12.13.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 12:02:29 -0700 (PDT)
-Date:   Wed, 11 Mar 2020 12:02:26 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     David Miller <davem@davemloft.net>, Alex Elder <elder@linaro.org>
-Cc:     Jon Hunter <jonathanh@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Dan Williams <dcbw@redhat.com>,
-        Evan Green <evgreen@google.com>,
-        Eric Caruso <ejcaruso@google.com>,
-        Susheel Yadav Yadagiri <syadagir@codeaurora.org>,
-        Chaitanya Pratapa <cpratapa@codeaurora.org>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 17/17] arm64: dts: sdm845: add IPA information
-Message-ID: <20200311190226.GY1214176@minitux>
-References: <20200306042831.17827-1-elder@linaro.org>
- <20200306042831.17827-18-elder@linaro.org>
- <ec9776b3-ac79-8f9d-8c4d-012d62dc8f72@nvidia.com>
- <4decbc8a-b0a6-8f10-b439-ade9008a4cff@linaro.org>
+        Wed, 11 Mar 2020 12:13:58 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     kishon@ti.com
+Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
+        robh@kernel.org, bjorn.andersson@linaro.org,
+        p.zabel@pengutronix.de,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/5] Enable Qualcomm QCS 404 HS/SS USB PHYs
+Date:   Wed, 11 Mar 2020 19:13:53 +0000
+Message-Id: <20200311191358.8102-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4decbc8a-b0a6-8f10-b439-ade9008a4cff@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 11 Mar 07:39 PDT 2020, Alex Elder wrote:
+This set of patches does the following:
 
-> On 3/11/20 5:49 AM, Jon Hunter wrote:
-> > 
-> > On 06/03/2020 04:28, Alex Elder wrote:
-> >> Add IPA-related nodes and definitions to "sdm845.dtsi".
-> >>
-> >> Signed-off-by: Alex Elder <elder@linaro.org>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 51 ++++++++++++++++++++++++++++
-> >>  1 file changed, 51 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> >> index d42302b8889b..58fd1c611849 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> >> @@ -675,6 +675,17 @@
-> >>  			interrupt-controller;
-> >>  			#interrupt-cells = <2>;
-> >>  		};
-> >> +
-> >> +		ipa_smp2p_out: ipa-ap-to-modem {
-> >> +			qcom,entry-name = "ipa";
-> >> +			#qcom,smem-state-cells = <1>;
-> >> +		};
-> >> +
-> >> +		ipa_smp2p_in: ipa-modem-to-ap {
-> >> +			qcom,entry-name = "ipa";
-> >> +			interrupt-controller;
-> >> +			#interrupt-cells = <2>;
-> >> +		};
-> >>  	};
-> >>  
-> >>  	smp2p-slpi {
-> >> @@ -1435,6 +1446,46 @@
-> >>  			};
-> >>  		};
-> >>  
-> >> +		ipa@1e40000 {
-> >> +			compatible = "qcom,sdm845-ipa";
-> >> +
-> >> +			modem-init;
-> >> +			modem-remoteproc = <&mss_pil>;
-> >> +
-> >> +			reg = <0 0x1e40000 0 0x7000>,
-> >> +			      <0 0x1e47000 0 0x2000>,
-> >> +			      <0 0x1e04000 0 0x2c000>;
-> >> +			reg-names = "ipa-reg",
-> >> +				    "ipa-shared",
-> >> +				    "gsi";
-> >> +
-> >> +			interrupts-extended =
-> >> +					<&intc 0 311 IRQ_TYPE_EDGE_RISING>,
-> >> +					<&intc 0 432 IRQ_TYPE_LEVEL_HIGH>,
-> >> +					<&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> >> +					<&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
-> >> +			interrupt-names = "ipa",
-> >> +					  "gsi",
-> >> +					  "ipa-clock-query",
-> >> +					  "ipa-setup-ready";
-> >> +
-> >> +			clocks = <&rpmhcc RPMH_IPA_CLK>;
-> >> +			clock-names = "core";
-> >> +
-> >> +			interconnects =
-> >> +				<&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_EBI1>,
-> >> +				<&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_IMEM>,
-> >> +				<&rsc_hlos MASTER_APPSS_PROC &rsc_hlos SLAVE_IPA_CFG>;
-> >> +			interconnect-names = "memory",
-> >> +					     "imem",
-> >> +					     "config";
-> >> +
-> >> +			qcom,smem-states = <&ipa_smp2p_out 0>,
-> >> +					   <&ipa_smp2p_out 1>;
-> >> +			qcom,smem-state-names = "ipa-clock-enabled-valid",
-> >> +						"ipa-clock-enabled";
-> >> +		};
-> >> +
-> >>  		tcsr_mutex_regs: syscon@1f40000 {
-> >>  			compatible = "syscon";
-> >>  			reg = <0 0x01f40000 0 0x40000>;
-> >>
-> > 
-> > 
-> > This change is causing the following build error on today's -next ...
-> > 
-> >  DTC     arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dtb
-> >  arch/arm64/boot/dts/qcom/sdm845.dtsi:1710.15-1748.5: ERROR (phandle_references): /soc@0/ipa@1e40000: Reference to non-existent node or label "rsc_hlos"
-> 
-> This problem arises because a commit in the Qualcomm SoC tree affects
-> "arch/arm64/boot/dts/qcom/sdm845.dtsi", changing the interconnect provider
-> node(s) used by IPA:
->   b303f9f0050b arm64: dts: sdm845: Redefine interconnect provider DT nodes
-> 
-> I will send out a patch today that updates the IPA node in "sdm845.dtsi"
-> to correct that.
-> 
-> In the mean time, David, perhaps you should revert this change in net-next:
->   9cc5ae125f0e arm64: dts: sdm845: add IPA information
-> and let me work out fixing "sdm845.dtsi" with Andy and Bjorn in the
-> Qualcomm tree.
-> 
+- Removes unused Qualcomm USB PHY bindings
+- Adds new USB PHY bindings for QCS404
+- Adds new USB PHY drivers for QCS404
 
-Reverting this in net-next and applying it in our tree sounds like the
-easiest path forward, and avoids further conflicts down the road.
+These patches have been through seven review cycles already and have a
+number of Review-by and Ack-by. For the pusposes of making it easier to
+merge this set focuses on the PHY stuff in isolation.
 
-David, are you onboard with this?
+The last set for can be found here:
+https://lkml.org/lkml/2020/3/3/807
 
-Regards,
-Bjorn
+Jorge Ramirez-Ortiz (3):
+  dt-bindings: phy: remove qcom-dwc3-usb-phy
+  dt-bindings: Add Qualcomm USB SuperSpeed PHY bindings
+  phy: qualcomm: usb: Add SuperSpeed PHY driver
+
+Shawn Guo (1):
+  phy: qualcomm: Add Synopsys 28nm Hi-Speed USB PHY driver
+
+Sriharsha Allenki (1):
+  dt-bindings: phy: Add Qualcomm Synopsys Hi-Speed USB PHY binding
+
+ .../bindings/phy/qcom,usb-hs-28nm.yaml        |  90 ++++
+ .../devicetree/bindings/phy/qcom,usb-ss.yaml  |  83 ++++
+ .../bindings/phy/qcom-dwc3-usb-phy.txt        |  37 --
+ drivers/phy/qualcomm/Kconfig                  |  20 +
+ drivers/phy/qualcomm/Makefile                 |   2 +
+ drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c   | 415 ++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-usb-ss.c        | 246 +++++++++++
+ 7 files changed, 856 insertions(+), 37 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-28nm.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom-dwc3-usb-phy.txt
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb-ss.c
+
+-- 
+2.25.1
+
