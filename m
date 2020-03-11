@@ -2,166 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA54D1812E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 09:27:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0D191813AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 09:53:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728554AbgCKI1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 04:27:11 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:41418 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728555AbgCKI1L (ORCPT
+        id S1728705AbgCKIr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 04:47:28 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:23537 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728739AbgCKIr2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 04:27:11 -0400
-Received: by mail-lj1-f196.google.com with SMTP id o10so1278361ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 01:27:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NWQU7YCcR/s5BfakGwEM5MbP1hNswxlqWffpTanXogY=;
-        b=J2DX4Bveq98DNDNLQytIzyqNO5U/1AlZAea10CrmXpFd7AVX90yX5Tdtt+c1ZwmWBZ
-         fnvYHqNq/BJufaeH84JB+sQjUiXLFXeaTifVEvrmHuiDonL/w9rW4NDoo9gCju2Dl/uo
-         92ROgYAY+nNd2sqIH4YekmH8HwlZ6JuBBRQsWxmOiiilOB9ivaFB5mgwNHFSOq6GqvmG
-         XYAEumikhY4sYyW8zmTqNh2JpUimiMOYo4K1+CWkHjkpq5kQobVPWERlz52TuW7OzqND
-         D5qGNapWdFpE4kihUbV51Sbe3VJveaBctzaZgQREo6+0ZclVJVf1bdwNSMkGk2rPCgpc
-         fFEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NWQU7YCcR/s5BfakGwEM5MbP1hNswxlqWffpTanXogY=;
-        b=RQC0pg38g67rk+/9KLMBbimKX4zGkNTnhfHDZrTyu7al8/AoO3f4cxXWnXikVefXHx
-         8uWd+/FBBg7CGfr0hDSArA7uo+nOObtvmLRh82w4FmHoDLY9+9CqSIoucmh7CqPVTb6j
-         Hp0r10BqPkyK8h7+k7X5XR784n+wC5Hq/y8kUhg4oHHSLH5mOAIHbY8MyIHfYkRW4e0Q
-         LbvCfoY4qgR3Q+N+8Pot2lriZrAdQzVkM2sY1pGMjccSqJSezkkn5w7bvLMyDBN30pUP
-         YmNbLWSMihM+N6KZXqmgpHXGmJV9uHb9aQonc8WrfNVb9BLZXCgCCcepcLlK3FXnQ1gj
-         7vcw==
-X-Gm-Message-State: ANhLgQ3nPGkmKkqX0TGn94u+/Kw+/Xe/U4r03mVrfno7mOww0JfRmCHS
-        aeYwGAglxbyW05XG8sHl0di7n4TCwBBt9dmLVcYfJg==
-X-Google-Smtp-Source: ADFU+vvaBLQx0v3t5e1U81RlRAcTudqkB2UQUvNAnj10TA+zBwZty+uumu0htJHaLHRRaMeDZa+YsS6rF0AAu8Ma6cs=
-X-Received: by 2002:a2e:a0cc:: with SMTP id f12mr1365444ljm.154.1583915228511;
- Wed, 11 Mar 2020 01:27:08 -0700 (PDT)
+        Wed, 11 Mar 2020 04:47:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583916447; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=MBQ+jlRvZ46PUuF3vZJLmcG/4ub7oJ8ztLPGjJOuYXc=; b=HCOv1w5LUshSDgBK9BUS3VWlBh/8eQ8K/30f2fUjP4f7yJDWlTh5mnYJeCmxJczghKao37aa
+ W4Jw9JPIFjaG4H+9axeDOxJAAsjtyN9UcxH+9yb0Ohi8uT4yvTC84ksT+7RTC6RB2MPL1S/g
+ fMAjVZdw5GVrBOSs7quPr5+XJRc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e68a59d.7fde56402c38-smtp-out-n05;
+ Wed, 11 Mar 2020 08:47:25 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C906CC4478F; Wed, 11 Mar 2020 08:47:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.13.37] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0539CC433D2;
+        Wed, 11 Mar 2020 08:47:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0539CC433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [RFT PATCH 1/9] drivers: qcom: rpmh-rsc: Clean code
+ reading/writing regs/cmds
+To:     Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>, mka@chromium.org,
+        evgreen@chromium.org, swboyd@chromium.org,
+        Lina Iyer <ilina@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200306235951.214678-1-dianders@chromium.org>
+ <20200306155707.RFT.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <85758e97-8c0c-5c4e-24ad-d3e8b2b01d3c@codeaurora.org>
+Date:   Wed, 11 Mar 2020 14:17:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <cover.1583412540.git.amit.kucheria@linaro.org> <93466e6c031c0084de09bd6b448556a6c5080880.1583412540.git.amit.kucheria@linaro.org>
-In-Reply-To: <93466e6c031c0084de09bd6b448556a6c5080880.1583412540.git.amit.kucheria@linaro.org>
-From:   Vincent Guittot <vincent.guittot@linaro.org>
-Date:   Wed, 11 Mar 2020 09:26:56 +0100
-Message-ID: <CAKfTPtBXaVww5fdU5HpWWH1-H3dKr2s=Uvdr==wf669BtKnyvQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: thermal: Add yaml bindings for
- thermal sensors
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        "open list:THERMAL" <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200306155707.RFT.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 Mar 2020 at 13:56, Amit Kucheria <amit.kucheria@linaro.org> wrote:
+Hi,
+
+On 3/7/2020 5:29 AM, Douglas Anderson wrote:
+> This patch makes two changes, both of which should be no-ops:
 >
-> As part of moving the thermal bindings to YAML, split it up into 3
-> bindings: thermal sensors, cooling devices and thermal zones.
+> 1. Make read_tcs_reg() / read_tcs_cmd() symmetric to write_tcs_reg() /
+>    write_tcs_cmd().
+
+i agree that there are two different write function doing same thing except last addition (RSC_DRV_CMD_OFFSET * cmd_id)
+
+can you please rename write_tcs_cmd() to write_tcs_reg(), add above operation in it, and then remove existing write_tcs_reg().
+this way we have only one read and one write function.
+
+so at the end we will two function as,
+
+static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+{
+        return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
+                             RSC_DRV_CMD_OFFSET * cmd_id);
+}
+
+static void write_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id,
+                          u32 data)
+{
+        writel_relaxed(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
+                       RSC_DRV_CMD_OFFSET * cmd_id);
+}
+
 >
-> The property #thermal-sensor-cells is required in each device that acts
-> as a thermal sensor. It is used to uniquely identify the instance of the
-> thermal sensor inside the system.
->
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> 2. Change the order of operations in the above functions to make it
+>    more obvious to me what the math is doing.  Specifically first you
+>    want to find the right TCS, then the right register, and then
+>    multiply by the command ID if necessary.
+With above change, i don't think you need to re-order this.
+specifically from tcs->base, we find right "reg" first and if it happens to be tcs then intended tcs, and then cmd inside tcs.
+
+Thanks,
+Maulik
+
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  .../bindings/thermal/thermal-sensor.yaml      | 72 +++++++++++++++++++
->  1 file changed, 72 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
 >
-> diff --git a/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
-> new file mode 100644
-> index 0000000000000..920ee7667591d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
-> @@ -0,0 +1,72 @@
-> +# SPDX-License-Identifier: (GPL-2.0)
-> +# Copyright 2020 Linaro Ltd.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/thermal/thermal-sensor.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Thermal sensor binding
-> +
-> +maintainers:
-> +  - Amit Kucheria <amitk@kernel.org>
-> +
-> +description: |
-> +  Thermal management is achieved in devicetree by describing the sensor hardware
-> +  and the software abstraction of thermal zones required to take appropriate
-> +  action to mitigate thermal overloads.
-> +
-> +  The following node types are used to completely describe a thermal management
-> +  system in devicetree:
-> +   - thermal-sensor: device that measures temperature, has SoC-specific bindings
-> +   - cooling-device: device used to dissipate heat either passively or artively
-
-typo: s/artively/actively/
-
-> +   - thermal-zones: a container of the following node types used to describe all
-> +     thermal data for the platform
-> +
-> +  This binding describes the thermal-sensor.
-> +
-> +  Thermal sensor devices provide temperature sensing capabilities on thermal
-> +  zones. Typical devices are I2C ADC converters and bandgaps. Thermal sensor
-> +  devices may control one or more internal sensors.
-> +
-> +properties:
-> +  "#thermal-sensor-cells":
-> +    description:
-> +      Used to uniquely identify a thermal sensor instance within an IC. Will be
-> +      0 on sensor nodes with only a single sensor and at least 1 on nodes
-> +      containing several internal sensors.
-> +    enum: [0, 1]
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    // Example 1: SDM845 TSENS
-> +    soc: soc@0 {
-> +            #address-cells = <2>;
-> +            #size-cells = <2>;
-> +
-> +            /* ... */
-> +
-> +            tsens0: thermal-sensor@c263000 {
-> +                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-> +                    reg = <0 0x0c263000 0 0x1ff>, /* TM */
-> +                          <0 0x0c222000 0 0x1ff>; /* SROT */
-> +                    #qcom,sensors = <13>;
-> +                    interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-> +                                 <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-> +                    interrupt-names = "uplow", "critical";
-> +                    #thermal-sensor-cells = <1>;
-> +            };
-> +
-> +            tsens1: thermal-sensor@c265000 {
-> +                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-> +                    reg = <0 0x0c265000 0 0x1ff>, /* TM */
-> +                          <0 0x0c223000 0 0x1ff>; /* SROT */
-> +                    #qcom,sensors = <8>;
-> +                    interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-> +                                 <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-> +                    interrupt-names = "uplow", "critical";
-> +                    #thermal-sensor-cells = <1>;
-> +            };
-> +    };
-> +...
-> --
-> 2.20.1
+>  drivers/soc/qcom/rpmh-rsc.c | 31 ++++++++++++++++++-------------
+>  1 file changed, 18 insertions(+), 13 deletions(-)
 >
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index e278fc11fe5c..5c88b8cd5bf8 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -61,28 +61,33 @@
+>  #define CMD_STATUS_ISSUED		BIT(8)
+>  #define CMD_STATUS_COMPL		BIT(16)
+>  
+> -static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+> +static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+>  {
+> -	return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
+> +	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
+>  			     RSC_DRV_CMD_OFFSET * cmd_id);
+>  }
+>  
+> +static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id)
+> +{
+> +	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
+> +}
+> +
+>  static void write_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id,
+>  			  u32 data)
+>  {
+> -	writel_relaxed(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
+> +	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
+>  		       RSC_DRV_CMD_OFFSET * cmd_id);
+>  }
+>  
+>  static void write_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, u32 data)
+>  {
+> -	writel_relaxed(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id);
+> +	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
+>  }
+>  
+>  static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
+>  			       u32 data)
+>  {
+> -	writel(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id);
+> +	writel(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
+>  	for (;;) {
+>  		if (data == readl(drv->tcs_base + reg +
+>  				  RSC_DRV_TCS_OFFSET * tcs_id))
+> @@ -94,7 +99,7 @@ static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
+>  static bool tcs_is_free(struct rsc_drv *drv, int tcs_id)
+>  {
+>  	return !test_bit(tcs_id, drv->tcs_in_use) &&
+> -	       read_tcs_reg(drv, RSC_DRV_STATUS, tcs_id, 0);
+> +	       read_tcs_reg(drv, RSC_DRV_STATUS, tcs_id);
+>  }
+>  
+>  static struct tcs_group *get_tcs_of_type(struct rsc_drv *drv, int type)
+> @@ -212,7 +217,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+>  	const struct tcs_request *req;
+>  	struct tcs_cmd *cmd;
+>  
+> -	irq_status = read_tcs_reg(drv, RSC_DRV_IRQ_STATUS, 0, 0);
+> +	irq_status = read_tcs_reg(drv, RSC_DRV_IRQ_STATUS, 0);
+>  
+>  	for_each_set_bit(i, &irq_status, BITS_PER_LONG) {
+>  		req = get_req_from_tcs(drv, i);
+> @@ -226,7 +231,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+>  			u32 sts;
+>  
+>  			cmd = &req->cmds[j];
+> -			sts = read_tcs_reg(drv, RSC_DRV_CMD_STATUS, i, j);
+> +			sts = read_tcs_cmd(drv, RSC_DRV_CMD_STATUS, i, j);
+>  			if (!(sts & CMD_STATUS_ISSUED) ||
+>  			   ((req->wait_for_compl || cmd->wait) &&
+>  			   !(sts & CMD_STATUS_COMPL))) {
+> @@ -265,7 +270,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+>  	cmd_msgid |= msg->wait_for_compl ? CMD_MSGID_RESP_REQ : 0;
+>  	cmd_msgid |= CMD_MSGID_WRITE;
+>  
+> -	cmd_complete = read_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, 0);
+> +	cmd_complete = read_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id);
+>  
+>  	for (i = 0, j = cmd_id; i < msg->num_cmds; i++, j++) {
+>  		cmd = &msg->cmds[i];
+> @@ -281,7 +286,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+>  	}
+>  
+>  	write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
+> -	cmd_enable |= read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
+> +	cmd_enable |= read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
+>  	write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, cmd_enable);
+>  }
+>  
+> @@ -294,7 +299,7 @@ static void __tcs_trigger(struct rsc_drv *drv, int tcs_id)
+>  	 * While clearing ensure that the AMC mode trigger is cleared
+>  	 * and then the mode enable is cleared.
+>  	 */
+> -	enable = read_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id, 0);
+> +	enable = read_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id);
+>  	enable &= ~TCS_AMC_MODE_TRIGGER;
+>  	write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
+>  	enable &= ~TCS_AMC_MODE_ENABLE;
+> @@ -319,10 +324,10 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+>  		if (tcs_is_free(drv, tcs_id))
+>  			continue;
+>  
+> -		curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
+> +		curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
+>  
+>  		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
+> -			addr = read_tcs_reg(drv, RSC_DRV_CMD_ADDR, tcs_id, j);
+> +			addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j);
+>  			for (k = 0; k < msg->num_cmds; k++) {
+>  				if (addr == msg->cmds[k].addr)
+>  					return -EBUSY;
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
