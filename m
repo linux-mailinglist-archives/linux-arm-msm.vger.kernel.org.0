@@ -2,93 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7956C181EE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 18:14:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B313018200D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 18:51:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729675AbgCKROy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 13:14:54 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:51907 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730321AbgCKROy (ORCPT
+        id S1730573AbgCKRv5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 13:51:57 -0400
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:35311 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730472AbgCKRv5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 13:14:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583946893; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=hwl+XmvG5JG30mi1BrH5GWZRUzawJld2P9BWiACejEE=; b=cWNzb7lSlnZVR57Y1aWUiuu1Z7fwUj9rUp+qePdaD2RJ5oYDLcVhzi+BprVvR1Zf6CXNrdSA
- LXVOh7T5BLb2QJ0qZF93SZySAYC9nGiUCnvq5RdYRlsf/C5o7ECg6ShIBGxmPrJFcZ7XRTjj
- OdT9C7FVFw8Y0k9zC879E+QmWxA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e691c8c.7f03b675b228-smtp-out-n01;
- Wed, 11 Mar 2020 17:14:52 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C7923C43636; Wed, 11 Mar 2020 17:14:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FB72C433BA;
-        Wed, 11 Mar 2020 17:14:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4FB72C433BA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     bjorn.andersson@linaro.org, vkoul@kernel.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 11 Mar 2020 13:51:57 -0400
+Received: by mail-pj1-f67.google.com with SMTP id mq3so1390163pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 10:51:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=a5g25PDEXPRR99KehOK1iE2Gu80HzFKYuNkkikGwIFI=;
+        b=eNRE/qbm63stiKXIvgwIlV+IxOrzorOkM4iow7B6RZUpJva1559bRWMvw2agkD7Mis
+         2YTH3veSMsgbKxZyscQrguxH0BD1nYGckFuQ/fdaY2NKujUR7G6NuenUZTTOfFuGSGgH
+         Qxht0ueO4ugRgmAZGeX2WtSxnNFHitwKoKXgM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=a5g25PDEXPRR99KehOK1iE2Gu80HzFKYuNkkikGwIFI=;
+        b=cEL/XygkhnJLFmAy3zKta6pal+6jezWDALxDJfgQ2ZBIjmGbjS/aX6imE5WCJhPyy7
+         6SsBQH5spyi14npX8cgT/6Uv33jlHjL/p6LZbN9Mdqnl3KhPi7TaHaeWSm671X8knSmS
+         7ipZwlpUYHP4H5EvezrEeWcZwShUIcuORMcdXR+Ttnouc2oLrapYfHs3LUPO/xnG2xya
+         5AeNrR3ksZvr+NrAl9cU4ReIynX/nx7IRScBeWj2IqfDIXAWevhQQ0T3gr2ZP6dcI0e3
+         na8vHp9BrLfSP6AB1swn41p39gAc8uvQprNiskljmD9v4pxhE4mRqcdxgHnVki7cvAg7
+         yZRg==
+X-Gm-Message-State: ANhLgQ0ltb/E9KSXlOjltHLzqQqDQZ8s6SvKPxTumI8Vnv2tZQ3rROsU
+        Qr7DtWCMIJF4hFHxRxQ1tmQoew==
+X-Google-Smtp-Source: ADFU+vsBi+bUj1VxZCycAe0rgyooLlJtfjkUSx8xr00Nuup+ET1asdfp4FcWsNKm5fSW9KpT0NQn8w==
+X-Received: by 2002:a17:902:bc4c:: with SMTP id t12mr3853587plz.54.1583949115991;
+        Wed, 11 Mar 2020 10:51:55 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id d3sm5730078pfq.126.2020.03.11.10.51.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2020 10:51:54 -0700 (PDT)
+Date:   Wed, 11 Mar 2020 10:51:53 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS)
-Subject: [PATCH] arm64: dts: qcom: sc7180: Update reg names for SDHC
-Date:   Wed, 11 Mar 2020 22:44:22 +0530
-Message-Id: <1583946863-24308-2-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1583946863-24308-1-git-send-email-vbadigan@codeaurora.org>
-References: <1583946863-24308-1-git-send-email-vbadigan@codeaurora.org>
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: sc7180: Correct qmp phy reset
+ entries
+Message-ID: <20200311175153.GB144492@google.com>
+References: <1583928252-21246-1-git-send-email-sanm@codeaurora.org>
+ <1583928252-21246-5-git-send-email-sanm@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1583928252-21246-5-git-send-email-sanm@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove the redundant _mem suffix for SDHC reg names.
+Hi Sandeep,
 
-For SDcard instance, no need supply reg names since hc reg map
-is accessed with index. So remove reg names for SDcard.
+This patch landed in Bjorn's tree (arm64-for-5.7 branch). In case you have
+to re-spin the series there is no need to include it.
 
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 253274d..efca50a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -394,7 +394,7 @@
- 			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x7c4000 0 0x1000>,
- 				<0 0x07c5000 0 0x1000>;
--			reg-names = "hc_mem", "cqhci_mem";
-+			reg-names = "hc", "cqhci";
- 
- 			iommus = <&apps_smmu 0x60 0x0>;
- 			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1234,7 +1234,6 @@
- 		sdhc_2: sdhci@8804000 {
- 			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x08804000 0 0x1000>;
--			reg-names = "hc_mem";
- 
- 			iommus = <&apps_smmu 0x80 0>;
- 			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+On Wed, Mar 11, 2020 at 05:34:12PM +0530, Sandeep Maheswaram wrote:
+> The phy reset entries were incorrect.so swapped them.
+> 
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 9d112aa..253274d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1306,8 +1306,8 @@
+>  				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+>  			clock-names = "aux", "cfg_ahb", "ref", "com_aux";
+>  
+> -			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+> -				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+> +			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
+> +				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
+>  			reset-names = "phy", "common";
+>  
+>  			usb_1_ssphy: phy@88e9200 {
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
