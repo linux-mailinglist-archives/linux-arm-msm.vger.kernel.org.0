@@ -2,97 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DC3E180CE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 01:35:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9554C180E47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 04:04:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727695AbgCKAf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 20:35:58 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:47066 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727659AbgCKAf6 (ORCPT
+        id S1727942AbgCKDEt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 23:04:49 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:46094 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727506AbgCKDEs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 20:35:58 -0400
-Received: by mail-vs1-f66.google.com with SMTP id z125so198866vsb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 17:35:57 -0700 (PDT)
+        Tue, 10 Mar 2020 23:04:48 -0400
+Received: by mail-ot1-f68.google.com with SMTP id 111so436284oth.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 20:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Dj9AJ6DgaDsv1owS/OBbLL2hfYDA+jQ+pn99BxM6NK0=;
-        b=Xvp73QVkE935ImkOQZQ+bEOpPwsbuCXEDpTploRsshH27YQ78Xl8+Y0jFMALJsZJZr
-         COzdzjlC79Gv7YvIvlLm5q5CV+nQ2Ev6nEv7Vjcy3ZClRMVySqOoIRpKLvz0puB76HFz
-         JEwAyCg6gASt+sShiUPPEjJJxdmcSiyvoLNac=
+        bh=cc/y94pTTaN3pV5By9oa68NXOY/kGNd87nE1UcwsCUE=;
+        b=RNFHOuKi34s11GpOukBh0HStpY/JN8PkOaSp4edSPraYCR+bE5H3MFExHNG70W4/ZS
+         Wi6cM54wXx2o7+uvDXOeQhRwwKbb3s+IIFkbRl20jsraFa0yA2qaWHC9Ekrw2jtt6YYD
+         vinjAdl2j6XWm2IjDCGcbsde3IdY4JLpR68I0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Dj9AJ6DgaDsv1owS/OBbLL2hfYDA+jQ+pn99BxM6NK0=;
-        b=iVHq424VFgrGTc9ms98LXAIWh5uFMqR8NvkiaZowxBmtDJPISFhqpRGTBbYFWlmd12
-         /yNCnOyGtmB1XqptTZXLrlmGTJYrXw9xuk6A+fGPj0Sf8zLeou8tqCP7V5j34dJLWkIS
-         BM/psd61UFaYI9HJ1ZQ/26BT2FPDr0eWN60Nw3vyf7p9vY60os70JcpEhYn43xWIx4oV
-         sZeKU9EGnv4UAhJDG+vvF9969QLdKNysU1iP+DXbEJ/i+lOYeRsbmyIo2p4gvHVv5Wge
-         pWMGklyVETARdh2tfZv5htdhTAVndNOAg89rC/1FhMqPOAshqrMh6YQAzIN4JZ08oxuJ
-         1O2A==
-X-Gm-Message-State: ANhLgQ18PnCHGvoNJddtnqMPx6Tfi3g3l1Yv1hZN42qzMBSJ5+Wv493w
-        G133SZCHmRpfCFPzt+wC6pk9I/jUaVo=
-X-Google-Smtp-Source: ADFU+vtvBqZzjpChOOtxrOHubd539wuyShsK2i+/tJuxsbJKM/ou09poqFQNmUXf/TVD/h4wibSyXg==
-X-Received: by 2002:a67:f885:: with SMTP id h5mr429583vso.81.1583886957006;
-        Tue, 10 Mar 2020 17:35:57 -0700 (PDT)
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com. [209.85.217.42])
-        by smtp.gmail.com with ESMTPSA id s8sm11303340vsk.13.2020.03.10.17.35.55
+        bh=cc/y94pTTaN3pV5By9oa68NXOY/kGNd87nE1UcwsCUE=;
+        b=ebZVBRL9iPqoA3BGWyhIY8BzMNKjPh3pxbdAoxiI86YCUO89mmsf/E9IQIFjOWpY8d
+         p3tIhmNd+tb/Iljm/SBCI1VLJht0KMxjTcWgN4c3uY1zfxpFmrjhRgfMXER72dprdUVb
+         4MRpR5/ST/q9yxf3Fr6pjPkG/sj5iDjB4n+Oofcuird7SSMWI7+uFpXHa5+wwyytR1mJ
+         gw/VWm8M8W6fwRKyk+KLVTyUZajkB1yX4iGnE1BFQLZSCqf8LWPHjOXJBEnGe48dTjL3
+         T2MD9h7GbVezzr98VOPRSmNDnDa5Bp0HYiNHTrSAXBVUKue/nwfH5725owPQ8/+EzmuX
+         C5hQ==
+X-Gm-Message-State: ANhLgQ3d6DJ0ml7EB/0wI5CfGEfjtg6FUxgxs0kAPGbC6N9tH7NlDX5N
+        KptFZRb9DH3ptoLEyK+OVMMeq0HUrak=
+X-Google-Smtp-Source: ADFU+vvLE9FVyEvhQ2+jQoEVdtFd9XgVuveX8BhrUweeDif46KgfQ1JyafRU/Z56cqq+4wSsUkCjdQ==
+X-Received: by 2002:a9d:567:: with SMTP id 94mr645158otw.201.1583895885452;
+        Tue, 10 Mar 2020 20:04:45 -0700 (PDT)
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com. [209.85.210.52])
+        by smtp.gmail.com with ESMTPSA id y13sm16703858otk.40.2020.03.10.20.04.44
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Mar 2020 17:35:56 -0700 (PDT)
-Received: by mail-vs1-f42.google.com with SMTP id k188so218280vsc.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 17:35:55 -0700 (PDT)
-X-Received: by 2002:a05:6102:1cf:: with SMTP id s15mr403204vsq.109.1583886954828;
- Tue, 10 Mar 2020 17:35:54 -0700 (PDT)
+        Tue, 10 Mar 2020 20:04:44 -0700 (PDT)
+Received: by mail-ot1-f52.google.com with SMTP id h17so462732otn.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 20:04:44 -0700 (PDT)
+X-Received: by 2002:a05:6830:19e2:: with SMTP id t2mr642738ott.97.1583895883624;
+ Tue, 10 Mar 2020 20:04:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200306235951.214678-1-dianders@chromium.org> <20200306155707.RFT.9.I6d3d0a3ec810dc72ff1df3cbf97deefdcdeb8eef@changeid>
-In-Reply-To: <20200306155707.RFT.9.I6d3d0a3ec810dc72ff1df3cbf97deefdcdeb8eef@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 10 Mar 2020 17:35:43 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UrUMSf9005eCta0rf=4BaSWNGwTDsuja2pFtqauaC25Q@mail.gmail.com>
-Message-ID: <CAD=FV=UrUMSf9005eCta0rf=4BaSWNGwTDsuja2pFtqauaC25Q@mail.gmail.com>
-Subject: Re: [RFT PATCH 9/9] drivers: qcom: rpmh-rsc: Kill cmd_cache and
- find_match() with fire
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+References: <1583472756-7611-1-git-send-email-mansur@codeaurora.org>
+ <CAPBb6MW-zxK+=HHUP5=+pO4Mswkhm=hDX7V56ABDm+BCzDaGHg@mail.gmail.com> <CA+ddPcNdC4r3XBd+dQmv2oHwF6MA3bTJrWZZpJthruBQR_THBA@mail.gmail.com>
+In-Reply-To: <CA+ddPcNdC4r3XBd+dQmv2oHwF6MA3bTJrWZZpJthruBQR_THBA@mail.gmail.com>
+From:   Alexandre Courbot <acourbot@chromium.org>
+Date:   Wed, 11 Mar 2020 12:04:32 +0900
+X-Gmail-Original-Message-ID: <CAPBb6MVyTFqrVXAXqA6u=-0WtXcdWnozzN3gGk7y8TDK12-6Gg@mail.gmail.com>
+Message-ID: <CAPBb6MVyTFqrVXAXqA6u=-0WtXcdWnozzN3gGk7y8TDK12-6Gg@mail.gmail.com>
+Subject: Re: [PATCH] venus: avoid extra locking in driver
+To:     Jeffrey Kardatzke <jkardatzke@google.com>
+Cc:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Mar 6, 2020 at 4:00 PM Douglas Anderson <dianders@chromium.org> wrote:
+On Tue, Mar 10, 2020 at 7:07 AM Jeffrey Kardatzke <jkardatzke@google.com> wrote:
 >
-> @@ -889,12 +793,6 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev,
->                  */
->                 if (tcs->type == ACTIVE_TCS)
->                         continue;
-> -
-> -               tcs->cmd_cache = devm_kcalloc(&pdev->dev,
-> -                                             tcs->num_tcs * ncpt, sizeof(u32),
-> -                                             GFP_KERNEL);
-> -               if (!tcs->cmd_cache)
-> -                       return -ENOMEM;
+> On Thu, Mar 5, 2020 at 11:50 PM Alexandre Courbot <acourbot@chromium.org> wrote:
+> >
+> > On Fri, Mar 6, 2020 at 2:34 PM Mansur Alisha Shaik
+> > <mansur@codeaurora.org> wrote:
+> > >
+> > > This change will avoid extra locking in driver.
+> >
+> > Could you elaborate a bit more on the problem that this patch solves?
+>
+> For us it fixes a kernel null deref that happens when we run the
+> MultipleEncoders test (I've verified this to be true).
+>
+> >
+> > >
+> > > Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> > > ---
+> > >  drivers/media/platform/qcom/venus/core.c       |  2 +-
+> > >  drivers/media/platform/qcom/venus/core.h       |  2 +-
+> > >  drivers/media/platform/qcom/venus/helpers.c    | 11 +++++++++--
+> > >  drivers/media/platform/qcom/venus/pm_helpers.c |  8 ++++----
+> > >  4 files changed, 15 insertions(+), 8 deletions(-)
+> > >
+> > > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> > > index 194b10b9..75d38b8 100644
+> > > --- a/drivers/media/platform/qcom/venus/core.c
+> > > +++ b/drivers/media/platform/qcom/venus/core.c
+> > > @@ -447,7 +447,7 @@ static const struct freq_tbl sdm845_freq_table[] = {
+> > >         {  244800, 100000000 }, /* 1920x1080@30 */
+> > >  };
+> > >
+> > > -static struct codec_freq_data sdm845_codec_freq_data[] =  {
+> > > +static const struct codec_freq_data sdm845_codec_freq_data[] =  {
+> > >         { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> > >         { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> > >         { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> > > diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> > > index ab7c360..8c8d0e9 100644
+> > > --- a/drivers/media/platform/qcom/venus/core.h
+> > > +++ b/drivers/media/platform/qcom/venus/core.h
+> > > @@ -245,7 +245,7 @@ struct venus_buffer {
+> > >  struct clock_data {
+> > >         u32 core_id;
+> > >         unsigned long freq;
+> > > -       const struct codec_freq_data *codec_freq_data;
+> > > +       struct codec_freq_data codec_freq_data;
+> > >  };
+> > >
+> > >  #define to_venus_buffer(ptr)   container_of(ptr, struct venus_buffer, vb)
+> > > diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> > > index bcc6038..550c4ff 100644
+> > > --- a/drivers/media/platform/qcom/venus/helpers.c
+> > > +++ b/drivers/media/platform/qcom/venus/helpers.c
+> > > @@ -807,6 +807,7 @@ int venus_helper_init_codec_freq_data(struct venus_inst *inst)
+> > >         unsigned int i, data_size;
+> > >         u32 pixfmt;
+> > >         int ret = 0;
+> > > +       bool found = false;
+> > >
+> > >         if (!IS_V4(inst->core))
+> > >                 return 0;
+> > > @@ -816,16 +817,22 @@ int venus_helper_init_codec_freq_data(struct venus_inst *inst)
+> > >         pixfmt = inst->session_type == VIDC_SESSION_TYPE_DEC ?
+> > >                         inst->fmt_out->pixfmt : inst->fmt_cap->pixfmt;
+> > >
+> > > +       memset(&inst->clk_data.codec_freq_data, 0,
+> > > +               sizeof(inst->clk_data.codec_freq_data));
+> > > +
+> > >         for (i = 0; i < data_size; i++) {
+> > >                 if (data[i].pixfmt == pixfmt &&
+> > >                     data[i].session_type == inst->session_type) {
+> > > -                       inst->clk_data.codec_freq_data = &data[i];
+> > > +                       inst->clk_data.codec_freq_data = data[i];
+> >
+> > From the patch I'd infer that inst->clk_data.codec_freq_data needs to
+> > change at runtime. Is this what happens? Why? I'd expect that
+> > frequency tables remain constant, and thus that the global
+> > sdm845_codec_freq_data can remain constant while
+> > clock_data::codec_freq_data is a const reference to it. What prevents
+> > this from happening?
+> >
+> > > +                       found = true;
+> > >                         break;
+> > >                 }
+> > >         }
+> > >
+> > > -       if (!inst->clk_data.codec_freq_data)
+> > > +       if (!found) {
+> > > +               dev_err(inst->core->dev, "cannot find codec freq data\n");
+> > >                 ret = -EINVAL;
+> > > +       }
+> > >
+> > >         return ret;
+> > >  }
+> > > diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> > > index abf9315..240845e 100644
+> > > --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> > > +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> > > @@ -496,7 +496,7 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
+> > >         list_for_each_entry(inst_pos, &core->instances, list) {
+> > >                 if (inst_pos == inst)
+> > >                         continue;
+> > > -               vpp_freq = inst_pos->clk_data.codec_freq_data->vpp_freq;
+> > > +               vpp_freq = inst_pos->clk_data.codec_freq_data.vpp_freq;
+>
+> This is the main thing it fixes (this is where the null deref occurs).
+> If there's multiple instances in use and the other instance hasn't
+> populated the codec_freq_data pointer then we'll hit a null deref
+> here.
 
-During later code inspection I happened to notice that the "if" test
-above the code I removed can also be removed.  I'll do that in v2.
-The code after the v1 patch doesn't hurt, it's just silly to have the
-"if (blah) continue" at the end of the loop.
+Couldn't this be fixed by checking the pointer for NULL here or
+(probably better) populating codec_freq_data earlier so that it is
+always valid?
 
-I'll wait on sending a v2 until I get some testing / review feedback
-on v1 or enough time passes.
-
--Doug
+This fix looks like it is replacing a NULL pointer dereference with
+access to data initialized to fallback values (which may or may not be
+meaningful), and I don't see the need to copy what is effectively
+constant data into each instance.
