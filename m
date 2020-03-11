@@ -2,125 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B911814B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 10:24:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E97C318150F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 10:36:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728444AbgCKJY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 05:24:27 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:42209 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726097AbgCKJY1 (ORCPT
+        id S1728852AbgCKJf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 05:35:27 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:50674 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726934AbgCKJf1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 05:24:27 -0400
-Received: by mail-lj1-f193.google.com with SMTP id q19so1456590ljp.9;
-        Wed, 11 Mar 2020 02:24:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oTEgx+0q+wWx+G15t9Th6GjnGh/fBTDFvpJM0EhSSqg=;
-        b=fwxu2w7MMtm/x0hf3Cffk7yAO5eCmJidEVDf7cUyikp7L+Of/ZryD6H873cV9fR4lx
-         a0UWKNzkamTKmkOTh+xfwNH6iP50GbpJwDhVww3NWe8aS9HGQbHgQpKJFGIJJdZH8Osc
-         9cauMHySd8mtWNKj8k6Q3gb3i/DFIdl2NhF4anpTiNRF/ZljOcYib50hWk9Wi813R+KL
-         TajokvhN+1M/4Xok3Serw40kRx0E/0lwBUOUBccNYKasvLcvUynJXF74bFCT6aOkumsS
-         kp/1eHP40hus1keHPX71IrUYM5CXifL6m6yPVEYwqmSXDktAW9OIYLbdxyrgOzLZnzf1
-         aKaA==
-X-Gm-Message-State: ANhLgQ096Y2DDBdIwrOQs7fWcRW5Y3hNZB2gGWJzF6aDFMReezeEkD/e
-        HEcPrgmb1LINnU7+6049OZ8=
-X-Google-Smtp-Source: ADFU+vvQvYAE4SLupfEd5gDlFgHDl8iVN8OI49a+BbJLpOrASXqS8Bxt0ncyKf6hhI+pJzBAPHKQdQ==
-X-Received: by 2002:a2e:801a:: with SMTP id j26mr1519598ljg.249.1583918665226;
-        Wed, 11 Mar 2020 02:24:25 -0700 (PDT)
-Received: from xi.terra (c-12aae455.07-184-6d6c6d4.bbcust.telenor.se. [85.228.170.18])
-        by smtp.gmail.com with ESMTPSA id t3sm14614706lfp.81.2020.03.11.02.24.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 02:24:24 -0700 (PDT)
-Received: from johan by xi.terra with local (Exim 4.92.3)
-        (envelope-from <johan@kernel.org>)
-        id 1jBxb2-0004UZ-7N; Wed, 11 Mar 2020 10:24:12 +0100
-Date:   Wed, 11 Mar 2020 10:24:12 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: Replace devm_gpiod_get() with
- devm_gpiod_get_optional()
-Message-ID: <20200311092412.GH14211@localhost>
-References: <20200304131645.22057-1-rjliao@codeaurora.org>
+        Wed, 11 Mar 2020 05:35:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583919325; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=QyNiJ+0qok89TnybJL0siB5PS2p4435lMsK9Zo6fR2M=; b=IWBOQBV+5S1z4H7ymBaE1EtSqtPxPO85j4qflwM6ZA85uvQI8aWIzogvUjzSPwFE9zVK8X+F
+ M60U2Txrck/JTfvXNcK9iI7NmEU3AoOrJd4AgZ25GAHL/V0v3Eng2In8BqweuI195KOOKCy8
+ vNzYGQfUmFLjWns+JWRseEdel/0=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e68b0dd.7f22429b1768-smtp-out-n03;
+ Wed, 11 Mar 2020 09:35:25 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 58BECC4478C; Wed, 11 Mar 2020 09:35:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.13.37] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C69D4C432C2;
+        Wed, 11 Mar 2020 09:35:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C69D4C432C2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [RFT PATCH 2/9] drivers: qcom: rpmh-rsc: Document the register
+ layout better
+To:     Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>, mka@chromium.org,
+        evgreen@chromium.org, swboyd@chromium.org,
+        Lina Iyer <ilina@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200306235951.214678-1-dianders@chromium.org>
+ <20200306155707.RFT.2.Iaddc29b72772e6ea381238a0ee85b82d3903e5f2@changeid>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <285d3315-7558-d9f6-fe65-24d8ad07949d@codeaurora.org>
+Date:   Wed, 11 Mar 2020 15:05:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200304131645.22057-1-rjliao@codeaurora.org>
+In-Reply-To: <20200306155707.RFT.2.Iaddc29b72772e6ea381238a0ee85b82d3903e5f2@changeid>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 04, 2020 at 09:16:45PM +0800, Rocky Liao wrote:
-> This patch replaces devm_gpiod_get() with devm_gpiod_get_optional() to get
-> bt_en and replaces devm_clk_get() with devm_clk_get_optional() to get
-> susclk. It also uses NULL check to determine whether the resource is
-> available or not.
-> 
-> Fixes: 8a208b24d770 ("Bluetooth: hci_qca: Make bt_en and susclk not mandatory for QCA Rome")
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+Hi Doug,
+
+On 3/7/2020 5:29 AM, Douglas Anderson wrote:
+> Perhaps it's just me, it took a really long time to understand what
+> the register layout of rpmh-rsc was just from the #defines.  
+i don't understand why register layout is so important for you to understand?
+
+besides, i think all required registers are properly named with #define
+
+for e.g.
+/* Register offsets */
+#define RSC_DRV_IRQ_ENABLE              0x00
+#define RSC_DRV_IRQ_STATUS              0x04
+#define RSC_DRV_IRQ_CLEAR               0x08
+
+now when you want to enable/disable irq in driver code, its pretty simple to figure out
+that we need to read/write at RSC_DRV_IRQ_ENABLE offset.
+
+this seems unnecessary change to me, can you please drop this when you spin v2?
+
+Thanks,
+Maulik
+> It's much
+> easier to understand this if we define some structures.  At the moment
+> these structures aren't used at all (so think of them as
+> documentation), but to me they really help in understanding.
+>
+> These structures were all figured out from the #defines and
+> reading/writing functions.  Anything that wasn't used in the driver is
+> marked as "opaque".
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  drivers/bluetooth/hci_qca.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
-
-> @@ -1901,15 +1901,15 @@ static int qca_serdev_probe(struct serdev_device *serdev)
->  		}
->  	} else {
->  		qcadev->btsoc_type = QCA_ROME;
-> -		qcadev->bt_en = devm_gpiod_get(&serdev->dev, "enable",
-> +		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
->  					       GPIOD_OUT_LOW);
-> -		if (IS_ERR(qcadev->bt_en)) {
-> +		if (!qcadev->bt_en) {
->  			dev_warn(&serdev->dev, "failed to acquire enable gpio\n");
-
-Shouldn't this be dev_dbg() if the gpio is indeed optional?
-
->  			power_ctrl_enabled = false;
->  		}
+>
+>  drivers/soc/qcom/rpmh-rsc.c | 67 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 67 insertions(+)
+>
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index 5c88b8cd5bf8..0a409988d103 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -61,6 +61,73 @@
+>  #define CMD_STATUS_ISSUED		BIT(8)
+>  #define CMD_STATUS_COMPL		BIT(16)
 >  
-> -		qcadev->susclk = devm_clk_get(&serdev->dev, NULL);
-> -		if (IS_ERR(qcadev->susclk)) {
-> +		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
-> +		if (!qcadev->susclk) {
->  			dev_warn(&serdev->dev, "failed to acquire clk\n");
+> +/*
+> + * The following structures aren't used in the code anywhere (right now), but
+> + * help to document how the register space is laid out.  In other words it's
+> + * another way to visualize the "Register offsets".
+> + *
+> + * Couch this in a bogus #ifdef instead of comments to allow the embedded
+> + * comments to work.
+> + */
+> +#ifdef STRUCTS_TO_DOCUMENT_HW_REGISTER_MAP
+> +
+> +/* 0x14 = 20 bytes big (see RSC_DRV_CMD_OFFSET) */
+> +struct tcs_cmd_hw {
+> +	u32 msgid;
+> +	u32 addr;
+> +	u32 data;
+> +	u32 status;
+> +	u32 resp_data;
+> +};
+> +
+> +/* 0x2a0 = 672 bytes big (see RSC_DRV_TCS_OFFSET) */
+> +struct tcs_hw {
+> +	/*
+> +	 * These are only valid on TCS 0 but are present everywhere.
+> +	 * Contains 1 bit per TCS.
+> +	 */
+> +	u32 irq_enable;
+> +	u32 irq_status;
+> +	u32 irq_clear;			/* Write only; write 1 to clear */
+> +
+> +	char opaque_00c[0x4];
+> +
+> +	u32 cmd_wait_for_cmpl;		/* Bit field, 1 bit per command */
+> +	u32 control;
+> +	u32 status;			/* status is 0 if tcs is busy */
+> +	u32 cmd_enable;			/* Bit field, 1 bit per command */
+> +
+> +	char opaque_01c[0x10];
+> +
+> +	struct tcs_cmd_hw tcs_cmd_hw[MAX_CMDS_PER_TCS];
+> +
+> +	char opaque_170[0x130];
+> +};
+> +
+> +/* Example for sc7180 based on current dts */
+> +struct rpmh_rsc_hw_sc7180 {
+> +	char opaque_000[0xc];
+> +
+> +	u32 prnt_chld_config;
+> +
+> +	char opaque_010[0xcf0];
+> +
+> +	/*
+> +	 * Offset 0xd00 aka qcom,tcs-offset from device tree.  Presumably
+> +	 * could be different for different SoCs?  Currently driver stores
+> +	 * a pointer to the first tcs in tcs_base.
+> +	 *
+> +	 * Count of various TCS entries also comes from dts.
+> +	 */
+> +	struct tcs_hw active[2];
+> +	struct tcs_hw sleep[3];
+> +	struct tcs_hw wake[3];
+> +	struct tcs_hw control[1];
+> +};
+> +
+> +#endif /* STRUCTS_TO_DOCUMENT_HW_REGISTER_MAP */
+> +
+> +
+>  static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+>  {
+>  	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
 
-Same here.
-
->  		} else {
->  			err = clk_set_rate(qcadev->susclk, SUSCLK_RATE_32KHZ);
-> @@ -1924,7 +1924,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
->  		err = hci_uart_register_device(&qcadev->serdev_hu, &qca_proto);
->  		if (err) {
->  			BT_ERR("Rome serdev registration failed");
-> -			if (!IS_ERR(qcadev->susclk))
-> +			if (qcadev->susclk)
->  				clk_disable_unprepare(qcadev->susclk);
-
-The clock framework allows you to pass in NULL precisely to be able to
-handle optional resources without sprinkling conditionals all over (the
-gpio subsystem does not however).
-
-Applies to clk_set_rate() etc. above as well.
-
->  			return err;
->  		}
-> @@ -1945,7 +1945,7 @@ static void qca_serdev_remove(struct serdev_device *serdev)
->  
->  	if (qca_is_wcn399x(qcadev->btsoc_type))
->  		qca_power_shutdown(&qcadev->serdev_hu);
-> -	else if (!IS_ERR(qcadev->susclk))
-> +	else if (qcadev->susclk)
->  		clk_disable_unprepare(qcadev->susclk);
-
-Same here.
-
->  	hci_uart_unregister_device(&qcadev->serdev_hu);
-
-Johan
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
