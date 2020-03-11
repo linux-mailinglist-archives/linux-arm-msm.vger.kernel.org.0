@@ -2,168 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BEA45181553
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 10:52:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92C5A1815D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 11:30:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728987AbgCKJvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 05:51:09 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:27450 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728963AbgCKJvJ (ORCPT
+        id S1726817AbgCKKaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 06:30:52 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34154 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbgCKKaw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 05:51:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583920268; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=wz4KJcKwKB++JF4TaEFks1Eptm0k/C2T0zysdRtFHVM=; b=GuVQo/C+dVetyG+qRsWfzocgxYKJTD8sPpc2x373swV1uiGK4qv2S5b0T3SMvZQjjzM4o5pJ
- 0IYqnBi6dqhyoh+9c1UG8s6K7Xt/suyJlCu2/1GTTSgmtng124ay230UpZHuuNCuWPo5bX5C
- yAYV3uXwKkedNgVHOu1Ggtkcx2g=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e68b476.7f0ea770e6f8-smtp-out-n01;
- Wed, 11 Mar 2020 09:50:46 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EC3A6C433D2; Wed, 11 Mar 2020 09:50:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.13.37] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E17FC432C2;
-        Wed, 11 Mar 2020 09:50:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1E17FC432C2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [RFT PATCH 3/9] drivers: qcom: rpmh-rsc: Fold tcs_ctrl_write()
- into its single caller
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, mka@chromium.org,
-        evgreen@chromium.org, swboyd@chromium.org,
-        Lina Iyer <ilina@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200306235951.214678-1-dianders@chromium.org>
- <20200306155707.RFT.3.Ie88ce5ccfc0c6055903ccca5286ae28ed3b85ed3@changeid>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <4a3cf9cb-b29f-47c3-d681-a855ab34aeb7@codeaurora.org>
-Date:   Wed, 11 Mar 2020 15:20:38 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Wed, 11 Mar 2020 06:30:52 -0400
+Received: by mail-wr1-f68.google.com with SMTP id z15so1900429wrl.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 03:30:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LzaLKCBRIewXD3EaTa5hnO0VT8owm6vRQQh9HZJ8avA=;
+        b=Q8iLXeBxiZgXJvA2vze2ga6XXLHnHiwXpcRBGb+97vDPoqWmHmYQNZD5qm5/UYrxEN
+         cjwCR0pOyqqvz+obQOJ74UiEbO7YwyeOGWUXaBfM4aUNnRCAIQ9IE4r3C+JmrXVApEtN
+         QfPbit0/lnZGYVi+UbvPMWvMtahu0kOMN1FY7tWEojQqHEJFot3f9/ECjN87ZRJokwqG
+         2UsaMwgAolYMNAwFN3YLUN/BSxz17PzqJ2t4SXZFY+UzqWaGXWXRITvoP1q9aPlL8I0s
+         56ZCsoZTUZMEuVHJtvwg/6Z8hd7DcKfTuDssaWskglPcGlBC0+0hPscKQR+14eNZKuhJ
+         oaJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LzaLKCBRIewXD3EaTa5hnO0VT8owm6vRQQh9HZJ8avA=;
+        b=PoDN8YQNfE817H0m4YWRmF1IKm0X+CtV7msSi4qD4zw0ahxelk2UCaIAyorQTXiJoS
+         wEqWQt0tqDrlteX4BVa2ff9tMuR+qS9RS0PywEUrhZPVgKiJao63kADgIjFR8HZYELcP
+         B2c0DdmRS4LfKH/2I55yqDx/ycaRLlA+YTvpPuae808kxJdDsoE/huHYufPv7Z9kbsGC
+         RyXJT2sxp5Sr3pV88oAqdY59s6uhSWJ+dvKqXTPncMR95HPFBeQytfJfOcaB96Qg+l6y
+         kM5BRfWfR3M6B2OfK+ZN1rjQHyprRvexsGE6JcIhNGK1ve5iWbK4gOC3ON5EIDCz/2CL
+         YNwQ==
+X-Gm-Message-State: ANhLgQ17iAgkvoiHuvt2lz3V85UdzByzbl/oVSIKXX6GRC1llIxP4mLw
+        vUvlWwuGcHrvoZlHpnhhXTcGFw==
+X-Google-Smtp-Source: ADFU+vuO9qK9g/2D1BMl3E61Zu+yTrfHT1j9G9JEFmGh20HcuAhscXtAx5vC28GPTMlL0pnuoxc5CA==
+X-Received: by 2002:adf:ef44:: with SMTP id c4mr3720111wrp.404.1583922649952;
+        Wed, 11 Mar 2020 03:30:49 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id f9sm18718612wrc.71.2020.03.11.03.30.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2020 03:30:49 -0700 (PDT)
+Date:   Wed, 11 Mar 2020 10:30:47 +0000
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     kgunda@codeaurora.org
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V3 2/4] backlight: qcom-wled: Add callback functions
+Message-ID: <20200311103047.v7rt5ii3saack22a@holly.lan>
+References: <1583760362-26978-1-git-send-email-kgunda@codeaurora.org>
+ <1583760362-26978-3-git-send-email-kgunda@codeaurora.org>
+ <20200310152719.5hpzh6osq22y4qbn@holly.lan>
+ <05ab744dfbd83b6704bd394ce3c3dfc9@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200306155707.RFT.3.Ie88ce5ccfc0c6055903ccca5286ae28ed3b85ed3@changeid>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <05ab744dfbd83b6704bd394ce3c3dfc9@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Mar 11, 2020 at 12:11:00PM +0530, kgunda@codeaurora.org wrote:
+> On 2020-03-10 20:57, Daniel Thompson wrote:
+> > On Mon, Mar 09, 2020 at 06:56:00PM +0530, Kiran Gunda wrote:
+> > > Add cabc_config, sync_toggle, wled_ovp_fault_status and wled_ovp_delay
+> > > callback functions to prepare the driver for adding WLED5 support.
+> > > 
+> > > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+> > 
+> > Overall this code would a lot easier to review if
+> > > ---
+> > >  drivers/video/backlight/qcom-wled.c | 196
+> > > +++++++++++++++++++++++-------------
+> > >  1 file changed, 126 insertions(+), 70 deletions(-)
+> > > 
+> > > diff --git a/drivers/video/backlight/qcom-wled.c
+> > > b/drivers/video/backlight/qcom-wled.c
+> > > index 3d276b3..b73f273 100644
+> > > --- a/drivers/video/backlight/qcom-wled.c
+> > > +++ b/drivers/video/backlight/qcom-wled.c
+> > > @@ -128,6 +128,7 @@ struct wled_config {
+> > >  	bool cs_out_en;
+> > >  	bool ext_gen;
+> > >  	bool cabc;
+> > > +	bool en_cabc;
+> > 
+> > Does this ever get set to true?
+> > 
+> Yes. If user wants use the cabc pin to control the brightness and
+> use the "qcom,cabc" DT property in the device tree.
 
-On 3/7/2020 5:29 AM, Douglas Anderson wrote:
-> I was trying to write documentation for the functions in rpmh-rsc and
-> I got to tcs_ctrl_write().  The documentation for the function would
-> have been: "This is the core of rpmh_rsc_write_ctrl_data(); all the
-> caller does is error-check and then call this".
->
-> Having the error checks in a separate function doesn't help for
-> anything since:
-> - There are no other callers that need to bypass the error checks.
-> - It's less documenting.  When I read tcs_ctrl_write() I kept
->   wondering if I need to handle cases other than ACTIVE_ONLY or cases
->   with more commands than could fit in a TCS.  This is obvious when
->   the error checks and code are together.
-> - The function just isn't that long, so there's no problem
->   understanding the combined function.
->
-> Things were even more confusing because the two functions names didn't
-> make it obvious (at least to me) their relationship.
->
-> Simplify by folding one function into the other.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
->  drivers/soc/qcom/rpmh-rsc.c | 39 ++++++++++++++++---------------------
->  1 file changed, 17 insertions(+), 22 deletions(-)
->
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index 0a409988d103..099603bf14bf 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -549,27 +549,6 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
->  	return 0;
->  }
->  
-> -static int tcs_ctrl_write(struct rsc_drv *drv, const struct tcs_request *msg)
-> -{
-> -	struct tcs_group *tcs;
-> -	int tcs_id = 0, cmd_id = 0;
-> -	unsigned long flags;
-> -	int ret;
-> -
-> -	tcs = get_tcs_for_msg(drv, msg);
-> -	if (IS_ERR(tcs))
-> -		return PTR_ERR(tcs);
-> -
-> -	spin_lock_irqsave(&tcs->lock, flags);
-> -	/* find the TCS id and the command in the TCS to write to */
-> -	ret = find_slots(tcs, msg, &tcs_id, &cmd_id);
-> -	if (!ret)
-> -		__tcs_buffer_write(drv, tcs_id, cmd_id, msg);
-> -	spin_unlock_irqrestore(&tcs->lock, flags);
-> -
-> -	return ret;
-> -}
-> -
->  /**
->   * rpmh_rsc_write_ctrl_data: Write request to the controller
->   *
-> @@ -580,6 +559,11 @@ static int tcs_ctrl_write(struct rsc_drv *drv, const struct tcs_request *msg)
->   */
->  int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv, const struct tcs_request *msg)
->  {
-> +	struct tcs_group *tcs;
-> +	int tcs_id = 0, cmd_id = 0;
-> +	unsigned long flags;
-> +	int ret;
-> +
->  	if (!msg || !msg->cmds || !msg->num_cmds ||
->  	    msg->num_cmds > MAX_RPMH_PAYLOAD) {
->  		pr_err("Payload error\n");
-> @@ -590,7 +574,18 @@ int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv, const struct tcs_request *msg)
->  	if (msg->state == RPMH_ACTIVE_ONLY_STATE)
->  		return -EINVAL;
->  
-> -	return tcs_ctrl_write(drv, msg);
-> +	tcs = get_tcs_for_msg(drv, msg);
-> +	if (IS_ERR(tcs))
-> +		return PTR_ERR(tcs);
-> +
-> +	spin_lock_irqsave(&tcs->lock, flags);
-> +	/* find the TCS id and the command in the TCS to write to */
-> +	ret = find_slots(tcs, msg, &tcs_id, &cmd_id);
-> +	if (!ret)
-> +		__tcs_buffer_write(drv, tcs_id, cmd_id, msg);
-> +	spin_unlock_irqrestore(&tcs->lock, flags);
-> +
-> +	return ret;
->  }
->  
->  static int rpmh_probe_tcs_config(struct platform_device *pdev,
-i am ok with this change.
+That sounds like what you intended the code to do!
 
-Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
+Is the code that does this present in the patch? I could not find
+it.
 
-Thanks,
-Maulik
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+Daniel.
