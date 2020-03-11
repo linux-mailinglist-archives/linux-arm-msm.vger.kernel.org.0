@@ -2,164 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 289511825AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 00:14:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E7391825CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 00:25:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731535AbgCKXOl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 19:14:41 -0400
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:37351 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731493AbgCKXO1 (ORCPT
+        id S1726194AbgCKXZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 19:25:48 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41772 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731417AbgCKXZp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 19:14:27 -0400
-Received: by mail-pj1-f65.google.com with SMTP id ca13so1780178pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 16:14:25 -0700 (PDT)
+        Wed, 11 Mar 2020 19:25:45 -0400
+Received: by mail-pf1-f196.google.com with SMTP id z65so2219845pfz.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 16:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+l8HEEp5z/NJMl2lmZaebCPqD2oTwZcZODCagAmwBoI=;
-        b=gZsLsQ905xELdiFXDuvhCY948QmOeq8hgf7WRNwFQYggf7QXDlIrRdkt6RRbcRjNRw
-         wCDMWcAZnWj75TZ4WmkroiHz3XAAsw/OTa+lAVRAp2o5sCdGCFOAvvSDqJKeZEUCpmBb
-         BpstVVFKwXnMIPEHqdjum/DfKDyUB92ghvYrg=
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=chyavRIYqqg/mT1hVMLjimyfJ88wTwSB8SQE5bJSCcg=;
+        b=FDuOKRQ4jYAowPTrfkqbWPNwLC7ne85VH2TIBW4KS2PmvN2f6LhHAIPRx3ZI8cJWyc
+         l4865PDFEMva7cIi8Zt5qHizgX8lFeYT5H30cNNZ8/WeEXOONjMQI4utYiRmU1VIZixr
+         QA+8hVzyQYT9CfKVouR7a6z9Bf+kwLRUrAq2g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+l8HEEp5z/NJMl2lmZaebCPqD2oTwZcZODCagAmwBoI=;
-        b=NQAqEkRFvxE11Ssr8X5bKnN3I6rP1t5M8jrPhbWe8AQAU9ehdJTISnad9FCn3guOeh
-         +q7QigPI/5vyB+qXOGqol/UjNkGE6r9ptaTsUeNwj8ZQyjoj1BEwdV0kIJj3Y4bzSoxo
-         ztaIUXBkTEgDNschcgOlouA4KCuTQWA4mwS3UfURnwbv1rAA18MRAxaJNkI+oY4DS7uo
-         +j3aMAqnKgq6merpoYWmw+7XT+ud3hkMAvkWLY0rzg0p4iUe8hMsmxmsC9RgAUWhh3za
-         Wep6+XNUI9YwoqgStGhxzI3Zn3p8TJk9wuW5pQjUS8ddTE7uKd61fd6aSO0NFs5yrcgU
-         mY5w==
-X-Gm-Message-State: ANhLgQ1z7YnVeF+76S3Rw4bI5e1RugLFejoxnau3jWTMrh4i8gsc6HG6
-        y8aCm1XW5Zc2im64wOJS+Qj3KQ==
-X-Google-Smtp-Source: ADFU+vuyyhI1HC2LBNYvyyv/D6HXeGMLu7hKQzSZUyP6NZso3KnmgOeJay5KNjXVk2vcBMokDpLLZw==
-X-Received: by 2002:a17:90a:b90a:: with SMTP id p10mr1029934pjr.81.1583968464591;
-        Wed, 11 Mar 2020 16:14:24 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id g75sm2606334pje.37.2020.03.11.16.14.23
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=chyavRIYqqg/mT1hVMLjimyfJ88wTwSB8SQE5bJSCcg=;
+        b=Bg8PurP2aSOSYP3EyrfGrvtkQetwkq/dWymA1k8S2DPPa0Iq/FbA9/bdTA1HJs1l33
+         PY4xa04fTYJAPgRz2kYpIWRF91L9Om5n+46s2eqxByjzubO0bj0wMcs5Hw1g9BlrQyuk
+         MZxH6QKvbIEDUEkRXbiAONUOHeSuKDZzCKwLFpo9ZU4v/jtnbDqWyjX7psy0cv0nAjgu
+         TREs6CUC8aoKVB4G6UV5uVTq9CcfP9df0ZZUkEgRUyk4D6NmqY8KiRXPJVheJ9Mhhq8P
+         vTtPVo2zvIQoXQF66IXSDMRqsLmpwrI5BySEgo1uxTjodONB5sqXyz+Y9DDWhzwMdngL
+         VSCQ==
+X-Gm-Message-State: ANhLgQ2XuRWQafFjHKpXoX0CeFAaA23rj8+buUBxhgv/YDNewEL9ahT6
+        31/drKe+OWPz7MPfr40iA0iKXA==
+X-Google-Smtp-Source: ADFU+vv2rgEtd5LEvteUH15nHk8MoZckTyu4sc5oAWNh51o+qVCUk8hdHGfWn2+RI0sNiXgdi5lb8g==
+X-Received: by 2002:aa7:92da:: with SMTP id k26mr5126575pfa.139.1583969144060;
+        Wed, 11 Mar 2020 16:25:44 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id w128sm50656459pgb.55.2020.03.11.16.25.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 16:14:23 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Cc:     mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        evgreen@chromium.org, Lina Iyer <ilina@codeaurora.org>,
-        swboyd@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFT PATCH v2 10/10] drivers: qcom: rpmh-rsc: Always use -EAGAIN, never -EBUSY
-Date:   Wed, 11 Mar 2020 16:13:48 -0700
-Message-Id: <20200311161104.RFT.v2.10.I537337af59c51c72aac2c1625760a60519c66387@changeid>
-X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
-In-Reply-To: <20200311231348.129254-1-dianders@chromium.org>
-References: <20200311231348.129254-1-dianders@chromium.org>
+        Wed, 11 Mar 2020 16:25:43 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200310212728.GQ264362@yoga>
+References: <20200310063338.3344582-1-bjorn.andersson@linaro.org> <20200310063338.3344582-3-bjorn.andersson@linaro.org> <158387214232.149997.3935472981193001512@swboyd.mtv.corp.google.com> <20200310212728.GQ264362@yoga>
+Subject: Re: [PATCH v4 2/5] remoteproc: qcom: Introduce driver to store pil info in IMEM
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Wed, 11 Mar 2020 16:25:42 -0700
+Message-ID: <158396914211.149997.8114928596665644267@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some parts of rpmh-rsc returned -EAGAIN when the controller was busy
-and you should try again.  Other parts returned -EBUSY when the
-controller was busy and you should try again.  Typically -EAGAIN was
-used when dealing with sleep/wake TCSs and -EBUSY was used when
-dealing with the active TCS.
+Quoting Bjorn Andersson (2020-03-10 14:27:28)
+> On Tue 10 Mar 13:29 PDT 2020, Stephen Boyd wrote:
+>=20
+> > Why can't we search in DT for the
+> > imem node and then find the pil reloc info compatible string on the
+> > first call to this library? Then we don't need an API to see if the
+> > device has probed yet (qcom_pil_info_available)
+>=20
+> I think this sounds reasonable.
 
-Let's standardize and just have one return code.
+Great!
 
-If we don't do this then the crossover case where we need to use a
-sleep/wake TCS for an active only transfer (when there are zero active
-TCSs) we need to either adapt one code to the other test for both.
+>=20
+> > and we can just ioremap
+> > some region of memory that's carved out for this reason. Forcing
+> > everything through the regmap is mostly adding pain.
+> >=20
+>=20
+> My concern here was simply that we'll end up ioremapping various small
+> chunks of the imem region 10 (or so) times. But I agree that things
+> would be cleaner here.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
-Changes in v2:
-- ("Always use -EAGAIN, never -EBUSY") new for v2.
-
- drivers/soc/qcom/rpmh-rsc.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index abbd8b158a63..8b59d07ef94e 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -497,11 +497,11 @@ static void __tcs_trigger(struct rsc_drv *drv, int tcs_id)
-  *
-  * This will walk through the TCSs in the group and check if any of them
-  * appear to be sending to addresses referenced in the message.  If it finds
-- * one it'll return -EBUSY.
-+ * one it'll return -EAGAIN.
-  *
-  * Must be called with the drv->lock held since that protects tcs_in_use.
-  *
-- * Return: 0 if nothing in flight or -EBUSY if we should try again later.
-+ * Return: 0 if nothing in flight or -EAGAIN if we should try again later.
-  *         The caller must re-enable interrupts between tries since that's
-  *         the only way tcs_is_free() will ever return true and the only way
-  *         RSC_DRV_CMD_ENABLE will ever be cleared.
-@@ -524,7 +524,7 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
- 			addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j);
- 			for (k = 0; k < msg->num_cmds; k++) {
- 				if (addr == msg->cmds[k].addr)
--					return -EBUSY;
-+					return -EAGAIN;
- 			}
- 		}
- 	}
-@@ -550,21 +550,21 @@ static int find_free_tcs(struct tcs_group *tcs)
- 			return tcs->offset + i;
- 	}
- 
--	return -EBUSY;
-+	return -EAGAIN;
- }
- 
- /**
-- * tcs_write() - Store messages into a TCS right now, or return -EBUSY.
-+ * tcs_write() - Store messages into a TCS right now, or return -EAGAIN.
-  * @drv: The controller.
-  * @msg: The data to be sent.
-  *
-  * Grabs a TCS for ACTIVE_ONLY transfers and writes the messages to it.
-  *
-  * If there are no free ACTIVE_ONLY TCSs or if a command for the same address
-- * is already transferring returns -EBUSY which means the client should retry
-+ * is already transferring returns -EAGAIN which means the client should retry
-  * shortly.
-  *
-- * Return: 0 on success, -EBUSY if client should retry, or an error.
-+ * Return: 0 on success, -EAGAIN if client should retry, or an error.
-  *         Client should have interrupts enabled for a bit before retrying.
-  */
- static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
-@@ -580,7 +580,6 @@ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
- 	 */
- 	WARN_ON(msg->state != RPMH_ACTIVE_ONLY_STATE);
- 
--	/* TODO: get_tcs_for_msg() can return -EAGAIN and nobody handles */
- 	tcs = get_tcs_for_msg(drv, msg);
- 	if (IS_ERR(tcs))
- 		return PTR_ERR(tcs);
-@@ -651,12 +650,12 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
- 
- 	do {
- 		ret = tcs_write(drv, msg);
--		if (ret == -EBUSY) {
-+		if (ret == -EAGAIN) {
- 			pr_info_ratelimited("TCS Busy, retrying RPMH message send: addr=%#x\n",
- 					    msg->cmds[0].addr);
- 			udelay(10);
- 		}
--	} while (ret == -EBUSY);
-+	} while (ret == -EAGAIN);
- 
- 	return ret;
- }
--- 
-2.25.1.481.gfbce0eb801-goog
-
+Alright. I'd like the ioremap() approach. ioremap() will "do the right
+thing" and reuse mappings if they're already there and overlap in the
+page. So it's OK that the syscon/simple-mfd exists and makes a device,
+etc. etc., but we don't need to care about it. We can just ioremap() the
+area and not worry that the regmap users may have a mapping to the same
+place. This is a dedicated carveout inside IMEM so we're safe from other
+meddling users.
