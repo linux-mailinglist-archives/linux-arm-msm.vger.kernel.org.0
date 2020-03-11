@@ -2,97 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9283918186A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 13:46:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E7B18190E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2020 14:03:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729358AbgCKMqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 08:46:09 -0400
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:36488 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729287AbgCKMqI (ORCPT
+        id S1729473AbgCKNDC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 09:03:02 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:22976 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729358AbgCKNDC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 08:46:08 -0400
-Received: by mail-wm1-f48.google.com with SMTP id g62so1975193wme.1;
-        Wed, 11 Mar 2020 05:46:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=vX7xay1c272z5yWnR8Vm2AwXwafctOSlGFV/CAr3lyI=;
-        b=cpYVxJokDUEk+/C8NFK/CPVc5LRy+3ROB6BEZMu4V+wxk700micwN7r7SdhA9yluJh
-         a7KDXzoNYNN8xWsWkE2xGen+YUJtH0+ERwlKg5mVWshT5TJvTx63k1u+549yNls9xgT/
-         1/xXodKdej8umcgYWTpcmDw5IY5B9kCLgwe8bhN1LXtaSDGw87SkSfjR+GrkgioMRDGA
-         uNoEU8XQYPPFriqobX+KKIjlYT00KycIhNd1W1a5Z6hPmRbDrqGlWoEukQE9mcDe+jEi
-         CUfC7w9+Ev8k7Uu83l9IjeRQurJY29PCHDoTTz0FZs5tEfrgSLz8we+BX30VRQLjBl4v
-         FX5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=vX7xay1c272z5yWnR8Vm2AwXwafctOSlGFV/CAr3lyI=;
-        b=RXYfAx55O7wPVvu6I0KMFdNxwxPkMC6PCXGTnrCUrzWM3ZKO9q2G+nmONe8uBjfLjj
-         AB9v7PDLtiGJ9956Om3jLnZyg4RCBlm4cbjeIEhJoZ4pMSZB0fW4zb4PuqNrTGXMRO0t
-         CWA3FQibSLZd8OVIjo33/xn+cfR7D94NJxPmoCoRvE7rlleqZ3jbbZoWoP8ikfcbfiAh
-         SJQSPWgI7+wID3J1pZH81WXacxoRVMO77mBP5I9XIizB2USwqCXUBKp0+yyHoSiLKScZ
-         U3g6RE7k3xI+Qmn093MFUbAw+j548A6kfhUN2AWoM0EDh3Nfy1OXaH5MUecR3APLsqRc
-         hHMA==
-X-Gm-Message-State: ANhLgQ1ljkjlMucyup6ARnzzG+0/y6IkXgZfip3MSr0vK33TeuGxWkCx
-        aVr+vdhlp48pAi9gkQ5bl0vhWOq5hfM=
-X-Google-Smtp-Source: ADFU+vsVDxCVTN+N2Gw1D6GVC46ov+wXcq58elUBcCdzA8VarIJLUeD9zJfJLE7Z/1kCYEaZaD1GOg==
-X-Received: by 2002:a1c:f60d:: with SMTP id w13mr3702859wmc.171.1583930766069;
-        Wed, 11 Mar 2020 05:46:06 -0700 (PDT)
-Received: from AnsuelXPS (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.gmail.com with ESMTPSA id v10sm179900wml.44.2020.03.11.05.46.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Mar 2020 05:46:04 -0700 (PDT)
-From:   <ansuelsmth@gmail.com>
-To:     "'Rob Herring'" <robh@kernel.org>
-Cc:     <sboyd@kernel.org>, "'John Crispin'" <john@phrozen.org>,
-        "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Michael Turquette'" <mturquette@baylibre.com>,
-        "'Mark Rutland'" <mark.rutland@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <sboyd@kernel.org> <20200310143756.244-1-ansuelsmth@gmail.com> <20200310184109.GA2508@bogus>
-In-Reply-To: <20200310184109.GA2508@bogus>
-Subject: R: [PATCH v2] clk: qcom: clk-rpm: add missing rpm clk for ipq806x
-Date:   Wed, 11 Mar 2020 13:46:02 +0100
-Message-ID: <06a501d5f7a3$06ba72f0$142f58d0$@gmail.com>
+        Wed, 11 Mar 2020 09:03:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583931781; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=f7e0eWxDfW7nEaHlYSKRi90iftgXxefmOtrDot6oFE0=; b=OzyT8G5maR+SLIXpWDtc/taW8IjnZTtT+Nv8bvH2N3NpMZPVCP8V5EcfYSdOxCSBdzEivnwk
+ X8I5aGLD7SDml3pAn6pGtAvOVo9Z2tpKccS2v27NPlzXM+eMB8EgoVNr7ZDBUdteITPAurps
+ dMEp8MdBCCli2J2LbBPHAgl/aiY=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e68e184.7f6a583953e8-smtp-out-n02;
+ Wed, 11 Mar 2020 13:03:00 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8C30AC433CB; Wed, 11 Mar 2020 13:02:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.252.222.65] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 28AAFC433D2;
+        Wed, 11 Mar 2020 13:02:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 28AAFC433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 0/6] Add interconnect support to UART, I2C, SPI and QSPI
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
+ <20200309175954.GX24720@google.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <9e0afe90-5480-2db5-48fb-39cd8db6e8d1@codeaurora.org>
+Date:   Wed, 11 Mar 2020 18:32:44 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: it
-Thread-Index: AQD2n4NGhC+p0cGdAsYRRjYyx9FyPQH+RYtGAlzKsDSp3y3+UA==
+In-Reply-To: <20200309175954.GX24720@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On Tue, 10 Mar 2020 15:37:56 +0100, Ansuel Smith wrote:
-> > Add missing definition of rpm clk for ipq806x soc
-> >
-> > Signed-off-by: John Crispin <john@phrozen.org>
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > Acked-by: John Crispin <john@phrozen.org>
-> > ---
-> >  .../devicetree/bindings/clock/qcom,rpmcc.txt  |  1 +
-> >  drivers/clk/qcom/clk-rpm.c                    | 35 +++++++++++++++++++
-> >  include/dt-bindings/clock/qcom,rpmcc.h        |  4 +++
-> >  3 files changed, 40 insertions(+)
-> >
-> 
-> Please add Acked-by/Reviewed-by tags when posting new versions.
-> However,
-> there's no need to repost patches *only* to add the tags. The upstream
-> maintainer will do that for acks received on the version they apply.
-> 
-> If a tag was not added on purpose, please state why and what changed.
 
-Sorry it was asked to resend this as there was a bug in the software used to
-apply this. 
+On 3/9/2020 11:29 PM, Matthias Kaehlcke wrote:
+> Hi Akash,
+>
+> do you plan to re-spin this series in the near future?
+>
+> Thanks
+>
+> Matthias
 
+Hi  Matthias,
+
+I will re-spin the series by 3/13.
+
+Regards,
+
+Akash
+
+>
+> On Mon, Feb 17, 2020 at 06:59:59PM +0530, Akash Asthana wrote:
+>> dt-binding patch for UART, I2C and SPI.
+>>   - https://patchwork.kernel.org/patch/11385965/ [Convert QUP bindings
+>> 	to YAML and add ICC, pin swap doc]
+>>
+>> dt-binding patch for QSPI.
+>>   - https://patchwork.kernel.org/cover/11386003/ [Convert QSPI binding
+>> 	to YAML and add interconnect doc]
+>>
+>> Akash Asthana (6):
+>>    soc: qcom: geni: Support for ICC voting
+>>    tty: serial: qcom_geni_serial: Add interconnect support
+>>    i2c: i2c-qcom-geni: Add interconnect support
+>>    spi: spi-geni-qcom: Add interconnect support
+>>    spi: spi-qcom-qspi: Add interconnect support
+>>    arm64: dts: sc7180: Add interconnect for QUP and QSPI
+>>
+>>   arch/arm64/boot/dts/qcom/sc7180.dtsi  | 199 ++++++++++++++++++++++++++++++++++
+>>   drivers/i2c/busses/i2c-qcom-geni.c    |  84 +++++++++++++-
+>>   drivers/spi/spi-geni-qcom.c           |  65 ++++++++++-
+>>   drivers/spi/spi-qcom-qspi.c           |  38 ++++++-
+>>   drivers/tty/serial/qcom_geni_serial.c |  84 ++++++++++++--
+>>   include/linux/qcom-geni-se.h          |  31 ++++++
+>>   6 files changed, 481 insertions(+), 20 deletions(-)
+>>
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
