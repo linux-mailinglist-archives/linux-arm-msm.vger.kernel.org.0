@@ -2,116 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33F52182C62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 10:25:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90ED2182D2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 11:12:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbgCLJZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Mar 2020 05:25:33 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36776 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgCLJZd (ORCPT
+        id S1726254AbgCLKMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Mar 2020 06:12:42 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35374 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726194AbgCLKMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Mar 2020 05:25:33 -0400
-Received: by mail-wm1-f67.google.com with SMTP id g62so5402136wme.1;
-        Thu, 12 Mar 2020 02:25:31 -0700 (PDT)
+        Thu, 12 Mar 2020 06:12:42 -0400
+Received: by mail-pf1-f196.google.com with SMTP id u68so3043328pfb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2020 03:12:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=tZo5ZZ4tIC41ljTxXlaCIM/Fz/u40m/fyXeMfkYNLyw=;
-        b=YhZ1FUP/rMwvBvnBw7Izh4PEz309HMRj4HUaKJAaQJNqzBUUnWueYQAbcBOGuvTGj9
-         CIADtmBrZ/bMAUR+zgAVRIKZWZZofPH2M3ndSRGQKnKj4BWD5KJD/lHrYhnUGH2gIqMd
-         hxoX9o4W5PeSCzXqMh2LZGcjj41UgVIXOvE2yB1SfNgtb4NAO3YaMKT5nxRl/rm+gg2m
-         Xu8DYlMPSCehGN7WxWrIIcNpuzX91j4CsjDPOS91xuYfYVHoAMeg8WgXwMpND7VCmrc+
-         PtLPC/xF4cV7Xrda/NbQS3nbUQmitKHjN+UdEggfajHLV8VNKWiSnUZ8ps0EpG14KmQn
-         kJng==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=g2ic8RCgE8xfXSotQsLJPMX+SIIxXdgAWghsG0UmqWY=;
+        b=G+UNAh6wj/c0SGz5GhPSr+VYq88055m5ZZtvU0lGNrZyPFoDBu4p2FqlJVbHL/0EUl
+         6ARFETg2dQqDIZvvCsZcC4vZgzQ/u3QoEqcHtqMHvJUDVrmr3IDXqXgtNF8Jk2zJj0Bo
+         SkAT9oTLszdsWdZwcJ1HgX6P1ICWSXNQdtu/iGNnBZyYFIPlEeqB33DuXHZ9T1e6nCNm
+         qsdslFvy+BKwlPpw7fWakLpmb321bPsUvyvoOvrkrCz7G/hpLnLamMC3W3UN4XnrgEoL
+         SJ/l+N9kwwd6BEVVF+n3HteQBjQY1arEZRxvnFSreA83IHR9Q9hU6IEvl6EZDs+yDaji
+         uUcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=tZo5ZZ4tIC41ljTxXlaCIM/Fz/u40m/fyXeMfkYNLyw=;
-        b=XJAIEaK9HbJagzpzB3KnH3BBdbdyYWsub0qS1VNtvwsVghg0VwRqeSHrDrV0KmGN4b
-         wI16F6PmRmBA+nvdmE2Wi9q/wPX1IFwQBu4DBSjAeMbFMeO63csLzE8+OBG46vq5Igye
-         RBhU28UYfAzgh8F3mpBG76Yzv6fDIsdv/oiG9og+tx3w1udOvsWwjHmkHc+0SxXtQRBu
-         wFl/7M/RAdWTUKfMQX2m4VvkQmjByqe2exDvBT1xNSdKcfYTl+7iz+cQ+Yavh9AynXPF
-         MCD3bBo5nAztMHHBaZfXmm404WGBJ79b7FlLgivC9egqiB4MqFsMXx/uYOETvj6aGoFU
-         VUrg==
-X-Gm-Message-State: ANhLgQ3P7mXbP8uSOMELuuZ+/Fsrmixh9NpkiQx+5Ysy/iuwdTh8hvyo
-        W+3VKHVBbdrjzACZNp9waRU=
-X-Google-Smtp-Source: ADFU+vsdOlYqq4H+9zCS3gDmdlLhT3AWt61eJ62oAqQOXttc+gmok2ZjHu1svwnWTs7TkHdvI8Tc/A==
-X-Received: by 2002:a1c:9d41:: with SMTP id g62mr3995118wme.131.1584005130211;
-        Thu, 12 Mar 2020 02:25:30 -0700 (PDT)
-Received: from AnsuelXPS ([2001:470:b467:1:598e:6e04:3a30:76a6])
-        by smtp.gmail.com with ESMTPSA id c23sm12093081wme.39.2020.03.12.02.25.28
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g2ic8RCgE8xfXSotQsLJPMX+SIIxXdgAWghsG0UmqWY=;
+        b=YxkJxKGytDcSVvVIyl1eV52ZG7FsPbA8FlkaFR1pAoXanKWilQfauYscneB1hjILyR
+         RXKGML9mVtmlBuoJAtk3urYvp6eb/KvX1v5B1/jui1g/Mtyp/3HDD5+ImI6GHvmi9GyV
+         74SavKxowNp0ou7juKb3jKKqUDSOpvwyIDHuuwFLyfPohJdF83F1b7cKp5Va3ZFLdhpy
+         krSqMMIdXg5VBw2IcpecA+PG4niETsoghUuPpegYfefiQVxm0FrzuJpEMvBteQOwjGNE
+         WsKCLGVR3f/xnew0fG647PHKWeFxkxhsCFpgsrNCLAe8/HYI5eemgci7ruGRbVutMLZe
+         QkhQ==
+X-Gm-Message-State: ANhLgQ37pXyzgVTldW48xIhILbOM8cffU8Pf+IJdojHYBzX9rym2aVn3
+        m7DWnlFPIO7L75i/BGXwubxTlw==
+X-Google-Smtp-Source: ADFU+vsNpY0Hm54zBz9SHVmV3vmk513jLZGv0nsBMg1SxW2mhGr4zvQGzyTXRNQMCzGHjdW03YDzuA==
+X-Received: by 2002:a63:b216:: with SMTP id x22mr6869446pge.198.1584007960467;
+        Thu, 12 Mar 2020 03:12:40 -0700 (PDT)
+Received: from localhost ([122.171.122.128])
+        by smtp.gmail.com with ESMTPSA id k5sm8173410pju.29.2020.03.12.03.12.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Mar 2020 02:25:29 -0700 (PDT)
-From:   <ansuelsmth@gmail.com>
-To:     "'Bjorn Andersson'" <bjorn.andersson@linaro.org>
-Cc:     <agross@kernel.org>, "'Rob Herring'" <robh+dt@kernel.org>,
-        "'Mark Rutland'" <mark.rutland@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20200311130918.753-1-ansuelsmth@gmail.com> <20200312054649.GG1098305@builder>
-In-Reply-To: <20200312054649.GG1098305@builder>
-Subject: R: [PATCH 1/2] firmware: qcom_scm: add ipq806x with no clock
-Date:   Thu, 12 Mar 2020 10:25:26 +0100
-Message-ID: <00aa01d5f850$2b6ddcb0$82499610$@gmail.com>
+        Thu, 12 Mar 2020 03:12:39 -0700 (PDT)
+Date:   Thu, 12 Mar 2020 15:42:32 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Sricharan R <sricharan@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom: Add support for krait based socs
+Message-ID: <20200312101232.fmjs3zjl3gud5myh@vireshk-i7>
+References: <20200219205546.6800-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: it
-Thread-Index: AQLDpUr6d+Ge4N83XEGEcKjyX1zZ/AG5FpfzpluLgMA=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200219205546.6800-1-ansuelsmth@gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On Wed 11 Mar 06:09 PDT 2020, Ansuel Smith wrote:
+On 19-02-20, 21:55, Ansuel Smith wrote:
+> In Certain QCOM SoCs like ipq8064, apq8064, msm8960, msm8974
+> that has KRAIT processors the voltage/current value of each OPP
+> varies based on the silicon variant in use.
 > 
-> > ipq806x rpm definition was missing for a long time.
-> > Add this to make this soc support rpm.
-> >
+> The required OPP related data is determined based on
+> the efuse value. This is similar to the existing code for
+> kryo cores. So adding support for krait cores here.
 > 
-> I merged the dt-binding patch, but please update dts to use:
-> 	compatible = "qcom,scm-ipq806x", "qcom,scm";
-> 
-> instead of adding the platform specific compatible in the driver.
-> 
-> Regards,
-> Bjorn
-> 
+> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  .../bindings/opp/qcom-nvmem-cpufreq.txt       |   3 +-
+>  drivers/cpufreq/Kconfig.arm                   |   2 +-
+>  drivers/cpufreq/cpufreq-dt-platdev.c          |   5 +
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c          | 181 ++++++++++++++++--
+>  4 files changed, 173 insertions(+), 18 deletions(-)
 
-Should I drop the added compatible in qcom_scm.c or just
-keep it and add the definition in the ipq806x dts?
+Can someone from Qcom team review this ?
 
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  drivers/firmware/qcom_scm.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/firmware/qcom_scm.c
-> b/drivers/firmware/qcom_scm.c
-> > index 059bb0fbae9e..d13ef3cd8cf5 100644
-> > --- a/drivers/firmware/qcom_scm.c
-> > +++ b/drivers/firmware/qcom_scm.c
-> > @@ -1144,6 +1144,7 @@ static const struct of_device_id
-> qcom_scm_dt_match[] = {
-> >
-> SCM_HAS_BUS_CLK)
-> >  	},
-> >  	{ .compatible = "qcom,scm-ipq4019" },
-> > +	{ .compatible = "qcom,scm-ipq806x" },
-> >  	{ .compatible = "qcom,scm-msm8660", .data = (void *)
-> SCM_HAS_CORE_CLK },
-> >  	{ .compatible = "qcom,scm-msm8960", .data = (void *)
-> SCM_HAS_CORE_CLK },
-> >  	{ .compatible = "qcom,scm-msm8916", .data = (void
-> *)(SCM_HAS_CORE_CLK |
-> > --
-> > 2.25.0
-> >
-
+-- 
+viresh
