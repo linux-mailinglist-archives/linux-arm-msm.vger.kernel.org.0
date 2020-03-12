@@ -2,94 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 66CE6183447
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 16:17:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95A88183601
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 17:20:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727849AbgCLPRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Mar 2020 11:17:19 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:40389 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727455AbgCLPRS (ORCPT
+        id S1727001AbgCLQUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Mar 2020 12:20:11 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33044 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726677AbgCLQUL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Mar 2020 11:17:18 -0400
-Received: by mail-oi1-f196.google.com with SMTP id y71so5807999oia.7;
-        Thu, 12 Mar 2020 08:17:18 -0700 (PDT)
+        Thu, 12 Mar 2020 12:20:11 -0400
+Received: by mail-ed1-f68.google.com with SMTP id z65so8234038ede.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2020 09:20:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4Ri6Zo06xUqVBLdkBsBEWcTBkjmCotOOr1BUmTAsg3I=;
+        b=BnsaaGEZXZQ+MIghPu9pi3JdQ7NsQ/HWjMR2ykY98+99wV3F7uFg51Pe0wEK7yJpz/
+         2R6hfPm3zcBUhSTeaiYda1p9Tth8EuR53Kzi9+jyWG/UXP7aviVhd2a7Q6jsXd+JzjCO
+         AJR+nDOLTxf8X/q7fYHJePc6p60btksElmRuimChlmeYMKS0OckSwuqvU4N1PDBtj38k
+         TP0FMELPixK4VwxSfbQ/ab91pCmOGKFn49lX7VIBWYkUG+ukHmrQnaQP2AvsmD4txPZ4
+         et1GOipZRQVjfu+f7p9vuSIrYCkf0J8/eFofNs9vZIQ6Mme/IQ79C3Nl1TWDKiCWSKL2
+         Vh8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Jzpwe77Abgtv1XYYx0fhdTAjqfD6Awmd08c56L163dU=;
-        b=R4Usgqot9FMkEJa3WE/U/jhC3R34PTs6ftAqGcZY06HEA46dnUTv7VDfAnCZrD9Vsq
-         /4K0WHqGJANAQR+e57yQZ9t8n0eryxoKzXOe9eWIx0iRAiXo/UQPoI6TecRWvMlhZttY
-         NVq8gnobKtGeB/7gkLLOf5ubyrfFbrRx+EhJ/olR3x6V+eA+r0+N0ttIKm3m3K4YzTm1
-         8wEvxcE3tYsdI5Qjv8zQ4bOy9NG3cWB6LxGzqiEG2Ehd7hBCqvhwckQpFLiTBgn0h4qF
-         l24VwTvCq6W4PdgeyQHPu6Qce+JDKDDH8cP491aWltqo0I76k/7kaWc8YabWmn7LpcJ4
-         UQlQ==
-X-Gm-Message-State: ANhLgQ0nWGYu1FNXxXfVi1pXr2lqMhkzaBIUdwMNF2MvbaU4+ahG50Bz
-        D0H+6blHwkW0v9vJEOis/A==
-X-Google-Smtp-Source: ADFU+vsdmoOYjMIj0gWOrimsXEvO/w7aUb1U+jTQ6bLux3L7/gaZQojIdHDA7NxmCJ5EzsCb3gNUbQ==
-X-Received: by 2002:aca:5c46:: with SMTP id q67mr3034917oib.75.1584026237750;
-        Thu, 12 Mar 2020 08:17:17 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id j5sm18380490otl.71.2020.03.12.08.17.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2020 08:17:17 -0700 (PDT)
-Received: (nullmailer pid 7330 invoked by uid 1000);
-        Thu, 12 Mar 2020 15:17:16 -0000
-Date:   Thu, 12 Mar 2020 10:17:16 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        Harigovindan P <harigovi@codeaurora.org>, robdclark@gmail.com,
-        seanpaul@chromium.org, sean@poorly.run
-Subject: Re: [PATCH v6 1/2] dt-bindings: display: add visionox rm69299 panel
- variant
-Message-ID: <20200312151716.GA7045@bogus>
-References: <20200311085807.21984-1-harigovi@codeaurora.org>
- <20200311085807.21984-2-harigovi@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4Ri6Zo06xUqVBLdkBsBEWcTBkjmCotOOr1BUmTAsg3I=;
+        b=UkERrhhAOv83F6xLbgOi+VLQ1PFi56pFgSV7mIWQbzD9YHLSWnmVEfun260OacCjUG
+         8l1LxTXI0btjaxy25E4bfZQvgsEiNwH3HB95hAz98/mu+A9X+Y8RlrJn92N9lSOnzPnz
+         XG6CrZwsoZV4SH7GeGv+PeirII4fOUVGreD41VPylNkw83ZzDwLQBoGx/y/uI702YO+Q
+         5hl5Gi3jN/CDOgP9LBT9Z2pSuHcqkYRG0EGqCIwXp15S53VQhCsFAZeewlhV9U433VCT
+         PCYnemjem2Y6S/p59FbomNTWPwwFYuUrUE7DGwPxcOELIMB6rXQDxZA2PTUD6ojkZVvy
+         oyyg==
+X-Gm-Message-State: ANhLgQ1Z0kQYG1yr1SKEpYjRNVRod5sV5oBu0/rK6PyYbsgZ17t2fuzy
+        ELWfsQp0ade5U7MeCzxIQSiQtXKxCyl/T4D5DMPX73kG
+X-Google-Smtp-Source: ADFU+vuqPsB7DZGHkjoMD0pTX3OqBychAWWvqgB5t0ZT5bpa1RnqPfQCbA+j1Rn0HkU6vrLllgNLtBCFlaO66DHsWj8=
+X-Received: by 2002:a17:906:f1c4:: with SMTP id gx4mr5558031ejb.267.1584030009727;
+ Thu, 12 Mar 2020 09:20:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200311085807.21984-2-harigovi@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200312035154.1621-1-imirkin@alum.mit.edu>
+In-Reply-To: <20200312035154.1621-1-imirkin@alum.mit.edu>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 12 Mar 2020 09:19:58 -0700
+Message-ID: <CAF6AEGt4hnMJE=DSAx1754DTV4TJG5L8YocqMjAE1NpNJZaJMg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: avoid double-attaching hdmi/edp bridges
+To:     Ilia Mirkin <imirkin@alum.mit.edu>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 11 Mar 2020 14:28:06 +0530, Harigovindan P wrote:
-> Add bindings for visionox rm69299 panel.
-> 
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+On Wed, Mar 11, 2020 at 8:52 PM Ilia Mirkin <imirkin@alum.mit.edu> wrote:
+>
+> Each of hdmi and edp are already attached in msm_*_bridge_init. A second
+> attachment returns -EBUSY, failing the driver load.
+>
+> Tested with HDMI on IFC6410 (APQ8064 / MDP4), but eDP case should be
+> analogous.
+>
+> Fixes: 3ef2f119bd3ed (drm/msm: Use drm_attach_bridge() to attach a bridge to an encoder)
+> Cc: Boris Brezillon <boris.brezillon@collabora.com>
+> Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
+
+Thanks
+
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
 > ---
-> 
-> Changes in v2:
-> 	- Removed unwanted properties from description.
-> 	- Creating source files without execute permissions(Rob Herring).
-> Changes in v3:
-> 	- Changing txt file into yaml
-> Changes in v4:
-> 	- Updating license identifier.
-> 	- Moving yaml file inside panel directory.
-> 	- Removing pinctrl entries.
-> 	- Adding documentation for reset-gpios.
-> Changes in v5:
-> 	- No changes. Updated 2/2 Patch.
-> Changes in v6:
-> 	- Removing patternProperties.
-> 	- Added " |" after description.
-> 	- Setting port and reset-gpios to true.
-> 	- Removing @ae94000 for dsi node.
-> 
->  .../display/panel/visionox,rm69299.yaml       | 77 +++++++++++++++++++
->  1 file changed, 77 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
-> 
-
-My bot found errors running 'make dt_binding_check' on your patch:
-
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/panel/visionox,rm69299.example.dt.yaml: panel@0: 'reg' is a required property
-
-See https://patchwork.ozlabs.org/patch/1252722
-Please check and re-submit.
+>  drivers/gpu/drm/msm/edp/edp.c   | 4 ----
+>  drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ----
+>  2 files changed, 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/edp/edp.c b/drivers/gpu/drm/msm/edp/edp.c
+> index ad4e963ccd9b..106a67473af5 100644
+> --- a/drivers/gpu/drm/msm/edp/edp.c
+> +++ b/drivers/gpu/drm/msm/edp/edp.c
+> @@ -178,10 +178,6 @@ int msm_edp_modeset_init(struct msm_edp *edp, struct drm_device *dev,
+>                 goto fail;
+>         }
+>
+> -       ret = drm_bridge_attach(encoder, edp->bridge, NULL);
+> -       if (ret)
+> -               goto fail;
+> -
+>         priv->bridges[priv->num_bridges++]       = edp->bridge;
+>         priv->connectors[priv->num_connectors++] = edp->connector;
+>
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index 1a9b6289637d..737453b6e596 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -327,10 +327,6 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>                 goto fail;
+>         }
+>
+> -       ret = drm_bridge_attach(encoder, hdmi->bridge, NULL);
+> -       if (ret)
+> -               goto fail;
+> -
+>         priv->bridges[priv->num_bridges++]       = hdmi->bridge;
+>         priv->connectors[priv->num_connectors++] = hdmi->connector;
+>
+> --
+> 2.24.1
+>
