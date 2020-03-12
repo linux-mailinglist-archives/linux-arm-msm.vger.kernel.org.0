@@ -2,128 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E681F182878
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 06:35:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF6FE18288F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 06:47:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387848AbgCLFfu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Mar 2020 01:35:50 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:40111 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387847AbgCLFfu (ORCPT
+        id S2387837AbgCLFqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Mar 2020 01:46:55 -0400
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:37816 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387811AbgCLFqz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Mar 2020 01:35:50 -0400
-Received: by mail-pl1-f196.google.com with SMTP id h11so2183115plk.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 22:35:48 -0700 (PDT)
+        Thu, 12 Mar 2020 01:46:55 -0400
+Received: by mail-pj1-f66.google.com with SMTP id ca13so2169693pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 22:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SheGGD9VvRORuB+YjWtmYV6UdkIZ+YDt0GYXTwxkFwY=;
-        b=QI2yaeJTxbAKLPQH0pkjzKp+KCo2eDQet9Ig6cqJPhHEquRvxiac45P3qf/0UGZniP
-         5hWk1YbfNsLqCRoWrqE2NKrXHQGNuxEEWOoTauvZKasxXU2WfwtkPyBkOLtIIWroL3Cv
-         1sYSyzYW1Igxtzlz9TTHPGTKHr883vKw+zscEwVMe/f52ixMYl53ao5yfjNtGeK1PmGs
-         5lKsz1EQf/4MQRAwaasfI8033m6xGEplswXgiDo6pgvioQV274C+CPAvXK1+RiE2vNSR
-         WqP1mRMJEjFr9OG96PPxJcfO7DHsJWoP2YhpPdlC2AgSk94Mlp92EhKGYZB5SZqo7Y2z
-         c/Dg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=HdLQClxtUdSKaPYPUuDw8hsXm01ozTjM22vd2TlllWY=;
+        b=IboB44Xv4A4qjCH+4o4oeBZWNlCYG/ByHae4lTJdqvMyNBfaB60Yong+zCaWJGc5pD
+         u5BJpY7WgaiMw7Ktx+zZDDybj85pjdn0/kXGiTEUaE8n3bD92Dqt5FdHk5vhvbgWPuN2
+         AvsWdo9mT1BFwuH3FFGtyvj+iufWkZ+3MmHFccjCzC8FGN3fu4353OEipnJwkHtDYRB0
+         QKGNyFqIlYiqYGKBcGfbQZUQVDaTJFs+D/E4QY6EIsuhO2Dd1srPIufHIOWVDUyy+/bl
+         O97lE45PwOXOTzOz9HIyN6eiodf2dGy5Ipk3XWm16CSwCplm8891M4r65yWbG0uEnql8
+         DXFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SheGGD9VvRORuB+YjWtmYV6UdkIZ+YDt0GYXTwxkFwY=;
-        b=kMEPGwEC91rEV2aYvdbN9t/mHsLq+AnznRMAQyPqtKx+R3B058twtDtACPC49YnNvv
-         0elTb1JEqYIqOnfeTogHhHPIkEGMbbkx6t/9iCvNmAZ+4YAjC/DKzGMNPHQfOe73hNcI
-         jHvGzCbs+o17oNOH6/AW2SvSAGq9RyZ4SnSjCnHr+eilRW8w464phxbiRkkE8oGGPQLz
-         YPpFkqOm2TYJyHP35UPawMKAHaA9JoaDJDMr8MqQpHYXYRm2nmoTzScsLSWSoV9JMjLV
-         cPyy/0+G7lR3bSIsiYvs7aExEpfz8Ak650O5jK1TqSDf0FMueEn2IT9Njd5pGy/il826
-         rqTA==
-X-Gm-Message-State: ANhLgQ0BKb/ucszHzqX2ZykldK55RZJXk3pS2vj1yMIrPMVExxgRpgxB
-        ktQWNa+lKRyY/MSBWBSPKmxJdw==
-X-Google-Smtp-Source: ADFU+vs9fJDSMy2lBvj+aQy82yNPIdBrCy8YZQTsCPzP8m1hXpLVEkqnvIUqt9mGo7rUFkpJ+nWE9A==
-X-Received: by 2002:a17:90a:9f93:: with SMTP id o19mr2359492pjp.76.1583991347467;
-        Wed, 11 Mar 2020 22:35:47 -0700 (PDT)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g9sm44204468pfi.37.2020.03.11.22.35.45
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HdLQClxtUdSKaPYPUuDw8hsXm01ozTjM22vd2TlllWY=;
+        b=X22sRn85R0c0Rac0B4sqZHI9jxueW4Y3ZdFg8Dy/oUI+V0nXYdAnPGSOTUOydXZPzO
+         gAqF9JkR/KJCTMtUO5PzzYZxWabLegdga3tuJSPf97XSe59JLWGfE9QFfe+YYSBjMpYY
+         FbGIDz/3YnQ0RZBRCOKFT2bvCeey7nfiowUcI58veJQ3Ecv8fTHMrLyd8V4r5iSXTePn
+         7bKJrk+91VbaYvi+JQpmTTpHF8qlT4euOGzbzXkosoURt0Ao/Te9jCPtEci0+1xSo9V+
+         Ztv+L0Jiv9eJowTkdH5OaT1VWXAFMbfQ6xweIMAVrAZfzcztdHlpv9FpJa41PjZo1WUf
+         0Muw==
+X-Gm-Message-State: ANhLgQ2FoypJYHSBH9s+B6u/A4QYVfoMnJ3rN/ekUf9OOyK6ulV65EHZ
+        IWHg5+y1iFV6QmTRFLWp9RFclw==
+X-Google-Smtp-Source: ADFU+vvBWNdJZkvEkCv0nI8YzvJVVKiWy4ls6Cvv+ZJy9fEmA1IbQaWDjbdzG87HHLDEiZZTB4J7JA==
+X-Received: by 2002:a17:902:b090:: with SMTP id p16mr6000674plr.274.1583992011924;
+        Wed, 11 Mar 2020 22:46:51 -0700 (PDT)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id z20sm23161331pge.62.2020.03.11.22.46.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 22:35:46 -0700 (PDT)
-Date:   Wed, 11 Mar 2020 22:35:44 -0700
+        Wed, 11 Mar 2020 22:46:51 -0700 (PDT)
+Date:   Wed, 11 Mar 2020 22:46:49 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
-        olof@lixom.net, Anson.Huang@nxp.com, maxime@cerno.tech,
-        leonard.crestez@nxp.com, dinguyen@kernel.org,
-        marcin.juszkiewicz@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: Re: [v1 6/6] arm64: defconfig: Enable QCOM CAMCC, CAMSS and CCI
- drivers
-Message-ID: <20200312053544.GY264362@yoga>
-References: <20200311123501.18202-1-robert.foss@linaro.org>
- <20200311123501.18202-7-robert.foss@linaro.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     agross@kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] firmware: qcom_scm: add ipq806x with no clock
+Message-ID: <20200312054649.GG1098305@builder>
+References: <20200311130918.753-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200311123501.18202-7-robert.foss@linaro.org>
+In-Reply-To: <20200311130918.753-1-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 11 Mar 05:35 PDT 2020, Robert Foss wrote:
+On Wed 11 Mar 06:09 PDT 2020, Ansuel Smith wrote:
 
-> Build camera clock, isp and controller drivers as modules.
+> ipq806x rpm definition was missing for a long time.
+> Add this to make this soc support rpm.
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I merged the dt-binding patch, but please update dts to use:
+	compatible = "qcom,scm-ipq806x", "qcom,scm";
 
-
-Thanks for the series Robert!
+instead of adding the platform specific compatible in the driver.
 
 Regards,
 Bjorn
 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
->  arch/arm64/configs/defconfig | 4 ++++
->  1 file changed, 4 insertions(+)
+>  drivers/firmware/qcom_scm.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 4db223dbc549..7cb6989249ab 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -376,6 +376,7 @@ CONFIG_I2C_MESON=y
->  CONFIG_I2C_MV64XXX=y
->  CONFIG_I2C_OWL=y
->  CONFIG_I2C_PXA=y
-> +CONFIG_I2C_QCOM_CCI=m
->  CONFIG_I2C_QCOM_GENI=m
->  CONFIG_I2C_QUP=y
->  CONFIG_I2C_RK3X=y
-> @@ -530,6 +531,7 @@ CONFIG_VIDEO_SAMSUNG_S5P_MFC=m
->  CONFIG_VIDEO_SAMSUNG_EXYNOS_GSC=m
->  CONFIG_VIDEO_RENESAS_FCP=m
->  CONFIG_VIDEO_RENESAS_VSP1=m
-> +CONFIG_VIDEO_QCOM_CAMSS=m
->  CONFIG_DRM=m
->  CONFIG_DRM_I2C_NXP_TDA998X=m
->  CONFIG_DRM_NOUVEAU=m
-> @@ -732,6 +734,7 @@ CONFIG_MSM_GCC_8994=y
->  CONFIG_MSM_MMCC_8996=y
->  CONFIG_MSM_GCC_8998=y
->  CONFIG_QCS_GCC_404=y
-> +CONFIG_SDM_CAMCC_845=m
->  CONFIG_SDM_GCC_845=y
->  CONFIG_SM_GCC_8150=y
->  CONFIG_QCOM_HFPLL=y
-> @@ -762,6 +765,7 @@ CONFIG_QCOM_COMMAND_DB=y
->  CONFIG_QCOM_GENI_SE=y
->  CONFIG_QCOM_GLINK_SSR=m
->  CONFIG_QCOM_RMTFS_MEM=m
-> +CONFIG_SDM_CAMCC_845=m
->  CONFIG_QCOM_RPMH=y
->  CONFIG_QCOM_RPMHPD=y
->  CONFIG_QCOM_SMEM=y
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 059bb0fbae9e..d13ef3cd8cf5 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1144,6 +1144,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+>  							     SCM_HAS_BUS_CLK)
+>  	},
+>  	{ .compatible = "qcom,scm-ipq4019" },
+> +	{ .compatible = "qcom,scm-ipq806x" },
+>  	{ .compatible = "qcom,scm-msm8660", .data = (void *) SCM_HAS_CORE_CLK },
+>  	{ .compatible = "qcom,scm-msm8960", .data = (void *) SCM_HAS_CORE_CLK },
+>  	{ .compatible = "qcom,scm-msm8916", .data = (void *)(SCM_HAS_CORE_CLK |
 > -- 
-> 2.20.1
+> 2.25.0
 > 
