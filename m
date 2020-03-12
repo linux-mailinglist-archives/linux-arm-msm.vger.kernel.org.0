@@ -2,153 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 20D3B1825FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 00:44:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E588818271A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 03:42:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731417AbgCKXoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 19:44:15 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43472 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731412AbgCKXoP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 19:44:15 -0400
-Received: by mail-pl1-f193.google.com with SMTP id f8so1844719plt.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 16:44:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZEyMFnwakXjowg52voyfC4K3NxCZ17Ctu1QUhRXYRT8=;
-        b=W8NOfb6IhTJDTK4NvVVTnkeUUX2ZTACR57qIAAHhHfGsO3drKSin6f6/Eok7XkrVlw
-         IpO9S1AFMRPavhBJ3WAjnWiuNfpqSNzNqrvYwAiaIzvId7JI1ML0iN1C7ZmUKdJWvbBe
-         fBqCRf8EZXV1zJFJGestM93RMkTsIBi/TdKxa9aAqx0jQOCS7T8arUXRKV4XOgrAR8yn
-         QGccrmcsZakfUaSPqTi7uWuuCm0SNGECwnn2JRRkm6rmblfPxZnxprZuawaZeq7R1Gzk
-         ELb52TpQbdcpXTbqqggA1AoKCUSj+ZlNy7003gdOEprd+7OUgKiF6dmnEdVdtB+kw3Q5
-         FsFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZEyMFnwakXjowg52voyfC4K3NxCZ17Ctu1QUhRXYRT8=;
-        b=KIok6smzkzL66EHnrz2P25HrgX5y8O1qzbQyjolsU+TGbVxzaxOw1D80m0vbFCkgMO
-         GN8zAWU+SgaZGo8fobSYr1jpHKIYTnOaYesRSgHB3Ni/pRuBqHwcQbx7QeEQylev0g2n
-         IVeFPY/pdYpfkmefpm78FixjCPUHAc7x5n2g/OIcvbHiRUoq8wMF0CMWPx5rgodmqpgc
-         mrPn4iZy0keRfsumI0vFWT+/97teQjgtAHFo33+1Kzm9jv8NqyUQk2F/VAuDFjzx3tsZ
-         gotLzJSf1RMeGnYdIwAAST+apeCpxlTG1iDY7oXp7gS/44J1zB6zU26YXvLtneualxGs
-         bweA==
-X-Gm-Message-State: ANhLgQ0WqCnLEtYRAKNzm2YX2b8P1U62S/EScZjM2KClLoPHxgED70v4
-        F3ADWAWosX6GOKhpmLM/nsTmvA==
-X-Google-Smtp-Source: ADFU+vvAYHKzghO9JCb5F1g7p3KD/ZAgT/OiCQR+XEJpn5yw5f7PbqaSvpjVtk5PgBOjn8wT814SRQ==
-X-Received: by 2002:a17:902:5ac9:: with SMTP id g9mr5114278plm.69.1583970252383;
-        Wed, 11 Mar 2020 16:44:12 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id h2sm1173651pgq.32.2020.03.11.16.44.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 16:44:11 -0700 (PDT)
-Date:   Wed, 11 Mar 2020 16:44:09 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Alex Elder <elder@linaro.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] remoteproc: re-check state in
- rproc_trigger_recovery()
-Message-ID: <20200311234409.GH14744@builder>
-References: <20200228183359.16229-1-elder@linaro.org>
- <20200228183359.16229-2-elder@linaro.org>
- <20200309205633.GF1399@xps15>
+        id S2387501AbgCLCm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Mar 2020 22:42:57 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:11664 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2387411AbgCLCm4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Mar 2020 22:42:56 -0400
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id 964B35ED28EA7C162979;
+        Thu, 12 Mar 2020 10:42:48 +0800 (CST)
+Received: from ubuntu.huawei.com (10.175.104.215) by
+ DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
+ 14.3.487.0; Thu, 12 Mar 2020 10:42:40 +0800
+From:   tongtiangen <tongtiangen@huawei.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <airlied@linux.ie>,
+        <daniel@ffwll.ch>, <ddavenport@chromium.org>,
+        <gregkh@linuxfoundation.org>, <abhinavk@codeaurora.org>,
+        <jcrouse@codeaurora.org>, <tglx@linutronix.de>,
+        <tongtiangen@huawei.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH -next] drm/msm/dpu: Remove some set but not used variables
+Date:   Thu, 12 Mar 2020 08:25:59 +0800
+Message-ID: <20200312002559.20738-1-tongtiangen@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200309205633.GF1399@xps15>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Originating-IP: [10.175.104.215]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 09 Mar 13:56 PDT 2020, Mathieu Poirier wrote:
+Fixes gcc '-Wunused-but-set-variable' warning:
 
-> On Fri, Feb 28, 2020 at 12:33:56PM -0600, Alex Elder wrote:
-> > Two places call rproc_trigger_recovery():
-> >   - rproc_crash_handler_work() sets rproc->state to CRASHED under
-> >     protection of the mutex, then calls it if recovery is not
-> >     disabled.  This function is called in workqueue context when
-> >     scheduled in rproc_report_crash().
-> >   - rproc_recovery_write() calls it in two spots, both of which
-> >     the only call it if the rproc->state is CRASHED.
-> > 
-> > The mutex is taken right away in rproc_trigger_recovery().  However,
-> > by the time the mutex is acquired, something else might have changed
-> > rproc->state to something other than CRASHED.
-> 
-> I'm interested in the "something might have changed" part.  The only thing I can
-> see is if rproc_trigger_recovery() has been called from debugfs between the time
-> the mutex is released but just before rproc_trigger_recovery() is called in
-> rproc_crash_handler_work().  In this case we would be done twice, something your
-> patch prevents.  Have you found other scenarios?
-> 
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function _dpu_debugfs_show_regset32:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:142:26: warning: variable priv set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function dpu_kms_prepare_commit:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:271:21: warning: variable dev set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function _dpu_kms_hw_destroy:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:555:21: warning: variable dev set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function dpu_kms_hw_init:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:763:26: warning: variable priv set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function dpu_runtime_suspend:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:1021:21: warning: variable ddev set but not used [-Wunused-but-set-variable]
 
-Alex is right, by checking rproc->state outside of the lock
-rproc_recovery_write() allows for multiple contexts to enter
-rproc_trigger_recovery() at once.
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: tongtiangen <tongtiangen@huawei.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-Further more, these multiple context will be held up at the
-mutex_lock_interruptible() and as each one completes the recovery the
-subsequent ones will stop the rproc, generate a coredump and then start
-it again.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index cb08fafb1dc1..089d1cde39da 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -138,16 +138,12 @@ static int _dpu_debugfs_show_regset32(struct seq_file *s, void *data)
+ {
+ 	struct dpu_debugfs_regset32 *regset = s->private;
+ 	struct dpu_kms *dpu_kms = regset->dpu_kms;
+-	struct drm_device *dev;
+-	struct msm_drm_private *priv;
+ 	void __iomem *base;
+ 	uint32_t i, addr;
+ 
+ 	if (!dpu_kms->mmio)
+ 		return 0;
+ 
+-	dev = dpu_kms->dev;
+-	priv = dev->dev_private;
+ 	base = dpu_kms->mmio + regset->offset;
+ 
+ 	/* insert padding spaces, if needed */
+@@ -267,8 +263,6 @@ static ktime_t dpu_kms_vsync_time(struct msm_kms *kms, struct drm_crtc *crtc)
+ static void dpu_kms_prepare_commit(struct msm_kms *kms,
+ 		struct drm_atomic_state *state)
+ {
+-	struct dpu_kms *dpu_kms;
+-	struct drm_device *dev;
+ 	struct drm_crtc *crtc;
+ 	struct drm_crtc_state *crtc_state;
+ 	struct drm_encoder *encoder;
+@@ -276,8 +270,6 @@ static void dpu_kms_prepare_commit(struct msm_kms *kms,
+ 
+ 	if (!kms)
+ 		return;
+-	dpu_kms = to_dpu_kms(kms);
+-	dev = dpu_kms->dev;
+ 
+ 	/* Call prepare_commit for all affected encoders */
+ 	for_each_new_crtc_in_state(state, crtc, crtc_state, i) {
+@@ -552,11 +544,8 @@ static long dpu_kms_round_pixclk(struct msm_kms *kms, unsigned long rate,
+ 
+ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
+ {
+-	struct drm_device *dev;
+ 	int i;
+ 
+-	dev = dpu_kms->dev;
+-
+ 	if (dpu_kms->hw_intr)
+ 		dpu_hw_intr_destroy(dpu_kms->hw_intr);
+ 	dpu_kms->hw_intr = NULL;
+@@ -760,7 +749,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+ {
+ 	struct dpu_kms *dpu_kms;
+ 	struct drm_device *dev;
+-	struct msm_drm_private *priv;
+ 	int i, rc = -EINVAL;
+ 
+ 	if (!kms) {
+@@ -770,7 +758,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+ 
+ 	dpu_kms = to_dpu_kms(kms);
+ 	dev = dpu_kms->dev;
+-	priv = dev->dev_private;
+ 
+ 	atomic_set(&dpu_kms->bandwidth_ref, 0);
+ 
+@@ -1018,10 +1005,8 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+ 	int rc = -1;
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+-	struct drm_device *ddev;
+ 	struct dss_module_power *mp = &dpu_kms->mp;
+ 
+-	ddev = dpu_kms->dev;
+ 	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, false);
+ 	if (rc)
+ 		DPU_ERROR("clock disable failed rc:%d\n", rc);
+-- 
+2.17.1
 
-
-This patch would be to fix the latter problem and allows the next patch
-to move the check in the debugfs interface in under the mutex. As such
-I've picked up patch 1, 2 and 4.
-
-Regards,
-Bjorn
-
-> Thanks,
-> Mathieu
-> 
-> > 
-> > The work that follows that is only appropriate for a remoteproc in
-> > CRASHED state.  So check the state after acquiring the mutex, and
-> > only proceed with the recovery work if the remoteproc is still in
-> > CRASHED state.
-> > 
-> > Delay reporting that recovering has begun until after we hold the
-> > mutex and we know the remote processor is in CRASHED state.
-> > 
-> > Signed-off-by: Alex Elder <elder@linaro.org>
-> > ---
-> >  drivers/remoteproc/remoteproc_core.c | 12 ++++++++----
-> >  1 file changed, 8 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> > index 097f33e4f1f3..d327cb31d5c8 100644
-> > --- a/drivers/remoteproc/remoteproc_core.c
-> > +++ b/drivers/remoteproc/remoteproc_core.c
-> > @@ -1653,12 +1653,16 @@ int rproc_trigger_recovery(struct rproc *rproc)
-> >  	struct device *dev = &rproc->dev;
-> >  	int ret;
-> >  
-> > +	ret = mutex_lock_interruptible(&rproc->lock);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	/* State could have changed before we got the mutex */
-> > +	if (rproc->state != RPROC_CRASHED)
-> > +		goto unlock_mutex;
-> > +
-> >  	dev_err(dev, "recovering %s\n", rproc->name);
-> >  
-> > -	ret = mutex_lock_interruptible(&rproc->lock);
-> > -	if (ret)
-> > -		return ret;
-> > -
-> >  	ret = rproc_stop(rproc, true);
-> >  	if (ret)
-> >  		goto unlock_mutex;
-> > -- 
-> > 2.20.1
-> > 
