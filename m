@@ -2,109 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CA2FF182787
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 04:52:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 239991827F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 05:50:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730994AbgCLDwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Mar 2020 23:52:24 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:37019 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730931AbgCLDwY (ORCPT
+        id S2387657AbgCLEuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Mar 2020 00:50:17 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:50690 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387676AbgCLEuR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Mar 2020 23:52:24 -0400
-Received: by mail-qt1-f194.google.com with SMTP id l20so3325765qtp.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 20:52:21 -0700 (PDT)
+        Thu, 12 Mar 2020 00:50:17 -0400
+Received: by mail-pj1-f65.google.com with SMTP id u10so2027029pjy.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2020 21:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KQg257bFU/54D8sZD22vQvVkmqU+8hmHZdOg7G3dJQ4=;
-        b=TcIxJvpOUP/f+7MPbEGA4d+S0Zxx5fuLASCk1047vjuKQBiyWaRR7fJmmW637eBk5P
-         DIi6ZuWmL6nfYbHDTybLBkrk9tEfPWYuonggc6wFzSEhPzNeh7PpC8OY8CshPSbQENl0
-         ubbOVZ6pk39VI/sk6bwZXFCOq0nmi23wi1R4kODWy7JY8gwjyOiLyfPETafK/MxiRajH
-         8IhtMhmffv1RXh3LysaVC4+PD1P8vMOuCBv9/vcRraqaJg4Chg0VeqX/MqtZ8/14yEgY
-         i1dAcPpR326qbjxajTL33jt22gojvFa7P0rDJzjrHxSKePi3sNb0RsFiYRmdrxqgFkmB
-         E24Q==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9Huysc9k69DOetuyPT37xPzZ+YLOLRqnJ/FtV19WEDc=;
+        b=u05buOnhB2ZaHjx7I2VFVZdDS3meih0mc6WZaP2ubEFIX5IRV5PakdbMoocuP1aMet
+         136201rU4y6u8Z/BRJWEayhmgq6izg7StoG+xiBHPWeICaxzekOrFwczJDFN37vhaqhG
+         1kw58XU/mfyf4/4oZnJjk92aE03UU/a077dE71+PFVLVGLx6/iA3tlkGQl5FIdnhviBh
+         3XsuPkEDF8xtLyCuU6ZrY2qrQhM265xHA2AbYFz8FY43oNPUUHgB4+ccFwqE47xUd2S6
+         W4eYzRJufanpih+BqCLI38xka2OLJnMdlWxDNUS1RZnkjiP6U9kMQyeitCgIeZxffQ0S
+         Klvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=KQg257bFU/54D8sZD22vQvVkmqU+8hmHZdOg7G3dJQ4=;
-        b=Ps4EgcRZiigDDU1z/U3QRicoKfejZVGZISDS+lzgN3PCZHIzrqa4E0IDYuxVXlEPRa
-         /BuSGdHzvfpxGuP2jhr4/rVNHcJxGLNY98SA+kug6JXdRRkFotLWAIqeCPCDfE9Y9/YJ
-         R/samNamNXhb8X0c+pIFfN3At3VDShBDMeJsMUZYmGVuf/fPH+qgjlyMtWn965lE8lU+
-         KZi/q8PXI055CzOApcreISXjGv7GiQ5bvJzqUIjPDZKfScCkYfYy8V+LKyT6WjUubKjA
-         qaTbxS/aRAfFZkz2Sp3b6hM1SNVbKXg2hxXT59ZQ3EiAVgHxC7I7ztFnP1WSpO9lXYep
-         BCfA==
-X-Gm-Message-State: ANhLgQ2uw4I86WUZ5T3Wfiwh9Cides+vYIAdVFHTDB3IGx8bgS8We3xU
-        0cG7RLDXAwuFaI/pXqZWtUc=
-X-Google-Smtp-Source: ADFU+vtj53M9tfsuivBLtWhYCrZBup+7hHZahjU3LIYwZDJagukCdl1qw81rCRN0nwK8SPWKPjAi3Q==
-X-Received: by 2002:ac8:6708:: with SMTP id e8mr5484258qtp.229.1583985140745;
-        Wed, 11 Mar 2020 20:52:20 -0700 (PDT)
-Received: from athos.hellosponsor.com (pool-173-68-201-69.nycmny.fios.verizon.net. [173.68.201.69])
-        by smtp.gmail.com with ESMTPSA id x1sm7836250qkl.128.2020.03.11.20.52.19
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9Huysc9k69DOetuyPT37xPzZ+YLOLRqnJ/FtV19WEDc=;
+        b=TToyxbuQm00Xt1JRVX8JydEtKAyxxG07KN/sIBobYWq+57vpyYgPJ7X/kOgm28Jx16
+         kUluNJTmZUfaO7+hUhnuVpntjqapmLgYaKI3sGpV6z54UkfiimT6I3b/ct7dXyOv0HH/
+         Mce6VqjfiYfQMoOhPHB9jAtjknEP59CfZolPyMTtd+xtgBI1bTg27xWKMIxmGzZWIml0
+         iU1hJDEngEXehal3XUB7UCx/uPmgBiOz4TAnuXktLwIli8u3P+PKJHokUqgAq/xFzZtY
+         w4uLr/fqjKBzJsw8v9mBiGyRsQHqgwsAEzeq/Y9hOhZ48UkWgRrmTUDAYfxpc6xqRl38
+         4cmg==
+X-Gm-Message-State: ANhLgQ2kP1BzycNszmKhQZ1/65BdlkNONDxwdcFH3x0cpPGRzP3C+MXi
+        MuhJIG8CSyAawfaIYZAMv9cREg==
+X-Google-Smtp-Source: ADFU+vtQv6XCgFYw5CWT4cXp6fyTARSMSkMReQUHbK2N7f/ufSK/IBPreQ4I9vHrUgXhd7/6d78Hww==
+X-Received: by 2002:a17:902:7c0d:: with SMTP id x13mr6162264pll.93.1583988615935;
+        Wed, 11 Mar 2020 21:50:15 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id q12sm52827529pfh.158.2020.03.11.21.50.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2020 20:52:20 -0700 (PDT)
-From:   Ilia Mirkin <imirkin@alum.mit.edu>
-To:     freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@gmail.com>
-Cc:     Ilia Mirkin <imirkin@alum.mit.edu>,
-        Boris Brezillon <boris.brezillon@collabora.com>
-Subject: [PATCH] drm/msm: avoid double-attaching hdmi/edp bridges
-Date:   Wed, 11 Mar 2020 23:51:54 -0400
-Message-Id: <20200312035154.1621-1-imirkin@alum.mit.edu>
-X-Mailer: git-send-email 2.24.1
+        Wed, 11 Mar 2020 21:50:15 -0700 (PDT)
+Date:   Wed, 11 Mar 2020 21:50:12 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
+        olof@lixom.net, Anson.Huang@nxp.com, maxime@cerno.tech,
+        leonard.crestez@nxp.com, dinguyen@kernel.org,
+        marcin.juszkiewicz@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: Re: [v1 1/6] arm64: dts: msm8916: Add i2c-qcom-cci node
+Message-ID: <20200312045012.GT264362@yoga>
+References: <20200311123501.18202-1-robert.foss@linaro.org>
+ <20200311123501.18202-2-robert.foss@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200311123501.18202-2-robert.foss@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Each of hdmi and edp are already attached in msm_*_bridge_init. A second
-attachment returns -EBUSY, failing the driver load.
+On Wed 11 Mar 05:34 PDT 2020, Robert Foss wrote:
 
-Tested with HDMI on IFC6410 (APQ8064 / MDP4), but eDP case should be
-analogous.
+> From: Loic Poulain <loic.poulain@linaro.org>
+> 
+> The msm8916 CCI controller provides one CCI/I2C bus.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index 9f31064f2374..afe1d73e5cd3 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -1503,6 +1503,33 @@
+>  			};
+>  		};
+>  
+> +		cci@1b0c000 {
 
-Fixes: 3ef2f119bd3ed (drm/msm: Use drm_attach_bridge() to attach a bridge to an encoder)
-Cc: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
----
- drivers/gpu/drm/msm/edp/edp.c   | 4 ----
- drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ----
- 2 files changed, 8 deletions(-)
+This deserves a label, so that it's possible to reference it and alter
+the status in the board dts.
 
-diff --git a/drivers/gpu/drm/msm/edp/edp.c b/drivers/gpu/drm/msm/edp/edp.c
-index ad4e963ccd9b..106a67473af5 100644
---- a/drivers/gpu/drm/msm/edp/edp.c
-+++ b/drivers/gpu/drm/msm/edp/edp.c
-@@ -178,10 +178,6 @@ int msm_edp_modeset_init(struct msm_edp *edp, struct drm_device *dev,
- 		goto fail;
- 	}
- 
--	ret = drm_bridge_attach(encoder, edp->bridge, NULL);
--	if (ret)
--		goto fail;
--
- 	priv->bridges[priv->num_bridges++]       = edp->bridge;
- 	priv->connectors[priv->num_connectors++] = edp->connector;
- 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index 1a9b6289637d..737453b6e596 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -327,10 +327,6 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
- 		goto fail;
- 	}
- 
--	ret = drm_bridge_attach(encoder, hdmi->bridge, NULL);
--	if (ret)
--		goto fail;
--
- 	priv->bridges[priv->num_bridges++]       = hdmi->bridge;
- 	priv->connectors[priv->num_connectors++] = hdmi->connector;
- 
--- 
-2.24.1
+> +			compatible = "qcom,msm8916-cci";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <0x1b0c000 0x1000>;
 
+Please sort nodes my address (and then by name).
+
+Apart from these two nits, this looks good.
+
+Regards,
+Bjorn
+
+> +			interrupts = <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
+> +			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
+> +				<&gcc GCC_CAMSS_CCI_AHB_CLK>,
+> +				<&gcc GCC_CAMSS_CCI_CLK>,
+> +				<&gcc GCC_CAMSS_AHB_CLK>;
+> +			clock-names = "camss_top_ahb", "cci_ahb",
+> +				      "cci", "camss_ahb";
+> +			assigned-clocks = <&gcc GCC_CAMSS_CCI_AHB_CLK>,
+> +					  <&gcc GCC_CAMSS_CCI_CLK>;
+> +			assigned-clock-rates = <80000000>, <19200000>;
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&cci0_default>;
+> +			status = "disabled";
+> +
+> +			cci0: i2c-bus@0 {
+> +				reg = <0>;
+> +				clock-frequency = <400000>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
+> +		};
+> +
+>  		camss: camss@1b00000 {
+>  			compatible = "qcom,msm8916-camss";
+>  			reg = <0x1b0ac00 0x200>,
+> -- 
+> 2.20.1
+> 
