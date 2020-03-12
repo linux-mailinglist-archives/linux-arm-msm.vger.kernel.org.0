@@ -2,293 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 75FCB182FEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 13:09:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26531183048
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2020 13:33:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbgCLMJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Mar 2020 08:09:19 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:13237 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726720AbgCLMJS (ORCPT
+        id S1726731AbgCLMdR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Mar 2020 08:33:17 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:37902 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725268AbgCLMdQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Mar 2020 08:09:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584014958; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=k/4XOXaAg5rHcwWptb7gDJCZ3eY9V+VWNq1ehOc4CSo=; b=uJVHwnSsYubft/sO8/zDPOvbPh4T+fGI8kBKoIAb7udoh8Ko0TXDslwhHQ1BS8qVBHwVTdL7
- TZp9Z37TQMqOHraGlIqrSf2qqRzSkbqTc3tL8gfBNIN9PPcyj9VpNwj8Tr3jaZl3YEGphLTz
- lTYSXvr8g/UGV23WIL+gjy0e1XA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e6a2666.7f6afa060458-smtp-out-n02;
- Thu, 12 Mar 2020 12:09:10 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 52FF2C432C2; Thu, 12 Mar 2020 12:09:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D6F9C433CB;
-        Thu, 12 Mar 2020 12:09:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D6F9C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org
-Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        tsoni@codeaurora.org, vnkgutta@codeaurora.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v7 3/3] soc: qcom: apr: Add avs/audio tracking functionality
-Date:   Thu, 12 Mar 2020 17:38:42 +0530
-Message-Id: <20200312120842.21991-4-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200312120842.21991-1-sibis@codeaurora.org>
-References: <20200312120842.21991-1-sibis@codeaurora.org>
+        Thu, 12 Mar 2020 08:33:16 -0400
+Received: by mail-lf1-f65.google.com with SMTP id n13so2858839lfh.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2020 05:33:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5Bo582olf9I+MMKB0pQtd/IuQwjNyfcOYDF6NIq6gKo=;
+        b=v/SmbDFA9bum9xqEBrQZOBXw8nWWqls3dXOrOVMxWlA/CDQFR04wN1DwjURDMHF8kX
+         9NWNCckiZ+WU4TdKgACLJz2jpwEzLbl+1R58vGlJygw4xn66vB77TPdUEuYf8RN2qqkJ
+         m8bDSLr0ZusKUyMx9NGxUwOmdYU5GCDYOWywB3+V4cTyUuXw+n/aJhbri1vA2lHtlOAz
+         6/jQUELdmxpUHUmCNu3MC2QwNqNHxqTjCHZJzWjk2IpWPa31AaUwj4Uu4+QCydTtGU+9
+         beYTiEDwxsBYqtoCY0r1gHwO357WwcTPFfpDH9EVaGEgr+jUgqH2GhF65DsQe6MYsAWx
+         /lgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5Bo582olf9I+MMKB0pQtd/IuQwjNyfcOYDF6NIq6gKo=;
+        b=Y4CsfF/IUkGYHLSbULZ3EWtHsJ7Hqs8+rqpdaLQg+009bASJ83db5270EIq7jzrISn
+         IlPM0UsnCceyd1AA7oFKNjmojf52ie1A3hUczAAJ5wTpGshJ9xVh6Ux3bvUSWkC5JcNe
+         rvBEQNLzIdD5rTmSkx64N/7kn9eh/33UThWzDtJOxNNQtLWxXcJRbOLHcK6kNWE+KuCT
+         tiH8wdTTbD/juQt2wtZEj0C6taH2RnJKi1CK+fUHvQCAJTDS7XRmI+xDyAo6nSRnrZJm
+         3lQ0S/f3lGF+iokLTPZhkvQM+98Pyx/GHltL/RxCpYUaSn/ijPEGPuKsE47nJnQMD1Cr
+         03RQ==
+X-Gm-Message-State: ANhLgQ309nzD90ui0Hcv2ziyElv4YXxDgPu0C1bK94lBghGDcdhLhx0L
+        8ZnqndLI5nVAyRXG/XtmHi2RJ6f0sthNJTWNfE9Rmg==
+X-Google-Smtp-Source: ADFU+vuv/PMTCyaeiYoCTenY1lNCs2WeBwpMW3bw8GM67e8Mq0IfC3k0GJzP8LXAk+rWBCsmQ7trl+/XJx4vqj5piZo=
+X-Received: by 2002:a19:c515:: with SMTP id w21mr2148454lfe.114.1584016393599;
+ Thu, 12 Mar 2020 05:33:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1582548319.git.amit.kucheria@linaro.org> <5c7153cf-903d-607a-a783-35a4db7d8500@linaro.org>
+In-Reply-To: <5c7153cf-903d-607a-a783-35a4db7d8500@linaro.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Thu, 12 Mar 2020 18:03:02 +0530
+Message-ID: <CAP245DXXuD+LtqF68pENzdf8p=F840tHf2RnmQ6K18xTvXMUeQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/8] thermal: tsens: Handle critical interrupts
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>, sivaa@codeaurora.org,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use PDR helper functions to track the protection domains that the apr
-services are dependent upon on SDM845 SoC, specifically the "avs/audio"
-service running on ADSP Q6.
+Hi Daniel,
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
+On Thu, Mar 12, 2020 at 4:20 PM Daniel Lezcano
+<daniel.lezcano@linaro.org> wrote:
+>
+>
+> Hi Amit,
+>
+> I tried to apply the series but I've got a plethora of warnings about
+> WARNING: line over 80 characters from checkpatch.
 
-V7:
- * No change
+I've fixed most of the warnings, except the following. The first one
+will require some restructuring of the variable names or the for loop
+to fit into 80 chars and should probably be done in a separate patch.
+The next three warnings should be left as it is since the lines are
+longer by only a few characters and keeping it on a single line aids
+readability, IMO.
+The last warning gets fixed automatically as a result of patch 8, so I
+left it there.
 
- drivers/soc/qcom/Kconfig     |   1 +
- drivers/soc/qcom/apr.c       | 123 ++++++++++++++++++++++++++++++++---
- include/linux/soc/qcom/apr.h |   1 +
- 3 files changed, 116 insertions(+), 9 deletions(-)
+WARNING: line over 80 characters
+#201: FILE: drivers/thermal/qcom/tsens-common.c:780:
++
+priv->fields[idx]);
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 48501f0245b0a..9ac6b0072e8ce 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -200,6 +200,7 @@ config QCOM_APR
- 	tristate "Qualcomm APR Bus (Asynchronous Packet Router)"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on RPMSG
-+	select QCOM_PDR_HELPERS
- 	help
- 	  Enable APR IPC protocol support between
- 	  application processor and QDSP6. APR is
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index 4fcc32420c474..1f35b097c6356 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -11,6 +11,7 @@
- #include <linux/workqueue.h>
- #include <linux/of_device.h>
- #include <linux/soc/qcom/apr.h>
-+#include <linux/soc/qcom/pdr.h>
- #include <linux/rpmsg.h>
- #include <linux/of.h>
- 
-@@ -21,6 +22,7 @@ struct apr {
- 	spinlock_t rx_lock;
- 	struct idr svcs_idr;
- 	int dest_domain_id;
-+	struct pdr_handle *pdr;
- 	struct workqueue_struct *rxwq;
- 	struct work_struct rx_work;
- 	struct list_head rx_list;
-@@ -289,6 +291,9 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 		  id->svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
- 
-+	of_property_read_string_index(np, "qcom,protection-domain",
-+				      1, &adev->service_path);
-+
- 	dev_info(dev, "Adding APR dev: %s\n", dev_name(&adev->dev));
- 
- 	ret = device_register(&adev->dev);
-@@ -300,14 +305,75 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	return ret;
- }
- 
--static void of_register_apr_devices(struct device *dev)
-+static int of_apr_add_pd_lookups(struct device *dev)
-+{
-+	const char *service_name, *service_path;
-+	struct apr *apr = dev_get_drvdata(dev);
-+	struct device_node *node;
-+	struct pdr_service *pds;
-+	int ret;
-+
-+	for_each_child_of_node(dev->of_node, node) {
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    0, &service_name);
-+		if (ret < 0)
-+			continue;
-+
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (ret < 0) {
-+			dev_err(dev, "pdr service path missing: %d\n", ret);
-+			return ret;
-+		}
-+
-+		pds = pdr_add_lookup(apr->pdr, service_name, service_path);
-+		if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
-+			dev_err(dev, "pdr add lookup failed: %d\n", ret);
-+			return PTR_ERR(pds);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static void of_register_apr_devices(struct device *dev, const char *svc_path)
- {
- 	struct apr *apr = dev_get_drvdata(dev);
- 	struct device_node *node;
-+	const char *service_path;
-+	int ret;
- 
- 	for_each_child_of_node(dev->of_node, node) {
- 		struct apr_device_id id = { {0} };
- 
-+		/*
-+		 * This function is called with svc_path NULL during
-+		 * apr_probe(), in which case we register any apr devices
-+		 * without a qcom,protection-domain specified.
-+		 *
-+		 * Then as the protection domains becomes available
-+		 * (if applicable) this function is again called, but with
-+		 * svc_path representing the service becoming available. In
-+		 * this case we register any apr devices with a matching
-+		 * qcom,protection-domain.
-+		 */
-+
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (svc_path) {
-+			/* skip APR services that are PD independent */
-+			if (ret)
-+				continue;
-+
-+			/* skip APR services whose PD paths don't match */
-+			if (strcmp(service_path, svc_path))
-+				continue;
-+		} else {
-+			/* skip APR services whose PD lookups are registered */
-+			if (ret == 0)
-+				continue;
-+		}
-+
- 		if (of_property_read_u32(node, "reg", &id.svc_id))
- 			continue;
- 
-@@ -318,6 +384,34 @@ static void of_register_apr_devices(struct device *dev)
- 	}
- }
- 
-+static int apr_remove_device(struct device *dev, void *svc_path)
-+{
-+	struct apr_device *adev = to_apr_device(dev);
-+
-+	if (svc_path && adev->service_path) {
-+		if (!strcmp(adev->service_path, (char *)svc_path))
-+			device_unregister(&adev->dev);
-+	} else {
-+		device_unregister(&adev->dev);
-+	}
-+
-+	return 0;
-+}
-+
-+static void apr_pd_status(int state, char *svc_path, void *priv)
-+{
-+	struct apr *apr = (struct apr *)priv;
-+
-+	switch (state) {
-+	case SERVREG_SERVICE_STATE_UP:
-+		of_register_apr_devices(apr->dev, svc_path);
-+		break;
-+	case SERVREG_SERVICE_STATE_DOWN:
-+		device_for_each_child(apr->dev, svc_path, apr_remove_device);
-+		break;
-+	}
-+}
-+
- static int apr_probe(struct rpmsg_device *rpdev)
- {
- 	struct device *dev = &rpdev->dev;
-@@ -343,28 +437,39 @@ static int apr_probe(struct rpmsg_device *rpdev)
- 		return -ENOMEM;
- 	}
- 	INIT_WORK(&apr->rx_work, apr_rxwq);
-+
-+	apr->pdr = pdr_handle_alloc(apr_pd_status, apr);
-+	if (IS_ERR(apr->pdr)) {
-+		dev_err(dev, "Failed to init PDR handle\n");
-+		ret = PTR_ERR(apr->pdr);
-+		goto destroy_wq;
-+	}
-+
- 	INIT_LIST_HEAD(&apr->rx_list);
- 	spin_lock_init(&apr->rx_lock);
- 	spin_lock_init(&apr->svcs_lock);
- 	idr_init(&apr->svcs_idr);
--	of_register_apr_devices(dev);
--
--	return 0;
--}
- 
--static int apr_remove_device(struct device *dev, void *null)
--{
--	struct apr_device *adev = to_apr_device(dev);
-+	ret = of_apr_add_pd_lookups(dev);
-+	if (ret)
-+		goto handle_release;
- 
--	device_unregister(&adev->dev);
-+	of_register_apr_devices(dev, NULL);
- 
- 	return 0;
-+
-+handle_release:
-+	pdr_handle_release(apr->pdr);
-+destroy_wq:
-+	destroy_workqueue(apr->rxwq);
-+	return ret;
- }
- 
- static void apr_remove(struct rpmsg_device *rpdev)
- {
- 	struct apr *apr = dev_get_drvdata(&rpdev->dev);
- 
-+	pdr_handle_release(apr->pdr);
- 	device_for_each_child(&rpdev->dev, NULL, apr_remove_device);
- 	flush_workqueue(apr->rxwq);
- 	destroy_workqueue(apr->rxwq);
-diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
-index c5d52e2cb275f..7f0bc3cf4d610 100644
---- a/include/linux/soc/qcom/apr.h
-+++ b/include/linux/soc/qcom/apr.h
-@@ -85,6 +85,7 @@ struct apr_device {
- 	uint16_t	domain_id;
- 	uint32_t	version;
- 	char name[APR_NAME_SIZE];
-+	const char *service_path;
- 	spinlock_t	lock;
- 	struct list_head node;
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+WARNING: line over 80 characters
+#223: FILE: drivers/thermal/qcom/tsens-v2.c:54:
++       REG_FIELD_FOR_EACH_SENSOR16(LOW_THRESH,
+TM_Sn_UPPER_LOWER_THRESHOLD_OFF,  0,  11),
+
+WARNING: line over 80 characters
+#224: FILE: drivers/thermal/qcom/tsens-v2.c:55:
++       REG_FIELD_FOR_EACH_SENSOR16(UP_THRESH,
+TM_Sn_UPPER_LOWER_THRESHOLD_OFF, 12,  23),
+
+WARNING: line over 80 characters
+#225: FILE: drivers/thermal/qcom/tsens-v2.c:56:
++       REG_FIELD_FOR_EACH_SENSOR16(CRIT_THRESH,
+TM_Sn_CRITICAL_THRESHOLD_OFF,     0,  11),
+
+WARNING: line over 80 characters
+#266: FILE: drivers/thermal/qcom/tsens.c:107:
++                                               IRQF_TRIGGER_HIGH |
+IRQF_ONESHOT,
+
+total: 0 errors, 5 warnings, 0 checks, 375 lines checked
+
+
+>
+> Also the log contains the Link, but actually it is not necessary as my
+> scripts are automatically adding them so it ends up duplicated.
+
+OK, my git hooks automatically add those when I pull those patches
+back to spin a new series with reviewed-by/acked-by. I will disable
+the hook.
+
+> Can you resend the series without these warnings and the Links?
+
+Sending it out in a few moments as v7.
+
+Thanks,
+Amit
+
+> Thanks
+>
+>    -- Daniel
+>
+> On 24/02/2020 13:58, Amit Kucheria wrote:
+> > TSENS IP v2.x supports critical interrupts and v2.3+ adds watchdog supp=
+ort
+> > in case the FSM is stuck. Enable support in the driver.
+> >
+> > This series was generated on top of v5.6-rc2.
+> >
+> > Changes since v5:=C2=AC
+> >  - Introduce a function tsens_register_irq to handle uplow and critical
+> >    interrupt registration and reduce code duplication
+> >  - Clarify reason for patch 04
+> >
+> > Changes from v4:
+> > - Add back patch 1 from v3[*], I mistakenly didn't post it for v4.
+> > - Remove spinlock from critical interrupt handling
+> > - Change critical interrupt handler to fall thru watchdog bark handling=
+ to
+> >   handle critical interrupts too
+> >
+> > [*] https://lore.kernel.org/linux-arm-msm/77dd80eb58f0db29a03097cb442d6=
+06f810a849a.1577976221.git.amit.kucheria@linaro.org/
+> >
+> > Changes from v3:
+> > - Remove the DTS changes that are already queued
+> > - Fix review comments by Bjorn
+> > - Fixup patch description to clarify that we don't use TSENS critical
+> >   interrupts in Linux, but need it for the watchdog support that uses t=
+he
+> >   same HW irq line.
+> > - Separate kernel-doc fixes into a separate patch.
+> >
+> > Changes from v2:
+> > - Handle old DTBs w/o critical irq in the same way as fix sent for 5.5
+> >
+> > Changes from v1:
+> > - Make tsens_features non-const to allow run time detection of features
+> > - Pass tsens_sensor around as a const
+> > - Fix a bug to release dev pointer in success path
+> > - Address review comments from Bjorn and Stephen (thanks for the review=
+)
+> > - Add msm8998 and msm8996 DTSI changes for critical interrupts
+> >
+> >
+> > Amit Kucheria (8):
+> >   drivers: thermal: tsens: De-constify struct tsens_features
+> >   drivers: thermal: tsens: Pass around struct tsens_sensor as a constan=
+t
+> >   drivers: thermal: tsens: use simpler variables
+> >   drivers: thermal: tsens: Release device in success path
+> >   drivers: thermal: tsens: Add critical interrupt support
+> >   drivers: thermal: tsens: Add watchdog support
+> >   drivers: thermal: tsens: kernel-doc fixup
+> >   drivers: thermal: tsens: Remove unnecessary irq flag
+> >
+> >  drivers/thermal/qcom/tsens-8960.c   |   4 +-
+> >  drivers/thermal/qcom/tsens-common.c | 185 ++++++++++++++++++++++++----
+> >  drivers/thermal/qcom/tsens-v0_1.c   |   6 +-
+> >  drivers/thermal/qcom/tsens-v1.c     |   6 +-
+> >  drivers/thermal/qcom/tsens-v2.c     |  24 +++-
+> >  drivers/thermal/qcom/tsens.c        |  63 ++++++----
+> >  drivers/thermal/qcom/tsens.h        | 103 ++++++++++++++--
+> >  7 files changed, 320 insertions(+), 71 deletions(-)
+> >
+>
+>
+> --
+>  <http://www.linaro.org/> Linaro.org =E2=94=82 Open source software for A=
+RM SoCs
+>
+> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+> <http://twitter.com/#!/linaroorg> Twitter |
+> <http://www.linaro.org/linaro-blog/> Blog
+>
