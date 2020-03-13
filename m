@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 31A11184F07
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 19:55:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3263C184F32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 20:15:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726894AbgCMSzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 14:55:01 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41961 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726477AbgCMSzB (ORCPT
+        id S1726526AbgCMTPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 15:15:24 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38220 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726297AbgCMTPX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 14:55:01 -0400
-Received: by mail-ed1-f67.google.com with SMTP id m25so13124241edq.8;
-        Fri, 13 Mar 2020 11:54:59 -0700 (PDT)
+        Fri, 13 Mar 2020 15:15:23 -0400
+Received: by mail-ed1-f65.google.com with SMTP id h5so13259956edn.5;
+        Fri, 13 Mar 2020 12:15:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2WuB5xXMxFx8qoep56fRjLFlqqVLZxwUqYQw+OOizLU=;
-        b=ce46Gaog+VC1RTePandT+0mydyECZ68AyAEipXfSJ+flhB83WpX1JM4fvvJPdSkobf
-         rrFbfzCYSeP7PR6Z71nP/PqPL3J4d4yOug6SGogzhzuH1uqOIejw/GfdYaOwANPWoM9n
-         2A2k5tj5BMVr9oVME2CkR+IE7GxdzrCg3pA1qXVPm9qxllP20gh51Zx7+pjsCP5gxe8N
-         dFQmckYtfuikA+6RKRf/GrmiX9Io+uFTht9iieTybmJ1tjvVHfS/DyA9qCH2+guOwo7G
-         +WGvBimSemWRtqCsy8xnBtpSH/rFZcChbVNWt/XBOlsfGO6qrhIbiR1Y4NU3UEh55Zw9
-         Gyrw==
+        bh=a/Mvn0+PY7Zqcxqn/jETgFaE9sx7vy1J6+fqxPSu5Yk=;
+        b=fuhkVmLz0gXC7XyjGBn7cTymXP5dyrOVvVB9f/Tnr8064WVq1pfjwi7JX5cFeEn2yf
+         4hfh/x5jL7FEsLrBWEH7S1jt4v6Yy9QEGXFKY6AULjKerRJZKILqoY5PFuN8n3daVfYl
+         awUBRY6G7fqWz4i2GTvRJ05OuVDVqNL4bxFY7jDWPZxHVpqgCMgl1AsPuHG2NM1SF7js
+         d4IT7h9k7jCZu1bzp4D4WrvNq7RYRYx+U3YahXAvOfglfYjatLK71vmFz93IsY0LraXE
+         vXmN2pbQCzySLsfI/QmDy6YMgSlrAn7oVk7F/iwCO9TVF+2YPyha8m/bTII43yQy4Wr5
+         Qpww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2WuB5xXMxFx8qoep56fRjLFlqqVLZxwUqYQw+OOizLU=;
-        b=pAm9EIZ8tBU+GR54uMbDU2t2wAgfYIk63U0lTqLRKTnaGxyJehG8JmaupYNlpJhXDq
-         kNiKpD4jKZO1HJrbHywUI2/Cg1+6rsdC1EL0MFKo1qqCaLxjgT1hFkd2UxSuFGrJxVYn
-         qbKg8YB3TN/a//eQ06Hp1LkqYVEfpUZ5OazhnifOOMcrrbPwa1GR2ebdLp4vJa+6+GEZ
-         UAHlpaDGzVSEtaK2WBi/zzi2FWFZVoWxUveLACMtsQ9m1nKegxNiU7ayk2uejgu1IJuq
-         WBF5Cj2cXBKlQygsfcYGf29FOKhhJKDjcQbL2IN6pNvyfnksNZiFHKdhrtNuUxV4nd/A
-         LNyg==
-X-Gm-Message-State: ANhLgQ3vv/3XVNE0sguxHjGN/8rttGl5b76VSM9pZdIskzcU2s9pFvkB
-        xfnd9ka1NAG5NeCv2Grz4/s=
-X-Google-Smtp-Source: ADFU+vuK7AU23b5J/6IMctVT/DI9hy1uvQ83h7z91tD7k0pf9nDNbJufUjhUG77sz7Dww8KUVWb6Uw==
-X-Received: by 2002:a50:eb05:: with SMTP id y5mr14849321edp.358.1584125699097;
-        Fri, 13 Mar 2020 11:54:59 -0700 (PDT)
+        bh=a/Mvn0+PY7Zqcxqn/jETgFaE9sx7vy1J6+fqxPSu5Yk=;
+        b=kL3yXd4D7DbNbuV+RdqAo1Lh1TUCNPwXlsCA7KwLbv8OWuAxURdoRMtBnpEa/SvoEm
+         npdieQVRc8/WyDilCyBWqFTqc2+W6Ob61ddQ1FXWUmurK6nOWJS2HcWFmHmNyHo2NYC/
+         uBsngqs9BHgwNQv26FnR49towoafA1J7H2V8So1oNiry9ZZ7gYWNSwKwmvEpWz0b2vyP
+         sQPEtx+8MPnozq/xAx9eC2HyuLtp+MEggg8Zfe2X1deXPzpw+8McPzzMkdwFmWUPHHJc
+         15VWeatzA8S45nIxDOPCmpAMeicThf0Z6KzZW5Fx7Uq4AcUWYF3TiG+ACJwjfX9CWFD9
+         iyMA==
+X-Gm-Message-State: ANhLgQ1YLWK4qFdrw1W408bmZbVPr0l+akXreAn82hpIuM6MPBl9rs4p
+        IDiWYeyc+kyemAgebGF+m4s=
+X-Google-Smtp-Source: ADFU+vuWQEL9cTysb661kQdTOnQxHILIOGZA5AemK+0tjWcwsDfvcfV7S8iwXIUEw+EDH7G3oqKPOA==
+X-Received: by 2002:aa7:cf86:: with SMTP id z6mr14954854edx.281.1584126921840;
+        Fri, 13 Mar 2020 12:15:21 -0700 (PDT)
 Received: from Ansuel-XPS.localdomain (host61-50-dynamic.50-79-r.retail.telecomitalia.it. [79.50.50.61])
-        by smtp.googlemail.com with ESMTPSA id p7sm468763ejr.62.2020.03.13.11.54.57
+        by smtp.googlemail.com with ESMTPSA id 94sm2552140eda.7.2020.03.13.12.15.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 11:54:58 -0700 (PDT)
+        Fri, 13 Mar 2020 12:15:21 -0700 (PDT)
 From:   Ansuel Smith <ansuelsmth@gmail.com>
 To:     agross@kernel.org
 Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Abhishek Sahu <absahu@codeaurora.org>,
+        Ajay Kishore <akisho@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ipq806x: gcc: Added the enable regs and mask for PRNG
-Date:   Fri, 13 Mar 2020 19:54:06 +0100
-Message-Id: <20200313185406.10029-1-ansuelsmth@gmail.com>
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: use scm_call to route GPIO irq to Apps
+Date:   Fri, 13 Mar 2020 20:15:13 +0100
+Message-Id: <20200313191513.11365-1-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -64,28 +64,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-kernel got hanged while reading from /dev/hwrng at the
-time of PRNG clock enable
+For IPQ806x targets, TZ protects the registers that are used to
+configure the routing of interrupts to a target processor.
+To resolve this, this patch uses scm call to route GPIO interrupts
+to application processor. Also the scm call interface is changed.
 
-Signed-off-by: Abhishek Sahu <absahu@codeaurora.org>
+Signed-off-by: Ajay Kishore <akisho@codeaurora.org>
 Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 ---
- drivers/clk/qcom/gcc-ipq806x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 36 ++++++++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
-index b0eee0903807..a8456e09c44d 100644
---- a/drivers/clk/qcom/gcc-ipq806x.c
-+++ b/drivers/clk/qcom/gcc-ipq806x.c
-@@ -1224,6 +1224,8 @@ static struct clk_rcg prng_src = {
- 		.parent_map = gcc_pxo_pll8_map,
- 	},
- 	.clkr = {
-+		.enable_reg = 0x2e80,
-+		.enable_mask = BIT(11),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "prng_src",
- 			.parent_names = gcc_pxo_pll8,
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 9a8daa256a32..a83cfd1da219 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -22,6 +22,8 @@
+ #include <linux/reboot.h>
+ #include <linux/pm.h>
+ #include <linux/log2.h>
++#include <linux/qcom_scm.h>
++#include <linux/io.h>
+ 
+ #include <linux/soc/qcom/irq.h>
+ 
+@@ -710,6 +712,9 @@ static void msm_gpio_irq_mask(struct irq_data *d)
+ 	const struct msm_pingroup *g;
+ 	unsigned long flags;
+ 	u32 val;
++	u32 addr;
++	int ret;
++	const __be32 *reg;
+ 
+ 	if (d->parent_data)
+ 		irq_chip_mask_parent(d);
+@@ -863,6 +868,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	const struct msm_pingroup *g;
+ 	unsigned long flags;
+ 	u32 val;
++	int ret;
+ 
+ 	if (d->parent_data)
+ 		irq_chip_set_type_parent(d, type);
+@@ -882,11 +888,33 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	else
+ 		clear_bit(d->hwirq, pctrl->dual_edge_irqs);
+ 
++	ret = of_device_is_compatible(pctrl->dev->of_node,
++					"qcom,ipq8064-pinctrl");
+ 	/* Route interrupts to application cpu */
+-	val = msm_readl_intr_target(pctrl, g);
+-	val &= ~(7 << g->intr_target_bit);
+-	val |= g->intr_target_kpss_val << g->intr_target_bit;
+-	msm_writel_intr_target(val, pctrl, g);
++	if (!ret) {
++		val = msm_readl_intr_target(pctrl, g);
++		val &= ~(7 << g->intr_target_bit);
++		val |= g->intr_target_kpss_val << g->intr_target_bit;
++		msm_writel_intr_target(val, pctrl, g);
++	} else {
++		const __be32 *reg = of_get_property(pctrl->dev->of_node,
++						    "reg", NULL);
++
++		if (reg) {
++			u32 addr = be32_to_cpup(reg) + g->intr_target_reg;
++
++			qcom_scm_io_readl(addr, &val);
++			__iormb();
++
++			val &= ~(7 << g->intr_target_bit);
++			val |= g->intr_target_kpss_val << g->intr_target_bit;
++
++			__iowmb();
++			ret = qcom_scm_io_writel(addr, val);
++			if (ret)
++				pr_err("\n Routing interrupts to Apps proc failed");
++		}
++	}
+ 
+ 	/* Update configuration for gpio.
+ 	 * RAW_STATUS_EN is left on for all gpio irqs. Due to the
 -- 
 2.25.0
 
