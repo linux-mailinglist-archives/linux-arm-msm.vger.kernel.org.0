@@ -2,450 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 002181847B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 14:14:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE0DB1847BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 14:14:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726726AbgCMNOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 09:14:01 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:54186 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726637AbgCMNOA (ORCPT
+        id S1726738AbgCMNOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 09:14:17 -0400
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:36390 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbgCMNOR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 09:14:00 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584105239; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=PPCykA8kNlURutu5YrmhR3D3xaJD8fJkAX3u1ZRULlQ=; b=IHDLfvIAvY7FAKMQWcTkB9Evy+R5sPVvWRO18zMcewQJ2ibDwmlJKI0mOgFkJh3RcUlrFNUH
- 6ekDwBhfNwMgO0y47DAO0vqr4E7A0akuZ+lpwNtb1EGP/bsuFdkYFBfcKaAigEEQt8Bxsdkq
- qBgb1N14dXSD7+kN+J7xGJtO7yE=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e6b8709.7f8acac3b4c8-smtp-out-n01;
- Fri, 13 Mar 2020 13:13:45 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2B562C43637; Fri, 13 Mar 2020 13:13:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0BC0C44798;
-        Fri, 13 Mar 2020 13:13:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D0BC0C44798
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org
-Cc:     linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, evgreen@chromium.org,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH V2 8/8] arm64: dts: sc7180: Add interconnect for QUP and QSPI
-Date:   Fri, 13 Mar 2020 18:42:14 +0530
-Message-Id: <1584105134-13583-9-git-send-email-akashast@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+        Fri, 13 Mar 2020 09:14:17 -0400
+Received: by mail-vk1-f196.google.com with SMTP id m131so861792vkh.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 06:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=r5nej1zKnErVM5m54Oa8OEYdJkqeTYbYSG60lIVS6MM=;
+        b=AlM5pRFdaXDjEYep11vgb+5n8li/qmCjD7OTv2H8gwaG4LR5CLy7UD/hPFTWaKbdLn
+         qpUzrJj65b/u5moBdm1Z8zmDvNtnwbfkpurjBgjpSiD6fvuyec4p3KZ0lsqQg+hXdk/I
+         x94A/LTz7EzPkaIo9LSAQO93wnDnBB7pfQpQ1fSINeagF4IHQnN9s+EENifH2Bopa43O
+         ocHMUFUw+q1QqiMvnKdzGmhuaF8ypliYhDnspbR0eAHkIbPN1MYe/mnci5D0ZKusbmol
+         nqei0veUc+3zGDmKDx9i5aJ1ca8D9rH9VBRQO5koUw+rEv+o7V2BwR8Phon75UtiGia5
+         sdhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=r5nej1zKnErVM5m54Oa8OEYdJkqeTYbYSG60lIVS6MM=;
+        b=Vx5ZV3oMwcpSUGK9dBHKVOJ14RxZlsmoyAH122A2aG/Gn23qJIsUNKQHwb+5vssifT
+         3+HoSqWtJUqOSDIk2L8H9SsRL/9xE5q2/mlI6Wr+SO4oLe5Ba105ik4iIavMzrcoN+g8
+         sgUYYPQEWoliV4Q5ci1xXTMK7TbkT4cuOsztQ3HBO5xfRhzPF7PRR1fH0bd2KujDZlUX
+         F8Wqg2XHTVDkQHoVacmhE8uuPdsUnxbYInP+X9eZiTZvJJBgcBw6diW7UVjGZl7AO+sd
+         N8RLwTN/4CrKupTbLk9fmqL479BSnHLHTPRA8P61KUM6zSTEdQGkvX3rVC5ElOh3gcjR
+         KEOw==
+X-Gm-Message-State: ANhLgQ2VGlHBPh0tkx6XXi4b6qFE0nv4YCPM3RU1phsQDKmz8Bq+Nc3N
+        YUhmn9A7Q/4pNswVYgPXHRZNk+tzfX+MkrF0VcSmpg==
+X-Google-Smtp-Source: ADFU+vsIHMtphZ7t20Aii8tQJpMdxFA3wJFF6idsgMVs2k35O6ilYeLCvXoAQk+u9++kmhpmSvDedexyES6m1u95NLA=
+X-Received: by 2002:a1f:52c5:: with SMTP id g188mr8502433vkb.25.1584105255211;
+ Fri, 13 Mar 2020 06:14:15 -0700 (PDT)
+MIME-Version: 1.0
+References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org>
+ <1574254593-16078-5-git-send-email-thara.gopinath@linaro.org>
+ <CAPDyKFqBusMHWNHBCMXx6TxFO=8B6ytoyvvSfi14Z=-ahBDV5A@mail.gmail.com> <ac341c33-003a-587a-7078-84a7f0c01a3a@linaro.org>
+In-Reply-To: <ac341c33-003a-587a-7078-84a7f0c01a3a@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 13 Mar 2020 14:13:37 +0100
+Message-ID: <CAPDyKFotwoiDkF6Ru39rOv+GxF7dgXG6tc0oQHMim8yKB2hRvQ@mail.gmail.com>
+Subject: Re: [Patch v4 4/7] thermal: Add generic power domain warming device driver.
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Eduardo Valentin <edubezval@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interconnect ports for GENI QUPs and QSPI to set bus capabilities.
+[...]
 
-Signed-off-by: Akash Asthana <akashast@codeaurora.org>
----
-Changes in V2:
- - As per Bjorn's comment, ignoring 80 char limit in defining interconnects
-   paths.
+> >> +static struct thermal_cooling_device_ops pd_warming_device_ops = {
+> >> +       .get_max_state  = ::pd_wdev_get_max_state,
+> >> +       .get_cur_state  = pd_wdev_get_cur_state,
+> >> +       .set_cur_state  = pd_wdev_set_cur_state,
+> >> +};
+> >> +
+> >> +struct thermal_cooling_device *
+> >> +pwr_domain_warming_register(struct device *parent, char *pd_name, int pd_id)
+> >
+> > Maybe rename this to: thermal_of_pd_warming_register()
+>
+> How about pd_of_warming_register? It is consistent with other cooling
+> device register like cpuidle_of_cooling_register and
+> cpufreq_of_cooling_register.
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 127 +++++++++++++++++++++++++++++++++++
- 1 file changed, 127 insertions(+)
+Well, we actually have the following:
+of_devfreq_cooling_register()
+of_cpufreq_cooling_register()
+cpuidle_of_cooling_register()
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 89ba012..5c0185c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -427,6 +427,8 @@
- 			#size-cells = <2>;
- 			ranges;
- 			iommus = <&apps_smmu 0x43 0x0>;
-+			interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>;
-+			interconnect-names = "qup-core";
- 			status = "disabled";
- 
- 			i2c0: i2c@880000 {
-@@ -439,6 +441,11 @@
- 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>,
-+						<&aggre1_noc MASTER_QUP_0 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -452,6 +459,9 @@
- 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -463,6 +473,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart0_default>;
- 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -476,6 +489,11 @@
- 				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>,
-+						<&aggre1_noc MASTER_QUP_0 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -489,6 +507,9 @@
- 				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -500,6 +521,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart1_default>;
- 				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -513,6 +537,11 @@
- 				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>,
-+						<&aggre1_noc MASTER_QUP_0 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -524,6 +553,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart2_default>;
- 				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -537,6 +569,11 @@
- 				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>,
-+						<&aggre1_noc MASTER_QUP_0 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -550,6 +587,9 @@
- 				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -561,6 +601,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart3_default>;
- 				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -574,6 +617,11 @@
- 				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>,
-+						<&aggre1_noc MASTER_QUP_0 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -585,6 +633,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart4_default>;
- 				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -598,6 +649,11 @@
- 				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>,
-+						<&aggre1_noc MASTER_QUP_0 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -611,6 +667,9 @@
- 				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -622,6 +681,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart5_default>;
- 				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 		};
-@@ -636,6 +698,8 @@
- 			#size-cells = <2>;
- 			ranges;
- 			iommus = <&apps_smmu 0x4c3 0x0>;
-+			interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>;
-+			interconnect-names = "qup-core";
- 			status = "disabled";
- 
- 			i2c6: i2c@a80000 {
-@@ -648,6 +712,11 @@
- 				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>,
-+						<&aggre2_noc MASTER_QUP_1 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -661,6 +730,9 @@
- 				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -672,6 +744,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart6_default>;
- 				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -685,6 +760,11 @@
- 				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>,
-+						<&aggre2_noc MASTER_QUP_1 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -696,6 +776,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart7_default>;
- 				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -709,6 +792,11 @@
- 				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>,
-+						<&aggre2_noc MASTER_QUP_1 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -722,6 +810,9 @@
- 				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -733,6 +824,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart8_default>;
- 				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -746,6 +840,11 @@
- 				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>,
-+						<&aggre2_noc MASTER_QUP_1 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -757,6 +856,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart9_default>;
- 				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -770,6 +872,11 @@
- 				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>,
-+						<&aggre2_noc MASTER_QUP_1 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -783,6 +890,9 @@
- 				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -794,6 +904,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart10_default>;
- 				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -807,6 +920,11 @@
- 				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>,
-+						<&aggre2_noc MASTER_QUP_1 &mc_virt SLAVE_EBI1>;
-+				interconnect-names = "qup-core", "qup-config",
-+							"qup-memory";
- 				status = "disabled";
- 			};
- 
-@@ -820,6 +938,9 @@
- 				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 
-@@ -831,6 +952,9 @@
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart11_default>;
- 				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-+				interconnects = <&qup_virt MASTER_QUP_CORE_1 &qup_virt SLAVE_QUP_CORE_1>,
-+						<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>;
-+				interconnect-names = "qup-core", "qup-config";
- 				status = "disabled";
- 			};
- 		};
-@@ -1336,6 +1460,9 @@
- 			clocks = <&gcc GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
- 				 <&gcc GCC_QSPI_CORE_CLK>;
- 			clock-names = "iface", "core";
-+			interconnects = <&gem_noc MASTER_APPSS_PROC
-+					&config_noc SLAVE_QSPI_0>;
-+			interconnect-names = "qspi-config";
- 			status = "disabled";
- 		};
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+So maybe this is the most consistent. :-)
+of_pd_warming_register()
+
+>
+> > Moreover, I think you could replace the "struct device *parent", with
+> > a "struct device_node *node" as in-parameter. That's all you need,
+> > right?
+>
+> You mean pd_wdev->dev.parent need not be populated ? The device
+> in this case will be created under /sys/devices which I do not think
+> is the correct.
+
+Good point!
+
+> With a parent device specified, the power controller that resides the
+> power domain that can act as the warming dev, becomes the parent of the
+> warming dev. In case of this patch series, for the mx warming dev,
+> 179c0000.rsc/179c0000.rsc\:power-controller/ becomes the parent.(The
+> device will be created under
+> /sys/devices/platform/soc\@0/179c0000.rsc/179c0000.rsc\:power-controller/)
+>
+> Other way might be to register the warming device under virtual devices
+> as a new category of devices.
+
+No, that sounds wrong.
+
+Another option is to create a specific bus type for these new
+pd_warming devices. But I admit that sounds a bit too much, let's
+assign a parent.
+
+>
+> I prefer to keep it as a child of the power controller device, but I am
+> open to explore other options and to re-do this bit. What do you think?
+
+Sure, sorry for the noise.
+
+>
+> >
+> >> +{
+> >> +       struct pd_warming_device *pd_wdev;
+> >> +       struct of_phandle_args pd_args;
+> >> +       int ret;
+> >> +
+> >> +       pd_wdev = kzalloc(sizeof(*pd_wdev), GFP_KERNEL);
+> >> +       if (!pd_wdev)
+> >> +               return ERR_PTR(-ENOMEM);
+> >> +
+> >> +       dev_set_name(&pd_wdev->dev, "%s_warming_dev", pd_name);
+> >
+> > Perhaps skip the in-param *pd_name and make use of the suggested
+> > "struct device_node *node", the index and something with "warming...",
+> > when setting the name.
+>
+> Won't the index have to be in-param in this case ?
+
+Isn't that already the case?
+
+Huh, long time since I reviewed this.
+
+>
+> >
+> > Just an idea, as to simplify for the caller.
+> >
+> >> +       pd_wdev->dev.parent = parent;
+> >
+> > This isn't needed, I think.
+
+So ignore this comment, as discussed above.
+
+> >
+> >> +
+> >> +       ret = device_register(&pd_wdev->dev);
+> >> +       if (ret)
+> >> +               goto error;
+> >> +
+> >> +       pd_args.np = parent->of_node;
+> >> +       pd_args.args[0] = pd_id;
+> >> +       pd_args.args_count = 1;
+> >> +
+> >> +       ret = of_genpd_add_device(&pd_args, &pd_wdev->dev);
+> >> +
+> >
+> > White space.
+>
+> Will fix it.
+>
+> >
+> >> +       if (ret)
+> >> +               goto error;
+> >> +
+> >> +       ret = dev_pm_genpd_performance_state_count(&pd_wdev->dev);
+> >> +       if (ret < 0)
+> >> +               goto error;
+> >> +
+> >> +       pd_wdev->max_state = ret - 1;
+> >> +       pm_runtime_enable(&pd_wdev->dev);
+> >> +       pd_wdev->runtime_resumed = false;
+> >> +
+> >> +       pd_wdev->cdev = thermal_of_cooling_device_parent_register
+> >> +                                       (NULL, parent, pd_name, pd_wdev,
+> >> +                                        &pd_warming_device_ops);
+> >
+> > As stated in patch3, I don't get it why you need to use this new API
+> > for "parents".
+>
+> I agree with you. I cannot re-collect my thought process for this API.
+> I compiled and tested using the regular API and everything works fine.
+> I will drop patch 3 and use the thermal_of_cooling_device_register here.
+
+Great, one confusing piece seems to go away then. :-)
+
+>
+> >
+> >> +       if (IS_ERR(pd_wdev->cdev)) {
+> >> +               pr_err("unable to register %s cooling device\n", pd_name);
+> >> +               pm_runtime_disable(&pd_wdev->dev);
+> >> +               ret = PTR_ERR(pd_wdev->cdev);
+> >> +               goto error;
+> >> +       }
+> >> +
+> >> +       return pd_wdev->cdev;
+> >> +error:
+> >> +       put_device(&pd_wdev->dev);
+> >
+> > If device_register() succeeds you need to call device_unregister(),
+> > rather than put_device() as a part of the error handling.
+>
+> Will fix this.
+>
+> >
+> >> +       kfree(pd_wdev);
+> >
+> > You need a ->release() callback to manage kfree(), after you called
+> > device_register().
+>
+> mm?? I did not get this. What release callback? You mean for power
+> controller driver to call ?
+
+No, this how life cycle management of devices should be implemented.
+
+Have a look at genpd_release_dev() - and see how that is being used
+for genpd's virtual devices, that should explain more.
+
+>
+> >
+> >> +       return ERR_PTR(ret);
+> >
+> > Another thing is missing in the error path, which is to remove the
+> > device for the genpd. I think calling pm_genpd_remove_device() should
+> > work fine here.
+>
+> I will fix this. I am thinking this will be be needed in
+> pwr_domain_warming_unregister as well.
+
+Yep.
+
+Kind regards
+Uffe
