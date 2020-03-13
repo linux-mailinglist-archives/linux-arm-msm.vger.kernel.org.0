@@ -2,111 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EAEFF1845FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 12:31:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42C14184635
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 12:52:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726526AbgCMLb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 07:31:27 -0400
-Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:51113 "EHLO
-        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726495AbgCMLb1 (ORCPT
+        id S1726504AbgCMLwn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 07:52:43 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:41038 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726461AbgCMLwn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 07:31:27 -0400
-Received: from [192.168.2.10] ([46.9.234.233])
-        by smtp-cloud8.xs4all.net with ESMTPA
-        id CiXBj27JchVf8CiXEjObB6; Fri, 13 Mar 2020 12:31:25 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1584099085; bh=RqFft5VEIH6IZbrvJuRxVJzYe3kWZaUPl+dtOxSgqGI=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=H6EmHfKhukT5kXEeK7fwSTHsWno3x9kB3XnGLovMgTe230yzeXg4LxScMiIxsKqtc
-         FcEJgPK4XRuqRCL6QVilLadEEDfs6k2zM7la8ZRSqsccMZisJ0v8Oj0RzZqeCXHrd9
-         M8ViOv7oLFvd23zNXjCnTcIHlZMRYdCcwH9zcOu8W2TMrjx3a5YEtunQxpmyUHynGo
-         MqCvl+OdNwFhGUnxLvWulZfxIS5MCXQZYxyopHZQpNpIgEpWqVwBLPj6q0oxyhZ7ya
-         JH18bVajBSu5igh9fX555qRD5LNOWhszykgRumCaleggMCUhScje0wolzUAEUVd9xG
-         PYWt9bhC16siA==
-Subject: Re: [PATCH] media: qcom: venus: Fix a possible null-pointer
- dereference in vdec_g_fmt()
-To:     Jia-Ju Bai <baijiaju1990@gmail.com>, stanimir.varbanov@linaro.org,
-        agross@kernel.org, mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Fri, 13 Mar 2020 07:52:43 -0400
+Received: by mail-qt1-f193.google.com with SMTP id l21so7154209qtr.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 04:52:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8cRWFjyCHf4GbZngel1T0mk3vG3kUKL4H8h3Gu1F5vc=;
+        b=vvMDVjCvFZRY94q/QctMHV4zqZKu/fniPXWxclWBr/efdOMn9B1AkRJYokIsXwJBtl
+         0BZX6gyJu0sF/jwMULqmshOuGP0gTF1vDC0T3gW0Pgw0gkLzFQ9p0YifRI/hJFyyoVa3
+         w/Rd2Hb2WKT1x8alCcCx40ln9bbVCmSKx7MwFJ7VWH8GbdGpovM+sGerMFop2xTM0ZoD
+         EcIlgw0Exb1PPtV28vo+UxQfhaX6+HUrEumiizshiZENCj3lyXR1BA8ytNIwB050MT4Y
+         KuwFOd3upDiwE3ymO6eNVgsJ8RnXPQTyNbPSUY/AK49VSbX8nBb8kt5jDWwT1ewDXefI
+         F/cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8cRWFjyCHf4GbZngel1T0mk3vG3kUKL4H8h3Gu1F5vc=;
+        b=bH9eps/xliUDmOx+FMKIyWKiqiWI9PZXTIhlo6F056DI0qJBcbfB3Dk//PwT6RLrYc
+         nLtDP8dg9juviMD+pcscdTcnSGdNvws1z1QBZr1n3lIn0snJTPndDGEj6mPlJZaKloz0
+         TP9TTsQ9zvuaMeIgpGmA6Z1MpZTgUvMsAPIHAkrs2KY2t/BCup3ATooSdetXmcw/WQql
+         4rioKELzM82G7hcb4pSS7Yltijl60xhexj/wDQv8BgugsfH1GtNjOc8/yF8fVB6Mbg18
+         Lf0xjUJc4AldRmu3lbpTb3keP/SNRNiyzsT3Rif+2TIYaK8qUS17sVm/pmJhPOdF9Ob7
+         6xaQ==
+X-Gm-Message-State: ANhLgQ2sdmuM1QXrhkp9eRGB3zN++Y5esDWS4IDeM+w3tcI88x2/EPh9
+        zVMTIH5dnUjTtHrrt8yL85VmXg==
+X-Google-Smtp-Source: ADFU+vsWGdut+OD1aT3cywZs4Qd0ImcH4W8QDnCl8GceUnkjxcV8rOm5RbBlWtSGE2uu8nqZngvqyA==
+X-Received: by 2002:ac8:4b4e:: with SMTP id e14mr11973622qts.144.1584100362009;
+        Fri, 13 Mar 2020 04:52:42 -0700 (PDT)
+Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id 199sm11031143qkm.7.2020.03.13.04.52.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Mar 2020 04:52:41 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        David Miller <davem@davemloft.net>,
+        David Dai <daidavid1@codeaurora.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Odelu Kukatla <okukatla@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20190727091547.11674-1-baijiaju1990@gmail.com>
-From:   Hans Verkuil <hverkuil@xs4all.nl>
-Message-ID: <0c24a860-7bd7-4f25-3ccf-4c88bdff34c2@xs4all.nl>
-Date:   Fri, 13 Mar 2020 12:31:21 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+Subject: [PATCH 0/2] arm64: dts: sdm845: add/update IPA information
+Date:   Fri, 13 Mar 2020 06:52:35 -0500
+Message-Id: <20200313115237.10491-1-elder@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20190727091547.11674-1-baijiaju1990@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOVaX+hSZFFa2zv5ki43vKjqzxomfvC5iitQG0aK2D+4Vpl1X98UEtAfe2CH89VnpbxZ4KVuvHaW/n8jTwFo5gty0BvOcxcBsh/aobBz5p0V0u7XvhNV
- dApJB0cfsLCUW8ekwFGUBTQ1n73kmFD7YhZLpG8TIE1sYKlHFdMiER5gU4eu0MtaA78n/6O3axt3Lyk7EiSrFoYHMmclH/c44siGstjRnA7BRmCLtwpiLkpr
- TdIqnl/ufiXPD6RgkSp0j4/Vy1ROHK5uvEaNVCZhrOG6ndNoWPPfCoSCgCISo5A0uCsxAYESlwYsfS7wC8fKJ5U/CrNu4lYFMcM2/ZV0+Z8S2CCIELWvRoAj
- 1NasPwyIFqRpeTNMUBk00mAQfGi193BeSfjN1m8fOsu9SVDFw1M=
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch fell between the cracks, but while cleaning up patchwork
-it popped up again :-)
+Bjorn, these patches implement the DTS changes required for the
+Qualcomm IPA driver to support the SDM845 SoC.  The first adds the
+basic IPA information, which would be needed for kernel versions
+prior to v5.7.  The second updates the interconnect providers as
+required because of this commit:
+  b303f9f0050b arm64: dts: sdm845: Redefine interconnect provider DT nodes
 
-On 7/27/19 11:15 AM, Jia-Ju Bai wrote:
-> In vdec_g_fmt(), fmt is firstly assigned NULL, and it could be never
-> assigned before being used on line 223:
->     pixmp->pixelformat = fmt->pixfmt;
-> 
-> Thus, a possible null-pointer dereference may occur.
-> 
-> To fix this bug, fmt is checked before being used here.
+David Miller has reverted the first of these from net-next.
+  https://lore.kernel.org/netdev/20200312.154852.115271760293062652.davem@davemloft.net/
 
-Actually, this function can only be called for f->type values
-V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE or V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE.
+As agreed, please apply these to the Qualcomm tree if you find them
+acceptable after review.  They are based on the qcom/arm64-for-5.7
+branch.
 
-The easiest way to fix this is to replace this:
+Thanks.
 
-        if (f->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-                fmt = inst->fmt_cap;
-        else if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-                fmt = inst->fmt_out;
+					-Alex
 
-by:
+Alex Elder (2):
+  arm64: dts: sdm845: add IPA information
+  arm64: dts: sdm845: update IPA interconnect providers
 
-        if (f->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-                fmt = inst->fmt_cap;
-        else
-                fmt = inst->fmt_out;
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 52 ++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-And the same in a bit lower down in this function.
-
-Regards,
-
-	Hans
-
-> 
-> This bug is found by a static analysis tool STCheck written by us.
-> 
-> Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
-> ---
->  drivers/media/platform/qcom/venus/vdec.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index e1f998656c07..12c31551f191 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -211,7 +211,8 @@ static int vdec_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
->  		inst->height = format.fmt.pix_mp.height;
->  	}
->  
-> -	pixmp->pixelformat = fmt->pixfmt;
-> +	if (fmt)
-> +		pixmp->pixelformat = fmt->pixfmt;
->  
->  	if (f->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
->  		pixmp->width = inst->width;
-> 
-
+-- 
+2.20.1
