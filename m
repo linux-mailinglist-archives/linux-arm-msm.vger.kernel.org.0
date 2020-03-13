@@ -2,124 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 762BA18470E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 13:40:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6A6C184782
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 14:12:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726216AbgCMMkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 08:40:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34556 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726621AbgCMMky (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 08:40:54 -0400
-Received: from localhost (unknown [171.76.107.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726543AbgCMNMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 09:12:41 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:64044 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726553AbgCMNMl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Mar 2020 09:12:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584105161; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=b3CLsPT6+H6XAUf5xBwZbLtiEVGZ9FJA854R/d46QeI=; b=lKz13HiAOY9mr3BMce5Pib4FCy+oO7u3pyxRE1Y5OS+uGMO/gczwp0AxlI5fHvPf8wD0EqxW
+ fYTCgn/Bnxh0yu6UYElZi7N2ekcyHKjFR4MiehbO8vL0sDxI5/djuqu1zYLsTW2uVud2UuiN
+ AZ3jnNcBQW+3Gtm99CjLYxN1DTg=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6b86c1.7f6cb0af1928-smtp-out-n04;
+ Fri, 13 Mar 2020 13:12:33 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2C8BDC43637; Fri, 13 Mar 2020 13:12:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 11DE520724;
-        Fri, 13 Mar 2020 12:40:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584103254;
-        bh=tgITx3udnkEgR1xuM2wgsUOQN1rzYgIiMUlHDX0dYaE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=g+gYR2LvtvlA8v0hrbnFWvTCbNSX+vqRry14M3Uuzpmxt6rk3WQ17iARExRk3loUu
-         /wv5tuKoZZG+9F2ADNlpQUpQL3QvpXf3XRRO/WZWYTz7k9TYO0dmFaevu/XiM3Ocih
-         fgS4UxHUWklz/tB0U6Nqc99mbA8f1sIDr9FwlI3E=
-Date:   Fri, 13 Mar 2020 18:10:49 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Mark Brown <broonie@kernel.org>, Takashi Iwai <tiwai@suse.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RESEND PATCH v2 8/9] ASoC: qcom: q6asm-dai: add support for
- ALAC and APE decoders
-Message-ID: <20200313124049.GJ4885@vkoul-mobl>
-References: <20200313101627.1561365-1-vkoul@kernel.org>
- <20200313101627.1561365-9-vkoul@kernel.org>
- <fcee2779-fee8-e3d9-590f-e28fc5880ea0@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fcee2779-fee8-e3d9-590f-e28fc5880ea0@linaro.org>
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1A70DC433CB;
+        Fri, 13 Mar 2020 13:12:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1A70DC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+From:   Akash Asthana <akashast@codeaurora.org>
+To:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org
+Cc:     linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: [PATCH V2 0/8] Add interconnect support to QSPI and QUP drivers
+Date:   Fri, 13 Mar 2020 18:42:06 +0530
+Message-Id: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13-03-20, 12:15, Srinivas Kandagatla wrote:
-> 
-> 
-> On 13/03/2020 10:16, Vinod Koul wrote:
-> > Qualcomm DSPs also supports the ALAC and APE decoders, so add support
-> > for these and convert the snd_codec_params to qdsp format.
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> One minor nit, other that,
-> 
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+dt-binding patch for QUP drivers.
+ - https://patchwork.kernel.org/patch/11436621/ [Convert QUP bindings
+	to YAML and add ICC, pin swap doc]
 
-Thanks Srini for the reviews
+dt-binding patch for QSPI.
+ - https://patchwork.kernel.org/patch/11436719/ [Convert QSPI binding
+	to YAML and add interconnect doc]
 
-> > ---
-> >   sound/soc/qcom/qdsp6/q6asm-dai.c | 67 +++++++++++++++++++++++++++++++-
-> >   1 file changed, 66 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/sound/soc/qcom/qdsp6/q6asm-dai.c b/sound/soc/qcom/qdsp6/q6asm-dai.c
-> > index 53c250778eea..948710759824 100644
-> > --- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-> > +++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-> > @@ -628,12 +628,16 @@ static int q6asm_dai_compr_set_params(struct snd_compr_stream *stream,
-> >   	struct q6asm_dai_data *pdata;
-> >   	struct q6asm_flac_cfg flac_cfg;
-> >   	struct q6asm_wma_cfg wma_cfg;
-> > +	struct q6asm_alac_cfg alac_cfg;
-> > +	struct q6asm_ape_cfg ape_cfg;
-> >   	unsigned int wma_v9 = 0;
-> >   	struct device *dev = c->dev;
-> >   	int ret;
-> >   	union snd_codec_options *codec_options;
-> >   	struct snd_dec_flac *flac;
-> >   	struct snd_dec_wma *wma;
-> > +	struct snd_dec_alac *alac;
-> > +	struct snd_dec_ape *ape;
-> >   	codec_options = &(prtd->codec_param.codec.options);
-> > @@ -756,6 +760,65 @@ static int q6asm_dai_compr_set_params(struct snd_compr_stream *stream,
-> >   			dev_err(dev, "WMA9 CMD failed:%d\n", ret);
-> >   			return -EIO;
-> >   		}
-> > +		break;
-> > +
-> > +	case SND_AUDIOCODEC_ALAC:
-> > +		memset(&alac_cfg, 0x0, sizeof(alac_cfg));
-> > +		alac = &codec_options->alac_d;
-> > +
-> > +		alac_cfg.sample_rate = params->codec.sample_rate;
-> > +		alac_cfg.avg_bit_rate = params->codec.bit_rate;
-> > +		alac_cfg.bit_depth = prtd->bits_per_sample;
-> > +		alac_cfg.num_channels = params->codec.ch_in;
-> > +
-> > +		alac_cfg.frame_length = alac->frame_length;
-> > +		alac_cfg.pb = alac->pb;
-> > +		alac_cfg.mb = alac->mb;
-> > +		alac_cfg.kb = alac->kb;
-> > +		alac_cfg.max_run = alac->max_run;
-> > +		alac_cfg.compatible_version = alac->compatible_version;
-> > +		alac_cfg.max_frame_bytes = alac->max_frame_bytes;
-> > +
-> > +		switch (params->codec.ch_in) {
-> > +		case 1:
-> > +			alac_cfg.channel_layout_tag = (100 << 16) | 1;
-> 
-> We should probably define this layout tag in asm.h
-> something like:
-> 
-> #define ALAC_CHANNEL_LAYOUT_TAG_Mono (100<<16) | 1
-> #define ALAC_CHANNEL_LAYOUT_TAG_STEREO (100<<16) | 2
+High level design:
+ - QUP wrapper/common driver.
+   Vote for QUP core on behalf of earlycon from probe.
+   Remove BW vote during sys suspend call
 
-Sure I will add these
+ - SERIAL driver.
+   Vote only for CPU/CORE path because driver is in FIFO mode only
+   Vote/unvote from qcom_geni_serial_pm func.
+   Bump up the CPU vote from set_termios call based on real time need
+
+ - I2C driver.
+   Vote for CORE/CPU/DDR path
+   Vote/unvote from runtime resume/suspend callback
+   As bus speed for I2C is fixed from probe itself no need for bump up.
+
+ - SPI QUP driver.
+   Vote only for CPU/CORE path because driver is in FIFO mode only
+   Vote/unvote from runtime resume/suspend callback
+   Bump up CPU vote based on real time need per transfer.
+
+ - QSPI driver.
+   Vote only for CPU path
+   Vote/unvote from runtime resume/suspend callback
+   Bump up CPU vote based on real time need per transfer.
+
+
+Changes in V2:
+ - Add devm_of_icc_get() API interconnect core.
+ - Add ICC support to common driver to fix earlyconsole crash.
+
+Akash Asthana (8):
+  interconnect: Add devm_of_icc_get() as exported API for users
+  soc: qcom: geni: Support for ICC voting
+  soc: qcom-geni-se: Add interconnect support to fix earlycon crash
+  tty: serial: qcom_geni_serial: Add interconnect support
+  i2c: i2c-qcom-geni: Add interconnect support
+  spi: spi-geni-qcom: Add interconnect support
+  spi: spi-qcom-qspi: Add interconnect support
+  arm64: dts: sc7180: Add interconnect for QUP and QSPI
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi  | 127 ++++++++++++++++++++++++++++++++++
+ drivers/i2c/busses/i2c-qcom-geni.c    | 110 +++++++++++++++++++++++++++++
+ drivers/interconnect/core.c           |  25 +++++++
+ drivers/soc/qcom/qcom-geni-se.c       |  41 +++++++++++
+ drivers/spi/spi-geni-qcom.c           |  74 +++++++++++++++++++-
+ drivers/spi/spi-qcom-qspi.c           |  46 +++++++++++-
+ drivers/tty/serial/qcom_geni_serial.c |  69 ++++++++++++++++--
+ include/linux/interconnect.h          |   7 ++
+ include/linux/qcom-geni-se.h          |  28 ++++++++
+ 9 files changed, 521 insertions(+), 6 deletions(-)
 
 -- 
-~Vinod
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
