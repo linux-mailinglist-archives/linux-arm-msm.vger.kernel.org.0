@@ -2,247 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 790C8184884
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 14:53:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 248DF184886
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 14:54:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbgCMNxb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 09:53:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51744 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726695AbgCMNxb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 09:53:31 -0400
-Received: from localhost (unknown [171.76.107.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726327AbgCMNyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 09:54:08 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:11037 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726642AbgCMNyI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Mar 2020 09:54:08 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584107648; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=r0kpkxMAplkgIWkkncsMJpp9/LkYkIEQT6DADZGppXU=;
+ b=ouGycTc0VLmWZCPsMeSJaSrZLJI5AlINH4Uj5jIItnVYfGQ8Czx/45CsTXOjhY/Fa/oQu2RA
+ bHCvKAsgDs5MWIhR4ijRyX0wAuelwpfhrHOAcngpQbhY0wQMgX3Ay6S1WsbX38GnP/pfxVvT
+ 4FdOtWs2j8hI4DuABEPNxSQnl+A=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6b9070.7f31a81b07d8-smtp-out-n02;
+ Fri, 13 Mar 2020 13:53:52 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2A60AC43636; Fri, 13 Mar 2020 13:53:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3A965206B7;
-        Fri, 13 Mar 2020 13:53:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584107609;
-        bh=HnEW42TbU4FLknhXioegkFJkSnYu92M53fwbC4zqmK0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KPOuFAn394Mu4Iz+JJ1Q3IFT9X+2cnQcdxpclr7Yglb6urdp1d9VnbgruAtmIMNmH
-         jQvKnUywG/4i7w3zaCCkPsfI7wwj3VrOjm3BkkeQO5IeqZCL1fHTcVRP0A88v3GX4q
-         QfGtGMf1hFvkvE2oyskDyI2FU0Ec3zPiPXgs8KZc=
-Date:   Fri, 13 Mar 2020 19:23:24 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: db845c: add analog audio support
-Message-ID: <20200313135324.GM4885@vkoul-mobl>
-References: <20200312143024.11059-1-srinivas.kandagatla@linaro.org>
- <20200312143024.11059-6-srinivas.kandagatla@linaro.org>
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A30EBC433D2;
+        Fri, 13 Mar 2020 13:53:50 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200312143024.11059-6-srinivas.kandagatla@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 13 Mar 2020 19:23:50 +0530
+From:   skakit@codeaurora.org
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     swboyd@chromium.org, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        akashast@codeaurora.org, rojay@codeaurora.org,
+        msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V3 2/2] tty: serial: qcom_geni_serial: Fix RX cancel
+ command failure
+In-Reply-To: <20200312091041.GA198954@kroah.com>
+References: <1583477228-32231-1-git-send-email-skakit@codeaurora.org>
+ <1583477228-32231-3-git-send-email-skakit@codeaurora.org>
+ <20200312091041.GA198954@kroah.com>
+Message-ID: <436ae3cfb957b11b0d7aa3b1dbb0adf2@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-03-20, 14:30, Srinivas Kandagatla wrote:
-> This patch adds support to Analog audio via WSA881x speakers.
+On 2020-03-12 14:40, Greg KH wrote:
+> On Fri, Mar 06, 2020 at 12:17:08PM +0530, satya priya wrote:
+>> RX cancel command fails when BT is switched on and off multiple times.
+>> 
+>> To handle this, poll for the cancel bit in SE_GENI_S_IRQ_STATUS 
+>> register
+>> instead of SE_GENI_S_CMD_CTRL_REG.
+>> 
+>> As per the HPG update, handle the RX last bit after cancel command
+>> and flush out the RX FIFO buffer.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> ---
+>>  drivers/tty/serial/qcom_geni_serial.c | 18 ++++++++++++++----
+>>  1 file changed, 14 insertions(+), 4 deletions(-)
 > 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 159 +++++++++++++++++++++
->  1 file changed, 159 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index 6e60e81f8db7..94aa9227ca51 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -8,6 +8,8 @@
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +#include <dt-bindings/sound/qcom,q6asm.h>
->  #include "sdm845.dtsi"
->  #include "pm8998.dtsi"
->  #include "pmi8998.dtsi"
-> @@ -200,6 +202,40 @@
->  	firmware-name = "qcom/sdm845/adsp.mdt";
->  };
->  
-> +
-> +&wcd9340{
+> This patch didn't apply :(
 
-Here as well :)
-
-> +	pinctrl-0 = <&wcd_intr_default>;
-> +	pinctrl-names = "default";
-> +	clock-names = "extclk";
-> +	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
-> +	reset-gpios = <&tlmm 64 0>;
-> +	vdd-buck-supply = <&vreg_s4a_1p8>;
-> +	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
-> +	vdd-tx-supply = <&vreg_s4a_1p8>;
-> +	vdd-rx-supply = <&vreg_s4a_1p8>;
-> +	vdd-io-supply = <&vreg_s4a_1p8>;
-> +
-> +	swm: swm@c85 {
-> +		left_spkr: wsa8810-left{
-> +			compatible = "sdw10217201000";
-> +			reg = <0 1>;
-> +			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
-> +			#thermal-sensor-cells = <0>;
-> +			sound-name-prefix = "SpkrLeft";
-> +			#sound-dai-cells = <0>;
-> +		};
-> +
-> +		right_spkr: wsa8810-right{
-> +			compatible = "sdw10217201000";
-> +			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
-> +			reg = <0 2>;
-> +			#thermal-sensor-cells = <0>;
-> +			sound-name-prefix = "SpkrRight";
-> +			#sound-dai-cells = <0>;
-> +		};
-> +	};
-> +};
-> +
->  &apps_rsc {
->  	pm8998-rpmh-regulators {
->  		compatible = "qcom,pm8998-rpmh-regulators";
-> @@ -535,6 +571,15 @@
->  		function = "gpio";
->  		bias-pull-up;
->  	};
-> +
-> +	wcd_intr_default: wcd_intr_default {
-> +		pins = <54>;
-> +		function = "gpio";
-> +
-> +		input-enable;
-> +		bias-pull-down;
-> +		drive-strength = <2>;
-> +	};
->  };
->  
->  &uart6 {
-> @@ -674,3 +719,117 @@
->  		bias-pull-up;
->  	};
->  };
-> +
-> +/* QUAT I2S Uses 4 I2S SD Lines for audio on LT9611 HDMI Bridge */
-> +&q6afedai {
-> +	qi2s@22 {
-> +		reg = <22>;
-> +		qcom,sd-lines = <0 1 2 3>;
-> +	};
-> +};
-> +
-> +&q6asmdai {
-> +	dai@0 {
-> +		reg = <0>;
-> +		direction = <2>;
-> +	};
-> +
-> +	dai@1 {
-> +		reg = <1>;
-> +		direction = <2>;
-> +	};
-> +
-> +	dai@2 {
-> +		reg = <2>;
-> +		direction = <1>;
-> +	};
-> +
-> +	dai@3 {
-> +		reg = <3>;
-> +		direction = <2>;
-> +		is-compress-dai;
-> +	};
-> +};
-> +
-> +&sound {
-> +	compatible = "qcom,db845c-sndcard";
-> +	pinctrl-0 = <&quat_mi2s_active
-> +			 &quat_mi2s_sd0_active
-> +			 &quat_mi2s_sd1_active
-> +			 &quat_mi2s_sd2_active
-> +			 &quat_mi2s_sd3_active>;
-> +	pinctrl-names = "default";
-> +	model = "DB845c";
-> +	audio-routing =
-> +		"RX_BIAS", "MCLK",
-> +		"AMIC1", "MIC BIAS1",
-> +		"AMIC2", "MIC BIAS2",
-> +		"DMIC0", "MIC BIAS1",
-> +		"DMIC1", "MIC BIAS1",
-> +		"DMIC2", "MIC BIAS3",
-> +		"DMIC3", "MIC BIAS3",
-> +		"SpkrLeft IN", "SPK1 OUT",
-> +		"SpkrRight IN", "SPK2 OUT",
-> +		"MM_DL1",  "MultiMedia1 Playback",
-> +		"MM_DL2",  "MultiMedia2 Playback",
-> +		"MM_DL4",  "MultiMedia4 Playback",
-> +		"MultiMedia3 Capture", "MM_UL3";
-> +
-> +	mm1-dai-link {
-> +		link-name = "MultiMedia1";
-> +		cpu {
-> +			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA1>;
-> +		};
-> +	};
-> +
-> +	mm2-dai-link {
-> +		link-name = "MultiMedia2";
-> +		cpu {
-> +			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA2>;
-> +		};
-> +	};
-> +
-> +	mm3-dai-link {
-> +		link-name = "MultiMedia3";
-> +		cpu {
-> +			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA3>;
-> +		};
-> +	};
-> +
-> +	mm4-dai-link {
-> +		link-name = "MultiMedia4";
-> +		cpu {
-> +			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA4>;
-> +		};
-> +	};
-> +
-> +	slim-dai-link {
-> +		link-name = "SLIM Playback";
-> +		cpu {
-> +			sound-dai = <&q6afedai SLIMBUS_0_RX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai =  <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
-> +		};
-> +	};
-> +
-> +	slimcap-dai-link {
-> +		link-name = "SLIM Capture";
-> +		cpu {
-> +			sound-dai = <&q6afedai SLIMBUS_0_TX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai = <&wcd9340 1>;
-> +		};
-> +	};
-> +};
-> -- 
-> 2.21.0
-
--- 
-~Vinod
+V1 of this patch is already picked in tty-next tree(commit id: 
+679aac5ead2f18d223554a52b543e1195e181811). There is no change in this 
+patch from V1 to V3[2/2].
+There is a crash reported by Stephen with V1, to resolve that we posted 
+next versions adding this patch 
+https://patchwork.kernel.org/patch/11423231/, that is, V3[1/2]. So now 
+only V3[1/2] needs to be picked.
