@@ -2,106 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ADFC5185183
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 23:06:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA0491851AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 23:34:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726964AbgCMWGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 18:06:41 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:39592 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726543AbgCMWGk (ORCPT
+        id S1726543AbgCMWeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 18:34:12 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35807 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726534AbgCMWeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 18:06:40 -0400
-Received: by mail-oi1-f194.google.com with SMTP id d63so11113788oig.6;
-        Fri, 13 Mar 2020 15:06:40 -0700 (PDT)
+        Fri, 13 Mar 2020 18:34:12 -0400
+Received: by mail-wr1-f68.google.com with SMTP id d5so13725609wrc.2;
+        Fri, 13 Mar 2020 15:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=u2/KsbMRst5bOqjjozeqv6hTnglC4BshRp2rjl0jtkE=;
+        b=J+TIiwsKperfrX263SHYpVChqgx2ehGPtuTPCxNhG61/OgzX0SeZROV+/dZCwtr0UL
+         iQZm5u345orMAsMTyYca+AHmpt7gL8VOm7ijkJKezhhW/iUqOwWa64hZfI2TT4M+OQ5w
+         +GNCtW/wxOyQAEP2qsJog8CdrpPRNg8NAN2Qv4h9vPcNJgbKNbdwWvNY/9ujuPLNB29t
+         O3y2tzPrHhfQ9oojPZ2C3mNhtXjGydVi7kdkJ4joFq1S9GhS+YbzFMUZ6c+3K9hRNk5U
+         OhFRXx35CcfyIkEDhJDiTyyHkrJVSoCFtRnXy6C32sR3x4QRvhHrASLMB6ls3CaG6MCE
+         tXjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ilzS0hJrGQZ6eyLJRBMPCbAkFbNW8hu+JqnsWG5936I=;
-        b=FMB1uWI5bE3snfrdo8OWuN5f+AQegdsYzLmOpXmzCBaEs3zaLgP6YckrC7824RnDWm
-         5PCAtaW9fUz/I14Ke83ThYWmiW+KSnxVhahqOOmoSfGlEOQbgfRnqCpfAtyL+iKAjz7d
-         YXluz5F2azda8faLqdNDyHDDRxP4mNKKDhx5+TGvuZCpp9bsi6Le8GqEkfT7JitwWhgP
-         5aQJHnrU7aVKWRz+TQcHN3nLIQRnka1Qs6kcd0bFQHVzDadim32980TMnqj3i4rxcp85
-         e3vb2ZlLpJyf4KUIggSg3HB/QxSK3pFAkD++52/r9/zubB6i8Bs81IVDmZ57yafoSqh7
-         ZYHQ==
-X-Gm-Message-State: ANhLgQ2GR2ZDcfG1GqZ7MMBkuZ8Zfitc9eCGGIO2yzVmUW2/glrVPxrD
-        qeHq45sbWVjyQ7kw5g1e4Q==
-X-Google-Smtp-Source: ADFU+vuN0h/7UXuNud4g4VDHnWNmJuW+Wfhs0pZvp6rDUJ7bcR6HzbpLy9YcuoijqL6RjgUhj/8JYA==
-X-Received: by 2002:aca:5ad5:: with SMTP id o204mr8463583oib.2.1584137199554;
-        Fri, 13 Mar 2020 15:06:39 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id w21sm3324370otm.10.2020.03.13.15.06.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 15:06:39 -0700 (PDT)
-Received: (nullmailer pid 2933 invoked by uid 1000);
-        Fri, 13 Mar 2020 22:06:38 -0000
-Date:   Fri, 13 Mar 2020 17:06:38 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        rojay@codeaurora.org, c_skakit@codeaurora.org, mka@chromium.org
-Subject: Re: [PATCH V5 2/3] dt-bindings: geni-se: Add interconnect binding
- for GENI QUP
-Message-ID: <20200313220638.GA30287@bogus>
-References: <1584095350-841-1-git-send-email-akashast@codeaurora.org>
- <1584095350-841-3-git-send-email-akashast@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=u2/KsbMRst5bOqjjozeqv6hTnglC4BshRp2rjl0jtkE=;
+        b=cjaLJ530orLqSUMw+uLGJSdQY8KkzXU9oqP+g1mOtPvzi2LZsw87K4ZdslmHdipVvg
+         BfY3Qc8O1GU9ki2bv1g7BKYRy+YLI7yhnuJpFD1DEYmBzV6LGWvCnwIGOPk9Mf3Qu8ti
+         Y78vebQkv3N76vTMLJ0rWMxuAl6aMLny8BEcVIoG1KI67nbs9h1QHzzAjeQflJ3+iVU8
+         uAnShiBl8eUo1bLFHqj+cmUMU7vxU8CPRi3JFuQIGNnTEZhaCnM2E8X34QQT9wITrLhT
+         P0T9p/qEIfWFT+837doki3J5DNocTcIDF3T1kiq621Q5mJ02aj8GF95cXAiqyLVJLBsa
+         5p3w==
+X-Gm-Message-State: ANhLgQ0CcOhQnjuCK0BTRCH10RGPkf23n2K1Mf+jjkvXY3GMRnIfTCM2
+        i/Ve68pENr/xNqSPlBYjHkw=
+X-Google-Smtp-Source: ADFU+vuwl9wZQqUu+AK3esARk//0MO9KcaK6BM7g9CGUYNYklmt4SgOYLGnFRB6MFLNXN1F+2JzSiQ==
+X-Received: by 2002:adf:e98c:: with SMTP id h12mr20476792wrm.345.1584138849748;
+        Fri, 13 Mar 2020 15:34:09 -0700 (PDT)
+Received: from AnsuelXPS ([2001:470:b467:1:44af:5966:96b9:9aa4])
+        by smtp.gmail.com with ESMTPSA id t1sm36023991wrq.36.2020.03.13.15.34.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Mar 2020 15:34:09 -0700 (PDT)
+From:   <ansuelsmth@gmail.com>
+To:     "'Stephen Boyd'" <sboyd@kernel.org>, <agross@kernel.org>
+Cc:     "'Mathieu Olivari'" <mathieu@codeaurora.org>,
+        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
+        "'Rob Herring'" <robh+dt@kernel.org>,
+        "'Mark Rutland'" <mark.rutland@arm.com>,
+        "'Michael Turquette'" <mturquette@baylibre.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+References: <20200313195816.12435-1-ansuelsmth@gmail.com> <158413179776.164562.8295974225127853050@swboyd.mtv.corp.google.com>
+In-Reply-To: <158413179776.164562.8295974225127853050@swboyd.mtv.corp.google.com>
+Subject: R: [PATCH] ARM: qcom: Disable i2c device on gsbi4 for ipq806x
+Date:   Fri, 13 Mar 2020 23:34:05 +0100
+Message-ID: <014101d5f987$82790c90$876b25b0$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1584095350-841-3-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFhpnVMu9aClkJmE4H4ViqLWFkkBwJI+//GqR16BZA=
+Content-Language: it
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 13, 2020 at 03:59:09PM +0530, Akash Asthana wrote:
-> Add documentation for the interconnect and interconnect-names properties
-> for the GENI QUP.
+> Quoting Ansuel Smith (2020-03-13 12:58:16)
+> > diff --git a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+> b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+> > index 554c65e7aa0e..580aec63030d 100644
+> > --- a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+> > +++ b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+> > @@ -21,14 +21,5 @@ mux {
+> >                                 };
+> >                         };
+> >                 };
+> > -
+> > -               gsbi@16300000 {
+> > -                       i2c@16380000 {
+> > -                               status = "ok";
+> > -                               clock-frequency = <200000>;
+> > -                               pinctrl-0 = <&i2c4_pins>;
+> > -                               pinctrl-names = "default";
+> > -                       };
+> > -               };
+> >         };
+> >  };
+> > diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-
+> ipq806x.c
+> > index b0eee0903807..75706807e6cf 100644
+> > --- a/drivers/clk/qcom/gcc-ipq806x.c
+> > +++ b/drivers/clk/qcom/gcc-ipq806x.c
+> > @@ -782,7 +782,7 @@ static struct clk_rcg gsbi4_qup_src = {
+> >                         .parent_names = gcc_pxo_pll8,
+> >                         .num_parents = 2,
+> >                         .ops = &clk_rcg_ops,
+> > -                       .flags = CLK_SET_PARENT_GATE,
+> > +                       .flags = CLK_SET_PARENT_GATE | CLK_IGNORE_UNUSED,
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> ---
-> Changes in V5:
->  - Add interconnect property for QUP wrapper (parent node).
->  - Add minItems = 2 for interconnect property in child nodes
+> A better solution is to use the protected-clocks property so we don't
+> try to touch these clks at all on this device. So this whole patch can
+> be routed through arm-soc and remove the i2c node and add some dt
+> property to the gcc node.
 > 
->  .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml       | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> index 23282ab..533400b 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> @@ -46,6 +46,12 @@ properties:
->  
->    ranges: true
->  
-> +  interconnects:
-> +    maxItems: 1
-> +
-> +  interconnect-names:
-> +    const: qup-core
-> +
->  required:
->    - compatible
->    - reg
-> @@ -73,6 +79,16 @@ patternProperties:
->          description: Serial engine core clock needed by the device.
->          maxItems: 1
->  
-> +      interconnects:
-> +         minItems: 2
-> +         maxItems: 3
-> +
-> +      interconnect-names:
-> +         items:
-> +           - const: qup-core
-> +           - const: qup-config
-> +           - const: qup-memory
 
-Don't you need 'minItems: 2' here?
+Should I add a comment where the i2c is removed or I can remove it
+directly?
 
-Rob
+> >                 },
+> >         },
+> >  };
+
