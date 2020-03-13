@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E57BE184132
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 08:09:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 887E6184134
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 08:09:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726371AbgCMHJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 03:09:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58278 "EHLO mail.kernel.org"
+        id S1726387AbgCMHJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 03:09:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58336 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726216AbgCMHJL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 03:09:11 -0400
+        id S1726216AbgCMHJQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Mar 2020 03:09:16 -0400
 Received: from localhost.localdomain (unknown [171.76.107.175])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8F1952074A;
-        Fri, 13 Mar 2020 07:09:07 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EF10220409;
+        Fri, 13 Mar 2020 07:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584083351;
-        bh=eAOYl2icplz8mBmGFU2V/HyyvjUJIezolE5jQJwy6rA=;
+        s=default; t=1584083355;
+        bh=2HHtMQ/oq3CtVwVJ1RMLryfUOU4xqIkyYyt4FkFInU4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=1mOJ6rEUFCtPR3yyk/rTu4nByZyMJlnModafsjzicVfXVj4RlD7A+WVyA5IMQUR1r
-         iU0E1j1JQYC0p6mFfBLf9i8cdzbXBMslI0DXUROxAJATFEgdimYk7deDNSaL6FVgAs
-         /vHcVsv9J/L0Ac8JqcxU1sdJTTVvNqzF1R+pUOSI=
+        b=IUPKa6UHmHqG2wrCYo/fRPrehhLUdlUT1kQUURDnW9MOJAIJ/PDri9+GGmFv8l7lG
+         PQFg1vTx4bFgramvlWSPrdB7dG1Ld1t8jrsn4v7ZItpdlr3uM23txFIb1eP4nAIb5+
+         gsY1Xz3EnQkzPtgpNZ4pTAaAryWG3h8h9LL4s07c=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Mark Brown <broonie@kernel.org>, Takashi Iwai <tiwai@suse.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -34,9 +34,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Jaroslav Kysela <perex@perex.cz>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/9] ALSA: compress: add wma codec profiles
-Date:   Fri, 13 Mar 2020 12:38:39 +0530
-Message-Id: <20200313070847.1464977-2-vkoul@kernel.org>
+Subject: [PATCH 2/9] ALSA: compress: Add wma decoder params
+Date:   Fri, 13 Mar 2020 12:38:40 +0530
+Message-Id: <20200313070847.1464977-3-vkoul@kernel.org>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200313070847.1464977-1-vkoul@kernel.org>
 References: <20200313070847.1464977-1-vkoul@kernel.org>
@@ -47,28 +47,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some codec profiles were missing for WMA, like WMA9/10 lossless and
-wma10 pro, so add these profiles
+Some WMA decoders like WMAv10 etc need some additional encoder option
+parameters, so add these as WMA decoder params.
 
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- include/uapi/sound/compress_params.h | 3 +++
- 1 file changed, 3 insertions(+)
+ include/uapi/sound/compress_params.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/include/uapi/sound/compress_params.h b/include/uapi/sound/compress_params.h
-index 9c96fb0e4d90..634daa354b58 100644
+index 634daa354b58..19d69d626573 100644
 --- a/include/uapi/sound/compress_params.h
 +++ b/include/uapi/sound/compress_params.h
-@@ -142,6 +142,9 @@
- #define SND_AUDIOPROFILE_WMA8                ((__u32) 0x00000002)
- #define SND_AUDIOPROFILE_WMA9                ((__u32) 0x00000004)
- #define SND_AUDIOPROFILE_WMA10               ((__u32) 0x00000008)
-+#define SND_AUDIOPROFILE_WMA9_PRO            ((__u32) 0x00000010)
-+#define SND_AUDIOPROFILE_WMA9_LOSSLESS       ((__u32) 0x00000011)
-+#define SND_AUDIOPROFILE_WMA10_LOSSLESS      ((__u32) 0x00000012)
+@@ -329,6 +329,13 @@ struct snd_dec_flac {
+ 	__u16 reserved;
+ } __attribute__((packed, aligned(4)));
  
- #define SND_AUDIOMODE_WMA_LEVEL1             ((__u32) 0x00000001)
- #define SND_AUDIOMODE_WMA_LEVEL2             ((__u32) 0x00000002)
++struct snd_dec_wma {
++	__u32 encoder_option;
++	__u32 adv_encoder_option;
++	__u32 adv_encoder_option2;
++	__u32 reserved;
++} __attribute__((packed, aligned(4)));
++
+ union snd_codec_options {
+ 	struct snd_enc_wma wma;
+ 	struct snd_enc_vorbis vorbis;
+@@ -336,6 +343,7 @@ union snd_codec_options {
+ 	struct snd_enc_flac flac;
+ 	struct snd_enc_generic generic;
+ 	struct snd_dec_flac flac_d;
++	struct snd_dec_wma wma_d;
+ } __attribute__((packed, aligned(4)));
+ 
+ /** struct snd_codec_desc - description of codec capabilities
 -- 
 2.24.1
 
