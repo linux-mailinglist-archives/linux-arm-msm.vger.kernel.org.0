@@ -2,90 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D4E618444A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 11:05:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32284184458
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 11:07:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726504AbgCMKFX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 06:05:23 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36428 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726393AbgCMKFW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 06:05:22 -0400
-Received: by mail-wr1-f65.google.com with SMTP id s5so11319608wrg.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 03:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DkgtdvOLhPq5sUtjHRHCpYAFEd/88KxYCJ5Q/7OZdAA=;
-        b=WL8rtzOewU/9s+K0tvQpcOMXbr6z8K1b/4xg47mX7DzD3tGkqmlitudW6dcgGxCTUy
-         ZnhpdCWiUyndV3kwVLwm4Kz9Y1OafWLeQQiRN9Ja3dy85aJ3z2Fwl+xp3bCkdryfSF4x
-         EeZT+N7l9jLcATyhvvHXnq2+ggmZ4axNP8ELE8a5MrgQ0/h8zkmE+SDyru4TbGb+dlKl
-         wE5mVpwdcjsn1PwQd7Ft03lUgseGNgXRaKYBNTIdaMVrLI8FuXLpZRiEa/NsJaaOZuob
-         0Z4A10T7fdFLYy82VZu/Ld6XKr/AEabGd3ymvJgaiGCAUPA9VL/qJUVbEIiFc5tPB0aA
-         bxiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DkgtdvOLhPq5sUtjHRHCpYAFEd/88KxYCJ5Q/7OZdAA=;
-        b=ltZSxoHA6wDZs7EVHYp5N1sIzKZHjm+cBdfHOhb7GssP0xAC+6tXsycKxHHComftD6
-         nma3quE8h6o4PjKkpfuVHTzBRv/Efu4+1TrYG1cZFeTM+VeoDjzBdCZpEg48r1blpP4c
-         xE48dDjJ6adyMLHaHnofxlWwsbqjKbkLf53/2K8D1fs4g1czUq+UEJh2Ka7ftFqrec7x
-         LzTA7jc4whcBG5O3tir0qR1aowiD01le99xS4VyM8PagkSz5mNJ5OHUO235kvKAbwN+Z
-         0YjCUf/CZfTRna9Dr4tdUIhEsN+NNK1MPznGbbpie0IsfW6FvX/aRM+q5csl6FQ6Hvy2
-         nYjQ==
-X-Gm-Message-State: ANhLgQ1uyZDtaMTPAjD4ZYxaXcd8MeQtHSqy1OUvoeXYMLJ6KkDWsEiD
-        vQlsvjdl6YYCxqKTQ3kqEXXd/Q==
-X-Google-Smtp-Source: ADFU+vuTRDG0n/eB58imQFTmEl0YspJzXhA4oFvRnCi/L172+s9nTOf1O8dWmim1NZPCcDnu+tPD+g==
-X-Received: by 2002:a5d:5545:: with SMTP id g5mr965179wrw.290.1584093920811;
-        Fri, 13 Mar 2020 03:05:20 -0700 (PDT)
-Received: from google.com ([2a00:79e0:d:110:d6cc:2030:37c1:9964])
-        by smtp.gmail.com with ESMTPSA id x13sm16642987wmj.5.2020.03.13.03.05.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 03:05:20 -0700 (PDT)
-Date:   Fri, 13 Mar 2020 10:05:16 +0000
-From:   Quentin Perret <qperret@google.com>
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Morten.Rasmussen@arm.com,
-        Dietmar.Eggemann@arm.com, javi.merino@arm.com,
-        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
-        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
-        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org
-Subject: Re: [PATCH v4 1/4] PM / EM: add devices to Energy Model
-Message-ID: <20200313100516.GB144499@google.com>
-References: <20200309134117.2331-1-lukasz.luba@arm.com>
- <20200309134117.2331-2-lukasz.luba@arm.com>
- <20200313100407.GA144499@google.com>
+        id S1726481AbgCMKH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 06:07:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34606 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726055AbgCMKH1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Mar 2020 06:07:27 -0400
+Received: from localhost.localdomain (unknown [171.76.107.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D1DE620746;
+        Fri, 13 Mar 2020 10:07:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584094046;
+        bh=lS+qwx9mm8I2t3RkiOHXznQAfI14rFMap31xJBPpUeA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=N9hznwMzcjGQjsqGtzfdE82DknA6ShqCZTwLOp/v0ka/nAx6na5sIdZBg3LHfxyZf
+         iqM7z7pvHtA/C54fog+kzF8icaE1c5/0AngYMS6lII3/iYP0uWVramsSRqTqdrocd0
+         ajZIfvqrPwUKzTbYBnmXU9skZIV0LEt9GYV3/qTw=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mark Brown <broonie@kernel.org>, Takashi Iwai <tiwai@suse.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/9] ALSA: compress: add wma codec profiles
+Date:   Fri, 13 Mar 2020 15:37:00 +0530
+Message-Id: <20200313100708.1558658-2-vkoul@kernel.org>
+X-Mailer: git-send-email 2.24.1
+In-Reply-To: <20200313095318.1555163-2-vkoul@kernel.org>
+References: <20200313095318.1555163-2-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200313100407.GA144499@google.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Friday 13 Mar 2020 at 10:04:07 (+0000), Quentin Perret wrote:
-> Not easy to figure out which device has a problem with this. I'm
-> guessing you went that way since this is called before ida_simple_get() ?
-> Could that be refactored to make the error message more useful ?
+Some codec profiles were missing for WMA, like WMA9/10 lossless and
+wma10 pro, so add these profiles
 
-Bah, forget that one :)
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ include/uapi/sound/compress_params.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/include/uapi/sound/compress_params.h b/include/uapi/sound/compress_params.h
+index 9c96fb0e4d90..a47d9df0fd7b 100644
+--- a/include/uapi/sound/compress_params.h
++++ b/include/uapi/sound/compress_params.h
+@@ -142,6 +142,9 @@
+ #define SND_AUDIOPROFILE_WMA8                ((__u32) 0x00000002)
+ #define SND_AUDIOPROFILE_WMA9                ((__u32) 0x00000004)
+ #define SND_AUDIOPROFILE_WMA10               ((__u32) 0x00000008)
++#define SND_AUDIOPROFILE_WMA9_PRO            ((__u32) 0x00000010)
++#define SND_AUDIOPROFILE_WMA9_LOSSLESS       ((__u32) 0x00000020)
++#define SND_AUDIOPROFILE_WMA10_LOSSLESS      ((__u32) 0x00000040)
+ 
+ #define SND_AUDIOMODE_WMA_LEVEL1             ((__u32) 0x00000001)
+ #define SND_AUDIOMODE_WMA_LEVEL2             ((__u32) 0x00000002)
+-- 
+2.24.1
+
