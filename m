@@ -2,102 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C01B6184638
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 12:52:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FB66184675
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 13:04:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726650AbgCMLwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 07:52:46 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:36271 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726667AbgCMLwq (ORCPT
+        id S1726838AbgCMMEz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 08:04:55 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45971 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726395AbgCMMEz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 07:52:46 -0400
-Received: by mail-qt1-f196.google.com with SMTP id m33so7186207qtb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 04:52:45 -0700 (PDT)
+        Fri, 13 Mar 2020 08:04:55 -0400
+Received: by mail-ed1-f66.google.com with SMTP id h62so11525698edd.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 05:04:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EJYEwhvvykhNvLjfomJTk+7wfFhPwkWPWJYIsxK+5ik=;
-        b=WHJUb0/IaXI8YcDSsvqHVkiPkhBDtqH3G5v2AxaXMmjzE/v8jmczleWms+uAsMI/3b
-         Epb2+MASyIy28CDMCjlAhiccteW/2XOnn89UAbJyPDCisRmVM3sbY1zz7RboW4xGOlyb
-         iiW+iaQ01QvGTk0YkEFZMaGSVeYpotCjYe8UHBdflbY66Eqd/q1nJNzvUVnPywKUMlWx
-         979eYmyVlHyNAobDzaJsWSv/9DzlZWR38drY0TMzDHiTZhWo6kY1R5RppESnLc89vHBW
-         6DoOXQIrB04CYSNdGJIZe+svMlcmaw1rkTAPLoNqEy0diOdYI8TuazDEyDCNd9TmLipY
-         3ROA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=KVQaV5WPaAITEfXGJD3iw4zrtyye7kAolYp6oZ1quUI=;
+        b=GVZv6ChaXLEWYvbrWTdhS4i8fMw2qeJSXb/2JBjNdfMY6mhOggh6/Z5mOaWCYPz6Ad
+         PetuwUXpdI272XaInycenRqesHqQBmYhwOBAMPaM4DCpfbCev1WQekRbj0o7QM4YsMTi
+         FkvBwDPMqy4tbFaLyfxVfYKBPgeGMPLpoi1kp2ylMBm1/Ithj6eoLKXkBEzlhpA/ihLd
+         qL22Qiw9DAFKOJT6+N8KPo5aUP110lqB7mD++bhFrTZXbdce6Qd/U/JEnBbgdbSZBnq/
+         AaqJO9+Hx6eGmoHph7LwUFG+z4KSEcnIHB1QgOQ3JYmudJ1VcD4R91SoUMJraYGdukpk
+         vEcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EJYEwhvvykhNvLjfomJTk+7wfFhPwkWPWJYIsxK+5ik=;
-        b=GHyRLQjhubYLAjVmvPXgwdwFTQXwwGZZIL9un0yydlh5LHpCvbypgfQ4b99ZFruTyU
-         B0bg4uaqV7Cp0IcF6i/zki8OSsnUeE1hUrufG9WehlTvtk3gxxydABU773CAGkMdnzYN
-         sF4cInyZSYs/K9WKlyyGda/y3xTI42dSP1duJz6G42VbnbhWpF1zTlKXICcdNH6lzU3G
-         dpuCbONwSk45QAeWyvkInTME62GitDSvOHwDtkeYzY1W00WXeCUDQaPI8/alzJQWJk/i
-         ltBc4FuMNadzLdHfGBV+zGtC9vJyK0GdoVGR2IddNF/MleSE/UMRAQgG333bVqLMGm5B
-         w/Yg==
-X-Gm-Message-State: ANhLgQ2ZtMXWSMTUTI2H21no4XoHXD1qNiQKbHjGPRLbQXqtM8ViSx+E
-        aGHAWB/B8OMokUQSWunooRhWxXQxe3g=
-X-Google-Smtp-Source: ADFU+vvej74YRXY/m6GfPvQUsq2YU9gpzqc0nY21UEsUUCQi5bwxmriEBtGWTbteSOh6z5lB/G3bYA==
-X-Received: by 2002:ac8:4e14:: with SMTP id c20mr11766098qtw.141.1584100365397;
-        Fri, 13 Mar 2020 04:52:45 -0700 (PDT)
-Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id 199sm11031143qkm.7.2020.03.13.04.52.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 04:52:44 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     David Dai <daidavid1@codeaurora.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        David Miller <davem@davemloft.net>,
-        Evan Green <evgreen@chromium.org>,
-        Odelu Kukatla <okukatla@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: sdm845: update IPA interconnect providers
-Date:   Fri, 13 Mar 2020 06:52:37 -0500
-Message-Id: <20200313115237.10491-3-elder@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200313115237.10491-1-elder@linaro.org>
-References: <20200313115237.10491-1-elder@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KVQaV5WPaAITEfXGJD3iw4zrtyye7kAolYp6oZ1quUI=;
+        b=KR8U/EwHVnj2R0ak75m5CYFbjD0HxygRgDH0InYRwadDkkzI3CbvnXdN1GhPA6igul
+         rAgXbogQoDTOev9PrZI4L2UYevKtj+bpb2kjYaLtJlKpfcIHpU6n5fUhCscE0mGav3p/
+         3qolCVikSwvO37EYAdZD6xf/UJl7Td96me6Y221DTpbA8egcwNWnAg8fxhiuIefNmnxl
+         RWwEQxWMNOqcNWpWL+GNwNoyHnM4yDXPPsvr82xf/CmdE0gNi/75gzojdoZNd0PVFeAV
+         I2eSxlx7Rzt6DDrR7BJz2V6mDqm8w3l9mVOsstxzt3NDwtiL23mVr4AFknURyrb3mYkj
+         n+dg==
+X-Gm-Message-State: ANhLgQ3nHDHU3MGXrX/XrwnwK4Ndy4JC4Z8Bs/W5meGn5aGRtuzkvcqo
+        ZLM+USNNloN/fGfoEYWNeylXjA==
+X-Google-Smtp-Source: ADFU+vskqub7CpCaC/ugUWZs2oR/RvePIrTwC+6a82eCHZMWi25KAtvuE8JcxWJt62Qtis9Q1Vw0NQ==
+X-Received: by 2002:a17:906:76c6:: with SMTP id q6mr11068012ejn.176.1584101092902;
+        Fri, 13 Mar 2020 05:04:52 -0700 (PDT)
+Received: from [192.168.1.9] ([84.238.208.211])
+        by smtp.googlemail.com with ESMTPSA id v25sm4584220edx.89.2020.03.13.05.04.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Mar 2020 05:04:52 -0700 (PDT)
+Subject: Re: [PATCH -next 011/491] ARM/QUALCOMM SUPPORT: Use fallthrough;
+To:     Joe Perches <joe@perches.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-pm@vger.kernel.org
+References: <cover.1583896344.git.joe@perches.com>
+ <2e6818291503f032e7662f1fa45fb64c7751a7ae.1583896348.git.joe@perches.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <2ac47436-e13c-bc87-d661-e4a423c7ef5b@linaro.org>
+Date:   Fri, 13 Mar 2020 14:04:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <2e6818291503f032e7662f1fa45fb64c7751a7ae.1583896348.git.joe@perches.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit:
-  b303f9f0050b arm64: dts: sdm845: Redefine interconnect provider DT nodes
-removed/redefined the interconnect provider node(s) used for IPA.
+Hi,
 
-Update the IPA interconnect specifications accordingly.
+On 3/11/20 6:51 AM, Joe Perches wrote:
+> Convert the various uses of fallthrough comments to fallthrough;
+> 
+> Done via script
+> Link: https://lore.kernel.org/lkml/b56602fcf79f849e733e7b521bb0e17895d390fa.1582230379.git.joe.com/
+> 
+> Signed-off-by: Joe Perches <joe@perches.com>
+> ---
+>  drivers/media/platform/qcom/venus/vdec.c |  2 +-
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+For the Venus bits:
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 0ebe12e4c07f..e0fd1f0c9b07 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1734,9 +1734,10 @@
- 			clock-names = "core";
- 
- 			interconnects =
--				<&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_EBI1>,
--				<&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_IMEM>,
--				<&rsc_hlos MASTER_APPSS_PROC &rsc_hlos SLAVE_IPA_CFG>;
-+				<&aggre2_noc MASTER_IPA &mem_noc SLAVE_EBI1>,
-+				<&aggre2_noc MASTER_IPA &system_noc SLAVE_IMEM>,
-+				<&gladiator_noc MASTER_APPSS_PROC
-+					&config_noc SLAVE_IPA_CFG>;
- 			interconnect-names = "memory",
- 					     "imem",
- 					     "config";
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+
+>  drivers/phy/qualcomm/phy-qcom-usb-hs.c   |  2 +-
+>  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c |  4 ++--
+>  drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c |  2 +-
+>  drivers/rpmsg/qcom_glink_native.c        |  4 ++--
+>  drivers/soc/qcom/socinfo.c               | 16 ++++++++--------
+>  drivers/thermal/qcom/tsens-v0_1.c        |  8 ++++----
+>  drivers/thermal/qcom/tsens-v1.c          |  4 ++--
+>  8 files changed, 21 insertions(+), 21 deletions(-)
+> 
+
 -- 
-2.20.1
-
+regards,
+Stan
