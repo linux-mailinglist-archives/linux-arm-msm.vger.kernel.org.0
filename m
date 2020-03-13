@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 000EA1844AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 11:17:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 553DA1844E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2020 11:29:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726718AbgCMKRU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 06:17:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47510 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726364AbgCMKRT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 06:17:19 -0400
-Received: from localhost.localdomain (unknown [171.76.107.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726597AbgCMK3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 06:29:46 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:62463 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726512AbgCMK3q (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Mar 2020 06:29:46 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584095385; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=vPwrLpdye8z7HdM8WtZwBBjCF0ObrstKhrN7qJYwu5Q=; b=FHZ+linAiCWZ1UqZFidhBXYWbyHQ/LjmnZG0CZnAwO5h9h8MvZv/rdpS9Z3St17v1yvKQ9gd
+ sZ4/cUCTKKtp0xyqBUrK6nV+yFmU8AJ1OMKGrvO6R3UnNwb7u1gwly/BzyPApta74IZMLcL6
+ bi3a0YeMG8HGXAAI7fMrLXfz6hM=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6b6084.7efb59c60a08-smtp-out-n01;
+ Fri, 13 Mar 2020 10:29:24 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C7F4DC43636; Fri, 13 Mar 2020 10:29:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C321320752;
-        Fri, 13 Mar 2020 10:17:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584094639;
-        bh=eOHdzKsuiDRxoSeOKx1T/q3qpP4W3MG5l3YkkamaGsA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Qsvw6gJC9EUFUTUlvPKrcV18uMpume8SkblzARhMPsFVi4/0BmnsE9jRETmSwJhFJ
-         2cFAIRQ9bYNs45hs9PjemzdVn3TNbJ07pUlRBk4NI1vGX2e5Ht/bx+4Chfz6aQOscK
-         ft+Hx/lwnuHdCsjvBaE22hGzTyWTKeoltGiIOPeM=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mark Brown <broonie@kernel.org>, Takashi Iwai <tiwai@suse.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Subject: [RESEND PATCH v2 9/9] ALSA: compress: bump the version
-Date:   Fri, 13 Mar 2020 15:46:27 +0530
-Message-Id: <20200313101627.1561365-10-vkoul@kernel.org>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200313101627.1561365-1-vkoul@kernel.org>
-References: <20200313101627.1561365-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D6BE2C433D2;
+        Fri, 13 Mar 2020 10:29:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D6BE2C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+From:   Akash Asthana <akashast@codeaurora.org>
+To:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        rojay@codeaurora.org, c_skakit@codeaurora.org, mka@chromium.org,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: [PATCH V5 0/3] Convert QUP bindings to YAML and add ICC, pin swap doc
+Date:   Fri, 13 Mar 2020 15:59:07 +0530
+Message-Id: <1584095350-841-1-git-send-email-akashast@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We have added support for bunch of new decoders and parameters for
-decoders. To help users find the support bump the version up to 0,2,0.
+Changes in V4:
+ - Add interconnect binding patch.
+ - Add UART pin swap binding patch.
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- include/uapi/sound/compress_offload.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Akash Asthana (3):
+  dt-bindings: geni-se: Convert QUP geni-se bindings to YAML
+  dt-bindings: geni-se: Add interconnect binding for GENI QUP
+  dt-bindings: geni-se: Add binding for UART pin swap
 
-diff --git a/include/uapi/sound/compress_offload.h b/include/uapi/sound/compress_offload.h
-index 56d95673ce0f..7184265c0b0d 100644
---- a/include/uapi/sound/compress_offload.h
-+++ b/include/uapi/sound/compress_offload.h
-@@ -31,7 +31,7 @@
- #include <sound/compress_params.h>
- 
- 
--#define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 1, 2)
-+#define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 2, 0)
- /**
-  * struct snd_compressed_buffer - compressed buffer
-  * @fragment_size: size of buffer fragment in bytes
+ .../devicetree/bindings/soc/qcom/qcom,geni-se.txt  |  94 ---------
+ .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 231 +++++++++++++++++++++
+ 2 files changed, 231 insertions(+), 94 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+
 -- 
-2.24.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
