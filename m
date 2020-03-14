@@ -2,97 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E248185796
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 02:41:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C5E91856FE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 02:31:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726964AbgCOBl1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Mar 2020 21:41:27 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40174 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726530AbgCOBl0 (ORCPT
+        id S1727321AbgCOBbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Mar 2020 21:31:36 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:11104 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727320AbgCOBbg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Mar 2020 21:41:26 -0400
-Received: by mail-ed1-f67.google.com with SMTP id a24so17326162edy.7;
-        Sat, 14 Mar 2020 18:41:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Kdlcv0vXg+e3IXgeXkwIX+UvL6hiQeQvJR6h+ymcppc=;
-        b=thByE3DO/kUnWcOoocjbLM+DQ0XCQhtyskwN5xLJyReNqZElXrdPMTTWwftzA30vW2
-         qhyGZ6G2CbXzPpst6Usf+SuTPqDumFIEc+DrV2KGmCinoKV/scRi/P8TCBoCw0VSX2qH
-         vctWR/sd4lGzsFtO+1gEQrMkr5DQh9RwU93qP+9bGbJJNfZKN/k/SQARWsK8U9kOraPt
-         dpQZ652ktMOGKM543Lc8/b4AenNllPzSTxtVewwPDanpk3RZGoLErVQFqvyXqifUinO9
-         Tf9bUTEiUEzTuvYuEHSLqZJlHdE1TgHYH+nZajGvR1PzGL7HBf31lrCNxHJY8jzYyrTf
-         h5MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Kdlcv0vXg+e3IXgeXkwIX+UvL6hiQeQvJR6h+ymcppc=;
-        b=dWT+dQRGia3r4jzBGDm1Qzs1waRmy35YmYf2sV/MQntQsqGRr2UJydQKcG7xnqiUH7
-         YBK8zvyNX3KgHPRkUF2UHEJoqf44PqB8BgKbsGdtevWH4wJDsSEyMCnHetSSfj3cIvTB
-         3SBEvae0DNeOPAirNT9gLXeD7ZoMkFdbjR4kcktstBE9K5iXcDCfXv17h6pj7jX9jhzb
-         DcnUcF/kPSX3qHPT63zDRBVmH2uBi+nSbIXPStkEzos754v1EZyboPWYuH8ysSC8rHLA
-         Y8hi3wSm0yFFoDbZFzrASNRueSlkaLIZIvaBqg20cOprJ8EaNZLoCueAUHdgDFm6MtsK
-         QsuA==
-X-Gm-Message-State: ANhLgQ1lr3+x3FSx+puubgjL3Que6qci2fTHmXPjEi/W5RIUu2wXfvdu
-        JWmkVMoQpz2qR4kTd/a/Vno9QnPBpk2bog==
-X-Google-Smtp-Source: ADFU+vs00b+0TuPh7UK7ayrUuIskNi33PA5Zud2/5ALZ8kFWqEKnbRLGNhSAuC/yr9xghGmiwskgcQ==
-X-Received: by 2002:a05:6402:10c2:: with SMTP id p2mr6025962edu.375.1584192971411;
-        Sat, 14 Mar 2020 06:36:11 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host129-252-dynamic.6-87-r.retail.telecomitalia.it. [87.6.252.129])
-        by smtp.googlemail.com with ESMTPSA id g5sm4066360edn.9.2020.03.14.06.36.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Mar 2020 06:36:10 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     agross@kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Abhishek Sahu <absahu@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Kumar Gala <galak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [RESEND PATCH] ipq806x: gcc: Added the enable regs and mask for PRNG
-Date:   Sat, 14 Mar 2020 14:36:00 +0100
-Message-Id: <20200314133600.183-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <158413140244.164562.11497203149584037524@swboyd.mtv.corp.google.com>
-References: <158413140244.164562.11497203149584037524@swboyd.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sat, 14 Mar 2020 21:31:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584235895; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=JylJ2rTy/Spa9FGV/rDNvZeuTPw7s+H4qdIzU9nL+wo=; b=U1HTz56h9YPDpVt9LrW0JGu9Qf/uPkZsN952GNWtF9w5EFpPu7uoEKWpR462t2OZFHO9/GDV
+ PHmKza7opPgOvAbYAV0lwlUdfW/btzJ1uqxQXDev1R+DYkLFWOxdU+3Cl8AylAM07KJhndy7
+ cEk9LM9zvDk05z0IHo5H6Yq7QXM=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6d24e1.7f4eca242148-smtp-out-n04;
+ Sat, 14 Mar 2020 18:39:29 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C92AFC43637; Sat, 14 Mar 2020 18:39:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9D1C9C433CB;
+        Sat, 14 Mar 2020 18:39:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9D1C9C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v6 1/3] dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
+Date:   Sun, 15 Mar 2020 00:09:05 +0530
+Message-Id: <1584211147-5570-2-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1584211147-5570-1-git-send-email-tdas@codeaurora.org>
+References: <1584211147-5570-1-git-send-email-tdas@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kernel got hanged while reading from /dev/hwrng at the
-time of PRNG clock enable
+The Modem Subsystem clock provider have a bunch of generic properties
+that are needed in a device tree. Add a YAML schemas for those.
 
-Fixes: 24d8fba44af3 "clk: qcom: Add support for IPQ8064's global
-clock controller (GCC)"
+Add clock ids for GCC MSS and MSS clocks which are required to bring
+the modem out of reset.
 
-Signed-off-by: Abhishek Sahu <absahu@codeaurora.org>
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
 ---
- drivers/clk/qcom/gcc-ipq806x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 ++++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc7180.h        |  7 ++-
+ include/dt-bindings/clock/qcom,mss-sc7180.h        | 12 +++++
+ 3 files changed, 80 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
 
-diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
-index b0eee0903807..a8456e09c44d 100644
---- a/drivers/clk/qcom/gcc-ipq806x.c
-+++ b/drivers/clk/qcom/gcc-ipq806x.c
-@@ -1224,6 +1224,8 @@ static struct clk_rcg prng_src = {
- 		.parent_map = gcc_pxo_pll8_map,
- 	},
- 	.clkr = {
-+		.enable_reg = 0x2e80,
-+		.enable_mask = BIT(11),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "prng_src",
- 			.parent_names = gcc_pxo_pll8,
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
+new file mode 100644
+index 0000000..72493dd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
+@@ -0,0 +1,62 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,sc7180-mss.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Modem Clock Controller Binding
++
++maintainers:
++  - Taniya Das <tdas@codeaurora.org>
++
++description: |
++  Qualcomm modem clock control module which supports the clocks.
++
++  See also dt-bindings/clock/qcom,mss-sc7180.h.
++
++properties:
++  compatible:
++    enum:
++       - qcom,sc7180-mss
++
++  clocks:
++    items:
++      - description: gcc_mss_mfab_axi clock from GCC
++      - description: gcc_mss_nav_axi clock from GCC
++      - description: gcc_mss_cfg_ahb clock from GCC
++
++  clock-names:
++    items:
++      - const: gcc_mss_mfab_axis
++      - const: gcc_mss_nav_axi
++      - const: cfg_ahb
++
++  '#clock-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - '#clock-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
++    clock-controller@41a8000 {
++      compatible = "qcom,sc7180-mss";
++      reg = <0 0x041a8000 0 0x8000>;
++      clocks = <&gcc GCC_MSS_MFAB_AXIS_CLK>,
++               <&gcc GCC_MSS_NAV_AXI_CLK>,
++               <&gcc GCC_MSS_CFG_AHB_CLK>;
++      clock-names = "gcc_mss_mfab_axis",
++                    "gcc_mss_nav_axi",
++                    "cfg_ahb";
++      #clock-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,gcc-sc7180.h b/include/dt-bindings/clock/qcom,gcc-sc7180.h
+index e8029b2e..1258fd0 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sc7180.h
++++ b/include/dt-bindings/clock/qcom,gcc-sc7180.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * Copyright (c) 2019, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+  */
+ 
+ #ifndef _DT_BINDINGS_CLK_QCOM_GCC_SC7180_H
+@@ -132,6 +132,11 @@
+ #define GCC_VIDEO_GPLL0_DIV_CLK_SRC				122
+ #define GCC_VIDEO_THROTTLE_AXI_CLK				123
+ #define GCC_VIDEO_XO_CLK					124
++#define GCC_MSS_CFG_AHB_CLK					125
++#define GCC_MSS_MFAB_AXIS_CLK					126
++#define GCC_MSS_NAV_AXI_CLK					127
++#define GCC_MSS_Q6_MEMNOC_AXI_CLK				128
++#define GCC_MSS_SNOC_AXI_CLK					129
+ 
+ /* GCC resets */
+ #define GCC_QUSB2PHY_PRIM_BCR					0
+diff --git a/include/dt-bindings/clock/qcom,mss-sc7180.h b/include/dt-bindings/clock/qcom,mss-sc7180.h
+new file mode 100644
+index 0000000..f15a9de
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,mss-sc7180.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_MSS_SC7180_H
++#define _DT_BINDINGS_CLK_QCOM_MSS_SC7180_H
++
++#define MSS_AXI_CRYPTO_CLK	0
++#define MSS_AXI_NAV_CLK		1
++
++#endif
 -- 
-2.25.0
-
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
