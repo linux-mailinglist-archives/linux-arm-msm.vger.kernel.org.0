@@ -2,128 +2,321 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 88E46185276
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2020 00:47:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1055185338
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2020 01:17:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726893AbgCMXrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 19:47:04 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40642 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726860AbgCMXrE (ORCPT
+        id S1727629AbgCNARc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 20:17:32 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:35912 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726860AbgCNARc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 19:47:04 -0400
-Received: by mail-pf1-f195.google.com with SMTP id l184so6226073pfl.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 16:47:02 -0700 (PDT)
+        Fri, 13 Mar 2020 20:17:32 -0400
+Received: by mail-pj1-f65.google.com with SMTP id nu11so1982929pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 17:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=QqSV3LpUI3XKUkmQyfNi1UamAdu5bkgGpHDrMQfv4MU=;
-        b=HNvgMOR2I4lu6ZzQhLaqLLWdM+2GtFd3IZ4AuPpce/zw9p/2oX7gHoLKNpj8pDJ3Pj
-         Jij9sP4ezR342y5fuAI/xYD8IyVYpsAdH5FWh6dW9U0DC3yQUz/e9eRPDExe1KhgW0Vy
-         rO81pgsWwtIIwk0BTd+z1VJ8I3vFOlSR9xbrp8wt4bH003euw1llVcV39hsIheW0NLZH
-         3rH6dYrHUjz0+PDZvr/zh1CgPjpt1cZDRUdc3a/09XwqbDnHLO2Cgy/KP6Q7AQwDMqYy
-         lLUX9NU/nAHYdBHqteUHrygCelftfNMsp+AxKPno4amYs3qpLBSFr+4snMF5NW7uHOCj
-         kNTw==
+        bh=syZHaQRjtDBx5EuX/9qwnmYFq4VBMCD/W9VXsBIFEfQ=;
+        b=GbWquVM1fgvzZW6KXKCJn76JhhhAPn7We/k13bBYCOP9VA+5DeEXacA2BsU2pnxzP8
+         osO+0A+Euk4JYSC6OOKogdwlNAxqOjQeeFDiMNMq8PL0zwlrNsPPIwPht0Tk7LaDCCRw
+         6l9iBeZ6ZO5Z/hVAw0znm2cUklSsYutQNY8/o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QqSV3LpUI3XKUkmQyfNi1UamAdu5bkgGpHDrMQfv4MU=;
-        b=NMt7QAts1PF7bfqODp34xNpusRLPUOTQ/syx+MzWuyMdTM/qQ3GRi55r726eTeOQfM
-         SDnnzZWzB8Ud0PWTXng9aJhI7qRU756Y6jkNsiS9FLugki9Y4NsxsjoXVhEPZbJF+ApO
-         MZxT5tTk5BPdsRShZcQYX23XCRi0jfMKdowqTyHtG6KoQQXF4eblahQGfzBTrBfnH3rT
-         1MZYR81VFJgENpbhHwxhd2je42Omo5/SU3LuO0JC24fs5HTiEfU1zvENTXII7YzxvQ6L
-         SyGTu4wf6W7EUrTOaYXfMzQDlEvtE3or+uE1g9JPIKCzBYwtPwiDkzpgURUbmkMF0U3d
-         uIPg==
-X-Gm-Message-State: ANhLgQ2aa9bOOZYq5J1us90y76CIxMSudY6/XgZT+UDwhKcsezDu9W7V
-        gJdpWeZiIKcgmiFgqlt1Zbo9Fg==
-X-Google-Smtp-Source: ADFU+vsW6m1GL4wfPHL5s4jhGiDzBkhnb+8gcvRgTtKjWKHSrkQbWzNiNxyD247XMBP14NBXaEZ10A==
-X-Received: by 2002:a63:1d7:: with SMTP id 206mr13645799pgb.99.1584143221655;
-        Fri, 13 Mar 2020 16:47:01 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o11sm10927883pjb.18.2020.03.13.16.47.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 16:47:00 -0700 (PDT)
-Date:   Fri, 13 Mar 2020 16:46:57 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     ansuelsmth@gmail.com
-Cc:     'Stephen Boyd' <sboyd@kernel.org>, agross@kernel.org,
-        'Mathieu Olivari' <mathieu@codeaurora.org>,
-        'Rob Herring' <robh+dt@kernel.org>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        'Michael Turquette' <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: R: [PATCH] ARM: qcom: Disable i2c device on gsbi4 for ipq806x
-Message-ID: <20200313234657.GD1214176@minitux>
-References: <20200313195816.12435-1-ansuelsmth@gmail.com>
- <158413179776.164562.8295974225127853050@swboyd.mtv.corp.google.com>
- <014101d5f987$82790c90$876b25b0$@gmail.com>
+        bh=syZHaQRjtDBx5EuX/9qwnmYFq4VBMCD/W9VXsBIFEfQ=;
+        b=XJ0ga5WFNoEItjb+izHsGST/4Z7sqlGFNqe6j5+Nu8NrMpNsryVkvEYDK5k0JS6TFO
+         tmWy+hKcnmz5/QbBEY9iIVcR08/8wFSxdKrf4gijHOTObn5tOMxAo+xK6lWgsKfgMq7X
+         NgxZyPmJSvrBbvh1bL9aP3wGptrYjwJv4cHNhpYSoaIBjHQHbQx50sm0hn4TbwQmXwEm
+         YbhLXc8SUy/HLT5J8H809wq7k0KR2C5TGIfXiRy7rc3vsb3CJMhaXMMPgML/RpOpmV3X
+         STYHNhiw21b0wVgehCUH0cAtgH4YEdB1xrxVYBT9xO6/6VAYKmpkwUqMNAajHKvA/kiG
+         IQHA==
+X-Gm-Message-State: ANhLgQ3lNmI8jFsZsYjkc51cp+z+r+JrcPpFNIi43TWT0AjtaWB4hGx8
+        7NOePKSGWXQnbUHiwQo86Hmm8A==
+X-Google-Smtp-Source: ADFU+vvkaXJ+Qg40tKhEadMIEpNkLAKs3mqM3ed3Qrw7VOQlB3tPXdACyoqw9mBEbHu8QaMT4C2wTw==
+X-Received: by 2002:a17:902:bd43:: with SMTP id b3mr1577741plx.209.1584145050969;
+        Fri, 13 Mar 2020 17:17:30 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id y18sm57499273pfe.19.2020.03.13.17.17.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Mar 2020 17:17:30 -0700 (PDT)
+Date:   Fri, 13 Mar 2020 17:17:28 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V2 5/8] i2c: i2c-qcom-geni: Add interconnect support
+Message-ID: <20200314001728.GL144492@google.com>
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-6-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <014101d5f987$82790c90$876b25b0$@gmail.com>
+In-Reply-To: <1584105134-13583-6-git-send-email-akashast@codeaurora.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 13 Mar 15:34 PDT 2020, ansuelsmth@gmail.com wrote:
+Hi,
 
-> > Quoting Ansuel Smith (2020-03-13 12:58:16)
-> > > diff --git a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
-> > b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
-> > > index 554c65e7aa0e..580aec63030d 100644
-> > > --- a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
-> > > +++ b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
-> > > @@ -21,14 +21,5 @@ mux {
-> > >                                 };
-> > >                         };
-> > >                 };
-> > > -
-> > > -               gsbi@16300000 {
-> > > -                       i2c@16380000 {
-> > > -                               status = "ok";
-> > > -                               clock-frequency = <200000>;
-> > > -                               pinctrl-0 = <&i2c4_pins>;
-> > > -                               pinctrl-names = "default";
-> > > -                       };
-> > > -               };
-> > >         };
-> > >  };
-> > > diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-
-> > ipq806x.c
-> > > index b0eee0903807..75706807e6cf 100644
-> > > --- a/drivers/clk/qcom/gcc-ipq806x.c
-> > > +++ b/drivers/clk/qcom/gcc-ipq806x.c
-> > > @@ -782,7 +782,7 @@ static struct clk_rcg gsbi4_qup_src = {
-> > >                         .parent_names = gcc_pxo_pll8,
-> > >                         .num_parents = 2,
-> > >                         .ops = &clk_rcg_ops,
-> > > -                       .flags = CLK_SET_PARENT_GATE,
-> > > +                       .flags = CLK_SET_PARENT_GATE | CLK_IGNORE_UNUSED,
-> > 
-> > A better solution is to use the protected-clocks property so we don't
-> > try to touch these clks at all on this device. So this whole patch can
-> > be routed through arm-soc and remove the i2c node and add some dt
-> > property to the gcc node.
-> > 
+On Fri, Mar 13, 2020 at 06:42:11PM +0530, Akash Asthana wrote:
+> Get the interconnect paths for I2C based Serial Engine device
+> and vote according to the bus speed of the driver.
 > 
-> Should I add a comment where the i2c is removed or I can remove it
-> directly?
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> ---
+> Changes in V2:
+>  - As per Bjorn's comment, removed se == NULL check from geni_i2c_icc_get
+>  - As per Bjorn's comment, removed code to set se->icc_path* to NULL in failure
+>  - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
+>    path handle
+>  - As per Matthias comment, added error handling for icc_set_bw call
 > 
-
-It's fine that you just remove it, like you proposed above.
-
-The commit message should describe the reason and per your description I
-don't expect that anyone will miss the node...
-
-Regards,
-Bjorn
-
-> > >                 },
-> > >         },
-> > >  };
+>  drivers/i2c/busses/i2c-qcom-geni.c | 110 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 110 insertions(+)
 > 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 17abf60c..33ab685 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -163,6 +163,23 @@ static void qcom_geni_i2c_conf(struct geni_i2c_dev *gi2c)
+>  	writel_relaxed(val, gi2c->se.base + SE_I2C_SCL_COUNTERS);
+>  }
+>  
+> +static int geni_i2c_icc_get(struct geni_se *se)
+> +{
+> +	se->icc_path_geni_to_core = devm_of_icc_get(se->dev, "qup-core");
+> +	if (IS_ERR(se->icc_path_geni_to_core))
+> +		return PTR_ERR(se->icc_path_geni_to_core);
+> +
+> +	se->icc_path_cpu_to_geni = devm_of_icc_get(se->dev, "qup-config");
+> +	if (IS_ERR(se->icc_path_cpu_to_geni))
+> +		return PTR_ERR(se->icc_path_cpu_to_geni);
+> +
+> +	se->icc_path_geni_to_ddr = devm_of_icc_get(se->dev, "qup-memory");
+> +	if (IS_ERR(se->icc_path_geni_to_ddr))
+> +		return PTR_ERR(se->icc_path_geni_to_ddr);
+> +
+> +	return 0;
+> +}
+> +
+>  static void geni_i2c_err_misc(struct geni_i2c_dev *gi2c)
+>  {
+>  	u32 m_cmd = readl_relaxed(gi2c->se.base + SE_GENI_M_CMD0);
+> @@ -563,6 +580,39 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>  	gi2c->adap.dev.of_node = pdev->dev.of_node;
+>  	strlcpy(gi2c->adap.name, "Geni-I2C", sizeof(gi2c->adap.name));
+>  
+> +	ret = geni_i2c_icc_get(&gi2c->se);
+> +	if (ret)
+> +		return ret;
+> +	/*
+> +	 * Set the bus quota for core and cpu to a reasonable value for
+> +	 * register access.
+> +	 * Set quota for DDR based on bus speed, assume peak requirement
+> +	 * as twice of avg bw.
+> +	 */
+> +	gi2c->se.avg_bw_core = Bps_to_icc(1000);
+
+as commented on the UART patch, you might want to consider adding a constant
+for this recurring default value.
+
+> +	gi2c->se.peak_bw_core = Bps_to_icc(CORE_2X_100_MHZ);
+> +	gi2c->se.avg_bw_cpu = Bps_to_icc(1000);
+> +	gi2c->se.peak_bw_cpu = Bps_to_icc(1000);
+> +	gi2c->se.avg_bw_ddr = Bps_to_icc(gi2c->clk_freq_out);
+> +	gi2c->se.peak_bw_ddr = Bps_to_icc(2 * gi2c->clk_freq_out);
+> +
+> +	/* Vote for core clocks and CPU for register access */
+> +	ret = icc_set_bw(gi2c->se.icc_path_geni_to_core, gi2c->se.avg_bw_core,
+> +				gi2c->se.peak_bw_core);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "%s: ICC BW voting failed for core\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+> +	ret = icc_set_bw(gi2c->se.icc_path_cpu_to_geni, gi2c->se.avg_bw_cpu,
+> +				gi2c->se.peak_bw_cpu);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "%s: ICC BW voting failed for cpu\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+>  	ret = geni_se_resources_on(&gi2c->se);
+>  	if (ret) {
+>  		dev_err(&pdev->dev, "Error turning on resources %d\n", ret);
+> @@ -584,6 +634,19 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>  		dev_err(&pdev->dev, "Error turning off resources %d\n", ret);
+>  		return ret;
+>  	}
+> +	/* Remove vote from core clocks and CPU */
+> +	ret = icc_set_bw(gi2c->se.icc_path_geni_to_core, 0, 0);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "%s: ICC BW remove failed for core\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+> +	ret = icc_set_bw(gi2c->se.icc_path_cpu_to_geni, 0, 0);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "%s: ICC BW remove failed for cpu\n",
+> +			__func__);
+
+Should this return an error as for the core clocks?
+
+> +	}
+>  
+>  	dev_dbg(&pdev->dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
+>  
+> @@ -629,6 +692,28 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+>  		gi2c->suspended = 1;
+>  	}
+>  
+> +	/* Remove BW votes */
+> +	ret = icc_set_bw(gi2c->se.icc_path_geni_to_core, 0, 0);
+> +	if (ret) {
+> +		dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW remove failed for core\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+> +	ret = icc_set_bw(gi2c->se.icc_path_cpu_to_geni, 0, 0);
+> +	if (ret) {
+> +		dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW remove failed for cpu\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+> +	ret = icc_set_bw(gi2c->se.icc_path_geni_to_ddr, 0, 0);
+> +	if (ret) {
+> +		dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW remove failed for ddr\n",
+> +			__func__);
+> +		return ret;
+> +	}
+
+you could consider putting this and the ICC voting in _runtime_resume() in
+separate functions and call them from here and _probe(). The only difference
+in _probe() is that it doesn't vote for the DDR bandwidth, but that slight
+one-time overhead might be worth for consolidating the code.
+
+Actually all this looks very similar for UART, I2C, SPI and QSPI. It seems it
+should be possible to consolidate this further by having functions like these
+in the geni SE driver:
+
+int geni_icc_get(struct geni_se *se, const char *icc_core, const char *icc_cpu,
+	const char *icc_ddr)
+{
+	if (icc_core) {
+		se->icc_path_geni_to_core = devm_of_icc_get(se->dev, icc_core);
+		if (IS_ERR(se->icc_path_geni_to_core))
+			return PTR_ERR(se->icc_path_geni_to_core);
+	}
+
+	if (icc_cpu) {
+
+	...
+}
+
+int geni_icc_vote_on(struct geni_se *se)
+{
+	if (gi2c->se.icc_path_geni_to_core) {
+		ret = icc_set_bw(gi2c->se.icc_path_geni_to_core, gi2c->se.avg_bw_core,
+			gi2c->se.peak_bw_core);
+		if (ret) {
+			dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW voting failed for core\n",
+				__func__);
+			return ret;
+		}
+	}
+
+	/* or to reduce nesting:
+	if (!gi2c->se.icc_path_geni_to_core)
+		goto vote_cpu;
+
+	ret = icc_set_bw(gi2c->se.icc_path_geni_to_core, gi2c->se.avg_bw_core,
+			gi2c->se.peak_bw_core);
+	if (ret) {
+	...
+
+vote_cpu:
+	*/
+
+	if (gi2c->se.icc_path_cpu_to_geni) {
+
+	...
+}
+
+int geni_icc_vote_off(struct geni_se *se)
+{
+	if (gi2c->se.icc_path_geni_to_core) {
+		ret = icc_set_bw(gi2c->se.icc_path_geni_to_core, 0, 0);
+		if (ret) {
+			dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW remove failed for core\n",
+				__func__);
+			return ret;
+		}
+	}
+
+	if (gi2c->se.icc_path_cpu_to_geni) {
+
+	...
+}
+
+optionally you could even reduce the code further by having an array of
+'struct geni_icc_path' (as suggested on https://patchwork.kernel.org/patch/11436889/#23221925)
+and iterate over the array instead of spelling everything out for the 3
+ICC paths.
+
+> +
+>  	return 0;
+>  }
+>  
+> @@ -637,6 +722,31 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+>  	int ret;
+>  	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+>  
+> +	/* Vote on Core, CPU and DDR path respectively */
+> +	ret = icc_set_bw(gi2c->se.icc_path_geni_to_core, gi2c->se.avg_bw_core,
+> +		gi2c->se.peak_bw_core);
+> +	if (ret) {
+> +		dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW voting failed for core\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+> +	ret = icc_set_bw(gi2c->se.icc_path_cpu_to_geni, gi2c->se.avg_bw_cpu,
+> +		gi2c->se.peak_bw_cpu);
+> +	if (ret) {
+> +		dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW voting failed for cpu\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+> +	ret = icc_set_bw(gi2c->se.icc_path_geni_to_ddr, gi2c->se.avg_bw_ddr,
+> +		gi2c->se.peak_bw_ddr);
+> +	if (ret) {
+> +		dev_err_ratelimited(gi2c->se.dev, "%s: ICC BW voting failed for ddr\n",
+> +			__func__);
+> +		return ret;
+> +	}
+> +
+
+as per above this would be just:
+
+	ret = geni_icc_vote_on(&gi2c->se);
+	if (ret)
+		return ret;
+
+with the same benefit for the other 3 drivers.
