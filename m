@@ -2,91 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 00A2118538C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2020 01:55:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C4C5185393
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2020 01:58:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727781AbgCNAzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 20:55:06 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:53494 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726637AbgCNAzG (ORCPT
+        id S1727719AbgCNA6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 20:58:20 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:32931 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727687AbgCNA6U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 20:55:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584147306; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=f+CR1kcG4Nmj1zbB3rR2lH3I1Cysjzz9Pe1f5KmSe4o=; b=uZyzXaRE3NWq8c86xJbOZJNXTfRjhUthJE+8qLat/f5xM4hEBP+hSwG+4raw4Fy7RwfMmfS/
- Oxoglk5hKmeUZwgP0E/4GEvRMK0WcQrY6WueUlMV//OeZAV2FpA60J2DHDUZELqTDhN1Uj9L
- 3WWeBk0iBlPgaxMWzL2v8ful3Vo=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e6c2b68.7f139b73d228-smtp-out-n05;
- Sat, 14 Mar 2020 00:55:04 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DE64DC447A1; Sat, 14 Mar 2020 00:55:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0E42CC4478F;
-        Sat, 14 Mar 2020 00:55:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0E42CC4478F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-From:   Wesley Cheng <wcheng@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH 4/4] phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB
-Date:   Fri, 13 Mar 2020 17:54:53 -0700
-Message-Id: <1584147293-6763-5-git-send-email-wcheng@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1584147293-6763-1-git-send-email-wcheng@codeaurora.org>
-References: <1584147293-6763-1-git-send-email-wcheng@codeaurora.org>
+        Fri, 13 Mar 2020 20:58:20 -0400
+Received: by mail-pj1-f65.google.com with SMTP id dw20so2300872pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 17:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XkYkz7olGuMoHjxIYMm5YyzLZkVPwk4ncu3nYGmC0LU=;
+        b=hIzbj4tiMzwa7yvFFtYnreJK3Hm4RFPdQYBxc9OLUkJkVaHnGWgdL2WW3Wa2p6TqQe
+         jPqXBfZXOQrxKtkIoobRZ7gq4psLmPnMjSSK5yt+utMMVDhdmcqeP6J3iYOn0MXXargV
+         wcDJ9Sv78r1FZg64Er4hfwhJixUr9L5uEOVsg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XkYkz7olGuMoHjxIYMm5YyzLZkVPwk4ncu3nYGmC0LU=;
+        b=kwi5OVJnN1WUQGXtYINJcpNOqA92dehRZj4FQW/kqvdH4YflkinUFvlmWX0jSYWlPH
+         Zr3yXwgH098MIpwW/5+6mH+x+ezOd16z5nyLaH7fCQLS7S9Tlm77+LP0NiukI+62kfUY
+         5aFcv2cAJCEA7eQqFwpmgKdbeO4sJbWPlkNThWJoKSuxsSrvAxQTVH+pBGTHFIUMsthK
+         2TbevOTYfW9KYzE97lbTrwKIT3wD78Lx1b8pC4yqonl3yUfUiQ7s9a3r01LiXH3ZiJhk
+         AQwyE5/9tW54yZFr2Y3e3X1Vt9gceUozUQXrP2aBniuy6irwllSjpK/Oj7Ofvi+qVXRT
+         Swxg==
+X-Gm-Message-State: ANhLgQ2X5p0CtTdz0QGutZclwVbGzCAa+CZ6mWst4juMMXKPM/a5eE3f
+        gxVPPaHvl9Ov4DX00DCT1QSBng==
+X-Google-Smtp-Source: ADFU+vvhBGrL9Xnlfe5/hQ6M3VwsQ+6WfaCs3st09JIB8ufa3kMvrkB86gSREv5L7WsZ80wVjP2TnQ==
+X-Received: by 2002:a17:902:bf06:: with SMTP id bi6mr16374090plb.30.1584147499410;
+        Fri, 13 Mar 2020 17:58:19 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id f19sm16696202pgn.42.2020.03.13.17.58.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Mar 2020 17:58:18 -0700 (PDT)
+Date:   Fri, 13 Mar 2020 17:58:17 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V2 7/8] spi: spi-qcom-qspi: Add interconnect support
+Message-ID: <20200314005817.GN144492@google.com>
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-8-git-send-email-akashast@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1584105134-13583-8-git-send-email-akashast@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The register map for SM8150 QMP USB SSPHY has moved
-QPHY_POWER_DOWN_CONTROL to a different offset.  Allow for
-an offset in the register table to override default value
-if it is a DP capable PHY.
+Hi,
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+On Fri, Mar 13, 2020 at 06:42:13PM +0530, Akash Asthana wrote:
+> Get the interconnect paths for QSPI device and vote according to the
+> current bus speed of the driver.
+> 
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> ---
+>  - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
+>    path handle
+>  - As per Matthias comment, added error handling for icc_set_bw call
+> 
+>  drivers/spi/spi-qcom-qspi.c | 46 ++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 45 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+> index 3c4f83b..ad48f43 100644
+> --- a/drivers/spi/spi-qcom-qspi.c
+> +++ b/drivers/spi/spi-qcom-qspi.c
+> @@ -2,6 +2,7 @@
+>  // Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
+>  
+>  #include <linux/clk.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+>  #include <linux/module.h>
+> @@ -139,7 +140,10 @@ struct qcom_qspi {
+>  	struct device *dev;
+>  	struct clk_bulk_data *clks;
+>  	struct qspi_xfer xfer;
+> -	/* Lock to protect xfer and IRQ accessed registers */
+> +	struct icc_path *icc_path_cpu_to_qspi;
+> +	unsigned int avg_bw_cpu;
+> +	unsigned int peak_bw_cpu;
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index cc04471..71a230a 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -164,6 +164,7 @@ enum qphy_reg_layout {
- 	[QPHY_SW_RESET]			= 0x00,
- 	[QPHY_START_CTRL]		= 0x44,
- 	[QPHY_PCS_STATUS]		= 0x14,
-+	[QPHY_COM_POWER_DOWN_CONTROL]	= 0x40,
- };
- 
- static const unsigned int sdm845_ufsphy_regs_layout[] = {
-@@ -1627,6 +1628,9 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
- 	if (cfg->has_phy_com_ctrl)
- 		qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
- 			     SW_PWRDN);
-+	else if (!cfg->has_phy_com_ctrl && cfg->regs[QPHY_COM_POWER_DOWN_CONTROL])
-+		qphy_setbits(pcs, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
-+			     cfg->pwrdn_ctrl);
- 	else
- 		qphy_setbits(pcs, QPHY_POWER_DOWN_CONTROL, cfg->pwrdn_ctrl);
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+This triplet is a recurring pattern, and is probably not limited to geni SE/QSPI.
+On https://patchwork.kernel.org/patch/11436889/#23221925 I suggested the creation
+of a geni SE specific struct, however adding a generic convenience struct to
+'linux/interconnect.h' might be the better solution:
+
+struct icc_client {
+	struct icc_path *path;
+	unsigned int avg_bw;
+	unsigned int peak_bw;
+};
+
+I'm sure there are better names for it, but this would be the idea.
