@@ -2,82 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B4FB1858CF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 03:24:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 860BC1858B5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 03:20:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727953AbgCOCYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Mar 2020 22:24:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39096 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727916AbgCOCYN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Mar 2020 22:24:13 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C1D4620665;
-        Sat, 14 Mar 2020 08:18:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584173902;
-        bh=UxRNdDswoc+aYFNAIDNEbP0gH8SJJcjUu+LoTnQeirI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JQa6Y5NVSKrELT+Y7cEdvdggf5WFlqVXME9mu6Vc7SzTiy/bijWQK2zuQrNjdTPQh
-         96MB1sI64568Sw82CYaOe0lYUf55L6W59tFTnamAYWz04Zu+wmBmTD5q3YS3EKsl5e
-         0+JBu3wjWCsqS92+Nya4gSpTq5DOaYD8SpBj8Y5U=
-Date:   Sat, 14 Mar 2020 09:07:42 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     skakit@codeaurora.org
-Cc:     swboyd@chromium.org, mgautam@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        akashast@codeaurora.org, rojay@codeaurora.org,
-        msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V3 2/2] tty: serial: qcom_geni_serial: Fix RX cancel
- command failure
-Message-ID: <20200314080742.GA6509@kroah.com>
-References: <1583477228-32231-1-git-send-email-skakit@codeaurora.org>
- <1583477228-32231-3-git-send-email-skakit@codeaurora.org>
- <20200312091041.GA198954@kroah.com>
- <436ae3cfb957b11b0d7aa3b1dbb0adf2@codeaurora.org>
+        id S1727180AbgCOCUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Mar 2020 22:20:11 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:33513 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727030AbgCOCUK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 14 Mar 2020 22:20:10 -0400
+Received: by mail-qt1-f194.google.com with SMTP id d22so11216700qtn.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Mar 2020 19:20:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=rySLrb6e8pdxDloLytBEUWmIP8HvBNLPxIuJLcg1j9c=;
+        b=h9YhYCfhuvcoOK9JuTSnuiXg2cILoy3ExIWXtsaJYq8huKBTSezqcgybwNUJnF31OD
+         8M4XkdAA+wF3Kc0hz30O/kK9eMooTs7yoqdIBJNfvWQnNRWRGMPcYzXrJl2zdeF1j7va
+         J8XdxMT0KmL8llAYJuvJtfAv+moo5flCUCJCh/tlglJ+fFmIUPVbZ1fac7bCjKhbkCn+
+         rZJerUAJLBThHl7kvNkOSCFj/J2Gim7L2OHs8nEEBbbGF0yG+oMEoxI1m7Q6XmwEaoXK
+         TKHu+SSgJteucaBn++J1ylejcFocesa/O0LZlk7VxDKA6TPZDYhdjLA4ADjt7vhRjRdb
+         KZMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=rySLrb6e8pdxDloLytBEUWmIP8HvBNLPxIuJLcg1j9c=;
+        b=a2c1z0TS2cqbc3TyjIq8HZIbaXNeVjxHx71U0r6GVa+q6rsiIF9qcDlorc+eikhtYD
+         K4JIh6500JRJ8dba73ZeaPQlLXPgmodxqkURSXfY3D1L+mBLaxDJ+RotIyTLUSv46ZUq
+         DdhcDPp2S1Uj5RQtyYEo+S96RxGCeCEHezNBPjMhg8NzEjhYjkVMsFiMGpIwAuWubuIS
+         xvG0uROuhF5DfCLzu22go7iEQ/Sztg8F6f+r9efbDThSWC3M5nmfBoQ1R8oyFUfpO81/
+         rtUdCn8O4k5d41Mo5/P0L0AzRUfqO/i5L2PeRFJrpIyR9jUv/GHoJbxQ5W3r++alIZPM
+         nSnQ==
+X-Gm-Message-State: ANhLgQ3hiJuW+ouRLz75BU1rLSB7VbekWb4M0J4JwzBeCqqV3SVEUqeK
+        wPR++4Li8wzS7QY7+BAIwm0vrK3ziUBNIaK/K71SnWlR
+X-Google-Smtp-Source: ADFU+vsJ8OZ/Dhr0DwwgkL8CDPySYZHLYuNtMBF50V178xoCgQ3+Wbsy6eqrOFGI1hDMkk7GA6AGM8FMlDHfqPtuVxs=
+X-Received: by 2002:a02:3f4c:: with SMTP id c12mr12249418jaf.115.1584206617074;
+ Sat, 14 Mar 2020 10:23:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <436ae3cfb957b11b0d7aa3b1dbb0adf2@codeaurora.org>
+Received: by 2002:a02:63c1:0:0:0:0:0 with HTTP; Sat, 14 Mar 2020 10:23:36
+ -0700 (PDT)
+From:   Omar Ousman <omarousman25@gmail.com>
+Date:   Sat, 14 Mar 2020 18:23:36 +0100
+X-Google-Sender-Auth: e3Esaw6NMf2t59gU8aF8hbfxq5E
+Message-ID: <CAOdk3H=BWVFSbBHnPp89pkv5eyhE_YLWx_uztwjom2+untGdDQ@mail.gmail.com>
+Subject: You received my last mail,,,,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 13, 2020 at 07:23:50PM +0530, skakit@codeaurora.org wrote:
-> On 2020-03-12 14:40, Greg KH wrote:
-> > On Fri, Mar 06, 2020 at 12:17:08PM +0530, satya priya wrote:
-> > > RX cancel command fails when BT is switched on and off multiple times.
-> > > 
-> > > To handle this, poll for the cancel bit in SE_GENI_S_IRQ_STATUS
-> > > register
-> > > instead of SE_GENI_S_CMD_CTRL_REG.
-> > > 
-> > > As per the HPG update, handle the RX last bit after cancel command
-> > > and flush out the RX FIFO buffer.
-> > > 
-> > > Signed-off-by: satya priya <skakit@codeaurora.org>
-> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > > ---
-> > >  drivers/tty/serial/qcom_geni_serial.c | 18 ++++++++++++++----
-> > >  1 file changed, 14 insertions(+), 4 deletions(-)
-> > 
-> > This patch didn't apply :(
-> 
-> V1 of this patch is already picked in tty-next tree(commit id:
-> 679aac5ead2f18d223554a52b543e1195e181811). There is no change in this patch
-> from V1 to V3[2/2].
-> There is a crash reported by Stephen with V1, to resolve that we posted next
-> versions adding this patch https://patchwork.kernel.org/patch/11423231/,
-> that is, V3[1/2]. So now only V3[1/2] needs to be picked.
+I am Mr.Omar Ousman, a regional managing director (CORIS BANK
+INTERNATIONAL) Ouagadougou Burkina Faso, in my department we have
+US$9,500.0000 million united state dollars, to transfer into your
+account as a dormant fund.If you are interested to use this fund to
+help the orphans around the world contact and send me your personal
+information for more details to my email omarousman25@gmail.com
 
-Ok, and I picked that up already, right?
+Your full names..........
+Your country of origin..........
+Your occupation..........
+Your Age..........
+Your Mobile Number..........
 
-Please be kind to maintainers and make it obvious what you want them to
-do...
-
-thanks,
-
-greg k-h
+Best Regards,
