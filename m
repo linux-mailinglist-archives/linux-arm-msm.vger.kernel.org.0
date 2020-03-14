@@ -2,70 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 860BC1858B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 03:20:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 202D31858B9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 03:21:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727180AbgCOCUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Mar 2020 22:20:11 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:33513 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727030AbgCOCUK (ORCPT
+        id S1727652AbgCOCVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Mar 2020 22:21:45 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:15635 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727030AbgCOCVp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Mar 2020 22:20:10 -0400
-Received: by mail-qt1-f194.google.com with SMTP id d22so11216700qtn.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Mar 2020 19:20:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=rySLrb6e8pdxDloLytBEUWmIP8HvBNLPxIuJLcg1j9c=;
-        b=h9YhYCfhuvcoOK9JuTSnuiXg2cILoy3ExIWXtsaJYq8huKBTSezqcgybwNUJnF31OD
-         8M4XkdAA+wF3Kc0hz30O/kK9eMooTs7yoqdIBJNfvWQnNRWRGMPcYzXrJl2zdeF1j7va
-         J8XdxMT0KmL8llAYJuvJtfAv+moo5flCUCJCh/tlglJ+fFmIUPVbZ1fac7bCjKhbkCn+
-         rZJerUAJLBThHl7kvNkOSCFj/J2Gim7L2OHs8nEEBbbGF0yG+oMEoxI1m7Q6XmwEaoXK
-         TKHu+SSgJteucaBn++J1ylejcFocesa/O0LZlk7VxDKA6TPZDYhdjLA4ADjt7vhRjRdb
-         KZMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=rySLrb6e8pdxDloLytBEUWmIP8HvBNLPxIuJLcg1j9c=;
-        b=a2c1z0TS2cqbc3TyjIq8HZIbaXNeVjxHx71U0r6GVa+q6rsiIF9qcDlorc+eikhtYD
-         K4JIh6500JRJ8dba73ZeaPQlLXPgmodxqkURSXfY3D1L+mBLaxDJ+RotIyTLUSv46ZUq
-         DdhcDPp2S1Uj5RQtyYEo+S96RxGCeCEHezNBPjMhg8NzEjhYjkVMsFiMGpIwAuWubuIS
-         xvG0uROuhF5DfCLzu22go7iEQ/Sztg8F6f+r9efbDThSWC3M5nmfBoQ1R8oyFUfpO81/
-         rtUdCn8O4k5d41Mo5/P0L0AzRUfqO/i5L2PeRFJrpIyR9jUv/GHoJbxQ5W3r++alIZPM
-         nSnQ==
-X-Gm-Message-State: ANhLgQ3hiJuW+ouRLz75BU1rLSB7VbekWb4M0J4JwzBeCqqV3SVEUqeK
-        wPR++4Li8wzS7QY7+BAIwm0vrK3ziUBNIaK/K71SnWlR
-X-Google-Smtp-Source: ADFU+vsJ8OZ/Dhr0DwwgkL8CDPySYZHLYuNtMBF50V178xoCgQ3+Wbsy6eqrOFGI1hDMkk7GA6AGM8FMlDHfqPtuVxs=
-X-Received: by 2002:a02:3f4c:: with SMTP id c12mr12249418jaf.115.1584206617074;
- Sat, 14 Mar 2020 10:23:37 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a02:63c1:0:0:0:0:0 with HTTP; Sat, 14 Mar 2020 10:23:36
- -0700 (PDT)
-From:   Omar Ousman <omarousman25@gmail.com>
-Date:   Sat, 14 Mar 2020 18:23:36 +0100
-X-Google-Sender-Auth: e3Esaw6NMf2t59gU8aF8hbfxq5E
-Message-ID: <CAOdk3H=BWVFSbBHnPp89pkv5eyhE_YLWx_uztwjom2+untGdDQ@mail.gmail.com>
-Subject: You received my last mail,,,,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        Sat, 14 Mar 2020 22:21:45 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584238904; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=bab8s4tBbO8m9drWNuWpC59mcIOm3kFwBEnRSL7ZdyI=; b=LCjBFT838fmBaE4ctXUt5S77gCnDbkf2lRkCXx+qrFmn3f0ZMNzey+TH5B/WcpFYpkWMSJxF
+ mjWdYvPyGtmiQ/xyeaHHlB/+qYdijbBX/puZchm3NBDC7GRAWJwwPPNfwyqe+wylb2LkgurT
+ dRxpDfbpmfJypKj6h5TqFZK2Mm8=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6d24d9.7f79699e3f80-smtp-out-n04;
+ Sat, 14 Mar 2020 18:39:21 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 94DFDC43636; Sat, 14 Mar 2020 18:39:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8278DC433BA;
+        Sat, 14 Mar 2020 18:39:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8278DC433BA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v6 0/3] Add modem Clock controller (MSS CC) driver for SC7180
+Date:   Sun, 15 Mar 2020 00:09:04 +0530
+Message-Id: <1584211147-5570-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I am Mr.Omar Ousman, a regional managing director (CORIS BANK
-INTERNATIONAL) Ouagadougou Burkina Faso, in my department we have
-US$9,500.0000 million united state dollars, to transfer into your
-account as a dormant fund.If you are interested to use this fund to
-help the orphans around the world contact and send me your personal
-information for more details to my email omarousman25@gmail.com
+[v6]
+ * Combine the Documentation YAML schema and clock IDs for GCC MSS and
+   MSS clocks.
+ * Remove a unnecessary header file inclusion, define the max_registers for
+   regmap and also update the fw_name to remove _clk suffix.
+ * Update the copyright year.
 
-Your full names..........
-Your country of origin..........
-Your occupation..........
-Your Age..........
-Your Mobile Number..........
+[v5]
+ * Update the clock ID for GCC_MSS_NAV_AXIS_CLK to GCC_MSS_NAV_AXI_CLK
 
-Best Regards,
+[v4]
+ * Split the GCC MSS clocks and Modem clock driver.
+ * Update mss_regmap_config to const.
+ * Rename the Documentation binding as per the latest convention.
+ * Minor comments of clock-names/clocks properties updated.
+
+[v3]
+  * Add clocks/clock-names required for the MSS clock controller.
+  * Add pm_ops to enable/disable the required dependent clock.
+  * Add parent_data for the MSS clocks.
+  * Update the GCC MSS clocks from _CBCR to _CLK.
+
+[v2]
+  * Update the license for the documentation and fix minor comments in the
+    YAML bindings.
+
+[v1]
+  * Add driver support for Modem clock controller for SC7180 and also
+    update device tree bindings for the various clocks supported in the
+    clock controller.
+
+Taniya Das (3):
+  dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
+  clk: qcom: gcc: Add support for modem clocks in GCC
+  clk: qcom: Add modem clock controller driver for SC7180
+
+ .../devicetree/bindings/clock/qcom,sc7180-mss.yaml |  62 +++++++++
+ drivers/clk/qcom/Kconfig                           |   9 ++
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/gcc-sc7180.c                      |  72 ++++++++++-
+ drivers/clk/qcom/mss-sc7180.c                      | 143 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc7180.h        |   7 +-
+ include/dt-bindings/clock/qcom,mss-sc7180.h        |  12 ++
+ 7 files changed, 304 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
+ create mode 100644 drivers/clk/qcom/mss-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
+
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
