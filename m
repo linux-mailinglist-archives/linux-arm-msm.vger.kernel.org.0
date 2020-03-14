@@ -2,220 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 85799185362
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2020 01:41:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 242FA18537B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2020 01:55:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726893AbgCNAlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Mar 2020 20:41:10 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38761 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727696AbgCNAlK (ORCPT
+        id S1727636AbgCNAzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Mar 2020 20:55:11 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:22247 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727790AbgCNAzJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Mar 2020 20:41:10 -0400
-Received: by mail-pg1-f194.google.com with SMTP id x7so5983054pgh.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2020 17:41:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+YSW3mt80z9CCjuJH3Ji36iqGwKRMrlrk+wnvIOhyhk=;
-        b=J19NXz25semJfpPmXTe2dsLok9m4rW42I1oyw5NHxb0O2a6Vjl62K+sZ9w/SQORQO9
-         L1Rbe1NFtubgURSHIWzm5RxqISGjxGR4aJkxCdsPpHwp8ezEA3nD9X8jjMILcriSbUgm
-         f771O4qHMnRMrjejAFe65UCv5+yRetWPts7QI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+YSW3mt80z9CCjuJH3Ji36iqGwKRMrlrk+wnvIOhyhk=;
-        b=QQqGN2lqSPo2Hz/dNUutzeA9C7sxPYZnjaGw/TbyZ2YenGbBRzeTpLmik9OYpJBYrb
-         4O0p+jfXPg0aS14g3Z3tSFaUuT1e4P0pb47FYQsldnyAZs6+AFegTOff+JXRX09fKvmE
-         A/kEGdMHQyWqWJWp+b1cLFbfaSyIjF5V7xu53kPimcvnqAEEKsvKLVMzREdbdSiYL2ls
-         CI7DPDsp+vi0YfpCtoxV7fKxKkWAbSHBYyKrdJDh9xMtBIulGEntkAwuJul0RXQ0B2Gk
-         RTukNkgLj/lLHyLyfb5PQFtIXU97TTPOygxWjO7BWXNXGnAXkZLfxD1GhJ78drCshrbs
-         rFvA==
-X-Gm-Message-State: ANhLgQ1zx+gZPM1lanCTOQCxJ9HISAS8V8l9sfAD8TzDPYdZmg7EPzKO
-        0/QJZlllGYh9x7LE2X5+znjpwg==
-X-Google-Smtp-Source: ADFU+vuslQLGf4xcYGRQe1z6Yvr3ZzcUBM4XSOaWv9bdeBRUPS3wI9MzredWsYK1bA8n9Q8+YpIbDg==
-X-Received: by 2002:aa7:914b:: with SMTP id 11mr16871749pfi.69.1584146468392;
-        Fri, 13 Mar 2020 17:41:08 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id q30sm13469970pjh.5.2020.03.13.17.41.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Mar 2020 17:41:07 -0700 (PDT)
-Date:   Fri, 13 Mar 2020 17:41:06 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-Subject: Re: [PATCH V2 6/8] spi: spi-geni-qcom: Add interconnect support
-Message-ID: <20200314004106.GM144492@google.com>
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-7-git-send-email-akashast@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1584105134-13583-7-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        Fri, 13 Mar 2020 20:55:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584147309; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=LswQoCiDsV5fUK3UT5IuFHcjpFvD+YypngIW7/91iJg=; b=ZCZU/0jir9SlzU1z/uvtiVzePDtfJq6ShgX7qaZS1bAVGnHVmkoGF6lP5KlLwO1e8d45o7fF
+ L4m6wWhUxHYQmKtPchQ/dyAShkCSDZ5m+TVvgrevRrvDVp/NQ2NpnGCryDwhrzdhHp2bnXjJ
+ De182lvUCvUOzPBNnIrbiRw3sjQ=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6c2b65.7f78a6d93618-smtp-out-n05;
+ Sat, 14 Mar 2020 00:55:01 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3E2CDC4478F; Sat, 14 Mar 2020 00:55:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 469B8C433CB;
+        Sat, 14 Mar 2020 00:54:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 469B8C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH 0/4] Add SS/HS-USB changes for Qualcomm SM8150 chipset
+Date:   Fri, 13 Mar 2020 17:54:49 -0700
+Message-Id: <1584147293-6763-1-git-send-email-wcheng@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
+This series adds support for the Synopsis 7nm HSPHY USB driver being
+used in QCOM chipsets.  The HSPHY register map differs compared to 
+other PHY revisions.  In addition, modifications and updates are done
+to the QMP driver to add new registers/offsets, and to update the
+initialization sequence for enabling the SSUSB path on SM8150.
 
-On Fri, Mar 13, 2020 at 06:42:12PM +0530, Akash Asthana wrote:
-> Get the interconnect paths for SPI based Serial Engine device
-> and vote according to the current bus speed of the driver.
-> 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> ---
->  - As per Bjorn's comment, removed se == NULL check from geni_spi_icc_get
->  - As per Bjorn's comment, removed code to set se->icc_path* to NULL in failure
->  - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
->    path handle
->  - As per Matthias comment, added error handling for icc_set_bw call
-> 
->  drivers/spi/spi-geni-qcom.c | 74 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 73 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index c397242..09c4709 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -118,6 +118,19 @@ static int get_spi_clk_cfg(unsigned int speed_hz,
->  	return ret;
->  }
->  
-> +static int geni_spi_icc_get(struct geni_se *se)
-> +{
-> +	se->icc_path_geni_to_core = devm_of_icc_get(se->dev, "qup-core");
-> +	if (IS_ERR(se->icc_path_geni_to_core))
-> +		return PTR_ERR(se->icc_path_geni_to_core);
-> +
-> +	se->icc_path_cpu_to_geni = devm_of_icc_get(se->dev, "qup-config");
-> +	if (IS_ERR(se->icc_path_cpu_to_geni))
-> +		return PTR_ERR(se->icc_path_cpu_to_geni);
-> +
-> +	return 0;
-> +}
+Jack Pham (1):
+  phy: qcom-qmp: Add SM8150 QMP USB3 PHY support
 
-As per my comments on (https://patchwork.kernel.org/patch/11436895/#23222713),
-the above function could be replaced by calling a 'geni_icc_get()' (or so, to
-be created) provided by the geni SE driver.
+Wesley Cheng (3):
+  dt-bindings: phy: Add binding for qcom,usb-hs-7nm
+  phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs
+  phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB
 
-> +
->  static void handle_fifo_timeout(struct spi_master *spi,
->  				struct spi_message *msg)
->  {
-> @@ -234,6 +247,20 @@ static int setup_fifo_params(struct spi_device *spi_slv,
->  		return ret;
->  	}
->  
-> +	/*
-> +	 * Set BW quota for CPU as driver supports FIFO mode only.
-> +	 * Assume peak bw as twice of avg bw.
-> +	 */
-> +	se->avg_bw_cpu = Bps_to_icc(mas->cur_speed_hz);
-> +	se->peak_bw_cpu = Bps_to_icc(2 * mas->cur_speed_hz);
-> +	ret = icc_set_bw(se->icc_path_cpu_to_geni, se->avg_bw_cpu,
-> +			se->peak_bw_cpu);
-> +	if (ret) {
-> +		dev_err(mas->dev, "%s: ICC BW voting failed for cpu\n",
-> +			__func__);
-> +		return ret;
-> +	}
-> +
->  	clk_sel = idx & CLK_SEL_MSK;
->  	m_clk_cfg = (div << CLK_DIV_SHFT) | SER_CLK_EN;
->  	spi_setup_word_len(mas, spi_slv->mode, spi_slv->bits_per_word);
-> @@ -578,6 +605,15 @@ static int spi_geni_probe(struct platform_device *pdev)
->  	spin_lock_init(&mas->lock);
->  	pm_runtime_enable(dev);
->  
-> +	ret = geni_spi_icc_get(&mas->se);
-> +	if (ret)
-> +		goto spi_geni_probe_runtime_disable;
-> +	/* Set the bus quota to a reasonable value for register access */
-> +	mas->se.avg_bw_core = Bps_to_icc(CORE_2X_50_MHZ);
-> +	mas->se.peak_bw_core = Bps_to_icc(CORE_2X_100_MHZ);
-> +	mas->se.avg_bw_cpu = Bps_to_icc(1000);
-> +	mas->se.peak_bw_cpu = Bps_to_icc(1000);
-> +
->  	ret = spi_geni_init(mas);
->  	if (ret)
->  		goto spi_geni_probe_runtime_disable;
-> @@ -616,14 +652,50 @@ static int __maybe_unused spi_geni_runtime_suspend(struct device *dev)
->  {
->  	struct spi_master *spi = dev_get_drvdata(dev);
->  	struct spi_geni_master *mas = spi_master_get_devdata(spi);
-> +	int ret;
-> +
-> +	ret = geni_se_resources_off(&mas->se);
-> +	if (ret)
-> +		return ret;
->  
-> -	return geni_se_resources_off(&mas->se);
-> +	ret = icc_set_bw(mas->se.icc_path_geni_to_core, 0, 0);
-> +	if (ret) {
-> +		dev_err_ratelimited(mas->dev, "%s: ICC BW remove failed for core\n",
-> +			__func__);
-> +		return ret;
-> +	}
-> +
-> +	ret = icc_set_bw(mas->se.icc_path_cpu_to_geni, 0, 0);
-> +	if (ret) {
-> +		dev_err_ratelimited(mas->dev, "%s: ICC BW remove failed for cpu\n",
-> +			__func__);
-> +		return ret;
-> +	}
+ .../devicetree/bindings/phy/qcom,usb-hs-7nm.yaml   |  74 ++++++
+ drivers/phy/qualcomm/Kconfig                       |  10 +
+ drivers/phy/qualcomm/Makefile                      |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c                | 157 +++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h                | 198 +++++++++++++-
+ drivers/phy/qualcomm/phy-qcom-snps-7nm.c           | 294 +++++++++++++++++++++
+ 6 files changed, 732 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-snps-7nm.c
 
-the ICC stuff above would become:
-
-	ret = geni_icc_vote_off(&mas->se);
-	if (ret)
-		return ret;
-
-with the consolidated code in geni SE.
-
-> +
-> +	return 0;
->  }
->  
->  static int __maybe_unused spi_geni_runtime_resume(struct device *dev)
->  {
->  	struct spi_master *spi = dev_get_drvdata(dev);
->  	struct spi_geni_master *mas = spi_master_get_devdata(spi);
-> +	int ret;
-> +
-> +	ret = icc_set_bw(mas->se.icc_path_geni_to_core, mas->se.avg_bw_core,
-> +		mas->se.peak_bw_core);
-> +	if (ret) {
-> +		dev_err_ratelimited(mas->dev, "%s: ICC BW voting failed for core\n",
-> +			__func__);
-> +		return ret;
-> +	}
-> +
-> +	ret = icc_set_bw(mas->se.icc_path_cpu_to_geni, mas->se.avg_bw_cpu,
-> +		mas->se.peak_bw_cpu);
-> +	if (ret) {
-> +		dev_err_ratelimited(mas->dev, "%s: ICC BW voting failed for cpu\n",
-> +			__func__);
-> +		return ret;
-> +	}
-
-and this:
-
-	ret = geni_icc_vote_on(&mas->se);
-	if (ret)
-		return ret;
-
->  	return geni_se_resources_on(&mas->se);
-
-possibly you could even do the ICC voting from geni_se_resources_on/off()
-it seems the two are always done together for UART, I2C and SPI.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
