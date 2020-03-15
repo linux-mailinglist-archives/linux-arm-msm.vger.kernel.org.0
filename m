@@ -2,98 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D755A185A3F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 06:23:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6B89185F99
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2020 20:38:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727443AbgCOFXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Mar 2020 01:23:43 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45170 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726936AbgCOFXn (ORCPT
+        id S1728896AbgCOTit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Mar 2020 15:38:49 -0400
+Received: from mail-vk1-f194.google.com ([209.85.221.194]:39625 "EHLO
+        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728822AbgCOTit (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Mar 2020 01:23:43 -0400
-Received: by mail-pg1-f196.google.com with SMTP id m15so7568988pgv.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Mar 2020 22:23:42 -0700 (PDT)
+        Sun, 15 Mar 2020 15:38:49 -0400
+Received: by mail-vk1-f194.google.com with SMTP id t129so4257146vkg.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2020 12:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wR8nFRPEBNLxmIrRh2XX942TMuucAJ5R0/7i6Fo9p5k=;
-        b=rT4FsdqjKQBVFo3+uu3fzLfB762MuezwSN1LOBD3ukiXZTdXlSwwQK0uPYMfrGKpBw
-         HStP0LAwyHUgCf+9x10UYRCF9UJunuqcsp28aLez8GE2hFDyi0ofXM8Dr154ZCspaaDE
-         VtH1KqHCF1ohopOvbBe7ipKJhL7UEUPpzwYNws75GT7CW6MhGKCWLuE60W0BotyCDLvo
-         r4veXdZGi+c7XAXXCQaraojq3143FgIV7X78c33GlZQNlXCKwXQtmByc8TvqoSmTlHRH
-         Cgon8IVWrL7L1XDgxXdvlKuzPupzlbR94v3hnlq4+LXltc9bPmrXUZb2Ky4pFUwuc1FI
-         26Tw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3r4/BvkXpJFWjW4Dm8u+4gw7YjX6yojUcnevi1e7c+I=;
+        b=XwpMgfGTAdDtlhQO/YyoLhfNXwLMPvXTGSKSJ3/yqwas/b7Ta+cQ2wnTzDLHjT5AuA
+         is0tUAKR6jiW1Cp5bh7DfL57FcgLB+1uO7sUhAvKy4ebM7qf38EiZHoE25LYF+13WKXO
+         UTog8wXTqLa6AS9Bcxq9qNZwzuGSYiMRLGQ47LcjF6wwY498/AUO6+Q7BFxvs1m1/AMG
+         bRUdL4CTsbH92OFprdSeYcOMRQljBtzwNgAHkoWt5fplEmNq9lKf1gBvYX5n+9g7QUlN
+         WIcYJPwR4J1PG631fhwjnINaNXQOAXCFMpJiRrfgYBnaMeUqN3+L5RpB21LPVEEkQQ47
+         TPKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wR8nFRPEBNLxmIrRh2XX942TMuucAJ5R0/7i6Fo9p5k=;
-        b=g1Zn4EkE358N12AmnksVkv6z9ILBUPvXPQxQ16NTvsM8HTrjeqQBpCALBfjH1pvrjx
-         mt8DyM7puNOYNn1Venxi1ruQbKlZxwYYgKizR2CfdgxONoxv+Jv3RwWKnh8hv6FZdSMH
-         Cq664YTX8SPhCuAt8AOj5rZe24/Am7GRcWAOIxC6+UqVHVgp5LErfS30b91ZpDMwiQyc
-         lIiCp3ECi1l3vDeBf5xFZDtbTszs7n3fgfcW3ndrRCH88O74vPeOsDdjf6hvVkn/X930
-         I4LIQwY9IjJ2hLPPgTY9uljaJxgiFP8uDKBuozMfvaztwqDB334ATvWcc8+XhUc1xGJJ
-         E15Q==
-X-Gm-Message-State: ANhLgQ01CBVFpHS1783PBq4UbVPI9NUpSVEbWXJBuANgB2vQAVIE+Qbl
-        JnAazB2Xxiu+qV0xrC3r4f9t9U10cSY=
-X-Google-Smtp-Source: ADFU+vs5W6pKhDasxst/A96FZNjz5ZlLsLbn4MZHDngTRdMpMnXsBjfTrhf9HXmupeey+hIoU1207w==
-X-Received: by 2002:a63:514f:: with SMTP id r15mr20218986pgl.432.1584249822088;
-        Sat, 14 Mar 2020 22:23:42 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id s12sm33303143pgi.38.2020.03.14.22.23.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Mar 2020 22:23:41 -0700 (PDT)
-Date:   Sat, 14 Mar 2020 22:23:39 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/5] arm64: dts: qcom: sdm845: add audio support
-Message-ID: <20200315052339.GH1098305@builder>
-References: <20200312143024.11059-1-srinivas.kandagatla@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3r4/BvkXpJFWjW4Dm8u+4gw7YjX6yojUcnevi1e7c+I=;
+        b=PrcXgadPM3yG3rPwyDni6QR/926NDtLGBy/QQLTOxHrDLPtxAyWS+YhLiq1M9yZ5XR
+         F7vlAXfTSjgkLKrpldVfE2jDNrIL6uyZ85+yhkDJqMMvIzdstjV7KWdSZspAMLEUmuzg
+         fdoWHdlTSrX3U4YkwP3zeJF4icTnKqbR4nT/1+Vf3UQ6D0tVcsfhMdIhwUtWzrc5D/0M
+         yDbPT/tfqY/cSlxKN0Gs7MVSLxWI1C/qeCME5pPfmOgpjI5lu4rNEMJJiBHT1TTVh64H
+         HWoWzKufB/BV91yfahA1wI2ynWGPwyDrAGdIJav9kYYQ31kA1Hwl06TPc0hAlsjfZgyo
+         anNw==
+X-Gm-Message-State: ANhLgQ0maviwnWNgSnIum8H6smGfmG7onCfGgkS4V1RLbc8irMg9cPcu
+        7xOZdEr7YuQ3c5DWA2KApk8985zewJX/ncUzgqmS1Q==
+X-Google-Smtp-Source: ADFU+vukkt95spIbn7oU3hsXT2PRPErWHGLPhTFw57L5X+fXp8Nt6v07e839vlcZH6eMP2Skvw+cvfE3msIzvNj+PKk=
+X-Received: by 2002:a1f:e004:: with SMTP id x4mr15188225vkg.79.1584301126800;
+ Sun, 15 Mar 2020 12:38:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200312143024.11059-1-srinivas.kandagatla@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20200313214552.845-1-robh@kernel.org> <20200313214552.845-2-robh@kernel.org>
+In-Reply-To: <20200313214552.845-2-robh@kernel.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Mon, 16 Mar 2020 01:08:35 +0530
+Message-ID: <CAHLCerMDNXEr_1JHrdM_3rMFaJJK009E1v4JPJhLSu1dgVKJLA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dt-bindings: thermal: qcom-tsens: Remove redundant 'maxItems'
+To:     Rob Herring <robh@kernel.org>
+Cc:     Zhang Rui <rui.zhang@intel.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 12 Mar 07:30 PDT 2020, Srinivas Kandagatla wrote:
+On Sat, Mar 14, 2020 at 3:15 AM Rob Herring <robh@kernel.org> wrote:
+>
+> There's no need to specify 'maxItems' with the same value as the number
+> of entries in 'items'. A meta-schema update will catch future cases.
 
-> This patchset adds analog audio support for sdm845 based boards.
-> 
-> 
-> Changes since v1:
-> 	- various trival cleanups done as suggested by Bjorn
-> 	- added compressed audio dai for db845c
-> 
+Thanks Rob.
 
-Thanks Srini!
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 
-I fixed up the sort order per Vinod's feedback and applied these, with
-Vinod's acks.
-
-Regards,
-Bjorn
-
-> Srinivas Kandagatla (5):
->   arm64: dts: qcom: sdm845: add slimbus nodes
->   arm64: dts: qcom: sdm845: add apr nodes
->   arm64: dts: qcom: c630: Enable audio support
->   arm64: dts: qcom: sdm845: add pinctrl nodes for quat i2s
->   arm64: dts: qcom: db845c: add analog audio support
-> 
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 159 ++++++++++
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 281 ++++++++++++++++++
->  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 113 +++++++
->  3 files changed, 553 insertions(+)
-> 
-> -- 
-> 2.21.0
-> 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Amit Kucheria <amit.kucheria@linaro.org>
+> Cc: Zhang Rui <rui.zhang@intel.com>
+> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-pm@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index c0ed030d0960..62b97a6d9b65 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -43,7 +43,6 @@ properties:
+>            - const: qcom,tsens-v2
+>
+>    reg:
+> -    maxItems: 2
+>      items:
+>        - description: TM registers
+>        - description: SROT registers
+> --
+> 2.20.1
+>
