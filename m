@@ -2,143 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 85010186F1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 16:50:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE02A186F1F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 16:50:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731555AbgCPPt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Mar 2020 11:49:59 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37615 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731903AbgCPPt7 (ORCPT
+        id S1731904AbgCPPuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Mar 2020 11:50:32 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:41330 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731890AbgCPPuc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Mar 2020 11:49:59 -0400
-Received: by mail-wm1-f67.google.com with SMTP id a141so18638864wme.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2020 08:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=cOIEYtWNEzlYYthtD0spEjkukXqfmxlfoFYyEio2yD4=;
-        b=bLP9tzXHgsnZOO+gQY30NTwMxHujM+PxDf2Pr2BsRs9UN3PNl67882FriKQhyCzQBr
-         TQvoYRDzZIEuZjT7HWvj9ryRh0wafj4b7mSPg86iUfXDu3MNCvfAIbQ4I6SS/cLilfBh
-         zMVdnQIcxINkndSo9MyT7JC/g4ws4131+16aS9y6jaXhUaO7tb8k1sGg+cmElZUSjHvf
-         nKD3AWMMSBYWgumDkjJNP77sHEVHIJpLXozOmkpGlN6fzZlvjPS6WDKFGpj2t6vQjwFm
-         6iyRvLJuu8HH4z1PQSOJsYFBsODpIu2hXolpCRed+/OXwkJGe0xQdQ4Mvpx9JFxwkUU9
-         wcFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cOIEYtWNEzlYYthtD0spEjkukXqfmxlfoFYyEio2yD4=;
-        b=pV0qvLAiqDS45rq6+vsWQrPnqCvHZC1StuETqJlexLz6rYTZvu1iXMBWWtQDkftxhS
-         9IeYD7gDxGIccRcTNRoUglJImmXZwtSDMq0hVmJaiIhhB1HyU//L+k7i+wPzNrNuPfta
-         df/vOPEruxbbDAC9ie+sFPVz3JFEmTniEG3+VyvUPQP9NNizKmnrYq6Jad9p7tS3glyr
-         /ZGE/pwb7No4WhGNoaPkx1qmNEQgFyCuN2DuDpN35HlEE7QCRiMWIY3YnNTrRRYFaifI
-         HD/ov8GfjMzupqTLIxwdZiC0lcKW+Ty0+uIcnteDHU/nLwzJCaztrghSHktP8JoaV2m7
-         1EDw==
-X-Gm-Message-State: ANhLgQ3FCtKjb7OzxJy6SzJ/rbojJ8rhr3H/YGZ31unR6pKyF+1mBH0k
-        Rhf2N6ne9Kt49gmHcHD4RklsSw==
-X-Google-Smtp-Source: ADFU+vv4N7xQNm1wFNrIZmN2Kg+Ua4DIBj8t6C6sgaFA18dYvUkMu368tWpVIaA4w1ORNN6r5eo5hg==
-X-Received: by 2002:a1c:7c05:: with SMTP id x5mr28123545wmc.67.1584373796917;
-        Mon, 16 Mar 2020 08:49:56 -0700 (PDT)
-Received: from myrica ([2001:171b:226b:54a0:116c:c27a:3e7f:5eaf])
-        by smtp.gmail.com with ESMTPSA id 9sm127395wmx.32.2020.03.16.08.49.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2020 08:49:56 -0700 (PDT)
-Date:   Mon, 16 Mar 2020 16:49:48 +0100
-From:   Jean-Philippe Brucker <jean-philippe@linaro.org>
-To:     Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Hanjun Guo <guohanjun@huawei.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <jroedel@suse.de>
-Subject: Re: [PATCH 09/15] iommu/arm-smmu-v3: Use accessor functions for
- iommu private data
-Message-ID: <20200316154948.GJ304669@myrica>
-References: <20200310091229.29830-1-joro@8bytes.org>
- <20200310091229.29830-10-joro@8bytes.org>
+        Mon, 16 Mar 2020 11:50:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=4Fcs/ravGQBzEwV+PwLN/3FuduA8sqVcdSOOMqzyw+E=; b=cZVHtxGt+DHwY530inZn5uaoAd
+        NKYBLQCYm+jTGzzEtxEZZcghNZyQz3KZrzDd7pz5fIwHj8M1443PQzUVnDLn/hazE65KuoyeFpX4q
+        SlRMMnPERZ+98066ISJv8PqhvKadqBvfmDLO8yR9v9I62OoyIKC9HSVz650f2PtsxYapCWFVbdZ5R
+        f4Zrx1W+r/vsU+FwAD8cKpo9ZL8NyEpgdqr6xqK9E2SS96UpdcX+0mbPNpmGzTlROypcTsbmMtJ+v
+        SIN/U5JGq9qiN3Kzq85xwDB29JrmkRYMtCWIIZ3wmAhwo4vIys/n0ZiMZfOMz5rdYneOW+8wr8bIu
+        p6c7BDsw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1jDs0a-0004dZ-Nu; Mon, 16 Mar 2020 15:50:28 +0000
+Date:   Mon, 16 Mar 2020 08:50:28 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, joro@8bytes.org,
+        ohad@wizery.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        agross@kernel.org
+Subject: Re: [PATCH 0/3] Request direct mapping for modem firmware subdevice
+Message-ID: <20200316155028.GB18704@infradead.org>
+References: <20200309182255.20142-1-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200310091229.29830-10-joro@8bytes.org>
+In-Reply-To: <20200309182255.20142-1-sibis@codeaurora.org>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 10, 2020 at 10:12:23AM +0100, Joerg Roedel wrote:
-> From: Joerg Roedel <jroedel@suse.de>
-> 
-> Make use of dev_iommu_priv_set/get() functions in the code.
-> 
-> Tested-by: Hanjun Guo <guohanjun@huawei.com>
-> Signed-off-by: Joerg Roedel <jroedel@suse.de>
+On Mon, Mar 09, 2020 at 11:52:52PM +0530, Sibi Sankar wrote:
+> The Q6 modem sub-system has direct access to DDR through memnoc and
+> an indirect access routed through a SMMU which MSS CE (crypto engine
+> sub-component of MSS) uses during out of reset sequence. Request direct
+> mapping for the modem-firmware subdevice since smmu is not expected
+> to provide access control/translation for these SIDs (sandboxing of the
+> modem is achieved through XPUs engaged using SMC calls).
 
-Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-
-> ---
->  drivers/iommu/arm-smmu-v3.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm-smmu-v3.c b/drivers/iommu/arm-smmu-v3.c
-> index aa3ac2a03807..2b68498dfb66 100644
-> --- a/drivers/iommu/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm-smmu-v3.c
-> @@ -2659,7 +2659,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->  	if (!fwspec)
->  		return -ENOENT;
->  
-> -	master = fwspec->iommu_priv;
-> +	master = dev_iommu_priv_get(dev);
->  	smmu = master->smmu;
->  
->  	arm_smmu_detach_dev(master);
-> @@ -2795,7 +2795,7 @@ static int arm_smmu_add_device(struct device *dev)
->  	if (!fwspec || fwspec->ops != &arm_smmu_ops)
->  		return -ENODEV;
->  
-> -	if (WARN_ON_ONCE(fwspec->iommu_priv))
-> +	if (WARN_ON_ONCE(dev_iommu_priv_get(dev)))
->  		return -EBUSY;
->  
->  	smmu = arm_smmu_get_by_fwnode(fwspec->iommu_fwnode);
-> @@ -2810,7 +2810,7 @@ static int arm_smmu_add_device(struct device *dev)
->  	master->smmu = smmu;
->  	master->sids = fwspec->ids;
->  	master->num_sids = fwspec->num_ids;
-> -	fwspec->iommu_priv = master;
-> +	dev_iommu_priv_set(dev, master);
->  
->  	/* Check the SIDs are in range of the SMMU and our stream table */
->  	for (i = 0; i < master->num_sids; i++) {
-> @@ -2852,7 +2852,7 @@ static int arm_smmu_add_device(struct device *dev)
->  	iommu_device_unlink(&smmu->iommu, dev);
->  err_free_master:
->  	kfree(master);
-> -	fwspec->iommu_priv = NULL;
-> +	dev_iommu_priv_set(dev, NULL);
->  	return ret;
->  }
->  
-> @@ -2865,7 +2865,7 @@ static void arm_smmu_remove_device(struct device *dev)
->  	if (!fwspec || fwspec->ops != &arm_smmu_ops)
->  		return;
->  
-> -	master = fwspec->iommu_priv;
-> +	master = dev_iommu_priv_get(dev);
->  	smmu = master->smmu;
->  	arm_smmu_detach_dev(master);
->  	iommu_group_remove_device(dev);
-> -- 
-> 2.17.1
-> 
+Please fix your device tree so that the device isn't bound to an
+IOMMU.
