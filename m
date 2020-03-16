@@ -2,86 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 70C40186E45
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 16:07:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5285186EB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 16:39:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731753AbgCPPHc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Mar 2020 11:07:32 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:20847 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731724AbgCPPHc (ORCPT
+        id S1731783AbgCPPj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Mar 2020 11:39:27 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41846 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731692AbgCPPj0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Mar 2020 11:07:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584371251; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=I74FzD8gT42MrBJOC+YUJAHq1MUTpP7zxvPx0mJUftQ=;
- b=u9kFM25JBtPXz1DJOS+N6d/010XMLjRrt4Ren/bY/hIj1ZmtOCCkRQtr8VKiv9EMTUnOJSHZ
- J8pcNrySfWdk4fQhXP6gPESBZ6e+6/PyeizCQZ788G4oVCNKSV12DsHE6fR5xNQfpTqlqNn+
- GkVUktcVDNht1rsHeUbG28QcT2Q=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e6f9623.7f69d522ab20-smtp-out-n01;
- Mon, 16 Mar 2020 15:07:15 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2E512C433CB; Mon, 16 Mar 2020 15:07:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bgodavar)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 94B9CC44791;
-        Mon, 16 Mar 2020 15:07:13 +0000 (UTC)
+        Mon, 16 Mar 2020 11:39:26 -0400
+Received: by mail-wr1-f67.google.com with SMTP id f11so5035588wrp.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2020 08:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Q0yzkSCm1Xcsm6hOYYsbTqS4amhDbi797Ag8RmkjurU=;
+        b=VjUfHswCT1UKNAujAPhK8VCtliVrWtYIYyppBsAtlnbFCrxaad4Uc2A5soRvyi8Lz/
+         SqPfxSFRDIQCzDyvLFNz52fC+JJkBauYJCclNDsvmtzidrUQROIsVQV6zcwzj00LmPWd
+         He65rfdf7A/Oc+IFkmPIIFP2thDMmrP7w+MUVZbhd7yiRPnRF5U7lNWsW24hYJVoJYeR
+         8wHBvHBpk9d8ZmoBo1s6yLkrnEqIRgPQmKuMyjkvlD33ynh0mEfoeYi9XfpNu36ky7nN
+         jntyaqHoGFn/okVfozaKqLoYwnG4+U3ZIqhxZ9ETSHCiCMC6Iw7WS6sjUwRs0+vfP+X7
+         +bQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Q0yzkSCm1Xcsm6hOYYsbTqS4amhDbi797Ag8RmkjurU=;
+        b=IVQlheREeM0J7xnT/W1ekmfwfrcv6g9th1zyJwkpUy+EY6dYVRbJEa7RBs8dELq0z7
+         R+30roGeFJneq5/doRiJaB1yGdw8FpNu1bgveGHrPwe+HmbvyMND7oLzrrv0kXWnf0j+
+         5/J+xYfQ+9gSjHRN+SIHp4a2iYozN2MWFxXYHtLby+gF1It7YHrctHSc7FwqazO8AAYZ
+         yA/5DYs8/f5GqVWNp9AQ3oWMepVA21FUL5+YaUSsSSvGmWJHXAYbT9A7By5/kv8V07+K
+         ssygie7yj2rVEPc594GR4LQlY4IFo4ajzz9TBtJ8NZJOa5YeWUYMDhdSoqNFg8W9zL+t
+         XA4Q==
+X-Gm-Message-State: ANhLgQ1PwnKJ4bN+jwlv2L58cEsGDCbXkBnREaVA3gIv/9hiloUpSWzt
+        9VyyNFOydX82c2Bkf2wTuaUZ0w==
+X-Google-Smtp-Source: ADFU+vs0mvRenL1g+U69U0qbNtFq1SVNLFNkkOGefFPc2C+th0hGKZ/JyHhYDuRn/eeS5wXEeUsB/Q==
+X-Received: by 2002:adf:d4ce:: with SMTP id w14mr26159791wrk.101.1584373164974;
+        Mon, 16 Mar 2020 08:39:24 -0700 (PDT)
+Received: from myrica ([2001:171b:226b:54a0:116c:c27a:3e7f:5eaf])
+        by smtp.gmail.com with ESMTPSA id 19sm143446wma.3.2020.03.16.08.39.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Mar 2020 08:39:24 -0700 (PDT)
+Date:   Mon, 16 Mar 2020 16:39:16 +0100
+From:   Jean-Philippe Brucker <jean-philippe@linaro.org>
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        virtualization@lists.linux-foundation.org,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Hanjun Guo <guohanjun@huawei.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <jroedel@suse.de>
+Subject: Re: [PATCH 01/15] iommu: Define dev_iommu_fwspec_get() for
+ !CONFIG_IOMMU_API
+Message-ID: <20200316153916.GB304669@myrica>
+References: <20200310091229.29830-1-joro@8bytes.org>
+ <20200310091229.29830-2-joro@8bytes.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 16 Mar 2020 20:37:13 +0530
-From:   bgodavar@codeaurora.org
-To:     Rocky Liao <rjliao@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
-        hemantg@codeaurora.org, mka@chromium.org
-Subject: Re: [PATCH v1 2/2] dt-bindings: net: bluetooth: Add device tree
- bindings for QCA chip QCA6390
-In-Reply-To: <20200314094328.3331-2-rjliao@codeaurora.org>
-References: <20200314094328.3331-1-rjliao@codeaurora.org>
- <20200314094328.3331-2-rjliao@codeaurora.org>
-Message-ID: <1ac67f48f34bc91e89a1b3a5d1c23453@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200310091229.29830-2-joro@8bytes.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-03-14 15:13, Rocky Liao wrote:
-> This patch adds compatible string for the QCA chip QCA6390.
+On Tue, Mar 10, 2020 at 10:12:15AM +0100, Joerg Roedel wrote:
+> From: Joerg Roedel <jroedel@suse.de>
 > 
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> There are users outside of the IOMMU code that need to call that
+> function. Define it for !CONFIG_IOMMU_API too so that compilation does
+> not break.
+> 
+> Reported-by: kbuild test robot <lkp@intel.com>
+> Signed-off-by: Joerg Roedel <jroedel@suse.de>
+
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+
+As a result drivers/gpu/host1x/hw/channel_hw.c and
+drivers/gpu/drm/tegra/vic.c can lose their #ifdef CONFIG_IOMMU_API
+
 > ---
->  Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 1 +
->  1 file changed, 1 insertion(+)
+>  include/linux/iommu.h | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> diff --git
-> a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> index beca6466d59a..badf597c0e58 100644
-> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> @@ -13,6 +13,7 @@ Required properties:
->     * "qcom,wcn3990-bt"
->     * "qcom,wcn3991-bt"
->     * "qcom,wcn3998-bt"
-> +   * "qcom,qca6390-bt"
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index d1b5f4d98569..3c4ca041d7a2 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -1073,6 +1073,10 @@ static inline int iommu_sva_unbind_gpasid(struct iommu_domain *domain,
+>  	return -ENODEV;
+>  }
+>  
+> +static inline struct iommu_fwspec *dev_iommu_fwspec_get(struct device *dev)
+> +{
+> +	return NULL;
+> +}
+>  #endif /* CONFIG_IOMMU_API */
+>  
+>  #ifdef CONFIG_IOMMU_DEBUGFS
+> -- 
+> 2.17.1
 > 
-
-[Bala]: Can you add a example snippet of QCA6390 dts
-
->  Optional properties for compatible string qcom,qca6174-bt:
