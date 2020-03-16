@@ -2,129 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A7C818755F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 23:09:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 179D6187563
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 23:10:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732737AbgCPWJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Mar 2020 18:09:32 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:46756 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732652AbgCPWJc (ORCPT
+        id S1732567AbgCPWKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Mar 2020 18:10:36 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:37605 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732749AbgCPWKg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Mar 2020 18:09:32 -0400
-Received: by mail-pl1-f195.google.com with SMTP id r3so590544pls.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2020 15:09:31 -0700 (PDT)
+        Mon, 16 Mar 2020 18:10:36 -0400
+Received: by mail-pg1-f195.google.com with SMTP id a32so9668461pga.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2020 15:10:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=B5SCW2mpwqfmklTei3IeO+x4lJGs0aSMZDQgwcWofPQ=;
-        b=oVXJUCxuUtRI/jY4vIsIq5/aCvthVQhuW+fQge67kF7fyLZTLDLGe3kGCyHn5DDYdl
-         6IBdZaaxCsODY+QT0VY9gWsHOTSSPW7l+MGn5xNXr85B7kT5QrxCfMgm5wQvcjfMOz6+
-         O/vYNKhnRvHEoGxAcPLcrn0tSMxEsX+5q4ZC85EAE+n3WSr7OurXDXKbzQdndNrD4z+b
-         1MIZOFANlv4CtDy6rMzZA4L5O545VKfaMnr6CSl4BJkXa1PX7e9VRLrqhKtvbzoGGMia
-         bMuokD6q46KE7vVTk43WyjSn0W7N0MSKE6i9sPy8BtlnoP/XGkZo+pz6UE8Mip/W38p8
-         rVnQ==
+        bh=lsN7EIok/ouPxtEONuI3O/CpHJW1h0sdrosta3mQ6+A=;
+        b=fIiUBq1l01hYj8p+vHzAisWXU9WUJrxuIHL1WZZBr7bUPM4xYemJmTHH/vqXERaXKh
+         E2SpAdwsDs45Vd7CWKG6PIrvPKxgKFz7xe4YPbTZII9CAAwI/Va6Rk1/JJiFd+4c1BcH
+         f5MSctYqJlExETlAgfMwtlywD/0xD4HXhZD0+q/SGh4U26sP1XCjGvUZinrMJRfzEel0
+         2zFYZmlthBNJV5sXYCjoPs72+POB3wWsZYU2KS1QJjfbvI4GEahFgSDYVOk/Z6EYYOR7
+         KYgZ68368ZqtjVvi41XIIiT6jiKRciplcvu4IzVZ9IkGPHiJSs5lUddoyZZo2V047dbm
+         YScA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=B5SCW2mpwqfmklTei3IeO+x4lJGs0aSMZDQgwcWofPQ=;
-        b=ZKJLASC2h1woFmNr80bIfIt80Zhb96Jhw591rmYPEfXjYtvbNZt4y1LKsNftqyLZLA
-         qJ0kyMxNQDe9vcE5Csb8N1+9kxGGtOhdSE10smrzIhDwiwHHCCVAib3wPaD46h8mYeej
-         v+wg1g4HiPnD7FF3qvFNnaO/XTGh7G6OfGL9fKdEfRnukf3Vgp2SOqzZayuS7Gy1JP6V
-         x/xWAyqlN/4x/no84cPsFmGwaJc2su9PvPJMKije+mU6AhGLdnDPIbvWtnjeqfeoOsRY
-         /MFZU3hAlFftimsKREhYHubCFo4RQtMXnvSd2zpx0x68A6m0cjUqCkzA1qAPPmBNwLaE
-         FCwQ==
-X-Gm-Message-State: ANhLgQ3zgqcyEygBFrHywXOEs/qrvmRjlZZtDt4AFP6nzxBFgDqsk8Dc
-        pe6EFNy4xOUKhBgI4x2ysqzfWg==
-X-Google-Smtp-Source: ADFU+vsLXoJYCvXg5JukbIDAjlvi58zKDpDTMAntAZBEQZo6NTjd4Zk8DZY+t3cbSOG5GYO7mJEigA==
-X-Received: by 2002:a17:902:8603:: with SMTP id f3mr1228175plo.235.1584396570907;
-        Mon, 16 Mar 2020 15:09:30 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v123sm827164pfb.85.2020.03.16.15.09.29
+        bh=lsN7EIok/ouPxtEONuI3O/CpHJW1h0sdrosta3mQ6+A=;
+        b=sSzqpXVgdPULXg/vuLM/IBh5CHEIaSzbTX++mEcrchEt4QV6RIFvx7iiGqqJ1zIOPw
+         Mk95ZHwqMnmAnOkeGLwxH/5B0A7+JZwYKXkzMQnsKpkJaTBsOz+4dzXFAlRVWGRcIm4j
+         SN2w3OrDmRxTM02UyoHtIc0DB1HR/o9Bnp5mtMKs6D/fYjFrDHG3ugksE8SUrv4f0yc9
+         ySQtY0T9R8YFl6ZslQSDoLRJVI2svy6ZfGwP/mKIaLjeLvMNXWE05O/gqlbYQvGXlcWD
+         PDourPGjY8i5OP0ndTJF34Pe6VInBrKYOBQTF5ys1mU+JevNETeg/+HRnrXe7XY7L0wv
+         GQOg==
+X-Gm-Message-State: ANhLgQ3IWseh4L1U8Ggv6E/L6MfOcsvcm4Ei+wLbIHtAd23mC4ohEnrt
+        cLwWkukOaXa97CTlg1xv1Y6/Dw==
+X-Google-Smtp-Source: ADFU+vvRZTokbXDvAMeIciVBdT0hLnacvxrbIHnxTebxVa++fTVhf8IiwkpdOSqi4cln8SxcNU9oBQ==
+X-Received: by 2002:a63:348b:: with SMTP id b133mr1961463pga.372.1584396635461;
+        Mon, 16 Mar 2020 15:10:35 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id s20sm809439pfm.154.2020.03.16.15.10.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2020 15:09:30 -0700 (PDT)
-Date:   Mon, 16 Mar 2020 15:09:28 -0700
+        Mon, 16 Mar 2020 15:10:34 -0700 (PDT)
+Date:   Mon, 16 Mar 2020 15:10:32 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Nathan Chancellor <natechancellor@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>, Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        clang-built-linux@googlegroups.com
-Subject: Re: [PATCH] soc: qcom: pdr: Avoid uninitialized use of found in
- pdr_indication_cb
-Message-ID: <20200316220928.GA1135@builder>
-References: <20200316204855.15611-1-natechancellor@gmail.com>
+To:     Randy Dunlap <rdunlap@infradead.org>
+Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
+        Linux Next Mailing List <linux-next@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: linux-next: Tree for Mar 16 (drivers/soc/qcom/)
+Message-ID: <20200316221032.GF1214176@minitux>
+References: <20200316183039.0d1c45ce@canb.auug.org.au>
+ <4bf2d095-e416-7e39-b514-3a1a9b4248dd@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200316204855.15611-1-natechancellor@gmail.com>
+In-Reply-To: <4bf2d095-e416-7e39-b514-3a1a9b4248dd@infradead.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 16 Mar 13:48 PDT 2020, Nathan Chancellor wrote:
+On Mon 16 Mar 10:34 PDT 2020, Randy Dunlap wrote:
 
-> Clang warns:
+> On 3/16/20 12:30 AM, Stephen Rothwell wrote:
+> > Hi all,
+> > 
+> > Changes since 20200313:
+> > 
 > 
-> ../drivers/soc/qcom/pdr_interface.c:316:2: warning: variable 'found' is
-> used uninitialized whenever 'for' loop exits because its condition is
-> false [-Wsometimes-uninitialized]
->         list_for_each_entry(pds, &pdr->lookups, node) {
->         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ../include/linux/list.h:624:7: note: expanded from macro
-> 'list_for_each_entry'
->              &pos->member != (head);
->              ^~~~~~~~~~~~~~~~~~~~~~
-> ../drivers/soc/qcom/pdr_interface.c:325:7: note: uninitialized use
-> occurs here
->         if (!found)
->              ^~~~~
-> ../drivers/soc/qcom/pdr_interface.c:316:2: note: remove the condition if
-> it is always true
->         list_for_each_entry(pds, &pdr->lookups, node) {
->         ^
-> ../include/linux/list.h:624:7: note: expanded from macro
-> 'list_for_each_entry'
->              &pos->member != (head);
->              ^
-> ../drivers/soc/qcom/pdr_interface.c:309:12: note: initialize the
-> variable 'found' to silence this warning
->         bool found;
->                   ^
->                    = 0
-> 1 warning generated.
+> on i386 or x86_64:
 > 
-> Initialize found to false to fix this warning.
+> WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS
+>   Depends on [n]: NET [=n]
+>   Selected by [y]:
+>   - QCOM_PDR_HELPERS [=y]
 > 
-> Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/933
-> Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+> causing:
+> 
+> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_send_new_lookup':
+> qmi_interface.c:(.text+0xd3): undefined reference to `kernel_sendmsg'
+> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_send_new_server':
+> qmi_interface.c:(.text+0x1b6): undefined reference to `kernel_sendmsg'
+> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_sock_create':
+> qmi_interface.c:(.text+0x2f2): undefined reference to `init_net'
+> ld: qmi_interface.c:(.text+0x2f9): undefined reference to `sock_create_kern'
+> ld: qmi_interface.c:(.text+0x319): undefined reference to `kernel_getsockname'
+> ld: qmi_interface.c:(.text+0x33e): undefined reference to `sock_release'
+> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_send_message.isra.4':
+> qmi_interface.c:(.text+0x45f): undefined reference to `kernel_sendmsg'
+> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_data_ready_work':
+> qmi_interface.c:(.text+0x7dc): undefined reference to `kernel_recvmsg'
+> ld: qmi_interface.c:(.text+0x877): undefined reference to `sock_release'
+> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_handle_release':
+> qmi_interface.c:(.text+0x1018): undefined reference to `sock_release'
+> 
+> 
+> 
+> 
+> All caused by QCOM_APR, which selects QCOM_PDR_HELPERS,
+> and that one selects QCOM_QMI_HELPERS, which depends on NET, but:
+> # CONFIG_NET is not set
+> 
+> Full randconfig file is attached.
+> 
+> -- 
+> ~Randy
+> Reported-by: Randy Dunlap <rdunlap@infradead.org>
 
-Thanks Nathan, applied with Nick's ack.
+Thanks Randy, I've added the necessary dependency for QCOM_APR.
 
 Regards,
 Bjorn
 
-> ---
->  drivers/soc/qcom/pdr_interface.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-> index 7ee088b9cc7c..17ad3b8698e1 100644
-> --- a/drivers/soc/qcom/pdr_interface.c
-> +++ b/drivers/soc/qcom/pdr_interface.c
-> @@ -306,7 +306,7 @@ static void pdr_indication_cb(struct qmi_handle *qmi,
->  	const struct servreg_state_updated_ind *ind_msg = data;
->  	struct pdr_list_node *ind;
->  	struct pdr_service *pds;
-> -	bool found;
-> +	bool found = false;
->  
->  	if (!ind_msg || !ind_msg->service_path[0] ||
->  	    strlen(ind_msg->service_path) > SERVREG_NAME_LENGTH)
-> -- 
-> 2.26.0.rc1
-> 
