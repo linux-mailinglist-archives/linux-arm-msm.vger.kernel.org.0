@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 59B18186237
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 03:38:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8874A186241
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 03:38:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730214AbgCPCfl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Mar 2020 22:35:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40316 "EHLO mail.kernel.org"
+        id S1729847AbgCPCfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Mar 2020 22:35:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40638 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730224AbgCPCfk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Mar 2020 22:35:40 -0400
+        id S1729525AbgCPCfu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 15 Mar 2020 22:35:50 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 54076206BE;
-        Mon, 16 Mar 2020 02:35:39 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 255D320724;
+        Mon, 16 Mar 2020 02:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584326140;
-        bh=6Pe8o5i5K3qDvVX/UzNEoLD4bmR+7YYriviwdr0EBk8=;
+        s=default; t=1584326150;
+        bh=MHzvLO6pQ9hDsO4k5x5F0p44tCBqF8g2CiJnwVzl7XU=;
         h=From:To:Cc:Subject:Date:From;
-        b=uSizxwEdL8NkUeyqTOGZ3TV8iFEna6+OifOwsQ2BN2O+lmu1Wdjl/NFInBeB1LQGg
-         QiMnqx+fc69thie2mPpBpTsQGOPhkbuBAiG7if0VWFssLyTkxPrFwPtAGYSvWHyev6
-         7mavtjEKg/zvQnH/WcBc/6XJ1uu0tz46KqRUAVcQ=
+        b=wVMOJiqgc5lAsfx4WyIh0WrHhbDwKZSbedDf+p/XxpHYTMVZYkqaXKsIcI6iQBLjq
+         S4vjhVgeTMhxLnQ0jM10I455fv9zrXQTzS32AyajZHlkW1A5M3guCpJGCQ6C9KBQOO
+         GsQ3/vOtdUxjzR0xg5j9wk7JY1hUMBKJCeEgHKrM=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Yuji Sasaki <sasakiy@chromium.org>, Vinod Koul <vkoul@kernel.org>,
         Mark Brown <broonie@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 1/7] spi: qup: call spi_qup_pm_resume_runtime before suspending
-Date:   Sun, 15 Mar 2020 22:35:32 -0400
-Message-Id: <20200316023538.2232-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 1/7] spi: qup: call spi_qup_pm_resume_runtime before suspending
+Date:   Sun, 15 Mar 2020 22:35:41 -0400
+Message-Id: <20200316023548.2347-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 X-stable: review
@@ -57,14 +57,14 @@ Link: https://lore.kernel.org/r/20200214074340.2286170-1-vkoul@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qup.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/spi/spi-qup.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index 1bfa889b8427a..88b108e1c85fe 100644
+index 810a7fae34798..2487a91c4cfdb 100644
 --- a/drivers/spi/spi-qup.c
 +++ b/drivers/spi/spi-qup.c
-@@ -974,6 +974,11 @@ static int spi_qup_suspend(struct device *device)
+@@ -961,6 +961,11 @@ static int spi_qup_suspend(struct device *device)
  	struct spi_qup *controller = spi_master_get_devdata(master);
  	int ret;
  
@@ -76,19 +76,6 @@ index 1bfa889b8427a..88b108e1c85fe 100644
  	ret = spi_master_suspend(master);
  	if (ret)
  		return ret;
-@@ -982,10 +987,8 @@ static int spi_qup_suspend(struct device *device)
- 	if (ret)
- 		return ret;
- 
--	if (!pm_runtime_suspended(device)) {
--		clk_disable_unprepare(controller->cclk);
--		clk_disable_unprepare(controller->iclk);
--	}
-+	clk_disable_unprepare(controller->cclk);
-+	clk_disable_unprepare(controller->iclk);
- 	return 0;
- }
- 
 -- 
 2.20.1
 
