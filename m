@@ -2,119 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 179D6187563
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 23:10:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B6BF187577
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 23:20:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732567AbgCPWKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Mar 2020 18:10:36 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:37605 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732749AbgCPWKg (ORCPT
+        id S1732716AbgCPWUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Mar 2020 18:20:40 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:38934 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732652AbgCPWUk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Mar 2020 18:10:36 -0400
-Received: by mail-pg1-f195.google.com with SMTP id a32so9668461pga.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2020 15:10:36 -0700 (PDT)
+        Mon, 16 Mar 2020 18:20:40 -0400
+Received: by mail-pf1-f194.google.com with SMTP id d25so2732175pfn.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2020 15:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lsN7EIok/ouPxtEONuI3O/CpHJW1h0sdrosta3mQ6+A=;
-        b=fIiUBq1l01hYj8p+vHzAisWXU9WUJrxuIHL1WZZBr7bUPM4xYemJmTHH/vqXERaXKh
-         E2SpAdwsDs45Vd7CWKG6PIrvPKxgKFz7xe4YPbTZII9CAAwI/Va6Rk1/JJiFd+4c1BcH
-         f5MSctYqJlExETlAgfMwtlywD/0xD4HXhZD0+q/SGh4U26sP1XCjGvUZinrMJRfzEel0
-         2zFYZmlthBNJV5sXYCjoPs72+POB3wWsZYU2KS1QJjfbvI4GEahFgSDYVOk/Z6EYYOR7
-         KYgZ68368ZqtjVvi41XIIiT6jiKRciplcvu4IzVZ9IkGPHiJSs5lUddoyZZo2V047dbm
-         YScA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OdJL97TnHEiwXNrNot3Nu+tTBwH6OViCGp++MAMoJjI=;
+        b=LvC1OSwZYDZhevpzNqmBIv1hskVJduDT0SK46lnoXZM7yCRwcl/gdG0KzlWgHXMvhv
+         LUgm3GaQaWEMgxGVKKdpsiCMfOg/h3Jp+Ii4+XN8ntv9ZXXcZiaZFjr3KlGAZX4TFhrU
+         Z0d7m3y3RlzzMmNzKVc3B2P2bhbDiIsD36WbQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lsN7EIok/ouPxtEONuI3O/CpHJW1h0sdrosta3mQ6+A=;
-        b=sSzqpXVgdPULXg/vuLM/IBh5CHEIaSzbTX++mEcrchEt4QV6RIFvx7iiGqqJ1zIOPw
-         Mk95ZHwqMnmAnOkeGLwxH/5B0A7+JZwYKXkzMQnsKpkJaTBsOz+4dzXFAlRVWGRcIm4j
-         SN2w3OrDmRxTM02UyoHtIc0DB1HR/o9Bnp5mtMKs6D/fYjFrDHG3ugksE8SUrv4f0yc9
-         ySQtY0T9R8YFl6ZslQSDoLRJVI2svy6ZfGwP/mKIaLjeLvMNXWE05O/gqlbYQvGXlcWD
-         PDourPGjY8i5OP0ndTJF34Pe6VInBrKYOBQTF5ys1mU+JevNETeg/+HRnrXe7XY7L0wv
-         GQOg==
-X-Gm-Message-State: ANhLgQ3IWseh4L1U8Ggv6E/L6MfOcsvcm4Ei+wLbIHtAd23mC4ohEnrt
-        cLwWkukOaXa97CTlg1xv1Y6/Dw==
-X-Google-Smtp-Source: ADFU+vvRZTokbXDvAMeIciVBdT0hLnacvxrbIHnxTebxVa++fTVhf8IiwkpdOSqi4cln8SxcNU9oBQ==
-X-Received: by 2002:a63:348b:: with SMTP id b133mr1961463pga.372.1584396635461;
-        Mon, 16 Mar 2020 15:10:35 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id s20sm809439pfm.154.2020.03.16.15.10.34
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OdJL97TnHEiwXNrNot3Nu+tTBwH6OViCGp++MAMoJjI=;
+        b=J/KcaTqkAHwFeok1k42zb6y1FNL0NtGRkK1C7WeTOujG3ldnleaGtydFe5UBo8eL/9
+         gNehQfBV0cJB4HFPIBgO4RXuAAUgg6rhfq0EArKyBvJzvO8i5WCjZGjfem/pp/czQaA2
+         DuCmhQbjWiE4+dxCxcsjbOHKHV+hKQKtHpp5jIohDVAsfv61+HC7I6NAHG5VMGeOhXxm
+         +QgHbrRfYNF7kH/kUuZ58Z2nXtMMiJMIZoTiG9Pwsns6cCYZO53iCkyU6aNfaahy2Gy/
+         63W1PMTui3O8cDxjSDKHsonUScUINBVHIdA0On7ukvJIi0bYRa/maxmDhDir2RKL6G1X
+         DSDQ==
+X-Gm-Message-State: ANhLgQ1PUz7Vxrs/spRQ6HvgoK8rG9HeAa+aRRsc2ZaXhNWYPpUmcn6q
+        yClb5V2ROu4feGtf0oEcTJTesw==
+X-Google-Smtp-Source: ADFU+vuzlYlb8p9d2+T6E5oG1EolUGtKK3FaYXBJKoHapG07JRQmTGibH+PYw4PUZ72sqbeZD6jwGw==
+X-Received: by 2002:aa7:8d18:: with SMTP id j24mr1884679pfe.264.1584397238841;
+        Mon, 16 Mar 2020 15:20:38 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id f8sm828535pfq.178.2020.03.16.15.20.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2020 15:10:34 -0700 (PDT)
-Date:   Mon, 16 Mar 2020 15:10:32 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Randy Dunlap <rdunlap@infradead.org>
-Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
-        Linux Next Mailing List <linux-next@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: linux-next: Tree for Mar 16 (drivers/soc/qcom/)
-Message-ID: <20200316221032.GF1214176@minitux>
-References: <20200316183039.0d1c45ce@canb.auug.org.au>
- <4bf2d095-e416-7e39-b514-3a1a9b4248dd@infradead.org>
+        Mon, 16 Mar 2020 15:20:38 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Alok Chauhan <alokc@codeaurora.org>,
+        Dilip Kota <dkota@codeaurora.org>, skakit@codeaurora.org,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: [PATCH] spi: spi-geni-qcom: Speculative fix of "nobody cared" about interrupt
+Date:   Mon, 16 Mar 2020 15:20:01 -0700
+Message-Id: <20200316151939.1.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid>
+X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4bf2d095-e416-7e39-b514-3a1a9b4248dd@infradead.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 16 Mar 10:34 PDT 2020, Randy Dunlap wrote:
+Every once in a while (like once in a few months on a device) people
+have seen warnings on devices using spi-geni-qcom like:
 
-> On 3/16/20 12:30 AM, Stephen Rothwell wrote:
-> > Hi all,
-> > 
-> > Changes since 20200313:
-> > 
-> 
-> on i386 or x86_64:
-> 
-> WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS
->   Depends on [n]: NET [=n]
->   Selected by [y]:
->   - QCOM_PDR_HELPERS [=y]
-> 
-> causing:
-> 
-> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_send_new_lookup':
-> qmi_interface.c:(.text+0xd3): undefined reference to `kernel_sendmsg'
-> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_send_new_server':
-> qmi_interface.c:(.text+0x1b6): undefined reference to `kernel_sendmsg'
-> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_sock_create':
-> qmi_interface.c:(.text+0x2f2): undefined reference to `init_net'
-> ld: qmi_interface.c:(.text+0x2f9): undefined reference to `sock_create_kern'
-> ld: qmi_interface.c:(.text+0x319): undefined reference to `kernel_getsockname'
-> ld: qmi_interface.c:(.text+0x33e): undefined reference to `sock_release'
-> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_send_message.isra.4':
-> qmi_interface.c:(.text+0x45f): undefined reference to `kernel_sendmsg'
-> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_data_ready_work':
-> qmi_interface.c:(.text+0x7dc): undefined reference to `kernel_recvmsg'
-> ld: qmi_interface.c:(.text+0x877): undefined reference to `sock_release'
-> ld: drivers/soc/qcom/qmi_interface.o: in function `qmi_handle_release':
-> qmi_interface.c:(.text+0x1018): undefined reference to `sock_release'
-> 
-> 
-> 
-> 
-> All caused by QCOM_APR, which selects QCOM_PDR_HELPERS,
-> and that one selects QCOM_QMI_HELPERS, which depends on NET, but:
-> # CONFIG_NET is not set
-> 
-> Full randconfig file is attached.
-> 
-> -- 
-> ~Randy
-> Reported-by: Randy Dunlap <rdunlap@infradead.org>
+  irq ...: nobody cared (try booting with the "irqpoll" option)
 
-Thanks Randy, I've added the necessary dependency for QCOM_APR.
+...where the interrupt number listed matches up with "spi_geni" in
+/proc/interrupts.
 
-Regards,
-Bjorn
+You can get "nobody cared" if the interrupt handler returns IRQ_NONE.
+Once you get into this state the driver will just stop working.
+
+Auditing the code makes me believe that it's probably not so good
+checking "cur_mcmd" in the interrupt handler not under spinlock.
+Let's move it to be under spinlock.  While we're at it, let's not
+return IRQ_NONE.  IRQ_NONE is supposed to check the _hardware_ status
+registers and only be returned if your hardware says that there's no
+interrupt present.  It's not supposed to check software state.  In any
+case, the whole point of IRQ_NONE is if two separate devices are
+trying to share an interrupt line, which just isn't true for anyone
+using geni.
+
+Looking more closely at the code, it looks as if there are some other
+places that could be under spinlock, so let's add.  It looks as if the
+original code was assuming that by the time that the interrupt handler
+got called that the write to "cur_mcmd" (to make it not CMD_NONE
+anymore) would make it to the processor handling the interrupt.
+Perhaps with weakly ordered memory this sometimes (though very rarely)
+happened.
+
+Patch is marked "speculative" because I have no way to reproduce this
+problem, so I'm just hoping this fixes it.  Weakly ordered memory
+makes my brain hurt.
+
+Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ drivers/spi/spi-geni-qcom.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index c3972424af71..51290a3fd203 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -151,16 +151,19 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ 	struct geni_se *se = &mas->se;
+ 	unsigned long time_left;
+ 
+-	reinit_completion(&mas->xfer_done);
+ 	pm_runtime_get_sync(mas->dev);
+ 	if (!(slv->mode & SPI_CS_HIGH))
+ 		set_flag = !set_flag;
+ 
++	spin_lock_irq(&mas->lock);
++	reinit_completion(&mas->xfer_done);
++
+ 	mas->cur_mcmd = CMD_CS;
+ 	if (set_flag)
+ 		geni_se_setup_m_cmd(se, SPI_CS_ASSERT, 0);
+ 	else
+ 		geni_se_setup_m_cmd(se, SPI_CS_DEASSERT, 0);
++	spin_unlock_irq(&mas->lock);
+ 
+ 	time_left = wait_for_completion_timeout(&mas->xfer_done, HZ);
+ 	if (!time_left)
+@@ -307,6 +310,8 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	u32 spi_tx_cfg, len;
+ 	struct geni_se *se = &mas->se;
+ 
++	spin_lock_irq(&mas->lock);
++
+ 	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+ 	if (xfer->bits_per_word != mas->cur_bits_per_word) {
+ 		spi_setup_word_len(mas, mode, xfer->bits_per_word);
+@@ -376,6 +381,8 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	 */
+ 	if (m_cmd & SPI_TX_ONLY)
+ 		writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
++
++	spin_unlock_irq(&mas->lock);
+ }
+ 
+ static int spi_geni_transfer_one(struct spi_master *spi,
+@@ -479,12 +486,17 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 	u32 m_irq;
+ 	unsigned long flags;
+ 
+-	if (mas->cur_mcmd == CMD_NONE)
+-		return IRQ_NONE;
+-
+ 	spin_lock_irqsave(&mas->lock, flags);
+ 	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
+ 
++	/*
++	 * We don't expect to hit this, but if we do we should try our best
++	 * to clear the interrupts and return so we don't just get called
++	 * again.
++	 */
++	if (mas->cur_mcmd == CMD_NONE)
++		goto exit;
++
+ 	if ((m_irq & M_RX_FIFO_WATERMARK_EN) || (m_irq & M_RX_FIFO_LAST_EN))
+ 		geni_spi_handle_rx(mas);
+ 
+@@ -523,6 +535,7 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 		complete(&mas->xfer_done);
+ 	}
+ 
++exit:
+ 	writel(m_irq, se->base + SE_GENI_M_IRQ_CLEAR);
+ 	spin_unlock_irqrestore(&mas->lock, flags);
+ 	return IRQ_HANDLED;
+-- 
+2.25.1.481.gfbce0eb801-goog
 
