@@ -2,70 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43CE11870C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 18:00:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12A911870D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 18:03:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731884AbgCPRAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Mar 2020 13:00:25 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:36055 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731785AbgCPRAZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Mar 2020 13:00:25 -0400
-Received: by mail-pg1-f194.google.com with SMTP id z72so240788pgz.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2020 10:00:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YjH5MjgZiWD2AsCPzj7RL36rRlVP+ZNEC4uN51b8qdI=;
-        b=K7kVjtB+7y4URjn4G1hvdMzn78WcrIP9Oz7RSUfwUDvU/XnO2byPqav/Is3jiUWUkB
-         W86Xg8p06VavshPMBHqPziU3vXTiy7N48VTAL2j/s2lTWb9lq92j1IU/quTDDTv6S2fu
-         DEgpMw1cMNqIxgev0hk/hR3tQhU9JDTDTTbyA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YjH5MjgZiWD2AsCPzj7RL36rRlVP+ZNEC4uN51b8qdI=;
-        b=boj4qk6F5gAbd99bEJiv4cQynTtmn10AZzpvR2FyQSLMO1MZpaYy7/ozdta21hWfoI
-         Fmj/N7SnyOYaO0KlkcXdPKcu4ylqM7JKu6tsSnY+0+TvF602bb6m72IvLoZrNYOOdzlJ
-         BQOXfgnOTUkUPK1LhnoZVcDjcyeU8TxeW8spuGF/zreGQ2I00Wy2gLsKCDwxcmXysDRb
-         VhbbJkUcfrSOEWyZt05jkkRV4nEGbmbJ5OXSOQJPIXFIi6f+qSbfsC/A5vtQhoWvYhvL
-         QFpX1WTaMtkSC8f8K+UgDS1EoTBUt9VIWHQRb1wsg5zH/noPR5yx59xAGjZQpxB3uJz3
-         tqAA==
-X-Gm-Message-State: ANhLgQ1MHalGNjliBSjUt0hy0TRCoBxr6bg7qQfDPsaXZeCZsy8P11DO
-        FsJ/rT5n8UT5izx4l8Mz+UyG7g==
-X-Google-Smtp-Source: ADFU+vv9s0qOxourNNI2GtsjQWv3rsuzY2mQKW8R2dZ8kWjwvGLWsHZAnNuynD6l0oAx3VizaNsAAA==
-X-Received: by 2002:a65:678e:: with SMTP id e14mr669453pgr.299.1584378022722;
-        Mon, 16 Mar 2020 10:00:22 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id u126sm407308pfu.182.2020.03.16.10.00.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Mar 2020 10:00:22 -0700 (PDT)
-Date:   Mon, 16 Mar 2020 10:00:20 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        robdclark@gmail.com, seanpaul@chromium.org, sean@poorly.run
-Subject: Re: [PATCH v7 2/2] drm/panel: add support for rm69299 visionox panel
- driver
-Message-ID: <20200316170020.GO144492@google.com>
-References: <20200316041647.27953-1-harigovi@codeaurora.org>
- <20200316041647.27953-3-harigovi@codeaurora.org>
+        id S1732191AbgCPRDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Mar 2020 13:03:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60324 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731947AbgCPRDP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Mar 2020 13:03:15 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E3BDB2051A;
+        Mon, 16 Mar 2020 17:03:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584378195;
+        bh=ctHcaIxT498RZ5of8Wva/SYXCtm03HaEzFZKtTZS0uE=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=cIr29p6lCoghPQYCjZOlBNOkRG1iMxs5HjU7pipvmIrkbm4WsJ1pFHcMITJO9cyil
+         FZCPRLAaR1pFsv2VXtzkJLtU2bZpbQKWQd4R5fD8yohCL0yDFZ26vZ8RhWYS7iOX2D
+         WqbftnYPBCKU8bFtWN5n21ra/IRbdGX3aUWibXWw=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200316041647.27953-3-harigovi@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1584172319-24843-3-git-send-email-wcheng@codeaurora.org>
+References: <1584172319-24843-1-git-send-email-wcheng@codeaurora.org> <1584172319-24843-3-git-send-email-wcheng@codeaurora.org>
+Subject: Re: [PATCH 2/3] clk: qcom: gcc: Add USB3 PIPE clock operations
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Wesley Cheng <wcheng@codeaurora.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mark.rutland@arm.com,
+        mturquette@baylibre.com, robh+dt@kernel.org
+Date:   Mon, 16 Mar 2020 10:03:14 -0700
+Message-ID: <158437819409.88485.6326749791923076608@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 16, 2020 at 09:46:47AM +0530, Harigovindan P wrote:
-> Add support for Visionox panel driver.
-> 
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+Quoting Wesley Cheng (2020-03-14 00:51:58)
+> Add the USB3 PIPE clock structures, so that the USB driver can
+> vote for the GCC to enable/disable it when required.  This clock
+> is needed for SSUSB operation.
+>=20
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> ---
+>  drivers/clk/qcom/gcc-sm8150.c | 26 ++++++++++++++++++++++++++
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Can you please combine these two patches and add sm8150 in the subject?
+
+>  1 file changed, 26 insertions(+)
+>=20
+> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+> index d0cd03d..ef98fdc 100644
+> --- a/drivers/clk/qcom/gcc-sm8150.c
+> +++ b/drivers/clk/qcom/gcc-sm8150.c
+> @@ -3172,6 +3172,18 @@ enum {
+>         },
+>  };
+> =20
+> +static struct clk_branch gcc_usb3_prim_phy_pipe_clk =3D {
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0xf058,
+> +               .enable_mask =3D BIT(0),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "gcc_usb3_prim_phy_pipe_clk",
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+>  static struct clk_branch gcc_usb3_sec_clkref_clk =3D {
+>         .halt_reg =3D 0x8c028,
+>         .halt_check =3D BRANCH_HALT,
+> @@ -3219,6 +3231,18 @@ enum {
+>         },
+>  };
+> =20
+> +static struct clk_branch gcc_usb3_sec_phy_pipe_clk =3D {
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+
+Sad to see that we'll never resolve this.
