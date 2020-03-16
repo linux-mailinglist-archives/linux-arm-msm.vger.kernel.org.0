@@ -2,56 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 784F4186400
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 04:59:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D7B5186407
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 05:13:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729434AbgCPD7h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Mar 2020 23:59:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34752 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729412AbgCPD7h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Mar 2020 23:59:37 -0400
-Received: from localhost (unknown [122.178.203.172])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0DE2920679;
-        Mon, 16 Mar 2020 03:59:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584331176;
-        bh=OwJofg1umza0zcGppaQzonY2py79O/Agzc6jYX0VXNM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rpgDkk+670A5qB2Q00do/ZWIQgTumAcfirYJqxkvV68VMr8ku79MxQwSVK7rdwa5L
-         jyxNIvUMxG5GhgyWKfWCSg3kbxZqXvlx6foqWLX+o7My3S7tcJXTqsQTlm2cd2Ih7x
-         2O2xuN8slIpyoBr6PdqN1UguFyJMSalSoQqcSohI=
-Date:   Mon, 16 Mar 2020 09:29:29 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm SDM845 audio configs
-Message-ID: <20200316035929.GS4885@vkoul-mobl>
-References: <20200315050827.1575421-1-bjorn.andersson@linaro.org>
+        id S1728652AbgCPENV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Mar 2020 00:13:21 -0400
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:58683 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728407AbgCPENU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Mar 2020 00:13:20 -0400
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Mar 2020 09:43:17 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 16 Mar 2020 09:43:04 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id 64828284A; Mon, 16 Mar 2020 09:43:03 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>, robdclark@gmail.com,
+        seanpaul@chromium.org, sean@poorly.run
+Subject: [PATCH v7 0/2] Add support for rm69299 Visionox panel driver and add devicetree bindings for visionox panel
+Date:   Mon, 16 Mar 2020 09:42:59 +0530
+Message-Id: <20200316041301.23154-1-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200315050827.1575421-1-bjorn.andersson@linaro.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-03-20, 22:08, Bjorn Andersson wrote:
-> Enable soundwire, slimbus frameworks, the machine driver and the codec
-> drivers for WCD934x and WSA881x used on varios SDM845 based designs.
+Adding support for visionox rm69299 panel driver and adding bindings for the same panel.
 
-Thanks Bjorn, I was about to send this and you beat me. I have tested
-this on RB3
+Harigovindan P (2):
+  dt-bindings: display: add visionox rm69299 panel variant
+  drm/panel: add support for rm69299 visionox panel driver
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Tested-by: Vinod Koul <vkoul@kernel.org>
+ .../display/panel/visionox,rm69299.yaml       |  81 +++++
+ drivers/gpu/drm/panel/Kconfig                 |   8 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ .../gpu/drm/panel/panel-visionox-rm69299.c    | 295 ++++++++++++++++++
+ 4 files changed, 385 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+ create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm69299.c
 
 -- 
-~Vinod
+2.25.1
+
