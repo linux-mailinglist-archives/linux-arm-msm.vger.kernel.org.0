@@ -2,39 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D81618622A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 03:38:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 59B18186237
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2020 03:38:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730142AbgCPCfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Mar 2020 22:35:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39770 "EHLO mail.kernel.org"
+        id S1730214AbgCPCfl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Mar 2020 22:35:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40316 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729732AbgCPCfX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Mar 2020 22:35:23 -0400
+        id S1730224AbgCPCfk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 15 Mar 2020 22:35:40 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B473D20736;
-        Mon, 16 Mar 2020 02:35:21 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 54076206BE;
+        Mon, 16 Mar 2020 02:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584326122;
-        bh=L57iPVKkL097o6qLvQ+L5j2oTFH13RI1AUODGUtvQTY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YfeQBcXS7nbwyWzrVdjD6YUgCjx2ofoxQoU0TmQ7nqLfieMF8cPBJxKGqH6Z1CpK+
-         38AhEi20rxGk16vrAHwtViqozv2imujXq5oWXKt74Tat0exfx9i/QFCZG+a6rp6o2b
-         Tw/SKq8NZ0nj9+sRlQABbMwuiXHbnkBhZe4G7wgQ=
+        s=default; t=1584326140;
+        bh=6Pe8o5i5K3qDvVX/UzNEoLD4bmR+7YYriviwdr0EBk8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=uSizxwEdL8NkUeyqTOGZ3TV8iFEna6+OifOwsQ2BN2O+lmu1Wdjl/NFInBeB1LQGg
+         QiMnqx+fc69thie2mPpBpTsQGOPhkbuBAiG7if0VWFssLyTkxPrFwPtAGYSvWHyev6
+         7mavtjEKg/zvQnH/WcBc/6XJ1uu0tz46KqRUAVcQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Yuji Sasaki <sasakiy@chromium.org>, Vinod Koul <vkoul@kernel.org>,
         Mark Brown <broonie@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 02/15] spi: qup: call spi_qup_pm_resume_runtime before suspending
-Date:   Sun, 15 Mar 2020 22:35:06 -0400
-Message-Id: <20200316023519.2050-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 1/7] spi: qup: call spi_qup_pm_resume_runtime before suspending
+Date:   Sun, 15 Mar 2020 22:35:32 -0400
+Message-Id: <20200316023538.2232-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200316023519.2050-1-sashal@kernel.org>
-References: <20200316023519.2050-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -63,10 +61,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index 974a8ce58b68b..cb74fd1af2053 100644
+index 1bfa889b8427a..88b108e1c85fe 100644
 --- a/drivers/spi/spi-qup.c
 +++ b/drivers/spi/spi-qup.c
-@@ -1190,6 +1190,11 @@ static int spi_qup_suspend(struct device *device)
+@@ -974,6 +974,11 @@ static int spi_qup_suspend(struct device *device)
  	struct spi_qup *controller = spi_master_get_devdata(master);
  	int ret;
  
@@ -78,7 +76,7 @@ index 974a8ce58b68b..cb74fd1af2053 100644
  	ret = spi_master_suspend(master);
  	if (ret)
  		return ret;
-@@ -1198,10 +1203,8 @@ static int spi_qup_suspend(struct device *device)
+@@ -982,10 +987,8 @@ static int spi_qup_suspend(struct device *device)
  	if (ret)
  		return ret;
  
