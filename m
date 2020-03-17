@@ -2,84 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F1281884B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 14:06:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66F1B1884BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 14:07:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbgCQNGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 09:06:19 -0400
-Received: from foss.arm.com ([217.140.110.172]:37940 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726637AbgCQNGT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 09:06:19 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5466830E;
-        Tue, 17 Mar 2020 06:06:18 -0700 (PDT)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A72F53F534;
-        Tue, 17 Mar 2020 06:06:17 -0700 (PDT)
-Date:   Tue, 17 Mar 2020 13:06:16 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, evgreen@chromium.org
-Subject: Re: [PATCH V2 6/8] spi: spi-geni-qcom: Add interconnect support
-Message-ID: <20200317130616.GE3971@sirena.org.uk>
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-7-git-send-email-akashast@codeaurora.org>
- <20200313131603.GG5528@sirena.org.uk>
- <aa197568-3bac-6962-d39d-3261f68c0514@codeaurora.org>
+        id S1726148AbgCQNHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 09:07:48 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:46199 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726039AbgCQNHs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Mar 2020 09:07:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584450468; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=OzBinwjasneXX1n8YD6svwHCtiwmcexTJOEThjdgLII=; b=W6n6C7ifJr1nAbcsEPeOihll56GI91Sku8Dvvk8vYLaVpVNeksfc4bjP1uEjU9PD3/B/DcJs
+ 0UBlIYV29e18obkxYP+WLvOLwrrbW9EqqwI2Cpe6n6briDFDy1CPHxbVJO35etb2e74tLBbq
+ H+VjMDW+U8nBf3Gbj08g44N0ils=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e70cb94.7f8b3efc2e30-smtp-out-n05;
+ Tue, 17 Mar 2020 13:07:32 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 33F58C44788; Tue, 17 Mar 2020 13:07:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.8] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8B656C433D2;
+        Tue, 17 Mar 2020 13:07:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8B656C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 2/2] tty: serial: qcom_geni_serial: Don't try to manually
+ disable the console
+To:     Douglas Anderson <dianders@chromium.org>,
+        gregkh@linuxfoundation.org
+Cc:     mka@chromium.org, swboyd@chromium.org, ryandcase@chromium.org,
+        bjorn.andersson@linaro.org, skakit@codeaurora.org,
+        rojay@codeaurora.org, mgautam@codeaurora.org,
+        Andy Gross <agross@kernel.org>,
+        Doug Anderson <dianders@google.com>,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        Jiri Slaby <jslaby@suse.com>,
+        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
+        Sagar Dharia <sdharia@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+References: <20200313134635.1.Icf54c533065306b02b880c46dfd401d8db34e213@changeid>
+ <20200313134635.2.I3648fac6c98b887742934146ac2729ecb7232eb1@changeid>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <7663863d-3f38-2ad9-d544-370064695aef@codeaurora.org>
+Date:   Tue, 17 Mar 2020 18:37:22 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9l24NVCWtSuIVIod"
-Content-Disposition: inline
-In-Reply-To: <aa197568-3bac-6962-d39d-3261f68c0514@codeaurora.org>
-X-Cookie: There's only one everything.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200313134635.2.I3648fac6c98b887742934146ac2729ecb7232eb1@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---9l24NVCWtSuIVIod
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 3/14/2020 2:16 AM, Douglas Anderson wrote:
+> The geni serial driver's shutdown code had a special case to call
+> console_stop().  Grepping through the code, it was the only serial
+> driver doing something like this (the only other caller of
+> console_stop() was in serial_core.c).
+>
+> As far as I can tell there's no reason to call console_stop() in the
+> geni code.  ...and a good reason _not_ to call it.  Specifically if
+> you have an agetty running on the same serial port as the console then
+> killing the agetty kills your console and if you start the agetty
+> again the console doesn't come back.
+>
+> Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+Reviewed-by: Akash Asthana <akashast@codeaurora.org>
 
-On Tue, Mar 17, 2020 at 03:05:21PM +0530, Akash Asthana wrote:
-
-> We are taking care of actual throughput requirement in avg_bw vote and the
-> intention of putting peak as twice of avg is to ensure that if high speed
-> peripherals(ex:USB) removes their votes, we shouldn't see any latency issue
-> because of other ICC client who don't vote for their BW requirement or
-> *actual* BW requirement. Factor of 2 is chosen randomly. Please
-> correct/improve me if this is not okay.
-
-> If this is okay, I will centralize this design for SPI QUP, I2C and UART
-> driver.
-
-That seems reasonable to me, it was just the fact that every driver
-seemed to be doing the same thing that I was noticing - what was being
-done seemed OK.
-
---9l24NVCWtSuIVIod
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5wy0cACgkQJNaLcl1U
-h9Ae3QgAggJnWHS/CyykvzCHo7E8nPR1L9kx3kYVZpAuCtrYfxzrw9cs6+7l/K1G
-CKM6uVeL3GtVc7wO+8Y3B6KSmyXcNYMZnHTk/skQlxv2i32r3gRIYxXbl1xqoZXn
-8r//df86MC+eLCnCLLngJD57k4mHG6yP0+05zpZ28N8F0rSFbG5+hC303bojUM9i
-/wi8QJBfXtABa4qZ1UpiAlUghsIIjLQDn+LYHFDALx1Ju/5XShsVHfIMaJuVeVQ4
-vbfLjXl+GDyNSQ8Yxa7Thzojxjys+Wk1ZFChxJ7FPfhGEYWjAv/Q8k12R7D/oUl9
-4srH0EJ6Y77GgPuPPEQpQYO6ecHiMg==
-=e7Eb
------END PGP SIGNATURE-----
-
---9l24NVCWtSuIVIod--
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
