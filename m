@@ -2,127 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 47D1418836C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 13:13:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A92F0188490
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 13:55:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726272AbgCQMN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 08:13:28 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:47949 "EHLO
+        id S1725794AbgCQMzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 08:55:21 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:51370 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725906AbgCQMN2 (ORCPT
+        by vger.kernel.org with ESMTP id S1726019AbgCQMzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 08:13:28 -0400
+        Tue, 17 Mar 2020 08:55:21 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584447207; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=a1YiAJpWf/Sf823hJI2HWkW5ILCzCOPKtuET3jua5IY=; b=HyZUUVm/NHq4/XRKDScWgvs4LnywYiMpTkrr0q/4+HQDzd1d2eJsD5KgIEbVzdbOErUTDhjz
- hyH8Sjqv9ynhuLk7Imi3EHXtFIVi4zYnh1i9qSaXsZETJKNjSMnoy45vhZJpw/+24OtkrJ+I
- 9/0uEUmnq8v5Kr5P+YJAARP9G4o=
+ s=smtp; t=1584449720; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=GjbOAVBonUachoEYynZJyqOqo/SneyKPARmLiqRE1nc=;
+ b=gKmQyoT/Iar1RM3IzbQTk814We93rc8l0n0mC/MmHEwmW79b2Nt99NcKZLv0pTHc1AI4YVPA
+ RcTEYXKMlhMDL8EXSfy0KKZmSkAa5J0V8DeHb9PjnGPo61EqewkASDtP8TJSp3HnxFES864x
+ kGcvSW/+QNQ/ACh5csB21Un1ge8=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e70bed6.7f4896cd1308-smtp-out-n01;
- Tue, 17 Mar 2020 12:13:10 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e70c8a9.7f870ab8da78-smtp-out-n03;
+ Tue, 17 Mar 2020 12:55:05 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3ED21C432C2; Tue, 17 Mar 2020 12:13:10 +0000 (UTC)
+        id 507C8C43637; Tue, 17 Mar 2020 12:55:04 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.8] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 680F7C433D2;
-        Tue, 17 Mar 2020 12:13:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 680F7C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V2 7/8] spi: spi-qcom-qspi: Add interconnect support
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-8-git-send-email-akashast@codeaurora.org>
- <20200314005817.GN144492@google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <3aeb3083-2a31-b269-510d-eb608ff14ce5@codeaurora.org>
-Date:   Tue, 17 Mar 2020 17:43:01 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 604C1C433BA;
+        Tue, 17 Mar 2020 12:55:03 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200314005817.GN144492@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Tue, 17 Mar 2020 18:25:03 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?Q?Michael_Turquette_=C2=A0?= <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        linux-soc-owner@vger.kernel.org
+Subject: Re: [PATCH v6 0/3] Add modem Clock controller (MSS CC) driver for
+ SC7180
+In-Reply-To: <1584211798-10332-1-git-send-email-tdas@codeaurora.org>
+References: <1584211798-10332-1-git-send-email-tdas@codeaurora.org>
+Message-ID: <e8bed15b87dda3698e37bfcd09dc3c31@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On 2020-03-15 00:19, Taniya Das wrote:
+> [v6]
+>  * Combine the Documentation YAML schema and clock IDs for GCC MSS and
+>    MSS clocks.
+>  * Remove a unnecessary header file inclusion, define the max_registers 
+> for
+>    regmap and also update the fw_name to remove _clk suffix.
+>  * Update the copyright year.
 
-On 3/14/2020 6:28 AM, Matthias Kaehlcke wrote:
-> Hi,
->
-> On Fri, Mar 13, 2020 at 06:42:13PM +0530, Akash Asthana wrote:
->> Get the interconnect paths for QSPI device and vote according to the
->> current bus speed of the driver.
->>
->> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
->> ---
->>   - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
->>     path handle
->>   - As per Matthias comment, added error handling for icc_set_bw call
->>
->>   drivers/spi/spi-qcom-qspi.c | 46 ++++++++++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 45 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
->> index 3c4f83b..ad48f43 100644
->> --- a/drivers/spi/spi-qcom-qspi.c
->> +++ b/drivers/spi/spi-qcom-qspi.c
->> @@ -2,6 +2,7 @@
->>   // Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
->>   
->>   #include <linux/clk.h>
->> +#include <linux/interconnect.h>
->>   #include <linux/interrupt.h>
->>   #include <linux/io.h>
->>   #include <linux/module.h>
->> @@ -139,7 +140,10 @@ struct qcom_qspi {
->>   	struct device *dev;
->>   	struct clk_bulk_data *clks;
->>   	struct qspi_xfer xfer;
->> -	/* Lock to protect xfer and IRQ accessed registers */
->> +	struct icc_path *icc_path_cpu_to_qspi;
->> +	unsigned int avg_bw_cpu;
->> +	unsigned int peak_bw_cpu;
-> This triplet is a recurring pattern, and is probably not limited to geni SE/QSPI.
-> On https://patchwork.kernel.org/patch/11436889/#23221925 I suggested the creation
-> of a geni SE specific struct, however adding a generic convenience struct to
-> 'linux/interconnect.h' might be the better solution:
->
-> struct icc_client {
-> 	struct icc_path *path;
-> 	unsigned int avg_bw;
-> 	unsigned int peak_bw;
-> };
->
-> I'm sure there are better names for it, but this would be the idea.
+Tested-by: Sibi Sankar <sibis@codeaurora.org>
 
-Yeah, I think introducing this to ICC header would be better solution.
-
-Regards,
-
-Akash
+> 
+> [v5]
+>  * Update the clock ID for GCC_MSS_NAV_AXIS_CLK to GCC_MSS_NAV_AXI_CLK
+> 
+> [v4]
+>  * Split the GCC MSS clocks and Modem clock driver.
+>  * Update mss_regmap_config to const.
+>  * Rename the Documentation binding as per the latest convention.
+>  * Minor comments of clock-names/clocks properties updated.
+> 
+> [v3]
+>   * Add clocks/clock-names required for the MSS clock controller.
+>   * Add pm_ops to enable/disable the required dependent clock.
+>   * Add parent_data for the MSS clocks.
+>   * Update the GCC MSS clocks from _CBCR to _CLK.
+> 
+> [v2]
+>   * Update the license for the documentation and fix minor comments in 
+> the
+>     YAML bindings.
+> 
+> [v1]
+>   * Add driver support for Modem clock controller for SC7180 and also
+>     update device tree bindings for the various clocks supported in the
+>     clock controller.
+> 
+> Taniya Das (3):
+>   dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
+>   clk: qcom: gcc: Add support for modem clocks in GCC
+>   clk: qcom: Add modem clock controller driver for SC7180
+> 
+>  .../devicetree/bindings/clock/qcom,sc7180-mss.yaml |  62 +++++++++
+>  drivers/clk/qcom/Kconfig                           |   9 ++
+>  drivers/clk/qcom/Makefile                          |   1 +
+>  drivers/clk/qcom/gcc-sc7180.c                      |  72 ++++++++++-
+>  drivers/clk/qcom/mss-sc7180.c                      | 143 
+> +++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,gcc-sc7180.h        |   7 +-
+>  include/dt-bindings/clock/qcom,mss-sc7180.h        |  12 ++
+>  7 files changed, 304 insertions(+), 2 deletions(-)
+>  create mode 100644 
+> Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
+>  create mode 100644 drivers/clk/qcom/mss-sc7180.c
+>  create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
+> 
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a 
+> member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
