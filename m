@@ -2,197 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A4F8188DDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 20:20:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C175188E68
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 20:54:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgCQTUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 15:20:25 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:61554 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726388AbgCQTUZ (ORCPT
+        id S1726530AbgCQTyt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 15:54:49 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:35472 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726294AbgCQTyt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 15:20:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584472824; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=04UTOZ7ySzY56t49Lejqqg+/qSfvKFvxULvm3fkhHB8=; b=e0Meo10FieG9k4wdBfw2+VMCyNKVwm51eug2gzQzkej5PZgwS9BXXDc7Egd2+2nml7X83Ltl
- kzibSF86/ZrUbMsfGnxkMnynlq0eTL83XbrwySSII0eRUPxWSyQlnvAQ0xd8EcG1YIAFFQwp
- D50MUG1nZ5KV3mmz7nYZtrG/u/4=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e7122f4.7f0a0b246458-smtp-out-n04;
- Tue, 17 Mar 2020 19:20:20 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1557CC432C2; Tue, 17 Mar 2020 19:20:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE6D3C433CB;
-        Tue, 17 Mar 2020 19:20:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EE6D3C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, ohad@wizery.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH] remoteproc: qcom_q6v5_mss: map/unmap mpss region before/after use
-Date:   Wed, 18 Mar 2020 00:49:18 +0530
-Message-Id: <20200317191918.4123-1-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
+        Tue, 17 Mar 2020 15:54:49 -0400
+Received: by mail-pj1-f65.google.com with SMTP id mq3so221975pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2020 12:54:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=O/lWXTQG++br12397r/eMxixaj0W6QJTCCX6z/ptTBI=;
+        b=JOMYFff4M4AYYw6lAANTV0zrwKhYzOemNVt3rmbqGRqsu0vTYKnjivA8Ywa1i+V6fe
+         0xx/TeEyHRL7F8kB13hU75tgaCgKkfPW9Eaz7xLWtmiouAejuu7v1tEJqcTcTAxqCW1T
+         J7bfFqX08kfk0Q2N2nkNQuoWbXgZZJWjsItPo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=O/lWXTQG++br12397r/eMxixaj0W6QJTCCX6z/ptTBI=;
+        b=Kd3t2QeYTNv8p9fMFS9g9TbZK2T7bSqQR6Y6Xv1bf29ouWSI4NVW7vXdxlXDSZLwXf
+         IVs5lVVDKtlzpM3wORPdD2Pf5lYWV3zIjNpO/Yxo0+y8HWbOf+/piXDMVRnQalWKRYhG
+         PoGUqAwPSkXWOtioVUZn4TjxIYsB9EN09zCDb21UgigDXjxZG27mg/1sSz2yONVDS77j
+         I/oXBvDYa+7eDuTpTnCUQxd69vWJvKfCbJXUi6leSPdrlRIoq3ZRgIDxP9dH+RFY51Qx
+         4aCewAmggwRcyR66bOEWjZ/6xYADlsOmBxCnyhvFO4olCzu/1R31GUBozFdYKUh7Gibo
+         tBbQ==
+X-Gm-Message-State: ANhLgQ1hjvSsQRIxwid7zd/Ld0UTxPFw5v91QH8D7xZO4CsHswFoEz9y
+        nOh3ZjUomF0R+2VWY7nwfq4ZoVTGETo=
+X-Google-Smtp-Source: ADFU+vvuiR3sAqi78N+JXAQczvF3mNm8+YQE6/CZrpfjANL8Fb0DVxN2aBLQroBwbUCGQW/fpAyARg==
+X-Received: by 2002:a17:90a:240f:: with SMTP id h15mr914470pje.176.1584474887588;
+        Tue, 17 Mar 2020 12:54:47 -0700 (PDT)
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com. [209.85.214.178])
+        by smtp.gmail.com with ESMTPSA id a71sm4117495pfa.162.2020.03.17.12.54.47
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Mar 2020 12:54:47 -0700 (PDT)
+Received: by mail-pl1-f178.google.com with SMTP id ay11so10091439plb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2020 12:54:47 -0700 (PDT)
+X-Received: by 2002:a05:6102:1cf:: with SMTP id s15mr476407vsq.109.1584474404023;
+ Tue, 17 Mar 2020 12:46:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-4-git-send-email-akashast@codeaurora.org>
+ <20200313204441.GJ144492@google.com> <1f86fdf0-df7c-4e4a-d4d8-8b0162e52cb4@codeaurora.org>
+ <CAE=gft5GcOeQ5kh1bGen_P0J98g2XaAJ7NrDsxkirDoLtL4GWg@mail.gmail.com>
+In-Reply-To: <CAE=gft5GcOeQ5kh1bGen_P0J98g2XaAJ7NrDsxkirDoLtL4GWg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 17 Mar 2020 12:46:32 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Vwh5mLrn2p_Uvp1Wc9vyxzD6Nmny8OrEKUbMXGDHLR1w@mail.gmail.com>
+Message-ID: <CAD=FV=Vwh5mLrn2p_Uvp1Wc9vyxzD6Nmny8OrEKUbMXGDHLR1w@mail.gmail.com>
+Subject: Re: [PATCH V2 3/8] soc: qcom-geni-se: Add interconnect support to fix
+ earlycon crash
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Akash Asthana <akashast@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@the-dreams.de>,
+        Mark Brown <broonie@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-spi <linux-spi@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The application processor accessing the mpss region when the Q6 modem
-is running will lead to an XPU violation. Fix this by un-mapping the
-mpss region post copy during processor out of reset sequence and
-coredumps.
+Hi,
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/remoteproc/qcom_q6v5_mss.c | 53 ++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 24 deletions(-)
+On Tue, Mar 17, 2020 at 12:08 PM Evan Green <evgreen@chromium.org> wrote:
+>
+> On Tue, Mar 17, 2020 at 3:58 AM Akash Asthana <akashast@codeaurora.org> wrote:
+> >
+> > Hi Matthias,
+> >
+> > On 3/14/2020 2:14 AM, Matthias Kaehlcke wrote:
+> > > Hi Akash,
+> > >
+> > > On Fri, Mar 13, 2020 at 06:42:09PM +0530, Akash Asthana wrote:
+> > >> V1 patch@https://patchwork.kernel.org/patch/11386469/ caused SC7180 system
+> > >> to reset at boot time.
+> > > The v1 patch isn't relevant in the commit message, please just describe the
+> > > problem. Also the crash only occurs when earlycon is used.
+> > ok
+> > >
+> > >> As QUP core clock is shared among all the SE drivers present on particular
+> > >> QUP wrapper, the reset seen is due to earlycon usage after QUP core clock
+> > >> is put to 0 from other SE drivers before real console comes up.
+> > >>
+> > >> As earlycon can't vote for it's QUP core need, to fix this add ICC
+> > >> support to common/QUP wrapper driver and put vote for QUP core from
+> > >> probe on behalf of earlycon and remove vote during sys suspend.
+> > > Only removing the vote on suspend isn't ideal, the system might never get
+> > > suspended. That said I don't have a really good alternative suggestion.
+> > >
+> > > One thing you could possibly do is to launch a delayed work, check
+> > > console_device() every second or so and remove the vote when it returns
+> > > non-NULL. Not claiming this would be a great solution ...
+> > >
+> > > The cleanest solution might be a notifier when the early console is
+> > > unregistered, it seems somewhat over-engineered though ... Then again
+> > > other (future) uart drivers with interconnect support might run into
+> > > the same problem.
+> >
+> > We are hitting this problem because QUP core clocks are shared among all
+> > the SE driver present in particular QUP wrapper, if other HW controllers
+> > has similar architecture we will hit this issue.
+> >
+> > How about if we expose an API from common driver(geni-se) for putting
+> > QUP core BW vote to 0.
+> >
+> > We call this from console probe just after uart_add_one_port call
+> > (console resources are enabled as part of this call) to put core quota
+> > to 0 on behalf of earlyconsole?
+>
+> +Georgi
+>
+> Hm, these boot proxy votes are annoying, since the whole house of
+> cards comes down if you replace these votes in the wrong order.
+>
+> I believe consensus in the other patches was to consolidate most of
+> the interconnect support into the common SE code, right? Would that
+> help you with these boot proxy votes? What I'm thinking is something
+> along the lines of:
+>  * SPI, I2C, UART all call into the new common geni_se_icc_on/off()
+> (or whatever it's called)
+>  * If geni_se_icc_off() sees that console UART hasn't voted yet, save
+> the votes but don't actually call icc_set(0) now.
+>  * Once uart votes for the first time, call icc_set() on all of SPI,
+> I2C, UART to get things back in sync.
+>
+> That's a sort of roll-your-own solution for GENI, but we do have this
+> problem elsewhere as well. A more general solution would be to have
+> the interconnect providers prop things up (ie ignore votes to lower
+> bandwidth) until some "go" moment where we feel we've enumerated all
+> devices. I was originally thinking to model this off of something like
+> clk_disable_unused(), but after chatting with Stephen it's clear
+> late_initcall's aren't really indicative of all devices having
+> actually come up. So I'm not sure where the appropriate "go" moment
+> is.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index ce49c3236ff7c..b1ad4de179019 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -196,7 +196,6 @@ struct q6v5 {
- 
- 	phys_addr_t mpss_phys;
- 	phys_addr_t mpss_reloc;
--	void *mpss_region;
- 	size_t mpss_size;
- 
- 	struct qcom_rproc_glink glink_subdev;
-@@ -1061,6 +1060,18 @@ static int q6v5_reload_mba(struct rproc *rproc)
- 	return ret;
- }
- 
-+static void *q6v5_da_to_va(struct rproc *rproc, u64 da, size_t len)
-+{
-+	struct q6v5 *qproc = rproc->priv;
-+	int offset;
-+
-+	offset = da - qproc->mpss_reloc;
-+	if (offset < 0 || offset + len > qproc->mpss_size)
-+		return NULL;
-+
-+	return devm_ioremap_wc(qproc->dev, qproc->mpss_phys + offset, len);
-+}
-+
- static int q6v5_mpss_load(struct q6v5 *qproc)
- {
- 	const struct elf32_phdr *phdrs;
-@@ -1156,7 +1167,11 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
- 			goto release_firmware;
- 		}
- 
--		ptr = qproc->mpss_region + offset;
-+		ptr = q6v5_da_to_va(qproc->rproc, phdr->p_paddr, phdr->p_memsz);
-+		if (!ptr) {
-+			dev_err(qproc->dev, "failed to map memory\n");
-+			goto release_firmware;
-+		}
- 
- 		if (phdr->p_filesz && phdr->p_offset < fw->size) {
- 			/* Firmware is large enough to be non-split */
-@@ -1165,6 +1180,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
- 					"failed to load segment %d from truncated file %s\n",
- 					i, fw_name);
- 				ret = -EINVAL;
-+				devm_iounmap(qproc->dev, ptr);
- 				goto release_firmware;
- 			}
- 
-@@ -1175,6 +1191,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
- 			ret = request_firmware(&seg_fw, fw_name, qproc->dev);
- 			if (ret) {
- 				dev_err(qproc->dev, "failed to load %s\n", fw_name);
-+				devm_iounmap(qproc->dev, ptr);
- 				goto release_firmware;
- 			}
- 
-@@ -1187,6 +1204,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
- 			memset(ptr + phdr->p_filesz, 0,
- 			       phdr->p_memsz - phdr->p_filesz);
- 		}
-+		devm_iounmap(qproc->dev, ptr);
- 		size += phdr->p_memsz;
- 
- 		code_length = readl(qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
-@@ -1236,7 +1254,7 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
- 	int ret = 0;
- 	struct q6v5 *qproc = rproc->priv;
- 	unsigned long mask = BIT((unsigned long)segment->priv);
--	void *ptr = rproc_da_to_va(rproc, segment->da, segment->size);
-+	void *ptr = NULL;
- 
- 	/* Unlock mba before copying segments */
- 	if (!qproc->dump_mba_loaded) {
-@@ -1250,10 +1268,15 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
- 		}
- 	}
- 
--	if (!ptr || ret)
--		memset(dest, 0xff, segment->size);
--	else
-+	if (!ret)
-+		ptr = rproc_da_to_va(rproc, segment->da, segment->size);
-+
-+	if (ptr) {
- 		memcpy(dest, ptr, segment->size);
-+		devm_iounmap(qproc->dev, ptr);
-+	} else {
-+		memset(dest, 0xff, segment->size);
-+	}
- 
- 	qproc->dump_segment_mask |= mask;
- 
-@@ -1327,18 +1350,6 @@ static int q6v5_stop(struct rproc *rproc)
- 	return 0;
- }
- 
--static void *q6v5_da_to_va(struct rproc *rproc, u64 da, size_t len)
--{
--	struct q6v5 *qproc = rproc->priv;
--	int offset;
--
--	offset = da - qproc->mpss_reloc;
--	if (offset < 0 || offset + len > qproc->mpss_size)
--		return NULL;
--
--	return qproc->mpss_region + offset;
--}
--
- static int qcom_q6v5_register_dump_segments(struct rproc *rproc,
- 					    const struct firmware *mba_fw)
- {
-@@ -1595,12 +1606,6 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
- 
- 	qproc->mpss_phys = qproc->mpss_reloc = r.start;
- 	qproc->mpss_size = resource_size(&r);
--	qproc->mpss_region = devm_ioremap_wc(qproc->dev, qproc->mpss_phys, qproc->mpss_size);
--	if (!qproc->mpss_region) {
--		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
--			&r.start, qproc->mpss_size);
--		return -EBUSY;
--	}
- 
- 	return 0;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I ran across this gem the other day, which explains why I get a bunch
+of regulator yells 30 seconds after bootup:
+
+/*
+ * We punt completion for an arbitrary amount of time since
+ * systems like distros will load many drivers from userspace
+ * so consumers might not always be ready yet, this is
+ * particularly an issue with laptops where this might bounce
+ * the display off then on.  Ideally we'd get a notification
+ * from userspace when this happens but we don't so just wait
+ * a bit and hope we waited long enough.  It'd be better if
+ * we'd only do this on systems that need it, and a kernel
+ * command line option might be useful.
+ */
+schedule_delayed_work(&regulator_init_complete_work,
+      msecs_to_jiffies(30000));
+
+...but that also means that this is basically an unsolved problem.  I
+suppose one thing you could do would be to centralize this "30 seconds
+after bootup" for several subsystems (regulator, clock, interconnect,
+...) and then at least it would leave a nice place for someone to do
+better...  ;-)
+
+-Doug
