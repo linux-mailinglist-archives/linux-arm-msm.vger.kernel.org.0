@@ -2,361 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F48B187EC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 11:52:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF403187F0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 11:58:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725794AbgCQKwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 06:52:21 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:35557 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbgCQKwV (ORCPT
+        id S1727140AbgCQK6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 06:58:10 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:22859 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727151AbgCQK6H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 06:52:21 -0400
-Received: by mail-vs1-f65.google.com with SMTP id m9so13526071vso.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2020 03:52:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2h930L2nUaeWpN/VPq6cjVwd1EstsXRD+uH/UzVG50M=;
-        b=yzFTv6PVIFzp+YEHgkfJktWrdnpr0NoIVVwCQtTNHKjE54+UQKGskUFPTQl0cH0/il
-         RKsQaXITWE9Aad7OxxFsDCSM/te0ws0j4wJlKrjQ11NLx1XzXqZfaWd/KIcvJ3fATEis
-         SfNhsN9gqE8M3VXyvbqgYvBO7hZgw8j3y22AVkkmU8lGijaqZmBSiAt7si9bHCZZ3wxG
-         dxx/zRACvw2LuNBzWjNeTyJGjPcUiOLcjGQHhjPRyvW8oTzq65Gzx7vzk3i/xeQLb8q5
-         ugpHD8GyX7kHvSsYaFdXcDnZ6crW1EGHwQdXEu1ZFFeJvvRNqBKrr/qZyP6udpCQAAAB
-         kbdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2h930L2nUaeWpN/VPq6cjVwd1EstsXRD+uH/UzVG50M=;
-        b=QJ7ZzjmHdXX3nx24yN4jT3bcQvuxLodWvPxPt86rX3lMStX8OsJ0ZXOQN8Cc+aCNWX
-         aMPQBuRvIO3cJLvqOBpglAk0fmskbs+POj6itIoldwBcHC9YusXweYtbY5v5FGYnzljR
-         pbqhHJclA+AncnJTjC+m4JIAQu5cdXoLdMFTvugCPaQXUWF+TG/815WSBTaYNbFAZOdQ
-         PHw9EU4D0svXWU8RtKMFprWlavgd89q0mnhSWNntzErEUhk/GO5jnwb7aornMJRcNiM9
-         otQI4J8j2ToGRcKsX9L9A7nQItjU23Ucer7P43qnAsJfaYsGBmyr0uBUhTL1yaid+s6p
-         BiFA==
-X-Gm-Message-State: ANhLgQ39BfM2caRm6ob3QsgeT2rlC2twpc5Mh92wyUXWcMwhexCNld/K
-        GTqJQBDCp4/wtHVn5AU7ntHqDsKRaywAbaNH1z06IA==
-X-Google-Smtp-Source: ADFU+vuJwh4C02Y8CB3LnnNmExzyITUoR6WKl8q1aLb0YHzq2cRlxar6SO9ePlsiqr5C/u1I9OAB68nw+UZqVFt/2RM=
-X-Received: by 2002:a67:eb81:: with SMTP id e1mr3171827vso.27.1584442337603;
- Tue, 17 Mar 2020 03:52:17 -0700 (PDT)
+        Tue, 17 Mar 2020 06:58:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584442687; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=cQuV8le5zJMXEg6Nx5zOixnWj9Q+mZRhKelZQ5b1wgI=; b=l+ja6svLhPyyxGagUuMIFQNncA02TH6jdLlIK2HtFUxm49YB4PXJuh0MZb7HDRJtblYu/Nqq
+ DGln7j1PccZB7kELWNn7rBJdYFQD7fqWkBkYGytWIM7TnZCjv7XzeQar8WdSvdrQpbShJPPq
+ 7Y88z+LvPV+Vg8x2NQz/S0NZnH0=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e70ad36.7f29df409538-smtp-out-n03;
+ Tue, 17 Mar 2020 10:57:58 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 99225C4478C; Tue, 17 Mar 2020 10:57:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.8] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1FF87C43636;
+        Tue, 17 Mar 2020 10:57:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1FF87C43636
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V2 3/8] soc: qcom-geni-se: Add interconnect support to fix
+ earlycon crash
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-4-git-send-email-akashast@codeaurora.org>
+ <20200313204441.GJ144492@google.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <1f86fdf0-df7c-4e4a-d4d8-8b0162e52cb4@codeaurora.org>
+Date:   Tue, 17 Mar 2020 16:27:47 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <1584430804-8343-1-git-send-email-rkambl@codeaurora.org>
-In-Reply-To: <1584430804-8343-1-git-send-email-rkambl@codeaurora.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Tue, 17 Mar 2020 16:22:00 +0530
-Message-ID: <CAHLCerOSz4aAkukPzRRwOgeiTnw1ATSp0gPd9ujqiv9uAfj2Mg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Changed polling-delay in
- Thermal-zones node
-To:     Rajeshwari <rkambl@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        sivaa@codeaurora.org, sanm@codeaurora.org,
-        Doug Anderson <dianders@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200313204441.GJ144492@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 17, 2020 at 1:11 PM Rajeshwari <rkambl@codeaurora.org> wrote:
->
-> Changed polling-delay and polling-delay-passive to zero as per
-> the requirement.
->
-> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
+Hi Matthias,
 
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+On 3/14/2020 2:14 AM, Matthias Kaehlcke wrote:
+> Hi Akash,
+>
+> On Fri, Mar 13, 2020 at 06:42:09PM +0530, Akash Asthana wrote:
+>> V1 patch@https://patchwork.kernel.org/patch/11386469/ caused SC7180 system
+>> to reset at boot time.
+> The v1 patch isn't relevant in the commit message, please just describe the
+> problem. Also the crash only occurs when earlycon is used.
+ok
+>
+>> As QUP core clock is shared among all the SE drivers present on particular
+>> QUP wrapper, the reset seen is due to earlycon usage after QUP core clock
+>> is put to 0 from other SE drivers before real console comes up.
+>>
+>> As earlycon can't vote for it's QUP core need, to fix this add ICC
+>> support to common/QUP wrapper driver and put vote for QUP core from
+>> probe on behalf of earlycon and remove vote during sys suspend.
+> Only removing the vote on suspend isn't ideal, the system might never get
+> suspended. That said I don't have a really good alternative suggestion.
+>
+> One thing you could possibly do is to launch a delayed work, check
+> console_device() every second or so and remove the vote when it returns
+> non-NULL. Not claiming this would be a great solution ...
+>
+> The cleanest solution might be a notifier when the early console is
+> unregistered, it seems somewhat over-engineered though ... Then again
+> other (future) uart drivers with interconnect support might run into
+> the same problem.
 
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 100 +++++++++++++++++------------------
->  1 file changed, 50 insertions(+), 50 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index ca876ed..d81c4f1 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1907,8 +1907,8 @@
->
->         thermal-zones {
->                 cpu0-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 1>;
->
-> @@ -1955,8 +1955,8 @@
->                 };
->
->                 cpu1-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 2>;
->
-> @@ -2003,8 +2003,8 @@
->                 };
->
->                 cpu2-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 3>;
->
-> @@ -2051,8 +2051,8 @@
->                 };
->
->                 cpu3-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 4>;
->
-> @@ -2099,8 +2099,8 @@
->                 };
->
->                 cpu4-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 5>;
->
-> @@ -2147,8 +2147,8 @@
->                 };
->
->                 cpu5-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 6>;
->
-> @@ -2195,8 +2195,8 @@
->                 };
->
->                 cpu6-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 9>;
->
-> @@ -2235,8 +2235,8 @@
->                 };
->
->                 cpu7-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 10>;
->
-> @@ -2275,8 +2275,8 @@
->                 };
->
->                 cpu8-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 11>;
->
-> @@ -2315,8 +2315,8 @@
->                 };
->
->                 cpu9-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 12>;
->
-> @@ -2355,8 +2355,8 @@
->                 };
->
->                 aoss0-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 0>;
->
-> @@ -2376,8 +2376,8 @@
->                 };
->
->                 cpuss0-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 7>;
->
-> @@ -2396,8 +2396,8 @@
->                 };
->
->                 cpuss1-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 8>;
->
-> @@ -2416,8 +2416,8 @@
->                 };
->
->                 gpuss0-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 13>;
->
-> @@ -2437,8 +2437,8 @@
->                 };
->
->                 gpuss1-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 14>;
->
-> @@ -2458,8 +2458,8 @@
->                 };
->
->                 aoss1-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 0>;
->
-> @@ -2479,8 +2479,8 @@
->                 };
->
->                 cwlan-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 1>;
->
-> @@ -2500,8 +2500,8 @@
->                 };
->
->                 audio-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 2>;
->
-> @@ -2521,8 +2521,8 @@
->                 };
->
->                 ddr-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 3>;
->
-> @@ -2542,8 +2542,8 @@
->                 };
->
->                 q6-hvx-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 4>;
->
-> @@ -2563,8 +2563,8 @@
->                 };
->
->                 camera-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 5>;
->
-> @@ -2584,8 +2584,8 @@
->                 };
->
->                 mdm-core-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 6>;
->
-> @@ -2605,8 +2605,8 @@
->                 };
->
->                 mdm-dsp-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 7>;
->
-> @@ -2626,8 +2626,8 @@
->                 };
->
->                 npu-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 8>;
->
-> @@ -2647,8 +2647,8 @@
->                 };
->
->                 video-thermal {
-> -                       polling-delay-passive = <250>;
-> -                       polling-delay = <1000>;
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
->
->                         thermal-sensors = <&tsens1 9>;
->
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
+We are hitting this problem because QUP core clocks are shared among all 
+the SE driver present in particular QUP wrapper, if other HW controllers 
+has similar architecture we will hit this issue.
+
+How about if we expose an API from common driver(geni-se) for putting 
+QUP core BW vote to 0.
+
+We call this from console probe just after uart_add_one_port call 
+(console resources are enabled as part of this call) to put core quota 
+to 0 on behalf of earlyconsole?
+
+>
+>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+>> Reported-by: Matthias Kaehlcke <mka@chromium.org>
+>> ---
+>>   drivers/soc/qcom/qcom-geni-se.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 41 insertions(+)
+>>
+>> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+>> index 7d622ea..d244dfc 100644
+>> --- a/drivers/soc/qcom/qcom-geni-se.c
+>> +++ b/drivers/soc/qcom/qcom-geni-se.c
+>> @@ -90,6 +90,7 @@ struct geni_wrapper {
+>>   	struct device *dev;
+>>   	void __iomem *base;
+>>   	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
+>> +	struct icc_path *icc_path_geni_to_core;
+>>   };
+>>   
+>>   #define QUP_HW_VER_REG			0x4
+>> @@ -747,11 +748,50 @@ static int geni_se_probe(struct platform_device *pdev)
+>>   		}
+>>   	}
+>>   
+>> +#ifdef CONFIG_SERIAL_EARLYCON
+>> +	wrapper->icc_path_geni_to_core = devm_of_icc_get(dev, "qup-core");
+>> +	if (IS_ERR(wrapper->icc_path_geni_to_core))
+>> +		return PTR_ERR(wrapper->icc_path_geni_to_core);
+>> +	/*
+>> +	 * Put minmal BW request on core clocks on behalf of early console.
+>> +	 * The vote will be removed in suspend call.
+>> +	 */
+>> +	ret = icc_set_bw(wrapper->icc_path_geni_to_core, Bps_to_icc(1000),
+>> +			Bps_to_icc(1000));
+>> +	if (ret) {
+>> +		dev_err(&pdev->dev, "%s: ICC BW voting failed for core\n",
+>> +			__func__);
+>> +		return ret;
+>> +	}
+> What is ugly about this is that it's done for every QUP, not only the one
+> with the early console. Again, I don't have a good solution for it, maybe
+> it's a limitation we have to live with :(
+
+There is one more limitation from QUP core side. Core clocks for both 
+the QUP wrapper runs at same speed.
+
+core2x_1 = core2x_2 = max(core2x_1, core2x_2);
+
+So with above limitation and if we are removing early con vote from Core 
+when real console comes up. It doesn't matter whether it's done for 
+every QUP or the only with early console.
+
+>
+>> +#endif
+>> +
+>>   	dev_set_drvdata(dev, wrapper);
+>>   	dev_dbg(dev, "GENI SE Driver probed\n");
+>>   	return devm_of_platform_populate(dev);
+>>   }
+>>   
+>> +static int __maybe_unused geni_se_sys_suspend(struct device *dev)
+>> +{
+>> +	struct geni_wrapper *wrapper = dev_get_drvdata(dev);
+>> +	int ret;
+>> +
+>> +#ifdef CONFIG_SERIAL_EARLYCON
+>> +	ret = icc_set_bw(wrapper->icc_path_geni_to_core, 0, 0);
+> I think you only want to do this on the first suspend.
+Ok, I can add that logic using global variable.
+>
+> Do we need to handle the case where no 'real' console is configured?
+> In this case the early console would be active forever and setting
+> the bandwidths to 0 might cause a similar crash than the one you are
+> trying to fix. Not sure if that's a real world use case, but wanted to
+> mention it. Maybe this is an argument of the notifier approach?
+We can't support earlycon without real console.
+
+As earlyconsole doesn't do any kind of resource enablement(SE clocks, 
+pinctrl, etc) it assumes that resources are already enabled from 
+previous stages.
+
+So if real console doesn't come up no one will vote for that SE clock, 
+and it will be disabled from clk late_init call which will result into 
+un-clocked access.
+
+
+>
+>> +	if (ret) {
+>> +		dev_err(dev, "%s: ICC BW remove failed for core\n",
+>> +			__func__);
+>> +		return ret;
+> Aborting suspend seems too harsh since the QUP should still be fully
+> functional unless there is a general problem with the interconnects.
+>
+> I would suggest to change the log to dev_warn() and return 0.
+
+Ok
+
+Thanks for reviewing the patch.
+
+regards,
+
+Akash
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
