@@ -2,69 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 92F20188B2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 17:51:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE190188BF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 18:27:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726974AbgCQQvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 12:51:19 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:42510 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726476AbgCQQvP (ORCPT
+        id S1726549AbgCQR1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 13:27:12 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:37270 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbgCQR1K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 12:51:15 -0400
-Received: by mail-ua1-f65.google.com with SMTP id v16so7172886ual.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2020 09:51:13 -0700 (PDT)
+        Tue, 17 Mar 2020 13:27:10 -0400
+Received: by mail-vs1-f67.google.com with SMTP id o3so4377124vsd.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2020 10:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=5+4aJa7IpjGZCPI3Fh6cthpiIv4IQ9AsMliiqsg2mts=;
-        b=YkGBAuYA3wpjmbt2VnCUIMI0xJVISAM2HQ+4vpw4N5qYFuYvkK/XDLG95zf96seDTj
-         JLTzADnRCAjLkajykdhv5TBY+UyCAAt4Fg0/W1SluewltWU9Q42ysjJuhoOH4sDheabF
-         gAhRDlrX3PZyU1wGBAo+zTG5FaY2a1pPsQWXA=
+        bh=kYxhd4YbdvKna+Hk3H++oy2r+2XxoGCrQ2OcQrBquQI=;
+        b=VWLDmipX7IFDQ/yHjCAzFxlk/+VluSSJwe4qv5jpHr4e6B0U7gp1YOW3C9Csk4kZHd
+         NXgx0kZ6qhPzwcHQS3y9Qvp7AMowj6bjIngubmHTjWmVhTh0fc8O7LbAKQh0NHGA4pJV
+         mU73ACIJwkVyGoLSZZRtAPc2yjx+8+foKjquI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=5+4aJa7IpjGZCPI3Fh6cthpiIv4IQ9AsMliiqsg2mts=;
-        b=iKdMapPeDedjBibeRJ7pboFQF9XQg6Kvt0D0nfxvgEIYV2qtXLEuCkGR6FW227EFOK
-         LiHj8k055SgIAT3mc8/BvttQWo8DT9TiC/7A7KzqxcownCWhdMfqFRazVJxm/nHrEHr7
-         0sMk2DmsLTFHpQZXmWc4JttAqRc4iZ9IQ2ZGY8VUc8Xtq8s/Ex88nWz2brvyaYVWZywI
-         l9e+cvokr/zYqydKDA6scOuYxibRKpXaR4KblRVdo2eDRoENvvJR5sxxclGingLV82zl
-         KElN7cxQo3J3b8T0YKuo0o2/KDmxWbmAQYGDmy+4jDUoVGZOVHw7B/Cqmdb8uFEmo4eV
-         HfeQ==
-X-Gm-Message-State: ANhLgQ3tf3CDV7EiNt60ZV1EyTT4rpMMvBk1DXJo7OU9L4zwnqhPlb1/
-        RpE8RQ3xEIsGrUUafzcbVhIM+eHBC7s=
-X-Google-Smtp-Source: ADFU+vuENUxtUg8dOvVwMindZI5oIl1bbqTNiUupTc9jQXMAPvYRneIbl6JxeSCSbz9huLzCP2Qdxw==
-X-Received: by 2002:a9f:2848:: with SMTP id c66mr4129566uac.70.1584463872983;
-        Tue, 17 Mar 2020 09:51:12 -0700 (PDT)
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com. [209.85.221.178])
-        by smtp.gmail.com with ESMTPSA id d8sm1697611uan.13.2020.03.17.09.51.12
+        bh=kYxhd4YbdvKna+Hk3H++oy2r+2XxoGCrQ2OcQrBquQI=;
+        b=S0Q1sifpfIhsJ2tysym8/OIShHdgZN2Z6+IFEJ+QnNU2T8LUoJtCMjVHIe7Z4UV36P
+         NQ5VHXiK4Dew4fWtci7SM8ixXKdYkwAlDh3020GWFet2OoKjOhHW+oTyyQ8OkGZk6AGF
+         AuLd4Wvlrzij9/iBR5S8us7w8ulEEsp0BYx+DIMlcQx0svVGW+d/gSapqivHQAeA+DIP
+         HZ+yShwElAkLKQeCXyh6zh5LrwemocchDBi88ZP+Z4IPXSxT+XDitLAg3b25XsbunI/s
+         /PkzzzhdsL4iDACe7rsMzDIB11TJ1Cfq14XJPqBmUxRRawSsgqkEw7V95xxqS1Zvf6bu
+         GXSA==
+X-Gm-Message-State: ANhLgQ17Nr0pFu4BHUVjm7fq1TyUaF/tWaqTSjlHL3voThnKK02Jc/iL
+        /1gjkhpD6RwOTN2b6EdzvYQZVIfn/0M=
+X-Google-Smtp-Source: ADFU+vtKZuPLIyO4qVncNcDjj1b9cMWFlaNGJ4VQPcyG94EX9xEbh6PdFDfViF1FIjYBUeapmiTiDA==
+X-Received: by 2002:a67:87cd:: with SMTP id j196mr21207vsd.98.1584466029198;
+        Tue, 17 Mar 2020 10:27:09 -0700 (PDT)
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
+        by smtp.gmail.com with ESMTPSA id a13sm1596946vsq.28.2020.03.17.10.27.07
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Mar 2020 09:51:12 -0700 (PDT)
-Received: by mail-vk1-f178.google.com with SMTP id g25so4763947vkl.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2020 09:51:12 -0700 (PDT)
-X-Received: by 2002:a1f:2305:: with SMTP id j5mr155171vkj.40.1584463871622;
- Tue, 17 Mar 2020 09:51:11 -0700 (PDT)
+        Tue, 17 Mar 2020 10:27:08 -0700 (PDT)
+Received: by mail-vs1-f47.google.com with SMTP id p7so12247674vso.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2020 10:27:07 -0700 (PDT)
+X-Received: by 2002:a67:e951:: with SMTP id p17mr22233vso.106.1584466026884;
+ Tue, 17 Mar 2020 10:27:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <1584430804-8343-1-git-send-email-rkambl@codeaurora.org>
-In-Reply-To: <1584430804-8343-1-git-send-email-rkambl@codeaurora.org>
+References: <20200315194239.28785-1-christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20200315194239.28785-1-christophe.jaillet@wanadoo.fr>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 17 Mar 2020 09:50:59 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VLZ4RQQuji=1kKE5EnqrpY0M=U_G8XigAWAaZ8mxc=eg@mail.gmail.com>
-Message-ID: <CAD=FV=VLZ4RQQuji=1kKE5EnqrpY0M=U_G8XigAWAaZ8mxc=eg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Changed polling-delay in
- Thermal-zones node
-To:     Rajeshwari <rkambl@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
+Date:   Tue, 17 Mar 2020 10:26:55 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WrncW_y+dtXHU7Lj1J0Lh7w8Kw+d28KZF52-OMs=0pSQ@mail.gmail.com>
+Message-ID: <CAD=FV=WrncW_y+dtXHU7Lj1J0Lh7w8Kw+d28KZF52-OMs=0pSQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Fix an error handling path 'msm_drm_init()'
+To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        sivaa@codeaurora.org, Sandeep Maheswaram <sanm@codeaurora.org>
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        kernel-janitors@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -73,18 +72,19 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Mar 17, 2020 at 12:42 AM Rajeshwari <rkambl@codeaurora.org> wrote:
+On Sun, Mar 15, 2020 at 12:42 PM Christophe JAILLET
+<christophe.jaillet@wanadoo.fr> wrote:
 >
-> Changed polling-delay and polling-delay-passive to zero as per
-> the requirement.
+> If this memory allocation fails, we have to go through the error handling
+> path to perform some clean-up, as already done in other other paths of
+> this function.
 >
-> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
+> Fixes: db735fc4036b ("drm/msm: Set dma maximum segment size for mdss")
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 100 +++++++++++++++++------------------
->  1 file changed, 50 insertions(+), 50 deletions(-)
+>  drivers/gpu/drm/msm/msm_drv.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 
-It probably wouldn't hurt to mention in the commit message that this
-is because the thermal sensor interrupts are all hooked up and thus
-the polling is not a useful thing to do.  ...but other than that:
+This has already been posted as:
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+https://lore.kernel.org/r/20200309101410.GA18031@duo.ucw.cz
