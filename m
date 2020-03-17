@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B7501187C1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 10:35:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BC32187D99
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 10:59:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725872AbgCQJfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 05:35:32 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:62858 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725906AbgCQJfc (ORCPT
+        id S1725933AbgCQJ7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 05:59:10 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:34506 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725730AbgCQJ7K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 05:35:32 -0400
+        Tue, 17 Mar 2020 05:59:10 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584437731; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1584439149; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=dWslmfFJwyoLLIjetdrb1GRyg2NP/CSxii4Vm8lMPvs=; b=ihHgPiahyI6J7SEjoP8rEd5zTrWcENBBJJ1yFoX5BnVntv+81dNgFLmJH8cUZ4zE87mGkJ2o
- a5gWRSOc1mGGvOj/gRIqP8/16UGbhRv49QoyqNDlLjk9k5UsPucpAMBuTVxskYY1p6kqLsoa
- 6KDTouLwGVbGATkEz/tZP5mlnrU=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ Subject: Sender; bh=zk0/3MnwTvjKwUaJCc0k9Bn95kVQ4cS9R+JoWid1pcA=; b=ZvJ5gETVyXD0t3EEBoSp5DAusMkO7LbordCHempCAeLJD0TI6EnjRu8f+AVMrzyE2xAUUfiL
+ nf7HwwJqAN9dURqOYujkg8pXs2d1dKH6f98dV/udDzPvaB1FVm1FCWSqrdlLVRVQ0hL9FaDD
+ /h3icoLU6SPLGVyhqAxUunVcWO8=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e7099e3.7f212343bce0-smtp-out-n03;
- Tue, 17 Mar 2020 09:35:31 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e709f6c.7f870a93b378-smtp-out-n03;
+ Tue, 17 Mar 2020 09:59:08 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 157DCC433BA; Tue, 17 Mar 2020 09:35:31 +0000 (UTC)
+        id 8E8EBC43636; Tue, 17 Mar 2020 09:59:07 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,75 +34,128 @@ Received: from [192.168.0.8] (unknown [183.83.138.47])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DE460C433CB;
-        Tue, 17 Mar 2020 09:35:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DE460C433CB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C64CFC433D2;
+        Tue, 17 Mar 2020 09:59:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C64CFC433D2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V2 6/8] spi: spi-geni-qcom: Add interconnect support
-To:     Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH V2 2/8] soc: qcom: geni: Support for ICC voting
+To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
         mark.rutland@arm.com, robh+dt@kernel.org,
         linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
         devicetree@vger.kernel.org, swboyd@chromium.org,
         mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, evgreen@chromium.org
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
 References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-7-git-send-email-akashast@codeaurora.org>
- <20200313131603.GG5528@sirena.org.uk>
+ <1584105134-13583-3-git-send-email-akashast@codeaurora.org>
+ <20200313164207.GH144492@google.com>
 From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <aa197568-3bac-6962-d39d-3261f68c0514@codeaurora.org>
-Date:   Tue, 17 Mar 2020 15:05:21 +0530
+Message-ID: <faf3cbea-bce7-3592-cfae-93613a8c7e26@codeaurora.org>
+Date:   Tue, 17 Mar 2020 15:28:59 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <20200313131603.GG5528@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20200313164207.GH144492@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Matthias,
 
-On 3/13/2020 6:46 PM, Mark Brown wrote:
-> On Fri, Mar 13, 2020 at 06:42:12PM +0530, Akash Asthana wrote:
+On 3/13/2020 10:12 PM, Matthias Kaehlcke wrote:
+> Hi Akash,
 >
->> +	se->avg_bw_cpu = Bps_to_icc(mas->cur_speed_hz);
->> +	se->peak_bw_cpu = Bps_to_icc(2 * mas->cur_speed_hz);
-> As I commented on the previous version to no reply there seem to be a
-> lot of cases where the peak bandwidth is just set to double the normal
-> bandwidth without obvious analysis.  Should this default be centralized?
+> On Fri, Mar 13, 2020 at 06:42:08PM +0530, Akash Asthana wrote:
+>> Add necessary macros and structure variables to support ICC BW
+>> voting from individual SE drivers.
+>>
+>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+>> ---
+>> Changes in V2:
+>>   - As per Bjorn's comment dropped enums for ICC paths, given the three
+>>     paths individual members
+>>
+>>   include/linux/qcom-geni-se.h | 28 ++++++++++++++++++++++++++++
+>>   1 file changed, 28 insertions(+)
+>>
+>> diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+>> index dd46494..eaae16e 100644
+>> --- a/include/linux/qcom-geni-se.h
+>> +++ b/include/linux/qcom-geni-se.h
+>> @@ -6,6 +6,8 @@
+>>   #ifndef _LINUX_QCOM_GENI_SE
+>>   #define _LINUX_QCOM_GENI_SE
+>>   
+>> +#include <linux/interconnect.h>
+>> +
+>>   /* Transfer mode supported by GENI Serial Engines */
+>>   enum geni_se_xfer_mode {
+>>   	GENI_SE_INVALID,
+>> @@ -33,6 +35,15 @@ struct clk;
+>>    * @clk:		Handle to the core serial engine clock
+>>    * @num_clk_levels:	Number of valid clock levels in clk_perf_tbl
+>>    * @clk_perf_tbl:	Table of clock frequency input to serial engine clock
+>> + * @icc_path_geni_to_core:	ICC path handle for geni to core
+>> + * @icc_path_cpu_to_geni:	ICC path handle for cpu to geni
+>> + * @icc_path_geni_to_ddr:	ICC path handle for geni to ddr
+>> + * @avg_bw_core:	Average bus bandwidth value for QUP core 2x clock
+>> + * @peak_bw_core:	Peak bus bandwidth value for QUP core 2x clock
+>> + * @avg_bw_cpu:		Average bus bandwidth value for CPU
+>> + * @peak_bw_cpu:	Peak bus bandwidth value for CPU
+>> + * @avg_bw_ddr:		Average bus bandwidth value for DDR
+>> + * @peak_bw_ddr:	Peak bus bandwidth value for DDR
+>>    */
+>>   struct geni_se {
+>>   	void __iomem *base;
+>> @@ -41,6 +52,15 @@ struct geni_se {
+>>   	struct clk *clk;
+>>   	unsigned int num_clk_levels;
+>>   	unsigned long *clk_perf_tbl;
+>> +	struct icc_path *icc_path_geni_to_core;
+>> +	struct icc_path *icc_path_cpu_to_geni;
+>> +	struct icc_path *icc_path_geni_to_ddr;
+>> +	unsigned int avg_bw_core;
+>> +	unsigned int peak_bw_core;
+>> +	unsigned int avg_bw_cpu;
+>> +	unsigned int peak_bw_cpu;
+>> +	unsigned int avg_bw_ddr;
+>> +	unsigned int peak_bw_ddr;
+> Those are a lot of new individual struct members. How about clustering
+> them, e.g.:
+>
+> struct geni_icc_path {
+> 	struct icc_path *path;
+> 	unsigned int avg_bw;
+> 	unsigned int peak_bw;
+> };
+I guess it would be better to add this structure  ICC driver as you 
+suggested@https://patchwork.kernel.org/patch/11436905/.
+> struct geni_iccs_paths {
+> 	struct geni_icc_path to_core;
+> 	struct geni_icc_path from_cpu;
+> 	struct geni_icc_path to_ddr;
+> };
+>
+> And 'struct geni_se' just gets this entry:
+>
+> 	struct geni_icc_paths icc;
+>
+> or alternatively three 'struct geni_icc_path' entries.
 
-Hi Mark,
+ok
 
-I misunderstood previous comment on V1 
-patch@https://patchwork.kernel.org/patch/11386479/ as a suggestion to 
-mention comment for peak BW choice if nothing mentioned explicitly (in 
-this case I mentioned assume peak BW twice as average).
+Thanks for reviewing.
 
-I understand in any case I should have ack'ed the comment atleast by 
-replying "ok". I am sorry about it.
-
-
-We are taking care of actual throughput requirement in avg_bw vote and 
-the intention of putting peak as twice of avg is to ensure that if high 
-speed peripherals(ex:USB) removes their votes, we shouldn't see any 
-latency issue because of other ICC client who don't vote for their BW 
-requirement or *actual* BW requirement. Factor of 2 is chosen randomly. 
-Please correct/improve me if this is not okay.
-
-If this is okay, I will centralize this design for SPI QUP, I2C and UART 
-driver.
-
-Regards,
+Regards
 
 Akash
-
-
 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
