@@ -2,130 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A92F0188490
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 13:55:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 208D81884B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 14:05:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725794AbgCQMzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 08:55:21 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:51370 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726019AbgCQMzV (ORCPT
+        id S1726491AbgCQNFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 09:05:55 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:58525 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726478AbgCQNFz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 08:55:21 -0400
+        Tue, 17 Mar 2020 09:05:55 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584449720; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=GjbOAVBonUachoEYynZJyqOqo/SneyKPARmLiqRE1nc=;
- b=gKmQyoT/Iar1RM3IzbQTk814We93rc8l0n0mC/MmHEwmW79b2Nt99NcKZLv0pTHc1AI4YVPA
- RcTEYXKMlhMDL8EXSfy0KKZmSkAa5J0V8DeHb9PjnGPo61EqewkASDtP8TJSp3HnxFES864x
- kGcvSW/+QNQ/ACh5csB21Un1ge8=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1584450355; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=ZTED8PjW1HwvOigSt/VzJRJKGdN0cV9OXysHgYPS88c=; b=MWWbI+n71j+1qNHdWcto0KIv71U8TrdOR9WK/FUcEx/naSCiwXF1Fva1NX3F2A5ZrM0lP9Py
+ WdQWBDzEJ5LwZPDWmr9zH1dDTsEQF2weBQbfrzhI2qiA88l5gjkpGG+mZUPA7BzRDFOA9rJk
+ +ex3HxLaOzAsP0qGqoVsW92j5KU=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e70c8a9.7f870ab8da78-smtp-out-n03;
- Tue, 17 Mar 2020 12:55:05 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e70cb26.7f4eca5d7650-smtp-out-n04;
+ Tue, 17 Mar 2020 13:05:42 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 507C8C43637; Tue, 17 Mar 2020 12:55:04 +0000 (UTC)
+        id C4B25C4478F; Tue, 17 Mar 2020 13:05:40 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from [192.168.0.8] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 604C1C433BA;
-        Tue, 17 Mar 2020 12:55:03 +0000 (UTC)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A2CA6C433CB;
+        Tue, 17 Mar 2020 13:05:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A2CA6C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 1/2] tty: serial: qcom_geni_serial: No need to stop tx/rx
+ on UART shutdown
+To:     Douglas Anderson <dianders@chromium.org>,
+        gregkh@linuxfoundation.org
+Cc:     mka@chromium.org, swboyd@chromium.org, ryandcase@chromium.org,
+        bjorn.andersson@linaro.org, skakit@codeaurora.org,
+        rojay@codeaurora.org, mgautam@codeaurora.org,
+        Andy Gross <agross@kernel.org>,
+        Doug Anderson <dianders@google.com>,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        Jiri Slaby <jslaby@suse.com>,
+        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
+        Sagar Dharia <sdharia@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+References: <20200313134635.1.Icf54c533065306b02b880c46dfd401d8db34e213@changeid>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <ce79643c-e854-a48f-2faf-f405c310a8a7@codeaurora.org>
+Date:   Tue, 17 Mar 2020 18:35:31 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200313134635.1.Icf54c533065306b02b880c46dfd401d8db34e213@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 17 Mar 2020 18:25:03 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?Q?Michael_Turquette_=C2=A0?= <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        linux-soc-owner@vger.kernel.org
-Subject: Re: [PATCH v6 0/3] Add modem Clock controller (MSS CC) driver for
- SC7180
-In-Reply-To: <1584211798-10332-1-git-send-email-tdas@codeaurora.org>
-References: <1584211798-10332-1-git-send-email-tdas@codeaurora.org>
-Message-ID: <e8bed15b87dda3698e37bfcd09dc3c31@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-03-15 00:19, Taniya Das wrote:
-> [v6]
->  * Combine the Documentation YAML schema and clock IDs for GCC MSS and
->    MSS clocks.
->  * Remove a unnecessary header file inclusion, define the max_registers 
-> for
->    regmap and also update the fw_name to remove _clk suffix.
->  * Update the copyright year.
 
-Tested-by: Sibi Sankar <sibis@codeaurora.org>
+On 3/14/2020 2:16 AM, Douglas Anderson wrote:
+> On a board using qcom_geni_serial I found that I could no longer
+> interact with kdb if I got a crash after the "agetty" running on the
+> same serial port was killed.  This meant that various classes of
+> crashes that happened at reboot time were undebuggable.
+>
+> Reading through the code, I couldn't figure out why qcom_geni_serial
+> felt the need to run so much code at port shutdown time.  All we need
+> to do is disable the interrupt.
+>
+> After I make this change then a hardcoded kgdb_breakpoint in some late
+> shutdown code now allows me to interact with the debugger.  I also
+> could freely close / re-open the port without problems.
+>
+> Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-> 
-> [v5]
->  * Update the clock ID for GCC_MSS_NAV_AXIS_CLK to GCC_MSS_NAV_AXI_CLK
-> 
-> [v4]
->  * Split the GCC MSS clocks and Modem clock driver.
->  * Update mss_regmap_config to const.
->  * Rename the Documentation binding as per the latest convention.
->  * Minor comments of clock-names/clocks properties updated.
-> 
-> [v3]
->   * Add clocks/clock-names required for the MSS clock controller.
->   * Add pm_ops to enable/disable the required dependent clock.
->   * Add parent_data for the MSS clocks.
->   * Update the GCC MSS clocks from _CBCR to _CLK.
-> 
-> [v2]
->   * Update the license for the documentation and fix minor comments in 
-> the
->     YAML bindings.
-> 
-> [v1]
->   * Add driver support for Modem clock controller for SC7180 and also
->     update device tree bindings for the various clocks supported in the
->     clock controller.
-> 
-> Taniya Das (3):
->   dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
->   clk: qcom: gcc: Add support for modem clocks in GCC
->   clk: qcom: Add modem clock controller driver for SC7180
-> 
->  .../devicetree/bindings/clock/qcom,sc7180-mss.yaml |  62 +++++++++
->  drivers/clk/qcom/Kconfig                           |   9 ++
->  drivers/clk/qcom/Makefile                          |   1 +
->  drivers/clk/qcom/gcc-sc7180.c                      |  72 ++++++++++-
->  drivers/clk/qcom/mss-sc7180.c                      | 143 
-> +++++++++++++++++++++
->  include/dt-bindings/clock/qcom,gcc-sc7180.h        |   7 +-
->  include/dt-bindings/clock/qcom,mss-sc7180.h        |  12 ++
->  7 files changed, 304 insertions(+), 2 deletions(-)
->  create mode 100644 
-> Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
->  create mode 100644 drivers/clk/qcom/mss-sc7180.c
->  create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
-> 
-> --
-> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a 
-> member
-> of the Code Aurora Forum, hosted by the  Linux Foundation.
+Looks good to me.
+
+Reviewed-by: Akash Asthana <akashast@codeaurora.org>
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
