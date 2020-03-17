@@ -2,138 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 82C58188F32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 21:43:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEB1B188FD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2020 21:55:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726388AbgCQUnS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Mar 2020 16:43:18 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:19834 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726738AbgCQUnR (ORCPT
+        id S1726388AbgCQUxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Mar 2020 16:53:39 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:26053 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726549AbgCQUxj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Mar 2020 16:43:17 -0400
+        Tue, 17 Mar 2020 16:53:39 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584477797; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=5Sknz7KDOw1qdge5xizFs8Eb5sj7/j6Seo1ppF3kntM=;
- b=Sg4kmayy2Nns/c6Ef3QKTqMsa3mEEEcKankXFwneRrcKfQtIhfR1Soq5bcKetjDYuM/uIoPI
- CX8nQfpO9binfu2bWd22zDh9Zx98vfI3clUaNiupfyp0P5rYLAjBb44NIz7OyvGvBINbwxxO
- 3Dm6E8ihkZGAPu78ElNRA/8pPnk=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ s=smtp; t=1584478419; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=0FuWCaiIeZ+dC3cNZQsIBNBHz1QAlcLwuEg7g1HMh0o=; b=xIhuVEd40feaIp3Vszra7ER2iNDGwV5KRldu2HuY6RpMTh8alaZmsKOT4fN3VN/nyXyBBnWQ
+ /biHAFQBRW0s4UOqlhDuWSmNbqBTSdLBqfSWDarReRwXfsVxUZffXvmti92wN5goGA2W/wFi
+ mjcKejxdP6SBQ8tGmfv/fQF6EYI=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e713664.7f7a1a189ed8-smtp-out-n03;
- Tue, 17 Mar 2020 20:43:16 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e7138d2.7f859b99af80-smtp-out-n02;
+ Tue, 17 Mar 2020 20:53:38 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 278F1C43637; Tue, 17 Mar 2020 20:43:16 +0000 (UTC)
+        id 39C36C44788; Tue, 17 Mar 2020 20:53:38 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5E54BC433CB;
-        Tue, 17 Mar 2020 20:43:15 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 18 Mar 2020 02:13:15 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, saravanak@google.com
-Cc:     nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        ulf.hansson@linaro.org
-Subject: Re: [RFC v3 00/10] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
-In-Reply-To: <20200127200350.24465-1-sibis@codeaurora.org>
-References: <20200127200350.24465-1-sibis@codeaurora.org>
-Message-ID: <19cf027ba87ade1b895ea90ac0fedbe2@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51595C433D2;
+        Tue, 17 Mar 2020 20:53:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 51595C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v2 0/2] Enable SS/HS USB support on SM8150
+Date:   Tue, 17 Mar 2020 13:53:30 -0700
+Message-Id: <1584478412-7798-1-git-send-email-wcheng@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-01-28 01:33, Sibi Sankar wrote:
-> This RFC series aims to extend cpu based scaling support to L3/DDR on
-> SDM845 and SC7180 SoCs.
-> 
+Add required device tree nodes to enable the USB SS and HS
+paths on the primary USB controller on SM8150.  In addition,
+implement missing resources from the SM8150 GCC driver, which
+includes the USB GDSC and the USB PIPE clocks.
 
-Hey Viresh/Saravana,
+Changes in v2:
+ - Combine GDSC and USB PIPE clock changes.
+ - Re-order DTS nodes based on address
 
-Ping! Can you take a stab at reviewing
-the series, it has been on the list for
-a while now.
+Jack Pham (1):
+  arm64: dts: qcom: sm8150: Add USB and PHY device nodes
 
-> Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
-> Patches [5-7] - Hack in a way to add/remove multiple opp tables to
->                 a single device. I am yet to fix the debugfs to
-> 		support multiple opp_tables per device but wanted to
-> 		send what was working upstream to get an idea if multiple
-> 		opp tables per device is a feature that will be useful
-> 		upstream.
-> Patches [9-10] - Add the cpu/cpu-ddr/cpu-l3 opp tables for SDM845
->                  and SC7180 SoCs.
-> 
-> v3:
->  * Migrated to using Saravana's opp-kBps bindings [1]
->  * Fixed some misc comments from Rajendra
->  * Added support for SC7180
-> 
-> v2:
->  * Incorporated Viresh's comments from:
->  
-> https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
->  
-> https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
->  * Dropped cpufreq-map passive governor
-> 
-> Git-branch: https://github.com/QuinAsura/linux/tree/lnext-012420
-> 
-> Some alternate ways of hosting the opp-tables:
-> https://github.com/QuinAsura/linux/commit/50b92bfaadc8f9a0d1e12249646e018bd6d1a9d3
-> https://github.com/QuinAsura/linux/commit/3d23d1eefd16ae6d9e3ef91e93e78749d8844e98
-> Viresh didn't really like ^^ bindings and they dont really scale well. 
-> Just
-> including them here for completeness.
-> 
-> Depends on the following series:
-> [1] https://patchwork.kernel.org/cover/11277199/
-> [2] https://patchwork.kernel.org/cover/11055499/
-> [3] https://patchwork.kernel.org/cover/11326381/
-> 
-> Sibi Sankar (10):
->   arm64: dts: qcom: sdm845: Add SoC compatible to MTP
->   cpufreq: blacklist SDM845 in cpufreq-dt-platdev
->   cpufreq: blacklist SC7180 in cpufreq-dt-platdev
->   OPP: Add and export helper to update voltage
->   opp: of: export _opp_of_get_opp_desc_node
->   opp: Allow multiple opp_tables to be mapped to a single device
->   opp: Remove multiple attached opp tables from a device
->   cpufreq: qcom: Update the bandwidth levels on frequency change
->   arm64: dts: qcom: sdm845: Add cpu OPP tables
->   arm64: dts: qcom: sc7180: Add cpu OPP tables
-> 
->  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 287 +++++++++++++++
->  arch/arm64/boot/dts/qcom/sdm845-mtp.dts |   2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi    | 453 ++++++++++++++++++++++++
->  drivers/cpufreq/cpufreq-dt-platdev.c    |   2 +
->  drivers/cpufreq/qcom-cpufreq-hw.c       | 246 +++++++++++--
->  drivers/opp/core.c                      | 111 +++++-
->  drivers/opp/of.c                        |   3 +-
->  drivers/opp/opp.h                       |   2 +
->  include/linux/pm_opp.h                  |  10 +
->  9 files changed, 1083 insertions(+), 33 deletions(-)
+Wesley Cheng (1):
+  clk: qcom: gcc: Add USB3 PIPE clock and GDSC for SM8150
+
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts     | 17 ++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi        | 92 +++++++++++++++++++++++++++++
+ drivers/clk/qcom/gcc-sm8150.c               | 52 ++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sm8150.h |  4 ++
+ 4 files changed, 165 insertions(+)
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
