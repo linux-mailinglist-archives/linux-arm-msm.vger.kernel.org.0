@@ -2,92 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0639D189D0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 14:32:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C6F2189D17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 14:36:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726911AbgCRNcl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 09:32:41 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42369 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726856AbgCRNcl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 09:32:41 -0400
-Received: by mail-ed1-f68.google.com with SMTP id b21so20569106edy.9;
-        Wed, 18 Mar 2020 06:32:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mYCC0npBMG0vbAOp6lmFNCRY0zK8adL/9dKbj+Yqe7Y=;
-        b=Cl0pZFanv4M9J1aHobxx5invUvlqLH+t7nhja3ohfPPNddUcIMPeESp2YfaJEW5na9
-         qj0OcVgtvDVktgIXXf/8hYTys/icsmDxI7utUoF8IzQd6nmcABR2KtoH/bRMICAtG0eQ
-         ae1fn1NcxytBebk4wowKsIEK+8ez8av+STpxjXa/UU0USladilHZBJw1X7PbZOvRJLt3
-         Jgb3OsaOEn7IeMGM9aThge0JODAtfRh/NmqfhOWybUpDQ+kQW2K6xypHnHDX5P8ULNm9
-         1nU/FGV06t0upZaZYEzbwCwE0cz/rCnV2jFklmyXnhTFgjR3VztjzX1MM6HHtjI/eA/3
-         sIAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mYCC0npBMG0vbAOp6lmFNCRY0zK8adL/9dKbj+Yqe7Y=;
-        b=awj1/G8D6Bqw1GpXsXczRi58TxWydXvOEfYo7b4GcDovr6OQnY6V5wzub9XQU7tY6r
-         ZjQD8bHpzOvSM8HqBCgRI8IP6BHTyn2z7PFG8a43gIzer0A5VQ9NadsJ6qGat98l9WVW
-         F89WoQ0s/5/MmPFj7IWzKcTsBT4zFFKORKE69Y9Ch3MX6SOBTQlBFFRAmyOBS1UR00s1
-         Gay6bckPleItJr9VXOsMnglBGVEK6vE09BksH7DLEZZIlRkN1zWe4gMmEpg+DXJ60Tru
-         tWjm+hJ8y8nVxP26/KeN/EaNTfReQiSA0kzUtyja/7qaLfoMT3AzP/nQa2aLSBSyzGxL
-         KD3g==
-X-Gm-Message-State: ANhLgQ3FLbfQKnopDPthy5D0jzYuGgi2XS3FY7Mk4zXlczK/i+ikXw7f
-        D1c+kMopmH2oowVLDMD/oEA=
-X-Google-Smtp-Source: ADFU+vuReANJeEqUItjIq+M9/F87Jm+fIrhJyn+pckLzJ9iiwEIXJ0vfbUxIbAg6RE2pe28SmD3Drw==
-X-Received: by 2002:a05:6402:1d95:: with SMTP id dk21mr3836875edb.93.1584538358848;
-        Wed, 18 Mar 2020 06:32:38 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host203-232-dynamic.53-79-r.retail.telecomitalia.it. [79.53.232.203])
-        by smtp.googlemail.com with ESMTPSA id c21sm344479ejm.47.2020.03.18.06.32.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 06:32:38 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        id S1726834AbgCRNgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Mar 2020 09:36:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37344 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726777AbgCRNga (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Mar 2020 09:36:30 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 59AC420774;
+        Wed, 18 Mar 2020 13:36:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584538588;
+        bh=gLmKwIgKSmCrplDshX3y+IGw0PE0LxDrFt/DCEBxXjs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=zGaBOO4+xpBSYAAQ/UJsNB0SxSxV8SnlT4VS0RM9M+df3P6npTCBJuMgF5cJPAuLP
+         6JI62qXCFctFbpjUospbeIPZLwe46H9vi9Nhie34SNsxuwBfLdk3j5yD/C3gbHh0Vo
+         gVYzWnYeuIFubNhyDEuw5mNwJFTiq2O328fSaqKE=
+Date:   Wed, 18 Mar 2020 14:36:26 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     arnd@arndb.de, smohanad@codeaurora.org, jhugo@codeaurora.org,
+        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: add scm definition
-Date:   Wed, 18 Mar 2020 14:32:14 +0100
-Message-Id: <20200318133213.1041-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
+Subject: Re: [PATCH v3 03/16] bus: mhi: core: Add support for registering MHI
+ client drivers
+Message-ID: <20200318133626.GA2801580@kroah.com>
+References: <20200220095854.4804-1-manivannan.sadhasivam@linaro.org>
+ <20200220095854.4804-4-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200220095854.4804-4-manivannan.sadhasivam@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing scm definition for ipq806x soc
+On Thu, Feb 20, 2020 at 03:28:41PM +0530, Manivannan Sadhasivam wrote:
+> This commit adds support for registering MHI client drivers with the
+> MHI stack. MHI client drivers binds to one or more MHI devices inorder
+> to sends and receive the upper-layer protocol packets like IP packets,
+> modem control messages, and diagnostics messages over MHI bus.
+> 
+> This is based on the patch submitted by Sujeev Dias:
+> https://lkml.org/lkml/2018/7/9/987
+> 
+> Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
+> Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
+> [mani: splitted and cleaned up for upstream]
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/init.c | 149 ++++++++++++++++++++++++++++++++++++
+>  include/linux/mhi.h         |  39 ++++++++++
+>  2 files changed, 188 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 6f24c21284ec..12e386862b3f 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -374,8 +374,157 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
+>  	return mhi_dev;
+>  }
+>  
+> +static int mhi_driver_probe(struct device *dev)
+> +{
+> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +	struct device_driver *drv = dev->driver;
+> +	struct mhi_driver *mhi_drv = to_mhi_driver(drv);
+> +	struct mhi_event *mhi_event;
+> +	struct mhi_chan *ul_chan = mhi_dev->ul_chan;
+> +	struct mhi_chan *dl_chan = mhi_dev->dl_chan;
+> +
+> +	if (ul_chan) {
+> +		/*
+> +		 * If channel supports LPM notifications then status_cb should
+> +		 * be provided
+> +		 */
+> +		if (ul_chan->lpm_notify && !mhi_drv->status_cb)
+> +			return -EINVAL;
+> +
+> +		/* For non-offload channels then xfer_cb should be provided */
+> +		if (!ul_chan->offload_ch && !mhi_drv->ul_xfer_cb)
+> +			return -EINVAL;
+> +
+> +		ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
+> +	}
+> +
+> +	if (dl_chan) {
+> +		/*
+> +		 * If channel supports LPM notifications then status_cb should
+> +		 * be provided
+> +		 */
+> +		if (dl_chan->lpm_notify && !mhi_drv->status_cb)
+> +			return -EINVAL;
+> +
+> +		/* For non-offload channels then xfer_cb should be provided */
+> +		if (!dl_chan->offload_ch && !mhi_drv->dl_xfer_cb)
+> +			return -EINVAL;
+> +
+> +		mhi_event = &mhi_cntrl->mhi_event[dl_chan->er_index];
+> +
+> +		/*
+> +		 * If the channel event ring is managed by client, then
+> +		 * status_cb must be provided so that the framework can
+> +		 * notify pending data
+> +		 */
+> +		if (mhi_event->cl_manage && !mhi_drv->status_cb)
+> +			return -EINVAL;
+> +
+> +		dl_chan->xfer_cb = mhi_drv->dl_xfer_cb;
+> +	}
+> +
+> +	/* Call the user provided probe function */
+> +	return mhi_drv->probe(mhi_dev, mhi_dev->id);
+> +}
+> +
+> +static int mhi_driver_remove(struct device *dev)
+> +{
+> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> +	struct mhi_driver *mhi_drv = to_mhi_driver(dev->driver);
+> +	struct mhi_chan *mhi_chan;
+> +	enum mhi_ch_state ch_state[] = {
+> +		MHI_CH_STATE_DISABLED,
+> +		MHI_CH_STATE_DISABLED
+> +	};
+> +	int dir;
+> +
+> +	/* Skip if it is a controller device */
+> +	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
+> +		return 0;
+> +
+> +	/* Reset both channels */
+> +	for (dir = 0; dir < 2; dir++) {
+> +		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
+> +
+> +		if (!mhi_chan)
+> +			continue;
+> +
+> +		/* Wake all threads waiting for completion */
+> +		write_lock_irq(&mhi_chan->lock);
+> +		mhi_chan->ccs = MHI_EV_CC_INVALID;
+> +		complete_all(&mhi_chan->completion);
+> +		write_unlock_irq(&mhi_chan->lock);
+> +
+> +		/* Set the channel state to disabled */
+> +		mutex_lock(&mhi_chan->mutex);
+> +		write_lock_irq(&mhi_chan->lock);
+> +		ch_state[dir] = mhi_chan->ch_state;
+> +		mhi_chan->ch_state = MHI_CH_STATE_SUSPENDED;
+> +		write_unlock_irq(&mhi_chan->lock);
+> +
+> +		mutex_unlock(&mhi_chan->mutex);
+> +	}
+> +
+> +	mhi_drv->remove(mhi_dev);
+> +
+> +	/* De-init channel if it was enabled */
+> +	for (dir = 0; dir < 2; dir++) {
+> +		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
+> +
+> +		if (!mhi_chan)
+> +			continue;
+> +
+> +		mutex_lock(&mhi_chan->mutex);
+> +
+> +		mhi_chan->ch_state = MHI_CH_STATE_DISABLED;
+> +
+> +		mutex_unlock(&mhi_chan->mutex);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +int mhi_driver_register(struct mhi_driver *mhi_drv)
+> +{
+> +	struct device_driver *driver = &mhi_drv->driver;
+> +
+> +	if (!mhi_drv->probe || !mhi_drv->remove)
+> +		return -EINVAL;
+> +
+> +	driver->bus = &mhi_bus_type;
+> +	driver->probe = mhi_driver_probe;
+> +	driver->remove = mhi_driver_remove;
+> +
+> +	return driver_register(driver);
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_driver_register);
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+You don't care about module owners of the driver?  Odd :(
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 16c0da97932c..bb5f678c869f 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -93,6 +93,12 @@ sleep_clk: sleep_clk {
- 		};
- 	};
- 
-+	firmware {
-+		scm {
-+			compatible = "qcom,scm-ipq806x", "qcom,scm";
-+		};
-+	};
-+
- 	soc: soc {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
--- 
-2.25.1
+(hint, you probably should...)
 
+greg k-h
