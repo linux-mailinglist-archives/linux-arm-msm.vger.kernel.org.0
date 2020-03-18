@@ -2,204 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C6F2189D17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 14:36:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AB7A189D43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 14:48:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbgCRNgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 09:36:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37344 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726777AbgCRNga (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 09:36:30 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727031AbgCRNsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Mar 2020 09:48:31 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:52955 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726851AbgCRNsb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Mar 2020 09:48:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584539310; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=e7D++PiZS2wNSyjtok+pyoNm2YTmDPQke/rQXBiRN5U=; b=v+0xVmqlyEYqGZJyr1xyBYtMgx9ufvvxVyzxWxuJlNHt6k+vRn+XeWj0edh5krwMdJrhg+4N
+ 9SsrKwWC7sZdwOAGXX2k0deJ6+AoSIrO5EJdkGRQs+MD287ynrdiT5nxS+NihuX7B1w3rp6G
+ qKwPw0PmqRyZEq35CoXw4sFE4Js=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7226a2.7f4612e53730-smtp-out-n03;
+ Wed, 18 Mar 2020 13:48:18 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 29F15C43636; Wed, 18 Mar 2020 13:48:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.8] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 59AC420774;
-        Wed, 18 Mar 2020 13:36:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584538588;
-        bh=gLmKwIgKSmCrplDshX3y+IGw0PE0LxDrFt/DCEBxXjs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=zGaBOO4+xpBSYAAQ/UJsNB0SxSxV8SnlT4VS0RM9M+df3P6npTCBJuMgF5cJPAuLP
-         6JI62qXCFctFbpjUospbeIPZLwe46H9vi9Nhie34SNsxuwBfLdk3j5yD/C3gbHh0Vo
-         gVYzWnYeuIFubNhyDEuw5mNwJFTiq2O328fSaqKE=
-Date:   Wed, 18 Mar 2020 14:36:26 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     arnd@arndb.de, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 03/16] bus: mhi: core: Add support for registering MHI
- client drivers
-Message-ID: <20200318133626.GA2801580@kroah.com>
-References: <20200220095854.4804-1-manivannan.sadhasivam@linaro.org>
- <20200220095854.4804-4-manivannan.sadhasivam@linaro.org>
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AB192C433CB;
+        Wed, 18 Mar 2020 13:48:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AB192C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V2 7/8] spi: spi-qcom-qspi: Add interconnect support
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        wsa@the-dreams.de, Mark Brown <broonie@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-spi@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-8-git-send-email-akashast@codeaurora.org>
+ <20200314005817.GN144492@google.com>
+ <3aeb3083-2a31-b269-510d-eb608ff14ce5@codeaurora.org>
+ <CAE=gft58QsgTCUHMHKJhcM9ZxAeMiY16CrbNv2HaTCRqwtmt7A@mail.gmail.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <e2ee1a60-a379-5c78-355a-64aad451a944@codeaurora.org>
+Date:   Wed, 18 Mar 2020 19:18:07 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200220095854.4804-4-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <CAE=gft58QsgTCUHMHKJhcM9ZxAeMiY16CrbNv2HaTCRqwtmt7A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 20, 2020 at 03:28:41PM +0530, Manivannan Sadhasivam wrote:
-> This commit adds support for registering MHI client drivers with the
-> MHI stack. MHI client drivers binds to one or more MHI devices inorder
-> to sends and receive the upper-layer protocol packets like IP packets,
-> modem control messages, and diagnostics messages over MHI bus.
-> 
-> This is based on the patch submitted by Sujeev Dias:
-> https://lkml.org/lkml/2018/7/9/987
-> 
-> Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
-> Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
-> [mani: splitted and cleaned up for upstream]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/init.c | 149 ++++++++++++++++++++++++++++++++++++
->  include/linux/mhi.h         |  39 ++++++++++
->  2 files changed, 188 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 6f24c21284ec..12e386862b3f 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -374,8 +374,157 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
->  	return mhi_dev;
->  }
->  
-> +static int mhi_driver_probe(struct device *dev)
-> +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	struct device_driver *drv = dev->driver;
-> +	struct mhi_driver *mhi_drv = to_mhi_driver(drv);
-> +	struct mhi_event *mhi_event;
-> +	struct mhi_chan *ul_chan = mhi_dev->ul_chan;
-> +	struct mhi_chan *dl_chan = mhi_dev->dl_chan;
-> +
-> +	if (ul_chan) {
-> +		/*
-> +		 * If channel supports LPM notifications then status_cb should
-> +		 * be provided
-> +		 */
-> +		if (ul_chan->lpm_notify && !mhi_drv->status_cb)
-> +			return -EINVAL;
-> +
-> +		/* For non-offload channels then xfer_cb should be provided */
-> +		if (!ul_chan->offload_ch && !mhi_drv->ul_xfer_cb)
-> +			return -EINVAL;
-> +
-> +		ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
-> +	}
-> +
-> +	if (dl_chan) {
-> +		/*
-> +		 * If channel supports LPM notifications then status_cb should
-> +		 * be provided
-> +		 */
-> +		if (dl_chan->lpm_notify && !mhi_drv->status_cb)
-> +			return -EINVAL;
-> +
-> +		/* For non-offload channels then xfer_cb should be provided */
-> +		if (!dl_chan->offload_ch && !mhi_drv->dl_xfer_cb)
-> +			return -EINVAL;
-> +
-> +		mhi_event = &mhi_cntrl->mhi_event[dl_chan->er_index];
-> +
-> +		/*
-> +		 * If the channel event ring is managed by client, then
-> +		 * status_cb must be provided so that the framework can
-> +		 * notify pending data
-> +		 */
-> +		if (mhi_event->cl_manage && !mhi_drv->status_cb)
-> +			return -EINVAL;
-> +
-> +		dl_chan->xfer_cb = mhi_drv->dl_xfer_cb;
-> +	}
-> +
-> +	/* Call the user provided probe function */
-> +	return mhi_drv->probe(mhi_dev, mhi_dev->id);
-> +}
-> +
-> +static int mhi_driver_remove(struct device *dev)
-> +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_driver *mhi_drv = to_mhi_driver(dev->driver);
-> +	struct mhi_chan *mhi_chan;
-> +	enum mhi_ch_state ch_state[] = {
-> +		MHI_CH_STATE_DISABLED,
-> +		MHI_CH_STATE_DISABLED
-> +	};
-> +	int dir;
-> +
-> +	/* Skip if it is a controller device */
-> +	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
-> +		return 0;
-> +
-> +	/* Reset both channels */
-> +	for (dir = 0; dir < 2; dir++) {
-> +		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
-> +
-> +		if (!mhi_chan)
-> +			continue;
-> +
-> +		/* Wake all threads waiting for completion */
-> +		write_lock_irq(&mhi_chan->lock);
-> +		mhi_chan->ccs = MHI_EV_CC_INVALID;
-> +		complete_all(&mhi_chan->completion);
-> +		write_unlock_irq(&mhi_chan->lock);
-> +
-> +		/* Set the channel state to disabled */
-> +		mutex_lock(&mhi_chan->mutex);
-> +		write_lock_irq(&mhi_chan->lock);
-> +		ch_state[dir] = mhi_chan->ch_state;
-> +		mhi_chan->ch_state = MHI_CH_STATE_SUSPENDED;
-> +		write_unlock_irq(&mhi_chan->lock);
-> +
-> +		mutex_unlock(&mhi_chan->mutex);
-> +	}
-> +
-> +	mhi_drv->remove(mhi_dev);
-> +
-> +	/* De-init channel if it was enabled */
-> +	for (dir = 0; dir < 2; dir++) {
-> +		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
-> +
-> +		if (!mhi_chan)
-> +			continue;
-> +
-> +		mutex_lock(&mhi_chan->mutex);
-> +
-> +		mhi_chan->ch_state = MHI_CH_STATE_DISABLED;
-> +
-> +		mutex_unlock(&mhi_chan->mutex);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +int mhi_driver_register(struct mhi_driver *mhi_drv)
-> +{
-> +	struct device_driver *driver = &mhi_drv->driver;
-> +
-> +	if (!mhi_drv->probe || !mhi_drv->remove)
-> +		return -EINVAL;
-> +
-> +	driver->bus = &mhi_bus_type;
-> +	driver->probe = mhi_driver_probe;
-> +	driver->remove = mhi_driver_remove;
-> +
-> +	return driver_register(driver);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_driver_register);
+Hi Evan,
 
-You don't care about module owners of the driver?  Odd :(
+On 3/18/2020 12:38 AM, Evan Green wrote:
+> On Tue, Mar 17, 2020 at 5:13 AM Akash Asthana <akashast@codeaurora.org> wrote:
+>> Hi Matthias,
+>>
+>> On 3/14/2020 6:28 AM, Matthias Kaehlcke wrote:
+>>> Hi,
+>>>
+>>> On Fri, Mar 13, 2020 at 06:42:13PM +0530, Akash Asthana wrote:
+>>>> Get the interconnect paths for QSPI device and vote according to the
+>>>> current bus speed of the driver.
+>>>>
+>>>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+>>>> ---
+>>>>    - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
+>>>>      path handle
+>>>>    - As per Matthias comment, added error handling for icc_set_bw call
+>>>>
+>>>>    drivers/spi/spi-qcom-qspi.c | 46 ++++++++++++++++++++++++++++++++++++++++++++-
+>>>>    1 file changed, 45 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+>>>> index 3c4f83b..ad48f43 100644
+>>>> --- a/drivers/spi/spi-qcom-qspi.c
+>>>> +++ b/drivers/spi/spi-qcom-qspi.c
+>>>> @@ -2,6 +2,7 @@
+>>>>    // Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
+>>>>
+>>>>    #include <linux/clk.h>
+>>>> +#include <linux/interconnect.h>
+>>>>    #include <linux/interrupt.h>
+>>>>    #include <linux/io.h>
+>>>>    #include <linux/module.h>
+>>>> @@ -139,7 +140,10 @@ struct qcom_qspi {
+>>>>       struct device *dev;
+>>>>       struct clk_bulk_data *clks;
+>>>>       struct qspi_xfer xfer;
+>>>> -    /* Lock to protect xfer and IRQ accessed registers */
+>>>> +    struct icc_path *icc_path_cpu_to_qspi;
+>>>> +    unsigned int avg_bw_cpu;
+>>>> +    unsigned int peak_bw_cpu;
+>>> This triplet is a recurring pattern, and is probably not limited to geni SE/QSPI.
+>>> On https://patchwork.kernel.org/patch/11436889/#23221925 I suggested the creation
+>>> of a geni SE specific struct, however adding a generic convenience struct to
+>>> 'linux/interconnect.h' might be the better solution:
+>>>
+>>> struct icc_client {
+>>>        struct icc_path *path;
+>>>        unsigned int avg_bw;
+>>>        unsigned int peak_bw;
+>>> };
+>>>
+>>> I'm sure there are better names for it, but this would be the idea.
+>> Yeah, I think introducing this to ICC header would be better solution.
+> +Georgi
+>
+> I'm not as convinced this structure is generally useful and belongs in
+> the interconnect core. The thing that strikes me as weird with putting
+> it in the core is now we're saving these values both inside and
+> outside the interconnect core.
+IIUC, you meant to say struct icc_req(inside icc_path) will be saving 
+avg_bw and peak_bw so no need to save it outside icc_path?
+>   In the GENI case here, we only really
+> need them to undo the 0 votes we cast during suspend. If "vote for 0
+> in suspend and whatever it was before at resume" is a recurring theme,
+> maybe the core should give us path_disable() and path_enable() calls
+> instead. I'm thinking out loud, maybe Georgi has some thoughts.
+>
+> Akash, for now if you want to avoid wading into a larger discussion
+> maybe just refactor to a common structure local to GENI.
 
-(hint, you probably should...)
+Ok
 
-greg k-h
+Thanks,
+
+Akash
+
+>
+>
+> -Evan
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
