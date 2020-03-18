@@ -2,106 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 53AD71897A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 10:11:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E1C1189874
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 10:48:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727177AbgCRJLB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 05:11:01 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:39452 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727113AbgCRJLB (ORCPT
+        id S1726933AbgCRJsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Mar 2020 05:48:01 -0400
+Received: from aserp2120.oracle.com ([141.146.126.78]:52106 "EHLO
+        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726786AbgCRJsB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 05:11:01 -0400
-Received: by mail-vs1-f66.google.com with SMTP id p7so13707712vso.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 02:10:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Z5Zpp1lwuKFsHZwyKtq5kZrgcIvyGzbMByBBkkzuDxo=;
-        b=pkpalXpFb+LL0W1iA6cUhuZFLFQQWCdIT3oY0LwzC4hspvtZVvFHSYVcP2yXDKjrKD
-         i1BD6uReLlgKC/zyVdUmwvNkjERphnlcbXdkUaIUrK5b3I0dcrrQ1qbIZLCJADdxIZSp
-         CtKBzRK6vS+GBJmKAxH7cUSC+IMpZyT9//fFOjqvlLxYJzndi22u6BRM/0rJ0w9jGniO
-         c9+RK6axNk/1Crwuh6WrmiTuHFPAUIbVhpZC+m4hGCjVJsLlG4iksQy6vmY1b8tnaQ/8
-         cVHLdJQQoDCXM/0mWrDUG8J1hSQadZzpNsvKXO/0TRyAXHBUENBwHVhVtHtKAPPdtyuc
-         B/Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Z5Zpp1lwuKFsHZwyKtq5kZrgcIvyGzbMByBBkkzuDxo=;
-        b=H2TkuRUsepnbqZTx1+AFBs2/g8rbMaGpBo+KN63T/SXr8A891sZzJRNpT3AioSKzle
-         UnwKe8/I4DE1vYTpXtdlCz+Bp1GaqRjjQgxLBtjejDP7tYmrY7VGmanyFCMX2corYpVh
-         f2OphcOmPBEJU4j7fBFhsQrjGvdNz/Qu2oS8o43QWVrOA/j9tHVXroO5bewOogZ6PEEm
-         RI8lO5QcgSHoveSwndZ+SX/nVgou/jqPhtxBvRHGWSR4iSw8fnDdJQrVdgWLKQjOctUh
-         uOqAoio5Sqv9oYQJqgCf1fXjwx5uNRtIppg8kIDRROvYa4V9boRxhFGGQZr0tPk1WTED
-         OZqg==
-X-Gm-Message-State: ANhLgQ1J0FZD2jdvSDXuLbiaJ+C3YJvD18vbWuYZqyvM7X1pVppgB6UO
-        y29L/ANANjcJwuCySHCwDfrK9NZFQdmLhz/BHEYVfw==
-X-Google-Smtp-Source: ADFU+vt11ShWCw4hpQ84mzHUvKXgXfobrzKPRozN+fntpbNeo4Ni35ZtpB5EIB9Vn3LrVZ0Zn5Iq8e6kqWTCDgf80T8=
-X-Received: by 2002:a67:69d5:: with SMTP id e204mr2123868vsc.159.1584522658467;
- Wed, 18 Mar 2020 02:10:58 -0700 (PDT)
+        Wed, 18 Mar 2020 05:48:01 -0400
+Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
+        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02I9cpI5079251;
+        Wed, 18 Mar 2020 09:47:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : mime-version : content-type; s=corp-2020-01-29;
+ bh=mNiBsc3ccmxXW4TUucRB5ax7Pch8UQ2P6Tuk5AciZMw=;
+ b=wnJFJvsy1LT1pWAd3aqFzKgSFchXJ2PU0EIiryAuzEI/ARa5eS1jW3N3vZEZLi/kPkoi
+ YvVju2iwMqTC/W79TyabOubzyuSDhuh8hmaJj0VBHjFbp5c0NHF9MJ1B2WqAjK/3evYr
+ kDE/Idpdiw5Uz+1es4wEw6ul0sXNV9dnX2EH2XIp/hMsTAyjMVIXTCL7sNKE0WgWkSJV
+ 7SWiLpuTW5dPCHXYqqTo5b/m/z1RW39DO3arIIzMzzxdAmUHttlw2XEfOpd6Q5ZsJ9s7
+ ycnMVP/sznifWv6R/PYsvEKR9k2dOg1lTnIPbf0qRpfnmaG5QAulo6DNiMG/dsRZOgjJ VA== 
+Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
+        by aserp2120.oracle.com with ESMTP id 2yrq7m1gv8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 18 Mar 2020 09:47:57 +0000
+Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
+        by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 02I9MU7O186581;
+        Wed, 18 Mar 2020 09:47:57 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by userp3020.oracle.com with ESMTP id 2ys9013vtc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 18 Mar 2020 09:47:57 +0000
+Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 02I9luXH026936;
+        Wed, 18 Mar 2020 09:47:56 GMT
+Received: from mwanda (/41.57.98.10)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 18 Mar 2020 02:47:55 -0700
+Date:   Wed, 18 Mar 2020 12:47:50 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     sibis@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [bug report] soc: qcom: Introduce Protection Domain Restart helpers
+Message-ID: <20200318094750.GA4617@mwanda>
 MIME-Version: 1.0
-References: <1584430804-8343-1-git-send-email-rkambl@codeaurora.org>
- <CAD=FV=VLZ4RQQuji=1kKE5EnqrpY0M=U_G8XigAWAaZ8mxc=eg@mail.gmail.com> <fc7f250e-aa85-0835-8bc4-8274235c74d0@codeaurora.org>
-In-Reply-To: <fc7f250e-aa85-0835-8bc4-8274235c74d0@codeaurora.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Wed, 18 Mar 2020 14:40:47 +0530
-Message-ID: <CAHLCerMCrNdKUmRww4EFctU8cojh6Fqhs7gpux3SNCSwYUBOvQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Changed polling-delay in
- Thermal-zones node
-To:     "Rajeshwari Ravindra Kamble (Temp)" <rkambl@codeaurora.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        sivaa@codeaurora.org, Sandeep Maheswaram <sanm@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9563 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxlogscore=999 mlxscore=0
+ adultscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=3
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2003180048
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9563 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 lowpriorityscore=0 suspectscore=3
+ adultscore=0 bulkscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
+ malwarescore=0 mlxscore=0 phishscore=0 impostorscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2003180048
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 11:49 AM Rajeshwari Ravindra Kamble (Temp)
-<rkambl@codeaurora.org> wrote:
->
->
-> On 3/17/2020 10:20 PM, Doug Anderson wrote:
->
-> Hi,
->
-> On Tue, Mar 17, 2020 at 12:42 AM Rajeshwari <rkambl@codeaurora.org> wrote:
->
-> Changed polling-delay and polling-delay-passive to zero as per
-> the requirement.
->
-> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 100 +++++++++++++++++------------------
->  1 file changed, 50 insertions(+), 50 deletions(-)
->
-> It probably wouldn't hurt to mention in the commit message that this
-> is because the thermal sensor interrupts are all hooked up and thus
-> the polling is not a useful thing to do.  ...but other than that:
->
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->
->
-> Hi Douglas
->
-> I didn't  get your comment.
->
-> Thanks,
-> Rajeshwari
+Hello Sibi Sankar,
 
-I think he means that you haven't mentioned WHY this patch is needed
-in the message. The reason you should mention is "to disable polling
-mode of the framework since interrupts for tsens are already
-configured."
+The patch fbe639b44a82: "soc: qcom: Introduce Protection Domain
+Restart helpers" from Mar 12, 2020, leads to the following static
+checker warning:
 
-Regards,
-Amit
+	drivers/soc/qcom/pdr_interface.c:158 pdr_register_listener()
+	warn: impossible condition '(resp.curr_state < (-((~0 >> 1)) - 1)) => (s32min-s32max < s32min)'
+
+drivers/soc/qcom/pdr_interface.c
+   145          ret = qmi_txn_wait(&txn, 5 * HZ);
+   146          if (ret < 0) {
+   147                  pr_err("PDR: %s register listener txn wait failed: %d\n",
+   148                         pds->service_path, ret);
+   149                  return ret;
+   150          }
+   151  
+   152          if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
+   153                  pr_err("PDR: %s register listener failed: 0x%x\n",
+   154                         pds->service_path, resp.resp.error);
+   155                  return ret;
+   156          }
+   157  
+   158          if ((int)resp.curr_state < INT_MIN || (int)resp.curr_state > INT_MAX)
+                    ^^^^                              ^^^^
+These are casted to int so they can't be outside of int range.
+
+   159                  pr_err("PDR: %s notification state invalid: 0x%x\n",
+   160                         pds->service_path, resp.curr_state);
+   161  
+   162          pds->state = resp.curr_state;
+   163  
+   164          return 0;
+   165  }
+
+regards,
+dan carpenter
