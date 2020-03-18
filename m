@@ -2,88 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 394BF18A78C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 23:05:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A923318A847
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 23:34:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727195AbgCRWEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 18:04:46 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:34968 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbgCRWEq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 18:04:46 -0400
-Received: by mail-il1-f194.google.com with SMTP id v6so369791ilq.2;
-        Wed, 18 Mar 2020 15:04:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nvP10y4co7+lz1ui5VSoxULGIs1uH9GMl57cIOt93KU=;
-        b=TfGqSLGcvxRaLB/n/SEe7qM8tPG13jeJcmhPCovd/ddGpDkufRPIgJCjX6WdTxjsW6
-         nINd0rOGmMsx8wMV5VlE9sNR985z6pLXDmDE0E3cHxcj/i7IStGIB9ShNlapF06cMiSK
-         pZcKloBwDyjPnkX+JjUMD/Wg9AuDRX/bZnbjpWAML1FhXUMeKG4AGQqzvthRntSBeUPs
-         wqAKZbB7nTKgky0RALaZew68KoiwgdU5Ot1t/g11u+LAOMd9HwQt7Q8n1l6xAKxmvzE7
-         0pImvPOQAZFFAXWN3lqcWAMN+HcnnMUg1npg5dTrZRHtQnOkO50P6zlen7ZFVdS0Sx/c
-         YPbg==
-X-Gm-Message-State: ANhLgQ20llxf9dajzhQ6e2cIDbuNuj2fIjK7Tk+MwRo//CcXPNnvpyRq
-        19cC09vu+l+sMnSspOgvqg==
-X-Google-Smtp-Source: ADFU+vtrY4dt+9MXe/DeJN43InzVxlzOGFVmFX635slbQ1fD96a4nEurmq+8jIxCKSegB6jUOLy0Og==
-X-Received: by 2002:a92:7f01:: with SMTP id a1mr254571ild.132.1584569084977;
-        Wed, 18 Mar 2020 15:04:44 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id p2sm62743iln.22.2020.03.18.15.04.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 15:04:44 -0700 (PDT)
-Received: (nullmailer pid 16608 invoked by uid 1000);
-        Wed, 18 Mar 2020 22:04:43 -0000
-Date:   Wed, 18 Mar 2020 16:04:43 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>, David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v6 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
- MSS clock bindings
-Message-ID: <20200318220443.GA16192@bogus>
-References: <1584211798-10332-1-git-send-email-tdas@codeaurora.org>
- <1584211798-10332-2-git-send-email-tdas@codeaurora.org>
+        id S1726801AbgCRWeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Mar 2020 18:34:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51274 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726623AbgCRWeG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Mar 2020 18:34:06 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2B80E2076F;
+        Wed, 18 Mar 2020 22:34:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584570845;
+        bh=wCFIzWLWMkiT8lTa8V+0C/JqIcP9mF/QSeauJauOzpI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jmjErUMUP3x8nQ2xrxHLZ7HcxmyYxXZuBqYoP0HKb8n1iNax7keZ66Z5nV2hT9Xwy
+         ZYI1GsHQyJsEab3G+3TvMJqIQu3rsUe1b4WZw0dapl4Hf1XBCMN5GmNgLQg8HCgPes
+         UaPg5INpoTdSpoqu9rNcUV9ovHMuUyc5w8bNNfLU=
+Date:   Wed, 18 Mar 2020 22:34:00 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     iommu@lists.linux-foundation.org, robin.murphy@arm.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Joerg Roedel <joro@8bytes.org>
+Subject: Re: [PATCH v5 2/5] iommu/arm-smmu: Add support for TTBR1
+Message-ID: <20200318223400.GA10304@willie-the-truck>
+References: <1580248819-12644-1-git-send-email-jcrouse@codeaurora.org>
+ <1580248819-12644-3-git-send-email-jcrouse@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1584211798-10332-2-git-send-email-tdas@codeaurora.org>
+In-Reply-To: <1580248819-12644-3-git-send-email-jcrouse@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 15 Mar 2020 00:19:56 +0530, Taniya Das wrote:
-> The Modem Subsystem clock provider have a bunch of generic properties
-> that are needed in a device tree. Add a YAML schemas for those.
+On Tue, Jan 28, 2020 at 03:00:16PM -0700, Jordan Crouse wrote:
+> Add support to enable TTBR1 if the domain requests it via the
+> DOMAIN_ATTR_SPLIT_TABLES attribute. If enabled by the hardware
+> and pagetable configuration the driver will configure the TTBR1 region
+> and program the domain pagetable on TTBR1. TTBR0 will be disabled.
 > 
-> Add clock ids for GCC MSS and MSS clocks which are required to bring
-> the modem out of reset.
+> After attaching the device the value of he domain attribute can
+> be queried to see if the split pagetables were successfully programmed.
+> The domain geometry will be updated as well so that the caller can
+> determine the active region for the pagetable that was programmed.
 > 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 > ---
->  .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,gcc-sc7180.h        |  7 ++-
->  include/dt-bindings/clock/qcom,mss-sc7180.h        | 12 +++++
->  3 files changed, 80 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
 > 
+>  drivers/iommu/arm-smmu.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
+>  drivers/iommu/arm-smmu.h | 22 ++++++++++++++++------
+>  2 files changed, 57 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> index 16c4b87..23b22fa 100644
+> --- a/drivers/iommu/arm-smmu.c
+> +++ b/drivers/iommu/arm-smmu.c
+> @@ -557,11 +557,17 @@ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
+>  			cb->ttbr[0] = pgtbl_cfg->arm_v7s_cfg.ttbr;
+>  			cb->ttbr[1] = 0;
+>  		} else {
+> -			cb->ttbr[0] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
+> -			cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID,
+> -						  cfg->asid);
+> -			cb->ttbr[1] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
+> -						 cfg->asid);
 
-My bot found errors running 'make dt_binding_check' on your patch:
+I think it would be clearer if you set the ASID in TTBR0 unconditionally
+here...
 
-Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml: $id: relative path/filename doesn't match actual path or filename
-	expected: http://devicetree.org/schemas/clock/qcom,sc7180-mss.yaml#
+> +			if (pgtbl_cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1) {
+> +				cb->ttbr[0] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
+> +							 cfg->asid);
+> +				cb->ttbr[1] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
+> +			} else {
+> +				cb->ttbr[0] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
+> +				cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID,
+> +							  cfg->asid);
 
-See https://patchwork.ozlabs.org/patch/1254940
-Please check and re-submit.
+... and then OR'd in the TTBR base here.
+
+> +				cb->ttbr[1] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
+> +							 cfg->asid);
+> +			}
+>  		}
+>  	} else {
+>  		cb->ttbr[0] = pgtbl_cfg->arm_lpae_s2_cfg.vttbr;
+> @@ -675,6 +681,7 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+>  	enum io_pgtable_fmt fmt;
+>  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+>  	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+> +	unsigned long quirks = 0;
+>  
+>  	mutex_lock(&smmu_domain->init_mutex);
+>  	if (smmu_domain->smmu)
+> @@ -743,6 +750,14 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+>  		oas = smmu->ipa_size;
+>  		if (cfg->fmt == ARM_SMMU_CTX_FMT_AARCH64) {
+>  			fmt = ARM_64_LPAE_S1;
+> +
+> +			/*
+> +			 * We are assuming that split pagetables will always use
+> +			 * SEP_UPSTREAM so we don't need to reduce the size of
+> +			 * the ias to account for the sign extension bit
+> +			 */
+> +			if (smmu_domain->split_pagetables)
+> +				quirks |= IO_PGTABLE_QUIRK_ARM_TTBR1;
+>  		} else if (cfg->fmt == ARM_SMMU_CTX_FMT_AARCH32_L) {
+>  			fmt = ARM_32_LPAE_S1;
+>  			ias = min(ias, 32UL);
+> @@ -812,6 +827,7 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+>  		.coherent_walk	= smmu->features & ARM_SMMU_FEAT_COHERENT_WALK,
+>  		.tlb		= smmu_domain->flush_ops,
+>  		.iommu_dev	= smmu->dev,
+> +		.quirks		= quirks,
+>  	};
+>  
+>  	if (smmu_domain->non_strict)
+> @@ -825,8 +841,15 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+>  
+>  	/* Update the domain's page sizes to reflect the page table format */
+>  	domain->pgsize_bitmap = pgtbl_cfg.pgsize_bitmap;
+> -	domain->geometry.aperture_end = (1UL << ias) - 1;
+> -	domain->geometry.force_aperture = true;
+> +
+> +	if (pgtbl_cfg.quirks & IO_PGTABLE_QUIRK_ARM_TTBR1) {
+> +		domain->geometry.aperture_start = ~0UL << ias;
+> +		domain->geometry.aperture_end = ~0UL;
+> +	} else {
+> +		domain->geometry.aperture_end = (1UL << ias) - 1;
+> +		domain->geometry.force_aperture = true;
+> +		smmu_domain->split_pagetables = false;
+> +	}
+
+Why do you only force the aperture for TTBR0?
+
+> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+> index 8d1cd54..53053fd 100644
+> --- a/drivers/iommu/arm-smmu.h
+> +++ b/drivers/iommu/arm-smmu.h
+> @@ -172,6 +172,7 @@ enum arm_smmu_cbar_type {
+>  #define ARM_SMMU_TCR_SH0		GENMASK(13, 12)
+>  #define ARM_SMMU_TCR_ORGN0		GENMASK(11, 10)
+>  #define ARM_SMMU_TCR_IRGN0		GENMASK(9, 8)
+> +#define ARM_SMMU_TCR_EPD0		BIT(7)
+>  #define ARM_SMMU_TCR_T0SZ		GENMASK(5, 0)
+>  
+>  #define ARM_SMMU_VTCR_RES1		BIT(31)
+> @@ -343,16 +344,25 @@ struct arm_smmu_domain {
+>  	struct mutex			init_mutex; /* Protects smmu pointer */
+>  	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
+>  	struct iommu_domain		domain;
+> +	bool				split_pagetables;
+>  };
+>  
+>  static inline u32 arm_smmu_lpae_tcr(struct io_pgtable_cfg *cfg)
+>  {
+> -	return ARM_SMMU_TCR_EPD1 |
+> -	       FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
+> -	       FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
+> -	       FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
+> -	       FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
+> -	       FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
+> +	u32 tcr = FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
+> +		FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
+> +		FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
+> +		FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
+> +		FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
+> +
+> +       /*
+> +	* When TTBR1 is selected shift the TCR fields by 16 bits and disable
+> +	* translation in TTBR0
+> +	*/
+> +	if (cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1)
+> +		return (tcr << 16) | ARM_SMMU_TCR_EPD0;
+> +
+> +	return tcr | ARM_SMMU_TCR_EPD1;
+>  }
+
+Please give this a single return statement, i.e.
+
+	if (cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1)
+		tcr = (tcr << 16) | ARM_SMMU_TCR_EPD0;
+	else
+		tcr |= ARM_SMMU_TCR_EPD1;
+
+	return tcr;
+
+Will
