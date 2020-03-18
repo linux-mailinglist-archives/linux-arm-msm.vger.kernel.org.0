@@ -2,152 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B28B8189796
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 10:08:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53AD71897A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 10:11:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727415AbgCRJI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 05:08:29 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33383 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727113AbgCRJI3 (ORCPT
+        id S1727177AbgCRJLB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Mar 2020 05:11:01 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:39452 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727113AbgCRJLB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 05:08:29 -0400
-Received: by mail-pl1-f196.google.com with SMTP id g18so98149plq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 02:08:27 -0700 (PDT)
+        Wed, 18 Mar 2020 05:11:01 -0400
+Received: by mail-vs1-f66.google.com with SMTP id p7so13707712vso.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 02:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/Tz2TCBJLosFvMQuiEOmNBTTJaUHSMY5x8obUhagqkE=;
-        b=VOuHeVGSbEZWE2VKzMs94drnC1PuaM51fUd3ZUT9z76t1g70Iys5H5QRoq/3I/rqbk
-         TtBaTmIaHPvKxjs4BBcJCISqhPiRs1D3wqmPWxslYm7fjmGJHUCgie0JBP60h2vkIUhq
-         OzAz6jxgyKHNehFiXpGjLHkynvcTOV2kRdey+HOTyLHXjNVPrBH9Sr2+eKef96De9fZ4
-         gBhC3NTaL5d3CGmg9E6P2SNL9Hw7Y55pDgZkIRJed1o/baoCFB8LgEtt9Bn4dvhL/wWZ
-         oe5ERNbWiATIyDsgJOoRCZv6Wb0Aa77uR9P+ruhxWUtRac8Oos82KfBdbp5G9tihDkAG
-         i4Pg==
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Z5Zpp1lwuKFsHZwyKtq5kZrgcIvyGzbMByBBkkzuDxo=;
+        b=pkpalXpFb+LL0W1iA6cUhuZFLFQQWCdIT3oY0LwzC4hspvtZVvFHSYVcP2yXDKjrKD
+         i1BD6uReLlgKC/zyVdUmwvNkjERphnlcbXdkUaIUrK5b3I0dcrrQ1qbIZLCJADdxIZSp
+         CtKBzRK6vS+GBJmKAxH7cUSC+IMpZyT9//fFOjqvlLxYJzndi22u6BRM/0rJ0w9jGniO
+         c9+RK6axNk/1Crwuh6WrmiTuHFPAUIbVhpZC+m4hGCjVJsLlG4iksQy6vmY1b8tnaQ/8
+         cVHLdJQQoDCXM/0mWrDUG8J1hSQadZzpNsvKXO/0TRyAXHBUENBwHVhVtHtKAPPdtyuc
+         B/Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/Tz2TCBJLosFvMQuiEOmNBTTJaUHSMY5x8obUhagqkE=;
-        b=iI5YDz/cqWa2OSUsNji+8UNaAbZfGE6G74yzmia09LX9z3PW6yVBKmWFY1ODREJVeE
-         twiUFRTokYbyoK+WzrQQCixjBkppeAz1RtZ5D4Qb/YBT6iKiyCt0RZiSyL8cweGlNkPP
-         H3X1AMlUgK2B/PXFV+uV+FQVCTptJU4yWuonaEIFKgj1dTfgGFwTyA2yMiQ9hh0O6yvw
-         56JORiCm+MdWcuLXAbpXPVmCHfzZvhVF2bkZMigrJAcvfl72EFinkBxgQsctm61xjkDe
-         jwrZMGV6h92Jcfe1mnBu2AbDU2SkBtP3trnk26a4zTQrrlUQj/IsWZ9QEK1YFKC+oQFE
-         RQDg==
-X-Gm-Message-State: ANhLgQ3RTFEcDkQ5c9CnLJ9nKsKCu6u3Tf+O4yGv5FbwiyuldkzMzM+E
-        6vQexJAAh5taSHjI9mSDviXVC37Lfqc=
-X-Google-Smtp-Source: ADFU+vteaWEM0j3A/aF4401U3on0RbmVqXgvFPxU04fll4tf52yVLpO3JpSbWnSrhSmTz+1e2S7GQw==
-X-Received: by 2002:a17:902:a5c4:: with SMTP id t4mr2967798plq.242.1584522506555;
-        Wed, 18 Mar 2020 02:08:26 -0700 (PDT)
-Received: from localhost ([103.195.202.108])
-        by smtp.gmail.com with ESMTPSA id x18sm5920560pfo.148.2020.03.18.02.08.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 02:08:25 -0700 (PDT)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, sibis@codeaurora.org,
-        swboyd@chromium.org, dianders@chromium.org,
-        Andy Gross <agross@kernel.org>
-Cc:     devicetree@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sc7180: Fix cpu compatible
-Date:   Wed, 18 Mar 2020 14:38:17 +0530
-Message-Id: <2526d2b2907116d1bb6f7edd194226eb7e24c333.1584516925.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cd0f3d35ca0fc2944fd97e030a28318ff82dd5c1.1584516925.git.amit.kucheria@linaro.org>
-References: <cd0f3d35ca0fc2944fd97e030a28318ff82dd5c1.1584516925.git.amit.kucheria@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z5Zpp1lwuKFsHZwyKtq5kZrgcIvyGzbMByBBkkzuDxo=;
+        b=H2TkuRUsepnbqZTx1+AFBs2/g8rbMaGpBo+KN63T/SXr8A891sZzJRNpT3AioSKzle
+         UnwKe8/I4DE1vYTpXtdlCz+Bp1GaqRjjQgxLBtjejDP7tYmrY7VGmanyFCMX2corYpVh
+         f2OphcOmPBEJU4j7fBFhsQrjGvdNz/Qu2oS8o43QWVrOA/j9tHVXroO5bewOogZ6PEEm
+         RI8lO5QcgSHoveSwndZ+SX/nVgou/jqPhtxBvRHGWSR4iSw8fnDdJQrVdgWLKQjOctUh
+         uOqAoio5Sqv9oYQJqgCf1fXjwx5uNRtIppg8kIDRROvYa4V9boRxhFGGQZr0tPk1WTED
+         OZqg==
+X-Gm-Message-State: ANhLgQ1J0FZD2jdvSDXuLbiaJ+C3YJvD18vbWuYZqyvM7X1pVppgB6UO
+        y29L/ANANjcJwuCySHCwDfrK9NZFQdmLhz/BHEYVfw==
+X-Google-Smtp-Source: ADFU+vt11ShWCw4hpQ84mzHUvKXgXfobrzKPRozN+fntpbNeo4Ni35ZtpB5EIB9Vn3LrVZ0Zn5Iq8e6kqWTCDgf80T8=
+X-Received: by 2002:a67:69d5:: with SMTP id e204mr2123868vsc.159.1584522658467;
+ Wed, 18 Mar 2020 02:10:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1584430804-8343-1-git-send-email-rkambl@codeaurora.org>
+ <CAD=FV=VLZ4RQQuji=1kKE5EnqrpY0M=U_G8XigAWAaZ8mxc=eg@mail.gmail.com> <fc7f250e-aa85-0835-8bc4-8274235c74d0@codeaurora.org>
+In-Reply-To: <fc7f250e-aa85-0835-8bc4-8274235c74d0@codeaurora.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Wed, 18 Mar 2020 14:40:47 +0530
+Message-ID: <CAHLCerMCrNdKUmRww4EFctU8cojh6Fqhs7gpux3SNCSwYUBOvQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Changed polling-delay in
+ Thermal-zones node
+To:     "Rajeshwari Ravindra Kamble (Temp)" <rkambl@codeaurora.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        sivaa@codeaurora.org, Sandeep Maheswaram <sanm@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-"arm,armv8" compatible should only be used for software models. Replace
-it with the real cpu type.
+On Wed, Mar 18, 2020 at 11:49 AM Rajeshwari Ravindra Kamble (Temp)
+<rkambl@codeaurora.org> wrote:
+>
+>
+> On 3/17/2020 10:20 PM, Doug Anderson wrote:
+>
+> Hi,
+>
+> On Tue, Mar 17, 2020 at 12:42 AM Rajeshwari <rkambl@codeaurora.org> wrote:
+>
+> Changed polling-delay and polling-delay-passive to zero as per
+> the requirement.
+>
+> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 100 +++++++++++++++++------------------
+>  1 file changed, 50 insertions(+), 50 deletions(-)
+>
+> It probably wouldn't hurt to mention in the commit message that this
+> is because the thermal sensor interrupts are all hooked up and thus
+> the polling is not a useful thing to do.  ...but other than that:
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>
+>
+> Hi Douglas
+>
+> I didn't  get your comment.
+>
+> Thanks,
+> Rajeshwari
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+I think he means that you haven't mentioned WHY this patch is needed
+in the message. The reason you should mention is "to disable polling
+mode of the framework since interrupts for tsens are already
+configured."
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 8011c5fe2a31..a01dfefd90be 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -83,7 +83,7 @@
- 
- 		CPU0: cpu@0 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-@@ -100,7 +100,7 @@
- 
- 		CPU1: cpu@100 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x100>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_100>;
-@@ -114,7 +114,7 @@
- 
- 		CPU2: cpu@200 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x200>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_200>;
-@@ -128,7 +128,7 @@
- 
- 		CPU3: cpu@300 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x300>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_300>;
-@@ -142,7 +142,7 @@
- 
- 		CPU4: cpu@400 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x400>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_400>;
-@@ -156,7 +156,7 @@
- 
- 		CPU5: cpu@500 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x500>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_500>;
-@@ -170,7 +170,7 @@
- 
- 		CPU6: cpu@600 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x600>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_600>;
-@@ -184,7 +184,7 @@
- 
- 		CPU7: cpu@700 {
- 			device_type = "cpu";
--			compatible = "arm,armv8";
-+			compatible = "qcom,kryo468";
- 			reg = <0x0 0x700>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_700>;
--- 
-2.20.1
-
+Regards,
+Amit
