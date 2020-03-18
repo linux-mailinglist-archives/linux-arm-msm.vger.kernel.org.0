@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 004281894ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 05:30:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88AFD1894F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2020 05:30:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726994AbgCREaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 00:30:10 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:45333 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726871AbgCREaK (ORCPT
+        id S1727029AbgCREaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Mar 2020 00:30:18 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:55872 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727048AbgCREaR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 00:30:10 -0400
+        Wed, 18 Mar 2020 00:30:17 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584505810; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1584505817; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=MSw4xVYEsk71EtF3fzdgtkp0pHYtQe4rRnmOGgCIreI=; b=Dl87vE/Fghp+IaWJWuZTMV9MpHGVkVtNEKfarPwbQP3YZD5jV+Pc0Taitfhzj2BYtD5GxKcP
- F3dJfsGix0J/pizHwv+SJjbuLwks87LN7JH2tszC+Mc6+cysaSrU+v+opUnMQlMKnZV1df7W
- 7U5Bpu6ddLXbrQ2jcrAZMccPKGk=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=AQurlkgWkldGIbYVlBgGWYFJkyW2IsTVg7EXKiXNeH0=; b=SP1behJx02NmMdFSVgmowrAh5QQZR+ASzTnGhG57zK1OZRrmTs3CfeCjrRKpUNrjC0DruBgE
+ R1Qjk3JK6kMJJ4UOjDTbBVeDx5r1TN95y6u592LaZ31xl1/jTj9v3IJpgmJeQyAomewTeZI/
+ gS1SRisdOG/z4FRI0VmDAVqJnmw=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e71a3c6.7f2fc4bec6c0-smtp-out-n05;
- Wed, 18 Mar 2020 04:29:58 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e71a3c9.7fc57266c3b0-smtp-out-n01;
+ Wed, 18 Mar 2020 04:30:01 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 46446C432C2; Wed, 18 Mar 2020 04:29:57 +0000 (UTC)
+        id 910AFC43637; Wed, 18 Mar 2020 04:30:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 95924C43637;
-        Wed, 18 Mar 2020 04:29:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 95924C43637
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 37FE8C44791;
+        Wed, 18 Mar 2020 04:29:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 37FE8C44791
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
 From:   Maulik Shah <mkshah@codeaurora.org>
@@ -45,10 +45,10 @@ To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
         ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>, devicetree@vger.kernel.org
-Subject: [PATCH v5 3/4] arm64: dts: qcom: sc7180: Enable SoC sleep stats
-Date:   Wed, 18 Mar 2020 09:59:17 +0530
-Message-Id: <1584505758-21037-4-git-send-email-mkshah@codeaurora.org>
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v5 4/4] arm64: defconfig: Enable SoC sleep stats driver
+Date:   Wed, 18 Mar 2020 09:59:18 +0530
+Message-Id: <1584505758-21037-5-git-send-email-mkshah@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1584505758-21037-1-git-send-email-mkshah@codeaurora.org>
 References: <1584505758-21037-1-git-send-email-mkshah@codeaurora.org>
@@ -57,43 +57,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for SoC sleep stats driver which provides various
-low power mode stats.
+Enable SoC sleep stats driver. The driver gives statistics for
+various low power modes on Qualcomm Technologies, Inc. (QTI) SoCs.
 
-Also update the reg size of aoss_qmp device to 0x400.
-
-Cc: devicetree@vger.kernel.org
 Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 253274d..0eb6695 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1610,7 +1610,7 @@
- 
- 		aoss_qmp: qmp@c300000 {
- 			compatible = "qcom,sc7180-aoss-qmp";
--			reg = <0 0x0c300000 0 0x100000>;
-+			reg = <0 0x0c300000 0 0x400>;
- 			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
- 			mboxes = <&apss_shared 0>;
- 
-@@ -1618,6 +1618,11 @@
- 			#power-domain-cells = <1>;
- 		};
- 
-+		rpmh-sleep-stats@c3f0000 {
-+			compatible = "qcom,rpmh-sleep-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 5f15901..6228177 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -794,6 +794,7 @@ CONFIG_QCOM_SMD_RPM=y
+ CONFIG_QCOM_SMP2P=y
+ CONFIG_QCOM_SMSM=y
+ CONFIG_QCOM_SOCINFO=m
++CONFIG_QCOM_SOC_SLEEP_STATS=m
+ CONFIG_ARCH_R8A774A1=y
+ CONFIG_ARCH_R8A774B1=y
+ CONFIG_ARCH_R8A774C0=y
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
