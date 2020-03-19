@@ -2,148 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F22E618BAFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 16:23:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 659FC18BCD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 17:40:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727720AbgCSPXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 11:23:34 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:44414 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727753AbgCSPXd (ORCPT
+        id S1727302AbgCSQku (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 12:40:50 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46683 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727928AbgCSQks (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 11:23:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584631413; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=+h/aH/tnk8MqVRqSLVDvUiUIVZnrq7v6U7JA2ycdYoE=; b=u9hXHaaNBS5dlfiWMOhxuwXMFKUCUP2BRqrLxMShtDHCQe6rIb3Qt5nlj1k2jcZ3TjQLetZC
- 3VcCFYoxjtjsAQZZ0LbPhcFYTTuQ23dttu6CL2W0513nxulNKXHSCTPW65iSoyQIr/zZTKTZ
- G3X2/7i2Sy61wFpXlFID0xLmwEA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e738e6e.7fed6ca99538-smtp-out-n04;
- Thu, 19 Mar 2020 15:23:26 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D9812C43637; Thu, 19 Mar 2020 15:23:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67016C433D2;
-        Thu, 19 Mar 2020 15:23:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67016C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 19 Mar 2020 09:23:22 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Will Deacon <will@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v1 2/6] arm/smmu: Add auxiliary domain support for
- arm-smmuv2
-Message-ID: <20200319152322.GA25898@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" <linux-arm-kernel@lists.infradead.org>
-References: <1580249770-1088-1-git-send-email-jcrouse@codeaurora.org>
- <1580249770-1088-3-git-send-email-jcrouse@codeaurora.org>
- <20200318224840.GA10796@willie-the-truck>
- <CAF6AEGu-hj6=3rsCe5XeBq_ffoq9VFmL+ycrQ8N=iv89DZf=8Q@mail.gmail.com>
+        Thu, 19 Mar 2020 12:40:48 -0400
+Received: by mail-pl1-f195.google.com with SMTP id r3so1273971pls.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 09:40:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=H3Qh9MRFkrW7eubE7g/PTYkKSwQYsQfKFn0ldHiI/ek=;
+        b=gyu9c7mhkMJwzKMXvge9gD7MV1dSFaFcFzb2ZrPARvKculD8xwliJTUIG0jz2mzDvj
+         ypfN9/7QKnlAN//K6livKuNk+6ySjO8cuOakLFVVFVByS7WyaiNEnOh3hgNbIREJ6TEY
+         L/YFr6suGa8wTINd1rVecbLo8+hrZV8BG02NE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=H3Qh9MRFkrW7eubE7g/PTYkKSwQYsQfKFn0ldHiI/ek=;
+        b=SzwZJmrVXRp92JxRr5d5DnYiqOZokS6Lj3HfNO8gX8gDxGk92e/O0m7vkkyq8by/1Q
+         ywn+Rcv7HbMMNmf0Abt5gllMxvFlgClybpPwKwgRz3W43wNi3sqrWxtzrHwWU56BcDfy
+         T2YrcyHlyG7Roq2AG6DvLZvh6p5YPBADwWOvEHND3mXM1ltmIuAWHYn1rs/NCEZjzbIC
+         Pa/MpN1w8qbwbJloDgtenK41iOkuTcbmlZiqN78wp8OcV4zwRZPfHDiLdGVzrYwYQ8Uy
+         tQDP9hfZCb9rSmEu81nOHcD6B222apc32x5YLXMxnOdUeUddOqthc30YL1/FdkO3oOdh
+         7qQQ==
+X-Gm-Message-State: ANhLgQ2V6FLRC3BgNbVyytwPz4RKXQe6OqCeJLAk71MvXvnQEcsK6UZK
+        yl2gkapkMe162SMNbrIy8Vj1Yc58vgo=
+X-Google-Smtp-Source: ADFU+vt8w3kcLzL1YLsszOfH8enVFIKV6/Gk0PHjqHG+oxg3AKEfxOns8NIo8vKyf0a9X96F1vw7ZA==
+X-Received: by 2002:a17:90a:bc06:: with SMTP id w6mr4645048pjr.67.1584636047303;
+        Thu, 19 Mar 2020 09:40:47 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id u18sm3063339pfl.40.2020.03.19.09.40.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 09:40:46 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGu-hj6=3rsCe5XeBq_ffoq9VFmL+ycrQ8N=iv89DZf=8Q@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <aa6aa234-e2d1-bdcd-0f0e-64b2a7e497d3@linaro.org>
+References: <20200311191501.8165-1-bryan.odonoghue@linaro.org> <20200311191501.8165-3-bryan.odonoghue@linaro.org> <158458013177.152100.17920784952083533825@swboyd.mtv.corp.google.com> <aa6aa234-e2d1-bdcd-0f0e-64b2a7e497d3@linaro.org>
+Subject: Re: [PATCH 2/7] dt-bindings: usb: dwc3: Add a gpio-usb-connector example
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org, jackp@codeaurora.org, robh@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, balbi@kernel.org,
+        gregkh@linuxfoundation.org, linux-usb@vger.kernel.org
+Date:   Thu, 19 Mar 2020 09:40:45 -0700
+Message-ID: <158463604559.152100.9219030962819234620@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 04:43:07PM -0700, Rob Clark wrote:
-> On Wed, Mar 18, 2020 at 3:48 PM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Tue, Jan 28, 2020 at 03:16:06PM -0700, Jordan Crouse wrote:
-> > > Support auxiliary domains for arm-smmu-v2 to initialize and support
-> > > multiple pagetables for a single SMMU context bank. Since the smmu-v2
-> > > hardware doesn't have any built in support for switching the pagetable
-> > > base it is left as an exercise to the caller to actually use the pagetable.
-> > >
-> > > Aux domains are supported if split pagetable (TTBR1) support has been
-> > > enabled on the master domain.  Each auxiliary domain will reuse the
-> > > configuration of the master domain. By default the a domain with TTBR1
-> > > support will have the TTBR0 region disabled so the first attached aux
-> > > domain will enable the TTBR0 region in the hardware and conversely the
-> > > last domain to be detached will disable TTBR0 translations.  All subsequent
-> > > auxiliary domains create a pagetable but not touch the hardware.
-> > >
-> > > The leaf driver will be able to query the physical address of the
-> > > pagetable with the DOMAIN_ATTR_PTBASE attribute so that it can use the
-> > > address with whatever means it has to switch the pagetable base.
-> > >
-> > > Following is a pseudo code example of how a domain can be created
-> > >
-> > >  /* Check to see if aux domains are supported */
-> > >  if (iommu_dev_has_feature(dev, IOMMU_DEV_FEAT_AUX)) {
-> > >        iommu = iommu_domain_alloc(...);
-> > >
-> > >        if (iommu_aux_attach_device(domain, dev))
-> > >                return FAIL;
-> > >
-> > >       /* Save the base address of the pagetable for use by the driver
-> > >       iommu_domain_get_attr(domain, DOMAIN_ATTR_PTBASE, &ptbase);
-> > >  }
-> >
-> > I'm not really understanding what the pagetable base gets used for here and,
-> > to be honest with you, the whole thing feels like a huge layering violation
-> > with the way things are structured today. Why doesn't the caller just
-> > interface with io-pgtable directly?
-> >
-> > Finally, if we need to support context-switching TTBR0 for a live domain
-> > then that code really needs to live inside the SMMU driver because the
-> > ASID and TLB management necessary to do that safely doesn't belong anywhere
-> > else.
-> 
-> Hi Will,
-> 
-> We do in fact need live domain switching, that is really the whole
-> point.  The GPU CP (command processor/parser) is directly updating
-> TTBR0 and triggering TLB flush, asynchronously from the CPU.
+Quoting Bryan O'Donoghue (2020-03-19 08:22:14)
+> On 19/03/2020 01:08, Stephen Boyd wrote:
+> >=20
+> > Maybe it should be a virtual node at the root of the DT if it's GPIO
+> > controlled? And then the phy can be connected to the usb connector
+> > through the graph binding.
+>=20
+> Graph binding can probably work.
+>=20
+> Re: the PHY.
+>=20
+> For myself the hardware model is
+>=20
+> Connector -> PHY -> Host controller -> Host controller wrapper
+>=20
+> Only
+>=20
+> Connector -> Host controller -> Host controller wrapper
+>=20
+> care about the USB role though.
+>=20
+> If your PHY did care about the role, you'd really need to write a=20
+> connector/phy type-c type driver, to detect the state and toggle your=20
+> PHY bits before doing usb_role_switch_set_role() back to DWC3.
+>=20
 
-Right. This is entirely done in hardware with a GPU that has complete access to
-the context bank registers. All the driver does is send the PTBASE to the
-command stream see [1] and especially [2] (look for CP_SMMU_TABLE_UPDATE).
+Yes some PHYs do care about the role. Sometimes they have to toggle some
+bit to switch between host and gadget mode for example. I haven't fully
+read this patch series but maybe the PHY can be the one that controls
+the gpio for the connector?
 
-As for interacting with the io-pgtable directly I would love to do that but it
-would need some new infrastructure to either pull the io-pgtable from the aux
-domain or to create an io-pgtable ourselves and pass it for use by the aux
-domain. I'm not sure if that is better for the layering violation.
-
-> And I think the answer about ASID is easy (on current hw).. it must be zero[*].
-
-Right now the GPU microcode still uses TLBIALL. I want to assign each new aux
-domain its own ASID in the hopes that we could some day change that but for now
-having a uinque ASID doesn't help.
-
-Jordan
-
-[1] https://patchwork.freedesktop.org/patch/351089/
-[2] https://patchwork.freedesktop.org/patch/351090/
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+We (ChromeOS) need to integrate the type-c connector class, etc. on
+sc7180 with the dwc3 driver and the current thinking has the type-c
+connectors underneath the cros_ec node because the EC is the type-c
+manager. The EC will have a type-c driver associated with it.
