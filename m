@@ -2,133 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E3CC318BF39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 19:19:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0524A18BF9E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 19:48:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727187AbgCSST3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 14:19:29 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46179 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbgCSST2 (ORCPT
+        id S1727417AbgCSSso (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 14:48:44 -0400
+Received: from gateway32.websitewelcome.com ([192.185.145.123]:24102 "EHLO
+        gateway32.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726867AbgCSSso (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 14:19:28 -0400
-Received: by mail-ed1-f68.google.com with SMTP id ca19so3880651edb.13;
-        Thu, 19 Mar 2020 11:19:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VUnLPRFaXYEyBMAu2KerTyrQvIYIc8Adcw0gQEvJv1g=;
-        b=lgXZcIvA+kWlIoPJziys10SY+bpa92mglfzT+MBUMHhjvOu9zbr2UUe9GFdhoqCKEx
-         B2NIDVBcMACw4/h86uBHZHdkFxDKlqEO3RbQHlJdpwsvDLoLyM8g0h35hwOW0kHwRTZb
-         b+b40DXCqdQgTO6FtOInYhhcpCumJvr6veMoQTtS6fqGKXuIECoUzAGrPeZPke+MO8mp
-         dWjl5fe5YasL/G+bdIQlOTbWyUCjDY1j2AUthyCd7vClmH+ulbx8MjbtSHCV73KXo+FK
-         46rgB5WN9EfrklB/kJOGc+zwo6/WKRKM7nyRAOVOIWkNQd8JsfRECJmTIBfutDRonDsD
-         aIsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VUnLPRFaXYEyBMAu2KerTyrQvIYIc8Adcw0gQEvJv1g=;
-        b=gvaumCxT2/OeG9g3HQoedlgovkOHRbxwiwzksVpBe7S7sUXkT51pAVwL2PEAcs4s4M
-         /pB9ifHfPyWsj2zlUexH8CYCG90geGNFvRyJI3PhOcf726C/dZ/XSSM5bBvDhWJzlHhi
-         vmvD6nkYH1vetwpUFNMIoNtzxPb4LiXrXSuFOVa9tYdR+7tty8o1BoiOGuBnLZDFLAli
-         e9tQOaRVizu7ub+wG+h1O5vHQARENZqAgPAnoOdqEyRlEXQcXsD62RuHssZuVauXC0vg
-         Y4qQkeDm+6SUGUtD0acCtKG25PWMXnWTkl16Xkh2yRMVEF3s7AcXZbhdLI2iQlpaD/B/
-         1WnA==
-X-Gm-Message-State: ANhLgQ1RVWZ+kwaCMp45MwUpXUhfndp+XEwJIeUz7Vddw0L4TwwECy/i
-        g3o16pz3XzKV4a+FTMC01eqLGE1Adk1kr8H3fA4=
-X-Google-Smtp-Source: ADFU+vud33ZNOWzEZL7qH7qtQzJyc7BdVgN4hxJA6xo79YTL1rHt/UMu58hsnUr03cPz9Jge8sTfUNaovlby3KRdpbE=
-X-Received: by 2002:a05:6402:8ca:: with SMTP id d10mr4157650edz.362.1584641965480;
- Thu, 19 Mar 2020 11:19:25 -0700 (PDT)
+        Thu, 19 Mar 2020 14:48:44 -0400
+Received: from cm16.websitewelcome.com (cm16.websitewelcome.com [100.42.49.19])
+        by gateway32.websitewelcome.com (Postfix) with ESMTP id B0DCF80989
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 13:48:40 -0500 (CDT)
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with SMTP
+        id F0DgjUMqa8vkBF0DgjLQGg; Thu, 19 Mar 2020 13:48:40 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=salDAP8ehHVtnoEEty5Lr7QuUQoBYqHUOZ9uNY3e1ZY=; b=QwtrUKuoVfkrES4TwRleFDy94M
+        aJ+tp9jr48joTJd7HG7UVcgVKan0i4lpwYXgJwGeGTcQ7OjColOH7y4UmQ+M0fqY+hFAHnxI21cZF
+        fe6Gn/BrMbtq/RjHIeKxorufNWKHE0psCAHvzo7E56VvIYal0JmyFttYgsMe0cON2FMNnY2kfW6tD
+        MvyKLNrso7A20RyREcX1ug3bbdBHhalPL3iYaGdmrjLWF+Emwp6jI+sHeqkXQbqfYGWU3ZAueTJSJ
+        PWlrePfL66XsmFAF6sDHlHIVYVDCGpCykzuVwpuPmRKvdo3UuUYtiYZ23qVgGgdEch0QnGghSc85M
+        qOasqU0w==;
+Received: from cablelink-189-218-116-241.hosts.intercable.net ([189.218.116.241]:51748 helo=embeddedor)
+        by gator4166.hostgator.com with esmtpa (Exim 4.92)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1jF0De-000G3A-Om; Thu, 19 Mar 2020 13:48:38 -0500
+Date:   Thu, 19 Mar 2020 13:48:38 -0500
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Subject: [PATCH] thermal: qcom: tsens.h: Replace zero-length array with
+ flexible-array member
+Message-ID: <20200319184838.GA25767@embeddedor.com>
 MIME-Version: 1.0
-References: <20200319043741.3338842-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20200319043741.3338842-1-bjorn.andersson@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 19 Mar 2020 11:19:15 -0700
-Message-ID: <CAF6AEGtvSZOp48hyrBUzqQLV6+twtuy6k6MLimz6fhC-dqWEVA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Don't attempt to attach HDMI bridge twice
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 189.218.116.241
+X-Source-L: No
+X-Exim-ID: 1jF0De-000G3A-Om
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: cablelink-189-218-116-241.hosts.intercable.net (embeddedor) [189.218.116.241]:51748
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 6
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 9:39 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> With the introduction of '3ef2f119bd3e ("drm/msm: Use
-> drm_attach_bridge() to attach a bridge to an encoder")' the HDMI bridge
-> is attached both in msm_hdmi_bridge_init() and later in
-> msm_hdmi_modeset_init().
->
-> The second attempt fails as the bridge is already attached to the
-> encoder and the whole process is aborted.
->
-> So instead make msm_hdmi_bridge_init() just initialize the hdmi_bridge
-> object and let msm_hdmi_modeset_init() attach it later.
->
-> Fixes: 3ef2f119bd3e ("drm/msm: Use drm_attach_bridge() to attach a bridge to an encoder")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+The current codebase makes use of the zero-length array language
+extension to the C90 standard, but the preferred mechanism to declare
+variable-length types such as these ones is a flexible array member[1][2],
+introduced in C99:
 
-Thanks, I think this should also be solved by:
+struct foo {
+        int stuff;
+        struct boo array[];
+};
 
-https://patchwork.freedesktop.org/patch/357331/?series=74611&rev=1
+By making use of the mechanism above, we will get a compiler warning
+in case the flexible array does not occur last in the structure, which
+will help us prevent some kind of undefined behavior bugs from being
+inadvertently introduced[3] to the codebase from now on.
 
-BR,
--R
+Also, notice that, dynamic memory allocations won't be affected by
+this change:
 
-> ---
->  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 19 +++----------------
->  1 file changed, 3 insertions(+), 16 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> index 6e380db9287b..0e103ee1b730 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> @@ -271,31 +271,18 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
->  /* initialize bridge */
->  struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
->  {
-> -       struct drm_bridge *bridge = NULL;
->         struct hdmi_bridge *hdmi_bridge;
-> -       int ret;
-> +       struct drm_bridge *bridge;
->
->         hdmi_bridge = devm_kzalloc(hdmi->dev->dev,
->                         sizeof(*hdmi_bridge), GFP_KERNEL);
-> -       if (!hdmi_bridge) {
-> -               ret = -ENOMEM;
-> -               goto fail;
-> -       }
-> +       if (!hdmi_bridge)
-> +               return ERR_PTR(-ENOMEM);
->
->         hdmi_bridge->hdmi = hdmi;
->
->         bridge = &hdmi_bridge->base;
->         bridge->funcs = &msm_hdmi_bridge_funcs;
->
-> -       ret = drm_bridge_attach(hdmi->encoder, bridge, NULL, 0);
-> -       if (ret)
-> -               goto fail;
-> -
->         return bridge;
-> -
-> -fail:
-> -       if (bridge)
-> -               msm_hdmi_bridge_destroy(bridge);
-> -
-> -       return ERR_PTR(ret);
->  }
-> --
-> 2.24.0
->
+"Flexible array members have incomplete type, and so the sizeof operator
+may not be applied. As a quirk of the original implementation of
+zero-length arrays, sizeof evaluates to zero."[1]
+
+This issue was found with the help of Coccinelle.
+
+[1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+[2] https://github.com/KSPP/linux/issues/21
+[3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+
+Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+---
+ drivers/thermal/qcom/tsens.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index e24a865fbc34..92503712596a 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -488,7 +488,7 @@ struct tsens_priv {
+ 	struct dentry			*debug_root;
+ 	struct dentry			*debug;
+ 
+-	struct tsens_sensor		sensor[0];
++	struct tsens_sensor		sensor[];
+ };
+ 
+ char *qfprom_read(struct device *dev, const char *cname);
+-- 
+2.23.0
+
