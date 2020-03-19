@@ -2,104 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AFAF918ABC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 05:28:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB41B18ABDF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 05:39:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726596AbgCSE2o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 00:28:44 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:15339 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725768AbgCSE2o (ORCPT
+        id S1725787AbgCSEjW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 00:39:22 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41658 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725601AbgCSEjV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 00:28:44 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584592124; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=0mRFMEJwpdIXaB+jwVtf97Gm3MwCqBL7eIA/yGyn8AI=; b=BPB/AhEeJu9TQdGDwd0dgE26CuVpxgXvjImghNLWITxq7FFCWDqyhrZ4yT5g2bcBebmzPeod
- ylsdrX2LH+6nVoWat5mqZ2N/Pn5bPvDtgCjdB/oEkMz+WWO65mOwWrs6qGIG995EWOcdxVKT
- +PuK0UJicA4emFeKd0346oW9nNc=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e72f4f1.7fd13655c110-smtp-out-n04;
- Thu, 19 Mar 2020 04:28:33 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CDFC3C43637; Thu, 19 Mar 2020 04:28:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.35.103] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6DC6BC433CB;
-        Thu, 19 Mar 2020 04:28:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6DC6BC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH 1/4] dt-bindings: phy: Add binding for qcom,usb-hs-7nm
-To:     Rob Herring <robh@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <1584147293-6763-1-git-send-email-wcheng@codeaurora.org>
- <1584147293-6763-2-git-send-email-wcheng@codeaurora.org>
- <20200318220352.GA12501@bogus>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <44d97f2d-eb09-1192-ad20-daef7542a8b0@codeaurora.org>
-Date:   Wed, 18 Mar 2020 21:28:30 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Thu, 19 Mar 2020 00:39:21 -0400
+Received: by mail-pg1-f195.google.com with SMTP id b1so545074pgm.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 21:39:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ruMvWKaCTsbInQhs/V5bAwFT4fo/B2LhqokROVX1RJo=;
+        b=tg2aN6xtBRVVIsylVN35uS278/h81kU5E3rrZb4l9rasLTWQ0gO2RA0UvpzzCntSPD
+         ZPIiYQ8t6hnvWpKofzzGzll+jfkqbYURB0VtpYDjsIKqvD4B3bKHij1aLEY1qdFdWFUR
+         6II5O54rz9PrCLotYrETJh1NIQT3fKEtfL/DUGC2rs/BPsqoqb+egLQnKbiBy7uwf55n
+         U+kLTmtbRTdj3d3FG0Jk7dNBxxYhnOvKmqe0Oau6zQGq5nEoJVoE1nooNnvWQxELdLl8
+         0bNe9Qqfe61hyW/e5KaoNY32tTxagRuyKyaKC1epbe1ve6VNNVmKXpriu+88+RagG67M
+         Ixvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ruMvWKaCTsbInQhs/V5bAwFT4fo/B2LhqokROVX1RJo=;
+        b=F84XSFeZPpFn6gHn8FqIs6hTR7Jo9kXPxX3tCAp5CAzincSoSULHH3iwlaXatkymaC
+         J7ihn929WPa3/4xATsJi3cAM70PKPW7YF+6PexAksYxIPrIKXrSVYk6247qVkEQQ6aD/
+         ULGg1sTmcqbuudRhZn97RxL0VwT4th3p7OJxNy2YFfOObS+05mpOzaN1VXL4ap5DzT6j
+         fZ3MhyN7mvQOK8hb/LJRjhpUg0Nxs9RLzcbRu6qur42OayweZSC/DhhP2+BJKpYEhtKS
+         PeY4HUexHRQd5XTW+nx33xBV5lml7ODGtA54BBqajRqyI6TO+tmItozpfMeMJYxIiETO
+         QSaw==
+X-Gm-Message-State: ANhLgQ2VrDKtA1NZEwhStWCUxRhCKh/M9IKJ3lCXm5o6WgWhw6x6sRwL
+        rsrojsOFiJX42aRzAJLgYGC7sA==
+X-Google-Smtp-Source: ADFU+vvT12s0aAoLNNrPFmHAx5hQiycl6q/fBkWc1OwJE6FPv7umjTrZuM7h/FPuLb8vCrLAF5uWdw==
+X-Received: by 2002:a63:2a4b:: with SMTP id q72mr1309267pgq.441.1584592760401;
+        Wed, 18 Mar 2020 21:39:20 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 25sm571370pfn.190.2020.03.18.21.39.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Mar 2020 21:39:19 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Boris Brezillon <boris.brezillon@collabora.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: Don't attempt to attach HDMI bridge twice
+Date:   Wed, 18 Mar 2020 21:37:41 -0700
+Message-Id: <20200319043741.3338842-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-In-Reply-To: <20200318220352.GA12501@bogus>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+With the introduction of '3ef2f119bd3e ("drm/msm: Use
+drm_attach_bridge() to attach a bridge to an encoder")' the HDMI bridge
+is attached both in msm_hdmi_bridge_init() and later in
+msm_hdmi_modeset_init().
 
+The second attempt fails as the bridge is already attached to the
+encoder and the whole process is aborted.
 
-On 3/18/2020 3:03 PM, Rob Herring wrote:
-> On Fri, 13 Mar 2020 17:54:50 -0700, Wesley Cheng wrote:
->> This binding shows the descriptions and properties for the
->> 7nm Synopsis HS USB PHY used on QCOM platforms.
->>
->> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
->> ---
->>  .../devicetree/bindings/phy/qcom,usb-hs-7nm.yaml   | 74 ++++++++++++++++++++++
->>  1 file changed, 74 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
->>
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> warning: no schema found in file: Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml: ignoring, error parsing file
-> Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml:  while scanning a block scalar
->   in "<unicode string>", line 59, column 5
-> found a tab character where an indentation space is expected
->   in "<unicode string>", line 73, column 1
-> Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.example.dts' failed
-> make[1]: *** [Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.example.dts] Error 1
-> Makefile:1262: recipe for target 'dt_binding_check' failed
-> make: *** [dt_binding_check] Error 2
-> 
-> See https://patchwork.ozlabs.org/patch/1254748
-> Please check and re-submit.
-> 
+So instead make msm_hdmi_bridge_init() just initialize the hdmi_bridge
+object and let msm_hdmi_modeset_init() attach it later.
 
-Hi Rob,
+Fixes: 3ef2f119bd3e ("drm/msm: Use drm_attach_bridge() to attach a bridge to an encoder")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
-Sorry for not checking this step beforehand.  I installed the tools for
-device tree validation, ran the same check, and resolved the errors.
-Will resubmit the series with the changes.
-
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+index 6e380db9287b..0e103ee1b730 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+@@ -271,31 +271,18 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
+ /* initialize bridge */
+ struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
+ {
+-	struct drm_bridge *bridge = NULL;
+ 	struct hdmi_bridge *hdmi_bridge;
+-	int ret;
++	struct drm_bridge *bridge;
+ 
+ 	hdmi_bridge = devm_kzalloc(hdmi->dev->dev,
+ 			sizeof(*hdmi_bridge), GFP_KERNEL);
+-	if (!hdmi_bridge) {
+-		ret = -ENOMEM;
+-		goto fail;
+-	}
++	if (!hdmi_bridge)
++		return ERR_PTR(-ENOMEM);
+ 
+ 	hdmi_bridge->hdmi = hdmi;
+ 
+ 	bridge = &hdmi_bridge->base;
+ 	bridge->funcs = &msm_hdmi_bridge_funcs;
+ 
+-	ret = drm_bridge_attach(hdmi->encoder, bridge, NULL, 0);
+-	if (ret)
+-		goto fail;
+-
+ 	return bridge;
+-
+-fail:
+-	if (bridge)
+-		msm_hdmi_bridge_destroy(bridge);
+-
+-	return ERR_PTR(ret);
+ }
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.24.0
+
