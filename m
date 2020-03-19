@@ -2,71 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A334118B189
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 11:33:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B10818B1C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 11:54:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726955AbgCSKdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 06:33:43 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:37282 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbgCSKdn (ORCPT
+        id S1727095AbgCSKyC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 06:54:02 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:18821 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727063AbgCSKyB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 06:33:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=cHEIfPKeH9omjNt+0k991N/wm6h5xTiMPSj7a3ocvkk=; b=fqbeo36MCxVADWcrpk/D9GeNit
-        YSF85PIZ5pZRnh/gMtR2c79Jsb8L7YhvvN64lZ60kOxZfWWSJ6Ae7O7AhkL3Ayjae3KYft2zXedIR
-        fNP+IugcEnmbNPTGciEn4qpUnj9OXjNyaCy7HO5i7Tky2zl+Ayw3wB4suhJF04W2+8RWQ7KuGpZAg
-        UJRxkefSD6ewnGd+iAQwAMtrwc9GVUoW5gZ/n8IDzmU5MBqMX2hMy7c+8sJXOpCVTfBuF7DEYMNPF
-        DEC44x4DgN1K7/3nnWxzQZlc3UczWGFRgrmw9tLdY3dxsXFsfrVkzF/N7t0J1mofyKqstCyOChcH9
-        kcg8bDNQ==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jEsUg-0001WX-9j; Thu, 19 Mar 2020 10:33:42 +0000
-Date:   Thu, 19 Mar 2020 03:33:42 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-        "linux-fscrypt@vger.kernel.org" <linux-fscrypt@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>
-Subject: Re: [RFC PATCH v3 4/4] scsi: ufs-qcom: add Inline Crypto Engine
- support
-Message-ID: <20200319103342.GB30601@infradead.org>
-References: <20200312171259.151442-1-ebiggers@kernel.org>
- <20200312171259.151442-5-ebiggers@kernel.org>
- <BY5PR02MB65778B0D07AA92F6AB5E39E8FFFD0@BY5PR02MB6577.namprd02.prod.outlook.com>
- <20200312190541.GB6470@sol.localdomain>
+        Thu, 19 Mar 2020 06:54:01 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584615241; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=G1xcrA3VxHhne2SYFlZHYK1yCSX3CDOuVGju3yHGiP4=; b=iCmxtCjaznOZG8y57jBUQ6xJc5OLmUemGpYAKV4K9HZmqmzpvXZAwI+2UfDpudy5x1oqA5Aa
+ vYiPCL8ifRop7JNObEZjVVR8MX9eGRUq9rkVuTR5v5ZAPA6ftBlO6WH3tBhYoV299m2f6KwG
+ ATu68fMD2xFAZQPOXvMS0rv970E=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e734f3f.7f655465e7a0-smtp-out-n01;
+ Thu, 19 Mar 2020 10:53:51 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9DBD8C44791; Thu, 19 Mar 2020 10:53:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.103] (unknown [106.51.30.43])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 00C85C433CB;
+        Thu, 19 Mar 2020 10:53:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 00C85C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [RFC v3 00/10] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>
+Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
+        nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        ulf.hansson@linaro.org, linux-kernel-owner@vger.kernel.org
+References: <20200127200350.24465-1-sibis@codeaurora.org>
+ <19cf027ba87ade1b895ea90ac0fedbe2@codeaurora.org>
+ <20200318034243.o2metmggzuah6cqw@vireshk-i7>
+ <f6a7930a-4eaa-6982-88c6-b50773bee9d8@codeaurora.org>
+ <ea4265f3f4b5a439d70d3c80bcc77b7f@codeaurora.org>
+ <20200319102411.oivesngrk7gy7vtw@vireshk-i7>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <78d92969-0219-d140-d788-d1b14e643e90@codeaurora.org>
+Date:   Thu, 19 Mar 2020 16:23:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200312190541.GB6470@sol.localdomain>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+In-Reply-To: <20200319102411.oivesngrk7gy7vtw@vireshk-i7>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 12, 2020 at 12:05:41PM -0700, Eric Biggers wrote:
-> Of course, if someone actually posts patches to support hardware that diverges
-> from the UFS standard in new and "exciting" ways (whether it's another vendor's
-> hardware or future Qualcomm hardware) then they'll need to post any variant
-> operation(s) they need.  They need to be targetted to only the specific quirk(s)
-> needed, so that drivers don't have to unnecessarily re-implement stuff.
 
-I think the only sane answer is that we only support hardware upstream
-that conforms to the standard and we skip all that bullshit.  The whole
-point of the standard is that things just work, and we should not give
-vendors a wild card to come up with bullshit like the interfaces handled
-in this patchset.
+
+On 3/19/2020 3:54 PM, Viresh Kumar wrote:
+> On 19-03-20, 15:41, Sibi Sankar wrote:
+>> Viresh,
+>> Saravana's example does show a device
+>> with multiple opp tables but doesn't
+>> need multiple opp table support to
+>> land though (since it works fine with
+>> the current implementation). I am more
+>> interested  in understanding your/
+>> Stephen's/Saravana's stance on adding
+>> multiple opp-table support. Personally
+>> I feel its inevitable, since multiple
+>> qc drivers using interconnect opp-tables,
+>> routinely need vote on multiple paths in
+>> a non-trivial manner.
+> 
+> The OPP core doesn't support multiple OPP tables for a device and I
+> don't understand how it will. And so I have been waiting for a reply.
+
+I thought this series indeed is proposing to add that support in OPP core?
+a.k.a "[RFC v3 06/10] opp: Allow multiple opp_tables to be mapped to a single device"
+
+> 
+>>>
+>>> Could you please post a link to the discussion that you are referring to
+>>> here?
+>>> I looked at a few links posted in the cover letter as dependencies and
+>>> it seems
+>>> like the discussions are pending for *months* and not weeks but I
+>>> might have looked
+>>> at the wrong ones.
+>>
+>> https://lore.kernel.org/lkml/20200114103448.odnvqawnqb3twst5@vireshk-i7/
+>>
+>> Rajendra,
+>> Viresh is referring to ^^ one
+> 
+> Right, thanks.
+
+These discussions are stalled for over 2 months now waiting on a response from Saravana.
+Viresh, whats the way forward here and how long do we plan on waiting for Saravanas response?
+
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
