@@ -2,98 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EE5E18BDDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 18:21:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EB3818BEB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 18:48:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727269AbgCSRVf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 13:21:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55360 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727146AbgCSRVf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 13:21:35 -0400
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3F51520836;
-        Thu, 19 Mar 2020 17:21:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584638494;
-        bh=Wa5WhY7NV/amydUQxKZOOUXAC72lGMcK0NhEdS62D74=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ft7/kE4yvSeKvAW7bbRrolP0UaF4xWVzoUrxHpX0nmu8GiUwsWuPjC9AXv1rRvqzH
-         sVRiUQ2587taXsEXy1sB2Zk5TBLyJLMygLxbHZVX7XO/h+r/38lcGeiLC0wZaFDnYu
-         Y4lX75HTJ+SSMrlihdhmMBdXg2cJ2f851/tEqHBo=
-Received: by mail-qk1-f174.google.com with SMTP id c145so3855298qke.12;
-        Thu, 19 Mar 2020 10:21:34 -0700 (PDT)
-X-Gm-Message-State: ANhLgQ13TX7m3D5QlSqmEd7vWKhcYbGOigfeWKTOCs/0JJzHGkIJY/Gp
-        gOrbfhLp3rgKSUMWL67AMN7RGw+g8gqZeHXyEw==
-X-Google-Smtp-Source: ADFU+vulofMsciR5pLApGaBb0QXCqdfQARLGVOuL0yu914G08i7K943mRV5VQl5ypvWeXQ6VTH6kM8/ISVQqrL9dm34=
-X-Received: by 2002:a37:8502:: with SMTP id h2mr4136038qkd.223.1584638493344;
- Thu, 19 Mar 2020 10:21:33 -0700 (PDT)
+        id S1728364AbgCSRsN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 13:48:13 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36503 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728345AbgCSRsN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Mar 2020 13:48:13 -0400
+Received: by mail-pf1-f193.google.com with SMTP id i13so1819607pfe.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 10:48:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=iWUSd6tNelA3B2gV8L14dd3S0Goj3iWlFgAqgwk5kPw=;
+        b=T5wSGnt2PrWmaej5pxTQjA5iZ75Iq5B8ryc8SsC0GZUqDnlwetsWMpCtffoLmhaty7
+         MEpRGQOi8ly0/vnWHX7gn8Je3y5VDnIUpNcgALh6uSrWPV9q0Ly1fiQ5RC4Xi02iZE6W
+         JyMt029uRbZPrTBbpHeGtn40yI63DT1zUUIhk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=iWUSd6tNelA3B2gV8L14dd3S0Goj3iWlFgAqgwk5kPw=;
+        b=fkiddccm5UHSHksZWf7kjSl9D3f212ubCM6ANTPsURyHFhOAJMcyKoqrxZ1lRa6HNl
+         egF6LbPX5YU/+F0uFmr2Dm+hz088XpFEBUnUhjdcRR2LT2DWbRqzF9pZXRZIHY6wQkyh
+         7X+gjm1qsufi5Ed5OZ4E77FOl7iA0VF6df3o9LUvlyJ8RDtRjQcBPKX6uXVv0sB6Dmmr
+         jdC9M6B5Gs+l6ehVfb4TEC5khjl08AlsEH7v00m0dSnN06r3F2bFKWr837l0ZWqR7Are
+         gCDXdoL+ygqatr3vPOuhCjAMBFvjl2VRUOr+vNTD9gv7/bwFlDmn3HbtYKOxeD7V2Hub
+         sXxQ==
+X-Gm-Message-State: ANhLgQ3to5N35G4gQQbjKL11ipulERG+aMYurgsbMnsGpbNkD6dVPqId
+        A8du9XZV7Gzn2cFXRtfeHfyqEQ==
+X-Google-Smtp-Source: ADFU+vut6Lso223EbxYK+y4BZyU7C3AfV3mD375ioWsMfGKfgEhQlPlHMn0XJNEJoyfTIpfVnP8PYA==
+X-Received: by 2002:a63:c811:: with SMTP id z17mr4386751pgg.41.1584640092091;
+        Thu, 19 Mar 2020 10:48:12 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id h11sm2990799pfq.56.2020.03.19.10.48.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 10:48:11 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <1584211798-10332-1-git-send-email-tdas@codeaurora.org>
- <1584211798-10332-2-git-send-email-tdas@codeaurora.org> <20200318220443.GA16192@bogus>
- <2ceccbac-b289-03d0-665b-6e9ca57b4333@codeaurora.org>
-In-Reply-To: <2ceccbac-b289-03d0-665b-6e9ca57b4333@codeaurora.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 19 Mar 2020 11:21:21 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKOTRzvtTjHPmOR60tpxUoPsoaB5ZbLdPG0VrN-NnFxWg@mail.gmail.com>
-Message-ID: <CAL_JsqKOTRzvtTjHPmOR60tpxUoPsoaB5ZbLdPG0VrN-NnFxWg@mail.gmail.com>
-Subject: Re: [PATCH v6 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
- MSS clock bindings
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1584356562-13181-1-git-send-email-mkrishn@codeaurora.org>
+References: <1584356562-13181-1-git-send-email-mkrishn@codeaurora.org>
+Subject: Re: [v2] arm64: dts: sc7180: modify assigned clocks for sc7180 target
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+To:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Date:   Thu, 19 Mar 2020 10:48:10 -0700
+Message-ID: <158464009041.152100.18425074316530931981@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 11:37 PM Taniya Das <tdas@codeaurora.org> wrote:
->
->
->
-> On 3/19/2020 3:34 AM, Rob Herring wrote:
-> > On Sun, 15 Mar 2020 00:19:56 +0530, Taniya Das wrote:
-> >> The Modem Subsystem clock provider have a bunch of generic properties
-> >> that are needed in a device tree. Add a YAML schemas for those.
-> >>
-> >> Add clock ids for GCC MSS and MSS clocks which are required to bring
-> >> the modem out of reset.
-> >>
-> >> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> >> ---
-> >>   .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 ++++++++++++++++++++++
-> >>   include/dt-bindings/clock/qcom,gcc-sc7180.h        |  7 ++-
-> >>   include/dt-bindings/clock/qcom,mss-sc7180.h        | 12 +++++
-> >>   3 files changed, 80 insertions(+), 1 deletion(-)
-> >>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
-> >>   create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
-> >>
-> >
-> > My bot found errors running 'make dt_binding_check' on your patch:
-> >
-> > Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml: $id: relative path/filename doesn't match actual path or filename
-> >       expected: http://devicetree.org/schemas/clock/qcom,sc7180-mss.yaml#
-> >
-> > See https://patchwork.ozlabs.org/patch/1254940
-> > Please check and re-submit.
-> >
-> Hi Rob,
->
-> Thanks, I have fixed it in the next patch series.
->
-> Is there a way to catch these before submitting? As I do not see these
-> errors on my machine.
+Subject could be "sc7180: update DPU assigned clocks"
 
-If you ran 'make dt_binding_check' already, then update dt-schema with pip.
+Quoting Krishna Manikandan (2020-03-16 04:02:42)
+> Add DISP_CC_MDSS_ROT_CLK and DISP_CC_MDSS_AHB_CLK
+> in the assigned clocks list for sc7180 target.
 
-Rob
+Why?
+
+>=20
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+
+Does this need a Fixes: tag?
+
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
+com/sc7180.dtsi
+> index 998f101..e3b60f1 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1544,8 +1544,12 @@
+>                                 clock-names =3D "iface", "rot", "lut", "c=
+ore",
+>                                               "vsync";
+>                                 assigned-clocks =3D <&dispcc DISP_CC_MDSS=
+_MDP_CLK>,
+> -                                                 <&dispcc DISP_CC_MDSS_V=
+SYNC_CLK>;
+> +                                                 <&dispcc DISP_CC_MDSS_V=
+SYNC_CLK>,
+> +                                                 <&dispcc DISP_CC_MDSS_R=
+OT_CLK>,
+> +                                                 <&dispcc DISP_CC_MDSS_A=
+HB_CLK>;
+>                                 assigned-clock-rates =3D <300000000>,
+> +                                                      <19200000>,
+> +                                                      <19200000>,
+>                                                        <19200000>;
+> =20
+>                                 interrupt-parent =3D <&mdss>;
