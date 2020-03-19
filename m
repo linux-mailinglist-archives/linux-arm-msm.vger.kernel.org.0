@@ -2,49 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 22E1018B1D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 11:57:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F64218B215
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 12:08:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725787AbgCSK5R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 06:57:17 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:13818 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726767AbgCSK5R (ORCPT
+        id S1726663AbgCSLIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 07:08:09 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35879 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726802AbgCSLIJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 06:57:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584615436; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=USCY7tIkJjVPsdtXWG2SypaDeqfF1YJU6a6I4ETYJgU=;
- b=pCSU669Gtj0Qxz7SmCbmVJQXUwjP4exIIZzaLBs7XfbJdmmJ5bc2JWLhfSySSOIAX5jkz3+u
- yooX6900ehchVfVh0UN50v/b/xTNjenkJEKy4vGQlPUbc5rc/VvcZI6QM39UlCrDDxrMLvUW
- pwsrmewZ+SEma6y3mdlVxY/XPbk=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e73500b.7f03fa77da78-smtp-out-n03;
- Thu, 19 Mar 2020 10:57:15 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 18619C4478C; Thu, 19 Mar 2020 10:57:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2F549C433D2;
-        Thu, 19 Mar 2020 10:57:13 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 19 Mar 2020 16:27:13 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, sboyd@kernel.org,
+        Thu, 19 Mar 2020 07:08:09 -0400
+Received: by mail-pf1-f196.google.com with SMTP id i13so1259039pfe.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 04:08:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wET7jlYZA/4lYWuMPV+Ad+UExmNQxPrKP3xeSJ3g+Kw=;
+        b=ySgV85Vy3ejQyPifI8tKJjqbe1gwDywC9nlpV1Mbm3nRFseO5pUgy8yyhQxCtwk/nt
+         z8qNB8GDGqONIaYkv1jSadxZ7Ha/SehAakwLqbYy3ABjtn96W6l/PoY+r5T+8XVdXuf+
+         aHGS2es72WncgUdpDJtZwrzIyxHBlMpQpp5vqZS2mqOdIHovL1dDiHx/Yup4i1+vD//U
+         iKXeV9fV44li72p4GiYrbI80GKjxAlGxftzsN39E5YrParAraVzowhYqoAEEVegxHuWS
+         rCTGLriRHveYnx84aMdrbXzwzy6QMhuOYUGOq8j4314e4lGImiGUIdQzY2G2aDnDYxLJ
+         jnYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wET7jlYZA/4lYWuMPV+Ad+UExmNQxPrKP3xeSJ3g+Kw=;
+        b=Gx9aH/ouix2XopMI50eF1TOyz6EZT2uT2OHzB0fXGXz138M1nL5vSdyQLqv+x5EA65
+         KsQ7aqFEdOwDMBP6e4vdmm9CmBAHx6vXNOSyH14yxDFksFOrie9qyvoNVAFT0gq7r7KK
+         J601Li97HIdFk1oEF/Xc8TAHlwrnxZzLtVQvTNrJbHuMkSOXYFBmeNZhXgLZWYwZfX6z
+         1/1UZKduPNp9TMsM8demMFhK8uWXwIlc8+oyyZgNRQzoCOeb0xaKe3uAY1AC/g5555Gx
+         OFE+IKXs+uLTHWWEovl9TfnfoZHrhwoCo29RE4yAU1AGurdqtsBqAj9accOSwDZwGnq/
+         CabQ==
+X-Gm-Message-State: ANhLgQ18JL9kMl2Cf2yVHlz4zcY/qRJyExYXmfbV8gRjp20tjTJcaB6e
+        bc+qN1OWtX/TWGlCnTo5A+GEAA==
+X-Google-Smtp-Source: ADFU+vtYvQQhg3OmZruUKxSIx/hPlBONPwH7mo3pcdX9ZDiCSLwANvh0o4aAcByJMnw3hG84WV24pQ==
+X-Received: by 2002:a63:6ec7:: with SMTP id j190mr2739706pgc.356.1584616087501;
+        Thu, 19 Mar 2020 04:08:07 -0700 (PDT)
+Received: from localhost ([122.171.118.46])
+        by smtp.gmail.com with ESMTPSA id i26sm2024923pfk.176.2020.03.19.04.08.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Mar 2020 04:08:06 -0700 (PDT)
+Date:   Thu, 19 Mar 2020 16:38:05 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, sboyd@kernel.org,
         georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
         bjorn.andersson@linaro.org, agross@kernel.org,
         david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
@@ -54,71 +58,42 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>, sboyd@kernel.org,
         vincent.guittot@linaro.org, amit.kucheria@linaro.org,
         ulf.hansson@linaro.org, linux-kernel-owner@vger.kernel.org
 Subject: Re: [RFC v3 00/10] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
-In-Reply-To: <20200319102411.oivesngrk7gy7vtw@vireshk-i7>
+Message-ID: <20200319110805.glmuc2qvgcei3mon@vireshk-i7>
 References: <20200127200350.24465-1-sibis@codeaurora.org>
  <19cf027ba87ade1b895ea90ac0fedbe2@codeaurora.org>
  <20200318034243.o2metmggzuah6cqw@vireshk-i7>
  <f6a7930a-4eaa-6982-88c6-b50773bee9d8@codeaurora.org>
  <ea4265f3f4b5a439d70d3c80bcc77b7f@codeaurora.org>
  <20200319102411.oivesngrk7gy7vtw@vireshk-i7>
-Message-ID: <e2cab5f55b9d26849e45d3df951ad7b9@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+ <78d92969-0219-d140-d788-d1b14e643e90@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <78d92969-0219-d140-d788-d1b14e643e90@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-03-19 15:54, Viresh Kumar wrote:
-> On 19-03-20, 15:41, Sibi Sankar wrote:
->> Viresh,
->> Saravana's example does show a device
->> with multiple opp tables but doesn't
->> need multiple opp table support to
->> land though (since it works fine with
->> the current implementation). I am more
->> interested  in understanding your/
->> Stephen's/Saravana's stance on adding
->> multiple opp-table support. Personally
->> I feel its inevitable, since multiple
->> qc drivers using interconnect opp-tables,
->> routinely need vote on multiple paths in
->> a non-trivial manner.
+On 19-03-20, 16:23, Rajendra Nayak wrote:
 > 
-> The OPP core doesn't support multiple OPP tables for a device and I
-> don't understand how it will. And so I have been waiting for a reply.
+> 
+> On 3/19/2020 3:54 PM, Viresh Kumar wrote:
+> I thought this series indeed is proposing to add that support in OPP core?
+> a.k.a "[RFC v3 06/10] opp: Allow multiple opp_tables to be mapped to a single device"
+> 
+> These discussions are stalled for over 2 months now waiting on a response from Saravana.
+> Viresh, whats the way forward here and how long do we plan on waiting for Saravanas response?
 
-This series tries to add minimal support
-for multiple opp-tables per device and
-can be tested on db845c/sdm845mtp/sc7180.
-Debugfs still needs to be fixed though and
-fixing it did feel non-trivial (I can get
-to it if we reach a consensus). Perhaps we
-can fork out icc oppp-tables from regular
-opp-tables and allow only multiple instances
-of icc opp-tables per device(though Rob
-didn't like the bindings associated with it)
-that way all the current users wont be
-affected but from what I've tested the
-series shouldn't cause any regression.
+I agree and I am equally worried about it. So lets clear the air a bit
+first. Can someone answer following :
 
-> 
->> >
->> > Could you please post a link to the discussion that you are referring to
->> > here?
->> > I looked at a few links posted in the cover letter as dependencies and
->> > it seems
->> > like the discussions are pending for *months* and not weeks but I
->> > might have looked
->> > at the wrong ones.
->> 
->> https://lore.kernel.org/lkml/20200114103448.odnvqawnqb3twst5@vireshk-i7/
->> 
->> Rajendra,
->> Viresh is referring to ^^ one
-> 
-> Right, thanks.
+- This series depends on the series from Saravana ? Right, so that
+  needs to get merged/accepted first ?
+
+- If yes, then what is the way forward as Saravana isn't responding
+  right now ..
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+viresh
