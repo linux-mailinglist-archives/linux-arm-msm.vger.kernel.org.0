@@ -2,147 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4353618C016
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 20:08:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFD4A18C0A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 20:43:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726867AbgCSTIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 15:08:55 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:39618 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbgCSTIz (ORCPT
+        id S1727634AbgCSTng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 15:43:36 -0400
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:38183 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727194AbgCSTng (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 15:08:55 -0400
-Received: by mail-pf1-f194.google.com with SMTP id d25so1914556pfn.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 12:08:54 -0700 (PDT)
+        Thu, 19 Mar 2020 15:43:36 -0400
+Received: by mail-pj1-f65.google.com with SMTP id m15so1441901pje.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 12:43:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zlKmJ2002BFVX2ZXxYBAvMXUqHfOUCBNDSCbpquzDD4=;
-        b=snEHPqIWVHGADR5tx1NSp9UdpaVA8/qSH0Y5/qNyPUv+rOJjSnBcUlIRiOvg5qGYfL
-         Q0tqqT+WC6ncGdFoDlIF7JUnLpTq+8HNiQrPwREwNfEW6ccu1EfFnJGPPdC4QyPRIIkp
-         5RU3tBCF0kyWrOjXuVq9gYlrQdYaJJZ4/ZC7Z9KyzK+xElRq3r8I5gDp8n+sQZ+0W38g
-         9DxL/vlgYcKiUR6T9xbGsce4Mt/ky+5U1OQKf6naER91G1OxbNLCCOJZYSISWKf15TgW
-         FvD6EyKTUeYndw15/zS7RolG/uv7r0CmrelG4NlIXeVSxIqx02wVEeSlC9EqCUFmWboR
-         k5ZA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=AUrpvm7nUie7dQ0qT11wsqJbElri6+aRNCl7JJRNBOA=;
+        b=My59+S7CI/GWdSKMy3K1BSkHqMaKH1SYAEBgY7D+oXZhLV3OuxRxwvtEk4EqOUQMHA
+         h8pn+KPzD+jnwDzdghZ6bxbO5SkEFbP+Eb2E34MFXJdXzrML9McGCbRCRE7jBBURPwRZ
+         3ODmgNveoAhbGTVSR2/N2Hcmd+r2KjUGphIU4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zlKmJ2002BFVX2ZXxYBAvMXUqHfOUCBNDSCbpquzDD4=;
-        b=b/9YpKr1mI6ts55BW29insHqAOBQA+Ye0boLIVVr/cAk3eJBxE9sLF0amTRON4c6GN
-         Pskfh1JRTiC/w/Rc7RaS4JUPLpn3djPVsbFHMkldmixGSXMDktOb55/GGqs/uElFABwp
-         /dEFvpwlh1oREAWyKWJ6zbslFySnb1eOEjb2st6Lz29U7D8m02RrZotLhB63wogGosvY
-         eey0X8IxlNrBdWQf+XuG0OXaLxXRN5006IpszMEwdXycqy+MXkQqSSWL0PVfrt4y/0zl
-         l5rbygeQIpcuDfqIAnl0POXMyrYz6O45CwC3sx5r7MO0Ww5Fwq2lpSsZFv8epg6oXmuv
-         RFjQ==
-X-Gm-Message-State: ANhLgQ0GvWHfFJ0yq9FGuo5aAFKdCh6cMv+ZLSbFJk9gDXwQSINYaECr
-        Ia+2Qt+RK4ksZtfc97jJIyqZRw==
-X-Google-Smtp-Source: ADFU+vvbguubW7E6FOD/bR6UAFbsfiXhbysyZNZA0X02MHIz8KIBZKkLDrSYMWTpjPPb3cT9rshHyA==
-X-Received: by 2002:a62:b604:: with SMTP id j4mr5635879pff.93.1584644933964;
-        Thu, 19 Mar 2020 12:08:53 -0700 (PDT)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f8sm3151821pfn.2.2020.03.19.12.08.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 12:08:53 -0700 (PDT)
-Date:   Thu, 19 Mar 2020 12:08:51 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm: Don't attempt to attach HDMI bridge twice
-Message-ID: <20200319190851.GB458947@yoga>
-References: <20200319043741.3338842-1-bjorn.andersson@linaro.org>
- <CAF6AEGtvSZOp48hyrBUzqQLV6+twtuy6k6MLimz6fhC-dqWEVA@mail.gmail.com>
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=AUrpvm7nUie7dQ0qT11wsqJbElri6+aRNCl7JJRNBOA=;
+        b=TJ/PucKXP4+n/fcl4HNreeUb+8ZPRJQpyyix/SpYXvDiHhdzRRSsELVXbHGX4V8B95
+         qYef2ARzxGheEKQSQXf9uBZr+VjULyRTeMFeA6Ke/6BexOm+TVO+RKHpOL/lsMXOibDr
+         DyxFDHMiJusYZCJoFndszfxXXM244fl3ZQp4l8aYRtaVXGIsE0N3nXDwaF2ohL06NLCo
+         6++o7HfBwBX2qPAWRo9YjNCrBqU7jejYgED5vru2fEX64gjGFnL8lhJW+/3qE04lX2iu
+         Ym6m2G9XrlOpHi308MxnMBqcW7eRr15YJXvV/mHAm5AH46jeNi0E3VDGxZbyjvmoztrt
+         M/hQ==
+X-Gm-Message-State: ANhLgQ3EJkftRNccaRatO/abl0klyoPDlrU0NnscFGICtT2Jrq/sLFGJ
+        zfJBmhv+N6r92s/VDznod1IyXg==
+X-Google-Smtp-Source: ADFU+vtsdT3busfKz6fGAHHD3V1l9Ghnb9/WDphQ22G1N//OaqyPJ8sNLSJMAiYmie0cCo6/Rbt3xQ==
+X-Received: by 2002:a17:90a:9501:: with SMTP id t1mr5661674pjo.108.1584647014709;
+        Thu, 19 Mar 2020 12:43:34 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id d17sm3145653pfo.148.2020.03.19.12.43.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Mar 2020 12:43:33 -0700 (PDT)
+Date:   Thu, 19 Mar 2020 12:43:32 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V2 3/8] soc: qcom-geni-se: Add interconnect support to
+ fix earlycon crash
+Message-ID: <20200319194332.GA60149@google.com>
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-4-git-send-email-akashast@codeaurora.org>
+ <20200313204441.GJ144492@google.com>
+ <1f86fdf0-df7c-4e4a-d4d8-8b0162e52cb4@codeaurora.org>
+ <20200317182910.GR144492@google.com>
+ <3831b33c-93ee-e5e0-fcfb-530b4738f930@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAF6AEGtvSZOp48hyrBUzqQLV6+twtuy6k6MLimz6fhC-dqWEVA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3831b33c-93ee-e5e0-fcfb-530b4738f930@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 19 Mar 11:19 PDT 2020, Rob Clark wrote:
-
-> On Wed, Mar 18, 2020 at 9:39 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > With the introduction of '3ef2f119bd3e ("drm/msm: Use
-> > drm_attach_bridge() to attach a bridge to an encoder")' the HDMI bridge
-> > is attached both in msm_hdmi_bridge_init() and later in
-> > msm_hdmi_modeset_init().
-> >
-> > The second attempt fails as the bridge is already attached to the
-> > encoder and the whole process is aborted.
-> >
-> > So instead make msm_hdmi_bridge_init() just initialize the hdmi_bridge
-> > object and let msm_hdmi_modeset_init() attach it later.
-> >
-> > Fixes: 3ef2f119bd3e ("drm/msm: Use drm_attach_bridge() to attach a bridge to an encoder")
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Wed, Mar 18, 2020 at 02:24:35PM +0530, Akash Asthana wrote:
+> Hi Matthias,
 > 
-> Thanks, I think this should also be solved by:
+> On 3/17/2020 11:59 PM, Matthias Kaehlcke wrote:
+> > Hi Akash,
+> > 
+> > On Tue, Mar 17, 2020 at 04:27:47PM +0530, Akash Asthana wrote:
+> > > Hi Matthias,
+> > > 
+> > > On 3/14/2020 2:14 AM, Matthias Kaehlcke wrote:
+> > > > Hi Akash,
+> > > > 
+> > > > On Fri, Mar 13, 2020 at 06:42:09PM +0530, Akash Asthana wrote:
+> > > > > V1 patch@https://patchwork.kernel.org/patch/11386469/ caused SC7180 system
+> > > > > to reset at boot time.
+> > > > The v1 patch isn't relevant in the commit message, please just describe the
+> > > > problem. Also the crash only occurs when earlycon is used.
+> > > ok
+> > > > > As QUP core clock is shared among all the SE drivers present on particular
+> > > > > QUP wrapper, the reset seen is due to earlycon usage after QUP core clock
+> > > > > is put to 0 from other SE drivers before real console comes up.
+> > > > > 
+> > > > > As earlycon can't vote for it's QUP core need, to fix this add ICC
+> > > > > support to common/QUP wrapper driver and put vote for QUP core from
+> > > > > probe on behalf of earlycon and remove vote during sys suspend.
+> > > > Only removing the vote on suspend isn't ideal, the system might never get
+> > > > suspended. That said I don't have a really good alternative suggestion.
+> > > > 
+> > > > One thing you could possibly do is to launch a delayed work, check
+> > > > console_device() every second or so and remove the vote when it returns
+> > > > non-NULL. Not claiming this would be a great solution ...
+> > > > 
+> > > > The cleanest solution might be a notifier when the early console is
+> > > > unregistered, it seems somewhat over-engineered though ... Then again
+> > > > other (future) uart drivers with interconnect support might run into
+> > > > the same problem.
+> > > We are hitting this problem because QUP core clocks are shared among all the
+> > > SE driver present in particular QUP wrapper, if other HW controllers has
+> > > similar architecture we will hit this issue.
+> > > 
+> > > How about if we expose an API from common driver(geni-se) for putting QUP
+> > > core BW vote to 0.
+> > > 
+> > > We call this from console probe just after uart_add_one_port call (console
+> > > resources are enabled as part of this call) to put core quota to 0 on behalf
+> > > of earlyconsole?
+> >  From my notes from earlier debugging I have doubts this would work:
+> > 
+> >    There is a short window where the early console and the 'real' console coexist:
+> > 
+> >    [    3.858122] printk: console [ttyMSM0] enabled
+> >    [    3.875692] printk: bootconsole [qcom_geni0] disabled
+> > 
+> >    The reset probably occurs when the early console tries to write, but the ICC
+> >    is effectively disabled because ttyMSM0 and the other geni ports are runtime
+> >    suspended.
 > 
-> https://patchwork.freedesktop.org/patch/357331/?series=74611&rev=1
-
-Yes, didn't find that when looking yesterday. T-b and R-b.
-
-Thanks,
-Bjorn
-
+> Code flow from console driver probe(qcom_geni_serial.c)
 > 
-> BR,
-> -R
+> uart_add_one_port--->uart_configure_port--->{ 1) uart_change_pm(enable
+> console resources)  2)register_console(boot to real console switch happens
+> here)}
 > 
-> > ---
-> >  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 19 +++----------------
-> >  1 file changed, 3 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> > index 6e380db9287b..0e103ee1b730 100644
-> > --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> > +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> > @@ -271,31 +271,18 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
-> >  /* initialize bridge */
-> >  struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
-> >  {
-> > -       struct drm_bridge *bridge = NULL;
-> >         struct hdmi_bridge *hdmi_bridge;
-> > -       int ret;
-> > +       struct drm_bridge *bridge;
-> >
-> >         hdmi_bridge = devm_kzalloc(hdmi->dev->dev,
-> >                         sizeof(*hdmi_bridge), GFP_KERNEL);
-> > -       if (!hdmi_bridge) {
-> > -               ret = -ENOMEM;
-> > -               goto fail;
-> > -       }
-> > +       if (!hdmi_bridge)
-> > +               return ERR_PTR(-ENOMEM);
-> >
-> >         hdmi_bridge->hdmi = hdmi;
-> >
-> >         bridge = &hdmi_bridge->base;
-> >         bridge->funcs = &msm_hdmi_bridge_funcs;
-> >
-> > -       ret = drm_bridge_attach(hdmi->encoder, bridge, NULL, 0);
-> > -       if (ret)
-> > -               goto fail;
-> > -
-> >         return bridge;
-> > -
-> > -fail:
-> > -       if (bridge)
-> > -               msm_hdmi_bridge_destroy(bridge);
-> > -
-> > -       return ERR_PTR(ret);
-> >  }
-> > --
-> > 2.24.0
-> >
+> Console resources are not disabled from anywhere before the switch happens
+> completely. I meant to say until we saw below logs.
+> 
+> [    3.875692] printk: bootconsole [qcom_geni0] disabled
+> 
+> I think the board reset issue cannot occur during the window where early
+> console and 'real' console coexist.
+
+Thanks for the clarification! Indeed my notes were only a hypothesis, I
+don't see evidence that there is an actual downvote shortly after console
+registration.
+
+> I have validated proposed solution by me, it is working fine.
+> 
+> Currently voting is done for every QUP and not only to which earlycon is
+> connect, with the above approach we can't remove vote from other QUPs.
+> 
+> However we can limit voting only to earlycon QUP by removing interconnect
+> from DT node of other QUPs.
+> 
+> I am not sure how clean is this solution.
+
+I'm more inclined towards a solution along the lines of what Evan
+proposed, i.e. delaying the votes (either in geni or ICC) until we
+are ready.
