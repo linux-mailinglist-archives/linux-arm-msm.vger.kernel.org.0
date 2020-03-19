@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FD9218AC61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 06:40:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40F1C18AC64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 06:41:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727178AbgCSFkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 01:40:52 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45036 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727150AbgCSFkv (ORCPT
+        id S1727194AbgCSFk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 01:40:57 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:37927 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727136AbgCSFku (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 01:40:51 -0400
-Received: by mail-pl1-f194.google.com with SMTP id h11so558287plr.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 22:40:50 -0700 (PDT)
+        Thu, 19 Mar 2020 01:40:50 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w3so570610plz.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 22:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DwffIuMpvk4MGqf+N9hfygy8Mho+4EUVsVCSokGeAQw=;
-        b=X53gtvJLmWBUrskrgljJXYHsNsA8qA7LLIjZjGx/ddYmqslDXrqXaEZJCj2qZWkTb9
-         CpypERtzO85ih/v5b6/6ZC+0zhqOSCD3I9UNaFZiwwIdNffhPq1cAT7nPidTHZOMyHKT
-         WM7vJFaWjdnwV/0PgMs89NSnqn/Jb5jiSe9inOaXf80SsfP/kDso2RyiF+HHEoCEm1k7
-         ywpPjIP4fMNCeiBWJ1u/C4foUCnOjKSO4XcU9u4WqY+Y2Pfc6N7BOI9koVnOVy6c0yEq
-         wCrkeqOSVgWTtRJMziShLlsQbPuoqXSdmizzw/+wlhCC3V4VRNKB0QM1E4o9O/6tLw8K
-         V5MQ==
+        bh=Z/69m7Zf+ruag16yCUxMLHHMI4Yg4kUCSYDk0zKgyCg=;
+        b=GNA5dhAfvYYpetATfgKyqLZz5xlqU1swtnZ8dzTWy+4qldc1xRRbyXZak0HEBTVC9d
+         Jrg18WL4KAFFq2QXJ3vjKAGQceRb/D6/f4UfoBnqwJuPD6vjnWCLEAEgSod9vHxQX+ej
+         BDIFlrEBBqvgkoxy7lAdszwi6BFG3XySWcWss0gnwUUd/h/Qubwa+ORCnV0/Ib6kBol+
+         fT1t1to1sBkgDvDUMTaiZ6+nxhevdSVkkIy8YmE9K+gLRLnZMnWOW4g1B8kl2bfEGH7G
+         m1mrtPFlotMHwVAHSswInC3EoDzYxrkyaHseIgZBkpXvDTfh5DzDlbFaQ9omhU8wXQTi
+         1hag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DwffIuMpvk4MGqf+N9hfygy8Mho+4EUVsVCSokGeAQw=;
-        b=J1c+lS29zfYhzruj2Uz4RGzWn6yd1Vr99ICcX2oO1ejDdEXbxLP8WydOu9/q6l9i3G
-         ql//F36RE5lKolRnpCeuC9C5hHKcKfXlQrtx2xiCNWaZTw1OO8BF9VXSaHzkzv3pcnAs
-         WJunLDvf8MPWUZtl5i3OIQs/c9M07PM+5VgWPZeaClpxrA+xTUTLHhGeA1WnaSjjFWoq
-         uWjDp0pQE1SSZqHYm3Adxc+Sfbx56PVczx5IEzTO04yu7azu7uxCill15AXbWttRdzqT
-         Dq655LM/tuEOXlXzpP8psZzrk0wbzFB8eNTglNVzOjqDmQ/DDVh90phuJQR5euSrSGnB
-         qD0Q==
-X-Gm-Message-State: ANhLgQ2erx4ZEtYyTTxg//N5xPexQbkKTAYt9ZUOobmsSIsMLKnb7fqs
-        6jeaHHvkLpx+VIaxBBK5GD6xDQ==
-X-Google-Smtp-Source: ADFU+vu9i8jbX+n972WNpB0F25HnwNcSfJC5HNFNCANPQazM0JhMj0i565gk6eYk+vMAwS88xlSXpQ==
-X-Received: by 2002:a17:90a:1954:: with SMTP id 20mr2110292pjh.106.1584596445739;
-        Wed, 18 Mar 2020 22:40:45 -0700 (PDT)
+        bh=Z/69m7Zf+ruag16yCUxMLHHMI4Yg4kUCSYDk0zKgyCg=;
+        b=eblh2dmgZzn2j/HHjHuBj4eUTjP0ltcr4OTKaU1PsCA6pFBN/qFuTRW7FOwaZ5o1ny
+         gJheJPW7FxDjuiFcN12N2hw1YzSqACmtvyBSR16cIeYrw1e0PeznFRQo90kZ1A1KgODv
+         260BiBl9g5mLjB4ZUaxLNjppX9awyGcJIT7gTDrWfcrYHu+BXoyphst+zo/slI4BgxZc
+         Ol4grPum3WBMqPocIgopvGyiNghVp4Ib5oUzuvNBMxPb+5c7hF3yIRO5CThZ+xSMWM7i
+         ctfao8/1eOVqfTbEh0BS6nMJfCnFxaADhl8WdA7jqkaNOGD4uu//RJALPKFERMVtGnc5
+         AdPQ==
+X-Gm-Message-State: ANhLgQ1EsvtVHQu9HN1dt993LqeYg29XaZpM55OBBL3Tm9W5Ope389fM
+        JI8lses1D2hzQPy2EUYdJ0QijA==
+X-Google-Smtp-Source: ADFU+vsRf2sDvae95TJ6VcZ7xmIYGkaloU4QXsDM6UWMf7v+/ukUDbAHYC3DGNVQzt1wESDRV1ejsA==
+X-Received: by 2002:a17:90a:e505:: with SMTP id t5mr1967909pjy.101.1584596448549;
+        Wed, 18 Mar 2020 22:40:48 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l125sm229126pgl.57.2020.03.18.22.40.44
+        by smtp.gmail.com with ESMTPSA id l125sm229126pgl.57.2020.03.18.22.40.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 22:40:44 -0700 (PDT)
+        Wed, 18 Mar 2020 22:40:47 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -53,9 +53,9 @@ Cc:     Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>
-Subject: [PATCH 3/4] arm64: dts: qcom: db820c: Add s2 regulator in pmi8994
-Date:   Wed, 18 Mar 2020 22:39:01 -0700
-Message-Id: <20200319053902.3415984-4-bjorn.andersson@linaro.org>
+Subject: [PATCH 4/4] arm64: dts: qcom: msm8996: Make GPU node control GPU_GX GDSC
+Date:   Wed, 18 Mar 2020 22:39:02 -0700
+Message-Id: <20200319053902.3415984-5-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20200319053902.3415984-1-bjorn.andersson@linaro.org>
 References: <20200319053902.3415984-1-bjorn.andersson@linaro.org>
@@ -66,71 +66,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rajendra Nayak <rnayak@codeaurora.org>
+Presumably the GPU node needs to control both the GPU and GPU GX power
+domains, but given that GPU GX now depends on the GPU GDSC both can
+effectively be controlled by controlling GPU GX. So use this instead.
 
-Add the SPMI regulator node in the PMI8994, use it to give us VDD_GX
-at a fixed max nominal voltage for the db820c and specify this as supply
-for the MMSS GPU_GX GDSC.
-
-With the introduction of CPR support the range for VDD_GX should be
-expanded.
-
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-[bjorn: Split between pmi8994 and db820c, changed voltage, rewrote commit message]
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 14 ++++++++++++++
- arch/arm64/boot/dts/qcom/pmi8994.dtsi        |  6 ++++++
- 2 files changed, 20 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index 4692b7ad16b7..075cebaec3f3 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -251,6 +251,10 @@ &mdss {
- 	status = "okay";
- };
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 14827adebd94..f29f45e9737b 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -639,7 +639,7 @@ gpu@b00000 {
+ 				"mem",
+ 				"mem_iface";
  
-+&mmcc {
-+	vdd_gfx-supply = <&vdd_gfx>;
-+};
-+
- &msmgpio {
- 	gpio-line-names =
- 		"[SPI0_DOUT]", /* GPIO_0, BLSP1_SPI_MOSI, LSEC pin 14 */
-@@ -688,6 +692,16 @@ pinconf {
- 	};
- };
+-			power-domains = <&mmcc GPU_GDSC>;
++			power-domains = <&mmcc GPU_GX_GDSC>;
+ 			iommus = <&adreno_smmu 0>;
  
-+
-+&pmi8994_spmi_regulators {
-+	vdd_gfx: s2@1700 {
-+		reg = <0x1700 0x100>;
-+		regulator-name = "VDD_GFX";
-+		regulator-min-microvolt = <980000>;
-+		regulator-max-microvolt = <980000>;
-+	};
-+};
-+
- &rpm_requests {
- 	pm8994-regulators {
- 		compatible = "qcom,rpm-pm8994-regulators";
-diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-index 21e05215abe4..e5ed28ab9b2d 100644
---- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-@@ -26,5 +26,11 @@ pmic@3 {
- 		reg = <0x3 SPMI_USID>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
-+
-+		pmi8994_spmi_regulators: regulators {
-+			compatible = "qcom,pmi8994-regulators";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+		};
- 	};
- };
+ 			nvmem-cells = <&gpu_speed_bin>;
 -- 
 2.24.0
 
