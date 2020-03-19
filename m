@@ -2,122 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DC23618AA31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 02:08:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFAF918ABC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 05:28:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbgCSBI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 21:08:57 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:39092 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726879AbgCSBIy (ORCPT
+        id S1726596AbgCSE2o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 00:28:44 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:15339 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725768AbgCSE2o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 21:08:54 -0400
-Received: by mail-pg1-f195.google.com with SMTP id b22so254900pgb.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 18:08:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=HOrVTVj94hEqYzP+BNYpSkqs29uiFE6WXOJ/uoI1nY0=;
-        b=MT0Y8soJkEXXSdQVlOiuDB77ehUHT9j37xPgvUaPEAjUfLvnUxhWsASSZRDBU80+UE
-         4Yvm727E1zUBc7xZdiND5J9r7CGnI47FLMRXA/TzwP0VJmbe4GjX95BHgnmtZ5gbpDnq
-         YVcYCFBwG76DaaWPMx5qXkx/DqtnKFixVSljU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=HOrVTVj94hEqYzP+BNYpSkqs29uiFE6WXOJ/uoI1nY0=;
-        b=K0gXMPCKrjytKJVjLjyeHEpx0rtq7K4fD6aM5LQvnbJ7PKtHIkOkj5ATRbGrmaY2Ds
-         xbM3RcVqiz/VOu6qn0QFBaN0mKi6ZHC9W085t87eBVDnmCIDSTKI9djNJ1U8zxyX5f7M
-         Q3n1o4kXadtesxWNUHeHhpHnT25fk7j0+v5w5Vd4Qsl2B7ZiD1NRcHWxUSDjL+ILthDH
-         UGTYiKHa3njInltErK7VMA9bxGvz/DjqMpyiy/zv+WVG/Hnb3mlY7fHibGNgDM/iHH6o
-         Iz2zRalrXsE8jxtD0QxACWkP3Dnajeh2bhxW6MvlP+sntSV+tbf6lxt7156vCpFiBWTp
-         2/OQ==
-X-Gm-Message-State: ANhLgQ2jBAkTdmPJwUH6BTNoOBl3Ckc3CYUXz7cmItldF0w3EVpc/OSS
-        oh0G8Ul6d6FARpk9xKb9HsqjXwSi3AI=
-X-Google-Smtp-Source: ADFU+vuAWgIWajuJGpPlRJxuUxjrbJeZVY6ltZuXXUYT9Lo/14j2AaHjIDuHwCwpxd//vqXGygp/gA==
-X-Received: by 2002:aa7:8bd1:: with SMTP id s17mr1130786pfd.225.1584580133274;
-        Wed, 18 Mar 2020 18:08:53 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id y15sm209863pfc.206.2020.03.18.18.08.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 18:08:52 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 19 Mar 2020 00:28:44 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584592124; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=0mRFMEJwpdIXaB+jwVtf97Gm3MwCqBL7eIA/yGyn8AI=; b=BPB/AhEeJu9TQdGDwd0dgE26CuVpxgXvjImghNLWITxq7FFCWDqyhrZ4yT5g2bcBebmzPeod
+ ylsdrX2LH+6nVoWat5mqZ2N/Pn5bPvDtgCjdB/oEkMz+WWO65mOwWrs6qGIG995EWOcdxVKT
+ +PuK0UJicA4emFeKd0346oW9nNc=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e72f4f1.7fd13655c110-smtp-out-n04;
+ Thu, 19 Mar 2020 04:28:33 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CDFC3C43637; Thu, 19 Mar 2020 04:28:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.35.103] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6DC6BC433CB;
+        Thu, 19 Mar 2020 04:28:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6DC6BC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [PATCH 1/4] dt-bindings: phy: Add binding for qcom,usb-hs-7nm
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <1584147293-6763-1-git-send-email-wcheng@codeaurora.org>
+ <1584147293-6763-2-git-send-email-wcheng@codeaurora.org>
+ <20200318220352.GA12501@bogus>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <44d97f2d-eb09-1192-ad20-daef7542a8b0@codeaurora.org>
+Date:   Wed, 18 Mar 2020 21:28:30 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200311191501.8165-3-bryan.odonoghue@linaro.org>
-References: <20200311191501.8165-1-bryan.odonoghue@linaro.org> <20200311191501.8165-3-bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH 2/7] dt-bindings: usb: dwc3: Add a gpio-usb-connector example
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, jackp@codeaurora.org, robh@kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, balbi@kernel.org,
-        gregkh@linuxfoundation.org, linux-usb@vger.kernel.org
-Date:   Wed, 18 Mar 2020 18:08:51 -0700
-Message-ID: <158458013177.152100.17920784952083533825@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+In-Reply-To: <20200318220352.GA12501@bogus>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bryan O'Donoghue (2020-03-11 12:14:56)
-> A USB connector should be a child node of the USB controller
-> connector/usb-connector.txt. This patch adds an example of how to do this
-> to the dwc3 binding descriptions.
 
-I read that as a child of the USB interface controller, which is not the
-same as the USB controller. For example, we're talking about having the
-usb connector be a child of the EC on ChromeOS devices because that
-manages the connector
 
->=20
-> It is necessary to declare a connector as a child-node of a USB controller
-> for role-switching to work, so this example should be helpful to others
-> implementing that.
+On 3/18/2020 3:03 PM, Rob Herring wrote:
+> On Fri, 13 Mar 2020 17:54:50 -0700, Wesley Cheng wrote:
+>> This binding shows the descriptions and properties for the
+>> 7nm Synopsis HS USB PHY used on QCOM platforms.
+>>
+>> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+>> ---
+>>  .../devicetree/bindings/phy/qcom,usb-hs-7nm.yaml   | 74 ++++++++++++++++++++++
+>>  1 file changed, 74 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
+>>
+> 
+> My bot found errors running 'make dt_binding_check' on your patch:
+> 
+> warning: no schema found in file: Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml: ignoring, error parsing file
+> Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml:  while scanning a block scalar
+>   in "<unicode string>", line 59, column 5
+> found a tab character where an indentation space is expected
+>   in "<unicode string>", line 73, column 1
+> Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.example.dts' failed
+> make[1]: *** [Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.example.dts] Error 1
+> Makefile:1262: recipe for target 'dt_binding_check' failed
+> make: *** [dt_binding_check] Error 2
+> 
+> See https://patchwork.ozlabs.org/patch/1254748
+> Please check and re-submit.
+> 
 
-Maybe it should be a virtual node at the root of the DT if it's GPIO
-controlled? And then the phy can be connected to the usb connector
-through the graph binding.
+Hi Rob,
 
->=20
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: linux-usb@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Acked-by: Felipe Balbi <balbi@kernel.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  Documentation/devicetree/bindings/usb/dwc3.txt | 8 ++++++++
->  1 file changed, 8 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/usb/dwc3.txt b/Documentati=
-on/devicetree/bindings/usb/dwc3.txt
-> index 66780a47ad85..4e1e4afccee6 100644
-> --- a/Documentation/devicetree/bindings/usb/dwc3.txt
-> +++ b/Documentation/devicetree/bindings/usb/dwc3.txt
-> @@ -121,4 +121,12 @@ dwc3@4a030000 {
->         interrupts =3D <0 92 4>
->         usb-phy =3D <&usb2_phy>, <&usb3,phy>;
+Sorry for not checking this step beforehand.  I installed the tools for
+device tree validation, ran the same check, and resolved the errors.
+Will resubmit the series with the changes.
 
-Weird that there's a comma here        ^
-
-Not a problem with this patch, just noticing it while reading the diff.
-
->         snps,incr-burst-type-adjustment =3D <1>, <4>, <8>, <16>;
-> +
-> +       usb_con: connector {
-> +               compatible =3D "gpio-usb-b-connector";
-> +               id-gpios =3D <&tlmm 116 GPIO_ACTIVE_HIGH>;
-> +               vbus-supply =3D <&usb3_vbus_reg>;
-> +               pinctrl-names =3D "default";
-> +               pinctrl-0 =3D <&usb3_id_pin>, <&usb3_vbus_pin>;
-> +       };
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
