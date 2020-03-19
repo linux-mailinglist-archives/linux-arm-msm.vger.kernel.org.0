@@ -2,186 +2,316 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 58EC118C19A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 21:43:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ECAB18C29C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 22:53:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbgCSUnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 16:43:15 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41968 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727049AbgCSUnM (ORCPT
+        id S1727302AbgCSVxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 17:53:39 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39424 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726785AbgCSVxi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 16:43:12 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h9so4893406wrc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 13:43:09 -0700 (PDT)
+        Thu, 19 Mar 2020 17:53:38 -0400
+Received: by mail-pl1-f193.google.com with SMTP id m1so1631497pll.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 14:53:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=O6r0t1yicjzQKqceseu/FWsfoa3NWDobxww0hSFYqkQ=;
-        b=yvtIjvHStFiF4KuJi0iDEtxiTLcQD3xVIwY1g+2ZvEg6cVydL80/QoSCLTIwjXvIdA
-         OSUxatb1oQLmUeGvgiXlo2WmezOdH/4dkAxbp3BjhXoQoaWdpToJ4nH4XIoufTCtz6+7
-         +eD1tMtGEtag0vsX8VHPocNiM+XHT2JH70yjLLzp1ZRY5+LcMDjGex4nvMSVo0aZAlP2
-         HN6fVlwJ/YLJeb0cKY/UoeDBVaSVpV0BzNhMq/tXK5Owhk825aG4wM69GQILCJ2VBvsl
-         ZX6tvz8YQHR6I7IgjElc+f9r358NMxiIYaZLeq+l26BZaPcHho7A5PEpF/nRkbAYIUPd
-         fWvg==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=5LUA4b+2SbuX5pz6Qw7zYT21GzewUpDmcXH9BX3vcFc=;
+        b=awxnB4eAkRjRl9q5UYQjmmdNzQsc1KyXNqpR2yheQC+GsZxZyP3ORuKC/zqxsmKNBK
+         RAbtkLzGjEN3ReCgxWeoJ+4UxEA8ihlPBAck1g6XIH1PPsS6mdam0dbK8TLVfkPm6Gw7
+         05YS+6qMtfo/2eV08NTOqUWVJK+7ShgOZfrDM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=O6r0t1yicjzQKqceseu/FWsfoa3NWDobxww0hSFYqkQ=;
-        b=Wkc8UhKUsLtVQz3e/bGiWNuJ6GwvWya9ec24FdDFoR/Rq7G9CeImH004zFMImW4NE4
-         ffqchScwJLo1OM7TAgP8k3W9XIa73EnNXB7cinMUqVHAIawrS+tVMmFXGFNdbWtNe+dH
-         4AKvwmEv48S0F0pul+jvJQaQrwjK1O0aTE2Y/wM3ZxLllQO/Htu4gQLPqAqT52c6zcFo
-         1wYDpSEOgopImTOnU9UuGsZY/bzmfAp1SDlJLz1GC/hSbz7RwOBaXP2SnNFehrfcPjd0
-         4zd3ZMe5xUSn2HEwxZBlTyvB9AGEnKC//Rbtj9fsYVbt5TU70/42eLiWBBuCUXZAlcFY
-         pXNg==
-X-Gm-Message-State: ANhLgQ1oPYIu0+g6Q39mWlYHlfEoxa0J8tIx1gO/eIV9vp69EOdeek5b
-        SdBz+qpZ8cIhyICGDKDuDu/cwg==
-X-Google-Smtp-Source: ADFU+vuAz2a0bwYa5cVKGTguXIY0DHOO5Upst7FBVbcyhwcjT5etcnkeaRKEPW5GlwOiYukAx+oRuw==
-X-Received: by 2002:a5d:6044:: with SMTP id j4mr6132682wrt.232.1584650588717;
-        Thu, 19 Mar 2020 13:43:08 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:6dd6:dc1a:136d:210e? ([2a01:e34:ed2f:f020:6dd6:dc1a:136d:210e])
-        by smtp.googlemail.com with ESMTPSA id u8sm4821511wrn.69.2020.03.19.13.43.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2020 13:43:07 -0700 (PDT)
-Subject: Re: [PATCH] thermal: qcom: tsens.h: Replace zero-length array with
- flexible-array member
-To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200319184838.GA25767@embeddedor.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <dc2d025f-0d26-b91c-975a-6c815a7682ef@linaro.org>
-Date:   Thu, 19 Mar 2020 21:43:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=5LUA4b+2SbuX5pz6Qw7zYT21GzewUpDmcXH9BX3vcFc=;
+        b=kxa8Gr4dbGuiCFV//17qh3Po7/r6//ULKG1dfq09tBc/RB4AbQIoeLTC/tvH/y4nKy
+         EQKPhrApDPU44xERCDZ7+ziouZap0TzJXz48QPMJOXSWGqhbpeoO0apu76K5LYZ+8jSj
+         wRo/y7QN5k0uzuMs/ufDO4PzAaFHmhB9AV0OS/yX8tb9e0K/EQsv/2yzn7nRGIsjJOU2
+         mV1M63ieeTF8gmQcVtiO+aGNWvaYTet0o6S9vwvnEjsyMT+aR4p7h9luVxQpVQDR0xR7
+         oZCTCG8ztYiTNuBa3ixRYNkmLBc3HhsXsK7OFiEjlJelfJ4caxzXRkq+wl92749EyY9W
+         toHA==
+X-Gm-Message-State: ANhLgQ350IM1JRk1oug6C8M/wvRCSWiAhrz3Lo5T/T1xkqdtz7DsEqT7
+        /nuMaF5FakkQ3aI8QoHDo8N0uw==
+X-Google-Smtp-Source: ADFU+vvrsV+zI3RoNorTznotYVHzvCN1c7bkOcoJCRTPyK2/J6IAknvRhqrEXH3QAJd+yxoPvz0DzQ==
+X-Received: by 2002:a17:90b:f0e:: with SMTP id br14mr6081834pjb.21.1584654815052;
+        Thu, 19 Mar 2020 14:53:35 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id q71sm2981604pjb.5.2020.03.19.14.53.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 14:53:34 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20200319184838.GA25767@embeddedor.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <b5124e41-df99-c5d0-28d8-f0157db77ce1@codeaurora.org>
+References: <1584019379-12085-1-git-send-email-mkshah@codeaurora.org> <1584019379-12085-2-git-send-email-mkshah@codeaurora.org> <158441069917.88485.95270915247150166@swboyd.mtv.corp.google.com> <bc2f75bc-1223-68b5-3c64-8ea17ee677cf@codeaurora.org> <158456608487.152100.9336929115021414535@swboyd.mtv.corp.google.com> <b5124e41-df99-c5d0-28d8-f0157db77ce1@codeaurora.org>
+Subject: Re: [RFC v2] irqchip: qcom: pdc: Introduce irq_set_wake call
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, linus.walleij@linaro.org, tglx@linutronix.de,
+        maz@kernel.org, jason@lakedaemon.net, dianders@chromium.org,
+        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Date:   Thu, 19 Mar 2020 14:53:32 -0700
+Message-ID: <158465481295.152100.8582940107266934812@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/03/2020 19:48, Gustavo A. R. Silva wrote:
-> The current codebase makes use of the zero-length array language
-> extension to the C90 standard, but the preferred mechanism to declare
-> variable-length types such as these ones is a flexible array member[1][2],
-> introduced in C99:
-> 
-> struct foo {
->         int stuff;
->         struct boo array[];
-> };
-> 
-> By making use of the mechanism above, we will get a compiler warning
-> in case the flexible array does not occur last in the structure, which
-> will help us prevent some kind of undefined behavior bugs from being
-> inadvertently introduced[3] to the codebase from now on.
-> 
-> Also, notice that, dynamic memory allocations won't be affected by
-> this change:
-> 
-> "Flexible array members have incomplete type, and so the sizeof operator
-> may not be applied. As a quirk of the original implementation of
-> zero-length arrays, sizeof evaluates to zero."[1]
-> 
-> This issue was found with the help of Coccinelle.
-> 
-> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-> [2] https://github.com/KSPP/linux/issues/21
-> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
-> 
-> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+Quoting Maulik Shah (2020-03-19 02:56:31)
+> On 3/19/2020 2:44 AM, Stephen Boyd wrote:
+> > Quoting Maulik Shah (2020-03-16 23:47:21)
+> >> On 3/17/2020 7:34 AM, Stephen Boyd wrote:
+> >>> What happens if irq is "disabled" in software, because this is the fi=
+rst
+> >>> function called on the irq, and we aren't in suspend yet. Then we get
+> >>> the irq. Won't we be interrupting the CPU because we've enabled in PDC
+> >>> and GIC hardware? Why doesn't this function update the wake bit and t=
+hen
+> >>> leave the force on irq logic to suspend entry? Will we miss an interr=
+upt
+> >>> while entering suspend because of that?
+> >> As PDC (and GIC) have a role during "active" time as well, interrupt s=
+hould be
+> >> enabled in PDC and GIC HW.
+> > Sure. When the irq is enabled we want to enable at the GIC, but if it
+> > isn't enabled and we're not in suspend I would think we don't want the
+> > irq enabled at the GIC. But this code is doing that. Why?
+>=20
+> Since we want to wake up in idle path LPM as well, when IRQ is marked as =
+wake up capable and even though its disabled.
 
-Applied, thanks
+No. IRQs that are disabled but have wake enabled on them should not wake
+up the CPU from deep idle states (which is what I assume you mean by
+idle path LPM (Low Power Mode)). Only if the irq is enabled should it
+wake the CPU from deep idle states, and in this case irq wake state has
+nothing to do with that working or not.
 
-> ---
->  drivers/thermal/qcom/tsens.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index e24a865fbc34..92503712596a 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -488,7 +488,7 @@ struct tsens_priv {
->  	struct dentry			*debug_root;
->  	struct dentry			*debug;
->  
-> -	struct tsens_sensor		sensor[0];
-> +	struct tsens_sensor		sensor[];
->  };
->  
->  char *qfprom_read(struct device *dev, const char *cname);
-> 
+> >  I'd think we
+> > would want to make enable in the PDC driver enable the parent and then
+> > make the set_wake path just update some bitmap tracking wakeup enabled
+> > irqs.
+> >
+> > Then when we enter suspend we will enable any pdc interrupts only in the
+> > PDC so that we can wakeup from suspend if that interrupt comes in. When
+> > we wakeup we'll resend the edge interrupts to the GIC on the resume path
+> > and level interrupts will "just work" because they'll stay asserted
+> > throughout resume.
+> >
+> > The bigger problem would look to be suspend entry, but in that case we
+> > leave any interrupts enabled at the GIC on the path to suspend (see
+> > suspend_device_irq() and how it bails out early if it's marked for
+> > wakeup)=20
+>=20
+> No it doesn't happen this way in suspend_device_irq(), not for this disab=
+led IRQ.
+>=20
+> Agree, it's a bigger problem to set IRQ enabled at GIC HW which is alread=
+y disabled in HW and SW but marked for wake up.
+> However suspend_device_irq() is of little or no-use here (for that partic=
+ular IRQ). Let me step by step give details.
+>=20
+> This will benefit everyone to understand this problem. Correct me if some=
+thing below in not happening as I listed.
+>=20
+> Step-1
+>=20
+> Driver invokes enable_irq_wake() to mark their IRQ wake up capable.
+>=20
+> Step-2
+>=20
+> After enable_irq_wake(), drivers invokes disable_irq().
+> Let's break it down how this disable_irq() will traverse (in current code=
+, without this RFC PATCH)
+>=20
+> Step-2.1
+>=20
+> In kernel/irq/manage.c
+> disable_irq() =3D> __disable_irq_nosync() =3D> __disable_irq() =3D> irq_d=
+isable()
+>=20
+> Step-2.2
+>=20
+> This will jump to kernel/irq/chip.c
+> irq_disable() =3D> __irq_disable()=C2=A0 =3D> which then calls chip's .ir=
+q_disable via desc->irq_data.chip->irq_disable(&desc->irq_data);
+> Note that this is a GPIO IRQ, gpiolib set's this .irq_disable for every g=
+pio chip during registration
+>=20
+> (see below in drivers/gpio/gpiolib.c)
+> irqchip->irq_disable =3D gpiochip_irq_disable;
+>=20
+> So it doesn't take lazy path to disable at HW, its always unlazy (at-leas=
+t for gpio IRQs)
 
+That looks like a bug. It appears that gpiolib is only hooking the irq
+disable path here so that it can keep track of what irqs are not in use
+by gpiolib and allow them to be used for GPIO purposes when the irqs are
+disabled. See commit 461c1a7d4733 ("gpiolib: override
+irq_enable/disable"). That code in gpiolib should probably see if lazy
+mode has been disabled on the irq and do similar things to what genirq
+does and then let genirq mask the gpios if they trigger during the time
+when the irq is disabled. Regardless of this design though, I don't
+understand why this matters.
 
--- 
- <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+>=20
+> Step-2.3
+>=20
+> Call Jumps to gpiochip_irq_disable()
+> This then invokes irq_chip's=C2=A0 .irq_disable via chip->irq.irq_disable=
+(d)
+> which finally arrives at msmgpio irq_chip's msm_gpio_irq_disable() call f=
+rom here.
+> it finds that IRQ controller is in hierarchy, so it invokes irq_chip_disa=
+ble_parent().
+>=20
+> Step-2.4
+>=20
+> This invokes PDC irq_chip's qcom_pdc_gic_disable()
+> At this point,
+> This will go ahead and "disabled in PDC HW"
+> This also invokes irq_chip_disable_parent() since PDC is also in hierarch=
+y with GIC.
+>=20
+> Step-2.5
+>=20
+> This invokes GIC's gic_mask_irq() since GIC doesn't have .irq_disable imp=
+lemented, it instead invokes mask.
+> This will go ahead and "disables at GIC HW".
+>=20
+> Final status at the end of step 2:
+> (a)=C2=A0=C2=A0=C2=A0 IRQ is marked as wake up capable in SW
+> (b)=C2=A0=C2=A0=C2=A0 IRQ is disabled in both SW and HW at GIC and PDC
+>=20
+> Step-3
+> Device enters "suspend to RAM" which invokes suspend_device_irq()
+> Pasting the interested part here...
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (irqd_is_wakeup_set(&desc->irq_da=
+ta)) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 irqd_set(&desc->irq_data, IRQD_WAKEUP_ARMED);
+> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=
+=A0 ...
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 return true;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 ..
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __disable_irq(desc);
+>=20
+> Note that it bails out with above if condition here for IRQs that are mar=
+ked wake up capable, as you have already pointed out.
+>=20
+> For the rest of IRQs it goes ahead and disables them at HW via invoking _=
+_disable_irq() (be it a GIC HW or PDC HW)
+> so when device is in suspend only wake up capable IRQs are finally left e=
+nabled in HW.
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+__disable_irq() considers lazy setting or not and leaves the irq
+unmasked if the irq is lazy disabled. But we have the
+IRQCHIP_MASK_ON_SUSPEND flag set in the gpio irq controller and that
+properly masks the irq through the hierarchy if necessary. Again, this
+is fine and all but I don't see how it matters.
 
+>=20
+> Now, If any driver that has only done step-1, then it make sense that it =
+will bail out here and leave IRQ enabled in HW (to be precise in its
+> original state at HW, without disabling it)
+>=20
+> But some drivers did step-1 and step-2 both.
+>=20
+> Yes even for this case, it will still bail out here, since its marked as =
+wake up capable but it defeats the purpose of bail out
+> (bail out is to NOT go ahead and disable at HW), but by doing step-2 driv=
+er already disabled the IRQ at HW well before
+> suspend_device_irq() is invoked.
+>=20
+> In other words, IRQ status stays same as what was at the end of step-2 (d=
+isabled in HW)
+>=20
+> So this whole function is of no use (for that particular IRQ part). Here =
+driver is disabling IRQ on their own via step-2 and then asks
+> "hey remember I marked it as wake up capable in step-1, so IRQ should
+> resume system from suspend when it occurs" completely ignoring
+> the fact that its already disabled at HW in step-2.
+>=20
+> IMO, drivers should not even do step-2 here.=C2=A0 They should just mark =
+irq as wake up capable and then let suspend framework decide whether
+> to keep it enabled or disabled in HW when entering to suspend (Read may o=
+nly do step-1, then everything works fine with current code)
+>=20
+> Hope that above details makes it clear on why I way asking earlier to
+> remove unnecessary disable_irq() call from driver, I don't understand its=
+ usage
+> (at least till now its not clear to me). May be there are some reasons li=
+ke seeing spurious IRQ when entering to suspend so driver may want to disab=
+le it in HW.
+>=20
+> But then responsibility is falling on either suspend framework to re-enab=
+le such wake up capable interrupts in HW.
+> This may be done by again invoking enable_irq() before bailing out for
+> wakeup capable IRQ in suspend_device_irq(). I don't know if this is accep=
+table.=C2=A0
+>=20
+> Someone from To/Cc may clarify if above can be done. Note that it may cre=
+ate problem for other drivers which does only step-1, by calling enable_irq=
+()
+> during suspend, it will update desc->depth, so this agin need to be undo =
+when resuming.
+>=20
+> Otherwise, it is currently falling onto the individual irq_chip's to avoi=
+d disabling in HW in the first place.
+>=20
+> this RFC patch tries to do same and address this problem in PDC irq_chip =
+when control reaches at Step 2.4, to NOT disable at HW when the IRQ
+> is already marked wake up capable, it bails out at Step 2.4 in PDC irq_ch=
+ip so that interrupt is left enabled in HW at both PDC and GIC HW level.
+
+I don't see any need to change genirq by changing how
+suspend_device_irq() is written, but I'm not the maintainer of this code.
+
+>=20
+> > so we should be able to have some suspend entry hook in pdc that
+> > enables the irq in the PDC if it's in the wakeup bitmap. Then on the
+> > path to suspend the GIC can lose power at any point after we enable the
+> > wakeup path in PDC and then the system should resume and get the
+> > interrupt through the resend mechanism.
+> I thought of this to introduce suspend hook in PDC which decides to keep =
+wake up marked irq enabled at PDC.
+> But then someone need to keep it enabled at GIC as well.
+>=20
+> PDC does not directly forward IRQ to CPU. PDC brings SoC out of low power=
+ mode where GIC does
+> not have power cut, it replays the interrupt at GIC in HW and that leads =
+to forwarding interrupt
+> to CPU and resume from low power mode.
+> So PDC and GIC HW status should need to be in sync.
+>=20
+
+It sounds like PDC just passes along the level or edge and relies on the
+parent irq chip (GIC in this case) to have the irq unmasked so it can be
+seen at the CPU. If the irq is masked at the GIC does it still wakeup
+the CPU if it's unmasked at the PDC?
+
+Does the PDC have any other registers that can latch an edge type irq
+across suspend so we can read it on resume? If that exists then we can
+have software resend irqs at resume time. I think this was asked before
+and the answer was it doesn't exist.
+
+If there isn't any sort of latching, then why can't we unmask the irq in
+the GIC hardware by calling irq_chip_enable_parent() from the suspend
+hook in PDC? That should guarantee that the irq is unmasked at the GIC
+when we're suspending and the GIC is about to lose power. And presumably
+the GIC state is restored by hardware on resume so that the PDC can
+forward the edge to the GIC which can interrupt the CPU because the
+interrupt was left unmasked. The idea is to capture wake and enable
+state in a bitmap, unmask at the PDC and GIC during system suspend if
+it's marked for wakeup regardless of enable state, and then mask in the
+PDC and GIC during resume if the irq is disabled in software. Does that
+fail somehow?
