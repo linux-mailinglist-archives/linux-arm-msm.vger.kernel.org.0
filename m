@@ -2,127 +2,344 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C36C18A961
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 00:43:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB44718A9C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 01:25:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727095AbgCRXnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Mar 2020 19:43:20 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38478 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726777AbgCRXnU (ORCPT
+        id S1726869AbgCSAZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Mar 2020 20:25:44 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41740 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726647AbgCSAZo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Mar 2020 19:43:20 -0400
-Received: by mail-ed1-f65.google.com with SMTP id h5so356902edn.5;
-        Wed, 18 Mar 2020 16:43:18 -0700 (PDT)
+        Wed, 18 Mar 2020 20:25:44 -0400
+Received: by mail-pf1-f196.google.com with SMTP id z65so390977pfz.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 17:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=T6rxV8z4faDRzhqK467Xv2a7dOy/TE520C3YV3WjV8c=;
-        b=i3FPub1DIHkvCD+yi/2Y0pX69MrTIvO1RmbzVf6wk00DV0ApmY13YfnnFpks/NVTLs
-         G1QplMy/+0w+GsFrwD1fV1STvoKneEr8NQlSW0vIhii6MAK+xDn8ddbmfxyIfh+bWkPE
-         NEeRdRZ2QE6MO1YpPwSPzXvQKexEK5sr8Dox9C9jyfSyvqP6X6trr48Ms86RoFLn9dAG
-         92zK1vRSIdLYDibQabEa5foOn7Ajn4QGZfbFS6XCk1yr6R/d+WaM4jqJ31uE4ljyQmMb
-         YiomgNSyyErYriEW6Abwe6sruyYqTy62RHKzpwUnN7Vinym7R/FBnsL8LzowJAa3l8q2
-         3Z7w==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=TS6P2eCji56vuECNK+OnxyNExkiDHGAgsqe13dfkHLc=;
+        b=dR4pZVZUPCB9WP5RtHi48RInvDPFxbVSZF64yzvFiowyJ8AaF/SzhGg3I26ovGtEw6
+         juqhj9+JPPtZpwAankcBFWysZTi8RZQ7ONKfQr6nB/lNYH8WUdk0FqDQjrTSFdJhOYWC
+         0QLySo4DZ1zSM5qz3RCpzIqXTnrqPpFZl/t7A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=T6rxV8z4faDRzhqK467Xv2a7dOy/TE520C3YV3WjV8c=;
-        b=O1nEDNd9FSAUNGQHVc6BjpCTY0iaCckSwTESS23JEBb0jXNfg5aYUNZTspKC6t0Hwz
-         oqGpUYH3lGjOcp6jNX6IjK6LJadyknTgTLB1qLKyu1PBz308HsUwASFx6zVO+rSznWDo
-         lZgm4bDogt7Th5zeWaRMbKvFZ3MYOvCfpaChIR3T/Yp6FJdQkxMcoz2AmisY5ktxpUwr
-         jNFKV6+Q7nRA+y+1gG8diMlNd63E8NlMdZnmHU+D39wOubdDwH02CV2y9d9jGkFje0jF
-         G/Pvvutb53oYWTEmlvqvo/Qvmi/a6XWcA8PyTGInBH0ctZJMmbsS08S4kXJBbmh5zPoH
-         abyA==
-X-Gm-Message-State: ANhLgQ1kLEpvZznWhcEJx/I0rWwTN15B9sE9k1mHG4S6K3M+6ZslQHZP
-        Fp2x09LPQmAO5wIswFRP/+iWh9d3q3KhaciAjFDStbvC
-X-Google-Smtp-Source: ADFU+vunbg/mabJAoT4ECckSo9VlWXEI7Tk7MCM2NEIzGX//dTyumqWFksHG62C18XwPsVHwF/wqELk+aHHpZR6UYqI=
-X-Received: by 2002:a17:906:b888:: with SMTP id hb8mr686525ejb.166.1584574997823;
- Wed, 18 Mar 2020 16:43:17 -0700 (PDT)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=TS6P2eCji56vuECNK+OnxyNExkiDHGAgsqe13dfkHLc=;
+        b=ei1NmLAre8uTfyhOSBQH5J2V5jJu0E9dhSmahy5h7hGX26kFFzUe2flJy5ClHqed7Q
+         Z0Bn1eZHCPvKdEKS4nNXqw38AxHZFQ9PjxjD5yWEGcDW/tdfPXnvDvrdpOa3FB47B14B
+         tUPcIkRVzmTQrEo3xNQOhx26AnewcbY1TIJATzCpLtKTWqYiJnVfGJJq8/Jn9EB99irw
+         jmPcs2kQ3aN8HB7wmPCRmFnAEEDd912+I43TOcLaEzsR7HFaVJvVG9qoP2pudAG1fN9s
+         FezAukLL8BvSV7SToUL8o/FAMQNNTAXoAhskFfamv/YmCwwzamJAXImChPRX2MFnSnNz
+         CYbA==
+X-Gm-Message-State: ANhLgQ0BOB/njr/A93lAOZ7Mn1HYr1gHBMODt2tHJGPCnO1n+yI614lG
+        XbcJiKpvBQXoIRtYMGWfLJeXFw==
+X-Google-Smtp-Source: ADFU+vvR6DJVT7U8l4rNquQ/VWZAF6xNkv4StE9mw7mjRxnJhAzRjNNny3oDTrKT1S8WhBBPmAEZ+Q==
+X-Received: by 2002:aa7:87c1:: with SMTP id i1mr1017080pfo.297.1584577542429;
+        Wed, 18 Mar 2020 17:25:42 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id h24sm178367pfn.49.2020.03.18.17.25.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Mar 2020 17:25:41 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <1580249770-1088-1-git-send-email-jcrouse@codeaurora.org>
- <1580249770-1088-3-git-send-email-jcrouse@codeaurora.org> <20200318224840.GA10796@willie-the-truck>
-In-Reply-To: <20200318224840.GA10796@willie-the-truck>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 18 Mar 2020 16:43:07 -0700
-Message-ID: <CAF6AEGu-hj6=3rsCe5XeBq_ffoq9VFmL+ycrQ8N=iv89DZf=8Q@mail.gmail.com>
-Subject: Re: [PATCH v1 2/6] arm/smmu: Add auxiliary domain support for arm-smmuv2
-To:     Will Deacon <will@kernel.org>
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1584505758-21037-3-git-send-email-mkshah@codeaurora.org>
+References: <1584505758-21037-1-git-send-email-mkshah@codeaurora.org> <1584505758-21037-3-git-send-email-mkshah@codeaurora.org>
+Subject: Re: [PATCH v5 2/4] soc: qcom: Add SoC sleep stats driver
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Date:   Wed, 18 Mar 2020 17:25:40 -0700
+Message-ID: <158457754092.152100.9555786468515303757@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 3:48 PM Will Deacon <will@kernel.org> wrote:
->
-> On Tue, Jan 28, 2020 at 03:16:06PM -0700, Jordan Crouse wrote:
-> > Support auxiliary domains for arm-smmu-v2 to initialize and support
-> > multiple pagetables for a single SMMU context bank. Since the smmu-v2
-> > hardware doesn't have any built in support for switching the pagetable
-> > base it is left as an exercise to the caller to actually use the pagetable.
-> >
-> > Aux domains are supported if split pagetable (TTBR1) support has been
-> > enabled on the master domain.  Each auxiliary domain will reuse the
-> > configuration of the master domain. By default the a domain with TTBR1
-> > support will have the TTBR0 region disabled so the first attached aux
-> > domain will enable the TTBR0 region in the hardware and conversely the
-> > last domain to be detached will disable TTBR0 translations.  All subsequent
-> > auxiliary domains create a pagetable but not touch the hardware.
-> >
-> > The leaf driver will be able to query the physical address of the
-> > pagetable with the DOMAIN_ATTR_PTBASE attribute so that it can use the
-> > address with whatever means it has to switch the pagetable base.
-> >
-> > Following is a pseudo code example of how a domain can be created
-> >
-> >  /* Check to see if aux domains are supported */
-> >  if (iommu_dev_has_feature(dev, IOMMU_DEV_FEAT_AUX)) {
-> >        iommu = iommu_domain_alloc(...);
-> >
-> >        if (iommu_aux_attach_device(domain, dev))
-> >                return FAIL;
-> >
-> >       /* Save the base address of the pagetable for use by the driver
-> >       iommu_domain_get_attr(domain, DOMAIN_ATTR_PTBASE, &ptbase);
-> >  }
->
-> I'm not really understanding what the pagetable base gets used for here and,
-> to be honest with you, the whole thing feels like a huge layering violation
-> with the way things are structured today. Why doesn't the caller just
-> interface with io-pgtable directly?
->
-> Finally, if we need to support context-switching TTBR0 for a live domain
-> then that code really needs to live inside the SMMU driver because the
-> ASID and TLB management necessary to do that safely doesn't belong anywhere
-> else.
+Quoting Maulik Shah (2020-03-17 21:29:16)
+> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sl=
+eep_stats.c
+> new file mode 100644
+> index 0000000..0db7c3d
+> --- /dev/null
+> +++ b/drivers/soc/qcom/soc_sleep_stats.c
+> @@ -0,0 +1,244 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2011-2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/debugfs.h>
+> +#include <linux/device.h>
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/seq_file.h>
+> +
+> +#include <linux/soc/qcom/smem.h>
+> +#include <clocksource/arm_arch_timer.h>
+> +
+> +#define STAT_TYPE_ADDR         0x0
+> +#define COUNT_ADDR             0x4
+> +#define LAST_ENTERED_AT_ADDR   0x8
+> +#define LAST_EXITED_AT_ADDR    0x10
+> +#define ACCUMULATED_ADDR       0x18
+> +#define CLIENT_VOTES_ADDR      0x1c
+> +
+> +struct subsystem_data {
+> +       const char *name;
+> +       u32 smem_item;
+> +       u32 pid;
+> +};
+> +
+> +static struct subsystem_data subsystems[] =3D {
 
-Hi Will,
+This can be const.
 
-We do in fact need live domain switching, that is really the whole
-point.  The GPU CP (command processor/parser) is directly updating
-TTBR0 and triggering TLB flush, asynchronously from the CPU.
+> +       { "modem", 605, 1 },
+> +       { "adsp", 606, 2 },
+> +       { "cdsp", 607, 5 },
+> +       { "slpi", 608, 3 },
+> +       { "gpu", 609, 0 },
+> +       { "display", 610, 0 },
+> +};
+> +
+> +struct stats_config {
+> +       unsigned int offset_addr;
+> +       unsigned int num_records;
+> +       bool appended_stats_avail;
+> +};
+> +
+> +struct stats_prv_data {
+> +       const struct stats_config *config;
 
-And I think the answer about ASID is easy (on current hw).. it must be zero[*].
+Can we have 'bool has_appended_stats' here instead?
 
-BR,
--R
+> +       void __iomem *reg;
+> +};
+> +
+> +struct sleep_stats {
+> +       u32 stat_type;
+> +       u32 count;
+> +       u64 last_entered_at;
+> +       u64 last_exited_at;
+> +       u64 accumulated;
+> +};
+> +
+> +struct appended_stats {
+> +       u32 client_votes;
+> +       u32 reserved[3];
+> +};
+> +
+> +static void print_sleep_stats(struct seq_file *s, struct sleep_stats *st=
+at)
 
-[*] my rough theory/plan there, and to solve the issue with drm/msm
-getting dma-iommu ops when it really would rather not (since
-blacklisting idea wasn't popular and I couldn't figure out a way to
-deal with case where device gets attached before driver shows up) is
-to invent some API that drm/msm can call to unhook the dma-iommu ops
-and detatch the DMA domain.  Hopefully that at least gets us closer to
-the point where, when drm/msm attaches it's UNMANAGED domain, we get
-cbidx/asid zero.
+Make stat const please.
+
+> +{
+> +       u64 accumulated =3D stat->accumulated;
+> +       /*
+> +        * If a subsystem is in sleep when reading the sleep stats adjust
+> +        * the accumulated sleep duration to show actual sleep time.
+> +        */
+> +       if (stat->last_entered_at > stat->last_exited_at)
+> +               accumulated +=3D arch_timer_read_counter()
+
+This assumes that arch_timer_read_counter() is returning the physical
+counter? Is accumulated duration useful for anything? I don't like that
+we're relying on the arch timer code to return a certain counter value
+that may or may not be the same as what is written into smem.
+
+> +                              - stat->last_entered_at;
+> +
+> +       seq_printf(s, "Count =3D %u\n", stat->count);
+> +       seq_printf(s, "Last Entered At =3D %llu\n", stat->last_entered_at=
+);
+> +       seq_printf(s, "Last Exited At =3D %llu\n", stat->last_exited_at);
+> +       seq_printf(s, "Accumulated Duration =3D %llu\n", accumulated);
+> +}
+> +
+> +static int subsystem_sleep_stats_show(struct seq_file *s, void *d)
+> +{
+> +       struct subsystem_data *subsystem =3D s->private;
+> +       struct sleep_stats *stat;
+> +
+> +       stat =3D qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL=
+);
+
+We already get this during probe in create_debugfs_entries() (which is
+too generic of a name by the way). Why can't we stash that pointer away
+so that it comes through the 'd' parameter to this function?
+
+> +       if (IS_ERR(stat))
+> +               return PTR_ERR(stat);
+> +
+> +       print_sleep_stats(s, stat);
+> +
+> +       return 0;
+> +}
+> +
+> +static int soc_sleep_stats_show(struct seq_file *s, void *d)
+> +{
+> +       struct stats_prv_data *prv_data =3D s->private;
+> +       void __iomem *reg =3D prv_data->reg;
+> +       struct sleep_stats stat;
+> +
+> +       stat.count =3D readl(reg + COUNT_ADDR);
+> +       stat.last_entered_at =3D readq(reg + LAST_ENTERED_AT_ADDR);
+> +       stat.last_exited_at =3D readq(reg + LAST_EXITED_AT_ADDR);
+> +       stat.accumulated =3D readq(reg + ACCUMULATED_ADDR);
+> +
+> +       print_sleep_stats(s, &stat);
+
+Ok I see. The same stat info is in SMEM and also in some IO memory
+location? So we have to read one from an iomem region and one from smem?
+Please make subsystem_sleep_stats_show() take a 'struct
+smem_sleep_stats' through 'd' that has the __le32 and __le64 markings
+and then do the byte swaps into a stack local struct sleep_stats that
+print_sleep_stats() can use.
+
+> +
+> +       if (prv_data->config->appended_stats_avail) {
+> +               struct appended_stats app_stat;
+
+Just use a u32 for this. The struct is not useful here.
+
+> +
+> +               app_stat.client_votes =3D readl(reg + CLIENT_VOTES_ADDR);
+> +               seq_printf(s, "Client_votes =3D %#x\n", app_stat.client_v=
+otes);
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +DEFINE_SHOW_ATTRIBUTE(soc_sleep_stats);
+> +DEFINE_SHOW_ATTRIBUTE(subsystem_sleep_stats);
+> +
+> +static struct dentry *create_debugfs_entries(void __iomem *reg,
+> +                                            struct stats_prv_data *prv_d=
+ata)
+
+I'd prefer this was just inlined into probe.
+
+> +{
+> +       struct dentry *root;
+> +       struct sleep_stats *stat;
+> +       char stat_type[sizeof(u32) + 1] =3D {0};
+> +       u32 offset, type;
+> +       int i;
+> +
+> +       root =3D debugfs_create_dir("qcom_sleep_stats", NULL);
+> +
+> +       for (i =3D 0; i < prv_data[0].config->num_records; i++) {
+
+Pass config as another argument instead of attaching it to prv_data
+please.
+
+> +               offset =3D STAT_TYPE_ADDR + (i * sizeof(struct sleep_stat=
+s));
+> +
+> +               if (prv_data[0].config->appended_stats_avail)
+> +                       offset +=3D i * sizeof(struct appended_stats);
+
+I was imagining a macro like, SLEEP_STATn(i, has_appended) that did all the
+math to figure out the offset.
+
+> +
+> +               prv_data[i].reg =3D reg + offset;
+> +
+> +               type =3D readl(prv_data[i].reg);
+> +               memcpy(stat_type, &type, sizeof(u32));
+
+Is it a 4-byte ascii register that may or may not be NUL terminated? We
+should use __raw_readl() then so we don't do an endian swap. Using
+memcpy_fromio() does this all for you.
+
+> +               debugfs_create_file(stat_type, 0444, root,
+
+Maybe just 0400? Not sure why everyone in the world needs to read this.
+
+> +                                   &prv_data[i],
+> +                                   &soc_sleep_stats_fops);
+> +       }
+> +
+> +       for (i =3D 0; i < ARRAY_SIZE(subsystems); i++) {
+> +               stat =3D qcom_smem_get(subsystems[i].pid, subsystems[i].s=
+mem_item,
+> +                                    NULL);
+> +               if (IS_ERR(stat))
+> +                       continue;
+> +
+> +               debugfs_create_file(subsystems[i].name, 0444, root,
+> +                                   &subsystems[i],
+> +                                   &subsystem_sleep_stats_fops);
+> +       }
+> +
+> +       return root;
+> +}
+> +
+> +static int soc_sleep_stats_probe(struct platform_device *pdev)
+> +{
+> +       struct resource *res;
+> +       void __iomem *reg;
+> +       void __iomem *offset_addr;
+> +       phys_addr_t stats_base;
+> +       resource_size_t stats_size;
+> +       struct dentry *root;
+> +       const struct stats_config *config;
+> +       struct stats_prv_data *prv_data;
+> +       int i;
+> +
+> +       config =3D device_get_match_data(&pdev->dev);
+> +       if (!config)
+> +               return -ENODEV;
+> +
+> +       res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       if (!res)
+> +               return PTR_ERR(res);
+> +
+> +       offset_addr =3D ioremap(res->start + config->offset_addr, sizeof(=
+u32));
+> +       if (IS_ERR(offset_addr))
+> +               return PTR_ERR(offset_addr);
+> +
+> +       stats_base =3D res->start | readl_relaxed(offset_addr);
+
+I still don't get it, but whatever. I highly doubt the lower bits are
+anything besides 0 so a logical OR vs addition is not different.
+
+> +       stats_size =3D resource_size(res);
+> +       iounmap(offset_addr);
+> +
+> +       reg =3D devm_ioremap(&pdev->dev, stats_base, stats_size);
+> +       if (!reg)
+> +               return -ENOMEM;
+> +
+> +       prv_data =3D devm_kzalloc(&pdev->dev, config->num_records *
+> +                               sizeof(struct stats_prv_data), GFP_KERNEL=
+);
+
+We have devm_kcalloc() for array allocations.
+
+> +       if (!prv_data)
+> +               return -ENOMEM;
+> +
+> +       for (i =3D 0; i < config->num_records; i++)
+> +               prv_data[i].config =3D config;
+> +
+> +       root =3D create_debugfs_entries(reg, prv_data);
+> +       platform_set_drvdata(pdev, root);
+> +
+> +       return 0;
+> +}
