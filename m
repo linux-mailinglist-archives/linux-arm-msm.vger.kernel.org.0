@@ -2,160 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ED8B18C323
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 23:44:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 573B518C30F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 23:39:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727407AbgCSWoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 18:44:22 -0400
-Received: from gateway30.websitewelcome.com ([192.185.197.25]:30219 "EHLO
-        gateway30.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726867AbgCSWoW (ORCPT
+        id S1726726AbgCSWjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 18:39:46 -0400
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:52375 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727494AbgCSWjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 18:44:22 -0400
-X-Greylist: delayed 1308 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Mar 2020 18:44:21 EDT
-Received: from cm10.websitewelcome.com (cm10.websitewelcome.com [100.42.49.4])
-        by gateway30.websitewelcome.com (Postfix) with ESMTP id 88DF92912
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 17:22:32 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id F3YejD6DHEfyqF3YejD8fM; Thu, 19 Mar 2020 17:22:32 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Fch2gw+FxFOXUz75GYw483nOatBMsFwMZSrEf6kFfTg=; b=l3k+wfE4lVqBWzoz4AH1Y3aB4X
-        SNG1oTH5L8odnCiD4YykyzsTml/8wJx0Nh3HQ5xOyW9QdscofmWrhUoksFaYLna1vptrw4dH7u0OR
-        JQ/z2YgbjGQYyiTjWegOVTfZTG+G0+mabbHUMsPZs9XhLRksK+sWYqVAlQcBuaPl/qkoYYGLyXrB5
-        PC3zlrvGU52YVAz6nur+atgPOezOttLLEeDD++9BdlbxykWlKNZRh1gBk7e2iJXpdJx7To+tSUoTe
-        XgzlFwksvHPa4oQpM1NfeFzE1xSw8FcfB+JxFOqiKEJ9k1tEzdDLc1Kylt1gxrEJkcj3oMD0MAnj9
-        bU+P7o4A==;
-Received: from cablelink-189-218-116-241.hosts.intercable.net ([189.218.116.241]:53888 helo=embeddedor)
-        by gator4166.hostgator.com with esmtpa (Exim 4.92)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1jF3Yc-0023qC-18; Thu, 19 Mar 2020 17:22:30 -0500
-Date:   Thu, 19 Mar 2020 17:22:29 -0500
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH][next] media: venus: hfi_msgs.h: Replace zero-length array
- with flexible-array member
-Message-ID: <20200319222229.GA19280@embeddedor.com>
+        Thu, 19 Mar 2020 18:39:43 -0400
+Received: by mail-pj1-f67.google.com with SMTP id ng8so1636903pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 15:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=7mMAj8dUbAadtvulGNGY4QfYnieXkzH3hC7LluqQC7w=;
+        b=Lgd9Hgzqo90zpN++gDqagmBBkHHSJlmPirhxcUzg+37BS+hWQVBA7vV640vQFRNd5l
+         xWKdbaGhnEihCgFA/lHDH6U540gyXi6hA23jFRDmu3hyAaNyBAKHDJVeRwgk/yBOtqPm
+         Q7Kr3wpsKDdAEVjyvEqiExTKjoAn7gOJtKSwc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=7mMAj8dUbAadtvulGNGY4QfYnieXkzH3hC7LluqQC7w=;
+        b=LBDxhfxx91Szr+o2AHaLdYtigEPqxx5Uvuu3UF30YbQwW/9+jGkt4eTO/KvhZ/t0Tf
+         WgUAwSiln5Sm41I64cVPCQj6WITWpj96C/osH2xujy6NragFVCQefwHnYpTPjAAQyLNo
+         A6k/WFXPcTGaLrz+QUkBsqqo/KPOvDdWU9xjL2NI1sWTZuGUQqAug4ehrCKHgsedI2hO
+         pEu8TJnAlkWdtOiTyVTtGT2ZAUsMlvM9wZ21lNWTzayiHm9A2DZjof+YIyFiBQ4ko6cb
+         V4WTQ9rugruTHh6UUNiepbg7wjcPoSIGCxNuN7PqCo8xc4ZxmUiXr6CIA9ghaewBLcIh
+         kktw==
+X-Gm-Message-State: ANhLgQ1UcZGKcrQzfxYL/Jzj44C8xXl5bbCS8pb3b+llmPSjX8Zz+QrL
+        oqennlXDnVnX5Kgn8/skoDgryQ==
+X-Google-Smtp-Source: ADFU+vvVmFXLAxs6dCiwhXzCd4ILz2lDLhBmP3EvjM3zl27Yjl7Tom/VFHkVLS/IIUiyDnwnT6laNg==
+X-Received: by 2002:a17:90a:af81:: with SMTP id w1mr6230009pjq.14.1584657579847;
+        Thu, 19 Mar 2020 15:39:39 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id g16sm3412012pgb.54.2020.03.19.15.39.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 15:39:39 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 189.218.116.241
-X-Source-L: No
-X-Exim-ID: 1jF3Yc-0023qC-18
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: cablelink-189-218-116-241.hosts.intercable.net (embeddedor) [189.218.116.241]:53888
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 13
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <6a3aebf8-72dd-a1d6-bf0c-aad6204cb6c7@codeaurora.org>
+References: <1584505758-21037-1-git-send-email-mkshah@codeaurora.org> <1584505758-21037-3-git-send-email-mkshah@codeaurora.org> <158457754092.152100.9555786468515303757@swboyd.mtv.corp.google.com> <6a3aebf8-72dd-a1d6-bf0c-aad6204cb6c7@codeaurora.org>
+Subject: Re: [PATCH v5 2/4] soc: qcom: Add SoC sleep stats driver
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Date:   Thu, 19 Mar 2020 15:39:38 -0700
+Message-ID: <158465757824.152100.16700786589009071452@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The current codebase makes use of the zero-length array language
-extension to the C90 standard, but the preferred mechanism to declare
-variable-length types such as these ones is a flexible array member[1][2],
-introduced in C99:
+Quoting Maulik Shah (2020-03-19 08:14:03)
+> On 3/19/2020 5:55 AM, Stephen Boyd wrote:
+> > Quoting Maulik Shah (2020-03-17 21:29:16)
+> >> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc=
+_sleep_stats.c
+> >> new file mode 100644
+> >> index 0000000..0db7c3d
+> >> --- /dev/null
+> >> +++ b/drivers/soc/qcom/soc_sleep_stats.c
+> >> @@ -0,0 +1,244 @@
+[..]
+> >> +
+> >> +static struct subsystem_data subsystems[] =3D {
+> > This can be const.
+> we are passing each element of this in debugfs_create_file as (void * dat=
+a)
+> making this const is saying error passing const as void *.
 
-struct foo {
-        int stuff;
-        struct boo array[];
-};
+I think we can cast it and have a comment. This way the structure can be
+placed in the RO section of memory.
 
-By making use of the mechanism above, we will get a compiler warning
-in case the flexible array does not occur last in the structure, which
-will help us prevent some kind of undefined behavior bugs from being
-inadvertently introduced[3] to the codebase from now on.
+> >> +       { "modem", 605, 1 },
+> >> +       { "adsp", 606, 2 },
+> >> +       { "cdsp", 607, 5 },
+> >> +       { "slpi", 608, 3 },
+> >> +       { "gpu", 609, 0 },
+> >> +       { "display", 610, 0 },
+> >> +};
+> >> +
+> >> +struct stats_config {
+> >> +       unsigned int offset_addr;
+> >> +       unsigned int num_records;
+> >> +       bool appended_stats_avail;
+> >> +};
+> >> +
+> >> +struct stats_prv_data {
+> >> +       const struct stats_config *config;
+> > Can we have 'bool has_appended_stats' here instead?
+> any reason to move? this is per compatible config where rpm based target =
+have appended stats available.
 
-Also, notice that, dynamic memory allocations won't be affected by
-this change:
+It avoids one indirection to figure out something and makes the code
+clearer. prv_data doesn't have any use for config otherwise.
 
-"Flexible array members have incomplete type, and so the sizeof operator
-may not be applied. As a quirk of the original implementation of
-zero-length arrays, sizeof evaluates to zero."[1]
+> >
+> >> +{
+> >> +       u64 accumulated =3D stat->accumulated;
+> >> +       /*
+> >> +        * If a subsystem is in sleep when reading the sleep stats adj=
+ust
+> >> +        * the accumulated sleep duration to show actual sleep time.
+> >> +        */
+> >> +       if (stat->last_entered_at > stat->last_exited_at)
+> >> +               accumulated +=3D arch_timer_read_counter()
+> > This assumes that arch_timer_read_counter() is returning the physical
+> > counter? Is accumulated duration useful for anything? I don't like that
+> > we're relying on the arch timer code to return a certain counter value
+> > that may or may not be the same as what is written into smem.
+>=20
+> we are not comparing it with what is written into smem. The idea here is =
+to adjust the accumulated sleep length to reflect close/real value.
+>=20
+> When a subsystem goes to sleep, it updates entry time and then stays in s=
+leep.
+> Exit time and accumulated duration is updated when subsystem comes out of=
+ low power mode.
 
-This issue was found with the help of Coccinelle.
+Who is updating the accumulated time? This debugfs code? Or the
+subsystems themselves?
 
-[1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-[2] https://github.com/KSPP/linux/issues/21
-[3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+>=20
+> Now if Subsystem updated entry time and went in sleep, while printing acc=
+umulated duration
+> will keep giving older value.
+>=20
+> If read it at interval of say every 10 seconds, if subsystem never comes =
+out during this.
+> Even after 10 seconds, it gives older accumulated duration, while we want=
+ to get
+> printed as close to real value. so its updated here.
+>=20
+> Now when it comes out of sleep, it always prints value given from subsyst=
+em.
 
-Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
----
- drivers/media/platform/qcom/venus/hfi_msgs.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Thanks, I understand the motivation.
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
-index 7694b1d25d9d..526d9f5b487b 100644
---- a/drivers/media/platform/qcom/venus/hfi_msgs.h
-+++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
-@@ -155,7 +155,7 @@ struct hfi_msg_session_empty_buffer_done_pkt {
- 	u32 input_tag;
- 	u32 packet_buffer;
- 	u32 extradata_buffer;
--	u32 data[0];
-+	u32 data[];
- };
- 
- struct hfi_msg_session_fbd_compressed_pkt {
-@@ -175,7 +175,7 @@ struct hfi_msg_session_fbd_compressed_pkt {
- 	u32 picture_type;
- 	u32 packet_buffer;
- 	u32 extradata_buffer;
--	u32 data[0];
-+	u32 data[];
- };
- 
- struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
-@@ -202,7 +202,7 @@ struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
- 	u32 picture_type;
- 	u32 packet_buffer;
- 	u32 extradata_buffer;
--	u32 data[0];
-+	u32 data[];
- };
- 
- struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
-@@ -211,7 +211,7 @@ struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
- 	u32 filled_len;
- 	u32 offset;
- 	u32 packet_buffer2;
--	u32 data[0];
-+	u32 data[];
- };
- 
- struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
-@@ -220,7 +220,7 @@ struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
- 	u32 filled_len;
- 	u32 offset;
- 	u32 packet_buffer3;
--	u32 data[0];
-+	u32 data[];
- };
- 
- struct hfi_msg_session_parse_sequence_header_done_pkt {
--- 
-2.23.0
+>=20
+> >
+> >> +                              - stat->last_entered_at;
+> >> +
+> >> +       seq_printf(s, "Count =3D %u\n", stat->count);
+> >> +       seq_printf(s, "Last Entered At =3D %llu\n", stat->last_entered=
+_at);
+> >> +       seq_printf(s, "Last Exited At =3D %llu\n", stat->last_exited_a=
+t);
+> >> +       seq_printf(s, "Accumulated Duration =3D %llu\n", accumulated);
+> >> +}
+> >> +
+> >> +static int subsystem_sleep_stats_show(struct seq_file *s, void *d)
+> >> +{
+> >> +       struct subsystem_data *subsystem =3D s->private;
+> >> +       struct sleep_stats *stat;
+> >> +
+> >> +       stat =3D qcom_smem_get(subsystem->pid, subsystem->smem_item, N=
+ULL);
+> > We already get this during probe in create_debugfs_entries() (which is
+> > too generic of a name by the way).=20
+> I will update the name.
+> > Why can't we stash that pointer away
+> > so that it comes through the 'd' parameter to this function?
+> i think you are missing a subsystem restart case, in that pointer may be =
+updated to new value.
+> so we can not just save it and re-use it every time, we don't know when s=
+ubsystem restart happens and we now need new pointer.
 
+Yes I'm missing subsystem restart. A comment would certainly help. If
+this is the case, maybe this should be libified and each subsystem
+driver should call some add/remove function in here so that we can
+refetch the smem pointer. Doing the lookup each time isn't great.
+
+> >
+> >> +
+> >> +               prv_data[i].reg =3D reg + offset;
+> >> +
+> >> +               type =3D readl(prv_data[i].reg);
+> >> +               memcpy(stat_type, &type, sizeof(u32));
+> > Is it a 4-byte ascii register that may or may not be NUL terminated? We
+> > should use __raw_readl() then so we don't do an endian swap. Using
+> > memcpy_fromio() does this all for you.
+>=20
+> memcpy_fromio() seems not copying properly with u32 or u32+1 size.=C2=A0 =
+seems it need align to 8 byte.
+>=20
+> so when i pass u64 size it seems working fine. i will change this to use =
+memcpy_fromio with sizeof(u64).
+
+What is the failure? Do you need to read 4 bytes at a time? On arm64
+memcpy_fromio() looks to do byte size reads if the size isn't 8 bytes.
+Maybe just use __raw_readl() then if it is only 4 bytes and you need a
+word accessor.
