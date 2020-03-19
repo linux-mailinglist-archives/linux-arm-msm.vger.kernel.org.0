@@ -2,61 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F62B18C32B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 23:44:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 479E418C385
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 00:11:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727580AbgCSWor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 18:44:47 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35764 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726867AbgCSWor (ORCPT
+        id S1727655AbgCSXLg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 19:11:36 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:57446 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727456AbgCSXLg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 18:44:47 -0400
-Received: by mail-ed1-f68.google.com with SMTP id a20so4821334edj.2;
-        Thu, 19 Mar 2020 15:44:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mYCC0npBMG0vbAOp6lmFNCRY0zK8adL/9dKbj+Yqe7Y=;
-        b=TcTDl2tDGNgBAaeziYf3pLljPgmzoctYZoU6s2SI0JOlRpxSIpIqVqn7MObZ8hKZMe
-         kY+4IbIhSCoWP5GfPipK8Uq7NFxCVjVuzlGDrRUc8YrWfxK2XvCrb7+UIFy8TT9HwXCq
-         aO0kWPEqEVo+YAmvmpbv5fSntkFg28PXU2iX1BFKorjeo5u1we5dGbXmZZg7bW4Zo184
-         s0KM4beRTjNDr6osxUQDjzt7HBs5sJXJUJEvelOK5qpBSaEyiCO1TUSr4rBVugrrVR++
-         E0doyBA4JPIOzff1LCFyl2rUk40aTjxWW4RnXBunuErpnLWCHhqH/FA/iKFHyIEC1wNM
-         kcMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mYCC0npBMG0vbAOp6lmFNCRY0zK8adL/9dKbj+Yqe7Y=;
-        b=C+fyMx4/bG4hyI4U+iIA4GlHQ6ucv67DTpXwHgBL1f2BRdoiUjRyCsM4f8JqRtGR4p
-         z3HmTM/dnVIwWUrr/LkJ7QfKQzBIO192pFuixZIoBRMwOBIJROsMXT7sVF+WA4G9zhtn
-         bsrf2nvHJ5iVyWzQePaP9TZxJkSttlG5KdYK3rifO9zaNpQzUZzsysO09tdIOULviNuq
-         /Bn86ZcRF/OYsyULjFpUmbm24mvVGyV6w80V4R5Lp9PUUWyks93LN2jqT+R5Q9RY7FXU
-         0eptnFKWvKUGZck1tqfI4qPVHnkccW/Agz1844nwwhd2HJJPnvOS7Xa3GdMmV+hJEucv
-         RvWA==
-X-Gm-Message-State: ANhLgQ04ooWyJnnspI4XWw201UFrj8pHEnGjiHTRI1nP6xorWeFGkmFR
-        YsbUehuW3deIx8q4U0RvEV4=
-X-Google-Smtp-Source: ADFU+vuBct1KRuMGJvc8LRwcNnwdnABrZPBx+DDO4CJ62i+6MJWDN4mUXNUzKi4lBLxvXrqj4/Sx5A==
-X-Received: by 2002:a17:906:4301:: with SMTP id j1mr5699201ejm.46.1584657884798;
-        Thu, 19 Mar 2020 15:44:44 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host203-232-dynamic.53-79-r.retail.telecomitalia.it. [79.53.232.203])
-        by smtp.googlemail.com with ESMTPSA id a12sm244253ejy.89.2020.03.19.15.44.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 15:44:44 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [RESEND PATCH] ARM: dts: qcom: add scm definition to ipq806x
-Date:   Thu, 19 Mar 2020 23:44:24 +0100
-Message-Id: <20200319224424.18473-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 19 Mar 2020 19:11:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584659495; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=lgPcKGxes2wWKu8ZYirzlVaF0XLf7i8dA+8OTprMqPo=; b=UhaIebR5/62W0AhbE4xszJijhFqVASiKgoeqKPmmz7JFNUwMAfmiIbCNn3+EZeDlZ/FCSo1/
+ s8FGiKr0SnpaXROxrqJzT1zWw6IE+NR0sPiB9AbF9iSuchNxXjjhrWqjk8NRtNqdvtUPo6gB
+ aSQM4bDln8x/XGD5vzQB7jIghVk=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e73fc1f.7f3350c28420-smtp-out-n04;
+ Thu, 19 Mar 2020 23:11:27 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 140D7C43636; Thu, 19 Mar 2020 23:11:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mdtipton-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdtipton)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36160C433D2;
+        Thu, 19 Mar 2020 23:11:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36160C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
+From:   Mike Tipton <mdtipton@codeaurora.org>
+To:     georgi.djakov@linaro.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Mike Tipton <mdtipton@codeaurora.org>
+Subject: [PATCH] interconnect: qcom: Fix uninitialized tcs_cmd::wait
+Date:   Thu, 19 Mar 2020 16:10:21 -0700
+Message-Id: <20200319231021.18108-1-mdtipton@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -64,30 +55,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing scm definition for ipq806x soc
+Currently, if tcs_cmd_gen is called with commit=false, then
+tcs_cmd::wait is left uninitialized. Since the tcs_cmd structures passed
+to this function aren't zero-initialized, then we're left with random
+wait values. This results in waiting for completion for more commands
+than is necessary, depending on what's on the stack at the time.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+Removing the unnecessary if-condition fixes this, but add an explicit
+memset of the tcs_cmd structure as well to ensure predictable behavior
+if more tcs_cmd members are added in the future.
+
+Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
+Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
 ---
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/interconnect/qcom/bcm-voter.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 16c0da97932c..bb5f678c869f 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -93,6 +93,12 @@ sleep_clk: sleep_clk {
- 		};
- 	};
+diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+index 2adfde8cdf19..2a11a63e7217 100644
+--- a/drivers/interconnect/qcom/bcm-voter.c
++++ b/drivers/interconnect/qcom/bcm-voter.c
+@@ -96,6 +96,8 @@ static inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
+ 	if (!cmd)
+ 		return;
  
-+	firmware {
-+		scm {
-+			compatible = "qcom,scm-ipq806x", "qcom,scm";
-+		};
-+	};
++	memset(cmd, 0, sizeof(*cmd));
 +
- 	soc: soc {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
+ 	if (vote_x == 0 && vote_y == 0)
+ 		valid = false;
+ 
+@@ -112,8 +114,7 @@ static inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
+ 	 * Set the wait for completion flag on command that need to be completed
+ 	 * before the next command.
+ 	 */
+-	if (commit)
+-		cmd->wait = true;
++	cmd->wait = commit;
+ }
+ 
+ static void tcs_list_gen(struct list_head *bcm_list, int bucket,
 -- 
-2.25.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
