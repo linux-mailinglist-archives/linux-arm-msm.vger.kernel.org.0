@@ -2,92 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 40F1C18AC64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 06:41:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C824A18AE61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 09:33:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727194AbgCSFk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 01:40:57 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:37927 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727136AbgCSFku (ORCPT
+        id S1726603AbgCSIdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 04:33:16 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:10252 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726366AbgCSIdQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 01:40:50 -0400
-Received: by mail-pl1-f196.google.com with SMTP id w3so570610plz.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 22:40:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Z/69m7Zf+ruag16yCUxMLHHMI4Yg4kUCSYDk0zKgyCg=;
-        b=GNA5dhAfvYYpetATfgKyqLZz5xlqU1swtnZ8dzTWy+4qldc1xRRbyXZak0HEBTVC9d
-         Jrg18WL4KAFFq2QXJ3vjKAGQceRb/D6/f4UfoBnqwJuPD6vjnWCLEAEgSod9vHxQX+ej
-         BDIFlrEBBqvgkoxy7lAdszwi6BFG3XySWcWss0gnwUUd/h/Qubwa+ORCnV0/Ib6kBol+
-         fT1t1to1sBkgDvDUMTaiZ6+nxhevdSVkkIy8YmE9K+gLRLnZMnWOW4g1B8kl2bfEGH7G
-         m1mrtPFlotMHwVAHSswInC3EoDzYxrkyaHseIgZBkpXvDTfh5DzDlbFaQ9omhU8wXQTi
-         1hag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Z/69m7Zf+ruag16yCUxMLHHMI4Yg4kUCSYDk0zKgyCg=;
-        b=eblh2dmgZzn2j/HHjHuBj4eUTjP0ltcr4OTKaU1PsCA6pFBN/qFuTRW7FOwaZ5o1ny
-         gJheJPW7FxDjuiFcN12N2hw1YzSqACmtvyBSR16cIeYrw1e0PeznFRQo90kZ1A1KgODv
-         260BiBl9g5mLjB4ZUaxLNjppX9awyGcJIT7gTDrWfcrYHu+BXoyphst+zo/slI4BgxZc
-         Ol4grPum3WBMqPocIgopvGyiNghVp4Ib5oUzuvNBMxPb+5c7hF3yIRO5CThZ+xSMWM7i
-         ctfao8/1eOVqfTbEh0BS6nMJfCnFxaADhl8WdA7jqkaNOGD4uu//RJALPKFERMVtGnc5
-         AdPQ==
-X-Gm-Message-State: ANhLgQ1EsvtVHQu9HN1dt993LqeYg29XaZpM55OBBL3Tm9W5Ope389fM
-        JI8lses1D2hzQPy2EUYdJ0QijA==
-X-Google-Smtp-Source: ADFU+vsRf2sDvae95TJ6VcZ7xmIYGkaloU4QXsDM6UWMf7v+/ukUDbAHYC3DGNVQzt1wESDRV1ejsA==
-X-Received: by 2002:a17:90a:e505:: with SMTP id t5mr1967909pjy.101.1584596448549;
-        Wed, 18 Mar 2020 22:40:48 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l125sm229126pgl.57.2020.03.18.22.40.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 22:40:47 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: msm8996: Make GPU node control GPU_GX GDSC
-Date:   Wed, 18 Mar 2020 22:39:02 -0700
-Message-Id: <20200319053902.3415984-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200319053902.3415984-1-bjorn.andersson@linaro.org>
-References: <20200319053902.3415984-1-bjorn.andersson@linaro.org>
+        Thu, 19 Mar 2020 04:33:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584606796; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=OROpbwz6Sl2/iofvDAbw1QWoGqGQL4/CHkBzZoLHDbc=; b=GmTlIsnlRq9a5W/GXBgZdMO1s1yvOSjOPJEKTYnD0IVT+F/+gcjOltvV5m1rlKGZuhxS0CcF
+ fkLq3G6Wbl/qyZvXZm3tiZgPhYeSPxpYQAAYxGwWSOneghmoNYDuqWCqFPIAknNpc8K77Ge5
+ RCeAmFVQCjZ7F3M6om7HhNreUFc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e732e3b.7f285d946ab0-smtp-out-n02;
+ Thu, 19 Mar 2020 08:32:59 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CB449C43636; Thu, 19 Mar 2020 08:32:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.103] (unknown [106.51.30.43])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 11CA4C433CB;
+        Thu, 19 Mar 2020 08:32:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 11CA4C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm: cpus: Add kryo468 compatible
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, sibis@codeaurora.org,
+        swboyd@chromium.org, dianders@chromium.org
+Cc:     devicetree@vger.kernel.org
+References: <cd0f3d35ca0fc2944fd97e030a28318ff82dd5c1.1584516925.git.amit.kucheria@linaro.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <5bacd2ad-811f-103f-ac5c-fd91522df40d@codeaurora.org>
+Date:   Thu, 19 Mar 2020 14:02:54 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <cd0f3d35ca0fc2944fd97e030a28318ff82dd5c1.1584516925.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Presumably the GPU node needs to control both the GPU and GPU GX power
-domains, but given that GPU GX now depends on the GPU GDSC both can
-effectively be controlled by controlling GPU GX. So use this instead.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 14827adebd94..f29f45e9737b 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -639,7 +639,7 @@ gpu@b00000 {
- 				"mem",
- 				"mem_iface";
- 
--			power-domains = <&mmcc GPU_GDSC>;
-+			power-domains = <&mmcc GPU_GX_GDSC>;
- 			iommus = <&adreno_smmu 0>;
- 
- 			nvmem-cells = <&gpu_speed_bin>;
+On 3/18/2020 2:38 PM, Amit Kucheria wrote:
+> Kryo468 is found in sc7180, so add it to the list of cpu compatibles
+> 
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
+
+Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
+
+>   Documentation/devicetree/bindings/arm/cpus.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+> index 7a9c3ce2dbef..57408c773b4d 100644
+> --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> @@ -156,6 +156,7 @@ properties:
+>         - qcom,krait
+>         - qcom,kryo
+>         - qcom,kryo385
+> +      - qcom,kryo468
+>         - qcom,kryo485
+>         - qcom,scorpion
+>   
+> 
+
 -- 
-2.24.0
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
