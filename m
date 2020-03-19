@@ -2,164 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EFD4A18C0A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 20:43:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2956318C0B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 20:50:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727634AbgCSTng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 15:43:36 -0400
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:38183 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727194AbgCSTng (ORCPT
+        id S1725787AbgCSTt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 15:49:59 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:37037 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbgCSTt7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 15:43:36 -0400
-Received: by mail-pj1-f65.google.com with SMTP id m15so1441901pje.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 12:43:35 -0700 (PDT)
+        Thu, 19 Mar 2020 15:49:59 -0400
+Received: by mail-pf1-f193.google.com with SMTP id 3so1981307pff.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 12:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=AUrpvm7nUie7dQ0qT11wsqJbElri6+aRNCl7JJRNBOA=;
-        b=My59+S7CI/GWdSKMy3K1BSkHqMaKH1SYAEBgY7D+oXZhLV3OuxRxwvtEk4EqOUQMHA
-         h8pn+KPzD+jnwDzdghZ6bxbO5SkEFbP+Eb2E34MFXJdXzrML9McGCbRCRE7jBBURPwRZ
-         3ODmgNveoAhbGTVSR2/N2Hcmd+r2KjUGphIU4=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=pYVz/q/oYfSRcEW9kuy6vXjgqJxNH9kUoZVwT624bk4=;
+        b=IP+8fN97RRyISsjp13UrNbWub91yoKTrJ+dLi/IFdFwlMeln8RUzPJABNSvRg7oClB
+         4IDElPtf6Zru/hDRJxfOkImoE/cCiAZrwUfBKSF6Khxu4tws9CFZOSqS02HprXba4v5Q
+         48YvYNN/O4/8h1zIZB5nBxGah70564rlEWJtLtYlZnO8HFIlLenjL0hobrKL2mA6UvHm
+         dXW0caDwGhwnvupdjGg57HjhXZlrcFEJRemF04YTcrUJeUR++df5K5mrlLj74xZ6mfUJ
+         qMH5/ZPC/KKas94YUIfeh5x436aeTceIo2Two2AZQWmBRISXkbrw4koErmNvEP75UsAy
+         f1Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=AUrpvm7nUie7dQ0qT11wsqJbElri6+aRNCl7JJRNBOA=;
-        b=TJ/PucKXP4+n/fcl4HNreeUb+8ZPRJQpyyix/SpYXvDiHhdzRRSsELVXbHGX4V8B95
-         qYef2ARzxGheEKQSQXf9uBZr+VjULyRTeMFeA6Ke/6BexOm+TVO+RKHpOL/lsMXOibDr
-         DyxFDHMiJusYZCJoFndszfxXXM244fl3ZQp4l8aYRtaVXGIsE0N3nXDwaF2ohL06NLCo
-         6++o7HfBwBX2qPAWRo9YjNCrBqU7jejYgED5vru2fEX64gjGFnL8lhJW+/3qE04lX2iu
-         Ym6m2G9XrlOpHi308MxnMBqcW7eRr15YJXvV/mHAm5AH46jeNi0E3VDGxZbyjvmoztrt
-         M/hQ==
-X-Gm-Message-State: ANhLgQ3EJkftRNccaRatO/abl0klyoPDlrU0NnscFGICtT2Jrq/sLFGJ
-        zfJBmhv+N6r92s/VDznod1IyXg==
-X-Google-Smtp-Source: ADFU+vtsdT3busfKz6fGAHHD3V1l9Ghnb9/WDphQ22G1N//OaqyPJ8sNLSJMAiYmie0cCo6/Rbt3xQ==
-X-Received: by 2002:a17:90a:9501:: with SMTP id t1mr5661674pjo.108.1584647014709;
-        Thu, 19 Mar 2020 12:43:34 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id d17sm3145653pfo.148.2020.03.19.12.43.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2020 12:43:33 -0700 (PDT)
-Date:   Thu, 19 Mar 2020 12:43:32 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-Subject: Re: [PATCH V2 3/8] soc: qcom-geni-se: Add interconnect support to
- fix earlycon crash
-Message-ID: <20200319194332.GA60149@google.com>
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-4-git-send-email-akashast@codeaurora.org>
- <20200313204441.GJ144492@google.com>
- <1f86fdf0-df7c-4e4a-d4d8-8b0162e52cb4@codeaurora.org>
- <20200317182910.GR144492@google.com>
- <3831b33c-93ee-e5e0-fcfb-530b4738f930@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3831b33c-93ee-e5e0-fcfb-530b4738f930@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=pYVz/q/oYfSRcEW9kuy6vXjgqJxNH9kUoZVwT624bk4=;
+        b=IF4jWdFnq+r+RD1vRyG6tSXqdy3eWz5acbftLsGt5L1euvIRIpMhaFst5pvKqHMMOu
+         0UbFyHMRBzt3e29s4MyQIHqnAeMjeN+VReYnVhE6/kaEm01WSGeVeV2OM+/jWY1AtKRJ
+         bsuzFlfxtddefK6SvBBRYtO/fIfstESnTfn1EUEexh6Z+9sgn9NalWVvJlan7szCxnbt
+         WyGYOtaxWqhLARaKxXP8TejUcPaiVRY4Gr5jzhQ6sNkoWHZt+pMVf5YJGenjFsVsFfIe
+         LoHramgStr4gMVcR/DCruTzGS4yqryLcemsxTfrP3XE4gq0whfFU2wncBzGuWDNhEEwY
+         cIFw==
+X-Gm-Message-State: ANhLgQ3h+wmHG1DSTIZMx6+ui/02uYRoebftKlB/f1Bx4GfeH40E0GCy
+        rK5+q6TtMdagDYrmolQClVhI6g==
+X-Google-Smtp-Source: ADFU+vvlVU94t5LjsSahudUpZjzSkyz8yES5tDVu4tZoZ6z3hwxUvIzmiDn8xe4iH/duCOlp9e8+ag==
+X-Received: by 2002:a63:8c51:: with SMTP id q17mr5094662pgn.320.1584647398261;
+        Thu, 19 Mar 2020 12:49:58 -0700 (PDT)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id y28sm2989377pgc.69.2020.03.19.12.49.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 12:49:57 -0700 (PDT)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>, Todd Kjos <tkjos@google.com>,
+        Saravana Kannan <saravanak@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2] soc: qcom: rpmpd: Allow RPMPD driver to be loaded as a module
+Date:   Thu, 19 Mar 2020 19:49:54 +0000
+Message-Id: <20200319194954.39853-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 18, 2020 at 02:24:35PM +0530, Akash Asthana wrote:
-> Hi Matthias,
-> 
-> On 3/17/2020 11:59 PM, Matthias Kaehlcke wrote:
-> > Hi Akash,
-> > 
-> > On Tue, Mar 17, 2020 at 04:27:47PM +0530, Akash Asthana wrote:
-> > > Hi Matthias,
-> > > 
-> > > On 3/14/2020 2:14 AM, Matthias Kaehlcke wrote:
-> > > > Hi Akash,
-> > > > 
-> > > > On Fri, Mar 13, 2020 at 06:42:09PM +0530, Akash Asthana wrote:
-> > > > > V1 patch@https://patchwork.kernel.org/patch/11386469/ caused SC7180 system
-> > > > > to reset at boot time.
-> > > > The v1 patch isn't relevant in the commit message, please just describe the
-> > > > problem. Also the crash only occurs when earlycon is used.
-> > > ok
-> > > > > As QUP core clock is shared among all the SE drivers present on particular
-> > > > > QUP wrapper, the reset seen is due to earlycon usage after QUP core clock
-> > > > > is put to 0 from other SE drivers before real console comes up.
-> > > > > 
-> > > > > As earlycon can't vote for it's QUP core need, to fix this add ICC
-> > > > > support to common/QUP wrapper driver and put vote for QUP core from
-> > > > > probe on behalf of earlycon and remove vote during sys suspend.
-> > > > Only removing the vote on suspend isn't ideal, the system might never get
-> > > > suspended. That said I don't have a really good alternative suggestion.
-> > > > 
-> > > > One thing you could possibly do is to launch a delayed work, check
-> > > > console_device() every second or so and remove the vote when it returns
-> > > > non-NULL. Not claiming this would be a great solution ...
-> > > > 
-> > > > The cleanest solution might be a notifier when the early console is
-> > > > unregistered, it seems somewhat over-engineered though ... Then again
-> > > > other (future) uart drivers with interconnect support might run into
-> > > > the same problem.
-> > > We are hitting this problem because QUP core clocks are shared among all the
-> > > SE driver present in particular QUP wrapper, if other HW controllers has
-> > > similar architecture we will hit this issue.
-> > > 
-> > > How about if we expose an API from common driver(geni-se) for putting QUP
-> > > core BW vote to 0.
-> > > 
-> > > We call this from console probe just after uart_add_one_port call (console
-> > > resources are enabled as part of this call) to put core quota to 0 on behalf
-> > > of earlyconsole?
-> >  From my notes from earlier debugging I have doubts this would work:
-> > 
-> >    There is a short window where the early console and the 'real' console coexist:
-> > 
-> >    [    3.858122] printk: console [ttyMSM0] enabled
-> >    [    3.875692] printk: bootconsole [qcom_geni0] disabled
-> > 
-> >    The reset probably occurs when the early console tries to write, but the ICC
-> >    is effectively disabled because ttyMSM0 and the other geni ports are runtime
-> >    suspended.
-> 
-> Code flow from console driver probe(qcom_geni_serial.c)
-> 
-> uart_add_one_port--->uart_configure_port--->{ 1) uart_change_pm(enable
-> console resources)  2)register_console(boot to real console switch happens
-> here)}
-> 
-> Console resources are not disabled from anywhere before the switch happens
-> completely. I meant to say until we saw below logs.
-> 
-> [    3.875692] printk: bootconsole [qcom_geni0] disabled
-> 
-> I think the board reset issue cannot occur during the window where early
-> console and 'real' console coexist.
+This patch allow the rpmpd driver to be loaded as a permenent
+module. Meaning it can be loaded from a module, but then cannot
+be unloaded.
 
-Thanks for the clarification! Indeed my notes were only a hypothesis, I
-don't see evidence that there is an actual downvote shortly after console
-registration.
+Ideally, it would include a remove hook and related logic, but
+apparently the genpd code isn't able to track usage and cleaning
+things up? (See: https://lkml.org/lkml/2019/1/24/38)
 
-> I have validated proposed solution by me, it is working fine.
-> 
-> Currently voting is done for every QUP and not only to which earlycon is
-> connect, with the above approach we can't remove vote from other QUPs.
-> 
-> However we can limit voting only to earlycon QUP by removing interconnect
-> from DT node of other QUPs.
-> 
-> I am not sure how clean is this solution.
+So making it a permenent module at least improves things slightly
+over requiring it to be a built in driver.
 
-I'm more inclined towards a solution along the lines of what Evan
-proposed, i.e. delaying the votes (either in geni or ICC) until we
-are ready.
+Feedback would be appreciated!
+
+Cc: Todd Kjos <tkjos@google.com>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rajendra Nayak <rnayak@codeaurora.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+---
+v2:
+* Fix MODULE_LICENSE to be GPL v2 as suggested by Bjorn
+* Leave initcall as core_initcall, since that switches to module_initcall
+  only when built as a module, also suggested by Bjorn
+* Add module tags taken from Rajendra's earlier patch
+---
+ drivers/soc/qcom/Kconfig | 4 ++--
+ drivers/soc/qcom/rpmpd.c | 6 ++++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index d0a73e76d563..af774555b9d2 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -123,8 +123,8 @@ config QCOM_RPMHPD
+ 	  for the voltage rail.
+ 
+ config QCOM_RPMPD
+-	bool "Qualcomm RPM Power domain driver"
+-	depends on QCOM_SMD_RPM=y
++	tristate "Qualcomm RPM Power domain driver"
++	depends on QCOM_SMD_RPM
+ 	help
+ 	  QCOM RPM Power domain driver to support power-domains with
+ 	  performance states. The driver communicates a performance state
+diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
+index 2b1834c5609a..22fe94c03e79 100644
+--- a/drivers/soc/qcom/rpmpd.c
++++ b/drivers/soc/qcom/rpmpd.c
+@@ -5,6 +5,7 @@
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/mutex.h>
++#include <linux/module.h>
+ #include <linux/pm_domain.h>
+ #include <linux/of.h>
+ #include <linux/of_device.h>
+@@ -226,6 +227,7 @@ static const struct of_device_id rpmpd_match_table[] = {
+ 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, rpmpd_match_table);
+ 
+ static int rpmpd_send_enable(struct rpmpd *pd, bool enable)
+ {
+@@ -422,3 +424,7 @@ static int __init rpmpd_init(void)
+ 	return platform_driver_register(&rpmpd_driver);
+ }
+ core_initcall(rpmpd_init);
++
++MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPM Power Domain Driver");
++MODULE_LICENSE("GPL v2");
++MODULE_ALIAS("platform:qcom-rpmpd");
+-- 
+2.17.1
+
