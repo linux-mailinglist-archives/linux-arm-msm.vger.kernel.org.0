@@ -2,123 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EB41B18ABDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 05:39:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FA5F18AC42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 06:36:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725787AbgCSEjW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 00:39:22 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:41658 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725601AbgCSEjV (ORCPT
+        id S1726998AbgCSFgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 01:36:14 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:30093 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725767AbgCSFgN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 00:39:21 -0400
-Received: by mail-pg1-f195.google.com with SMTP id b1so545074pgm.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2020 21:39:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ruMvWKaCTsbInQhs/V5bAwFT4fo/B2LhqokROVX1RJo=;
-        b=tg2aN6xtBRVVIsylVN35uS278/h81kU5E3rrZb4l9rasLTWQ0gO2RA0UvpzzCntSPD
-         ZPIiYQ8t6hnvWpKofzzGzll+jfkqbYURB0VtpYDjsIKqvD4B3bKHij1aLEY1qdFdWFUR
-         6II5O54rz9PrCLotYrETJh1NIQT3fKEtfL/DUGC2rs/BPsqoqb+egLQnKbiBy7uwf55n
-         U+kLTmtbRTdj3d3FG0Jk7dNBxxYhnOvKmqe0Oau6zQGq5nEoJVoE1nooNnvWQxELdLl8
-         0bNe9Qqfe61hyW/e5KaoNY32tTxagRuyKyaKC1epbe1ve6VNNVmKXpriu+88+RagG67M
-         Ixvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ruMvWKaCTsbInQhs/V5bAwFT4fo/B2LhqokROVX1RJo=;
-        b=F84XSFeZPpFn6gHn8FqIs6hTR7Jo9kXPxX3tCAp5CAzincSoSULHH3iwlaXatkymaC
-         J7ihn929WPa3/4xATsJi3cAM70PKPW7YF+6PexAksYxIPrIKXrSVYk6247qVkEQQ6aD/
-         ULGg1sTmcqbuudRhZn97RxL0VwT4th3p7OJxNy2YFfOObS+05mpOzaN1VXL4ap5DzT6j
-         fZ3MhyN7mvQOK8hb/LJRjhpUg0Nxs9RLzcbRu6qur42OayweZSC/DhhP2+BJKpYEhtKS
-         PeY4HUexHRQd5XTW+nx33xBV5lml7ODGtA54BBqajRqyI6TO+tmItozpfMeMJYxIiETO
-         QSaw==
-X-Gm-Message-State: ANhLgQ2VrDKtA1NZEwhStWCUxRhCKh/M9IKJ3lCXm5o6WgWhw6x6sRwL
-        rsrojsOFiJX42aRzAJLgYGC7sA==
-X-Google-Smtp-Source: ADFU+vvT12s0aAoLNNrPFmHAx5hQiycl6q/fBkWc1OwJE6FPv7umjTrZuM7h/FPuLb8vCrLAF5uWdw==
-X-Received: by 2002:a63:2a4b:: with SMTP id q72mr1309267pgq.441.1584592760401;
-        Wed, 18 Mar 2020 21:39:20 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 25sm571370pfn.190.2020.03.18.21.39.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2020 21:39:19 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Boris Brezillon <boris.brezillon@collabora.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: Don't attempt to attach HDMI bridge twice
-Date:   Wed, 18 Mar 2020 21:37:41 -0700
-Message-Id: <20200319043741.3338842-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 19 Mar 2020 01:36:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584596173; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=MINbUZTkSWwgDB4Z3KnGKRZ0AOl8pKCct/9BN0h90hA=; b=so0LJWZzmsMlhcDw7rOconh6X5ptHYE8XxRHfYK3K2GVtFr7mrYpUQjcQbgzG/21zo9pdH4H
+ ChOTK6Isr+wWHo3IDRGBD4nciXLOR9sfo0b1fRvYufNuUSMjtWBISfYu8vUjpE9efPLl6s8B
+ YDnPu2f2jf5Zs7odLivUH4DiWBg=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7304b7.7f6cebd052d0-smtp-out-n05;
+ Thu, 19 Mar 2020 05:35:51 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8598CC433BA; Thu, 19 Mar 2020 05:35:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CBDCCC433D2;
+        Thu, 19 Mar 2020 05:35:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CBDCCC433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v7 0/3] Add modem Clock controller (MSS CC) driver for SC7180
+Date:   Thu, 19 Mar 2020 11:05:28 +0530
+Message-Id: <1584596131-22741-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With the introduction of '3ef2f119bd3e ("drm/msm: Use
-drm_attach_bridge() to attach a bridge to an encoder")' the HDMI bridge
-is attached both in msm_hdmi_bridge_init() and later in
-msm_hdmi_modeset_init().
+[v7]
+ * Fix Documentation YAML issues reported.
 
-The second attempt fails as the bridge is already attached to the
-encoder and the whole process is aborted.
+[v6]
+ * Combine the Documentation YAML schema and clock IDs for GCC MSS and
+   MSS clocks.
+ * Remove a unnecessary header file inclusion, define the max_registers for
+   regmap and also update the fw_name to remove _clk suffix.
+ * Update the copyright year.
 
-So instead make msm_hdmi_bridge_init() just initialize the hdmi_bridge
-object and let msm_hdmi_modeset_init() attach it later.
+[v5]
+ * Update the clock ID for GCC_MSS_NAV_AXIS_CLK to GCC_MSS_NAV_AXI_CLK
 
-Fixes: 3ef2f119bd3e ("drm/msm: Use drm_attach_bridge() to attach a bridge to an encoder")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+[v4]
+ * Split the GCC MSS clocks and Modem clock driver.
+ * Update mss_regmap_config to const.
+ * Rename the Documentation binding as per the latest convention.
+ * Minor comments of clock-names/clocks properties updated.
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 6e380db9287b..0e103ee1b730 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -271,31 +271,18 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
- /* initialize bridge */
- struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
- {
--	struct drm_bridge *bridge = NULL;
- 	struct hdmi_bridge *hdmi_bridge;
--	int ret;
-+	struct drm_bridge *bridge;
- 
- 	hdmi_bridge = devm_kzalloc(hdmi->dev->dev,
- 			sizeof(*hdmi_bridge), GFP_KERNEL);
--	if (!hdmi_bridge) {
--		ret = -ENOMEM;
--		goto fail;
--	}
-+	if (!hdmi_bridge)
-+		return ERR_PTR(-ENOMEM);
- 
- 	hdmi_bridge->hdmi = hdmi;
- 
- 	bridge = &hdmi_bridge->base;
- 	bridge->funcs = &msm_hdmi_bridge_funcs;
- 
--	ret = drm_bridge_attach(hdmi->encoder, bridge, NULL, 0);
--	if (ret)
--		goto fail;
--
- 	return bridge;
--
--fail:
--	if (bridge)
--		msm_hdmi_bridge_destroy(bridge);
--
--	return ERR_PTR(ret);
- }
--- 
-2.24.0
+[v3]
+  * Add clocks/clock-names required for the MSS clock controller.
+  * Add pm_ops to enable/disable the required dependent clock.
+  * Add parent_data for the MSS clocks.
+  * Update the GCC MSS clocks from _CBCR to _CLK.
 
+[v2]
+  * Update the license for the documentation and fix minor comments in the
+    YAML bindings.
+
+[v1]
+  * Add driver support for Modem clock controller for SC7180 and also
+    update device tree bindings for the various clocks supported in the
+    clock controller.
+
+Taniya Das (3):
+  dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
+  clk: qcom: gcc: Add support for modem clocks in GCC
+  clk: qcom: Add modem clock controller driver for SC7180
+
+ .../devicetree/bindings/clock/qcom,sc7180-mss.yaml |  62 +++++++++
+ drivers/clk/qcom/Kconfig                           |   9 ++
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/gcc-sc7180.c                      |  72 ++++++++++-
+ drivers/clk/qcom/mss-sc7180.c                      | 143 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc7180.h        |   7 +-
+ include/dt-bindings/clock/qcom,mss-sc7180.h        |  12 ++
+ 7 files changed, 304 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
+ create mode 100644 drivers/clk/qcom/mss-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
+
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
