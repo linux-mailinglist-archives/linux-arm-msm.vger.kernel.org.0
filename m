@@ -2,136 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F18CD18BEF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 19:03:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3CC318BF39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 19:19:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728300AbgCSSDn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 14:03:43 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35865 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727187AbgCSSDn (ORCPT
+        id S1727187AbgCSST3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 14:19:29 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46179 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbgCSST2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 14:03:43 -0400
-Received: by mail-ed1-f66.google.com with SMTP id b18so3896291edu.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 11:03:40 -0700 (PDT)
+        Thu, 19 Mar 2020 14:19:28 -0400
+Received: by mail-ed1-f68.google.com with SMTP id ca19so3880651edb.13;
+        Thu, 19 Mar 2020 11:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XfNpIrjpsRE5Z/i+mEEnL1CN6uH1onpiPIQdClkvN9k=;
-        b=zUNj5uWPN3ed1s0ovn/PizQ3gonRKIsiPyOqsCTbOf9n1TWl0o60Agb+4fTV2eoYi0
-         zv4fUftei3+7uGNBFN3oHKBi1wCkcIv24/sM5sVKPymgnZxQBtgGeUf86U/4/e8ymNNY
-         fo4BiOFuCNG+GbvYzWb8NivNs1ZfLDropeV1j2djud6WRCAQe6wpHXvGlVCSXouAhwH8
-         nHeKziNAmqcvtJhC9sQZ3rU8+4Kh1q1RcgHbddGpl6DeuuaDnRcpv5TYYJhYdYPgJqhf
-         KifXIkXGlezdB2uknSnll53X9ffy8g8Us1tJCxPRWVta7rqlc9Utvyhbv1zEDaNfodSN
-         xSXA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VUnLPRFaXYEyBMAu2KerTyrQvIYIc8Adcw0gQEvJv1g=;
+        b=lgXZcIvA+kWlIoPJziys10SY+bpa92mglfzT+MBUMHhjvOu9zbr2UUe9GFdhoqCKEx
+         B2NIDVBcMACw4/h86uBHZHdkFxDKlqEO3RbQHlJdpwsvDLoLyM8g0h35hwOW0kHwRTZb
+         b+b40DXCqdQgTO6FtOInYhhcpCumJvr6veMoQTtS6fqGKXuIECoUzAGrPeZPke+MO8mp
+         dWjl5fe5YasL/G+bdIQlOTbWyUCjDY1j2AUthyCd7vClmH+ulbx8MjbtSHCV73KXo+FK
+         46rgB5WN9EfrklB/kJOGc+zwo6/WKRKM7nyRAOVOIWkNQd8JsfRECJmTIBfutDRonDsD
+         aIsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=XfNpIrjpsRE5Z/i+mEEnL1CN6uH1onpiPIQdClkvN9k=;
-        b=Bi47qdb6FmqlVpR+/zENu7rGX7bLiY0BI7YrCc6XNUS1m9G8zxPgIUop4qXKbnTH4Y
-         8cAgpPbNR95Ems9zpxOpUZZ3jU9Ql8OVryzLy8QzF66JJbddFRLvJVBiW1CyYt4VEMHP
-         AEoXHbc8eeW6kwjo2GWRPycBBFarkVNwjYttQOxRpmYWuIXPLIZQ6fWoCTquBmSxpiTc
-         5PZPYGEwIgKIqr5mU1/RI498//kviyqApaEi9yf+hz0R9iuF8fXrcy/WV3Adla5GHwhk
-         9tWyZaheAfeXR4ze7otrWMLcmDEblFUCHB5uRraxTcf3HY275cOGV4qIf+l33xwxa0zI
-         7gsg==
-X-Gm-Message-State: ANhLgQ0BsfiBZuzGM1SNMj/3BVrFR9/wOsnDnLT9pRr6qthfCRlLY/9C
-        I2RbN8CSDF9SHHBXdzOv/9m4jg==
-X-Google-Smtp-Source: ADFU+vscWLKaOryISlWMAo7HeQrnyWVtnZCYLNMamJ7iFeEAu+BEipdUTnLwPnEstiRldF4p+RNPhA==
-X-Received: by 2002:a05:6402:2cd:: with SMTP id b13mr4017272edx.68.1584641019890;
-        Thu, 19 Mar 2020 11:03:39 -0700 (PDT)
-Received: from [192.168.0.38] ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id ny24sm184082ejb.50.2020.03.19.11.03.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2020 11:03:38 -0700 (PDT)
-Subject: Re: [PATCH 2/7] dt-bindings: usb: dwc3: Add a gpio-usb-connector
- example
-To:     Stephen Boyd <swboyd@chromium.org>, balbi@kernel.org,
-        gregkh@linuxfoundation.org, linux-usb@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, jackp@codeaurora.org, robh@kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-References: <20200311191501.8165-1-bryan.odonoghue@linaro.org>
- <20200311191501.8165-3-bryan.odonoghue@linaro.org>
- <158458013177.152100.17920784952083533825@swboyd.mtv.corp.google.com>
- <aa6aa234-e2d1-bdcd-0f0e-64b2a7e497d3@linaro.org>
- <158463604559.152100.9219030962819234620@swboyd.mtv.corp.google.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <f6e948cb-7d3f-72b6-b153-58afb1304c49@linaro.org>
-Date:   Thu, 19 Mar 2020 18:03:58 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VUnLPRFaXYEyBMAu2KerTyrQvIYIc8Adcw0gQEvJv1g=;
+        b=gvaumCxT2/OeG9g3HQoedlgovkOHRbxwiwzksVpBe7S7sUXkT51pAVwL2PEAcs4s4M
+         /pB9ifHfPyWsj2zlUexH8CYCG90geGNFvRyJI3PhOcf726C/dZ/XSSM5bBvDhWJzlHhi
+         vmvD6nkYH1vetwpUFNMIoNtzxPb4LiXrXSuFOVa9tYdR+7tty8o1BoiOGuBnLZDFLAli
+         e9tQOaRVizu7ub+wG+h1O5vHQARENZqAgPAnoOdqEyRlEXQcXsD62RuHssZuVauXC0vg
+         Y4qQkeDm+6SUGUtD0acCtKG25PWMXnWTkl16Xkh2yRMVEF3s7AcXZbhdLI2iQlpaD/B/
+         1WnA==
+X-Gm-Message-State: ANhLgQ1RVWZ+kwaCMp45MwUpXUhfndp+XEwJIeUz7Vddw0L4TwwECy/i
+        g3o16pz3XzKV4a+FTMC01eqLGE1Adk1kr8H3fA4=
+X-Google-Smtp-Source: ADFU+vud33ZNOWzEZL7qH7qtQzJyc7BdVgN4hxJA6xo79YTL1rHt/UMu58hsnUr03cPz9Jge8sTfUNaovlby3KRdpbE=
+X-Received: by 2002:a05:6402:8ca:: with SMTP id d10mr4157650edz.362.1584641965480;
+ Thu, 19 Mar 2020 11:19:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <158463604559.152100.9219030962819234620@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200319043741.3338842-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20200319043741.3338842-1-bjorn.andersson@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 19 Mar 2020 11:19:15 -0700
+Message-ID: <CAF6AEGtvSZOp48hyrBUzqQLV6+twtuy6k6MLimz6fhC-dqWEVA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Don't attempt to attach HDMI bridge twice
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/03/2020 16:40, Stephen Boyd wrote:
-> Quoting Bryan O'Donoghue (2020-03-19 08:22:14)
->> On 19/03/2020 01:08, Stephen Boyd wrote:
->>>
->>> Maybe it should be a virtual node at the root of the DT if it's GPIO
->>> controlled? And then the phy can be connected to the usb connector
->>> through the graph binding.
->>
->> Graph binding can probably work.
->>
->> Re: the PHY.
->>
->> For myself the hardware model is
->>
->> Connector -> PHY -> Host controller -> Host controller wrapper
->>
->> Only
->>
->> Connector -> Host controller -> Host controller wrapper
->>
->> care about the USB role though.
->>
->> If your PHY did care about the role, you'd really need to write a
->> connector/phy type-c type driver, to detect the state and toggle your
->> PHY bits before doing usb_role_switch_set_role() back to DWC3.
->>
-> 
-> Yes some PHYs do care about the role. Sometimes they have to toggle some
-> bit to switch between host and gadget mode for example. I haven't fully
-> read this patch series but maybe the PHY can be the one that controls
-> the gpio for the connector?
+On Wed, Mar 18, 2020 at 9:39 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> With the introduction of '3ef2f119bd3e ("drm/msm: Use
+> drm_attach_bridge() to attach a bridge to an encoder")' the HDMI bridge
+> is attached both in msm_hdmi_bridge_init() and later in
+> msm_hdmi_modeset_init().
+>
+> The second attempt fails as the bridge is already attached to the
+> encoder and the whole process is aborted.
+>
+> So instead make msm_hdmi_bridge_init() just initialize the hdmi_bridge
+> object and let msm_hdmi_modeset_init() attach it later.
+>
+> Fixes: 3ef2f119bd3e ("drm/msm: Use drm_attach_bridge() to attach a bridge to an encoder")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Previous version of the PHY from 2019 had extcon toggling vbus.
+Thanks, I think this should also be solved by:
 
-Since extcon is going away, we moved go usb-gpio
+https://patchwork.freedesktop.org/patch/357331/?series=74611&rev=1
 
-https://lwn.net/ml/devicetree/20190905175802.GA19599@jackp-linux.qualcomm.com/
+BR,
+-R
 
-https://lwn.net/ml/devicetree/5d71edf5.1c69fb81.1f307.fdd6@mx.google.com/
-
-usb-gpio-conn handle VBUS and notifies via the USB role switch API.
-
-Which if the connector is a child of the controller "just works" but, 
-maybe with a little bit of work DT <port> references could do the same 
-thing and the connector wouldn't need to be declared as a child.
-
-> We (ChromeOS) need to integrate the type-c connector class, etc. on
-> sc7180 with the dwc3 driver and the current thinking has the type-c
-> connectors underneath the cros_ec node because the EC is the type-c
-> manager. The EC will have a type-c driver associated with it.
-
-right and you don't want, doesn't work or doesn't make sense, to declare 
-cros_ec as a child of DWC3, fair enough.
-
-I guess a DT remote-endpoint{} will do the job.
-
-Something like:
-arch/arm64/boot/dts/freescale/imx8mn-evk.dtsi
-
----
-bod
+> ---
+>  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 19 +++----------------
+>  1 file changed, 3 insertions(+), 16 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> index 6e380db9287b..0e103ee1b730 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> @@ -271,31 +271,18 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
+>  /* initialize bridge */
+>  struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
+>  {
+> -       struct drm_bridge *bridge = NULL;
+>         struct hdmi_bridge *hdmi_bridge;
+> -       int ret;
+> +       struct drm_bridge *bridge;
+>
+>         hdmi_bridge = devm_kzalloc(hdmi->dev->dev,
+>                         sizeof(*hdmi_bridge), GFP_KERNEL);
+> -       if (!hdmi_bridge) {
+> -               ret = -ENOMEM;
+> -               goto fail;
+> -       }
+> +       if (!hdmi_bridge)
+> +               return ERR_PTR(-ENOMEM);
+>
+>         hdmi_bridge->hdmi = hdmi;
+>
+>         bridge = &hdmi_bridge->base;
+>         bridge->funcs = &msm_hdmi_bridge_funcs;
+>
+> -       ret = drm_bridge_attach(hdmi->encoder, bridge, NULL, 0);
+> -       if (ret)
+> -               goto fail;
+> -
+>         return bridge;
+> -
+> -fail:
+> -       if (bridge)
+> -               msm_hdmi_bridge_destroy(bridge);
+> -
+> -       return ERR_PTR(ret);
+>  }
+> --
+> 2.24.0
+>
