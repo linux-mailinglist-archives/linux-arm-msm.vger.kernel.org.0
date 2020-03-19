@@ -2,113 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 772C818B267
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 12:36:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F119118B318
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2020 13:14:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726188AbgCSLgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 07:36:03 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:60517 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725601AbgCSLgD (ORCPT
+        id S1727027AbgCSMO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 08:14:29 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43652 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbgCSMO3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 07:36:03 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584617763; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=uCSWClx9gSFWClnfgPeB6lqVwOSev3ID8/3KAaM1uuw=; b=FZDcJ94oR1Q1z0I2MFX910bU+shMTX2kAzA4Ez7/ngwWzIxWXtEVo31gYnFsqOTvVnht68zs
- GGl5aEYwUtu7OuaZoBJYQCboNaN2iKciHuzsLwJvf3T0ySY1FNw6vmfhF6kuV8pVZvW7acWu
- 0aaiCx+Y78hAB6y1CmBXrbyxT0Y=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e735922.7f10041c5ea0-smtp-out-n03;
- Thu, 19 Mar 2020 11:36:02 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 88B5EC433D2; Thu, 19 Mar 2020 11:36:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.2] (unknown [183.83.137.78])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 64B85C433CB;
-        Thu, 19 Mar 2020 11:35:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 64B85C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v5 1/4] dt-bindings: Introduce SoC sleep stats bindings
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        devicetree@vger.kernel.org
-References: <1584505758-21037-1-git-send-email-mkshah@codeaurora.org>
- <1584505758-21037-2-git-send-email-mkshah@codeaurora.org>
- <158456695397.152100.7669140417826227943@swboyd.mtv.corp.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <ab6d61c8-010a-dbed-a9bb-69ee7f0022ea@codeaurora.org>
-Date:   Thu, 19 Mar 2020 17:05:55 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Thu, 19 Mar 2020 08:14:29 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b2so2614013wrj.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 05:14:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=X2Xv4uORm87l+84uMG+Z6O9csFS6Z05eg8XvBedWYqw=;
+        b=njOQ4F8kt/r3GjPvAzUyBYTgWq111kBIjNvQFumoP24lpirM/JRS32i7mCVLBAITCi
+         cgiYylpSdPnpyFSwyawXbeFzc1KdwmAbCRNhWrvybOpBDtnQQiQK2bq/okxVMSP7NaCX
+         7bBvGtZ5YwrbK4yH7oOvieqdjMtx4erDTKjJyt/OzwZi131VLgkiU9Pa44pS1i3WJvFs
+         vPGmnFXcmqDLGxd3OVVOQlNZWufB0Dks+OxA4p4z4tW/3yroj4QIdTPRJlx5QrWeFkAY
+         g7cOh1gkk4K/rH1mndJ7M9wVr52N9ZqFiXrMm93At1zZlereR94Z0BjZFxeMRZqNgmU8
+         f0KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=X2Xv4uORm87l+84uMG+Z6O9csFS6Z05eg8XvBedWYqw=;
+        b=HoGszSpGyHlO2TVQDvSuSEImrq0iaO1Hw0tQE2LT4/EvfDxdsWHch6liYumaFSXllT
+         OuA2CfYaf3k4Wkrdgs6mWoflT5AoeFdex1AiLR6NDxuALq4hOtwtKtQMJi/NJIZm03Ba
+         ZopWVv1XgZWpw2PkD9U1P96rYfOnFO+2Ho7tcy5dgMO6Ma9vpkzFCGqRwv5Nh07U5P9L
+         lafAk1Cu3f+6lOFbSCgEl6QamoXEwa2bmF98UNczl5Yyj5crXAbB76nD5g8VbLet3NVr
+         oHCUtesChPDHbO59YmDK/HBNpareAfu6LD6bz50bD9YunGmOCMU4Q+4bYNymt6Ufgq+y
+         DAwQ==
+X-Gm-Message-State: ANhLgQ3hMZK2PyKJrR+k1rv42rlOdkYE4h6MTgBG/4myJo97gg3uJdbs
+        tBaBbMOOIL2ZpFFWUEnBfQvFcg==
+X-Google-Smtp-Source: ADFU+vtRmac6JqvgKSJgSidNRtitLeNCe4QcW4CA86WQGWpD3QSiU9DNPQqam6jsn2srAoi7DF6rEg==
+X-Received: by 2002:adf:ef92:: with SMTP id d18mr3813859wro.193.1584620066954;
+        Thu, 19 Mar 2020 05:14:26 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.gmail.com with ESMTPSA id a73sm2770455wme.47.2020.03.19.05.14.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2020 05:14:25 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2] soc: qcom: socinfo: add missing soc_id sysfs entry
+Date:   Thu, 19 Mar 2020 12:14:18 +0000
+Message-Id: <20200319121418.5180-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-In-Reply-To: <158456695397.152100.7669140417826227943@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Looks like SoC ID is not exported to sysfs for some reason.
+This patch adds it!
 
-On 3/19/2020 2:59 AM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2020-03-17 21:29:15)
->> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->>
->> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
->> SoC sleep stats driver. The driver is used for displaying SoC sleep
->> statistic maintained by Always On Processor or Resource Power Manager.
->>
->> Cc: devicetree@vger.kernel.org
->> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> ---
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Thanks Stephen.
->
-> Two nits below.
->
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
->> new file mode 100644
->> index 0000000..d0c751d
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
->> @@ -0,0 +1,46 @@
-> [...]
->> +
->> +examples:
->> +  # Example of rpmh sleep stats
->> +  - |
->> +    rpmh-sleep-stats@c3f0000 {
-> I would think 'memory' would be a more appropriate node name, but OK.
->
->> +      compatible = "qcom,rpmh-sleep-stats";
->> +      reg = <0 0xc3f0000 0 0x400>;
-> Please add a leading 0 to the address to pad it out to 8 digits.
-I will address this in v6.
->
->> +    };
-Thanks,
-Maulik
+This is mostly used by userspace libraries like Snapdragon
+Neural Processing Engine (SNPE) SDK for checking supported SoC info.
 
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+Changes since v1:
+	- expanded SNPE short form for more clarity
+
+ drivers/soc/qcom/socinfo.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index ebb49aee179b..08a4b8ae1764 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -430,6 +430,8 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
+ 	qs->attr.family = "Snapdragon";
+ 	qs->attr.machine = socinfo_machine(&pdev->dev,
+ 					   le32_to_cpu(info->id));
++	qs->attr.soc_id = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u",
++					 le32_to_cpu(info->id));
+ 	qs->attr.revision = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.%u",
+ 					   SOCINFO_MAJOR(le32_to_cpu(info->ver)),
+ 					   SOCINFO_MINOR(le32_to_cpu(info->ver)));
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.21.0
+
