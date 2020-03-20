@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B9F9418DC10
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2020 00:33:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3355818DC17
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2020 00:34:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbgCTXdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 19:33:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44192 "EHLO mail.kernel.org"
+        id S1726840AbgCTXem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 19:34:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44314 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726738AbgCTXdt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 19:33:49 -0400
+        id S1726738AbgCTXem (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Mar 2020 19:34:42 -0400
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2411920714;
-        Fri, 20 Mar 2020 23:33:49 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 99E0220714;
+        Fri, 20 Mar 2020 23:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584747229;
-        bh=Dg5xxHZhZvwd4PpSo/Az4o/X+gBJlPIXP/xpvh9yBAg=;
+        s=default; t=1584747281;
+        bh=KlD7C3t6BH2O4UP6R7njnCijifLTsjKPiRnTBJC0TUU=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=UBt1+4JI0dQfs6NJK9LAZ/EeW4nDhqnMJ/X70zgWaBRx9Q4c5m/06LeoVmjT+WIGd
-         mev9V/HdZz5SoB3XiN6/kOJtSUFCYC9mIUqidFZESO3L7E9QhPWl/jkbOa5SugnOrz
-         CuwNb/tPQxhZoBmGYmerqsI1fd25QBprIiQ1B0wI=
+        b=MMMQSZ5DQwc/CSJKvWD0WRLuljCe26Uu3SstV6VvWn1SCRmvrB585TSDTCrF10Die
+         a9AvfjMhSR9mAxhfQ5S7TT6FpOk5gjZPifXyzMY+rrYoJIJ6YfTSGCvp/jBORQ92Dq
+         6huMW/cEIDLEgsaG96mQe/0o/ApsRQ/Rf0RA/zwU=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
@@ -36,8 +36,8 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
 To:     Wesley Cheng <wcheng@codeaurora.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, mark.rutland@arm.com,
         mturquette@baylibre.com, robh+dt@kernel.org
-Date:   Fri, 20 Mar 2020 16:33:48 -0700
-Message-ID: <158474722840.125146.9426954203327777812@swboyd.mtv.corp.google.com>
+Date:   Fri, 20 Mar 2020 16:34:40 -0700
+Message-ID: <158474728076.125146.11401827374115414324@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -45,16 +45,18 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Quoting Wesley Cheng (2020-03-17 13:53:31)
-> This adds the USB3 PIPE clock and GDSC structures, so
-> that the USB driver can vote for these resources to be
-> enabled/disabled when required.  Both are needed for SS
-> and HS USB paths to operate properly.  The GDSC will
-> allow the USB system to be brought out of reset, while
-> the PIPE clock is needed for data transactions between
-> the PHY and controller.
->=20
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-> ---
+> diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bin=
+dings/clock/qcom,gcc-sm8150.h
+> index 90d60ef..3e1a918 100644
+> --- a/include/dt-bindings/clock/qcom,gcc-sm8150.h
+> +++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
+> @@ -240,4 +240,8 @@
+>  #define GCC_USB30_SEC_BCR                                      27
+>  #define GCC_USB_PHY_CFG_AHB2PHY_BCR                            28
+> =20
+> +/* GCC GDSCRs */
+> +#define USB30_PRIM_GDSC                     4
+> +#define USB30_SEC_GDSC                                         5
 
-Applied to clk-next
+BTW, should we expect more GDSCs at 0,1,2,3 here? Why wasn't that done
+initially?
