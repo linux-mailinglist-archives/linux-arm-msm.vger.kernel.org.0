@@ -2,120 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E77718D4C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 17:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65B8C18D532
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 18:01:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727479AbgCTQqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 12:46:14 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:33352 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727417AbgCTQqN (ORCPT
+        id S1727092AbgCTRB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 13:01:28 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43929 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727323AbgCTRB2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 12:46:13 -0400
-Received: by mail-lf1-f65.google.com with SMTP id c20so5100906lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2020 09:46:12 -0700 (PDT)
+        Fri, 20 Mar 2020 13:01:28 -0400
+Received: by mail-wr1-f66.google.com with SMTP id b2so8364010wrj.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2020 10:01:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yVeMWWgOR9TOsajWbE931ud3emvQ0ziFK5hlBW9OADE=;
-        b=ZGRQRHVYCzH20glp+CuGONYp6DfLbf36SiaLFRCofD+cDdIUlqDIJFyII0gsPvuBtO
-         hCqPw+nLaQvXF1wEZLoYIPhwNfGVkUUZtXGg05RoKCrMYcQutWHg+7zLOZ3+BSB+QIvY
-         EV93/VSdJajMFJqONuXGVgXN27wm7h3uUh4yI=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=WAc5lm/otiSMYlhAZkwpRkCEm3vOHc+J4qVldOzMYLg=;
+        b=PbPE1WyvLko7zML64W4Fy/tWupg+WQH1wKpA3pUay8H3XFuNYdU3nzhD3CPGihnTx7
+         ih+cLHp3N5pEAkHECPGmtZBMzrPaN+y9XHQMkiI7iqEujqP5t7x+2Lt7a1XeJ9QHHLNK
+         nk+1jOvU7HCwNzazBbQWRyev4rktZQY6ByMAnqaVVSxXAQ0Zi9mOB3MGaNTow49biVkr
+         QDmYbFifK5dkrj3HJ6IRqWKpagtMdGr+QqaZl4sZ7+GtG1hNKyCA9NFmiheF4FBlQb9E
+         QJNRHCnlPaej/Y9dapBmKFx6r1AeoUEpVqzdyDEaA6bQBF5ja+41O6bsou1YZFv39a1s
+         +Mgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yVeMWWgOR9TOsajWbE931ud3emvQ0ziFK5hlBW9OADE=;
-        b=Nwodqjeu7E1BKXFpjUdYQDErcuVmbxlRAMj8pVSQYzTgg5YZdZAVbXau2XnCuwYlTn
-         5nAcEfO0g+Y6UIzdaq8AApbf9DTcyc8jltu53gf4KssRwbYc20JBTY+P3mkKPqgTGpFF
-         YWTjHwIGccgrd5amUwmPMfkGAABKRCl83ETa5D26B77oD+Te/SV/EKB/Nsyxpg7pnzC6
-         xPub5miaeI7MetMAb+Htot1d9/pQMb9cX/qchTzsm+n7HQKjcMxshkXUm4ya6qq/m9Y9
-         PiXwP4djHZN4kBZfcNKzy87Og4NlfT/nuUINuxCTMGRgCRvHa7u78WL6x6ArtLBj41cL
-         RFjg==
-X-Gm-Message-State: ANhLgQ06DYMjIpPl2hu6aDYUphkKBoA/1wmrKJtPbJIXqKcp0zYR18o1
-        AqpXQtMF6trVujnJId6jtfl1EJSmbZ8=
-X-Google-Smtp-Source: ADFU+vslxamlPbVrGpSANBSGIJY8KLGaqTk5vmCw15v7gDaE7t8JA4L+s865B8gg/K8bzABvqMl3+A==
-X-Received: by 2002:ac2:5465:: with SMTP id e5mr5855031lfn.210.1584722771725;
-        Fri, 20 Mar 2020 09:46:11 -0700 (PDT)
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com. [209.85.208.175])
-        by smtp.gmail.com with ESMTPSA id h2sm3576990ljm.103.2020.03.20.09.46.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Mar 2020 09:46:11 -0700 (PDT)
-Received: by mail-lj1-f175.google.com with SMTP id w4so7119229lji.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2020 09:46:11 -0700 (PDT)
-X-Received: by 2002:a2e:2206:: with SMTP id i6mr5969667lji.208.1584722770463;
- Fri, 20 Mar 2020 09:46:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-3-git-send-email-akashast@codeaurora.org>
- <CAE=gft4_Su4+SXWAW_HWy5BF1mH7QaDHCiwAAhrNaekTeU57rA@mail.gmail.com> <74851dda-296d-cdc5-2449-b9ec59bbc057@codeaurora.org>
-In-Reply-To: <74851dda-296d-cdc5-2449-b9ec59bbc057@codeaurora.org>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Fri, 20 Mar 2020 09:45:34 -0700
-X-Gmail-Original-Message-ID: <CAE=gft5Uucr83DoQqaE7_8_H=ExnkPBQvRiUK_+LxOMeadam_g@mail.gmail.com>
-Message-ID: <CAE=gft5Uucr83DoQqaE7_8_H=ExnkPBQvRiUK_+LxOMeadam_g@mail.gmail.com>
-Subject: Re: [PATCH V2 2/8] soc: qcom: geni: Support for ICC voting
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=WAc5lm/otiSMYlhAZkwpRkCEm3vOHc+J4qVldOzMYLg=;
+        b=Kdf9EcPsDAFbpYcgF7Jo5pDHb4jH9ujLD4WwXPMOieAgCG4Plr07RABADvsYcZjRNb
+         Ng7z1b7rWI0/JpA9lvnVaHncy0/0ZQeza2o9TfjEEQUtYkumcirR/+iHGThdmdLFCG6e
+         iXroQQfRHLERO+p2s28JyS0NLGlv2TFOMQQTgg5HkqrLq1yLH8+l0QzlZcWSVimu+wah
+         7G+4S66Rz5OonXx8U4j/nJ+aQp8OSErAQufo0VqFm7RhCgEavDbAKGjN8TNxKzdvf4eV
+         jmlUUSzb+hh9Vdo35O34zB2XwDtMIFYAB95ewiXOScC3a/BHdM5yPxo2sq/9Hn3zItPG
+         B9xQ==
+X-Gm-Message-State: ANhLgQ1m2aKhjkktBPU0HiQjvgomtLpNZDVykmvxG1FnH2o9nZ85Zuzs
+        OyRd+yvAx1CONG/l9Wm66QMBM+MrTC4=
+X-Google-Smtp-Source: ADFU+vv37Lo2CSsXWa5Kztok67Rtq3einqxjkNtW+ODswAo0H7LtIjSk0BpXPmvoHxMYmOyW+uTN6A==
+X-Received: by 2002:a5d:694e:: with SMTP id r14mr11999902wrw.312.1584723683784;
+        Fri, 20 Mar 2020 10:01:23 -0700 (PDT)
+Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.googlemail.com with ESMTPSA id c124sm8695442wma.10.2020.03.20.10.01.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Mar 2020 10:01:23 -0700 (PDT)
+Subject: Re: [PATCH 5/5] soundwire: qcom: add sdw_master_device support
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        alsa-devel@alsa-project.org
+Cc:     linux-kernel@vger.kernel.org, tiwai@suse.de, broonie@kernel.org,
+        vkoul@kernel.org, gregkh@linuxfoundation.org, jank@cadence.com,
+        slawomir.blauciak@intel.com,
+        Bard liao <yung-chuan.liao@linux.intel.com>,
+        Rander Wang <rander.wang@linux.intel.com>,
+        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+        Hui Wang <hui.wang@canonical.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        wsa@the-dreams.de, Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-spi@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
-        Doug Anderson <dianders@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+References: <20200320162947.17663-1-pierre-louis.bossart@linux.intel.com>
+ <20200320162947.17663-6-pierre-louis.bossart@linux.intel.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <81e2101e-d7ce-d023-5c35-ac6b55ea7166@linaro.org>
+Date:   Fri, 20 Mar 2020 17:01:21 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <20200320162947.17663-6-pierre-louis.bossart@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 20, 2020 at 4:03 AM Akash Asthana <akashast@codeaurora.org> wrote:
->
-> Hi Evan,
->
-> +/* Core 2X clock frequency to BCM threshold mapping */
-> +#define CORE_2X_19_2_MHZ               960
-> +#define CORE_2X_50_MHZ                 2500
-> +#define CORE_2X_100_MHZ                        5000
-> +#define CORE_2X_150_MHZ                        7500
-> +#define CORE_2X_200_MHZ                        10000
-> +#define CORE_2X_236_MHZ                        16383
->
-> These are all just 50 * clock_rate. Can you instead specify that one
-> define of CLK_TO_BW_RATIO 50, and then use clk_get_rate() to get the
-> input clock frequency. That way, if these end up getting clocked at a
-> different rate, the bandwidth also scales appropriately. Also, can you
-> enumerate why 50 is an appropriate ratio?
-> -Evan
->
-> -Evan
->
-> Clock rate for Core 2X is controlled by BW voting only, we don't set clock rate for core 2X clock either by DFS or calling clk_set_rate API like we do for SE clocks from individual driver.
->
-> In DT node it's not mentioned as clock.
->
-> As discussed in patch@ https://patchwork.kernel.org/patch/11436897/  We are not scaling Core 2X clock based on dynamic need of driver instead we are putting recommended value from HW team for each driver.
 
-Oh I get it. This is pretty opaque, since this table is saying "here
-are the bandwidth values that happen to work out to a Core2X clock
-rate of N". But it's not obvious why setting the Core2X clock rate to
-N is desirable or appropriate. The answer seems to be hardware guys
-told us these thresholds work well in practice. And if I'm reading
-into it more, probably they're saying these bandwidths are too low to
-be worth dynamically managing beyond on/off.
 
-At the very least we should explain some of this in the comment above
-these defines. Something like:
-/* Define bandwidth thresholds that cause the underlying Core 2X
-interconnect clock to run at the named frequency. These baseline
-values are recommended by the hardware team, and are not dynamically
-scaled with GENI bandwidth beyond basic on/off. */
--Evan
+On 20/03/2020 16:29, Pierre-Louis Bossart wrote:
+> Add new device as a child of the platform device, following the
+> following hierarchy:
+> 
+> platform_device
+>      sdw_master_device
+>          sdw_slave0
+
+Why can't we just remove the platform device layer here and add 
+sdw_master_device directly?
+
+What is it stopping doing that?
+
+--srini
+
+
+> 	...
+> 	sdw_slaveN
+> 
+> For the Qualcomm implementation no sdw_master_driver is registered so
+> the dais have to be registered using the platform_device and likely
+> all power management is handled at the platform device level.
+> 
+> Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+> ---
+>   drivers/soundwire/qcom.c | 29 +++++++++++++++++++++++++----
+>   1 file changed, 25 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index 77783ae4b71d..86b46415e50b 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -89,6 +89,7 @@ struct qcom_swrm_port_config {
+>   struct qcom_swrm_ctrl {
+>   	struct sdw_bus bus;
+>   	struct device *dev;
+> +	struct sdw_master_device *md;
+>   	struct regmap *regmap;
+>   	struct completion *comp;
+>   	struct work_struct slave_work;
+> @@ -775,14 +776,31 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>   	mutex_init(&ctrl->port_lock);
+>   	INIT_WORK(&ctrl->slave_work, qcom_swrm_slave_wq);
+>   
+> -	ctrl->bus.dev = dev;
+> +	/*
+> +	 * add sdw_master_device.
+> +	 * For the Qualcomm implementation there is no driver.
+> +	 */
+> +	ctrl->md = sdw_master_device_add(NULL,	/* no driver name */
+> +					 dev,	/* platform device is parent */
+> +					 dev->fwnode,
+> +					 0,	/* only one link supported */
+> +					 NULL);	/* no context */
+> +	if (IS_ERR(ctrl->md)) {
+> +		dev_err(dev, "Could not create sdw_master_device\n");
+> +		ret = PTR_ERR(ctrl->md);
+> +		goto err_clk;
+> +	}
+> +
+> +	/* the bus uses the sdw_master_device, not the platform device */
+> +	ctrl->bus.dev = &ctrl->md->dev;
+> +
+>   	ctrl->bus.ops = &qcom_swrm_ops;
+>   	ctrl->bus.port_ops = &qcom_swrm_port_ops;
+>   	ctrl->bus.compute_params = &qcom_swrm_compute_params;
+>   
+>   	ret = qcom_swrm_get_port_config(ctrl);
+>   	if (ret)
+> -		goto err_clk;
+> +		goto err_md;
+>   
+>   	params = &ctrl->bus.params;
+>   	params->max_dr_freq = DEFAULT_CLK_FREQ;
+> @@ -809,14 +827,14 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>   					"soundwire", ctrl);
+>   	if (ret) {
+>   		dev_err(dev, "Failed to request soundwire irq\n");
+> -		goto err_clk;
+> +		goto err_md;
+>   	}
+>   
+>   	ret = sdw_add_bus_master(&ctrl->bus);
+>   	if (ret) {
+>   		dev_err(dev, "Failed to register Soundwire controller (%d)\n",
+>   			ret);
+> -		goto err_clk;
+> +		goto err_md;
+>   	}
+>   
+>   	qcom_swrm_init(ctrl);
+> @@ -832,6 +850,8 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>   
+>   err_master_add:
+>   	sdw_delete_bus_master(&ctrl->bus);
+> +err_md:
+> +	device_unregister(&ctrl->md->dev);
+>   err_clk:
+>   	clk_disable_unprepare(ctrl->hclk);
+>   err_init:
+> @@ -843,6 +863,7 @@ static int qcom_swrm_remove(struct platform_device *pdev)
+>   	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(&pdev->dev);
+>   
+>   	sdw_delete_bus_master(&ctrl->bus);
+> +	device_unregister(&ctrl->md->dev);
+>   	clk_disable_unprepare(ctrl->hclk);
+>   
+>   	return 0;
+> 
