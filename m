@@ -2,95 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 04EBD18C710
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 06:35:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A823818C734
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 06:45:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726814AbgCTFfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 01:35:53 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:45069 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726791AbgCTFfx (ORCPT
+        id S1726584AbgCTFp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 01:45:28 -0400
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:59933 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726030AbgCTFp2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 01:35:53 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584682553; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=3o1RZ/6bELZAsXOfwev81T339te60gO/KqDzjUk4CZA=; b=obCEGtg7GtnTGEpAvO5HMGzcshDSDyaACZstd57G1eYq6QAQLaT+dfkWpy8uwEz+IEzGGlB6
- HZmM16Hk8hwR1vNsx4rDY0ma61F1vBZ5Mn8ELWflRpERMYWsRTVeU6MFzN0TdXfENK5GrrrA
- edWM55bEkcsC8R+c4gmH3WUhs1I=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e745637.7f9b3d093bc8-smtp-out-n03;
- Fri, 20 Mar 2020 05:35:51 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D3BAAC44788; Fri, 20 Mar 2020 05:35:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.13] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A570FC433CB;
-        Fri, 20 Mar 2020 05:35:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A570FC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V2 7/8] spi: spi-qcom-qspi: Add interconnect support
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        wsa@the-dreams.de, Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-spi@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-8-git-send-email-akashast@codeaurora.org>
- <20200314005817.GN144492@google.com>
- <3aeb3083-2a31-b269-510d-eb608ff14ce5@codeaurora.org>
- <CAE=gft58QsgTCUHMHKJhcM9ZxAeMiY16CrbNv2HaTCRqwtmt7A@mail.gmail.com>
- <e2ee1a60-a379-5c78-355a-64aad451a944@codeaurora.org>
- <CAE=gft4xL9+GN2NrM9ewyPg0Fog3pnf_sLGjWRNOg7KynNh-Dg@mail.gmail.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <f8f7041b-c21e-2c2c-a6e7-b92e7cc3e90b@codeaurora.org>
-Date:   Fri, 20 Mar 2020 11:05:42 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Fri, 20 Mar 2020 01:45:28 -0400
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Mar 2020 11:14:26 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 20 Mar 2020 11:14:12 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id B9E492916; Fri, 20 Mar 2020 11:14:11 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>, robdclark@gmail.com,
+        seanpaul@chromium.org, sean@poorly.run
+Subject: [PATCH v8 0/2] Add support for rm69299 Visionox panel driver and add devicetree bindings for visionox panel
+Date:   Fri, 20 Mar 2020 11:14:07 +0530
+Message-Id: <20200320054409.32509-1-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <CAE=gft4xL9+GN2NrM9ewyPg0Fog3pnf_sLGjWRNOg7KynNh-Dg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Evan,
->> IIUC, you meant to say struct icc_req(inside icc_path) will be saving
->> avg_bw and peak_bw so no need to save it outside icc_path?
-> Correct, it seems silly to store the same set of values twice in the
-> framework, but with different semantics about who's watching it.
-> -Evan
+Adding support for visionox rm69299 panel driver and adding bindings for the same panel.
 
-Thanks for clarification! Yeah make sense not to introduce the structure 
-in ICC framework
+Harigovindan P (2):
+  dt-bindings: display: add visionox rm69299 panel variant
+  drm/panel: add support for rm69299 visionox panel driver
 
-Regards,
-
-Akash
+ .../display/panel/visionox,rm69299.yaml       |  73 +++++
+ drivers/gpu/drm/panel/Kconfig                 |   8 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ .../gpu/drm/panel/panel-visionox-rm69299.c    | 295 ++++++++++++++++++
+ 4 files changed, 377 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+ create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm69299.c
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.25.1
+
