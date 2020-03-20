@@ -2,28 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DD09B18C5DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 04:36:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D80EF18C5E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 04:36:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726658AbgCTDgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 23:36:40 -0400
+        id S1726975AbgCTDgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 23:36:54 -0400
 Received: from mail27.static.mailgun.info ([104.130.122.27]:13357 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726596AbgCTDgk (ORCPT
+        by vger.kernel.org with ESMTP id S1727049AbgCTDgx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 23:36:40 -0400
+        Thu, 19 Mar 2020 23:36:53 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584675400; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=znBJGhFi3/HMKJ6NsPkvkKTgdVlBcafwD2Un8aWndTg=; b=wX3eXeSNJhOjckI1aDEC1L4UdwskQps2pTteMaJeegi/tp2UAxnW3eJTO4aPtCwTyI/5LPH8
- QjO7ScoayTyKkNUYIjPFkweddd0sbzGxVTDoLNwe/jnB/W9hjaF/Oqb1qK/z5ptE+FnaZ9Eq
- HlV8FKMd/9VWys2sR+0Et1ZZ/pI=
+ s=smtp; t=1584675413; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=M3t+oAG+0rKLDlYPz2q1I8Jp5bRrYW00ieIVzeM0aqE=; b=hsaqlvdb1L1586D03pUilslEjNHjYuWdKci6IyZmehfiW7XEooUmOPW0WdyPdAWwgYwGkQT1
+ aovCjsa2gKbq3dGmGeEbQVn/TYYWBxMx46yT80LTnUlqOQF3ulPyEuz61oHCiLrxCRcegFrc
+ 0sL6aMvJysY0I0t3slgurZd4Y6E=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e743a3c.7f7fe2817b58-smtp-out-n05;
- Fri, 20 Mar 2020 03:36:28 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e743a42.7f6125a1fa78-smtp-out-n03;
+ Fri, 20 Mar 2020 03:36:34 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BE01AC44788; Fri, 20 Mar 2020 03:36:26 +0000 (UTC)
+        id 51B03C43637; Fri, 20 Mar 2020 03:36:33 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -33,79 +34,246 @@ Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.2
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1DC4CC433D2;
-        Fri, 20 Mar 2020 03:36:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1DC4CC433D2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 63388C432C2;
+        Fri, 20 Mar 2020 03:36:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 63388C432C2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     John Stultz <john.stultz@linaro.org>, smasetty@codeaurora.org,
         Brian Masney <masneyb@onstation.org>,
-        Christoph Hellwig <hch@infradead.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
         Rob Clark <robdclark@gmail.com>,
         Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v6 0/2] msm/gpu/a6xx: use the DMA-API for GMU memory allocations
-Date:   Thu, 19 Mar 2020 21:36:09 -0600
-Message-Id: <20200320033611.7623-1-jcrouse@codeaurora.org>
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v6 1/2] dt-bindings: display: msm: Convert GMU bindings to YAML
+Date:   Thu, 19 Mar 2020 21:36:10 -0600
+Message-Id: <20200320033611.7623-2-jcrouse@codeaurora.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200320033611.7623-1-jcrouse@codeaurora.org>
+References: <20200320033611.7623-1-jcrouse@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Convert display/msm/gmu.txt to display/msm/gmu.yaml and remove the old
+text bindings.  The 'sram' text from the old binding never applied to
+the GMU so it was not converted but all the other properties were correct.
 
-When CONFIG_INIT_ON_ALLOC_DEFAULT_ON the GMU memory allocator runs afoul of
-cache coherency issues because it is mapped as write-combine without clearing
-the cache after it was zeroed.
-
-Rather than duplicate the hacky workaround we use in the GEM allocator for the
-same reason it turns out that we don't need to have a bespoke memory allocator
-for the GMU anyway. It uses a flat, global address space and there are only
-two relatively minor allocations anyway. In short this is essentially what the
-DMA API was created for so replace a bunch of memory management code with two
-calls to allocate and free DMA memory and we're fine.
-
-In a previous version of this series I added the dma-ranges property to the
-device tree file for the GMU and updated the bindings to YAML. Rob correctly
-pointed out that we didn't need dma-ranges any more but I'm still pushing the
-YAML conversion because it is good and we'll eventually need it anyway so why
-not.
-
-v6: Check return value of dma_set_mask_and_coherent per Christoph Hellwig
-
-v5: Refresh on Brian Masney's patch that removes sram from gmu.txt [1]
-
-v4: Use dma_alloc_wc() wrappers per Michael Ruhl.
-
-v3: Fix YAML description per RobH and remove dma-ranges and replace it with the
-correct DMA mask in the GMU device. Convert the iova type to a dma_attr_t to
-make it 32 bit friendly.
-
-v2: Fix the example bindings for dma-ranges - the third item is the size
-Pass false to of_dma_configure so that it fails probe if the DMA region is not
-set up.
-
-[1] https://patchwork.freedesktop.org/patch/356869/?series=74446&rev=1
-
-Jordan Crouse (2):
-  dt-bindings: display: msm: Convert GMU bindings to YAML
-  drm/msm/a6xx: Use the DMA API for GMU memory objects
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
  .../devicetree/bindings/display/msm/gmu.txt   |  65 ---------
  .../devicetree/bindings/display/msm/gmu.yaml  | 123 ++++++++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c         | 115 ++--------------
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h         |   6 +-
- 4 files changed, 137 insertions(+), 172 deletions(-)
+ 2 files changed, 123 insertions(+), 65 deletions(-)
  delete mode 100644 Documentation/devicetree/bindings/display/msm/gmu.txt
  create mode 100644 Documentation/devicetree/bindings/display/msm/gmu.yaml
 
+diff --git a/Documentation/devicetree/bindings/display/msm/gmu.txt b/Documentation/devicetree/bindings/display/msm/gmu.txt
+deleted file mode 100644
+index 90af5b0a56a9..000000000000
+--- a/Documentation/devicetree/bindings/display/msm/gmu.txt
++++ /dev/null
+@@ -1,65 +0,0 @@
+-Qualcomm adreno/snapdragon GMU (Graphics management unit)
+-
+-The GMU is a programmable power controller for the GPU. the CPU controls the
+-GMU which in turn handles power controls for the GPU.
+-
+-Required properties:
+-- compatible: "qcom,adreno-gmu-XYZ.W", "qcom,adreno-gmu"
+-    for example: "qcom,adreno-gmu-630.2", "qcom,adreno-gmu"
+-  Note that you need to list the less specific "qcom,adreno-gmu"
+-  for generic matches and the more specific identifier to identify
+-  the specific device.
+-- reg: Physical base address and length of the GMU registers.
+-- reg-names: Matching names for the register regions
+-  * "gmu"
+-  * "gmu_pdc"
+-  * "gmu_pdc_seg"
+-- interrupts: The interrupt signals from the GMU.
+-- interrupt-names: Matching names for the interrupts
+-  * "hfi"
+-  * "gmu"
+-- clocks: phandles to the device clocks
+-- clock-names: Matching names for the clocks
+-   * "gmu"
+-   * "cxo"
+-   * "axi"
+-   * "mnoc"
+-- power-domains: should be:
+-	<&clock_gpucc GPU_CX_GDSC>
+-	<&clock_gpucc GPU_GX_GDSC>
+-- power-domain-names: Matching names for the power domains
+-- iommus: phandle to the adreno iommu
+-- operating-points-v2: phandle to the OPP operating points
+-
+-Example:
+-
+-/ {
+-	...
+-
+-	gmu: gmu@506a000 {
+-		compatible="qcom,adreno-gmu-630.2", "qcom,adreno-gmu";
+-
+-		reg = <0x506a000 0x30000>,
+-			<0xb280000 0x10000>,
+-			<0xb480000 0x10000>;
+-		reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
+-
+-		interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+-		     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-names = "hfi", "gmu";
+-
+-		clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
+-			<&gpucc GPU_CC_CXO_CLK>,
+-			<&gcc GCC_DDRSS_GPU_AXI_CLK>,
+-			<&gcc GCC_GPU_MEMNOC_GFX_CLK>;
+-		clock-names = "gmu", "cxo", "axi", "memnoc";
+-
+-		power-domains = <&gpucc GPU_CX_GDSC>,
+-				<&gpucc GPU_GX_GDSC>;
+-		power-domain-names = "cx", "gx";
+-
+-		iommus = <&adreno_smmu 5>;
+-
+-		operating-points-v2 = <&gmu_opp_table>;
+-	};
+-};
+diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+new file mode 100644
+index 000000000000..0b8736a9384e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+@@ -0,0 +1,123 @@
++# SPDX-License-Identifier: GPL-2.0-only
++# Copyright 2019-2020, The Linux Foundation, All Rights Reserved
++%YAML 1.2
++---
++
++$id: "http://devicetree.org/schemas/display/msm/gmu.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Devicetree bindings for the GMU attached to certain Adreno GPUs
++
++maintainers:
++  - Rob Clark <robdclark@gmail.com>
++
++description: |
++  These bindings describe the Graphics Management Unit (GMU) that is attached
++  to members of the Adreno A6xx GPU family. The GMU provides on-device power
++  management and support to improve power efficiency and reduce the load on
++  the CPU.
++
++properties:
++  compatible:
++    items:
++      - enum:
++          - qcom,adreno-gmu-630.2
++      - const: qcom,adreno-gmu
++
++  reg:
++    items:
++      - description: Core GMU registers
++      - description: GMU PDC registers
++      - description: GMU PDC sequence registers
++
++  reg-names:
++    items:
++      - const: gmu
++      - const: gmu_pdc
++      - const: gmu_pdc_seq
++
++  clocks:
++    items:
++     - description: GMU clock
++     - description: GPU CX clock
++     - description: GPU AXI clock
++     - description: GPU MEMNOC clock
++
++  clock-names:
++    items:
++      - const: gmu
++      - const: cxo
++      - const: axi
++      - const: memnoc
++
++  interrupts:
++    items:
++     - description: GMU HFI interrupt
++     - description: GMU interrupt
++
++
++  interrupt-names:
++    items:
++      - const: hfi
++      - const: gmu
++
++  power-domains:
++     items:
++       - description: CX power domain
++       - description: GX power domain
++
++  power-domain-names:
++     items:
++       - const: cx
++       - const: gx
++
++  iommus:
++    maxItems: 1
++
++  operating-points-v2: true
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - clocks
++  - clock-names
++  - interrupts
++  - interrupt-names
++  - power-domains
++  - power-domain-names
++  - iommus
++  - operating-points-v2
++
++examples:
++ - |
++   #include <dt-bindings/clock/qcom,gpucc-sdm845.h>
++   #include <dt-bindings/clock/qcom,gcc-sdm845.h>
++   #include <dt-bindings/interrupt-controller/irq.h>
++   #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++   gmu: gmu@506a000 {
++        compatible="qcom,adreno-gmu-630.2", "qcom,adreno-gmu";
++
++        reg = <0x506a000 0x30000>,
++              <0xb280000 0x10000>,
++              <0xb480000 0x10000>;
++        reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
++
++        clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
++                 <&gpucc GPU_CC_CXO_CLK>,
++                 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
++                 <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
++        clock-names = "gmu", "cxo", "axi", "memnoc";
++
++        interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-names = "hfi", "gmu";
++
++        power-domains = <&gpucc GPU_CX_GDSC>,
++                        <&gpucc GPU_GX_GDSC>;
++        power-domain-names = "cx", "gx";
++
++        iommus = <&adreno_smmu 5>;
++        operating-points-v2 = <&gmu_opp_table>;
++   };
 -- 
 2.17.1
