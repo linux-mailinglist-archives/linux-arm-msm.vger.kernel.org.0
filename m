@@ -2,79 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B781C18CC9F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 12:20:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5074F18CD60
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 13:01:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726973AbgCTLUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 07:20:20 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:34240 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726976AbgCTLUT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 07:20:19 -0400
-Received: by mail-ot1-f66.google.com with SMTP id j16so5611717otl.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2020 04:20:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=6w+aFSJ+2vZ3lBtg9xVXLOFVqSNoMPd625E7FNYobb8=;
-        b=AQ5FoC1OvszEznNGHWNHa6rbIx4Qr8JOmnwimrbjcyEOUVVGSE5mk9MB/QUF7GExUv
-         ZIey8vANt9dj1j0wwwpPNvoWT3JF6kFrxIT1f0gH841PQB+Ji0aEWMqE/FrRpAi5oai5
-         hFwY2v1AcyJNm/MHVODBNwnJC4dmzAXwO2HfT9DBvNVjKFUYoZvl2XwM5f1WgIF856PF
-         TThUHCkPZgbzFHN2+mcbcoscgTm81+lj67bAFLOdO/teK12p1kvFtxU58g74g2t7NzZo
-         rUvIsZQYxSerz93o/WEviV/d0EtSBYJhnQKzGwXvQ2G4nm3dztLZIrRIerLXcSqax2Ko
-         MHEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6w+aFSJ+2vZ3lBtg9xVXLOFVqSNoMPd625E7FNYobb8=;
-        b=YDtMwzyFLrHzQt/ZTeetK4xpEYBpAAZcESvqY1GiXDSsdGylB9oNE8w6EUR6d0sSIG
-         QNpCy8ZJhH23jobOLY29dQermaoIxg336RlHGOxlDaJMPAA48Mf3X03aOEl+I2kG2u+R
-         Tuz9QyuOgSvyspvdKhzwiaUE+zzpx+zOLeJrdhQon4DFBKmu7e1LPRrAZoEJLt6SMxel
-         q1rrPThqwhE5/SMY+KbzUs26TZRzJdPyUmN0laGsehHKSwYh+U0ja1UNufkGan98OEqL
-         M/yN0L1flIQDv4xpqhXFef3DTAPKzW1jCKgBEACCrh9PS2Ksz0hMDUY2xZhkrn6UpPAz
-         PmmQ==
-X-Gm-Message-State: ANhLgQ2C0b8jBsSZ2oy4jCA2SoJAc4KqsVt0VT/qBjl2yNRM9rPCbb/g
-        Lcj2OZcsNT6mMwKmbRZdyoQKp7YuqgZ0OdR3Bbw=
-X-Google-Smtp-Source: ADFU+vuBBEO68qOyaPIRY/DARgRUPX0iQbK9sRD7vCRUGAF092s/g1ozReStH0c9cQA3fwLTJ3USfdGhG2wE8zXhULo=
-X-Received: by 2002:a9d:12b4:: with SMTP id g49mr6530343otg.50.1584703217840;
- Fri, 20 Mar 2020 04:20:17 -0700 (PDT)
+        id S1726967AbgCTMBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 08:01:11 -0400
+Received: from foss.arm.com ([217.140.110.172]:48106 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726893AbgCTMBL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Mar 2020 08:01:11 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7AA5D31B;
+        Fri, 20 Mar 2020 05:01:10 -0700 (PDT)
+Received: from C02TD0UTHF1T.local (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1E89A3F85E;
+        Fri, 20 Mar 2020 05:01:07 -0700 (PDT)
+Date:   Fri, 20 Mar 2020 12:01:05 +0000
+From:   Mark Rutland <mark.rutland@arm.com>
+To:     Elliot Berman <eberman@codeaurora.org>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Trilok Soni <tsoni@codeaurora.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] dt: psci: Add arm,psci-sys-reset2-vendor-param
+ property
+Message-ID: <20200320120105.GA36658@C02TD0UTHF1T.local>
+References: <1583435129-31356-1-git-send-email-eberman@codeaurora.org>
+ <1583435129-31356-2-git-send-email-eberman@codeaurora.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6838:40c6:0:0:0:0 with HTTP; Fri, 20 Mar 2020 04:20:17
- -0700 (PDT)
-From:   ECOWAS COMMITEE <ecowasmonitoringcommitteeabj@gmail.com>
-Date:   Fri, 20 Mar 2020 11:20:17 +0000
-Message-ID: <CAHHubrZ1ezbdrwbRJEimmavkmE1YkgwPJE1q19_7Jvh2e8vX4A@mail.gmail.com>
-Subject: HAPPY SURVIVAL OF CORONAVIRUS
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1583435129-31356-2-git-send-email-eberman@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear Sir/Madam
+Hi Elliot,
 
-HAPPY SURVIVAL OF CORONAVIRUS
+On Thu, Mar 05, 2020 at 11:05:27AM -0800, Elliot Berman wrote:
+> Some implementors of PSCI may wish to use a different reset type than
+> SYSTEM_WARM_RESET. For instance, Qualcomm SoCs support an alternate
+> reset_type which may be used in more warm reboot scenarios than
+> SYSTEM_WARM_RESET permits (e.g. to reboot into recovery mode).
 
-We the West African Monitoring Committee of the West African Economic
-Community(ECOWAS)are contacting you for a business transaction which
-we feel will be of great interest to you.
+To be honest, I'm still confused by this series, and I think that these
+patches indicate a larger problem that we cannot solve generally (e.g.
+on other platofrms and/or with ACPI).
 
-Our duty is to see to the coming in and out of funds into this sub
-region.There is a fund which we confiscated worth of $12.5 million
-dollars.We will like you to receive this fund on your name in your
-account and as well helping us in the investment.
+I think the underlying issue is whether the semantics for:
 
-You are advised to contact us as soon as you get this message for
-details of the transaction if you find it interesting.
+a) Linux's RESET_WARM and RESET_SOFT
+b) PSCI's SYSTEM_RESET2 SYSTEM_WARM_RESET
 
-Best Regards,
+... actually align in practice, which this series suggests is not the
+case.
 
-Mr John Aka
+If those don't align, then I think that commit:
 
-Chairman
-ECOWAS
-West African Monitoring Committee
-Tel 00225 6716 6756
-Abidjan Cote D'Ivoire
+  4302e381a870aafb ("firmware/psci: add support for SYSTEM_RESET2")
+
+... is not actually reliable, and not something we can support by
+default, and we should rethink the code introduce in that commit.
+
+If (a) and (b) are supposed to align, and the behaviour on your platform
+is an erratum, then I think we should treat it as such rather than
+adding a property that is open to abuse.
+
+Thoughts?
+
+Thanks,
+Mark.
+
+> 
+> Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/arm/psci.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/psci.yaml b/Documentation/devicetree/bindings/arm/psci.yaml
+> index 8ef8542..1a9d2dd 100644
+> --- a/Documentation/devicetree/bindings/arm/psci.yaml
+> +++ b/Documentation/devicetree/bindings/arm/psci.yaml
+> @@ -102,6 +102,13 @@ properties:
+>        [1] Kernel documentation - ARM idle states bindings
+>          Documentation/devicetree/bindings/arm/idle-states.txt
+>  
+> +  arm,psci-sys-reset2-vendor-param:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: |
+> +        Vendor-specific reset type parameter to use for SYSTEM_RESET2 during
+> +        a warm or soft reboot. If no value is provided, then architectural
+> +        reset type SYSTEM_WARM_RESET is used.
+> +
+>    "#power-domain-cells":
+>      description:
+>        The number of cells in a PM domain specifier as per binding in [3].
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
