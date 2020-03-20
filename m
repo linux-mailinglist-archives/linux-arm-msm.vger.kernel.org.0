@@ -2,114 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1908018C442
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 01:26:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 032A118C473
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 02:01:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726785AbgCTA0p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 20:26:45 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:41552 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725787AbgCTA0p (ORCPT
+        id S1727266AbgCTBBc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 21:01:32 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:40061 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727235AbgCTBBc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 20:26:45 -0400
-Received: by mail-pl1-f193.google.com with SMTP id t16so1770411plr.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 17:26:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3CquBIknUh+wWij7pI3+EpiDVMbP4UE5jsk6gx0/y4s=;
-        b=hIL879rr/L5dDRaQ5wFuNONmj14fKu2pOrCX0vcpiDCbDvQNW9D0XNhjQ812YIdJcl
-         RFAA2QzyjMzwd4GerjIE1pcQTu7olaNibdMLiloj/OvyJs0dipLnlGDvPoaPJN07LF7F
-         UpfdW8IHurtcqD7j9uunVEbKf7ka1RrgzG9H7++qEoXG0xofRl0tYeR5MQrxj+lu36Tf
-         FZ+3j94YLwPxT4dCVO4muAjKHWNj39N/pscVLolXnbkt+oFHux9FDZk0ms266R6Y9OMV
-         HjGdlLmJ9rmc+0SDvkMngNObYsKNqMJupbmJJiQ14SRp5BiLmdkQnqDHTRwXie3QkLi/
-         ctIw==
+        Thu, 19 Mar 2020 21:01:32 -0400
+Received: by mail-io1-f65.google.com with SMTP id h18so4341921ioh.7;
+        Thu, 19 Mar 2020 18:01:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3CquBIknUh+wWij7pI3+EpiDVMbP4UE5jsk6gx0/y4s=;
-        b=KZq/uRGZmzaGWqrOvxoYz/NdF+xOm6kj46RDDIoX74GuYs+ugfc/c4GWSuYIFUAk3A
-         nXhc+zHiljtdtsvm0Tj6fw6koJciW0JXtX0t/0kbvCSkhhyV/lOtZYLaZr8B0eaxhMt5
-         b3QzzLE5BDNWllUbUZYU2Y/FbagiZloSDsr7yoi4f/uGX5qAcKzZd0O/BV7yjCk/5TTW
-         PYlq/hwd+2WpSHQKIxulo4Pl1DxLaIG/zcwYuc71VVlL8dp+4K1wMkDRbsSsaWNMe2/X
-         csRzE+J6CHIr5yfjMZzOtxVItXlRKCgvXbhVenN7ElXHxwhn/A6Exuqi4KUVCxSBLYmH
-         orUg==
-X-Gm-Message-State: ANhLgQ2CgEUM6lLnII7ppAFB6loXRs1PMP77ar1LH3ybE3MhY2YHFXOn
-        j+U1OJcYgLLZproUHqa6cxLabB0aiyo=
-X-Google-Smtp-Source: ADFU+vuvvlwjzHruspaJwITkonWxQdZ8Jw5QJj79hDHHYrQ1qrBu8aOfup37D42mz/zOwumlweKbcw==
-X-Received: by 2002:a17:90a:3328:: with SMTP id m37mr6559226pjb.158.1584664004002;
-        Thu, 19 Mar 2020 17:26:44 -0700 (PDT)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z125sm3629586pfz.187.2020.03.19.17.26.42
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Ot6m4hY0BwqCmo0YvvIottBecwmdUoxIdqh0iIdJLaE=;
+        b=e0vc4wcMKbYfbI6kyipBnoZ1jmoO413EpOBpUIq2a2ONQx4SMkadKAsSv/al4OvhS6
+         dG7+iC9ejaWy2n9m67iLR0LfuJJRrO16XToJBG6D4gMWktjXSIXXtqIXGsQ8PnbCMMzG
+         9lLuVaC6YZ4S3JVRhPb+MOk8omHlUR97IDjmNEcaiZq6Xfw8YELFte7Jt984jB3i89u1
+         LWHsNliibdWRyBFuXfmvcQc8iS6WGC35TsBCfsUVOcCrcDEwfp8qd2crOiobfTfo5ASH
+         fZFfZTfpHIhTtwr3BWH3T4yBBy8udnF6xjuYGP39Il1mZwA8G2Clm8bl4zldq2t0YQul
+         zrQw==
+X-Gm-Message-State: ANhLgQ30r6Rr3/d1b7Q4/X+9aJ1ZLJDR4TAt+nZyIGHZjiCRjbDgmK/2
+        VIafk6fZhJ/UdZujRyk0EQ==
+X-Google-Smtp-Source: ADFU+vveriY9yvP9Jzlx6UROYD7yZzJxkqX2tb0ZEVFvDtSMM5LsoOiJpdoQMBneWm4Sh8Le1oz4Cg==
+X-Received: by 2002:a5e:9b09:: with SMTP id j9mr5198775iok.114.1584666091207;
+        Thu, 19 Mar 2020 18:01:31 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id s18sm1290993ioc.0.2020.03.19.18.01.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 17:26:43 -0700 (PDT)
-Date:   Thu, 19 Mar 2020 17:26:40 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Mike Tipton <mdtipton@codeaurora.org>
-Cc:     georgi.djakov@linaro.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] interconnect: qcom: Fix uninitialized tcs_cmd::wait
-Message-ID: <20200320002640.GC458947@yoga>
-References: <20200319231021.18108-1-mdtipton@codeaurora.org>
+        Thu, 19 Mar 2020 18:01:30 -0700 (PDT)
+Received: (nullmailer pid 17809 invoked by uid 1000);
+        Fri, 20 Mar 2020 01:01:27 -0000
+Date:   Thu, 19 Mar 2020 19:01:27 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, sean@poorly.run
+Subject: Re: [PATCH v7 1/2] dt-bindings: display: add visionox rm69299 panel
+ variant
+Message-ID: <20200320010127.GA8379@bogus>
+References: <20200316041647.27953-1-harigovi@codeaurora.org>
+ <20200316041647.27953-2-harigovi@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200319231021.18108-1-mdtipton@codeaurora.org>
+In-Reply-To: <20200316041647.27953-2-harigovi@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 19 Mar 16:10 PDT 2020, Mike Tipton wrote:
-
-> Currently, if tcs_cmd_gen is called with commit=false, then
-> tcs_cmd::wait is left uninitialized. Since the tcs_cmd structures passed
-> to this function aren't zero-initialized, then we're left with random
-> wait values. This results in waiting for completion for more commands
-> than is necessary, depending on what's on the stack at the time.
+On Mon, Mar 16, 2020 at 09:46:46AM +0530, Harigovindan P wrote:
+> Add bindings for visionox rm69299 panel.
 > 
-> Removing the unnecessary if-condition fixes this, but add an explicit
-> memset of the tcs_cmd structure as well to ensure predictable behavior
-> if more tcs_cmd members are added in the future.
-> 
-> Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
-> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
 > ---
->  drivers/interconnect/qcom/bcm-voter.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-> index 2adfde8cdf19..2a11a63e7217 100644
-> --- a/drivers/interconnect/qcom/bcm-voter.c
-> +++ b/drivers/interconnect/qcom/bcm-voter.c
-> @@ -96,6 +96,8 @@ static inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
->  	if (!cmd)
->  		return;
->  
-> +	memset(cmd, 0, sizeof(*cmd));
+> Changes in v2:
+> 	- Removed unwanted properties from description.
+> 	- Creating source files without execute permissions(Rob Herring).
+> Changes in v3:
+> 	- Changing txt file into yaml
+> Changes in v4:
+> 	- Updating license identifier.
+> 	- Moving yaml file inside panel directory.
+> 	- Removing pinctrl entries.
+> 	- Adding documentation for reset-gpios.
+> Changes in v5:
+> 	- No changes. Updated 2/2 Patch.
+> Changes in v6:
+> 	- Removing patternProperties.
+> 	- Added " |" after description.
+> 	- Setting port and reset-gpios to true.
+> 	- Removing @ae94000 for dsi node.
+> Changes in v7:
+> 	- Added reg property.
+> 
+>  .../display/panel/visionox,rm69299.yaml       | 81 +++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> new file mode 100644
+> index 000000000000..6ea1a7be3787
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> @@ -0,0 +1,81 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/visionox,rm69299.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
->  	if (vote_x == 0 && vote_y == 0)
->  		valid = false;
->  
-> @@ -112,8 +114,7 @@ static inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
->  	 * Set the wait for completion flag on command that need to be completed
->  	 * before the next command.
->  	 */
-> -	if (commit)
-> -		cmd->wait = true;
-> +	cmd->wait = commit;
->  }
->  
->  static void tcs_list_gen(struct list_head *bcm_list, int bucket,
+> +title: Visionox model RM69299 Panels Device Tree Bindings.
+> +
+> +maintainers:
+> + - Harigovindan P <harigovi@codeaurora.org>
+> +
+> +description: |
+> + This binding is for display panels using a Visionox RM692999 panel.
+> +
+> +allOf:
+> + - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: visionox,rm69299-1080p-display
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  vdda-supply:
+> +    description: |
+> +      Phandle of the regulator that provides the vdda supply voltage.
+> +
+> +  vdd3p3-supply:
+> +    description: |
+> +      Phandle of the regulator that provides the vdd3p3 supply voltage.
+> +
+> +  ports:
+> +    type: object
+> +    description: |
+> +      A node containing DSI input & output port nodes with endpoint
+> +      definitions as documented in
+> +      Documentation/devicetree/bindings/media/video-interfaces.txt
+> +      Documentation/devicetree/bindings/graph.txt
+> +      properties:
+> +        port: true
+
+Need:
+
+       additionalProperties: false
+
+
+> +
+> +  reset-gpios: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - vdda-supply
+> +  - vdd3p3-supply
+> +  - reset-gpios
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    dsi {
+> +        reg = <0x0ae94000 0x400>;
+
+Either drop 'reg' or add a unit-address.
+
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +        panel@0 {
+> +            compatible = "visionox,rm69299-1080p-display";
+> +            reg = <0x0ae94000 0x400>;
+
+Wrong address.
+
+> +
+> +            vdda-supply = <&src_pp1800_l8c>;
+> +            vdd3p3-supply = <&src_pp2800_l18a>;
+> +
+> +            reset-gpios = <&pm6150l_gpio 3 0>;
+> +            ports {
+> +                    #address-cells = <1>;
+> +                    #size-cells = <0>;
+> +                    port@0 {
+
+This will fail with the above change.
+
+> +                            reg = <0>;
+> +                            panel0_in: endpoint {
+> +                                remote-endpoint = <&dsi0_out>;
+> +                            };
+> +                    };
+> +            };
+> +        };
+> +    };
+> +
+> +...
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.25.1
+> 
