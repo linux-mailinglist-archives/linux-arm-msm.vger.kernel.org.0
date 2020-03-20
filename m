@@ -2,95 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F4018CF7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 14:52:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9719118D376
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 17:02:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726851AbgCTNwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 09:52:33 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:44948 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727191AbgCTNwd (ORCPT
+        id S1726982AbgCTQC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 12:02:26 -0400
+Received: from mail-qv1-f68.google.com ([209.85.219.68]:42315 "EHLO
+        mail-qv1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726925AbgCTQC0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 09:52:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1584712352; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=asVXwuIl1gP5wCzIA2Kf9ocQuAN/2qFIJy7nJb+pgio=; b=tF+z246CLAbkn6nzaMrWrQKMDRYhhbOa2F7M4H8zm2Qo8bX9nnCJjjOJ0sC6Jb0SUd9BWhwy
- OAnMc3GwE9W+wTm+Svh2xdt6usUA8kkE8EchIm35TDPmBnNsBGVVTd2mfxM/csaoR+v/q3c9
- rQg4mhQD2MWOoIWGcirkf/AFXMc=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e74ca9a.7f6912d3a500-smtp-out-n05;
- Fri, 20 Mar 2020 13:52:26 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 71283C4478C; Fri, 20 Mar 2020 13:52:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.13] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33635C433CB;
-        Fri, 20 Mar 2020 13:52:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33635C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V2 6/8] spi: spi-geni-qcom: Add interconnect support
-To:     Mark Brown <broonie@kernel.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, evgreen@chromium.org
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-7-git-send-email-akashast@codeaurora.org>
- <20200313131603.GG5528@sirena.org.uk>
- <aa197568-3bac-6962-d39d-3261f68c0514@codeaurora.org>
- <20200317130616.GE3971@sirena.org.uk>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <58116473-1d9e-d08a-8839-a39dd0ee32bf@codeaurora.org>
-Date:   Fri, 20 Mar 2020 19:22:17 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Fri, 20 Mar 2020 12:02:26 -0400
+Received: by mail-qv1-f68.google.com with SMTP id ca9so3216442qvb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2020 09:02:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nEXV7f7OLrPPpLBkVTxsyZh4hXKceEQGD47QjUNsjwI=;
+        b=rTvYxlF/pGTLWPLsFEoyRwq0ScuYph3nxQEse3YxKoayW7g1jB1rjMRQicqRbga34t
+         k9+Xvu908nwggeZFO7UMovn8+U9jcSz9ygjM4XTqbB5YXwZufY+U0EcID8TTkvgrY/ee
+         m8F0+ifzVGPORWcGgwB5FhQaXnO+KIzu0drZU8Wu6W7IHERJY2UHOU7C71Fibch6xL2u
+         KVC2sBA0QLCstDS2vg3LBwGr44Pf69X1eqtUkLitSHgNdpKxcNK33d2Kfu6+YzoQvOjp
+         /vuvz7q9YtKa4cJFCoLjK1N+GCD7k6bcsDWPYkN2NSOm+BXECvzNPtUf/0vlKSHjk6h7
+         5SBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nEXV7f7OLrPPpLBkVTxsyZh4hXKceEQGD47QjUNsjwI=;
+        b=auly21BGFR0Q4EGevfjk9zbkQAM2byzlwHuEp2YzA2c/PQ8UVb7/u/C4Ej6MbPxPea
+         8X0c+hhEqWrMnGXuJ1+ZWbmni8gEu9o0PVyq8+TjKU8tnr9rJcWBm/S1X6/N23fzz4uX
+         mFXppgtVylVkj2ADxCZ66f9WsrsDjPwHxIO7Svgunsju9TiI/Rnt9iwBPeFr4ivZ1Xbz
+         OaYRnaO7QQ7psR2h+O/4nhoFqGYfag1XTJszVCNCr/uJ1duOGwIU/NQ6l2xreRa4S/cB
+         fYpwWYbuh3JyTKTM5BJR+21dWn3/ZxnfX2ZRYA612p3VJ3toufCbOqIzcsM6Jk6d2hhr
+         D35w==
+X-Gm-Message-State: ANhLgQ3VunMhJX3B1Ljztd+S2ODHW4YeWFvLI1UbIbPjqP+wc1+yQbr1
+        jabXXfT+HdnsVvMd50WMEjHyWg==
+X-Google-Smtp-Source: ADFU+vvTpfHka/t7GmFisaLRGj+Pw/RaMT+OgZv8d398Bsml8mWd7ly8I2zR5w28CPShZVo+7mLwlw==
+X-Received: by 2002:a05:6214:1703:: with SMTP id db3mr9065713qvb.28.1584720145521;
+        Fri, 20 Mar 2020 09:02:25 -0700 (PDT)
+Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id y17sm5066925qth.59.2020.03.20.09.02.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Mar 2020 09:02:24 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     "David S . Miller" <davem@davemloft.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Naresh Kamboju <naresh.kamboju@linaro.org>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: ipa: kill IPA_RX_BUFFER_ORDER
+Date:   Fri, 20 Mar 2020 11:02:20 -0500
+Message-Id: <20200320160220.21425-1-elder@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20200317130616.GE3971@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mark,
+Don't assume the receive buffer size is a power-of-2 number of pages.
+Instead, define the receive buffer size independently, and then
+compute the page order from that size when needed.
 
-On 3/17/2020 6:36 PM, Mark Brown wrote:
-> On Tue, Mar 17, 2020 at 03:05:21PM +0530, Akash Asthana wrote:
->
->> We are taking care of actual throughput requirement in avg_bw vote and the
->> intention of putting peak as twice of avg is to ensure that if high speed
->> peripherals(ex:USB) removes their votes, we shouldn't see any latency issue
->> because of other ICC client who don't vote for their BW requirement or
->> *actual* BW requirement. Factor of 2 is chosen randomly. Please
->> correct/improve me if this is not okay.
->> If this is okay, I will centralize this design for SPI QUP, I2C and UART
->> driver.
-> That seems reasonable to me, it was just the fact that every driver
-> seemed to be doing the same thing that I was noticing - what was being
-> done seemed OK.
+This fixes a build problem that arises when the ARM64_PAGE_SHIFT
+config option is set to have a page size greater than 4KB.  The
+problem was identified by Linux Kernel Functional Testing.
 
-Okay, thanks for confirming I will keep as is.
+The IPA code basically assumed the page size to be 4KB.  A larger page
+size caused the receive buffer size to become correspondingly larger
+(32KB or 128KB for ARM64_16K_PAGES and ARM64_64K_PAGES, respectively).
+The receive buffer size is used to compute an "aggregation byte limit"
+value that gets programmed into the hardware, and the large page sizes
+caused that limit value to be too big to fit in a 5 bit field.  This
+triggered a BUILD_BUG_ON() call in ipa_endpoint_validate_build().
 
-Regards,
+This fix causes a lot of receive buffer memory to be wasted if
+system is configured for page size greater than 4KB.  But such a
+misguided configuration will now build successfully.
 
-Akash
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
 
+Dave, I *hope* this is it for IPA for this release.	-Alex
+
+ drivers/net/ipa/ipa_endpoint.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
+index 217cbf337ad7..6de03be28784 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -26,8 +26,8 @@
+ 
+ #define IPA_REPLENISH_BATCH	16
+ 
+-#define IPA_RX_BUFFER_SIZE	(PAGE_SIZE << IPA_RX_BUFFER_ORDER)
+-#define IPA_RX_BUFFER_ORDER	1	/* 8KB endpoint RX buffers (2 pages) */
++/* RX buffer is 1 page (or a power-of-2 contiguous pages) */
++#define IPA_RX_BUFFER_SIZE	8192	/* PAGE_SIZE > 4096 wastes a LOT */
+ 
+ /* The amount of RX buffer space consumed by standard skb overhead */
+ #define IPA_RX_BUFFER_OVERHEAD	(PAGE_SIZE - SKB_MAX_ORDER(NET_SKB_PAD, 0))
+@@ -758,7 +758,7 @@ static int ipa_endpoint_replenish_one(struct ipa_endpoint *endpoint)
+ 	u32 len;
+ 	int ret;
+ 
+-	page = dev_alloc_pages(IPA_RX_BUFFER_ORDER);
++	page = dev_alloc_pages(get_order(IPA_RX_BUFFER_SIZE));
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+@@ -787,7 +787,7 @@ static int ipa_endpoint_replenish_one(struct ipa_endpoint *endpoint)
+ err_trans_free:
+ 	gsi_trans_free(trans);
+ err_free_pages:
+-	__free_pages(page, IPA_RX_BUFFER_ORDER);
++	__free_pages(page, get_order(IPA_RX_BUFFER_SIZE));
+ 
+ 	return -ENOMEM;
+ }
+@@ -1073,7 +1073,7 @@ void ipa_endpoint_trans_release(struct ipa_endpoint *endpoint,
+ 		struct page *page = trans->data;
+ 
+ 		if (page)
+-			__free_pages(page, IPA_RX_BUFFER_ORDER);
++			__free_pages(page, get_order(IPA_RX_BUFFER_SIZE));
+ 	}
+ }
+ 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.20.1
+
