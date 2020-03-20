@@ -2,146 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EE9B18C6C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 06:22:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04EBD18C710
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 06:35:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726584AbgCTFWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 01:22:43 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:41336 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbgCTFWn (ORCPT
+        id S1726814AbgCTFfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 01:35:53 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:45069 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726791AbgCTFfx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 01:22:43 -0400
-Received: by mail-ot1-f65.google.com with SMTP id s15so4877720otq.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 22:22:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kuqZitG28D6cu+nd1SoE8yFkR4mBbbKOsK5vySIs4Co=;
-        b=KvGWUWWCVjsfFVfFVYH7c3tKNsW/IY+5HGc7nakHOAlEV5sW7f/4PLYkyuf+DSodXq
-         yTnv6usL0PGvC4OK9knxg8sPSmVzPgVNWOY1Q7qZwYgi++ycRSc3y2a/OOka335ncGJ/
-         VPgA0JrCW1lZaZjrZ5m8BArT4aeePxbVtjKknm2ZOIqJLNEAH8AWRJQh4B2TZT0RdNEl
-         dL3dihtxzoDE9EarNGSBJwm4wm9RDr5eJxDbU27sOBqP619YBGhdXEooliZGVE2qHf0W
-         uRXDqrA9kLPc/LGiVHb3kVTiv69hA+kgci3Q6z9gKs/eZjILlNgajrd6KRzcFsqV2Uyu
-         nXCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kuqZitG28D6cu+nd1SoE8yFkR4mBbbKOsK5vySIs4Co=;
-        b=PvicKnb2I0gNBTWYtQxoGiadtGZVtmlmr39zGhlT6V/mhFQ7C9jaqSEswqOcckbyCe
-         Mr5VwOIxOszUUECMRdrnWsHdKQhGLXfV7Yvyp3PgaLFXZI8ORdfG35Eu+4f0AC/OVskI
-         EuBQnq/TW7mceiUhpbC3ZpHe3LZX0xQW+h6nxERTlSAodHsPxpXQSM35+kgkiVhzGwdZ
-         EYMkVjBa04flmV1FN0uJx6gLml/21q3AasmIhBWLOZtcDsuHv2PNFe4VScCJQdS6BW0L
-         HOYH6jq78T/q2ju5F2M0Qi2Cv12UaEJku1rlRCdvU//h3814P6eNxoX7dUuPU9jHUAUw
-         GGKA==
-X-Gm-Message-State: ANhLgQ3fm0E/HtQKfpKga8CvihVRIqFZDFIWUbBIenFJhZgj+us/IB82
-        V9DywWpVeUs5MbdNMYk5aSQlgVoLcUoYZm/s7KH0AA==
-X-Google-Smtp-Source: ADFU+vuMyCXVoQ7R8+fFsv9qWGJSaeB7mpdOKQvS3drwo7aFOvb7Qtflc+a81WJcHEP/B2afBHA0c5bvj5kBtXFpbA0=
-X-Received: by 2002:a9d:3b09:: with SMTP id z9mr5469806otb.195.1584681762685;
- Thu, 19 Mar 2020 22:22:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200319194954.39853-1-john.stultz@linaro.org>
-In-Reply-To: <20200319194954.39853-1-john.stultz@linaro.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Thu, 19 Mar 2020 22:22:06 -0700
-Message-ID: <CAGETcx-q-BY8o17bKWU79iEgfZagSDn9-fwJQ5FzdcOnwbXQHA@mail.gmail.com>
-Subject: Re: [PATCH v2] soc: qcom: rpmpd: Allow RPMPD driver to be loaded as a module
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>, Todd Kjos <tkjos@google.com>,
+        Fri, 20 Mar 2020 01:35:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584682553; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3o1RZ/6bELZAsXOfwev81T339te60gO/KqDzjUk4CZA=; b=obCEGtg7GtnTGEpAvO5HMGzcshDSDyaACZstd57G1eYq6QAQLaT+dfkWpy8uwEz+IEzGGlB6
+ HZmM16Hk8hwR1vNsx4rDY0ma61F1vBZ5Mn8ELWflRpERMYWsRTVeU6MFzN0TdXfENK5GrrrA
+ edWM55bEkcsC8R+c4gmH3WUhs1I=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e745637.7f9b3d093bc8-smtp-out-n03;
+ Fri, 20 Mar 2020 05:35:51 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D3BAAC44788; Fri, 20 Mar 2020 05:35:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.13] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A570FC433CB;
+        Fri, 20 Mar 2020 05:35:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A570FC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V2 7/8] spi: spi-qcom-qspi: Add interconnect support
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        wsa@the-dreams.de, Mark Brown <broonie@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-spi@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-8-git-send-email-akashast@codeaurora.org>
+ <20200314005817.GN144492@google.com>
+ <3aeb3083-2a31-b269-510d-eb608ff14ce5@codeaurora.org>
+ <CAE=gft58QsgTCUHMHKJhcM9ZxAeMiY16CrbNv2HaTCRqwtmt7A@mail.gmail.com>
+ <e2ee1a60-a379-5c78-355a-64aad451a944@codeaurora.org>
+ <CAE=gft4xL9+GN2NrM9ewyPg0Fog3pnf_sLGjWRNOg7KynNh-Dg@mail.gmail.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <f8f7041b-c21e-2c2c-a6e7-b92e7cc3e90b@codeaurora.org>
+Date:   Fri, 20 Mar 2020 11:05:42 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+MIME-Version: 1.0
+In-Reply-To: <CAE=gft4xL9+GN2NrM9ewyPg0Fog3pnf_sLGjWRNOg7KynNh-Dg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 19, 2020 at 12:50 PM John Stultz <john.stultz@linaro.org> wrote:
->
-> This patch allow the rpmpd driver to be loaded as a permenent
-> module. Meaning it can be loaded from a module, but then cannot
-> be unloaded.
->
-> Ideally, it would include a remove hook and related logic, but
-> apparently the genpd code isn't able to track usage and cleaning
-> things up? (See: https://lkml.org/lkml/2019/1/24/38)
->
-> So making it a permenent module at least improves things slightly
-> over requiring it to be a built in driver.
->
-> Feedback would be appreciated!
->
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rajendra Nayak <rnayak@codeaurora.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
-> ---
-> v2:
-> * Fix MODULE_LICENSE to be GPL v2 as suggested by Bjorn
-> * Leave initcall as core_initcall, since that switches to module_initcall
->   only when built as a module, also suggested by Bjorn
-> * Add module tags taken from Rajendra's earlier patch
-> ---
->  drivers/soc/qcom/Kconfig | 4 ++--
->  drivers/soc/qcom/rpmpd.c | 6 ++++++
->  2 files changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index d0a73e76d563..af774555b9d2 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -123,8 +123,8 @@ config QCOM_RPMHPD
->           for the voltage rail.
->
->  config QCOM_RPMPD
-> -       bool "Qualcomm RPM Power domain driver"
-> -       depends on QCOM_SMD_RPM=y
-> +       tristate "Qualcomm RPM Power domain driver"
-> +       depends on QCOM_SMD_RPM
->         help
->           QCOM RPM Power domain driver to support power-domains with
->           performance states. The driver communicates a performance state
-> diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-> index 2b1834c5609a..22fe94c03e79 100644
-> --- a/drivers/soc/qcom/rpmpd.c
-> +++ b/drivers/soc/qcom/rpmpd.c
-> @@ -5,6 +5,7 @@
->  #include <linux/init.h>
->  #include <linux/kernel.h>
->  #include <linux/mutex.h>
-> +#include <linux/module.h>
->  #include <linux/pm_domain.h>
->  #include <linux/of.h>
->  #include <linux/of_device.h>
-> @@ -226,6 +227,7 @@ static const struct of_device_id rpmpd_match_table[] = {
->         { .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
->         { }
->  };
-> +MODULE_DEVICE_TABLE(of, rpmpd_match_table);
->
->  static int rpmpd_send_enable(struct rpmpd *pd, bool enable)
->  {
-> @@ -422,3 +424,7 @@ static int __init rpmpd_init(void)
->         return platform_driver_register(&rpmpd_driver);
->  }
->  core_initcall(rpmpd_init);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPM Power Domain Driver");
-> +MODULE_LICENSE("GPL v2");
-> +MODULE_ALIAS("platform:qcom-rpmpd");
-> --
-> 2.17.1
->
+Hi Evan,
+>> IIUC, you meant to say struct icc_req(inside icc_path) will be saving
+>> avg_bw and peak_bw so no need to save it outside icc_path?
+> Correct, it seems silly to store the same set of values twice in the
+> framework, but with different semantics about who's watching it.
+> -Evan
 
-I think making it a permanent module is still very useful and a good first step.
+Thanks for clarification! Yeah make sense not to introduce the structure 
+in ICC framework
 
-Acked-by: Saravana Kannan <saravanak@google.com>
+Regards,
 
--Saravana
+Akash
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
