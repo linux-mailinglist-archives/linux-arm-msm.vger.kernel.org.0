@@ -2,56 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C0DC18D734
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 19:35:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8F1318D79A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 19:47:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727547AbgCTSfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 14:35:37 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44498 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbgCTSfh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 14:35:37 -0400
-Received: by mail-ed1-f67.google.com with SMTP id z3so8266993edq.11;
-        Fri, 20 Mar 2020 11:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=R1yA09A2jj2GJ7mf6EWjnGj5car0+pFadneU5DRW1E0=;
-        b=A91sMfRkl42TkFSWs9Q9IhP6ewbRQpGP3zvAHs4ixj8O0VAlwGf2XdqjxNkda42p+F
-         rE1DdJYbgM+bE/7PhlMb0i8QNf6tNtciczvIyl6A7MvXq2tplBeeOIREacm5BF8C0Fw7
-         y9sLTfP6+k64lr6KcJIL291+2IO2htWpdYT/FRFBPULP7rUPSY7Xs/lPWCzsVEW5Mlsj
-         yowqy//ObW7xPUz+y9oVin5RzgtlFn/PydNjEYt5Z8Em8x0mS+PiZ8NOY0CpQQH9Cr+W
-         z4WnBLD8zAVDMWGGwLcnVIUyI8ISCr4mR0xjG5JGN4/hmdWAYWZWBu4vEvL2hovawwHJ
-         akjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=R1yA09A2jj2GJ7mf6EWjnGj5car0+pFadneU5DRW1E0=;
-        b=U9kpaTOT0dc+MqPSsaRRcXngU1pgfjRXjlPnaOpCFyJ6HrvN+RZ004oNvipAZsFZk8
-         REIluxWus3h7k+hPtYUwyB2BXUlCTvfmBlNefd/+OUP9XaH0NagLhoeDPG8bGXrF5nh0
-         KYyHVzKUe8iYbhLAeLo5rEICQ6CR56WEjScZpHYILavL3sY/6FkOnXJeFRbgzZPawmJJ
-         6+e5TkANcd9QPWvYtVdHoU4DsbmyNMHY/hNfMV0FjKGw4HxVUNGieTBuEwdQCO6on3/0
-         /wvNFZbFaaNjEky5F6tKdfFOpid1o9cTLbpIOyfBw7EqRscBbXGPHYNiv/cPk+TkMmsm
-         QXfg==
-X-Gm-Message-State: ANhLgQ3S0AIrlaJi6aF6H29dbzdW/yxNYJmVrVhgu0hoRYsQRtB6B1A3
-        hc+n2XcJzDi20biyTqbkhYo=
-X-Google-Smtp-Source: ADFU+vtC/hTDKXr5YBXEcAwc7n8EoSk1Q/19B2vYXfusmIsN1j9VwEZgjYrCe4aSdRDu42y4EE82hw==
-X-Received: by 2002:aa7:d9d8:: with SMTP id v24mr3531315eds.386.1584729334422;
-        Fri, 20 Mar 2020 11:35:34 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host203-232-dynamic.53-79-r.retail.telecomitalia.it. [79.53.232.203])
-        by smtp.googlemail.com with ESMTPSA id y13sm172916eje.3.2020.03.20.11.35.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2020 11:35:33 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Sriram Palanisamy <gpalan@codeaurora.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
+        id S1726801AbgCTSrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 14:47:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43938 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725446AbgCTSrx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Mar 2020 14:47:53 -0400
+Received: from localhost (mobile-166-175-186-165.mycingular.net [166.175.186.165])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6831C20767;
+        Fri, 20 Mar 2020 18:47:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584730072;
+        bh=HqpiTJQyr9fDyPSNuUEqWWkbEn51JriLn0w+UPbw2yo=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=RRZFBvsbfiHI+AmQu/N+eR167scn+qgU4oNVo5beyw2SGt6t9vaMknwVf3fD3uGzz
+         gI9C9c8HLqIJ1flmCtV5aXvQPGFVDfeu1ru8jIO1V2hzWWARhouxJxeb024GNSSqWm
+         kPEgK86HvDj86XSNOAT+dBUUjTw2V53nyQrUNJCE=
+Date:   Fri, 20 Mar 2020 13:47:50 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Sham Muthayyan <smuthayy@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
@@ -59,85 +37,41 @@ Cc:     Sriram Palanisamy <gpalan@codeaurora.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 12/12] pcie: qcom: Set PCIE MRRS and MPS to 256B
-Date:   Fri, 20 Mar 2020 19:34:54 +0100
-Message-Id: <20200320183455.21311-12-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200320183455.21311-1-ansuelsmth@gmail.com>
-References: <20200320183455.21311-1-ansuelsmth@gmail.com>
+Subject: Re: [PATCH 01/12] pcie: qcom: add missing ipq806x clocks in pcie
+ driver
+Message-ID: <20200320184750.GA241809@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200320183455.21311-1-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sriram Palanisamy <gpalan@codeaurora.org>
+Please add a cover letter with the patches as responses to it.
 
-Set Max Read Request Size and Max Payload Size to 256 bytes,
-per chip team recommendation.
+Make your subjects match in capitalization, verb tense, etc.:
 
-Signed-off-by: Gokul Sriram Palanisamy <gpalan@codeaurora.org>
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 37 ++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+  $ git log --oneline drivers/pci/controller/dwc/pcie-qcom.c
+  ed8cc3b1fc84 PCI: qcom: Add support for SDM845 PCIe controller
+  64adde31c8e9 PCI: qcom: Ensure that PERST is asserted for at least 100 ms
+  67021ae0bbe9 PCI: qcom: Add QCS404 PCIe controller support
+  5aa180974e4d PCI: qcom: Use clk bulk API for 2.4.0 controllers
+  322f03436692 PCI: qcom: Use default config space read function
+  02b485e31d98 PCI: qcom: Don't deassert reset GPIO during probe
+  6e5da6f7d824 PCI: qcom: Fix error handling in runtime PM support
+  739cd35918b7 PCI: qcom: Drop unnecessary root_bus_nr setting
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 03130a3206b4..ad437c6f49a0 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -125,6 +125,14 @@
- 
- #define PCIE20_LNK_CONTROL2_LINK_STATUS2        0xA0
- 
-+#define __set(v, a, b)	(((v) << (b)) & GENMASK(a, b))
-+#define __mask(a, b)	(((1 << ((a) + 1)) - 1) & ~((1 << (b)) - 1))
-+#define PCIE20_DEV_CAS			0x78
-+#define PCIE20_MRRS_MASK		__mask(14, 12)
-+#define PCIE20_MRRS(x)			__set(x, 14, 12)
-+#define PCIE20_MPS_MASK			__mask(7, 5)
-+#define PCIE20_MPS(x)			__set(x, 7, 5)
-+
- #define DEVICE_TYPE_RC				0x4
- 
- #define QCOM_PCIE_2_1_0_MAX_SUPPLY	3
-@@ -1595,6 +1603,35 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static void qcom_pcie_fixup_final(struct pci_dev *pcidev)
-+{
-+	int cap, err;
-+	u16 ctl, reg_val;
-+
-+	cap = pci_pcie_cap(pcidev);
-+	if (!cap)
-+		return;
-+
-+	err = pci_read_config_word(pcidev, cap + PCI_EXP_DEVCTL, &ctl);
-+
-+	if (err)
-+		return;
-+
-+	reg_val = ctl;
-+
-+	if (((reg_val & PCIE20_MRRS_MASK) >> 12) > 1)
-+		reg_val = (reg_val & ~(PCIE20_MRRS_MASK)) | PCIE20_MRRS(0x1);
-+
-+	if (((ctl & PCIE20_MPS_MASK) >> 5) > 1)
-+		reg_val = (reg_val & ~(PCIE20_MPS_MASK)) | PCIE20_MPS(0x1);
-+
-+	err = pci_write_config_word(pcidev, cap + PCI_EXP_DEVCTL, reg_val);
-+
-+	if (err)
-+		dev_err(&pcidev->dev, "pcie config write failed %d\n", err);
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_ANY_ID, PCI_ANY_ID, qcom_pcie_fixup_final);
-+
- static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-apq8084", .data = &ops_1_0_0 },
- 	{ .compatible = "qcom,pcie-ipq8064", .data = &ops_2_1_0 },
--- 
-2.25.1
+On Fri, Mar 20, 2020 at 07:34:43PM +0100, Ansuel Smith wrote:
+> Aux and Ref clk are missing in pcie qcom driver.
+> Add support in the driver to fix pcie inizialization
+> in ipq806x
 
+s/pcie/PCIe/ in English text like commit logs and comments.
+s/inizialization/initialization/
+
+It'd be useful to have enough context to know what "ipq806x" is.
+
+Add period at end of sentence.
