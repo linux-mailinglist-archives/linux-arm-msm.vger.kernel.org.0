@@ -2,78 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D8C2E18D64C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 18:55:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 60DEA18D64E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 18:57:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbgCTRzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 13:55:07 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:35127 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727041AbgCTRzG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 13:55:06 -0400
-Received: by mail-io1-f66.google.com with SMTP id h8so6889664iob.2;
-        Fri, 20 Mar 2020 10:55:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xEFFch4ode9uAdt5LKTVjGKh0d9AyJMR356v0HY7PA0=;
-        b=jCP2icBdLTH3Me57hTF69RqzQAwvgggs7PKb2g+5dTFR3IDPQietGreQ6kRTMgx+15
-         Wzs74x6TrqwfjrxzhwvKn/tl25CTcoYh2FkwORzBQFWVoKoW+QQwqWD3OaNPYMYPqKx7
-         HtGzG4UTGqnIVj6tk11p3h21OL1P06P86fvTDw1Y4s1MtbJ+iFwOcR5+in+83omoyqoF
-         q/wPRRcrBO5Pr4Npn1YyNCGISEh0RfS9alsD7AZghEee4VdOsyanz9B7TUIsC55o98ZI
-         X4uRhg7vopXSK7c5NyfMETlp+YC1GJgTbH/ptjG15ttiF9syyaZojaFg/IH7TU8EhWsB
-         0M+w==
-X-Gm-Message-State: ANhLgQ232VKJBT44XJJe3dNRGbbKJljHTZXUyCDxZznxkoT2HGe8Frhi
-        fRhEQc3l7Db4CM2srJgNtA==
-X-Google-Smtp-Source: ADFU+vt+SEWH2J2f6vDId7XVkseA5PcLUfTD98uIFaOMgOqhsiMul3OH4W1i7vh0gcMGuNy6AqJdZA==
-X-Received: by 2002:a5d:9708:: with SMTP id h8mr8522503iol.141.1584726905725;
-        Fri, 20 Mar 2020 10:55:05 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id c87sm2258351ilg.2.2020.03.20.10.55.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2020 10:55:05 -0700 (PDT)
-Received: (nullmailer pid 30722 invoked by uid 1000);
-        Fri, 20 Mar 2020 17:55:03 -0000
-Date:   Fri, 20 Mar 2020 11:55:03 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1726829AbgCTR5y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 13:57:54 -0400
+Received: from mga01.intel.com ([192.55.52.88]:31292 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725446AbgCTR5y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Mar 2020 13:57:54 -0400
+IronPort-SDR: r71geOQEIaSfWMZJ6TeJbS80s1s4UME7czaI12BpC1s26yRlO7uVuXBjy12s3QaWK7/0Uj2sMi
+ 625iUw2EwMPA==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2020 10:57:53 -0700
+IronPort-SDR: OmDXVhyTKlU50WoWzpmVCqcLA7WUwVpCf1Ao7u1nBnBGKJ/i2veDk5SXC5PBRgALl8UdNfmn1Z
+ JPTfAOqQ1bEQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,285,1580803200"; 
+   d="scan'208";a="392225793"
+Received: from manallet-mobl.amr.corp.intel.com (HELO [10.255.34.12]) ([10.255.34.12])
+  by orsmga004.jf.intel.com with ESMTP; 20 Mar 2020 10:57:50 -0700
+Subject: Re: [PATCH 5/5] soundwire: qcom: add sdw_master_device support
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        alsa-devel@alsa-project.org
+Cc:     tiwai@suse.de, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org,
+        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+        Hui Wang <hui.wang@canonical.com>, vkoul@kernel.org,
+        broonie@kernel.org, Andy Gross <agross@kernel.org>,
+        jank@cadence.com,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        slawomir.blauciak@intel.com, Sanyog Kale <sanyog.r.kale@intel.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: Re: [PATCH v5 2/9] dt-bindings: phy: qcom,qusb2: Add compatibles for
- QUSB2 V2 phy and SC7180
-Message-ID: <20200320175503.GA30684@bogus>
-References: <1583747589-17267-1-git-send-email-sanm@codeaurora.org>
- <1583747589-17267-3-git-send-email-sanm@codeaurora.org>
+        Bard liao <yung-chuan.liao@linux.intel.com>,
+        Rander Wang <rander.wang@linux.intel.com>
+References: <20200320162947.17663-1-pierre-louis.bossart@linux.intel.com>
+ <20200320162947.17663-6-pierre-louis.bossart@linux.intel.com>
+ <81e2101e-d7ce-d023-5c35-ac6b55ea7166@linaro.org>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Message-ID: <40803069-e7dc-3dd6-ec7b-bec4308f381e@linux.intel.com>
+Date:   Fri, 20 Mar 2020 12:57:50 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1583747589-17267-3-git-send-email-sanm@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <81e2101e-d7ce-d023-5c35-ac6b55ea7166@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon,  9 Mar 2020 15:23:02 +0530, Sandeep Maheswaram wrote:
-> Add compatibles for generic QUSB2 V2 phy which can be used for
-> sdm845 and sc7180.
-> 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+>> Add new device as a child of the platform device, following the
+>> following hierarchy:
+>>
+>> platform_device
+>>      sdw_master_device
+>>          sdw_slave0
+> 
+> Why can't we just remove the platform device layer here and add 
+> sdw_master_device directly?
+> 
+> What is it stopping doing that?
+
+The guidance from Greg was "no platform devices, unless you really are 
+on a platform bus (i.e. Device tree.)". We never discussed changing the 
+way the Device Tree parts are handled.
+
+The main idea was to leave the parent (be it platform-device or PCI 
+device) alone and not add new attributes or references to it.
+
+The scheme here is similar to I2C/SPI, you have a platform device 
+handled by the Device Tree baseline, and a driver create an 
+i2c_adapter/spi_controller/sdw_master_device.
+
