@@ -2,81 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 60DEA18D64E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 18:57:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 461E418D68C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 19:07:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726829AbgCTR5y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 13:57:54 -0400
-Received: from mga01.intel.com ([192.55.52.88]:31292 "EHLO mga01.intel.com"
+        id S1726783AbgCTSHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 14:07:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59046 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725446AbgCTR5y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 13:57:54 -0400
-IronPort-SDR: r71geOQEIaSfWMZJ6TeJbS80s1s4UME7czaI12BpC1s26yRlO7uVuXBjy12s3QaWK7/0Uj2sMi
- 625iUw2EwMPA==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2020 10:57:53 -0700
-IronPort-SDR: OmDXVhyTKlU50WoWzpmVCqcLA7WUwVpCf1Ao7u1nBnBGKJ/i2veDk5SXC5PBRgALl8UdNfmn1Z
- JPTfAOqQ1bEQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,285,1580803200"; 
-   d="scan'208";a="392225793"
-Received: from manallet-mobl.amr.corp.intel.com (HELO [10.255.34.12]) ([10.255.34.12])
-  by orsmga004.jf.intel.com with ESMTP; 20 Mar 2020 10:57:50 -0700
-Subject: Re: [PATCH 5/5] soundwire: qcom: add sdw_master_device support
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        alsa-devel@alsa-project.org
-Cc:     tiwai@suse.de, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org,
-        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-        Hui Wang <hui.wang@canonical.com>, vkoul@kernel.org,
-        broonie@kernel.org, Andy Gross <agross@kernel.org>,
-        jank@cadence.com,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        slawomir.blauciak@intel.com, Sanyog Kale <sanyog.r.kale@intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bard liao <yung-chuan.liao@linux.intel.com>,
-        Rander Wang <rander.wang@linux.intel.com>
-References: <20200320162947.17663-1-pierre-louis.bossart@linux.intel.com>
- <20200320162947.17663-6-pierre-louis.bossart@linux.intel.com>
- <81e2101e-d7ce-d023-5c35-ac6b55ea7166@linaro.org>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Message-ID: <40803069-e7dc-3dd6-ec7b-bec4308f381e@linux.intel.com>
-Date:   Fri, 20 Mar 2020 12:57:50 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1725446AbgCTSHt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Mar 2020 14:07:49 -0400
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A9FED20739;
+        Fri, 20 Mar 2020 18:07:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584727668;
+        bh=U8oXIP5oXGvZd/1FPI5kRuFkzQslAnVxi3jbhT86N8g=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=Zl8vTyVaCE7XSqVRaFQHGYQ1hpT6gdLgT/OoUVQkp8avDWWFAKgBIZ23zn4RsyXhZ
+         VguFbxdJpa/PGLXWCV9PaVDpQjjZHtZSseureYdhCvaemCgfMmOM3Bv3sFN2Lsmaew
+         mrsprz7Pwc35y2W87l/SHVNcMFgNDyeyT4nWo3Uk=
+Received: by mail-qk1-f173.google.com with SMTP id l25so2944357qki.7;
+        Fri, 20 Mar 2020 11:07:48 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ1SQ2xxjsfeClJc2ACehrcRA1ASOgmw5nO7QbHIEsOlEAMNugo8
+        uOobKars663p97UVtEYV1LjJB9aoYG6Hvtbqvw==
+X-Google-Smtp-Source: ADFU+vuxhlkoXyT1YY53b7HKSyPc40/5axtT/yKvtUn1tYpPSEZWkUnm5O/F/s11tGwXXgPTo5JaJMBZdIsGq9/lTho=
+X-Received: by 2002:a37:634d:: with SMTP id x74mr9645562qkb.254.1584727667842;
+ Fri, 20 Mar 2020 11:07:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <81e2101e-d7ce-d023-5c35-ac6b55ea7166@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1584095350-841-1-git-send-email-akashast@codeaurora.org> <1584095350-841-4-git-send-email-akashast@codeaurora.org>
+In-Reply-To: <1584095350-841-4-git-send-email-akashast@codeaurora.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 20 Mar 2020 12:07:36 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKLoiPUhiJDuYX+bSQwoCLTXOvtNyEB8ti__xMfEDyxNQ@mail.gmail.com>
+Message-ID: <CAL_JsqKLoiPUhiJDuYX+bSQwoCLTXOvtNyEB8ti__xMfEDyxNQ@mail.gmail.com>
+Subject: Re: [PATCH V5 3/3] dt-bindings: geni-se: Add binding for UART pin swap
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>, rojay@codeaurora.org,
+        c_skakit@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Mar 13, 2020 at 4:29 AM Akash Asthana <akashast@codeaurora.org> wrote:
+>
+> Add documentation to support RX/TX/CTS/RTS pin swap in HW.
+>
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> ---
+> Changes in V5:
+>  -  As per Matthias's comment, remove rx-tx-cts-rts-swap property from UART
+>     child node.
+>
+>  Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
->> Add new device as a child of the platform device, following the
->> following hierarchy:
->>
->> platform_device
->>      sdw_master_device
->>          sdw_slave0
-> 
-> Why can't we just remove the platform device layer here and add 
-> sdw_master_device directly?
-> 
-> What is it stopping doing that?
+STM32 folks need something similar. Can you move this to a common
+location. That's serial.txt, but that is being converted to DT schema.
 
-The guidance from Greg was "no platform devices, unless you really are 
-on a platform bus (i.e. Device tree.)". We never discussed changing the 
-way the Device Tree parts are handled.
-
-The main idea was to leave the parent (be it platform-device or PCI 
-device) alone and not add new attributes or references to it.
-
-The scheme here is similar to I2C/SPI, you have a platform device 
-handled by the Device Tree baseline, and a driver create an 
-i2c_adapter/spi_controller/sdw_master_device.
-
+Rob
