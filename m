@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F55518C4AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 02:41:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4E2D18C4DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 02:42:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727384AbgCTBlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 21:41:13 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:39875 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727257AbgCTBlM (ORCPT
+        id S1727240AbgCTBlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 21:41:14 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:34649 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727360AbgCTBlN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 21:41:12 -0400
-Received: by mail-qk1-f193.google.com with SMTP id t17so5378012qkm.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 18:41:11 -0700 (PDT)
+        Thu, 19 Mar 2020 21:41:13 -0400
+Received: by mail-qk1-f195.google.com with SMTP id f3so5438838qkh.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 18:41:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eW/OFJFoFR7v20uQTXTPh54Gfwm5+Kkq94S8j8KRbyc=;
-        b=KHAAHrhj23E533BBgqVy2TKK9CkcDC+OiwALUwXvFo6SAi2TVKs1mJB2WM2g78Mz6K
-         SH/hEEVBv5Y/WYM3+X5xyw1FJGPxEUlGxbd6NNOwmDpuyPWp92lwuI8U17HEADuXTbZ9
-         tmCPLEI1tftEfJRlRIBot9aYl60W4ZdMhhrO5xS8nxxi14JlOS/mMusF2gDpc9QwFiO8
-         ujIKx79Ob+MgNtBJHwRv/Nyycj3yhy/sh6f06kdZsCIYTSQzyusrpvVFEthtiBdHJ/Yz
-         iUFL7ZufL460bMxi9slNvBYv7269HUi7Taz/6OtXN7BSuqhCoGJZMeuul74pHhwn8HCC
-         eRzw==
+        bh=PMpp9cGV1kolIa23/+eXnHG3jYVNr7iJ09Ptby/dQWg=;
+        b=iUr7LVw9yHWif+ZG2vxEMY0bR1h+bCvJ+y8Af7km3yxODyCKqGeLTuoAa94xgvtgvN
+         9r/pYxzS6JQpcpWm6vPUMohRn6hsM+mnz8L/BY7V9ZuUcOl8gFc/Cl/ONKiXSl2AwYID
+         4DAY+x0Q81jFcJcTVsMUpyGs/ybHm1U4GYKlV8sEh1ON90pbIijtoj5Rx3dlLn/iHT1i
+         Z4A++AavvO8qdTEW/g3j1JcgA/OTnxayZveVOoI8mupFY3geIf3aEqQkt94XG3BVgW67
+         AWJW6g6HffdtQsixG9lBHGPbeENRX/pNWXM5SnyOipO8XPB7/JyA4K085MljAgLQrnOA
+         bWOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eW/OFJFoFR7v20uQTXTPh54Gfwm5+Kkq94S8j8KRbyc=;
-        b=UfHdh79mqB2NW4ma7RchpjpXRQebbm09IGWcPoR4Rg3XxVrVseAXHUtM9ucxAeZywF
-         592RgRuWUnjBBGxT/Thq8J0KTbpjN+z12eDafxKV/uPvQcrluI8x3fw3bwURFtd55jAr
-         8iJT61yDOsN1W14CnO0U+iMXkQUaqlG6d6zvuhtiiNIfC/twOMZRBw+rRlI+8+YZsuKm
-         fy600g+8EBgzkwzrkYkzxg8Vu2plY4EBTFQ+3q17eiOMjcN7vi5VJn9Z8eviSPleMri+
-         L1lLTNscl1jxXzyF21NzBErkBWvw4Xo2iOxoOmCTNGjNnIaCRkwOdFFtn7y/g0zj6dWQ
-         Cytw==
-X-Gm-Message-State: ANhLgQ2Po4C0/dBEtCdzaDxYXsBNrqpqlNG1Np3P6o8BA3+YjrlJr0t2
-        yvb1SOP7BC7CCsprJKdLB9B8Ig==
-X-Google-Smtp-Source: ADFU+vupj+aipcr9NvAb73NIy/bo48Y/CMGZJQO1EeS20z8InsstfuNlICLQGUkvjfuN2dcNGNPp7w==
-X-Received: by 2002:a05:620a:4e:: with SMTP id t14mr5845072qkt.122.1584668471016;
-        Thu, 19 Mar 2020 18:41:11 -0700 (PDT)
+        bh=PMpp9cGV1kolIa23/+eXnHG3jYVNr7iJ09Ptby/dQWg=;
+        b=RlB9DqoDlD5vfl7edvyF0+QJCmkBHRI3ZHK1N09FCR9D3bQYBvQFt+++t3h9NPkZs5
+         sr+o4L6q+8jvucrkwyFqiGxocQtYM55UP29r7czoBfclzqCcFZKva3KY6Jngg2QDXxr9
+         COaDaWJg9elr56mdrX1kOgU00WqFZnzBU7Tvbb3+nwe4ApwYlcxB8npBB1bfpGjkdCda
+         INL90a+kAaLtCs39ZrSJtA7Dc8UIPKnXdaQwTqWgcSIChx6eY2QjkzBBnaQ+7UJIp4rx
+         LzPjMQmTUZUamwCRRF+5wVKTS2cPtamjwg34KFCjnQ1BS9nzBOK09xgyuDMeBU8LY0/p
+         CgNA==
+X-Gm-Message-State: ANhLgQ2QVbNx1ooksbFLUQNcQPHb9MxhFJSID1V6F5qvfvpodDmwcdPw
+        nW2KWJE2vwAy5D1+0RaRIH54Zw==
+X-Google-Smtp-Source: ADFU+vtZPj94yZXMLwqO8JOCiKMUmJSZBqsuWIHCWksgaTY/SAPuOrMmCfd9rU2kKgjinskLZzoRhw==
+X-Received: by 2002:a37:aa92:: with SMTP id t140mr5385602qke.119.1584668472463;
+        Thu, 19 Mar 2020 18:41:12 -0700 (PDT)
 Received: from pop-os.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.googlemail.com with ESMTPSA id 2sm2706287qtp.33.2020.03.19.18.41.09
+        by smtp.googlemail.com with ESMTPSA id 2sm2706287qtp.33.2020.03.19.18.41.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 18:41:10 -0700 (PDT)
+        Thu, 19 Mar 2020 18:41:11 -0700 (PDT)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     rui.zhang@intel.com, ulf.hansson@linaro.org,
         daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
@@ -53,9 +53,9 @@ Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
         rjw@rjwysocki.net, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [Patch v5 1/6] PM/Domains: Add support for retrieving genpd performance states information
-Date:   Thu, 19 Mar 2020 21:41:02 -0400
-Message-Id: <20200320014107.26087-2-thara.gopinath@linaro.org>
+Subject: [Patch v5 2/6] soc: qcom: rpmhpd: Introduce function to retrieve power domain performance state count
+Date:   Thu, 19 Mar 2020 21:41:03 -0400
+Message-Id: <20200320014107.26087-3-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200320014107.26087-1-thara.gopinath@linaro.org>
 References: <20200320014107.26087-1-thara.gopinath@linaro.org>
@@ -66,117 +66,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add two new APIs in the genpd framework, dev_pm_genpd_get_performance_state
-to return the current performance state of a power domain and
-dev_pm_genpd_performance_state_count to return the total number of
-performance states supported by a power domain. Since the genpd framework
-does not maintain a count of number of performance states supported by a
-power domain, introduce a new callback(.get_performance_state_count) that
-can be used to retrieve this information from power domain drivers.
-
-These APIs are added to aid the implementation of a power domain as a
-warming device. Linux kernel cooling device framework(into which warming
-device can be plugged in) requires during initialization to be provided
-with the maximum number of states that can be supported. When a power
-domain acts as a warming device, the max state is the max number of
-perfomrance states supported by the power domain. The cooling device
-framework implements API to retrieve the current state of the cooling
-device. This in turn translates to the current performance state of the
-power domain.
+Populate .get_performace_state_count in genpd ops to retrieve the count of
+performance states supported by a rpmh power domain.
 
 Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
- drivers/base/power/domain.c | 37 +++++++++++++++++++++++++++++++++++++
- include/linux/pm_domain.h   | 13 +++++++++++++
- 2 files changed, 50 insertions(+)
+ drivers/soc/qcom/rpmhpd.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 959d6d5eb000..d0297c48fa79 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -408,6 +408,43 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
+diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+index 4d264d0672c4..7142409a3b77 100644
+--- a/drivers/soc/qcom/rpmhpd.c
++++ b/drivers/soc/qcom/rpmhpd.c
+@@ -341,6 +341,13 @@ static unsigned int rpmhpd_get_performance_state(struct generic_pm_domain *genpd
+ 	return dev_pm_opp_get_level(opp);
  }
- EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
  
-+int dev_pm_genpd_get_performance_state(struct device *dev)
++static int rpmhpd_performance_states_count(struct generic_pm_domain *domain)
 +{
-+	struct generic_pm_domain *genpd;
-+	unsigned int state;
++	struct rpmhpd *pd = domain_to_rpmhpd(domain);
 +
-+	genpd = dev_to_genpd_safe(dev);
-+	if (IS_ERR(genpd))
-+		return -ENODEV;
-+
-+	genpd_lock(genpd);
-+	state = genpd->performance_state;
-+	genpd_unlock(genpd);
-+
-+	return state;
++	return pd->level_count;
 +}
-+EXPORT_SYMBOL_GPL(dev_pm_genpd_get_performance_state);
 +
-+int dev_pm_genpd_performance_state_count(struct device *dev)
-+{
-+	struct generic_pm_domain *genpd;
-+	int count;
-+
-+	genpd = dev_to_genpd_safe(dev);
-+	if (IS_ERR(genpd))
-+		return -ENODEV;
-+
-+	if (unlikely(!genpd->get_performance_state_count))
-+		return -EINVAL;
-+
-+	genpd_lock(genpd);
-+	count = genpd->get_performance_state_count(genpd);
-+	genpd_unlock(genpd);
-+
-+	return count;
-+}
-+EXPORT_SYMBOL_GPL(dev_pm_genpd_performance_state_count);
-+
- static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+ static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
  {
- 	unsigned int state_idx = genpd->state_idx;
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index 9ec78ee53652..7d415350380f 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -117,6 +117,7 @@ struct generic_pm_domain {
- 						 struct dev_pm_opp *opp);
- 	int (*set_performance_state)(struct generic_pm_domain *genpd,
- 				     unsigned int state);
-+	int (*get_performance_state_count)(struct generic_pm_domain *genpd);
- 	struct gpd_dev_ops dev_ops;
- 	s64 max_off_time_ns;	/* Maximum allowed "suspended" time. */
- 	bool max_off_time_changed;
-@@ -204,6 +205,8 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
- 		  struct dev_power_governor *gov, bool is_off);
- int pm_genpd_remove(struct generic_pm_domain *genpd);
- int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
-+int dev_pm_genpd_get_performance_state(struct device *dev);
-+int dev_pm_genpd_performance_state_count(struct device *dev);
+ 	int i;
+@@ -429,6 +436,8 @@ static int rpmhpd_probe(struct platform_device *pdev)
+ 		rpmhpds[i]->pd.power_on = rpmhpd_power_on;
+ 		rpmhpds[i]->pd.set_performance_state = rpmhpd_set_performance_state;
+ 		rpmhpds[i]->pd.opp_to_performance_state = rpmhpd_get_performance_state;
++		rpmhpds[i]->pd.get_performance_state_count =
++					rpmhpd_performance_states_count;
+ 		pm_genpd_init(&rpmhpds[i]->pd, NULL, true);
  
- extern struct dev_power_governor simple_qos_governor;
- extern struct dev_power_governor pm_domain_always_on_gov;
-@@ -251,6 +254,16 @@ static inline int dev_pm_genpd_set_performance_state(struct device *dev,
- 	return -ENOTSUPP;
- }
- 
-+static inline int dev_pm_genpd_get_performance_state(struct device *dev)
-+{
-+	return -ENOTSUPP;
-+}
-+
-+static inline int dev_pm_genpd_performance_state_count(struct device *dev)
-+{
-+	return -ENOTSUPP;
-+}
-+
- #define simple_qos_governor		(*(struct dev_power_governor *)(NULL))
- #define pm_domain_always_on_gov		(*(struct dev_power_governor *)(NULL))
- #endif
+ 		data->domains[i] = &rpmhpds[i]->pd;
 -- 
 2.20.1
 
