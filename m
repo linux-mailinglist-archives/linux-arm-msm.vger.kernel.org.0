@@ -2,82 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8ACA218C47A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 02:04:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1336418C4E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 02:42:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727235AbgCTBEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Mar 2020 21:04:38 -0400
-Received: from mail-il1-f196.google.com ([209.85.166.196]:35752 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725787AbgCTBEi (ORCPT
+        id S1727286AbgCTBlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Mar 2020 21:41:11 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:36505 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727220AbgCTBlL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Mar 2020 21:04:38 -0400
-Received: by mail-il1-f196.google.com with SMTP id o16so1522008ilm.2;
-        Thu, 19 Mar 2020 18:04:37 -0700 (PDT)
+        Thu, 19 Mar 2020 21:41:11 -0400
+Received: by mail-qk1-f196.google.com with SMTP id d11so5406628qko.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2020 18:41:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eZP0u8ITunLiIIRvSTm1UDhFa2x+FOEr9rW1o7749xQ=;
+        b=ch9QVTq4I67QoriwHaevg8GW7hXScd11/w/CBbCQ7WxRxps1cAMVtSS6fHp9gCncIZ
+         S78U66ED8dfSrlv95xnu/Eyg5Z1Mnlg1sOfTgqTrxCmMGsPf3W9IGy1vAKNiIgXXbA0d
+         BOSCBXlTGB66Kt8TKlqT4G9y43hVCO20Q8pvNBDnbJ/D3tbRjTlGGxl1CsWfy4+gj/kJ
+         /ozhlhuSfH2+lcIEEdWAeQ+NDIBRv6Oks/lBViT0vCDcqDj1P4UZuev0K9cK5pMdvkIO
+         wTO66o7+GMiKoRws/uakv1R3YiPY+SK0oZRTwUToFigy5QhCfpAASMlt2MywZ3943Avs
+         TJ9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UGCAb9wVeglaPfbrAhPUQDDVEQ1klnV38624n1QkmF0=;
-        b=aMLW+xSh5GQWE77JUbvhLyi4VGwx03gpx1tk2OnjrFoXyuTh48RZa544oIZAdTd8Yb
-         vNDYEN9lseERtpJpYpZDxrNy7MfBwJel4QCtYeupXxxnb8zQ1kh3FP4nMpL0Y9zbiiCR
-         FY2kSIkzBjc64lUjvofEOdrVBPes0W7p89tvfyAKRkD2s3fyxORxBmdWi6khPRoNP3M7
-         uPQnRuFCy9n646t3iIEm5TGzY9BIwZNzlf+V8RkSQgcjyFXhmVeYWld2fPieAOtuHkQo
-         4bbPAsfvKaRYAh/cTIM0Oh6LnJFdBf+WyuDCpzQPKDo8fH9NpwAkeFbV88HDZIpAr48o
-         wD8w==
-X-Gm-Message-State: ANhLgQ18i4FNm6Lfm60qNar3iN8TEUrkVqBSkQfWX5caYc38dqqeL4hw
-        TQ2LF0kp7YDyYf3Q11NK/Q==
-X-Google-Smtp-Source: ADFU+vvlv+TFuLos9es6ZMHJJts1Of92KuSp8Lj8FMdYp0zS7O9szteFdC1O/KDhibPp0NlG1HYhAQ==
-X-Received: by 2002:a92:a192:: with SMTP id b18mr5903577ill.199.1584666277084;
-        Thu, 19 Mar 2020 18:04:37 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id j18sm1497075ila.56.2020.03.19.18.04.35
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eZP0u8ITunLiIIRvSTm1UDhFa2x+FOEr9rW1o7749xQ=;
+        b=V7xgtvq+Nb3dAuuoEWI+TaC83cBocO2K8jpT6nPpq1E4yf5Z+TvZ89InV192GSb5BC
+         uz+BNRWg7SmFlOwIjhzRodGDpOjEo201RUHoxOnyaNDkwxLlXnEgJd0/ZGWXnxwqjhHW
+         gfnuYOQYS40b9zxcjprtQoTARlFcOL5Y6P2/HKKYEPGqJn001GKPtmetWf0EU+dZY7gP
+         cNetaCDmQnH+6TSBJ09ClFHGZou+sWVRs74KvoTnMvbSkTy4ezLskQr2EdDusmHuvQRg
+         EnkO3o0YH0d01/PHFZkJWBN7ej/Vz0todEfu6W+TSiTv98zkh4mzg5m/hSBk5r2snuD4
+         KHbA==
+X-Gm-Message-State: ANhLgQ3WZkuTMoo6P9wPp5VBhpJ0+wsvTmvrccGUoT+yU13ACglUX8M2
+        8RBxpCMrsW/85IyQg9mo+2Fdhg==
+X-Google-Smtp-Source: ADFU+vtHoEjmxDMNZ3DTXsUDWYUwN7WHrNIVQU4FEmg3Vg32kJaDK07DIpk0aYZpGhtYL0mspWm+WA==
+X-Received: by 2002:a37:4bd1:: with SMTP id y200mr4044290qka.205.1584668469530;
+        Thu, 19 Mar 2020 18:41:09 -0700 (PDT)
+Received: from pop-os.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.googlemail.com with ESMTPSA id 2sm2706287qtp.33.2020.03.19.18.41.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2020 18:04:36 -0700 (PDT)
-Received: (nullmailer pid 23247 invoked by uid 1000);
-        Fri, 20 Mar 2020 01:04:34 -0000
-Date:   Thu, 19 Mar 2020 19:04:34 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>, David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v7 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
- MSS clock bindings
-Message-ID: <20200320010434.GA23155@bogus>
-References: <1584596131-22741-1-git-send-email-tdas@codeaurora.org>
- <1584596131-22741-2-git-send-email-tdas@codeaurora.org>
+        Thu, 19 Mar 2020 18:41:08 -0700 (PDT)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     rui.zhang@intel.com, ulf.hansson@linaro.org,
+        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, robh@kernel.org
+Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [Patch v5 0/6] Introduce Power domain based warming device driver
+Date:   Thu, 19 Mar 2020 21:41:01 -0400
+Message-Id: <20200320014107.26087-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1584596131-22741-2-git-send-email-tdas@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Mar 2020 11:05:29 +0530, Taniya Das wrote:
-> The Modem Subsystem clock provider have a bunch of generic properties
-> that are needed in a device tree. Add a YAML schemas for those.
-> 
-> Add clock ids for GCC MSS and MSS clocks which are required to bring
-> the modem out of reset.
-> 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,gcc-sc7180.h        |  7 ++-
->  include/dt-bindings/clock/qcom,mss-sc7180.h        | 12 +++++
->  3 files changed, 80 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
-> 
+Certain resources modeled as a generic power domain in linux kernel can be
+used to warm up the SoC (mx power domain on sdm845) if the temperature
+falls below certain threshold. These power domains can be considered as
+thermal warming devices.  (opposite of thermal cooling devices).
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+In kernel, these warming devices can be modeled as a thermal cooling
+device. Since linux kernel today has no instance of a resource modeled as
+a power domain acting as a thermal warming device, a generic power domain
+based thermal warming device driver that can be used pan-Socs is the
+approach taken in this patch series. Since thermal warming devices can be
+thought of as the mirror opposite of thermal cooling devices, this patch
+series re-uses thermal cooling device framework. To use these power
+domains as warming devices require further tweaks in the thermal framework
+which are out of scope of this patch series. These tweaks have been posted
+as a separate series[1].
+
+The first patch in this series extends the genpd framework to export out
+the performance states of a power domain so that when a power domain is
+modeled as a cooling device, the number of possible states and current
+state of the cooling device can be retrieved from the genpd framework.
+
+The second patch implements the newly added genpd callback for Qualcomm
+RPMH power domain driver which hosts the mx power domain.
+
+The third patch introduces a new cooling device register API that allows
+a parent to be specified for the cooling device.
+
+The fourth patch introduces the generic power domain warming device
+driver.
+
+The fifth patch extends Qualcomm RPMh power controller driver to register
+mx power domain as a thermal warming device in the kernel.
+
+The sixth patch describes the dt binding extensions for mx power domain to
+be a thermal warming device.
+
+The seventh patch introduces the DT entreis for sdm845 to register mx
+power domain as a thermal warming device.
+
+v1->v2:
+	- Rename the patch series from "qcom: Model RPMH power domains as
+	  thermal cooling devices" to "Introduce Power domain based
+	  thermal warming devices" as it is more appropriate.
+	- Introduce a new patch(patch 3) describing the dt-bindings for
+	  generic power domain warming device.
+	- Patch specific changes mentioned in respective patches.
+
+v2->v3:
+	- Changed power domain warming device from a virtual device node
+	  entry in DT to being a subnode of power domain controller
+	  binding following Rob's review comments.
+	- Implemented Ulf's review comments.
+	- The changes above introduced two new patches (patch 3 and 4)
+v3->v4:
+	- Dropped late_init hook in cooling device ops. Instead introduced
+	  a new cooling device register API that allows to define a parent
+	  for the cooling device.
+	- Patch specific changes mentioned in respective patches. 
+
+v4->v5:
+	- Dropped the patch that introduced the cooling device register
+	  API with parent as per review comments from Ulf. 
+	- Patch specific changes mentioned in respective patches.
+
+1. https://lkml.org/lkml/2019/9/18/1180
+
+Thara Gopinath (6):
+  PM/Domains: Add support for retrieving genpd performance states
+    information
+  soc: qcom: rpmhpd: Introduce function to retrieve power domain
+    performance state count
+  thermal: Add generic power domain warming device driver.
+  soc: qcom: Extend RPMh power controller driver to register warming
+    devices.
+  dt-bindings: power: Extend RPMh power controller binding to describe
+    thermal warming device
+  arm64: dts: qcom: Indicate rpmhpd hosts a power domain that can be
+    used as a warming device.
+
+ .../devicetree/bindings/power/qcom,rpmpd.yaml |   3 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   1 +
+ drivers/base/power/domain.c                   |  37 ++++
+ drivers/soc/qcom/rpmhpd.c                     |  46 ++++-
+ drivers/thermal/Kconfig                       |  10 ++
+ drivers/thermal/Makefile                      |   2 +
+ drivers/thermal/pd_warming.c                  | 168 ++++++++++++++++++
+ include/linux/pd_warming.h                    |  29 +++
+ include/linux/pm_domain.h                     |  13 ++
+ 9 files changed, 308 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/thermal/pd_warming.c
+ create mode 100644 include/linux/pd_warming.h
+
+-- 
+2.20.1
+
