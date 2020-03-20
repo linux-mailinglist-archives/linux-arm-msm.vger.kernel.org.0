@@ -2,70 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 61AE918CE79
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 14:12:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0F4018CF7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 14:52:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727020AbgCTNMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 09:12:20 -0400
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:28294 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726902AbgCTNMU (ORCPT
+        id S1726851AbgCTNwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 09:52:33 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:44948 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727191AbgCTNwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 09:12:20 -0400
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Mar 2020 18:41:25 +0530
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 20 Mar 2020 18:41:07 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id C1C1A4509; Fri, 20 Mar 2020 18:41:06 +0530 (IST)
-From:   Krishna Manikandan <mkrishn@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org
-Subject: [v3] arm64: dts: sc7180: modify assigned clocks for sc7180 target
-Date:   Fri, 20 Mar 2020 18:41:04 +0530
-Message-Id: <1584709864-5587-1-git-send-email-mkrishn@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Fri, 20 Mar 2020 09:52:33 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584712352; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=asVXwuIl1gP5wCzIA2Kf9ocQuAN/2qFIJy7nJb+pgio=; b=tF+z246CLAbkn6nzaMrWrQKMDRYhhbOa2F7M4H8zm2Qo8bX9nnCJjjOJ0sC6Jb0SUd9BWhwy
+ OAnMc3GwE9W+wTm+Svh2xdt6usUA8kkE8EchIm35TDPmBnNsBGVVTd2mfxM/csaoR+v/q3c9
+ rQg4mhQD2MWOoIWGcirkf/AFXMc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e74ca9a.7f6912d3a500-smtp-out-n05;
+ Fri, 20 Mar 2020 13:52:26 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 71283C4478C; Fri, 20 Mar 2020 13:52:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.13] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33635C433CB;
+        Fri, 20 Mar 2020 13:52:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33635C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V2 6/8] spi: spi-geni-qcom: Add interconnect support
+To:     Mark Brown <broonie@kernel.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-7-git-send-email-akashast@codeaurora.org>
+ <20200313131603.GG5528@sirena.org.uk>
+ <aa197568-3bac-6962-d39d-3261f68c0514@codeaurora.org>
+ <20200317130616.GE3971@sirena.org.uk>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <58116473-1d9e-d08a-8839-a39dd0ee32bf@codeaurora.org>
+Date:   Fri, 20 Mar 2020 19:22:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+MIME-Version: 1.0
+In-Reply-To: <20200317130616.GE3971@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DISP_CC_MDSS_ROT_CLK and DISP_CC_MDSS_AHB_CLK
-in the assigned clocks list as these are display
-specific clocks and needs to be initialized from
-the client side. Adding the default rate of
-19.2 mhz for these clocks for sc7180 target.
+Hi Mark,
 
-Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+On 3/17/2020 6:36 PM, Mark Brown wrote:
+> On Tue, Mar 17, 2020 at 03:05:21PM +0530, Akash Asthana wrote:
+>
+>> We are taking care of actual throughput requirement in avg_bw vote and the
+>> intention of putting peak as twice of avg is to ensure that if high speed
+>> peripherals(ex:USB) removes their votes, we shouldn't see any latency issue
+>> because of other ICC client who don't vote for their BW requirement or
+>> *actual* BW requirement. Factor of 2 is chosen randomly. Please
+>> correct/improve me if this is not okay.
+>> If this is okay, I will centralize this design for SPI QUP, I2C and UART
+>> driver.
+> That seems reasonable to me, it was just the fact that every driver
+> seemed to be doing the same thing that I was noticing - what was being
+> done seemed OK.
 
-Changes in v3:
-	- Change in commit message
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Okay, thanks for confirming I will keep as is.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 998f101..e3b60f1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1544,8 +1544,12 @@
- 				clock-names = "iface", "rot", "lut", "core",
- 					      "vsync";
- 				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
--						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>,
-+						  <&dispcc DISP_CC_MDSS_ROT_CLK>,
-+						  <&dispcc DISP_CC_MDSS_AHB_CLK>;
- 				assigned-clock-rates = <300000000>,
-+						       <19200000>,
-+						       <19200000>,
- 						       <19200000>;
- 
- 				interrupt-parent = <&mdss>;
+Regards,
+
+Akash
+
 -- 
-1.9.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
