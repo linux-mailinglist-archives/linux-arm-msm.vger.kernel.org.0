@@ -2,134 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C8F418D8AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 20:46:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47E8718D8B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2020 20:52:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726840AbgCTTqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 15:46:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37580 "EHLO mail.kernel.org"
+        id S1726829AbgCTTw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Mar 2020 15:52:29 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:52360 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726666AbgCTTqr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 15:46:47 -0400
-Received: from localhost (mobile-166-175-186-165.mycingular.net [166.175.186.165])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B3B1520739;
-        Fri, 20 Mar 2020 19:46:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584733607;
-        bh=cWtAUzd2rzDP9wEzmMrW/qhJoPZ5i4sE8aCtwPlju7w=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=X3d+L4Jqyb6dAW7q1cPglXf0FktkzS3wWtwooGY+RoSz3BWL3o5F9Z5AN7Kcgt/Gf
-         3wQIAOtzNyVvErjlICDEncCpzpiwUU+kWLR/M5mZqN/nW0QsHfh2fWqvCnWKj+fc5L
-         r2apIhcVhBidEfiS8bIYAaN7+ImQqdNl2BlHCeuM=
-Date:   Fri, 20 Mar 2020 14:46:45 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Sriram Palanisamy <gpalan@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/12] pcie: qcom: Set PCIE MRRS and MPS to 256B
-Message-ID: <20200320194645.GA251282@google.com>
+        id S1726738AbgCTTw3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Mar 2020 15:52:29 -0400
+Received: by mail.z3ntu.xyz (Postfix, from userid 182)
+        id E1E16C43CD; Fri, 20 Mar 2020 19:52:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1584733946; bh=MDnzSJT+llofSXN9pFcQrkcAec3ckxZl7QrMwV659OU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=aV5+AQ5HFMQtjamOGfq2RPgVngbnXZM/kr1CKeliXJGmCvn29OoiLOtA6k1WRlax7
+         ppDPVYf6XCWEK9PcBUBVZ1Xni7o+4PhcPo24OtDDVKzAeMh6FFkVJUUdehwdS4CHkD
+         yWwVP/6VCUwDibK8MTf/YgWud5NfbK1AkV6/wBT0=
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on arch-vps
+X-Spam-Level: 
+X-Spam-Status: No, score=0.9 required=5.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.4
+Received: from g550jk.localnet (80-110-124-168.cgn.dynamic.surfer.at [80.110.124.168])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 7BB74C43BA;
+        Fri, 20 Mar 2020 19:52:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1584733942; bh=MDnzSJT+llofSXN9pFcQrkcAec3ckxZl7QrMwV659OU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=D3dkUm3eV3UFiDyYuYr9T3nrTLJiA18jxrZ26rNJ/7pLpyiLXTm1wf6cEuMUKeMhc
+         PDTdZxAD0QrTDo0qFjaXiqDhT3hLDf4SME6700HUqDMR8nbCvYuR4j7xFjEiURtWh1
+         TORTze3yF0dIb1duzBBDNGWr81ua4lgRGNUpmH7E=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, olof@lixom.net, maxime@cerno.tech,
+        Anson.Huang@nxp.com, dinguyen@kernel.org, leonard.crestez@nxp.com,
+        marcin.juszkiewicz@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>
+Cc:     Robert Foss <robert.foss@linaro.org>
+Subject: Re: [v2 6/6] arm64: defconfig: Enable QCOM CAMCC, CAMSS and CCI drivers
+Date:   Fri, 20 Mar 2020 20:52:20 +0100
+Message-ID: <2523204.mvXUDI8C0e@g550jk>
+In-Reply-To: <20200317135740.19412-7-robert.foss@linaro.org>
+References: <20200317135740.19412-1-robert.foss@linaro.org> <20200317135740.19412-7-robert.foss@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200320183455.21311-12-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 20, 2020 at 07:34:54PM +0100, Ansuel Smith wrote:
-> From: Sriram Palanisamy <gpalan@codeaurora.org>
-> 
-> Set Max Read Request Size and Max Payload Size to 256 bytes,
-> per chip team recommendation.
+Hi Robert,
 
-Is this to avoid a device defect or to optimize performance?
-
-This should not be done in an individual driver for performance
-reasons because these parameters need to be managed at the system
-level.
-
-If this is to work around a device defect, we probably need to think
-about a quirk that changes the device capabilities advertised by this
-bridge and then changes to the PCI core code to take that into
-account.
-
-> Signed-off-by: Gokul Sriram Palanisamy <gpalan@codeaurora.org>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+On Dienstag, 17. M=E4rz 2020 14:57:40 CET Robert Foss wrote:
+> Build camera clock, isp and controller drivers as modules.
+>=20
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 37 ++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 03130a3206b4..ad437c6f49a0 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -125,6 +125,14 @@
->  
->  #define PCIE20_LNK_CONTROL2_LINK_STATUS2        0xA0
->  
-> +#define __set(v, a, b)	(((v) << (b)) & GENMASK(a, b))
-> +#define __mask(a, b)	(((1 << ((a) + 1)) - 1) & ~((1 << (b)) - 1))
-> +#define PCIE20_DEV_CAS			0x78
-> +#define PCIE20_MRRS_MASK		__mask(14, 12)
-> +#define PCIE20_MRRS(x)			__set(x, 14, 12)
-> +#define PCIE20_MPS_MASK			__mask(7, 5)
-> +#define PCIE20_MPS(x)			__set(x, 7, 5)
+>  arch/arm64/configs/defconfig | 4 ++++
+>  1 file changed, 4 insertions(+)
+>=20
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 4db223dbc549..7cb6989249ab 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -376,6 +376,7 @@ CONFIG_I2C_MESON=3Dy
+>  CONFIG_I2C_MV64XXX=3Dy
+>  CONFIG_I2C_OWL=3Dy
+>  CONFIG_I2C_PXA=3Dy
+> +CONFIG_I2C_QCOM_CCI=3Dm
+>  CONFIG_I2C_QCOM_GENI=3Dm
+>  CONFIG_I2C_QUP=3Dy
+>  CONFIG_I2C_RK3X=3Dy
+> @@ -530,6 +531,7 @@ CONFIG_VIDEO_SAMSUNG_S5P_MFC=3Dm
+>  CONFIG_VIDEO_SAMSUNG_EXYNOS_GSC=3Dm
+>  CONFIG_VIDEO_RENESAS_FCP=3Dm
+>  CONFIG_VIDEO_RENESAS_VSP1=3Dm
+> +CONFIG_VIDEO_QCOM_CAMSS=3Dm
+>  CONFIG_DRM=3Dm
+>  CONFIG_DRM_I2C_NXP_TDA998X=3Dm
+>  CONFIG_DRM_NOUVEAU=3Dm
+> @@ -732,6 +734,7 @@ CONFIG_MSM_GCC_8994=3Dy
+>  CONFIG_MSM_MMCC_8996=3Dy
+>  CONFIG_MSM_GCC_8998=3Dy
+>  CONFIG_QCS_GCC_404=3Dy
+> +CONFIG_SDM_CAMCC_845=3Dm
 
-These should all be the generic PCI_EXP_DEVCTL_READRQ and similar
-#defines, since you use them on values from PCI_EXP_DEVCTL.
+You seem to have this option twice in this patch.
 
->  #define DEVICE_TYPE_RC				0x4
->  
->  #define QCOM_PCIE_2_1_0_MAX_SUPPLY	3
-> @@ -1595,6 +1603,35 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> +static void qcom_pcie_fixup_final(struct pci_dev *pcidev)
-> +{
-> +	int cap, err;
-> +	u16 ctl, reg_val;
-> +
-> +	cap = pci_pcie_cap(pcidev);
-> +	if (!cap)
-> +		return;
-> +
-> +	err = pci_read_config_word(pcidev, cap + PCI_EXP_DEVCTL, &ctl);
-> +
-> +	if (err)
-> +		return;
-> +
-> +	reg_val = ctl;
-> +
-> +	if (((reg_val & PCIE20_MRRS_MASK) >> 12) > 1)
-> +		reg_val = (reg_val & ~(PCIE20_MRRS_MASK)) | PCIE20_MRRS(0x1);
-> +
-> +	if (((ctl & PCIE20_MPS_MASK) >> 5) > 1)
-> +		reg_val = (reg_val & ~(PCIE20_MPS_MASK)) | PCIE20_MPS(0x1);
-> +
-> +	err = pci_write_config_word(pcidev, cap + PCI_EXP_DEVCTL, reg_val);
-> +
-> +	if (err)
-> +		dev_err(&pcidev->dev, "pcie config write failed %d\n", err);
-> +}
-> +DECLARE_PCI_FIXUP_FINAL(PCI_ANY_ID, PCI_ANY_ID, qcom_pcie_fixup_final);
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8084", .data = &ops_1_0_0 },
->  	{ .compatible = "qcom,pcie-ipq8064", .data = &ops_2_1_0 },
-> -- 
-> 2.25.1
-> 
+>  CONFIG_SDM_GCC_845=3Dy
+>  CONFIG_SM_GCC_8150=3Dy
+>  CONFIG_QCOM_HFPLL=3Dy
+> @@ -762,6 +765,7 @@ CONFIG_QCOM_COMMAND_DB=3Dy
+>  CONFIG_QCOM_GENI_SE=3Dy
+>  CONFIG_QCOM_GLINK_SSR=3Dm
+>  CONFIG_QCOM_RMTFS_MEM=3Dm
+> +CONFIG_SDM_CAMCC_845=3Dm
+
+^
+
+>  CONFIG_QCOM_RPMH=3Dy
+>  CONFIG_QCOM_RPMHPD=3Dy
+>  CONFIG_QCOM_SMEM=3Dy
+
+Regards
+Luca
+
+
