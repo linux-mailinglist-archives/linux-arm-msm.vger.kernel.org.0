@@ -2,202 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A06F18DCFC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2020 02:00:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD8B218DDF5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2020 06:16:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726980AbgCUBAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Mar 2020 21:00:10 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:24787 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727046AbgCUBAJ (ORCPT
+        id S1727961AbgCUFQS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Mar 2020 01:16:18 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:42448 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727969AbgCUFQR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Mar 2020 21:00:09 -0400
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Mar 2020 18:00:09 -0700
-Received: from asutoshd-linux1.qualcomm.com ([10.46.160.39])
-  by ironmsg02-sd.qualcomm.com with ESMTP; 20 Mar 2020 18:00:08 -0700
-Received: by asutoshd-linux1.qualcomm.com (Postfix, from userid 92687)
-        id 984271FFE7; Fri, 20 Mar 2020 18:00:08 -0700 (PDT)
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     cang@codeaurora.org, Avri.Altman@wdc.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     Asutosh Das <asutoshd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Tomas Winkler <tomas.winkler@intel.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [<RFC RESEND PATCH v2> 3/3] ufs: sysfs: add sysfs entries for write booster
-Date:   Fri, 20 Mar 2020 17:59:20 -0700
-Message-Id: <7dcdd3ec5b49a17d14c53540bf70bb725c6bc1cb.1584752043.git.asutoshd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1584752043.git.asutoshd@codeaurora.org>
-References: <cover.1584752043.git.asutoshd@codeaurora.org>
-In-Reply-To: <cover.1584752043.git.asutoshd@codeaurora.org>
-References: <cover.1584752043.git.asutoshd@codeaurora.org>
+        Sat, 21 Mar 2020 01:16:17 -0400
+Received: by mail-pg1-f194.google.com with SMTP id h8so4132604pgs.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2020 22:16:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XNi67lxb8U8NV5u7Vn404GtWj+hZ0U+9yVzYkz6He6c=;
+        b=jq8uYH4KlVRzXv1z55n7X7m51bZgjDN7PaeFcN5NkEvGni89YjKSeIk1kY1qugZ2EW
+         A2oUo07JhAZvwb6/Awi0TCpenPbNi8CujHTpna1iApfqArhDl0pHhWMY/zX20I+ZTfMV
+         wYGuRj0e+22DUP2xtisJw0EabKIUIZ90TprLg087ujThJ0CTRoxsqE2/tNrzcEzT3SLw
+         naQSXNKV23pdQ5DBrd+B64G5uOajpwStBJOPChgD7/VDf4jb1bbbZ8k+gFFFVnlv/mlY
+         6R8BcXlqX8wcYF0H4m7kpMAD4q4jZcg4zM+6vHjBScFw8RLaVTvdzN+5RkZAoGwqBPbc
+         9N4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XNi67lxb8U8NV5u7Vn404GtWj+hZ0U+9yVzYkz6He6c=;
+        b=dlLqq8VDYkDMhaUh3a703TqLfpjBoRgxTo1gFdWdazitqyLZuPr3J+JNcAnP8M6VL2
+         3brl99QGAmM/ZVg455jgkhuoGelUsKotM0XmzgQA5peE5jqq3cO9C7de0Kg0TD4Bpa+W
+         MvxHmd9uuneoJet71uUFYH+MS9NGzUVxPHJqDajwePxI5+hi/mq1xaEfIt78kzDcynOM
+         348EUqorEq17hdKuBJNdDzH03Lj72yjLKOg+R4VsoOOsyfxoScwloQfYEiS6u+Oir4rR
+         R68yKMKkKvwBu6LSKIuLeDok07ihtjj5erVuVienVkl3+2PqtbpVfV50hbF7WFraUByO
+         4GmA==
+X-Gm-Message-State: ANhLgQ31Iigho3f2ZaGmz1/dk4XTtFMwLQ4Iqq0V8tCafq0YzyEMrtlk
+        7wsp0E0TD0+DjPn1btaUGjAq/g==
+X-Google-Smtp-Source: ADFU+vs2kNydDTd3Wn+dEAvpwU9bUvPxix2ypzpJD/vmL+TvIzEbcNGfc+1iSt2ank04tWaOQaCaVQ==
+X-Received: by 2002:a63:18b:: with SMTP id 133mr2609937pgb.422.1584767775753;
+        Fri, 20 Mar 2020 22:16:15 -0700 (PDT)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id i11sm6170637pje.30.2020.03.20.22.16.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Mar 2020 22:16:15 -0700 (PDT)
+Date:   Fri, 20 Mar 2020 22:16:12 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>
+Subject: Re: [PATCH 2/4] clk: qcom: mmcc-msm8996: Properly describe GPU_GX
+ gdsc
+Message-ID: <20200321051612.GA5063@builder>
+References: <20200319053902.3415984-1-bjorn.andersson@linaro.org>
+ <20200319053902.3415984-3-bjorn.andersson@linaro.org>
+ <158474710844.125146.15515925711513283888@swboyd.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <158474710844.125146.15515925711513283888@swboyd.mtv.corp.google.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adds unit, device, geometry descriptor sysfs entries.
-Adds flags sysfs entries for write booster.
+On Fri 20 Mar 16:31 PDT 2020, Stephen Boyd wrote:
 
-Change-Id: I53ac9e83baa4a012187ee215280032d96deedf62
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
----
- drivers/scsi/ufs/ufs-sysfs.c | 39 ++++++++++++++++++++++++++++++++++++++-
- drivers/scsi/ufs/ufs.h       |  6 ++++++
- 2 files changed, 44 insertions(+), 1 deletion(-)
+> Quoting Bjorn Andersson (2020-03-18 22:39:00)
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+> > index 85518494ce43..65d9aa790581 100644
+> > --- a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+> > @@ -67,6 +67,10 @@ properties:
+> >      description:
+> >         Protected clock specifier list as per common clock binding
+> >  
+> > +  vdd_gfx-supply:
+> 
+> Why not vdd-gfx-supply? What's with the underscore?
+> 
 
-diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
-index dbdf8b0..db3b932 100644
---- a/drivers/scsi/ufs/ufs-sysfs.c
-+++ b/drivers/scsi/ufs/ufs-sysfs.c
-@@ -274,6 +274,10 @@ UFS_DEVICE_DESC_PARAM(device_version, _DEV_VER, 2);
- UFS_DEVICE_DESC_PARAM(number_of_secure_wpa, _NUM_SEC_WPA, 1);
- UFS_DEVICE_DESC_PARAM(psa_max_data_size, _PSA_MAX_DATA, 4);
- UFS_DEVICE_DESC_PARAM(psa_state_timeout, _PSA_TMT, 1);
-+UFS_DEVICE_DESC_PARAM(ext_feature_sup, _EXT_UFS_FEATURE_SUP, 4);
-+UFS_DEVICE_DESC_PARAM(wb_presv_us_en, _WB_US_RED_EN, 1);
-+UFS_DEVICE_DESC_PARAM(wb_type, _WB_TYPE, 1);
-+UFS_DEVICE_DESC_PARAM(wb_shared_alloc_units, _WB_SHARED_ALLOC_UNITS, 4);
- 
- static struct attribute *ufs_sysfs_device_descriptor[] = {
- 	&dev_attr_device_type.attr,
-@@ -302,6 +306,10 @@ static struct attribute *ufs_sysfs_device_descriptor[] = {
- 	&dev_attr_number_of_secure_wpa.attr,
- 	&dev_attr_psa_max_data_size.attr,
- 	&dev_attr_psa_state_timeout.attr,
-+	&dev_attr_ext_feature_sup.attr,
-+	&dev_attr_wb_presv_us_en.attr,
-+	&dev_attr_wb_type.attr,
-+	&dev_attr_wb_shared_alloc_units.attr,
- 	NULL,
- };
- 
-@@ -371,6 +379,12 @@ UFS_GEOMETRY_DESC_PARAM(enh4_memory_max_alloc_units,
- 	_ENM4_MAX_NUM_UNITS, 4);
- UFS_GEOMETRY_DESC_PARAM(enh4_memory_capacity_adjustment_factor,
- 	_ENM4_CAP_ADJ_FCTR, 2);
-+UFS_GEOMETRY_DESC_PARAM(wb_max_alloc_units, _WB_MAX_ALLOC_UNITS, 4);
-+UFS_GEOMETRY_DESC_PARAM(wb_max_wb_luns, _WB_MAX_WB_LUNS, 1);
-+UFS_GEOMETRY_DESC_PARAM(wb_buff_cap_adj, _WB_BUFF_CAP_ADJ, 1);
-+UFS_GEOMETRY_DESC_PARAM(wb_sup_red_type, _WB_SUP_RED_TYPE, 1);
-+UFS_GEOMETRY_DESC_PARAM(wb_sup_wb_type, _WB_SUP_WB_TYPE, 1);
-+
- 
- static struct attribute *ufs_sysfs_geometry_descriptor[] = {
- 	&dev_attr_raw_device_capacity.attr,
-@@ -402,6 +416,11 @@ static struct attribute *ufs_sysfs_geometry_descriptor[] = {
- 	&dev_attr_enh3_memory_capacity_adjustment_factor.attr,
- 	&dev_attr_enh4_memory_max_alloc_units.attr,
- 	&dev_attr_enh4_memory_capacity_adjustment_factor.attr,
-+	&dev_attr_wb_max_alloc_units.attr,
-+	&dev_attr_wb_max_wb_luns.attr,
-+	&dev_attr_wb_buff_cap_adj.attr,
-+	&dev_attr_wb_sup_red_type.attr,
-+	&dev_attr_wb_sup_wb_type.attr,
- 	NULL,
- };
- 
-@@ -608,7 +627,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 	if (ufshcd_query_flag(hba, UPIU_QUERY_OPCODE_READ_FLAG,		\
- 		QUERY_FLAG_IDN##_uname, &flag))				\
- 		return -EINVAL;						\
--	return sprintf(buf, "%s\n", flag ? "true" : "false");		\
-+	return sprintf(buf, "%s\n", flag ? "true" : "false"); \
- }									\
- static DEVICE_ATTR_RO(_name)
- 
-@@ -620,6 +639,9 @@ UFS_FLAG(life_span_mode_enable, _LIFE_SPAN_MODE_ENABLE);
- UFS_FLAG(phy_resource_removal, _FPHYRESOURCEREMOVAL);
- UFS_FLAG(busy_rtc, _BUSY_RTC);
- UFS_FLAG(disable_fw_update, _PERMANENTLY_DISABLE_FW_UPDATE);
-+UFS_FLAG(wb_enable, _WB_EN);
-+UFS_FLAG(wb_flush_en, _WB_BUFF_FLUSH_EN);
-+UFS_FLAG(wb_flush_during_h8, _WB_BUFF_FLUSH_DURING_HIBERN8);
- 
- static struct attribute *ufs_sysfs_device_flags[] = {
- 	&dev_attr_device_init.attr,
-@@ -630,6 +652,9 @@ static struct attribute *ufs_sysfs_device_flags[] = {
- 	&dev_attr_phy_resource_removal.attr,
- 	&dev_attr_busy_rtc.attr,
- 	&dev_attr_disable_fw_update.attr,
-+	&dev_attr_wb_enable.attr,
-+	&dev_attr_wb_flush_en.attr,
-+	&dev_attr_wb_flush_during_h8.attr,
- 	NULL,
- };
- 
-@@ -667,6 +692,11 @@ UFS_ATTRIBUTE(exception_event_status, _EE_STATUS);
- UFS_ATTRIBUTE(ffu_status, _FFU_STATUS);
- UFS_ATTRIBUTE(psa_state, _PSA_STATE);
- UFS_ATTRIBUTE(psa_data_size, _PSA_DATA_SIZE);
-+UFS_ATTRIBUTE(wb_flush_status, _WB_FLUSH_STATUS);
-+UFS_ATTRIBUTE(wb_avail_buf, _AVAIL_WB_BUFF_SIZE);
-+UFS_ATTRIBUTE(wb_life_time_est, _WB_BUFF_LIFE_TIME_EST);
-+UFS_ATTRIBUTE(wb_cur_buf, _CURR_WB_BUFF_SIZE);
-+
- 
- static struct attribute *ufs_sysfs_attributes[] = {
- 	&dev_attr_boot_lun_enabled.attr,
-@@ -685,6 +715,10 @@ static struct attribute *ufs_sysfs_attributes[] = {
- 	&dev_attr_ffu_status.attr,
- 	&dev_attr_psa_state.attr,
- 	&dev_attr_psa_data_size.attr,
-+	&dev_attr_wb_flush_status.attr,
-+	&dev_attr_wb_avail_buf.attr,
-+	&dev_attr_wb_life_time_est.attr,
-+	&dev_attr_wb_cur_buf.attr,
- 	NULL,
- };
- 
-@@ -736,6 +770,8 @@ UFS_UNIT_DESC_PARAM(provisioning_type, _PROVISIONING_TYPE, 1);
- UFS_UNIT_DESC_PARAM(physical_memory_resourse_count, _PHY_MEM_RSRC_CNT, 8);
- UFS_UNIT_DESC_PARAM(context_capabilities, _CTX_CAPABILITIES, 2);
- UFS_UNIT_DESC_PARAM(large_unit_granularity, _LARGE_UNIT_SIZE_M1, 1);
-+UFS_UNIT_DESC_PARAM(wb_buf_alloc_units, _WB_BUF_ALLOC_UNITS, 4);
-+
- 
- static struct attribute *ufs_sysfs_unit_descriptor[] = {
- 	&dev_attr_boot_lun_id.attr,
-@@ -751,6 +787,7 @@ static struct attribute *ufs_sysfs_unit_descriptor[] = {
- 	&dev_attr_physical_memory_resourse_count.attr,
- 	&dev_attr_context_capabilities.attr,
- 	&dev_attr_large_unit_granularity.attr,
-+	&dev_attr_wb_buf_alloc_units.attr,
- 	NULL,
- };
- 
-diff --git a/drivers/scsi/ufs/ufs.h b/drivers/scsi/ufs/ufs.h
-index 2c77b3e..5c26659 100644
---- a/drivers/scsi/ufs/ufs.h
-+++ b/drivers/scsi/ufs/ufs.h
-@@ -267,6 +267,7 @@ enum device_desc_param {
- 	DEVICE_DESC_PARAM_PSA_TMT		= 0x29,
- 	DEVICE_DESC_PARAM_PRDCT_REV		= 0x2A,
- 	DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP	= 0x4F,
-+	DEVICE_DESC_PARAM_WB_US_RED_EN		= 0x53,
- 	DEVICE_DESC_PARAM_WB_TYPE		= 0x54,
- 	DEVICE_DESC_PARAM_WB_SHARED_ALLOC_UNITS = 0x55,
- };
-@@ -313,6 +314,11 @@ enum geometry_desc_param {
- 	GEOMETRY_DESC_PARAM_ENM4_MAX_NUM_UNITS	= 0x3E,
- 	GEOMETRY_DESC_PARAM_ENM4_CAP_ADJ_FCTR	= 0x42,
- 	GEOMETRY_DESC_PARAM_OPT_LOG_BLK_SIZE	= 0x44,
-+	GEOMETRY_DESC_PARAM_WB_MAX_ALLOC_UNITS	= 0x4F,
-+	GEOMETRY_DESC_PARAM_WB_MAX_WB_LUNS	= 0x53,
-+	GEOMETRY_DESC_PARAM_WB_BUFF_CAP_ADJ	= 0x54,
-+	GEOMETRY_DESC_PARAM_WB_SUP_RED_TYPE	= 0x55,
-+	GEOMETRY_DESC_PARAM_WB_SUP_WB_TYPE	= 0x56,
- };
- 
- /* Health descriptor parameters offsets in bytes*/
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+The pad is named "VDD_GFX" in the datasheet and the schematics. I see
+that we've started y/_/-/ in some of the newly added bindings, would you
+prefer I follow this?
 
+Regards,
+Bjorn
+
+> > +    description:
+> > +      Regulator supply for the GPU_GX GDSC
+> > +
+> >  required:
+> >    - compatible
+> >    - reg
