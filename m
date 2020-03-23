@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 79DBF190112
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 23:29:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08ED519011C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 23:33:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725897AbgCWW3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Mar 2020 18:29:20 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:33859 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726982AbgCWW3T (ORCPT
+        id S1725990AbgCWWdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Mar 2020 18:33:06 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35849 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726955AbgCWWdG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Mar 2020 18:29:19 -0400
-Received: by mail-pj1-f66.google.com with SMTP id q16so450929pje.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 15:29:17 -0700 (PDT)
+        Mon, 23 Mar 2020 18:33:06 -0400
+Received: by mail-pg1-f195.google.com with SMTP id j29so1076226pgl.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 15:33:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=DzC9W/xv9G0mvkqS7wIEtwwe0msHpsyFnVKkJbuUO4o=;
-        b=RRAMMEbw0WzP6ie3WUj3bXGLHVWJ4tqcEZ35ZByVEJ5uPEWhBPBznkXE4LPsceL+xj
-         5gbK2D/L/3F239ZhijvA4aBuJsRqMo/D8YGfO46rqPIHrvHudE7r4ZrohelL4JJZjG/q
-         EtbRVQvhNWrOrcuPHTepVgKydz1UIvPKb/fGyR7WEItqPyiAA8Z42gzUPcslJCocEL1D
-         cRKtbo54OWTzl6zuu9BKzayiCoAmk3FWrtP+E7h7hz3zjjAvQFAhK7JMki7tqqBpw7f9
-         UCzO3W9WJhP50lsL8LmFDzIJRyZfGV9g5YT+mXl6vziNcStdBoPgcPkxz2FQ7IXLw4Zs
-         IpAw==
+        bh=0+ekX362XTPZJu3MhQATXIXqUXtG5s7CcnngEAL+Izo=;
+        b=b1NZ3QUpB8kyqAwX+eyh8GUPAXNDdOo1fCa5qf2EFSFPVbJdg07sptzq6SiNSW34i5
+         ZWmyQbOPpGEoDsMvWnvurtNfNzkCUyns53hEoX3dawG18/5impvl8lZn5WXph6sSYxA8
+         jm04jXIkWWISgkibF1MGcD4GUIygaajwRfRxRQoYb421YVaARMC13jM/IlQCMSuMsY91
+         Azu/HDfOmz33wfgnx4n7F8dFgSNDMnsJD1XjNMbDDueKcb6MNqCPk8fC/X9RRFeGrgKF
+         s1D3IWrT7WQO4jO5rzwukZcpKmhpsS13Aby/O2uyxX96wlFbaVOKsVs/8BUrsVU97CSQ
+         n7sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DzC9W/xv9G0mvkqS7wIEtwwe0msHpsyFnVKkJbuUO4o=;
-        b=dtO9fAQmxul+Baz+qKDXxg2zrr/N0HdAj4zZLZshBJWpDXoXfPb8PkJobtOfg1WO7e
-         TEKXXf4tIbCougDUhlv/Fa45DEpnCQjfQ10Y8tTmhhMKuIQ+4YYVopVqMvJj4nIO8IYK
-         NRvhQp3DNY3ML+E9gGp1rgBd0EcM+3C2VrppLLBeCfPmN+jPKRsC+R6MTiVwQNtemRUS
-         7lyc2n2zszDHdkWQpOQnqwzUYGYn8K7U2vE8OplTYcNTOCNZ9LcuJhu9qfSrv53NOWpW
-         dD9nn2nG4xBqwkq1612Ta4zpdH4aXd65cMYhXCgxkVqa7gVJMJ56/ySI8+qVtTO0WQan
-         QjHg==
-X-Gm-Message-State: ANhLgQ1ahIbhoEQX/zT+BOrm7W8RAEAOxAKsD7/Zcbyk/Y5gE8KMmsue
-        ND7GMT2CGXmwBU3C5Kz5KwkUgg==
-X-Google-Smtp-Source: ADFU+vsVn86V0nTSOc3nrWDYcJKh13+JDnpO+YGzVzsSQe0GKLfpodxZJmr0s+/lkTqlRudDTZm8Xw==
-X-Received: by 2002:a17:90a:9b06:: with SMTP id f6mr1723653pjp.76.1585002556593;
-        Mon, 23 Mar 2020 15:29:16 -0700 (PDT)
+        bh=0+ekX362XTPZJu3MhQATXIXqUXtG5s7CcnngEAL+Izo=;
+        b=JhUCasi56kg8EFcEuy8InFJ0vV+D2Ed3zuLiUErFUUucKuu+URfeF/y4F8/SyF7KyJ
+         dxQvkUoAN8p/SRjU5U9Vn3lLyxI9ys1K+RuBNS1rPYj4SC+Fqg15ehynY+ijKqb7dut0
+         ITVSqcqHVCCLrRRJqkNpRrBDPBuKngMeeWMKds4UEMr+ZCATAedUf7uUVtX/wKQJSJKl
+         vSrO4Qw9lxzEBoGF0u2z5YoCLMQnluY3SuzigRTXaFf7foT+kFz3q0mj5hFM1fIqJ+Rv
+         /tsQpx+tHuUjMIjqhQKZc52gW1dKmvz8THTlh/PMnmltm0DfANJgFWeI/r7HGAoo4l6M
+         Zvzw==
+X-Gm-Message-State: ANhLgQ1OSQFG80rFAi01biAV1EPHf9I4LYa3UW6h+QiJu8PawUM5/ftA
+        ylODSf5jvDhsb1LfSkQV6yMgPx/pABE=
+X-Google-Smtp-Source: ADFU+vtefTwL6Il0Xt8K5zlmPRXAiFzgLNisLSnIcnujFjC7yBzql5SiSmblDDlkqMGnLglZXAPmpA==
+X-Received: by 2002:a63:4912:: with SMTP id w18mr23539999pga.122.1585002784637;
+        Mon, 23 Mar 2020 15:33:04 -0700 (PDT)
 Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id x70sm13119417pgd.37.2020.03.23.15.29.15
+        by smtp.gmail.com with ESMTPSA id e9sm14427742pfl.179.2020.03.23.15.33.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 15:29:16 -0700 (PDT)
-Date:   Mon, 23 Mar 2020 16:29:14 -0600
+        Mon, 23 Mar 2020 15:33:04 -0700 (PDT)
+Date:   Mon, 23 Mar 2020 16:33:02 -0600
 From:   Mathieu Poirier <mathieu.poirier@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v4 2/4] remoteproc: Introduce "panic" callback in ops
-Message-ID: <20200323222914.GB30464@xps15>
+Message-ID: <20200323223302.GC30464@xps15>
 References: <20200310063817.3344712-1-bjorn.andersson@linaro.org>
  <20200310063817.3344712-3-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
@@ -120,17 +120,6 @@ On Mon, Mar 09, 2020 at 11:38:15PM -0700, Bjorn Andersson wrote:
 > +	list_for_each_entry_rcu(rproc, &rproc_list, node) {
 > +		if (!rproc->ops->panic || rproc->state != RPROC_RUNNING)
 > +			continue;
-
-To do things correctly rproc->state would need to be protected by the
-rproc->mutex, which would violate RCU's rule of not blocking inside a read-side
-critical section.  And going back to using the rproc_list_mutex as in your
-previous version would likely set off the lockdep mechanic quickly.   
-
-I don't have a solution, just noting that a potential race does exist.  On the
-flip side consequences are minimal.
-
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-
 > +
 > +		d = rproc->ops->panic(rproc);
 > +		longest = max(longest, d);
@@ -142,6 +131,9 @@ Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 > +	 * This can be used by the remoteproc drivers to give the remote
 > +	 * processor time to perform any requested operations (such as flush
 > +	 * caches), where means for signalling the Linux side isn't available
+
+There is a problem with the above sentence.
+
 > +	 * while in panic.
 > +	 */
 > +	mdelay(longest);
