@@ -2,95 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2499618F9C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 17:32:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ECE118FAD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 18:06:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727408AbgCWQcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Mar 2020 12:32:55 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:37306 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727461AbgCWQcy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Mar 2020 12:32:54 -0400
-Received: by mail-ua1-f66.google.com with SMTP id l18so1007403uak.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 09:32:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vX/pTxX5leUKI//FHes+EDjkWAmuKn+xAlsAhXDay5w=;
-        b=c1CQI6r5AyGrK7N+JP44nrKbQ0k3r8F5dz6wSdikRKRG8IBAr591tkZHPW4rL5sQ0K
-         FEIOrHYN/ryK4FWkhbMYudP9qub+iU9PP6IqV2AufntwMh0sDIrw8OhzUhO9h7+AEtcU
-         bntwsCZo8mATCRdmMgeNj+YyBFYL6wTejiX5s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vX/pTxX5leUKI//FHes+EDjkWAmuKn+xAlsAhXDay5w=;
-        b=KZVzbDKHHJFGH8wmuTX35zMndH5UH96jOOTl+Xw0Bn5RKTWVRukRPOvY2eM0fulr2W
-         W9QToqEEzoV0WF5uEnNWe2iBwdzBth4gHXNiCbnLEEj2miUO+3BjafjAnWKk1sD1yFFj
-         XSpOjlzeZ6swpzSsMjGZKBY8ZvwhF1qiK8CkEjNB/8eBmIuZrryJox2MNFp8Ycq6daet
-         ycPB1yNdh5zmnOEm0cgUOPrxggQWHDCgMiUdjHDdPbf3Bo9AGKwSGJkr5XJYt3VTg/h/
-         KWx7YKtAq1kbaTwBIw0sqixW/XWWLbGqMtkWtQJ0VCiWEcF/2pCXMjiD4sTq2qdujXQU
-         YPBA==
-X-Gm-Message-State: ANhLgQ1gJdgzejw9V8fpQfpdCXHXn68JV9OafOsjUtWppBNwgEK0Ix2A
-        U9sGkBvyorZIOqLu33NBOCG4GxjkYz0=
-X-Google-Smtp-Source: ADFU+vus+SvkdM+N2rOegjsGXeSrd7T0wbPZxy80NFVHbxqAzDAs/2OYcJTgUYE6WzUmSSHYWqJVhA==
-X-Received: by 2002:a9f:21aa:: with SMTP id 39mr14211570uac.138.1584981173490;
-        Mon, 23 Mar 2020 09:32:53 -0700 (PDT)
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com. [209.85.222.47])
-        by smtp.gmail.com with ESMTPSA id g130sm40823vke.15.2020.03.23.09.32.51
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2020 09:32:51 -0700 (PDT)
-Received: by mail-ua1-f47.google.com with SMTP id 9so5191727uav.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 09:32:51 -0700 (PDT)
-X-Received: by 2002:ab0:604f:: with SMTP id o15mr8911387ual.120.1584981170619;
- Mon, 23 Mar 2020 09:32:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200317133653.v2.1.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid>
- <20200323110756.GD26299@kadam>
-In-Reply-To: <20200323110756.GD26299@kadam>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 23 Mar 2020 09:32:39 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WcnAtA2WRoC-+R2yKC1OCsDOEDMXu5jKveOARhw4gmOg@mail.gmail.com>
-Message-ID: <CAD=FV=WcnAtA2WRoC-+R2yKC1OCsDOEDMXu5jKveOARhw4gmOg@mail.gmail.com>
-Subject: Re: [PATCH v2] spi: spi-geni-qcom: Speculative fix of "nobody cared"
- about interrupt
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     kbuild@lists.01.org, kbuild-all@lists.01.org,
-        Mark Brown <broonie@kernel.org>,
-        Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        Andy Gross <agross@kernel.org>,
+        id S1727658AbgCWRGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Mar 2020 13:06:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44872 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725861AbgCWRGd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Mar 2020 13:06:33 -0400
+Received: from localhost.localdomain (unknown [122.178.205.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CDFEC20722;
+        Mon, 23 Mar 2020 17:06:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584983192;
+        bh=CCyZttakd4FmCcuw4OkB8h7zFy787/A7n7jzKzcu/eI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=zjNMvKoMNUGTTD8+7EgN7bIEWTxx45Jnlvp/GpKJ3HcL2FCH6wCTNS/NP7bO56tQW
+         gWE9Und4661zbV0faSj41XnCerkz3zDJhfWIp5EWvOssiK9VvVAvjHm9UP9xHQd1jG
+         n8NO2BaPGqJtJpAgOBgXMlSCdWWqBaapn1J6JhtM=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Vinod Koul <vkoul@kernel.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        =?UTF-8?q?Andreas=20B=C3=B6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v8 0/5] usb: xhci: Add support for Renesas USB controllers
+Date:   Mon, 23 Mar 2020 22:35:56 +0530
+Message-Id: <20200323170601.419809-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This series add support for Renesas USB controllers uPD720201 and uPD720202.
+These require firmware to be loaded and in case devices have ROM those can
+also be programmed if empty. If ROM is programmed, it runs from ROM as well.
 
-On Mon, Mar 23, 2020 at 4:08 AM Dan Carpenter <dan.carpenter@oracle.com> wrote:
->
-> 561de45f72bd5f Girish Mahadevan 2018-10-03  327                 ret = get_spi_clk_cfg(xfer->speed_hz, mas, &idx, &div);
-> 561de45f72bd5f Girish Mahadevan 2018-10-03  328                 if (ret) {
-> 561de45f72bd5f Girish Mahadevan 2018-10-03  329                         dev_err(mas->dev, "Err setting clks:%d\n", ret);
-> 561de45f72bd5f Girish Mahadevan 2018-10-03  330                         return;
->
-> Needs to drop the lock before returning.
+This includes patches from Christian which supported these controllers w/o
+ROM and later my patches for ROM support and debugfs hook for rom erase and
+export of xhci-pci functions.
 
-Oops, thanks for catching.  I will wait before spinning a v3 until
-there is some clarity about whether folks want to do something more
-like Stephen suggested or whether I should continue with my strategy.
-At the moment I'm still in favor of keeping w/ my strategy and seeing
-if I can reduce the amount of time with interrupts disabled in
-setup_fifo_xfer(), maybe just grabbing the lock around the start of
-the transfer to keep the state machine in sync with the kickoff...
+Changes in v8:
+ Fix compile error reported by Kbuild-bot by making usb_hcd_pci_probe() take
+ const struct hc_driver * as argument
 
--Doug
+Changes in v7:
+ Make a single module which removes issues with module loading
+ Keep the renesas code in renesas file
+ Add hc_driver as argument for usb_hcd_pci_probe and modify hdc drivers to
+   pass this and not use driver_data
+ Use driver data for fw name
+ Remove code to check if we need to load firmware or not
+ remove multiple fw version support, we can do that with symlink in
+   userspace
+
+Changes in v6:
+ Move the renesas code into a separate driver which invokes xhci-pci functions.
+
+Changes in v5:
+ Added a debugfs rom erase patch, helps in debugging
+ Squashed patch 1 & 2 as requested by Mathias
+
+Changes in v4:
+ Rollback the delay values as we got device failures
+
+Changes in v3:
+  Dropped patch 2 as discussed with Christian
+  Removed aligned 8 bytes check
+  Change order for firmware search from highest version to lowest
+  Added entry for new firmware for device 0x14 as well
+  Add tested by Christian
+
+Changes in v2:
+  used macros for timeout count and delay
+  removed renesas_fw_alive_check
+  cleaned renesas_fw_callback
+  removed recurion for renesas_fw_download
+  added MODULE_FIRMWARE
+  added comment for multiple fw order
+
+Christian Lamparter (1):
+  usb: renesas-xhci: Add the renesas xhci driver
+
+Vinod Koul (4):
+  usb: hci: add hc_driver as argument for usb_hcd_pci_probe
+  usb: xhci: Add support for Renesas controller with memory
+  usb: renesas-xhci: Add ROM loader for uPD720201
+  usb: xhci: provide a debugfs hook for erasing rom
+
+ drivers/usb/core/hcd-pci.c          |   7 +-
+ drivers/usb/host/Makefile           |   3 +-
+ drivers/usb/host/ehci-pci.c         |   6 +-
+ drivers/usb/host/ohci-pci.c         |   9 +-
+ drivers/usb/host/uhci-pci.c         |   8 +-
+ drivers/usb/host/xhci-pci-renesas.c | 802 ++++++++++++++++++++++++++++
+ drivers/usb/host/xhci-pci.c         |  43 +-
+ drivers/usb/host/xhci-pci.h         |  14 +
+ include/linux/usb/hcd.h             |   3 +-
+ 9 files changed, 871 insertions(+), 24 deletions(-)
+ create mode 100644 drivers/usb/host/xhci-pci-renesas.c
+ create mode 100644 drivers/usb/host/xhci-pci.h
+
+-- 
+2.25.1
+
