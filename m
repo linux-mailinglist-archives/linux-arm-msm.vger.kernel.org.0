@@ -2,114 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CEC3190020
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 22:16:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BCA51900B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 22:53:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726764AbgCWVQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Mar 2020 17:16:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33282 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726203AbgCWVQ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Mar 2020 17:16:27 -0400
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E43AD2073E;
-        Mon, 23 Mar 2020 21:16:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584998187;
-        bh=lAcPaGMeuTbQ0e60tGnw6ov4e5Q5aILJQN/wYj3AAMk=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=z5xnYgUgdU2DIBDs8HEZaSJH752225z4W2JUWCZZIukzeTeclguBbUyeCUXDTX9I8
-         56K0xXKFuMxB2oxCqLne3IK+sazlamo7gKkDX4NAYNCTIwlU+bNmXO0p1L/aH5bs+1
-         CFPOr47ciju93GlG08d1OyFZizI1aN3zdH+eNNxc=
-Received: by mail-qt1-f180.google.com with SMTP id f20so13149902qtq.6;
-        Mon, 23 Mar 2020 14:16:26 -0700 (PDT)
-X-Gm-Message-State: ANhLgQ1+8lGd7B0mnyiOmqvoggfla72NQPnqp9c/0D/Lol8BN2BPjJfy
-        lRGWyAiiokq0/hMdw1pIryXDSfx+69F03WXlhg==
-X-Google-Smtp-Source: ADFU+vum708OpcpjRaJMVDkorGVUHHFISsRaDWFsZpbGSzR6ZkKzsCsNyMn7et2Npg4zVfxkp3GAuYA09s21/oTFXis=
-X-Received: by 2002:aed:3461:: with SMTP id w88mr23486218qtd.143.1584998186039;
- Mon, 23 Mar 2020 14:16:26 -0700 (PDT)
+        id S1727121AbgCWVwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Mar 2020 17:52:11 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:36124 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725897AbgCWVwK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Mar 2020 17:52:10 -0400
+Received: by mail-pf1-f195.google.com with SMTP id i13so8205354pfe.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 14:52:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=zzaojujfcls2hgFyVUn0hD1Rb+7tZyy+TgUJhbpUoN0=;
+        b=tWTwtLciVWGSxsbK51pBsm7+vZ073MLGRYvTY2C4gVsjjvEfn14hy7mCtlIsWT+LvQ
+         al5phEEv8sdIIHJnFOjBu5CNIfygJVjQbwKif/nBhzkXYzPt2NeARsXaQbO7sHjYl7Ho
+         IyuMyLSDe76UZsuPAvnYEFVGKNVGSkygCw+8o5OXo9RGlOSzkscK/JydAc5DUTMZO83W
+         03ohm0vE/DAPjcuZXljtjSbkdPHLTIyQmiBH6KTiDrfaisDWAPIrUN0bK7hUee01IuaS
+         2vh5bPwOmBCgwlmBoPM7NeRT3ejSr2KPgaJ3H/+g6hW07PbV15/ZheZ3OF+7xCrlsE1Y
+         pXqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zzaojujfcls2hgFyVUn0hD1Rb+7tZyy+TgUJhbpUoN0=;
+        b=fOV80VC0x872czGXBzHHI4AHEXq6U/jBFamYQLNac635AZyo68EnTRZecYYRjH1TJc
+         3FA4K/qCQL8Ify7BtRIvG57L5uhVGMlWAfzRTFimkfN4IM7jmhWmV9qoTjIVYsq3qmQw
+         SXZw/TL0Wb61ke4yuZXMtP/LW4D/Aq2VzCTV71yclJ61kblb0Re2/jwkFrxRJds4M9nj
+         35JiTEAany2C40/XpOTUQWFvuQDbWpDkagJPYc5J9xjDm/Gkh5NX82eJ3Zu3WE9icYQz
+         5zh31pUHioHZjv6U0n2nNy3L4hOkDhUmBFAQePr5Plhj1LP5RKq5+1GOt1zChE9vrDKc
+         oEww==
+X-Gm-Message-State: ANhLgQ1RAa61jzrXeT2drdgRWUhJuZnn288E4SkOBWGbRZUZFW0Xheff
+        7tbzH1Yuamo44RSKu2DeW8WFlw==
+X-Google-Smtp-Source: ADFU+vvmkqQHQNARe/Cfqm5giF+9fLK7xjtj+Kr/nmczELP2SRPVq3XmEvxUAYfyJp75b2PX8eQsiQ==
+X-Received: by 2002:a63:ec50:: with SMTP id r16mr25369318pgj.274.1585000327853;
+        Mon, 23 Mar 2020 14:52:07 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id j12sm5499008pgs.0.2020.03.23.14.52.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2020 14:52:07 -0700 (PDT)
+Date:   Mon, 23 Mar 2020 15:52:05 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/4] remoteproc: Traverse rproc_list under RCU read
+ lock
+Message-ID: <20200323215205.GA30464@xps15>
+References: <20200310063817.3344712-1-bjorn.andersson@linaro.org>
+ <20200310063817.3344712-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <cover.1583412540.git.amit.kucheria@linaro.org>
- <8a0cfe9e3018f7996c1563035bee76048941beb4.1583412540.git.amit.kucheria@linaro.org>
- <20200311144933.GA21587@bogus> <CAHLCerN99eKOofxcCuvNwjNGbJfB7BzoPGAPCtXHNQdN9w8Bcw@mail.gmail.com>
-In-Reply-To: <CAHLCerN99eKOofxcCuvNwjNGbJfB7BzoPGAPCtXHNQdN9w8Bcw@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 23 Mar 2020 15:16:14 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJ6T3LVbKueGn53dZmR=caD2AR7yLX9gffmOc9VwF9kXQ@mail.gmail.com>
-Message-ID: <CAL_JsqJ6T3LVbKueGn53dZmR=caD2AR7yLX9gffmOc9VwF9kXQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] dt-bindings: thermal: Add yaml bindings for
- thermal zones
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200310063817.3344712-2-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 23, 2020 at 2:46 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
->
-> Hi Rob,
->
-> Thanks for the review.
->
-> On Wed, Mar 11, 2020 at 8:19 PM Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Thu, Mar 05, 2020 at 06:26:43PM +0530, Amit Kucheria wrote:
-> > > As part of moving the thermal bindings to YAML, split it up into 3
-> > > bindings: thermal sensors, cooling devices and thermal zones.
-> > >
-> > > The thermal-zone binding is a software abstraction to capture the
-> > > properties of each zone - how often they should be checked, the
-> > > temperature thresholds (trips) at which mitigation actions need to be
-> > > taken and the level of mitigation needed at those thresholds.
+On Mon, Mar 09, 2020 at 11:38:14PM -0700, Bjorn Andersson wrote:
+> In order to be able to traverse the mostly read-only rproc_list without
+> locking during panic migrate traversal to be done under rcu_read_lock().
+> 
+> Mutual exclusion for modifications of the list continues to be handled
+> by the rproc_list_mutex and a synchronization point is added before
+> releasing objects that are popped from the list.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Change v3:
+> - New patch
+> 
+>  drivers/remoteproc/remoteproc_core.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index 097f33e4f1f3..f0a77c30c6b1 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -1854,8 +1854,8 @@ struct rproc *rproc_get_by_phandle(phandle phandle)
+>  	if (!np)
+>  		return NULL;
+>  
+> -	mutex_lock(&rproc_list_mutex);
+> -	list_for_each_entry(r, &rproc_list, node) {
+> +	rcu_read_lock();
+> +	list_for_each_entry_rcu(r, &rproc_list, node) {
+>  		if (r->dev.parent && r->dev.parent->of_node == np) {
+>  			/* prevent underlying implementation from being removed */
+>  			if (!try_module_get(r->dev.parent->driver->owner)) {
+> @@ -1868,7 +1868,7 @@ struct rproc *rproc_get_by_phandle(phandle phandle)
+>  			break;
+>  		}
+>  	}
+> -	mutex_unlock(&rproc_list_mutex);
+> +	rcu_read_unlock();
+>  
+>  	of_node_put(np);
+>  
+> @@ -1925,7 +1925,7 @@ int rproc_add(struct rproc *rproc)
+>  
+>  	/* expose to rproc_get_by_phandle users */
+>  	mutex_lock(&rproc_list_mutex);
+> -	list_add(&rproc->node, &rproc_list);
+> +	list_add_rcu(&rproc->node, &rproc_list);
+>  	mutex_unlock(&rproc_list_mutex);
+>  
+>  	return 0;
+> @@ -2140,9 +2140,12 @@ int rproc_del(struct rproc *rproc)
+>  
+>  	/* the rproc is downref'ed as soon as it's removed from the klist */
+>  	mutex_lock(&rproc_list_mutex);
+> -	list_del(&rproc->node);
+> +	list_del_rcu(&rproc->node);
+>  	mutex_unlock(&rproc_list_mutex);
+>  
+> +	/* Ensure that no readers of rproc_list are still active */
+> +	synchronize_rcu();
+> +
 
-[...]
+Please add linuc/rculist.h to include the RCU API.  With that:
 
-> > > +          trips:
-> > > +            type: object
-> > > +            description:
-> > > +              This node describes a set of points in the temperature domain at
-> > > +              which the thermal framework needs to takes action. The actions to
-> > > +              be taken are defined in another node called cooling-maps.
-> > > +
-> > > +            patternProperties:
-> > > +              "^[a-zA-Z][a-zA-Z0-9,+\\._]{0,63}$":
-> >
-> > Drop ',', '+', '.', and ideally '_'. Probably need to add '-'.
->
-> Dropping underscore flags a lot of DTs in dtbs_check. Do you want me
-> to go fix them or can we live with the underscore. Is there some
-> document I should read on why underscore isn't desirable?
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-Just convention. dtc will warn (with W=2), but we probably should
-document that better. Anyways, fine to leave '_' here.
-
-
-> > > +            /* ... */
-> > > +
-> > > +            gpu-thermal-top {
-> >
-> > This one is not going to match (which should cause an error).
->
-> Good catch. Unfortunately, this isn't getting caught. Nor is the
-> 12-char limitation before -thermal in the thermal zone name. I can't
-> figure out why.
-
-That's because this schema has to be included by another schema which
-matches on a parent node containing 'thermal-zones'. If
-'thermal-zones' can be at the root node, then you should rework this
-such that you have $nodename: {const: thermal-zones} as a top-level
-property.
-
-Rob
+>  	device_del(&rproc->dev);
+>  
+>  	return 0;
+> -- 
+> 2.24.0
+> 
