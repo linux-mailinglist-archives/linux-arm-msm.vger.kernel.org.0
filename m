@@ -2,69 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 24F9918F87C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 16:25:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF94718F8B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 16:36:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727230AbgCWPZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Mar 2020 11:25:14 -0400
-Received: from netrider.rowland.org ([192.131.102.5]:58225 "HELO
-        netrider.rowland.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with SMTP id S1727151AbgCWPZO (ORCPT
+        id S1727313AbgCWPgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Mar 2020 11:36:17 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:22351 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727243AbgCWPgQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Mar 2020 11:25:14 -0400
-Received: (qmail 24985 invoked by uid 500); 23 Mar 2020 11:25:13 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 23 Mar 2020 11:25:13 -0400
-Date:   Mon, 23 Mar 2020 11:25:13 -0400 (EDT)
-From:   Alan Stern <stern@rowland.harvard.edu>
-X-X-Sender: stern@netrider.rowland.org
-To:     Vinod Koul <vkoul@kernel.org>
-cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        =?UTF-8?q?Andreas=20B=C3=B6hler?= <dev@aboehler.at>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v7 1/5] usb: hci: add hc_driver as argument for
- usb_hcd_pci_probe
-In-Reply-To: <20200323101121.243906-2-vkoul@kernel.org>
-Message-ID: <Pine.LNX.4.44L0.2003231124190.24254-100000@netrider.rowland.org>
+        Mon, 23 Mar 2020 11:36:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584977776; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=wijimHVzaAPkYdmKEb1ozTEK2M9kYeLXNSo3279w37s=;
+ b=oXhjG3pJVS7H0WMJE+RAaLqMyLYC62nSjyMA8d+YMrKka9UWkI+mB+xMs8Bapas8+g3yYsPk
+ jWl71odnIqMqcjP7pmeTTNSFpC4x8Y2YLAFs76JWvbEVPoyn605Z0hjtYuMnAnSltWb1gUCw
+ Y4H1OIt3hSGR0bRB/JjAiSyf4aE=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e78d76c.7f9b3ececab0-smtp-out-n03;
+ Mon, 23 Mar 2020 15:36:12 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9A551C432C2; Mon, 23 Mar 2020 15:36:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7712C433D2;
+        Mon, 23 Mar 2020 15:36:11 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 23 Mar 2020 21:06:11 +0530
+From:   kgunda@codeaurora.org
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V3 2/4] backlight: qcom-wled: Add callback functions
+In-Reply-To: <20200311103047.v7rt5ii3saack22a@holly.lan>
+References: <1583760362-26978-1-git-send-email-kgunda@codeaurora.org>
+ <1583760362-26978-3-git-send-email-kgunda@codeaurora.org>
+ <20200310152719.5hpzh6osq22y4qbn@holly.lan>
+ <05ab744dfbd83b6704bd394ce3c3dfc9@codeaurora.org>
+ <20200311103047.v7rt5ii3saack22a@holly.lan>
+Message-ID: <45964027ff388aec97d27f579d96c012@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Mar 2020, Vinod Koul wrote:
-
-> usb_hcd_pci_probe expects users to call this with driver_data set as
-> hc_driver, that limits the possibility of using the driver_data for
-> driver data.
+On 2020-03-11 16:00, Daniel Thompson wrote:
+> On Wed, Mar 11, 2020 at 12:11:00PM +0530, kgunda@codeaurora.org wrote:
+>> On 2020-03-10 20:57, Daniel Thompson wrote:
+>> > On Mon, Mar 09, 2020 at 06:56:00PM +0530, Kiran Gunda wrote:
+>> > > Add cabc_config, sync_toggle, wled_ovp_fault_status and wled_ovp_delay
+>> > > callback functions to prepare the driver for adding WLED5 support.
+>> > >
+>> > > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> >
+>> > Overall this code would a lot easier to review if
+>> > > ---
+>> > >  drivers/video/backlight/qcom-wled.c | 196
+>> > > +++++++++++++++++++++++-------------
+>> > >  1 file changed, 126 insertions(+), 70 deletions(-)
+>> > >
+>> > > diff --git a/drivers/video/backlight/qcom-wled.c
+>> > > b/drivers/video/backlight/qcom-wled.c
+>> > > index 3d276b3..b73f273 100644
+>> > > --- a/drivers/video/backlight/qcom-wled.c
+>> > > +++ b/drivers/video/backlight/qcom-wled.c
+>> > > @@ -128,6 +128,7 @@ struct wled_config {
+>> > >  	bool cs_out_en;
+>> > >  	bool ext_gen;
+>> > >  	bool cabc;
+>> > > +	bool en_cabc;
+>> >
+>> > Does this ever get set to true?
+>> >
+>> Yes. If user wants use the cabc pin to control the brightness and
+>> use the "qcom,cabc" DT property in the device tree.
 > 
-> Add hc_driver as argument to usb_hcd_pci_probe and modify the callers
-> ehci/ohci/xhci/uhci to pass hc_driver as argument and freeup the
-> driver_data used
+> That sounds like what you intended the code to do!
 > 
-> Tested xhci driver on Dragon-board RB3, compile tested ehci and ohci.
-> Couldn't compile uhci
+> Is the code that does this present in the patch? I could not find
+> it.
 > 
-> Suggested-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/usb/core/hcd-pci.c  |  7 ++++---
->  drivers/usb/host/ehci-pci.c |  6 ++----
->  drivers/usb/host/ohci-pci.c |  9 ++++++---
->  drivers/usb/host/uhci-pci.c |  8 ++++++--
->  drivers/usb/host/xhci-pci.c | 14 +++++---------
->  include/linux/usb/hcd.h     |  3 ++-
->  6 files changed, 25 insertions(+), 22 deletions(-)
-
-For all but the xHCI parts:
-
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-
+okay... It's my bad. We already have the "cabc" for this. I will remove 
+the en_cabc in
+next series.
+> 
+> Daniel.
