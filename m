@@ -2,150 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5F2418ED45
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 00:29:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93BA118EDBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 02:51:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbgCVX3Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Mar 2020 19:29:24 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:33963 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726814AbgCVX3X (ORCPT
+        id S1726956AbgCWBvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Mar 2020 21:51:41 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:64919 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726954AbgCWBvi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Mar 2020 19:29:23 -0400
-Received: by mail-ed1-f47.google.com with SMTP id i24so14343688eds.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2020 16:29:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=qtuq6N55/cW3iPYtxBvjA3AV9DJr5vFxSYYSJdykhog=;
-        b=R+FpMqx6TClSexIsQhyh1Mlzdrv6hzYHm3cHEpbK1Wc+PjexHu/uHgQB1dVwGsbMaS
-         180Xp/KIvwqTGtIWsRsn7QH4mRJrk3HrjHXrmupbzjSYsA74EF1bCYf91L3qUnRLxCVI
-         1sB3H7oulW15Cyv1GMpZXZICQeCRFne69dFPScPmbiMBjjltY/4R1NCP+pcT0Rq3k/B1
-         XL156ow/owmNPb8iJkZ6GtmZiAwClK2/AJDj/g8/6HrpUhWapWFtTWVKZWFeWihYpj87
-         W3KXWslYm2Yv66bb1RtoGRbBjPGCsn3+sWhAnKi36WEW7aegPubIibrvqUl+YNitXwov
-         8Uzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=qtuq6N55/cW3iPYtxBvjA3AV9DJr5vFxSYYSJdykhog=;
-        b=tibAGVplentIKk8szFWaCFS0RwmQrPmlSqizs57YzUUOdQcV71iWSnG5lBSHQJu113
-         s9KMjAw4hNB6VSmqrExzdZtv2SWWnuMWXZWbRsXsouZFCJhLnZpmzD/qC7/nMes4cVpv
-         rVfueFD8clq4LyQ3Iyhd2xsFxiE+HOv38390x3oX4udaBYC0TOBuF5XOFCtoyY2xQ1wW
-         I58FPCF91yqmQRzknvSjvqppouY4Zs69E4qx+DewIbgiHPJ5u1xk0xbHvQB3jZTICb3h
-         hwT9olP3dFEe0H1wNriAiWjRFrTkvwm+X2UNHaNunIa8LeeoLmwNuz52jxcQXlAXC+b0
-         Oj5w==
-X-Gm-Message-State: ANhLgQ1xYEFh+lixF69ggVcYBdV65Z/tKcYcGH8MiclF7PeXlQ4EBH14
-        3NIoBBd7ZHVCLzuCMLvoj80wTXYwSinE1iV0jaw=
-X-Google-Smtp-Source: ADFU+vvDNl9KF6aWmG1Nag+zo6K4mMMz/lowU/jb6RrY9/cFR5io+N8rAzuOKYPoirYOxdi09+q/IW2mxNQvpY6/SZY=
-X-Received: by 2002:a50:a0c7:: with SMTP id 65mr19127482edo.7.1584919761847;
- Sun, 22 Mar 2020 16:29:21 -0700 (PDT)
+        Sun, 22 Mar 2020 21:51:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1584928296; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=rVs4UhZfq5ySydb0Mkp7e5H5eaz7AWJc5B+WJxcd6OA=;
+ b=spXQb9E/uQKdL1umoi/cILs+7btx6No4JwHyXAIhYy9+WBNqzd1AYrq1P5kElktXlqttDlHc
+ UKhXvVeDsgjBBuwUHHpHbD6lW2gP1yNS172LYKlYFPvRe2PKrXHzbsb4TtIYrsJA1uWE5DOY
+ WRXZdYT4sb6NYg2H8Z27EvtjZFs=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e78161f.7f05264692d0-smtp-out-n03;
+ Mon, 23 Mar 2020 01:51:27 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C2B99C43636; Mon, 23 Mar 2020 01:51:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rjliao)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF9E2C433D2;
+        Mon, 23 Mar 2020 01:51:26 +0000 (UTC)
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 22 Mar 2020 16:29:12 -0700
-Message-ID: <CAF6AEGuf1R4Xz-t9Z7_cwx9jD=b4wUvvwfqA5cHR8fCSXSd5XQ@mail.gmail.com>
-Subject: [pull] drm/msm: msm-next for 5.7
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 23 Mar 2020 09:51:26 +0800
+From:   Rocky Liao <rjliao@codeaurora.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
+        linux-bluetooth-owner@vger.kernel.org
+Subject: Re: [PATCH v1 1/2] Bluetooth: hci_qca: Add support for Qualcomm
+ Bluetooth SoC QCA6390
+In-Reply-To: <20200316174615.GP144492@google.com>
+References: <20200314094328.3331-1-rjliao@codeaurora.org>
+ <20200316174615.GP144492@google.com>
+Message-ID: <1aff039c60da7e1d188bd5ef8750eefd@codeaurora.org>
+X-Sender: rjliao@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+在 2020-03-17 01:46，Matthias Kaehlcke 写道：
+> On Sat, Mar 14, 2020 at 05:43:27PM +0800, Rocky Liao wrote:
+>> This patch adds support for QCA6390, including the devicetree and acpi
+>> compatible hwid matching, and patch/nvm downloading.
+>> 
+>> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+>> ---
+>>  drivers/bluetooth/btqca.c   | 44 +++++++++++++++++++++++++++++++----
+>>  drivers/bluetooth/btqca.h   |  8 +++++++
+>>  drivers/bluetooth/hci_qca.c | 46 
+>> +++++++++++++++++++++++++++++++------
+>>  3 files changed, 86 insertions(+), 12 deletions(-)
+>> 
+>> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+>> index a16845c0751d..ca126e499c58 100644
+>> --- a/drivers/bluetooth/btqca.c
+>> +++ b/drivers/bluetooth/btqca.c
+>> @@ -14,6 +14,9 @@
+>> 
+>>  #define VERSION "0.1"
+>> 
+>> +#define QCA_IS_3991_6390(soc_type)    \
+>> +	(soc_type == QCA_WCN3991 || soc_type == QCA_QCA6390)
+> 
+> This macro style is 3991 or 6390 is pretty ugly, IMO it's worse than 
+> the
+> problem it intends to solve.
+> 
+> I would either just spell out what the macro does, or if that becomes 
+> to
+> cumbersome (especially when more types are added) have a macro that 
+> checks
+> a bitmask like:
+> 
+> qca_soc_type_matches(soc_type, QCA_WCN3991 | QCA6390)
+> 
+> For this the SoC types read from FW would have to be mapped to a bit 
+> for
+> each SoC type, which could be done during initialization.
+> 
+> Another alternative could be to have a set of flags that indicate if a 
+> SoC
+> has certain characteristics (e.g. enhanced logging needs to be 
+> enabled),
+> these flags could be set during initialization.
+> 
 
-A bit smaller this time around.. there are still a couple uabi
-additions for vulkan waiting in the wings, but I punted on them this
-cycle due to running low on time.  (They should be easy enough to
-rebase, and if it is a problem for anyone I can push a next+uabi
-branch so that tu work can proceed.)
+I prefer to adopt Bala's suggestion to use soc_type >= QCA_WCN3991
 
-The bigger change is refactoring dpu resource manager and moving dpu
-to use atomic global state.  Other than that, it is mostly cleanups
-and fixes.
+>> +
+>>  int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+>>  			 enum qca_btsoc_type soc_type)
+>>  {
+>> @@ -32,7 +35,7 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 
+>> *soc_version,
+>>  	 * VSE event. WCN3991 sends version command response as a payload to
+>>  	 * command complete event.
+>>  	 */
+>> -	if (soc_type == QCA_WCN3991) {
+>> +	if (QCA_IS_3991_6390(soc_type)) {
+>>  		event_type = 0;
+>>  		rlen += 1;
+>>  		rtype = EDL_PATCH_VER_REQ_CMD;
+>> @@ -69,7 +72,7 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 
+>> *soc_version,
+>>  		goto out;
+>>  	}
+>> 
+>> -	if (soc_type == QCA_WCN3991)
+>> +	if (QCA_IS_3991_6390(soc_type))
+>>  		memmove(&edl->data, &edl->data[1], sizeof(*ver));
+>> 
+>>  	ver = (struct qca_btsoc_version *)(edl->data);
+>> @@ -138,6 +141,29 @@ int qca_send_pre_shutdown_cmd(struct hci_dev 
+>> *hdev)
+>>  }
+>>  EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
+>> 
+>> +int qca_send_enhancelog_enable_cmd(struct hci_dev *hdev)
+>> +{
+>> +	struct sk_buff *skb;
+>> +	int err;
+>> +	const u8 param[2] = {0x14, 0x01};
+>> +
+>> +	bt_dev_dbg(hdev, "QCA enhanced log enable cmd");
+>> +
+>> +	skb = __hci_cmd_sync_ev(hdev, QCA_ENHANCED_LOG_ENABLE_CMD, 2,
+>> +				param, HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
+>> +
+>> +	if (IS_ERR(skb)) {
+>> +		err = PTR_ERR(skb);
+>> +		bt_dev_err(hdev, "Enhanced log enable cmd failed (%d)", err);
+>> +		return err;
+>> +	}
+>> +
+>> +	kfree_skb(skb);
+>> +
+>> +	return 0;
+>> +}
+>> +EXPORT_SYMBOL_GPL(qca_send_enhancelog_enable_cmd);
+>> +
+>>  static void qca_tlv_check_data(struct qca_fw_config *config,
+>>  		const struct firmware *fw, enum qca_btsoc_type soc_type)
+>>  {
+>> @@ -217,7 +243,7 @@ static void qca_tlv_check_data(struct 
+>> qca_fw_config *config,
+>>  				tlv_nvm->data[0] |= 0x80;
+>> 
+>>  				/* UART Baud Rate */
+>> -				if (soc_type == QCA_WCN3991)
+>> +				if (QCA_IS_3991_6390(soc_type))
+>>  					tlv_nvm->data[1] = nvm_baud_rate;
+>>  				else
+>>  					tlv_nvm->data[2] = nvm_baud_rate;
+>> @@ -268,7 +294,7 @@ static int qca_tlv_send_segment(struct hci_dev 
+>> *hdev, int seg_size,
+>>  	 * VSE event. WCN3991 sends version command response as a payload to
+>>  	 * command complete event.
+>>  	 */
+>> -	if (soc_type == QCA_WCN3991) {
+>> +	if (QCA_IS_3991_6390(soc_type)) {
+>>  		event_type = 0;
+>>  		rlen = sizeof(*edl);
+>>  		rtype = EDL_PATCH_TLV_REQ_CMD;
+>> @@ -301,7 +327,7 @@ static int qca_tlv_send_segment(struct hci_dev 
+>> *hdev, int seg_size,
+>>  		err = -EIO;
+>>  	}
+>> 
+>> -	if (soc_type == QCA_WCN3991)
+>> +	if (QCA_IS_3991_6390(soc_type))
+>>  		goto out;
+>> 
+>>  	tlv_resp = (struct tlv_seg_resp *)(edl->data);
+>> @@ -442,6 +468,11 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t 
+>> baudrate,
+>>  			    (soc_ver & 0x0000000f);
+>>  		snprintf(config.fwname, sizeof(config.fwname),
+>>  			 "qca/crbtfw%02x.tlv", rom_ver);
+>> +	} else if (soc_type == QCA_QCA6390) {
+>> +		rom_ver = ((soc_ver & 0x00000f00) >> 0x04) |
+>> +			    (soc_ver & 0x0000000f);
+>> +		snprintf(config.fwname, sizeof(config.fwname),
+>> +			 "qca/htbtfw%02x.tlv", rom_ver);
+>>  	} else {
+>>  		snprintf(config.fwname, sizeof(config.fwname),
+>>  			 "qca/rampatch_%08x.bin", soc_ver);
+>> @@ -464,6 +495,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t 
+>> baudrate,
+>>  	else if (qca_is_wcn399x(soc_type))
+>>  		snprintf(config.fwname, sizeof(config.fwname),
+>>  			 "qca/crnv%02x.bin", rom_ver);
+>> +	else if (soc_type == QCA_QCA6390)
+>> +		snprintf(config.fwname, sizeof(config.fwname),
+>> +			 "qca/htnv%02x.bin", rom_ver);
+>>  	else
+>>  		snprintf(config.fwname, sizeof(config.fwname),
+>>  			 "qca/nvm_%08x.bin", soc_ver);
+>> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+>> index e16a4d650597..bc703817c3d7 100644
+>> --- a/drivers/bluetooth/btqca.h
+>> +++ b/drivers/bluetooth/btqca.h
+>> @@ -14,6 +14,7 @@
+>>  #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
+>>  #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+>>  #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+>> +#define QCA_ENHANCED_LOG_ENABLE_CMD     (0xFC17)
+>> 
+>>  #define EDL_CMD_REQ_RES_EVT		(0x00)
+>>  #define EDL_PATCH_VER_RES_EVT		(0x19)
+>> @@ -127,6 +128,7 @@ enum qca_btsoc_type {
+>>  	QCA_WCN3990,
+>>  	QCA_WCN3991,
+>>  	QCA_WCN3998,
+>> +	QCA_QCA6390,
+> 
+> QCA_QCAxxxx seems a bit redundant, why not call it QCA_6390 or QCA6390?
+> I also wouldn't be opposed to scrap the QCA_ prefixes from the WCN399x
+> types, this is the QCA Bluetooth driver, so it's pretty evident that
+> these are Qualcomm chips.
 
-The following changes since commit fb33c6510d5595144d585aa194d377cf74d31911:
-
-  Linux 5.6-rc6 (2020-03-15 15:01:23 -0700)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2020-03-22
-
-for you to fetch changes up to a5fb8b918920c6f7706a8b5b8ea535a7f077a7f6:
-
-  drm/msm/a6xx: Use the DMA API for GMU memory objects (2020-03-20
-07:13:05 -0700)
-
-----------------------------------------------------------------
-Brian Masney (1):
-      dt-bindings: display: msm: gmu: move sram property to gpu bindings
-
-Drew Davenport (4):
-      drm/msm/dpu: Remove unused function arguments
-      drm/msm/dpu: Refactor rm iterator
-      drm/msm/dpu: Refactor resource manager
-      drm/msm/dpu: Track resources in global state
-
-Gustavo A. R. Silva (1):
-      drm/msm/msm_gem.h: Replace zero-length array with flexible-array member
-
-Ilia Mirkin (1):
-      drm/msm: avoid double-attaching hdmi/edp bridges
-
-Jordan Crouse (3):
-      drm/msm/a5xx: Always set an OPP supported hardware value
-      dt-bindings: display: msm: Convert GMU bindings to YAML
-      drm/msm/a6xx: Use the DMA API for GMU memory objects
-
-Pavel Machek (1):
-      drm/msm: fix leaks if initialization fails
-
-Rob Clark (2):
-      drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP buffers
-      drm/msm/a6xx: Fix CP_MEMPOOL state name
-
-Takashi Iwai (1):
-      drm/msm: Use scnprintf() for avoiding potential buffer overflow
-
-Zheng Bin (4):
-      drm/msm/dpu: fix comparing pointer to 0 in dpu_encoder_phys_cmd.c
-      drm/msm/dpu: fix comparing pointer to 0 in dpu_encoder_phys_vid.c
-      drm/msm/dpu: fix comparing pointer to 0 in dpu_vbif.c
-      drm/msm/dpu: fix comparing pointer to 0 in dpu_encoder.c
-
-tongtiangen (1):
-      drm/msm/dpu: Remove some set but not used variables
-
- .../devicetree/bindings/display/msm/gmu.txt        | 116 ----
- .../devicetree/bindings/display/msm/gmu.yaml       | 123 ++++
- .../devicetree/bindings/display/msm/gpu.txt        |  55 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |  27 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 115 +---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   6 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |   2 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 118 ++--
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   4 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  10 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |  10 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  98 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  26 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             | 620 +++++++++------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |  71 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c           |   6 +-
- drivers/gpu/drm/msm/edp/edp.c                      |   4 -
- drivers/gpu/drm/msm/hdmi/hdmi.c                    |   4 -
- drivers/gpu/drm/msm/msm_drv.c                      |   6 +-
- drivers/gpu/drm/msm/msm_gem.h                      |  12 +-
- drivers/gpu/drm/msm/msm_gpu.c                      |  28 +-
- drivers/gpu/drm/msm/msm_rd.c                       |   8 +-
- 24 files changed, 724 insertions(+), 751 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/display/msm/gmu.txt
- create mode 100644 Documentation/devicetree/bindings/display/msm/gmu.yaml
+I would like to do this in a separate patch.
