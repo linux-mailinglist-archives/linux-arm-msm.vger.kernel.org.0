@@ -2,143 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 195EF18F462
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 13:21:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F09318F478
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 13:25:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727617AbgCWMVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Mar 2020 08:21:24 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37465 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727401AbgCWMVY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Mar 2020 08:21:24 -0400
-Received: by mail-pf1-f194.google.com with SMTP id h72so5208826pfe.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 05:21:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NXD1SgZW436mNJVJaMChhmgGCTlF4WiqRwqdWQvrpTs=;
-        b=PTwj5hpje3JpuO1htIYsJIEXYURWCwJAp4M6WSsFzykDg2cPLjCe7XoxmgyXS2AUY+
-         5SIHECIhCqNbLCFc6JeVEbjBmx03WGaqfd6Uhu+JB5/ZEsvME+6BT+r5YTWwgT2s2tl9
-         Z4+00WqAAy8rirYeCMfhdCKsCGUs2B2M8lJVK1Z4X37W3/vlByoMA9owiRYVFlsQlKGn
-         QvPR3hQTnBHimbWuRJHavdPTn4w10d7Rfp7wJS1fA3bUq7R8sbFPuzCLAqU2m8c8MayS
-         DNjE/psIQEmK+NfaS7kpfgzsnDozs/v8Je0z5yk+FSFrmsS2O3DzMXXi8QU3hh7gz1oJ
-         6g/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=NXD1SgZW436mNJVJaMChhmgGCTlF4WiqRwqdWQvrpTs=;
-        b=nX/nYM+RReL7+8oWMdVS7W9bnr2HqrRqJAge5CQePX/tOKCvHPLHnBtzB5knMYjFSG
-         tYCX+rYAZNdidSHsqNQRKfbT2rR/ttORvV886fLd2oTWbJVWmJqK4Z8ZD8UZ7iHjwJHZ
-         Q5ShLSG9s+HazoKvL5fu+RpGJ3w657kuRnvakFMoIU1Ou909p7HNsHSCR4H6SNtti18f
-         D33lgkM4bRtYO4mByF58htpbhDBnzSNoto70lUkujyEwOxyRfNEXyAUULjXWSAwEoP3x
-         t4/7oO24wjNgri+vP5Nj3H0sEJpLnhzpklgySfsRkvhoWtGAkYiYuaYh2Pkc5o7xZBo1
-         gWoA==
-X-Gm-Message-State: ANhLgQ0IbMLUuj7pGMaf3vLpmmjE7vEYCbtqjitCPoZQteZ2jOAtmEUt
-        CevGF/PLasYDsFCaCpaGemkG
-X-Google-Smtp-Source: ADFU+vvvdW9dxl4BGvA3NvO6he+3lvIxhs6y+Bm2bmFG2xpuoN3R5X3IdqK8weXD2Q9PHE9USxZmWQ==
-X-Received: by 2002:a63:3fce:: with SMTP id m197mr20992934pga.38.1584966082907;
-        Mon, 23 Mar 2020 05:21:22 -0700 (PDT)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.googlemail.com with ESMTPSA id w27sm13351438pfq.211.2020.03.23.05.21.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 05:21:21 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org, davem@davemloft.net
-Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 1/7] bus: mhi: core: Pass module owner during client driver registration
-Date:   Mon, 23 Mar 2020 17:51:02 +0530
-Message-Id: <20200323122108.12851-2-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200323122108.12851-1-manivannan.sadhasivam@linaro.org>
-References: <20200323122108.12851-1-manivannan.sadhasivam@linaro.org>
+        id S1727508AbgCWMZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Mar 2020 08:25:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50376 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727126AbgCWMZd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Mar 2020 08:25:33 -0400
+Received: from mail.kernel.org (ip5f5ad4e9.dynamic.kabel-deutschland.de [95.90.212.233])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B9DB02077D;
+        Mon, 23 Mar 2020 12:25:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584966332;
+        bh=4n4sTcilQXV6g0qMlbr72FB9JX6uR71p2LA7YpKB4rs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LUG1jJAjVwQNPEYwayR+w3TJhQ8iKUQ2YmeQFdq0BublA88mGbuGCnxJTyk4BHmOk
+         YzmUsD7FaBlWmKe1k3SpjvGpuDOltd/7Qhsk2ElPAIhqMevAAWLcywcajUi+JfV8N/
+         +EwCGw20J2CcSLr8moYEy6HinZu4UIUz3oZEJmdI=
+Received: from mchehab by mail.kernel.org with local (Exim 4.92.3)
+        (envelope-from <mchehab@kernel.org>)
+        id 1jGM93-001TrI-GR; Mon, 23 Mar 2020 13:25:29 +0100
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Linux Doc Mailing List <linux-doc@vger.kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH 1/2] docs: dt: qcom,dwc3.txt: fix cross-reference for a converted file
+Date:   Mon, 23 Mar 2020 13:25:27 +0100
+Message-Id: <66b8da28bbf0af6d8bd23953936e7feb6a7ed0c2.1584966325.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.24.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The module owner field can be used to prevent the removal of kernel
-modules when there are any device files associated with it opened in
-userspace. Hence, modify the API to pass module owner field. For
-convenience, module_mhi_driver() macro is used which takes care of
-passing the module owner through THIS_MODULE of the module of the
-driver and also avoiding the use of specifying the default MHI client
-driver register/unregister routines.
+The qcom-qusb2-phy.txt file was converted and renamed to yaml.
+Update cross-reference accordingly.
 
-Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: 8ce65d8d38df ("dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy bindings to yaml")
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- drivers/bus/mhi/core/init.c |  5 +++--
- include/linux/mhi.h         | 19 ++++++++++++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 5fb756ca335e..eb7f556a8531 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -1189,7 +1189,7 @@ static int mhi_driver_remove(struct device *dev)
- 	return 0;
- }
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+index cb695aa3fba4..fbdd01756752 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+@@ -52,8 +52,8 @@ A child node must exist to represent the core DWC3 IP block. The name of
+ the node is not important. The content of the node is defined in dwc3.txt.
  
--int mhi_driver_register(struct mhi_driver *mhi_drv)
-+int __mhi_driver_register(struct mhi_driver *mhi_drv, struct module *owner)
- {
- 	struct device_driver *driver = &mhi_drv->driver;
+ Phy documentation is provided in the following places:
+-Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt   - USB3 QMP PHY
+-Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt - USB2 QUSB2 PHY
++Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt    - USB3 QMP PHY
++Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml - USB2 QUSB2 PHY
  
-@@ -1197,12 +1197,13 @@ int mhi_driver_register(struct mhi_driver *mhi_drv)
- 		return -EINVAL;
+ Example device nodes:
  
- 	driver->bus = &mhi_bus_type;
-+	driver->owner = owner;
- 	driver->probe = mhi_driver_probe;
- 	driver->remove = mhi_driver_remove;
- 
- 	return driver_register(driver);
- }
--EXPORT_SYMBOL_GPL(mhi_driver_register);
-+EXPORT_SYMBOL_GPL(__mhi_driver_register);
- 
- void mhi_driver_unregister(struct mhi_driver *mhi_drv)
- {
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 79cb9f898544..0e7071dbf2c3 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -514,11 +514,28 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
-  */
- void mhi_unregister_controller(struct mhi_controller *mhi_cntrl);
- 
-+/*
-+ * module_mhi_driver() - Helper macro for drivers that don't do
-+ * anything special in module init/exit.  This eliminates a lot of
-+ * boilerplate.  Each module may only use this macro once, and
-+ * calling it replaces module_init() and module_exit()
-+ */
-+#define module_mhi_driver(mhi_drv) \
-+	module_driver(mhi_drv, mhi_driver_register, \
-+		      mhi_driver_unregister)
-+
-+/*
-+ * Macro to avoid include chaining to get THIS_MODULE
-+ */
-+#define mhi_driver_register(mhi_drv) \
-+	__mhi_driver_register(mhi_drv, THIS_MODULE)
-+
- /**
-  * mhi_driver_register - Register driver with MHI framework
-  * @mhi_drv: Driver associated with the device
-+ * @owner: The module owner
-  */
--int mhi_driver_register(struct mhi_driver *mhi_drv);
-+int __mhi_driver_register(struct mhi_driver *mhi_drv, struct module *owner);
- 
- /**
-  * mhi_driver_unregister - Unregister a driver for mhi_devices
 -- 
-2.17.1
+2.24.1
 
