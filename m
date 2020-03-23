@@ -2,133 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A44318EF9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 07:06:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E44A18EFB6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2020 07:15:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbgCWGGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Mar 2020 02:06:36 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:39521 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726142AbgCWGGf (ORCPT
+        id S1727188AbgCWGPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Mar 2020 02:15:00 -0400
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:46873 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726059AbgCWGPA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Mar 2020 02:06:35 -0400
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <pza@pengutronix.de>)
-        id 1jGGEC-0008Et-Tp; Mon, 23 Mar 2020 07:06:24 +0100
-Received: from pza by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <pza@pengutronix.de>)
-        id 1jGGE8-0002sT-HS; Mon, 23 Mar 2020 07:06:20 +0100
-Date:   Mon, 23 Mar 2020 07:06:20 +0100
-From:   Philipp Zabel <pza@pengutronix.de>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Sham Muthayyan <smuthayy@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 05/12] pcie: qcom: add missing reset for ipq806x
-Message-ID: <20200323060620.GA1617@pengutronix.de>
-References: <20200320183455.21311-1-ansuelsmth@gmail.com>
- <20200320183455.21311-5-ansuelsmth@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200320183455.21311-5-ansuelsmth@gmail.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-IRC:  #ptxdist @freenode
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-Uptime: 07:00:25 up 32 days, 13:30, 45 users,  load average: 1.03, 0.51,
- 0.25
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: pza@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+        Mon, 23 Mar 2020 02:15:00 -0400
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Mar 2020 11:44:15 +0530
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 23 Mar 2020 11:43:53 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 0662F4719; Mon, 23 Mar 2020 11:43:51 +0530 (IST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        dianders@chromium.org, jsanka@codeaurora.org,
+        mkrishn@codeaurora.org, travitej@codeaurora.org,
+        nganji@codeaurora.org
+Subject: [PATCH] drm/msm/dpu: ensure device suspend happens during PM sleep
+Date:   Mon, 23 Mar 2020 11:43:47 +0530
+Message-Id: <1584944027-1730-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ansuel,
+"The PM core always increments the runtime usage counter
+before calling the ->suspend() callback and decrements it
+after calling the ->resume() callback"
 
-On Fri, Mar 20, 2020 at 07:34:47PM +0100, Ansuel Smith wrote:
-> Add missing ext reset used by ipq806x soc in
-> pcie qcom driver
-> 
-> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 24 ++++++++++++++++++------
->  1 file changed, 18 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 596731b54728..ecc22fd27ea6 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -95,6 +95,7 @@ struct qcom_pcie_resources_2_1_0 {
->  	struct reset_control *ahb_reset;
->  	struct reset_control *por_reset;
->  	struct reset_control *phy_reset;
-> +	struct reset_control *ext_reset;
->  	struct regulator_bulk_data supplies[QCOM_PCIE_2_1_0_MAX_SUPPLY];
->  };
->  
-> @@ -272,6 +273,10 @@ static int qcom_pcie_get_resources_2_1_0(struct qcom_pcie *pcie)
->  	if (IS_ERR(res->por_reset))
->  		return PTR_ERR(res->por_reset);
->  
-> +	res->ext_reset = devm_reset_control_get(dev, "ext");
+DPU and DSI are managed as runtime devices. When
+suspend is triggered, PM core adds a refcount on all the
+devices and calls device suspend, since usage count is
+already incremented, runtime suspend was not getting called
+and it kept the clocks on which resulted in target not
+entering into XO shutdown.
 
-Please use devm_reset_control_get_exclusive() instead.
+Add changes to manage runtime devices during pm sleep.
 
-> +	if (IS_ERR(res->ext_reset))
-> +		return PTR_ERR(res->ext_reset);
-> +
->  	res->phy_reset = devm_reset_control_get_exclusive(dev, "phy");
->  	return PTR_ERR_OR_ZERO(res->phy_reset);
->  }
-> @@ -285,6 +290,7 @@ static void qcom_pcie_deinit_2_1_0(struct qcom_pcie *pcie)
->  	reset_control_assert(res->axi_reset);
->  	reset_control_assert(res->ahb_reset);
->  	reset_control_assert(res->por_reset);
-> +	reset_control_assert(res->ext_reset);
->  	reset_control_assert(res->phy_reset);
->  	clk_disable_unprepare(res->iface_clk);
->  	clk_disable_unprepare(res->core_clk);
-> @@ -301,18 +307,18 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
->  	u32 val;
->  	int ret;
->  
-> +	ret = reset_control_assert(res->ahb_reset);
-> +	if (ret) {
-> +		dev_err(dev, "cannot assert ahb reset\n");
-> +		return ret;
-> +	}
-> +
->  	ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
->  	if (ret < 0) {
->  		dev_err(dev, "cannot enable regulators\n");
->  		return ret;
->  	}
->  
-> -	ret = reset_control_assert(res->ahb_reset);
-> -	if (ret) {
-> -		dev_err(dev, "cannot assert ahb reset\n");
-> -		goto err_assert_ahb;
-> -	}
-> -
+Changes in v1:
+ - Remove unnecessary checks in the function
+     _dpu_kms_disable_dpu (Rob Clark).
 
-This change is not described in the commit message.
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 28 ++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi.c           |  7 +++++++
+ drivers/gpu/drm/msm/msm_drv.c           | 14 ++++++++++++++
+ drivers/gpu/drm/msm/msm_kms.h           |  2 ++
+ 4 files changed, 51 insertions(+)
 
-regards
-Philipp
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index ce19f1d..c3e8287 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -26,6 +26,7 @@
+ #include "dpu_encoder.h"
+ #include "dpu_plane.h"
+ #include "dpu_crtc.h"
++#include "dsi.h"
+ 
+ #define CREATE_TRACE_POINTS
+ #include "dpu_trace.h"
+@@ -325,6 +326,24 @@ static void dpu_kms_disable_commit(struct msm_kms *kms)
+ 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+ }
+ 
++static void _dpu_kms_disable_dpu(struct msm_kms *kms)
++{
++	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
++	struct drm_device *dev = dpu_kms->dev;
++	struct msm_drm_private *priv = dev->dev_private;
++	struct msm_dsi *dsi;
++	int i;
++
++	dpu_kms_disable_commit(kms);
++
++	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
++		if (!priv->dsi[i])
++			continue;
++		dsi = priv->dsi[i];
++		pm_runtime_put_sync(&dsi->pdev->dev);
++	}
++}
++
+ static ktime_t dpu_kms_vsync_time(struct msm_kms *kms, struct drm_crtc *crtc)
+ {
+ 	struct drm_encoder *encoder;
+@@ -751,6 +770,7 @@ static void dpu_irq_uninstall(struct msm_kms *kms)
+ #ifdef CONFIG_DEBUG_FS
+ 	.debugfs_init    = dpu_kms_debugfs_init,
+ #endif
++	.disable_dpu = _dpu_kms_disable_dpu,
+ };
+ 
+ static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms)
+@@ -1121,7 +1141,15 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+ 	return rc;
+ }
+ 
++
++static int __maybe_unused dpu_pm_suspend_late(struct device *dev)
++{
++	pm_runtime_get_noresume(dev);
++	return 0;
++}
++
+ static const struct dev_pm_ops dpu_pm_ops = {
++	SET_LATE_SYSTEM_SLEEP_PM_OPS(dpu_pm_suspend_late, NULL)
+ 	SET_RUNTIME_PM_OPS(dpu_runtime_suspend, dpu_runtime_resume, NULL)
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+index 55ea4bc2..3d3740e 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -154,12 +154,19 @@ static int dsi_dev_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static int __maybe_unused dsi_pm_suspend_late(struct device *dev)
++{
++	pm_runtime_get_noresume(dev);
++	return 0;
++}
++
+ static const struct of_device_id dt_match[] = {
+ 	{ .compatible = "qcom,mdss-dsi-ctrl" },
+ 	{}
+ };
+ 
+ static const struct dev_pm_ops dsi_pm_ops = {
++	SET_LATE_SYSTEM_SLEEP_PM_OPS(dsi_pm_suspend_late, NULL)
+ 	SET_RUNTIME_PM_OPS(msm_dsi_runtime_suspend, msm_dsi_runtime_resume, NULL)
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 7d985f8..7451ae0 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1040,6 +1040,7 @@ static int msm_pm_suspend(struct device *dev)
+ {
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct msm_drm_private *priv = ddev->dev_private;
++	struct msm_kms *kms = priv->kms;
+ 
+ 	if (WARN_ON(priv->pm_state))
+ 		drm_atomic_state_put(priv->pm_state);
+@@ -1051,6 +1052,11 @@ static int msm_pm_suspend(struct device *dev)
+ 		return ret;
+ 	}
+ 
++	if (kms->funcs->disable_dpu)
++		kms->funcs->disable_dpu(kms);
++
++	pm_runtime_put_sync(dev);
++
+ 	return 0;
+ }
+ 
+@@ -1069,6 +1075,13 @@ static int msm_pm_resume(struct device *dev)
+ 
+ 	return ret;
+ }
++
++static int msm_pm_suspend_late(struct device *dev)
++{
++	pm_runtime_get_noresume(dev);
++	return 0;
++}
++
+ #endif
+ 
+ #ifdef CONFIG_PM
+@@ -1102,6 +1115,7 @@ static int msm_runtime_resume(struct device *dev)
+ #endif
+ 
+ static const struct dev_pm_ops msm_pm_ops = {
++	SET_LATE_SYSTEM_SLEEP_PM_OPS(msm_pm_suspend_late, NULL)
+ 	SET_SYSTEM_SLEEP_PM_OPS(msm_pm_suspend, msm_pm_resume)
+ 	SET_RUNTIME_PM_OPS(msm_runtime_suspend, msm_runtime_resume, NULL)
+ };
+diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+index 1cbef6b..c73a89b 100644
+--- a/drivers/gpu/drm/msm/msm_kms.h
++++ b/drivers/gpu/drm/msm/msm_kms.h
+@@ -126,6 +126,8 @@ struct msm_kms_funcs {
+ 	/* debugfs: */
+ 	int (*debugfs_init)(struct msm_kms *kms, struct drm_minor *minor);
+ #endif
++	void (*disable_dpu)(struct msm_kms *kms);
++
+ };
+ 
+ struct msm_kms;
+-- 
+1.9.1
+
