@@ -2,145 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A0091913DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 16:06:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02F091914F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 16:42:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727986AbgCXPGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Mar 2020 11:06:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51268 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727736AbgCXPGV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Mar 2020 11:06:21 -0400
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2BAC520775;
-        Tue, 24 Mar 2020 15:06:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1585062380;
-        bh=8pIS4vs8NHSn+hwQhqH3u3RNHDcaAGCJDHvJt0tjNa4=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=fc+aeEH5arhksV19znprIHLe75k2fAW9cwMJmmeIORp/Pe8rgRiFxpGXCq0aafd0T
-         Fvm/XvCFvYRxQBeqWqjjC+JfnLqguSbXh8UhE1TU4rEnzeTDxYbod/sM84Hl92iRlr
-         JMstjao+AeVl6QpFGL2frE+DycngLxvZOPG59jqo=
-Received: by mail-qk1-f179.google.com with SMTP id k13so7796136qki.2;
-        Tue, 24 Mar 2020 08:06:20 -0700 (PDT)
-X-Gm-Message-State: ANhLgQ3nWe7ULCSNnoAzpx/XfxCX3iuPJge3LiMzggjfmzGBU1q/6xkO
-        GVVsj280NZw84dI0n84bPWC9LAkWNzXW9ZedLQ==
-X-Google-Smtp-Source: ADFU+vtg882wc2BN6wL0hT6KIwxPK3ki0huHjsWp/kB5sbJP9A444Ldp1mPmpZWwv6Ts7ombMhx35L3vr0Yc8fv7dGw=
-X-Received: by 2002:a37:4a85:: with SMTP id x127mr26564313qka.152.1585062379195;
- Tue, 24 Mar 2020 08:06:19 -0700 (PDT)
+        id S1727680AbgCXPjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Mar 2020 11:39:07 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:33844 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728417AbgCXPjG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Mar 2020 11:39:06 -0400
+Received: by mail-ot1-f67.google.com with SMTP id j16so17450098otl.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2020 08:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=gdNgUyovH3fFL036Rwp6qFNO07syiek5Tdf11PTq7yM=;
+        b=ONu4l2SCV9dgZFVg2UfYC52IuLbDCEb5mUeYEhKuzsvwFmPCM5N8SJEEk4UafeWoac
+         DoP3VVqPJ1Dk2LAERFmDMuVGBO0TY89uQuoBp7MFHclOAMl3bheWXApCowCeUXM/iSYl
+         Nki8KGmmkSaOqM2fHh6N8WGQtlddbJhB3NDhpJ++w3NiESRoLgfLeVfr2rbE+cELcGxq
+         o2DKUdhGkONXExSAuo9kb0sL0NAcnUZsgjhHgPJPpfzcsj07J5frb6YO7TEkmwK/jufN
+         epMmVkXkVFOiJMmQSqJtLz6OILDjXl85QLHgLlYPCaP8HtfqS6wc3U9QgUQs5Zr3ATYI
+         g9ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gdNgUyovH3fFL036Rwp6qFNO07syiek5Tdf11PTq7yM=;
+        b=CmMb895qaNkVfTGXuCvAaeImKT+MTAJIW7fp7zXS3BN7/tMMRmTHwnSKXFFTtEtKKQ
+         HmBN8tdudDMazIWUUgkxRr2tt89zEvnNd4jEnRa6BinALbNDN4tyoARqSz/AMzT8cv/K
+         i1Sn/eP362bejH0DNSByUwjWQ57tCY8oeCmbC3k1LzMrWiloKcyqZZfCBHZcX4N6Zkm7
+         XaOTnOVV7N8HMwgCWQcAUxt6fo+EqUI1vc+DVpOYvnskBg3sb1DJVWWd/bFh1/OtgZ5K
+         6t31iVe37Kq892pe7j7+c7wXF2swzp+3FMNDYoFySgnPz81neeyr+MpNU+gzfyOYb4zR
+         pbHA==
+X-Gm-Message-State: ANhLgQ1DjDzWNZPlg0bwRW6E4HfcC8YAOng0Jq2etgfLiRnXlfQfWmS6
+        iEiunymOUztDZUUsmZFe0kBFSxMYW16A5n8TX+7vzQ==
+X-Google-Smtp-Source: ADFU+vtLsKQwanUzdtbf2Q0mesZdWrEI+84/TzmxAH6yGULo2vc9lF+1ZHeUnyQ0lDvVCPKemKF+dhoLeJTrSBfVjBc=
+X-Received: by 2002:a4a:e48a:: with SMTP id s10mr2128023oov.10.1585064345759;
+ Tue, 24 Mar 2020 08:39:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1583412540.git.amit.kucheria@linaro.org>
- <8a0cfe9e3018f7996c1563035bee76048941beb4.1583412540.git.amit.kucheria@linaro.org>
- <20200311144933.GA21587@bogus> <CAHLCerN99eKOofxcCuvNwjNGbJfB7BzoPGAPCtXHNQdN9w8Bcw@mail.gmail.com>
- <CAL_JsqJ6T3LVbKueGn53dZmR=caD2AR7yLX9gffmOc9VwF9kXQ@mail.gmail.com> <CAP245DWgg7KsV9sMXmS571dAAy-cvDy4Q_9vi_KGxoOQ5VBU7w@mail.gmail.com>
-In-Reply-To: <CAP245DWgg7KsV9sMXmS571dAAy-cvDy4Q_9vi_KGxoOQ5VBU7w@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 24 Mar 2020 09:06:07 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKhK-yz+iqe6G+-c0pt9mJSsW8hMnTiWdRh3_+1PeG=dg@mail.gmail.com>
-Message-ID: <CAL_JsqKhK-yz+iqe6G+-c0pt9mJSsW8hMnTiWdRh3_+1PeG=dg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] dt-bindings: thermal: Add yaml bindings for
- thermal zones
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linux PM list <linux-pm@vger.kernel.org>,
+References: <20200317135740.19412-1-robert.foss@linaro.org>
+ <20200317135740.19412-7-robert.foss@linaro.org> <2523204.mvXUDI8C0e@g550jk>
+In-Reply-To: <2523204.mvXUDI8C0e@g550jk>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 24 Mar 2020 16:38:54 +0100
+Message-ID: <CAG3jFyuiVFHfNVwCAEynH0j8fK91k32m+nvZYYR79gju9cwPKQ@mail.gmail.com>
+Subject: Re: [v2 6/6] arm64: defconfig: Enable QCOM CAMCC, CAMSS and CCI drivers
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, catalin.marinas@arm.com,
+        will@kernel.org, shawnguo@kernel.org, olof@lixom.net,
+        maxime@cerno.tech, Anson.Huang@nxp.com, dinguyen@kernel.org,
+        leonard.crestez@nxp.com,
+        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Loic Poulain <loic.poulain@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 24, 2020 at 4:33 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+Hey Luca,
+
+On Fri, 20 Mar 2020 at 20:52, Luca Weiss <luca@z3ntu.xyz> wrote:
 >
-> On Tue, Mar 24, 2020 at 2:46 AM Rob Herring <robh@kernel.org> wrote:
+> Hi Robert,
+>
+> On Dienstag, 17. M=C3=A4rz 2020 14:57:40 CET Robert Foss wrote:
+> > Build camera clock, isp and controller drivers as modules.
 > >
-> > On Mon, Mar 23, 2020 at 2:46 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
-> > >
-> > > Hi Rob,
-> > >
-> > > Thanks for the review.
-> > >
-> > > On Wed, Mar 11, 2020 at 8:19 PM Rob Herring <robh@kernel.org> wrote:
-> > > >
-> > > > On Thu, Mar 05, 2020 at 06:26:43PM +0530, Amit Kucheria wrote:
-> > > > > As part of moving the thermal bindings to YAML, split it up into 3
-> > > > > bindings: thermal sensors, cooling devices and thermal zones.
-> > > > >
-> > > > > The thermal-zone binding is a software abstraction to capture the
-> > > > > properties of each zone - how often they should be checked, the
-> > > > > temperature thresholds (trips) at which mitigation actions need to be
-> > > > > taken and the level of mitigation needed at those thresholds.
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  arch/arm64/configs/defconfig | 4 ++++
+> >  1 file changed, 4 insertions(+)
 > >
+> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfi=
+g
+> > index 4db223dbc549..7cb6989249ab 100644
+> > --- a/arch/arm64/configs/defconfig
+> > +++ b/arch/arm64/configs/defconfig
+> > @@ -376,6 +376,7 @@ CONFIG_I2C_MESON=3Dy
+> >  CONFIG_I2C_MV64XXX=3Dy
+> >  CONFIG_I2C_OWL=3Dy
+> >  CONFIG_I2C_PXA=3Dy
+> > +CONFIG_I2C_QCOM_CCI=3Dm
+> >  CONFIG_I2C_QCOM_GENI=3Dm
+> >  CONFIG_I2C_QUP=3Dy
+> >  CONFIG_I2C_RK3X=3Dy
+> > @@ -530,6 +531,7 @@ CONFIG_VIDEO_SAMSUNG_S5P_MFC=3Dm
+> >  CONFIG_VIDEO_SAMSUNG_EXYNOS_GSC=3Dm
+> >  CONFIG_VIDEO_RENESAS_FCP=3Dm
+> >  CONFIG_VIDEO_RENESAS_VSP1=3Dm
+> > +CONFIG_VIDEO_QCOM_CAMSS=3Dm
+> >  CONFIG_DRM=3Dm
+> >  CONFIG_DRM_I2C_NXP_TDA998X=3Dm
+> >  CONFIG_DRM_NOUVEAU=3Dm
+> > @@ -732,6 +734,7 @@ CONFIG_MSM_GCC_8994=3Dy
+> >  CONFIG_MSM_MMCC_8996=3Dy
+> >  CONFIG_MSM_GCC_8998=3Dy
+> >  CONFIG_QCS_GCC_404=3Dy
+> > +CONFIG_SDM_CAMCC_845=3Dm
 >
-> [...]
->
-> >
-> > > > > +            /* ... */
-> > > > > +
-> > > > > +            gpu-thermal-top {
-> > > >
-> > > > This one is not going to match (which should cause an error).
-> > >
-> > > Good catch. Unfortunately, this isn't getting caught. Nor is the
-> > > 12-char limitation before -thermal in the thermal zone name. I can't
-> > > figure out why.
-> >
-> > That's because this schema has to be included by another schema which
-> > matches on a parent node containing 'thermal-zones'. If
-> > 'thermal-zones' can be at the root node, then you should rework this
-> > such that you have $nodename: {const: thermal-zones} as a top-level
-> > property.
->
-> I've done all the change requested in the review(see attached patch),
-> including moving to
->
-> properties:
->    $nodename:
->        const: thermal-zones
->
-> but that generates a bunch of errors similar to:
->
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/zte.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/sunxi.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/sprd/sprd.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/calxeda.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/ti/ti,davinci.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/spear.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
-> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/ti/nspire.example.dt.yaml:
-> /: $nodename:0: 'thermal-zones' was expected
->
-> It seems like dtc is expecting every node to have a thermal-zones node?
->
-> Looking at other root nodes such as cpus.yaml, the main difference I
-> noticed was the absence of the "select: true" property. However, if I
-> remove that, we go back to the schema not being applied.
+> You seem to have this option twice in this patch.
 
-'select: true' should be dropped. It will be applied to any
-'thermal-zones' nodes. The generated 'select' will use $nodename if
-compatible is not present for the schema.
+Thanks for catching this.
+I'll send out a fix in v3.
 
-I tested that putting an error in the example works.
-
-> You mentioned that the thermal-zones schema needs to included by
-> another schema. What did you mean by that?
-
-Nevermind, I wasn't thinking that it's a top-level node. If it was a
-child node, then you'd want to include it from the parent schemas.
-
-Rob
+>
+> >  CONFIG_SDM_GCC_845=3Dy
+> >  CONFIG_SM_GCC_8150=3Dy
+> >  CONFIG_QCOM_HFPLL=3Dy
+> > @@ -762,6 +765,7 @@ CONFIG_QCOM_COMMAND_DB=3Dy
+> >  CONFIG_QCOM_GENI_SE=3Dy
+> >  CONFIG_QCOM_GLINK_SSR=3Dm
+> >  CONFIG_QCOM_RMTFS_MEM=3Dm
+> > +CONFIG_SDM_CAMCC_845=3Dm
+>
+> ^
+>
+> >  CONFIG_QCOM_RPMH=3Dy
+> >  CONFIG_QCOM_RPMHPD=3Dy
+> >  CONFIG_QCOM_SMEM=3Dy
+>
+> Regards
+> Luca
+>
+>
