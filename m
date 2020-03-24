@@ -2,90 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2994A190594
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 07:11:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 538E01909ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 10:49:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727470AbgCXGLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Mar 2020 02:11:42 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:35029 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727473AbgCXGLl (ORCPT
+        id S1726524AbgCXJtd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Mar 2020 05:49:33 -0400
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:41853 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726129AbgCXJtd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Mar 2020 02:11:41 -0400
-Received: by mail-pf1-f193.google.com with SMTP id u68so8777434pfb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 23:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kEUOtzoCcyxMGagaGiuW85PJFCulYHpDp09UxNca9Ic=;
-        b=LWqoC+ijN07fTREV37khZvwLxEKrJVJ8dLjconoL52HWgkoIMQm5u5V6zJr9faWwEu
-         EiA/axtbMM5pm8LWqafW1QlKlEgyLlNkpnn5PzPmvp7OgOUW9zJe6xndMfqJHTNnrIzK
-         AXTT8LKoIkT7rh6tOmvgfjXwOm60cpNWCUyzRRR5uej42sH7YgyQ/NCMOgfVGWy+3KYT
-         eNU8rhn+hJo4VZs3+fpLLjYQ3KVZr1paMqH2EXtgM5bHm1KXAH+ALJXMLGuE9iAYGwaS
-         BrPs4wfnYuLkezc3ZNF/j4sFUFrM2RPfeyWibQ7RhrPjPUvZxUiRirfzkdbZJtIckmY5
-         Z0Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kEUOtzoCcyxMGagaGiuW85PJFCulYHpDp09UxNca9Ic=;
-        b=MaC8VhuWM3tg8Dh3aQpNr8L+W8Pz1+NGBQIOAnoqbNP5kQAECoJ7VClBMZR3DFC3BE
-         RUc6qr+AppQvgkvMo8/1ZMl77i9rswbqz/gAK50Mp/fRV2L3eVVUoO3r0N4ZU8GjnB9J
-         vxtqhPS2y9ZiMdmz9CZjvs10PeY0D+jBnk3VgL0O68FUJvKclVhDVIEItGQTEE836Uir
-         Fsu4urq6FZHFBWRwoxYmijg9tNsCvRBBHVZicdLVGYwre2INaK3ZIiMJnCYvtzHZcdHr
-         +e7gGHkE2y18ftbCq6FVG/El65dWoLYZByNvX+UhV8oc9L/SaxO1IZuvbg1Q9CodwQ6B
-         s8nA==
-X-Gm-Message-State: ANhLgQ39c/5OuwIIw5cn2+JzDfBIDnktFce1jV22F9ygL6u64r0c3l1j
-        44UJbTwINc52aATw3SrZJWO2
-X-Google-Smtp-Source: ADFU+vsE1loIykImw3+EDdk0dvEYpS7hbzKWOjzd6Nt2/voPeuQ9B8H8HvVt9opVTI845JEihChDeg==
-X-Received: by 2002:a63:844a:: with SMTP id k71mr25767936pgd.79.1585030300253;
-        Mon, 23 Mar 2020 23:11:40 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:59b:91e:2dd6:dffe:3569:b473])
-        by smtp.gmail.com with ESMTPSA id d3sm1198230pjc.42.2020.03.23.23.11.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2020 23:11:39 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org, davem@davemloft.net
-Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        netdev@vger.kernel.org
-Subject: [PATCH v3 7/7] net: qrtr: Do not depend on ARCH_QCOM
-Date:   Tue, 24 Mar 2020 11:40:50 +0530
-Message-Id: <20200324061050.14845-8-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
-References: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
+        Tue, 24 Mar 2020 05:49:33 -0400
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <pza@pengutronix.de>)
+        id 1jGgBZ-0008G8-MI; Tue, 24 Mar 2020 10:49:25 +0100
+Received: from pza by ptx.hi.pengutronix.de with local (Exim 4.92)
+        (envelope-from <pza@pengutronix.de>)
+        id 1jGgBY-00070X-Ea; Tue, 24 Mar 2020 10:49:24 +0100
+Date:   Tue, 24 Mar 2020 10:49:24 +0100
+From:   Philipp Zabel <pza@pengutronix.de>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] phy: qcom-snps: Add SNPS USB PHY driver for QCOM
+ based SOCs
+Message-ID: <20200324094924.GA22281@pengutronix.de>
+References: <1584994632-31193-1-git-send-email-wcheng@codeaurora.org>
+ <1584994632-31193-3-git-send-email-wcheng@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1584994632-31193-3-git-send-email-wcheng@codeaurora.org>
+X-Sent-From: Pengutronix Hildesheim
+X-URL:  http://www.pengutronix.de/
+X-IRC:  #ptxdist @freenode
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
+X-Uptime: 10:44:11 up 33 days, 17:14, 83 users,  load average: 0.32, 0.42,
+ 0.32
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: pza@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPC Router protocol is also used by external modems for exchanging the QMI
-messages. Hence, it doesn't always depend on Qualcomm platforms. One such
-instance is the QCA6390 WLAN device connected to x86 machine.
+Hi Wesley,
 
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: netdev@vger.kernel.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- net/qrtr/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+On Mon, Mar 23, 2020 at 01:17:10PM -0700, Wesley Cheng wrote:
+> This adds the SNPS FemtoPHY driver used in QCOM SOCs.  There
+> are potentially multiple instances of this UTMI PHY on the
+> SOC, all which can utilize this driver.
+> 
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> ---
+>  drivers/phy/qualcomm/Kconfig             |  10 ++
+>  drivers/phy/qualcomm/Makefile            |   1 +
+>  drivers/phy/qualcomm/phy-qcom-snps-7nm.c | 294 +++++++++++++++++++++++++++++++
+>  3 files changed, 305 insertions(+)
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-snps-7nm.c
+> 
+[...]
+> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-7nm.c b/drivers/phy/qualcomm/phy-qcom-snps-7nm.c
+> new file mode 100644
+> index 0000000..8d4ba53
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-snps-7nm.c
+> @@ -0,0 +1,294 @@
+[...]
+> +static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct qcom_snps_hsphy *hsphy;
+> +	struct phy_provider *phy_provider;
+> +	struct phy *generic_phy;
+> +	struct resource *res;
+> +	int ret, i;
+> +	int num;
+> +
+> +	hsphy = devm_kzalloc(dev, sizeof(*hsphy), GFP_KERNEL);
+> +	if (!hsphy)
+> +		return -ENOMEM;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	hsphy->base = devm_ioremap_resource(dev, res);
+> +	if (IS_ERR(hsphy->base))
+> +		return PTR_ERR(hsphy->base);
+> +
+> +	hsphy->ref_clk = devm_clk_get(dev, "ref");
+> +	if (IS_ERR(hsphy->ref_clk)) {
+> +		ret = PTR_ERR(hsphy->ref_clk);
+> +		if (ret != -EPROBE_DEFER)
+> +			dev_err(dev, "failed to get ref clk, %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	hsphy->phy_reset = devm_reset_control_get_by_index(&pdev->dev, 0);
+> +	if (IS_ERR(hsphy->phy_reset)) {
+> +		dev_err(dev, "failed to get phy core reset\n");
+> +		return PTR_ERR(hsphy->phy_reset);
+> +	}
 
-diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
-index 8eb876471564..f362ca316015 100644
---- a/net/qrtr/Kconfig
-+++ b/net/qrtr/Kconfig
-@@ -4,7 +4,6 @@
- 
- config QRTR
- 	tristate "Qualcomm IPC Router support"
--	depends on ARCH_QCOM || COMPILE_TEST
- 	---help---
- 	  Say Y if you intend to use Qualcomm IPC router protocol.  The
- 	  protocol is used to communicate with services provided by other
--- 
-2.17.1
+There is only a single reset specified, so there is no need for
+_by_index. Also please explicitly request exclusive reset control
+for this driver, I suggest:
 
+	hsphy->phy_reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+
+If you do want to prepare for future addition of other resets to the
+bindings (but if so, why not specify those right now?), you should add
+a reset-names property and request the reset control by id string
+instead.
+
+regards
+Philipp
