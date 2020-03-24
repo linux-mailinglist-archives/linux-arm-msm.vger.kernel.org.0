@@ -2,204 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C41E1917B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 18:33:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA5D31917DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 18:40:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727755AbgCXRcp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Mar 2020 13:32:45 -0400
-Received: from foss.arm.com ([217.140.110.172]:38756 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727487AbgCXRco (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Mar 2020 13:32:44 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0727B1FB;
-        Tue, 24 Mar 2020 10:32:44 -0700 (PDT)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 749413F71F;
-        Tue, 24 Mar 2020 10:32:43 -0700 (PDT)
-Date:   Tue, 24 Mar 2020 17:32:41 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Applied "regulator: qcom_smd: Add pmi8994 regulator support" to the regulator tree
-In-Reply-To:  <20200324041424.518160-1-bjorn.andersson@linaro.org>
-Message-Id:  <applied-20200324041424.518160-1-bjorn.andersson@linaro.org>
-X-Patchwork-Hint: ignore
+        id S1727257AbgCXRk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Mar 2020 13:40:26 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:33007 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727266AbgCXRkY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Mar 2020 13:40:24 -0400
+Received: by mail-lf1-f66.google.com with SMTP id c20so14000577lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2020 10:40:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oHdHSXeaggEKXTuBPUsj+Dax4+iq/FMGBOOC34Ttl8I=;
+        b=drSQstK+tdROKRR/LjOj0ucrd3VEKgjwndat96gIt+pKISyoD4RCEXpolqW2DSz887
+         NXDT3WHFlNiBYqtYaJhxvGLK/i0ts8BKmntpzqOqXMEG3/nwDTJqCvmppkci0sgKx8aJ
+         BZQn9m3oSQgMvJILG91fD7vdJijttO+lLvgeo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oHdHSXeaggEKXTuBPUsj+Dax4+iq/FMGBOOC34Ttl8I=;
+        b=lg1DPNQYsXHvNV2O29DSr/0iLxJ+K2IQL7L3H129x5Z8riyiLaanB1c4WL/C7TgjQn
+         ul+n/+KqPlYIUXNNQv/QrRKkLjjvk1ca3YbaAbdfWZflRZqXwCqBK+kJf4ALhdwuhc9G
+         ccCJPzk5acBNpC6PSMH3ETnuQqYNPw4L95hXALNsqZ9+A6K+wfE1kotkzeEn78Ijk8fL
+         OeS6iQbBrW3V2+mvwlZmuBr7/kY7pe8MESA6/ghvCGSj1rN4ZGQSSmJrhXhS8ARPAfDs
+         EYr9HRKFCymJb9gC1DVNzh563Xf71zWURvuWvfNvshuKwQCOMgdlrsAQpbnBzpBNKco1
+         ncTQ==
+X-Gm-Message-State: ANhLgQ3ujMwevtYgkj1dqEQGXH8jA2Se4Jxc5ZC9Itc2kwqAEvXEmnGs
+        JMux0r6+xnQBmdls50O+mVpSSyobEyI=
+X-Google-Smtp-Source: ADFU+vs9tTa9BsLZs1SFtkCAG3S59wOOtTC8A5xi1zFlHSAMo6N2sEXXSD5TUbIW1n00Ypvr9V8gnQ==
+X-Received: by 2002:ac2:48a7:: with SMTP id u7mr17702591lfg.7.1585071622058;
+        Tue, 24 Mar 2020 10:40:22 -0700 (PDT)
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com. [209.85.208.176])
+        by smtp.gmail.com with ESMTPSA id r18sm10690244lji.16.2020.03.24.10.40.20
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Mar 2020 10:40:21 -0700 (PDT)
+Received: by mail-lj1-f176.google.com with SMTP id s13so19569981ljm.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2020 10:40:20 -0700 (PDT)
+X-Received: by 2002:a2e:a495:: with SMTP id h21mr6019658lji.123.1585071619722;
+ Tue, 24 Mar 2020 10:40:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
+In-Reply-To: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Tue, 24 Mar 2020 10:39:43 -0700
+X-Gmail-Original-Message-ID: <CAE=gft7EOALEMUWzoR3+pjoxCUTYWbiXoXY=dXH1BDhS3KwBzg@mail.gmail.com>
+Message-ID: <CAE=gft7EOALEMUWzoR3+pjoxCUTYWbiXoXY=dXH1BDhS3KwBzg@mail.gmail.com>
+Subject: Re: [PATCH v6] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+To:     Rakesh Pillai <pillair@codeaurora.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch
+Hi Rakesh,
 
-   regulator: qcom_smd: Add pmi8994 regulator support
+On Tue, Feb 4, 2020 at 5:21 AM Rakesh Pillai <pillair@codeaurora.org> wrote:
+>
+> Add device node for the ath10k SNOC platform driver probe
+> and add resources required for WCN3990 on sc7180 soc.
+>
+> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
 
-has been applied to the regulator tree at
+What is the status of this? Looks like you have some feedback from
+Sibi. Can you reply and spin this? Also a comment below:
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git 
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
+>  2 files changed, 32 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 388f50a..167f68ac 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -287,6 +287,11 @@
+>         vdda-pll-supply = <&vreg_l4a_0p8>;
+>  };
+>
+> +&wifi {
+> +       status = "okay";
+> +       qcom,msa-fixed-perm;
+> +};
+> +
+>  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+>
+>  &qspi_clk {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 8011c5f..e3e8610 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -75,6 +75,11 @@
+>                         reg = <0x0 0x80900000 0x0 0x200000>;
+>                         no-map;
+>                 };
+> +
+> +               wlan_fw_mem: memory@93900000 {
+> +                       reg = <0 0x93900000 0 0x200000>;
+> +                       no-map;
+> +               };
+>         };
+>
+>         cpus {
+> @@ -1490,6 +1495,28 @@
+>
+>                         #freq-domain-cells = <1>;
+>                 };
+> +
+> +               wifi: wifi@18800000 {
+> +                       compatible = "qcom,wcn3990-wifi";
+> +                       reg = <0 0x18800000 0 0x800000>;
+> +                       reg-names = "membase";
+> +                       iommus = <&apps_smmu 0xc0 0x1>;
+> +                       interrupts =
+> +                               <GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
+> +                               <GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
+> +                               <GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
+> +                               <GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
+> +                               <GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
+> +                               <GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
+> +                               <GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
+> +                               <GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
+> +                               <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
+> +                               <GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
+> +                               <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
+> +                               <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
+> +                       memory-region = <&wlan_fw_mem>;
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
+The clocks are missing:
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+clocks = <&rpmhcc RPMH_RF_CLK2>;
+clock-names = "cxo_ref_clk_pin";
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From 86332c343491c6d2228a1e0c80b1ea98a2653d20 Mon Sep 17 00:00:00 2001
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
-Date: Mon, 23 Mar 2020 21:14:24 -0700
-Subject: [PATCH] regulator: qcom_smd: Add pmi8994 regulator support
-
-The pmi8994 is commonly found on MSM8996 based devices, such as the
-Dragonboard 820c, where it supplies power to a number of LDOs on the
-primary PMIC.
-
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20200324041424.518160-1-bjorn.andersson@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- .../regulator/qcom,smd-rpm-regulator.txt      | 13 +++++
- drivers/regulator/qcom_smd-regulator.c        | 47 +++++++++++++++++++
- include/linux/soc/qcom/smd-rpm.h              |  1 +
- 3 files changed, 61 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
-index d126df043403..dea4384f4c03 100644
---- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
-+++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
-@@ -26,6 +26,7 @@ Regulator nodes are identified by their compatible:
- 		    "qcom,rpm-pm8994-regulators"
- 		    "qcom,rpm-pm8998-regulators"
- 		    "qcom,rpm-pma8084-regulators"
-+		    "qcom,rpm-pmi8994-regulators"
- 		    "qcom,rpm-pmi8998-regulators"
- 		    "qcom,rpm-pms405-regulators"
- 
-@@ -143,6 +144,15 @@ Regulator nodes are identified by their compatible:
- 	Definition: reference to regulator supplying the input pin, as
- 		    described in the data sheet
- 
-+- vdd_s1-supply:
-+- vdd_s2-supply:
-+- vdd_s3-supply:
-+- vdd_bst_byp-supply:
-+	Usage: optional (pmi8994 only)
-+	Value type: <phandle>
-+	Definition: reference to regulator supplying the input pin, as
-+		    described in the data sheet
-+
- - vdd_s1-supply:
- - vdd_s2-supply:
- - vdd_s3-supply:
-@@ -259,6 +269,9 @@ pma8084:
- 	l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20,
- 	l21, l22, l23, l24, l25, l26, l27, lvs1, lvs2, lvs3, lvs4, 5vs1
- 
-+pmi8994:
-+	s1, s2, s3, boost-bypass
-+
- pmi8998:
- 	bob
- 
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index fff8d5fdef6a..fdde4195cefb 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -445,6 +445,44 @@ static const struct regulator_desc pm8994_lnldo = {
- 	.ops = &rpm_smps_ldo_ops_fixed,
- };
- 
-+static const struct regulator_desc pmi8994_ftsmps = {
-+	.linear_ranges = (struct regulator_linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(350000,  0, 199, 5000),
-+		REGULATOR_LINEAR_RANGE(700000, 200, 349, 10000),
-+	},
-+	.n_linear_ranges = 2,
-+	.n_voltages = 350,
-+	.ops = &rpm_smps_ldo_ops,
-+};
-+
-+static const struct regulator_desc pmi8994_hfsmps = {
-+	.linear_ranges = (struct regulator_linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(350000,  0,  80, 12500),
-+		REGULATOR_LINEAR_RANGE(700000, 81, 141, 25000),
-+	},
-+	.n_linear_ranges = 2,
-+	.n_voltages = 142,
-+	.ops = &rpm_smps_ldo_ops,
-+};
-+
-+static const struct regulator_desc pmi8994_bby = {
-+	.linear_ranges = (struct regulator_linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(3000000, 0, 44, 50000),
-+	},
-+	.n_linear_ranges = 1,
-+	.n_voltages = 45,
-+	.ops = &rpm_bob_ops,
-+};
-+
-+static const struct regulator_desc pmi8994_boost = {
-+	.linear_ranges = (struct regulator_linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(4000000, 0, 30, 50000),
-+	},
-+	.n_linear_ranges = 1,
-+	.n_voltages = 31,
-+	.ops = &rpm_smps_ldo_ops,
-+};
-+
- static const struct regulator_desc pm8998_ftsmps = {
- 	.linear_ranges = (struct regulator_linear_range[]) {
- 		REGULATOR_LINEAR_RANGE(320000, 0, 258, 4000),
-@@ -780,6 +818,14 @@ static const struct rpm_regulator_data rpm_pm8994_regulators[] = {
- 	{}
- };
- 
-+static const struct rpm_regulator_data rpm_pmi8994_regulators[] = {
-+	{ "s1", QCOM_SMD_RPM_SMPB, 1, &pmi8994_ftsmps, "vdd_s1" },
-+	{ "s2", QCOM_SMD_RPM_SMPB, 2, &pmi8994_hfsmps, "vdd_s2" },
-+	{ "s2", QCOM_SMD_RPM_SMPB, 3, &pmi8994_hfsmps, "vdd_s3" },
-+	{ "boost-bypass", QCOM_SMD_RPM_BBYB, 1, &pmi8994_bby, "vdd_bst_byp" },
-+	{}
-+};
-+
- static const struct rpm_regulator_data rpm_pm8998_regulators[] = {
- 	{ "s1", QCOM_SMD_RPM_SMPA, 1, &pm8998_ftsmps, "vdd_s1" },
- 	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pm8998_ftsmps, "vdd_s2" },
-@@ -862,6 +908,7 @@ static const struct of_device_id rpm_of_match[] = {
- 	{ .compatible = "qcom,rpm-pm8994-regulators", .data = &rpm_pm8994_regulators },
- 	{ .compatible = "qcom,rpm-pm8998-regulators", .data = &rpm_pm8998_regulators },
- 	{ .compatible = "qcom,rpm-pma8084-regulators", .data = &rpm_pma8084_regulators },
-+	{ .compatible = "qcom,rpm-pmi8994-regulators", .data = &rpm_pmi8994_regulators },
- 	{ .compatible = "qcom,rpm-pmi8998-regulators", .data = &rpm_pmi8998_regulators },
- 	{ .compatible = "qcom,rpm-pms405-regulators", .data = &rpm_pms405_regulators },
- 	{}
-diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
-index 9e4fdd861a51..da304ce8c8f7 100644
---- a/include/linux/soc/qcom/smd-rpm.h
-+++ b/include/linux/soc/qcom/smd-rpm.h
-@@ -10,6 +10,7 @@ struct qcom_smd_rpm;
- /*
-  * Constants used for addressing resources in the RPM.
-  */
-+#define QCOM_SMD_RPM_BBYB	0x62796262
- #define QCOM_SMD_RPM_BOBB	0x62626f62
- #define QCOM_SMD_RPM_BOOST	0x61747362
- #define QCOM_SMD_RPM_BUS_CLK	0x316b6c63
--- 
-2.20.1
-
+> +                       status = "disabled";
+> +               };
+>         };
+>
+>         thermal-zones {
+> --
+> 2.7.4
+>
