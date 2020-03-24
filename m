@@ -2,139 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 02F091914F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 16:42:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5312191539
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 16:46:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbgCXPjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Mar 2020 11:39:07 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:33844 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728417AbgCXPjG (ORCPT
+        id S1727426AbgCXPp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Mar 2020 11:45:29 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:11144 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727389AbgCXPp3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Mar 2020 11:39:06 -0400
-Received: by mail-ot1-f67.google.com with SMTP id j16so17450098otl.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2020 08:39:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gdNgUyovH3fFL036Rwp6qFNO07syiek5Tdf11PTq7yM=;
-        b=ONu4l2SCV9dgZFVg2UfYC52IuLbDCEb5mUeYEhKuzsvwFmPCM5N8SJEEk4UafeWoac
-         DoP3VVqPJ1Dk2LAERFmDMuVGBO0TY89uQuoBp7MFHclOAMl3bheWXApCowCeUXM/iSYl
-         Nki8KGmmkSaOqM2fHh6N8WGQtlddbJhB3NDhpJ++w3NiESRoLgfLeVfr2rbE+cELcGxq
-         o2DKUdhGkONXExSAuo9kb0sL0NAcnUZsgjhHgPJPpfzcsj07J5frb6YO7TEkmwK/jufN
-         epMmVkXkVFOiJMmQSqJtLz6OILDjXl85QLHgLlYPCaP8HtfqS6wc3U9QgUQs5Zr3ATYI
-         g9ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gdNgUyovH3fFL036Rwp6qFNO07syiek5Tdf11PTq7yM=;
-        b=CmMb895qaNkVfTGXuCvAaeImKT+MTAJIW7fp7zXS3BN7/tMMRmTHwnSKXFFTtEtKKQ
-         HmBN8tdudDMazIWUUgkxRr2tt89zEvnNd4jEnRa6BinALbNDN4tyoARqSz/AMzT8cv/K
-         i1Sn/eP362bejH0DNSByUwjWQ57tCY8oeCmbC3k1LzMrWiloKcyqZZfCBHZcX4N6Zkm7
-         XaOTnOVV7N8HMwgCWQcAUxt6fo+EqUI1vc+DVpOYvnskBg3sb1DJVWWd/bFh1/OtgZ5K
-         6t31iVe37Kq892pe7j7+c7wXF2swzp+3FMNDYoFySgnPz81neeyr+MpNU+gzfyOYb4zR
-         pbHA==
-X-Gm-Message-State: ANhLgQ1DjDzWNZPlg0bwRW6E4HfcC8YAOng0Jq2etgfLiRnXlfQfWmS6
-        iEiunymOUztDZUUsmZFe0kBFSxMYW16A5n8TX+7vzQ==
-X-Google-Smtp-Source: ADFU+vtLsKQwanUzdtbf2Q0mesZdWrEI+84/TzmxAH6yGULo2vc9lF+1ZHeUnyQ0lDvVCPKemKF+dhoLeJTrSBfVjBc=
-X-Received: by 2002:a4a:e48a:: with SMTP id s10mr2128023oov.10.1585064345759;
- Tue, 24 Mar 2020 08:39:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200317135740.19412-1-robert.foss@linaro.org>
- <20200317135740.19412-7-robert.foss@linaro.org> <2523204.mvXUDI8C0e@g550jk>
-In-Reply-To: <2523204.mvXUDI8C0e@g550jk>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 24 Mar 2020 16:38:54 +0100
-Message-ID: <CAG3jFyuiVFHfNVwCAEynH0j8fK91k32m+nvZYYR79gju9cwPKQ@mail.gmail.com>
-Subject: Re: [v2 6/6] arm64: defconfig: Enable QCOM CAMCC, CAMSS and CCI drivers
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, catalin.marinas@arm.com,
-        will@kernel.org, shawnguo@kernel.org, olof@lixom.net,
-        maxime@cerno.tech, Anson.Huang@nxp.com, dinguyen@kernel.org,
-        leonard.crestez@nxp.com,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Tue, 24 Mar 2020 11:45:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585064728; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=v9dIb51/ZCmNlwPIwP3pchy18wJ6E/8T6dJA5ppS5pE=; b=XUwN+UDaw2R94v5YKNdFGus1MlJVfN71toc6baLdjfsSLKi6tcweAYRmT7/A1299x9C67/LH
+ KCJX1GaCGRVfdURt0PxpkxJVjSgAR66HWyoN7+Ere73aHzL+VAcNwAEHcHrmxEjGuY0xet6y
+ jm6+bNZ7YzwGeOfaNSdNKJr4dQo=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7a2b09.7feefbb70f10-smtp-out-n04;
+ Tue, 24 Mar 2020 15:45:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6B241C433BA; Tue, 24 Mar 2020 15:45:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jprakash-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jprakash)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 881B0C433CB;
+        Tue, 24 Mar 2020 15:45:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 881B0C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
+From:   Jishnu Prakash <jprakash@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, linus.walleij@linaro.org, sboyd@codeaurora.org,
+        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
+        kgunda@codeaurora.org, aghayal@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
+        Jishnu Prakash <jprakash@codeaurora.org>
+Subject: [PATCH 0/3] iio: adc: Add support for QCOM SPMI PMIC7 ADC
+Date:   Tue, 24 Mar 2020 21:14:07 +0530
+Message-Id: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Luca,
+The first patch converts the ADC DT bindings from .txt to .yaml format.
 
-On Fri, 20 Mar 2020 at 20:52, Luca Weiss <luca@z3ntu.xyz> wrote:
->
-> Hi Robert,
->
-> On Dienstag, 17. M=C3=A4rz 2020 14:57:40 CET Robert Foss wrote:
-> > Build camera clock, isp and controller drivers as modules.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  arch/arm64/configs/defconfig | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfi=
-g
-> > index 4db223dbc549..7cb6989249ab 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -376,6 +376,7 @@ CONFIG_I2C_MESON=3Dy
-> >  CONFIG_I2C_MV64XXX=3Dy
-> >  CONFIG_I2C_OWL=3Dy
-> >  CONFIG_I2C_PXA=3Dy
-> > +CONFIG_I2C_QCOM_CCI=3Dm
-> >  CONFIG_I2C_QCOM_GENI=3Dm
-> >  CONFIG_I2C_QUP=3Dy
-> >  CONFIG_I2C_RK3X=3Dy
-> > @@ -530,6 +531,7 @@ CONFIG_VIDEO_SAMSUNG_S5P_MFC=3Dm
-> >  CONFIG_VIDEO_SAMSUNG_EXYNOS_GSC=3Dm
-> >  CONFIG_VIDEO_RENESAS_FCP=3Dm
-> >  CONFIG_VIDEO_RENESAS_VSP1=3Dm
-> > +CONFIG_VIDEO_QCOM_CAMSS=3Dm
-> >  CONFIG_DRM=3Dm
-> >  CONFIG_DRM_I2C_NXP_TDA998X=3Dm
-> >  CONFIG_DRM_NOUVEAU=3Dm
-> > @@ -732,6 +734,7 @@ CONFIG_MSM_GCC_8994=3Dy
-> >  CONFIG_MSM_MMCC_8996=3Dy
-> >  CONFIG_MSM_GCC_8998=3Dy
-> >  CONFIG_QCS_GCC_404=3Dy
-> > +CONFIG_SDM_CAMCC_845=3Dm
->
-> You seem to have this option twice in this patch.
+The second patch updates the documentation, for PMIC7 ADC. The main
+difference between PMIC5 and PMIC7 for ADC is that for PMIC7, SW requests to
+ADCs (on any PMIC) need to go through the ADC on PMK8350, which communicates with
+the ADCs on other PMICs through PBS. A SID register has been added for SW to specify
+the PMIC with which it needs to communicate.
 
-Thanks for catching this.
-I'll send out a fix in v3.
+The third patch adds driver support for PMIC7 ADC. It also adds definitions for
+PMIC7 ADC channels and virtual channel definitions per PMIC (made by combining ADC
+channel number and PMIC SID), to be used by ADC clients for PMIC7.
 
->
-> >  CONFIG_SDM_GCC_845=3Dy
-> >  CONFIG_SM_GCC_8150=3Dy
-> >  CONFIG_QCOM_HFPLL=3Dy
-> > @@ -762,6 +765,7 @@ CONFIG_QCOM_COMMAND_DB=3Dy
-> >  CONFIG_QCOM_GENI_SE=3Dy
-> >  CONFIG_QCOM_GLINK_SSR=3Dm
-> >  CONFIG_QCOM_RMTFS_MEM=3Dm
-> > +CONFIG_SDM_CAMCC_845=3Dm
->
-> ^
->
-> >  CONFIG_QCOM_RPMH=3Dy
-> >  CONFIG_QCOM_RPMHPD=3Dy
-> >  CONFIG_QCOM_SMEM=3Dy
->
-> Regards
-> Luca
->
->
+Jishnu Prakash (3):
+  iio: adc: Convert the QCOM SPMI ADC bindings to .yaml format
+  iio: adc: Add PMIC7 ADC bindings
+  iio: adc: Add support for PMIC7 ADC
+
+ .../devicetree/bindings/iio/adc/qcom,spmi-vadc.txt | 173 --------------
+ .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 192 +++++++++++++++
+ drivers/iio/adc/qcom-spmi-adc5.c                   | 239 ++++++++++++++++++-
+ drivers/iio/adc/qcom-vadc-common.c                 | 260 +++++++++++++++++++++
+ drivers/iio/adc/qcom-vadc-common.h                 |  14 ++
+ include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h    |  67 ++++++
+ include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h   |  88 +++++++
+ include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h   |  46 ++++
+ include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h   |  28 +++
+ include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h   |  28 +++
+ include/dt-bindings/iio/qcom,spmi-vadc.h           |  78 ++++++-
+ 11 files changed, 1035 insertions(+), 178 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.txt
+ create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+ create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
+ create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h
+ create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
+ create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h
+ create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
