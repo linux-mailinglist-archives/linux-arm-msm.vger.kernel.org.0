@@ -2,113 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A0F9191587
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 17:00:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ED11191680
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 17:35:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728520AbgCXP7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Mar 2020 11:59:03 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35477 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728445AbgCXP7A (ORCPT
+        id S1727267AbgCXQdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Mar 2020 12:33:40 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:35486 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727161AbgCXQdk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Mar 2020 11:59:00 -0400
-Received: by mail-wr1-f66.google.com with SMTP id d5so9799559wrn.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2020 08:58:58 -0700 (PDT)
+        Tue, 24 Mar 2020 12:33:40 -0400
+Received: by mail-pg1-f194.google.com with SMTP id 7so9301645pgr.2;
+        Tue, 24 Mar 2020 09:33:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=SMq/EEyYYz6HWydBGjI4fuaJGHB5g+sKYV8/ecTsfnw=;
-        b=Cbo4qeBnndE69etkLuKizylOxVcCmcdaFqQ8/ct9sDJJikWNyXNk8ZZ6zLf4hRPrMW
-         l56jslKnUGo83vKTVAvhBIxzyrrH/9UvzP8GGTkw269WE/tUp1c5vHiI3guPOPFx+2jU
-         otpKMEXqs7w3tXsYyzTrwAL1f6ht3I7RTewqEhEXXRtrQzXmOIhfZ6BZtuNaDtX/QGhF
-         d8uR2xGZ+x+amFl+Pc1YODdzgdpqURlYziqetHbkrNP+k9GzC8A+XSTszxlNST78rD5I
-         N+YlxU5l68N9n294cQoT7qG53b102vbtwQluMbmo2KHjKF2Aq6dijxo1T53f39+1yEEf
-         G90g==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iyN1hBaAFSOHm3J/cqXgvfDBZR4y77oHwv+quvoJ2Ow=;
+        b=n0yORBkxyDKz3l+5kEyjxxdVxjiqvfxWjr9KzX7zthOx3zoi4FaxmCBPHrzaATQ+DR
+         uFAmkKdf89YlaAmcZ+BiKZbr/41CEZDvzGmVgMyNiNh0qgjSIYLZWMRbyXHAAz5TKs/3
+         d1TMGFu+nVqG6Gu94QrgQKIZ1qdQFlZneEAOZLf+aYtLuVr9GDnehP50IUA1MzFSNIb6
+         ttXQ9ZhcbPjKHY0F4U5hVNA5OflhweFQ4r/p+8eeVnLL0tfr9f2PzMzGfQ9PKnJyvGKL
+         vBAZq2R4qITHVrEOtuact0xmIaJyrCzo4+qX28D/RdlSLLTnxXHtHwqhT/othhzKHPPG
+         gTKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=SMq/EEyYYz6HWydBGjI4fuaJGHB5g+sKYV8/ecTsfnw=;
-        b=hXl0Ny7LBaz9VdFIUlUPIISkDXVKG1NRdkwit1+eLFwJ3/XCkCxcoVyL9s1+uXJAdr
-         lSflU+nCmnjXEkfRhBqsezVSRGuQvdIWFhwDxBvfv7eyZKDjiGLbrK5Eq4HApY7JLAks
-         xl7koquQDe87eC5/Kn9AqTDxmGiO22rWhdXkdYHBpysCNxqfHG8Gp5aUjfX/mYvdKoNI
-         mS9mcXr2Wp9Lk7I3rDzEBpB+LUfczXZGabr2LW5m2DfNip9vza5UwcGf66ZNlN9HIyyg
-         /e1X3qqzYsPY1jWR8cox+3lcGtX9md7GzOZM6CbV1staGJlwEgI/DxmpywwwY9Ylvz6H
-         IZJQ==
-X-Gm-Message-State: ANhLgQ0VOBixEjPqP8f9PrsSs3RRSoVijAChtPRNyjwrHVzGGJZhxpNS
-        rzIb+bmX9LdMzUz5TCyr0P4LsQ==
-X-Google-Smtp-Source: ADFU+vubkYQyMAvXnpVSqfNhDN699hpGdG7F6l9ggO5EBX7SXW1DGYqomCS6qxOHeD7C5nHYtfLhYg==
-X-Received: by 2002:adf:db02:: with SMTP id s2mr29329992wri.273.1585065537393;
-        Tue, 24 Mar 2020 08:58:57 -0700 (PDT)
-Received: from xps7590.local ([2a02:2450:102f:13b8:e15d:2127:89a:e5dc])
-        by smtp.gmail.com with ESMTPSA id t124sm4993321wmg.13.2020.03.24.08.58.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2020 08:58:56 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, catalin.marinas@arm.com, will@kernel.org,
-        shawnguo@kernel.org, olof@lixom.net, Anson.Huang@nxp.com,
-        dinguyen@kernel.org, leonard.crestez@nxp.com,
-        marcin.juszkiewicz@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [v3 6/6] arm64: defconfig: Enable QCOM CAMCC, CAMSS and CCI drivers
-Date:   Tue, 24 Mar 2020 16:58:42 +0100
-Message-Id: <20200324155843.10719-7-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200324155843.10719-1-robert.foss@linaro.org>
-References: <20200324155843.10719-1-robert.foss@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iyN1hBaAFSOHm3J/cqXgvfDBZR4y77oHwv+quvoJ2Ow=;
+        b=RbJIuzVftmKzCaoxMAteLR8vkyZrsG2bfr+HvxhI/IB3adsITrc70DxQASq2eDJIH1
+         I3KHdHwM1S06/hdxd898V5KttFl5eDX6gWpvy8vAeKlR+RhIuZHg/zJfeMw3s2Ph5Txc
+         sGAkSGnK3x67Qw69bZ02AsHCj0V8m9I6hXQnu8eKL2UT7F588ea5albA2JBuMve55wOB
+         ZEtY++GHlVboNkSZV2h82wtVWVh3xLS/r6r69VaroHJr+4LkbMNfJ3MzXbJZfnziwrhj
+         HfPAcga6fVYrpe+hFQuOfz375rXj28uExLreCRTrJJy1mLeNkRe8ZDqt9g89/eeU8K7n
+         vRVw==
+X-Gm-Message-State: ANhLgQ3Wo4Yooh8t65MxlktFKASkAplOS3IcLTS1jNlcb86r3f5HYYlj
+        nda5PhrUHNkcPlEm2vOcZUd6wW2nqPWSeKH95YEpAOtXuB1a/g==
+X-Google-Smtp-Source: ADFU+vunIaPHWUUqedQrpgKWtpPoP3M7Xizwmytl/c1HZPLqo46nZbzfQGaudS9BltKy1Pv3nq8w/yYVltMJ7cU06ZA=
+X-Received: by 2002:a63:798a:: with SMTP id u132mr29374862pgc.203.1585067618685;
+ Tue, 24 Mar 2020 09:33:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org> <1585064650-16235-4-git-send-email-jprakash@codeaurora.org>
+In-Reply-To: <1585064650-16235-4-git-send-email-jprakash@codeaurora.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Tue, 24 Mar 2020 18:33:31 +0200
+Message-ID: <CAHp75Vfk1DZ+bz6h_prm6Tp7kXos6jio5JCpg6=wvGRmDPTBsw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] iio: adc: Add support for PMIC7 ADC
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        smohanad@codeaurora.org, kgunda@codeaurora.org,
+        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-iio <linux-iio@vger.kernel.org>,
+        linux-arm-msm-owner@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Build camera clock, isp and controller drivers as modules.
+On Tue, Mar 24, 2020 at 5:46 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+>
+> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
+> major change from PMIC5 is that all SW communication to ADC goes through
+> PMK8350, which communicates with other PMICs through PBS when the ADC
+> on PMK8350 works in master mode. The SID register is used to identify the
+> PMICs with which the PBS needs to communicate. Add support for the same.
+>
+> In addition, add definitions for ADC channels and virtual channel
+> definitions per PMIC, to be used by ADC clients for PMIC7.
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+...
 
-Changes since v2:
- - Removed duplicated CONFIG_SDM_CAMCC_845 defconfig
+> +#define ADC_CHANNEL_OFFSET                     0x8
+> +#define ADC_CHANNEL_MASK                       0xff
 
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+GENMASK()
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 4db223dbc549..676bb53fb8cc 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -376,6 +376,7 @@ CONFIG_I2C_MESON=y
- CONFIG_I2C_MV64XXX=y
- CONFIG_I2C_OWL=y
- CONFIG_I2C_PXA=y
-+CONFIG_I2C_QCOM_CCI=m
- CONFIG_I2C_QCOM_GENI=m
- CONFIG_I2C_QUP=y
- CONFIG_I2C_RK3X=y
-@@ -530,6 +531,7 @@ CONFIG_VIDEO_SAMSUNG_S5P_MFC=m
- CONFIG_VIDEO_SAMSUNG_EXYNOS_GSC=m
- CONFIG_VIDEO_RENESAS_FCP=m
- CONFIG_VIDEO_RENESAS_VSP1=m
-+CONFIG_VIDEO_QCOM_CAMSS=m
- CONFIG_DRM=m
- CONFIG_DRM_I2C_NXP_TDA998X=m
- CONFIG_DRM_NOUVEAU=m
-@@ -732,6 +734,7 @@ CONFIG_MSM_GCC_8994=y
- CONFIG_MSM_MMCC_8996=y
- CONFIG_MSM_GCC_8998=y
- CONFIG_QCS_GCC_404=y
-+CONFIG_SDM_CAMCC_845=m
- CONFIG_SDM_GCC_845=y
- CONFIG_SM_GCC_8150=y
- CONFIG_QCOM_HFPLL=y
+...
+
+> +#define ADC_APP_SID                            0x40
+> +#define ADC_APP_SID_MASK                       0xf
+
+GENMASK()
+
+> +#define ADC7_CONV_TIMEOUT                      msecs_to_jiffies(10)
+
+Useless.
+
+...
+
+> +       buf[1] &= (u8) ~ADC5_USR_FAST_AVG_CTL_SAMPLES_MASK;
+
+Use '0xFF ^ _MASK' instead of casting.
+
+...
+
+> +       buf[3] &= (u8) ~ADC5_USR_HW_SETTLE_DELAY_MASK;
+
+Ditto.
+
+...
+
+> +       ret = adc5_write(adc, ADC5_USR_CONV_REQ, &conv_req, 1);
+> +
+> +       return ret;
+
+return adc5_write(...);
+
+...
+
+> +               pr_err("ADC configure failed with %d\n", ret);
+
+Use dev_*() instead everywhere.
+
+...
+
+> +       /* No support for polling mode at present*/
+> +       wait_for_completion_timeout(&adc->complete,
+> +                                       ADC7_CONV_TIMEOUT);
+
+One line. The limit is 80 and it can be bend in some cases a little bit.
+
+...
+
+> +               v_channel = ((adc->chan_props[i].sid << ADC_CHANNEL_OFFSET) |
+> +                       adc->chan_props[i].channel);
+
+Too many parentheses.
+
+...
+
+> +               sid = (chan >> ADC_CHANNEL_OFFSET);
+> +               chan = (chan & ADC_CHANNEL_MASK);
+
+Ditto.
+
+...
+
+> +                       (adc->is_pmic7))
+
+Ditto.
+
+...
+
+> +       if (of_device_is_compatible(node, "qcom,spmi-adc7")) {
+> +               indio_dev->info = &adc7_info;
+> +               adc->is_pmic7 = true;
+> +       } else {
+> +               indio_dev->info = &adc5_info;
+> +       }
+
+Hmm... I would rather put this as driver_data in ID structure(s).
+
+...
+
+> +static int adc5_exit(struct platform_device *pdev)
+> +{
+> +       struct adc5_chip *adc = platform_get_drvdata(pdev);
+> +
+
+> +       mutex_destroy(&adc->lock);
+
+Are you sure you will have no race conditions? Does this driver use IRQs?
+
+> +       return 0;
+> +}
+
+...
+
+> +       s64 resistance = 0;
+
+= adc_code  // or sign extended variant if needed.
+
+> +       /* (ADC code * R_PULLUP (100Kohm)) / (full_scale_code - ADC code)*/
+
+> +       resistance = (s64) adc_code * R_PU_100K;
+> +       resistance = div64_s64(resistance, (RATIO_MAX_ADC7 - adc_code));
+
+ resistance *= R_PU_100K;
+ resistance = div64_s64(resistance, RATIO_MAX_ADC7 - adc_code);
+
+...
+
+> +       int voltage, vtemp0, temp, i = 0;
+
+> +       while (i < ARRAY_SIZE(adcmap7_die_temp)) {
+> +               if (adcmap7_die_temp[i].x > voltage)
+> +                       break;
+> +               i++;
+> +       }
+
+for loop (one line less, more explicit initial value assignment)?
+
 -- 
-2.25.1
-
+With Best Regards,
+Andy Shevchenko
