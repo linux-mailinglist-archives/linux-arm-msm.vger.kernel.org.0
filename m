@@ -2,95 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C32051904D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 06:17:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D13A190523
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 06:29:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725853AbgCXFQ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Mar 2020 01:16:56 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:37481 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725934AbgCXFQz (ORCPT
+        id S1725853AbgCXF3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Mar 2020 01:29:10 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:47008 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725869AbgCXF3K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Mar 2020 01:16:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585027015; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=HJVvgeexErEjlhM7G8ecIrzeSjkVY0caLFRfY64utGo=; b=QOgKAD/Mqs2MS10qlFhd5aaiVU4nFtcEZy7ZZZUQgPXwNwKnJ0jWYTeAH2ddkyOJdEHsDI5w
- P9PklFTczNUdKtXCVdaVcepHXXubeZcyHOeFnPO4ekLxTMZGdNFuJjnwVhWKI6utCkgmS6dK
- e2u7433CFeJ0Kv1abJrRCvfS2LU=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e7997bf.7ff25d1ba928-smtp-out-n01;
- Tue, 24 Mar 2020 05:16:47 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 84445C43636; Tue, 24 Mar 2020 05:16:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.13] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A65DAC433D2;
-        Tue, 24 Mar 2020 05:16:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A65DAC433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V5 3/3] dt-bindings: geni-se: Add binding for UART pin
- swap
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>, rojay@codeaurora.org,
-        c_skakit@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>
-References: <1584095350-841-1-git-send-email-akashast@codeaurora.org>
- <1584095350-841-4-git-send-email-akashast@codeaurora.org>
- <CAL_JsqKLoiPUhiJDuYX+bSQwoCLTXOvtNyEB8ti__xMfEDyxNQ@mail.gmail.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <ee34573a-e4ff-ad43-64ed-53439206d534@codeaurora.org>
-Date:   Tue, 24 Mar 2020 10:46:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Tue, 24 Mar 2020 01:29:10 -0400
+Received: by mail-pl1-f195.google.com with SMTP id r3so6927138pls.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2020 22:29:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ra3lKpyRwpXEMv7HLjwjk2xlSk4Do59iXflfneeNh40=;
+        b=OVJfwC4b1PEr/2jykKzhhdZvbXbHUcn76l1jFofytmydV+hZD1SG74gGKktPsDAqSN
+         zFKJ9gjIseLoywqXUMffqa6z41YelbniVwpLO4cn8k0/mGxSfs7+o5oFd6hvmdDBA392
+         TgFhjkqejJ48IaOASEmZVcLA3uow/kBIBJQFR1sTibJHVU9HxbwaajHYFBRxYfkt7Lfc
+         nhCBas2c5k3T//9GSC0RH3Dr+dlmRIu9zN8KVHOIwDLqy2qQQJMantm2Ab9ZGL/wN+9z
+         m5wDS3bK9tYy8DXYGGxibpI3a8L9q46iPYyA83+bBvhoIk76AogOmzXTIYGzB8UYj+2N
+         q1iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ra3lKpyRwpXEMv7HLjwjk2xlSk4Do59iXflfneeNh40=;
+        b=Siu5ibn0zVUS6mZvl/wmApjHzmPKPzVf+k8bGmsq8Z3orO4SFHGtiG0UMnzLMlbIzI
+         8Xshq/7xnOzlfuVLdk/ENmP85JP0F4Rb1VlXefg1E72r064RnSoebTpYDSjyWxbblsRg
+         8Vvz9RK0I5PjF/3qY63DGFSCbjqubfGybfVVUov7iYd/Endd0/0Sua0PMQWwwjiLEedC
+         tymXhXsA50/Dg90gn44JJW7IaZw1mMfxyTbwS30ypKNL70R6Z/ExRJwhS9NXKjj+GLAI
+         oYT0Ydh4w4GZOLe8QY//CjunH11Vl/SJ9sQwDAIp1XjF2FzIkN2acklogs38WoXb14IS
+         LmlQ==
+X-Gm-Message-State: ANhLgQ21MyzeCQVQnYQUHbR+JfUT8rlyzjmjRUK+JkfpcVo7s+rvEeLS
+        AFySb+M0hbTi8qmkyTh80Qovrw==
+X-Google-Smtp-Source: ADFU+vtODNbfRHAyBz68wwxhAstaZapwyPZvFzxoO8Q8NW3QROIugYa6Kgu2ZXMASrFt7wQDdwTfxA==
+X-Received: by 2002:a17:90a:bd01:: with SMTP id y1mr3362201pjr.129.1585027748925;
+        Mon, 23 Mar 2020 22:29:08 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id j14sm2795413pgk.74.2020.03.23.22.29.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2020 22:29:08 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/4] remoteproc: Panic handling
+Date:   Mon, 23 Mar 2020 22:29:00 -0700
+Message-Id: <20200324052904.738594-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-In-Reply-To: <CAL_JsqKLoiPUhiJDuYX+bSQwoCLTXOvtNyEB8ti__xMfEDyxNQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Add support for invoking a panic handler in remoteproc drivers, to allow them
+to invoke e.g. cache flushing on the remote processors in response to a kernel
+panic - to aid in post mortem debugging of system issues.
 
-On 3/20/2020 11:37 PM, Rob Herring wrote:
-> On Fri, Mar 13, 2020 at 4:29 AM Akash Asthana <akashast@codeaurora.org> wrote:
->> Add documentation to support RX/TX/CTS/RTS pin swap in HW.
->>
->> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
->> ---
->> Changes in V5:
->>   -  As per Matthias's comment, remove rx-tx-cts-rts-swap property from UART
->>      child node.
->>
->>   Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 6 ++++++
->>   1 file changed, 6 insertions(+)
-> STM32 folks need something similar. Can you move this to a common
-> location. That's serial.txt, but that is being converted to DT schema.
->
-> Rob
+Bjorn Andersson (4):
+  remoteproc: Traverse rproc_list under RCU read lock
+  remoteproc: Introduce "panic" callback in ops
+  remoteproc: qcom: q6v5: Add common panic handler
+  remoteproc: qcom: Introduce panic handler for PAS and ADSP
 
-Okay, once serial.txt is converted to DT schema, I will move it there.
-
-Regards,
-
-Akash
+ drivers/remoteproc/qcom_q6v5.c       | 20 ++++++++++
+ drivers/remoteproc/qcom_q6v5.h       |  1 +
+ drivers/remoteproc/qcom_q6v5_adsp.c  |  8 ++++
+ drivers/remoteproc/qcom_q6v5_pas.c   |  8 ++++
+ drivers/remoteproc/remoteproc_core.c | 57 +++++++++++++++++++++++++---
+ include/linux/remoteproc.h           |  3 ++
+ 6 files changed, 92 insertions(+), 5 deletions(-)
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.24.0
+
