@@ -2,153 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4029D191363
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 15:38:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A0091913DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2020 16:06:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727270AbgCXOi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Mar 2020 10:38:56 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:41000 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727498AbgCXOi4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Mar 2020 10:38:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585060735; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=FDugQEzqT/2M8/NQELJOUiw4x17bkM4rtTJc2+a/+ps=; b=K5lmbSolNySGQIKbaBadL1iZDNqCi7B4OFr3XKG8/LeOz57yylRHpHGmdsXQDcS55jZCnp0u
- MsgAeDylypo1tM3FJAgdj4RQQOw427ZUWlV+ZI2KvU+ScMOtbEakAhPL/qd/iZ7KSA1bFxY7
- 6XoxlbPApD86l8WB34e+r3kXTgU=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e7a1b74.7f5cf3ec85a8-smtp-out-n02;
- Tue, 24 Mar 2020 14:38:44 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5B9AFC433BA; Tue, 24 Mar 2020 14:38:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        id S1727986AbgCXPGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Mar 2020 11:06:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51268 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727736AbgCXPGV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Mar 2020 11:06:21 -0400
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D45D8C433CB;
-        Tue, 24 Mar 2020 14:38:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D45D8C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v3 2/7] bus: mhi: core: Add support for reading MHI info
- from device
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        gregkh@linuxfoundation.org, davem@davemloft.net
-Cc:     smohanad@codeaurora.org, kvalo@codeaurora.org,
-        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
- <20200324061050.14845-3-manivannan.sadhasivam@linaro.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <edc9fb15-67f3-9cd1-275a-d850d80e2b65@codeaurora.org>
-Date:   Tue, 24 Mar 2020 08:38:40 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        by mail.kernel.org (Postfix) with ESMTPSA id 2BAC520775;
+        Tue, 24 Mar 2020 15:06:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1585062380;
+        bh=8pIS4vs8NHSn+hwQhqH3u3RNHDcaAGCJDHvJt0tjNa4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=fc+aeEH5arhksV19znprIHLe75k2fAW9cwMJmmeIORp/Pe8rgRiFxpGXCq0aafd0T
+         Fvm/XvCFvYRxQBeqWqjjC+JfnLqguSbXh8UhE1TU4rEnzeTDxYbod/sM84Hl92iRlr
+         JMstjao+AeVl6QpFGL2frE+DycngLxvZOPG59jqo=
+Received: by mail-qk1-f179.google.com with SMTP id k13so7796136qki.2;
+        Tue, 24 Mar 2020 08:06:20 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ3nWe7ULCSNnoAzpx/XfxCX3iuPJge3LiMzggjfmzGBU1q/6xkO
+        GVVsj280NZw84dI0n84bPWC9LAkWNzXW9ZedLQ==
+X-Google-Smtp-Source: ADFU+vtg882wc2BN6wL0hT6KIwxPK3ki0huHjsWp/kB5sbJP9A444Ldp1mPmpZWwv6Ts7ombMhx35L3vr0Yc8fv7dGw=
+X-Received: by 2002:a37:4a85:: with SMTP id x127mr26564313qka.152.1585062379195;
+ Tue, 24 Mar 2020 08:06:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200324061050.14845-3-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <cover.1583412540.git.amit.kucheria@linaro.org>
+ <8a0cfe9e3018f7996c1563035bee76048941beb4.1583412540.git.amit.kucheria@linaro.org>
+ <20200311144933.GA21587@bogus> <CAHLCerN99eKOofxcCuvNwjNGbJfB7BzoPGAPCtXHNQdN9w8Bcw@mail.gmail.com>
+ <CAL_JsqJ6T3LVbKueGn53dZmR=caD2AR7yLX9gffmOc9VwF9kXQ@mail.gmail.com> <CAP245DWgg7KsV9sMXmS571dAAy-cvDy4Q_9vi_KGxoOQ5VBU7w@mail.gmail.com>
+In-Reply-To: <CAP245DWgg7KsV9sMXmS571dAAy-cvDy4Q_9vi_KGxoOQ5VBU7w@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 24 Mar 2020 09:06:07 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKhK-yz+iqe6G+-c0pt9mJSsW8hMnTiWdRh3_+1PeG=dg@mail.gmail.com>
+Message-ID: <CAL_JsqKhK-yz+iqe6G+-c0pt9mJSsW8hMnTiWdRh3_+1PeG=dg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] dt-bindings: thermal: Add yaml bindings for
+ thermal zones
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/24/2020 12:10 AM, Manivannan Sadhasivam wrote:
-> The MHI register base has several registers used for getting the MHI
-> specific information such as version, family, major, and minor numbers
-> from the device. This information can be used by the controller drivers
-> for usecases such as applying quirks for a specific revision etc...
-> 
-> While at it, let's also rearrange the local variables
-> in mhi_register_controller().
-> 
-> Suggested-by: Hemant Kumar <hemantk@codeaurora.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   drivers/bus/mhi/core/init.c     | 19 +++++++++++++++++--
->   drivers/bus/mhi/core/internal.h | 10 ++++++++++
->   include/linux/mhi.h             | 17 +++++++++++++++++
->   3 files changed, 44 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index eb7f556a8531..d136f6c6ca78 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -802,12 +802,12 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
->   int mhi_register_controller(struct mhi_controller *mhi_cntrl,
->   			    struct mhi_controller_config *config)
->   {
-> -	int ret;
-> -	int i;
->   	struct mhi_event *mhi_event;
->   	struct mhi_chan *mhi_chan;
->   	struct mhi_cmd *mhi_cmd;
->   	struct mhi_device *mhi_dev;
-> +	u32 soc_info;
-> +	int ret, i;
->   
->   	if (!mhi_cntrl)
->   		return -EINVAL;
-> @@ -874,6 +874,21 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
->   		mhi_cntrl->unmap_single = mhi_unmap_single_no_bb;
->   	}
->   
-> +	/* Read the MHI device info */
-> +	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs,
-> +			   SOC_HW_VERSION_OFFS, &soc_info);
-> +	if (ret)
-> +		goto error_alloc_dev;
-> +
-> +	mhi_cntrl->family_number = (soc_info & SOC_HW_VERSION_FAM_NUM_BMSK) >>
-> +					SOC_HW_VERSION_FAM_NUM_SHFT;
-> +	mhi_cntrl->device_number = (soc_info & SOC_HW_VERSION_DEV_NUM_BMSK) >>
-> +					SOC_HW_VERSION_DEV_NUM_SHFT;
-> +	mhi_cntrl->major_version = (soc_info & SOC_HW_VERSION_MAJOR_VER_BMSK) >>
-> +					SOC_HW_VERSION_MAJOR_VER_SHFT;
-> +	mhi_cntrl->minor_version = (soc_info & SOC_HW_VERSION_MINOR_VER_BMSK) >>
-> +					SOC_HW_VERSION_MINOR_VER_SHFT;
-> +
->   	/* Register controller with MHI bus */
->   	mhi_dev = mhi_alloc_device(mhi_cntrl);
->   	if (IS_ERR(mhi_dev)) {
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 18066302e6e2..5deadfaa053a 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -196,6 +196,16 @@ extern struct bus_type mhi_bus_type;
->   #define BHIE_RXVECSTATUS_STATUS_XFER_COMPL (0x02)
->   #define BHIE_RXVECSTATUS_STATUS_ERROR (0x03)
->   
-> +#define SOC_HW_VERSION_OFFS (0x224)
-> +#define SOC_HW_VERSION_FAM_NUM_BMSK (0xF0000000)
-> +#define SOC_HW_VERSION_FAM_NUM_SHFT (28)
-> +#define SOC_HW_VERSION_DEV_NUM_BMSK (0x0FFF0000)
-> +#define SOC_HW_VERSION_DEV_NUM_SHFT (16)
-> +#define SOC_HW_VERSION_MAJOR_VER_BMSK (0x0000FF00)
-> +#define SOC_HW_VERSION_MAJOR_VER_SHFT (8)
-> +#define SOC_HW_VERSION_MINOR_VER_BMSK (0x000000FF)
-> +#define SOC_HW_VERSION_MINOR_VER_SHFT (0)
+On Tue, Mar 24, 2020 at 4:33 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+>
+> On Tue, Mar 24, 2020 at 2:46 AM Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Mon, Mar 23, 2020 at 2:46 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+> > >
+> > > Hi Rob,
+> > >
+> > > Thanks for the review.
+> > >
+> > > On Wed, Mar 11, 2020 at 8:19 PM Rob Herring <robh@kernel.org> wrote:
+> > > >
+> > > > On Thu, Mar 05, 2020 at 06:26:43PM +0530, Amit Kucheria wrote:
+> > > > > As part of moving the thermal bindings to YAML, split it up into 3
+> > > > > bindings: thermal sensors, cooling devices and thermal zones.
+> > > > >
+> > > > > The thermal-zone binding is a software abstraction to capture the
+> > > > > properties of each zone - how often they should be checked, the
+> > > > > temperature thresholds (trips) at which mitigation actions need to be
+> > > > > taken and the level of mitigation needed at those thresholds.
+> >
+>
+> [...]
+>
+> >
+> > > > > +            /* ... */
+> > > > > +
+> > > > > +            gpu-thermal-top {
+> > > >
+> > > > This one is not going to match (which should cause an error).
+> > >
+> > > Good catch. Unfortunately, this isn't getting caught. Nor is the
+> > > 12-char limitation before -thermal in the thermal zone name. I can't
+> > > figure out why.
+> >
+> > That's because this schema has to be included by another schema which
+> > matches on a parent node containing 'thermal-zones'. If
+> > 'thermal-zones' can be at the root node, then you should rework this
+> > such that you have $nodename: {const: thermal-zones} as a top-level
+> > property.
+>
+> I've done all the change requested in the review(see attached patch),
+> including moving to
+>
+> properties:
+>    $nodename:
+>        const: thermal-zones
+>
+> but that generates a bunch of errors similar to:
+>
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/zte.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/sunxi.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/sprd/sprd.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/calxeda.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/ti/ti,davinci.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/spear.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+> /home/amit/work/builds/build-aarch64/Documentation/devicetree/bindings/arm/ti/nspire.example.dt.yaml:
+> /: $nodename:0: 'thermal-zones' was expected
+>
+> It seems like dtc is expecting every node to have a thermal-zones node?
+>
+> Looking at other root nodes such as cpus.yaml, the main difference I
+> noticed was the absence of the "select: true" property. However, if I
+> remove that, we go back to the schema not being applied.
 
-I'm tempted to give reviewed-by, however it occurs to me that I don't 
-see this in the MHI spec.  I'm looking at Rev E, which as far as I am 
-aware is the latest.
+'select: true' should be dropped. It will be applied to any
+'thermal-zones' nodes. The generated 'select' will use $nodename if
+compatible is not present for the schema.
 
-Hemant, is this in the spec, and if so, what Rev?
+I tested that putting an error in the example works.
 
-I'm concerned that if its not in the spec, we may have an issue with 
-some device not implementing this as expected.
+> You mentioned that the thermal-zones schema needs to included by
+> another schema. What did you mean by that?
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Nevermind, I wasn't thinking that it's a top-level node. If it was a
+child node, then you'd want to include it from the parent schemas.
+
+Rob
