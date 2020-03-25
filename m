@@ -2,94 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 78A2B19325F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 22:13:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FE7E193319
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 22:54:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727376AbgCYVNW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 17:13:22 -0400
-Received: from mout.kundenserver.de ([212.227.17.10]:53325 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727357AbgCYVNV (ORCPT
+        id S1727358AbgCYVyi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 17:54:38 -0400
+Received: from mail-il1-f193.google.com ([209.85.166.193]:35410 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727357AbgCYVyi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 17:13:21 -0400
-Received: from mail-qk1-f170.google.com ([209.85.222.170]) by
- mrelayeu.kundenserver.de (mreue106 [212.227.15.145]) with ESMTPSA (Nemesis)
- id 1N5FQJ-1jQfbG41CP-01178k; Wed, 25 Mar 2020 22:13:20 +0100
-Received: by mail-qk1-f170.google.com with SMTP id o10so4229550qki.10;
-        Wed, 25 Mar 2020 14:13:19 -0700 (PDT)
-X-Gm-Message-State: ANhLgQ0LONAbeSxw4khp+j5NYRVO/giJMuxHjWYdo4nsNufUq1zmcG64
-        ZURuF/A0KxW13qXAdek2oFToUPzgoN3XaHmHz6o=
-X-Google-Smtp-Source: ADFU+vu9l/z+oM0lxSfEA0g3Poid+2S8rWoUyL4yoOgi/cbZMJnhoiOFpbVGBHfvi6Rzso58zdS/a4b1BFTBjUGoCJc=
-X-Received: by 2002:a37:6285:: with SMTP id w127mr4965337qkb.138.1585170798637;
- Wed, 25 Mar 2020 14:13:18 -0700 (PDT)
+        Wed, 25 Mar 2020 17:54:38 -0400
+Received: by mail-il1-f193.google.com with SMTP id 7so3473908ill.2;
+        Wed, 25 Mar 2020 14:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VIiYOE3oW3daBE6BLhIhLcjzmOFraPbTpEHLXt6kzBg=;
+        b=mKFgJFE4ToVuPC46SoR2yVv6yR7yJw9vZst20tYWm7bnMdJR7JJoLwfjuf3AVcnp1t
+         PQ2UIWWVzBy5uXt98cEm9u5klaglbb0Mq69HVhOrCMhm6RVrEWBF2guw5deZOlB/WbHm
+         0QXdBL5Qck2EwPHaG27MkHc8b8TzpBqMdwiJmpY5Q6ouGjU6Cg9eKgEq3Phr0/WC+bdI
+         rHX6W5OyQbjE6bI7Nll3Rsi4sUJyZkZhextwTktFkrIkWmNjM+uO8wG1Em/Y5yvj9YGf
+         YuyPu+3RSksL6ViYJ3boBWwcHGissVHA0rVL39CJVswsSxXgpuJXbL5rQMNb4mMvm7KU
+         kUog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VIiYOE3oW3daBE6BLhIhLcjzmOFraPbTpEHLXt6kzBg=;
+        b=da1P1djQpFwZNMRxc3olieFoeVWwzuc/oDFbdGJ7UpgJjOXZTsFySYwy6eisooWciH
+         Awqv9EXMxzBDGCDf0iAMJ8r2ZxPGa/jfkUgbuA3Z29kQUNW7hjbmJYryvMAWDrBdb8dr
+         GbCo0r2I4bc3NEjMJsGlLSsvWqii8vwgnufcAFal26ISYxH/mU+5XQ++Vg1bgGRjS60w
+         Umn0mBk044405ehQAVKf7T3YstRsiuo8st2n1RN/y7fT2qP7pi+hdIfQ0yYuBAVFXNdi
+         EkC1Wnn+u6po2OKv5aAiWg9+2Akh6ahwCQE7XiQ+W3L4rO/ZlyBKOzQDYl9oWGWPs29k
+         wa6A==
+X-Gm-Message-State: ANhLgQ0M3AsKkit2RshgtSZfdzlV5Emlt69qncQFBtb0MZt1PXTXY8Q3
+        +EmRzsYGfLUPEOfO1BAIgV+C9rD6s1Cbujw72MnqnQ==
+X-Google-Smtp-Source: ADFU+vvNX/Ir5Q4Of+TQ74ktMmPGivB3tdbs8dqgVQo2v3SDb+bnd7Kgc9bAoSm76mhL40G0rK0I9goh/p8wbOf6O1w=
+X-Received: by 2002:a05:6e02:589:: with SMTP id c9mr4549187ils.33.1585173277416;
+ Wed, 25 Mar 2020 14:54:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200302020757.551483-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20200302020757.551483-1-bjorn.andersson@linaro.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 25 Mar 2020 22:13:02 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a1QZbpYV8juTb31-CXQMVF==qFjJdRd064Md_rw5V7Vnw@mail.gmail.com>
-Message-ID: <CAK8P3a1QZbpYV8juTb31-CXQMVF==qFjJdRd064Md_rw5V7Vnw@mail.gmail.com>
+References: <20200302020757.551483-1-bjorn.andersson@linaro.org> <CAK8P3a1QZbpYV8juTb31-CXQMVF==qFjJdRd064Md_rw5V7Vnw@mail.gmail.com>
+In-Reply-To: <CAK8P3a1QZbpYV8juTb31-CXQMVF==qFjJdRd064Md_rw5V7Vnw@mail.gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 25 Mar 2020 15:54:26 -0600
+Message-ID: <CAOCk7NpuC3J2EoOrkYQjjqc-DpTgYBdEwQk762v-7L7eki3RPg@mail.gmail.com>
 Subject: Re: [PATCH] arm64: dts: qcom: sdm845-mtp: Relocate remoteproc firmware
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         DTML <devicetree@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:23AlKoK7JfyvIqlkPc2VNTcV1RVX6tcnr2s1dZFIRMkWYb7/awp
- ToEpktsd3CItXRFAKCESrsG53CRGbCXOwV2fH9Rz/yBIlqzgYngxZkOEQC2ynk4arBSE5tL
- CslJuye1gSg+YynI0TyV0P7tOcgysN7S8JhG1ptU3k0+HOtWz4Bwdo9GHN+p4hFwT1Z6xK8
- x8pb2A05E5bWaPhQOLnRw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:80eBV72EX1k=:5PQ4T/KOmiq/GiMZnDYD8K
- H/yEaQViDU7LY+uGNFn5GRXtLk0i9D4tv7DUcWPYn5ALhKUx6hD9eS2aQlVd3q2oL0pX77h3X
- UsmgHW/67rZrNfRfGwT6xr6Hr9hSzi2maKVpuu7h47p5dNPFW+k/rTm7+kkIjdzMzgLjpUBMm
- YN5MoWcDZBsCovQt+zH1roRUWWSNiHuHwJil1WQUduppWN0xTITPDNPT0zVVU7XGOAUq8Jx2f
- xm8F1fHEauh2wKQab8dM24NseCAQz4+2Mm2XXcZypcYAJbX9cXQdNIpsE5ocD9GMWwsA38zRX
- 3Rag2GtLyfYr1tw80sk/rRoi63R31qRuaxZA645ZHi+83lqmsQS01feFr0TuMxSlgHDOi8Q61
- 2/D+L0qiZWvIreH7saLip87Eq2Cy3udR1rfa95HLDwqeCyfsS847eruetwlsi2I5bOu+ExL63
- iacvaztwU9JNsBRNb3mwl1xbABcPKvXalE7A+KgZiUZiAwU433iZUydR8gkSczBzkwRQ1UKLT
- HRbavrgty6wlGCgBIFvPehF5qZQ3c0c3vrKsG1QtCgtzvzwFKgVLpch5DjGyzlLBSO36C6Pk/
- /7Ju8OEseF7iKN174DpfAFaav6yqIY+x4DGQbtbog2Rb6pGMa6bav5CKl12696bT2vvRWWodu
- 4rsrtUCl1oVCGVPbkKBav0oGZ9sZBwIbj98jcy+HejBI3oaZZe2GRFmtDGOOxmUU0WYA1UMcs
- qfkVeY7DyFya+dqGkBiWOhO5oaDxTF2fOCfYyIDNEMinokmnJYxa7BKT/JSqog8l93tgqvb6G
- snyKyPwJ2lXSaIKBTizN93rWTDdldTZwoRizbxg77RTtIUjJYA=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 2, 2020 at 3:09 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Wed, Mar 25, 2020 at 3:13 PM Arnd Bergmann <arnd@arndb.de> wrote:
 >
-> Update the firmware-name of the remoteproc nodes to mimic the firmware
-> structure on other 845 devices.
+> On Mon, Mar 2, 2020 at 3:09 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > Update the firmware-name of the remoteproc nodes to mimic the firmware
+> > structure on other 845 devices.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 7 +++++++
+> >  1 file changed, 7 insertions(+)
 >
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 7 +++++++
->  1 file changed, 7 insertions(+)
+> Hi Bjorn,
+>
+> Sorry for the late reply, I only came across this one while going
+> through the pull requests
+> that we had failed to pick up earlier.
+>
+> I really dislike the idea of hardcoding a firmware name in the
+> devicetree, we had long
+> discussions about this a few years ago and basically concluded that the firmware
+> name needs to be generated by the driver after identifying the hardware itself.
+>
+> The problem is that the firmware generally needs to match both the device driver
+> and the hardware, so when there is a firmware update that changes the behavior
+> (intentionally or not) in a way the driver needs to know about, then
+> the driver should
+> be able to request a particular firmware file based on information
+> that the owner
+> of the dtb may not have.
 
-Hi Bjorn,
+Interesting, this intersects some work I plan on doing.
 
-Sorry for the late reply, I only came across this one while going
-through the pull requests
-that we had failed to pick up earlier.
+What level information did this discussion assume that the device
+driver had?  Do you have a reference to the discussion handy?
 
-I really dislike the idea of hardcoding a firmware name in the
-devicetree, we had long
-discussions about this a few years ago and basically concluded that the firmware
-name needs to be generated by the driver after identifying the hardware itself.
+Please correct me if I am wrong, but this seems to assume that for
+device X, there is one firmware at a specific version that the driver
+is then knowledgeable about, and the driver can query the device
+hardware in some way to determine what is appropriate.  It seems like
+this assumption is believed to hold true, no matter what system X is
+included in.
 
-The problem is that the firmware generally needs to match both the device driver
-and the hardware, so when there is a firmware update that changes the behavior
-(intentionally or not) in a way the driver needs to know about, then
-the driver should
-be able to request a particular firmware file based on information
-that the owner
-of the dtb may not have.
+I think we have the problem where likely impossible that the driver
+will know what firmware is valid.
 
-I'm holding off on the pull request for today, maybe there is something we can
-still do about it before the merge window.
+Qualcomm, for better or worse, has a signing process for their images.
+This establishes a root a trust which is enforced by hardware.  For
+example, the Modem subsystem (the part of the SoC that talks to cell
+towers and such) will not run an image which is not properly signed.
+The valid signature is burned into the chip.
 
-        Arnd
+"Surely there is one signed image for a particular modem on a specific SoC?"
+Sadly, no.  The OEM is allowed to provide their own key.  This may be
+a key which is specific to the device (Ie the Brand XYZ Model 123
+phone).  Therefore, that device will only run the firmware that
+contains that OEM's signature, even if the actual code happens to be
+identical to what every other OEM has.
+
+For some SoCs which go into multiple products, there seem to be
+several OEMs which are willing to allow the firmware to be included in
+the linux-firmware project.  Therefore, it is likely that there will
+be multiple copies of the Modem image for the 845 SoC (for example) in
+/lib/firmware.  In this case, it seems like your recommendation is
+that the driver should somehow detect that it is running on device 123
+and not device 456, and therefore be able to request the device 123
+specific firmware.
+
+I don't know how the device driver is supposed to make that
+determination, and its my opinion that the driver shouldn't be.  Other
+than the need to have the correct firmware, which is tied to the
+specific device, I'm not aware of an instance where a driver cares
+about anything more than the hardware revision of the block it drives.
