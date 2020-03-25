@@ -2,273 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 784A1192573
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 11:24:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06A3519257B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 11:25:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727459AbgCYKYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 06:24:37 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:41294 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727458AbgCYKYh (ORCPT
+        id S1726262AbgCYKZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 06:25:50 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:37915 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726206AbgCYKZt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 06:24:37 -0400
-Received: by mail-oi1-f195.google.com with SMTP id k9so1579894oia.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 03:24:36 -0700 (PDT)
+        Wed, 25 Mar 2020 06:25:49 -0400
+Received: by mail-ot1-f65.google.com with SMTP id t28so1407185ott.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 03:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=eF3K0U6gQN8xSSi58+W4oxKPi9epPMdHwxeLT5okmEY=;
-        b=117AePM1sXLhTb2DESapBD6RsB0NrxfaND8xZtjqaC1yk6JYLxi7Mp3kbdNdbKAD0C
-         9dqoibOfGY8X22Gkndj+PWANXBtdXAOCnGprCKo2c9CyS+oJ5dMhGtyPYaPtZ4O7c7mj
-         xYul80GzkKijBYnGlvrAI3xofiWjNIjWB9yZBqSBSXJGIDPQznoyQ0PGYbozYgSaqob/
-         Vzt5uER5v/sKeKbmOBESaei2APnYyY3tco1rc+YF4xm038owiumANiWZXpaN0+kA6yzy
-         eFGEH8R1ukAuazJfLqsiDK/L9AQ2hXejWD9Xv4vOi5dDJi/yLZolnTIL42OcpqqPvNzg
-         fqRw==
+        bh=InLdmn9lfAU6Q8B7xfqxVdVzbUzzV6XbSkNNV60xQyQ=;
+        b=nlq+PtHWa9C9USMgmgx0HHVcM1G2xmlF4j55Xdb1gIWEa5hiA7jNhKNZ6ZWU8+wKJq
+         MAzzRwM7n057U73SjyOWshvSlPDAky3YJmtzOkmRLTh8MCz7pcLx8xclKqH/eW+hc9vz
+         /gnS7rLaZ7c65SM2GrDZkOcsooLtHOUYewdiri7Qzbvsh5KlMx7K6ChJr+zIqZ/dU/p+
+         xmYchSaBcPHOiI4GfgdQDqOMAaTU02lZFSkn24XBpMxKuG84+xFE/2Nra+dtZOZ0w2Qh
+         oki1HOxwcRLFZXC926VAE5N9+ZlreDrphJL/lZhPIvVx3m6/BXGJcY8Q/uTGhG4Nc9So
+         LUSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=eF3K0U6gQN8xSSi58+W4oxKPi9epPMdHwxeLT5okmEY=;
-        b=qO2uzzzzxYcMbPbf+bi6v1pSYGRqcdjxD7FqZqK3PjOpdjKp/+MtDjBOfOIMonHdMl
-         hvt+EMBNETLHUtiANFckjUlFHjh5GJq/67M110oF2bo9rAIvmqbJ9BYVcs9LYIymxD/H
-         +g5ZUWh86awuBGdM+JrrJ2Yyzrrqn34+SBqfvb0c4pJpYKrVC7t7gtxB3vgIk1Zo2tuD
-         UcL8avBMu1Gp1J6afDPG+N9ctAYhrym4Vx49Eygk75+kjoetzuUODkW8wGW46u2nRRyR
-         p7HTC+d7xGwUkHxqtQV5LqVEfvUz/iUh6KPMWwQLcHX1TEh3FBj50UIfJmMnnrfg1flN
-         8qtQ==
-X-Gm-Message-State: ANhLgQ3uzUT/D/5BBtlOofK+hBHzi/x3qC7aqSjAuJzguD3/bbVBP03S
-        oQExpxpD2sF8IxsJIHD9LzqfsQitPTtGfoDx7wlU0A==
-X-Google-Smtp-Source: ADFU+vuT4tXdOlYqK20/2kQYMIIL8tp/dRNR55kUrlcFHCkrqZ7mK6PKqlpJiS2Qtj6pTvfqCwwpMj6rlmgNWG07Kq8=
-X-Received: by 2002:aca:cd58:: with SMTP id d85mr1949659oig.173.1585131876052;
- Wed, 25 Mar 2020 03:24:36 -0700 (PDT)
+        bh=InLdmn9lfAU6Q8B7xfqxVdVzbUzzV6XbSkNNV60xQyQ=;
+        b=VMTDGcmvWYqquiwwC0d3S0EN8ZyabWZz1kGoma5EQWWM8fI/PqzHNAPDwZk+bY3shx
+         BqpKYRkPy0v6M24Hs/iydWUucHU3T46OJWZLO7sBsvqqBSzBGUy7p16xZIGpgm9QOyUh
+         kXEyLFJTTgwQ7qxDUb7Wnxr2JXQauA5ki7qX7Lsabe+T6ZwmI74ji73OPIWZ0+a3muwr
+         MlvnkL+80UIorOopJ51vzSzCL0ZVwUp6o95oAoLMgUqK1Cc0OGBjchq2WWgkSz7jkEAV
+         0ZXS5trhXz2f/BP/iZjsVeQny66siSk7BaiY0DmF1s2JoUBWj41YiBRJ1ojU8JplCdtk
+         LbCg==
+X-Gm-Message-State: ANhLgQ1JS/aWLMzcEs8S5ORrTVYjSmpWlKUltTMBdYixXXfc8KA4YFZi
+        LcfdRijofBWTt5tdv+Uhxsb7/KLbTqoqwA9SDMr25g==
+X-Google-Smtp-Source: ADFU+vsmxg0/ycMBgk1bM3vGA7RzekeO12oNQfii7BDQ++sUGCDR480tenHHojZqGSH9m6u5CEVcNPMZW/Zi9nL0IiU=
+X-Received: by 2002:a05:6830:18eb:: with SMTP id d11mr1922054otf.243.1585131949147;
+ Wed, 25 Mar 2020 03:25:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200127212319.1544222-1-robert.marko@sartura.hr>
-In-Reply-To: <20200127212319.1544222-1-robert.marko@sartura.hr>
+References: <20200106135715.1159420-1-robert.marko@sartura.hr>
+In-Reply-To: <20200106135715.1159420-1-robert.marko@sartura.hr>
 From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Wed, 25 Mar 2020 11:24:24 +0100
-Message-ID: <CA+HBbNHDNHvA1xZDhzuzBDW9ZDATjVHOYQkLpBxdwt7F6rj=4w@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
-To:     John Crispin <john@phrozen.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Luka Perkov <luka.perkov@sartura.hr>
+Date:   Wed, 25 Mar 2020 11:25:38 +0100
+Message-ID: <CA+HBbNHEetusFNH-8Qmva=2-_HQRRJ33qfBRSudZBVW+vK0tnw@mail.gmail.com>
+Subject: Re: [PATCH] ARM: qcom: Add support for IPQ40xx
+To:     agross@kernel.org, linux@armlinux.org.uk, arnd@arndb.de,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     Christian Lamparter <chunkeey@gmail.com>,
+        John Crispin <john@phrozen.org>,
+        Luka Perkov <luka.perkov@sartura.hr>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 27, 2020 at 10:23 PM Robert Marko <robert.marko@sartura.hr> wrote:
+On Mon, Jan 6, 2020 at 2:57 PM Robert Marko <robert.marko@sartura.hr> wrote:
 >
-> From: John Crispin <john@phrozen.org>
+> From: Christian Lamparter <chunkeey@gmail.com>
 >
-> Add a driver to setup the USB phy on Qualcom Dakota SoCs.
-> The driver sets up HS and SS phys.
-John, any blockers?
+> Add support for the Qualcomm IPQ40xx SoC in Kconfig.
+> Also add its appropriate textofs.
+Any blockers on this patch?
 
 Thanks
 >
+> Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
 > Signed-off-by: John Crispin <john@phrozen.org>
-> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> Tested-by: Robert Marko <robert.marko@sartura.hr>
 > Cc: Luka Perkov <luka.perkov@sartura.hr>
 > ---
-> Changes from v2 to v3:
-> * Remove magic writes as they are not needed
-> * Correct commit message
+>  arch/arm/Makefile          | 1 +
+>  arch/arm/mach-qcom/Kconfig | 5 +++++
+>  2 files changed, 6 insertions(+)
 >
->  drivers/phy/qualcomm/Kconfig                |   7 +
->  drivers/phy/qualcomm/Makefile               |   1 +
->  drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 152 ++++++++++++++++++++
->  3 files changed, 160 insertions(+)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+> diff --git a/arch/arm/Makefile b/arch/arm/Makefile
+> index db857d07114f..3db642722af0 100644
+> --- a/arch/arm/Makefile
+> +++ b/arch/arm/Makefile
+> @@ -152,6 +152,7 @@ textofs-$(CONFIG_PM_H1940)      := 0x00108000
+>  ifeq ($(CONFIG_ARCH_SA1100),y)
+>  textofs-$(CONFIG_SA1111) := 0x00208000
+>  endif
+> +textofs-$(CONFIG_ARCH_IPQ40XX) := 0x00208000
+>  textofs-$(CONFIG_ARCH_MSM8X60) := 0x00208000
+>  textofs-$(CONFIG_ARCH_MSM8960) := 0x00208000
+>  textofs-$(CONFIG_ARCH_MESON) := 0x00208000
+> diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
+> index ecbf3c4eb878..1772eccb5caf 100644
+> --- a/arch/arm/mach-qcom/Kconfig
+> +++ b/arch/arm/mach-qcom/Kconfig
+> @@ -12,6 +12,11 @@ menuconfig ARCH_QCOM
 >
-> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-> index e46824da29f6..964bd5d784d2 100644
-> --- a/drivers/phy/qualcomm/Kconfig
-> +++ b/drivers/phy/qualcomm/Kconfig
-> @@ -18,6 +18,13 @@ config PHY_QCOM_APQ8064_SATA
->         depends on OF
->         select GENERIC_PHY
+>  if ARCH_QCOM
 >
-> +config PHY_QCOM_IPQ4019_USB
-> +       tristate "Qualcomm IPQ4019 USB PHY module"
-> +       depends on OF && ARCH_QCOM
-> +       select GENERIC_PHY
-> +       help
-> +         Support for the USB PHY on QCOM IPQ4019/Dakota chipsets.
+> +config ARCH_IPQ40XX
+> +       bool "Enable support for IPQ40XX"
+> +       select CLKSRC_QCOM
+> +       select HAVE_ARM_ARCH_TIMER
 > +
->  config PHY_QCOM_IPQ806X_SATA
->         tristate "Qualcomm IPQ806x SATA SerDes/PHY driver"
->         depends on ARCH_QCOM
-> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-> index 283251d6a5d9..8afe6c4f5178 100644
-> --- a/drivers/phy/qualcomm/Makefile
-> +++ b/drivers/phy/qualcomm/Makefile
-> @@ -1,6 +1,7 @@
->  # SPDX-License-Identifier: GPL-2.0
->  obj-$(CONFIG_PHY_ATH79_USB)            += phy-ath79-usb.o
->  obj-$(CONFIG_PHY_QCOM_APQ8064_SATA)    += phy-qcom-apq8064-sata.o
-> +obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)     += phy-qcom-ipq4019-usb.o
->  obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)    += phy-qcom-ipq806x-sata.o
->  obj-$(CONFIG_PHY_QCOM_PCIE2)           += phy-qcom-pcie2.o
->  obj-$(CONFIG_PHY_QCOM_QMP)             += phy-qcom-qmp.o
-> diff --git a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-> new file mode 100644
-> index 000000000000..7efebae6b6fd
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-> @@ -0,0 +1,152 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Copyright (C) 2018 John Crispin <john@phrozen.org>
-> + *
-> + * Based on code from
-> + * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
-> + *
-> + */
-> +
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/mutex.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/phy/phy.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/reset.h>
-> +
-> +struct ipq4019_usb_phy {
-> +       struct device           *dev;
-> +       struct phy              *phy;
-> +       void __iomem            *base;
-> +       struct reset_control    *por_rst;
-> +       struct reset_control    *srif_rst;
-> +};
-> +
-> +static int ipq4019_ss_phy_power_off(struct phy *_phy)
-> +{
-> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> +
-> +       reset_control_assert(phy->por_rst);
-> +       msleep(10);
-> +
-> +       return 0;
-> +}
-> +
-> +static int ipq4019_ss_phy_power_on(struct phy *_phy)
-> +{
-> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> +
-> +       ipq4019_ss_phy_power_off(_phy);
-> +
-> +       reset_control_deassert(phy->por_rst);
-> +
-> +       return 0;
-> +}
-> +
-> +static struct phy_ops ipq4019_usb_ss_phy_ops = {
-> +       .power_on       = ipq4019_ss_phy_power_on,
-> +       .power_off      = ipq4019_ss_phy_power_off,
-> +};
-> +
-> +static int ipq4019_hs_phy_power_off(struct phy *_phy)
-> +{
-> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> +
-> +       reset_control_assert(phy->por_rst);
-> +       msleep(10);
-> +
-> +       reset_control_assert(phy->srif_rst);
-> +       msleep(10);
-> +
-> +       return 0;
-> +}
-> +
-> +static int ipq4019_hs_phy_power_on(struct phy *_phy)
-> +{
-> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> +
-> +       ipq4019_hs_phy_power_off(_phy);
-> +
-> +       reset_control_deassert(phy->srif_rst);
-> +       msleep(10);
-> +
-> +       reset_control_deassert(phy->por_rst);
-> +
-> +       return 0;
-> +}
-> +
-> +static struct phy_ops ipq4019_usb_hs_phy_ops = {
-> +       .power_on       = ipq4019_hs_phy_power_on,
-> +       .power_off      = ipq4019_hs_phy_power_off,
-> +};
-> +
-> +static const struct of_device_id ipq4019_usb_phy_of_match[] = {
-> +       { .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hs_phy_ops},
-> +       { .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ss_phy_ops},
-> +       { },
-> +};
-> +MODULE_DEVICE_TABLE(of, ipq4019_usb_phy_of_match);
-> +
-> +static int ipq4019_usb_phy_probe(struct platform_device *pdev)
-> +{
-> +       struct device *dev = &pdev->dev;
-> +       struct resource *res;
-> +       struct phy_provider *phy_provider;
-> +       struct ipq4019_usb_phy *phy;
-> +       const struct of_device_id *match;
-> +
-> +       match = of_match_device(ipq4019_usb_phy_of_match, &pdev->dev);
-> +       if (!match)
-> +               return -ENODEV;
-> +
-> +       phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
-> +       if (!phy)
-> +               return -ENOMEM;
-> +
-> +       phy->dev = &pdev->dev;
-> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +       phy->base = devm_ioremap_resource(&pdev->dev, res);
-> +       if (IS_ERR(phy->base)) {
-> +               dev_err(dev, "failed to remap register memory\n");
-> +               return PTR_ERR(phy->base);
-> +       }
-> +
-> +       phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
-> +       if (IS_ERR(phy->por_rst)) {
-> +               if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
-> +                       dev_err(dev, "POR reset is missing\n");
-> +               return PTR_ERR(phy->por_rst);
-> +       }
-> +
-> +       phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
-> +       if (IS_ERR(phy->srif_rst))
-> +               return PTR_ERR(phy->srif_rst);
-> +
-> +       phy->phy = devm_phy_create(dev, NULL, match->data);
-> +       if (IS_ERR(phy->phy)) {
-> +               dev_err(dev, "failed to create PHY\n");
-> +               return PTR_ERR(phy->phy);
-> +       }
-> +       phy_set_drvdata(phy->phy, phy);
-> +
-> +       phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
-> +
-> +       return PTR_ERR_OR_ZERO(phy_provider);
-> +}
-> +
-> +static struct platform_driver ipq4019_usb_phy_driver = {
-> +       .probe  = ipq4019_usb_phy_probe,
-> +       .driver = {
-> +               .of_match_table = ipq4019_usb_phy_of_match,
-> +               .name  = "ipq4019-usb-phy",
-> +       }
-> +};
-> +module_platform_driver(ipq4019_usb_phy_driver);
-> +
-> +MODULE_DESCRIPTION("QCOM/IPQ4019 USB phy driver");
-> +MODULE_AUTHOR("John Crispin <john@phrozen.org>");
-> +MODULE_LICENSE("GPL v2");
+>  config ARCH_MSM8X60
+>         bool "Enable support for MSM8X60"
+>         select CLKSRC_QCOM
 > --
 > 2.24.1
 >
