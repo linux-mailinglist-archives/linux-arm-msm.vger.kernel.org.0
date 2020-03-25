@@ -2,59 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CCF99192126
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 07:35:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 416B1192129
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 07:35:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726225AbgCYGfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 02:35:03 -0400
-Received: from mail-pg1-f182.google.com ([209.85.215.182]:37914 "EHLO
-        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726072AbgCYGfC (ORCPT
+        id S1726206AbgCYGfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 02:35:05 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40731 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbgCYGfF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 02:35:02 -0400
-Received: by mail-pg1-f182.google.com with SMTP id x7so677206pgh.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2020 23:35:00 -0700 (PDT)
+        Wed, 25 Mar 2020 02:35:05 -0400
+Received: by mail-pg1-f196.google.com with SMTP id t24so674317pgj.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2020 23:35:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XDUtIM4paHW0qOUeTkKt8AFyM+VSRp0AScAk260LK2s=;
-        b=CKVkfHoj/nZYW3irz1TY3+48Q6839881dDZMIU45L1EzcFqwV35P6C6D5VXZbnAfkI
-         tu5oq99VfrqvYMrRTwHB+ffrmsUeO73kq5AywG8YIxrLJCU2JQ/m4mjDnhLIzlbXAzG5
-         SRjKCWBaMUvDV2WOmQ4X6Q+w+Y9osPekTs/ID/BqAvIoLpSOxc4HnScud9yLgNY22BV3
-         XhTQUN0ixUIwXaFqK8DGM6gfhGPLErBzVqy3pfNHNisbhISiExCGQI7vp9FMuVZt4C0C
-         1SSrq1Tf/01TtmFIebam6DXTtX0/R7oIq+0/GGSm9kuQOxGawvfTylFbGYn01s8Kc9fv
-         mqaQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=siPGNDe+AxSm5pKa/Er1n8oaxWLKO8D7N1OvXW7uO3Y=;
+        b=ti42rp27v40CkiayUlokdDmBdSqvmyT2qfiSyfhGv4MdnJXxjQuSV1o5bNlrjvbK5N
+         YxAGlcWm2ZnCzGiVmLqBbM++fTanIs1+jQQQPD6p4EgVL/RocrWKeWqNyFI4TW7k8z8L
+         dSJrJ3j25FPhQZtIU6+Zhf7l02SG0IHDE4B+oaamj1ZXveCxgrk9nKAnckGiWA5H3wms
+         gjjGLtMztVC5W4HuxjYGegw00mREWMavEkOcDzdZwXd++1Pn+hJww3w0ffPYD3ABS+zL
+         eEf7gld8nKhNlwH97u5IcTk9MxM6dR6wBvCFRFWlXReyzS8Qxot5WE5/7StUa8yDPwoi
+         Rgyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XDUtIM4paHW0qOUeTkKt8AFyM+VSRp0AScAk260LK2s=;
-        b=JBT/yupnJbb3rXd/cSH9eQ7G7fg0JfuZbYjXIaN8RH4KRS2qUQJf023GppZ9+GYE8J
-         Rqc+pdMzZyKfH5nzYfyQD56UcIf6oPI3QcAtdMlt7IG6hvqX7WkkZ3MvpHrvey1KV55W
-         YRRJzID6oHdfsWlCWQXfUAjjvQ8u95zltSTBdnPqQ+iaRS/OcTdsku7XfiSLqA97M9VZ
-         LoGmqlfPVubKCePdmnV/R/8nzG1IdB+OxVIn+4VS9tjKotPOvkbJBmmMOOyxNGlTfDH1
-         ZMRUZGeSE8y5mLgxn+65xo2Dhzl7gvWdha8qWA2A6JFNl2UUVJUttjKXRo1cJPct44EU
-         D/ug==
-X-Gm-Message-State: ANhLgQ2pew0Qv4MY51qlC41crbsPWL/oo17xRhsMcvjUKAx8hkLtqeUt
-        HS0PrSTJ76MQCiFz6MXk52kecA==
-X-Google-Smtp-Source: ADFU+vvN3H7QGlUvfXSacv91SL0XLSkc7dVACoE1ob84EaxILfcJuRko4ery4B/XIUxIwrAPyWlDqQ==
-X-Received: by 2002:a63:da4d:: with SMTP id l13mr1705064pgj.216.1585118100212;
-        Tue, 24 Mar 2020 23:35:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=siPGNDe+AxSm5pKa/Er1n8oaxWLKO8D7N1OvXW7uO3Y=;
+        b=jSHhcvKd0IhyIVQvaacathLWnJUoXneEstUQIzwXVXycK53GyxhsxWbAdo5DLgh/xy
+         PujkIH5SA67iL0/mHZDUW7ZxIC69MrG8FLnn/dSclDgQc8KcdMb5u1xKaYgSu3088sLd
+         REHoB/MUT7wL1z36jtvgOvGyUOdP4QKL97oo4LAjOna3DuiqhBzz8FoRM2kpuS8lZGu0
+         +4YV/NGWasPZ1mOUF/RIh0CAknUEt9Z2TsWg/1WGbR2WeAFyKBdtkaTmYUK0hNTvtwxg
+         CmM5ZXKIi5dPlXQOk0O0zFmdUa18EuEphHXgBTEJ/5nzhYRpHKw/gyA2TW5oYR6p3l7d
+         VVrQ==
+X-Gm-Message-State: ANhLgQ24phjfD3U9bhW02U7rRVSFX29mmEbCKNMztNfk2wQCJXXeVm72
+        p7fgTCG5jzAbYgIwZe4MeTzRAA==
+X-Google-Smtp-Source: ADFU+vuSlF1tCz/0gmNbN3lD4lor8uE7Ghbaw8r1wnCZY9m1lBu2LVeaoo33nM5iHrT/K9MmyeZGiA==
+X-Received: by 2002:a62:648f:: with SMTP id y137mr1832185pfb.199.1585118104267;
+        Tue, 24 Mar 2020 23:35:04 -0700 (PDT)
 Received: from localhost ([103.195.202.71])
-        by smtp.gmail.com with ESMTPSA id d26sm4059263pfo.37.2020.03.24.23.34.57
+        by smtp.gmail.com with ESMTPSA id 8sm17839049pfv.65.2020.03.24.23.35.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2020 23:34:58 -0700 (PDT)
+        Tue, 24 Mar 2020 23:35:03 -0700 (PDT)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         swboyd@chromium.org, mka@chromium.org, daniel.lezcano@linaro.org,
         Amit Kucheria <amit.kucheria@verdurent.com>,
         Zhang Rui <rui.zhang@intel.com>
-Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: [PATCH v3 0/3] Convert thermal bindings to yaml
-Date:   Wed, 25 Mar 2020 12:04:51 +0530
-Message-Id: <cover.1585117436.git.amit.kucheria@linaro.org>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v3 1/3] dt-bindings: thermal: Add yaml bindings for thermal sensors
+Date:   Wed, 25 Mar 2020 12:04:52 +0530
+Message-Id: <93466e6c031c0084de09bd6b448556a6c5080880.1585117436.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <cover.1585117436.git.amit.kucheria@linaro.org>
+References: <cover.1585117436.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -62,58 +64,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
+As part of moving the thermal bindings to YAML, split it up into 3
+bindings: thermal sensors, cooling devices and thermal zones.
 
-Here is a series splitting up the thermal bindings into 3 separate bindings
-in YAML, one each of the sensor, cooling-device and the thermal zones.
+The property #thermal-sensor-cells is required in each device that acts
+as a thermal sensor. It is used to uniquely identify the instance of the
+thermal sensor inside the system.
 
-A series to remove thermal.txt and change over all references to it will
-follow shortly. Another series to fixup problems found by enforcing this
-yaml definition across dts files will also follow.
-
-Changes since v2:
-- Addressed review comment from Rob
-- Added required properties for thermal-zones node
-- Added select: true to thermal-cooling-devices.yaml
-- Fixed up example to pass dt_binding_check
-
-Changes since v1:
-- Addressed review comments from Rob
-- Moved the license back to GPLv2, waiting for other authors to give
-  permission to relicense to BSD-2-Clause as well
-- Fixed up warnings thrown by dt_binding_check
-
-I have to add that the bindings as they exist today, don't really follow
-the "describe the hardware" model of devicetree. e.g. the entire
-thermal-zone binding is a software abstraction to tie arbitrary,
-board-specific trip points to cooling strategies. This doesn't fit well
-into the model where the same SoC in two different form-factor devices e.g.
-mobile and laptop, will have fairly different thermal profiles and might
-benefit from different trip points and mitigation heuristics. I've started
-some experiments with moving the thermal zone data to a board-specific
-platform data that is used to initialise a "thermal zone driver".
-
-In any case, if we ever move down that path, it'll probably end up being v2
-of the binding, so this series is still relevant.
-
-Please help review.
-
-Regards,
-Amit
-
-Amit Kucheria (3):
-  dt-bindings: thermal: Add yaml bindings for thermal sensors
-  dt-bindings: thermal: Add yaml bindings for thermal cooling-devices
-  dt-bindings: thermal: Add yaml bindings for thermal zones
-
- .../thermal/thermal-cooling-devices.yaml      | 116 +++++++
- .../bindings/thermal/thermal-sensor.yaml      |  72 ++++
- .../bindings/thermal/thermal-zones.yaml       | 324 ++++++++++++++++++
- 3 files changed, 512 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
+Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+---
+ .../bindings/thermal/thermal-sensor.yaml      | 72 +++++++++++++++++++
+ 1 file changed, 72 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
- create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
 
+diff --git a/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+new file mode 100644
+index 000000000000..920ee7667591
+--- /dev/null
++++ b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: (GPL-2.0)
++# Copyright 2020 Linaro Ltd.
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/thermal/thermal-sensor.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Thermal sensor binding
++
++maintainers:
++  - Amit Kucheria <amitk@kernel.org>
++
++description: |
++  Thermal management is achieved in devicetree by describing the sensor hardware
++  and the software abstraction of thermal zones required to take appropriate
++  action to mitigate thermal overloads.
++
++  The following node types are used to completely describe a thermal management
++  system in devicetree:
++   - thermal-sensor: device that measures temperature, has SoC-specific bindings
++   - cooling-device: device used to dissipate heat either passively or artively
++   - thermal-zones: a container of the following node types used to describe all
++     thermal data for the platform
++
++  This binding describes the thermal-sensor.
++
++  Thermal sensor devices provide temperature sensing capabilities on thermal
++  zones. Typical devices are I2C ADC converters and bandgaps. Thermal sensor
++  devices may control one or more internal sensors.
++
++properties:
++  "#thermal-sensor-cells":
++    description:
++      Used to uniquely identify a thermal sensor instance within an IC. Will be
++      0 on sensor nodes with only a single sensor and at least 1 on nodes
++      containing several internal sensors.
++    enum: [0, 1]
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    // Example 1: SDM845 TSENS
++    soc: soc@0 {
++            #address-cells = <2>;
++            #size-cells = <2>;
++
++            /* ... */
++
++            tsens0: thermal-sensor@c263000 {
++                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
++                    reg = <0 0x0c263000 0 0x1ff>, /* TM */
++                          <0 0x0c222000 0 0x1ff>; /* SROT */
++                    #qcom,sensors = <13>;
++                    interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
++                                 <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
++                    interrupt-names = "uplow", "critical";
++                    #thermal-sensor-cells = <1>;
++            };
++
++            tsens1: thermal-sensor@c265000 {
++                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
++                    reg = <0 0x0c265000 0 0x1ff>, /* TM */
++                          <0 0x0c223000 0 0x1ff>; /* SROT */
++                    #qcom,sensors = <8>;
++                    interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
++                                 <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
++                    interrupt-names = "uplow", "critical";
++                    #thermal-sensor-cells = <1>;
++            };
++    };
++...
 -- 
 2.20.1
 
