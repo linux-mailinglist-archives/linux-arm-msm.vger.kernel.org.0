@@ -2,261 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA1A19260C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 11:46:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B624A19269D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 12:05:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbgCYKqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 06:46:01 -0400
-Received: from nbd.name ([46.4.11.11]:42416 "EHLO nbd.name"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726139AbgCYKqB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 06:46:01 -0400
-Received: from [2a04:4540:1403:6800:d147:da0f:4153:c02b]
-        by ds12 with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.89)
-        (envelope-from <john@phrozen.org>)
-        id 1jH3Xp-0003UB-4E; Wed, 25 Mar 2020 11:45:57 +0100
-Subject: Re: [PATCH v3 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
-To:     Robert Marko <robert.marko@sartura.hr>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Luka Perkov <luka.perkov@sartura.hr>
-References: <20200127212319.1544222-1-robert.marko@sartura.hr>
- <CA+HBbNHDNHvA1xZDhzuzBDW9ZDATjVHOYQkLpBxdwt7F6rj=4w@mail.gmail.com>
-From:   John Crispin <john@phrozen.org>
-Message-ID: <d6f46bff-1977-a0e6-2fd9-a4e9359fe666@phrozen.org>
-Date:   Wed, 25 Mar 2020 11:45:56 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1727458AbgCYLFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 07:05:05 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:39945 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727129AbgCYLFF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Mar 2020 07:05:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585134304; h=Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
+ To: From: Sender; bh=JepPCPGEarX1ss6ZbVvaIoXfTJutoTJE1MiruN2+lF8=; b=gkxn3/JvzBNYUl9VAT2ZR3vql5376nucZF5G6CvwG7ZUpwcN6LXwMKLqBzlJZKfu191nHqZ4
+ ARtSt1P96TES5pfKFbXGgF1x6Cr47lM5zlvyOlSC40B0C1i9lTuEBLVPvxCuk64Pf6f2u/Uo
+ olammCC4SvYEGvtqq1Oz7yH0kdg=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7b3adf.7f09eaada1b8-smtp-out-n02;
+ Wed, 25 Mar 2020 11:05:03 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5D206C433BA; Wed, 25 Mar 2020 11:05:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from Pillair (unknown [183.83.66.17])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 83978C433F2;
+        Wed, 25 Mar 2020 11:04:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 83978C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
+From:   <pillair@codeaurora.org>
+To:     "'Evan Green'" <evgreen@chromium.org>
+Cc:     "'open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS'" 
+        <devicetree@vger.kernel.org>,
+        "'linux-arm Mailing List'" <linux-arm-kernel@lists.infradead.org>,
+        "'LKML'" <linux-kernel@vger.kernel.org>,
+        "'linux-arm-msm'" <linux-arm-msm@vger.kernel.org>
+References: <1580822300-4491-1-git-send-email-pillair@codeaurora.org> <CAE=gft7EOALEMUWzoR3+pjoxCUTYWbiXoXY=dXH1BDhS3KwBzg@mail.gmail.com>
+In-Reply-To: <CAE=gft7EOALEMUWzoR3+pjoxCUTYWbiXoXY=dXH1BDhS3KwBzg@mail.gmail.com>
+Subject: RE: [PATCH v6] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
+Date:   Wed, 25 Mar 2020 16:34:54 +0530
+Message-ID: <000901d60295$3acc79b0$b0656d10$@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <CA+HBbNHDNHvA1xZDhzuzBDW9ZDATjVHOYQkLpBxdwt7F6rj=4w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIr1eNiqDxek+JigOIeIUW3T4FxSwDFrKGDp6dQ2yA=
+Content-Language: en-us
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Evan,
 
-On 25.03.20 11:24, Robert Marko wrote:
-> On Mon, Jan 27, 2020 at 10:23 PM Robert Marko <robert.marko@sartura.hr> wrote:
->> From: John Crispin <john@phrozen.org>
->>
->> Add a driver to setup the USB phy on Qualcom Dakota SoCs.
->> The driver sets up HS and SS phys.
-> John, any blockers?
->
-> Thanks
-
-not from my side, no idea why it is not getting merged
-
-     John
+I will send out a v7 for this patchset.
+Since I have to configure the S2 SIDs, it is dependent on below ath10k =
+patchset.
+https://patchwork.kernel.org/project/linux-wireless/list/?series=3D261367=
 
 
+Thanks,
+Rakesh Pillai.
 
-
->> Signed-off-by: John Crispin <john@phrozen.org>
->> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
->> Cc: Luka Perkov <luka.perkov@sartura.hr>
->> ---
->> Changes from v2 to v3:
->> * Remove magic writes as they are not needed
->> * Correct commit message
->>
->>   drivers/phy/qualcomm/Kconfig                |   7 +
->>   drivers/phy/qualcomm/Makefile               |   1 +
->>   drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 152 ++++++++++++++++++++
->>   3 files changed, 160 insertions(+)
->>   create mode 100644 drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
->>
->> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
->> index e46824da29f6..964bd5d784d2 100644
->> --- a/drivers/phy/qualcomm/Kconfig
->> +++ b/drivers/phy/qualcomm/Kconfig
->> @@ -18,6 +18,13 @@ config PHY_QCOM_APQ8064_SATA
->>          depends on OF
->>          select GENERIC_PHY
->>
->> +config PHY_QCOM_IPQ4019_USB
->> +       tristate "Qualcomm IPQ4019 USB PHY module"
->> +       depends on OF && ARCH_QCOM
->> +       select GENERIC_PHY
->> +       help
->> +         Support for the USB PHY on QCOM IPQ4019/Dakota chipsets.
->> +
->>   config PHY_QCOM_IPQ806X_SATA
->>          tristate "Qualcomm IPQ806x SATA SerDes/PHY driver"
->>          depends on ARCH_QCOM
->> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
->> index 283251d6a5d9..8afe6c4f5178 100644
->> --- a/drivers/phy/qualcomm/Makefile
->> +++ b/drivers/phy/qualcomm/Makefile
->> @@ -1,6 +1,7 @@
->>   # SPDX-License-Identifier: GPL-2.0
->>   obj-$(CONFIG_PHY_ATH79_USB)            += phy-ath79-usb.o
->>   obj-$(CONFIG_PHY_QCOM_APQ8064_SATA)    += phy-qcom-apq8064-sata.o
->> +obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)     += phy-qcom-ipq4019-usb.o
->>   obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)    += phy-qcom-ipq806x-sata.o
->>   obj-$(CONFIG_PHY_QCOM_PCIE2)           += phy-qcom-pcie2.o
->>   obj-$(CONFIG_PHY_QCOM_QMP)             += phy-qcom-qmp.o
->> diff --git a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
->> new file mode 100644
->> index 000000000000..7efebae6b6fd
->> --- /dev/null
->> +++ b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
->> @@ -0,0 +1,152 @@
->> +// SPDX-License-Identifier: GPL-2.0-or-later
->> +/*
->> + * Copyright (C) 2018 John Crispin <john@phrozen.org>
->> + *
->> + * Based on code from
->> + * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
->> + *
->> + */
->> +
->> +#include <linux/delay.h>
->> +#include <linux/err.h>
->> +#include <linux/io.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/mutex.h>
->> +#include <linux/of_platform.h>
->> +#include <linux/phy/phy.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/reset.h>
->> +
->> +struct ipq4019_usb_phy {
->> +       struct device           *dev;
->> +       struct phy              *phy;
->> +       void __iomem            *base;
->> +       struct reset_control    *por_rst;
->> +       struct reset_control    *srif_rst;
->> +};
->> +
->> +static int ipq4019_ss_phy_power_off(struct phy *_phy)
->> +{
->> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +
->> +       reset_control_assert(phy->por_rst);
->> +       msleep(10);
->> +
->> +       return 0;
->> +}
->> +
->> +static int ipq4019_ss_phy_power_on(struct phy *_phy)
->> +{
->> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +
->> +       ipq4019_ss_phy_power_off(_phy);
->> +
->> +       reset_control_deassert(phy->por_rst);
->> +
->> +       return 0;
->> +}
->> +
->> +static struct phy_ops ipq4019_usb_ss_phy_ops = {
->> +       .power_on       = ipq4019_ss_phy_power_on,
->> +       .power_off      = ipq4019_ss_phy_power_off,
->> +};
->> +
->> +static int ipq4019_hs_phy_power_off(struct phy *_phy)
->> +{
->> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +
->> +       reset_control_assert(phy->por_rst);
->> +       msleep(10);
->> +
->> +       reset_control_assert(phy->srif_rst);
->> +       msleep(10);
->> +
->> +       return 0;
->> +}
->> +
->> +static int ipq4019_hs_phy_power_on(struct phy *_phy)
->> +{
->> +       struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
->> +
->> +       ipq4019_hs_phy_power_off(_phy);
->> +
->> +       reset_control_deassert(phy->srif_rst);
->> +       msleep(10);
->> +
->> +       reset_control_deassert(phy->por_rst);
->> +
->> +       return 0;
->> +}
->> +
->> +static struct phy_ops ipq4019_usb_hs_phy_ops = {
->> +       .power_on       = ipq4019_hs_phy_power_on,
->> +       .power_off      = ipq4019_hs_phy_power_off,
->> +};
->> +
->> +static const struct of_device_id ipq4019_usb_phy_of_match[] = {
->> +       { .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hs_phy_ops},
->> +       { .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ss_phy_ops},
->> +       { },
->> +};
->> +MODULE_DEVICE_TABLE(of, ipq4019_usb_phy_of_match);
->> +
->> +static int ipq4019_usb_phy_probe(struct platform_device *pdev)
->> +{
->> +       struct device *dev = &pdev->dev;
->> +       struct resource *res;
->> +       struct phy_provider *phy_provider;
->> +       struct ipq4019_usb_phy *phy;
->> +       const struct of_device_id *match;
->> +
->> +       match = of_match_device(ipq4019_usb_phy_of_match, &pdev->dev);
->> +       if (!match)
->> +               return -ENODEV;
->> +
->> +       phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
->> +       if (!phy)
->> +               return -ENOMEM;
->> +
->> +       phy->dev = &pdev->dev;
->> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
->> +       phy->base = devm_ioremap_resource(&pdev->dev, res);
->> +       if (IS_ERR(phy->base)) {
->> +               dev_err(dev, "failed to remap register memory\n");
->> +               return PTR_ERR(phy->base);
->> +       }
->> +
->> +       phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
->> +       if (IS_ERR(phy->por_rst)) {
->> +               if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
->> +                       dev_err(dev, "POR reset is missing\n");
->> +               return PTR_ERR(phy->por_rst);
->> +       }
->> +
->> +       phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
->> +       if (IS_ERR(phy->srif_rst))
->> +               return PTR_ERR(phy->srif_rst);
->> +
->> +       phy->phy = devm_phy_create(dev, NULL, match->data);
->> +       if (IS_ERR(phy->phy)) {
->> +               dev_err(dev, "failed to create PHY\n");
->> +               return PTR_ERR(phy->phy);
->> +       }
->> +       phy_set_drvdata(phy->phy, phy);
->> +
->> +       phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
->> +
->> +       return PTR_ERR_OR_ZERO(phy_provider);
->> +}
->> +
->> +static struct platform_driver ipq4019_usb_phy_driver = {
->> +       .probe  = ipq4019_usb_phy_probe,
->> +       .driver = {
->> +               .of_match_table = ipq4019_usb_phy_of_match,
->> +               .name  = "ipq4019-usb-phy",
->> +       }
->> +};
->> +module_platform_driver(ipq4019_usb_phy_driver);
->> +
->> +MODULE_DESCRIPTION("QCOM/IPQ4019 USB phy driver");
->> +MODULE_AUTHOR("John Crispin <john@phrozen.org>");
->> +MODULE_LICENSE("GPL v2");
->> --
->> 2.24.1
->>
+> -----Original Message-----
+> From: Evan Green <evgreen@chromium.org>
+> Sent: Tuesday, March 24, 2020 11:10 PM
+> To: Rakesh Pillai <pillair@codeaurora.org>
+> Cc: open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
+> <devicetree@vger.kernel.org>; linux-arm Mailing List <linux-arm-
+> kernel@lists.infradead.org>; LKML <linux-kernel@vger.kernel.org>; =
+linux-
+> arm-msm <linux-arm-msm@vger.kernel.org>
+> Subject: Re: [PATCH v6] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
+> module device node
+>=20
+> Hi Rakesh,
+>=20
+> On Tue, Feb 4, 2020 at 5:21 AM Rakesh Pillai <pillair@codeaurora.org> =
+wrote:
+> >
+> > Add device node for the ath10k SNOC platform driver probe
+> > and add resources required for WCN3990 on sc7180 soc.
+> >
+> > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+>=20
+> What is the status of this? Looks like you have some feedback from
+> Sibi. Can you reply and spin this? Also a comment below:
+>=20
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27
+> +++++++++++++++++++++++++++
+> >  2 files changed, 32 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > index 388f50a..167f68ac 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > @@ -287,6 +287,11 @@
+> >         vdda-pll-supply =3D <&vreg_l4a_0p8>;
+> >  };
+> >
+> > +&wifi {
+> > +       status =3D "okay";
+> > +       qcom,msa-fixed-perm;
+> > +};
+> > +
+> >  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+> >
+> >  &qspi_clk {
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > index 8011c5f..e3e8610 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > @@ -75,6 +75,11 @@
+> >                         reg =3D <0x0 0x80900000 0x0 0x200000>;
+> >                         no-map;
+> >                 };
+> > +
+> > +               wlan_fw_mem: memory@93900000 {
+> > +                       reg =3D <0 0x93900000 0 0x200000>;
+> > +                       no-map;
+> > +               };
+> >         };
+> >
+> >         cpus {
+> > @@ -1490,6 +1495,28 @@
+> >
+> >                         #freq-domain-cells =3D <1>;
+> >                 };
+> > +
+> > +               wifi: wifi@18800000 {
+> > +                       compatible =3D "qcom,wcn3990-wifi";
+> > +                       reg =3D <0 0x18800000 0 0x800000>;
+> > +                       reg-names =3D "membase";
+> > +                       iommus =3D <&apps_smmu 0xc0 0x1>;
+> > +                       interrupts =3D
+> > +                               <GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* =
+CE0 */ >,
+> > +                               <GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* =
+CE1 */ >,
+> > +                               <GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* =
+CE2 */ >,
+> > +                               <GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* =
+CE3 */ >,
+> > +                               <GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* =
+CE4 */ >,
+> > +                               <GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* =
+CE5 */ >,
+> > +                               <GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* =
+CE6 */ >,
+> > +                               <GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* =
+CE7 */ >,
+> > +                               <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* =
+CE8 */ >,
+> > +                               <GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* =
+CE9 */ >,
+> > +                               <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* =
+CE10 */>,
+> > +                               <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* =
+CE11 */>;
+> > +                       memory-region =3D <&wlan_fw_mem>;
+>=20
+> The clocks are missing:
+>=20
+> clocks =3D <&rpmhcc RPMH_RF_CLK2>;
+> clock-names =3D "cxo_ref_clk_pin";
+>=20
+> > +                       status =3D "disabled";
+> > +               };
+> >         };
+> >
+> >         thermal-zones {
+> > --
+> > 2.7.4
+> >
