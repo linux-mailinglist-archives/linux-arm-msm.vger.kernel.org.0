@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 11699192D22
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 16:44:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2DC1192D25
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 16:44:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727675AbgCYPoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 11:44:05 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:34934 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727598AbgCYPoE (ORCPT
+        id S1727773AbgCYPo6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 11:44:58 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:41549 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727731AbgCYPo5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 11:44:04 -0400
-Received: by mail-lj1-f194.google.com with SMTP id k21so2986394ljh.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 08:44:02 -0700 (PDT)
+        Wed, 25 Mar 2020 11:44:57 -0400
+Received: by mail-lj1-f193.google.com with SMTP id n17so2958818lji.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 08:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LBAifNBmrJnMhjXFj42AkkhqZk/DQgMX1I7zEeLO1KM=;
-        b=BQj5OkGjAfRNIZLzNB09MAQd/d6rMp+y/3v/RIjRwrlpz81TLpzSf574xy/Fzl7TWc
-         /CnJxZQkyKsuI2hoYgY/UcZrNpajW/YYPP0OOU7g5Nz/CllobgzdUZOJK22HsGxZmNBf
-         SzrH6aZ5hgUTYeckKeYq9JSpshRCWflklBFg9xgRIjWUjef35vEidrAzDW6isEjPiRRV
-         VZptdUit+XcCDzugpMaYWb0ADXPmkqRaKu2WGVuv6JDxh1NxtYWzsOUzkYZwiYwkN0Ri
-         K32sgHweA6E+NuYJZWEucxvaA5w8ELuazdl49BTu7DSaKyFxSKhbTslV9+C+TNMsVfL5
-         9fVA==
+        bh=tXD0NIbBQHX+z9/5Cn5kHqlwTwqxUoD/Q190EABWTDY=;
+        b=iK5q0pYAem2IC9HXIUCtWiUmOAneNwO6eapMhrlo9VLWa65nib3Eh+CzYBy8hLhorL
+         sJ4Ms9eG4HklmPaumOYkym3iEypfey3ioMh+Mc6r/X19Mg1orDDY+UGlORpAE8tku7Nh
+         7gpopkJi24jMwYndQtn+iUf5ezVwgYYcdQSeIBhFo8isbCYnJrJ//SIkfBE8NVQuGkeE
+         FZBlZH1Vf1AvT+2gJKE8uCmSZ594hEBMXA9G2KD/ZO5I7JRV/XFxF+OZjkP0q9edpq3+
+         Wm9FPFp5/Z+Ok9ICmPaZcJrNO3u4h+skHjnxo25GXnJpos3CSOSMUP2WU+ep05IltdLY
+         GYaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LBAifNBmrJnMhjXFj42AkkhqZk/DQgMX1I7zEeLO1KM=;
-        b=IBXHELu0h3/4dC2UOcWdRKXyvi1ynVfC05cM0Vm2xOnijhWVZGicjLtOAYFV2oNQ8Z
-         bK3CsML1UhFMvflwrx9HxXOSjFz6G93lMpd/R28XOI4e8Bo4wjL3KvFfZZy9dqnsnoA7
-         SdDg1IHKksdSmfPRv2CL5eDyFEjgK5Q9hsydkVDdwcCBss+DBHjR2o+lEp1cgKgjI6hO
-         dx7nBG9ado9+K3nDrVM1RhAE1cEqzz8Z/hosa1f5NfN0lBL7obqlMtdbiytO/dPSQxaU
-         5bGv6N9sQ0dNMabr3EUPTB1VdqDJDziel06BTF+XopvehqMpVwbgiLg152qZN4bLoRSh
-         7TDw==
-X-Gm-Message-State: ANhLgQ2H4sNN9IvM9Zjj6LeB2YKRMCjX+OV7eBWDK87EzWnuLmML2sJB
-        4tnsnxvGCmsORL26scEhVRsVS6P4CvndnnqoBpRh0Q==
-X-Google-Smtp-Source: APiQypLy1o1jAyUhx+0b/e3QcaAKhZzmljoMl1rKjv8eoyonaedCEKN0p1ZyRQD0GsUQPUQztHMcDRDH5VU2lJagPw8=
-X-Received: by 2002:a2e:9497:: with SMTP id c23mr2340592ljh.286.1585151042137;
- Wed, 25 Mar 2020 08:44:02 -0700 (PDT)
+        bh=tXD0NIbBQHX+z9/5Cn5kHqlwTwqxUoD/Q190EABWTDY=;
+        b=DNycDzSrE3+nS87GMPG9VgG1r0kk/Mp3PbYYR5rzu73X9/LMy15ooMfdfZshCJW8gp
+         mHFNo+59DDSibxHl6uoROAWaLWZhiahkGV/ipSPCPFPEJgcqJTHNqc5sPg4r489IsOie
+         WtCjcDIOPyW0yP5wjNUTbgvZPq2fnfWgpuHq+UoURlCtErTDX+/qhZnCGEvmtx8kz0Fw
+         fM8K/Y7JhAyCxV0Afd0N7LmkNKqUfZLsxCE7fo44M5rIHyesP4KX4FSy5DOxSMIN9JuU
+         xofOqbfJEDsmi3esedHrg9g1/dP5kVnX8TURq9W6fntwKpPqKdMdhL6m86DFn7hGbD4y
+         IFYg==
+X-Gm-Message-State: ANhLgQ1RpcuF3gzG6udizM3qrnx109yDmF7Z+gI3b+WSI1qfzvpZ6a/v
+        f5ed7BvxkZFROJH+1Tbl9fUwxVpr+ljJnu5EyGDsQg==
+X-Google-Smtp-Source: ADFU+vv1RzjW7k7FmbN6HbpO06Hw8i+AT0m5YUev5QnYHDYHVSTJXBwOqWeX+HKNht/1FR17wexRpRGTCquA6m7QabQ=
+X-Received: by 2002:a2e:90c4:: with SMTP id o4mr2215674ljg.287.1585151095466;
+ Wed, 25 Mar 2020 08:44:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200324180513.3882-1-robh@kernel.org>
-In-Reply-To: <20200324180513.3882-1-robh@kernel.org>
+References: <20200324180513.3882-1-robh@kernel.org> <20200324180513.3882-2-robh@kernel.org>
+In-Reply-To: <20200324180513.3882-2-robh@kernel.org>
 From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Wed, 25 Mar 2020 21:13:50 +0530
-Message-ID: <CAP245DWvF+BPczjQgcwrSoYrAB7DxVaz+LSphbBMo00JT=O85w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: thermal: tsens: Fix nvmem-cell-names schema
+Date:   Wed, 25 Mar 2020 21:14:44 +0530
+Message-ID: <CAP245DVwuaDdTvymeGteoKcJj_+TyuEWnmY+GRtA2qnBKqhMsw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dt-bindings: thermal: tsens: Set 'additionalProperties:
+ false'
 To:     Rob Herring <robh@kernel.org>
 Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -64,10 +65,10 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, Mar 24, 2020 at 11:35 PM Rob Herring <robh@kernel.org> wrote:
 >
-> There's a typo 'nvmem-cells-names' in the schema which means the correct
-> 'nvmem-cell-names' in the examples are not checked. The possible values
-> are wrong too both in that the 2nd entry is not specified correctly and the
-> values are just wrong based on the dts files in the kernel.
+> Ensure the node only contains the properties listed in the schema by
+> setting 'additionalProperties: false'. Doing this requires reworking the
+> interrupt properties schemas so that they are defined in the main
+> 'properties' section.
 
 
 Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
@@ -83,39 +84,68 @@ Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 > Cc: devicetree@vger.kernel.org
 > Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
->  .../devicetree/bindings/thermal/qcom-tsens.yaml          | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
+>  .../bindings/thermal/qcom-tsens.yaml          | 28 ++++++++++++-------
+>  1 file changed, 18 insertions(+), 10 deletions(-)
 >
 > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index eac644d9e238..7a38d2116059 100644
+> index 7a38d2116059..3492447e42e9 100644
 > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
 > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -52,13 +52,12 @@ properties:
->      description:
->        Reference to an nvmem node for the calibration data
+> @@ -46,6 +46,18 @@ properties:
+>        - description: TM registers
+>        - description: SROT registers
 >
-> -  nvmem-cells-names:
-> +  nvmem-cell-names:
+> +  interrupts:
+> +    minItems: 1
+> +    items:
+> +      - description: Combined interrupt if upper or lower threshold crossed
+> +      - description: Interrupt if critical threshold crossed
+> +
+> +  interrupt-names:
+> +    minItems: 1
+> +    items:
+> +      - const: uplow
+> +      - const: critical
+> +
+>    nvmem-cells:
 >      minItems: 1
 >      maxItems: 2
->      items:
-> -      - enum:
-> -        - caldata
-> -        - calsel
-> +      - const: calib
-> +      - const: calib_sel
+> @@ -88,22 +100,16 @@ allOf:
+>      then:
+>        properties:
+>          interrupts:
+> -          items:
+> -            - description: Combined interrupt if upper or lower threshold crossed
+> +          maxItems: 1
+>          interrupt-names:
+> -          items:
+> -            - const: uplow
+> +          maxItems: 1
 >
->    "#qcom,sensors":
->      allOf:
-> @@ -124,7 +123,7 @@ examples:
->                   <0x4a8000 0x1000>; /* SROT */
+>      else:
+>        properties:
+>          interrupts:
+> -          items:
+> -            - description: Combined interrupt if upper or lower threshold crossed
+> -            - description: Interrupt if critical threshold crossed
+> +          minItems: 2
+>          interrupt-names:
+> -          items:
+> -            - const: uplow
+> -            - const: critical
+> +          minItems: 2
 >
->             nvmem-cells = <&tsens_caldata>, <&tsens_calsel>;
-> -           nvmem-cell-names = "caldata", "calsel";
-> +           nvmem-cell-names = "calib", "calib_sel";
+>  required:
+>    - compatible
+> @@ -113,6 +119,8 @@ required:
+>    - interrupt-names
+>    - "#thermal-sensor-cells"
 >
->             interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
->             interrupt-names = "uplow";
+> +additionalProperties: false
+> +
+>  examples:
+>    - |
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
 > --
 > 2.20.1
 >
