@@ -2,107 +2,332 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36212192CF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 16:40:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BFED192D17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 16:42:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbgCYPkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 11:40:21 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46882 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727992AbgCYPkU (ORCPT
+        id S1727491AbgCYPm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 11:42:26 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:45273 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727604AbgCYPmZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 11:40:20 -0400
-Received: by mail-ed1-f68.google.com with SMTP id cf14so2875079edb.13;
-        Wed, 25 Mar 2020 08:40:17 -0700 (PDT)
+        Wed, 25 Mar 2020 11:42:25 -0400
+Received: by mail-lj1-f194.google.com with SMTP id t17so2923311ljc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 08:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=vVQBr/UYJMdab8jRg2zR24QImGiBviKI+Lqx/RV8Icg=;
-        b=iM7fQags/yNx8RR2ehfaaLuUBoI2eC3ngDb/4LT7lEsOSVAPorZvL9vvcfzaiS579r
-         pgFp1e+/ArquN9GvkHX9wxU90+sCMiWWybFbWUe00yHiHTdHFsutf3sq5PHLUx0JEJWK
-         ck4Q8LpTpZQ3xd2pJEdZYJ/scZaUMf0DXBjEpWdWahv71/3HKMfYwqyZE9x1CylE0FtA
-         lYiAm5qYpDgvG+qJMuPHYWCmkNOZJTw3UpvcMiNXXj3LZwXsTF+Kbf9uaZhGHfi6cbNX
-         P9kq1JZiizjkbHXEhwwS0MQPu0HMt7xJ4FiUjJ9oPLUEPDLaCtnfOmZAgg1olxUPPlug
-         ieXQ==
+        bh=/6XG2whFohVXd5AQ1C08EQE0cymLHuuX/8O3HKq2GsE=;
+        b=B6czuBxu/KoDXNV9D7lleVdMipVKCiFPokLMcLU3Ib25+PRalf11CH6ny8ey3s5ZAA
+         mQGh4jVnYM/qc8OsJkIkYT9plVvcMQP0wsDSj/YUnfr5AbjSkUY+uEMELlhG8XWi7t9j
+         gYVD99QrAKlQoeJMRtHiWvNhXBVcXLVPXKx/AMDV5qL0XK9V0ElCG4e9zuxIHpleGMT2
+         bga3o6dWNj9bV/wQpnRDNEsIygsY3yXaPp0d1Y+51Luw6wfSFdBqVLiZpLzzOpQSR8EK
+         y+wMxih7R6YbX3AifEUy4sWGg1eQUOnLBkICfXPLwXj+vCKOZTGIc46tb846tE/n65YY
+         /G9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vVQBr/UYJMdab8jRg2zR24QImGiBviKI+Lqx/RV8Icg=;
-        b=XyGgMVFy3IxJi8KSCkRe+fm5iv/vf/Sjqgh39fM93cDdq+arGRZUpsXkdIulaWeDF4
-         8ghkrlNvrgkRB0/C8eHfVKygf+yhL3fIkbcKPRF5ELspSJAlXWGwudaALq45Hs9nomNV
-         2Wz6MPtkwajW9mZ8Nufji6Z/GyJ8zy4QOEuDuumCfkepvNWI51KYaD0/r0ifXrr0qah2
-         I9mmKDjZ0/02TfoQhqHaWMqE+IHJsNTLJJheSM4BID4EcFoa3X9gDEZ4VTAn3BBXhmdT
-         lZJ/z/WFvn+mPY5zfAC1Yihc/HKxTfgVMERvLMENuRQ6dFopsXuivEoHfcleYw93QB7w
-         fnMw==
-X-Gm-Message-State: ANhLgQ3zcoGpnn7rxqburlF3Tl0rHPAJlhfTO9HezwSjV9fzlom1Gl9W
-        wRbZ3Mj9EH/SS37SQ7vtx2gQfgP0AfqcxjUBznw=
-X-Google-Smtp-Source: ADFU+vvti2A9QZho9Id7sZ6hCv38ZZx7DwFDLQbnZuOsJZY6bJU+aLt9MOUecd3kZZiKiatZ3p4eVZ3oEbpz1o8iDmo=
-X-Received: by 2002:a50:d712:: with SMTP id t18mr3467606edi.151.1585150817053;
- Wed, 25 Mar 2020 08:40:17 -0700 (PDT)
+        bh=/6XG2whFohVXd5AQ1C08EQE0cymLHuuX/8O3HKq2GsE=;
+        b=sxxefytxlYq+qSkOD5DzJBHUd79C/aZvtHUZd1V6hnCYgC/QB6KUl6mTX+tuftVIU+
+         ROdobfnTNNjBF8mPzaGaNOiZqMD8RJFAD9WnyP7KNyZJjW+zAH30AqmtN8bT12B1Y1CD
+         9N/+42PDB+XavNZpc5T5pWbpx5aNzZTq1c6n1aRMnsT9ZQ4Y7sm9qJrkw1wgVywRwrhU
+         9F9tfx7nohEwFlbH0/RWnOdaVO85RrHCIMytLaXuK2ygK/zaJd7+28xSPcnCF3OVDFmz
+         AgoRR5hnHPauLVx7E7NLNaGOdGHDYalN0fUv9NvinrdvI8dVLoR0Mlh5Jgjz/CxeL9At
+         0zhQ==
+X-Gm-Message-State: ANhLgQ1mqDSdS9N7mwg4VSSS3GK4YQh4wkJHdhheY9qUJMqIeZIj7j87
+        YQjJO6q3LCLgawEbto8y2xaG8qHT3Bhe8AmegQou6A==
+X-Google-Smtp-Source: ADFU+vt4onp6VYyb/EthhQCkNnINPTTy+Y66DjO8zjSXv4OsQWR3PTNC2NXDnOxqaO0LJVbAbBXI03fGiRBXTHN3yYk=
+X-Received: by 2002:a05:651c:1044:: with SMTP id x4mr2232515ljm.230.1585150941481;
+ Wed, 25 Mar 2020 08:42:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <1584944027-1730-1-git-send-email-kalyan_t@codeaurora.org> <CAD=FV=VX+Lj=NeZnYxDv9gLYUiwUO6brwvDSL8dbs1MTF4ieuA@mail.gmail.com>
-In-Reply-To: <CAD=FV=VX+Lj=NeZnYxDv9gLYUiwUO6brwvDSL8dbs1MTF4ieuA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 25 Mar 2020 08:40:14 -0700
-Message-ID: <CAF6AEGs5saoU3FeO++S+YD=Js499HB2CjK8neYCXAZmCjgy2nQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: ensure device suspend happens during PM sleep
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+References: <cover.1585117436.git.amit.kucheria@linaro.org>
+ <9c447186008ef2e3f4c3e712458dc0ddcd8a8b03.1585117436.git.amit.kucheria@linaro.org>
+ <81b0cbe1-23c8-b4a3-4775-62e7d6c49b6b@arm.com>
+In-Reply-To: <81b0cbe1-23c8-b4a3-4775-62e7d6c49b6b@arm.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Wed, 25 Mar 2020 21:12:10 +0530
+Message-ID: <CAP245DWS=yqNQpbk3Y8_0KjcBurSyQbNW9jqepSz8LC=ruFWhA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] dt-bindings: thermal: Add yaml bindings for
+ thermal zones
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        mkrishn@codeaurora.org, travitej@codeaurora.org,
-        nganji@codeaurora.org
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 24, 2020 at 7:35 AM Doug Anderson <dianders@chromium.org> wrote:
+On Wed, Mar 25, 2020 at 4:36 PM Lukasz Luba <lukasz.luba@arm.com> wrote:
 >
-> Hi,
 >
-> On Sun, Mar 22, 2020 at 11:14 PM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+>
+> On 3/25/20 6:34 AM, Amit Kucheria wrote:
+> > As part of moving the thermal bindings to YAML, split it up into 3
+> > bindings: thermal sensors, cooling devices and thermal zones.
 > >
-> > "The PM core always increments the runtime usage counter
-> > before calling the ->suspend() callback and decrements it
-> > after calling the ->resume() callback"
+> > The thermal-zone binding is a software abstraction to capture the
+> > properties of each zone - how often they should be checked, the
+> > temperature thresholds (trips) at which mitigation actions need to be
+> > taken and the level of mitigation needed at those thresholds.
 > >
-> > DPU and DSI are managed as runtime devices. When
-> > suspend is triggered, PM core adds a refcount on all the
-> > devices and calls device suspend, since usage count is
-> > already incremented, runtime suspend was not getting called
-> > and it kept the clocks on which resulted in target not
-> > entering into XO shutdown.
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > ---
+> > Changes since v2:
+> > - Addressed review comment from Rob
+> > - Added required properties for thermal-zones node
+> > - Added select: true to thermal-cooling-devices.yaml
+> > - Fixed up example to pass dt_binding_check
 > >
-> > Add changes to manage runtime devices during pm sleep.
+> >   .../bindings/thermal/thermal-zones.yaml       | 324 ++++++++++++++++++
+> >   1 file changed, 324 insertions(+)
+> >   create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
 > >
-> > Changes in v1:
-> >  - Remove unnecessary checks in the function
-> >      _dpu_kms_disable_dpu (Rob Clark).
+> > diff --git a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+> > new file mode 100644
+> > index 000000000000..5632304dcf62
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+> > @@ -0,0 +1,324 @@
+> > +# SPDX-License-Identifier: (GPL-2.0)
+> > +# Copyright 2020 Linaro Ltd.
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/thermal/thermal-zones.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/base.yaml#
+> > +
+> > +title: Thermal zone binding
+> > +
+> > +maintainers:
+> > +  - Amit Kucheria <amitk@kernel.org>
+> > +
+> > +description: |
+> > +  Thermal management is achieved in devicetree by describing the sensor hardware
+> > +  and the software abstraction of cooling devices and thermal zones required to
+> > +  take appropriate action to mitigate thermal overloads.
+> > +
+> > +  The following node types are used to completely describe a thermal management
+> > +  system in devicetree:
+> > +   - thermal-sensor: device that measures temperature, has SoC-specific bindings
+> > +   - cooling-device: device used to dissipate heat either passively or actively
+> > +   - thermal-zones: a container of the following node types used to describe all
+> > +     thermal data for the platform
+> > +
+> > +  This binding describes the thermal-zones.
+> > +
+> > +  The polling-delay properties of a thermal-zone are bound to the maximum dT/dt
+> > +  (temperature derivative over time) in two situations for a thermal zone:
+> > +    1. when passive cooling is activated (polling-delay-passive)
+> > +    2. when the zone just needs to be monitored (polling-delay) or when
+> > +       active cooling is activated.
+> > +
+> > +  The maximum dT/dt is highly bound to hardware power consumption and
+> > +  dissipation capability. The delays should be chosen to account for said
+> > +  max dT/dt, such that a device does not cross several trip boundaries
+> > +  unexpectedly between polls. Choosing the right polling delays shall avoid
+> > +  having the device in temperature ranges that may damage the silicon structures
+> > +  and reduce silicon lifetime.
+> > +
+> > +properties:
+> > +  $nodename:
+> > +    const: thermal-zones
+> > +    description:
+> > +      A /thermal-zones node is required in order to use the thermal framework to
+> > +      manage input from the various thermal zones in the system in order to
+> > +      mitigate thermal overload conditions. It does not represent a real device
+> > +      in the system, but acts as a container to link thermal sensor devices,
 >
-> I'm wondering what happened with my feedback on v1, AKA:
->
-> https://lore.kernel.org/r/CAD=FV=VxzEV40g+ieuEN+7o=34+wM8MHO8o7T5zA1Yosx7SVWg@mail.gmail.com
->
-> Maybe you didn't see it?  ...or if you or Rob think I'm way off base
-> (always possible) then please tell me so.
->
+> I would say 'thermal sensor device', since there is 1-to-1 mapping and
+> aggregating a few sensors inside one tz is not allowed (or I missed
+> some patches queuing).
 
-At least w/ the current patch, disable_dpu should not be called for
-screen-off (although I'd hope if all the screens are off the device
-would suspend).  But I won't claim to be a pm expert.. so not really
-sure if this is the best approach or not.  I don't think our
-arrangement of sub-devices under a parent is completely abnormal, so
-it does feel like there should be a simpler solution..
+See below.
 
-BR,
--R
+>
+> > +      platform-data regarding temperature thresholds and the mitigation actions
+> > +      to take when the temperature crosses those thresholds.
+> > +
+> > +patternProperties:
+> > +  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
+> > +    type: object
+> > +    description:
+> > +      Each thermal zone node contains information about how frequently it
+> > +      must be checked, the sensor responsible for reporting temperature for
+> > +      this zone, one sub-node containing the various trip points for this
+> > +      zone and one sub-node containing all the zone cooling-maps.
+> > +
+> > +    properties:
+> > +      polling-delay:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > +        description:
+> > +          The maximum number of milliseconds to wait between polls when
+> > +          checking this thermal zone. Setting this to 0 disables the polling
+> > +          timers setup by the thermal framework and assumes that the thermal
+> > +          sensors in this zone support interrupts.
+> > +
+> > +      polling-delay-passive:
+> > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > +        description:
+> > +          The maximum number of milliseconds to wait between polls when
+> > +          checking this thermal zone while doing passive cooling. Setting
+> > +          this to 0 disables the polling timers setup by the thermal
+> > +          framework and assumes that the thermal sensors in this zone
+> > +          support interrupts.
+> > +
+> > +      thermal-sensors:
+> > +        $ref: /schemas/types.yaml#/definitions/phandle-array
+> > +        description:
+> > +          A list of thermal sensor phandles and sensor specifiers used to
+> > +          monitor this thermal zone.
+>
+> I don't know why it's not consistent with the actual code in
+> of-thermal.c, where there is even a comment stated:
+> /* For now, thermal framework supports only 1 sensor per zone */
+>
+> I think this is the place where developers should be informed about
+> the limitation and not even try to put more sensors into the list.
+
+That is a good point. I'm currently "porting" the existing binding as
+described in thermal.txt to yaml. If you look at some of the example
+(c) in there, the bindings allow many sensors to a zone mapping but
+the thermal core doesn't implement that functionality.
+
+So should we fix the core code or change the bindings? Thoughts - Rob,
+Daniel, Rui?
+
+> > +
+> > +      trips:
+> > +        type: object
+> > +        description:
+> > +          This node describes a set of points in the temperature domain at
+> > +          which the thermal framework needs to takes action. The actions to
+>
+> s/needs to takes/needs to take/
+
+Will fix.
+
+> > +          be taken are defined in another node called cooling-maps.
+> > +
+> > +        patternProperties:
+> > +          "^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$":
+> > +            type: object
+> > +
+> > +            properties:
+> > +              temperature:
+> > +                $ref: /schemas/types.yaml#/definitions/int32
+> > +                minimum: -273000
+> > +                maximum: 200000
+> > +                description:
+> > +                  An integer expressing the trip temperature in millicelsius.
+> > +
+> > +              hysteresis:
+> > +                $ref: /schemas/types.yaml#/definitions/uint32
+> > +                description:
+> > +                  An unsigned integer expressing the hysteresis delta with
+> > +                  respect to the trip temperature property above, also in
+> > +                  millicelsius.
+>
+> This property is worth a bit longer description.
+
+Will improve the description.
+
+> > +
+> > +              type:
+> > +                $ref: /schemas/types.yaml#/definitions/string
+> > +                enum:
+> > +                  - active   # enable active cooling e.g. fans
+> > +                  - passive  # enable passive cooling e.g. throttling cpu
+> > +                  - hot      # send notification to driver
+> > +                  - critical # send notification to driver, trigger shutdown
+> > +                description: |
+> > +                  There are four valid trip types: active, passive, hot,
+> > +                  critical.
+>
+> [snip]
+>
+> > +
+> > +    thermal-zones {
+> > +            cpu0-thermal {
+> > +                    polling-delay-passive = <250>;
+> > +                    polling-delay = <1000>;
+> > +
+> > +                    thermal-sensors = <&tsens0 1>;
+> > +
+> > +                    trips {
+> > +                            cpu0_alert0: trip-point0 {
+> > +                                    temperature = <90000>;
+> > +                                    hysteresis = <2000>;
+> > +                                    type = "passive";
+> > +                            };
+> > +
+> > +                            cpu0_alert1: trip-point1 {
+> > +                                    temperature = <95000>;
+> > +                                    hysteresis = <2000>;
+> > +                                    type = "passive";
+> > +                            };
+> > +
+> > +                            cpu0_crit: cpu_crit {
+> > +                                    temperature = <110000>;
+> > +                                    hysteresis = <1000>;
+> > +                                    type = "critical";
+> > +                            };
+> > +                    };
+> > +
+> > +                    cooling-maps {
+> > +                            map0 {
+> > +                                    trip = <&cpu0_alert0>;
+> > +                                    cooling-device = <&CPU0 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>,
+> > +                                                     <&CPU1 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>,
+> > +                                                     <&CPU2 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>,
+> > +                                                     <&CPU3 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>;
+> > +                            };
+> > +
+> > +                            map1 {
+> > +                                    trip = <&cpu0_alert1>;
+> > +                                    cooling-device = <&CPU0 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>,
+> > +                                                     <&CPU1 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>,
+> > +                                                     <&CPU2 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>,
+> > +                                                     <&CPU3 THERMAL_NO_LIMIT
+> > +                                                            THERMAL_NO_LIMIT>;
+>
+>  From this two examples of handling cpu0_alert0 and cpu0_alert1 you
+> cannot conclude anything (if you don't understand thermal framework (and
+> probably IPA). As a simple example it would be better to put a comment
+> with a description and limit min, max to a specific OPP:
+>
+> map0 {
+>      trip = <&cpu0_alert0>;
+>      /* Corresponds to 1400MHz in OPP table */
+>      cooling-device = <&CPU0 3 3>, <&CPU1 3 3>, <&CPU2 3 3>, <&CPU3 3 3>;
+> };
+>
+> map1 {
+>      trip = <&cpu0_alert1>;
+>      /* Corresponds to 1000MHz in OPP table */
+>      cooling-device = <&CPU0 5 5>, <&CPU1 5 5>, <&CPU2 5 5>, <&CPU3 5 5>;
+> };
+>
+> IMHO this kind of example would tell more to an avg driver developer.
+
+Will fix.
+
+Thanks for the review.
+
+Regards,
+Amit
