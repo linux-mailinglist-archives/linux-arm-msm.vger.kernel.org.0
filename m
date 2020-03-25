@@ -2,150 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2DC1192D25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 16:44:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6CAE192D5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 16:50:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727773AbgCYPo6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 11:44:58 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:41549 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727731AbgCYPo5 (ORCPT
+        id S1727896AbgCYPuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 11:50:21 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:35901 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727675AbgCYPuU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 11:44:57 -0400
-Received: by mail-lj1-f193.google.com with SMTP id n17so2958818lji.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 08:44:56 -0700 (PDT)
+        Wed, 25 Mar 2020 11:50:20 -0400
+Received: by mail-ua1-f68.google.com with SMTP id o15so909033ual.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 08:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=tXD0NIbBQHX+z9/5Cn5kHqlwTwqxUoD/Q190EABWTDY=;
-        b=iK5q0pYAem2IC9HXIUCtWiUmOAneNwO6eapMhrlo9VLWa65nib3Eh+CzYBy8hLhorL
-         sJ4Ms9eG4HklmPaumOYkym3iEypfey3ioMh+Mc6r/X19Mg1orDDY+UGlORpAE8tku7Nh
-         7gpopkJi24jMwYndQtn+iUf5ezVwgYYcdQSeIBhFo8isbCYnJrJ//SIkfBE8NVQuGkeE
-         FZBlZH1Vf1AvT+2gJKE8uCmSZ594hEBMXA9G2KD/ZO5I7JRV/XFxF+OZjkP0q9edpq3+
-         Wm9FPFp5/Z+Ok9ICmPaZcJrNO3u4h+skHjnxo25GXnJpos3CSOSMUP2WU+ep05IltdLY
-         GYaA==
+        bh=5R9OlcysTIjSd6LSQUVfdd7d9zM2FdO/Mwd40Pw5oqo=;
+        b=XtpjmpZHorFljb0nMx6/72BT6LEyg6Yu3GZqe2zFozULuw0vZvc0DGxN1dv5nyYcCC
+         hHWAbWGSOUvReB9nY4FED4Ar/y5wjn/ZL8FKAYhFCQofbGaikMQxNWYRkq+MvceY2mpy
+         N4Sp0qbxAYASySnf+wDwpkd2kniFgXVKTcZFs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=tXD0NIbBQHX+z9/5Cn5kHqlwTwqxUoD/Q190EABWTDY=;
-        b=DNycDzSrE3+nS87GMPG9VgG1r0kk/Mp3PbYYR5rzu73X9/LMy15ooMfdfZshCJW8gp
-         mHFNo+59DDSibxHl6uoROAWaLWZhiahkGV/ipSPCPFPEJgcqJTHNqc5sPg4r489IsOie
-         WtCjcDIOPyW0yP5wjNUTbgvZPq2fnfWgpuHq+UoURlCtErTDX+/qhZnCGEvmtx8kz0Fw
-         fM8K/Y7JhAyCxV0Afd0N7LmkNKqUfZLsxCE7fo44M5rIHyesP4KX4FSy5DOxSMIN9JuU
-         xofOqbfJEDsmi3esedHrg9g1/dP5kVnX8TURq9W6fntwKpPqKdMdhL6m86DFn7hGbD4y
-         IFYg==
-X-Gm-Message-State: ANhLgQ1RpcuF3gzG6udizM3qrnx109yDmF7Z+gI3b+WSI1qfzvpZ6a/v
-        f5ed7BvxkZFROJH+1Tbl9fUwxVpr+ljJnu5EyGDsQg==
-X-Google-Smtp-Source: ADFU+vv1RzjW7k7FmbN6HbpO06Hw8i+AT0m5YUev5QnYHDYHVSTJXBwOqWeX+HKNht/1FR17wexRpRGTCquA6m7QabQ=
-X-Received: by 2002:a2e:90c4:: with SMTP id o4mr2215674ljg.287.1585151095466;
- Wed, 25 Mar 2020 08:44:55 -0700 (PDT)
+        bh=5R9OlcysTIjSd6LSQUVfdd7d9zM2FdO/Mwd40Pw5oqo=;
+        b=b2bXY5GsjRJlTIVkb6xghbAqYEwcWzajAg2LlgqkiVmjczC878Oh8/kRqEV29e5/0k
+         Xz7yVQOJBe6z+szpNI8BcpJ9+709tjwx+4ni1EX9F6KYpHyVOLvd2x2p3v11rcsabhlx
+         XE9M6rckbMw2cCc9y4ENyKCAYknlGnjKEOZYBLPK2/0J079pF7P5uuPIv65S/uzedPUA
+         oEH/vo6c13clZBO+ctO8VyqrJyA2Cn6sSi19TMe0rDes22N2gYYLJhjdcD+aFlqz/Uzf
+         dENwERUVRNeRTwUe+peaA5Ln3Ilqtg74BQzfPnHjzSlzEJiO9VbbWXkxgTJqtY4rSW20
+         zXgA==
+X-Gm-Message-State: ANhLgQ0tIHIuz1y/teQYM33ixAawgUzfLmeE7RJScCyL1ClStFhhe60H
+        0TWRnRLHHMNxz8UVnN1b4rg1g96qnHc=
+X-Google-Smtp-Source: ADFU+vtawfUlnqrlIIhS9i2St7EjY1MjJgnTwF1KoiaZeAdoJP1r6GyQ9o78FiXlFve3uj5tpQcKAQ==
+X-Received: by 2002:ab0:480f:: with SMTP id b15mr2703447uad.11.1585151419061;
+        Wed, 25 Mar 2020 08:50:19 -0700 (PDT)
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
+        by smtp.gmail.com with ESMTPSA id u82sm1950576vsu.20.2020.03.25.08.50.18
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Mar 2020 08:50:18 -0700 (PDT)
+Received: by mail-vs1-f48.google.com with SMTP id b5so1818495vsb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 08:50:18 -0700 (PDT)
+X-Received: by 2002:a67:694f:: with SMTP id e76mr2833828vsc.73.1585151417831;
+ Wed, 25 Mar 2020 08:50:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200324180513.3882-1-robh@kernel.org> <20200324180513.3882-2-robh@kernel.org>
-In-Reply-To: <20200324180513.3882-2-robh@kernel.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Wed, 25 Mar 2020 21:14:44 +0530
-Message-ID: <CAP245DVwuaDdTvymeGteoKcJj_+TyuEWnmY+GRtA2qnBKqhMsw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] dt-bindings: thermal: tsens: Set 'additionalProperties:
- false'
-To:     Rob Herring <robh@kernel.org>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
+References: <1584944027-1730-1-git-send-email-kalyan_t@codeaurora.org>
+ <CAD=FV=VX+Lj=NeZnYxDv9gLYUiwUO6brwvDSL8dbs1MTF4ieuA@mail.gmail.com> <CAF6AEGs5saoU3FeO++S+YD=Js499HB2CjK8neYCXAZmCjgy2nQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGs5saoU3FeO++S+YD=Js499HB2CjK8neYCXAZmCjgy2nQ@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 25 Mar 2020 08:50:05 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VxeCUEEFi9T0Jand3EWkaQTLnQkT3v5yjyjLi4yDeQ-w@mail.gmail.com>
+Message-ID: <CAD=FV=VxeCUEEFi9T0Jand3EWkaQTLnQkT3v5yjyjLi4yDeQ-w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: ensure device suspend happens during PM sleep
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        mkrishn@codeaurora.org, travitej@codeaurora.org,
+        nganji@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 24, 2020 at 11:35 PM Rob Herring <robh@kernel.org> wrote:
+Hi,
+
+On Wed, Mar 25, 2020 at 8:40 AM Rob Clark <robdclark@gmail.com> wrote:
 >
-> Ensure the node only contains the properties listed in the schema by
-> setting 'additionalProperties: false'. Doing this requires reworking the
-> interrupt properties schemas so that they are defined in the main
-> 'properties' section.
+> On Tue, Mar 24, 2020 at 7:35 AM Doug Anderson <dianders@chromium.org> wrote:
+> >
+> > Hi,
+> >
+> > On Sun, Mar 22, 2020 at 11:14 PM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+> > >
+> > > "The PM core always increments the runtime usage counter
+> > > before calling the ->suspend() callback and decrements it
+> > > after calling the ->resume() callback"
+> > >
+> > > DPU and DSI are managed as runtime devices. When
+> > > suspend is triggered, PM core adds a refcount on all the
+> > > devices and calls device suspend, since usage count is
+> > > already incremented, runtime suspend was not getting called
+> > > and it kept the clocks on which resulted in target not
+> > > entering into XO shutdown.
+> > >
+> > > Add changes to manage runtime devices during pm sleep.
+> > >
+> > > Changes in v1:
+> > >  - Remove unnecessary checks in the function
+> > >      _dpu_kms_disable_dpu (Rob Clark).
+> >
+> > I'm wondering what happened with my feedback on v1, AKA:
+> >
+> > https://lore.kernel.org/r/CAD=FV=VxzEV40g+ieuEN+7o=34+wM8MHO8o7T5zA1Yosx7SVWg@mail.gmail.com
+> >
+> > Maybe you didn't see it?  ...or if you or Rob think I'm way off base
+> > (always possible) then please tell me so.
+> >
+>
+> At least w/ the current patch, disable_dpu should not be called for
+> screen-off (although I'd hope if all the screens are off the device
+> would suspend).
+
+OK, that's good.
+
+> But I won't claim to be a pm expert.. so not really
+> sure if this is the best approach or not.  I don't think our
+> arrangement of sub-devices under a parent is completely abnormal, so
+> it does feel like there should be a simpler solution..
+
+I think the other arguments about asymmetry are still valid and I've
+fixed bugs around this type of thing in the past.  For instance, see
+commit f7ccbed656f7 ("drm/rockchip: Suspend DP late").
 
 
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
-
-> Fixes: a877e768f655 ("dt-bindings: thermal: tsens: Convert over to a yaml schema")
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Amit Kucheria <amit.kucheria@linaro.org>
-> Cc: Zhang Rui <rui.zhang@intel.com>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-pm@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  .../bindings/thermal/qcom-tsens.yaml          | 28 ++++++++++++-------
->  1 file changed, 18 insertions(+), 10 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index 7a38d2116059..3492447e42e9 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -46,6 +46,18 @@ properties:
->        - description: TM registers
->        - description: SROT registers
->
-> +  interrupts:
-> +    minItems: 1
-> +    items:
-> +      - description: Combined interrupt if upper or lower threshold crossed
-> +      - description: Interrupt if critical threshold crossed
-> +
-> +  interrupt-names:
-> +    minItems: 1
-> +    items:
-> +      - const: uplow
-> +      - const: critical
-> +
->    nvmem-cells:
->      minItems: 1
->      maxItems: 2
-> @@ -88,22 +100,16 @@ allOf:
->      then:
->        properties:
->          interrupts:
-> -          items:
-> -            - description: Combined interrupt if upper or lower threshold crossed
-> +          maxItems: 1
->          interrupt-names:
-> -          items:
-> -            - const: uplow
-> +          maxItems: 1
->
->      else:
->        properties:
->          interrupts:
-> -          items:
-> -            - description: Combined interrupt if upper or lower threshold crossed
-> -            - description: Interrupt if critical threshold crossed
-> +          minItems: 2
->          interrupt-names:
-> -          items:
-> -            - const: uplow
-> -            - const: critical
-> +          minItems: 2
->
->  required:
->    - compatible
-> @@ -113,6 +119,8 @@ required:
->    - interrupt-names
->    - "#thermal-sensor-cells"
->
-> +additionalProperties: false
-> +
->  examples:
->    - |
->      #include <dt-bindings/interrupt-controller/arm-gic.h>
-> --
-> 2.20.1
->
+-Doug
