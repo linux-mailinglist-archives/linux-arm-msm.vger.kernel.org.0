@@ -2,286 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 42FBA1926BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 12:06:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECE2B192874
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 13:34:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727313AbgCYLGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 07:06:32 -0400
-Received: from foss.arm.com ([217.140.110.172]:46696 "EHLO foss.arm.com"
+        id S1727413AbgCYMbu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 08:31:50 -0400
+Received: from foss.arm.com ([217.140.110.172]:47762 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726842AbgCYLGc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 07:06:32 -0400
+        id S1727286AbgCYMbu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Mar 2020 08:31:50 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1164231B;
-        Wed, 25 Mar 2020 04:06:31 -0700 (PDT)
-Received: from [10.37.12.110] (unknown [10.37.12.110])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C30883F71F;
-        Wed, 25 Mar 2020 04:06:28 -0700 (PDT)
-Subject: Re: [PATCH v3 3/3] dt-bindings: thermal: Add yaml bindings for
- thermal zones
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, mka@chromium.org, daniel.lezcano@linaro.org,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-References: <cover.1585117436.git.amit.kucheria@linaro.org>
- <9c447186008ef2e3f4c3e712458dc0ddcd8a8b03.1585117436.git.amit.kucheria@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <81b0cbe1-23c8-b4a3-4775-62e7d6c49b6b@arm.com>
-Date:   Wed, 25 Mar 2020 11:06:27 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D4A3D31B;
+        Wed, 25 Mar 2020 05:31:49 -0700 (PDT)
+Received: from [192.168.1.123] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9A8983F71F;
+        Wed, 25 Mar 2020 05:31:47 -0700 (PDT)
+Subject: Re: [PATCH v3 10/15] iommu/arm-smmu: Use accessor functions for iommu
+ private data
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "guohanjun@huawei.com" <guohanjun@huawei.com>,
+        Sudeep Holla <Sudeep.Holla@arm.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Will Deacon <will@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <jroedel@suse.de>
+References: <20200320091414.3941-1-joro@8bytes.org>
+ <20200320091414.3941-11-joro@8bytes.org>
+ <09ed4676-449e-c6eb-8c51-c15b326c206c@arm.com>
+ <20200324100819.GA4038@8bytes.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <d69dad81-d025-96ef-863c-553b5ed2dd8e@arm.com>
+Date:   Wed, 25 Mar 2020 12:31:46 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <9c447186008ef2e3f4c3e712458dc0ddcd8a8b03.1585117436.git.amit.kucheria@linaro.org>
+In-Reply-To: <20200324100819.GA4038@8bytes.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/25/20 6:34 AM, Amit Kucheria wrote:
-> As part of moving the thermal bindings to YAML, split it up into 3
-> bindings: thermal sensors, cooling devices and thermal zones.
+On 2020-03-24 10:08 am, Joerg Roedel wrote:
+> Hey Robin,
 > 
-> The thermal-zone binding is a software abstraction to capture the
-> properties of each zone - how often they should be checked, the
-> temperature thresholds (trips) at which mitigation actions need to be
-> taken and the level of mitigation needed at those thresholds.
+> On Mon, Mar 23, 2020 at 04:02:33PM +0000, Robin Murphy wrote:
+>> Yikes, this ends up pretty ugly, and I'd prefer not have this much
+>> complexity hidden in macros that were intended just to be convenient
+>> shorthand. Would you mind pulling in the patch below as a precursor?
 > 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> ---
-> Changes since v2:
-> - Addressed review comment from Rob
-> - Added required properties for thermal-zones node
-> - Added select: true to thermal-cooling-devices.yaml
-> - Fixed up example to pass dt_binding_check
+> Sure thing, but your mail-client seemed to have fiddled with the patch
+> so that is is unusable to me. I tried to fix it up, but it still doesn't
+> apply. Can you please re-send it to me either via git-send-email or just
+> as a mime-attachement?
+
+Oops, sorry - as you might imagine I'm not in my normal workflow :)
+
+Let me rebase that onto something actually in your tree (rather than 
+whatever detached HEAD this is checked out out on my laptop...) and try 
+resending it properly.
+
+>> Other than that, the rest of the series looks OK at a glance. We should also
+>> move fwspec->ops to dev_iommu, as those are "IOMMU API" data rather than
+>> "firmware" data, but let's consider that separately as this series is
+>> already long enough.
 > 
->   .../bindings/thermal/thermal-zones.yaml       | 324 ++++++++++++++++++
->   1 file changed, 324 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-> new file mode 100644
-> index 000000000000..5632304dcf62
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-> @@ -0,0 +1,324 @@
-> +# SPDX-License-Identifier: (GPL-2.0)
-> +# Copyright 2020 Linaro Ltd.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/thermal/thermal-zones.yaml#
-> +$schema: http://devicetree.org/meta-schemas/base.yaml#
-> +
-> +title: Thermal zone binding
-> +
-> +maintainers:
-> +  - Amit Kucheria <amitk@kernel.org>
-> +
-> +description: |
-> +  Thermal management is achieved in devicetree by describing the sensor hardware
-> +  and the software abstraction of cooling devices and thermal zones required to
-> +  take appropriate action to mitigate thermal overloads.
-> +
-> +  The following node types are used to completely describe a thermal management
-> +  system in devicetree:
-> +   - thermal-sensor: device that measures temperature, has SoC-specific bindings
-> +   - cooling-device: device used to dissipate heat either passively or actively
-> +   - thermal-zones: a container of the following node types used to describe all
-> +     thermal data for the platform
-> +
-> +  This binding describes the thermal-zones.
-> +
-> +  The polling-delay properties of a thermal-zone are bound to the maximum dT/dt
-> +  (temperature derivative over time) in two situations for a thermal zone:
-> +    1. when passive cooling is activated (polling-delay-passive)
-> +    2. when the zone just needs to be monitored (polling-delay) or when
-> +       active cooling is activated.
-> +
-> +  The maximum dT/dt is highly bound to hardware power consumption and
-> +  dissipation capability. The delays should be chosen to account for said
-> +  max dT/dt, such that a device does not cross several trip boundaries
-> +  unexpectedly between polls. Choosing the right polling delays shall avoid
-> +  having the device in temperature ranges that may damage the silicon structures
-> +  and reduce silicon lifetime.
-> +
-> +properties:
-> +  $nodename:
-> +    const: thermal-zones
-> +    description:
-> +      A /thermal-zones node is required in order to use the thermal framework to
-> +      manage input from the various thermal zones in the system in order to
-> +      mitigate thermal overload conditions. It does not represent a real device
-> +      in the system, but acts as a container to link thermal sensor devices,
+> Yes, moving ops out of fwspec is next on the list, and moving the
+> iommu_group pointer into dev_iommu.
 
-I would say 'thermal sensor device', since there is 1-to-1 mapping and
-aggregating a few sensors inside one tz is not allowed (or I missed
-some patches queuing).
+Cool, let me know if you need a hand with all the *_iommu_configure() 
+stuff - I still have plans for overhauling that lot anyway, but not 
+imminently, so it probably is worthwhile to do the straightforward 
+housekeeping first.
 
-> +      platform-data regarding temperature thresholds and the mitigation actions
-> +      to take when the temperature crosses those thresholds.
-> +
-> +patternProperties:
-> +  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
-> +    type: object
-> +    description:
-> +      Each thermal zone node contains information about how frequently it
-> +      must be checked, the sensor responsible for reporting temperature for
-> +      this zone, one sub-node containing the various trip points for this
-> +      zone and one sub-node containing all the zone cooling-maps.
-> +
-> +    properties:
-> +      polling-delay:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description:
-> +          The maximum number of milliseconds to wait between polls when
-> +          checking this thermal zone. Setting this to 0 disables the polling
-> +          timers setup by the thermal framework and assumes that the thermal
-> +          sensors in this zone support interrupts.
-> +
-> +      polling-delay-passive:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description:
-> +          The maximum number of milliseconds to wait between polls when
-> +          checking this thermal zone while doing passive cooling. Setting
-> +          this to 0 disables the polling timers setup by the thermal
-> +          framework and assumes that the thermal sensors in this zone
-> +          support interrupts.
-> +
-> +      thermal-sensors:
-> +        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        description:
-> +          A list of thermal sensor phandles and sensor specifiers used to
-> +          monitor this thermal zone.
-
-I don't know why it's not consistent with the actual code in
-of-thermal.c, where there is even a comment stated:
-/* For now, thermal framework supports only 1 sensor per zone */
-
-I think this is the place where developers should be informed about
-the limitation and not even try to put more sensors into the list.
-
-> +
-> +      trips:
-> +        type: object
-> +        description:
-> +          This node describes a set of points in the temperature domain at
-> +          which the thermal framework needs to takes action. The actions to
-
-s/needs to takes/needs to take/
-
-> +          be taken are defined in another node called cooling-maps.
-> +
-> +        patternProperties:
-> +          "^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$":
-> +            type: object
-> +
-> +            properties:
-> +              temperature:
-> +                $ref: /schemas/types.yaml#/definitions/int32
-> +                minimum: -273000
-> +                maximum: 200000
-> +                description:
-> +                  An integer expressing the trip temperature in millicelsius.
-> +
-> +              hysteresis:
-> +                $ref: /schemas/types.yaml#/definitions/uint32
-> +                description:
-> +                  An unsigned integer expressing the hysteresis delta with
-> +                  respect to the trip temperature property above, also in
-> +                  millicelsius.
-
-This property is worth a bit longer description.
-
-> +
-> +              type:
-> +                $ref: /schemas/types.yaml#/definitions/string
-> +                enum:
-> +                  - active   # enable active cooling e.g. fans
-> +                  - passive  # enable passive cooling e.g. throttling cpu
-> +                  - hot      # send notification to driver
-> +                  - critical # send notification to driver, trigger shutdown
-> +                description: |
-> +                  There are four valid trip types: active, passive, hot,
-> +                  critical.
-
-[snip]
-
-> +
-> +    thermal-zones {
-> +            cpu0-thermal {
-> +                    polling-delay-passive = <250>;
-> +                    polling-delay = <1000>;
-> +
-> +                    thermal-sensors = <&tsens0 1>;
-> +
-> +                    trips {
-> +                            cpu0_alert0: trip-point0 {
-> +                                    temperature = <90000>;
-> +                                    hysteresis = <2000>;
-> +                                    type = "passive";
-> +                            };
-> +
-> +                            cpu0_alert1: trip-point1 {
-> +                                    temperature = <95000>;
-> +                                    hysteresis = <2000>;
-> +                                    type = "passive";
-> +                            };
-> +
-> +                            cpu0_crit: cpu_crit {
-> +                                    temperature = <110000>;
-> +                                    hysteresis = <1000>;
-> +                                    type = "critical";
-> +                            };
-> +                    };
-> +
-> +                    cooling-maps {
-> +                            map0 {
-> +                                    trip = <&cpu0_alert0>;
-> +                                    cooling-device = <&CPU0 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>,
-> +                                                     <&CPU1 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>,
-> +                                                     <&CPU2 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>,
-> +                                                     <&CPU3 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>;
-> +                            };
-> +
-> +                            map1 {
-> +                                    trip = <&cpu0_alert1>;
-> +                                    cooling-device = <&CPU0 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>,
-> +                                                     <&CPU1 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>,
-> +                                                     <&CPU2 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>,
-> +                                                     <&CPU3 THERMAL_NO_LIMIT
-> +                                                            THERMAL_NO_LIMIT>;
-
- From this two examples of handling cpu0_alert0 and cpu0_alert1 you
-cannot conclude anything (if you don't understand thermal framework (and
-probably IPA). As a simple example it would be better to put a comment
-with a description and limit min, max to a specific OPP:
-
-map0 {
-     trip = <&cpu0_alert0>;
-     /* Corresponds to 1400MHz in OPP table */
-     cooling-device = <&CPU0 3 3>, <&CPU1 3 3>, <&CPU2 3 3>, <&CPU3 3 3>;
-};
-
-map1 {
-     trip = <&cpu0_alert1>;
-     /* Corresponds to 1000MHz in OPP table */
-     cooling-device = <&CPU0 5 5>, <&CPU1 5 5>, <&CPU2 5 5>, <&CPU3 5 5>;
-};
-
-IMHO this kind of example would tell more to an avg driver developer.
-
-Regards,
-Lukasz
+Thanks,
+Robin.
