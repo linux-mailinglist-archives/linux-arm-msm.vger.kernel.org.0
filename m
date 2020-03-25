@@ -2,80 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 13E4C192DBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 17:04:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19CF1192DB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2020 17:03:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728060AbgCYQEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 12:04:12 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:39602 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728020AbgCYQEL (ORCPT
+        id S1727666AbgCYQDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 12:03:38 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:33365 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726102AbgCYQDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 12:04:11 -0400
-Received: by mail-lj1-f196.google.com with SMTP id i20so3056981ljn.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 09:04:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pn2KqvNFk/Kh/oN0XHQ6BHDkBBBhQ3u1DOedSWlNkfQ=;
-        b=NgTT4k5jlKQgS4xPUfrNeL4uN7tSr+FEjGTa0+opI2N8PJO6UtRhuIb/sfAji0iY5E
-         rpYPeEVdAQ+nQvJJF5LweKq2TJ1MRLDae7RaM6LxnVdeeulKZjz1ZsvXv8uVrZ1V3THB
-         uSYPP1p5vjzUNLwlKM728XMoTGFMLF7FmKOv4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pn2KqvNFk/Kh/oN0XHQ6BHDkBBBhQ3u1DOedSWlNkfQ=;
-        b=gX24geaadcD3JciMVPxruv9xdeeL/89hZACdGSL0Y9XEF67ajMql+jqcTb6u9shQO4
-         CRH4VKZBPCDRmnap6SMsXci9xyBcbopQbci5EP4AGP259hKLg3QJXgdKbCDR7S1l2n87
-         Gedy8R3JKEZUAMkxyX9Lg6bGNFDRMHnw385CqTCjvcu38C9Tr9sbi4sYgs8KXbRE3voH
-         UyDuiKNp2RUpVjz4eKf5cas7yST/q30Q6MMOEMJqxRHNkL+astiIQlvE/++0gLrYPB4K
-         ZRxZUT18JRiU/7R3Yy/WKMvpsKzpIlY8OD2w55wlpQs5QRlqdWNsbefrJftCN0WVUv/U
-         2cgw==
-X-Gm-Message-State: ANhLgQ2JqXGsv5UpyCfBomgukac9vsbQOlKT/Ybxe5+8WC1CVzzuA/lb
-        lpy63ncdkrSzlP/poIfIvnFX6MhwVt4=
-X-Google-Smtp-Source: APiQypJ1XIQeFw6c7qG2gfMyTMDtuneuCz8MX4PY5GTX3gTd8AUFrpPB/h3NKTpV0StVNaokrsiuhQ==
-X-Received: by 2002:a05:651c:1047:: with SMTP id x7mr2428533ljm.246.1585152249288;
-        Wed, 25 Mar 2020 09:04:09 -0700 (PDT)
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com. [209.85.208.171])
-        by smtp.gmail.com with ESMTPSA id x17sm2719973ljc.33.2020.03.25.09.04.08
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Mar 2020 09:04:08 -0700 (PDT)
-Received: by mail-lj1-f171.google.com with SMTP id v16so2999212ljk.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 09:04:08 -0700 (PDT)
-X-Received: by 2002:a2e:9216:: with SMTP id k22mr2471412ljg.278.1585152247655;
- Wed, 25 Mar 2020 09:04:07 -0700 (PDT)
+        Wed, 25 Mar 2020 12:03:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585152217; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=pdz5ZNlGXa/lJUXRST4+WuKTPrddM+7IkSwGYGumoXc=; b=WTIMbne4/xTfYa8/kvUpU9XhyVL1LZT2em5X1r45Sp37ZNHJxTmW4CbWSHv5hbnw335whDry
+ mmosbRoEPhaKODBrojcrJj/3F9QGdBJrT0q1rktFaq30WzS/cyj+GF96WymmjJxz9upRpEDQ
+ 3T1e/atuZO5BKLc3IMfz8eBhkmI=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7b80d9.7f9bf7e63b58-smtp-out-n02;
+ Wed, 25 Mar 2020 16:03:37 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4632FC433D2; Wed, 25 Mar 2020 16:03:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF161C433F2;
+        Wed, 25 Mar 2020 16:03:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CF161C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v3 4/7] bus: mhi: core: Drop the references to mhi_dev in
+ mhi_destroy_device()
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        gregkh@linuxfoundation.org, davem@davemloft.net
+Cc:     smohanad@codeaurora.org, kvalo@codeaurora.org,
+        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
+ <20200324061050.14845-5-manivannan.sadhasivam@linaro.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <0c9be20f-c349-a5b7-cbf8-a3edaffc2d70@codeaurora.org>
+Date:   Wed, 25 Mar 2020 10:03:32 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-References: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
- <CAE=gft7EOALEMUWzoR3+pjoxCUTYWbiXoXY=dXH1BDhS3KwBzg@mail.gmail.com> <000901d60295$3acc79b0$b0656d10$@codeaurora.org>
-In-Reply-To: <000901d60295$3acc79b0$b0656d10$@codeaurora.org>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Wed, 25 Mar 2020 09:03:31 -0700
-X-Gmail-Original-Message-ID: <CAE=gft7zqbUnx+BULDD+35z2p1=545=jF0=n6kFXZgo3ZTdCHQ@mail.gmail.com>
-Message-ID: <CAE=gft7zqbUnx+BULDD+35z2p1=545=jF0=n6kFXZgo3ZTdCHQ@mail.gmail.com>
-Subject: Re: [PATCH v6] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
- device node
-To:     pillair@codeaurora.org
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200324061050.14845-5-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 25, 2020 at 4:05 AM <pillair@codeaurora.org> wrote:
->
-> Hi Evan,
->
-> I will send out a v7 for this patchset.
-> Since I have to configure the S2 SIDs, it is dependent on below ath10k patchset.
-> https://patchwork.kernel.org/project/linux-wireless/list/?series=261367
+On 3/24/2020 12:10 AM, Manivannan Sadhasivam wrote:
+> For some scenarios like controller suspend and resume, mhi_destroy_device()
+> will get called without mhi_unregister_controller(). In that case, the
+> references to the mhi_dev created for the channels will not be dropped
+> but the channels will be destroyed as per the spec. This will cause issue
+> during resume as the channels will not be created due to the fact that
+> mhi_dev is not NULL.
+> 
+> Hence, this change decrements the refcount for mhi_dev in
+> mhi_destroy_device() for concerned channels and also sets mhi_dev to NULL
+> in release_device().
+> 
+> Reported-by: Carl Huang <cjhuang@codeaurora.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Ah, right. Thanks for the info, I'll check out that series as well.
--Evan
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
