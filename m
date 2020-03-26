@@ -2,168 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC49B1934FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 01:36:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C59419351B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 01:49:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727539AbgCZAgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 20:36:45 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40936 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727536AbgCZAgp (ORCPT
+        id S1727576AbgCZAs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 20:48:58 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:34035 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727540AbgCZAs6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 20:36:45 -0400
-Received: by mail-pf1-f193.google.com with SMTP id l184so1907046pfl.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 17:36:44 -0700 (PDT)
+        Wed, 25 Mar 2020 20:48:58 -0400
+Received: by mail-pl1-f193.google.com with SMTP id a23so1498769plm.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 17:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Ru7Xg8oyZNAOPgD4TDit2eFp41YNY/vd+RoiLDWH7AM=;
-        b=Ac9RTNtiGmUz73N34b35nfes/bBdr3vlwfZxKjhL95F8rCEqK8UT3pzhYn9RASR30g
-         hW3hIeZMy9TuCGS3K7ooXw5ZzbKirrmDoqKSsZKMpeA/kA1U/o13cvhtgO38tLz/uCJx
-         15aUZmVzwF3l44aKu5/jg76hOlzcanvSnBSkWW73wY0viiHTKRty+6W4DBvqsl+BO0og
-         MVcWXPUoGkRecR2d4c1Mi+68SYFg9qf6u0Muz1xqZ2zwve4aJhS4Mnew8lcRznl/6YUo
-         7BRxb6zFXP71xEt5JQnf7AAg7wK0gqargU6q4dXY7zeiUEa5Yg9qIzH2FXWTDXpZvACN
-         J9NQ==
+        bh=ZxzmZfPQ1xcC/8WFAa5OQo5qBlQ7cBwjnS72WYBmhnM=;
+        b=BaPu37FN/CsRiMEyYm+HmvCnIO8JDg5UEBcKiVnvhIRayz4l+DZ6c/rOFuGixsI5HJ
+         8fp359TgrVh+iMC8jKBDpIqdsWb2aGsb4iEGmDMvGtdS69HT47g6S+e/owlZ+tSjAYXD
+         56OeO3FBLPHnHriiGYcrSYnkeA3hJ8DFG5vcX4ij4fa73nKUZiFOGDd4/KWwDPCCN9nY
+         2EuSs91uRxCixGPZUo2fKE+Ny31dQi7T5260bKFwPflt9L4i3r/ZhUmkCouEBivHpPhE
+         ititO+ThCogxJzxi4HqALVxxsrRZMUx8Obvswcsjkl/Ovlfz/0y6fccNseM+u+YzK14y
+         OO6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Ru7Xg8oyZNAOPgD4TDit2eFp41YNY/vd+RoiLDWH7AM=;
-        b=nnB5QIzWy4lUH/PaOBR1Badpp6BKgJPKQtS7ODBU3kjxCGjuEethe93/SfPeHf7ek8
-         RUW2J9wzunKnp2AkOyC/j+k4ngtU2IUdEIYOr99viL/WZxMyhDvecyVJgkUbShXBiEc8
-         2s1/SUMapNbHyuwSCLz+7ntCsir7mqVsSQun50JVlcSEqgh8BzQUNFCOUigjWu1d6L8a
-         SGII2pcdTf278uWrHbirGcKlbKVfg69G1/2dPenkFHtewFYpp7CX32URU81jqo81ivNp
-         22GN6VACg7chjtdVMes7q+YW/M2tVVwDTuYH87+NjFQjPmEKymaAbNus2svlhotkzp9w
-         oKYg==
-X-Gm-Message-State: ANhLgQ2oHNjQA0CAjvgdtPKtB36UGqGH0zYTGEBfx/ZGEAY0+sQ8J5yQ
-        Umafhph8QhqjubDiNLm8CAfm6A==
-X-Google-Smtp-Source: ADFU+vuQ00w/IlwtTGRW/NqKJ7itCRhCZTwZmHq9FxET/6XEhNyLBVYxZZmcySH+nXeOAmRDGbAj7w==
-X-Received: by 2002:a63:68f:: with SMTP id 137mr5929568pgg.348.1585183003888;
-        Wed, 25 Mar 2020 17:36:43 -0700 (PDT)
+        bh=ZxzmZfPQ1xcC/8WFAa5OQo5qBlQ7cBwjnS72WYBmhnM=;
+        b=hQDWkbu76699BlNC7h9eIzN5dyNIzOc6EUccSogXz5xsLCZ9jLSLKZa8rYPx1+iTbO
+         8TjbmqIl8xVrUU9TWdvAqcpDNNmgz4xGmUhylGK3e/x4MN/DPv07O1zr710514pWNrgN
+         db7D3euSZc0DNFSAnS+BfaZzFxm/0nJ2wdMHyi6jQj6KrA0T8bRdZpKf4e/N6y0vqEjv
+         r1ddlJ0Bx9TVBVm/eDeOHxcekTpaon7r0h6i3E5e4wG2SCF9P4RXUPd66F+6sFXUiZSR
+         ThQb8T6mkWNRqlWft1dAI1orUfPYZQBsYMjpctI6nGNXsFzOWf3rVnFXUY3aqWQjZCN4
+         BsTg==
+X-Gm-Message-State: ANhLgQ1akydCgyWH3+jM375FRKellP/uQXtBcOLjbAm8lUjBxdQaWeN1
+        cm4mxJhRES/GHSnwalTdZS3lpQ==
+X-Google-Smtp-Source: ADFU+vtw3sinPXugyhL8FDCWdq3ewIqgQgO1/OskBNO4Ad9/Uea+Sz3NiutRtgjrIwX+CfwM4abhRA==
+X-Received: by 2002:a17:902:b592:: with SMTP id a18mr2419130pls.98.1585183736437;
+        Wed, 25 Mar 2020 17:48:56 -0700 (PDT)
 Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g7sm338358pjl.17.2020.03.25.17.36.42
+        by smtp.gmail.com with ESMTPSA id z15sm273726pfg.152.2020.03.25.17.48.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2020 17:36:43 -0700 (PDT)
-Date:   Wed, 25 Mar 2020 17:36:40 -0700
+        Wed, 25 Mar 2020 17:48:55 -0700 (PDT)
+Date:   Wed, 25 Mar 2020 17:48:53 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-mtp: Relocate remoteproc
- firmware
-Message-ID: <20200326003640.GG119913@minitux>
-References: <20200302020757.551483-1-bjorn.andersson@linaro.org>
- <CAK8P3a1QZbpYV8juTb31-CXQMVF==qFjJdRd064Md_rw5V7Vnw@mail.gmail.com>
- <CAOCk7NpuC3J2EoOrkYQjjqc-DpTgYBdEwQk762v-7L7eki3RPg@mail.gmail.com>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     agross@kernel.org, Ajay Kishore <akisho@codeaurora.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] pinctrl: qcom: use scm_call to route GPIO irq to Apps
+Message-ID: <20200326004853.GH119913@minitux>
+References: <20200313191513.11365-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOCk7NpuC3J2EoOrkYQjjqc-DpTgYBdEwQk762v-7L7eki3RPg@mail.gmail.com>
+In-Reply-To: <20200313191513.11365-1-ansuelsmth@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 25 Mar 14:54 PDT 2020, Jeffrey Hugo wrote:
+On Fri 13 Mar 12:15 PDT 2020, Ansuel Smith wrote:
 
-> On Wed, Mar 25, 2020 at 3:13 PM Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > On Mon, Mar 2, 2020 at 3:09 AM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > Update the firmware-name of the remoteproc nodes to mimic the firmware
-> > > structure on other 845 devices.
-> > >
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 7 +++++++
-> > >  1 file changed, 7 insertions(+)
-> >
-> > Hi Bjorn,
-> >
-> > Sorry for the late reply, I only came across this one while going
-> > through the pull requests
-> > that we had failed to pick up earlier.
-> >
-> > I really dislike the idea of hardcoding a firmware name in the
-> > devicetree, we had long
-> > discussions about this a few years ago and basically concluded that the firmware
-> > name needs to be generated by the driver after identifying the hardware itself.
-> >
-> > The problem is that the firmware generally needs to match both the device driver
-> > and the hardware, so when there is a firmware update that changes the behavior
-> > (intentionally or not) in a way the driver needs to know about, then
-> > the driver should
-> > be able to request a particular firmware file based on information
-> > that the owner
-> > of the dtb may not have.
-> 
-> Interesting, this intersects some work I plan on doing.
-> 
-> What level information did this discussion assume that the device
-> driver had?  Do you have a reference to the discussion handy?
-> 
-> Please correct me if I am wrong, but this seems to assume that for
-> device X, there is one firmware at a specific version that the driver
-> is then knowledgeable about, and the driver can query the device
-> hardware in some way to determine what is appropriate.  It seems like
-> this assumption is believed to hold true, no matter what system X is
-> included in.
-> 
-> I think we have the problem where likely impossible that the driver
-> will know what firmware is valid.
-> 
-> Qualcomm, for better or worse, has a signing process for their images.
-> This establishes a root a trust which is enforced by hardware.  For
-> example, the Modem subsystem (the part of the SoC that talks to cell
-> towers and such) will not run an image which is not properly signed.
-> The valid signature is burned into the chip.
-> 
-> "Surely there is one signed image for a particular modem on a specific SoC?"
-> Sadly, no.  The OEM is allowed to provide their own key.  This may be
-> a key which is specific to the device (Ie the Brand XYZ Model 123
-> phone).  Therefore, that device will only run the firmware that
-> contains that OEM's signature, even if the actual code happens to be
-> identical to what every other OEM has.
+> For IPQ806x targets, TZ protects the registers that are used to
+> configure the routing of interrupts to a target processor.
+> To resolve this, this patch uses scm call to route GPIO interrupts
+> to application processor. Also the scm call interface is changed.
 > 
 
-And generally your XYZ 123 might come in different SKUs that might or
-might not vary in software and hardware features; so for some products
-the driver should know that it can use the "generic" XYZ 123 firmware
-and in others it needs to know that it should be looking for the XYZ 123
-firmware for, say, the Japanese market (different hardware).
+Oh no...but this does look pretty reasonable after all, some comments
+and suggestions below.
 
-> For some SoCs which go into multiple products, there seem to be
-> several OEMs which are willing to allow the firmware to be included in
-> the linux-firmware project.  Therefore, it is likely that there will
-> be multiple copies of the Modem image for the 845 SoC (for example) in
-> /lib/firmware.  In this case, it seems like your recommendation is
-> that the driver should somehow detect that it is running on device 123
-> and not device 456, and therefore be able to request the device 123
-> specific firmware.
+> Signed-off-by: Ajay Kishore <akisho@codeaurora.org>
+
+With this --author should be Ajay.
+
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 36 ++++++++++++++++++++++++++----
+>  1 file changed, 32 insertions(+), 4 deletions(-)
 > 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 9a8daa256a32..a83cfd1da219 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -22,6 +22,8 @@
+>  #include <linux/reboot.h>
+>  #include <linux/pm.h>
+>  #include <linux/log2.h>
+> +#include <linux/qcom_scm.h>
+> +#include <linux/io.h>
+>  
+>  #include <linux/soc/qcom/irq.h>
+>  
+> @@ -710,6 +712,9 @@ static void msm_gpio_irq_mask(struct irq_data *d)
+>  	const struct msm_pingroup *g;
+>  	unsigned long flags;
+>  	u32 val;
+> +	u32 addr;
+> +	int ret;
+> +	const __be32 *reg;
+>  
+>  	if (d->parent_data)
+>  		irq_chip_mask_parent(d);
+> @@ -863,6 +868,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>  	const struct msm_pingroup *g;
+>  	unsigned long flags;
+>  	u32 val;
+> +	int ret;
+>  
+>  	if (d->parent_data)
+>  		irq_chip_set_type_parent(d, type);
+> @@ -882,11 +888,33 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>  	else
+>  		clear_bit(d->hwirq, pctrl->dual_edge_irqs);
+>  
+> +	ret = of_device_is_compatible(pctrl->dev->of_node,
+> +					"qcom,ipq8064-pinctrl");
 
-And in the past I've worked on products where product 123, 456 and 789
-had the same firmware, but on some particular market all three used a
-market-specific firmware and in some cases two of them existed in a WiFi
-only variant.
+This won't change in runtime, so I would like for you to query this
+during probe and then carry the result in msm_pinctrl.
 
-> I don't know how the device driver is supposed to make that
-> determination, and its my opinion that the driver shouldn't be.  Other
-> than the need to have the correct firmware, which is tied to the
-> specific device, I'm not aware of an instance where a driver cares
-> about anything more than the hardware revision of the block it drives.
+>  	/* Route interrupts to application cpu */
+> -	val = msm_readl_intr_target(pctrl, g);
+> -	val &= ~(7 << g->intr_target_bit);
+> -	val |= g->intr_target_kpss_val << g->intr_target_bit;
+> -	msm_writel_intr_target(val, pctrl, g);
+> +	if (!ret) {
+> +		val = msm_readl_intr_target(pctrl, g);
+> +		val &= ~(7 << g->intr_target_bit);
+> +		val |= g->intr_target_kpss_val << g->intr_target_bit;
+> +		msm_writel_intr_target(val, pctrl, g);
+> +	} else {
+> +		const __be32 *reg = of_get_property(pctrl->dev->of_node,
+> +						    "reg", NULL);
 
-Looking at the particular problem it's not the revision of the hardware
-block(s) that the remoteproc interacts with that determines any of this.
+This too will be static, and we already resolve this, properly, with
+address translation etc during probe.
 
-E.g. the modem subsystem is the same on Dragonboard845c with WiFi-only
-as it is on the Lenovo Yoga C630 with or without LTE - but we still need
-some mechanism to determine which of the 3 firmware files to pick.
+So if you do a partial rollback of '4b024225c4a8 ("pinctrl: use
+devm_platform_ioremap_resource() to simplify code")' you can stash the
+base address of the resource in msm_pinctrl, and then make your change
+conditional on this being NULL or not.
+
+> +
+> +		if (reg) {
+> +			u32 addr = be32_to_cpup(reg) + g->intr_target_reg;
+> +
+> +			qcom_scm_io_readl(addr, &val);
+> +			__iormb();
+
+Why do you need this and below barriers?
+
+> +
+> +			val &= ~(7 << g->intr_target_bit);
+> +			val |= g->intr_target_kpss_val << g->intr_target_bit;
+> +
+> +			__iowmb();
+> +			ret = qcom_scm_io_writel(addr, val);
+> +			if (ret)
+> +				pr_err("\n Routing interrupts to Apps proc failed");
+
+You have msm_pinctrl->dev, so use dev_err(). And the \n goes at the end
+in Linux - and perhaps make it include d->hwirq to make it a little bit
+informative?
 
 Regards,
 Bjorn
+
+> +		}
+> +	}
+>  
+>  	/* Update configuration for gpio.
+>  	 * RAW_STATUS_EN is left on for all gpio irqs. Due to the
+> -- 
+> 2.25.0
+> 
