@@ -2,181 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C59419351B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 01:49:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF84C19392D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 08:07:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727576AbgCZAs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 20:48:58 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:34035 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727540AbgCZAs6 (ORCPT
+        id S1727575AbgCZHG6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 03:06:58 -0400
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:9267 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726210AbgCZHG6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 20:48:58 -0400
-Received: by mail-pl1-f193.google.com with SMTP id a23so1498769plm.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 17:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZxzmZfPQ1xcC/8WFAa5OQo5qBlQ7cBwjnS72WYBmhnM=;
-        b=BaPu37FN/CsRiMEyYm+HmvCnIO8JDg5UEBcKiVnvhIRayz4l+DZ6c/rOFuGixsI5HJ
-         8fp359TgrVh+iMC8jKBDpIqdsWb2aGsb4iEGmDMvGtdS69HT47g6S+e/owlZ+tSjAYXD
-         56OeO3FBLPHnHriiGYcrSYnkeA3hJ8DFG5vcX4ij4fa73nKUZiFOGDd4/KWwDPCCN9nY
-         2EuSs91uRxCixGPZUo2fKE+Ny31dQi7T5260bKFwPflt9L4i3r/ZhUmkCouEBivHpPhE
-         ititO+ThCogxJzxi4HqALVxxsrRZMUx8Obvswcsjkl/Ovlfz/0y6fccNseM+u+YzK14y
-         OO6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZxzmZfPQ1xcC/8WFAa5OQo5qBlQ7cBwjnS72WYBmhnM=;
-        b=hQDWkbu76699BlNC7h9eIzN5dyNIzOc6EUccSogXz5xsLCZ9jLSLKZa8rYPx1+iTbO
-         8TjbmqIl8xVrUU9TWdvAqcpDNNmgz4xGmUhylGK3e/x4MN/DPv07O1zr710514pWNrgN
-         db7D3euSZc0DNFSAnS+BfaZzFxm/0nJ2wdMHyi6jQj6KrA0T8bRdZpKf4e/N6y0vqEjv
-         r1ddlJ0Bx9TVBVm/eDeOHxcekTpaon7r0h6i3E5e4wG2SCF9P4RXUPd66F+6sFXUiZSR
-         ThQb8T6mkWNRqlWft1dAI1orUfPYZQBsYMjpctI6nGNXsFzOWf3rVnFXUY3aqWQjZCN4
-         BsTg==
-X-Gm-Message-State: ANhLgQ1akydCgyWH3+jM375FRKellP/uQXtBcOLjbAm8lUjBxdQaWeN1
-        cm4mxJhRES/GHSnwalTdZS3lpQ==
-X-Google-Smtp-Source: ADFU+vtw3sinPXugyhL8FDCWdq3ewIqgQgO1/OskBNO4Ad9/Uea+Sz3NiutRtgjrIwX+CfwM4abhRA==
-X-Received: by 2002:a17:902:b592:: with SMTP id a18mr2419130pls.98.1585183736437;
-        Wed, 25 Mar 2020 17:48:56 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z15sm273726pfg.152.2020.03.25.17.48.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2020 17:48:55 -0700 (PDT)
-Date:   Wed, 25 Mar 2020 17:48:53 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     agross@kernel.org, Ajay Kishore <akisho@codeaurora.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: qcom: use scm_call to route GPIO irq to Apps
-Message-ID: <20200326004853.GH119913@minitux>
-References: <20200313191513.11365-1-ansuelsmth@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200313191513.11365-1-ansuelsmth@gmail.com>
+        Thu, 26 Mar 2020 03:06:58 -0400
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 Mar 2020 12:36:55 +0530
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 26 Mar 2020 12:36:28 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id 4FEDF19BD; Thu, 26 Mar 2020 12:36:27 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v5 0/2] Add USB DWC3 support for SC7180 
+Date:   Thu, 26 Mar 2020 12:36:06 +0530
+Message-Id: <1585206368-685-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 13 Mar 12:15 PDT 2020, Ansuel Smith wrote:
+Converting dt binding to yaml.
+Adding compatible for SC7180 in dt bindings.
 
-> For IPQ806x targets, TZ protects the registers that are used to
-> configure the routing of interrupts to a target processor.
-> To resolve this, this patch uses scm call to route GPIO interrupts
-> to application processor. Also the scm call interface is changed.
-> 
+Changes in v5:
+Addressed the comments from Stephen in yaml file.
 
-Oh no...but this does look pretty reasonable after all, some comments
-and suggestions below.
+Changes in v4:
+Addressed the comments from Doug in yaml file.
 
-> Signed-off-by: Ajay Kishore <akisho@codeaurora.org>
+Changes in v3:
+Dropped the patch for adding the compatible in dwc3 driver from the series.
+Addressed the comments from Doug in yaml file.
 
-With this --author should be Ajay.
+Changes in v2:
+Sorted the compatible in dwc3 driver.
+Converted dt binding to yaml.
+Added compatible in yaml.
 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 36 ++++++++++++++++++++++++++----
->  1 file changed, 32 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 9a8daa256a32..a83cfd1da219 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -22,6 +22,8 @@
->  #include <linux/reboot.h>
->  #include <linux/pm.h>
->  #include <linux/log2.h>
-> +#include <linux/qcom_scm.h>
-> +#include <linux/io.h>
->  
->  #include <linux/soc/qcom/irq.h>
->  
-> @@ -710,6 +712,9 @@ static void msm_gpio_irq_mask(struct irq_data *d)
->  	const struct msm_pingroup *g;
->  	unsigned long flags;
->  	u32 val;
-> +	u32 addr;
-> +	int ret;
-> +	const __be32 *reg;
->  
->  	if (d->parent_data)
->  		irq_chip_mask_parent(d);
-> @@ -863,6 +868,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->  	const struct msm_pingroup *g;
->  	unsigned long flags;
->  	u32 val;
-> +	int ret;
->  
->  	if (d->parent_data)
->  		irq_chip_set_type_parent(d, type);
-> @@ -882,11 +888,33 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->  	else
->  		clear_bit(d->hwirq, pctrl->dual_edge_irqs);
->  
-> +	ret = of_device_is_compatible(pctrl->dev->of_node,
-> +					"qcom,ipq8064-pinctrl");
+Sandeep Maheswaram (2):
+  dt-bindings: usb: qcom,dwc3: Convert USB DWC3 bindings
+  dt-bindings: usb: qcom,dwc3: Add compatible for SC7180
 
-This won't change in runtime, so I would like for you to query this
-during probe and then carry the result in msm_pinctrl.
+ .../devicetree/bindings/usb/qcom,dwc3.txt          | 104 --------------
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         | 159 +++++++++++++++++++++
+ 2 files changed, 159 insertions(+), 104 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
 
->  	/* Route interrupts to application cpu */
-> -	val = msm_readl_intr_target(pctrl, g);
-> -	val &= ~(7 << g->intr_target_bit);
-> -	val |= g->intr_target_kpss_val << g->intr_target_bit;
-> -	msm_writel_intr_target(val, pctrl, g);
-> +	if (!ret) {
-> +		val = msm_readl_intr_target(pctrl, g);
-> +		val &= ~(7 << g->intr_target_bit);
-> +		val |= g->intr_target_kpss_val << g->intr_target_bit;
-> +		msm_writel_intr_target(val, pctrl, g);
-> +	} else {
-> +		const __be32 *reg = of_get_property(pctrl->dev->of_node,
-> +						    "reg", NULL);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-This too will be static, and we already resolve this, properly, with
-address translation etc during probe.
-
-So if you do a partial rollback of '4b024225c4a8 ("pinctrl: use
-devm_platform_ioremap_resource() to simplify code")' you can stash the
-base address of the resource in msm_pinctrl, and then make your change
-conditional on this being NULL or not.
-
-> +
-> +		if (reg) {
-> +			u32 addr = be32_to_cpup(reg) + g->intr_target_reg;
-> +
-> +			qcom_scm_io_readl(addr, &val);
-> +			__iormb();
-
-Why do you need this and below barriers?
-
-> +
-> +			val &= ~(7 << g->intr_target_bit);
-> +			val |= g->intr_target_kpss_val << g->intr_target_bit;
-> +
-> +			__iowmb();
-> +			ret = qcom_scm_io_writel(addr, val);
-> +			if (ret)
-> +				pr_err("\n Routing interrupts to Apps proc failed");
-
-You have msm_pinctrl->dev, so use dev_err(). And the \n goes at the end
-in Linux - and perhaps make it include d->hwirq to make it a little bit
-informative?
-
-Regards,
-Bjorn
-
-> +		}
-> +	}
->  
->  	/* Update configuration for gpio.
->  	 * RAW_STATUS_EN is left on for all gpio irqs. Due to the
-> -- 
-> 2.25.0
-> 
