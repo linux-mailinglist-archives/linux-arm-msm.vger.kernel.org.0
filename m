@@ -2,117 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 58657194690
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 19:34:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 516AC1946F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 20:02:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727719AbgCZSeV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Mar 2020 14:34:21 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:46510 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727354AbgCZSeV (ORCPT
+        id S1727446AbgCZTC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 15:02:57 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:44828 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbgCZTC5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Mar 2020 14:34:21 -0400
-Received: by mail-oi1-f196.google.com with SMTP id q204so6399158oia.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2020 11:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zvcRbO8JiiH8TflCF3JYY64FRuv850T5VBR+zKWVaAo=;
-        b=D5KANnoUgA813LQvHjIp5rAoPhY2gTJup4nP+xGLb5FNmM7+8RNwum/ue1O95T+xWb
-         5Ktbnl2iWEXVoCU3oOQg1rH6QozCfngfrmRO501JFNyUSHuo2dqvZagSkuCv/ZkCcdDy
-         9SNPpYOLAEHYsE4N1CYsv1lw2JsDmzr3bO5CAhprXa6CHmJ/wgf3TslEjhp5iWSPZbla
-         6EGwewp3bw3kVgK1ceZl6cCzyM58RIqxXE7Ece2gV1Bkyopg2Mdv5j42z6O1C0vGsEb+
-         xUlK8kqOpBq79qowMpVYE7dI2KBF+1Bmk+h2mEbeqaCTkXHdCSEol6R1AyJ6SpC3NLmt
-         slKg==
+        Thu, 26 Mar 2020 15:02:57 -0400
+Received: by mail-io1-f65.google.com with SMTP id v3so7176758iot.11;
+        Thu, 26 Mar 2020 12:02:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zvcRbO8JiiH8TflCF3JYY64FRuv850T5VBR+zKWVaAo=;
-        b=gyQmfztVmtmvakLVnE6OS+eCimeEs5OEfh3j7F6gbEQkN1vmylj7toS3hRtlAKW0AK
-         OtjMz93Y004aejoY+Agryrte65Mw2S4vmP7q94stRGljI8Ajt+XSEyDTsjjxJlK4AkkE
-         Z5y44eR4MjTb0rDao8oehT08TbirLwAs9L8gGC4OtRgpWGVrEA9pWUXF+tOQ033L6IcI
-         pxOCIC1BZADqX2uHBo3/ThY70OqrNVt1IPqTCQ0CX8AXlsNEIO4NXUm87hDKwVoHd/5Y
-         etF0A/r21DuD6eQ4G6PhWqD43BOeJHFal/FViK2M+GPJ+DQLLNjYul1Hu+eCk9FAX985
-         piSQ==
-X-Gm-Message-State: ANhLgQ2rDA4g2OZpkxHpj8rHyy/IYxJY6zxrSsRzORFVvYUBeKfvuL6g
-        1w/XSryJmBvGDHIIFScT5QlsuQTTTnMkV6AS4ukEtw==
-X-Google-Smtp-Source: ADFU+vuhr19j1Gh9BuMJvyrUH94cq/bHJXqm/DeIzQEZemccehjW6KDkcmRhHiQOfwXBWmMBVCeLo1LvtVagEPcJ2FU=
-X-Received: by 2002:aca:f541:: with SMTP id t62mr1218807oih.172.1585247660202;
- Thu, 26 Mar 2020 11:34:20 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=913nXdxioKFyBXx/HO1CiaF3q6eac3NnTWagXaXe9gM=;
+        b=snjMPj4R6k2v144tBuqVK7n2fbKtzR7C/CfEK1EnvNJ8Ue2ef4B4ggiazACpt8aRRc
+         v6BwZ0Bf+4z63kE70AFjVoez7RInkXLJcb7h0Ss2OWxizm59ZGvlkV/ybVVpaQodSB+t
+         kBZymOuowLGOoAKZO1r0IFo9jqemAM5xI5apSERiKHTMGACmcn4q8MS8gedUGSjJSf52
+         Il+g2Gmd8ge8iiKpbcFNegjQgTi67Sfw08M/0WxwfVJGzvpP1pC7Bsl64d1b31XMSQZ9
+         /E+xu0PyDAfSi9RDSJm6kEZh00su5oy371nnRoXrdv+cg9PHCNWfHPYNyYtQ4F+w4Rwg
+         ywlQ==
+X-Gm-Message-State: ANhLgQ2StMlbPnUT85JtDayCNu46N3vEt7Q3PBXULvkBZX6821KWCWyQ
+        lkjkAnojPiChzJ8uF5waWDcN480=
+X-Google-Smtp-Source: ADFU+vtcHtx/pWLZ5r+4OrJlDvMhktQM3VWwN1mtU/cnSTzgT5KMfVdBgp6bEq0yg6SjHaY9I5/E8g==
+X-Received: by 2002:a6b:e316:: with SMTP id u22mr9211014ioc.1.1585249374945;
+        Thu, 26 Mar 2020 12:02:54 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id c88sm1079423ill.15.2020.03.26.12.02.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2020 12:02:54 -0700 (PDT)
+Received: (nullmailer pid 15089 invoked by uid 1000);
+        Thu, 26 Mar 2020 19:02:53 -0000
+Date:   Thu, 26 Mar 2020 13:02:53 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, sean@poorly.run
+Subject: Re: [PATCH v9 1/2] dt-bindings: display: add visionox rm69299 panel
+ variant
+Message-ID: <20200326190253.GA5029@bogus>
+References: <20200323050316.32108-1-harigovi@codeaurora.org>
+ <20200323050316.32108-2-harigovi@codeaurora.org>
 MIME-Version: 1.0
-References: <1584973502-14775-1-git-send-email-ppvk@codeaurora.org> <c17d8842-0e1d-0014-b909-3114952b350b@codeaurora.org>
-In-Reply-To: <c17d8842-0e1d-0014-b909-3114952b350b@codeaurora.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Thu, 26 Mar 2020 11:33:44 -0700
-Message-ID: <CAGETcx_GD4K9CKyUtJEHKtAjHFKdfrepT0ZdA9WfRoUCF+QKPg@mail.gmail.com>
-Subject: Re: [RFC v6 0/2] Add SDHC interconnect bandwidth scaling
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Pradeep P V K <ppvk@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        adrian.hunter@intel.com, Rob Herring <robh+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, asutoshd@codeaurora.org,
-        stummala@codeaurora.org, sayalil@codeaurora.org,
-        rampraka@codeaurora.org, vbadigan@codeaurora.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>, mka@chromium.org,
-        linux-mmc@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-mmc-owner@vger.kernel.org,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200323050316.32108-2-harigovi@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 26, 2020 at 2:22 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->
-> Adding Viresh and Saravana,
->
-> On 3/23/2020 7:55 PM, Pradeep P V K wrote:
-> > Add interconnect bandwidths for SDHC driver using OPP framework that
-> > is required by SDHC driver based on the clock frequency and bus width
-> > of the card. Otherwise, the system clocks may run at minimum clock
-> > speed and thus affecting the performance.
-> >
-> > This change is based on
-> > [RFC] mmc: host: sdhci-msm: Use the interconnect API
-> > (https://lkml.org/lkml/2018/10/11/499) and
-> >
-> > [PATCH v6] Introduce Bandwidth OPPs for interconnects
-> > (https://lkml.org/lkml/2019/12/6/740)
->
-> Pradeep, since your series seems to depend on the above proposed bw bindings,
-> can you post the DT changes for the platform that you are testing these
-> patches on?
->
-> Please note that the above series is currently deadlocked [1][2] with no clear path
-> forward for now, so looking at how you plan to use this might throw some light onto
-> the requirements
->
-> [1] https://lkml.org/lkml/2020/1/14/511
-> [2] https://lkml.org/lkml/2020/3/20/106
+On Mon, Mar 23, 2020 at 10:33:15AM +0530, Harigovindan P wrote:
+> Add bindings for visionox rm69299 panel.
+> 
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
+> 
+> Changes in v2:
+>     - Removed unwanted properties from description.
+>     - Creating source files without execute permissions(Rob Herring).
+> Changes in v3:
+>     - Changing txt file into yaml
+> Changes in v4:
+>     - Updating license identifier.
+>     - Moving yaml file inside panel directory.
+>     - Removing pinctrl entries.
+>     - Adding documentation for reset-gpios.
+> Changes in v5:
+>     - No changes. Updated 2/2 Patch.
+> Changes in v6:
+>     - Removing patternProperties.
+>     - Added " |" after description.
+>     - Setting port and reset-gpios to true.
+>     - Removing @ae94000 for dsi node.
+> Changes in v7:
+>     - Added reg property.
+> Changes in v8:
+>     - Rearranged additionalProperties.
+>     - Dropping improper reg property.
+> Changes in v9:
+>     - Adding additionalProperties at the same level as
+>       'properties'
+>     - Adding properties for "ports" which includes:
+>       -> #address-cells
+>       -> #size-cells
+>       -> port@0
+> 
+>  .../display/panel/visionox,rm69299.yaml       | 82 +++++++++++++++++++
+>  1 file changed, 82 insertions(+)
+>  create mode 100755 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
 
-Sorry, not deadlocked. Just kinda busy. For [1] I believe I agreed
-with Viresh later on. I'll respond to [2] soon.
+Wrong file mode.
 
--Saravana
+> 
+> diff --git a/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> new file mode 100755
+> index 000000000000..2dd4d9471fa8
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> @@ -0,0 +1,82 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/visionox,rm69299.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Visionox model RM69299 Panels Device Tree Bindings.
+> +
+> +maintainers:
+> + - Harigovindan P <harigovi@codeaurora.org>
+> +
+> +description: |
+> + This binding is for display panels using a Visionox RM692999 panel.
+> +
+> +allOf:
+> + - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: visionox,rm69299-1080p-display
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  vdda-supply:
+> +    description: |
+> +      Phandle of the regulator that provides the vdda supply voltage.
+> +
+> +  vdd3p3-supply:
+> +    description: |
+> +      Phandle of the regulator that provides the vdd3p3 supply voltage.
+> +
+> +  ports:
+> +    type: object
+> +    description: |
+> +      A ports node with endpoint definitions as defined in
+> +      Documentation/devicetree/bindings/media/video-interfaces.txt.
+> +
+> +    properties:
+> +      "#address-cells":
+> +        const: 1
+> +
+> +      "#size-cells":
+> +        const: 0
+> +
+> +      port@0:
 
->
-> >
-> > Pradeep P V K (2):
-> >    mmc: sdhci-msm: Add interconnect bus bandwidth scaling support
-> >    dt-bindings: mmc: sdhci-msm: Add interconnect BW scaling strings
-> >
-> >   .../devicetree/bindings/mmc/sdhci-msm.txt          |  18 ++
-> >   drivers/mmc/host/sdhci-msm.c                       | 240 ++++++++++++++++++++-
-> >   2 files changed, 254 insertions(+), 4 deletions(-)
-> >
->
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+As I said before, fix the example. You don't need 'ports' nor a unit 
+address as there is only 1 port.
+
+All you need instead of 'ports' is 'port: true' because 
+panel-common.yaml defines it.
+
+And 'port' should be required.
+
+> +        type: object
+> +        description: |
+> +          Input endpoints of the controller.
+> +
+> +  reset-gpios: true
+> +
+> +  additionalProperties: false
+
+You are defining a property called 'additionalProperties'. Remove the 
+indentation.
+
+> +
+> +required:
+> +  - compatible
+> +  - vdda-supply
+> +  - vdd3p3-supply
+> +  - reset-gpios
+> +
+> +examples:
+> +  - |
+> +    panel {
+> +        compatible = "visionox,rm69299-1080p-display";
+> +
+> +        vdda-supply = <&src_pp1800_l8c>;
+> +        vdd3p3-supply = <&src_pp2800_l18a>;
+> +
+> +        reset-gpios = <&pm6150l_gpio 3 0>;
+> +        ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +            port@0 {
+> +                reg = <0>;
+> +                panel0_in: endpoint {
+> +                    remote-endpoint = <&dsi0_out>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
+> +
+> -- 
+> 2.25.1
+> 
