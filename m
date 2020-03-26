@@ -2,68 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC2E21945B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 18:42:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D6267194609
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 19:07:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727770AbgCZRmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Mar 2020 13:42:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44426 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726359AbgCZRmG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Mar 2020 13:42:06 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 45AA520719;
-        Thu, 26 Mar 2020 17:42:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1585244525;
-        bh=PR3fTXO4gmBg3C7y7WW919YmnVrJ51lYEcotjqu9Vsk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GMDLXo4onAulUghoEQWp9U/bSWTkKfOlCi1SkbavkGGKRppB1Xm4tgWWLRKk5n2LG
-         NwdqacWbX10ZfxcIjAsvKBMwKVre2C+it/YkucXDsMKDgMRczDa//5Enpj+agsUU3a
-         z0JUAMEzRRrev07Q0m6qsrkUNXf3h01MavEz0BCI=
-Date:   Thu, 26 Mar 2020 18:42:03 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     davem@davemloft.net, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/7] Improvements to MHI Bus
-Message-ID: <20200326174203.GA1558281@kroah.com>
-References: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
- <20200326145144.GA1484574@kroah.com>
- <20200326172514.GA8813@Mani-XPS-13-9360>
+        id S1727803AbgCZSHZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 14:07:25 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:42348 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbgCZSHY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Mar 2020 14:07:24 -0400
+Received: by mail-ua1-f68.google.com with SMTP id m18so2479671uap.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2020 11:07:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=S+88eV5gK0LljhqKdZ1yGcysPszYlI5kB6q6EVwjYtM=;
+        b=iajwo6ojaH6PQ0M+kFhP3CIwc4WeldtAB8KkVDaqEJ2XOiscCgtWqKrv9JgYGGrzCN
+         9HdQjVQDYrEB0Tpwu/BZBGrA+jNrpOZ5/jUEOE9t1h6DXRmYGPEbeHF4k7AwRlraXoPf
+         nkYRKiOHMLvzeuAXL9m/nvB/Uo76yXnDU+Dw8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=S+88eV5gK0LljhqKdZ1yGcysPszYlI5kB6q6EVwjYtM=;
+        b=it/uKAWyIHkFAUE99rEFhT4jYVhirB7Zn4v6I6w1ujrZ7OtfK/pirBZEsKXirglbp6
+         s3z4p5Kiwftzd44KimN0uvJ9ZGhtMOl1Urnqr3myLCcCa7Q3uF7o9hwEn7W1z21JlCBr
+         D+NwiGXqWXz5hso45oHO44whoBQ8t6xMvTW5pXJ6rCvR9tpCZZhzfwBgh2ALeYZIk281
+         ifPhaGsn0kO493bsXhloCAzXnzOIvEQRb9ol3BFfm8unrdQA7sme847qzwaOEndt+Y5c
+         Z9+b+S0MUXwgPxHdwtmIRC4x16QQFMOgOAvtwczz2SqTr6Ub4JPbLvB2alPeqfCFuuTI
+         mxdg==
+X-Gm-Message-State: ANhLgQ28MrNAz2GOu1bONz+Y3WdFHmZKfxEr2g+4svlJikbl22w4VfeT
+        eTkjte+MidlI0FFqavyoO4BTNSlQI9U=
+X-Google-Smtp-Source: ADFU+vuEOKNuvrj8UH6Jx89Tl5inCvKoBrMUxACs6YFgR7l/gpsT9TolSe7eb1lDLEQnbW/guq9abQ==
+X-Received: by 2002:ab0:28c9:: with SMTP id g9mr7088355uaq.117.1585246040700;
+        Thu, 26 Mar 2020 11:07:20 -0700 (PDT)
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com. [209.85.217.41])
+        by smtp.gmail.com with ESMTPSA id k10sm1514515vsr.31.2020.03.26.11.07.19
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Mar 2020 11:07:19 -0700 (PDT)
+Received: by mail-vs1-f41.google.com with SMTP id w185so4476457vsw.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2020 11:07:19 -0700 (PDT)
+X-Received: by 2002:a67:1e46:: with SMTP id e67mr8011826vse.106.1585246038937;
+ Thu, 26 Mar 2020 11:07:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200326172514.GA8813@Mani-XPS-13-9360>
+References: <20190218140210.14631-1-rplsssn@codeaurora.org> <20190218140210.14631-2-rplsssn@codeaurora.org>
+In-Reply-To: <20190218140210.14631-2-rplsssn@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 26 Mar 2020 11:07:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XmBQb8yfx14T-tMQ68F-h=3UHog744b3X3JZViu15+4g@mail.gmail.com>
+Message-ID: <CAD=FV=XmBQb8yfx14T-tMQ68F-h=3UHog744b3X3JZViu15+4g@mail.gmail.com>
+Subject: Re: [PATCH RESEND v1 1/2] drivers: qcom: rpmh-rsc: clear active mode
+ configuration for wake TCS
+To:     Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 26, 2020 at 10:55:14PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Mar 26, 2020 at 03:51:44PM +0100, Greg KH wrote:
-> > On Tue, Mar 24, 2020 at 11:40:43AM +0530, Manivannan Sadhasivam wrote:
-> > > Hi Greg,
-> > > 
-> > > Here is the patchset for improving the MHI bus support. One of the patch
-> > > is suggested by you for adding the driver owner field and rest are additional
-> > > improvements and some fixes.
-> > 
-> > I've taken the first 4 of these now, thanks.
-> > 
-> 
-> Thanks Greg! For the future patches after v5.7, how do you want to pick them?
-> I assume that you'll be the person picking all "bus" related patches, then
-> do you want me to CC you for all patches or just send them as a pull request
-> finally?
+Hi
 
-Sending me patch series like this is good to start with for now.  If it
-gets too complex and too big, then we can worry about pull requests.
+On Mon, 18 Feb 2019 19:32:09 Raju P.L.S.S.S.N <rplsssn@codeaurora.org> wrote:
+>
+> For RSCs that have sleep & wake TCS but no dedicated active TCS, wake
+> TCS can be re-purposed to send active requests. Once the active requests
+> are sent and response is received, the active mode configuration needs
+> to be cleared so that controller can use wake TCS for sending wake
+> requests.
+>
+> Signed-off-by: Raju P.L.S.S.S.N <rplsssn@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>  drivers/soc/qcom/rpmh-rsc.c | 77 ++++++++++++++++++++++++++-----------
+>  1 file changed, 54 insertions(+), 23 deletions(-)
+>
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index 75bd9a83aef0..6cc7f219ce48 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -201,6 +201,42 @@ static const struct tcs_request *get_req_from_tcs(struct rsc_drv *drv,
+>         return NULL;
+>  }
+>
+> +static void __tcs_trigger(struct rsc_drv *drv, int tcs_id, bool trigger)
 
-thanks,
+nit: can you rename this to __tcs_set_trigger() so it's a little more
+obvious that the last value means trigger/untrigger?
 
-greg k-h
+It'd also be nice to really understand why it has to be structured
+this way.  It's weird that the two options are "untrigger + retrigger"
+and "untrigger"
+
+
+> +{
+> +       u32 enable;
+> +
+> +       /*
+> +        * HW req: Clear the DRV_CONTROL and enable TCS again
+> +        * While clearing ensure that the AMC mode trigger is cleared
+> +        * and then the mode enable is cleared.
+> +        */
+> +       enable = read_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id, 0);
+> +       enable &= ~TCS_AMC_MODE_TRIGGER;
+> +       write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
+> +       enable &= ~TCS_AMC_MODE_ENABLE;
+> +       write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
+> +
+> +       if (trigger) {
+> +               /* Enable the AMC mode on the TCS and then trigger the TCS */
+> +               enable = TCS_AMC_MODE_ENABLE;
+> +               write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
+> +               enable |= TCS_AMC_MODE_TRIGGER;
+> +               write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
+> +       }
+> +}
+> +
+> +static inline void enable_tcs_irq(struct rsc_drv *drv, int tcs_id, bool enable)
+> +{
+> +       u32 data;
+> +
+> +       data = read_tcs_reg(drv, RSC_DRV_IRQ_ENABLE, 0, 0);
+> +       if (enable)
+> +               data |= BIT(tcs_id);
+> +       else
+> +               data &= ~BIT(tcs_id);
+> +       write_tcs_reg(drv, RSC_DRV_IRQ_ENABLE, 0, data);
+> +}
+> +
+>  /**
+>   * tcs_tx_done: TX Done interrupt handler
+>   */
+> @@ -237,6 +273,21 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+>                 }
+>
+>                 trace_rpmh_tx_done(drv, i, req, err);
+> +
+> +               /*
+> +                * if wake tcs was re-purposed for sending active
+> +                * votes, clear AMC trigger & enable modes and
+> +                * disable interrupt for this TCS
+> +                */
+> +               if (!drv->tcs[ACTIVE_TCS].num_tcs) {
+> +                       __tcs_trigger(drv, i, false);
+
+I assume that the reason that the code originally didn't try to
+"untrigger" in the interrupt handler is that it's slow (it uses
+write_tcs_reg_sync).  If that's true then maybe you shouldn't do the
+untrigger here for the case when you're on a borrowed TCS.  Can't you
+just do the untrigger later when you reprogram the TCS for someone
+else's use?
+
+
+> +                       /*
+> +                        * Disable interrupt for this TCS to avoid being
+> +                        * spammed with interrupts coming when the solver
+> +                        * sends its wake votes.
+> +                        */
+> +                       enable_tcs_irq(drv, i, false);
+
+Should you be doing this under the spinlock?  You're doing a
+read-modify-write of the RSC_DRV_IRQ_ENABLE register which seems like
+it could race with someone trying to enable an IRQ if the borrowed TCS
+type has more than one TCS (so you could be trying to start a transfer
+on one TCS while one is finishing on another).
+
+It would be somewhat hard for this to happen, but I don't _think_ it's
+impossible.  Specifically:
+
+1. Two threads can call rpmh_write() at the same time.
+
+2. Both threads call into rpmh_rsc_send_data() w/out holding any locks.
+
+3. Both threads call into tcs_write() w/out holding any locks.
+
+4. Both threads call get_tcs_for_msg() w/out holding any locks.
+
+5. Both threads notice they need to borrow the wake TCS.
+
+6. Both threads call rpmh_rsc_invalidate().  There are locks in here,
+but nothing stops both threads from returning 0 (not -EAGAIN) since
+nobody has claimed the wake TCS by setting 'tcs_in_use' yet.
+
+Assuming that there are more than one wake TCSs it is possible that
+both transfers can be happening at the same time and I believe it's
+even possible (though you'd need crazy timing) for one thread to hit
+the interrupt handler and finish at the same time that the other
+thread starts.
+
+
+Assuming we care about the case of having zero-active TCS and
+more-than-one-wake TCS, it'd be nice to fix.  If we don't care about
+this case, it should be documented in the code.  Funny enough, most of
+the time having zero-active TCS and more-than-one-wake TCS doesn't buy
+us much with the current code because the 2nd thread will return
+-EAGAIN from rpmh_rsc_invalidate() assuming that the 1st thread
+manages to set "tcs_in_use" before the 2nd thread gets there.
+
+
+Overall the locking involved with borrowing a wake TCS is really
+tricky if you want to close all corner cases.  I need to constantly
+refer to my series adding documentation to have any chance here.
+
+https://lore.kernel.org/r/20200311161104.RFT.v2.5.I52653eb85d7dc8981ee0dafcd0b6cc0f273e9425@changeid
+
+I'd love review feedback on that!  Some of this stuff maybe becomes
+easier to understand if we don't have Maulik's flushing series and we
+can always assume that writing active TCSs and writing sleep/wake TCSs
+never happen at the same time (I think traditionally sleep/wake TCSs
+only get written from special PM code when we know nothing else is
+running).
+
+
+-Doug
