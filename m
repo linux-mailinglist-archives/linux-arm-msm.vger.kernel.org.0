@@ -2,83 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D27C419349F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 00:34:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EDC11934DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 01:08:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727399AbgCYXeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Mar 2020 19:34:13 -0400
-Received: from onstation.org ([52.200.56.107]:42750 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727395AbgCYXeM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Mar 2020 19:34:12 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id D9ADB3E993;
-        Wed, 25 Mar 2020 23:34:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1585179251;
-        bh=UmMfQfL2Dh6nfn2syBX2sC1MPLmcaAcwUvfWVe3vkpM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BPWtzEWeaE0xPqB52s39r4KFFu9CAc2XWbyWEeiYjMFFp4zI3Jnc7Ce1qomgad3+i
-         Zssb5erETKV/5tFlC9CDhOpLk9pnxg2NCChpeKVZIiBN8eTPwpTU1e5qXBz7i2qmMi
-         ohX+2HrLcdpwIAUyrpKCZpDJiGxTBey+OAukZuAo=
-Date:   Wed, 25 Mar 2020 19:34:09 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Zhang Rui <rui.zhang@intel.com>,
-        dri-devel@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: sram: qcom: Clean-up 'ranges' and child
- node names
-Message-ID: <20200325233409.GB16767@onstation.org>
-References: <20200325220542.19189-1-robh@kernel.org>
- <20200325220542.19189-3-robh@kernel.org>
+        id S1727644AbgCZAIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Mar 2020 20:08:04 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44477 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727611AbgCZAIE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Mar 2020 20:08:04 -0400
+Received: by mail-pg1-f196.google.com with SMTP id 142so1960072pgf.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2020 17:08:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=D0CV0Uku18oFuW+TPNfaEyxgPkTMYFP8ObQ3tAgtOsc=;
+        b=SBVg/zWsk52JKcc+nEzqXNzg7w+HdPM+lrL+HI2UtDuTis6PRGJW94M/+n13O7YFJ6
+         MkyiHnm+qz/wx068nDs7rRLD8Mxv0/d1wvd4ydeatxtcR8oeIo1jgdzPJWoBiWLOMy5D
+         Sr7aD48oUo1BGco1e4RkKs/cV4d8PChb5tGcmIVWLw4+gCx6zjSNiIkgcushvn7efvzG
+         2NB35CZPdE1L9jj/4rXITMdF2rI03jjFSk5pQtNPgT9t6zFYfBB69DlnPNvdf0FaIVyh
+         RdJT+9KPjhHtw68UyMFICMBQNtihr9TcRKOx34/0Fr0tHKLMzLfslUmpoZ/zH8vX9jx/
+         Av0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=D0CV0Uku18oFuW+TPNfaEyxgPkTMYFP8ObQ3tAgtOsc=;
+        b=mk+uZbfhIppTdPs0Ta9WsSTgzt17WBQZZsWnff9f6tCR/WS+wKP+6He184zOZbuovl
+         l2yIUSf0+7szneYsAxcoR+e0zujAnUG7Q0LrIy+uu4Oe5CzXiK1GB5cqWgYIhlEmrkD4
+         wCpzt5AKzqWCPpfqw6GdJ7/Y3ZHsYmwQqw2b5Vz7q/qWthDqMuIUylF2z9QZmZducGGl
+         HE71uSaf/+kKR2TKKNXYo+UBHHaYizAZxciy5xZp9gdK9Mjq/61GbJUylfbGw/68aIAt
+         XzsLnxMGVDhuZyxovutQnUNBXUo8x9AKEMFi6O/uGYXk428/YjClPYrzHf5Mpkm1AlQr
+         vQtQ==
+X-Gm-Message-State: ANhLgQ2qzAkN1MG0mBJk4G7G6Z3Lye0byh+5QTs2XTY9polyxASxgTAF
+        HjDcmmWJbD0ZrEGyUqjVAeiSfg==
+X-Google-Smtp-Source: ADFU+vuIfUjtKDwe+/9IZoHaEyu52b65Fllav4Sg62s59kUgWWdWFkYrl4HvkTVxCVFhPIOx9IDLGA==
+X-Received: by 2002:a62:2e42:: with SMTP id u63mr6197087pfu.69.1585181280449;
+        Wed, 25 Mar 2020 17:08:00 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id u12sm227537pfm.165.2020.03.25.17.07.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2020 17:07:59 -0700 (PDT)
+Date:   Wed, 25 Mar 2020 17:07:57 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-mtp: Relocate remoteproc
+ firmware
+Message-ID: <20200326000757.GF119913@minitux>
+References: <20200302020757.551483-1-bjorn.andersson@linaro.org>
+ <CAK8P3a1QZbpYV8juTb31-CXQMVF==qFjJdRd064Md_rw5V7Vnw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200325220542.19189-3-robh@kernel.org>
+In-Reply-To: <CAK8P3a1QZbpYV8juTb31-CXQMVF==qFjJdRd064Md_rw5V7Vnw@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 25, 2020 at 04:05:39PM -0600, Rob Herring wrote:
-> The regex for child nodes doesn't match the example. This wasn't flagged
-> with 'additionalProperties: false' missing. The child node schema was also
-> incorrect with 'ranges' property as it applies to child nodes and should
-> be moved up to the parent node.
-> 
-> Fixes: 957fd69d396b ("dt-bindings: soc: qcom: add On Chip MEMory (OCMEM) bindings")
-> Cc: Brian Masney <masneyb@onstation.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Rob Herring <robh@kernel.org>
+On Wed 25 Mar 14:13 PDT 2020, Arnd Bergmann wrote:
 
-Reviewed-by: Brian Masney <masneyb@onstation.org>
+> On Mon, Mar 2, 2020 at 3:09 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > Update the firmware-name of the remoteproc nodes to mimic the firmware
+> > structure on other 845 devices.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> 
+> Hi Bjorn,
+> 
+> Sorry for the late reply, I only came across this one while going
+> through the pull requests
+> that we had failed to pick up earlier.
+> 
+> I really dislike the idea of hardcoding a firmware name in the
+> devicetree, we had long
+> discussions about this a few years ago and basically concluded that the firmware
+> name needs to be generated by the driver after identifying the hardware itself.
+> 
+
+I remember this discussion and generally I share your view, but after
+postponing this problem for years we've not managed to come up with a
+solution for our problem.
+
+> The problem is that the firmware generally needs to match both the device driver
+> and the hardware, so when there is a firmware update that changes the behavior
+> (intentionally or not) in a way the driver needs to know about, then
+> the driver should
+> be able to request a particular firmware file based on information
+> that the owner
+> of the dtb may not have.
+> 
+
+There are three variables in play here:
+
+1) Large feature differences, e.g. does your modem Hexagon have
+associated RF hardware, or is it WiFi only. Or other similar things,
+which does affect DeviceTree anyways (memory maps, audio routing etc)
+
+2) Purely software versions of the firmware. Generally no impact on
+remoteproc level or the immediate layers above, bug fixes etc.
+
+3) Vendor specific signatures. All these files are signed with vendor
+specific private keys.
+
+
+None of these affects how we describe the hardware, so we did choose to
+use a compatible per platform and remoteproc, e.g. qcom,sdm845-mss-pil
+will handle the modem core on all SDM845 devices, regardless of the
+firmware implementing WiFi only or it's a devboard or a product with
+strict signature validation.
+
+We could add another property in the DT node to denote if the modem RF
+hardware is present and have the sdm845-mss-pil compatible result in a
+selection of qcom/sdm845/modem.mbn vs qcom/sdm845/modem_nm.mbn. This
+would handle 1) above.
+
+
+But this doesn't solve 3) and my Lenovo Yoga C630 will refuse to load
+these files, as they are not signed by Lenovo.
+
+For years we've toyed with the idea of building the necessary firmware
+path based on e.g. information from DMI (which not all boards has) or
+somehow tokenizing the machine compatible. But nothing sane has come out
+of these attempts/ideas.
+
+So after years of not being able to send these files to linux-firmware,
+without breaking some other board we decided to just describe these
+variations using firmware-name.
+
+So this solves 1) and 3) in a straight forward way, and so far in all
+cases we've handled 2) by upgrading (until now, our fork of)
+linux-firmware.
+
+But I don't have any suggestions for how to solve the case where kernel
+version X and X+1 _needs_ different versions of the firmware.
+
+
+Lastly, most variations in firmware features are discoverable by the
+higher layers, but for the cases where the remoteproc driver itself is
+affected we're looking at changes to the memory map, clocks, regulators,
+power domains - problems that has to be resolved in DT anyways. 
+
+Which is the reason why several companies are looking at passing
+dynamically loaded DT snippets with their remoteproc firmware.
+
+> I'm holding off on the pull request for today, maybe there is something we can
+> still do about it before the merge window.
+> 
+
+The binding addition was merged in 5.1, with Rob's r-b, in 5.5 we used
+these properties for the Lenovo Yoga C630 and in 5.6 we merged the
+equivalent change for the Dragonboard 845c.
+
+If there is a solution that allow us to move away from firmware-name in
+DT I'm interested and would like to see us migrate towards it, but the
+only thing this particular change does is to make the SDM845 MTP find
+the right files in linux-firmware, using the already existing binding
+and implementation.
+
+Regards,
+Bjorn
