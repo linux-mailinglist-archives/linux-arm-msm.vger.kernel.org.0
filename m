@@ -2,141 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F73A193B2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 09:39:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6017A193B83
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 10:10:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726292AbgCZIjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Mar 2020 04:39:24 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35727 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726354AbgCZIjY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Mar 2020 04:39:24 -0400
-Received: by mail-wr1-f66.google.com with SMTP id d5so6680800wrn.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2020 01:39:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:autocrypt:organization:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=TLKfrWP8AcWMfXeFe+OL6HzlrP4WSBWNABjm4srbTno=;
-        b=J5gCYRRbYEj1hCUaEBVlU8bi9gpdFIkdCjjUKomRB01ovaQLmGoZezSV4UymD5J3Vk
-         UAQxUniYX12deWTkW2AoIfX8E0qqGRlViNFjELQqjswB0Ky5fe73mKF7U2oK3f+87AGk
-         apIJUNtPXDBW+DXgBlYQQ8G2wNlz5goRvUYS2XlnXUNWPg/ZkWNo6JPPdnEam/DLwCQo
-         lcizhqwTuoW7QH+u8TPnsYPhxgo0kuYLCsz+05OmYvB080/4lnQthTrOeNgwUYsfHhuY
-         V82r7rl7iMbh/wAzhsNyWZYchZdm8rEWBKL/b9eIdJLE9vEG7Zgqfl5mTb1K50VXGdJJ
-         UVew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :organization:message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=TLKfrWP8AcWMfXeFe+OL6HzlrP4WSBWNABjm4srbTno=;
-        b=m4HMkL/bXMyKP+A6SlGBrjZ5focAbzkE96QTttObH8GmBYeBApefk15QejJ+/rhP0s
-         3Z3VIYEzA0jApeDfvtXLLU5TUxmRqPdEyrUdX747DgoU9cTEKGwWO+h10xywCYaPn9af
-         afUrlKvN4haZFxkGlA9ReD1n/XnpEMbKkgKSuI8y/BzvuowOC1lTWgeQOk4WRRGsysNE
-         SzmVzrfOgFlkq0zzer7uqalp0jecVolMALmBlVg5bzPONWKkbvMO8b1yrtP6aBqfbH9O
-         dQgS4BBsf78FEnw9Se6/jmBCQW23V78547nLTsP9YgbugCUxP519w+TApTQVodemhacQ
-         CbLQ==
-X-Gm-Message-State: ANhLgQ0sIlEPNRQwxJ+HzGWaBKG/uIJ4LRVQcm691KcG8DaqS5hwmJkr
-        jkUukGDWQ49XPkRVG7BXnsu6fA==
-X-Google-Smtp-Source: ADFU+vvzuQ4QxVS/s0ibmVMZp4jdcmJoedPChELBVbuKyTFcPAB+5OcyntAwpr9Tl9sZS9yiTvZRQg==
-X-Received: by 2002:adf:c587:: with SMTP id m7mr8354429wrg.64.1585211961242;
-        Thu, 26 Mar 2020 01:39:21 -0700 (PDT)
-Received: from ?IPv6:2a01:e35:2ec0:82b0:25f2:833f:2a30:1344? ([2a01:e35:2ec0:82b0:25f2:833f:2a30:1344])
-        by smtp.gmail.com with ESMTPSA id l4sm1317884wru.1.2020.03.26.01.39.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Mar 2020 01:39:20 -0700 (PDT)
-Subject: Re: [PATCH 3/4] dt-bindings: Clean-up schema errors due to missing
- 'addtionalProperties: false'
-To:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        id S1727689AbgCZJKx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 05:10:53 -0400
+Received: from mga06.intel.com ([134.134.136.31]:45602 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726292AbgCZJKx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Mar 2020 05:10:53 -0400
+IronPort-SDR: Fv9mga/JYauPBSPb6P2hSPJBJUzyLxQOdHOf3RJKEOUro4LZLwZvAUDQ2wTcZXdWYrQII9p5Uo
+ dTEzIfH65RUw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Mar 2020 02:10:52 -0700
+IronPort-SDR: FkXE58tUwihO6nd3Lw5ViYuA7DM1g9lgAXC+1NJZGEZhLIUvhLwAWmHfXwsR5ij0icg5VzL9vQ
+ FXlrPrLwmmCA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,307,1580803200"; 
+   d="scan'208";a="240902570"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.170]) ([10.237.72.170])
+  by orsmga008.jf.intel.com with ESMTP; 26 Mar 2020 02:10:48 -0700
+Subject: Re: [PATCH v8 1/5] usb: hci: add hc_driver as argument for
+ usb_hcd_pci_probe
+To:     Vinod Koul <vkoul@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Zhang Rui <rui.zhang@intel.com>,
-        dri-devel@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
-        netdev@vger.kernel.org
-References: <20200325220542.19189-1-robh@kernel.org>
- <20200325220542.19189-4-robh@kernel.org>
-From:   Neil Armstrong <narmstrong@baylibre.com>
-Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
- 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
- BSwxi7g3Mu7u5kUByanqHyA=
-Organization: Baylibre
-Message-ID: <e60df575-c70d-a194-6c54-32b5ae69a041@baylibre.com>
-Date:   Thu, 26 Mar 2020 09:39:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        =?UTF-8?Q?Andreas_B=c3=b6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200323170601.419809-1-vkoul@kernel.org>
+ <20200323170601.419809-2-vkoul@kernel.org>
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=mathias.nyman@linux.intel.com; prefer-encrypt=mutual; keydata=
+ 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 fiD/
+Message-ID: <293c8217-11e5-6231-1506-15c7e1834c4a@linux.intel.com>
+Date:   Thu, 26 Mar 2020 11:13:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200325220542.19189-4-robh@kernel.org>
+In-Reply-To: <20200323170601.419809-2-vkoul@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -145,63 +97,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/03/2020 23:05, Rob Herring wrote:
-> Numerous schemas are missing 'additionalProperties: false' statements which
-> ensures a binding doesn't have any extra undocumented properties or child
-> nodes. Fixing this reveals various missing properties, so let's fix all
-> those occurrences.
+On 23.3.2020 19.05, Vinod Koul wrote:
+> usb_hcd_pci_probe expects users to call this with driver_data set as
+> hc_driver, that limits the possibility of using the driver_data for
+> driver data.
 > 
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Bartosz Golaszewski <bgolaszewski@baylibre.com>
-> Cc: Masahiro Yamada <yamada.masahiro@socionext.com>
-> Cc: Jonathan Cameron <jic23@kernel.org>
-> Cc: Hartmut Knaack <knaack.h@gmx.de>
-> Cc: Lars-Peter Clausen <lars@metafoo.de>
-> Cc: Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-> Cc: Neil Armstrong <narmstrong@baylibre.com>
-> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-> Cc: Kevin Hilman <khilman@baylibre.com>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Liam Girdwood <lgirdwood@gmail.com>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Guillaume La Roque <glaroque@baylibre.com>
-> Cc: Zhang Rui <rui.zhang@intel.com>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: linux-clk@vger.kernel.org
-> Cc: linux-gpio@vger.kernel.org
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: linux-iio@vger.kernel.org
-> Cc: linux-media@vger.kernel.org
-> Cc: linux-amlogic@lists.infradead.org
-> Cc: netdev@vger.kernel.org
-> Cc: linux-pm@vger.kernel.org
-> Signed-off-by: Rob Herring <robh@kernel.org>
+> Add hc_driver as argument to usb_hcd_pci_probe and modify the callers
+> ehci/ohci/xhci/uhci to pass hc_driver as argument and freeup the
+> driver_data used
+> 
+> Tested xhci driver on Dragon-board RB3, compile tested ehci and ohci.
+> Couldn't compile uhci
+> 
+> Suggested-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  .../devicetree/bindings/clock/fsl,plldig.yaml |  3 +++
->  .../gpio/socionext,uniphier-gpio.yaml         |  2 ++
->  .../bindings/gpu/arm,mali-bifrost.yaml        |  6 ++---
->  .../bindings/gpu/arm,mali-midgard.yaml        |  3 +++
->  .../bindings/iio/adc/adi,ad7192.yaml          |  1 -
->  .../bindings/iio/pressure/bmp085.yaml         |  3 +++
->  .../media/amlogic,meson-gx-ao-cec.yaml        |  9 +++++---
->  .../bindings/mfd/rohm,bd71828-pmic.yaml       |  3 +++
->  .../bindings/net/ti,cpsw-switch.yaml          | 23 ++++++++++++-------
->  .../regulator/max77650-regulator.yaml         |  2 +-
->  .../bindings/thermal/amlogic,thermal.yaml     |  2 ++
->  .../bindings/timer/arm,arch_timer_mmio.yaml   |  2 ++
->  12 files changed, 43 insertions(+), 16 deletions(-)
+>  drivers/usb/core/hcd-pci.c  |  7 ++++---
+>  drivers/usb/host/ehci-pci.c |  6 ++----
+>  drivers/usb/host/ohci-pci.c |  9 ++++++---
+>  drivers/usb/host/uhci-pci.c |  8 ++++++--
+>  drivers/usb/host/xhci-pci.c | 14 +++++---------
+>  include/linux/usb/hcd.h     |  3 ++-
+>  6 files changed, 25 insertions(+), 22 deletions(-)
 > 
 
-For:
-  .../bindings/gpu/arm,mali-bifrost.yaml        |  6 ++---
-  .../bindings/gpu/arm,mali-midgard.yaml        |  3 +++
-  .../media/amlogic,meson-gx-ao-cec.yaml        |  9 +++++---
-  .../bindings/thermal/amlogic,thermal.yaml     |  2 ++
-
-
-Reviewed-by: Neil Armstrong <narmstrong@baylibre.com>
-
+For the xhci part of this 1/5 patch only:
+Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
