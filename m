@@ -2,540 +2,366 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D345193E6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 12:56:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76109193F1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 13:45:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728144AbgCZL4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Mar 2020 07:56:13 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46673 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728120AbgCZL4N (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Mar 2020 07:56:13 -0400
-Received: by mail-wr1-f68.google.com with SMTP id j17so7328541wru.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2020 04:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=h5V84dig7xOL1AyiKcdgVcY57+dpP4X3nAOl48YFq8A=;
-        b=wnqDOMJYVFf8jJceFlspBqsWltNAULFjb3tQ3Vlpl+Zbd2ODLoNGxgjt/7wZVD4ePL
-         1WGCIebmwBAuvZRNciZF5xFdsAIRHyEzKiZIqewv80HLUs0MrA3BUoFINzv8vrAYRwWU
-         XBQq1yRR0xj7vC2hiAfgevK12zjVcmcz5HfcfIAeN4Wohd0IIuD0SWG3F1oaAPmBXmTD
-         YXLMBcQxyhT67mJXyacq7+5J5moQBqmjrPpgK4klFmcqtrZjqTH7fynOdY7W4+ZoFLGF
-         exU4KwbzBbPZNcdJQDqulHtuIw33AmfUxK1lQ+j9+R7lyQouxcMnpPuXvv3jAr9hzSDA
-         Ufzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=h5V84dig7xOL1AyiKcdgVcY57+dpP4X3nAOl48YFq8A=;
-        b=cimeUTKeND3nI9DakxoqaU7f9r+mKYcYZtT/xjQiQu2r66bck1Y1OfV7K5BkgtXHOB
-         ZLc0favB5pSy7K1/ScmtRA2t7qES941tZGBKItz4L9+x9SvhaXRwMikEJmQl8Oj4RoBr
-         069cQkXtyIzV0yVkQ40VzzuAR22gxOWxsz2WFvZPWRxaYpHnky0J+s7QMjr2c5QkOrOn
-         gAUqxT5GdbE2YvaLBrvskTclnqKBCR6zLVhY3OmzIfSAyO/nxVrh3TajNGpcqBO4PSLD
-         WZfGbZZEUDlVgXDQFq81SzpOZZMLGI+W8FfIrtJ3q+oCyax07tg6ryIMgiuMKxfG/uc9
-         zoMg==
-X-Gm-Message-State: ANhLgQ0aHy38XJ/iHnsHBx5mgOM99o0TlMMW33o8+B5+HgPqhTWympcT
-        RmeHbyTFhd8mvypMnfzCx56kdA==
-X-Google-Smtp-Source: ADFU+vta4p4kYdrA4CN1MK9obrQfbjEFxpgPh0MlPq16cA2A1WGm3xoEafJSY1ZqXFKoYfFnnlw62Q==
-X-Received: by 2002:adf:8165:: with SMTP id 92mr9512537wrm.217.1585223771859;
-        Thu, 26 Mar 2020 04:56:11 -0700 (PDT)
-Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id o14sm3103270wmh.22.2020.03.26.04.56.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 26 Mar 2020 04:56:11 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     bjorn.andersson@linaro.org, mturquette@baylibre.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Ilia Lin <ilialin@codeaurora.org>
-Subject: [PATCH 4/4] arch: arm64: dts: msm8996: Add opp and thermal
-Date:   Thu, 26 Mar 2020 13:00:08 +0100
-Message-Id: <1585224008-15730-5-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1585224008-15730-1-git-send-email-loic.poulain@linaro.org>
-References: <1585224008-15730-1-git-send-email-loic.poulain@linaro.org>
+        id S1728181AbgCZMpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 08:45:20 -0400
+Received: from lhrrgout.huawei.com ([185.176.76.210]:2608 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728134AbgCZMpU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Mar 2020 08:45:20 -0400
+Received: from lhreml705-cah.china.huawei.com (unknown [172.18.7.106])
+        by Forcepoint Email with ESMTP id 0DAEA28515626089D084;
+        Thu, 26 Mar 2020 12:45:18 +0000 (GMT)
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ lhreml705-cah.china.huawei.com (10.201.108.46) with Microsoft SMTP Server
+ (TLS) id 14.3.408.0; Thu, 26 Mar 2020 12:45:17 +0000
+Received: from localhost (10.47.88.85) by lhreml710-chm.china.huawei.com
+ (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 26 Mar
+ 2020 12:45:16 +0000
+Date:   Thu, 26 Mar 2020 12:45:08 +0000
+From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To:     Rob Herring <robh@kernel.org>
+CC:     <devicetree@vger.kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        <linux-iio@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Masahiro Yamada" <yamada.masahiro@socionext.com>,
+        Guillaume La Roque <glaroque@baylibre.com>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        "Lee Jones" <lee.jones@linaro.org>, <linux-clk@vger.kernel.org>,
+        "Lars-Peter Clausen" <lars@metafoo.de>,
+        Kevin Hilman <khilman@baylibre.com>,
+        "Daniel Lezcano" <daniel.lezcano@linaro.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Brian Masney <masneyb@onstation.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        <linux-gpio@vger.kernel.org>, Mark Brown <broonie@kernel.org>,
+        <linux-amlogic@lists.infradead.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Stephen Boyd <sboyd@kernel.org>, <netdev@vger.kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        "Hartmut Knaack" <knaack.h@gmx.de>, <linux-media@vger.kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [PATCH 3/4] dt-bindings: Clean-up schema errors due to missing
+ 'addtionalProperties: false'
+Message-ID: <20200326124508.00003a52@Huawei.com>
+In-Reply-To: <20200325220542.19189-4-robh@kernel.org>
+References: <20200325220542.19189-1-robh@kernel.org>
+        <20200325220542.19189-4-robh@kernel.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; i686-w64-mingw32)
+MIME-Version: 1.0
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.47.88.85]
+X-ClientProxiedBy: lhreml739-chm.china.huawei.com (10.201.108.189) To
+ lhreml710-chm.china.huawei.com (10.201.108.61)
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Ilia Lin <ilialin@codeaurora.org>
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 338 ++++++++++++++++++++++++++++++++--
- 1 file changed, 323 insertions(+), 15 deletions(-)
+On Wed, 25 Mar 2020 16:05:40 -0600
+Rob Herring <robh@kernel.org> wrote:
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 7ae082e..951c53a 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/soc/qcom,apr.h>
-+#include <dt-bindings/thermal/thermal.h>
- 
- / {
- 	interrupt-parent = <&intc>;
-@@ -43,6 +44,12 @@
- 			enable-method = "psci";
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
-+			clocks = <&kryocc 0>;
-+			operating-points-v2 = <&cluster0_opp>;
-+			/* cooling options */
-+			cooling-min-level = <0>;
-+			cooling-max-level = <15>;
-+			#cooling-cells = <2>;
- 			next-level-cache = <&L2_0>;
- 			L2_0: l2-cache {
- 			      compatible = "cache";
-@@ -57,6 +64,12 @@
- 			enable-method = "psci";
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
-+			clocks = <&kryocc 0>;
-+			operating-points-v2 = <&cluster0_opp>;
-+			/* cooling options */
-+			cooling-min-level = <0>;
-+			cooling-max-level = <15>;
-+			#cooling-cells = <2>;
- 			next-level-cache = <&L2_0>;
- 		};
- 
-@@ -67,6 +80,12 @@
- 			enable-method = "psci";
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
-+			clocks = <&kryocc 1>;
-+			operating-points-v2 = <&cluster1_opp>;
-+			/* cooling options */
-+			cooling-min-level = <0>;
-+			cooling-max-level = <15>;
-+			#cooling-cells = <2>;
- 			next-level-cache = <&L2_1>;
- 			L2_1: l2-cache {
- 			      compatible = "cache";
-@@ -81,6 +100,12 @@
- 			enable-method = "psci";
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
-+			clocks = <&kryocc 1>;
-+			operating-points-v2 = <&cluster1_opp>;
-+			/* cooling options */
-+			cooling-min-level = <0>;
-+			cooling-max-level = <15>;
-+			#cooling-cells = <2>;
- 			next-level-cache = <&L2_1>;
- 		};
- 
-@@ -424,7 +449,7 @@
- 				bits = <1 4>;
- 			};
- 
--			gpu_speed_bin: gpu_speed_bin@133 {
-+			speedbin_efuse: speedbin@133 {
- 				reg = <0x133 0x1>;
- 				bits = <5 3>;
- 			};
-@@ -639,7 +664,7 @@
- 			power-domains = <&mmcc GPU_GDSC>;
- 			iommus = <&adreno_smmu 0>;
- 
--			nvmem-cells = <&gpu_speed_bin>;
-+			nvmem-cells = <&speedbin_efuse>;
- 			nvmem-cell-names = "speed_bin";
- 
- 			qcom,gpu-quirk-two-pass-use-wfi;
-@@ -1690,8 +1715,9 @@
- 				};
- 			};
- 		};
-+
- 		kryocc: clock-controller@6400000 {
--			compatible = "qcom,apcc-msm8996";
-+			compatible = "qcom,msm8996-apcc";
- 			reg = <0x06400000 0x90000>;
- 			#clock-cells = <1>;
- 		};
-@@ -2157,6 +2183,229 @@
- 	sound: sound {
- 	};
- 
-+	cluster0_opp: opp_table0 {
-+		compatible = "operating-points-v2-kryo-cpu";
-+		nvmem-cells = <&speedbin_efuse>;
-+		opp-shared;
-+
-+		/* Nominal fmax for now */
-+
-+		opp-307200000 {
-+			opp-hz = /bits/ 64 <  307200000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-422400000 {
-+			opp-hz = /bits/ 64 <  422400000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-480000000 {
-+			opp-hz = /bits/ 64 <  480000000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-556800000 {
-+			opp-hz = /bits/ 64 <  556800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-652800000 {
-+			opp-hz = /bits/ 64 <  652800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-729600000 {
-+			opp-hz = /bits/ 64 <  729600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-844800000 {
-+			opp-hz = /bits/ 64 <  844800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-960000000 {
-+			opp-hz = /bits/ 64 <  960000000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1036800000 {
-+			opp-hz = /bits/ 64 < 1036800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1113600000 {
-+			opp-hz = /bits/ 64 < 1113600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1190400000 {
-+			opp-hz = /bits/ 64 < 1190400000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1228800000 {
-+			opp-hz = /bits/ 64 < 1228800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1324800000 {
-+			opp-hz = /bits/ 64 < 1324800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1401600000 {
-+			opp-hz = /bits/ 64 < 1401600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1478400000 {
-+			opp-hz = /bits/ 64 < 1478400000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1593600000 {
-+			opp-hz = /bits/ 64 < 1593600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
-+	cluster1_opp: opp_table1 {
-+		compatible = "operating-points-v2-kryo-cpu";
-+		nvmem-cells = <&speedbin_efuse>;
-+		opp-shared;
-+
-+		/* Nominal fmax for now */
-+
-+		opp-307200000 {
-+			opp-hz = /bits/ 64 <  307200000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-403200000 {
-+			opp-hz = /bits/ 64 <  403200000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-480000000 {
-+			opp-hz = /bits/ 64 <  480000000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-556800000 {
-+			opp-hz = /bits/ 64 <  556800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-652800000 {
-+			opp-hz = /bits/ 64 <  652800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-729600000 {
-+			opp-hz = /bits/ 64 <  729600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-806400000 {
-+			opp-hz = /bits/ 64 <  806400000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-883200000 {
-+			opp-hz = /bits/ 64 <  883200000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-940800000 {
-+			opp-hz = /bits/ 64 <  940800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1036800000 {
-+			opp-hz = /bits/ 64 < 1036800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1113600000 {
-+			opp-hz = /bits/ 64 < 1113600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1190400000 {
-+			opp-hz = /bits/ 64 < 1190400000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1248000000 {
-+			opp-hz = /bits/ 64 < 1248000000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1324800000 {
-+			opp-hz = /bits/ 64 < 1324800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1401600000 {
-+			opp-hz = /bits/ 64 < 1401600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1478400000 {
-+			opp-hz = /bits/ 64 < 1478400000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1555200000 {
-+			opp-hz = /bits/ 64 < 1555200000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1632000000 {
-+			opp-hz = /bits/ 64 < 1632000000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1708800000 {
-+			opp-hz = /bits/ 64 < 1708800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1785600000 {
-+			opp-hz = /bits/ 64 < 1785600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1824000000 {
-+			opp-hz = /bits/ 64 < 1824000000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1920000000 {
-+			opp-hz = /bits/ 64 < 1920000000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1996800000 {
-+			opp-hz = /bits/ 64 < 1996800000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-2073600000 {
-+			opp-hz = /bits/ 64 < 2073600000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-2150400000 {
-+			opp-hz = /bits/ 64 < 2150400000 >;
-+			opp-supported-hw = <0x77>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	thermal-zones {
- 		cpu0-thermal {
- 			polling-delay-passive = <250>;
-@@ -2165,18 +2414,33 @@
- 			thermal-sensors = <&tsens0 3>;
- 
- 			trips {
--				cpu0_alert0: trip-point@0 {
-+				cpu_alert0: cpu_alert0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
-+					type = "active";
-+				};
-+				cpu_warn0: cpu_warn0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
- 					type = "passive";
- 				};
--
--				cpu0_crit: cpu_crit {
-+				cpu_crit0: cpu_crit0 {
- 					temperature = <110000>;
- 					hysteresis = <2000>;
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu_alert0>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT 7>;
-+				};
-+				map1 {
-+					trip = <&cpu_warn0>;
-+					cooling-device = <&CPU0 8 THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu1-thermal {
-@@ -2186,18 +2450,33 @@
- 			thermal-sensors = <&tsens0 5>;
- 
- 			trips {
--				cpu1_alert0: trip-point@0 {
-+				cpu_alert1: cpu_alert1 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
-+					type = "active";
-+				};
-+				cpu_warn1: cpu_warn1 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
- 					type = "passive";
- 				};
--
--				cpu1_crit: cpu_crit {
-+				cpu_crit1: cpu_crit1 {
- 					temperature = <110000>;
- 					hysteresis = <2000>;
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu_alert1>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT 7>;
-+				};
-+				map1 {
-+					trip = <&cpu_warn1>;
-+					cooling-device = <&CPU0 8 THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu2-thermal {
-@@ -2207,18 +2486,32 @@
- 			thermal-sensors = <&tsens0 8>;
- 
- 			trips {
--				cpu2_alert0: trip-point@0 {
-+				cpu_alert2: cpu_alert2 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
-+					type = "active";
-+				};
-+				cpu_warn2: cpu_warn2 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
- 					type = "passive";
- 				};
--
--				cpu2_crit: cpu_crit {
-+				cpu_crit2: cpu_crit2 {
- 					temperature = <110000>;
- 					hysteresis = <2000>;
- 					type = "critical";
- 				};
- 			};
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu_alert2>;
-+					cooling-device = <&CPU2 THERMAL_NO_LIMIT 7>;
-+				};
-+				map1 {
-+					trip = <&cpu_warn2>;
-+					cooling-device = <&CPU2 8 THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu3-thermal {
-@@ -2228,18 +2521,33 @@
- 			thermal-sensors = <&tsens0 10>;
- 
- 			trips {
--				cpu3_alert0: trip-point@0 {
-+				cpu_alert3: cpu_alert3 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
-+					type = "active";
-+				};
-+				cpu_warn3: cpu_warn3 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
- 					type = "passive";
- 				};
--
--				cpu3_crit: cpu_crit {
-+				cpu_crit3: trip1 {
- 					temperature = <110000>;
- 					hysteresis = <2000>;
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu_alert3>;
-+					cooling-device = <&CPU2 THERMAL_NO_LIMIT 7>;
-+				};
-+				map1 {
-+					trip = <&cpu_warn3>;
-+					cooling-device = <&CPU2 8 THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		gpu-thermal-top {
--- 
-2.7.4
+> Numerous schemas are missing 'additionalProperties: false' statements which
+> ensures a binding doesn't have any extra undocumented properties or child
+> nodes. Fixing this reveals various missing properties, so let's fix all
+> those occurrences.
+> 
+> Cc: Stephen Boyd <sboyd@kernel.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+> Cc: Masahiro Yamada <yamada.masahiro@socionext.com>
+> Cc: Jonathan Cameron <jic23@kernel.org>
+> Cc: Hartmut Knaack <knaack.h@gmx.de>
+> Cc: Lars-Peter Clausen <lars@metafoo.de>
+> Cc: Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+> Cc: Neil Armstrong <narmstrong@baylibre.com>
+> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+> Cc: Kevin Hilman <khilman@baylibre.com>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: Liam Girdwood <lgirdwood@gmail.com>
+> Cc: Mark Brown <broonie@kernel.org>
+> Cc: Guillaume La Roque <glaroque@baylibre.com>
+> Cc: Zhang Rui <rui.zhang@intel.com>
+> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: linux-clk@vger.kernel.org
+> Cc: linux-gpio@vger.kernel.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: linux-iio@vger.kernel.org
+> Cc: linux-media@vger.kernel.org
+> Cc: linux-amlogic@lists.infradead.org
+> Cc: netdev@vger.kernel.org
+> Cc: linux-pm@vger.kernel.org
+> Signed-off-by: Rob Herring <robh@kernel.org>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com> #for-iio
+
+> ---
+>  .../devicetree/bindings/clock/fsl,plldig.yaml |  3 +++
+>  .../gpio/socionext,uniphier-gpio.yaml         |  2 ++
+>  .../bindings/gpu/arm,mali-bifrost.yaml        |  6 ++---
+>  .../bindings/gpu/arm,mali-midgard.yaml        |  3 +++
+>  .../bindings/iio/adc/adi,ad7192.yaml          |  1 -
+>  .../bindings/iio/pressure/bmp085.yaml         |  3 +++
+>  .../media/amlogic,meson-gx-ao-cec.yaml        |  9 +++++---
+>  .../bindings/mfd/rohm,bd71828-pmic.yaml       |  3 +++
+>  .../bindings/net/ti,cpsw-switch.yaml          | 23 ++++++++++++-------
+>  .../regulator/max77650-regulator.yaml         |  2 +-
+>  .../bindings/thermal/amlogic,thermal.yaml     |  2 ++
+>  .../bindings/timer/arm,arch_timer_mmio.yaml   |  2 ++
+>  12 files changed, 43 insertions(+), 16 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/fsl,plldig.yaml b/Documentation/devicetree/bindings/clock/fsl,plldig.yaml
+> index c8350030b374..d1c040228cf7 100644
+> --- a/Documentation/devicetree/bindings/clock/fsl,plldig.yaml
+> +++ b/Documentation/devicetree/bindings/clock/fsl,plldig.yaml
+> @@ -21,6 +21,9 @@ properties:
+>    reg:
+>      maxItems: 1
+>  
+> +  clocks:
+> +    maxItems: 1
+> +
+>    '#clock-cells':
+>      const: 0
+>  
+> diff --git a/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml b/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml
+> index 580a39e09d39..c58ff9a94f45 100644
+> --- a/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml
+> +++ b/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml
+> @@ -41,6 +41,8 @@ properties:
+>      minimum: 0
+>      maximum: 512
+>  
+> +  gpio-ranges: true
+> +
+>    gpio-ranges-group-names:
+>      $ref: /schemas/types.yaml#/definitions/string-array
+>  
+> diff --git a/Documentation/devicetree/bindings/gpu/arm,mali-bifrost.yaml b/Documentation/devicetree/bindings/gpu/arm,mali-bifrost.yaml
+> index e8b99adcb1bd..05fd9a404ff7 100644
+> --- a/Documentation/devicetree/bindings/gpu/arm,mali-bifrost.yaml
+> +++ b/Documentation/devicetree/bindings/gpu/arm,mali-bifrost.yaml
+> @@ -43,6 +43,9 @@ properties:
+>  
+>    operating-points-v2: true
+>  
+> +  resets:
+> +    maxItems: 2
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -57,9 +60,6 @@ allOf:
+>            contains:
+>              const: amlogic,meson-g12a-mali
+>      then:
+> -      properties:
+> -        resets:
+> -          minItems: 2
+>        required:
+>          - resets
+>  
+> diff --git a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml
+> index 8d966f3ff3db..6819cde050df 100644
+> --- a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml
+> +++ b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml
+> @@ -75,6 +75,9 @@ properties:
+>  
+>    mali-supply: true
+>  
+> +  power-domains:
+> +    maxItems: 1
+> +
+>    resets:
+>      minItems: 1
+>      maxItems: 2
+> diff --git a/Documentation/devicetree/bindings/iio/adc/adi,ad7192.yaml b/Documentation/devicetree/bindings/iio/adc/adi,ad7192.yaml
+> index 84d25bd39488..d0913034b1d8 100644
+> --- a/Documentation/devicetree/bindings/iio/adc/adi,ad7192.yaml
+> +++ b/Documentation/devicetree/bindings/iio/adc/adi,ad7192.yaml
+> @@ -106,7 +106,6 @@ examples:
+>          spi-cpha;
+>          clocks = <&ad7192_mclk>;
+>          clock-names = "mclk";
+> -        #interrupt-cells = <2>;
+>          interrupts = <25 0x2>;
+>          interrupt-parent = <&gpio>;
+>          dvdd-supply = <&dvdd>;
+> diff --git a/Documentation/devicetree/bindings/iio/pressure/bmp085.yaml b/Documentation/devicetree/bindings/iio/pressure/bmp085.yaml
+> index 519137e5c170..5d4aec0e0d24 100644
+> --- a/Documentation/devicetree/bindings/iio/pressure/bmp085.yaml
+> +++ b/Documentation/devicetree/bindings/iio/pressure/bmp085.yaml
+> @@ -25,6 +25,9 @@ properties:
+>        - bosch,bmp280
+>        - bosch,bme280
+>  
+> +  reg:
+> +    maxItems: 1
+> +
+>    vddd-supply:
+>      description:
+>        digital voltage regulator (see regulator/regulator.txt)
+> diff --git a/Documentation/devicetree/bindings/media/amlogic,meson-gx-ao-cec.yaml b/Documentation/devicetree/bindings/media/amlogic,meson-gx-ao-cec.yaml
+> index 41197578f19a..e8ce37fcbfec 100644
+> --- a/Documentation/devicetree/bindings/media/amlogic,meson-gx-ao-cec.yaml
+> +++ b/Documentation/devicetree/bindings/media/amlogic,meson-gx-ao-cec.yaml
+> @@ -24,6 +24,12 @@ properties:
+>    reg:
+>      maxItems: 1
+>  
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    maxItems: 1
+> +
+>    interrupts:
+>      maxItems: 1
+>  
+> @@ -47,7 +53,6 @@ allOf:
+>              - description: AO-CEC clock
+>  
+>          clock-names:
+> -          maxItems: 1
+>            items:
+>              - const: core
+>  
+> @@ -66,7 +71,6 @@ allOf:
+>              - description: AO-CEC clock generator source
+>  
+>          clock-names:
+> -          maxItems: 1
+>            items:
+>              - const: oscin
+>  
+> @@ -88,4 +92,3 @@ examples:
+>          clock-names = "core";
+>          hdmi-phandle = <&hdmi_tx>;
+>      };
+> -
+> diff --git a/Documentation/devicetree/bindings/mfd/rohm,bd71828-pmic.yaml b/Documentation/devicetree/bindings/mfd/rohm,bd71828-pmic.yaml
+> index 4fbb9e734284..38dc4f8b0ceb 100644
+> --- a/Documentation/devicetree/bindings/mfd/rohm,bd71828-pmic.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/rohm,bd71828-pmic.yaml
+> @@ -41,6 +41,9 @@ properties:
+>    "#clock-cells":
+>      const: 0
+>  
+> +  clock-output-names:
+> +    const: bd71828-32k-out
+> +
+>    rohm,charger-sense-resistor-ohms:
+>      minimum: 10000000
+>      maximum: 50000000
+> diff --git a/Documentation/devicetree/bindings/net/ti,cpsw-switch.yaml b/Documentation/devicetree/bindings/net/ti,cpsw-switch.yaml
+> index ac8c76369a86..b9e9696da5be 100644
+> --- a/Documentation/devicetree/bindings/net/ti,cpsw-switch.yaml
+> +++ b/Documentation/devicetree/bindings/net/ti,cpsw-switch.yaml
+> @@ -37,6 +37,12 @@ properties:
+>      description:
+>         The physical base address and size of full the CPSW module IO range
+>  
+> +  '#address-cells':
+> +    const: 1
+> +
+> +  '#size-cells':
+> +    const: 1
+> +
+>    ranges: true
+>  
+>    clocks:
+> @@ -111,13 +117,6 @@ properties:
+>              - reg
+>              - phys
+>  
+> -  mdio:
+> -    type: object
+> -    allOf:
+> -      - $ref: "ti,davinci-mdio.yaml#"
+> -    description:
+> -      CPSW MDIO bus.
+> -
+>    cpts:
+>      type: object
+>      description:
+> @@ -148,6 +147,15 @@ properties:
+>        - clocks
+>        - clock-names
+>  
+> +patternProperties:
+> +  "^mdio@":
+> +    type: object
+> +    allOf:
+> +      - $ref: "ti,davinci-mdio.yaml#"
+> +    description:
+> +      CPSW MDIO bus.
+> +
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -174,7 +182,6 @@ examples:
+>          #address-cells = <1>;
+>          #size-cells = <1>;
+>          syscon = <&scm_conf>;
+> -        inctrl-names = "default", "sleep";
+>  
+>          interrupts = <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
+>                       <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
+> diff --git a/Documentation/devicetree/bindings/regulator/max77650-regulator.yaml b/Documentation/devicetree/bindings/regulator/max77650-regulator.yaml
+> index 7d724159f890..50690487edc8 100644
+> --- a/Documentation/devicetree/bindings/regulator/max77650-regulator.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/max77650-regulator.yaml
+> @@ -24,7 +24,7 @@ properties:
+>      const: maxim,max77650-regulator
+>  
+>  patternProperties:
+> -  "^regulator@[0-3]$":
+> +  "^regulator-(ldo|sbb[0-2])$":
+>      $ref: "regulator.yaml#"
+>  
+>  required:
+> diff --git a/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml b/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
+> index f761681e4c0d..93fe7b10a82e 100644
+> --- a/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
+> @@ -32,6 +32,8 @@ properties:
+>      description: phandle to the ao-secure syscon
+>      $ref: '/schemas/types.yaml#/definitions/phandle'
+>  
+> +  '#thermal-sensor-cells':
+> +    const: 0
+>  
+>  required:
+>    - compatible
+> diff --git a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+> index 102f319833d9..f7ef6646bade 100644
+> --- a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+> +++ b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+> @@ -32,6 +32,8 @@ properties:
+>    '#size-cells':
+>      const: 1
+>  
+> +  ranges: true
+> +
+>    clock-frequency:
+>      description: The frequency of the main counter, in Hz. Should be present
+>        only where necessary to work around broken firmware which does not configure
+
 
