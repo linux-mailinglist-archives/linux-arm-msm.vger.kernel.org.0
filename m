@@ -2,87 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E602194564
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 18:25:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8E9F194582
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 18:36:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728428AbgCZRZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Mar 2020 13:25:26 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:36220 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbgCZRZZ (ORCPT
+        id S1727724AbgCZRgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 13:36:13 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40906 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726067AbgCZRgN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Mar 2020 13:25:25 -0400
-Received: by mail-pl1-f193.google.com with SMTP id g2so2400651plo.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2020 10:25:23 -0700 (PDT)
+        Thu, 26 Mar 2020 13:36:13 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w26so7832390edu.7;
+        Thu, 26 Mar 2020 10:36:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=C0aXSSH6jnOuUiW5h4DP/qn1ilfkml9FjlWglQ0fxfY=;
-        b=BuCpeTuJxIHYhgM4pr9GuJi+J095SECgRli1HbHzufUokL+dDm6MI9L2ct7BzLGsef
-         oMPXccVhCwoz1uAtaANBM/UPQVu9sDWOBp/KwPpphKJi1Q7VP0HAkIPsgUDvFo8GqOOv
-         a5YgVJ2b2PSwo4DPUW/CzJeEFSHF6lhmsqZPqYeODJQ0W9x5OgqOkVW4Ls8xlv92asFM
-         6v5W3KjvceL15B5biEq7kfxv//LzRrI0svHbskXkxKjXxVOFfehm5mWH4Di7p/AQ9/RI
-         c4BSjcJVhYP7TZAPcRkEa2EsF9RT6N5aq3FfFngWenTLPBiQLHkdtQ/thAsc1g//9/zb
-         fREA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8+Ugwyc8ML4peI25E2t3UFApnbL9Vw/SvVb5J6/qvFg=;
+        b=lPhMtOCLbROjP2BLncSQ9jCvAf5x53CJgO1FmY67FXg9UduaalPhxePkOSGGXtqTK9
+         z0WTnfs5jhx76mvR2fBXM8pJTy/vfl5CkIWoBaypUI+aRsMoctrlFT6gT9QlAShOFgnJ
+         OhO5lpz0bAsPTpWpObd39j1AxBxVB27cegmgA79Qt25nDojzSsvzXrlT7AVhsGJO3usb
+         v5oEj21GAfemq4xyeQyW6eKyJyWggVhoryC5SX/ealeEiniEmAfv0rAcm1G+50RHQjsG
+         JL2Dauenw6nvMUnF7Y5l67J1GOsQVlc7tdzjQpnUkhpKWVepZ93bUDDJLDbL0HNKA20/
+         C0/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=C0aXSSH6jnOuUiW5h4DP/qn1ilfkml9FjlWglQ0fxfY=;
-        b=BEglsV+jQaKnKN88r3aVE5TLHTIBzADeLn7ZPfzc/X5hdfPErvK5ItWvgtQyzVsEeK
-         cpmQ+r9qrq/JI1BeC/1Qt+XlZmJAXxhnz76PGcmiEEGQe34P5eLHVPHoEX011WTXcp+2
-         GsD9BUNJJLd1K5G4RkHVOXMJQDaEsXhDd2lcQwbRruXiaBasDdciIbJgmNs73rcTtcd6
-         OxitM0Dh0nFA7QAQWu9Vv7iS3dxL0uAFYD31g1l9cOG9cN8r3Fhvwa5LBdz4Rbq3oOb7
-         TMBwu9vSv44JNakFCBIoj8FhnpQXk6DoRLG8e69uYS5lxQXaZPEH2N37jqLDzLONN3WJ
-         w/kA==
-X-Gm-Message-State: ANhLgQ0ixrUXMC+nTj9chKHO8/wcjm2l+ckAoDk/ILk11rb/A1D/H/4u
-        sxPyEUuI98lpm+lK2ClC9F+o
-X-Google-Smtp-Source: ADFU+vseVdsHmsCD+UdMKpGktH3crnbZk2+DYLHURuVVukZble7QaNRJjwqQF55+XnCJWXdc2ZXDHg==
-X-Received: by 2002:a17:90a:ab0a:: with SMTP id m10mr1054838pjq.173.1585243522867;
-        Thu, 26 Mar 2020 10:25:22 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:518:654f:ac72:3cc0:da67:5ad7])
-        by smtp.gmail.com with ESMTPSA id z7sm2129001pfz.24.2020.03.26.10.25.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Mar 2020 10:25:21 -0700 (PDT)
-Date:   Thu, 26 Mar 2020 22:55:14 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     davem@davemloft.net, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8+Ugwyc8ML4peI25E2t3UFApnbL9Vw/SvVb5J6/qvFg=;
+        b=lhdRqVfm+XFTW+W5/MeVGmZR94S0pr/ubSdgZRAepyA5CCLhYD6z71REH7m1WCoiuO
+         GTEnrNKDIubAFWzQeVj84bHvMdbkaCraFEIfGp3BVxpvxFEMA15KA2+o6DGjZX3tlyeD
+         PoWYxG/pHpbJmNqs+J8zrfO1yRaW0uceixJPtctd5IBDKk3BtlJC7/er6f1SYiisOTt+
+         Pn/mFMrOmz9f/lA8WpOR3DuK1MFL3U88kxaPrgm1TnH4s9Y79GR3AqLXvc+lMth7QQeZ
+         Fl5LLnwH3/YTY3Eu5ooTJgKnxEZfp4WVF/Vq84HCMwcX3YngX1W0q/UhvyPZccNfGJxP
+         /W1Q==
+X-Gm-Message-State: ANhLgQ2V0UXkawr5INrWgtsQ8AS+FQJfS7VMQ+GxCHG195gLZjx1syy/
+        ibyUJWJf/Ucpl/oLPkAcZRc=
+X-Google-Smtp-Source: ADFU+vsrsA/iixmQ2Wh7lUtLnt+k2r/AoPzphAGrjbVY1iT6R8i2W1Zt6miMmd2Qs7O9ItaLYWsZtg==
+X-Received: by 2002:a17:906:fd7:: with SMTP id c23mr9080221ejk.312.1585244170431;
+        Thu, 26 Mar 2020 10:36:10 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain ([79.53.232.203])
+        by smtp.googlemail.com with ESMTPSA id d11sm375409ejd.2.2020.03.26.10.36.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2020 10:36:09 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Ajay Kishore <akisho@codeaurora.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/7] Improvements to MHI Bus
-Message-ID: <20200326172514.GA8813@Mani-XPS-13-9360>
-References: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
- <20200326145144.GA1484574@kroah.com>
+Subject: [PATCH v2] pinctrl: qcom: use scm_call to route GPIO irq to Apps
+Date:   Thu, 26 Mar 2020 18:35:24 +0100
+Message-Id: <20200326173524.15236-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200326145144.GA1484574@kroah.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 26, 2020 at 03:51:44PM +0100, Greg KH wrote:
-> On Tue, Mar 24, 2020 at 11:40:43AM +0530, Manivannan Sadhasivam wrote:
-> > Hi Greg,
-> > 
-> > Here is the patchset for improving the MHI bus support. One of the patch
-> > is suggested by you for adding the driver owner field and rest are additional
-> > improvements and some fixes.
-> 
-> I've taken the first 4 of these now, thanks.
-> 
+From: Ajay Kishore <akisho@codeaurora.org>
 
-Thanks Greg! For the future patches after v5.7, how do you want to pick them?
-I assume that you'll be the person picking all "bus" related patches, then
-do you want me to CC you for all patches or just send them as a pull request
-finally?
+For IPQ806x targets, TZ protects the registers that are used to
+configure the routing of interrupts to a target processor.
+To resolve this, this patch uses scm call to route GPIO interrupts
+to application processor. Also the scm call interface is changed.
 
-Thanks,
-Mani
+Signed-off-by: Ajay Kishore <akisho@codeaurora.org>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+v2:
+* Move static varibale in msm_pinctrl struct
+* Revert '4b024225c4a8 ("pinctrl: use devm_platform_ioremap_resource() to simplify code")'
+  to get base_reg addr
 
-> greg k-h
+ drivers/pinctrl/qcom/pinctrl-msm.c | 37 ++++++++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 9a8daa256a32..9627ebd41ff9 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -22,6 +22,8 @@
+ #include <linux/reboot.h>
+ #include <linux/pm.h>
+ #include <linux/log2.h>
++#include <linux/qcom_scm.h>
++#include <linux/io.h>
+ 
+ #include <linux/soc/qcom/irq.h>
+ 
+@@ -60,6 +62,9 @@ struct msm_pinctrl {
+ 	struct irq_chip irq_chip;
+ 	int irq;
+ 
++	int route_to_apps;
++	u32 base_reg;
++
+ 	raw_spinlock_t lock;
+ 
+ 	DECLARE_BITMAP(dual_edge_irqs, MAX_NR_GPIO);
+@@ -883,10 +888,27 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 		clear_bit(d->hwirq, pctrl->dual_edge_irqs);
+ 
+ 	/* Route interrupts to application cpu */
+-	val = msm_readl_intr_target(pctrl, g);
+-	val &= ~(7 << g->intr_target_bit);
+-	val |= g->intr_target_kpss_val << g->intr_target_bit;
+-	msm_writel_intr_target(val, pctrl, g);
++	if (pctrl->route_to_apps && pctrl->base_reg) {
++		u32 addr = pctrl->base_reg + g->intr_target_reg;
++		int ret;
++
++		qcom_scm_io_readl(addr, &val);
++
++		val &= ~(7 << g->intr_target_bit);
++		val |= g->intr_target_kpss_val << g->intr_target_bit;
++
++		ret = qcom_scm_io_writel(addr, val);
++		if (ret)
++			dev_err(pctrl->dev,
++				"Failed routing %lu interrupt to Apps proc",
++				d->hwirq);
++		}
++	} else {
++		val = msm_readl_intr_target(pctrl, g);
++		val &= ~(7 << g->intr_target_bit);
++		val |= g->intr_target_kpss_val << g->intr_target_bit;
++		msm_writel_intr_target(val, pctrl, g);
++	}
+ 
+ 	/* Update configuration for gpio.
+ 	 * RAW_STATUS_EN is left on for all gpio irqs. Due to the
+@@ -1241,6 +1263,8 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+ 	pctrl->dev = &pdev->dev;
+ 	pctrl->soc = soc_data;
+ 	pctrl->chip = msm_gpio_template;
++	pctrl->route_to_apps = of_device_is_compatible(pctrl->dev->of_node,
++					"qcom,ipq8064-pinctrl");
+ 
+ 	raw_spin_lock_init(&pctrl->lock);
+ 
+@@ -1253,9 +1277,12 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+ 				return PTR_ERR(pctrl->regs[i]);
+ 		}
+ 	} else {
+-		pctrl->regs[0] = devm_platform_ioremap_resource(pdev, 0);
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++		pctrl->regs[0] = devm_ioremap_resource(&pdev->dev, res);
+ 		if (IS_ERR(pctrl->regs[0]))
+ 			return PTR_ERR(pctrl->regs[0]);
++		else
++			pctrl->base_reg = res->start;
+ 	}
+ 
+ 	msm_pinctrl_setup_pm_reset(pctrl);
+-- 
+2.25.1
+
