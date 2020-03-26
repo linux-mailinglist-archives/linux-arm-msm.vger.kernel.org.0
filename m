@@ -2,164 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A8E9F194582
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 18:36:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E48B4194595
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 18:38:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727724AbgCZRgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Mar 2020 13:36:13 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:40906 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726067AbgCZRgN (ORCPT
+        id S1727890AbgCZRiN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 13:38:13 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:47699 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727612AbgCZRiN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Mar 2020 13:36:13 -0400
-Received: by mail-ed1-f65.google.com with SMTP id w26so7832390edu.7;
-        Thu, 26 Mar 2020 10:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8+Ugwyc8ML4peI25E2t3UFApnbL9Vw/SvVb5J6/qvFg=;
-        b=lPhMtOCLbROjP2BLncSQ9jCvAf5x53CJgO1FmY67FXg9UduaalPhxePkOSGGXtqTK9
-         z0WTnfs5jhx76mvR2fBXM8pJTy/vfl5CkIWoBaypUI+aRsMoctrlFT6gT9QlAShOFgnJ
-         OhO5lpz0bAsPTpWpObd39j1AxBxVB27cegmgA79Qt25nDojzSsvzXrlT7AVhsGJO3usb
-         v5oEj21GAfemq4xyeQyW6eKyJyWggVhoryC5SX/ealeEiniEmAfv0rAcm1G+50RHQjsG
-         JL2Dauenw6nvMUnF7Y5l67J1GOsQVlc7tdzjQpnUkhpKWVepZ93bUDDJLDbL0HNKA20/
-         C0/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8+Ugwyc8ML4peI25E2t3UFApnbL9Vw/SvVb5J6/qvFg=;
-        b=lhdRqVfm+XFTW+W5/MeVGmZR94S0pr/ubSdgZRAepyA5CCLhYD6z71REH7m1WCoiuO
-         GTEnrNKDIubAFWzQeVj84bHvMdbkaCraFEIfGp3BVxpvxFEMA15KA2+o6DGjZX3tlyeD
-         PoWYxG/pHpbJmNqs+J8zrfO1yRaW0uceixJPtctd5IBDKk3BtlJC7/er6f1SYiisOTt+
-         Pn/mFMrOmz9f/lA8WpOR3DuK1MFL3U88kxaPrgm1TnH4s9Y79GR3AqLXvc+lMth7QQeZ
-         Fl5LLnwH3/YTY3Eu5ooTJgKnxEZfp4WVF/Vq84HCMwcX3YngX1W0q/UhvyPZccNfGJxP
-         /W1Q==
-X-Gm-Message-State: ANhLgQ2V0UXkawr5INrWgtsQ8AS+FQJfS7VMQ+GxCHG195gLZjx1syy/
-        ibyUJWJf/Ucpl/oLPkAcZRc=
-X-Google-Smtp-Source: ADFU+vsrsA/iixmQ2Wh7lUtLnt+k2r/AoPzphAGrjbVY1iT6R8i2W1Zt6miMmd2Qs7O9ItaLYWsZtg==
-X-Received: by 2002:a17:906:fd7:: with SMTP id c23mr9080221ejk.312.1585244170431;
-        Thu, 26 Mar 2020 10:36:10 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain ([79.53.232.203])
-        by smtp.googlemail.com with ESMTPSA id d11sm375409ejd.2.2020.03.26.10.36.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2020 10:36:09 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Ajay Kishore <akisho@codeaurora.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] pinctrl: qcom: use scm_call to route GPIO irq to Apps
-Date:   Thu, 26 Mar 2020 18:35:24 +0100
-Message-Id: <20200326173524.15236-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 26 Mar 2020 13:38:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585244292; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=olwq/tt1NVcJbMaU8qh8Fy028waGW9o2ny/LjvxmEng=; b=VWWraiMZ/O2+/sWVz6a6UMjO7putqVWkmRGteHx6cg4DJWziYkcWspRLqHBquws60AfPtzzC
+ 0g3fSnCmcne4W6w87QdKgTwfiOfvHS51aK31P9CjvgBEZMwJ4vgI28HIvkNo0XE3NVjtegQ+
+ BS0OJytLPamrmXmsxWdVDdScAQU=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7ce883.7f3ae0140f10-smtp-out-n03;
+ Thu, 26 Mar 2020 17:38:11 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C51D3C43636; Thu, 26 Mar 2020 17:38:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36E29C433D2;
+        Thu, 26 Mar 2020 17:38:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36E29C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, mka@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v14 0/6] Invoke rpmh_flush for non OSI targets
+Date:   Thu, 26 Mar 2020 23:07:44 +0530
+Message-Id: <1585244270-637-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ajay Kishore <akisho@codeaurora.org>
+Changes in v14:
+- Address Doug's comments on change 3 from v13
+- Drop new APIs for start and end transaction from change 4 in v13
+- Update change 4 to use cpu pm notifications instead
+- Add [5] as change 5 to enable use of WAKE TCS when ACTIVE TCS count is 0
+- Add change 6 to Allow multiple WAKE TCS to be used as ACTIVE TCSes
+- First 4 changes can be merged even without change 5 and 6.
 
-For IPQ806x targets, TZ protects the registers that are used to
-configure the routing of interrupts to a target processor.
-To resolve this, this patch uses scm call to route GPIO interrupts
-to application processor. Also the scm call interface is changed.
+Changes in v13:
+- Address Stephen's comment to maintain COMPILE_TEST
+- Address Doug's comments and add new APIs for start and end transaction
 
-Signed-off-by: Ajay Kishore <akisho@codeaurora.org>
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
-v2:
-* Move static varibale in msm_pinctrl struct
-* Revert '4b024225c4a8 ("pinctrl: use devm_platform_ioremap_resource() to simplify code")'
-  to get base_reg addr
+Changes in v12:
+- Kconfig change to remove COMPILE_TEST was dropped in v11, reinclude it.
 
- drivers/pinctrl/qcom/pinctrl-msm.c | 37 ++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 5 deletions(-)
+Changes in v11:
+- Address Doug's comments on change 2 and 3
+- Include change to invalidate TCSes before flush from [4]
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 9a8daa256a32..9627ebd41ff9 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -22,6 +22,8 @@
- #include <linux/reboot.h>
- #include <linux/pm.h>
- #include <linux/log2.h>
-+#include <linux/qcom_scm.h>
-+#include <linux/io.h>
- 
- #include <linux/soc/qcom/irq.h>
- 
-@@ -60,6 +62,9 @@ struct msm_pinctrl {
- 	struct irq_chip irq_chip;
- 	int irq;
- 
-+	int route_to_apps;
-+	u32 base_reg;
-+
- 	raw_spinlock_t lock;
- 
- 	DECLARE_BITMAP(dual_edge_irqs, MAX_NR_GPIO);
-@@ -883,10 +888,27 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 		clear_bit(d->hwirq, pctrl->dual_edge_irqs);
- 
- 	/* Route interrupts to application cpu */
--	val = msm_readl_intr_target(pctrl, g);
--	val &= ~(7 << g->intr_target_bit);
--	val |= g->intr_target_kpss_val << g->intr_target_bit;
--	msm_writel_intr_target(val, pctrl, g);
-+	if (pctrl->route_to_apps && pctrl->base_reg) {
-+		u32 addr = pctrl->base_reg + g->intr_target_reg;
-+		int ret;
-+
-+		qcom_scm_io_readl(addr, &val);
-+
-+		val &= ~(7 << g->intr_target_bit);
-+		val |= g->intr_target_kpss_val << g->intr_target_bit;
-+
-+		ret = qcom_scm_io_writel(addr, val);
-+		if (ret)
-+			dev_err(pctrl->dev,
-+				"Failed routing %lu interrupt to Apps proc",
-+				d->hwirq);
-+		}
-+	} else {
-+		val = msm_readl_intr_target(pctrl, g);
-+		val &= ~(7 << g->intr_target_bit);
-+		val |= g->intr_target_kpss_val << g->intr_target_bit;
-+		msm_writel_intr_target(val, pctrl, g);
-+	}
- 
- 	/* Update configuration for gpio.
- 	 * RAW_STATUS_EN is left on for all gpio irqs. Due to the
-@@ -1241,6 +1263,8 @@ int msm_pinctrl_probe(struct platform_device *pdev,
- 	pctrl->dev = &pdev->dev;
- 	pctrl->soc = soc_data;
- 	pctrl->chip = msm_gpio_template;
-+	pctrl->route_to_apps = of_device_is_compatible(pctrl->dev->of_node,
-+					"qcom,ipq8064-pinctrl");
- 
- 	raw_spin_lock_init(&pctrl->lock);
- 
-@@ -1253,9 +1277,12 @@ int msm_pinctrl_probe(struct platform_device *pdev,
- 				return PTR_ERR(pctrl->regs[i]);
- 		}
- 	} else {
--		pctrl->regs[0] = devm_platform_ioremap_resource(pdev, 0);
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+		pctrl->regs[0] = devm_ioremap_resource(&pdev->dev, res);
- 		if (IS_ERR(pctrl->regs[0]))
- 			return PTR_ERR(pctrl->regs[0]);
-+		else
-+			pctrl->base_reg = res->start;
- 	}
- 
- 	msm_pinctrl_setup_pm_reset(pctrl);
+Changes in v10:
+- Address Evan's comments to update commit message on change 2
+- Add Evan's Reviewed by on change 2
+- Remove comment from rpmh_flush() related to last CPU invoking it
+- Rebase all changes on top of next-20200302
+
+Changes in v9:
+- Keep rpmh_flush() to invoke from within cache_lock
+- Remove comments related to only last cpu invoking rpmh_flush()
+
+Changes in v8:
+- Address Stephen's comments on changes 2 and 3
+- Add Reviewed by from Stephen on change 1
+
+Changes in v7:
+- Address Srinivas's comments to update commit text
+- Add Reviewed by from Srinivas
+
+Changes in v6:
+- Drop 1 & 2 changes from v5 as they already landed in maintainer tree
+- Drop 3 & 4 changes from v5 as no user at present for power domain in rsc
+- Rename subject to appropriate since power domain changes are dropped
+- Rebase other changes on top of next-20200221
+
+Changes in v5:
+- Add Rob's Acked by on dt-bindings change
+- Drop firmware psci change
+- Update cpuidle stats in dtsi to follow PC mode
+- Include change to update dirty flag when data is updated from [4]
+- Add change to invoke rpmh_flush when caches are dirty
+
+Changes in v4:
+- Add change to allow hierarchical topology in PC mode
+- Drop hierarchical domain idle states converter from v3
+- Address Merge sc7180 dtsi change to add low power modes
+
+Changes in v3:
+- Address Rob's comment on dt property value
+- Address Stephen's comments on rpmh-rsc driver change
+- Include sc7180 cpuidle low power mode changes from [1]
+- Include hierarchical domain idle states converter change from [2]
+
+Changes in v2:
+- Add Stephen's Reviewed-By to the first three patches
+- Addressed Stephen's comments on fourth patch
+- Include changes to connect rpmh domain to cpuidle and genpds
+
+Resource State Coordinator (RSC) is responsible for powering off/lowering
+the requirements from CPU subsystem for the associated hardware like buses,
+clocks, and regulators when all CPUs and cluster is powered down.
+
+RSC power domain uses last-man activities provided by genpd framework based
+on Ulf Hansoon's patch series[3], when the cluster of CPUs enter deepest
+idle states. As a part of domain poweroff, RSC can lower resource state
+requirements by flushing the cached sleep and wake state votes for various
+resources.
+
+[1] https://patchwork.kernel.org/patch/11218965
+[2] https://patchwork.kernel.org/patch/10941671
+[3] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=222355
+[4] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=236503
+[5] https://patchwork.kernel.org/patch/10818129
+
+Maulik Shah (5):
+  arm64: dts: qcom: sc7180: Add cpuidle low power states
+  soc: qcom: rpmh: Update dirty flag only when data changes
+  soc: qcom: rpmh: Invalidate SLEEP and WAKE TCSes before flushing new
+    data
+  soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
+  soc: qcom: rpmh-rsc: Allow using free WAKE TCS for active request
+
+Raju P.L.S.S.S.N (1):
+  soc: qcom: rpmh-rsc: Clear active mode configuration for wake TCS
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi |  78 ++++++++++++++
+ drivers/soc/qcom/rpmh-internal.h     |   8 ++
+ drivers/soc/qcom/rpmh-rsc.c          | 203 ++++++++++++++++++++++++++++-------
+ drivers/soc/qcom/rpmh.c              |  71 ++++++------
+ 4 files changed, 280 insertions(+), 80 deletions(-)
+
 -- 
-2.25.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
