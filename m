@@ -2,118 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 39A08193D10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 11:39:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62CD5193D3A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2020 11:48:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728014AbgCZKjn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Mar 2020 06:39:43 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:33819 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727939AbgCZKjm (ORCPT
+        id S1727880AbgCZKsw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Mar 2020 06:48:52 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:46295 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727560AbgCZKsw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Mar 2020 06:39:42 -0400
-Received: by mail-lj1-f196.google.com with SMTP id p10so5615679ljn.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2020 03:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ltvILhWw+Z8JxlENYP0mAF8OSEMClYvL/9bIL1S5Kpk=;
-        b=gNM9owfXJa+dSlXbbxty1r7WYn0Vre4U4J5MDJuANbo/DqAdHjITFd0aXd250+kgZa
-         BBoWO6/eWsDTVUFSP/CbYcRysEhMRxz+SAH34DXnYRURMBuwtmqslM1+6iePBLm+NnpI
-         VMk/rKREhpC+5kGl6T6i0CFgULvqeuk3T8xWx6XudqaneIM7NqJ3QFRVtsom69i88Lrf
-         c+x/xZgFY6N2mSJbbFKPevX3hfN9H6HOHOS/yKCBYszcI2M9HrfHyBlZo8vNeKDzWlIP
-         WurHB5jS3OKWqbRob4xVgl0PI2SCVzFfF5V+fZGxrn7geaztCIDWxd+6rHQk+THCqPv/
-         6hIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ltvILhWw+Z8JxlENYP0mAF8OSEMClYvL/9bIL1S5Kpk=;
-        b=k325X4ft+pO5qxGENuzgmv0jqbtOSiUF12hKwmexfhWby3uo7e1DAiheYAgnPZcys9
-         ADIY4BdUG/A+9H801aljzW58A4kJRZ48WxFAVroPquBDBzZzRyJTrDVcZiYo6YmTju8C
-         t8lk2RKaGKO+X3MVJB3SjlaSgUje143UN/FqZnbu1i4XjmLdq1AWooJG+zXHr6/K/Do6
-         NHOD3tljnU8LE8JYHcou3UsUKCqYssmXz+T1RQ9WwLz047lQOKdyeuua4ZIcDIOtx1Lc
-         UYsshA8QD16ReS6sPgy47RLn2qlKZe0auGpk9l8q8J+wzBph1mmHFmZus7RgjBheomJa
-         y5wg==
-X-Gm-Message-State: ANhLgQ3mHGtR/01pvqVmdu5SIHtAOARBNesbDdpYMrVMXKQmT/sbW8Os
-        LSlphj+GkKs8kkgcOZhdeRoajw==
-X-Google-Smtp-Source: ADFU+vsLtdkgRectxhYOVDyCqiOqGpq4Xqt+Wl7DV1FV/CF1VdSJqutewgZkRdbbmLZjLm73f0qT9A==
-X-Received: by 2002:a2e:99c9:: with SMTP id l9mr5092848ljj.79.1585219179500;
-        Thu, 26 Mar 2020 03:39:39 -0700 (PDT)
-Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
-        by smtp.gmail.com with ESMTPSA id h3sm1304008lfk.30.2020.03.26.03.39.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2020 03:39:38 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: msm8916: Conform to the nodename pattern PSCI subnodes
-Date:   Thu, 26 Mar 2020 11:39:32 +0100
-Message-Id: <20200326103932.5809-3-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200326103932.5809-1-ulf.hansson@linaro.org>
-References: <20200326103932.5809-1-ulf.hansson@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 26 Mar 2020 06:48:52 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585219731; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=nWq7mGCCiLsuXbi/yM67WLfCeYpRQEJ7BwezHf5ePpg=; b=b+pUJkYAoRblxsk1VWKCQhuW2uxzs8vw3OcMDKWrYBIsodegJgPxhW0RhElrqPDmS3aJ4QKv
+ l4tN0oZdsOQJms7SnJUYZRmvpY4mdQEtm3lhx2J47nVFlij5gxYPCMNR6NY1IMjNa5hUEMv9
+ hH8eSM7l2gARcq8eso7RXReqRGw=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7c8892.7f9b3b430a08-smtp-out-n03;
+ Thu, 26 Mar 2020 10:48:50 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7C91FC433D2; Thu, 26 Mar 2020 10:48:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from pillair-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4649BC433F2;
+        Thu, 26 Mar 2020 10:48:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4649BC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
+From:   Rakesh Pillai <pillair@codeaurora.org>
+To:     devicetree@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Rakesh Pillai <pillair@codeaurora.org>
+Subject: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
+Date:   Thu, 26 Mar 2020 16:18:43 +0530
+Message-Id: <1585219723-28323-1-git-send-email-pillair@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Subnodes for PSCI should start with "power-domain-", so let's adopt to
-this.
+Add device node for the ath10k SNOC platform driver probe
+and add resources required for WCN3990 on sc7180 soc.
 
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index e7ff8701eed3..2fdc6aa61b83 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -191,31 +191,31 @@
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
+Depends on https://patchwork.kernel.org/patch/11455345/
+The above patch adds the dt-bindings for wifi-firmware
+subnode
+---
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts |  8 ++++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index 043c9b9..a6168a4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -327,6 +327,14 @@
+ 	};
+ };
  
--		CPU_PD0: cpu-pd0 {
-+		CPU_PD0: power-domain-cpu0 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
- 			domain-idle-states = <&CPU_SLEEP_0>;
++&wifi {
++	status = "okay";
++	qcom,msa-fixed-perm;
++	wifi-firmware {
++		iommus = <&apps_smmu 0xc2 0x1>;
++	};
++};
++
+ /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+ 
+ &qspi_clk {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 998f101..2745128 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -83,6 +83,11 @@
+ 			reg = <0 0x8f600000 0 0x500000>;
+ 			no-map;
+ 		};
++
++		wlan_fw_mem: memory@94104000 {
++			reg = <0 0x94104000 0 0x200000>;
++			no-map;
++		};
+ 	};
+ 
+ 	cpus {
+@@ -835,6 +840,28 @@
+ 			};
  		};
  
--		CPU_PD1: cpu-pd1 {
-+		CPU_PD1: power-domain-cpu1 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
- 			domain-idle-states = <&CPU_SLEEP_0>;
- 		};
- 
--		CPU_PD2: cpu-pd2 {
-+		CPU_PD2: power-domain-cpu2 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
- 			domain-idle-states = <&CPU_SLEEP_0>;
- 		};
- 
--		CPU_PD3: cpu-pd3 {
-+		CPU_PD3: power-domain-cpu3 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
- 			domain-idle-states = <&CPU_SLEEP_0>;
- 		};
- 
--		CLUSTER_PD: cluster-pd {
-+		CLUSTER_PD: power-domain-cluster {
- 			#power-domain-cells = <0>;
- 			domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
- 		};
++		wifi: wifi@18800000 {
++			compatible = "qcom,wcn3990-wifi";
++			reg = <0 0x18800000 0 0x800000>;
++			reg-names = "membase";
++			iommus = <&apps_smmu 0xc0 0x1>;
++			interrupts =
++				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
++				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
++				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
++				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
++				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
++				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
++				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
++				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
++				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
++				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
++				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
++				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
++			memory-region = <&wlan_fw_mem>;
++			status = "disabled";
++		};
++
+ 		config_noc: interconnect@1500000 {
+ 			compatible = "qcom,sc7180-config-noc";
+ 			reg = <0 0x01500000 0 0x28000>;
 -- 
-2.20.1
-
+2.7.4
