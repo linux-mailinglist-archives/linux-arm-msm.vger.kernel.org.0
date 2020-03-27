@@ -2,138 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 14EDD1950B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 06:33:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9587195219
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 08:36:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726454AbgC0Fdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Mar 2020 01:33:51 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:13448 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725956AbgC0Fdv (ORCPT
+        id S1726133AbgC0Hg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Mar 2020 03:36:58 -0400
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:30087 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725942AbgC0Hg6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Mar 2020 01:33:51 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585287230; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=V+ERd6fCgQjZF/hnv7fmKN9YfpzFtPi8H3fqR0rE/u0=; b=xS3AoWQsc6xiZxheK5OcHIK3LNfHf6fyhPEUo+a/ySk03CQbbRbycgGUul1h9liZWSY6HNl+
- FKc1T9IVxONJDP8FLF8R2aEYt/63cRWFmV4oGQteJbvO35z7o+dD9S4SOWLn2mf2ZbFxPvKE
- yVYq8sl9a3ECmrm5reWV7Rj+T+Y=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e7d9035.7f249cbb05e0-smtp-out-n01;
- Fri, 27 Mar 2020 05:33:41 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ED29BC4478C; Fri, 27 Mar 2020 05:33:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.13] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9B442C433F2;
-        Fri, 27 Mar 2020 05:33:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9B442C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V2 2/8] soc: qcom: geni: Support for ICC voting
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        wsa@the-dreams.de, Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-spi@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
-        Doug Anderson <dianders@chromium.org>
-References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
- <1584105134-13583-3-git-send-email-akashast@codeaurora.org>
- <CAE=gft4_Su4+SXWAW_HWy5BF1mH7QaDHCiwAAhrNaekTeU57rA@mail.gmail.com>
- <74851dda-296d-cdc5-2449-b9ec59bbc057@codeaurora.org>
- <CAE=gft5Uucr83DoQqaE7_8_H=ExnkPBQvRiUK_+LxOMeadam_g@mail.gmail.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <51bdf6b5-28b1-64ca-011d-59990012569f@codeaurora.org>
-Date:   Fri, 27 Mar 2020 11:03:30 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Fri, 27 Mar 2020 03:36:58 -0400
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Mar 2020 13:06:52 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 27 Mar 2020 13:06:39 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id DCC5F2973; Fri, 27 Mar 2020 13:06:37 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>, robdclark@gmail.com,
+        seanpaul@chromium.org, sean@poorly.run
+Subject: [PATCH v10 0/2] Add support for rm69299 Visionox panel driver and add devicetree bindings for visionox panel
+Date:   Fri, 27 Mar 2020 13:06:34 +0530
+Message-Id: <20200327073636.13823-1-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <CAE=gft5Uucr83DoQqaE7_8_H=ExnkPBQvRiUK_+LxOMeadam_g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Evan,
+Adding support for visionox rm69299 panel driver and adding bindings for the same panel.
 
-On 3/20/2020 10:15 PM, Evan Green wrote:
-> On Fri, Mar 20, 2020 at 4:03 AM Akash Asthana <akashast@codeaurora.org> wrote:
->> Hi Evan,
->>
->> +/* Core 2X clock frequency to BCM threshold mapping */
->> +#define CORE_2X_19_2_MHZ               960
->> +#define CORE_2X_50_MHZ                 2500
->> +#define CORE_2X_100_MHZ                        5000
->> +#define CORE_2X_150_MHZ                        7500
->> +#define CORE_2X_200_MHZ                        10000
->> +#define CORE_2X_236_MHZ                        16383
->>
->> These are all just 50 * clock_rate. Can you instead specify that one
->> define of CLK_TO_BW_RATIO 50, and then use clk_get_rate() to get the
->> input clock frequency. That way, if these end up getting clocked at a
->> different rate, the bandwidth also scales appropriately. Also, can you
->> enumerate why 50 is an appropriate ratio?
->> -Evan
->>
->> -Evan
->>
->> Clock rate for Core 2X is controlled by BW voting only, we don't set clock rate for core 2X clock either by DFS or calling clk_set_rate API like we do for SE clocks from individual driver.
->>
->> In DT node it's not mentioned as clock.
->>
->> As discussed in patch@ https://patchwork.kernel.org/patch/11436897/  We are not scaling Core 2X clock based on dynamic need of driver instead we are putting recommended value from HW team for each driver.
-> Oh I get it. This is pretty opaque, since this table is saying "here
-> are the bandwidth values that happen to work out to a Core2X clock
-> rate of N".
+Harigovindan P (2):
+  dt-bindings: display: add visionox rm69299 panel variant
+  drm/panel: add support for rm69299 visionox panel driver
 
-Hmm,  BCM threshold to CORE2X clock rate mapping is exposed to us from 
-clock team.
-
-BCM threshold value is internally convert to mentioned clock rate this 
-is something internal to board ICC driver.
-
->   But it's not obvious why setting the Core2X clock rate to
-> N is desirable or appropriate. The answer seems to be hardware guys
-> told us these thresholds work well in practice.
-Yes, this is correct as the core clocks behaves different than any other 
-NOC, we rely on the recommendation from VI/HW team.
->   And if I'm reading
-> into it more, probably they're saying these bandwidths are too low to
-> be worth dynamically managing beyond on/off
-I am not sure whether they intend to say this.
-> At the very least we should explain some of this in the comment above
-> these defines. Something like:
-> /* Define bandwidth thresholds that cause the underlying Core 2X
-> interconnect clock to run at the named frequency. These baseline
-> values are recommended by the hardware team, and are not dynamically
-> scaled with GENI bandwidth beyond basic on/off. */
-> -Evan
-
-Ok,
-
-regards,
-
-Akash
+ .../display/panel/visionox,rm69299.yaml       |  58 ++++
+ drivers/gpu/drm/panel/Kconfig                 |   8 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ .../gpu/drm/panel/panel-visionox-rm69299.c    | 295 ++++++++++++++++++
+ 4 files changed, 362 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+ create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm69299.c
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.25.1
+
