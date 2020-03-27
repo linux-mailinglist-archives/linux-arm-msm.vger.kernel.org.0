@@ -2,175 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 453B21956B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 13:04:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C75201957FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 14:29:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbgC0MEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Mar 2020 08:04:50 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:35180 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726454AbgC0MEu (ORCPT
+        id S1726758AbgC0N3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Mar 2020 09:29:21 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:59498 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726515AbgC0N3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Mar 2020 08:04:50 -0400
+        Fri, 27 Mar 2020 09:29:21 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585310688; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=WKPprADW7GaHUNyw/PHeP+u/8K2DkZNryKIcozt3Bdo=; b=tw0546czURVt3JqUZKtGw/twd7Ptz4/6uvDLRZxi+GXrLKgnuQUZMfr3LbTDEY06h3t3YISA
- h+gPRbwKvES5pC5gKXDPWMPkE+6JYaWdDRb9ju8DohRj/M0mJEZgtx+YEvk6p2ABnmbIdWyA
- jhuAI4ij6cezN8jivdid8Wo5Ka4=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ s=smtp; t=1585315761; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=wk6z8lY+8A26/AMPDqUoidffKFNMBrvM9I+CQYQywl8=; b=w0Fu58LeKwsGD2oP/tfMVWn4stLcMrW09wCBAMJgMwzrruLMsv7p14WbZqzPx2Hkl+iQw8c4
+ YAJOeGIf3l+TZvlBurefbwBKe4duZc1df1Wv3Ug+jQPzROxUr/5rYzMV7B0wAsq46+KVFIg+
+ i3HWcquKs5M4qhUGh8rv7WwfyEg=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e7debd2.7feaa61c4998-smtp-out-n01;
- Fri, 27 Mar 2020 12:04:34 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e7dffa3.7fec5bd37500-smtp-out-n01;
+ Fri, 27 Mar 2020 13:29:07 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DDDB3C43637; Fri, 27 Mar 2020 12:04:33 +0000 (UTC)
+        id 63EA7C433F2; Fri, 27 Mar 2020 13:29:07 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.129] (unknown [106.222.5.70])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F482C433D2;
-        Fri, 27 Mar 2020 12:04:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F482C433D2
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 71A98C433D2;
+        Fri, 27 Mar 2020 13:29:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 71A98C433D2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v14 6/6] soc: qcom: rpmh-rsc: Allow using free WAKE TCS
- for active request
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-References: <1585244270-637-1-git-send-email-mkshah@codeaurora.org>
- <1585244270-637-7-git-send-email-mkshah@codeaurora.org>
- <CAD=FV=Vbo3JC6mBJXq+q+DQPC_bbNtn3bbScG5N8wzJZm87YuA@mail.gmail.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <8d19958d-7334-ca4e-d7ba-f5919a56b279@codeaurora.org>
-Date:   Fri, 27 Mar 2020 17:34:26 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] iommu/arm-smmu: Demote error messages to debug in shutdown callback
+Date:   Fri, 27 Mar 2020 18:58:52 +0530
+Message-Id: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=Vbo3JC6mBJXq+q+DQPC_bbNtn3bbScG5N8wzJZm87YuA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Currently on reboot/shutdown, the following messages are
+displayed on the console as error messages before the
+system reboots/shutdown.
 
-On 3/27/2020 3:16 AM, Doug Anderson wrote:
-> Hi,
->
-> On Thu, Mar 26, 2020 at 10:38 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->> When there are more than one WAKE TCS available and there is no dedicated
->> ACTIVE TCS available, invalidating all WAKE TCSes and waiting for current
->> transfer to complete in first WAKE TCS blocks using another free WAKE TCS
->> to complete current request.
->>
->> Remove rpmh_rsc_invalidate() to happen from tcs_write() when WAKE TCSes
->> is re-purposed to be used for Active mode. Clear only currently used
->> WAKE TCS's register configuration.
->>
->> Mark the caches as dirty so next time when rpmh_flush() is invoked it
->> can invalidate and program cached sleep and wake sets again.
->>
->> Fixes: 2de4b8d33eab (drivers: qcom: rpmh-rsc: allow active requests from wake TCS)
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> ---
->>  drivers/soc/qcom/rpmh-rsc.c | 29 +++++++++++++++++++----------
->>  1 file changed, 19 insertions(+), 10 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
->> index 8fa70b4..c0513af 100644
->> --- a/drivers/soc/qcom/rpmh-rsc.c
->> +++ b/drivers/soc/qcom/rpmh-rsc.c
->> @@ -154,8 +154,9 @@ int rpmh_rsc_invalidate(struct rsc_drv *drv)
->>  static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
->>                                          const struct tcs_request *msg)
->>  {
->> -       int type, ret;
->> +       int type;
->>         struct tcs_group *tcs;
->> +       unsigned long flags;
->>
->>         switch (msg->state) {
->>         case RPMH_ACTIVE_ONLY_STATE:
->> @@ -175,18 +176,18 @@ static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
->>          * If we are making an active request on a RSC that does not have a
->>          * dedicated TCS for active state use, then re-purpose a wake TCS to
->>          * send active votes.
->> -        * NOTE: The driver must be aware that this RSC does not have a
->> -        * dedicated AMC, and therefore would invalidate the sleep and wake
->> -        * TCSes before making an active state request.
->> +        *
->> +        * NOTE: Mark caches as dirty here since existing data in wake TCS will
->> +        * be lost. rpmh_flush() will processed for dirty caches to restore
->> +        * data.
->>          */
->>         tcs = get_tcs_of_type(drv, type);
->>         if (msg->state == RPMH_ACTIVE_ONLY_STATE && !tcs->num_tcs) {
->>                 tcs = get_tcs_of_type(drv, WAKE_TCS);
->> -               if (tcs->num_tcs) {
->> -                       ret = rpmh_rsc_invalidate(drv);
->> -                       if (ret)
->> -                               return ERR_PTR(ret);
->> -               }
->> +
->> +               spin_lock_irqsave(&drv->client.cache_lock, flags);
->> +               drv->client.dirty = true;
->> +               spin_unlock_irqrestore(&drv->client.cache_lock, flags);
-> This seems like a huge abstraction violation.  
+On SC7180:
 
-Agree that cache_lock and dirty flag are used in rpmh.c
+  arm-smmu 15000000.iommu: removing device with active domains!
+  arm-smmu 5040000.iommu: removing device with active domains!
 
-I will address this to either notify rpmh.c to mark it dirty or think of other solution.
+Demote the log level to debug since it does not offer much
+help in identifying/fixing any issue as the system is anyways
+going down and reduce spamming the kernel log.
 
-> Why can't rpmh_write()
-> / rpmh_write_async() / rpmh_write_batch() just always unconditionally
-> mark the cache dirty?  Are there really lots of cases when those calls
-> are made and they do nothing?
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/iommu/arm-smmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-At rpmh.c, it doesn't know that rpmh-rsc.c worked on borrowed TCS to finish the request.
-
-We should not blindly mark caches dirty everytime.
-
->
->
-> Other than that this patch seems sane to me and addresses one of the
-> comments I had in:
->
-> https://lore.kernel.org/r/CAD=FV=XmBQb8yfx14T-tMQ68F-h=3UHog744b3X3JZViu15+4g@mail.gmail.com
->
-> ...interestingly after your patch I guess now I guess tcs_invalidate()
-> no longer needs spinlocks since it's only ever called from PM code on
-> the last CPU.  ...if you agree, I can always do it in my cleanup
-> series.  See:
->
-> https://lore.kernel.org/r/CAD=FV=Xp1o68HnC2-hMnffDDsi+jjgc9pNrdNuypjQZbS5K4nQ@mail.gmail.com
->
-> -Doug
-
-There are other RSCs which use same driver, so lets keep spinlock.
-
-I still didn't get chance to validate your patch (i will have update sometime next week), just to update I have never seen any issue internally
-
-using spin_lock even on nosmp case, that might require it to change to _irq_save/restore variant.
-
-Thanks,
-Maulik
-
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 16c4b87af42b..0a865e32054a 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -2250,7 +2250,7 @@ static int arm_smmu_device_remove(struct platform_device *pdev)
+ 		return -ENODEV;
+ 
+ 	if (!bitmap_empty(smmu->context_map, ARM_SMMU_MAX_CBS))
+-		dev_err(&pdev->dev, "removing device with active domains!\n");
++		dev_dbg(&pdev->dev, "removing device with active domains!\n");
+ 
+ 	arm_smmu_bus_init(NULL);
+ 	iommu_device_unregister(&smmu->iommu);
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
