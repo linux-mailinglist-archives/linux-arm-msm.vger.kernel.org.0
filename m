@@ -2,106 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 03E73195E0F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 20:03:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 313B6195F15
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 20:48:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727254AbgC0TDC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Mar 2020 15:03:02 -0400
-Received: from foss.arm.com ([217.140.110.172]:51450 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726900AbgC0TDC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Mar 2020 15:03:02 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BF59E30E;
-        Fri, 27 Mar 2020 12:03:00 -0700 (PDT)
-Received: from [10.57.60.204] (unknown [10.57.60.204])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6527F3F71E;
-        Fri, 27 Mar 2020 12:02:59 -0700 (PDT)
-Subject: Re: [PATCH] iommu/arm-smmu: Demote error messages to debug in
- shutdown callback
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
- <0023bc68-45fb-4e80-00c8-01fd0369243f@arm.com>
- <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <5858bdac-b7f9-ac26-0c0d-c9653cef841d@arm.com>
-Date:   Fri, 27 Mar 2020 19:02:58 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-MIME-Version: 1.0
-In-Reply-To: <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+        id S1727495AbgC0Tsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Mar 2020 15:48:40 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:10431 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727252AbgC0Tsf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Mar 2020 15:48:35 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585338514; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=0fqTY0l0+n8WhQXdA6uQEsshpvosH4QlcVJn+mbYH6Q=; b=hkx1pW0zmWdRG3TYnJhaaDqAvMCs/eZI/01OIoMvxeNnTFddnJri5IgLRbXGng9Gdv6SOMS6
+ TtR/e6za2QQSKNrbb1ewHQV43OrWhUtdSCs2VIZlV9HFdFw0BZIsb7CnwReBMU6Y6/jp3ysl
+ hlCCQlM6VqspaJvxvugkFJvTBEo=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e7e5883.7f98046e2228-smtp-out-n01;
+ Fri, 27 Mar 2020 19:48:19 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 28B8AC44788; Fri, 27 Mar 2020 19:48:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 098F2C433D2;
+        Fri, 27 Mar 2020 19:48:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 098F2C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1 0/4] clk: qcom: Support for Low Power Audio Clocks on SC7180
+Date:   Sat, 28 Mar 2020 01:18:01 +0530
+Message-Id: <1585338485-31820-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-03-27 3:09 pm, Sai Prakash Ranjan wrote:
-> Hi Robin,
-> 
-> Thanks for taking a look at this.
-> 
-> On 2020-03-27 19:42, Robin Murphy wrote:
->> On 2020-03-27 1:28 pm, Sai Prakash Ranjan wrote:
->>> Currently on reboot/shutdown, the following messages are
->>> displayed on the console as error messages before the
->>> system reboots/shutdown.
->>>
->>> On SC7180:
->>>
->>>    arm-smmu 15000000.iommu: removing device with active domains!
->>>    arm-smmu 5040000.iommu: removing device with active domains!
->>>
->>> Demote the log level to debug since it does not offer much
->>> help in identifying/fixing any issue as the system is anyways
->>> going down and reduce spamming the kernel log.
->>
->> I've gone back and forth on this pretty much ever since we added the
->> shutdown hook - on the other hand, if any devices *are* still running
->> in those domains at this point, then once we turn off the SMMU and let
->> those IOVAs go out on the bus as physical addresses, all manner of
->> weirdness may ensue. Thus there is an argument for *some* indication
->> that this may happen, although IMO it could be downgraded to at least
->> dev_warn().
->>
-> 
-> Any pointers to the weirdness here after SMMU is turned off?
-> Because if we look at the call sites, device_shutdown is called
-> from kernel_restart_prepare or kernel_shutdown_prepare which would
-> mean system is going down anyways, so do we really care about these
-> error messages or warnings from SMMU?
-> 
->   arm_smmu_device_shutdown
->    platform_drv_shutdown
->     device_shutdown
->      kernel_restart_prepare
->       kernel_restart
+[v1]
+ * Add support for Retention of GDSCR.
+ * Add YAML schema for LPASS clocks and clock IDs for LPASS.
+ * Add clock driver for LPASS core clocks and GCC LPASS clock.
 
-Imagine your network driver doesn't implement a .shutdown method (so the 
-hardware is still active regardless of device links), happens to have an 
-Rx buffer or descriptor ring DMA-mapped at an IOVA that looks like the 
-physical address of the memory containing some part of the kernel text 
-lower down that call stack, and the MAC receives a broadcast IP packet 
-at about the point arm_smmu_device_shutdown() is returning. Enjoy 
-debugging that ;)
+Taniya Das (4):
+  clk: qcom: gdsc: Add support to enable retention of GSDCR
+  dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7180
+  clk: qcom: gcc: Add support for GCC LPASS clock for SC7180
+  clk: qcom: lpass: Add support for LPASS clock controller for SC7180
 
-And if coincidental memory corruption seems too far-fetched for your 
-liking, other fun alternatives might include "display tries to scan out 
-from powered-off device, deadlocks interconnect and prevents anything 
-else making progress", or "access to TZC-protected physical address 
-triggers interrupt and over-eager Secure firmware resets system before 
-orderly poweroff has a chance to finish".
+ .../bindings/clock/qcom,sc7180-lpasscorecc.yaml    |  81 ++++
+ drivers/clk/qcom/Kconfig                           |   9 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/gcc-sc7180.c                      |  14 +
+ drivers/clk/qcom/gdsc.c                            |  12 +
+ drivers/clk/qcom/gdsc.h                            |   1 +
+ drivers/clk/qcom/lpasscorecc-sc7180.c              | 479 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc7180.h        |   1 +
+ .../dt-bindings/clock/qcom,lpasscorecc-sc7180.h    |  28 ++
+ 9 files changed, 626 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml
+ create mode 100644 drivers/clk/qcom/lpasscorecc-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,lpasscorecc-sc7180.h
 
-Of course the fact that in practice we'll *always* see the warning 
-because there's no way to tear down the default DMA domains, and even if 
-all devices *have* been nicely quiesced there's no way to tell, is 
-certainly less than ideal. Like I say, it's not entirely clear-cut 
-either way...
-
-Robin.
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
