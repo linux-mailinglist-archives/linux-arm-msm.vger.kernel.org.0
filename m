@@ -2,120 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A3311960EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 23:15:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3C7A196127
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 23:32:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726781AbgC0WPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Mar 2020 18:15:52 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34781 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727725AbgC0WPv (ORCPT
+        id S1727620AbgC0WcW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Mar 2020 18:32:22 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41541 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726781AbgC0WcW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Mar 2020 18:15:51 -0400
-Received: by mail-pg1-f195.google.com with SMTP id d37so4737873pgl.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2020 15:15:49 -0700 (PDT)
+        Fri, 27 Mar 2020 18:32:22 -0400
+Received: by mail-ed1-f65.google.com with SMTP id v1so13210024edq.8;
+        Fri, 27 Mar 2020 15:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TEwTFJQjvV6Mx5spN7GpwpVz8q19VnSJjUr5y2zOQf4=;
-        b=p9SBNdR+ETIPSTXcv5EhsgX4tSQOTcZTMdhoZo/8WYUG+a++O1VV0uJ6+modK5pxzh
-         HMITDpSbUK0bPjS+gKppaVH4D6idOVczgD3d/rfavsXFgmDbsSJQAGgO9g/wkbGj3kMn
-         PnoH2d0IKUqvRfBtogvE07RRc5sijJBwuAmz6F4pNACVZD6o+Mc83UJ+FzcaLxBAqyQI
-         JEzwo+ApKOBsJjORG+54L5O8FR8LRtj8oNjw+d2rQkVunVbiKXhFKn+DoUdiBKTsd6HE
-         98xUG1mGuTYvcEEnUlVpqZitjoQ4FiNZPwhkJiMYBdyB98fu1AMII5hzw/KR4Tjb14iI
-         4KSw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PS7K5rF+Cg6On6T3DToyfe3R3dABZKL4am5J0GbhTdc=;
+        b=uhUfpfv1fHQDzSKiZvahUYHiOoF2HuQgzuE83x6rP4SAxvRKfVV29Os1SuqguMCqIo
+         n7FtXSqsPrizA2bWYlZqgJH9R5pbQDR2Y/zjaFsOCtsaY/ys/iTK0ADLKFG3+PGRGh/F
+         xIr2eTCKnTOoy4XHUpg50mXyOsd6Bi8gV9ufFexWeqMLPlh4DuJ69yu5JnN4OQKfjazd
+         lCDiTWcV2+x3ixrkMcD2mimcBvGmpRfHYMX32XlbIoGu6NSTmCg+tlkZK/3D/qegi5jD
+         GcOoZnubiVjCOFKZAnVsQUbDqkdyN/iVwqMMPAMu1/rqGpHqnAJnnH3XGw7P6BqfhWZx
+         zuyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TEwTFJQjvV6Mx5spN7GpwpVz8q19VnSJjUr5y2zOQf4=;
-        b=qQttMlR5AbLGipeEkWrzrG/GxfJPDmoDjE+UpVgvrHr+OdvRpq6nhUZ6zjnAA0I+OG
-         6WtqWfCM/EOy9BYlLff4ebwt7pjyV+b5vRh7FMD2GPAIZwH3SwKnPqJ1P9d3x6NOurI2
-         /xsRPdJ6/YjdQrU286ZM7M1nj5MvBNrsCirdoj3Gr1My1kykzC5Q/2sGPed7OwkR/qB5
-         6nViZtnzanKWWUHTbT9HpPvujPhtOeYPWkcjOegpGz4bLYCEBsLKIb8usVTLQxn2B6FN
-         JR0LCEMMO1JkUumLCs6weDlWGPY7YfyIQgsFo698PCTQ1kOnQYQxrDPysQIdIc9c6lmD
-         RWhQ==
-X-Gm-Message-State: ANhLgQ0Msywqln9Wtt/QbX20tP12hLqlFwNtyiNb1TeMnhD2gepD0LO2
-        3yWlzKo+dh7oIB9MbZRLHo3VjA==
-X-Google-Smtp-Source: ADFU+vud/GGU22qfW9z9qf0DG+nmWdPXJx314vADEi1cJKcHiCmBXY49eDWGGyDc8y3g/2VXMAR/aw==
-X-Received: by 2002:a63:a65:: with SMTP id z37mr1441563pgk.31.1585347348852;
-        Fri, 27 Mar 2020 15:15:48 -0700 (PDT)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r4sm4564372pgp.53.2020.03.27.15.15.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PS7K5rF+Cg6On6T3DToyfe3R3dABZKL4am5J0GbhTdc=;
+        b=XcU4WI0n1FhswMRe64IKvYinIcj5H6A6ex+RwawWtSY9IHiMZch/O4FfuTIajwWSLs
+         mKEZz3QaWxM8bo4SJHmbzyOL+oUr9b+GjXKdmKHAqMjatBt6Wm9TBp3AGJMfDEeWPRrV
+         5jHz0tafcKJTQPyyfcy7SV2veH+8bqu6nQYiCHp0edPJIuAaO79IjqaAmvOTf1noExgF
+         G1Xy1x0ywMopWqI9o76zp15MoGmvgrcEmRmRmnqEiWKUATAWWFicqWuFuj4TwMC1ihgw
+         vmJaikr3QF/veOrBTJRBTX6r7vx95Eu7c5WYAhjZkcNZLHmdJMpPc0zinCaZRcd5j+iz
+         PfVw==
+X-Gm-Message-State: ANhLgQ2oClLWzGKQntNLTLOMhdAIZ6mHZkWyfTCCnf341xGdDwgmdKGd
+        i7DARoS4NyMV+4XBSHXVhLA=
+X-Google-Smtp-Source: ADFU+vtxilaq5/JJXYmsRylks0eE4gcJmXLVEWDGDi4/GpErXjHanhDXgc13g3q4tpCUIuuPtQGsyg==
+X-Received: by 2002:a05:6402:b14:: with SMTP id bm20mr1336170edb.365.1585348340310;
+        Fri, 27 Mar 2020 15:32:20 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host203-232-dynamic.53-79-r.retail.telecomitalia.it. [79.53.232.203])
+        by smtp.googlemail.com with ESMTPSA id p8sm1056354edm.96.2020.03.27.15.32.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2020 15:15:47 -0700 (PDT)
-Date:   Fri, 27 Mar 2020 15:15:45 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     rui.zhang@intel.com, ulf.hansson@linaro.org,
-        daniel.lezcano@linaro.org, agross@kernel.org, robh@kernel.org,
-        amit.kucheria@verdurent.com, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Fri, 27 Mar 2020 15:32:19 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Ajay Kishore <akisho@codeaurora.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [Patch v5 2/6] soc: qcom: rpmhpd: Introduce function to retrieve
- power domain performance state count
-Message-ID: <20200327221545.GF5063@builder>
-References: <20200320014107.26087-1-thara.gopinath@linaro.org>
- <20200320014107.26087-3-thara.gopinath@linaro.org>
+Subject: [PATCH v3] pinctrl: qcom: use scm_call to route GPIO irq to Apps
+Date:   Fri, 27 Mar 2020 23:32:08 +0100
+Message-Id: <20200327223209.20409-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200320014107.26087-3-thara.gopinath@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 19 Mar 18:41 PDT 2020, Thara Gopinath wrote:
+From: Ajay Kishore <akisho@codeaurora.org>
 
-> Populate .get_performace_state_count in genpd ops to retrieve the count of
-> performance states supported by a rpmh power domain.
-> 
-> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
->  drivers/soc/qcom/rpmhpd.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index 4d264d0672c4..7142409a3b77 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -341,6 +341,13 @@ static unsigned int rpmhpd_get_performance_state(struct generic_pm_domain *genpd
->  	return dev_pm_opp_get_level(opp);
->  }
->  
-> +static int rpmhpd_performance_states_count(struct generic_pm_domain *domain)
-> +{
-> +	struct rpmhpd *pd = domain_to_rpmhpd(domain);
-> +
-> +	return pd->level_count;
-> +}
-> +
->  static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
->  {
->  	int i;
-> @@ -429,6 +436,8 @@ static int rpmhpd_probe(struct platform_device *pdev)
->  		rpmhpds[i]->pd.power_on = rpmhpd_power_on;
->  		rpmhpds[i]->pd.set_performance_state = rpmhpd_set_performance_state;
->  		rpmhpds[i]->pd.opp_to_performance_state = rpmhpd_get_performance_state;
-> +		rpmhpds[i]->pd.get_performance_state_count =
-> +					rpmhpd_performance_states_count;
+For IPQ806x targets, TZ protects the registers that are used to
+configure the routing of interrupts to a target processor.
+To resolve this, this patch uses scm call to route GPIO interrupts
+to application processor. Also the scm call interface is changed.
 
-I would prefer if you ignore the 80-char limit here and leave the line
-unwrapped.
+Signed-off-by: Ajay Kishore <akisho@codeaurora.org>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+v3:
+* Rename route_to_apps to intr_target_use_scm
+* Follow standard design and rename base_reg to phys_base
+* Add additional comments in route interrupts condition 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+v2:
+* Move static varibale in msm_pinctrl struct
+* Revert '4b024225c4a8 ("pinctrl: use devm_platform_ioremap_resource() to simplify code")'
+  to get base_reg addr
 
-Regards,
-Bjorn
+ drivers/pinctrl/qcom/pinctrl-msm.c | 42 +++++++++++++++++++++++++-----
+ 1 file changed, 36 insertions(+), 6 deletions(-)
 
->  		pm_genpd_init(&rpmhpds[i]->pd, NULL, true);
->  
->  		data->domains[i] = &rpmhpds[i]->pd;
-> -- 
-> 2.20.1
-> 
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 9a8daa256a32..7d2a34beb1b6 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -22,6 +22,8 @@
+ #include <linux/reboot.h>
+ #include <linux/pm.h>
+ #include <linux/log2.h>
++#include <linux/qcom_scm.h>
++#include <linux/io.h>
+ 
+ #include <linux/soc/qcom/irq.h>
+ 
+@@ -60,6 +62,8 @@ struct msm_pinctrl {
+ 	struct irq_chip irq_chip;
+ 	int irq;
+ 
++	bool intr_target_use_scm;
++
+ 	raw_spinlock_t lock;
+ 
+ 	DECLARE_BITMAP(dual_edge_irqs, MAX_NR_GPIO);
+@@ -68,6 +72,7 @@ struct msm_pinctrl {
+ 
+ 	const struct msm_pinctrl_soc_data *soc;
+ 	void __iomem *regs[MAX_NR_TILES];
++	u32 phys_base[MAX_NR_TILES];
+ };
+ 
+ #define MSM_ACCESSOR(name) \
+@@ -882,11 +887,31 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	else
+ 		clear_bit(d->hwirq, pctrl->dual_edge_irqs);
+ 
+-	/* Route interrupts to application cpu */
+-	val = msm_readl_intr_target(pctrl, g);
+-	val &= ~(7 << g->intr_target_bit);
+-	val |= g->intr_target_kpss_val << g->intr_target_bit;
+-	msm_writel_intr_target(val, pctrl, g);
++	/* Route interrupts to application cpu.
++	 * With intr_target_use_scm interrupts are routed to
++	 * application cpu using scm calls.
++	 */
++	if (pctrl->intr_target_use_scm) {
++		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
++		int ret;
++
++		qcom_scm_io_readl(addr, &val);
++
++		val &= ~(7 << g->intr_target_bit);
++		val |= g->intr_target_kpss_val << g->intr_target_bit;
++
++		ret = qcom_scm_io_writel(addr, val);
++		if (ret)
++			dev_err(pctrl->dev,
++				"Failed routing %lu interrupt to Apps proc",
++				d->hwirq);
++		}
++	} else {
++		val = msm_readl_intr_target(pctrl, g);
++		val &= ~(7 << g->intr_target_bit);
++		val |= g->intr_target_kpss_val << g->intr_target_bit;
++		msm_writel_intr_target(val, pctrl, g);
++	}
+ 
+ 	/* Update configuration for gpio.
+ 	 * RAW_STATUS_EN is left on for all gpio irqs. Due to the
+@@ -1241,6 +1266,9 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+ 	pctrl->dev = &pdev->dev;
+ 	pctrl->soc = soc_data;
+ 	pctrl->chip = msm_gpio_template;
++	pctrl->intr_target_use_scm = of_device_is_compatible(
++					pctrl->dev->of_node,
++					"qcom,ipq8064-pinctrl");
+ 
+ 	raw_spin_lock_init(&pctrl->lock);
+ 
+@@ -1253,9 +1280,12 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+ 				return PTR_ERR(pctrl->regs[i]);
+ 		}
+ 	} else {
+-		pctrl->regs[0] = devm_platform_ioremap_resource(pdev, 0);
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++		pctrl->regs[0] = devm_ioremap_resource(&pdev->dev, res);
+ 		if (IS_ERR(pctrl->regs[0]))
+ 			return PTR_ERR(pctrl->regs[0]);
++
++		pctrl->phys_base[0] = res->start;
+ 	}
+ 
+ 	msm_pinctrl_setup_pm_reset(pctrl);
+-- 
+2.25.1
+
