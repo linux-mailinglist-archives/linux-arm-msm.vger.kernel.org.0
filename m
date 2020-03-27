@@ -2,128 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB71195D71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 19:18:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80792195D8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2020 19:22:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727185AbgC0SSk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Mar 2020 14:18:40 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:31205 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726738AbgC0SSk (ORCPT
+        id S1726540AbgC0SWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Mar 2020 14:22:46 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:41432 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbgC0SWp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Mar 2020 14:18:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585333119; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=9j8az2wn5tFjF/j7S4vwuA3DngrkCuX03aHf5YAPc50=;
- b=sycV28eg7X17I40uToiROyxVEjusTuqfYs74XCPto3IE5p0KNnknQyn5y51sNXymhEPYqgNy
- 7FXvuuHwSGB9TvUwb4luAXHL1qeki6kWQeCFvuLTXW9TSt9OEC+pbVx7yVT0q9g3+GzGZyF+
- SvfknbPLBZdczumMQVhvtSK44bM=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e7e4378.7f3e5b6e1ca8-smtp-out-n03;
- Fri, 27 Mar 2020 18:18:32 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7A4D6C43637; Fri, 27 Mar 2020 18:18:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CAB97C433F2;
-        Fri, 27 Mar 2020 18:18:31 +0000 (UTC)
+        Fri, 27 Mar 2020 14:22:45 -0400
+Received: by mail-ua1-f68.google.com with SMTP id f9so3861318uaq.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2020 11:22:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FMqfnFJfOBNCe0ahBd62eMY+XQaeL21j8Kfs+r5ufSA=;
+        b=G7WCrgscZMeRk0ftZqju+5xPkj8WyWt0QH3xSwv9B6HzbWbeum1U4B64GLxHjdb9Qt
+         SG2/j74SA5xNvA3oZy3EIZDIkGC3tvKLMwcsJVmo/w88jkaO/mufMSy/6mKQG5xd+3yt
+         r1mtAyJ6LsEE3cGbfLXKlEvld8VsPvVFft+PI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FMqfnFJfOBNCe0ahBd62eMY+XQaeL21j8Kfs+r5ufSA=;
+        b=mrVHt8ydAA54vMmkic6IHwayQDk2XxvJ9j/9dfW2xVBk8mvYBx1qeFQj+BZuYnjVaV
+         gMqpldcYDDLDBJQ3ZPx6TwLm6jvZWYD1bIjZHaY/rrOgnD9BYzMzWf1Vu2nzRUVlzzjY
+         8rAVOVTQ+t8M/cOpjNkrSMsA3n7v3QKpOq7MwpZi+z3FRQI9G+JjO7FEeqosqJVMq74+
+         nxtZFA7q3wRgW+IhgFtIfj7os72JjtYkhOjqpAp4+mTerQhBFT4dnwRdYIw5KNr7KAHU
+         kPJuQw+t8q6BZUqKPDk5nXa+cfBQchkDwMkvqUJJRnsmbtrdJMlkOBjdQtlZf6MMJ1M9
+         QULQ==
+X-Gm-Message-State: AGi0PuZrfYfpjzBASfo9CCGlNT9FUlKE9mxJsJYo5fiDa2tZsoGUDdkJ
+        zCdomOnZ1wSmD2BNa9MiTY4p/kSLO7k=
+X-Google-Smtp-Source: APiQypKHdiRNY406PG382EfAH7rqD94arH8S0KfdCrJfXclmL3KbK34vcLQKg05e29n5QKoXwZYK2g==
+X-Received: by 2002:ab0:6796:: with SMTP id v22mr154665uar.41.1585333363292;
+        Fri, 27 Mar 2020 11:22:43 -0700 (PDT)
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
+        by smtp.gmail.com with ESMTPSA id l17sm2359208vsq.28.2020.03.27.11.22.42
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Mar 2020 11:22:42 -0700 (PDT)
+Received: by mail-vs1-f45.google.com with SMTP id y138so6837937vsy.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2020 11:22:42 -0700 (PDT)
+X-Received: by 2002:a67:7c02:: with SMTP id x2mr277589vsc.45.1585333361883;
+ Fri, 27 Mar 2020 11:22:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 27 Mar 2020 23:48:31 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
+References: <1585244270-637-1-git-send-email-mkshah@codeaurora.org>
+ <1585244270-637-5-git-send-email-mkshah@codeaurora.org> <CAD=FV=UQAbqitmYR7=5+AAL8pqy2imzEWf8BTkBoD6mthAwpKw@mail.gmail.com>
+ <7bd2c923-4003-a1c4-610f-548e79a94d35@codeaurora.org>
+In-Reply-To: <7bd2c923-4003-a1c4-610f-548e79a94d35@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 27 Mar 2020 11:22:29 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WEH_A4SvyX0uv9Z_n+z9_SYcdm2LfsLRK7qALEiOyHqQ@mail.gmail.com>
+Message-ID: <CAD=FV=WEH_A4SvyX0uv9Z_n+z9_SYcdm2LfsLRK7qALEiOyHqQ@mail.gmail.com>
+Subject: Re: [PATCH v14 4/6] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
-        <iommu@lists.linux-foundation.org>, Will Deacon <will@kernel.org>
-Subject: Re: [PATCH] iommu/arm-smmu: Demote error messages to debug in
- shutdown callback
-In-Reply-To: <CAF6AEGtWqaGf1m_ew=iSQG2cX0_tV=W_7DwKRkTJUWJaParsvw@mail.gmail.com>
-References: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
- <0023bc68-45fb-4e80-00c8-01fd0369243f@arm.com>
- <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
- <CAF6AEGtWqaGf1m_ew=iSQG2cX0_tV=W_7DwKRkTJUWJaParsvw@mail.gmail.com>
-Message-ID: <0148cf32b9770ad4b5b4f7baf4541a40@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hi,
 
-On 2020-03-27 21:47, Rob Clark wrote:
-> On Fri, Mar 27, 2020 at 8:10 AM Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> Hi Robin,
->> 
->> Thanks for taking a look at this.
->> 
->> On 2020-03-27 19:42, Robin Murphy wrote:
->> > On 2020-03-27 1:28 pm, Sai Prakash Ranjan wrote:
->> >> Currently on reboot/shutdown, the following messages are
->> >> displayed on the console as error messages before the
->> >> system reboots/shutdown.
->> >>
->> >> On SC7180:
->> >>
->> >>    arm-smmu 15000000.iommu: removing device with active domains!
->> >>    arm-smmu 5040000.iommu: removing device with active domains!
->> >>
->> >> Demote the log level to debug since it does not offer much
->> >> help in identifying/fixing any issue as the system is anyways
->> >> going down and reduce spamming the kernel log.
->> >
->> > I've gone back and forth on this pretty much ever since we added the
->> > shutdown hook - on the other hand, if any devices *are* still running
->> > in those domains at this point, then once we turn off the SMMU and let
->> > those IOVAs go out on the bus as physical addresses, all manner of
->> > weirdness may ensue. Thus there is an argument for *some* indication
->> > that this may happen, although IMO it could be downgraded to at least
->> > dev_warn().
->> >
->> 
->> Any pointers to the weirdness here after SMMU is turned off?
->> Because if we look at the call sites, device_shutdown is called
->> from kernel_restart_prepare or kernel_shutdown_prepare which would
->> mean system is going down anyways, so do we really care about these
->> error messages or warnings from SMMU?
->> 
->>   arm_smmu_device_shutdown
->>    platform_drv_shutdown
->>     device_shutdown
->>      kernel_restart_prepare
->>       kernel_restart
->> 
-> 
-> I'd guess that drm/msm is not detaching all of it's UNMANAGED domains
-> in shutdown.  Although *presumably* the device_link stuff would
-> prevent the SMMU from shutting down while gpu/display is still active?
->  If not I think we have bigger problems.
-> 
+On Fri, Mar 27, 2020 at 4:00 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+>   * @ctrlr: controller making request to flush cached data
+>   *
+> - * Return: -EBUSY if the controller is busy, probably waiting on a response
+> - * to a RPMH request sent earlier.
+> + * Return: 0 on success, error number otherwise.
+>   *
+> - * This function is always called from the sleep code from the last CPU
+> - * that is powering down the entire system. Since no other RPMH API would be
+> - * executing at this time, it is safe to run lockless.
+> + * This function can either be called from sleep code on the last CPU
+> + * (thus no spinlock needed) or with the ctrlr->cache_lock already held.
+>
+> Now you can remove the "or with the ctrlr->cache_lock already held"
+> since it's no longer true.
+>
+> It can be true for other RSCs, so i kept as it is.
 
-Where is the shutdown callback in drm/msm? I don't see any...
+I don't really understand this.  The cache_lock is only a concept in
+"rpmh.c".  How could another RSC grab the cache lock?  If nothing
+else, can you remove this comment until support for those other RSCs
+are added and we can evaluate then?
 
-Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+-Doug
