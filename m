@@ -2,145 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 744A11967CF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2020 18:04:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D69FF196873
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2020 19:31:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726369AbgC1REP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Mar 2020 13:04:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36088 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725807AbgC1REP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Mar 2020 13:04:15 -0400
-Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4F16E20714;
-        Sat, 28 Mar 2020 17:04:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1585415054;
-        bh=re7p6j0PGrxKSZZ6Le17eLNOy+JoAmbengRYQrLBe3E=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=K3ktQwAG5vot+NVGaYyusk7AKtEnQPr029KatKl6b1HNTIflnBg5WVmhft5+k9vdQ
-         TsPGI+yB1TU6Mk7YqxTHOXXpIG1XFqmZq+TJQwtyvWYIjH5tTUN+GLeQ7lO8BAm9k1
-         sGbi7J1KvatH9dr1cljVM7zM03Xg/IRc9zjkJ3qc=
-Date:   Sat, 28 Mar 2020 17:04:07 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, linus.walleij@linaro.org, sboyd@codeaurora.org,
-        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH 3/3] iio: adc: Add support for PMIC7 ADC
-Message-ID: <20200328170407.41d8ed68@archlinux>
-In-Reply-To: <1585064650-16235-4-git-send-email-jprakash@codeaurora.org>
-References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
-        <1585064650-16235-4-git-send-email-jprakash@codeaurora.org>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        id S1727176AbgC1SbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Mar 2020 14:31:03 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:34772 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726937AbgC1SbB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 28 Mar 2020 14:31:01 -0400
+Received: by mail-pf1-f194.google.com with SMTP id 23so6314027pfj.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2020 11:30:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+mVck/pOJv55KYF3ZzMyTGWgs0RFVKHx1LKbGb8RbSs=;
+        b=bj4M59RKtnKKUaVQsWvI4u4nhhvyXqBegUEMmfvGKXIBT/mika1RpNwaWwGdABjLzu
+         PeSQC2Yl7lqu+IJJl8x6vzppsEG8QEMztXC0LIAjp1v9FU2NPx+XdMCJw+jmd61ds2Nl
+         iqzOUHjLA2yTibgvFUBRLUYtzTKkbmCHs/u57EqL332uswGIi+iTTmNCOAotm68VVlbd
+         VfRuNm949tV4tyVoq+ouNy1HbzLKzDE4rM6qHY5mS7PKnK64W3GrNA8geQzMiOk/BupI
+         aUBhsFQsxGhS7vjn9/PCWhe1j2VzrBOCgHUk1bGK9XJgJGBK9TyvwyNN31JojGWzluUB
+         YKEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+mVck/pOJv55KYF3ZzMyTGWgs0RFVKHx1LKbGb8RbSs=;
+        b=MAUhx42db6XXmg46FU/PYSb4g3yU7EGn69RvrR0FSLkALHeUEQ51p9xcbeabG43C3V
+         6KFt/PLKWWxE6VeGYoACjDs/lBAADEBK3k32LEXhcsOC0dtaKpKhoFJekGgbRyxpkld1
+         xXqfD3cc3ujcCkDtKbjO0lSGMVQF9B3pcwlq5xPEt7FpSCfJz8PU8L7A9KPw9Vo6sGtq
+         c7IH8Xb8nIs1yz/J9BiBllmBzY2WKOugAn+myuRe5UeK0FGJBYtmp6M702qAwsgQoH9C
+         LO40su+Ylfnk6YY4iMDiNBWaMkgQm9IlmiJoKRCtDnBDZgO79Co9TF9bkHEGop1Z4ZLy
+         wd5Q==
+X-Gm-Message-State: ANhLgQ2O8KLRczd94fWrHb62aL1DO9mQWAnXx5ErDttoiaTzI2ZqyWDJ
+        bbw2u+UZj7MtV2YN2Mnjb8MtLom6fqk=
+X-Google-Smtp-Source: ADFU+vvaKrpy0yv4Pq6rQuQ4KMnEp88icJyuuxyYhbQEtG7ooH+mR8DMcc8VezWIPH5TZPc9M4fJiA==
+X-Received: by 2002:a63:7f05:: with SMTP id a5mr5336763pgd.327.1585420258811;
+        Sat, 28 Mar 2020 11:30:58 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 79sm6691688pfz.23.2020.03.28.11.30.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Mar 2020 11:30:58 -0700 (PDT)
+Date:   Sat, 28 Mar 2020 11:30:55 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     pillair@codeaurora.org
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+Message-ID: <20200328183055.GA663905@yoga>
+References: <1585219723-28323-1-git-send-email-pillair@codeaurora.org>
+ <20200327230025.GJ5063@builder>
+ <000101d604f8$afc48220$0f4d8660$@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <000101d604f8$afc48220$0f4d8660$@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 24 Mar 2020 21:14:10 +0530
-Jishnu Prakash <jprakash@codeaurora.org> wrote:
+On Sat 28 Mar 05:01 PDT 2020, pillair@codeaurora.org wrote:
 
-> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
-> major change from PMIC5 is that all SW communication to ADC goes through
-> PMK8350, which communicates with other PMICs through PBS when the ADC
-> on PMK8350 works in master mode. The SID register is used to identify the
-> PMICs with which the PBS needs to communicate. Add support for the same.
+> Hi Bjorn,
+>  Comments inline.
 > 
-> In addition, add definitions for ADC channels and virtual channel
-> definitions per PMIC, to be used by ADC clients for PMIC7.
 > 
-> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+> > -----Original Message-----
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Sent: Saturday, March 28, 2020 4:30 AM
+> > To: Rakesh Pillai <pillair@codeaurora.org>
+> > Cc: devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
+> linux-
+> > kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org
+> > Subject: Re: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
+> > module device node
+> > 
+> > On Thu 26 Mar 03:48 PDT 2020, Rakesh Pillai wrote:
+> > 
+> > > Add device node for the ath10k SNOC platform driver probe
+> > > and add resources required for WCN3990 on sc7180 soc.
+> > >
+> > > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> > > ---
+> > >
+> > > Depends on https://patchwork.kernel.org/patch/11455345/
+> > > The above patch adds the dt-bindings for wifi-firmware
+> > > subnode
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  8 ++++++++
+> > >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27
+> > +++++++++++++++++++++++++++
+> > >  2 files changed, 35 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > index 043c9b9..a6168a4 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > @@ -327,6 +327,14 @@
+> > >  	};
+> > >  };
+> > >
+> > > +&wifi {
+> > > +	status = "okay";
+> > > +	qcom,msa-fixed-perm;
+> > > +	wifi-firmware {
+> > > +		iommus = <&apps_smmu 0xc2 0x1>;
+> > 
+> > How is sc7180 different from sdm845, where the iommus property goes
+> > directly in the &wifi node?
+> 
+> Sc7180 IDP is a target without TrustZone support and also with S2 IOMMU
+> enabled.
+> Since in Trustzone based targets, the iommu SID configuration was done by
+> TZ, there was nothing required to be done by driver.
+> But in non-TZ based targets, the IOMMU mappings need to be done by the
+> driver.
+> Since this is the mapping of the firmware memory and to keep it different
+> from the driver memory access, a different device has been created for
+> firmware and these SIDs are configured.
+> 
 
-A few additions from me.
+I see, I missed the fact that 0xc0:1 is used in the &wifi node itself.
 
-> ---
+So to confirm, we have streams 0xc0 and 0xc1 for data pipes and 0xc2 and
+0xc3 for some form of firmware access? And in the normal Qualcomm design
+implementation the 0c2/0xc3 stream mapping is setup by TZ, and hidden
+from Linux using the SMMU virtualisation?
 
-...
 
->  
-> +static int adc5_exit(struct platform_device *pdev)
-> +{
-> +	struct adc5_chip *adc = platform_get_drvdata(pdev);
-> +
-> +	mutex_destroy(&adc->lock);
+Would have been nice to have some better mechanism for describing
+multi-connected hardware block, than to sprinkle dummy nodes all over
+the DT...
 
-Andy raised potential races.  You definitely have some as this
-will destroy the mutex before you've removed the userspace interfaces.
+Regards,
+Bjorn
 
-> +	return 0;
-> +}
-> +
->  static struct platform_driver adc5_driver = {
->  	.driver = {
->  		.name = "qcom-spmi-adc5.c",
->  		.of_match_table = adc5_match_table,
->  	},
->  	.probe = adc5_probe,
-> +	.remove = adc5_exit,
->  };
->  module_platform_driver(adc5_driver);
->  
-
-...
-
->  
-> +static int qcom_vadc7_scale_hw_calib_die_temp(
-> +				const struct vadc_prescale_ratio *prescale,
-> +				const struct adc5_data *data,
-> +				u16 adc_code, int *result_mdec)
-> +{
-> +
-> +	int voltage, vtemp0, temp, i = 0;
-> +
-> +	voltage = qcom_vadc_scale_code_voltage_factor(adc_code,
-> +				prescale, data, 1);
-> +
-> +	while (i < ARRAY_SIZE(adcmap7_die_temp)) {
-> +		if (adcmap7_die_temp[i].x > voltage)
-> +			break;
-> +		i++;
-> +	}
-
-For loop (I think Andy also raised this one).
-
-> +
-> +	if (i == 0) {
-> +		*result_mdec = DIE_TEMP_ADC7_SCALE_1;
-> +	} else if (i == ARRAY_SIZE(adcmap7_die_temp)) {
-> +		*result_mdec = DIE_TEMP_ADC7_MAX;
-> +	} else {
-> +		vtemp0 = adcmap7_die_temp[i-1].x;
-
-Spaces around the - 
-Same elsewhere.
-
-> +		voltage = voltage - vtemp0;
-> +		temp = div64_s64(voltage * DIE_TEMP_ADC7_SCALE_FACTOR,
-> +			adcmap7_die_temp[i-1].y);
-> +		temp += DIE_TEMP_ADC7_SCALE_1 + (DIE_TEMP_ADC7_SCALE_2 * (i-1));
-> +		*result_mdec = temp;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  static int qcom_vadc_scale_hw_smb_temp(
->  				const struct vadc_prescale_ratio *prescale,
->  				const struct adc5_data *data,
-...
-
+> The below ath10k series brings-in this support.
+> https://patchwork.kernel.org/project/linux-wireless/list/?series=261367&stat
+> e=* 
+> 
+> Thanks,
+> Rakesh Pillai.
+> 
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > +	};
+> > > +};
+> > > +
+> > >  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+> > >
+> > >  &qspi_clk {
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > index 998f101..2745128 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > @@ -83,6 +83,11 @@
+> > >  			reg = <0 0x8f600000 0 0x500000>;
+> > >  			no-map;
+> > >  		};
+> > > +
+> > > +		wlan_fw_mem: memory@94104000 {
+> > > +			reg = <0 0x94104000 0 0x200000>;
+> > > +			no-map;
+> > > +		};
+> > >  	};
+> > >
+> > >  	cpus {
+> > > @@ -835,6 +840,28 @@
+> > >  			};
+> > >  		};
+> > >
+> > > +		wifi: wifi@18800000 {
+> > > +			compatible = "qcom,wcn3990-wifi";
+> > > +			reg = <0 0x18800000 0 0x800000>;
+> > > +			reg-names = "membase";
+> > > +			iommus = <&apps_smmu 0xc0 0x1>;
+> > > +			interrupts =
+> > > +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0
+> > */ >,
+> > > +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1
+> > */ >,
+> > > +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2
+> > */ >,
+> > > +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3
+> > */ >,
+> > > +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4
+> > */ >,
+> > > +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5
+> > */ >,
+> > > +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6
+> > */ >,
+> > > +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7
+> > */ >,
+> > > +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8
+> > */ >,
+> > > +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9
+> > */ >,
+> > > +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10
+> > */>,
+> > > +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11
+> > */>;
+> > > +			memory-region = <&wlan_fw_mem>;
+> > > +			status = "disabled";
+> > > +		};
+> > > +
+> > >  		config_noc: interconnect@1500000 {
+> > >  			compatible = "qcom,sc7180-config-noc";
+> > >  			reg = <0 0x01500000 0 0x28000>;
+> > > --
+> > > 2.7.4
