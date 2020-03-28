@@ -2,220 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D69FF196873
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2020 19:31:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75108196947
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2020 21:40:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727176AbgC1SbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Mar 2020 14:31:03 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34772 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726937AbgC1SbB (ORCPT
+        id S1727547AbgC1UkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Mar 2020 16:40:13 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:52322 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727167AbgC1UkN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Mar 2020 14:31:01 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 23so6314027pfj.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2020 11:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+mVck/pOJv55KYF3ZzMyTGWgs0RFVKHx1LKbGb8RbSs=;
-        b=bj4M59RKtnKKUaVQsWvI4u4nhhvyXqBegUEMmfvGKXIBT/mika1RpNwaWwGdABjLzu
-         PeSQC2Yl7lqu+IJJl8x6vzppsEG8QEMztXC0LIAjp1v9FU2NPx+XdMCJw+jmd61ds2Nl
-         iqzOUHjLA2yTibgvFUBRLUYtzTKkbmCHs/u57EqL332uswGIi+iTTmNCOAotm68VVlbd
-         VfRuNm949tV4tyVoq+ouNy1HbzLKzDE4rM6qHY5mS7PKnK64W3GrNA8geQzMiOk/BupI
-         aUBhsFQsxGhS7vjn9/PCWhe1j2VzrBOCgHUk1bGK9XJgJGBK9TyvwyNN31JojGWzluUB
-         YKEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+mVck/pOJv55KYF3ZzMyTGWgs0RFVKHx1LKbGb8RbSs=;
-        b=MAUhx42db6XXmg46FU/PYSb4g3yU7EGn69RvrR0FSLkALHeUEQ51p9xcbeabG43C3V
-         6KFt/PLKWWxE6VeGYoACjDs/lBAADEBK3k32LEXhcsOC0dtaKpKhoFJekGgbRyxpkld1
-         xXqfD3cc3ujcCkDtKbjO0lSGMVQF9B3pcwlq5xPEt7FpSCfJz8PU8L7A9KPw9Vo6sGtq
-         c7IH8Xb8nIs1yz/J9BiBllmBzY2WKOugAn+myuRe5UeK0FGJBYtmp6M702qAwsgQoH9C
-         LO40su+Ylfnk6YY4iMDiNBWaMkgQm9IlmiJoKRCtDnBDZgO79Co9TF9bkHEGop1Z4ZLy
-         wd5Q==
-X-Gm-Message-State: ANhLgQ2O8KLRczd94fWrHb62aL1DO9mQWAnXx5ErDttoiaTzI2ZqyWDJ
-        bbw2u+UZj7MtV2YN2Mnjb8MtLom6fqk=
-X-Google-Smtp-Source: ADFU+vvaKrpy0yv4Pq6rQuQ4KMnEp88icJyuuxyYhbQEtG7ooH+mR8DMcc8VezWIPH5TZPc9M4fJiA==
-X-Received: by 2002:a63:7f05:: with SMTP id a5mr5336763pgd.327.1585420258811;
-        Sat, 28 Mar 2020 11:30:58 -0700 (PDT)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 79sm6691688pfz.23.2020.03.28.11.30.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2020 11:30:58 -0700 (PDT)
-Date:   Sat, 28 Mar 2020 11:30:55 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     pillair@codeaurora.org
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
- device node
-Message-ID: <20200328183055.GA663905@yoga>
-References: <1585219723-28323-1-git-send-email-pillair@codeaurora.org>
- <20200327230025.GJ5063@builder>
- <000101d604f8$afc48220$0f4d8660$@codeaurora.org>
+        Sat, 28 Mar 2020 16:40:13 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id 01F812001E;
+        Sat, 28 Mar 2020 21:40:08 +0100 (CET)
+Date:   Sat, 28 Mar 2020 21:40:07 +0100
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        sean@poorly.run, seanpaul@chromium.org
+Subject: Re: [PATCH v10 1/2] dt-bindings: display: add visionox rm69299 panel
+ variant
+Message-ID: <20200328204007.GF32230@ravnborg.org>
+References: <20200327073636.13823-1-harigovi@codeaurora.org>
+ <20200327073636.13823-2-harigovi@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <000101d604f8$afc48220$0f4d8660$@codeaurora.org>
+In-Reply-To: <20200327073636.13823-2-harigovi@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=eMA9ckh1 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8
+        a=gEfo2CItAAAA:8 a=e5mUnYsNAAAA:8 a=NjNwzAhdQeOObC28CH0A:9
+        a=tQ1a9pTNNNMtrxpv:21 a=s9IzzZuyMKRTQNRv:21 a=CjuIK1q_8ugA:10
+        a=pioyyrs4ZptJ924tMmac:22 a=sptkURWiP4Gy88Gu7hUp:22
+        a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 28 Mar 05:01 PDT 2020, pillair@codeaurora.org wrote:
+Hi Harigovindan
 
-> Hi Bjorn,
->  Comments inline.
+On Fri, Mar 27, 2020 at 01:06:35PM +0530, Harigovindan P wrote:
+> Add bindings for visionox rm69299 panel.
 > 
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
 > 
-> > -----Original Message-----
-> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Sent: Saturday, March 28, 2020 4:30 AM
-> > To: Rakesh Pillai <pillair@codeaurora.org>
-> > Cc: devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
-> linux-
-> > kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org
-> > Subject: Re: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
-> > module device node
-> > 
-> > On Thu 26 Mar 03:48 PDT 2020, Rakesh Pillai wrote:
-> > 
-> > > Add device node for the ath10k SNOC platform driver probe
-> > > and add resources required for WCN3990 on sc7180 soc.
-> > >
-> > > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> > > ---
-> > >
-> > > Depends on https://patchwork.kernel.org/patch/11455345/
-> > > The above patch adds the dt-bindings for wifi-firmware
-> > > subnode
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  8 ++++++++
-> > >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27
-> > +++++++++++++++++++++++++++
-> > >  2 files changed, 35 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > index 043c9b9..a6168a4 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > @@ -327,6 +327,14 @@
-> > >  	};
-> > >  };
-> > >
-> > > +&wifi {
-> > > +	status = "okay";
-> > > +	qcom,msa-fixed-perm;
-> > > +	wifi-firmware {
-> > > +		iommus = <&apps_smmu 0xc2 0x1>;
-> > 
-> > How is sc7180 different from sdm845, where the iommus property goes
-> > directly in the &wifi node?
+> Changes in v2:
+>     - Removed unwanted properties from description.
+>     - Creating source files without execute permissions(Rob Herring).
+> Changes in v3:
+>     - Changing txt file into yaml
+> Changes in v4:
+>     - Updating license identifier.
+>     - Moving yaml file inside panel directory.
+>     - Removing pinctrl entries.
+>     - Adding documentation for reset-gpios.
+> Changes in v5:
+>     - No changes. Updated 2/2 Patch.
+> Changes in v6:
+>     - Removing patternProperties.
+>     - Added " |" after description.
+>     - Setting port and reset-gpios to true.
+>     - Removing @ae94000 for dsi node.
+> Changes in v7:
+>     - Added reg property.
+> Changes in v8:
+>     - Rearranged additionalProperties.
+>     - Dropping improper reg property.
+> Changes in v9:
+>     - Adding additionalProperties at the same level as
+>       'properties'
+>     - Adding properties for "ports" which includes:
+>       -> #address-cells
+>       -> #size-cells
+>       -> port@0
+> Changes in v10:
+>    - Changed file mode
+>    - Making port as required
+>    - Fixing example by removing ports and unit address in port
+>    - Removing indentation for 'additionalProperties'
+Fixed ident in a few places (one space => two sapces), and applied to
+drm-misc-next.
+
+	Sam
+
+
 > 
-> Sc7180 IDP is a target without TrustZone support and also with S2 IOMMU
-> enabled.
-> Since in Trustzone based targets, the iommu SID configuration was done by
-> TZ, there was nothing required to be done by driver.
-> But in non-TZ based targets, the IOMMU mappings need to be done by the
-> driver.
-> Since this is the mapping of the firmware memory and to keep it different
-> from the driver memory access, a different device has been created for
-> firmware and these SIDs are configured.
+>  .../display/panel/visionox,rm69299.yaml       | 58 +++++++++++++++++++
+>  1 file changed, 58 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
 > 
-
-I see, I missed the fact that 0xc0:1 is used in the &wifi node itself.
-
-So to confirm, we have streams 0xc0 and 0xc1 for data pipes and 0xc2 and
-0xc3 for some form of firmware access? And in the normal Qualcomm design
-implementation the 0c2/0xc3 stream mapping is setup by TZ, and hidden
-from Linux using the SMMU virtualisation?
-
-
-Would have been nice to have some better mechanism for describing
-multi-connected hardware block, than to sprinkle dummy nodes all over
-the DT...
-
-Regards,
-Bjorn
-
-> The below ath10k series brings-in this support.
-> https://patchwork.kernel.org/project/linux-wireless/list/?series=261367&stat
-> e=* 
+> diff --git a/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> new file mode 100644
+> index 000000000000..1a44caae5f9b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> @@ -0,0 +1,58 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/visionox,rm69299.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Visionox model RM69299 Panels Device Tree Bindings.
+> +
+> +maintainers:
+> + - Harigovindan P <harigovi@codeaurora.org>
+> +
+> +description: |
+> + This binding is for display panels using a Visionox RM692999 panel.
+> +
+> +allOf:
+> + - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: visionox,rm69299-1080p-display
+> +
+> +  vdda-supply:
+> +    description: |
+> +      Phandle of the regulator that provides the vdda supply voltage.
+> +
+> +  vdd3p3-supply:
+> +    description: |
+> +      Phandle of the regulator that provides the vdd3p3 supply voltage.
+> +
+> +  port: true
+> +
+> +  reset-gpios: true
+> +
+> +additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - vdda-supply
+> +  - vdd3p3-supply
+> +  - reset-gpios
+> +  - port
+> +
+> +examples:
+> +  - |
+> +    panel {
+> +        compatible = "visionox,rm69299-1080p-display";
+> +
+> +        vdda-supply = <&src_pp1800_l8c>;
+> +        vdd3p3-supply = <&src_pp2800_l18a>;
+> +
+> +        reset-gpios = <&pm6150l_gpio 3 0>;
+> +        port {
+> +            panel0_in: endpoint {
+> +                remote-endpoint = <&dsi0_out>;
+> +            };
+> +        };
+> +    };
+> +...
+> -- 
+> 2.25.1
 > 
-> Thanks,
-> Rakesh Pillai.
-> 
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > +	};
-> > > +};
-> > > +
-> > >  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
-> > >
-> > >  &qspi_clk {
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > index 998f101..2745128 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > @@ -83,6 +83,11 @@
-> > >  			reg = <0 0x8f600000 0 0x500000>;
-> > >  			no-map;
-> > >  		};
-> > > +
-> > > +		wlan_fw_mem: memory@94104000 {
-> > > +			reg = <0 0x94104000 0 0x200000>;
-> > > +			no-map;
-> > > +		};
-> > >  	};
-> > >
-> > >  	cpus {
-> > > @@ -835,6 +840,28 @@
-> > >  			};
-> > >  		};
-> > >
-> > > +		wifi: wifi@18800000 {
-> > > +			compatible = "qcom,wcn3990-wifi";
-> > > +			reg = <0 0x18800000 0 0x800000>;
-> > > +			reg-names = "membase";
-> > > +			iommus = <&apps_smmu 0xc0 0x1>;
-> > > +			interrupts =
-> > > +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0
-> > */ >,
-> > > +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1
-> > */ >,
-> > > +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2
-> > */ >,
-> > > +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3
-> > */ >,
-> > > +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4
-> > */ >,
-> > > +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5
-> > */ >,
-> > > +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6
-> > */ >,
-> > > +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7
-> > */ >,
-> > > +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8
-> > */ >,
-> > > +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9
-> > */ >,
-> > > +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10
-> > */>,
-> > > +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11
-> > */>;
-> > > +			memory-region = <&wlan_fw_mem>;
-> > > +			status = "disabled";
-> > > +		};
-> > > +
-> > >  		config_noc: interconnect@1500000 {
-> > >  			compatible = "qcom,sc7180-config-noc";
-> > >  			reg = <0 0x01500000 0 0x28000>;
-> > > --
-> > > 2.7.4
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
