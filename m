@@ -2,86 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A0E3196F02
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2020 19:44:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 123BF19707C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2020 23:17:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728041AbgC2RoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Mar 2020 13:44:20 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38378 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727942AbgC2RoU (ORCPT
+        id S1728481AbgC2VRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Mar 2020 17:17:37 -0400
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:37693 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727591AbgC2VRg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Mar 2020 13:44:20 -0400
-Received: by mail-pf1-f196.google.com with SMTP id c21so6766067pfo.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2020 10:44:19 -0700 (PDT)
+        Sun, 29 Mar 2020 17:17:36 -0400
+Received: by mail-ua1-f65.google.com with SMTP id l18so5569247uak.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2020 14:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kmRMCVebQwKolZ1owfxZgEJ3Z36wIWAyCqEaSASHlvY=;
-        b=Bq06fe9AJChcuooMu7thhI4C1GMIK7gBxwAa5A71KCW1ABGzEVfx/U97uOufooY5Hk
-         fb73LsjUD0AuOAFgeEoeyRLu9vHh2p1QuQoIz1x0YmdQuURcftUjh1s3aNTqabzM1tKA
-         glBN7VgzxkikA71e2C0Mm1VFJ8syJGrqmRMFE=
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PlAsMJa4Ap4Bu6zfW50JonjjDBj+TTytLskw+4DE0eE=;
+        b=kpkCaXt2+Nl7ioWQEwi3llXPbAASFJ3ojg/l8gaqgXvpXKsqMh6nONMh1Yc8z9mAal
+         unFgZH2mj9DaMvoWiKmonO10acBajrv0HiRZgydY2mQgFfwqVpwBKbXUhzu3uUGvZVdB
+         U42FLdYU3SOMmx4PP9bbI0aRLis9AboC1xQ6F7e8Vho7MfjbgsAEYPqG0wcFgHkXKRwl
+         tZ/aFUe/KxbNJa71VocRZJu47Pl9qgMZZo0pgkzvZRqSvVN0dPl9iI+BPy02IsjrDqxc
+         MemwmL1yGpBQPID0FIrKZBMNvEioEMafCud5HWUWfzLcnWvmKi+kVhQUFoHGQZsA7CUh
+         hzCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kmRMCVebQwKolZ1owfxZgEJ3Z36wIWAyCqEaSASHlvY=;
-        b=Ry6MUk6azasgXOXSfjnaN1pxdo4/Arb2tUknxJ3DeGEtCnUwY1XYpjdBF2bz+uhAfT
-         ost4QjQKML/jMhqfXP0NUwmQX8BucKeTlOeEYneIWH4I2Uqje/hxcKwiBgkAdFFNmOwQ
-         5MTC6GyH3hh1wH5cNetmT8mHx7ioGF+sHWbqxapu6gHqgK600/tsOkdLEN41guQpu4z2
-         Q6ebnt7oV+fQT3rRLDYFZcMeIdI9T9T5WFseG4KjXXngKg1+sJXaMRAnnPwEz9h7i1UT
-         NvbL1MqRgD6AsCbBL5qf6GGCqJgLf/3heOKqkZ0yRqKGytoY1ZIczMwueMIY6XRkY334
-         moXA==
-X-Gm-Message-State: ANhLgQ020yItFuGjI61kNLbVOa9oB+1GPbP5JNmJUmgZ+AjvpRhlxfFl
-        PNeoMurj/0ylvclBg0UkENOQ5A==
-X-Google-Smtp-Source: ADFU+vs0uMGtGWmK6rFkOfdAMPSqn9eO9elktCgbjLQA+xwo3JFqty5Dy0EluvHOkdf0DrnOXdwAWg==
-X-Received: by 2002:a62:7950:: with SMTP id u77mr9691072pfc.34.1585503858884;
-        Sun, 29 Mar 2020 10:44:18 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id o14sm8393537pfh.147.2020.03.29.10.44.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Mar 2020 10:44:18 -0700 (PDT)
-Date:   Sun, 29 Mar 2020 10:44:17 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        sean@poorly.run, seanpaul@chromium.org
-Subject: Re: [PATCH v10 0/2] Add support for rm69299 Visionox panel driver
- and add devicetree bindings for visionox panel
-Message-ID: <20200329174417.GB199755@google.com>
-References: <20200327073636.13823-1-harigovi@codeaurora.org>
- <20200328204047.GG32230@ravnborg.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PlAsMJa4Ap4Bu6zfW50JonjjDBj+TTytLskw+4DE0eE=;
+        b=WAV+JnhkmVN9XI/eV00RXqv60tYqnba+c78criyGaLZ7EZvWoZ2IeN4uHkSzJIPBt6
+         4Paud0vqr5rBZpF/5r+W/HQhBiwit/QcMum9hnsYMCA8u7qmDhWdFvz18egNOVv4sJVt
+         X6+MzqYkLBWAYxUnqtU6v8+huKieuPbqvVdzve3zgMGqCZdChAIejaCbbGfxg5ueStQ6
+         z+E8Moq6QgimsJkdXuYfC8f9p8YASN2lo+dxyLCA36YNMtzWqweuH+aIiZCjr26p0Vme
+         AficijzTg3syLZ2Fmd8Npkvu2PtFcGAhNEsy6d3yKUCTzqh199aLP00VU6GWR9RSwcy9
+         JSZg==
+X-Gm-Message-State: AGi0PuYBUZcIZpiHjTfuv8l8qkbgBz05QyjD4e8uQhksP7hCy63tTStT
+        z6mguwFLFt4eDsULkDU1qGv3nPL+s/i1erZrnABkQA==
+X-Google-Smtp-Source: APiQypI5UyPceZaqS4xPEyKZJ+1QsToAhF0AamS+JTJQoRAG+CuN4Z8gCIgVDlEuDjF9cmMKZjq9V//u5kOMJTG958s=
+X-Received: by 2002:a9f:2a88:: with SMTP id z8mr5926056uai.17.1585516654164;
+ Sun, 29 Mar 2020 14:17:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200328204047.GG32230@ravnborg.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20200106135715.1159420-1-robert.marko@sartura.hr>
+ <CA+HBbNHEetusFNH-8Qmva=2-_HQRRJ33qfBRSudZBVW+vK0tnw@mail.gmail.com>
+ <20200327220545.GC5063@builder> <CAK8P3a1_eyVSTgKDk+qph6CCKswWFWhPfX=yi3=jAeUf4uWC6w@mail.gmail.com>
+In-Reply-To: <CAK8P3a1_eyVSTgKDk+qph6CCKswWFWhPfX=yi3=jAeUf4uWC6w@mail.gmail.com>
+From:   Luka Perkov <luka.perkov@sartura.hr>
+Date:   Sun, 29 Mar 2020 23:17:23 +0200
+Message-ID: <CAKQ-crgF6ebubzi2Kim7fNp4BJFSjffnmMsaN6ghnfSXaXbCVQ@mail.gmail.com>
+Subject: Re: [PATCH] ARM: qcom: Add support for IPQ40xx
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Andy Gross <agross@kernel.org>,
+        Russell King - ARM Linux <linux@armlinux.org.uk>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Christian Lamparter <chunkeey@gmail.com>,
+        John Crispin <john@phrozen.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sam,
+Hello Arnd,
 
-On Sat, Mar 28, 2020 at 09:40:47PM +0100, Sam Ravnborg wrote:
-> Hi Harigovindan
-> 
-> On Fri, Mar 27, 2020 at 01:06:34PM +0530, Harigovindan P wrote:
-> > Adding support for visionox rm69299 panel driver and adding bindings for the same panel.
-> > 
-> > Harigovindan P (2):
-> >   dt-bindings: display: add visionox rm69299 panel variant
-> >   drm/panel: add support for rm69299 visionox panel driver
-> 
-> I have only the first patch, which is now applied.
-> Please resend second patch as it is lost somewhere.
+On Sat, Mar 28, 2020 at 10:15 AM Arnd Bergmann <arnd@arndb.de> wrote:
+>
+> On Fri, Mar 27, 2020 at 11:05 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Wed 25 Mar 03:25 PDT 2020, Robert Marko wrote:
+> >
+> > > On Mon, Jan 6, 2020 at 2:57 PM Robert Marko <robert.marko@sartura.hr> wrote:
+> > > >
+> > > > From: Christian Lamparter <chunkeey@gmail.com>
+> > > >
+> > > > Add support for the Qualcomm IPQ40xx SoC in Kconfig.
+> > > > Also add its appropriate textofs.
+> > > Any blockers on this patch?
+> > >
+> >
+> > No, I must have missed it in the past. I've picked it up for 5.8.
+> >
+>
+> If we only need these few lines, I can still squeeze it in for v5.7 last minute,
+> just forward that patch to soc@kernel.org. If other things are still needed,
+> let's wait until v5.8.
 
-Yes, it seems for v8, v9 and v10 only the bindings were sent, even
-though the cover letter and subject say it's a series of two patches.
+These few lines is all that is needed. I'd appreciate if we could land
+this in v5.7 rather then wait for v5.8.
 
-To my knowledge the latest version of the driver patch is this:
-
-https://patchwork.kernel.org/patch/11439689/
+Thanks,
+Luka
