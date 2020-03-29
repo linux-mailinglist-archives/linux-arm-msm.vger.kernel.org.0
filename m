@@ -2,133 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2697B196E9D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2020 19:18:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A0E3196F02
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2020 19:44:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728065AbgC2RSB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Mar 2020 13:18:01 -0400
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:40925 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728311AbgC2RSB (ORCPT
+        id S1728041AbgC2RoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Mar 2020 13:44:20 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:38378 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727942AbgC2RoU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Mar 2020 13:18:01 -0400
-Received: by mail-pj1-f67.google.com with SMTP id kx8so6258656pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2020 10:18:00 -0700 (PDT)
+        Sun, 29 Mar 2020 13:44:20 -0400
+Received: by mail-pf1-f196.google.com with SMTP id c21so6766067pfo.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2020 10:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1VdjSPPRhlOBu7W9s+NexDovrzvWntWGJmIdhHoxZAQ=;
-        b=a4VluhObQuJFb8SVMTjUUnyaHON/TeGQbbeStEeHeBcJegBh1n4OVsHdtsIfVjvse5
-         IbvBFPybuUVOSQC5Fxd7Qc5iEqcrp89RD74YyUyxSTdpfuKOOp0DVATyIlxcyzQfmBWr
-         zEFxYeTsBKcYbSpW7IIWW+VqW4tsstUSA4qE0=
+        bh=kmRMCVebQwKolZ1owfxZgEJ3Z36wIWAyCqEaSASHlvY=;
+        b=Bq06fe9AJChcuooMu7thhI4C1GMIK7gBxwAa5A71KCW1ABGzEVfx/U97uOufooY5Hk
+         fb73LsjUD0AuOAFgeEoeyRLu9vHh2p1QuQoIz1x0YmdQuURcftUjh1s3aNTqabzM1tKA
+         glBN7VgzxkikA71e2C0Mm1VFJ8syJGrqmRMFE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1VdjSPPRhlOBu7W9s+NexDovrzvWntWGJmIdhHoxZAQ=;
-        b=rmue0QrovrsY7kKc08bLYh8kYey88lMlvwEq/w4JBmgdxuwfKXwOmVGmQcQ0q9kFHB
-         z+HKh7C3acXiQXLxCg2tYeLS4czlXtMKDjyESkoioqP/E4buA0lIZiPBc2ajWAfs8uZ3
-         CvM4KJH0rC2v/bXJUQN1bhj76JO7Wed1SDOOrcEYpXDYIMgutYhsb0Ajlv/9r1mRSynl
-         em9dpRb39GBSjc9QTY0Y/HtwBQJr8otJXAPuFvSD+FK6/PTg4kb0cCmvNy5d8HjUdUS0
-         uk7xb78BVi28nu0mePswP07P9rnjHYDbIzAej56/ti7B7zY8+pEbaIKDlpct53TNXFF2
-         OD3A==
-X-Gm-Message-State: ANhLgQ0IzDtI27eCCzt3p6M2ZHJgNfu6xdZxeZxkGYzqahqx4/XdOT1r
-        UJScAL1fUBzjhxFvC72E4EaBjA==
-X-Google-Smtp-Source: ADFU+vsiB7DX7YoDE8Qsn1o3o8N1nnCf0ZGMiEPaCNY3wHCH2wyiT2nAj/cJUqGyY0agzks/DRDjjA==
-X-Received: by 2002:a17:90a:b702:: with SMTP id l2mr11203973pjr.22.1585502280189;
-        Sun, 29 Mar 2020 10:18:00 -0700 (PDT)
+        bh=kmRMCVebQwKolZ1owfxZgEJ3Z36wIWAyCqEaSASHlvY=;
+        b=Ry6MUk6azasgXOXSfjnaN1pxdo4/Arb2tUknxJ3DeGEtCnUwY1XYpjdBF2bz+uhAfT
+         ost4QjQKML/jMhqfXP0NUwmQX8BucKeTlOeEYneIWH4I2Uqje/hxcKwiBgkAdFFNmOwQ
+         5MTC6GyH3hh1wH5cNetmT8mHx7ioGF+sHWbqxapu6gHqgK600/tsOkdLEN41guQpu4z2
+         Q6ebnt7oV+fQT3rRLDYFZcMeIdI9T9T5WFseG4KjXXngKg1+sJXaMRAnnPwEz9h7i1UT
+         NvbL1MqRgD6AsCbBL5qf6GGCqJgLf/3heOKqkZ0yRqKGytoY1ZIczMwueMIY6XRkY334
+         moXA==
+X-Gm-Message-State: ANhLgQ020yItFuGjI61kNLbVOa9oB+1GPbP5JNmJUmgZ+AjvpRhlxfFl
+        PNeoMurj/0ylvclBg0UkENOQ5A==
+X-Google-Smtp-Source: ADFU+vs0uMGtGWmK6rFkOfdAMPSqn9eO9elktCgbjLQA+xwo3JFqty5Dy0EluvHOkdf0DrnOXdwAWg==
+X-Received: by 2002:a62:7950:: with SMTP id u77mr9691072pfc.34.1585503858884;
+        Sun, 29 Mar 2020 10:44:18 -0700 (PDT)
 Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id t2sm4016414pfh.157.2020.03.29.10.17.58
+        by smtp.gmail.com with ESMTPSA id o14sm8393537pfh.147.2020.03.29.10.44.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Mar 2020 10:17:59 -0700 (PDT)
-Date:   Sun, 29 Mar 2020 10:17:56 -0700
+        Sun, 29 Mar 2020 10:44:18 -0700 (PDT)
+Date:   Sun, 29 Mar 2020 10:44:17 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-Subject: Re: [PATCH v6 2/4] usb: dwc3: qcom: Add interconnect support in dwc3
- driver
-Message-ID: <20200329171756.GA199755@google.com>
-References: <1585302203-11008-1-git-send-email-sanm@codeaurora.org>
- <1585302203-11008-3-git-send-email-sanm@codeaurora.org>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        sean@poorly.run, seanpaul@chromium.org
+Subject: Re: [PATCH v10 0/2] Add support for rm69299 Visionox panel driver
+ and add devicetree bindings for visionox panel
+Message-ID: <20200329174417.GB199755@google.com>
+References: <20200327073636.13823-1-harigovi@codeaurora.org>
+ <20200328204047.GG32230@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1585302203-11008-3-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <20200328204047.GG32230@ravnborg.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Sam,
 
-On Fri, Mar 27, 2020 at 03:13:21PM +0530, Sandeep Maheswaram wrote:
-> Add interconnect support in dwc3-qcom driver to vote for bus
-> bandwidth.
+On Sat, Mar 28, 2020 at 09:40:47PM +0100, Sam Ravnborg wrote:
+> Hi Harigovindan
 > 
-> This requires for two different paths - from USB master to
-> DDR slave. The other is from APPS master to USB slave.
+> On Fri, Mar 27, 2020 at 01:06:34PM +0530, Harigovindan P wrote:
+> > Adding support for visionox rm69299 panel driver and adding bindings for the same panel.
+> > 
+> > Harigovindan P (2):
+> >   dt-bindings: display: add visionox rm69299 panel variant
+> >   drm/panel: add support for rm69299 visionox panel driver
 > 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 128 ++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 126 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 1dfd024..7e85fe6 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->
-> ...
->
-> +/* To disable an interconnect, we just set its bandwidth to 0 */
-> +static int dwc3_qcom_interconnect_disable(struct dwc3_qcom *qcom)
-> +{
-> +	int ret;
-> +
-> +	ret = icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = icc_set_bw(qcom->apps_usb_icc_path, 0, 0);
-> +	if (ret)
-> +		goto err_reenable_memory_path;
-> +
-> +	return 0;
-> +
-> +	/* Re-enable things in the event of an error */
-> +err_reenable_memory_path:
-> +	ret = dwc3_qcom_interconnect_enable(qcom);
+> I have only the first patch, which is now applied.
+> Please resend second patch as it is lost somewhere.
 
-This overwrites the error that led to the execution of this code path.
-The function should return original error, not the result of the
-_interconnect_enable() call.
+Yes, it seems for v8, v9 and v10 only the bindings were sent, even
+though the cover letter and subject say it's a series of two patches.
 
-I saw Felipe queued the patch for v5.8. I think the main options to fix this
-are:
+To my knowledge the latest version of the driver patch is this:
 
-- a v6 of this patch to replace v5 in Felipe's tree (which IIUC will be rebased
-  anyway once there is a v5.7-rc)
-- send the fix as a separate patch
-- Felipe amends the patch in his tree
-
-Felipe, what would work best for you?
-
-Thanks
-
-Matthias
+https://patchwork.kernel.org/patch/11439689/
