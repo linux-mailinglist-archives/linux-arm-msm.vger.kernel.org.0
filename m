@@ -2,207 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8837C197F0D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 16:54:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BDFC197FCC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 17:38:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726312AbgC3OyB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 10:54:01 -0400
-Received: from mail-qv1-f67.google.com ([209.85.219.67]:41986 "EHLO
-        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728080AbgC3OyB (ORCPT
+        id S1729042AbgC3PiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 11:38:22 -0400
+Received: from mail-il1-f196.google.com ([209.85.166.196]:40338 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725978AbgC3PiW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 10:54:01 -0400
-Received: by mail-qv1-f67.google.com with SMTP id ca9so9027994qvb.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 07:54:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Ku5iL1N6RANAABzr84iAJg9CN/CMxTxUbEuZrAn7SbU=;
-        b=L9/0Hme32NofXz992b6CsrXgGCn+cAPnw0YKmlXlaEVc2EdsrME7DA1dyG6E68jsb5
-         +lEdHtcSG+Jh7vGSwM5eL03dAWRakzA5SVmGtw1s2vdArPYrqPo9j0GoPl6NzQSn0anC
-         p4aaijoNZEDfjF9IzjVZRsWMrtm3Wi7rG/HP1SQ1OUc+hOa1qJouNTG9FTkRYpAKjZAD
-         jhfcB0SpfkiH+Ycu3+SACdv1LE7IqPq71vnEZTCTWrRZ1ugePDlBu4g5uFUam58Vel0g
-         pSywvkBrhQ2WvVjiobH6uT7Uyh8skIVlfpqAsGNhIiHl+BWEc20xyZzQrscHnvgbbkWb
-         yJCg==
+        Mon, 30 Mar 2020 11:38:22 -0400
+Received: by mail-il1-f196.google.com with SMTP id j9so16256371ilr.7;
+        Mon, 30 Mar 2020 08:38:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Ku5iL1N6RANAABzr84iAJg9CN/CMxTxUbEuZrAn7SbU=;
-        b=D3uupu/VhLSG6uFfG70/3CG8HYmeYKxY1t8KWqwvZnOt9i9nvZUuMMlpkZrZPRYOD9
-         j7A1PwqgfkX9SNAU+dnPkMjfZP6v5SodPEk2Wd5GOXtU9jetLiEVEWtZdH8yd1qScl0o
-         R3ERBPMTXxy3Ku4R0j+Qe015SYRx6yZzMsGdZUu5x5EeEHbgfdpP8209KQSNa5UlSv81
-         rYj/m5CcpliN8aiSpW12RsXgKP/LHQNM0sibJmvPOQmE+41dTj5UlR2m9t2L74lljrW4
-         /S0Hbfh1fhmmn9zHmjT83Nu1h5Xv+yso4nPDy5LGkkeINCB1HFb6VwrbLCQjZuhroe6e
-         4xkQ==
-X-Gm-Message-State: ANhLgQ1eyp+lxza7W1NkRLsDZdEDO1k2jXfuB8FqTO2XF6O5ENe3MpCg
-        d0Ih42lUiFtNVdX6e2Sr2TEMPg==
-X-Google-Smtp-Source: ADFU+vvnZVsf13I2tKyzEPZbzZSTUzrSmDWcuIiitXTu0rbnYah/+4rhMe7ysN6LuRmkXvkXtRCo3Q==
-X-Received: by 2002:a0c:e08d:: with SMTP id l13mr12253135qvk.216.1585580040023;
-        Mon, 30 Mar 2020 07:54:00 -0700 (PDT)
-Received: from [192.168.1.92] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.gmail.com with ESMTPSA id 73sm10651439qkf.82.2020.03.30.07.53.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Mar 2020 07:53:59 -0700 (PDT)
-Subject: Re: [Patch v5 4/6] soc: qcom: Extend RPMh power controller driver to
- register warming devices.
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     rui.zhang@intel.com, ulf.hansson@linaro.org,
-        daniel.lezcano@linaro.org, agross@kernel.org, robh@kernel.org,
-        amit.kucheria@verdurent.com, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200320014107.26087-1-thara.gopinath@linaro.org>
- <20200320014107.26087-5-thara.gopinath@linaro.org>
- <20200327225345.GH5063@builder>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <f20b4940-11ad-82b1-6ece-661a1b033df8@linaro.org>
-Date:   Mon, 30 Mar 2020 10:53:58 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EXjMGOdpbJrvmMf7CXHzMRGgy3e0VQX/+0etqeIYW0I=;
+        b=NPbkt9poFni0A6IYIINdF5/iAZ0ePAUo+11fz2WBbxooSVuKgd3HM1X5L0vrPTuasE
+         ftt/LIYPPZCy3XXeO/VlXQUVj3NHDEr1POGtCP8Ll75UM3s7uUtMecdU02Myjr2A24RJ
+         0Ytp/GAx2JCXAB/JHPgvB1BxOTcYkZnQCZHclnyz6ukR8fgeOXmjpaYKIhVzl4vVZGw9
+         QNQ+eI0PP+W441mkg/42F/zm2h+HzLjRGtyPU42hC3bGe716NnLobyghGaxeHEke2yrT
+         m+RoZFWzkBClvyRjbzAOF+zKyV7buIkSxkGp/wbca7B5THdcSjq/bG4Mxnpw3e6rJAWf
+         YDhQ==
+X-Gm-Message-State: ANhLgQ32zwh3qeRCyUumfYqJzS1j6TPJ/vRuaRaRl7B5laEIoq9OU38j
+        ePZOTRoSjyG/72Uh9+t7DeeNr/k=
+X-Google-Smtp-Source: ADFU+vs3+gql6fDj89qq2KjSl6YPLLP7Rggs4xlleR1CpIoDOZyi6hisfvhiRdP4SAUnEH4MpKBuLg==
+X-Received: by 2002:a92:cb49:: with SMTP id f9mr11644813ilq.193.1585582700524;
+        Mon, 30 Mar 2020 08:38:20 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id h29sm4969835ili.19.2020.03.30.08.38.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2020 08:38:19 -0700 (PDT)
+Received: (nullmailer pid 19151 invoked by uid 1000);
+        Mon, 30 Mar 2020 15:38:18 -0000
+Date:   Mon, 30 Mar 2020 09:38:18 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, linus.walleij@linaro.org, sboyd@codeaurora.org,
+        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
+        kgunda@codeaurora.org, aghayal@codeaurora.org,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Jishnu Prakash <jprakash@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>, linux-iio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH 1/3] iio: adc: Convert the QCOM SPMI ADC bindings to
+ .yaml format
+Message-ID: <20200330153818.GA18495@bogus>
+References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
+ <1585064650-16235-2-git-send-email-jprakash@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200327225345.GH5063@builder>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1585064650-16235-2-git-send-email-jprakash@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/27/20 6:53 PM, Bjorn Andersson wrote:
-> On Thu 19 Mar 18:41 PDT 2020, Thara Gopinath wrote:
+On Tue, 24 Mar 2020 21:14:08 +0530, Jishnu Prakash wrote:
+> Convert the adc bindings from .txt to .yaml format.
 > 
->> RPMh power control hosts power domains that can be used as
->> thermal warming devices. Register these power domains
->> with the generic power domain warming device thermal framework.
->>
->> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>
->> v3->v4:
->> 	- Introduce a boolean value is_warming_dev in rpmhpd structure to
->> 	  indicate if a generic power domain can be used as a warming
->> 	  device or not.With this change, device tree no longer has to
->> 	  specify which power domain inside the rpmh power domain provider
->> 	  is a warming device.
->> 	- Move registering of warming devices into a late initcall to
->> 	  ensure that warming devices are registered after thermal
->> 	  framework is initialized.
-> 
-> This information is lost when we merge patches, as such I would like
-> such design decisions to be described in the commit message itself.
-> But...
-> 
->>
->>   drivers/soc/qcom/rpmhpd.c | 37 ++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 36 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
->> index 7142409a3b77..4e9c0bbb8826 100644
->> --- a/drivers/soc/qcom/rpmhpd.c
->> +++ b/drivers/soc/qcom/rpmhpd.c
->> @@ -11,6 +11,7 @@
->>   #include <linux/of_device.h>
->>   #include <linux/platform_device.h>
->>   #include <linux/pm_opp.h>
->> +#include <linux/pd_warming.h>
->>   #include <soc/qcom/cmd-db.h>
->>   #include <soc/qcom/rpmh.h>
->>   #include <dt-bindings/power/qcom-rpmpd.h>
->> @@ -48,6 +49,7 @@ struct rpmhpd {
->>   	bool		enabled;
->>   	const char	*res_name;
->>   	u32		addr;
->> +	bool		is_warming_dev;
->>   };
->>   
->>   struct rpmhpd_desc {
->> @@ -55,6 +57,8 @@ struct rpmhpd_desc {
->>   	size_t num_pds;
->>   };
->>   
->> +const struct rpmhpd_desc *global_desc;
->> +
->>   static DEFINE_MUTEX(rpmhpd_lock);
->>   
->>   /* SDM845 RPMH powerdomains */
->> @@ -89,6 +93,7 @@ static struct rpmhpd sdm845_mx = {
->>   	.pd = { .name = "mx", },
->>   	.peer = &sdm845_mx_ao,
->>   	.res_name = "mx.lvl",
->> +	.is_warming_dev = true,
->>   };
->>   
->>   static struct rpmhpd sdm845_mx_ao = {
->> @@ -452,7 +457,14 @@ static int rpmhpd_probe(struct platform_device *pdev)
->>   					       &rpmhpds[i]->pd);
->>   	}
->>   
->> -	return of_genpd_add_provider_onecell(pdev->dev.of_node, data);
->> +	ret = of_genpd_add_provider_onecell(pdev->dev.of_node, data);
->> +
->> +	if (ret)
->> +		return ret;
->> +
->> +	global_desc = desc;
->> +
->> +	return 0;
->>   }
->>   
->>   static struct platform_driver rpmhpd_driver = {
->> @@ -469,3 +481,26 @@ static int __init rpmhpd_init(void)
->>   	return platform_driver_register(&rpmhpd_driver);
->>   }
->>   core_initcall(rpmhpd_init);
->> +
->> +static int __init rpmhpd_init_warming_device(void)
->> +{
->> +	size_t num_pds;
->> +	struct rpmhpd **rpmhpds;
->> +	int i;
->> +
->> +	if (!global_desc)
->> +		return -EINVAL;
->> +
->> +	rpmhpds = global_desc->rpmhpds;
->> +	num_pds = global_desc->num_pds;
->> +
->> +	if (!of_find_property(rpmhpds[0]->dev->of_node, "#cooling-cells", NULL))
->> +		return 0;
->> +
->> +	for (i = 0; i < num_pds; i++)
->> +		if (rpmhpds[i]->is_warming_dev)
->> +			of_pd_warming_register(rpmhpds[i]->dev, i);
->> +
->> +	return 0;
->> +}
->> +late_initcall(rpmhpd_init_warming_device);
-> 
-> ...why can't this be done in rpmhpd_probe()?
-> 
-> In particular with the recent patches from John Stultz to allow rpmhpd
-> to be built as a module I don't think there's any guarantees that
-> rpmh_probe() will have succeeded before rpmhpd_init_warming_device()
-> executes.
-
-It is to take care of boot order.
-So this has to happen after the thermal framework is initialized. 
-Thermal framework is initialized with core_initcall. Can I move the 
-rpmhpd init as a postcore_initcall ? Then I can get rid of this separate 
-function and keep it as part of probe.
-
-> 
-> Regards,
-> Bjorn
+> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+> ---
+>  .../devicetree/bindings/iio/adc/qcom,spmi-vadc.txt | 173 --------------------
+>  .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 178 +++++++++++++++++++++
+>  2 files changed, 178 insertions(+), 173 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.txt
+>  create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
 > 
 
--- 
-Warm Regards
-Thara
+My bot found errors running 'make dt_binding_check' on your patch:
+
+Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dts:20.11-26: Warning (reg_format): /example-0/vadc@3100:reg: property has invalid length (4 bytes) (#address-cells == 1, #size-cells == 1)
+Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dt.yaml: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dt.yaml: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dt.yaml: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dt.yaml: vadc@3100: 'adc-chan@0x39' does not match any of the regexes: '.*-names$', '.*-supply$', '^#.*-cells$', '^#[a-zA-Z0-9,+\\-._]{0,63}$', '^[a-zA-Z][a-zA-Z0-9,+\\-._]{0,63}$', '^[a-zA-Z][a-zA-Z0-9,+\\-._]{0,63}@[0-9a-fA-F]+(,[0-9a-fA-F]+)*$', '^__.*__$', 'pinctrl-[0-9]+'
+
+See https://patchwork.ozlabs.org/patch/1260800
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
