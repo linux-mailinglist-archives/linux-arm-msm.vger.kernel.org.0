@@ -2,196 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 07861198195
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 18:46:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81F8919819B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 18:46:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729467AbgC3QqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 12:46:01 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53534 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbgC3QqB (ORCPT
+        id S1729573AbgC3Qqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 12:46:53 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:39700 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728261AbgC3Qqw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 12:46:01 -0400
-Received: by mail-wm1-f65.google.com with SMTP id b12so20693440wmj.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 09:46:00 -0700 (PDT)
+        Mon, 30 Mar 2020 12:46:52 -0400
+Received: by mail-oi1-f194.google.com with SMTP id d63so16249999oig.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 09:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=u01MPjpNUTMHsez0F0H9AHhzrsoSor9pky3lmIVAZDI=;
-        b=DW7/jlyTETqYLrHSlgXGb4d3tNoy5Y5EkVfjvrxMevne+lKoL7RdSRcKV/YxnjuIsY
-         j6LQQbArr/wwBGbKORvp1TRl/KxTuVRT5iOlyyOrG6mgMtmrYbKzrGJ+exhnnyUXblMw
-         OOk/TxraD577MVrYZ85w+3hrnKq2R1xYuTJ2tLr8FbQjAnxS0+aozz36cSXwnjJPcmNw
-         pJrHYiNh3UVwUICHIu3/QqGzOpXQjT788b0ZnS9igtUAfKFW4uhpBnAEAJGN+9YBoG7K
-         AObmGcTmAjJI/O9bHCpBm6h34Iy7Sgi2dg1gsd4d+R5VpBdNzbjb3rTfHsrlNmFe2d9v
-         NbVQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DPz9gtxpMPf6tArK7MvaaRJYhPzPBkxkpKB6SAn10yM=;
+        b=SVW0nrw9OU8xTC4JiaLDCppad8ywA6MOGUwE5c83bNflZhIs+9J4qyevvQWlZlmS4C
+         ezl2EmbERzSzOcNNtg+HcjH3TRtM2Wfm8jWsShVPektGOLBqAu+8Zt01eYM2z7AeOZyg
+         qvcTemzaAxTjscS6yAaY6j3kX0S5B7Z0JiGW2sxNi6rdu6GBm5r9X1ZWRx43RPO+5s6b
+         nSYhh8Qvtcxv1xGir1hh/u6+sH2GEEwHYM/LCGD6awSNFWq76itiMT3PG2angx6rRXJq
+         crw4daFNWy8RgJq5YMiy6NIUvW6x90mKIh7OfPkhsBzOAHRFzQY791dg6zOtuUnWFJJi
+         ivTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=u01MPjpNUTMHsez0F0H9AHhzrsoSor9pky3lmIVAZDI=;
-        b=KF1hXg8jhxPsRQeecz9GFqSe6xym9Ec7oErt9fj0fBu7rma7Zng8EjkLLdz/5jXSpN
-         xggSJQtahaWX7E6829ZzUpn+ad/16TIFPuUqTRI8+lMm4JbwUyg+IwjAJ+kWYeqJGazP
-         XLkLcj+dLjodj64+BTF6gDz+Er8rrfLJk3QyhbRH6hP6O74o32fCmIlxY24hr3Kkm1GM
-         HVvKZNBHWA241UKWeUPzBo5KCc2DEUthVbiVw9Gj0JOBatN5WTZJ2v/a9V+tAHKImuve
-         cyEyWbKP8onl73IsIVxmjtuCFleFOll3t7Ky45pIhwEh9GNq6YczdzFYy2sO12Ce9Jgd
-         6cag==
-X-Gm-Message-State: ANhLgQ39Mhc7ZAW1m3oebAz28Tk/nPmEzZNFqkvbBrFmOoBkGFoY757f
-        UZHJ8Z19ekvlBCcos2pRhPKdFA==
-X-Google-Smtp-Source: ADFU+vuLKI27cJ4EToB73D4/54U6nwIjhdYCL+6daR5BNyCULI+4LUEX65XizZCgokPo0e4zUlBmXw==
-X-Received: by 2002:a1c:a9cf:: with SMTP id s198mr147042wme.115.1585586760265;
-        Mon, 30 Mar 2020 09:46:00 -0700 (PDT)
-Received: from localhost.localdomain (dh207-96-177.xnet.hr. [88.207.96.177])
-        by smtp.googlemail.com with ESMTPSA id h2sm146711wmb.16.2020.03.30.09.45.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2020 09:45:59 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        devicetree@vger.kernel.org
-Cc:     John Crispin <john@phrozen.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH v5 3/3] ARM: dts: qcom: ipq4019: add USB devicetree nodes
-Date:   Mon, 30 Mar 2020 18:43:31 +0200
-Message-Id: <20200330164328.2944505-3-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200330164328.2944505-1-robert.marko@sartura.hr>
-References: <20200330164328.2944505-1-robert.marko@sartura.hr>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DPz9gtxpMPf6tArK7MvaaRJYhPzPBkxkpKB6SAn10yM=;
+        b=rs6c1KfpQpVWevqNJwnmY68fzgXc9W6VWDJ56PH0mBzQiN0wwLG3c7xzXRR8gqc92Q
+         jjEfNRE8HiDooxegk8m0D4jdv95F06bOX5pxah/G/07GXYNloiuH3uzxxlJJfy1gH0Gl
+         wWXT+BpZBq6t2oRRAvNxHnCKevshNY8mWI5UIpa5X6LKW++cFKBxJZg9RrvLpm+4Pc8S
+         CeehXmYbLT6Gm/Xsvd44AeDDTbCnZS4NRSBilSs3sne2y6WI0+fV0W35HZXf5bWkGr+/
+         nK3Pf8hOIRNiqjZMjTpRCXFrpqs9YJ1dC8fz7vLL3jnSIj9TP/8Z1x0hAqWrDFlSAVos
+         aN4Q==
+X-Gm-Message-State: ANhLgQ0scyyUsYVo5mi2YCWtuuFJVOLKRMSEI0iUr4WvhFd0bdg9Qgni
+        LuenUDSEksiDmms4Q0gRPwn2FWOMcxcGrUQ4SC7hhg==
+X-Google-Smtp-Source: ADFU+vtUGsmlN2XFYfF62TaUwNUzBJOISRq1oEeqlaCLbMM2tYHWk9/YylsjgI6dk9sJqFOq4w9ceQfS1SA8m2ByZbA=
+X-Received: by 2002:aca:4d86:: with SMTP id a128mr182032oib.96.1585586811745;
+ Mon, 30 Mar 2020 09:46:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200328135345.695622-1-robert.marko@sartura.hr>
+ <20200328135345.695622-2-robert.marko@sartura.hr> <20200330154056.GA22114@bogus>
+In-Reply-To: <20200330154056.GA22114@bogus>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Mon, 30 Mar 2020 18:46:40 +0200
+Message-ID: <CA+HBbNEBCK_TfMRuKC71-dw1Wcir+43LK4ahAi9F_3kMosWJsQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] dt-bindings: phy-qcom-ipq4019-usb: add binding document
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        kishon@ti.com, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, John Crispin <john@phrozen.org>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: John Crispin <john@phrozen.org>
+On Mon, Mar 30, 2020 at 5:40 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Sat, 28 Mar 2020 14:53:49 +0100, Robert Marko wrote:
+> > This patch adds the binding documentation for the HS/SS USB PHY found
+> > inside Qualcom Dakota SoCs.
+> >
+> > Signed-off-by: John Crispin <john@phrozen.org>
+> > Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> > Cc: Luka Perkov <luka.perkov@sartura.hr>
+> > ---
+> >  .../bindings/phy/qcom-usb-ipq4019-phy.yaml    | 45 +++++++++++++++++++
+> >  1 file changed, 45 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+> >
+>
+> My bot found errors running 'make dt_binding_check' on your patch:
+>
+> Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml:  while scanning a block scalar
+>   in "<unicode string>", line 37, column 5
+> found a tab character where an indentation space is expected
+>   in "<unicode string>", line 39, column 1
+> Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.example.dts' failed
+> make[1]: *** [Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.example.dts] Error 1
+> make[1]: *** Waiting for unfinished jobs....
+> warning: no schema found in file: Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml: ignoring, error parsing file
+> Makefile:1262: recipe for target 'dt_binding_check' failed
+> make: *** [dt_binding_check] Error 2
+>
+> See https://patchwork.ozlabs.org/patch/1263219
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure dt-schema is up to date:
+>
+> pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+>
+> Please check and re-submit.
 
-Since we now have driver for the USB PHY, lets add the necessary nodes to DTSI.
+Thanks,
 
-Signed-off-by: John Crispin <john@phrozen.org>
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
----
- arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi | 20 +++++
- arch/arm/boot/dts/qcom-ipq4019.dtsi           | 74 +++++++++++++++++++
- 2 files changed, 94 insertions(+)
+I fixed it and pushed v5.
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi b/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi
-index 418f9a022336..2ee5f05d5a43 100644
---- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi
-@@ -109,5 +109,25 @@ wifi@a000000 {
- 		wifi@a800000 {
- 			status = "ok";
- 		};
-+
-+		usb3_ss_phy: ssphy@9a000 {
-+			status = "ok";
-+		};
-+
-+		usb3_hs_phy: hsphy@a6000 {
-+			status = "ok";
-+		};
-+
-+		usb3: usb3@8af8800 {
-+			status = "ok";
-+		};
-+
-+		usb2_hs_phy: hsphy@a8000 {
-+			status = "ok";
-+		};
-+
-+		usb2: usb2@60f8800 {
-+			status = "ok";
-+		};
- 	};
- };
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index bfa9ce4c6e69..ee45253361cb 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -576,5 +576,79 @@ wifi1: wifi@a800000 {
- 					  "legacy";
- 			status = "disabled";
- 		};
-+
-+		usb3_ss_phy: ssphy@9a000 {
-+			compatible = "qcom,usb-ss-ipq4019-phy";
-+			#phy-cells = <0>;
-+			reg = <0x9a000 0x800>;
-+			reg-names = "phy_base";
-+			resets = <&gcc USB3_UNIPHY_PHY_ARES>;
-+			reset-names = "por_rst";
-+			status = "disabled";
-+		};
-+
-+		usb3_hs_phy: hsphy@a6000 {
-+			compatible = "qcom,usb-hs-ipq4019-phy";
-+			#phy-cells = <0>;
-+			reg = <0xa6000 0x40>;
-+			reg-names = "phy_base";
-+			resets = <&gcc USB3_HSPHY_POR_ARES>, <&gcc USB3_HSPHY_S_ARES>;
-+			reset-names = "por_rst", "srif_rst";
-+			status = "disabled";
-+		};
-+
-+		usb3@8af8800 {
-+			compatible = "qcom,dwc3";
-+			reg = <0x8af8800 0x100>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			clocks = <&gcc GCC_USB3_MASTER_CLK>,
-+				 <&gcc GCC_USB3_SLEEP_CLK>,
-+				 <&gcc GCC_USB3_MOCK_UTMI_CLK>;
-+			clock-names = "master", "sleep", "mock_utmi";
-+			ranges;
-+			status = "disabled";
-+
-+			dwc3@8a00000 {
-+				compatible = "snps,dwc3";
-+				reg = <0x8a00000 0xf8000>;
-+				interrupts = <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>;
-+				phys = <&usb3_hs_phy>, <&usb3_ss_phy>;
-+				phy-names = "usb2-phy", "usb3-phy";
-+				dr_mode = "host";
-+			};
-+		};
-+
-+		usb2_hs_phy: hsphy@a8000 {
-+			compatible = "qcom,usb-hs-ipq4019-phy";
-+			#phy-cells = <0>;
-+			reg = <0xa8000 0x40>;
-+			reg-names = "phy_base";
-+			resets = <&gcc USB2_HSPHY_POR_ARES>, <&gcc USB2_HSPHY_S_ARES>;
-+			reset-names = "por_rst", "srif_rst";
-+			status = "disabled";
-+		};
-+
-+		usb2@60f8800 {
-+			compatible = "qcom,dwc3";
-+			reg = <0x60f8800 0x100>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			clocks = <&gcc GCC_USB2_MASTER_CLK>,
-+				 <&gcc GCC_USB2_SLEEP_CLK>,
-+				 <&gcc GCC_USB2_MOCK_UTMI_CLK>;
-+			clock-names = "master", "sleep", "mock_utmi";
-+			ranges;
-+			status = "disabled";
-+
-+			dwc3@6000000 {
-+				compatible = "snps,dwc3";
-+				reg = <0x6000000 0xf8000>;
-+				interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
-+				phys = <&usb2_hs_phy>;
-+				phy-names = "usb2-phy";
-+				dr_mode = "host";
-+			};
-+		};
- 	};
- };
--- 
-2.26.0
-
+Cheers
+Robert
