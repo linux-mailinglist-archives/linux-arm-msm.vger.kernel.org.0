@@ -2,172 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D15D197E62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 16:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 554D7197EA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 16:41:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727719AbgC3O2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 10:28:48 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:63138 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726085AbgC3O2s (ORCPT
+        id S1727877AbgC3OlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 10:41:09 -0400
+Received: from mail-qv1-f67.google.com ([209.85.219.67]:36164 "EHLO
+        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727769AbgC3OlJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 10:28:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585578528; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Z6pGLvcJiDN7TQIxiTcGrUrMaVtIipeZQGdjkSCnW+Y=;
- b=p7M1o9pGtr/hpYqFexmQKNz/6NAnWJpbuRjWLAxK1NDHmvC+QzEWOMt7VPMx5mMD3uBjbArv
- aKqjCFqszF/8QL2jtgLiaJzg6uSeZjj/HdyHrpb4hkWdBxICK/0ib2ZTUoa4WSnuabiOw2L9
- qX3VmH9XacOXtHu6jtzj9+0IADA=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e820212.7f0c896f1bc8-smtp-out-n02;
- Mon, 30 Mar 2020 14:28:34 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2C790C433BA; Mon, 30 Mar 2020 14:28:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 146FAC43636;
-        Mon, 30 Mar 2020 14:28:33 +0000 (UTC)
+        Mon, 30 Mar 2020 10:41:09 -0400
+Received: by mail-qv1-f67.google.com with SMTP id z13so9022527qvw.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 07:41:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rDcplkrNOR8fTQWpkrvvkQU2hQvD6/9jr9hYg71oITo=;
+        b=xqLnGdoHaTXp/62rSjJP1YmIXik/97SKipfrMDfHH9wmc/lpdcRAmuiljz5i/kuu3u
+         +xsoTKciWKFf3M0E8nuc3mQVdW7nQiIx2m4+Kx9aWQZNUJz8WoLvdD104COjmECOjZi2
+         DRCdByeHmIFviu13F/M/dGMh5XsY2WTkxNPlvHN7X42DIE1gXbQY6qDWY7yZ3rNNTIRG
+         tn+I27ueDtEKBd54V6MCSuJQmL/8FNHWFSjFlKOvpWq53TcdeeK2Jtl+voFb1C/Mk29j
+         x1xceu3u4jb9bhqbNw7ROPmLjHMF1CFTY5MZ8e8kXFCmbLtYEALZAv/G2Wh8Xd64w0Gp
+         WDng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rDcplkrNOR8fTQWpkrvvkQU2hQvD6/9jr9hYg71oITo=;
+        b=TSBpyB7cqseq2+F8MuQngscQRfpix/L/K/KKUYqVjiuuVUOSvKWOr7zyTVDZzkhkrJ
+         S8DNJQ+/Ijc25q4JQn58rugVJChQbj1CwV8KieYB7WYqeaPRs2b1h8fH37pL1btoqzSB
+         MIfFjDxoiT6F5DLGgDweK7YIVgzOf4MtukrTu/R4RZyrPELXH4efHhIltfQ0xLlneSrM
+         KGNsFeFEVpSl36ZSthQcoY/gDRJA64jvLK8wXcCKSe6M7F0liXGsJ7maAM47ed7zXJKT
+         S75wzk4+upIvYkO96fgX1fKJZoOonAfOKtP/0bPsQzuM7V76Q7tEARpRJPtwRZUuYjaO
+         iaeA==
+X-Gm-Message-State: ANhLgQ36yspxDauJoQrPue6rfBLwUmy1Dk3FFVZf84Y2cYV0LG+ERnUv
+        imeIgOeyCsi8HeivLNCgxnxtdA==
+X-Google-Smtp-Source: ADFU+vu3RH0WRUmQbpyjKeSWfs7vBOo3n+yCX9ak4+Gl6Tjcz4DthxSw0tHEkMnHiAp4GrdHCJsJ+A==
+X-Received: by 2002:a05:6214:a8f:: with SMTP id ev15mr12216022qvb.81.1585579266839;
+        Mon, 30 Mar 2020 07:41:06 -0700 (PDT)
+Received: from [192.168.1.92] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.gmail.com with ESMTPSA id v1sm11280407qtc.30.2020.03.30.07.41.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Mar 2020 07:41:05 -0700 (PDT)
+Subject: Re: [Patch v5 2/6] soc: qcom: rpmhpd: Introduce function to retrieve
+ power domain performance state count
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     rui.zhang@intel.com, ulf.hansson@linaro.org,
+        daniel.lezcano@linaro.org, agross@kernel.org, robh@kernel.org,
+        amit.kucheria@verdurent.com, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200320014107.26087-1-thara.gopinath@linaro.org>
+ <20200320014107.26087-3-thara.gopinath@linaro.org>
+ <20200327221545.GF5063@builder>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <1714f51c-1566-2756-ff43-5ee9b427e89c@linaro.org>
+Date:   Mon, 30 Mar 2020 10:41:04 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200327221545.GF5063@builder>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 30 Mar 2020 19:58:33 +0530
-From:   kgunda@codeaurora.org
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
-        linux-arm-msm@vger.kernel.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH V4 3/4] backlight: qcom-wled: Add WLED5 bindings
-In-Reply-To: <20200325153716.tcx3t4bd6p3gr2x6@holly.lan>
-References: <1584985618-25689-1-git-send-email-kgunda@codeaurora.org>
- <1584985618-25689-4-git-send-email-kgunda@codeaurora.org>
- <20200325153716.tcx3t4bd6p3gr2x6@holly.lan>
-Message-ID: <469430df70c9e3e12bfce7b654d7ce0e@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-03-25 21:07, Daniel Thompson wrote:
-> On Mon, Mar 23, 2020 at 11:16:57PM +0530, Kiran Gunda wrote:
->> Add WLED5 specific bindings.
->> 
->> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
->> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+
+
+On 3/27/20 6:15 PM, Bjorn Andersson wrote:
+> On Thu 19 Mar 18:41 PDT 2020, Thara Gopinath wrote:
+> 
+>> Populate .get_performace_state_count in genpd ops to retrieve the count of
+>> performance states supported by a rpmh power domain.
+>>
+>> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 >> ---
->>  .../bindings/leds/backlight/qcom-wled.yaml         | 39 
->> ++++++++++++++++++++++
->>  1 file changed, 39 insertions(+)
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml 
->> b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
->> index 8a388bf..159115f 100644
->> --- a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
->> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
->> @@ -20,6 +20,7 @@ properties:
->>         - qcom,pm8941-wled
->>         - qcom,pmi8998-wled
->>         - qcom,pm660l-wled
->> +       - qcom,pm8150l-wled
->> 
->>    reg:
->>      maxItems: 1
->> @@ -28,10 +29,23 @@ properties:
->>      maxItems: 1
->>      description:
->>        brightness value on boot, value from 0-4095.
->> +      For pm8150l this value vary from 0-4095 or 0-32767
->> +      depending on the brightness control mode. If CABC is
->> +      enabled 0-4095 range is used.
-> 
-> I rather dislike some of the property descriptions using PMIC version
-> numbers to distinguish between peripheral versions and others using
-> WLEDx version numbers.
-> 
-> Could the property description be rephrased to use WLED3/4/5 
-> terminology
-> instead?
-> 
-Sure. I will modify in the next post.
-> 
->>      allOf:
->>        - $ref: /schemas/types.yaml#/definitions/uint32
->>          default: 2048
->> 
->> +  max-brightness:
->> +    maxItems: 1
->> +    description:
->> +      Maximum brightness level. Allowed values are,
->> +      for pmi8998 it is  0-4095.
->> +      For pm8150l, this can be either 4095 or 32767.
->> +      If CABC is enabled, this is capped to 4095.
->> +    allOf:
->> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>>   drivers/soc/qcom/rpmhpd.c | 9 +++++++++
+>>   1 file changed, 9 insertions(+)
+>>
+>> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+>> index 4d264d0672c4..7142409a3b77 100644
+>> --- a/drivers/soc/qcom/rpmhpd.c
+>> +++ b/drivers/soc/qcom/rpmhpd.c
+>> @@ -341,6 +341,13 @@ static unsigned int rpmhpd_get_performance_state(struct generic_pm_domain *genpd
+>>   	return dev_pm_opp_get_level(opp);
+>>   }
+>>   
+>> +static int rpmhpd_performance_states_count(struct generic_pm_domain *domain)
+>> +{
+>> +	struct rpmhpd *pd = domain_to_rpmhpd(domain);
 >> +
-> 
-> Similar thing here, is PMI8998 simply a synonym for WLED4 or there
-> something special about the PMIC versioning that requires it to be 
-> used?
-> 
-> 
-> Daniel.
-> 
-Sure. It is synonym for WLED4. I will modify in the next post.
-> 
->>    label:
->>      maxItems: 1
->>      description:
->> @@ -124,6 +138,31 @@ properties:
->>        value for PM8941 from 1 to 3. Default 2
->>        For PMI8998 from 1 to 4.
->> 
->> +  qcom,modulator-sel:
->> +    maxItems: 1
->> +    allOf:
->> +      - $ref: /schemas/types.yaml#/definitions/uint32
->> +    description:
->> +      Selects the modulator used for brightness modulation.
->> +      Allowed values are,
->> +               0 - Modulator A
->> +               1 - Modulator B
->> +      If not specified, then modulator A will be used by default.
->> +      This property is applicable only to WLED5 peripheral.
+>> +	return pd->level_count;
+>> +}
 >> +
->> +  qcom,cabc-sel:
->> +    maxItems: 1
->> +    allOf:
->> +      - $ref: /schemas/types.yaml#/definitions/uint32
->> +    description:
->> +      Selects the CABC pin signal used for brightness modulation.
->> +      Allowed values are,
->> +              0 - CABC disabled
->> +              1 - CABC 1
->> +              2 - CABC 2
->> +              3 - External signal (e.g. LPG) is used for dimming
->> +      This property is applicable only to WLED5 peripheral.
->> +
->>    interrupts:
->>      maxItems: 2
->>      description:
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->>  a Linux Foundation Collaborative Project
+>>   static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
+>>   {
+>>   	int i;
+>> @@ -429,6 +436,8 @@ static int rpmhpd_probe(struct platform_device *pdev)
+>>   		rpmhpds[i]->pd.power_on = rpmhpd_power_on;
+>>   		rpmhpds[i]->pd.set_performance_state = rpmhpd_set_performance_state;
+>>   		rpmhpds[i]->pd.opp_to_performance_state = rpmhpd_get_performance_state;
+>> +		rpmhpds[i]->pd.get_performance_state_count =
+>> +					rpmhpd_performance_states_count;
+> 
+> I would prefer if you ignore the 80-char limit here and leave the line
+> unwrapped.
+
+Hi Bjorn,
+
+Thanks for the reviews. I will fix this  in the next version.
+
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Regards,
+> Bjorn
+> 
+>>   		pm_genpd_init(&rpmhpds[i]->pd, NULL, true);
+>>   
+>>   		data->domains[i] = &rpmhpds[i]->pd;
+>> -- 
+>> 2.20.1
+>>
+
+-- 
+Warm Regards
+Thara
