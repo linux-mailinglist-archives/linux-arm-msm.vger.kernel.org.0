@@ -2,68 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 53DB71979B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 12:52:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E48C197A0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 13:01:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729547AbgC3Kwb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 06:52:31 -0400
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:33706 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729381AbgC3Kw0 (ORCPT
+        id S1729638AbgC3LBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 07:01:10 -0400
+Received: from mail.11d01.mspz7.gob.ec ([190.152.145.91]:53490 "EHLO
+        mail.11d01.mspz7.gob.ec" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729553AbgC3LBJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 06:52:26 -0400
-Received: by mail-vk1-f194.google.com with SMTP id f63so4539153vkh.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 03:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=82B0OONv9gwbZlPp43NzThDz2fRV+KRFwafOQ16joDw=;
-        b=W/pqz5d7jRz2XhuR0NPXi/HrPrA1EYS2PHHQ1FpsLUolfOVyK7H009Wnc0lrOJx6Hi
-         8vUUF/pk3PeclHcAYXDWVsOIJGvMQpXmWA9vT3q5H+Fq3bPr7slBRNCq5ggPLqTXWSUN
-         WeDqQdBB3Fj9UYma7K77X5d+kEKTp6fOD5VReaWt0mRVZHR6HEobypypOg452dQIxRuj
-         xU65Ut9jAR+y63swe5g9KvSFt96uljniqy4kiAqd2Y/ynJzIziUhlZ91pwoD0sDfF2kV
-         2p+fbv2x6QZq8+EhnWOm9VRs7gRyumQNwl/HLY+Ct1f3AZKCEqIBhRL3NUkC6PiM1Er/
-         am5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=82B0OONv9gwbZlPp43NzThDz2fRV+KRFwafOQ16joDw=;
-        b=Tvv/kyo+t2eVMf/Ptgs5rBw10yx6V5/9ZpfGkP8LHezIhWpACHx5mtDAKaQkQOp5iB
-         qvSHE9LeIzE8qVgsAFMP138Ut+2bVYMIg6FqIVLCDU41cdi2c011sI7A10zatGVoowgO
-         Xgbaz5qlb0WZhqUmOYm/LzU+0a8Zld+0W/FAeM0EmgymNjhNqvZ0t+IBLOGt2ul1mIcX
-         jcPTmps4uv1g7aSfr9vEE2uJK/1GYbLCuTSBVdzQSTSoOsCj/lpN3XLF7abDuuGOgYGA
-         l2BusnwSLKKxCuoLfat7PhkiM8p37aVGyxCzYLZehKmx4WM/sjU4CFbUXohS88KpM4/r
-         driw==
-X-Gm-Message-State: AGi0PuZmd844YmKMnhmRhqPofRIh6FgDrV/fPLnd4Sd05r83rZrux5Dx
-        TEYk6cdpOiC8ykWHc8zqGV+hcVplVaaMZwXcW8s=
-X-Google-Smtp-Source: APiQypKDRP4A2GOOhX29xPbS6X6J2bOe+cEnGPGhkRlrf/LV9QYV7GSVV1iViigrqjvUPzJfpKV+0f/QlvWFf/q+m5k=
-X-Received: by 2002:a1f:2c4b:: with SMTP id s72mr7433998vks.93.1585565545391;
- Mon, 30 Mar 2020 03:52:25 -0700 (PDT)
+        Mon, 30 Mar 2020 07:01:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mail.11d01.mspz7.gob.ec (Postfix) with ESMTP id 8D0A72F6F5CE;
+        Mon, 30 Mar 2020 04:16:31 -0500 (-05)
+Received: from mail.11d01.mspz7.gob.ec ([127.0.0.1])
+        by localhost (mail.11d01.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id wHDWD2jiTREe; Mon, 30 Mar 2020 04:16:31 -0500 (-05)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.11d01.mspz7.gob.ec (Postfix) with ESMTP id 0CCE52F693CB;
+        Mon, 30 Mar 2020 04:16:31 -0500 (-05)
+DKIM-Filter: OpenDKIM Filter v2.9.2 mail.11d01.mspz7.gob.ec 0CCE52F693CB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=11d01.mspz7.gob.ec;
+        s=50CBC7E4-8BED-11E9-AF6C-F1A741A224D3; t=1585559791;
+        bh=cLQbOHa1aY+/FyDjaDQOZOnnnlZDxMu+rBX/cg5yps8=;
+        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:To:
+         From:Date:Reply-To:Message-Id;
+        b=I0rXDmCJi1DmUgV7kL/YWhU/SEjtjx3nHfmw9Fvm+1qaWWE48cvghCn7IXuLPzq9m
+         noTS1gQ6QjgHQK61jJdJ85k+vrJp9oJ7fMhy8dWy/cFx9wuFZ+1wP0xSkenk/+SpA8
+         vMBthVTDknFQkNI7Y+FmccFxisBOcqCb1ocpszcU=
+X-Virus-Scanned: amavisd-new at 11d01.mspz7.gob.ec
+Received: from mail.11d01.mspz7.gob.ec ([127.0.0.1])
+        by localhost (mail.11d01.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id eHtT7xwanvL8; Mon, 30 Mar 2020 04:16:30 -0500 (-05)
+Received: from [10.121.152.251] (unknown [105.12.0.10])
+        by mail.11d01.mspz7.gob.ec (Postfix) with ESMTPSA id 5FC382F6F56A;
+        Mon, 30 Mar 2020 04:16:19 -0500 (-05)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Received: by 2002:a67:c005:0:0:0:0:0 with HTTP; Mon, 30 Mar 2020 03:52:24
- -0700 (PDT)
-Reply-To: maryalice00.12@postribe.com
-From:   Maryalice Williams <maryalicewilliams730@gmail.com>
-Date:   Mon, 30 Mar 2020 08:52:24 -0200
-Message-ID: <CAKwdjspKQpXNN-muj712Ym+s=yC75k8CUdb6ULnvzKHxbYXvwA@mail.gmail.com>
-Subject: Reply For More Details.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: spende von 2.000.000,00 Euro
+To:     Recipients <luis.sanchez@11d01.mspz7.gob.ec>
+From:   "Manuel Franco" <luis.sanchez@11d01.mspz7.gob.ec>
+Date:   Mon, 30 Mar 2020 11:47:33 +0200
+Reply-To: manuelfrancospende11@gmail.com
+Message-Id: <20200330091620.5FC382F6F56A@mail.11d01.mspz7.gob.ec>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-My dear,
+Ich bin Manuel Franco, ich spende Ihnen 2.000.000,00 Euro. Kontaktieren Sie=
+ mich jetzt, damit wir fortfahren k=F6nnen.
 
-I am Mrs Maryalice Williams, I want to send you donation of two
-million seven hundred thousand Dollars ($2.7M) for volunteer projects
-in your country due to my ill health that could not permit me. Kindly
-reply for more details, and also send me the following details, as per
-below, your full Name ..........,  Address...........,
-Age...............,  Occupation ...............
-
-Remain blessed,
-Mrs. Maryalice Williams.
+I am Manuel Franco, I donate to you 2,000,000.00 euros. Contact me now so w=
+e can proceed.
