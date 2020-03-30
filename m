@@ -2,177 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 248971985A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 22:41:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D62B1985E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 22:57:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727750AbgC3Uly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 16:41:54 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:39790 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728267AbgC3Ulx (ORCPT
+        id S1728123AbgC3U5B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 16:57:01 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35774 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727750AbgC3U5B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 16:41:53 -0400
-Received: by mail-pj1-f66.google.com with SMTP id z3so108378pjr.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 13:41:52 -0700 (PDT)
+        Mon, 30 Mar 2020 16:57:01 -0400
+Received: by mail-ed1-f67.google.com with SMTP id a20so22577912edj.2;
+        Mon, 30 Mar 2020 13:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=gXEgQyqWtKi/deTewfCdJW+6ZT9gmXPBY4cz60z4Xy8=;
-        b=AGTm306RJBiq5wiPFYYs+svTnvzhqu8DEigXSeSwdj1zoVBse4dqbtUOYKdltzDXqz
-         p4vvvr7IShB+YHYr5KXFPGYkym6x9qpuivr42F00SQVzjCMVRcfOonGa7MWLjNy8U3/q
-         vbMvPM5LyFPT5fWdps4R3EBDBordMJKu7f/8xsWgCjyJtAQB5rc1yhvneDrAmbozsAXT
-         u6DRqPdRNCCK/yT5/3dsHdVLRPvEMKu4IU1SXoaXAW6fjXatvZSL0SQnCcVXMMfqDtno
-         mxvssvsxOKx2ESRz9yN1fyUa/JbWWj8QzEeZ0EsTYDNlmRVIifKslkKIUpalekX02QT7
-         4vkg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xV24bY+9ZHrEg7r2qYUHnQ8d27A7ffpYwBJNYjkSVys=;
+        b=b2bXKFNiFz7uYVBZYuUFOsPh+KRsloBhmBsh55XB9RUHCsuUoTL56b0zhQxc7XlXE7
+         rxnEjGULGjg6n2E1rcof+8xU9YKcOZYHAA/rfvFAMHTmRfPUM+BhPujRpbcabTQOBbwb
+         yg6QqQMVVy+amHCdIhhPsPNEFh11eko0FdApqzApyQAUTjPven7iQwZS5UMilDIu7zAi
+         Rf/nXJJ7rdlqj03DEWhMlNtZY78T/p8cYrDwmpGZIN+O0S1UEVWh9n91cfU9rbsQqlIM
+         FksYuIfWBZ8I+g3tEF3wQBkAdQP4+W5z3ZYkqQZiUhyTziz+bXcXwZarSvsuWfhsYd9E
+         PXxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=gXEgQyqWtKi/deTewfCdJW+6ZT9gmXPBY4cz60z4Xy8=;
-        b=fNL5ly7NvtXscEAwqCGorw8ukVBVTjJuVBYBhY8lJtSGt8eLZAfGf3Zvg7jzJ34Bp4
-         tjW/ZqyO0yL+shbXB/cSLoOwQpmXbzjMoq49Acdh869sexMjSnvpi/8yG/MZZbp8TmKp
-         OcKc6l29xeDGGkFIndXfX5LxRwU7AUWbTJ6zOv95E3RY4hbG5Qy2cuhL3HXQnYaaQD1u
-         1MsT1MAzHDj9xtTUgku5bboHOksRaWWfoLjp68y3dqvI2ee0FINmooAODbyo63DnGzwI
-         wBNS56igr/Uw8DPuzNHdij3KO3ywVz2l1djgH9K2heMb3ilrLoiIeBHek8FLrgp6KmZC
-         chZA==
-X-Gm-Message-State: ANhLgQ2CzEq+GNjPL9OAqoGqPs2QHw8bY+2blwrrUytNkffYlC57p5DD
-        fqWR/2AAr+77Hu+LuV3i04H9DuEXZQ0=
-X-Google-Smtp-Source: ADFU+vtRCLcMPMcubA8fte342DE9ReO2pbWBwxx+giULxWdYaHRK2nOzSEa0w9mTNXIoG6UmIXTTFg==
-X-Received: by 2002:a17:902:ec03:: with SMTP id l3mr12435349pld.73.1585600912095;
-        Mon, 30 Mar 2020 13:41:52 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id h198sm10837425pfe.76.2020.03.30.13.41.50
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xV24bY+9ZHrEg7r2qYUHnQ8d27A7ffpYwBJNYjkSVys=;
+        b=TwqUTOXAzOWRz5aC2KKaCLxPXtCFQzNLvjHpzwaJ18t8/Uua+ba1Aa2aA5Bwjj7eeg
+         5dvaZAqU4Vn1ph2po9ac5tB81gGARfCiJC07vtV12ase5xHxfif3373sFicfGEIifn4O
+         pz0ItMSto7qlEEpTZE0DFxy+mpZPwQ6JNXhqd6rm3a1L7gr1y03OadRRhmpWxeodnvk9
+         V57xCKTdwrkYkhqBqOzTfvFN6ZI4dnD6OF17Txu3iOmhq2p7NWBWMkpx5QMLh9nKWz84
+         G6RBXFcsVOUjmQdNwFPGAD6hHAVghSsMaKfTrCpi5+KHXKL5LHKD1Jo8lVNiEfLwBhQv
+         txbg==
+X-Gm-Message-State: ANhLgQ1jBzq2n9k0StY6ckYaO5JHjn7OORLIOPAAoC05506oBdtk8lcR
+        Npks6o0LS1sOENd9wncmiYo=
+X-Google-Smtp-Source: ADFU+vumP9c0QoPy1L/XVTrWfUB8yNiEmoCy+BYk7bNQi2c0EANdKJo32GXatd9yH3cBjgoyJwd8+g==
+X-Received: by 2002:a17:906:3607:: with SMTP id q7mr12498455ejb.65.1585601816946;
+        Mon, 30 Mar 2020 13:56:56 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host203-232-dynamic.53-79-r.retail.telecomitalia.it. [79.53.232.203])
+        by smtp.googlemail.com with ESMTPSA id n10sm2006475edf.3.2020.03.30.13.56.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2020 13:41:51 -0700 (PDT)
-Date:   Mon, 30 Mar 2020 13:41:49 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 30 Mar 2020 13:56:56 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Mathieu Olivari <mathieu@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH] clk: qcom: msm8916: Fix the address location of
- pll->config_reg
-Message-ID: <20200330204149.GA215915@minitux>
-References: <20200329124116.4185447-1-bryan.odonoghue@linaro.org>
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v2] ARM: qcom: Disable i2c device on gsbi4 for ipq806x
+Date:   Mon, 30 Mar 2020 22:56:46 +0200
+Message-Id: <20200330205647.24806-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200329124116.4185447-1-bryan.odonoghue@linaro.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 29 Mar 05:41 PDT 2020, Bryan O'Donoghue wrote:
+Disable the i2c device on gsbi4, mark gsbi4_h as unused and gsbi4_qup
+and src clks as protected. gsbi4_h can't be set to protected as it's
+used by both gsbi and rpm and making it protected creates some problem
+with gsbi4 uart function.
+Without this fix, clock framework will turn them off at end
+of probe. On ipq806x by design gsbi4_qup, gsbi4_h clks and i2c on gsbi4
+are meant for RPM usage. So turning them off in kernel is incorrect.
 
-> During the process of debugging a processor derived from the msm8916 which
-> we found the new processor was not starting one of its PLLs.
-> 
-> After tracing the addresses and writes that downstream was doing and
-> comparing to upstream it became obvious that we were writing to a different
-> register location than downstream when trying to configure the PLL.
-> 
+Signed-off-by: Mathieu Olivari <mathieu@codeaurora.org>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ arch/arm/boot/dts/qcom-ipq8064-ap148.dts | 9 ---------
+ arch/arm/boot/dts/qcom-ipq8064.dtsi      | 3 +++
+ drivers/clk/qcom/gcc-ipq806x.c           | 1 +
+ 3 files changed, 4 insertions(+), 9 deletions(-)
 
-Good catch.
+diff --git a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+index 554c65e7aa0e..580aec63030d 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
++++ b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+@@ -21,14 +21,5 @@ mux {
+ 				};
+ 			};
+ 		};
+-
+-		gsbi@16300000 {
+-			i2c@16380000 {
+-				status = "ok";
+-				clock-frequency = <200000>;
+-				pinctrl-0 = <&i2c4_pins>;
+-				pinctrl-names = "default";
+-			};
+-		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+index 16c0da97932c..d9a803c8a59b 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+@@ -421,6 +421,9 @@ qcom,ssbi@500000 {
+ 		gcc: clock-controller@900000 {
+ 			compatible = "qcom,gcc-ipq8064";
+ 			reg = <0x00900000 0x4000>;
++
++			protected-clocks = <GSBI4_QUP_SRC>, <GSBI4_QUP_CLK>;
++
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 		};
+diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
+index b0eee0903807..f7d7a2bc84c1 100644
+--- a/drivers/clk/qcom/gcc-ipq806x.c
++++ b/drivers/clk/qcom/gcc-ipq806x.c
+@@ -991,6 +991,7 @@ static struct clk_branch gsbi4_h_clk = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gsbi4_h_clk",
+ 			.ops = &clk_branch_ops,
++			.flags = CLK_IGNORE_UNUSED,
+ 		},
+ 	},
+ };
+-- 
+2.25.1
 
-> This error is also present in upstream msm8916.
-> 
-> As an example clk-pll.c::clk_pll_recalc_rate wants to write to
-> pll->config_reg updating the bit-field POST_DIV_RATIO. That bit-field is
-> defined in PLL_USER_CTL not in PLL_CONFIG_CTL. Taking the BIMC PLL as an
-> example
-> 
-
-For some reason we don't specify pll->post_div_width for anything but
-ipq806x, so the post_div is not considered for other platforms. This
-might be a bug, but in addition to updating the config_reg address
-post_div_width would have to be specified for the change to affect
-clk_pll_recalc_rate().
-
-More disturbing though is the clk_pll_set_rate() implementation, which
-just writes ibits to the entire config_reg. But given that we don't have
-a freq_tbl for any of these plls the function will return -EINVAL
-earlier.
-
-Lastly is clk_pll_configure() which would need this, but we don't call
-it from msm8916 at this point.
-
-
-So while your change is correct, afaict it's a nop unless you fill out
-the other fields as well.
-
-Regards,
-Bjorn
-
-> lm80-p0436-13_c_qc_snapdragon_410_processor_hrd.pdf
-> 
-> 0x01823010 GCC_BIMC_PLL_USER_CTL
-> 0x01823014 GCC_BIMC_PLL_CONFIG_CTL
-> 
-> This pattern is repeated for gpll0, gpll1, gpll2 and bimc_pll.
-> 
-> This error is likely not apparent since the bootloader will already have
-> initialized these PLLs.
-> 
-> This patch corrects the location of config_reg from PLL_CONFIG_CTL to
-> PLL_USER_CTL for all relevant PLLs on msm8916.
-> 
-> Fixes commit 3966fab8b6ab ("clk: qcom: Add MSM8916 Global Clock Controller support")
-> 
-> Cc: Georgi Djakov <georgi.djakov@linaro.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  drivers/clk/qcom/gcc-msm8916.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-msm8916.c b/drivers/clk/qcom/gcc-msm8916.c
-> index 4e329a7baf2b..17e4a5a2a9fd 100644
-> --- a/drivers/clk/qcom/gcc-msm8916.c
-> +++ b/drivers/clk/qcom/gcc-msm8916.c
-> @@ -260,7 +260,7 @@ static struct clk_pll gpll0 = {
->  	.l_reg = 0x21004,
->  	.m_reg = 0x21008,
->  	.n_reg = 0x2100c,
-> -	.config_reg = 0x21014,
-> +	.config_reg = 0x21010,
->  	.mode_reg = 0x21000,
->  	.status_reg = 0x2101c,
->  	.status_bit = 17,
-> @@ -287,7 +287,7 @@ static struct clk_pll gpll1 = {
->  	.l_reg = 0x20004,
->  	.m_reg = 0x20008,
->  	.n_reg = 0x2000c,
-> -	.config_reg = 0x20014,
-> +	.config_reg = 0x20010,
->  	.mode_reg = 0x20000,
->  	.status_reg = 0x2001c,
->  	.status_bit = 17,
-> @@ -314,7 +314,7 @@ static struct clk_pll gpll2 = {
->  	.l_reg = 0x4a004,
->  	.m_reg = 0x4a008,
->  	.n_reg = 0x4a00c,
-> -	.config_reg = 0x4a014,
-> +	.config_reg = 0x4a010,
->  	.mode_reg = 0x4a000,
->  	.status_reg = 0x4a01c,
->  	.status_bit = 17,
-> @@ -341,7 +341,7 @@ static struct clk_pll bimc_pll = {
->  	.l_reg = 0x23004,
->  	.m_reg = 0x23008,
->  	.n_reg = 0x2300c,
-> -	.config_reg = 0x23014,
-> +	.config_reg = 0x23010,
->  	.mode_reg = 0x23000,
->  	.status_reg = 0x2301c,
->  	.status_bit = 17,
-> -- 
-> 2.25.1
-> 
