@@ -2,354 +2,337 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 548A3197856
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 12:06:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0030919795A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 12:34:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729147AbgC3KGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 06:06:47 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:45309 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729095AbgC3KGr (ORCPT
+        id S1729140AbgC3Ked (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 06:34:33 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:41583 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728656AbgC3Ked (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 06:06:47 -0400
-Received: by mail-pf1-f196.google.com with SMTP id r14so5865761pfl.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 03:06:46 -0700 (PDT)
+        Mon, 30 Mar 2020 06:34:33 -0400
+Received: by mail-ed1-f66.google.com with SMTP id v1so20006327edq.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 03:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=t9nTriwKRskndC3FQU+CejJdO8RJWivFT2/XH3sqCgc=;
-        b=qycWlmyESLgLrT4nBdwQKfJ43Gle9E/5kZIqRHWRE24o5doKCQr+kEm7uUJfHT8mpx
-         N6UleKO0sqfV1PajKsw9SuZEdQ2zPTwDZVLcFdtlTFVudX2eeLQWzUkpIcDJczGNy2tK
-         /3THT+R7xHQTDzvSkVaupeN2bKbcUaU2qJhT2oNwdfoVfKKFyP6M7+ej/YE1bBil3vQS
-         V8yUQMd2cy+49AHgqHt+1XA4VWVDwV1TnEJvHj2qZvHPd8vnyL3kzxfdmu3q6Y9Bn+L2
-         jeiSB0iEeazCwJN60NdquCx3mNymm42sq8CyqNrdg2ppa2qmW2FgsDpiGNBwWbvGxn6U
-         q5AQ==
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rPOhyjyg+qG//E9KnpQ1mLh4HGsinrsLHjaD641g04c=;
+        b=ACSvsBh7q95ipi88Pn9UOo3e32tcG9KrkdpfN7C9kIhxyg+PzQxsjZYWjzfNNE5JJv
+         l07ISRyAg4M2yHP8s02mgUkX0QGYNdms7/UHK9qNCdRxIe9hSYWmcJqspLfnET8pOfCW
+         SYguXhE2XhwN92RgqAcrMn9Vcp4+IG0MALVWHiOVUWPCj1wZFAn22NPnbExWKxWHf1NA
+         rsOtaKKMmou0qxjS29TjALGqkzvixQHxFnEhPOV18AZJgKBjjQkpP6CNwkHl560r8p3v
+         mo2zmWoy4OZHct8BFfa2CrX3cVOadzLLUFvOBAJdLNLT1Vq33OfI5fRig0Pe8ONYHGBC
+         8Cew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=t9nTriwKRskndC3FQU+CejJdO8RJWivFT2/XH3sqCgc=;
-        b=oAin1CqImXgizovthxebMhOy1apUhwf6NPV7OfkG2OdB9Anf4FILg9WUrA/uIC5dX2
-         aTZaVue6/k10mXD/hUh08lBjMS6WJGJXpaZXsbJmwA4FM5aDK5yvom+KCMgckNaBuYWy
-         xVc19QTRrZyatpoQMagDAxdwQQYi+I8K4hMCO5rZt33ACU4CLMH3JKCfIP+xObG25wSg
-         1tzYPHrdU4ODmfa1/gy9HZ9O2aylx5SUhVa9GDYnUjOZuW70HtXHoTgMLRCKnHt8Qlsn
-         tdkR/uxPDrMIMblu/n4RSPE0Knh44gEddTia37Dx1zLFe+iosxqT7+z2+TUx7J1LBxW2
-         C5lg==
-X-Gm-Message-State: ANhLgQ2+V6KPHp7/XYhhALxrYdhg7B/U/GIA1rdqFhfS+/9qq9e+cu2H
-        NiPP5Rr6IpbhTuN6TQB5GeOecw==
-X-Google-Smtp-Source: ADFU+vs+qAml2X+oV6c986AFWU5n2cg6AJNpIpPui0EVRhYl7gNk/82abDdsDutvg0KcVnLBoAyXQQ==
-X-Received: by 2002:a63:704:: with SMTP id 4mr12118395pgh.294.1585562805534;
-        Mon, 30 Mar 2020 03:06:45 -0700 (PDT)
-Received: from localhost ([103.195.202.48])
-        by smtp.gmail.com with ESMTPSA id c8sm10277816pfj.108.2020.03.30.03.06.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2020 03:06:44 -0700 (PDT)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, Andy Gross <agross@kernel.org>
-Cc:     devicetree@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8998: remove unit name for thermal trip points
-Date:   Mon, 30 Mar 2020 15:36:28 +0530
-Message-Id: <cd6f0c7298437d35642b35c9ede9064c247d6090.1585562459.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1585562459.git.amit.kucheria@linaro.org>
-References: <cover.1585562459.git.amit.kucheria@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rPOhyjyg+qG//E9KnpQ1mLh4HGsinrsLHjaD641g04c=;
+        b=nSlRwd/b9LZklCJ8gUaeH5HjAWdVyyPkloaMl9n53Gs3/w/N3E9L+bFCoTz5CMxrak
+         bv9hHLCLdgGONMK4PScrdsDWkZFlV7iin+EhsKfQs6Io0MIkdZCjIhGq7vZLBIEAHnxJ
+         g6PimpNlIDDOnfbJqTIqle+t7UiRaIKgS5yTcF1J58Jf2A+yzvLxC98bQtzhGLAJEiBL
+         ONAoiAClGxZccFEUx+8oB25mt87+Kxwbbgsc/T8LRY0RzQf9O4zhxpqVxEZTqIxOZQtJ
+         oBvfLkxZOZmFyckL/WNctscVB7IIhLS+6D4ISGfmZPglhSrGzx/u3wGapFix+FyQZJlz
+         2V7g==
+X-Gm-Message-State: ANhLgQ3N+AEkg0qZMpA67hpvqboAUx8PlZGpqPLEOjXjwxRzaCQa9WRK
+        Yim5PwHJ66AruTiV7z7bpBhL5KCclzONe9OrZH9Pfg==
+X-Google-Smtp-Source: ADFU+vuvWHGnq0/YuZUhp3RM0rW7+tCZrWHDFezzi9eX+CTdv2q4cGHnufRtfw1o5QzF28+dfZ0sNVd3tIemm/OP+Yw=
+X-Received: by 2002:a17:906:319b:: with SMTP id 27mr10502059ejy.240.1585564470386;
+ Mon, 30 Mar 2020 03:34:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1585117436.git.amit.kucheria@linaro.org>
+ <9c447186008ef2e3f4c3e712458dc0ddcd8a8b03.1585117436.git.amit.kucheria@linaro.org>
+ <81b0cbe1-23c8-b4a3-4775-62e7d6c49b6b@arm.com> <CAP245DWS=yqNQpbk3Y8_0KjcBurSyQbNW9jqepSz8LC=ruFWhA@mail.gmail.com>
+In-Reply-To: <CAP245DWS=yqNQpbk3Y8_0KjcBurSyQbNW9jqepSz8LC=ruFWhA@mail.gmail.com>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Mon, 30 Mar 2020 16:04:19 +0530
+Message-ID: <CAHLCerMRcPmE70kN1Cyxio4_Dd1OoWT3iZ4vpzYKQVfORS336Q@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] dt-bindings: thermal: Add yaml bindings for
+ thermal zones
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal trip points have unit name but no reg property, so we can
-remove them. It also fixes the following warnings from 'make dtbs_check'
-after adding the thermal yaml bindings.
+On Wed, Mar 25, 2020 at 9:12 PM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+>
+> On Wed, Mar 25, 2020 at 4:36 PM Lukasz Luba <lukasz.luba@arm.com> wrote:
+> >
+> >
+> >
+> > On 3/25/20 6:34 AM, Amit Kucheria wrote:
+> > > As part of moving the thermal bindings to YAML, split it up into 3
+> > > bindings: thermal sensors, cooling devices and thermal zones.
+> > >
+> > > The thermal-zone binding is a software abstraction to capture the
+> > > properties of each zone - how often they should be checked, the
+> > > temperature thresholds (trips) at which mitigation actions need to be
+> > > taken and the level of mitigation needed at those thresholds.
+> > >
+> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > ---
+> > > Changes since v2:
+> > > - Addressed review comment from Rob
+> > > - Added required properties for thermal-zones node
+> > > - Added select: true to thermal-cooling-devices.yaml
+> > > - Fixed up example to pass dt_binding_check
+> > >
+> > >   .../bindings/thermal/thermal-zones.yaml       | 324 ++++++++++++++++++
+> > >   1 file changed, 324 insertions(+)
+> > >   create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+> > > new file mode 100644
+> > > index 000000000000..5632304dcf62
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+> > > @@ -0,0 +1,324 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0)
+> > > +# Copyright 2020 Linaro Ltd.
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/thermal/thermal-zones.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/base.yaml#
+> > > +
+> > > +title: Thermal zone binding
+> > > +
+> > > +maintainers:
+> > > +  - Amit Kucheria <amitk@kernel.org>
+> > > +
+> > > +description: |
+> > > +  Thermal management is achieved in devicetree by describing the sensor hardware
+> > > +  and the software abstraction of cooling devices and thermal zones required to
+> > > +  take appropriate action to mitigate thermal overloads.
+> > > +
+> > > +  The following node types are used to completely describe a thermal management
+> > > +  system in devicetree:
+> > > +   - thermal-sensor: device that measures temperature, has SoC-specific bindings
+> > > +   - cooling-device: device used to dissipate heat either passively or actively
+> > > +   - thermal-zones: a container of the following node types used to describe all
+> > > +     thermal data for the platform
+> > > +
+> > > +  This binding describes the thermal-zones.
+> > > +
+> > > +  The polling-delay properties of a thermal-zone are bound to the maximum dT/dt
+> > > +  (temperature derivative over time) in two situations for a thermal zone:
+> > > +    1. when passive cooling is activated (polling-delay-passive)
+> > > +    2. when the zone just needs to be monitored (polling-delay) or when
+> > > +       active cooling is activated.
+> > > +
+> > > +  The maximum dT/dt is highly bound to hardware power consumption and
+> > > +  dissipation capability. The delays should be chosen to account for said
+> > > +  max dT/dt, such that a device does not cross several trip boundaries
+> > > +  unexpectedly between polls. Choosing the right polling delays shall avoid
+> > > +  having the device in temperature ranges that may damage the silicon structures
+> > > +  and reduce silicon lifetime.
+> > > +
+> > > +properties:
+> > > +  $nodename:
+> > > +    const: thermal-zones
+> > > +    description:
+> > > +      A /thermal-zones node is required in order to use the thermal framework to
+> > > +      manage input from the various thermal zones in the system in order to
+> > > +      mitigate thermal overload conditions. It does not represent a real device
+> > > +      in the system, but acts as a container to link thermal sensor devices,
+> >
+> > I would say 'thermal sensor device', since there is 1-to-1 mapping and
+> > aggregating a few sensors inside one tz is not allowed (or I missed
+> > some patches queuing).
+>
+> See below.
+>
+> >
+> > > +      platform-data regarding temperature thresholds and the mitigation actions
+> > > +      to take when the temperature crosses those thresholds.
+> > > +
+> > > +patternProperties:
+> > > +  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
+> > > +    type: object
+> > > +    description:
+> > > +      Each thermal zone node contains information about how frequently it
+> > > +      must be checked, the sensor responsible for reporting temperature for
+> > > +      this zone, one sub-node containing the various trip points for this
+> > > +      zone and one sub-node containing all the zone cooling-maps.
+> > > +
+> > > +    properties:
+> > > +      polling-delay:
+> > > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > > +        description:
+> > > +          The maximum number of milliseconds to wait between polls when
+> > > +          checking this thermal zone. Setting this to 0 disables the polling
+> > > +          timers setup by the thermal framework and assumes that the thermal
+> > > +          sensors in this zone support interrupts.
+> > > +
+> > > +      polling-delay-passive:
+> > > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > > +        description:
+> > > +          The maximum number of milliseconds to wait between polls when
+> > > +          checking this thermal zone while doing passive cooling. Setting
+> > > +          this to 0 disables the polling timers setup by the thermal
+> > > +          framework and assumes that the thermal sensors in this zone
+> > > +          support interrupts.
+> > > +
+> > > +      thermal-sensors:
+> > > +        $ref: /schemas/types.yaml#/definitions/phandle-array
+> > > +        description:
+> > > +          A list of thermal sensor phandles and sensor specifiers used to
+> > > +          monitor this thermal zone.
+> >
+> > I don't know why it's not consistent with the actual code in
+> > of-thermal.c, where there is even a comment stated:
+> > /* For now, thermal framework supports only 1 sensor per zone */
+> >
+> > I think this is the place where developers should be informed about
+> > the limitation and not even try to put more sensors into the list.
+>
+> That is a good point. I'm currently "porting" the existing binding as
+> described in thermal.txt to yaml. If you look at some of the example
+> (c) in there, the bindings allow many sensors to a zone mapping but
+> the thermal core doesn't implement that functionality.
+>
+> So should we fix the core code or change the bindings? Thoughts - Rob,
+> Daniel, Rui?
 
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu0-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu1-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu2-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu3-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu4-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu5-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu6-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cpu7-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-clust0-mhm-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-clust1-mhm-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-cluster1-l2-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-modem-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-mem-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-wlan-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-q6-dsp-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-camera-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml: thermal-zones:
-multimedia-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
+Rob, Daniel: Any comments? We don't have any concerns for Linux
+backward compatibility since multiple sensors per zone isn't used
+anywhere. But asking since bindings are supposed to be OS-agnostic.
 
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu0-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu1-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu2-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu3-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu4-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu5-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu6-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cpu7-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-clust0-mhm-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-clust1-mhm-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-cluster1-l2-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-modem-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-mem-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-wlan-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-q6-dsp-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-camera-thermal:trips: 'trip-point@0' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml: thermal-zones:
-multimedia-thermal:trips: 'trip-point@0' does not match any of the
-regexes: '^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
-
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 38 +++++++++++++--------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 91f7f2d075978..074c4b614d221 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -500,7 +500,7 @@
- 			thermal-sensors = <&tsens0 1>;
- 
- 			trips {
--				cpu0_alert0: trip-point@0 {
-+				cpu0_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -521,7 +521,7 @@
- 			thermal-sensors = <&tsens0 2>;
- 
- 			trips {
--				cpu1_alert0: trip-point@0 {
-+				cpu1_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -542,7 +542,7 @@
- 			thermal-sensors = <&tsens0 3>;
- 
- 			trips {
--				cpu2_alert0: trip-point@0 {
-+				cpu2_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -563,7 +563,7 @@
- 			thermal-sensors = <&tsens0 4>;
- 
- 			trips {
--				cpu3_alert0: trip-point@0 {
-+				cpu3_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -584,7 +584,7 @@
- 			thermal-sensors = <&tsens0 7>;
- 
- 			trips {
--				cpu4_alert0: trip-point@0 {
-+				cpu4_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -605,7 +605,7 @@
- 			thermal-sensors = <&tsens0 8>;
- 
- 			trips {
--				cpu5_alert0: trip-point@0 {
-+				cpu5_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -626,7 +626,7 @@
- 			thermal-sensors = <&tsens0 9>;
- 
- 			trips {
--				cpu6_alert0: trip-point@0 {
-+				cpu6_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -647,7 +647,7 @@
- 			thermal-sensors = <&tsens0 10>;
- 
- 			trips {
--				cpu7_alert0: trip-point@0 {
-+				cpu7_alert0: trip-point0 {
- 					temperature = <75000>;
- 					hysteresis = <2000>;
- 					type = "passive";
-@@ -668,7 +668,7 @@
- 			thermal-sensors = <&tsens0 12>;
- 
- 			trips {
--				gpu1_alert0: trip-point@0 {
-+				gpu1_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -683,7 +683,7 @@
- 			thermal-sensors = <&tsens0 13>;
- 
- 			trips {
--				gpu2_alert0: trip-point@0 {
-+				gpu2_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -698,7 +698,7 @@
- 			thermal-sensors = <&tsens0 5>;
- 
- 			trips {
--				cluster0_mhm_alert0: trip-point@0 {
-+				cluster0_mhm_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -713,7 +713,7 @@
- 			thermal-sensors = <&tsens0 6>;
- 
- 			trips {
--				cluster1_mhm_alert0: trip-point@0 {
-+				cluster1_mhm_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -728,7 +728,7 @@
- 			thermal-sensors = <&tsens0 11>;
- 
- 			trips {
--				cluster1_l2_alert0: trip-point@0 {
-+				cluster1_l2_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -743,7 +743,7 @@
- 			thermal-sensors = <&tsens1 1>;
- 
- 			trips {
--				modem_alert0: trip-point@0 {
-+				modem_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -758,7 +758,7 @@
- 			thermal-sensors = <&tsens1 2>;
- 
- 			trips {
--				mem_alert0: trip-point@0 {
-+				mem_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -773,7 +773,7 @@
- 			thermal-sensors = <&tsens1 3>;
- 
- 			trips {
--				wlan_alert0: trip-point@0 {
-+				wlan_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -788,7 +788,7 @@
- 			thermal-sensors = <&tsens1 4>;
- 
- 			trips {
--				q6_dsp_alert0: trip-point@0 {
-+				q6_dsp_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -803,7 +803,7 @@
- 			thermal-sensors = <&tsens1 5>;
- 
- 			trips {
--				camera_alert0: trip-point@0 {
-+				camera_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
-@@ -818,7 +818,7 @@
- 			thermal-sensors = <&tsens1 6>;
- 
- 			trips {
--				multimedia_alert0: trip-point@0 {
-+				multimedia_alert0: trip-point0 {
- 					temperature = <90000>;
- 					hysteresis = <2000>;
- 					type = "hot";
--- 
-2.20.1
-
+> > > +
+> > > +      trips:
+> > > +        type: object
+> > > +        description:
+> > > +          This node describes a set of points in the temperature domain at
+> > > +          which the thermal framework needs to takes action. The actions to
+> >
+> > s/needs to takes/needs to take/
+>
+> Will fix.
+>
+> > > +          be taken are defined in another node called cooling-maps.
+> > > +
+> > > +        patternProperties:
+> > > +          "^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$":
+> > > +            type: object
+> > > +
+> > > +            properties:
+> > > +              temperature:
+> > > +                $ref: /schemas/types.yaml#/definitions/int32
+> > > +                minimum: -273000
+> > > +                maximum: 200000
+> > > +                description:
+> > > +                  An integer expressing the trip temperature in millicelsius.
+> > > +
+> > > +              hysteresis:
+> > > +                $ref: /schemas/types.yaml#/definitions/uint32
+> > > +                description:
+> > > +                  An unsigned integer expressing the hysteresis delta with
+> > > +                  respect to the trip temperature property above, also in
+> > > +                  millicelsius.
+> >
+> > This property is worth a bit longer description.
+>
+> Will improve the description.
+>
+> > > +
+> > > +              type:
+> > > +                $ref: /schemas/types.yaml#/definitions/string
+> > > +                enum:
+> > > +                  - active   # enable active cooling e.g. fans
+> > > +                  - passive  # enable passive cooling e.g. throttling cpu
+> > > +                  - hot      # send notification to driver
+> > > +                  - critical # send notification to driver, trigger shutdown
+> > > +                description: |
+> > > +                  There are four valid trip types: active, passive, hot,
+> > > +                  critical.
+> >
+> > [snip]
+> >
+> > > +
+> > > +    thermal-zones {
+> > > +            cpu0-thermal {
+> > > +                    polling-delay-passive = <250>;
+> > > +                    polling-delay = <1000>;
+> > > +
+> > > +                    thermal-sensors = <&tsens0 1>;
+> > > +
+> > > +                    trips {
+> > > +                            cpu0_alert0: trip-point0 {
+> > > +                                    temperature = <90000>;
+> > > +                                    hysteresis = <2000>;
+> > > +                                    type = "passive";
+> > > +                            };
+> > > +
+> > > +                            cpu0_alert1: trip-point1 {
+> > > +                                    temperature = <95000>;
+> > > +                                    hysteresis = <2000>;
+> > > +                                    type = "passive";
+> > > +                            };
+> > > +
+> > > +                            cpu0_crit: cpu_crit {
+> > > +                                    temperature = <110000>;
+> > > +                                    hysteresis = <1000>;
+> > > +                                    type = "critical";
+> > > +                            };
+> > > +                    };
+> > > +
+> > > +                    cooling-maps {
+> > > +                            map0 {
+> > > +                                    trip = <&cpu0_alert0>;
+> > > +                                    cooling-device = <&CPU0 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>,
+> > > +                                                     <&CPU1 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>,
+> > > +                                                     <&CPU2 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>,
+> > > +                                                     <&CPU3 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>;
+> > > +                            };
+> > > +
+> > > +                            map1 {
+> > > +                                    trip = <&cpu0_alert1>;
+> > > +                                    cooling-device = <&CPU0 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>,
+> > > +                                                     <&CPU1 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>,
+> > > +                                                     <&CPU2 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>,
+> > > +                                                     <&CPU3 THERMAL_NO_LIMIT
+> > > +                                                            THERMAL_NO_LIMIT>;
+> >
+> >  From this two examples of handling cpu0_alert0 and cpu0_alert1 you
+> > cannot conclude anything (if you don't understand thermal framework (and
+> > probably IPA). As a simple example it would be better to put a comment
+> > with a description and limit min, max to a specific OPP:
+> >
+> > map0 {
+> >      trip = <&cpu0_alert0>;
+> >      /* Corresponds to 1400MHz in OPP table */
+> >      cooling-device = <&CPU0 3 3>, <&CPU1 3 3>, <&CPU2 3 3>, <&CPU3 3 3>;
+> > };
+> >
+> > map1 {
+> >      trip = <&cpu0_alert1>;
+> >      /* Corresponds to 1000MHz in OPP table */
+> >      cooling-device = <&CPU0 5 5>, <&CPU1 5 5>, <&CPU2 5 5>, <&CPU3 5 5>;
+> > };
+> >
+> > IMHO this kind of example would tell more to an avg driver developer.
+>
+> Will fix.
+>
+> Thanks for the review.
+>
+> Regards,
+> Amit
