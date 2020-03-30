@@ -2,467 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5ED7198170
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 18:41:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CE5419818C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 18:44:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726000AbgC3Qle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 12:41:34 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:25760 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726497AbgC3Qld (ORCPT
+        id S1728534AbgC3Qof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 12:44:35 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33977 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728445AbgC3Qof (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 12:41:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585586492; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=SET+wvNgxuRLvLMyFVqrdey9GNdOJ5MZE69IVGtvv3E=; b=vYD7caY3vKuEdAVW6cFHTM21Chk1OypwRsgFnjyPvQIxJkY6BNG6SNW1o40kGf0TvHwtb9ev
- rmwclL5VncOMNICeskANmi4tAAeqfRRlnBp44UUsgwkUh5QXyG6rpdcn6pAbJssZFEeVTklm
- 789BDwuMopDdDPz4rmlh66vpf34=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e822139.7fed6b9d00a0-smtp-out-n04;
- Mon, 30 Mar 2020 16:41:29 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A046DC433BA; Mon, 30 Mar 2020 16:41:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 94640C433F2;
-        Mon, 30 Mar 2020 16:41:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 94640C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, linus.walleij@linaro.org, tglx@linutronix.de,
-        maz@kernel.org, jason@lakedaemon.net, dianders@chromium.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [RFC v3] irqchip: qcom: pdc: Introduce irq_set_wake call
-Date:   Mon, 30 Mar 2020 22:11:00 +0530
-Message-Id: <1585586460-3272-2-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1585586460-3272-1-git-send-email-mkshah@codeaurora.org>
-References: <1585586460-3272-1-git-send-email-mkshah@codeaurora.org>
+        Mon, 30 Mar 2020 12:44:35 -0400
+Received: by mail-wr1-f67.google.com with SMTP id 65so22555055wrl.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 09:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NMjjibIIWKkjS3mT8K/LaAOt0umug6ECpFrUMrbf80Q=;
+        b=A7hYCG+DMxsfs+p4dOlPbELVLSBYbonh32fiASwC66wGxegjqq0yAZwOa89o1z2aAb
+         0zy3AUO0M/juJRdqxZ2K1K8NRmXb2AnWYaLpK4URzN5fPUNjMU5cv6jV8NSMHBwB4a7I
+         AcW3NnqcHqnKM2IEBRxqaL+HRGt6xlt2R1b6UMqhRB2NI5bzRtyy9udI6ukbMxn1xlZY
+         iVxABTawQw2LLvT7vFMGC+alPQwH6aEpSWGmCOf2rUJL3lCYAF+VNEKVtwkhtDl5HN/J
+         tJkzYvKvyPqC0ZFqcdCrc4G5dRtxWYHGM0CdC5sriV9tHa9y1/sk02ReiJ5ozFxIbPoe
+         PlFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NMjjibIIWKkjS3mT8K/LaAOt0umug6ECpFrUMrbf80Q=;
+        b=X9aDmo/B/o1wp09OJNUmA5InXl55m7900I7zSop0ef6SaZdTheFCIXM41Jke62tED9
+         vahGcd8GPc2ytCvJEznjAG7Jiw4G0CSYYQ18N4CsjWLi52EuvfLh69/Y2aJVW+5HJm/t
+         ZTEizl/8I6D0pFLvTI9aKuSQNSd2kZJ6ihBYwdl2DTwuNPEOoV+4WcGWK5SKqKgwS7Dn
+         RkC/GlD4Cq771asA+HIOEdy/Rr56Y/TA186F6RYIx32ZOgGcIp/wdN51NlTN+79mU1NV
+         JqF3hBAVZC9oyrRGA/CuDVFh5UbsuCHLjko0VY9j2DOZ0pr8lHBUPHJud1xGnZWtRRsM
+         4OXg==
+X-Gm-Message-State: ANhLgQ0WkbZgGJ354QiDOhUtXBWuKcFGDpJ+UFi13QUZ6iXLFyFSjg20
+        uenD9UrPaTrZPsKeiWSKQJryvA==
+X-Google-Smtp-Source: ADFU+vs+gLwL7qsbyHwdmX1dM4orp+OrvvzUsH84kvoP5OmJhnkr1ogr21XVfZ/BNVSp588do3EZ8A==
+X-Received: by 2002:adf:9321:: with SMTP id 30mr15110799wro.330.1585586671677;
+        Mon, 30 Mar 2020 09:44:31 -0700 (PDT)
+Received: from localhost.localdomain (dh207-96-177.xnet.hr. [88.207.96.177])
+        by smtp.googlemail.com with ESMTPSA id h2sm146711wmb.16.2020.03.30.09.44.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2020 09:44:31 -0700 (PDT)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org
+Cc:     John Crispin <john@phrozen.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: [PATCH v5 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
+Date:   Mon, 30 Mar 2020 18:43:27 +0200
+Message-Id: <20200330164328.2944505-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.26.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add changes to differentiate enabled and wakeup capable interrupts in SW
-to support drivers which disable the wakeup capable interrupt in SW during
-suspend while irqchip HW expects it to leave enabled in HW during suspend.
+From: John Crispin <john@phrozen.org>
 
-Change the way interrupts get enabled at HW in wakeup capable PDC irq chip
-during suspend. Introduce .irq_set_wake call which lets interrupts marked
-as wakeup capable. Such interrupts in PDC domain and PDC gpio domain are
-checked from PDC's CPU PM notification to enable them in HW at PDC and its
-parent GIC if its marked as wakeup capable but are disabled in SW.
+Add a driver to setup the USB phy on Qualcom Dakota SoCs.
+The driver sets up HS and SS phys.
 
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+Signed-off-by: John Crispin <john@phrozen.org>
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: Luka Perkov <luka.perkov@sartura.hr>
 ---
- drivers/irqchip/qcom-pdc.c | 271 ++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 256 insertions(+), 15 deletions(-)
+Changes from v2 to v3:
+* Remove magic writes as they are not needed
+* Correct commit message
 
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 6ae9e1f..c43715b 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -1,9 +1,10 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-- * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
-  */
+ drivers/phy/qualcomm/Kconfig                |   7 +
+ drivers/phy/qualcomm/Makefile               |   1 +
+ drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 152 ++++++++++++++++++++
+ 3 files changed, 160 insertions(+)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+
+diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+index e46824da29f6..964bd5d784d2 100644
+--- a/drivers/phy/qualcomm/Kconfig
++++ b/drivers/phy/qualcomm/Kconfig
+@@ -18,6 +18,13 @@ config PHY_QCOM_APQ8064_SATA
+ 	depends on OF
+ 	select GENERIC_PHY
  
- #include <linux/err.h>
-+#include <linux/cpu_pm.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-@@ -17,6 +18,7 @@
- #include <linux/soc/qcom/irq.h>
- #include <linux/spinlock.h>
- #include <linux/slab.h>
-+#include <linux/suspend.h>
- #include <linux/types.h>
- 
- #define PDC_MAX_IRQS		168
-@@ -36,6 +38,23 @@ struct pdc_pin_region {
- 	u32 cnt;
- };
- 
-+struct pdc_pm_data {
-+	struct cpumask cpus_in_pc;
-+	spinlock_t pm_lock;
-+	bool suspend_start;
-+	bool from_pdc_suspend;
-+	struct notifier_block pdc_pm_nfb;
-+	struct notifier_block pdc_cpu_pm_nfb;
++config PHY_QCOM_IPQ4019_USB
++	tristate "Qualcomm IPQ4019 USB PHY module"
++	depends on OF && ARCH_QCOM
++	select GENERIC_PHY
++	help
++	  Support for the USB PHY on QCOM IPQ4019/Dakota chipsets.
 +
-+	DECLARE_BITMAP(pdc_domain_enabled_irqs, PDC_MAX_IRQS);
-+	DECLARE_BITMAP(pdc_domain_wake_irqs, PDC_MAX_IRQS);
-+	DECLARE_BITMAP(pdc_gpio_domain_enabled_irqs, PDC_MAX_GPIO_IRQS);
-+	DECLARE_BITMAP(pdc_gpio_domain_wake_irqs, PDC_MAX_GPIO_IRQS);
+ config PHY_QCOM_IPQ806X_SATA
+ 	tristate "Qualcomm IPQ806x SATA SerDes/PHY driver"
+ 	depends on ARCH_QCOM
+diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
+index 283251d6a5d9..8afe6c4f5178 100644
+--- a/drivers/phy/qualcomm/Makefile
++++ b/drivers/phy/qualcomm/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_PHY_ATH79_USB)		+= phy-ath79-usb.o
+ obj-$(CONFIG_PHY_QCOM_APQ8064_SATA)	+= phy-qcom-apq8064-sata.o
++obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)	+= phy-qcom-ipq4019-usb.o
+ obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)	+= phy-qcom-ipq806x-sata.o
+ obj-$(CONFIG_PHY_QCOM_PCIE2)		+= phy-qcom-pcie2.o
+ obj-$(CONFIG_PHY_QCOM_QMP)		+= phy-qcom-qmp.o
+diff --git a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+new file mode 100644
+index 000000000000..7efebae6b6fd
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+@@ -0,0 +1,152 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Copyright (C) 2018 John Crispin <john@phrozen.org>
++ *
++ * Based on code from
++ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
++ *
++ */
 +
-+	struct irq_domain *pdc_domain;
-+	struct irq_domain *pdc_gpio_domain;
++#include <linux/delay.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/of_platform.h>
++#include <linux/phy/phy.h>
++#include <linux/platform_device.h>
++#include <linux/reset.h>
++
++struct ipq4019_usb_phy {
++	struct device		*dev;
++	struct phy		*phy;
++	void __iomem		*base;
++	struct reset_control	*por_rst;
++	struct reset_control	*srif_rst;
 +};
 +
- static DEFINE_RAW_SPINLOCK(pdc_lock);
- static void __iomem *pdc_base;
- static struct pdc_pin_region *pdc_region;
-@@ -89,18 +108,38 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
- 
- static void qcom_pdc_gic_disable(struct irq_data *d)
- {
-+	struct pdc_pm_data *p;
-+
- 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
- 		return;
- 
-+	p = irq_data_get_irq_chip_data(d);
-+	if (!p->from_pdc_suspend) {
-+		if (irq_domain_qcom_handle_wakeup(d->domain))
-+			clear_bit(d->hwirq, p->pdc_gpio_domain_enabled_irqs);
-+		else
-+			clear_bit(d->hwirq, p->pdc_domain_enabled_irqs);
-+	}
-+
- 	pdc_enable_intr(d, false);
- 	irq_chip_disable_parent(d);
- }
- 
- static void qcom_pdc_gic_enable(struct irq_data *d)
- {
-+	struct pdc_pm_data *p;
-+
- 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
- 		return;
- 
-+	p = irq_data_get_irq_chip_data(d);
-+	if (!p->from_pdc_suspend) {
-+		if (irq_domain_qcom_handle_wakeup(d->domain))
-+			set_bit(d->hwirq, p->pdc_gpio_domain_enabled_irqs);
-+		else
-+			set_bit(d->hwirq, p->pdc_domain_enabled_irqs);
-+	}
-+
- 	pdc_enable_intr(d, true);
- 	irq_chip_enable_parent(d);
- }
-@@ -145,6 +184,39 @@ enum pdc_irq_config_bits {
- };
- 
- /**
-+ * qcom_pdc_gic_set_wake: Mark IRQ as wakeup capable
-+ *
-+ * @d: the interrupt data
-+ * @on: enable or disable wakeup capability
-+ *
-+ * Mark IRQ as wake up capable at either pdc_domain or pdc_gpio_domain.
-+ * This will be used when entering to suspend where if any wakeup capable
-+ * IRQ is already disabled in SW, such IRQ needs to be re-enabled at HW.
-+ */
-+static int qcom_pdc_gic_set_wake(struct irq_data *d, unsigned int on)
++static int ipq4019_ss_phy_power_off(struct phy *_phy)
 +{
-+	struct pdc_pm_data *p;
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
 +
-+	if (d->hwirq == GPIO_NO_WAKE_IRQ)
-+		return 0;
++	reset_control_assert(phy->por_rst);
++	msleep(10);
 +
-+	p = irq_data_get_irq_chip_data(d);
-+	if (on) {
-+		if (irq_domain_qcom_handle_wakeup(d->domain))
-+			set_bit(d->hwirq, p->pdc_gpio_domain_wake_irqs);
-+		else
-+			set_bit(d->hwirq, p->pdc_domain_wake_irqs);
-+	} else {
-+		if (irq_domain_qcom_handle_wakeup(d->domain))
-+			clear_bit(d->hwirq, p->pdc_gpio_domain_wake_irqs);
-+		else
-+			clear_bit(d->hwirq, p->pdc_domain_wake_irqs);
-+	}
-+
-+	return irq_chip_set_wake_parent(d, on);
++	return 0;
 +}
 +
-+/**
-  * qcom_pdc_gic_set_type: Configure PDC for the interrupt
-  *
-  * @d: the interrupt data
-@@ -202,14 +274,162 @@ static struct irq_chip qcom_pdc_gic_chip = {
- 	.irq_get_irqchip_state	= qcom_pdc_gic_get_irqchip_state,
- 	.irq_set_irqchip_state	= qcom_pdc_gic_set_irqchip_state,
- 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
-+	.irq_set_wake		= qcom_pdc_gic_set_wake,
- 	.irq_set_type		= qcom_pdc_gic_set_type,
- 	.flags			= IRQCHIP_MASK_ON_SUSPEND |
--				  IRQCHIP_SET_TYPE_MASKED |
--				  IRQCHIP_SKIP_SET_WAKE,
-+				  IRQCHIP_SET_TYPE_MASKED,
- 	.irq_set_vcpu_affinity	= irq_chip_set_vcpu_affinity_parent,
- 	.irq_set_affinity	= irq_chip_set_affinity_parent,
- };
- 
-+static struct irq_data *pdc_find_irq_data(struct irq_domain *domain,
-+					  int wake_irq)
++static int ipq4019_ss_phy_power_on(struct phy *_phy)
 +{
-+	int irq = irq_find_mapping(domain, wake_irq);
-+	struct irq_desc *desc = irq_to_desc(irq);
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
 +
-+	return &desc->irq_data;
++	ipq4019_ss_phy_power_off(_phy);
++
++	reset_control_deassert(phy->por_rst);
++
++	return 0;
 +}
 +
-+/**
-+ * pdc_suspend: Enable IRQs marked for wakeup
-+ *
-+ * @p: pdc_pm_data
-+ *
-+ * The SW expects that an IRQ that's disabled with disable_irq() can still
-+ * wake the system from sleep states such as "suspend to RAM", if it has
-+ * been marked for wakeup.
-+ *
-+ * While the SW may choose to differ status for "wake" and "enabled" interrupts,
-+ * its not the case with HW. There is no dedicated config in HW to differ "wake"
-+ * and "enabled". Same is case for PDC's parent irq_chip (ARM GIC) which has
-+ * only GICD_ISENABLER to indicate "enabled" or "disabled" status.
-+ *
-+ * So, the HW ONLY understands either "enabled" or "disabled".
-+ * The final status in HW should be an "OR" of "enable" and "wake" status.
-+ * i.e. PDC (and GIC) irq enable in HW = irq enable | irq wake in SW
-+ */
-+static void pdc_suspend(struct pdc_pm_data *p)
++static struct phy_ops ipq4019_usb_ss_phy_ops = {
++	.power_on	= ipq4019_ss_phy_power_on,
++	.power_off	= ipq4019_ss_phy_power_off,
++};
++
++static int ipq4019_hs_phy_power_off(struct phy *_phy)
 +{
-+	int wake_irq;
-+	bool enabled;
-+	struct irq_data *d;
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
 +
-+	p->from_pdc_suspend = true;
-+	for_each_set_bit(wake_irq, p->pdc_domain_wake_irqs, PDC_MAX_IRQS) {
-+		enabled = test_bit(wake_irq, p->pdc_domain_enabled_irqs);
-+		if (!enabled) {
-+			d = pdc_find_irq_data(p->pdc_domain, wake_irq);
++	reset_control_assert(phy->por_rst);
++	msleep(10);
 +
-+			pdc_enable_intr(d, true);
-+			irq_chip_enable_parent(d);
-+		}
-+	}
++	reset_control_assert(phy->srif_rst);
++	msleep(10);
 +
-+	for_each_set_bit(wake_irq, p->pdc_gpio_domain_wake_irqs,
-+			 PDC_MAX_GPIO_IRQS) {
-+		enabled = test_bit(wake_irq, p->pdc_gpio_domain_enabled_irqs);
-+		if (!enabled) {
-+			d = pdc_find_irq_data(p->pdc_gpio_domain, wake_irq);
-+
-+			irq_chip_enable_parent(d);
-+		}
-+	}
++	return 0;
 +}
 +
-+static void pdc_resume(struct pdc_pm_data *p)
++static int ipq4019_hs_phy_power_on(struct phy *_phy)
 +{
-+	int wake_irq;
-+	bool enabled, pending;
-+	struct irq_data *d;
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
 +
-+	for_each_set_bit(wake_irq, p->pdc_domain_wake_irqs, PDC_MAX_IRQS) {
-+		enabled = test_bit(wake_irq, p->pdc_domain_enabled_irqs);
-+		if (!enabled) {
-+			d = pdc_find_irq_data(p->pdc_domain, wake_irq);
++	ipq4019_hs_phy_power_off(_phy);
 +
-+			pdc_enable_intr(d, false);
-+			irq_chip_disable_parent(d);
-+		}
-+	}
++	reset_control_deassert(phy->srif_rst);
++	msleep(10);
 +
-+	for_each_set_bit(wake_irq, p->pdc_gpio_domain_wake_irqs,
-+			 PDC_MAX_GPIO_IRQS) {
-+		enabled = test_bit(wake_irq, p->pdc_gpio_domain_enabled_irqs);
-+		if (!enabled) {
-+			d = pdc_find_irq_data(p->pdc_gpio_domain, wake_irq);
++	reset_control_deassert(phy->por_rst);
 +
-+			/*
-+			 * When the drivers invoke enablie_irq() on a GPIO IRQ,
-+			 * the pending interrupt gets cleared at GIC before
-+			 * enabling it from msm_gpio_irq_enable(). So CPU will
-+			 * never see pending IRQ after resume if we disable them
-+			 * here.
-+			 *
-+			 * If wakeup is due to GPIO interrupt do not disable it.
-+			 * By not disabling, The IRQ will be delivered to CPU
-+			 * and when driver invokes enable_irq(), The softirq
-+			 * tasklet does resend_irqs() to call irq handler.
-+			 */
-+			irq_chip_get_parent_state(d, IRQCHIP_STATE_PENDING,
-+						  &pending);
-+			if (pending) {
-+				pending = false;
-+				continue;
-+			}
-+
-+			irq_chip_disable_parent(d);
-+		}
-+	}
-+	p->from_pdc_suspend = false;
++	return 0;
 +}
 +
-+static int pdc_cpu_pm_callback(struct notifier_block *nfb,
-+			       unsigned long action, void *v)
++static struct phy_ops ipq4019_usb_hs_phy_ops = {
++	.power_on	= ipq4019_hs_phy_power_on,
++	.power_off	= ipq4019_hs_phy_power_off,
++};
++
++static const struct of_device_id ipq4019_usb_phy_of_match[] = {
++	{ .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hs_phy_ops},
++	{ .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ss_phy_ops},
++	{ },
++};
++MODULE_DEVICE_TABLE(of, ipq4019_usb_phy_of_match);
++
++static int ipq4019_usb_phy_probe(struct platform_device *pdev)
 +{
-+	struct pdc_pm_data *p = container_of(nfb, struct pdc_pm_data,
-+					     pdc_cpu_pm_nfb);
-+	unsigned long flags;
++	struct device *dev = &pdev->dev;
++	struct resource *res;
++	struct phy_provider *phy_provider;
++	struct ipq4019_usb_phy *phy;
++	const struct of_device_id *match;
 +
-+	if (!p->suspend_start)
-+		return NOTIFY_OK;
++	match = of_match_device(ipq4019_usb_phy_of_match, &pdev->dev);
++	if (!match)
++		return -ENODEV;
 +
-+	spin_lock_irqsave(&p->pm_lock, flags);
-+	switch (action) {
-+	case CPU_PM_ENTER:
-+		cpumask_set_cpu(raw_smp_processor_id(), &p->cpus_in_pc);
-+		if (cpumask_equal(&p->cpus_in_pc, cpu_online_mask))
-+			pdc_suspend(p);
-+		break;
-+	case CPU_PM_ENTER_FAILED:
-+	case CPU_PM_EXIT:
-+		if (cpumask_equal(&p->cpus_in_pc, cpu_online_mask))
-+			pdc_resume(p);
-+		cpumask_clear_cpu(raw_smp_processor_id(), &p->cpus_in_pc);
-+		break;
-+	}
-+	spin_unlock_irqrestore(&p->pm_lock, flags);
-+
-+	return NOTIFY_OK;
-+}
-+
-+static int pdc_pm_callback(struct notifier_block *nfb,
-+			   unsigned long event, void *unused)
-+{
-+	struct pdc_pm_data *p = container_of(nfb, struct pdc_pm_data,
-+					     pdc_pm_nfb);
-+	switch (event) {
-+	case PM_SUSPEND_PREPARE:
-+		p->suspend_start = true;
-+		break;
-+	case PM_POST_SUSPEND:
-+		p->suspend_start = false;
-+		break;
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
- static irq_hw_number_t get_parent_hwirq(int pin)
- {
- 	int i;
-@@ -254,7 +474,8 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
- 		return ret;
- 
- 	ret  = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
--					     &qcom_pdc_gic_chip, NULL);
-+					     &qcom_pdc_gic_chip,
-+					     domain->host_data);
- 	if (ret)
- 		return ret;
- 
-@@ -298,7 +519,8 @@ static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
- 		return ret;
- 
- 	ret = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
--					    &qcom_pdc_gic_chip, NULL);
-+					    &qcom_pdc_gic_chip,
-+					    domain->host_data);
- 	if (ret)
- 		return ret;
- 
-@@ -376,7 +598,8 @@ static int pdc_setup_pin_mapping(struct device_node *np)
- 
- static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
- {
--	struct irq_domain *parent_domain, *pdc_domain, *pdc_gpio_domain;
-+	struct pdc_pm_data *p;
-+	struct irq_domain *parent_domain;
- 	int ret;
- 
- 	pdc_base = of_iomap(node, 0);
-@@ -385,6 +608,10 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
- 		return -ENXIO;
- 	}
- 
-+	p = kzalloc(sizeof(struct pdc_pm_data), GFP_KERNEL);
-+	if (!p)
++	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
++	if (!phy)
 +		return -ENOMEM;
 +
- 	parent_domain = irq_find_host(parent);
- 	if (!parent_domain) {
- 		pr_err("%pOF: unable to find PDC's parent domain\n", node);
-@@ -398,33 +625,47 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
- 		goto fail;
- 	}
- 
--	pdc_domain = irq_domain_create_hierarchy(parent_domain, 0, PDC_MAX_IRQS,
--						 of_fwnode_handle(node),
--						 &qcom_pdc_ops, NULL);
--	if (!pdc_domain) {
-+	p->pdc_domain = irq_domain_create_hierarchy(parent_domain, 0,
-+						    PDC_MAX_IRQS,
-+						    of_fwnode_handle(node),
-+						    &qcom_pdc_ops, p);
-+	if (!p->pdc_domain) {
- 		pr_err("%pOF: GIC domain add failed\n", node);
- 		ret = -ENOMEM;
- 		goto fail;
- 	}
- 
--	pdc_gpio_domain = irq_domain_create_hierarchy(parent_domain,
-+	p->pdc_gpio_domain = irq_domain_create_hierarchy(parent_domain,
- 					IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP,
- 					PDC_MAX_GPIO_IRQS,
- 					of_fwnode_handle(node),
--					&qcom_pdc_gpio_ops, NULL);
--	if (!pdc_gpio_domain) {
-+					&qcom_pdc_gpio_ops, p);
-+	if (!p->pdc_gpio_domain) {
- 		pr_err("%pOF: PDC domain add failed for GPIO domain\n", node);
- 		ret = -ENOMEM;
- 		goto remove;
- 	}
- 
--	irq_domain_update_bus_token(pdc_gpio_domain, DOMAIN_BUS_WAKEUP);
-+	irq_domain_update_bus_token(p->pdc_gpio_domain, DOMAIN_BUS_WAKEUP);
++	phy->dev = &pdev->dev;
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	phy->base = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(phy->base)) {
++		dev_err(dev, "failed to remap register memory\n");
++		return PTR_ERR(phy->base);
++	}
 +
-+	/* Register for PM-transition events */
-+	p->pdc_pm_nfb.notifier_call = pdc_pm_callback;
-+	ret = register_pm_notifier(&p->pdc_pm_nfb);
-+	if (ret)
-+		goto remove;
++	phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
++	if (IS_ERR(phy->por_rst)) {
++		if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
++			dev_err(dev, "POR reset is missing\n");
++		return PTR_ERR(phy->por_rst);
++	}
 +
-+	spin_lock_init(&p->pm_lock);
++	phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
++	if (IS_ERR(phy->srif_rst))
++		return PTR_ERR(phy->srif_rst);
 +
-+	/* Register for CPU PM notifications */
-+	p->pdc_cpu_pm_nfb.notifier_call = pdc_cpu_pm_callback;
-+	cpu_pm_register_notifier(&p->pdc_cpu_pm_nfb);
- 
- 	return 0;
- 
- remove:
--	irq_domain_remove(pdc_domain);
-+	irq_domain_remove(p->pdc_domain);
- fail:
-+	kfree(p);
- 	kfree(pdc_region);
- 	iounmap(pdc_base);
- 	return ret;
++	phy->phy = devm_phy_create(dev, NULL, match->data);
++	if (IS_ERR(phy->phy)) {
++		dev_err(dev, "failed to create PHY\n");
++		return PTR_ERR(phy->phy);
++	}
++	phy_set_drvdata(phy->phy, phy);
++
++	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
++
++	return PTR_ERR_OR_ZERO(phy_provider);
++}
++
++static struct platform_driver ipq4019_usb_phy_driver = {
++	.probe	= ipq4019_usb_phy_probe,
++	.driver = {
++		.of_match_table	= ipq4019_usb_phy_of_match,
++		.name  = "ipq4019-usb-phy",
++	}
++};
++module_platform_driver(ipq4019_usb_phy_driver);
++
++MODULE_DESCRIPTION("QCOM/IPQ4019 USB phy driver");
++MODULE_AUTHOR("John Crispin <john@phrozen.org>");
++MODULE_LICENSE("GPL v2");
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.0
+
