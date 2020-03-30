@@ -2,84 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C20C3198460
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 21:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3988F19848F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 21:37:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727714AbgC3TZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 15:25:17 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:48062 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727148AbgC3TZR (ORCPT
+        id S1728708AbgC3ThJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 15:37:09 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:52391 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728232AbgC3ThJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 15:25:17 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 30 Mar 2020 15:37:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585597029; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=5bL1rD6752n4bdZfwaN40CANhZG9U7fmvdfSvXpFEg0=; b=qS1rK+lIeGNsbt1oRpLgsoIl27WK+DV9B+V/+ORJn9LQKBR+uM/3uQoSRWubB/Ed5Jj1+Ics
+ isfTmVdxTyCzJzA4gsxYl2cuKITkuRpmOUiaptBW56lnqLmBsbmHl9ILL+Jq4/PWTqT2sMy+
+ KvnyBLv6xupPVlfAMXBjbYmaSyE=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e824a63.7f7fc336a500-smtp-out-n05;
+ Mon, 30 Mar 2020 19:37:07 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 74CC9C44792; Mon, 30 Mar 2020 19:37:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 5F9AB20024;
-        Mon, 30 Mar 2020 21:25:13 +0200 (CEST)
-Date:   Mon, 30 Mar 2020 21:25:11 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        sean@poorly.run, seanpaul@chromium.org
-Subject: Re: [PATCH v10 0/2] Add support for rm69299 Visionox panel driver
- and add devicetree bindings for visionox panel
-Message-ID: <20200330192511.GG7594@ravnborg.org>
-References: <20200327073636.13823-1-harigovi@codeaurora.org>
- <20200328204047.GG32230@ravnborg.org>
- <20200329174417.GB199755@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200329174417.GB199755@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=eMA9ckh1 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=VwQbUJbxAAAA:8
-        a=-x4TflB_B6iPNPREh9QA:9 a=CjuIK1q_8ugA:10 a=AjGcO6oz07-iQ99wixmX:22
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6D8D2C433BA;
+        Mon, 30 Mar 2020 19:37:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6D8D2C433BA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v4 0/4] Add SS/HS-USB changes for Qualcomm SM8150 chipset
+Date:   Mon, 30 Mar 2020 12:36:53 -0700
+Message-Id: <1585597017-30683-1-git-send-email-wcheng@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias.
+This series adds support for the Synopsis 7nm HSPHY USB driver being
+used in QCOM chipsets.  The HSPHY register map differs compared to 
+other PHY revisions.  In addition, modifications and updates are done
+to the QMP driver to add new registers/offsets, and to update the
+initialization sequence for enabling the SSUSB path on SM8150.
 
-On Sun, Mar 29, 2020 at 10:44:17AM -0700, Matthias Kaehlcke wrote:
-> Hi Sam,
-> 
-> On Sat, Mar 28, 2020 at 09:40:47PM +0100, Sam Ravnborg wrote:
-> > Hi Harigovindan
-> > 
-> > On Fri, Mar 27, 2020 at 01:06:34PM +0530, Harigovindan P wrote:
-> > > Adding support for visionox rm69299 panel driver and adding bindings for the same panel.
-> > > 
-> > > Harigovindan P (2):
-> > >   dt-bindings: display: add visionox rm69299 panel variant
-> > >   drm/panel: add support for rm69299 visionox panel driver
-> > 
-> > I have only the first patch, which is now applied.
-> > Please resend second patch as it is lost somewhere.
-> 
-> Yes, it seems for v8, v9 and v10 only the bindings were sent, even
-> though the cover letter and subject say it's a series of two patches.
-> 
-> To my knowledge the latest version of the driver patch is this:
-> 
-> https://patchwork.kernel.org/patch/11439689/
+Changes in v4:
+ - Fix POWERDOWN offset for QMP PHY exit routine, and check for
+   has_phy_dp_com_ctrl instead of !has_phy_com_ctrl
 
-I did not go back and check, but I recall there was
-review feedback that is not yet addressed.
+Changes in v3:
+ - Use devm_reset_control_get_exclusive instead of referencing index for
+   reset handle
 
-I applied the patch here and checkpatch was not happy:
-total: 14 errors, 22 warnings, 11 checks, 314 lines checked
+Changes in v2:
+ - Fixed YAML errors caught by dt_binding_check
 
-Many of these are trivial indent or spaces used where tabs should be
-used.
-These needs to be fixed before the driver will be applied.
+*** BLURB HERE ***
 
-And there was too much that I just did it while applying.
+Jack Pham (1):
+  phy: qcom-qmp: Add SM8150 QMP USB3 PHY support
 
-	Sam
+Wesley Cheng (3):
+  dt-bindings: phy: Add binding for qcom,usb-hs-7nm
+  phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs
+  phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB
+
+ .../devicetree/bindings/phy/qcom,usb-hs-7nm.yaml   |  76 ++++++
+ drivers/phy/qualcomm/Kconfig                       |  10 +
+ drivers/phy/qualcomm/Makefile                      |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c                | 168 +++++++++++-
+ drivers/phy/qualcomm/phy-qcom-qmp.h                | 198 +++++++++++++-
+ drivers/phy/qualcomm/phy-qcom-snps-7nm.c           | 294 +++++++++++++++++++++
+ 6 files changed, 742 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-snps-7nm.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
