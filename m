@@ -2,96 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 123BF19707C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2020 23:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A2B71975A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 09:30:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728481AbgC2VRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Mar 2020 17:17:37 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:37693 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727591AbgC2VRg (ORCPT
+        id S1729444AbgC3HaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 03:30:01 -0400
+Received: from condef-02.nifty.com ([202.248.20.67]:41104 "EHLO
+        condef-02.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729197AbgC3HaA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Mar 2020 17:17:36 -0400
-Received: by mail-ua1-f65.google.com with SMTP id l18so5569247uak.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2020 14:17:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PlAsMJa4Ap4Bu6zfW50JonjjDBj+TTytLskw+4DE0eE=;
-        b=kpkCaXt2+Nl7ioWQEwi3llXPbAASFJ3ojg/l8gaqgXvpXKsqMh6nONMh1Yc8z9mAal
-         unFgZH2mj9DaMvoWiKmonO10acBajrv0HiRZgydY2mQgFfwqVpwBKbXUhzu3uUGvZVdB
-         U42FLdYU3SOMmx4PP9bbI0aRLis9AboC1xQ6F7e8Vho7MfjbgsAEYPqG0wcFgHkXKRwl
-         tZ/aFUe/KxbNJa71VocRZJu47Pl9qgMZZo0pgkzvZRqSvVN0dPl9iI+BPy02IsjrDqxc
-         MemwmL1yGpBQPID0FIrKZBMNvEioEMafCud5HWUWfzLcnWvmKi+kVhQUFoHGQZsA7CUh
-         hzCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PlAsMJa4Ap4Bu6zfW50JonjjDBj+TTytLskw+4DE0eE=;
-        b=WAV+JnhkmVN9XI/eV00RXqv60tYqnba+c78criyGaLZ7EZvWoZ2IeN4uHkSzJIPBt6
-         4Paud0vqr5rBZpF/5r+W/HQhBiwit/QcMum9hnsYMCA8u7qmDhWdFvz18egNOVv4sJVt
-         X6+MzqYkLBWAYxUnqtU6v8+huKieuPbqvVdzve3zgMGqCZdChAIejaCbbGfxg5ueStQ6
-         z+E8Moq6QgimsJkdXuYfC8f9p8YASN2lo+dxyLCA36YNMtzWqweuH+aIiZCjr26p0Vme
-         AficijzTg3syLZ2Fmd8Npkvu2PtFcGAhNEsy6d3yKUCTzqh199aLP00VU6GWR9RSwcy9
-         JSZg==
-X-Gm-Message-State: AGi0PuYBUZcIZpiHjTfuv8l8qkbgBz05QyjD4e8uQhksP7hCy63tTStT
-        z6mguwFLFt4eDsULkDU1qGv3nPL+s/i1erZrnABkQA==
-X-Google-Smtp-Source: APiQypI5UyPceZaqS4xPEyKZJ+1QsToAhF0AamS+JTJQoRAG+CuN4Z8gCIgVDlEuDjF9cmMKZjq9V//u5kOMJTG958s=
-X-Received: by 2002:a9f:2a88:: with SMTP id z8mr5926056uai.17.1585516654164;
- Sun, 29 Mar 2020 14:17:34 -0700 (PDT)
+        Mon, 30 Mar 2020 03:30:00 -0400
+X-Greylist: delayed 833 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Mar 2020 03:29:58 EDT
+Received: from conssluserg-01.nifty.com ([10.126.8.80])by condef-02.nifty.com with ESMTP id 02U7AC7C000608;
+        Mon, 30 Mar 2020 16:10:12 +0900
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45]) (authenticated)
+        by conssluserg-01.nifty.com with ESMTP id 02U79xvR024938;
+        Mon, 30 Mar 2020 16:10:00 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-01.nifty.com 02U79xvR024938
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1585552200;
+        bh=ln1CQt+YaUVnJf/8SbMK3iPTVvG1KE5EE/FUul8MWQc=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=1sthGaoHw8qoSp3F/D3eH8NqZjk++zLNoSrFExAge5M5k4o6izC7znUZmDsjrR95d
+         3LRi45OyZDxUKTfu4A/3P4aV5+yY39DtCxwP5T2nox/GAPp7PJ3ZaF7u226D4E6kMs
+         pxp3tchjSZY1dsGYXfpp7Fyf63ssOrWN+V8tr3iI8kkkZhdSc6hQrcCJehpowCH1tV
+         t5Ybjs0wWAwMh0SzhZruoB9o66WBYJD1t+qP7ZqRNrr7efxFSXjCoLMubpsREjCj3w
+         uh2OG10xugvGzdVuKY1o+FeM5bjbz3bVeCv27FcaCEJ6WsaSLhERu5H58t5BiMZ2Xi
+         G3vbpTZyiHDew==
+X-Nifty-SrcIP: [209.85.217.45]
+Received: by mail-vs1-f45.google.com with SMTP id z125so10303326vsb.13;
+        Mon, 30 Mar 2020 00:09:59 -0700 (PDT)
+X-Gm-Message-State: AGi0PuaxIQ01k2OIzzRmX0pmP4+GKnL2dKkEkaAhViRjVhNEthRWBKXc
+        iLGdsfopkiPxzS20T9vORC2VKBgWqZ276l6JheA=
+X-Google-Smtp-Source: APiQypLmGnB9GmkGFIr7L8MQtdRTKDMNPR3ere0jKX6O5/r2adqpWFQ5TPcwWpLgYxRGXDf4dZ6YCv27RE8dCFz54+s=
+X-Received: by 2002:a67:2d55:: with SMTP id t82mr7452280vst.215.1585552198446;
+ Mon, 30 Mar 2020 00:09:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200106135715.1159420-1-robert.marko@sartura.hr>
- <CA+HBbNHEetusFNH-8Qmva=2-_HQRRJ33qfBRSudZBVW+vK0tnw@mail.gmail.com>
- <20200327220545.GC5063@builder> <CAK8P3a1_eyVSTgKDk+qph6CCKswWFWhPfX=yi3=jAeUf4uWC6w@mail.gmail.com>
-In-Reply-To: <CAK8P3a1_eyVSTgKDk+qph6CCKswWFWhPfX=yi3=jAeUf4uWC6w@mail.gmail.com>
-From:   Luka Perkov <luka.perkov@sartura.hr>
-Date:   Sun, 29 Mar 2020 23:17:23 +0200
-Message-ID: <CAKQ-crgF6ebubzi2Kim7fNp4BJFSjffnmMsaN6ghnfSXaXbCVQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: qcom: Add support for IPQ40xx
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Andy Gross <agross@kernel.org>,
-        Russell King - ARM Linux <linux@armlinux.org.uk>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+References: <20200325220542.19189-1-robh@kernel.org> <20200325220542.19189-5-robh@kernel.org>
+In-Reply-To: <20200325220542.19189-5-robh@kernel.org>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Mon, 30 Mar 2020 16:09:22 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARJn4uugHxcjK+WOWBs0gPVZQsCu4y6M8hkNK1U5FehRA@mail.gmail.com>
+Message-ID: <CAK7LNARJn4uugHxcjK+WOWBs0gPVZQsCu4y6M8hkNK1U5FehRA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] dt-bindings: Add missing 'additionalProperties: false'
+To:     Rob Herring <robh@kernel.org>
+Cc:     DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Guillaume La Roque <glaroque@baylibre.com>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Zhang Rui <rui.zhang@intel.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-amlogic@lists.infradead.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Christian Lamparter <chunkeey@gmail.com>,
-        John Crispin <john@phrozen.org>
+        linux-clk <linux-clk@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-iio@vger.kernel.org,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Linux PM mailing list <linux-pm@vger.kernel.org>,
+        Networking <netdev@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Arnd,
-
-On Sat, Mar 28, 2020 at 10:15 AM Arnd Bergmann <arnd@arndb.de> wrote:
+On Thu, Mar 26, 2020 at 7:06 AM Rob Herring <robh@kernel.org> wrote:
 >
-> On Fri, Mar 27, 2020 at 11:05 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Wed 25 Mar 03:25 PDT 2020, Robert Marko wrote:
-> >
-> > > On Mon, Jan 6, 2020 at 2:57 PM Robert Marko <robert.marko@sartura.hr> wrote:
-> > > >
-> > > > From: Christian Lamparter <chunkeey@gmail.com>
-> > > >
-> > > > Add support for the Qualcomm IPQ40xx SoC in Kconfig.
-> > > > Also add its appropriate textofs.
-> > > Any blockers on this patch?
-> > >
-> >
-> > No, I must have missed it in the past. I've picked it up for 5.8.
-> >
+> Setting 'additionalProperties: false' is frequently omitted, but is
+> important in order to check that there aren't extra undocumented
+> properties in a binding.
 >
-> If we only need these few lines, I can still squeeze it in for v5.7 last minute,
-> just forward that patch to soc@kernel.org. If other things are still needed,
-> let's wait until v5.8.
+> Ideally, we'd just add this automatically and make this the default, but
+> there's some cases where it doesn't work. For example, if a common
+> schema is referenced, then properties in the common schema aren't part
+> of what's considered for 'additionalProperties'. Also, sometimes there
+> are bus specific properties such as 'spi-max-frequency' that go into
+> bus child nodes, but aren't defined in the child node's schema.
+>
+> So let's stick with the json-schema defined default and add
+> 'additionalProperties: false' where needed. This will be a continual
+> review comment and game of wack-a-mole.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
 
-These few lines is all that is needed. I'd appreciate if we could land
-this in v5.7 rather then wait for v5.8.
 
-Thanks,
-Luka
+>  .../devicetree/bindings/gpio/socionext,uniphier-gpio.yaml      | 2 ++
+
+
+You may have already queue this up, but just in case.
+
+Acked-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+
+-- 
+Best Regards
+Masahiro Yamada
