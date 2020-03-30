@@ -2,69 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 40F80198353
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 20:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBC571983C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 20:55:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727745AbgC3SYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 14:24:48 -0400
-Received: from mail-vs1-f53.google.com ([209.85.217.53]:34645 "EHLO
-        mail-vs1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727714AbgC3SYq (ORCPT
+        id S1727936AbgC3Szn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 14:55:43 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:37537 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727728AbgC3Szm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 14:24:46 -0400
-Received: by mail-vs1-f53.google.com with SMTP id b5so11774437vsb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 11:24:44 -0700 (PDT)
+        Mon, 30 Mar 2020 14:55:42 -0400
+Received: by mail-vk1-f193.google.com with SMTP id o124so5004460vkc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 11:55:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=NBiWhVp0IqfyFDNmwRRGA/s+Dtxuu8Q2mjZHUKcx0uk=;
-        b=mlJLtlVPXBg1gWOsSAxsoafEcJT38NiNpF0UOqjmzXlo8GohAqgw297ZK1Swt56Bly
-         V3nGgPyqvQPMeDtng5baT7oly6ktnoBEa56u9lCaFRUnAvGmc515iPKUrcWy2Hs+fCMI
-         IFS1C4dlShgMqMwCUu2tNPruIHdi1VqoM0tac=
+        bh=g1gheYJXxxb4j05ZqgCh1WDjANy6+6oZN8fr+WGCLZA=;
+        b=PF9JCctEmZbycQHUREYCFpB93WZDn96lnP3Obqh6+qo2li0m+PomDclPw436h+k5nE
+         HPlEJnAMbHLsbEzWSUiQzAE/czvmUKvzYnBU/0y75CHLnzbcOLHIgDqMclZpnP93bXel
+         +PqZr9hZkasdPSR3g/8xLCfssCG0GE51W/VMI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=NBiWhVp0IqfyFDNmwRRGA/s+Dtxuu8Q2mjZHUKcx0uk=;
-        b=Quv/CjJKHWJof51vMjF0YsS5gFlEZQw1mpkDsjvQ8S4bqIrEkhdLz3fWnxB3RJJYm6
-         MYGsMBkdjxw5gF4fwnAQv8BsusrC7s7E/cxKUoLAmQRNI6OQLxGS3QAsWn5xf3FclPjq
-         UrDvNOeS5Qz9YrCSE4mYKfKyDTkJo+dwlS3mPotUsiov9Sevnw5ShG/P9ISZWg4Ob2pO
-         uQQ8xo6cPEiFE8jIm3SQiEPoANUNLTabV7vmRzjP9j2kpDEHwbyDajnlYM24oRSt55Bz
-         i06q+vOt7K2VXJ2aRk+JefEfsWntK9mJR7sIXBm8A6F4QGzM2Yrbgn3GuH4wM14S6HmI
-         en5w==
-X-Gm-Message-State: AGi0Puaq1AsHyoJo97Hf2P6CR6Km+UsAwbY+64XyX0bQwoTEbJu8QnKa
-        o3hZwN/hqo7IhNsu1+z2GVGimr5uY9w=
-X-Google-Smtp-Source: APiQypKmIuhE+fPEsbua2Gp5A7QbJwpfv40syWMeRj6AuZ0Il0B60E/Ii+7BYVWgoYWy99nEyigoSQ==
-X-Received: by 2002:a67:6e85:: with SMTP id j127mr9839440vsc.55.1585592683309;
-        Mon, 30 Mar 2020 11:24:43 -0700 (PDT)
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com. [209.85.221.177])
-        by smtp.gmail.com with ESMTPSA id j206sm5824882vke.22.2020.03.30.11.24.42
+        bh=g1gheYJXxxb4j05ZqgCh1WDjANy6+6oZN8fr+WGCLZA=;
+        b=LxJ8dbEGFiNT9dn+dq7hmmcPUSzK7YiYGr2Ydnc/rlRjueD+jHO03MNZdd/pu+v+t0
+         CrVrlH+NyX/ilVmZYobXhm43PKD13gXKgMdA7bD2BLIiC3GhztIvRUUtewv6TRndwOUa
+         xOfhlscZAr1BOCXNjCuiEz8w49k589A7/vB1R3Y/O5Jik4ZsnLolYBwIqpaTurPpLv+Y
+         LjVwS7HRO3tcxeqPybKNHsMnhGyM1i2uRrn0UmK1/eYgPHT5TYwknA3jk0ZGfgzScE7c
+         z6NCOfQyOGrJWkpXC0CwPFVAE1efDgrm5TInKzWozoQ5aKGCI3Xo7we+aADqoSqtA7gi
+         +7gQ==
+X-Gm-Message-State: AGi0Pua0RZQ8N/0wU+kBXKTaoyckN2zjN4rGvfqozNnrAfysoxxELsEQ
+        hIXEr9GBovivLdUFQ2jFCCJnqDe7dn0=
+X-Google-Smtp-Source: APiQypIAC0xiB3NzYKFiaTnxjior03qP749pSQpoSjMRLRpzm/xo3iVKHUYpxRnzlEFrDQEZJ2Y5gA==
+X-Received: by 2002:a1f:91c6:: with SMTP id t189mr8888508vkd.62.1585594538986;
+        Mon, 30 Mar 2020 11:55:38 -0700 (PDT)
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com. [209.85.217.41])
+        by smtp.gmail.com with ESMTPSA id s190sm5839003vks.34.2020.03.30.11.55.37
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Mar 2020 11:24:42 -0700 (PDT)
-Received: by mail-vk1-f177.google.com with SMTP id o124so4974608vkc.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 11:24:42 -0700 (PDT)
-X-Received: by 2002:a1f:a9d2:: with SMTP id s201mr8815125vke.92.1585592681966;
- Mon, 30 Mar 2020 11:24:41 -0700 (PDT)
+        Mon, 30 Mar 2020 11:55:37 -0700 (PDT)
+Received: by mail-vs1-f41.google.com with SMTP id a63so11768764vsa.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 11:55:37 -0700 (PDT)
+X-Received: by 2002:a67:2c81:: with SMTP id s123mr9594577vss.198.1585594536858;
+ Mon, 30 Mar 2020 11:55:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
- <0023bc68-45fb-4e80-00c8-01fd0369243f@arm.com> <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
- <5858bdac-b7f9-ac26-0c0d-c9653cef841d@arm.com> <d60196b548e1241b8334fadd0e8c2fb5@codeaurora.org>
-In-Reply-To: <d60196b548e1241b8334fadd0e8c2fb5@codeaurora.org>
+References: <1585559008-12705-1-git-send-email-kalyan_t@codeaurora.org>
+In-Reply-To: <1585559008-12705-1-git-send-email-kalyan_t@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 30 Mar 2020 11:24:30 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WXTN6xxqtL6d6MHxG8Epuo6FSQERRPfnoSCskhjh1KeQ@mail.gmail.com>
-Message-ID: <CAD=FV=WXTN6xxqtL6d6MHxG8Epuo6FSQERRPfnoSCskhjh1KeQ@mail.gmail.com>
-Subject: Re: [PATCH] iommu/arm-smmu: Demote error messages to debug in
- shutdown callback
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+Date:   Mon, 30 Mar 2020 11:55:25 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WcFahUm8jK+QTwx7BkCb3GTgKqFLP_pdqWBqN-zawrbw@mail.gmail.com>
+Message-ID: <CAD=FV=WcFahUm8jK+QTwx7BkCb3GTgKqFLP_pdqWBqN-zawrbw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: ensure device suspend happens during PM sleep
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        mkrishn@codeaurora.org, travitej@codeaurora.org,
+        nganji@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -73,39 +75,97 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Sat, Mar 28, 2020 at 12:35 AM Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
+On Mon, Mar 30, 2020 at 2:04 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
 >
-> > Of course the fact that in practice we'll *always* see the warning
-> > because there's no way to tear down the default DMA domains, and even
-> > if all devices *have* been nicely quiesced there's no way to tell, is
-> > certainly less than ideal. Like I say, it's not entirely clear-cut
-> > either way...
-> >
+> "The PM core always increments the runtime usage counter
+> before calling the ->suspend() callback and decrements it
+> after calling the ->resume() callback"
 >
-> Thanks for these examples, good to know these scenarios in case we come
-> across these.
-> However, if we see these error/warning messages appear everytime then
-> what will be
-> the credibility of these messages? We will just ignore these messages
-> when
-> these issues you mention actually appears because we see them everytime
-> on
-> reboot or shutdown.
+> DPU and DSI are managed as runtime devices. When
+> suspend is triggered, PM core adds a refcount on all the
+> devices and calls device suspend, since usage count is
+> already incremented, runtime suspend was not getting called
+> and it kept the clocks on which resulted in target not
+> entering into XO shutdown.
+>
+> Add changes to manage runtime devices during pm sleep.
+>
+> Changes in v1:
+>  - Remove unnecessary checks in the function
+>    _dpu_kms_disable_dpu (Rob Clark).
+>
+> Changes in v2:
+>  - Avoid using suspend_late to reset the usagecount
+>    as suspend_late might not be called during suspend
+>    call failures (Doug).
+>
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 33 +++++++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/msm_drv.c           |  4 ++++
+>  drivers/gpu/drm/msm/msm_kms.h           |  2 ++
+>  3 files changed, 39 insertions(+)
 
-I would agree that if these messages are expected to be seen every
-time, there's no way to fix them, and they're not indicative of any
-problem then something should be done.  Seeing something printed at
-"dev_error" level with an exclamation point (!) at the end makes me
-feel like this is something that needs immediate action on my part.
+I am still 100% baffled by your patch and I never did quite understand
+your response to my previous comments [1].  I think you're saying that
+the problem you were facing is that if you call "suspend" but never
+called "runtime_suspend" that the device stays active.  Is that right?
+ If that's true, did you try something like this suggestion I made?
 
-If we really can't do better but feel that the messages need to be
-there, at least make them dev_info and less scary like:
+SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
 
-  arm-smmu 15000000.iommu: turning off; DMA should be quiesced before now
 
-...that would still give you a hint in the logs that if you saw a DMA
-transaction after the message that it was a bug but also wouldn't
-sound scary to someone who wasn't seeing any other problems.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index ce19f1d..2343cbd 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -26,6 +26,7 @@
+>  #include "dpu_encoder.h"
+>  #include "dpu_plane.h"
+>  #include "dpu_crtc.h"
+> +#include "dsi.h"
+>
+>  #define CREATE_TRACE_POINTS
+>  #include "dpu_trace.h"
+> @@ -325,6 +326,37 @@ static void dpu_kms_disable_commit(struct msm_kms *kms)
+>         pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>  }
+>
+> +static void _dpu_kms_disable_dpu(struct msm_kms *kms)
+> +{
+> +       struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+> +       struct drm_device *dev = dpu_kms->dev;
+> +       struct msm_drm_private *priv = dev->dev_private;
+> +       struct msm_dsi *dsi;
+> +       int i;
+> +
+> +       dpu_kms_disable_commit(kms);
+> +
+> +       for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+> +               if (!priv->dsi[i])
+> +                       continue;
+> +               dsi = priv->dsi[i];
+> +               pm_runtime_put_sync(&dsi->pdev->dev);
+> +       }
+> +       pm_runtime_put_sync(dev->dev);
+> +
+> +       /* Increment the usagecount without triggering a resume */
+> +       pm_runtime_get_noresume(dev->dev);
+> +
+> +       pm_runtime_get_noresume(&dpu_kms->pdev->dev);
+> +
+> +       for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+> +               if (!priv->dsi[i])
+> +                       continue;
+> +               dsi = priv->dsi[i];
+> +               pm_runtime_get_noresume(&dsi->pdev->dev);
+> +       }
+> +}
+
+My pm_runtime knowledge is pretty weak sometimes, but the above
+function looks crazy.  Maybe it's just me not understanding, but can
+you please summarize what you're trying to accomplish?
 
 -Doug
+
+[1] https://lore.kernel.org/r/114130f68c494f83303c51157e2c5bfa@codeaurora.org
