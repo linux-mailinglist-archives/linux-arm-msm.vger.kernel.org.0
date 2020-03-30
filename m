@@ -2,76 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EEFC198301
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 20:07:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40F80198353
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 20:24:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728156AbgC3SHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 14:07:36 -0400
-Received: from mail-il1-f196.google.com ([209.85.166.196]:38770 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727302AbgC3SHg (ORCPT
+        id S1727745AbgC3SYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 14:24:48 -0400
+Received: from mail-vs1-f53.google.com ([209.85.217.53]:34645 "EHLO
+        mail-vs1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727714AbgC3SYq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 14:07:36 -0400
-Received: by mail-il1-f196.google.com with SMTP id n13so9438479ilm.5;
-        Mon, 30 Mar 2020 11:07:35 -0700 (PDT)
+        Mon, 30 Mar 2020 14:24:46 -0400
+Received: by mail-vs1-f53.google.com with SMTP id b5so11774437vsb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 11:24:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NBiWhVp0IqfyFDNmwRRGA/s+Dtxuu8Q2mjZHUKcx0uk=;
+        b=mlJLtlVPXBg1gWOsSAxsoafEcJT38NiNpF0UOqjmzXlo8GohAqgw297ZK1Swt56Bly
+         V3nGgPyqvQPMeDtng5baT7oly6ktnoBEa56u9lCaFRUnAvGmc515iPKUrcWy2Hs+fCMI
+         IFS1C4dlShgMqMwCUu2tNPruIHdi1VqoM0tac=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mj9C+ldVbUlZ3vIXMBDLPPubLs9WW33ew+oonI4HdKc=;
-        b=MiuBvZj5dZrhPHoQEzTH1XdPwUsV1uWSyDaIA0YTFjg2Ai/NiSkTyWqcFCQi5rIrwB
-         6gErFMn8TR5RJxBcuMYf4m0Fy7I3rIw2NsIheqREKTLHZa74ETfmIu6jNtXYbcJyCx1k
-         rwYhrpB00oW0y0p8PyrUEE6V38yBECkfZO9k91OfO9ko2YQkYAI5kztqO2K28s0ARqOl
-         a97VmpGcIb6ol4xgBWtgHD69LG1/foj7WLWXXeMShu80hxzHz7FcKDA1rnKNNnGFK2K2
-         ZdRqBGSyvGji2h/rxrZZlod4kDXIzG4L/qXy+S6BLeKChG6wUHyOK0CBlIGJXbveFiRQ
-         wExg==
-X-Gm-Message-State: ANhLgQ1YQ8/gm8H1I0aym/5LMCxAi9kPz19POKb1Ba/5rTLMzo+/KCQC
-        /Pc35hIsqtFXUsJprxWJNg==
-X-Google-Smtp-Source: ADFU+vtNqSrTRYSiHT+MOixHEmT/udRjClK4h0+HRhanDrEbRpaw67MMVUx3gP60KWbNpRPLNo+PQg==
-X-Received: by 2002:a92:443:: with SMTP id 64mr12853112ile.258.1585591655065;
-        Mon, 30 Mar 2020 11:07:35 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id b83sm5086913ill.7.2020.03.30.11.07.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2020 11:07:34 -0700 (PDT)
-Received: (nullmailer pid 3078 invoked by uid 1000);
-        Mon, 30 Mar 2020 18:07:33 -0000
-Date:   Mon, 30 Mar 2020 12:07:33 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        rojay@codeaurora.org, skakit@codeaurora.org,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: Re: [PATCH V2 2/2] dt-bindings: spi: Add interconnect binding for
- QSPI
-Message-ID: <20200330180733.GA2966@bogus>
-References: <1584098121-18075-1-git-send-email-akashast@codeaurora.org>
- <1584098121-18075-3-git-send-email-akashast@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NBiWhVp0IqfyFDNmwRRGA/s+Dtxuu8Q2mjZHUKcx0uk=;
+        b=Quv/CjJKHWJof51vMjF0YsS5gFlEZQw1mpkDsjvQ8S4bqIrEkhdLz3fWnxB3RJJYm6
+         MYGsMBkdjxw5gF4fwnAQv8BsusrC7s7E/cxKUoLAmQRNI6OQLxGS3QAsWn5xf3FclPjq
+         UrDvNOeS5Qz9YrCSE4mYKfKyDTkJo+dwlS3mPotUsiov9Sevnw5ShG/P9ISZWg4Ob2pO
+         uQQ8xo6cPEiFE8jIm3SQiEPoANUNLTabV7vmRzjP9j2kpDEHwbyDajnlYM24oRSt55Bz
+         i06q+vOt7K2VXJ2aRk+JefEfsWntK9mJR7sIXBm8A6F4QGzM2Yrbgn3GuH4wM14S6HmI
+         en5w==
+X-Gm-Message-State: AGi0Puaq1AsHyoJo97Hf2P6CR6Km+UsAwbY+64XyX0bQwoTEbJu8QnKa
+        o3hZwN/hqo7IhNsu1+z2GVGimr5uY9w=
+X-Google-Smtp-Source: APiQypKmIuhE+fPEsbua2Gp5A7QbJwpfv40syWMeRj6AuZ0Il0B60E/Ii+7BYVWgoYWy99nEyigoSQ==
+X-Received: by 2002:a67:6e85:: with SMTP id j127mr9839440vsc.55.1585592683309;
+        Mon, 30 Mar 2020 11:24:43 -0700 (PDT)
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com. [209.85.221.177])
+        by smtp.gmail.com with ESMTPSA id j206sm5824882vke.22.2020.03.30.11.24.42
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Mar 2020 11:24:42 -0700 (PDT)
+Received: by mail-vk1-f177.google.com with SMTP id o124so4974608vkc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 11:24:42 -0700 (PDT)
+X-Received: by 2002:a1f:a9d2:: with SMTP id s201mr8815125vke.92.1585592681966;
+ Mon, 30 Mar 2020 11:24:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1584098121-18075-3-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
+ <0023bc68-45fb-4e80-00c8-01fd0369243f@arm.com> <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
+ <5858bdac-b7f9-ac26-0c0d-c9653cef841d@arm.com> <d60196b548e1241b8334fadd0e8c2fb5@codeaurora.org>
+In-Reply-To: <d60196b548e1241b8334fadd0e8c2fb5@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 30 Mar 2020 11:24:30 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WXTN6xxqtL6d6MHxG8Epuo6FSQERRPfnoSCskhjh1KeQ@mail.gmail.com>
+Message-ID: <CAD=FV=WXTN6xxqtL6d6MHxG8Epuo6FSQERRPfnoSCskhjh1KeQ@mail.gmail.com>
+Subject: Re: [PATCH] iommu/arm-smmu: Demote error messages to debug in
+ shutdown callback
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Mar 2020 16:45:21 +0530, Akash Asthana wrote:
-> Add documentation for the interconnect and interconnect-names
-> properties for QSPI.
-> 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> ---
-> Changes in V2:
->  - Added minItems = 1 for interconnect property
-> 
->  Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
+Hi,
 
-Applied, thanks.
+On Sat, Mar 28, 2020 at 12:35 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> > Of course the fact that in practice we'll *always* see the warning
+> > because there's no way to tear down the default DMA domains, and even
+> > if all devices *have* been nicely quiesced there's no way to tell, is
+> > certainly less than ideal. Like I say, it's not entirely clear-cut
+> > either way...
+> >
+>
+> Thanks for these examples, good to know these scenarios in case we come
+> across these.
+> However, if we see these error/warning messages appear everytime then
+> what will be
+> the credibility of these messages? We will just ignore these messages
+> when
+> these issues you mention actually appears because we see them everytime
+> on
+> reboot or shutdown.
 
-Rob
+I would agree that if these messages are expected to be seen every
+time, there's no way to fix them, and they're not indicative of any
+problem then something should be done.  Seeing something printed at
+"dev_error" level with an exclamation point (!) at the end makes me
+feel like this is something that needs immediate action on my part.
+
+If we really can't do better but feel that the messages need to be
+there, at least make them dev_info and less scary like:
+
+  arm-smmu 15000000.iommu: turning off; DMA should be quiesced before now
+
+...that would still give you a hint in the logs that if you saw a DMA
+transaction after the message that it was a bug but also wouldn't
+sound scary to someone who wasn't seeing any other problems.
+
+-Doug
