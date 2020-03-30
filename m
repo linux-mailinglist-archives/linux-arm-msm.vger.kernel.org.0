@@ -2,96 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6088A197FED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 17:41:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91F7119802B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2020 17:50:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729601AbgC3PlA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Mar 2020 11:41:00 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:34037 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729489AbgC3PlA (ORCPT
+        id S1728259AbgC3Pup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Mar 2020 11:50:45 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38349 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728804AbgC3Pup (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Mar 2020 11:41:00 -0400
-Received: by mail-io1-f65.google.com with SMTP id h131so18240526iof.1;
-        Mon, 30 Mar 2020 08:40:59 -0700 (PDT)
+        Mon, 30 Mar 2020 11:50:45 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w3so6881201plz.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 08:50:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dZsn4EW/SyaRsmueE+/vYE2vemazchjXW/dbHmCRlUs=;
+        b=cbD3U0SWemqC1mmtbV87ewilvyfjJ6wvBrx1Zv9z50jgAf9m1zNNdUG66wXMgyvK6w
+         ZZdtz3wzvXNip6aIDfmUPWqG85OQxDWzLAzKrN9IJ2NIzLYVNAO6ke9IydE4kwJIysFp
+         5v+XWRKX9MnKGNCQeTmnSp3izMpZzXfKXtPtc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FrZskpAncwXlTmer8dNjyojk8sFLFkrvun4f6jCecoI=;
-        b=IyU4xKvhHM4zH+Vlx2S1R/uAfQUz6ZcBeTTLEVTk5/e4+P1ERSt87GrrFuNJfXk4aI
-         7YpvMOrFT/+DF2qZkOx0EH7Uz3ueGSwoGo/Mi/iRubHZ3ANUDSt05HuMGWfwRSIWrgWk
-         yMfYgsZzWYsWdxPhSubwPLAXT5x3WV7gMGOKvhqHXYS7t45NOqH9lvyLV3ZCjwkySZFT
-         H0TM2WJ0bd3kWTLJJsC5zD4JTKqY3VTTP7vrD0OCVUhz0sveON/fYhMU4R8YVhvfyFaR
-         yJSgBZdvqXLmf5zqDwxpkXVxFov5ITtLqERl6juF4oX/3Y3FQdzsap9+GBTsfZdEwmUc
-         jf0Q==
-X-Gm-Message-State: ANhLgQ0W/HMN7sMQqhFhi5MM1gFw21hgFRP4nK/4OAR3/igOb+gNqUWO
-        x+MSjSLT0h+7HOaeZY+okA==
-X-Google-Smtp-Source: ADFU+vtYbOnj6T9VKwympEk/Igl3zqimx0Szkm1G0rEgizbRyrQ7fVa90Ym/eEv6H01RXEsxKQD8/g==
-X-Received: by 2002:a6b:8d4c:: with SMTP id p73mr10903567iod.14.1585582858637;
-        Mon, 30 Mar 2020 08:40:58 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id m14sm5078251ilr.16.2020.03.30.08.40.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2020 08:40:58 -0700 (PDT)
-Received: (nullmailer pid 23073 invoked by uid 1000);
-        Mon, 30 Mar 2020 15:40:56 -0000
-Date:   Mon, 30 Mar 2020 09:40:56 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        Robert Marko <robert.marko@sartura.hr>,
-        John Crispin <john@phrozen.org>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: Re: [PATCH v4 2/3] dt-bindings: phy-qcom-ipq4019-usb: add binding
- document
-Message-ID: <20200330154056.GA22114@bogus>
-References: <20200328135345.695622-1-robert.marko@sartura.hr>
- <20200328135345.695622-2-robert.marko@sartura.hr>
+        bh=dZsn4EW/SyaRsmueE+/vYE2vemazchjXW/dbHmCRlUs=;
+        b=VjjeuEeiODGxwPNX88Yw1Xi4T0q3KvUS2g4LOOiYGnnpGQT8PCxDhT83VN9xtJpNvv
+         B3HQj2FhEMqVi8hQpTzGEHwtAMJQt1ExP+oQ/TjXab86nI7UQgByZC2Ya76lE1vYo8nw
+         Bvcc6G8M2vJl2XKmnZgtFaGyG/fdojUKDosxvsdvBwqryXzmWtTlAnJpsa0LJyNJvR5e
+         Ah15kyFl1ugByIGvDRXxhqeKN3gq+3DkSMuilHlP0TZc1rb2+693Jsgk11EylOC88NqL
+         AKyUK/ApH87eOJEJXcDioIPxA4qTM1hAlqY4cTwYfBnoaqrKUTOo/Cr+6c2Ch5tIeUiI
+         iuiw==
+X-Gm-Message-State: ANhLgQ20ejxDYPv9EYnLls03rxler17SbOFFcsC6UjRK99HcwpMEtocy
+        djZ1rs1m2DaDmMWVI3IIicg9fw==
+X-Google-Smtp-Source: ADFU+vs3bQbui32mwgN4d69WBgcOI3D/G3nH3HTL6g28UawRkGYTx1Gv6AOqnTJmut2iCUcqWB559A==
+X-Received: by 2002:a17:90a:3249:: with SMTP id k67mr16585418pjb.167.1585583442859;
+        Mon, 30 Mar 2020 08:50:42 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id r7sm10438837pfg.38.2020.03.30.08.50.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Mar 2020 08:50:41 -0700 (PDT)
+Date:   Mon, 30 Mar 2020 08:50:38 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Subject: Re: [PATCH v6 2/4] usb: dwc3: qcom: Add interconnect support in dwc3
+ driver
+Message-ID: <20200330155038.GC199755@google.com>
+References: <1585302203-11008-1-git-send-email-sanm@codeaurora.org>
+ <1585302203-11008-3-git-send-email-sanm@codeaurora.org>
+ <20200329171756.GA199755@google.com>
+ <87h7y62r28.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200328135345.695622-2-robert.marko@sartura.hr>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <87h7y62r28.fsf@kernel.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 28 Mar 2020 14:53:49 +0100, Robert Marko wrote:
-> This patch adds the binding documentation for the HS/SS USB PHY found
-> inside Qualcom Dakota SoCs.
+On Mon, Mar 30, 2020 at 11:19:11AM +0300, Felipe Balbi wrote:
 > 
-> Signed-off-by: John Crispin <john@phrozen.org>
-> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> Cc: Luka Perkov <luka.perkov@sartura.hr>
-> ---
->  .../bindings/phy/qcom-usb-ipq4019-phy.yaml    | 45 +++++++++++++++++++
->  1 file changed, 45 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+> Hi,
 > 
+> Matthias Kaehlcke <mka@chromium.org> writes:
+> >> Add interconnect support in dwc3-qcom driver to vote for bus
+> >> bandwidth.
+> >> 
+> >> This requires for two different paths - from USB master to
+> >> DDR slave. The other is from APPS master to USB slave.
+> >> 
+> >> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> >> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+> >> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> >> ---
+> >>  drivers/usb/dwc3/dwc3-qcom.c | 128 ++++++++++++++++++++++++++++++++++++++++++-
+> >>  1 file changed, 126 insertions(+), 2 deletions(-)
+> >> 
+> >> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> >> index 1dfd024..7e85fe6 100644
+> >> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> >> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> >>
+> >> ...
+> >>
+> >> +/* To disable an interconnect, we just set its bandwidth to 0 */
+> >> +static int dwc3_qcom_interconnect_disable(struct dwc3_qcom *qcom)
+> >> +{
+> >> +	int ret;
+> >> +
+> >> +	ret = icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
+> >> +	if (ret)
+> >> +		return ret;
+> >> +
+> >> +	ret = icc_set_bw(qcom->apps_usb_icc_path, 0, 0);
+> >> +	if (ret)
+> >> +		goto err_reenable_memory_path;
+> >> +
+> >> +	return 0;
+> >> +
+> >> +	/* Re-enable things in the event of an error */
+> >> +err_reenable_memory_path:
+> >> +	ret = dwc3_qcom_interconnect_enable(qcom);
+> >
+> > This overwrites the error that led to the execution of this code path.
+> > The function should return original error, not the result of the
+> > _interconnect_enable() call.
+> >
+> > I saw Felipe queued the patch for v5.8. I think the main options to fix this
+> > are:
+> >
+> > - a v6 of this patch to replace v5 in Felipe's tree (which IIUC will be rebased
+> >   anyway once there is a v5.7-rc)
+> > - send the fix as a separate patch
+> > - Felipe amends the patch in his tree
+> >
+> > Felipe, what would work best for you?
+> 
+> Let's go for a v6, which commits should I drop? I can't find anything
+> related to $subject in my queue:
+> 
+> $ git --no-pager log --oneline HEAD ^linus/master -- drivers/usb/dwc3/dwc3-qcom.c
+> 201c26c08db4 usb: dwc3: qcom: Replace <linux/clk-provider.h> by <linux/of_clk.h>
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml:  while scanning a block scalar
-  in "<unicode string>", line 37, column 5
-found a tab character where an indentation space is expected
-  in "<unicode string>", line 39, column 1
-Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.example.dts' failed
-make[1]: *** [Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-warning: no schema found in file: Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml: ignoring, error parsing file
-Makefile:1262: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
-
-See https://patchwork.ozlabs.org/patch/1263219
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
+I thought I saw a "queued for v5.8" message from you, but can't find that back.
+I guess I saw the "queued" message for the "Add USB DWC3 support for SC7180"
+series and thought it was for this one. Sorry for the confusion.
