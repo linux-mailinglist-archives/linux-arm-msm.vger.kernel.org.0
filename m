@@ -2,96 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23496199CF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3843B199D13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:40:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726023AbgCaRdx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 13:33:53 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:47072 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbgCaRdx (ORCPT
+        id S1726282AbgCaRkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 13:40:22 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:46141 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726000AbgCaRkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 13:33:53 -0400
-Received: by mail-io1-f65.google.com with SMTP id i3so13463177ioo.13;
-        Tue, 31 Mar 2020 10:33:51 -0700 (PDT)
+        Tue, 31 Mar 2020 13:40:22 -0400
+Received: by mail-pg1-f194.google.com with SMTP id k191so10632519pgc.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 10:40:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4l5ETOgQ0imWwnT/8ipOuClDORxJCjuXyVXWv0vRdoI=;
+        b=iAxPDHZi6j5XJDdwzsv0gC4hIkVTp64vobCnjhVmnUmhWcTudGJ0DxkmaAcflR3Tzk
+         qfmOb+xfqmzYhtVa4SEUkfXVw835Lf7flpWypgLk96zZmJC8Xr2gV2XAvHuqisPiFp8R
+         qUcZdqicxs+h69FdXEIhkQoBsPMr4JyCssTZz9Tk49dv7ReiplqU618mGAtYCZcAdih+
+         q9f1aGerdw1UxcTeN921BXCG7KdLdJZn+0XjBqwoZePxKmWuGFD5qd90dpB475khGY71
+         T2yecrpkGRyBI+6IqqTPfjcAYbLkf1lCQyKsundJ28kLDjjbigtSGI7LSJTxZZ1Nvi16
+         8cQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1kD178IJWLF7OrXvGCPAuwYTFKdbiIs5uu5/dy92+bw=;
-        b=KOn0F2+S7x8D2vARZeltg5HDUNyM2vS63C7Yce53FrPEzQq0KWRUq72Wde3GcvrRpe
-         cmBYkev12oZb8iyuAOge2bQIw+nQHQXZ2XQjUr5bSlTS+n98e3kZVRDqbChGKpzGY6iD
-         xoTl6F2yFPh4wx2yyGn5Mu8C/Hp7pAu2vYBV0xd8K2O8Utk5EFux4sqUvkwLBqRd//JO
-         +JN1boPkU1EMkotUg5tOxfYnPyC14MfYx5v7MtFuiP3jPOWNA2Sm/KAwbd99tC2omD31
-         0Adaensf6trexpOmQuCpe/19POgDzISvJE42HOyiSs7RSWojPwp0WOyWkM+f3m1poB2X
-         xPTA==
-X-Gm-Message-State: ANhLgQ1C9mgXAglculW9dIkK96Dksmz2Y6yRwZzylYjLNuOKCdpyEXFV
-        XLQRswIvCW6JCbkPNzapNg==
-X-Google-Smtp-Source: ADFU+vveQiIwjf4EHvPqSOhmyd+ZXcJTf30ZEWVFUmCOi01Fq+DbZTOdBdosmijz/0SQTw4Ka76TcQ==
-X-Received: by 2002:a6b:c9d2:: with SMTP id z201mr16653446iof.169.1585676030822;
-        Tue, 31 Mar 2020 10:33:50 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id y1sm5127603ioq.47.2020.03.31.10.33.49
+         :mime-version:content-disposition:in-reply-to;
+        bh=4l5ETOgQ0imWwnT/8ipOuClDORxJCjuXyVXWv0vRdoI=;
+        b=P1JnjALwTL4R3gIJHs9xJZtnoNrOAQzwOIuUnXFeOvZEYq+VXUcO5Ymgq40G+OYFUc
+         LmChNyEpZsbeUuCHtVYuD4YR01u4xUJF9GSefEVUrpf/EEssqj5W+vcEGbuiWQG09PCd
+         YYT9z3srswxoBZjOBwmUnwdMAV3ZKXDjTxrN2pKRb7Bd4jd6Pp52rYvmTKQuFevYAnnn
+         gFijCJ6h3yuwAXARuSKPNxrgDy0d6Coc2N9IEULmpshR572cxPf8HcJswifUHHr0h1qS
+         rnPSsh5TiAnqnxq7oFvoausj6EyN5G7enSMJ7VZKVRWhTXMNXjcZwdrFNcjLocmuCpOS
+         U3MA==
+X-Gm-Message-State: ANhLgQ314qCh5aMPeXwZ3uxTSY/SOGmWnjtJtOlaxDaOTF1zEdnQYp7u
+        +sEfJXlC6ylQxlZPEpf7RGuJ1j2k+dI=
+X-Google-Smtp-Source: ADFU+vtxoE33/QBXRkl1qEOqS7lVO2SAFrcJR/z+5URP14AMuRSyqNIjgdaD0jMgwjNXzGVQSp5kUQ==
+X-Received: by 2002:aa7:880c:: with SMTP id c12mr18142763pfo.77.1585676419418;
+        Tue, 31 Mar 2020 10:40:19 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id nh14sm2439979pjb.17.2020.03.31.10.40.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 10:33:50 -0700 (PDT)
-Received: (nullmailer pid 29165 invoked by uid 1000);
-        Tue, 31 Mar 2020 17:33:48 -0000
-Date:   Tue, 31 Mar 2020 11:33:48 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/12] devicetree: bindings: pci: add force_gen1 for
- qcom,pcie
-Message-ID: <20200331173348.GA28253@bogus>
-References: <20200320183455.21311-1-ansuelsmth@gmail.com>
- <20200320183455.21311-11-ansuelsmth@gmail.com>
+        Tue, 31 Mar 2020 10:40:18 -0700 (PDT)
+Date:   Tue, 31 Mar 2020 10:40:16 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Chris Lew <clew@codeaurora.org>, gregkh@linuxfoundation.org,
+        davem@davemloft.net, smohanad@codeaurora.org, jhugo@codeaurora.org,
+        kvalo@codeaurora.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: Re: [PATCH v3 6/7] net: qrtr: Add MHI transport layer
+Message-ID: <20200331174016.GA254911@minitux>
+References: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
+ <20200324061050.14845-7-manivannan.sadhasivam@linaro.org>
+ <20200324203952.GC119913@minitux>
+ <20200325103758.GA7216@Mani-XPS-13-9360>
+ <89f3c60c-70fb-23d3-d50f-98d1982b84b9@codeaurora.org>
+ <20200330094913.GA2642@Mani-XPS-13-9360>
+ <20200330221932.GB215915@minitux>
+ <20200331112326.GB21688@Mani-XPS-13-9360>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200320183455.21311-11-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200331112326.GB21688@Mani-XPS-13-9360>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 20, 2020 at 07:34:53PM +0100, Ansuel Smith wrote:
-> Document force_gen1 optional definition to limit pcie
-> line to GEN1 speed
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  Documentation/devicetree/bindings/pci/qcom,pcie.txt | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> index 8c1d014f37b0..766876465c42 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> @@ -260,6 +260,11 @@
->  	Definition: If not defined is 0. In ipq806x is set to 7. In newer
->  				revision (v2.0) the offset is zero.
->  
-> +- force_gen1:
-> +	Usage: optional
-> +	Value type: <u32>
-> +	Definition: Set 1 to force the pcie line to GEN1
-> +
+On Tue 31 Mar 04:23 PDT 2020, Manivannan Sadhasivam wrote:
 
-I believe we have a standard property 'link-speed' for this purpose.
-
->  * Example for ipq/apq8064
->  	pcie@1b500000 {
->  		compatible = "qcom,pcie-apq8064", "qcom,pcie-ipq8064", "snps,dw-pcie";
-> -- 
-> 2.25.1
+> Hi Bjorn,
 > 
+> On Mon, Mar 30, 2020 at 03:19:32PM -0700, Bjorn Andersson wrote:
+> > On Mon 30 Mar 02:49 PDT 2020, Manivannan Sadhasivam wrote:
+> > 
+> > > Hi Chris,
+> > > 
+> > > On Thu, Mar 26, 2020 at 03:54:42PM -0700, Chris Lew wrote:
+> > > > 
+> > > > 
+> > > > On 3/25/2020 3:37 AM, Manivannan Sadhasivam wrote:
+> > > > > Hi Bjorn,
+> > > > > 
+> > > > > + Chris Lew
+> > > > > 
+> > > > > On Tue, Mar 24, 2020 at 01:39:52PM -0700, Bjorn Andersson wrote:
+> > > > > > On Mon 23 Mar 23:10 PDT 2020, Manivannan Sadhasivam wrote:
+> > [..]
+> > > > > > > +	spin_lock_irqsave(&qdev->ul_lock, flags);
+> > > > > > > +	list_for_each_entry(pkt, &qdev->ul_pkts, node)
+> > > > > > > +		complete_all(&pkt->done);
+> > > > > 
+> > > > > Chris, shouldn't we require list_del(&pkt->node) here?
+> > > > > 
+> > > > 
+> > > > No this isn't a full cleanup, with the "early notifier" we just unblocked
+> > > > any threads waiting for the ul_callback. Those threads will wake, check
+> > > > in_reset, return an error back to the caller. Any list cleanup will be done
+> > > > in the ul_callbacks that the mhi bus will do for each queued packet right
+> > > > before device remove.
+> > > > 
+> > > > Again to simplify the code, we can probable remove the in_reset handling
+> > > > since it's not required with the current feature set.
+> > > > 
+> > > 
+> > > So since we are not getting status_cb for fatal errors, I think we should just
+> > > remove status_cb, in_reset and timeout code.
+> > > 
+> > 
+> > Looks reasonable.
+> > 
+> > [..]
+> > > > I thought having the client get an error on timeout and resend the packet
+> > > > would be better than silently dropping it. In practice, we've really only
+> > > > seen the timeout or ul_callback errors on unrecoverable errors so I think
+> > > > the timeout handling can definitely be redone.
+> > > > 
+> > > 
+> > > You mean we can just remove the timeout handling part and return after
+> > > kref_put()?
+> > > 
+> > 
+> > If all messages are "generated" by qcom_mhi_qrtr_send() and "released"
+> > in qcom_mhi_qrtr_ul_callback() I don't think you need the refcounting at
+> > all.
+> > 
+> 
+> Hmm, you're right. We can move the packet releasing part to ul_callback now.
+> 
+> > 
+> > Presumably though, it would have been nice to not have to carry a
+> > separate list of packets (and hope that it's in sync with the mhi core)
+> > and instead have the ul callback somehow allow us to derive the skb to
+> > be freed.
+> > 
+> 
+> Yep, MHI stack holds the skb in buf_addr member of mhi_result. So, we can just
+> use below to get the skb in ul_callback:
+> 
+> struct sk_buff *skb = (struct sk_buff *)mhi_res->buf_addr;
+> 
+> This will help us to avoid the use of pkt, ul_pkts list and use the skb directly
+> everywhere. At the same time I think we can also remove the ul_lock which
+> was added to protect the ul_pkts list.
+> 
+> Let me know your opinion, I'll just send a series with this modified QRTR MHI
+> client driver and MHI suspend/resume patches.
+> 
+
+This looks more robust than having the separate list shadowing the
+internal state of the MHI core.
+
++1
+
+Thanks,
+Bjorn
