@@ -2,131 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 609AA199751
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 15:21:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8A7E1997C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 15:46:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730940AbgCaNVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 09:21:08 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:11683 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730959AbgCaNVH (ORCPT
+        id S1730720AbgCaNqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 09:46:14 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:37189 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730464AbgCaNqO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 09:21:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585660866; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=FoDKU1Db7s6BoKmQ9JoRCGBnNR873xAghjI+Al+Hp6M=; b=EYkek+NhgxTClMjqM/TbQsap/K+MF1qZ5Q9kc32NVveiuTz2tlTqw1noUDFZ2hYLGEMKiYkl
- HcXzPYvXbQloDhy1AwBwWM/X7ZBgMs+D3LkmAapN8SsJoZ5gVZD2plYyZm1btUcXwkZrK9jk
- TEpoTg8fzpcL9QTVcxgxtDwKbc8=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8343b6.7fab18754ed8-smtp-out-n05;
- Tue, 31 Mar 2020 13:20:54 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4752BC4478C; Tue, 31 Mar 2020 13:20:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8152C433F2;
-        Tue, 31 Mar 2020 13:20:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A8152C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, mka@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v15 7/7] soc: qcom: rpmh-rsc: Allow using free WAKE TCS for active request
-Date:   Tue, 31 Mar 2020 18:49:42 +0530
-Message-Id: <1585660782-23416-8-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1585660782-23416-1-git-send-email-mkshah@codeaurora.org>
-References: <1585660782-23416-1-git-send-email-mkshah@codeaurora.org>
+        Tue, 31 Mar 2020 09:46:14 -0400
+Received: by mail-ed1-f68.google.com with SMTP id de14so25181780edb.4;
+        Tue, 31 Mar 2020 06:46:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=k9iFkUv/TiZl3HgGTqXLWemi0HPo7uSDDfYUPzhdtQs=;
+        b=VAJaQezvUIXW0JtKvg4nJQyzDsFwQRtkm/Pl2EBAWLgxlsH3V6xkUCdiuqdIjPaz2u
+         DUEzMDtVU5h5RI4e+vRxP4+vPEYHMSL6pVNUDYcAQhZweeNTMjHm2IFM6pCYa7su8rbG
+         rxCfFWPbutoXgRvqCO2YgR+p26VJcR7yD/+W0MptnQ2Kn3m32FMiCu2Za9A+e4uKy0S5
+         8RjXNdTdMdu/NdxHQtSkPmuK8mu3jYN90jEsgls4gJidFO6lxlnfcXSKsfth+WMMUjdV
+         OgqNy4RlsiQI+elSEPl6MxWGscpQGqXe3OFTz7DObxOIxUpRd4IifKxCW2PcMbzOhIZh
+         6BFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=k9iFkUv/TiZl3HgGTqXLWemi0HPo7uSDDfYUPzhdtQs=;
+        b=A0M9v3IZcRdvD0q4ROVjz4WA9IvD8atOUblmf6xQDxMCWPj8myJIiuk856qNGP8mT2
+         sTVObRi21Z/fwoSvDb0PW7N4ju3bo2d/btWNhquHaPbucZ5v9ZawBuY5Tfwoc3qarzJ9
+         OP19kEjSjHVhsgTJIisiPqV1etdKNTQa52ZqdKtJEZxs9WBbVHYfp2/I/8/5mlJ4XOnC
+         YFAbNlhjJDZkHPBDj+txIGgJcEwZuznDADhVysmkNyFjnL/mEgrzunWutmSqNxlUaQg0
+         oL+X56fxus1GCNvFK5kxVjsAnuQzwFjNPIkcaDDpJCj4lNjQREsXGMXEXheRHtWb24gZ
+         NaQw==
+X-Gm-Message-State: ANhLgQ2aRiMuEH/lPhiQsKc70/xhzKLNomtfwI26cgPGE5HOO1Hn+zIj
+        kOUkD6KSTJAttO3v/KL1TBA=
+X-Google-Smtp-Source: ADFU+vs3GVIst9Q+kxS8w/a3i/jqFsjS/ByGTLFBoBbq1TegvWlLXjaIE7b3oLTZbHPzlcQjITmBEg==
+X-Received: by 2002:a50:af02:: with SMTP id g2mr16579181edd.69.1585662372208;
+        Tue, 31 Mar 2020 06:46:12 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host203-232-dynamic.53-79-r.retail.telecomitalia.it. [79.53.232.203])
+        by smtp.googlemail.com with ESMTPSA id p25sm2258514ejw.49.2020.03.31.06.46.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2020 06:46:11 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: fix compilation error
+Date:   Tue, 31 Mar 2020 15:46:03 +0200
+Message-Id: <20200331134603.13513-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When there are more than one WAKE TCS available and there is no dedicated
-ACTIVE TCS available, invalidating all WAKE TCSes and waiting for current
-transfer to complete in first WAKE TCS blocks using another free WAKE TCS
-to complete current request.
+pinctrl: qcom: use scm_call to route GPIO irq to Apps has a typo in the
+patch and introduced a compilation error.
 
-Remove rpmh_rsc_invalidate() to happen from tcs_write() when WAKE TCSes
-is re-purposed to be used for Active mode. Clear only currently used
-WAKE TCS's register configuration.
-
-Mark the caches as dirty so next time when rpmh_flush() is invoked it
-can invalidate and program cached sleep and wake sets again.
-
-Fixes: 2de4b8d33eab (drivers: qcom: rpmh-rsc: allow active requests from wake TCS)
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+Fixes: 13bec8d4 pinctrl: qcom: use scm_call to route GPIO irq to Apps
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index d5b6dff..0fb0b9a 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -154,7 +154,7 @@ int rpmh_rsc_invalidate(struct rsc_drv *drv)
- static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
- 					 const struct tcs_request *msg)
- {
--	int type, ret;
-+	int type;
- 	struct tcs_group *tcs;
- 
- 	switch (msg->state) {
-@@ -175,19 +175,10 @@ static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
- 	 * If we are making an active request on a RSC that does not have a
- 	 * dedicated TCS for active state use, then re-purpose a wake TCS to
- 	 * send active votes.
--	 * NOTE: The driver must be aware that this RSC does not have a
--	 * dedicated AMC, and therefore would invalidate the sleep and wake
--	 * TCSes before making an active state request.
- 	 */
- 	tcs = get_tcs_of_type(drv, type);
--	if (msg->state == RPMH_ACTIVE_ONLY_STATE && !tcs->num_tcs) {
-+	if (msg->state == RPMH_ACTIVE_ONLY_STATE && !tcs->num_tcs)
- 		tcs = get_tcs_of_type(drv, WAKE_TCS);
--		if (tcs->num_tcs) {
--			ret = rpmh_rsc_invalidate(drv);
--			if (ret)
--				return ERR_PTR(ret);
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 2ef00882d1ce..5f7a6c64eea6 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -905,7 +905,6 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 			dev_err(pctrl->dev,
+ 				"Failed routing %lu interrupt to Apps proc",
+ 				d->hwirq);
 -		}
--	}
- 
- 	return tcs;
- }
-@@ -412,8 +403,16 @@ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
- 
- 	tcs->req[tcs_id - tcs->offset] = msg;
- 	set_bit(tcs_id, drv->tcs_in_use);
--	if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS)
-+	if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS) {
-+		/*
-+		 * Clear previously programmed WAKE commands in selected
-+		 * repurposed TCS to avoid triggering them. tcs->slots will be
-+		 * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
-+		 */
-+		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
-+		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, 0);
- 		enable_tcs_irq(drv, tcs_id, true);
-+	}
- 	spin_unlock(&drv->lock);
- 
- 	__tcs_buffer_write(drv, tcs_id, 0, msg);
+ 	} else {
+ 		val = msm_readl_intr_target(pctrl, g);
+ 		val &= ~(7 << g->intr_target_bit);
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.25.1
+
