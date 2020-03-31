@@ -2,184 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 85603199F60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 21:45:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1083D199FBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 22:06:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728804AbgCaTpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 15:45:39 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:44490 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728124AbgCaTpj (ORCPT
+        id S1727837AbgCaUGP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 16:06:15 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:40131 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726411AbgCaUGO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 15:45:39 -0400
-Received: by mail-pg1-f193.google.com with SMTP id 142so10828740pgf.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 12:45:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=bayV+AbB5HX5Myb1k5cRFv/tdCWMylnZ8INvrTMXrfI=;
-        b=aQpSuyXYeZZdIKU/ZRyQLR/yjBumhT4BPQzzO6caqQw3UB+dLbECiyGtQwk5YJhNTL
-         gVDlLxPm2MnSKheIOpfJJmw48AMSwFqL5W39FV2CWRsY6Xx83k9GNOdEbReT+VNOecGj
-         Mxx+HItnyCBIkBZFISaKN9Dk0e9/6GtX1M15w=
+        Tue, 31 Mar 2020 16:06:14 -0400
+Received: by mail-io1-f65.google.com with SMTP id k9so23180263iov.7;
+        Tue, 31 Mar 2020 13:06:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bayV+AbB5HX5Myb1k5cRFv/tdCWMylnZ8INvrTMXrfI=;
-        b=ZiUfsrDrS2UYK0z5xGTGlMuJRMQ17QrwpQ79Kp4Nki8cyfVLCPCbTm7I9/OWuB2Var
-         xiTU/d3EyhBTj8VWFIVuIJ+uDfKBW1fypL09tHK8sUyINuiq+/YGUxKhA5gNQzYX2t2h
-         v4jio6HRiDdOFDMEfqN2btXCGPlMgU2dtNtoY3s3rB/wgnaVf9OmBjMt5dR+RxfUjA65
-         c/txEiYpwJcOq+wDQ8Yb27Gm8GgKcSbfopDl5Kr7tW1tG4PCeQ5XRyHd9jyTzTn/zRTe
-         rm6AgBZNC9wNMLqPNmLYQvLOYiEhqaQ1x7U57DtCPS0aVfJwRzHN+4KLYBnNsq9QZa4j
-         tZeA==
-X-Gm-Message-State: ANhLgQ0VWM0HMruh0P+0VmykNkf7ReCcoPR+YTcp5JclL79iZ3axOagI
-        dLJSBBbPyQehfA2HMGflHeAbUA==
-X-Google-Smtp-Source: ADFU+vttCIKsEC/g/kbZExooJ94RSNvBXbyqZy3qhsPzPIjK9d3FJfijBLw7OLADd/fuE36KxHKduQ==
-X-Received: by 2002:a62:52d7:: with SMTP id g206mr20533720pfb.286.1585683937813;
-        Tue, 31 Mar 2020 12:45:37 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id w4sm12144309pgg.2.2020.03.31.12.45.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Mar 2020 12:45:37 -0700 (PDT)
-Date:   Tue, 31 Mar 2020 12:45:35 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-Subject: Re: [PATCH V3 7/8] spi: spi-qcom-qspi: Add interconnect support
-Message-ID: <20200331194535.GL199755@google.com>
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-8-git-send-email-akashast@codeaurora.org>
+        bh=wcJV+sTCvoXRorMTo3bla0YIvIY9cRD9ViFSeOd4nhY=;
+        b=IBuyMOPx6WPfsVnrNpd6GbkrI6eXp6ahtCn0nVytcL0vYvafj9LpssY69tZ4y/Llu4
+         Kb4PR67S3T5zZ4xcBvX+AB8aLrVwEqDFNEB/Vva1Rt+guEpIsoE5+2EYe7dT6HxclOOh
+         jyXt743kd33Az8F4wdn14X6GgBIg9VqxJwzZLkGWJ/IOanApkH0Wfoi+7gf4+K55GWwN
+         n6INkEbP3xal54GoNZIhtvxRkK69l7htmQrtQfY7i5GVmBfbR+hPY1gPuCQQL/fIwGkp
+         6j2pc9hwnCppEXAb4cNdHVEYgK7/kb7SoDb9izGXcPPJG7tFK1L39uG+NDolBRu1UuEI
+         LFaQ==
+X-Gm-Message-State: ANhLgQ2no+aglnPEJwhOHbJfPB6D/iPNlnQyX1dA+ueRR6eVtlkUblV1
+        lRzXQ65dqpdhiF3dCCE95g==
+X-Google-Smtp-Source: ADFU+vuiVI5b8z8thkcndKw6U1+iSGDIMWVZ0mMnFrO0LB3iYtaFNhiK7560NgAcRwmO5JbsytVojg==
+X-Received: by 2002:a6b:d20f:: with SMTP id q15mr10379413iob.179.1585685173591;
+        Tue, 31 Mar 2020 13:06:13 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id s25sm6221528ilb.37.2020.03.31.13.06.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2020 13:06:12 -0700 (PDT)
+Received: (nullmailer pid 13332 invoked by uid 1000);
+        Tue, 31 Mar 2020 20:06:11 -0000
+Date:   Tue, 31 Mar 2020 14:06:11 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, linus.walleij@linaro.org, sboyd@codeaurora.org,
+        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
+        kgunda@codeaurora.org, aghayal@codeaurora.org,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH 3/3] iio: adc: Add support for PMIC7 ADC
+Message-ID: <20200331200611.GA10950@bogus>
+References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
+ <1585064650-16235-4-git-send-email-jprakash@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1585652976-17481-8-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <1585064650-16235-4-git-send-email-jprakash@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 31, 2020 at 04:39:35PM +0530, Akash Asthana wrote:
-> Get the interconnect paths for QSPI device and vote according to the
-> current bus speed of the driver.
+On Tue, Mar 24, 2020 at 09:14:10PM +0530, Jishnu Prakash wrote:
+> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
+> major change from PMIC5 is that all SW communication to ADC goes through
+> PMK8350, which communicates with other PMICs through PBS when the ADC
+> on PMK8350 works in master mode. The SID register is used to identify the
+> PMICs with which the PBS needs to communicate. Add support for the same.
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> In addition, add definitions for ADC channels and virtual channel
+> definitions per PMIC, to be used by ADC clients for PMIC7.
+> 
+> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
 > ---
-> Changes in V2:
->  - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
->    path handle
->  - As per Matthias comment, added error handling for icc_set_bw call
-> 
-> Changes in V3:
->  - No Change.
-> 
->  drivers/spi/spi-qcom-qspi.c | 46 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 45 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
-> index 3c4f83b..ad48f43 100644
-> --- a/drivers/spi/spi-qcom-qspi.c
-> +++ b/drivers/spi/spi-qcom-qspi.c
-> @@ -2,6 +2,7 @@
->  // Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
->  
->  #include <linux/clk.h>
-> +#include <linux/interconnect.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/module.h>
-> @@ -139,7 +140,10 @@ struct qcom_qspi {
->  	struct device *dev;
->  	struct clk_bulk_data *clks;
->  	struct qspi_xfer xfer;
-> -	/* Lock to protect xfer and IRQ accessed registers */
-> +	struct icc_path *icc_path_cpu_to_qspi;
-> +	unsigned int avg_bw_cpu;
-> +	unsigned int peak_bw_cpu;
-> +	/* Lock to protect data accessed by IRQs */
->  	spinlock_t lock;
->  };
->  
-> @@ -241,6 +245,20 @@ static int qcom_qspi_transfer_one(struct spi_master *master,
->  		return ret;
->  	}
->  
-> +	/*
-> +	 * Set BW quota for CPU as driver supports FIFO mode only.
-> +	 * Assume peak bw as twice of avg bw.
-> +	 */
-> +	ctrl->avg_bw_cpu = Bps_to_icc(speed_hz);
-> +	ctrl->peak_bw_cpu = Bps_to_icc(2 * speed_hz);
-> +	ret = icc_set_bw(ctrl->icc_path_cpu_to_qspi, ctrl->avg_bw_cpu,
-> +		ctrl->peak_bw_cpu);
-> +	if (ret) {
-> +		dev_err(ctrl->dev, "%s: ICC BW voting failed for cpu\n",
-> +			__func__);
-> +		return ret;
-> +	}
-> +
->  	spin_lock_irqsave(&ctrl->lock, flags);
->  
->  	/* We are half duplex, so either rx or tx will be set */
-> @@ -458,6 +476,15 @@ static int qcom_qspi_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto exit_probe_master_put;
->  
-> +	ctrl->icc_path_cpu_to_qspi = devm_of_icc_get(dev, "qspi-config");
-> +	if (IS_ERR(ctrl->icc_path_cpu_to_qspi)) {
-> +		ret = PTR_ERR(ctrl->icc_path_cpu_to_qspi);
-> +		goto exit_probe_master_put;
-> +	}
-> +	/* Put BW vote on CPU path for register access */
-> +	ctrl->avg_bw_cpu = Bps_to_icc(1000);
-> +	ctrl->peak_bw_cpu = Bps_to_icc(1000);
-> +
->  	ret = platform_get_irq(pdev, 0);
->  	if (ret < 0)
->  		goto exit_probe_master_put;
-> @@ -511,9 +538,17 @@ static int __maybe_unused qcom_qspi_runtime_suspend(struct device *dev)
->  {
->  	struct spi_master *master = dev_get_drvdata(dev);
->  	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
-> +	int ret;
->  
->  	clk_bulk_disable_unprepare(QSPI_NUM_CLKS, ctrl->clks);
->  
-> +	ret = icc_set_bw(ctrl->icc_path_cpu_to_qspi, 0, 0);
-> +	if (ret) {
-> +		dev_err_ratelimited(ctrl->dev, "%s: ICC BW remove failed for cpu\n",
-> +			__func__);
-> +		return ret;
-> +	}
-> +
->  	return 0;
->  }
->  
-> @@ -521,6 +556,15 @@ static int __maybe_unused qcom_qspi_runtime_resume(struct device *dev)
->  {
->  	struct spi_master *master = dev_get_drvdata(dev);
->  	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
-> +	int ret;
-> +
-> +	ret = icc_set_bw(ctrl->icc_path_cpu_to_qspi, ctrl->avg_bw_cpu,
-> +		ctrl->peak_bw_cpu);
-> +	if (ret) {
-> +		dev_err_ratelimited(ctrl->dev, "%s: ICC BW voting failed for cpu\n",
-> +			__func__);
-> +		return ret;
-> +	}
->  
->  	return clk_bulk_prepare_enable(QSPI_NUM_CLKS, ctrl->clks);
->  }
+>  drivers/iio/adc/qcom-spmi-adc5.c                 | 239 ++++++++++++++++++++-
+>  drivers/iio/adc/qcom-vadc-common.c               | 260 +++++++++++++++++++++++
+>  drivers/iio/adc/qcom-vadc-common.h               |  14 ++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h  |  67 ++++++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h |  88 ++++++++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h |  46 ++++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h |  28 +++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h |  28 +++
+>  include/dt-bindings/iio/qcom,spmi-vadc.h         |  78 ++++++-
 
-Looks good to me besides Mark's concern about the bandwith calculation logic.
+DT headers go in the binding patch(es).
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>  9 files changed, 843 insertions(+), 5 deletions(-)
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h
