@@ -2,177 +2,326 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A9C7199D3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:52:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E29F199D42
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:54:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726164AbgCaRwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 13:52:11 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:40273 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgCaRwL (ORCPT
+        id S1726028AbgCaRyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 13:54:07 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:43150 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725958AbgCaRyH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 13:52:11 -0400
-Received: by mail-pl1-f196.google.com with SMTP id h11so8383402plk.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 10:52:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8b3WnZTTNBaPOMDMuIqGibWI1hhFOK4GHv2gbbqH4E4=;
-        b=Y8M8ls/Tz7mnjRLag509mDzeltvzbPfcMsTSXBMrI+rpRmUwjDK1+CkgdTXqyfEhYg
-         bZEmgXc4O3cx/xXKnPBfH/o2pWD2O/S4zuGQxn0PpL3D29pjVHIayEPExxJPcBvm/j+Y
-         ds26z93uo/7QI7TKsqvz0V98b+PNUYfX8DFiY=
+        Tue, 31 Mar 2020 13:54:07 -0400
+Received: by mail-io1-f65.google.com with SMTP id x9so16223801iom.10;
+        Tue, 31 Mar 2020 10:54:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8b3WnZTTNBaPOMDMuIqGibWI1hhFOK4GHv2gbbqH4E4=;
-        b=f7PDGvY+B4A4k2Nk25XRMdkDxon1Fs3FycJ8I3g5qU8t9nd9aDgpBiLo0a8R4+LVXH
-         f27JpajDhB+0IXVvxB7bxpXAQLWwNIZ5VKQRK4NL5D5/ntYocveBJUBLtiVNWB/pM6ab
-         VaN4bYLi8SCvck2C/bteMPZdAdcDmNf97ewrHkMTF7kOcGzfgtX4e+fQJz6kZLmT2Apm
-         lv70V1fQTrkVI1naX96+HVSwiBI0KIS7GMHiUbzpYZ/XG/gzR6ejADxPVljQ0RXdSoSU
-         MYkOfCIMXrPxmnQehaGIc47qPbwUGSkfEqNh29N770hO691M83f+cAbZUe+wrSPKaLUw
-         +c9Q==
-X-Gm-Message-State: AGi0PuYTvNEIuezkRp/xAYPwQSOPNJGh4OJ1YlesgF7R8Vzmhn9x+Ynr
-        gqHcBBvS/JLPXfdmVEwhgeNZOA==
-X-Google-Smtp-Source: APiQypLEDWt9naJrmZKRq7qNu/KyQtF3te2IOlxl2ISxISRKDGfkLLJ/GDPPR5qiBNFBaLE8bdDXAw==
-X-Received: by 2002:a17:90a:e398:: with SMTP id b24mr16072pjz.113.1585677129802;
-        Tue, 31 Mar 2020 10:52:09 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id i187sm12910140pfg.33.2020.03.31.10.52.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Mar 2020 10:52:09 -0700 (PDT)
-Date:   Tue, 31 Mar 2020 10:52:07 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-Subject: Re: [PATCH V3 2/8] soc: qcom: geni: Support for ICC voting
-Message-ID: <20200331175207.GG199755@google.com>
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-3-git-send-email-akashast@codeaurora.org>
+        bh=VVqxzqCk/8iKLQzhs53o31LGL6xk02tsOhwWahTs5eM=;
+        b=da7YOos67aYWE15eRjQCVWed0yf6NpWRfUxfxZ3XpAnlXbGLJ1+rJUMw282E00m/tN
+         rnEKWFuSETXJc6myVZ367KAHAGOU0RwEvg7o+0lEnPLGsCO058zB1/UYIwZifVWCePCs
+         z1zulqubYu6YDO/UbICGqgKO6cQ4qaM1QPB1JS+0bB118XbF4txedWki+Thg6ZSoCXLW
+         k/tBY/WSFH+JRLitxzA9kMXGTDK9nAWX1MAZzkz7aMMOSBa1XGsHgCWdtkAV0oInDLTw
+         n7YOggaPwN+O2Cn7DW6CAdBhjqWtwQQzZOYcdLC/IAh81rUjGGWm21qNHEoLgFh3RCrZ
+         9srg==
+X-Gm-Message-State: ANhLgQ12TJJZbG+9cj4g1Op5PqlRk+KF40n/0n/xff1cgzUchUPLidfd
+        uB9iUNwNcg1xzD3N3dyCvg==
+X-Google-Smtp-Source: ADFU+vvXkSukGu2SPM2EgxgtLqkTK+D0VHQKKIdwAmLB0GUZ/sqJRqKEYT5sgfJXFkvT0QhqMfsF6A==
+X-Received: by 2002:a05:6602:164b:: with SMTP id y11mr16703395iow.3.1585677245141;
+        Tue, 31 Mar 2020 10:54:05 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id l70sm6185605ili.81.2020.03.31.10.54.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2020 10:54:04 -0700 (PDT)
+Received: (nullmailer pid 25121 invoked by uid 1000);
+        Tue, 31 Mar 2020 17:54:01 -0000
+Date:   Tue, 31 Mar 2020 11:54:01 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH V4 1/4] backlight: qcom-wled: convert the wled bindings
+ to .yaml format
+Message-ID: <20200331175401.GA9791@bogus>
+References: <1584985618-25689-1-git-send-email-kgunda@codeaurora.org>
+ <1584985618-25689-2-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1585652976-17481-3-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <1584985618-25689-2-git-send-email-kgunda@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
-
-On Tue, Mar 31, 2020 at 04:39:30PM +0530, Akash Asthana wrote:
-> Add necessary macros and structure variables to support ICC BW
-> voting from individual SE drivers.
+On Mon, Mar 23, 2020 at 11:16:55PM +0530, Kiran Gunda wrote:
+> Convert the qcom-wled bindings from .txt to .yaml format.
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
 > ---
-> Changes in V2:
->  - As per Bjorn's comment dropped enums for ICC paths, given the three
->    paths individual members
+>  .../bindings/leds/backlight/qcom-wled.txt          | 154 -----------------
+>  .../bindings/leds/backlight/qcom-wled.yaml         | 184 +++++++++++++++++++++
+>  2 files changed, 184 insertions(+), 154 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+>  create mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+
+> diff --git a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> new file mode 100644
+> index 0000000..8a388bf
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> @@ -0,0 +1,184 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/leds/backlight/qcom-wled.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Binding for Qualcomm Technologies, Inc. WLED driver
+> +
+> +maintainers:
+> +  - Lee Jones <lee.jones@linaro.org>
+
+Should be the h/w owner (you), not who applies patches.
+
+> +
+> +description: |
+> +  WLED (White Light Emitting Diode) driver is used for controlling display
+> +  backlight that is part of PMIC on Qualcomm Technologies, Inc. reference
+> +  platforms. The PMIC is connected to the host processor via SPMI bus.
+> +
+> +properties:
+> +  compatible :
+
+Drop the space ^
+
+> +    enum:
+> +       - qcom,pm8941-wled
+> +       - qcom,pmi8998-wled
+> +       - qcom,pm660l-wled
+
+Wrong indent (1 space too many).
+
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  default-brightness:
+> +    maxItems: 1
+
+maxItems is for arrays and this is a single scalar.
+
+> +    description:
+> +      brightness value on boot, value from 0-4095.
+
+0-4095 sounds like a constraint.
+
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+
+There should be a common definition for this.
+
+> +        default: 2048
+> +
+> +  label:
+> +    maxItems: 1
+> +    description:
+> +      The name of the backlight device.
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/string
+
+Already has a type. Just 'label: true' is enough.
+
+> +
+> +  qcom,cs-out:
+> +    description:
+> +      enable current sink output.
+> +      This property is supported only for PM8941.
+> +    type: boolean
+> +
+> +  qcom,cabc:
+> +    description:
+> +      enable content adaptive backlight control.
+> +    type: boolean
+> +
+> +  qcom,ext-gen:
+> +    description:
+> +      use externally generated modulator signal to dim.
+> +      This property is supported only for PM8941.
+> +    type: boolean
+> +
+> +  qcom,current-limit:
+> +    maxItems: 1
+
+Not an array.
+
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      mA; per-string current limit; value from 0 to 25 with
+
+25 sounds like a constraint.
+
+> +      1 mA step. This property is supported only for pm8941.
+> +    default: 20
+> +
+> +  qcom,current-limit-microamp:
+> +    maxItems: 1
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+
+properties with unit suffix already have a type.
+
+> +    description:
+> +      uA; per-string current limit; value from 0 to 30000 with
+> +      2500 uA step.
+
+steps can be expressed using 'multipleOf'
+
+> +    default: 25
+
+25 can never be a multiple of 2500
+
+> +
+> +  qcom,current-boost-limit:
+> +    maxItems: 1
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      mA; boost current limit.
+> +      For pm8941 one of 105, 385, 525, 805, 980, 1260, 1400, 1680.
+> +      Default, 805 mA.
+> +      For pmi8998 one of 105, 280, 450, 620, 970, 1150, 1300,
+> +      1500. Default 970 mA.
+
+Constraints.
+
+> +
+> +  qcom,switching-freq:
+> +    maxItems: 1
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      kHz; switching frequency; one of 600, 640, 685, 738,
+> +      800, 872, 960, 1066, 1200, 1371, 1600, 1920, 2400, 3200,
+> +      4800, 9600.
+> +      Default for pm8941 1600 kHz
+> +               for pmi8998 800 kHz
+
+Constraints!
+
+> +
+> +  qcom,ovp:
+> +    maxItems: 1
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      V; Over-voltage protection limit; one of 27, 29, 32, 35. Default 29V
+> +      This property is supported only for PM8941.
+> +
+> +  qcom,ovp-millivolt:
+> +    maxItems: 1
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      mV; Over-voltage protection limit;
+> +      For pmi8998 one of 18100, 19600, 29600, 31100.
+> +      Default 29600 mV.
+> +      If this property is not specified for PM8941, it
+> +      falls back to "qcom,ovp" property.
+> +
+> +  qcom,num-strings:
+> +    maxItems: 1
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      number of led strings attached;
+> +      value for PM8941 from 1 to 3. Default 2
+> +      For PMI8998 from 1 to 4.
+> +
+> +  interrupts:
+> +    maxItems: 2
+
+items:
+  - description: ...
+  - description: ...
+
+> +    description:
+> +      Interrupts associated with WLED. This should be
+> +      "short" and "ovp" interrupts. Interrupts can be
+> +      specified as per the encoding listed under
+> +      Documentation/devicetree/bindings/spmi/
+> +      qcom,spmi-pmic-arb.txt.
+
+encoding is outside the scope of the binding.
+
+> +
+> +  interrupt-names:
+> +    description:
+> +      Interrupt names associated with the interrupts.
+> +      Must be "short" and "ovp". The short circuit detection
+> +      is not supported for PM8941.
+
+Names should be constraints.
+
+> +
+> +  qcom,enabled-strings:
+> +    maxItems: 1
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    description:
+> +      Array of the WLED strings numbered from 0 to 3. Each
+> +      string of leds are operated individually. Specify the
+> +      list of strings used by the device. Any combination of
+> +      led strings can be used.
+> +
+> +  qcom,external-pfet:
+> +    description:
+> +      Specify if external PFET control for short circuit
+> +      protection is used. This property is supported only
+> +      for PMI8998.
+> +    type: boolean
+> +
+> +  qcom,auto-string-detection:
+> +    description:
+> +      Enables auto-detection of the WLED string configuration.
+> +      This feature is not supported for PM8941.
+> +    type: boolean
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - label
+> +
+> +examples:
+> +  - |
+> +    pm8941-wled@d800 {
+
+backlight@...
+
+> +        compatible = "qcom,pm8941-wled";
+> +        reg = <0xd800 0x100>;
+> +        label = "backlight";
+> +
+> +        qcom,cs-out;
+> +        qcom,current-limit = <20>;
+> +        qcom,current-boost-limit = <805>;
+> +        qcom,switching-freq = <1600>;
+> +        qcom,ovp = <29>;
+> +        qcom,num-strings = <2>;
+> +        qcom,enabled-strings = <0 1>;
+> +     };
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>  a Linux Foundation Collaborative Project
 > 
-> Changes in V3:
->  - Add geni_icc_get, geni_icc_vote_on and geni_icc_vote_off as helper API.
->  - Add geni_icc_path structure in common header
-> 
->  drivers/soc/qcom/qcom-geni-se.c | 98 +++++++++++++++++++++++++++++++++++++++++
->  include/linux/qcom-geni-se.h    | 36 +++++++++++++++
->  2 files changed, 134 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 7d622ea..9344c14 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -720,6 +720,104 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
->  }
->  EXPORT_SYMBOL(geni_se_rx_dma_unprep);
->  
-> +int geni_icc_get(struct geni_se *se, const char *icc_core, const char *icc_cpu,
-> +		const char *icc_ddr)
-> +{
-> +	if (icc_core) {
-> +		se->to_core.path = devm_of_icc_get(se->dev, "qup-core");
-> +		if (IS_ERR(se->to_core.path))
-> +			return PTR_ERR(se->to_core.path);
-> +	}
-> +
-> +	if (icc_cpu) {
-> +		se->from_cpu.path = devm_of_icc_get(se->dev, "qup-config");
-> +		if (IS_ERR(se->from_cpu.path))
-> +			return PTR_ERR(se->from_cpu.path);
-> +	}
-> +
-> +	if (icc_ddr) {
-> +		se->to_ddr.path = devm_of_icc_get(se->dev, "qup-memory");
-> +		if (IS_ERR(se->to_ddr.path))
-> +			return PTR_ERR(se->to_ddr.path);
-> +	}
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL(geni_icc_get);
-> +
-> +int geni_icc_vote_on(struct geni_se *se)
-> +{
-> +	int ret;
-> +
-> +	if (se->to_core.path) {
-> +		ret = icc_set_bw(se->to_core.path, se->to_core.avg_bw,
-> +			se->to_core.peak_bw);
-> +		if (ret) {
-> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for core\n",
-> +						__func__);
-> +			return ret;
-> +		}
-> +	}
-> +
-> +	if (se->from_cpu.path) {
-> +		ret = icc_set_bw(se->from_cpu.path, se->from_cpu.avg_bw,
-> +			se->from_cpu.peak_bw);
-> +		if (ret) {
-> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for cpu\n",
-> +						__func__);
-> +			return ret;
-> +		}
-> +	}
-> +
-> +	if (se->to_ddr.path) {
-> +		ret = icc_set_bw(se->to_ddr.path, se->to_ddr.avg_bw,
-> +			se->to_ddr.peak_bw);
-> +		if (ret) {
-> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for ddr\n",
-> +						__func__);
-> +			return ret;
-> +		}
-> +	}
-
-
-With an array of 'struct geni_icc_path' pointers the above could be
-reduced to:
-
-	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
-		if (!se->icc_paths[i])
-			continue;
-
-		ret = icc_set_bw(se->icc_paths[i]->path, se->icc_paths[i]->avg_bw,
-			se->icc_paths[i]->peak_bw);
-		if (ret) {
-			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed\n",
-						__func__);
-			return ret;
-		}
-	}
-
-similar for geni_icc_vote_off()
-
-It's just a suggestion, looks also good to me as is.
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
