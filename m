@@ -2,119 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AEDD1199B81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 18:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DE73199B94
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 18:31:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730606AbgCaQ3j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 12:29:39 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:36473 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730590AbgCaQ3j (ORCPT
+        id S1730149AbgCaQbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 12:31:06 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:36183 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726194AbgCaQbG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 12:29:39 -0400
-Received: by mail-pf1-f194.google.com with SMTP id i13so10559655pfe.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 09:29:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3wP5LCDf1qLgKK+VOjwy/fW1+iOb+VwqM7TAcp3BsV8=;
-        b=YSlYN7OTswKyzWbeb+COMKOnvlKIkPMClodNu+D2n/6uKu5XWt6GHkoI5M1ofB5Gb+
-         rRdOjtgl3DGJBdnP1/umt9xvGTr3WFLeINe/yjJJBKc+9E3IM29YYplh6m3b72qpovtK
-         SfF/FNk5rtPH/jQEasgic5AtYgk1SBI7cPjzQ=
+        Tue, 31 Mar 2020 12:31:06 -0400
+Received: by mail-io1-f66.google.com with SMTP id n10so8306829iom.3;
+        Tue, 31 Mar 2020 09:31:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3wP5LCDf1qLgKK+VOjwy/fW1+iOb+VwqM7TAcp3BsV8=;
-        b=muqvh+zt4cHUrHxSoE7YEkFruShQtX72CjzFkkZcTLd1sr1Ogfd6vIkK/l3HSLxC4v
-         TB5bKZtJ8bg4OejDDmnd/OJENz0t9RQfZEsZfP5GqnyGEU0nvvRmF1/cotOoAy24FT50
-         ep4ATgE5jgEdkvVJRtKTek3vUjvUBksPPrszqyZjVulNuvUzVnsyKDGNOgf8Tbg2Q9Pe
-         t4rRKgPxXwjhFEtJtFymj+NjA/HO3kdt2DDV+JszSaSeZWnVgWD8G0rCv2q0jxlhacVe
-         QIFSgNMOMIk2naxePY9JE7BjeQSy4e0+Q9196w4b6M/tNt2eXAWbRrniE7gdURu2bmsF
-         LRRw==
-X-Gm-Message-State: AGi0PuYzpU7Yvk0iwgTx0xLBBI1ZMF4fJn0PCA//JVw4ED/A71MMEJvN
-        siGgB549RPWj1aCSLHE2q+YaSg==
-X-Google-Smtp-Source: APiQypIE8YZwOIL+SRdJzFHBcl+UVQk/2x3rJ3G6v/OprL+VIZ3bbRQSzJiLgYHEFwbBEdfp1hC1WQ==
-X-Received: by 2002:a63:31c4:: with SMTP id x187mr11698385pgx.205.1585672177939;
-        Tue, 31 Mar 2020 09:29:37 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id i16sm2964502pfq.165.2020.03.31.09.29.37
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zoQEkQjM/RIJRTp0VhUEAtYWdj5x7fe+RhUwfghxupI=;
+        b=WzS20qYhqf0IWsyYBSSqkdEemNosrZtX9J1l05rPS40rZzXkppIUOwkYz6+pqpW1fZ
+         qKne/UOM7gq4qm0ggxGBjysbA8HQDetFlDoiPXIA0tj7dRqzAo0/hVI6hTuZI2bxuXu9
+         x9B41iysI1FfMcu7YKzlvuDpiHPplEzsh9Dv2M+gZwxb/7aNgTVmznVyLxH/CWFai+e6
+         dNn+rMqdAsWrUsFLG37A7jFWq82gf0EpVwGdPYoBtnalooFWdpnZ/i9Xly3r+u2VrFQZ
+         s1g2Zw02Ejl5k7+EqZ3bcQnUvkfYD3/Li2mHwaEzJwGwpkpFZdMOCFHFYZ4sgTeOjvVW
+         oiTA==
+X-Gm-Message-State: ANhLgQ2sKYOob+VWUo2Ykl9rfgaUR6iqZHGMppWfOVFTILOT4rr3ZvAH
+        dByW60z0+qEkuETvecJKO6AyNuZKew==
+X-Google-Smtp-Source: ADFU+vu4PluKLuSQcRazSevqQJ+tYdJcBbLKoGll5Pt711ZFa614nH8fCOc5wkXi2o9PWi7OduTjZQ==
+X-Received: by 2002:a6b:c9d2:: with SMTP id z201mr16386409iof.169.1585672265396;
+        Tue, 31 Mar 2020 09:31:05 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id f2sm6047237ill.51.2020.03.31.09.31.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 09:29:37 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     mka@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: sc7180: Swap order of gpucc and sdhc_2
-Date:   Tue, 31 Mar 2020 09:29:00 -0700
-Message-Id: <20200331092832.1.Ic361058ca22d7439164ffea11421740462e14272@changeid>
-X-Mailer: git-send-email 2.26.0.rc2.310.g2932bb562d-goog
+        Tue, 31 Mar 2020 09:31:04 -0700 (PDT)
+Received: (nullmailer pid 23196 invoked by uid 1000);
+        Tue, 31 Mar 2020 16:31:03 -0000
+Date:   Tue, 31 Mar 2020 10:31:03 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org, Robert Marko <robert.marko@sartura.hr>,
+        John Crispin <john@phrozen.org>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: Re: [PATCH v5 2/3] dt-bindings: phy-qcom-ipq4019-usb: add binding
+ document
+Message-ID: <20200331163103.GA27585@bogus>
+References: <20200330164328.2944505-1-robert.marko@sartura.hr>
+ <20200330164328.2944505-2-robert.marko@sartura.hr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200330164328.2944505-2-robert.marko@sartura.hr>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Devices are supposed to be sorted by unit address.  These two got
-swapped when they landed.  Fix.
+On Mon, 30 Mar 2020 18:43:29 +0200, Robert Marko wrote:
+> This patch adds the binding documentation for the HS/SS USB PHY found
+> inside Qualcom Dakota SoCs.
+> 
+> Signed-off-by: John Crispin <john@phrozen.org>
+> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> Cc: Luka Perkov <luka.perkov@sartura.hr>
+> ---
+> Changes from v4 to v5:
+> * Replace tabs with whitespaces
+> * Add maintainer property
+> 
+>  .../bindings/phy/qcom-usb-ipq4019-phy.yaml    | 48 +++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+> 
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+My bot found errors running 'make dt_binding_check' on your patch:
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+Error: Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.example.dts:21.25-26 syntax error
+FATAL ERROR: Unable to parse input tree
+scripts/Makefile.lib:311: recipe for target 'Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.example.dt.yaml' failed
+make[1]: *** [Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+Makefile:1262: recipe for target 'dt_binding_check' failed
+make: *** [dt_binding_check] Error 2
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 998f101ad623..4bdadfd9efb9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1294,6 +1294,20 @@ pinconf-sd-cd {
- 			};
- 		};
- 
-+		gpucc: clock-controller@5090000 {
-+			compatible = "qcom,sc7180-gpucc";
-+			reg = <0 0x05090000 0 0x9000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			clock-names = "bi_tcxo",
-+				      "gcc_gpu_gpll0_clk_src",
-+				      "gcc_gpu_gpll0_div_clk_src";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		sdhc_2: sdhci@8804000 {
- 			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x08804000 0 0x1000>;
-@@ -1312,20 +1326,6 @@ sdhc_2: sdhci@8804000 {
- 			status = "disabled";
- 		};
- 
--		gpucc: clock-controller@5090000 {
--			compatible = "qcom,sc7180-gpucc";
--			reg = <0 0x05090000 0 0x9000>;
--			clocks = <&rpmhcc RPMH_CXO_CLK>,
--				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
--				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
--			clock-names = "bi_tcxo",
--				      "gcc_gpu_gpll0_clk_src",
--				      "gcc_gpu_gpll0_div_clk_src";
--			#clock-cells = <1>;
--			#reset-cells = <1>;
--			#power-domain-cells = <1>;
--		};
--
- 		qspi: spi@88dc000 {
- 			compatible = "qcom,qspi-v1";
- 			reg = <0 0x088dc000 0 0x600>;
--- 
-2.26.0.rc2.310.g2932bb562d-goog
+See https://patchwork.ozlabs.org/patch/1264091
 
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
