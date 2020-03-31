@@ -2,185 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 201ED199818
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 16:05:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A98841998BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 16:39:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730543AbgCaOFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 10:05:25 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:37417 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730562AbgCaOFZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 10:05:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585663524; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=JPQGZVO7GQmUjDTatLNPuWZXRCXTSbNi57XEzEX56cE=;
- b=hOuh2Xt7EVO4/2Vf4CjjMk8ECmeXIh3DoFSjRsRVRfuhTaEe0NZFuqvWUKbgFmUSkeKPFGp7
- 3MqFJLqDL3Ziufzs3Rj70OfRRo7RTPmn4jq9nxFHsL5r8+ie1UWqpI49TuRUY1Kwj67ygpcn
- IjwaOfqTZcN2HW0SkInlpoZSvME=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e834e23.7f61220ab848-smtp-out-n03;
- Tue, 31 Mar 2020 14:05:23 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8A93DC433F2; Tue, 31 Mar 2020 14:05:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1731071AbgCaOjO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 10:39:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52704 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726194AbgCaOjN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 31 Mar 2020 10:39:13 -0400
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: kalyan_t)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BBE03C433F2;
-        Tue, 31 Mar 2020 14:05:21 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B4A0F214D8;
+        Tue, 31 Mar 2020 14:39:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1585665552;
+        bh=VQTYjDLJpBPL64v+KHcwfSavLEUmQ5VPbYuKeDQvfh4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=w9kKXD8z4sqI86PU33XbHmfq5R7o1rl1Yc6oUOAz42cwHppv6UAYyiBVNzHr/8rGq
+         fiuijzJ4syHgX49+YFivKcsWhdJV6fv/bOG69I3vdo0Lq1npTDVuNQt+ItarZp4b9G
+         a/bP28cpaoxY9yg7N1tSpyTZfOjD00o0nNDF4FO0=
+Received: by mail-qk1-f175.google.com with SMTP id l25so23220051qki.7;
+        Tue, 31 Mar 2020 07:39:12 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ1Yn4A9Q6+UE+Fanv4lnS9wOsS2mOqlYHd34dkABj36/5Rng+QK
+        5l9WpzStfcaqEjMA1sRPag/9oA3L9MsbAp5F3A==
+X-Google-Smtp-Source: ADFU+vs96kIPVk/bUhQUvXuwHTzxBhEjf4smiGd+iZOn7jyc5rfIytLi140jinW+le6E+iSeEnGKe3qbfJEIB3it89g=
+X-Received: by 2002:a37:aa92:: with SMTP id t140mr4802134qke.119.1585665551704;
+ Tue, 31 Mar 2020 07:39:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 31 Mar 2020 19:35:21 +0530
-From:   kalyan_t@codeaurora.org
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, mkrishn@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        travitej@codeaurora.org, LKML <linux-kernel@vger.kernel.org>,
+References: <20200325220542.19189-1-robh@kernel.org> <20200325220542.19189-5-robh@kernel.org>
+ <CAK7LNARJn4uugHxcjK+WOWBs0gPVZQsCu4y6M8hkNK1U5FehRA@mail.gmail.com> <CAK7LNARXj3=1VPWL4kFmGkZuvV=yKb7gVaX2nbeiO54f-zWeHQ@mail.gmail.com>
+In-Reply-To: <CAK7LNARXj3=1VPWL4kFmGkZuvV=yKb7gVaX2nbeiO54f-zWeHQ@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 31 Mar 2020 08:39:00 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLDL6mVZ3Bb3f6eObF9SNwy6WK_srX5=m=NCN8Jq+-R+g@mail.gmail.com>
+Message-ID: <CAL_JsqLDL6mVZ3Bb3f6eObF9SNwy6WK_srX5=m=NCN8Jq+-R+g@mail.gmail.com>
+Subject: Re: [PATCH 4/4] dt-bindings: Add missing 'additionalProperties: false'
+To:     Masahiro Yamada <masahiroy@kernel.org>
+Cc:     DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Guillaume La Roque <glaroque@baylibre.com>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Zhang Rui <rui.zhang@intel.com>,
         dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>, nganji@codeaurora.org,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>
-Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: ensure device suspend happens
- during PM sleep
-In-Reply-To: <CAD=FV=WcFahUm8jK+QTwx7BkCb3GTgKqFLP_pdqWBqN-zawrbw@mail.gmail.com>
-References: <1585559008-12705-1-git-send-email-kalyan_t@codeaurora.org>
- <CAD=FV=WcFahUm8jK+QTwx7BkCb3GTgKqFLP_pdqWBqN-zawrbw@mail.gmail.com>
-Message-ID: <145ea4f469465674c8a2e36fdfcbec67@codeaurora.org>
-X-Sender: kalyan_t@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:IIO SUBSYSTEM AND DRIVERS" <linux-iio@vger.kernel.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Linux PM mailing list <linux-pm@vger.kernel.org>,
+        Networking <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-03-31 00:25, Doug Anderson wrote:
-> Hi,
-> 
-> On Mon, Mar 30, 2020 at 2:04 AM Kalyan Thota <kalyan_t@codeaurora.org> 
-> wrote:
->> 
->> "The PM core always increments the runtime usage counter
->> before calling the ->suspend() callback and decrements it
->> after calling the ->resume() callback"
->> 
->> DPU and DSI are managed as runtime devices. When
->> suspend is triggered, PM core adds a refcount on all the
->> devices and calls device suspend, since usage count is
->> already incremented, runtime suspend was not getting called
->> and it kept the clocks on which resulted in target not
->> entering into XO shutdown.
->> 
->> Add changes to manage runtime devices during pm sleep.
->> 
->> Changes in v1:
->>  - Remove unnecessary checks in the function
->>    _dpu_kms_disable_dpu (Rob Clark).
->> 
->> Changes in v2:
->>  - Avoid using suspend_late to reset the usagecount
->>    as suspend_late might not be called during suspend
->>    call failures (Doug).
->> 
->> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 33 
->> +++++++++++++++++++++++++++++++++
->>  drivers/gpu/drm/msm/msm_drv.c           |  4 ++++
->>  drivers/gpu/drm/msm/msm_kms.h           |  2 ++
->>  3 files changed, 39 insertions(+)
-> 
-> I am still 100% baffled by your patch and I never did quite understand
-> your response to my previous comments [1].  I think you're saying that
-> the problem you were facing is that if you call "suspend" but never
-> called "runtime_suspend" that the device stays active.  Is that right?
->  If that's true, did you try something like this suggestion I made?
-> 
-> SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, 
-> pm_runtime_force_resume)
-> 
-> 
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index ce19f1d..2343cbd 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -26,6 +26,7 @@
->>  #include "dpu_encoder.h"
->>  #include "dpu_plane.h"
->>  #include "dpu_crtc.h"
->> +#include "dsi.h"
->> 
->>  #define CREATE_TRACE_POINTS
->>  #include "dpu_trace.h"
->> @@ -325,6 +326,37 @@ static void dpu_kms_disable_commit(struct msm_kms 
->> *kms)
->>         pm_runtime_put_sync(&dpu_kms->pdev->dev);
->>  }
->> 
->> +static void _dpu_kms_disable_dpu(struct msm_kms *kms)
->> +{
->> +       struct dpu_kms *dpu_kms = to_dpu_kms(kms);
->> +       struct drm_device *dev = dpu_kms->dev;
->> +       struct msm_drm_private *priv = dev->dev_private;
->> +       struct msm_dsi *dsi;
->> +       int i;
->> +
->> +       dpu_kms_disable_commit(kms);
->> +
->> +       for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
->> +               if (!priv->dsi[i])
->> +                       continue;
->> +               dsi = priv->dsi[i];
->> +               pm_runtime_put_sync(&dsi->pdev->dev);
->> +       }
->> +       pm_runtime_put_sync(dev->dev);
->> +
->> +       /* Increment the usagecount without triggering a resume */
->> +       pm_runtime_get_noresume(dev->dev);
->> +
->> +       pm_runtime_get_noresume(&dpu_kms->pdev->dev);
->> +
->> +       for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
->> +               if (!priv->dsi[i])
->> +                       continue;
->> +               dsi = priv->dsi[i];
->> +               pm_runtime_get_noresume(&dsi->pdev->dev);
->> +       }
->> +}
-> 
-> My pm_runtime knowledge is pretty weak sometimes, but the above
-> function looks crazy.  Maybe it's just me not understanding, but can
-> you please summarize what you're trying to accomplish?
-> 
--- I was trying to get the runtime callbacks via controlling the device 
-usage_count
-Since the usage_count was already incremented by PM core, i was 
-decrementing and incrementing (without resume)
-so that callbacks are triggered.
+On Mon, Mar 30, 2020 at 2:38 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
+>
+> Hi Rob,
+>
+> On Mon, Mar 30, 2020 at 4:09 PM Masahiro Yamada <masahiroy@kernel.org> wrote:
+> >
+> > On Thu, Mar 26, 2020 at 7:06 AM Rob Herring <robh@kernel.org> wrote:
+> > >
+> > > Setting 'additionalProperties: false' is frequently omitted, but is
+> > > important in order to check that there aren't extra undocumented
+> > > properties in a binding.
+> > >
+> > > Ideally, we'd just add this automatically and make this the default, but
+> > > there's some cases where it doesn't work. For example, if a common
+> > > schema is referenced, then properties in the common schema aren't part
+> > > of what's considered for 'additionalProperties'. Also, sometimes there
+> > > are bus specific properties such as 'spi-max-frequency' that go into
+> > > bus child nodes, but aren't defined in the child node's schema.
+> > >
+> > > So let's stick with the json-schema defined default and add
+> > > 'additionalProperties: false' where needed. This will be a continual
+> > > review comment and game of wack-a-mole.
+> > >
+> > > Signed-off-by: Rob Herring <robh@kernel.org>
+> > > ---
+> >
+> >
+> > >  .../devicetree/bindings/gpio/socionext,uniphier-gpio.yaml      | 2 ++
+> >
+> >
+> > You may have already queue this up, but just in case.
+> >
+> > Acked-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+>
+>
+>
+> I take back Ack for socionext,uniphier-gpio.yaml
+>
+>
+>
+> Now "make dt_binding_check" produces a new warning.
+>
+> gpio@55000000: 'interrupt-parent' does not match any of the regexes:
+> 'pinctrl-[0-9]+'
+>
+>
+> This binding uses 'interrupt-parent'
+> without 'interrupts'.
+>
+> Instead, the mapping of the interrupt numbers
+> is specified by the vendor-specific property
+> socionext,interrupt-ranges
+>
+>
+>
+> I cannot add   "interrupt-parent: true" because
+> dt-schema/meta-schemas/interrupts.yaml
+> has "interrupt-parent: false".
+>
+>
+> Is there any solution?
 
-I have taken your suggestion on forcing the suspend instead of managing 
-it via usage_count.
-i'll follow it up in the next patchset.
+I'd meant to just drop socionext,uniphier-gpio.yaml.
 
-> -Doug
-> 
-> [1] 
-> https://lore.kernel.org/r/114130f68c494f83303c51157e2c5bfa@codeaurora.org
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+Rob
