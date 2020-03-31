@@ -2,101 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D481199BF1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 18:44:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64855199C43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 18:56:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731054AbgCaQoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 12:44:15 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:34932 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731051AbgCaQoO (ORCPT
+        id S1731229AbgCaQ4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 12:56:23 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39424 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730099AbgCaQ4X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 12:44:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585673054; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=uOkXbeZcr2DV9rCBPPxEDbCuvkJ222eXEUFzpRLZi3A=; b=IqQ2rkbQTlc2P7VdM0Xod1TFQCP756XH6bHa2lQPZmLLG3DJ+moL0kBMjMzs7wwOk5rKzWvx
- PbhdSBEvKGgPCthlRFhuSLrV/pnRjlpTOevhnhwZ3ZspJ0zuSE/TL/5tprZXakqBRhBfe7iV
- icZjAWAb/VcIiJKBYUfaiC098t8=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e837354.7f0028b137d8-smtp-out-n01;
- Tue, 31 Mar 2020 16:44:04 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4D83FC4478C; Tue, 31 Mar 2020 16:44:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0708C433F2;
-        Tue, 31 Mar 2020 16:44:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B0708C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 31 Mar 2020 10:43:59 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        sibis@codeaurora.org, saravanak@google.com, viresh.kumar@linaro.org
-Subject: Re: [PATCH 4/5] drm: msm: a6xx: Fix off by one error when setting
- GPU freq
-Message-ID: <20200331164359.GA11573@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Sharat Masetty <smasetty@codeaurora.org>,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        sibis@codeaurora.org, saravanak@google.com, viresh.kumar@linaro.org
-References: <1585641353-23229-1-git-send-email-smasetty@codeaurora.org>
- <1585641353-23229-5-git-send-email-smasetty@codeaurora.org>
+        Tue, 31 Mar 2020 12:56:23 -0400
+Received: by mail-pf1-f193.google.com with SMTP id k15so5454708pfh.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 09:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AoYRd9Pq6YoKCArfaky/GwN/okmu7M4Melv1gMLsus0=;
+        b=Dia3hfRrpxaRBxvHdYd3kMBU9QW0vqQmdSuDx/tIahRVeQTZWE1qSImujnys9OAPzf
+         ihL/Ae2uVTeIm7IRV4nnp3pPWpBiL7cxYKs2CPUGddpc3yogJ6Rik6vHHDjyPYtjRX5q
+         Py3e9yi5uOJCFjqDCc48fMSRehdhvj0dXwqdw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AoYRd9Pq6YoKCArfaky/GwN/okmu7M4Melv1gMLsus0=;
+        b=MPHd4HN1tIJW+iuxN4b4JWarFDlEugrH6+JayPqKSBy0OhZrJiYNjTAfGuXcAP79Ue
+         EKRnItcDgPbBT06WrWr14VqXXROVo1/fIrJtnkQw9EB49TJ76edYQpifS6O2w+qy//Md
+         d+ejHCVoVDfZcmEx2xrz171Mc/1qUpDJk7arGP/ewQqvfoN95hMZOcBUQTNszSgosnwf
+         3t4kvFtrdzODWxytdHcy3XkHGpTAFBWVeUYYl/jOs4jNJX4ja6BSQaFI/Zwuy/9jW8a/
+         o9ktoiFS9ec6YQTJwkHuoCeDZmvEz5rc3rRcwvZipZj4wEcQaiQM7u68tJWHfSuUDZa2
+         f3Ng==
+X-Gm-Message-State: ANhLgQ3KwVWqPIdPbAwmmyfXVJTCy5MnPbRz1/ZMsBSLgctq3IQKCkYr
+        SOEwhmpeyFcU7/SygL7zl3Riww==
+X-Google-Smtp-Source: ADFU+vu2yJB9PydRxx64pKqd+7UiF/mWFNoEoubw30zUx4+AkYrfUieVzTWz0wrsdhsJ/MmJMU3XnQ==
+X-Received: by 2002:a63:484:: with SMTP id 126mr19669475pge.161.1585673781872;
+        Tue, 31 Mar 2020 09:56:21 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id p22sm12147731pgn.73.2020.03.31.09.56.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Mar 2020 09:56:21 -0700 (PDT)
+Date:   Tue, 31 Mar 2020 09:56:20 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: sc7180: Swap order of gpucc and sdhc_2
+Message-ID: <20200331165620.GF199755@google.com>
+References: <20200331092832.1.Ic361058ca22d7439164ffea11421740462e14272@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1585641353-23229-5-git-send-email-smasetty@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20200331092832.1.Ic361058ca22d7439164ffea11421740462e14272@changeid>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 31, 2020 at 01:25:52PM +0530, Sharat Masetty wrote:
-> This patch fixes an error in the for loop, thereby allowing search on
-> the full list of possible GPU power levels.
+On Tue, Mar 31, 2020 at 09:29:00AM -0700, Douglas Anderson wrote:
+> Devices are supposed to be sorted by unit address.  These two got
+> swapped when they landed.  Fix.
 > 
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-
-Oh fun. This qualifies for drm-fixes. Can you pull this out of the stack and CC
-stable?
-
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 489d9b6..81b8559 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -176,7 +176,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
->  	if (freq == gmu->freq)
->  		return;
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 28 ++++++++++++++--------------
+>  1 file changed, 14 insertions(+), 14 deletions(-)
 > 
-> -	for (perf_index = 0; perf_index < gmu->nr_gpu_freqs - 1; perf_index++)
-> +	for (perf_index = 0; perf_index < gmu->nr_gpu_freqs; perf_index++)
->  		if (freq == gmu->gpu_freqs[perf_index])
->  			break;
-> 
-> --
-> 2.7.4
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 998f101ad623..4bdadfd9efb9 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1294,6 +1294,20 @@ pinconf-sd-cd {
+>  			};
+>  		};
+>  
+> +		gpucc: clock-controller@5090000 {
+> +			compatible = "qcom,sc7180-gpucc";
+> +			reg = <0 0x05090000 0 0x9000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+> +			clock-names = "bi_tcxo",
+> +				      "gcc_gpu_gpll0_clk_src",
+> +				      "gcc_gpu_gpll0_div_clk_src";
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>  		sdhc_2: sdhci@8804000 {
+>  			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+>  			reg = <0 0x08804000 0 0x1000>;
+> @@ -1312,20 +1326,6 @@ sdhc_2: sdhci@8804000 {
+>  			status = "disabled";
+>  		};
+>  
+> -		gpucc: clock-controller@5090000 {
+> -			compatible = "qcom,sc7180-gpucc";
+> -			reg = <0 0x05090000 0 0x9000>;
+> -			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> -				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> -				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+> -			clock-names = "bi_tcxo",
+> -				      "gcc_gpu_gpll0_clk_src",
+> -				      "gcc_gpu_gpll0_div_clk_src";
+> -			#clock-cells = <1>;
+> -			#reset-cells = <1>;
+> -			#power-domain-cells = <1>;
+> -		};
+> -
+>  		qspi: spi@88dc000 {
+>  			compatible = "qcom,qspi-v1";
+>  			reg = <0 0x088dc000 0 0x600>;
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
