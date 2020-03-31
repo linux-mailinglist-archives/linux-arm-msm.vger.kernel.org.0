@@ -2,78 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EA25199D20
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:42:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A9C7199D3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:52:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbgCaRmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 13:42:40 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:41697 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726164AbgCaRmj (ORCPT
+        id S1726164AbgCaRwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 13:52:11 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:40273 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726194AbgCaRwL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 13:42:39 -0400
-Received: by mail-io1-f68.google.com with SMTP id b12so6427737ion.8;
-        Tue, 31 Mar 2020 10:42:39 -0700 (PDT)
+        Tue, 31 Mar 2020 13:52:11 -0400
+Received: by mail-pl1-f196.google.com with SMTP id h11so8383402plk.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 10:52:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8b3WnZTTNBaPOMDMuIqGibWI1hhFOK4GHv2gbbqH4E4=;
+        b=Y8M8ls/Tz7mnjRLag509mDzeltvzbPfcMsTSXBMrI+rpRmUwjDK1+CkgdTXqyfEhYg
+         bZEmgXc4O3cx/xXKnPBfH/o2pWD2O/S4zuGQxn0PpL3D29pjVHIayEPExxJPcBvm/j+Y
+         ds26z93uo/7QI7TKsqvz0V98b+PNUYfX8DFiY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FTAqD+OnWKqPUS7vCWWL8ACHVlN3bM/iXdorWRR9HJA=;
-        b=m4amlG+dG+XITfbL0jZdKgd5wAS2AgyDDHpuEyV318YCBb+EIWdQY74Fp8phtRH9ZQ
-         TViNHhQ7eEi3vxeLrsxVAp+4a8GxgnYHNsF3mwf4R2O+44Zw3tKhKp9V3zoAUhgykJx8
-         WTDEQPp4w332p3uB89F6mHKfC1BiuUanZlji9LmDLOR1wU917lt8Aj70w5pXZoAXwZvv
-         7UnwPIeg8JqEOK2TQUxE5UiXPBtvdheGezloZ0aNjvx7MknboAdW9M6UhPN8Y2MRwFV2
-         iL7iRfOEuevhZrX3H6WaKFxVSu6MRAaFJ115eScmA8zFl0d+YaUyfJvkW15wiolMOFHZ
-         7PMg==
-X-Gm-Message-State: ANhLgQ3W2OqAiugHDQVk7PSuZUU5asMcnayAzaLgXlhVRxHm9ScQqwEx
-        2HkSMh+o3pOIn4awGiX3dnn/rQY=
-X-Google-Smtp-Source: ADFU+vsofZqcujz0YBlQeUxmcFaoWgeTxj5Kf5VemH202p86jO/BnjYgn6HMw3nAtP7k4B1E9T339Q==
-X-Received: by 2002:a02:2b02:: with SMTP id h2mr16570919jaa.81.1585676558974;
-        Tue, 31 Mar 2020 10:42:38 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id w88sm6083471ila.24.2020.03.31.10.42.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 10:42:38 -0700 (PDT)
-Received: (nullmailer pid 9628 invoked by uid 1000);
-        Tue, 31 Mar 2020 17:42:37 -0000
-Date:   Tue, 31 Mar 2020 11:42:37 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] docs: dt: qcom,dwc3.txt: fix cross-reference for a
- converted file
-Message-ID: <20200331174237.GA9527@bogus>
-References: <66b8da28bbf0af6d8bd23953936e7feb6a7ed0c2.1584966325.git.mchehab+huawei@kernel.org>
+        bh=8b3WnZTTNBaPOMDMuIqGibWI1hhFOK4GHv2gbbqH4E4=;
+        b=f7PDGvY+B4A4k2Nk25XRMdkDxon1Fs3FycJ8I3g5qU8t9nd9aDgpBiLo0a8R4+LVXH
+         f27JpajDhB+0IXVvxB7bxpXAQLWwNIZ5VKQRK4NL5D5/ntYocveBJUBLtiVNWB/pM6ab
+         VaN4bYLi8SCvck2C/bteMPZdAdcDmNf97ewrHkMTF7kOcGzfgtX4e+fQJz6kZLmT2Apm
+         lv70V1fQTrkVI1naX96+HVSwiBI0KIS7GMHiUbzpYZ/XG/gzR6ejADxPVljQ0RXdSoSU
+         MYkOfCIMXrPxmnQehaGIc47qPbwUGSkfEqNh29N770hO691M83f+cAbZUe+wrSPKaLUw
+         +c9Q==
+X-Gm-Message-State: AGi0PuYTvNEIuezkRp/xAYPwQSOPNJGh4OJ1YlesgF7R8Vzmhn9x+Ynr
+        gqHcBBvS/JLPXfdmVEwhgeNZOA==
+X-Google-Smtp-Source: APiQypLEDWt9naJrmZKRq7qNu/KyQtF3te2IOlxl2ISxISRKDGfkLLJ/GDPPR5qiBNFBaLE8bdDXAw==
+X-Received: by 2002:a17:90a:e398:: with SMTP id b24mr16072pjz.113.1585677129802;
+        Tue, 31 Mar 2020 10:52:09 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id i187sm12910140pfg.33.2020.03.31.10.52.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Mar 2020 10:52:09 -0700 (PDT)
+Date:   Tue, 31 Mar 2020 10:52:07 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V3 2/8] soc: qcom: geni: Support for ICC voting
+Message-ID: <20200331175207.GG199755@google.com>
+References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
+ <1585652976-17481-3-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <66b8da28bbf0af6d8bd23953936e7feb6a7ed0c2.1584966325.git.mchehab+huawei@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1585652976-17481-3-git-send-email-akashast@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Mar 2020 13:25:27 +0100, Mauro Carvalho Chehab wrote:
-> The qcom-qusb2-phy.txt file was converted and renamed to yaml.
-> Update cross-reference accordingly.
-> 
-> Fixes: 8ce65d8d38df ("dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy bindings to yaml")
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
+Hi Akash,
 
-Acked-by: Rob Herring <robh@kernel.org>
+On Tue, Mar 31, 2020 at 04:39:30PM +0530, Akash Asthana wrote:
+> Add necessary macros and structure variables to support ICC BW
+> voting from individual SE drivers.
+> 
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> ---
+> Changes in V2:
+>  - As per Bjorn's comment dropped enums for ICC paths, given the three
+>    paths individual members
+> 
+> Changes in V3:
+>  - Add geni_icc_get, geni_icc_vote_on and geni_icc_vote_off as helper API.
+>  - Add geni_icc_path structure in common header
+> 
+>  drivers/soc/qcom/qcom-geni-se.c | 98 +++++++++++++++++++++++++++++++++++++++++
+>  include/linux/qcom-geni-se.h    | 36 +++++++++++++++
+>  2 files changed, 134 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index 7d622ea..9344c14 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -720,6 +720,104 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
+>  }
+>  EXPORT_SYMBOL(geni_se_rx_dma_unprep);
+>  
+> +int geni_icc_get(struct geni_se *se, const char *icc_core, const char *icc_cpu,
+> +		const char *icc_ddr)
+> +{
+> +	if (icc_core) {
+> +		se->to_core.path = devm_of_icc_get(se->dev, "qup-core");
+> +		if (IS_ERR(se->to_core.path))
+> +			return PTR_ERR(se->to_core.path);
+> +	}
+> +
+> +	if (icc_cpu) {
+> +		se->from_cpu.path = devm_of_icc_get(se->dev, "qup-config");
+> +		if (IS_ERR(se->from_cpu.path))
+> +			return PTR_ERR(se->from_cpu.path);
+> +	}
+> +
+> +	if (icc_ddr) {
+> +		se->to_ddr.path = devm_of_icc_get(se->dev, "qup-memory");
+> +		if (IS_ERR(se->to_ddr.path))
+> +			return PTR_ERR(se->to_ddr.path);
+> +	}
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL(geni_icc_get);
+> +
+> +int geni_icc_vote_on(struct geni_se *se)
+> +{
+> +	int ret;
+> +
+> +	if (se->to_core.path) {
+> +		ret = icc_set_bw(se->to_core.path, se->to_core.avg_bw,
+> +			se->to_core.peak_bw);
+> +		if (ret) {
+> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for core\n",
+> +						__func__);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	if (se->from_cpu.path) {
+> +		ret = icc_set_bw(se->from_cpu.path, se->from_cpu.avg_bw,
+> +			se->from_cpu.peak_bw);
+> +		if (ret) {
+> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for cpu\n",
+> +						__func__);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	if (se->to_ddr.path) {
+> +		ret = icc_set_bw(se->to_ddr.path, se->to_ddr.avg_bw,
+> +			se->to_ddr.peak_bw);
+> +		if (ret) {
+> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for ddr\n",
+> +						__func__);
+> +			return ret;
+> +		}
+> +	}
+
+
+With an array of 'struct geni_icc_path' pointers the above could be
+reduced to:
+
+	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+		if (!se->icc_paths[i])
+			continue;
+
+		ret = icc_set_bw(se->icc_paths[i]->path, se->icc_paths[i]->avg_bw,
+			se->icc_paths[i]->peak_bw);
+		if (ret) {
+			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed\n",
+						__func__);
+			return ret;
+		}
+	}
+
+similar for geni_icc_vote_off()
+
+It's just a suggestion, looks also good to me as is.
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
