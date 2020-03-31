@@ -2,180 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33FF7198BBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 07:35:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2C5A198BDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 07:44:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726060AbgCaFfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 01:35:37 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:50655 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726236AbgCaFfg (ORCPT
+        id S1726620AbgCaFoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 01:44:15 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33024 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726216AbgCaFoP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 01:35:36 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585632936; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=fes4q3BYaybrvlgVDtBeVWule4OgaJcrX3+0iF8Z4cw=; b=r61IT9w27i82C8UD3ezCrLwxn0aZjYc+Nd2sGlCc0tji7nGayiBPXUjqsPfHCBGKE1GYS9sE
- igTqQtPncZj8NzafxqIrWLWqLxbZhM4XIWLhDf75C2hhVqbHSdPhXBlfuUnX1zEOqRX05iOQ
- nfs6faVhCoLVmbZum77oYamwZ0g=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e82d69c.7f59d0ebf928-smtp-out-n02;
- Tue, 31 Mar 2020 05:35:24 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B9B0FC433BA; Tue, 31 Mar 2020 05:35:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.104] (unknown [183.82.140.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F2464C433F2;
-        Tue, 31 Mar 2020 05:35:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F2464C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH 1/4] clk: qcom: gdsc: Handle GDSC regulator supplies
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>
-References: <20200319053902.3415984-1-bjorn.andersson@linaro.org>
- <20200319053902.3415984-2-bjorn.andersson@linaro.org>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <5dbd8e67-cc9f-631b-0b4f-b45389be83cd@codeaurora.org>
-Date:   Tue, 31 Mar 2020 11:05:17 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Tue, 31 Mar 2020 01:44:15 -0400
+Received: by mail-pg1-f194.google.com with SMTP id d17so9859005pgo.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 22:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uK3BmSb3QWPSt6rWVBQhv/InDeHrsw1A2WAoGEe/xYU=;
+        b=UUO43VcnOlW5f1fQ4GHfzAUzGnoaDOwuPUrZrYIJVySTj2iCzKN8TX96Ya1GXb+ZkV
+         Cv9x0bGCCo/R61aUBDkflXd8Too/h5vxt1K0t1WB1ZzB66XoHIZUX5NaaAXvpBwQ29Jv
+         6FNpU/6LDfPQj2HiCcXgQstPKjI4qBOH4zgDJjJoKeKTqTZ1I0kYoVsgZPx/k6MFfw/2
+         pm5pqZ7w9Qs9vUB2Vgu00R5TO2td97FHD+5DUfPSFozJZsOxUiqR8oAQStTQmvFcXQcw
+         BRAsOHiwraBM6ddHj4EywNuHQ/32Cqczdjv69sHmA4E7oRqJZ0looDo1M+nriMh5gFSC
+         jlfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uK3BmSb3QWPSt6rWVBQhv/InDeHrsw1A2WAoGEe/xYU=;
+        b=P4tJvTwSW+qL+CQEb4o+hHmfKu+1tBUu1rOcn6m03IW/mAGhVAIomGyLOK6D80eAId
+         uSI5dhj1aXoPF58Vrjyp/vtcGYt8SPPz6LAOP/HNmRa2bPfwi5uXfLb/jH/v6iDBAmF6
+         Rl9xb9h0O+QhbsSl4r+mW38W/lrLh4PvOh4ScQrS1s1ckdSWdqa6F6NXCsqaFszi/0CR
+         1R5GT0fSFINxW7wgIYSHWwb3uxPryER/vailI33oimHxGbMQsIdq58Uhso7U+flkSQ1H
+         kKF43J5aZQpzLRqGAsK5LNgR07FQm+SsRNbHw/IvTszbD108znhQKa1iP70GeSakzDv3
+         cAjA==
+X-Gm-Message-State: ANhLgQ22t8LsoyneAOP3gpCEsEOsJKIKvXAQJmWQo3b4ntTQj0i/eI/z
+        hrsGeqCh4gEnszTzKuJ8R9HnA1/du88=
+X-Google-Smtp-Source: ADFU+vubkUBYViYG1wiOE0PIkC4wOOUOcthcv6nrmXRSLZrwr2SnZnpdw6z2qt3JJpncraWpwspdng==
+X-Received: by 2002:aa7:9a45:: with SMTP id x5mr16941750pfj.248.1585633452726;
+        Mon, 30 Mar 2020 22:44:12 -0700 (PDT)
+Received: from localhost ([45.127.44.10])
+        by smtp.gmail.com with ESMTPSA id w27sm11527583pfq.211.2020.03.30.22.44.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2020 22:44:11 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, sibis@codeaurora.org,
+        swboyd@chromium.org, dianders@chromium.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
+Subject: [PATCH v2 1/2] dt-bindings: arm: cpus: Add kryo468 compatible
+Date:   Tue, 31 Mar 2020 11:14:06 +0530
+Message-Id: <18123f08bf1e60f6f7356c53f355884883b0897f.1585633235.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20200319053902.3415984-2-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+Kryo468 is found in sc7180, so add it to the list of cpu compatibles
 
-I think the upstream design always wanted the client/consumer to enable 
-the GPU Rail and then turn ON the GDSC?
+Fixes: 90db71e480708 ("arm64: dts: sc7180: Add minimal dts/dtsi files for SC7180 soc")
+Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+Changes since v1:
+- Added fixes tag
+- Added acks
 
-Why are we going ahead with adding the support of regulator in the GDSC 
-driver?
+ Documentation/devicetree/bindings/arm/cpus.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 3/19/2020 11:08 AM, Bjorn Andersson wrote:
-> Certain GDSCs, such as the GPU_GX on MSM8996, requires that the upstream
-> regulator supply is powered in order to be turned on.
-> 
-> It's not guaranteed that the bootloader will leave these supplies on and
-> the driver core will attempt to enable any GDSCs before allowing the
-> individual drivers to probe defer on the PMIC regulator driver not yet
-> being present.
-> 
-> So the gdsc driver needs to be made aware of supplying regulators and
-> probe defer on their absence, and it needs to enable and disable the
-> regulator accordingly.
-> 
-> Voltage adjustments of the supplying regulator are deferred to the
-> client drivers themselves.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->   drivers/clk/qcom/gdsc.c | 24 ++++++++++++++++++++++++
->   drivers/clk/qcom/gdsc.h |  4 ++++
->   2 files changed, 28 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index a250f59708d8..3528789cc9d0 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -13,6 +13,7 @@
->   #include <linux/regmap.h>
->   #include <linux/reset-controller.h>
->   #include <linux/slab.h>
-> +#include <linux/regulator/consumer.h>
->   #include "gdsc.h"
->   
->   #define PWR_ON_MASK		BIT(31)
-> @@ -112,6 +113,12 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->   	int ret;
->   	u32 val = (status == GDSC_ON) ? 0 : SW_COLLAPSE_MASK;
->   
-> +	if (status == GDSC_ON && sc->rsupply) {
-> +		ret = regulator_enable(sc->rsupply);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +
->   	ret = regmap_update_bits(sc->regmap, sc->gdscr, SW_COLLAPSE_MASK, val);
->   	if (ret)
->   		return ret;
-> @@ -143,6 +150,13 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->   
->   	ret = gdsc_poll_status(sc, status);
->   	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
-> +
-> +	if (!ret && status == GDSC_OFF && sc->rsupply) {
-> +		ret = regulator_disable(sc->rsupply);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +
->   	return ret;
->   }
->   
-> @@ -371,6 +385,16 @@ int gdsc_register(struct gdsc_desc *desc,
->   	if (!data->domains)
->   		return -ENOMEM;
->   
-> +	/* Resolve any regulator supplies */
-> +	for (i = 0; i < num; i++) {
-> +		if (!scs[i] || !scs[i]->supply)
-> +			continue;
-> +
-> +		scs[i]->rsupply = devm_regulator_get(dev, scs[i]->supply);
-> +		if (IS_ERR(scs[i]->rsupply))
-> +			return PTR_ERR(scs[i]->rsupply);
-> +	}
-> +
->   	data->num_domains = num;
->   	for (i = 0; i < num; i++) {
->   		if (!scs[i])
-> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> index 64cdc8cf0d4d..c36fc26dcdff 100644
-> --- a/drivers/clk/qcom/gdsc.h
-> +++ b/drivers/clk/qcom/gdsc.h
-> @@ -10,6 +10,7 @@
->   #include <linux/pm_domain.h>
->   
->   struct regmap;
-> +struct regulator;
->   struct reset_controller_dev;
->   
->   /**
-> @@ -52,6 +53,9 @@ struct gdsc {
->   	struct reset_controller_dev	*rcdev;
->   	unsigned int			*resets;
->   	unsigned int			reset_count;
-> +
-> +	const char 			*supply;
-> +	struct regulator		*rsupply;
->   };
->   
->   struct gdsc_desc {
-> 
-
+diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+index 0d5b61056b106..4cece4c27b73a 100644
+--- a/Documentation/devicetree/bindings/arm/cpus.yaml
++++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+@@ -156,6 +156,7 @@ properties:
+       - qcom,krait
+       - qcom,kryo
+       - qcom,kryo385
++      - qcom,kryo468
+       - qcom,kryo485
+       - qcom,scorpion
+ 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+2.20.1
 
---
