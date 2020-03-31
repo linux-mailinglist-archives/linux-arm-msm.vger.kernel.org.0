@@ -2,181 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B1E0199DF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 20:25:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 414E8199E38
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 20:40:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726170AbgCaSZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 14:25:02 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:35444 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726209AbgCaSZC (ORCPT
+        id S1727627AbgCaSk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 14:40:28 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:46461 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbgCaSk2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 14:25:02 -0400
-Received: by mail-pg1-f196.google.com with SMTP id k5so8503651pga.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 11:25:00 -0700 (PDT)
+        Tue, 31 Mar 2020 14:40:28 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q3so10705958pff.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 11:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OD4APimgEZMGsgSh2+kf2nEhlo5tym5G5xyWPxzhCFU=;
-        b=cni/Y2VVfTEbC+1+JW9g4Pq7M9qQKO0873cdLiP6lzNX05tOqejyE9L7bRz81oVjqF
-         spmPg4yqW+e+X+BcUzgEpr7F7v9No1oxIyjSapvnXJYoXwgQ2yLTPm+BUrBQZSoCSOUl
-         AKCctgm1lWAEd9zuMEaC49/K/CTSOTfyd5GjA=
+         :content-disposition:in-reply-to;
+        bh=BiFlrx2jci6UF/44wjMJRVvmGi3zYDtbTuZw76ofS9M=;
+        b=vTD9J09LOf7YaKpipJJDrND2YBBqrJCrokT+YirTJiDmBCrXSEte4ecos/ucAha3yU
+         Gg8STR6sCIRMljfMemjURNJ7wDHYDK6srFfQMLyVAoe7cH2R5XV25criDj6PpGB+DQDP
+         gTFjnucSamy6DZk8q/6MJ/WNjs5N1oSqTdng6KM9E+GKLjrcb27i0CddZhEDygJVLS6H
+         5LuChaiCe53Ho9X/DZtDglzHhPdz0aFauosokOuLsa941Xk659PoHyaMmNLUk7NRpzvy
+         ZQ23pmTUl9qKF5NprxcAYwfyhaxDpAVjba1eucGXDIxg1HVnVXqa3uZ4moml+KHZ91iC
+         ta8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OD4APimgEZMGsgSh2+kf2nEhlo5tym5G5xyWPxzhCFU=;
-        b=nZGPsa/wVjqT55YRHPNveAZ5I8UcD0CKv+oJ+3Ho9zPGepA+RmQU2BBmD7HqPxlsNJ
-         bIVj85k2HspQ2cV0tXYiGeWreSLf6PSLBxrZ8/Y3fHPhKTsiDwiuW0SLWXu9kmGLwpZG
-         HeXg1RRy1J2KWO6eZUy4D/D2W8srZlnYFW8FIf1lmy60r+RsjYf2YPyOMRS7V9U3Utan
-         F8FqVgbszrMO1VY+SkZ2fQy2uRU0QyAjhSNsKWqzsXv53sXyjUY8pM6BXslI5jdWw6Xx
-         lVwS9EgS0q/GBtsgCfXWvtg4h6aHQjYkAlHTwVtnPpJE4sfRaVjEHoLRemEwUMmKcYKx
-         yJ2Q==
-X-Gm-Message-State: ANhLgQ1AKjs1CKKgOArph7ff4QhjkA9FJj/D+HsS/dQAQnfk1vc3vVY2
-        aiF6qKknPJCnDSEA0QJa54axCA==
-X-Google-Smtp-Source: ADFU+vvkTEocDVBgyI1pOMqmc7wnzKXhmUi3tdwPEyjL7Pj2+Kw4PlEZ3jjHUgkibnILpfJkUubkxA==
-X-Received: by 2002:a65:6805:: with SMTP id l5mr18470841pgt.256.1585679099890;
-        Tue, 31 Mar 2020 11:24:59 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id h15sm12963919pfq.10.2020.03.31.11.24.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Mar 2020 11:24:59 -0700 (PDT)
-Date:   Tue, 31 Mar 2020 11:24:57 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-Subject: Re: [PATCH V3 3/8] soc: qcom-geni-se: Add interconnect support to
- fix earlycon crash
-Message-ID: <20200331182457.GH199755@google.com>
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-4-git-send-email-akashast@codeaurora.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=BiFlrx2jci6UF/44wjMJRVvmGi3zYDtbTuZw76ofS9M=;
+        b=m2AzgAMzoFylbYnRSNw+ZyX98Mpp4jwJ2JuXXTNw736oVnQQ70KayelYcIvAuLD4qu
+         CvxjVBAbZMjCgHjBNNPZu8f5Rve3n5ljA1i1GO+cCFmxEcmwuhK39ONRAOhfNq0jhQMf
+         DCstex0keZbTFQ3ocHEXr43YHZzZoVv80JBBJqpGbhmOjCWEkNR7jgM2v0YkWHeg2ipm
+         kQF9ScGz+RZJwDtze3+W4+oR40iGaINgSrLnKmUaqDNG2GWp+FpkDjqSzJdddbfoZNTU
+         v68lVTcdZfGX6i8vk+NufMAEDW4Egw6taZ/4toBpOLACh/j0+x9rIeb/dBziRugZwE0d
+         Yusw==
+X-Gm-Message-State: AGi0Pua+LXRjDemukBe1XY2TnWRfTRkW+wofGTFfZanbTbsluPkHEHcY
+        87yNLlnuExVtI19l6wwDpYJpog==
+X-Google-Smtp-Source: APiQypKUNpAzOq4pKgWQBvZIXbKQl122MMmvgDMFQ7moe2HCfS52TO3xMq7di1tLyj/TuRnpFvvq6A==
+X-Received: by 2002:a62:ee15:: with SMTP id e21mr6219077pfi.90.1585680026497;
+        Tue, 31 Mar 2020 11:40:26 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g7sm5951509pfo.85.2020.03.31.11.40.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2020 11:40:25 -0700 (PDT)
+Date:   Tue, 31 Mar 2020 11:40:23 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     pillair@codeaurora.org
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+Message-ID: <20200331184023.GB267644@minitux>
+References: <1585219723-28323-1-git-send-email-pillair@codeaurora.org>
+ <20200327230025.GJ5063@builder>
+ <000101d604f8$afc48220$0f4d8660$@codeaurora.org>
+ <20200328183055.GA663905@yoga>
+ <000301d605ba$3d034a10$b709de30$@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1585652976-17481-4-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <000301d605ba$3d034a10$b709de30$@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
+On Sun 29 Mar 04:07 PDT 2020, pillair@codeaurora.org wrote:
 
-On Tue, Mar 31, 2020 at 04:39:31PM +0530, Akash Asthana wrote:
-> QUP core clock is shared among all the SE drivers present on particular
-> QUP wrapper, the system will reset(unclocked access) if earlycon used after
-> QUP core clock is put to 0 from other SE drivers before real console comes
-> up.
+> Hi Bjorn,
 > 
-> As earlycon can't vote for it's QUP core need, to fix this add ICC
-> support to common/QUP wrapper driver and put vote for QUP core from
-> probe on behalf of earlycon and remove vote during earlycon exit call.
+> > -----Original Message-----
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Sent: Sunday, March 29, 2020 12:01 AM
+> > To: pillair@codeaurora.org
+> > Cc: devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
+> linux-
+> > kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org
+> > Subject: Re: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
+> > module device node
+> > 
+> > On Sat 28 Mar 05:01 PDT 2020, pillair@codeaurora.org wrote:
+> > 
+> > > Hi Bjorn,
+> > >  Comments inline.
+> > >
+> > >
+> > > > -----Original Message-----
+> > > > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > Sent: Saturday, March 28, 2020 4:30 AM
+> > > > To: Rakesh Pillai <pillair@codeaurora.org>
+> > > > Cc: devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
+> > > linux-
+> > > > kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org
+> > > > Subject: Re: [PATCH v7] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
+> > > > module device node
+> > > >
+> > > > On Thu 26 Mar 03:48 PDT 2020, Rakesh Pillai wrote:
+> > > >
+> > > > > Add device node for the ath10k SNOC platform driver probe
+> > > > > and add resources required for WCN3990 on sc7180 soc.
+> > > > >
+> > > > > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> > > > > ---
+> > > > >
+> > > > > Depends on https://patchwork.kernel.org/patch/11455345/
+> > > > > The above patch adds the dt-bindings for wifi-firmware
+> > > > > subnode
+> > > > > ---
+> > > > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  8 ++++++++
+> > > > >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27
+> > > > +++++++++++++++++++++++++++
+> > > > >  2 files changed, 35 insertions(+)
+> > > > >
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > > index 043c9b9..a6168a4 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > > @@ -327,6 +327,14 @@
+> > > > >  	};
+> > > > >  };
+> > > > >
+> > > > > +&wifi {
+> > > > > +	status = "okay";
+> > > > > +	qcom,msa-fixed-perm;
+> > > > > +	wifi-firmware {
+> > > > > +		iommus = <&apps_smmu 0xc2 0x1>;
+> > > >
+> > > > How is sc7180 different from sdm845, where the iommus property goes
+> > > > directly in the &wifi node?
+> > >
+> > > Sc7180 IDP is a target without TrustZone support and also with S2 IOMMU
+> > > enabled.
+> > > Since in Trustzone based targets, the iommu SID configuration was done
+> by
+> > > TZ, there was nothing required to be done by driver.
+> > > But in non-TZ based targets, the IOMMU mappings need to be done by the
+> > > driver.
+> > > Since this is the mapping of the firmware memory and to keep it
+> different
+> > > from the driver memory access, a different device has been created for
+> > > firmware and these SIDs are configured.
+> > >
+> > 
+> > I see, I missed the fact that 0xc0:1 is used in the &wifi node itself.
+> > 
+> > So to confirm, we have streams 0xc0 and 0xc1 for data pipes and 0xc2 and
+> > 0xc3 for some form of firmware access? And in the normal Qualcomm design
+> > implementation the 0c2/0xc3 stream mapping is setup by TZ, and hidden
+> > from Linux using the SMMU virtualisation?
+> > 
+> > 
+> > Would have been nice to have some better mechanism for describing
+> > multi-connected hardware block, than to sprinkle dummy nodes all over
+> > the DT...
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> Reported-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-> Change is V3:
->  - Add geni_remove_earlycon_icc_vote API that will be used by earlycon
->    exit function to remove ICC vote for earlyconsole.
->  - Remove suspend/resume hook for geni-se driver as we are no longer
->    removing earlyconsole ICC vote from system suspend, we are removing
->    from earlycon exit.
+> Yes, this is the firmware memory. This method is followed in the venus video
+> driver
+> https://patchwork.kernel.org/patch/11315765/
 > 
->  drivers/soc/qcom/qcom-geni-se.c       | 51 +++++++++++++++++++++++++++++++++++
->  drivers/tty/serial/qcom_geni_serial.c |  7 +++++
->  include/linux/qcom-geni-se.h          |  2 ++
->  3 files changed, 60 insertions(+)
+> Do you suggest following some other mechanism ?
 > 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 9344c14..d30c282 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -90,8 +90,11 @@ struct geni_wrapper {
->  	struct device *dev;
->  	void __iomem *base;
->  	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
-> +	struct geni_icc_path to_core;
->  };
->  
-> +struct geni_wrapper *earlycon_wrapper;
 
-should be static
+After considering this some more, and having a quick chat with Arnd
+yesterday, I don't have any other suggestions.
 
-> +
->  #define QUP_HW_VER_REG			0x4
->  
->  /* Common SE registers */
-> @@ -818,6 +821,26 @@ int geni_icc_vote_off(struct geni_se *se)
->  }
->  EXPORT_SYMBOL(geni_icc_vote_off);
->  
-> +void geni_remove_earlycon_icc_vote(void)
-> +{
-> +	struct geni_wrapper *wrapper = earlycon_wrapper;
-> +	struct device_node *parent = of_get_next_parent(wrapper->dev->of_node);
-> +	struct device_node *child;
-> +
-> +	for_each_child_of_node(parent, child) {
-> +		if (of_device_is_compatible(child, "qcom,geni-se-qup")) {
-> +			wrapper = platform_get_drvdata(of_find_device_by_node(
-> +					child));
-> +			icc_put(wrapper->to_core.path);
-> +			wrapper->to_core.path = NULL;
-> +		}
-> +	}
-> +	of_node_put(parent);
-> +
-> +	earlycon_wrapper = NULL;
-> +}
-> +EXPORT_SYMBOL(geni_remove_earlycon_icc_vote);
+So I will pick up your v8.
 
-I didn't know that consoles have an exit handler, this is way nicer than
-the miscellaneous triggers we discussed earlier :)
-
-> +
->  static int geni_se_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
-> @@ -845,6 +868,34 @@ static int geni_se_probe(struct platform_device *pdev)
->  		}
->  	}
->  
-> +#ifdef CONFIG_SERIAL_EARLYCON
-> +	wrapper->to_core.path = devm_of_icc_get(dev, "qup-core");
-> +	if (IS_ERR(wrapper->to_core.path))
-> +		return PTR_ERR(wrapper->to_core.path);
-> +	/*
-> +	 * Put minmal BW request on core clocks on behalf of early console.
-> +	 * The vote will be removed earlycon exit function.
-> +	 *
-> +	 * Note: We are putting vote on each QUP wrapper instead only to which
-> +	 * earlycon is connected because QUP core clock of different wrapper
-> +	 * share same voltage domain. If core1 is put to 0, then core2 will
-> +	 * also run at 0, if not voted. Default ICC vote will be removed ASA
-> +	 * we touch any of the core clock.
-> +	 * core1 = core2 = max(core1, core2)
-> +	 */
-
-I don't really understand this part. According to the comment if we vote
-(let's say) for core2 but not for core1 then:
-
-core1: 0
-core2: GENI_DEFAULT_BW
-
-core1 = core2 = max(core1, core2)
-  or
-core1 = core2 = max(0, GENI_DEFAULT_BW)
-
-hence
-
-core1 = core2 = GENI_DEFAULT_BW
-
-What am I missing, why is it necessary to vote for both/all?
+Thanks,
+Bjorn
