@@ -2,136 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE822198BFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 07:56:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFFBC198C16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 08:08:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbgCaF4n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 01:56:43 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:50344 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726174AbgCaF4n (ORCPT
+        id S1726216AbgCaGI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 02:08:57 -0400
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:53051 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726488AbgCaGIz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 01:56:43 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585634203; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=KhlT5+PQRIk/0ZJMDG0Z38jPRs2dicpw6nQbDYSyMhU=; b=ZYmNlggm5fgY0KpUv2cse/pRAVwuZuWnnXHkR33PQYlOso/VrUR2S+VJ09moyxtdGHYGiwVY
- Jpz6ru/gzRIMmjjWPK77RQtZ9TJHcQJXOxDy26v0it+jQSr2cjvjLfHl9xK61TRDEQ7kxccu
- 3TRSEqAPHLZ4eG4NI/3PoFDyKw4=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e82db85.7fba377c3c70-smtp-out-n01;
- Tue, 31 Mar 2020 05:56:21 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AE955C433D2; Tue, 31 Mar 2020 05:56:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pillair-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9E5B8C433F2;
-        Tue, 31 Mar 2020 05:55:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9E5B8C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v8] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Tue, 31 Mar 2020 11:24:57 +0530
-Message-Id: <1585634097-4590-1-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 31 Mar 2020 02:08:55 -0400
+Received: by mail-pj1-f68.google.com with SMTP id ng8so634596pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2020 23:08:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OpQKiggADNEam9j1IF1ZgKCFxLfApWFsR5KbZ1C+nBs=;
+        b=VSjVD2wV10lTVvj6HTTeoet5y8V8krcWRYwc6hXafNeAUq7SCc7y3tr4WGyeTC6oLL
+         I6oY0/HFBEB7zPN9e+C0wNSVibWi0OnZfTqxetkck/B5JXkZDu3Y0m5TZ13hwXEkKhYu
+         2mmIP6hkPsm/n8XrJjFOvbxyV3SntlQopq02k/DxfOJLxdPvdvOq3wrVCjUFVPLujD8c
+         cbwGVYlq2JJlU6Na9rsppS7NDQpBIrzzZmnHUkPJq5LuSnftQNIg/yT8GrH30NSce0M4
+         Y16tU+hFSRAs1vl/R0DuGyWjcnjsQvgPlkvNZSCM4OBMc+DoXpLbfNsW5TsRc2F9pefO
+         5djg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OpQKiggADNEam9j1IF1ZgKCFxLfApWFsR5KbZ1C+nBs=;
+        b=FAjmRB6/H2b+S88LTqGXVMywpTpNtHXy0Ot5vh+bOAloD0N+vnF+JEGUJ3FyfVaHa1
+         9B/B7b+vCykrY2oWmAXUYraBfS7XOvKinM2iwk8oadXXIU2G+JtzqsBx6tDp2pwpxOEF
+         ATNhu9OOu0GTx9ko8wmfFRu37VmyGBVReDpEluzRg0bmZ7GaNBWAW2gwzB68u0i6OETV
+         b2pv8cR37W48Zl31vksNOtbbesxzooUOM3vSD7aySa+mnKDC9Pnf9H0B2YW4vOxIO6NE
+         atlxZTPjomS9znYMw/oVX0I5F+Em/N8hsK1XeiVLYiRP2bo7/7K2VQTOjEQS6kh8tz65
+         cfWA==
+X-Gm-Message-State: AGi0PuZtN4Vg/2NBLgXbvUfx18ENbE7Ymu4M/DYC+8VE0XtJeXxDteeU
+        mP2POMx/Q/6Rte2uwPFOt3E9CA==
+X-Google-Smtp-Source: APiQypI37mArLqJb3kpr8kgCNB7T0c03vWdQcOiyYbzHcdpgd5de0iK7DZWllc8CctrFEMVI2AM7AA==
+X-Received: by 2002:a17:90b:3556:: with SMTP id lt22mr2010864pjb.138.1585634932111;
+        Mon, 30 Mar 2020 23:08:52 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id m2sm1015301pjl.21.2020.03.30.23.08.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2020 23:08:51 -0700 (PDT)
+Date:   Mon, 30 Mar 2020 23:08:49 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>
+Subject: Re: [PATCH 1/4] clk: qcom: gdsc: Handle GDSC regulator supplies
+Message-ID: <20200331060849.GC246874@minitux>
+References: <20200319053902.3415984-1-bjorn.andersson@linaro.org>
+ <20200319053902.3415984-2-bjorn.andersson@linaro.org>
+ <5dbd8e67-cc9f-631b-0b4f-b45389be83cd@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5dbd8e67-cc9f-631b-0b4f-b45389be83cd@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for the ath10k SNOC platform driver probe
-and add resources required for WCN3990 on sc7180 soc.
+On Mon 30 Mar 22:35 PDT 2020, Taniya Das wrote:
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
----
+> Hi Stephen,
+> 
+> I think the upstream design always wanted the client/consumer to enable the
+> GPU Rail and then turn ON the GDSC?
+> 
+> Why are we going ahead with adding the support of regulator in the GDSC
+> driver?
+> 
 
-Depends on https://patchwork.kernel.org/patch/11455345/
-The above patch adds the dt-bindings for wifi-firmware
-subnode
+As I (partially) describe below the mdss driver on 8996 doesn't probe
+because the GDSC fails to enable, because the upstream supply is not
+enabled, so the mdss driver can't turn on the regulator needed by the
+GDSC.
 
-Changes from v7:
-- Correct the wlan_fw_mem start address
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  8 ++++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
+I don't see any other way to handle this than extending the gdsc
+implementation, hence my proposal to change the design.
+Suggestions/feedback are welcome though.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 043c9b9..a6168a4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -327,6 +327,14 @@
- 	};
- };
- 
-+&wifi {
-+	status = "okay";
-+	qcom,msa-fixed-perm;
-+	wifi-firmware {
-+		iommus = <&apps_smmu 0xc2 0x1>;
-+	};
-+};
-+
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
- &qspi_clk {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 998f101..c03b6a7 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -83,6 +83,11 @@
- 			reg = <0 0x8f600000 0 0x500000>;
- 			no-map;
- 		};
-+
-+		wlan_fw_mem: memory@94100000 {
-+			reg = <0 0x94100000 0 0x200000>;
-+			no-map;
-+		};
- 	};
- 
- 	cpus {
-@@ -835,6 +840,28 @@
- 			};
- 		};
- 
-+		wifi: wifi@18800000 {
-+			compatible = "qcom,wcn3990-wifi";
-+			reg = <0 0x18800000 0 0x800000>;
-+			reg-names = "membase";
-+			iommus = <&apps_smmu 0xc0 0x1>;
-+			interrupts =
-+				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-+				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-+				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-+				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-+				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-+				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-+				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-+				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-+				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-+				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-+				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-+				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-+			memory-region = <&wlan_fw_mem>;
-+			status = "disabled";
-+		};
-+
- 		config_noc: interconnect@1500000 {
- 			compatible = "qcom,sc7180-config-noc";
- 			reg = <0 0x01500000 0 0x28000>;
--- 
-2.7.4
+Regards,
+Bjorn
+
+> On 3/19/2020 11:08 AM, Bjorn Andersson wrote:
+> > Certain GDSCs, such as the GPU_GX on MSM8996, requires that the upstream
+> > regulator supply is powered in order to be turned on.
+> > 
+> > It's not guaranteed that the bootloader will leave these supplies on and
+> > the driver core will attempt to enable any GDSCs before allowing the
+> > individual drivers to probe defer on the PMIC regulator driver not yet
+> > being present.
+> > 
+> > So the gdsc driver needs to be made aware of supplying regulators and
+> > probe defer on their absence, and it needs to enable and disable the
+> > regulator accordingly.
+> > 
+> > Voltage adjustments of the supplying regulator are deferred to the
+> > client drivers themselves.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >   drivers/clk/qcom/gdsc.c | 24 ++++++++++++++++++++++++
+> >   drivers/clk/qcom/gdsc.h |  4 ++++
+> >   2 files changed, 28 insertions(+)
+> > 
+> > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> > index a250f59708d8..3528789cc9d0 100644
+> > --- a/drivers/clk/qcom/gdsc.c
+> > +++ b/drivers/clk/qcom/gdsc.c
+> > @@ -13,6 +13,7 @@
+> >   #include <linux/regmap.h>
+> >   #include <linux/reset-controller.h>
+> >   #include <linux/slab.h>
+> > +#include <linux/regulator/consumer.h>
+> >   #include "gdsc.h"
+> >   #define PWR_ON_MASK		BIT(31)
+> > @@ -112,6 +113,12 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+> >   	int ret;
+> >   	u32 val = (status == GDSC_ON) ? 0 : SW_COLLAPSE_MASK;
+> > +	if (status == GDSC_ON && sc->rsupply) {
+> > +		ret = regulator_enable(sc->rsupply);
+> > +		if (ret < 0)
+> > +			return ret;
+> > +	}
+> > +
+> >   	ret = regmap_update_bits(sc->regmap, sc->gdscr, SW_COLLAPSE_MASK, val);
+> >   	if (ret)
+> >   		return ret;
+> > @@ -143,6 +150,13 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+> >   	ret = gdsc_poll_status(sc, status);
+> >   	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
+> > +
+> > +	if (!ret && status == GDSC_OFF && sc->rsupply) {
+> > +		ret = regulator_disable(sc->rsupply);
+> > +		if (ret < 0)
+> > +			return ret;
+> > +	}
+> > +
+> >   	return ret;
+> >   }
+> > @@ -371,6 +385,16 @@ int gdsc_register(struct gdsc_desc *desc,
+> >   	if (!data->domains)
+> >   		return -ENOMEM;
+> > +	/* Resolve any regulator supplies */
+> > +	for (i = 0; i < num; i++) {
+> > +		if (!scs[i] || !scs[i]->supply)
+> > +			continue;
+> > +
+> > +		scs[i]->rsupply = devm_regulator_get(dev, scs[i]->supply);
+> > +		if (IS_ERR(scs[i]->rsupply))
+> > +			return PTR_ERR(scs[i]->rsupply);
+> > +	}
+> > +
+> >   	data->num_domains = num;
+> >   	for (i = 0; i < num; i++) {
+> >   		if (!scs[i])
+> > diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> > index 64cdc8cf0d4d..c36fc26dcdff 100644
+> > --- a/drivers/clk/qcom/gdsc.h
+> > +++ b/drivers/clk/qcom/gdsc.h
+> > @@ -10,6 +10,7 @@
+> >   #include <linux/pm_domain.h>
+> >   struct regmap;
+> > +struct regulator;
+> >   struct reset_controller_dev;
+> >   /**
+> > @@ -52,6 +53,9 @@ struct gdsc {
+> >   	struct reset_controller_dev	*rcdev;
+> >   	unsigned int			*resets;
+> >   	unsigned int			reset_count;
+> > +
+> > +	const char 			*supply;
+> > +	struct regulator		*rsupply;
+> >   };
+> >   struct gdsc_desc {
+> > 
+> 
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation.
+> 
+> --
