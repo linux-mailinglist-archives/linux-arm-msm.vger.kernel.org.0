@@ -2,88 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 47F1D199248
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 11:30:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2CD7199466
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 12:55:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730263AbgCaJaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 05:30:23 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37882 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730131AbgCaJaX (ORCPT
+        id S1730469AbgCaKz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 06:55:29 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:21395 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730521AbgCaKz3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 05:30:23 -0400
-Received: by mail-ed1-f67.google.com with SMTP id de14so24258924edb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 02:30:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cRf4XSMOaFJMe4go+8/QY1e2A8UYJy3i4Zzxrup/Gvo=;
-        b=TCvC8IplBOkkC30T28VopRqymYOm2EFbGBHCP3eLUbu602822NIwK4+4dLt2mqYDTi
-         w+kQjpM1NkbPdazJD9AhAZs5U737ydDNfX4/zSgrVMK9klM0YaPIIdCfy1wyfP2vZAgB
-         U0kuWggt4Yldeb3LCZidaaAJW5VmrGPPLXthzX5AsNHP8jU0oIDlcmCiKwfaOTqnyqwW
-         caCTpIc6iDfy9tQd0qpaIkPWyMYC0pnuKneKPzPO+UpJCS+eFtCXi1S+QYCrmrXezLat
-         7buOEnP6awrLxpXkcnh5EKIIl6phVhG1mfn8gWhRCBJ8odlBJHcnBWwMLxLrZKKlfqBx
-         hqWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cRf4XSMOaFJMe4go+8/QY1e2A8UYJy3i4Zzxrup/Gvo=;
-        b=bdgZjOfKEXxfavFoP5pexe69aZpHu3iV61TDcwjdKr1D9fsIlcBwPCGWUTWNZ/04XX
-         AozmWEp0UpmTpJq1tFL0NTsk8CjOfGRG17ZRNLDfnvYdQuFCKr3fAzl41bapltwVIpNn
-         GI6lMS86pbN1ujTxlvaM0HGMgDk9uK9owmoyDnDseZGnh6awUNDY+VW6eCBG7ZC+k8ha
-         vzr0QybtzdQGIIhHQMfLuBjnv//zfh1Z2d2mryIUvi9YnoLyAnI2wWS12Yjv2o3BkVLq
-         qOBjNWU36UHOmVwaNEufCHxR+PD37MM8cEZ5hjHWzEiGGU+WCrbJEtOTegnvaFq31kMt
-         LPAw==
-X-Gm-Message-State: ANhLgQ3YmhMvbBWHvdX/tjwQGbShK/+YlR2AfHvBOdiEbxsYQFqzM6bs
-        5nHMkvyBuxBTGfzuISDo3Jh+kA==
-X-Google-Smtp-Source: ADFU+vvGYvR25pBE8ZqwnJMdn+n24oyddUIhZdPZjNWvdjL9iMK/eUeZkt/q7655brjEjlcis9v7Sw==
-X-Received: by 2002:a50:d613:: with SMTP id x19mr14653371edi.61.1585647021690;
-        Tue, 31 Mar 2020 02:30:21 -0700 (PDT)
-Received: from [192.168.0.38] ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id u29sm2200201edd.47.2020.03.31.02.30.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Mar 2020 02:30:21 -0700 (PDT)
-Subject: Re: [PATCH] clk: qcom: msm8916: Fix the address location of
- pll->config_reg
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-References: <20200329124116.4185447-1-bryan.odonoghue@linaro.org>
- <20200330204149.GA215915@minitux>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <b542e78a-9fa2-c7f8-460c-6cffa47d4ef6@linaro.org>
-Date:   Tue, 31 Mar 2020 10:30:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+        Tue, 31 Mar 2020 06:55:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585652128; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Z1zxpnAq/Fwpkm4EM1Ngtn/CesAxPUZeODG4rTDUTVI=; b=K038TTSRgKX+y8UTQrPlyo29wWxKepJQfTwAOTcEur4n65kwWO7ibYrJf8yUUq75dBm5Nkcs
+ hh6GYzhcTiIGNyI4c9WBFMsa7mZcEMznYoyuZ9+L7EfUMCoTRNqFo1Lsy8qG2sYJJbjyx09r
+ 1EimGcNsBKDeSO6w/afGuHi2mvc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e8321a0.7fae400bd500-smtp-out-n03;
+ Tue, 31 Mar 2020 10:55:28 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E82D7C44788; Tue, 31 Mar 2020 10:55:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.13] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E7C22C433BA;
+        Tue, 31 Mar 2020 10:55:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E7C22C433BA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V2 3/8] soc: qcom-geni-se: Add interconnect support to fix
+ earlycon crash
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>, wsa@the-dreams.de,
+        Mark Brown <broonie@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-spi@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org, Doug Anderson <dianders@chromium.org>
+References: <1584105134-13583-1-git-send-email-akashast@codeaurora.org>
+ <1584105134-13583-4-git-send-email-akashast@codeaurora.org>
+ <20200313204441.GJ144492@google.com>
+ <1f86fdf0-df7c-4e4a-d4d8-8b0162e52cb4@codeaurora.org>
+ <20200317182910.GR144492@google.com>
+ <3831b33c-93ee-e5e0-fcfb-530b4738f930@codeaurora.org>
+ <20200319194332.GA60149@google.com>
+ <a7227a1f-00a1-0818-80f3-904fe264f864@codeaurora.org>
+ <CAE=gft6AGkcdUAkoyevZgmtBgaiEkoQzzJcg7sYjbpy5Kh2fyA@mail.gmail.com>
+ <20200327232338.GL5063@builder>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <2d75c2e9-96a7-a503-18a9-f0665bc67973@codeaurora.org>
+Date:   Tue, 31 Mar 2020 16:25:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <20200330204149.GA215915@minitux>
+In-Reply-To: <20200327232338.GL5063@builder>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/2020 21:41, Bjorn Andersson wrote:
-> So while your change is correct, afaict it's a nop unless you fill out
-> the other fields as well.
+Hi Bjorn,
 
-Yes it shouldn't be a problem.
+On 3/28/2020 4:53 AM, Bjorn Andersson wrote:
+> Note though that the boot console will outlive the real console when the
+> kernel is booted with "keep_bootcon" on the command line (something I do
+> from time to time).
+>
+> So rather than relying on "real probe" to signal when we can release the
+> earlycon's icc vote I think we should specify dev->con->exit in
+> qcom_geni_serial_early
 
-We cloned the 8196 driver and then started adding bits. In our case we 
-need to start PLL3 and PLL4 from Linux, similar to line 3452 here
+Okay,
 
-https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/drivers/clk/qcom/clock-gcc-8936.c?h=APSS.FSM.3.0
+Thanks,
 
-which does end up calling into the PLL recalc logic.
+Akash
 
----
-bod
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
