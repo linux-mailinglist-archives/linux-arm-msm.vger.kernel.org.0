@@ -2,161 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3843B199D13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:40:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EA25199D20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2020 19:42:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726282AbgCaRkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Mar 2020 13:40:22 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46141 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726000AbgCaRkW (ORCPT
+        id S1726199AbgCaRmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Mar 2020 13:42:40 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:41697 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726164AbgCaRmj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Mar 2020 13:40:22 -0400
-Received: by mail-pg1-f194.google.com with SMTP id k191so10632519pgc.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 10:40:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4l5ETOgQ0imWwnT/8ipOuClDORxJCjuXyVXWv0vRdoI=;
-        b=iAxPDHZi6j5XJDdwzsv0gC4hIkVTp64vobCnjhVmnUmhWcTudGJ0DxkmaAcflR3Tzk
-         qfmOb+xfqmzYhtVa4SEUkfXVw835Lf7flpWypgLk96zZmJC8Xr2gV2XAvHuqisPiFp8R
-         qUcZdqicxs+h69FdXEIhkQoBsPMr4JyCssTZz9Tk49dv7ReiplqU618mGAtYCZcAdih+
-         q9f1aGerdw1UxcTeN921BXCG7KdLdJZn+0XjBqwoZePxKmWuGFD5qd90dpB475khGY71
-         T2yecrpkGRyBI+6IqqTPfjcAYbLkf1lCQyKsundJ28kLDjjbigtSGI7LSJTxZZ1Nvi16
-         8cQA==
+        Tue, 31 Mar 2020 13:42:39 -0400
+Received: by mail-io1-f68.google.com with SMTP id b12so6427737ion.8;
+        Tue, 31 Mar 2020 10:42:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4l5ETOgQ0imWwnT/8ipOuClDORxJCjuXyVXWv0vRdoI=;
-        b=P1JnjALwTL4R3gIJHs9xJZtnoNrOAQzwOIuUnXFeOvZEYq+VXUcO5Ymgq40G+OYFUc
-         LmChNyEpZsbeUuCHtVYuD4YR01u4xUJF9GSefEVUrpf/EEssqj5W+vcEGbuiWQG09PCd
-         YYT9z3srswxoBZjOBwmUnwdMAV3ZKXDjTxrN2pKRb7Bd4jd6Pp52rYvmTKQuFevYAnnn
-         gFijCJ6h3yuwAXARuSKPNxrgDy0d6Coc2N9IEULmpshR572cxPf8HcJswifUHHr0h1qS
-         rnPSsh5TiAnqnxq7oFvoausj6EyN5G7enSMJ7VZKVRWhTXMNXjcZwdrFNcjLocmuCpOS
-         U3MA==
-X-Gm-Message-State: ANhLgQ314qCh5aMPeXwZ3uxTSY/SOGmWnjtJtOlaxDaOTF1zEdnQYp7u
-        +sEfJXlC6ylQxlZPEpf7RGuJ1j2k+dI=
-X-Google-Smtp-Source: ADFU+vtxoE33/QBXRkl1qEOqS7lVO2SAFrcJR/z+5URP14AMuRSyqNIjgdaD0jMgwjNXzGVQSp5kUQ==
-X-Received: by 2002:aa7:880c:: with SMTP id c12mr18142763pfo.77.1585676419418;
-        Tue, 31 Mar 2020 10:40:19 -0700 (PDT)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id nh14sm2439979pjb.17.2020.03.31.10.40.18
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FTAqD+OnWKqPUS7vCWWL8ACHVlN3bM/iXdorWRR9HJA=;
+        b=m4amlG+dG+XITfbL0jZdKgd5wAS2AgyDDHpuEyV318YCBb+EIWdQY74Fp8phtRH9ZQ
+         TViNHhQ7eEi3vxeLrsxVAp+4a8GxgnYHNsF3mwf4R2O+44Zw3tKhKp9V3zoAUhgykJx8
+         WTDEQPp4w332p3uB89F6mHKfC1BiuUanZlji9LmDLOR1wU917lt8Aj70w5pXZoAXwZvv
+         7UnwPIeg8JqEOK2TQUxE5UiXPBtvdheGezloZ0aNjvx7MknboAdW9M6UhPN8Y2MRwFV2
+         iL7iRfOEuevhZrX3H6WaKFxVSu6MRAaFJ115eScmA8zFl0d+YaUyfJvkW15wiolMOFHZ
+         7PMg==
+X-Gm-Message-State: ANhLgQ3W2OqAiugHDQVk7PSuZUU5asMcnayAzaLgXlhVRxHm9ScQqwEx
+        2HkSMh+o3pOIn4awGiX3dnn/rQY=
+X-Google-Smtp-Source: ADFU+vsofZqcujz0YBlQeUxmcFaoWgeTxj5Kf5VemH202p86jO/BnjYgn6HMw3nAtP7k4B1E9T339Q==
+X-Received: by 2002:a02:2b02:: with SMTP id h2mr16570919jaa.81.1585676558974;
+        Tue, 31 Mar 2020 10:42:38 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id w88sm6083471ila.24.2020.03.31.10.42.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 10:40:18 -0700 (PDT)
-Date:   Tue, 31 Mar 2020 10:40:16 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Chris Lew <clew@codeaurora.org>, gregkh@linuxfoundation.org,
-        davem@davemloft.net, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH v3 6/7] net: qrtr: Add MHI transport layer
-Message-ID: <20200331174016.GA254911@minitux>
-References: <20200324061050.14845-1-manivannan.sadhasivam@linaro.org>
- <20200324061050.14845-7-manivannan.sadhasivam@linaro.org>
- <20200324203952.GC119913@minitux>
- <20200325103758.GA7216@Mani-XPS-13-9360>
- <89f3c60c-70fb-23d3-d50f-98d1982b84b9@codeaurora.org>
- <20200330094913.GA2642@Mani-XPS-13-9360>
- <20200330221932.GB215915@minitux>
- <20200331112326.GB21688@Mani-XPS-13-9360>
+        Tue, 31 Mar 2020 10:42:38 -0700 (PDT)
+Received: (nullmailer pid 9628 invoked by uid 1000);
+        Tue, 31 Mar 2020 17:42:37 -0000
+Date:   Tue, 31 Mar 2020 11:42:37 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] docs: dt: qcom,dwc3.txt: fix cross-reference for a
+ converted file
+Message-ID: <20200331174237.GA9527@bogus>
+References: <66b8da28bbf0af6d8bd23953936e7feb6a7ed0c2.1584966325.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200331112326.GB21688@Mani-XPS-13-9360>
+In-Reply-To: <66b8da28bbf0af6d8bd23953936e7feb6a7ed0c2.1584966325.git.mchehab+huawei@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 31 Mar 04:23 PDT 2020, Manivannan Sadhasivam wrote:
-
-> Hi Bjorn,
+On Mon, 23 Mar 2020 13:25:27 +0100, Mauro Carvalho Chehab wrote:
+> The qcom-qusb2-phy.txt file was converted and renamed to yaml.
+> Update cross-reference accordingly.
 > 
-> On Mon, Mar 30, 2020 at 03:19:32PM -0700, Bjorn Andersson wrote:
-> > On Mon 30 Mar 02:49 PDT 2020, Manivannan Sadhasivam wrote:
-> > 
-> > > Hi Chris,
-> > > 
-> > > On Thu, Mar 26, 2020 at 03:54:42PM -0700, Chris Lew wrote:
-> > > > 
-> > > > 
-> > > > On 3/25/2020 3:37 AM, Manivannan Sadhasivam wrote:
-> > > > > Hi Bjorn,
-> > > > > 
-> > > > > + Chris Lew
-> > > > > 
-> > > > > On Tue, Mar 24, 2020 at 01:39:52PM -0700, Bjorn Andersson wrote:
-> > > > > > On Mon 23 Mar 23:10 PDT 2020, Manivannan Sadhasivam wrote:
-> > [..]
-> > > > > > > +	spin_lock_irqsave(&qdev->ul_lock, flags);
-> > > > > > > +	list_for_each_entry(pkt, &qdev->ul_pkts, node)
-> > > > > > > +		complete_all(&pkt->done);
-> > > > > 
-> > > > > Chris, shouldn't we require list_del(&pkt->node) here?
-> > > > > 
-> > > > 
-> > > > No this isn't a full cleanup, with the "early notifier" we just unblocked
-> > > > any threads waiting for the ul_callback. Those threads will wake, check
-> > > > in_reset, return an error back to the caller. Any list cleanup will be done
-> > > > in the ul_callbacks that the mhi bus will do for each queued packet right
-> > > > before device remove.
-> > > > 
-> > > > Again to simplify the code, we can probable remove the in_reset handling
-> > > > since it's not required with the current feature set.
-> > > > 
-> > > 
-> > > So since we are not getting status_cb for fatal errors, I think we should just
-> > > remove status_cb, in_reset and timeout code.
-> > > 
-> > 
-> > Looks reasonable.
-> > 
-> > [..]
-> > > > I thought having the client get an error on timeout and resend the packet
-> > > > would be better than silently dropping it. In practice, we've really only
-> > > > seen the timeout or ul_callback errors on unrecoverable errors so I think
-> > > > the timeout handling can definitely be redone.
-> > > > 
-> > > 
-> > > You mean we can just remove the timeout handling part and return after
-> > > kref_put()?
-> > > 
-> > 
-> > If all messages are "generated" by qcom_mhi_qrtr_send() and "released"
-> > in qcom_mhi_qrtr_ul_callback() I don't think you need the refcounting at
-> > all.
-> > 
-> 
-> Hmm, you're right. We can move the packet releasing part to ul_callback now.
-> 
-> > 
-> > Presumably though, it would have been nice to not have to carry a
-> > separate list of packets (and hope that it's in sync with the mhi core)
-> > and instead have the ul callback somehow allow us to derive the skb to
-> > be freed.
-> > 
-> 
-> Yep, MHI stack holds the skb in buf_addr member of mhi_result. So, we can just
-> use below to get the skb in ul_callback:
-> 
-> struct sk_buff *skb = (struct sk_buff *)mhi_res->buf_addr;
-> 
-> This will help us to avoid the use of pkt, ul_pkts list and use the skb directly
-> everywhere. At the same time I think we can also remove the ul_lock which
-> was added to protect the ul_pkts list.
-> 
-> Let me know your opinion, I'll just send a series with this modified QRTR MHI
-> client driver and MHI suspend/resume patches.
+> Fixes: 8ce65d8d38df ("dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy bindings to yaml")
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 
-This looks more robust than having the separate list shadowing the
-internal state of the MHI core.
-
-+1
-
-Thanks,
-Bjorn
+Acked-by: Rob Herring <robh@kernel.org>
