@@ -2,81 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B78519AC9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 15:21:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F97619ACFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 15:38:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732529AbgDANV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 09:21:26 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:34561 "EHLO extserv.mm-sol.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732557AbgDANV0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 09:21:26 -0400
-Received: from [192.168.1.3] (212-5-158-187.ip.btc-net.bg [212.5.158.187])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id E352ECFAB;
-        Wed,  1 Apr 2020 16:21:23 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1585747284; bh=jQLOaV/9gNCw8k6Dt09Ffv5U8fBSYoigBETbYtsrfGg=;
-        h=Subject:To:Cc:From:Date:From;
-        b=hOQ+FwI48FvfF4wgRCrjSPX9HRQope4b+LmxDEKYjeqnGLh8jbjR0tx1EX+E5ptKp
-         0ytSgtjowjMUO6eybbWh+YvQnCL+0oAo+NdYwfBY8qw3iNMidnhC1bbXhw65uBYczK
-         A1vmXZOtyKyq+P5MwGPWp0+WazbYk2SEBkcd9IusLpfeYHjOxhHERPuYl0L6NFI5lU
-         I7mdYarbwmXm2EEzzlaiTxsDvPt/yDv7p4UPMjTJzyxbIGJ7jVdPvocgrHXI9N8MO5
-         V3Mdd3SPEVWwVooVP7+RFnGIR41vehx8QXe3q4+OgF/7T/7ScF93OPUEBbGLzE91eB
-         mYz1QcKewFzjA==
-Subject: Re: [PATCH 09/12] pcie: qcom: Programming the PCIE iATU for IPQ806x
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Sham Muthayyan <smuthayy@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200320183455.21311-1-ansuelsmth@gmail.com>
- <20200320183455.21311-9-ansuelsmth@gmail.com>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <3890fd67-53a3-aa73-af52-4b79c5881dca@mm-sol.com>
-Date:   Wed, 1 Apr 2020 16:21:21 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1732205AbgDANi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 09:38:29 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:38465 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732396AbgDANi2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Apr 2020 09:38:28 -0400
+Received: by mail-vk1-f193.google.com with SMTP id n128so6694501vke.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 06:38:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tdGCqc9X95oHSJMV+qy+8plsVCVI++tvDUGtwBmzzE0=;
+        b=iJgSy+ppUkCv23YRcokF5MvB1CtI9Q9oPoqYsxGBvu9wQipZSozOMMaBt5dk8Z64Pw
+         pTqrH4QMYPH1T/fOh6ky2k1mwgCWG7thPsK0HAJKY+KXigsZcFA+vVdLs/+lh9GW4g30
+         qbRMR59VqZieEJeHPKCmGXfF7UbjExFTSoH7GkWcm0/jwTeKIVdLWDpubhtHxQnMbAgz
+         Ghv9x6l9K3/76kloSSkSjPNzkOp95zWBlJehfWWaBtJv76JVFxFIa+/Ygzb9Esu3jKuQ
+         0hsOys1sDLjt4KEaEehzyUyS3F73eRnw2Mfvv0aRNpK0bNEezRK7eWIi7O8gknxzWU0R
+         Eexg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tdGCqc9X95oHSJMV+qy+8plsVCVI++tvDUGtwBmzzE0=;
+        b=h8PHAkCV5wN702eMa5U8PNRXrzJtKGgKaKgQ5kJppbjApGAJADs5zS9uK5UzUKqwhR
+         rXCkcLTmX1T0fUzZtJV5IkQ50NWeZds/wKwrnGrUiwaMFB5h/BJ3mY7x3DLmMezhXgOo
+         UXrvXi6+a2342hwM57r01xSJ2DUEK8MW8KJwPdVEqS1/2wEpzTBnB438WZmQS/Hl/Fu+
+         uTB/H6wSzjGquWPGUZmB+6i0Y2zS0fsa2orEsvK4W55iWLZ04TX5wvFa5aYlrkMPt/sx
+         cirpnLf/sYk6O6mAICDZs+H57MoqCACGnQuc7ZkelRH/c44rFz0tfiRzqgdrjJhAFKLJ
+         j8rA==
+X-Gm-Message-State: AGi0PuYg0nYi0m0f7Y05DPWJIkKd4YqzPL9Z4rK9i3wkLYGJErp0VQnJ
+        yBbGEkL5jgxQ0JBIXV+PgvPPzOdSMhSL3Ach4V4NRQ==
+X-Google-Smtp-Source: APiQypK82L+3ASqFUwhZ41FJdoIyKv5f4kEy867p4zztojbVdS++g9Yx4zgyKPjtA8Vk65/Js9wTmlxCm8JpqJ5m7bo=
+X-Received: by 2002:a1f:ee05:: with SMTP id m5mr16812468vkh.9.1585748305004;
+ Wed, 01 Apr 2020 06:38:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200320183455.21311-9-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <cover.1585738725.git.amit.kucheria@linaro.org>
+ <146b5dfebf23321c1eed8190ada957e2264ffe65.1585738725.git.amit.kucheria@linaro.org>
+ <da9860cf-0c2e-b7ff-47c2-19c79b06ad55@arm.com>
+In-Reply-To: <da9860cf-0c2e-b7ff-47c2-19c79b06ad55@arm.com>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Wed, 1 Apr 2020 19:08:13 +0530
+Message-ID: <CAHLCerMvwfBEGO6O9kHMg14AfJ1bEO7ZP4i=SH3XO6HCKucVKQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/3] dt-bindings: thermal: Add yaml bindings for
+ thermal sensors
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Rob Herring <robh@kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ansuel,
+On Wed, Apr 1, 2020 at 6:10 PM Lukasz Luba <lukasz.luba@arm.com> wrote:
+>
+>
+>
+> On 4/1/20 12:15 PM, Amit Kucheria wrote:
+> > As part of moving the thermal bindings to YAML, split it up into 3
+> > bindings: thermal sensors, cooling devices and thermal zones.
+> >
+> > The property #thermal-sensor-cells is required in each device that acts
+> > as a thermal sensor. It is used to uniquely identify the instance of the
+> > thermal sensor inside the system.
+> >
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+> > ---
+> >   .../bindings/thermal/thermal-sensor.yaml      | 72 +++++++++++++++++++
+> >   1 file changed, 72 insertions(+)
+> >   create mode 100644 Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+> > new file mode 100644
+> > index 0000000000000..920ee7667591d
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+> > @@ -0,0 +1,72 @@
+> > +# SPDX-License-Identifier: (GPL-2.0)
+> > +# Copyright 2020 Linaro Ltd.
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/thermal/thermal-sensor.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Thermal sensor binding
+> > +
+> > +maintainers:
+> > +  - Amit Kucheria <amitk@kernel.org>
+> > +
+> > +description: |
+> > +  Thermal management is achieved in devicetree by describing the sensor hardware
+> > +  and the software abstraction of thermal zones required to take appropriate
+> > +  action to mitigate thermal overloads.
+> > +
+> > +  The following node types are used to completely describe a thermal management
+> > +  system in devicetree:
+> > +   - thermal-sensor: device that measures temperature, has SoC-specific bindings
+> > +   - cooling-device: device used to dissipate heat either passively or artively
+>
+> s/artively/actively
+>
+> > +   - thermal-zones: a container of the following node types used to describe all
+> > +     thermal data for the platform
+> > +
+> > +  This binding describes the thermal-sensor.
+> > +
+> > +  Thermal sensor devices provide temperature sensing capabilities on thermal
+> > +  zones. Typical devices are I2C ADC converters and bandgaps. Thermal sensor
+> > +  devices may control one or more internal sensors.
+> > +
+> > +properties:
+> > +  "#thermal-sensor-cells":
+> > +    description:
+> > +      Used to uniquely identify a thermal sensor instance within an IC. Will be
+> > +      0 on sensor nodes with only a single sensor and at least 1 on nodes
+> > +      containing several internal sensors.
+> > +    enum: [0, 1]
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +
+> > +    // Example 1: SDM845 TSENS
+> > +    soc: soc@0 {
+> > +            #address-cells = <2>;
+> > +            #size-cells = <2>;
+> > +
+> > +            /* ... */
+> > +
+> > +            tsens0: thermal-sensor@c263000 {
+> > +                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
+> > +                    reg = <0 0x0c263000 0 0x1ff>, /* TM */
+> > +                          <0 0x0c222000 0 0x1ff>; /* SROT */
+> > +                    #qcom,sensors = <13>;
+> > +                    interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                 <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+> > +                    interrupt-names = "uplow", "critical";
+> > +                    #thermal-sensor-cells = <1>;
+> > +            };
+> > +
+> > +            tsens1: thermal-sensor@c265000 {
+> > +                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
+> > +                    reg = <0 0x0c265000 0 0x1ff>, /* TM */
+> > +                          <0 0x0c223000 0 0x1ff>; /* SROT */
+> > +                    #qcom,sensors = <8>;
+> > +                    interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                 <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
+> > +                    interrupt-names = "uplow", "critical";
+> > +                    #thermal-sensor-cells = <1>;
+> > +            };
+> > +    };
+> > +...
+> >
+>
+> Apart from the above, looks good.
+>
+> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
 
-On 3/20/20 8:34 PM, Ansuel Smith wrote:
-> From: Sham Muthayyan <smuthayy@codeaurora.org>
-> 
-> Resolved PCIE EP detection errors caused due to missing iATU programming.
-
-NACK, the iATU programing is not belonging here. Did you check what
-pcie-designware-*.c is doing with iATU?
-
-If you want to support endpoint mode in pcie-qcom driver you have to see
-how the other drivers is doing that.
-
-> 
-> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 78 ++++++++++++++++++++++++++
->  1 file changed, 78 insertions(+)
-> 
-
-
--- 
-regards,
-Stan
+Thanks for the review. Will spin a v5 with those trivial fixes.
