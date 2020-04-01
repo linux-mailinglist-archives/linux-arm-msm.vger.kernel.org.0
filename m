@@ -2,143 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CFFA319AB56
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 14:09:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E66D419ABA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 14:27:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732408AbgDAMJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 08:09:59 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38916 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732273AbgDAMJ7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 08:09:59 -0400
-Received: by mail-wm1-f68.google.com with SMTP id e9so6916316wme.4;
-        Wed, 01 Apr 2020 05:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=PU0qVr5nPkx5o+ufW3vb8KGQq695uV/03Y7NY5/Qzn4=;
-        b=ILmjXN8caMMj52xFvubitRb1AiZdfxDDUrsnMSYpdbcu3uIjKvPD9I28x8hds5yno/
-         PAmel+QXqgeGw1XmLW6RZqDra/krmOO+1ECKgsK3eKAnV7Hf0aGpZFnU9iUkKPGA45MA
-         AgVYRLu5OAaYfj20hpYXcoWc9rqbrUot56sjn4hK6iQPEs3WajKIRZ8Wn9VSzqNOgqDj
-         llz4R2Lxp2auGdmnDIZiLuyV4ReFDpW1L3sSm0x6sdx1NdC+ZZmT8pXUyv+lVnBv6DLh
-         xkZTtrUb2YMZ4JvHIkoxDOexX8Zo2LkHf1zFev8TmD1/8vd7mgBiwpfptzmDc4HLqY0r
-         RusQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=PU0qVr5nPkx5o+ufW3vb8KGQq695uV/03Y7NY5/Qzn4=;
-        b=JgVf50HCVPzVkd5Ye+l88ZfRG38ZhS6jgJEmkvH4XviubNWOiz/X0cHYPLPv8fx78Q
-         Nl21+33ByClWO007rvA7jN4VTYL7mYTfloJcufHoV2wm1lHggBynbGyd68VWChLss1hm
-         dt1JNMOf9nFASlrGCAlNnpLCMMTBevbdkvMyFz4wjeiaCPjoDIhOph35xEqcZcltttP/
-         6vedNuQw/vzjYGdctzvbybyOTpUZJaIcqEnG0emhk59lAB9Ft86MvBnWIsf7+VvFybQ3
-         QEe/kintkKf0sEkaGlPRm2bpSiiNpDxULp0Ixm4Vw5oY58FeR8sLnoOWB0qncBy2ndLe
-         jaIw==
-X-Gm-Message-State: AGi0Pua8tBlEPBTFxhtKg+kCFATrsrardDtZzAzxrawcWTcAgpomx8sc
-        w8WvO7uKe/Xh3TWOrW0XLsI=
-X-Google-Smtp-Source: APiQypLPuhTh2gyvjFErd3SXKSjXWWVPFQbYzmQNmDCWTxCJLVc0uH7H6CFQmbjK42jGjvax+4s0JQ==
-X-Received: by 2002:a7b:c185:: with SMTP id y5mr4191618wmi.90.1585742996497;
-        Wed, 01 Apr 2020 05:09:56 -0700 (PDT)
-Received: from AnsuelXPS (host3-220-static.183-80-b.business.telecomitalia.it. [80.183.220.3])
-        by smtp.gmail.com with ESMTPSA id w66sm2504621wma.38.2020.04.01.05.09.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Apr 2020 05:09:55 -0700 (PDT)
-From:   <ansuelsmth@gmail.com>
-To:     "'Rob Herring'" <robh@kernel.org>
-Cc:     "'Stanimir Varbanov'" <svarbanov@mm-sol.com>,
-        "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Bjorn Helgaas'" <bhelgaas@google.com>,
-        "'Mark Rutland'" <mark.rutland@arm.com>,
-        "'Lorenzo Pieralisi'" <lorenzo.pieralisi@arm.com>,
-        "'Andrew Murray'" <amurray@thegoodpenguin.co.uk>,
-        "'Philipp Zabel'" <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20200320183455.21311-1-ansuelsmth@gmail.com> <20200320183455.21311-8-ansuelsmth@gmail.com> <20200331173241.GA25681@bogus>
-In-Reply-To: <20200331173241.GA25681@bogus>
-Subject: R: [PATCH 08/12] devicetree: bindings: pci: add phy-tx0-term-offset to qcom,pcie
-Date:   Wed, 1 Apr 2020 14:09:54 +0200
-Message-ID: <013b01d6081e$74e3b710$5eab2530$@gmail.com>
+        id S1732370AbgDAM1D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 08:27:03 -0400
+Received: from foss.arm.com ([217.140.110.172]:50510 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726804AbgDAM1D (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Apr 2020 08:27:03 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2A7B730E;
+        Wed,  1 Apr 2020 05:27:03 -0700 (PDT)
+Received: from [10.37.12.63] (unknown [10.37.12.63])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A85E53F68F;
+        Wed,  1 Apr 2020 05:27:00 -0700 (PDT)
+Subject: Re: [PATCH v4 3/3] dt-bindings: thermal: Add yaml bindings for
+ thermal zones
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, mka@chromium.org, daniel.lezcano@linaro.org,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     Rob Herring <robh@kernel.org>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <cover.1585738725.git.amit.kucheria@linaro.org>
+ <af3625a9cdf1a8f0e433d67e3d785b03aae7bc82.1585738725.git.amit.kucheria@linaro.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <d4b8bf55-e240-6181-4976-880846cee413@arm.com>
+Date:   Wed, 1 Apr 2020 13:26:58 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: it
-Thread-Index: AQF7DJ39byRpk4MoIUXZtcQDafvd5gI+20GLAtWBGGmo8YCbwA==
+In-Reply-To: <af3625a9cdf1a8f0e433d67e3d785b03aae7bc82.1585738725.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Amit,
+
+Apart from small mistake during probably copy-paste (please check
+below), looks good.
+
+On 4/1/20 12:15 PM, Amit Kucheria wrote:
+> As part of moving the thermal bindings to YAML, split it up into 3
+> bindings: thermal sensors, cooling devices and thermal zones.
+> 
+> The thermal-zone binding is a software abstraction to capture the
+> properties of each zone - how often they should be checked, the
+> temperature thresholds (trips) at which mitigation actions need to be
+> taken and the level of mitigation needed at those thresholds.
+> 
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+> Changes since v3:
+>   - Clarify example by using cooling state numbers and a comment
+>   - Restrict thermal-sensors to a single reference to reflect actual code
+>     where there is a one-to-one mapping between sensors and thermal zones
+>   - Add two optional properties that were missed in earlier submissions:
+>     coefficients and sustainable-power
+>   - Improve description of hysteresis and contribution properties
+> 
+>   .../bindings/thermal/thermal-zones.yaml       | 341 ++++++++++++++++++
+>   1 file changed, 341 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+> 
+
+[snip]
+
+> +                    cooling-maps {
+> +                            map0 {
+> +                                    trip = <&cpu0_alert0>;
+> +                                    /* Corresponds to 1400MHz in OPP table */
+> +                                    cooling-device = <&CPU0 3 3>, <&CPU1 3 3>,
+> +                                                     <&CPU2 3 3>, <&CPU3 3 3>;
+> +                            };
+> +
+> +                            map1 {
+> +                                    trip = <&cpu0_alert1>;
+> +                                    /* Corresponds to 1400MHz in OPP table */
+
+s/1400MHz/1000MHz/
+1400MHZ is used in map0 as <&CPUx 3 3>, here we have '5 5'.
 
 
-> -----Messaggio originale-----
-> Da: Rob Herring <robh@kernel.org>
-> Inviato: marted=EC 31 marzo 2020 19:33
-> A: Ansuel Smith <ansuelsmth@gmail.com>
-> Cc: Stanimir Varbanov <svarbanov@mm-sol.com>; Andy Gross
-> <agross@kernel.org>; Bjorn Andersson <bjorn.andersson@linaro.org>;
-> Bjorn Helgaas <bhelgaas@google.com>; Mark Rutland
-> <mark.rutland@arm.com>; Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>;
-> Andrew Murray <amurray@thegoodpenguin.co.uk>; Philipp Zabel
-> <p.zabel@pengutronix.de>; linux-arm-msm@vger.kernel.org; linux-
-> pci@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org
-> Oggetto: Re: [PATCH 08/12] devicetree: bindings: pci: add =
-phy-tx0-term-
-> offset to qcom,pcie
->=20
-> On Fri, Mar 20, 2020 at 07:34:50PM +0100, Ansuel Smith wrote:
-> > Document phy-tx0-term-offset propriety to qcom pcie driver
->=20
-> propriety?
->=20
-> >
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  Documentation/devicetree/bindings/pci/qcom,pcie.txt | 7 +++++++
-> >  1 file changed, 7 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > index 6efcef040741..8c1d014f37b0 100644
-> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > @@ -254,6 +254,12 @@
-> >  			- "perst-gpios"	PCIe endpoint reset signal line
-> >  			- "wake-gpios"	PCIe endpoint wake signal line
-> >
-> > +- phy-tx0-term-offset:
->=20
-> Needs a vendor prefix.
->=20
+> +                                    cooling-device = <&CPU0 5 5>, <&CPU1 5 5>,
+> +                                                     <&CPU2 5 5>, <&CPU3 5 5>;
+> +                            };
+> +                    };
+> +            };
 
-So I should change to qcom,phy-tx0-term-offset  right?
 
-> > +	Usage: optional
-> > +	Value type: <u32>
-> > +	Definition: If not defined is 0. In ipq806x is set to 7. In newer
-> > +				revision (v2.0) the offset is zero.
-> > +
-> >  * Example for ipq/apq8064
-> >  	pcie@1b500000 {
-> >  		compatible =3D "qcom,pcie-apq8064", "qcom,pcie-ipq8064",
-> "snps,dw-pcie";
-> > @@ -293,6 +299,7 @@
-> >  		reset-names =3D "axi", "ahb", "por", "pci", "phy", "ext";
-> >  		pinctrl-0 =3D <&pcie_pins_default>;
-> >  		pinctrl-names =3D "default";
-> > +		phy-tx0-term-offset =3D <7>;
-> >  	};
-> >
-> >  * Example for apq8084
-> > --
-> > 2.25.1
-> >
+Apart from that, looks good:
 
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+
+Regards,
+Lukasz
