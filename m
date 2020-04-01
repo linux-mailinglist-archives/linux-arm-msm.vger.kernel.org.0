@@ -2,58 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A14B419A58A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 08:45:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A2AD19A58B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 08:45:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731683AbgDAGpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 02:45:14 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34251 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731868AbgDAGpO (ORCPT
+        id S1731888AbgDAGpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 02:45:20 -0400
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:35498 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731868AbgDAGpU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 02:45:14 -0400
-Received: by mail-pl1-f195.google.com with SMTP id a23so9232589plm.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 23:45:12 -0700 (PDT)
+        Wed, 1 Apr 2020 02:45:20 -0400
+Received: by mail-pj1-f67.google.com with SMTP id g9so2278132pjp.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2020 23:45:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/86LCZpkdCCI2aQCkzyWwEuy6AbVAj1IJKzL58DHDfQ=;
-        b=Pa6VtaEMzqbmuRKWOKeNTV1VG7JPCarrnGBwPfOg+89OwMJAH+TA+UwofmMViJcZWr
-         +IHGKY01tR/V60G1nOhQHC080Ohr6iQ/gA6yk6hlvEe0Z8WRc3nmJ9s1PkRF4Yvh0Wc5
-         1Dtsze2+n4KEW+HFSYzrwzD6jcMIi134rRyZV1uLcxVUtuVgyS0vYZA+gwTBBDM13NEw
-         CglYuz+p3PW3pHQikPmR2F9eYmjf/cW/O3YIY/gv4sv1bUUdJ+R/hCSPZzcrrUNHV8sf
-         UHQ0qjKWNYOv7LAc5TJbwGLQ7nRQhp4mPYZrnQ+ibbglCMmQBHYytrgRw/AX13CekfiK
-         kCqg==
+        bh=ZS0gV3JBjWbOHO4SSLHlOaSzVZMHP224dHQ2VsyE36o=;
+        b=Dyq4yoaAKxGZ5yi7tLEzc7Zhbnl32RgPdEkSrJLTrVCi+Znc89whhNYx/2VYrzl9YR
+         kd8VmkDosoR4IEx1BWxfLoi0a3i21RJ669v6XS11EGQyGDy8UC2EHsXGG7bW2NFOXAlm
+         2lJwCASsW79c97dNmvZH3UsntBPC/pxgnXxHmn24TjGDviA6DzzyeHAUOg/9TKx7ph3i
+         dkPgiuzZEjy2A/MFHzY1hggrmMnFSFT28soKAlwcLy5sdJWsiU8xsnsww5RqYvI6YBAN
+         tEtxPvQ0Y7nZUoJ+Ph/Ua9+2QNMIsWEs44apeWHBzmEYwhahfGmLLdGI5YKrPJtc56Ls
+         /25g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/86LCZpkdCCI2aQCkzyWwEuy6AbVAj1IJKzL58DHDfQ=;
-        b=ZUCyWle5wdMLK6v97+C3sgBkNb83wu3ZVQAuqrE13Rb+klk9hNDbcieTMZxpD7ut+G
-         TZY1fsQ2tf5lcUJO7AQIR5FsQk2p/rnjlzrsiEjBtSrL181r6Emk6RhZXy7gttYxsPlw
-         YFH7lwln/OPFXq7FqxiYPG8rtZ6MtxAYybr/KA72ONLtZ5HNBtnJLJYn4OT36zOKO+nx
-         34irrYp36yXV3BhebCWW2FE8CMnP/o8yM3+siGpCNdG76xHeXUGoWsIG3YMwnMu0S2vn
-         RYjcSomjUGpjRluRQY3FZLmNe8O72CgCf9c0WgtCnhz8m1fEaN3/VigNLZQzXejJGr6W
-         IhOA==
-X-Gm-Message-State: AGi0PuZympuDtUjOCQ50lkx+upSutdErzFm6VlNyUOtp0PFUofhVkOzk
-        BLxeWJFfJC3NfkSux5fWXMDdHLWA5xAE
-X-Google-Smtp-Source: APiQypLLcaicR4CC2kT6JFO230ntsZf0OeOZHNmaJ4vK6hQIkRRfoalkLe8g0UKZEtuaMZCgXBGJLg==
-X-Received: by 2002:a17:902:7896:: with SMTP id q22mr9787124pll.75.1585723511547;
-        Tue, 31 Mar 2020 23:45:11 -0700 (PDT)
+        bh=ZS0gV3JBjWbOHO4SSLHlOaSzVZMHP224dHQ2VsyE36o=;
+        b=kVRLXRG5xQP9OsMXqWYcRhb3NKyHxWhGKsx1rjvnpsPX03cwIQiUIdqr/IQa2H8bZ1
+         1c4MxOxL2a1a3/sNnPwpVd+A7W3ci1r1iIe9lOVy+jw08gv2Dx8tZKShz7aC3xOdwqwL
+         c83Z6UCK1UQpBD+KOS5wL5vV3SINl5V6c+Lxg9t+qJFiSsS/OhG2JTSyqB81QDyXHE2o
+         kQLpVxv3yS2If2jhUL/I99Gj6ymDozZY/iEZSSrmTfY6utPNAPdZejKil2bAz5zNnNSU
+         J6YGJgwHFN0pc7xZIC2RLjkyUPQLZDE6t5MPpCEyHaRzreCwEDIKnywY86PnR3DcQKho
+         dGfw==
+X-Gm-Message-State: AGi0PuaZNp6JE+rGUdaI7pvEPbGtWcHvr9GtqJGJpf6FFNb5qLWhOlKv
+        6d3cTwruJiSFsYAsEJa+1mSk
+X-Google-Smtp-Source: APiQypK4eGP+7x2mrl7B51TEphI6p2811HMmD1e4xIxdzJhBWe7ymqIF3tW/pkPWZ1wTD44OqX3EXA==
+X-Received: by 2002:a17:90a:2103:: with SMTP id a3mr3063641pje.181.1585723518792;
+        Tue, 31 Mar 2020 23:45:18 -0700 (PDT)
 Received: from localhost.localdomain ([2409:4072:648c:592d:60f5:6f58:e46:db78])
-        by smtp.gmail.com with ESMTPSA id w24sm831962pjn.14.2020.03.31.23.45.06
+        by smtp.gmail.com with ESMTPSA id w24sm831962pjn.14.2020.03.31.23.45.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2020 23:45:11 -0700 (PDT)
+        Tue, 31 Mar 2020 23:45:17 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org, davem@davemloft.net
 Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
         kvalo@codeaurora.org, bjorn.andersson@linaro.org,
         hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 1/3] bus: mhi: core: Add support for MHI suspend and resume
-Date:   Wed,  1 Apr 2020 12:14:33 +0530
-Message-Id: <20200401064435.12676-2-manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        netdev@vger.kernel.org
+Subject: [PATCH 2/3] net: qrtr: Add MHI transport layer
+Date:   Wed,  1 Apr 2020 12:14:34 +0530
+Message-Id: <20200401064435.12676-3-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200401064435.12676-1-manivannan.sadhasivam@linaro.org>
 References: <20200401064435.12676-1-manivannan.sadhasivam@linaro.org>
@@ -62,228 +63,178 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for MHI suspend and resume states. While at it, the
-mhi_notify() function needs to be exported as well.
+MHI is the transport layer used for communicating to the external modems.
+Hence, this commit adds MHI transport layer support to QRTR for
+transferring the QMI messages over IPC Router.
 
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: netdev@vger.kernel.org
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/core/main.c |   3 +-
- drivers/bus/mhi/core/pm.c   | 143 ++++++++++++++++++++++++++++++++++++
- include/linux/mhi.h         |  19 +++++
- 3 files changed, 164 insertions(+), 1 deletion(-)
+ net/qrtr/Kconfig  |   7 +++
+ net/qrtr/Makefile |   2 +
+ net/qrtr/mhi.c    | 126 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 135 insertions(+)
+ create mode 100644 net/qrtr/mhi.c
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index eb4256b81406..3e9aa3b2da77 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -267,7 +267,7 @@ int mhi_destroy_device(struct device *dev, void *data)
- 	return 0;
- }
+diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
+index 63f89cc6e82c..8eb876471564 100644
+--- a/net/qrtr/Kconfig
++++ b/net/qrtr/Kconfig
+@@ -29,4 +29,11 @@ config QRTR_TUN
+ 	  implement endpoints of QRTR, for purpose of tunneling data to other
+ 	  hosts or testing purposes.
  
--static void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason)
-+void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason)
- {
- 	struct mhi_driver *mhi_drv;
- 
-@@ -279,6 +279,7 @@ static void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason)
- 	if (mhi_drv->status_cb)
- 		mhi_drv->status_cb(mhi_dev, cb_reason);
- }
-+EXPORT_SYMBOL_GPL(mhi_notify);
- 
- /* Bind MHI channels to MHI devices */
- void mhi_create_devices(struct mhi_controller *mhi_cntrl)
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 52690cb5c89c..3529419d076b 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -669,6 +669,149 @@ void mhi_pm_st_worker(struct work_struct *work)
- 	}
- }
- 
-+int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
++config QRTR_MHI
++	tristate "MHI IPC Router channels"
++	depends on MHI_BUS
++	help
++	  Say Y here to support MHI based ipcrouter channels. MHI is the
++	  transport used for communicating to external modems.
++
+ endif # QRTR
+diff --git a/net/qrtr/Makefile b/net/qrtr/Makefile
+index 1c6d6c120fb7..3dc0a7c9d455 100644
+--- a/net/qrtr/Makefile
++++ b/net/qrtr/Makefile
+@@ -5,3 +5,5 @@ obj-$(CONFIG_QRTR_SMD) += qrtr-smd.o
+ qrtr-smd-y	:= smd.o
+ obj-$(CONFIG_QRTR_TUN) += qrtr-tun.o
+ qrtr-tun-y	:= tun.o
++obj-$(CONFIG_QRTR_MHI) += qrtr-mhi.o
++qrtr-mhi-y	:= mhi.o
+diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+new file mode 100644
+index 000000000000..d4f877f3d1eb
+--- /dev/null
++++ b/net/qrtr/mhi.c
+@@ -0,0 +1,126 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
++ */
++
++#include <linux/mhi.h>
++#include <linux/mod_devicetable.h>
++#include <linux/module.h>
++#include <linux/skbuff.h>
++#include <net/sock.h>
++
++#include "qrtr.h"
++
++struct qrtr_mhi_dev {
++	struct qrtr_endpoint ep;
++	struct mhi_device *mhi_dev;
++	struct device *dev;
++};
++
++/* From MHI to QRTR */
++static void qcom_mhi_qrtr_dl_callback(struct mhi_device *mhi_dev,
++				      struct mhi_result *mhi_res)
 +{
-+	struct mhi_chan *itr, *tmp;
-+	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	enum mhi_pm_state new_state;
-+	int ret;
++	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
++	int rc;
 +
-+	if (mhi_cntrl->pm_state == MHI_PM_DISABLE)
-+		return -EINVAL;
++	if (!qdev || mhi_res->transaction_status)
++		return;
 +
-+	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))
-+		return -EIO;
++	rc = qrtr_endpoint_post(&qdev->ep, mhi_res->buf_addr,
++				mhi_res->bytes_xferd);
++	if (rc == -EINVAL)
++		dev_err(qdev->dev, "invalid ipcrouter packet\n");
++}
 +
-+	/* Return busy if there are any pending resources */
-+	if (atomic_read(&mhi_cntrl->dev_wake))
-+		return -EBUSY;
++/* From QRTR to MHI */
++static void qcom_mhi_qrtr_ul_callback(struct mhi_device *mhi_dev,
++				      struct mhi_result *mhi_res)
++{
++	struct sk_buff *skb = (struct sk_buff *)mhi_res->buf_addr;
 +
-+	/* Take MHI out of M2 state */
-+	read_lock_bh(&mhi_cntrl->pm_lock);
-+	mhi_cntrl->wake_get(mhi_cntrl, false);
-+	read_unlock_bh(&mhi_cntrl->pm_lock);
++	consume_skb(skb);
++	if (skb->sk)
++		sock_put(skb->sk);
++}
 +
-+	ret = wait_event_timeout(mhi_cntrl->state_event,
-+				 mhi_cntrl->dev_state == MHI_STATE_M0 ||
-+				 mhi_cntrl->dev_state == MHI_STATE_M1 ||
-+				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
-+				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
++/* Send data over MHI */
++static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
++{
++	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, ep);
++	int rc;
 +
-+	read_lock_bh(&mhi_cntrl->pm_lock);
-+	mhi_cntrl->wake_put(mhi_cntrl, false);
-+	read_unlock_bh(&mhi_cntrl->pm_lock);
-+
-+	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
-+		dev_err(dev,
-+			"Could not enter M0/M1 state");
-+		return -EIO;
++	rc = skb_linearize(skb);
++	if (rc) {
++		kfree_skb(skb);
++		return rc;
 +	}
 +
-+	write_lock_irq(&mhi_cntrl->pm_lock);
-+
-+	if (atomic_read(&mhi_cntrl->dev_wake)) {
-+		write_unlock_irq(&mhi_cntrl->pm_lock);
-+		return -EBUSY;
++	rc = mhi_queue_skb(qdev->mhi_dev, DMA_TO_DEVICE, skb, skb->len,
++			   MHI_EOT);
++	if (rc) {
++		kfree_skb(skb);
++		return rc;
 +	}
 +
-+	dev_info(dev, "Allowing M3 transition\n");
-+	new_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_M3_ENTER);
-+	if (new_state != MHI_PM_M3_ENTER) {
-+		write_unlock_irq(&mhi_cntrl->pm_lock);
-+		dev_err(dev,
-+			"Error setting to PM state: %s from: %s\n",
-+			to_mhi_pm_state_str(MHI_PM_M3_ENTER),
-+			to_mhi_pm_state_str(mhi_cntrl->pm_state));
-+		return -EIO;
-+	}
++	if (skb->sk)
++		sock_hold(skb->sk);
 +
-+	/* Set MHI to M3 and wait for completion */
-+	mhi_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
-+	write_unlock_irq(&mhi_cntrl->pm_lock);
-+	dev_info(dev, "Wait for M3 completion\n");
++	return rc;
++}
 +
-+	ret = wait_event_timeout(mhi_cntrl->state_event,
-+				 mhi_cntrl->dev_state == MHI_STATE_M3 ||
-+				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
-+				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
++static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
++			       const struct mhi_device_id *id)
++{
++	struct qrtr_mhi_dev *qdev;
++	int rc;
 +
-+	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
-+		dev_err(dev,
-+			"Did not enter M3 state, MHI state: %s, PM state: %s\n",
-+			TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-+			to_mhi_pm_state_str(mhi_cntrl->pm_state));
-+		return -EIO;
-+	}
++	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
++	if (!qdev)
++		return -ENOMEM;
 +
-+	/* Notify clients about entering LPM */
-+	list_for_each_entry_safe(itr, tmp, &mhi_cntrl->lpm_chans, node) {
-+		mutex_lock(&itr->mutex);
-+		if (itr->mhi_dev)
-+			mhi_notify(itr->mhi_dev, MHI_CB_LPM_ENTER);
-+		mutex_unlock(&itr->mutex);
-+	}
++	qdev->mhi_dev = mhi_dev;
++	qdev->dev = &mhi_dev->dev;
++	qdev->ep.xmit = qcom_mhi_qrtr_send;
++
++	dev_set_drvdata(&mhi_dev->dev, qdev);
++	rc = qrtr_endpoint_register(&qdev->ep, QRTR_EP_NID_AUTO);
++	if (rc)
++		return rc;
++
++	dev_dbg(qdev->dev, "Qualcomm MHI QRTR driver probed\n");
 +
 +	return 0;
 +}
-+EXPORT_SYMBOL_GPL(mhi_pm_suspend);
 +
-+int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
++static void qcom_mhi_qrtr_remove(struct mhi_device *mhi_dev)
 +{
-+	struct mhi_chan *itr, *tmp;
-+	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	enum mhi_pm_state cur_state;
-+	int ret;
++	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
 +
-+	dev_info(dev, "Entered with PM state: %s, MHI state: %s\n",
-+		 to_mhi_pm_state_str(mhi_cntrl->pm_state),
-+		 TO_MHI_STATE_STR(mhi_cntrl->dev_state));
-+
-+	if (mhi_cntrl->pm_state == MHI_PM_DISABLE)
-+		return 0;
-+
-+	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))
-+		return -EIO;
-+
-+	/* Notify clients about exiting LPM */
-+	list_for_each_entry_safe(itr, tmp, &mhi_cntrl->lpm_chans, node) {
-+		mutex_lock(&itr->mutex);
-+		if (itr->mhi_dev)
-+			mhi_notify(itr->mhi_dev, MHI_CB_LPM_EXIT);
-+		mutex_unlock(&itr->mutex);
-+	}
-+
-+	write_lock_irq(&mhi_cntrl->pm_lock);
-+	cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_M3_EXIT);
-+	if (cur_state != MHI_PM_M3_EXIT) {
-+		write_unlock_irq(&mhi_cntrl->pm_lock);
-+		dev_info(dev,
-+			 "Error setting to PM state: %s from: %s\n",
-+			 to_mhi_pm_state_str(MHI_PM_M3_EXIT),
-+			 to_mhi_pm_state_str(mhi_cntrl->pm_state));
-+		return -EIO;
-+	}
-+
-+	/* Set MHI to M0 and wait for completion */
-+	mhi_set_mhi_state(mhi_cntrl, MHI_STATE_M0);
-+	write_unlock_irq(&mhi_cntrl->pm_lock);
-+
-+	ret = wait_event_timeout(mhi_cntrl->state_event,
-+				 mhi_cntrl->dev_state == MHI_STATE_M0 ||
-+				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
-+				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
-+
-+	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
-+		dev_err(dev,
-+			"Did not enter M0 state, MHI state: %s, PM state: %s\n",
-+			TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-+			to_mhi_pm_state_str(mhi_cntrl->pm_state));
-+		return -EIO;
-+	}
-+
-+	return 0;
++	qrtr_endpoint_unregister(&qdev->ep);
++	dev_set_drvdata(&mhi_dev->dev, NULL);
 +}
-+EXPORT_SYMBOL_GPL(mhi_pm_resume);
 +
- int __mhi_device_get_sync(struct mhi_controller *mhi_cntrl)
- {
- 	int ret;
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index ad1996001965..a4288f4d656f 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -568,6 +568,13 @@ void mhi_driver_unregister(struct mhi_driver *mhi_drv);
- void mhi_set_mhi_state(struct mhi_controller *mhi_cntrl,
- 		       enum mhi_state state);
- 
-+/**
-+ * mhi_notify - Notify the MHI client driver about client device status
-+ * @mhi_dev: MHI device instance
-+ * @cb_reason: MHI callback reason
-+ */
-+void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason);
++static const struct mhi_device_id qcom_mhi_qrtr_id_table[] = {
++	{ .chan = "IPCR" },
++	{}
++};
++MODULE_DEVICE_TABLE(mhi, qcom_mhi_qrtr_id_table);
 +
- /**
-  * mhi_prepare_for_power_up - Do pre-initialization before power up.
-  *                            This is optional, call this before power up if
-@@ -604,6 +611,18 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful);
-  */
- void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl);
- 
-+/**
-+ * mhi_pm_suspend - Move MHI into a suspended state
-+ * @mhi_cntrl: MHI controller
-+ */
-+int mhi_pm_suspend(struct mhi_controller *mhi_cntrl);
++static struct mhi_driver qcom_mhi_qrtr_driver = {
++	.probe = qcom_mhi_qrtr_probe,
++	.remove = qcom_mhi_qrtr_remove,
++	.dl_xfer_cb = qcom_mhi_qrtr_dl_callback,
++	.ul_xfer_cb = qcom_mhi_qrtr_ul_callback,
++	.id_table = qcom_mhi_qrtr_id_table,
++	.driver = {
++		.name = "qcom_mhi_qrtr",
++	},
++};
 +
-+/**
-+ * mhi_pm_resume - Resume MHI from suspended state
-+ * @mhi_cntrl: MHI controller
-+ */
-+int mhi_pm_resume(struct mhi_controller *mhi_cntrl);
++module_mhi_driver(qcom_mhi_qrtr_driver);
 +
- /**
-  * mhi_download_rddm_img - Download ramdump image from device for
-  *                         debugging purpose.
++MODULE_AUTHOR("Chris Lew <clew@codeaurora.org>");
++MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>");
++MODULE_DESCRIPTION("Qualcomm IPC-Router MHI interface driver");
++MODULE_LICENSE("GPL v2");
 -- 
 2.17.1
 
