@@ -2,150 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E13C19ABD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 14:40:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B8DB19ABDB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 14:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732354AbgDAMkF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 08:40:05 -0400
-Received: from foss.arm.com ([217.140.110.172]:50788 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732348AbgDAMkF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 08:40:05 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5EBC930E;
-        Wed,  1 Apr 2020 05:40:04 -0700 (PDT)
-Received: from [10.37.12.63] (unknown [10.37.12.63])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 00DBE3F68F;
-        Wed,  1 Apr 2020 05:40:01 -0700 (PDT)
-Subject: Re: [PATCH v4 1/3] dt-bindings: thermal: Add yaml bindings for
- thermal sensors
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, mka@chromium.org, daniel.lezcano@linaro.org,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     Rob Herring <robh@kernel.org>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <cover.1585738725.git.amit.kucheria@linaro.org>
- <146b5dfebf23321c1eed8190ada957e2264ffe65.1585738725.git.amit.kucheria@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <da9860cf-0c2e-b7ff-47c2-19c79b06ad55@arm.com>
-Date:   Wed, 1 Apr 2020 13:40:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1732444AbgDAMk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 08:40:28 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:23962 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732348AbgDAMk2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Apr 2020 08:40:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585744827; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=okh+F3uuRWsQcBuPF9wQiYLctrs6AGc2NTsoVj41CDM=; b=hnLy+qNEyLx/da6TpZnk9Yx0M0gRXOeGgFnawGJ0lEFZZaecYUx/8+y61RoF2i+wYRRjbNMO
+ 7iC+HZ3zJqXDMNmqgSkEfs1FaNp2zNRWF1+ZH1vPEhpIL4QI5VGJIbosDuMlBJ5PcN1G6YWa
+ DakQpw+BrJJCEB0JNAF69M+z/uU=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e848bba.7f09b4cc17a0-smtp-out-n02;
+ Wed, 01 Apr 2020 12:40:26 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 07CCDC433F2; Wed,  1 Apr 2020 12:40:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.129] (unknown [106.222.15.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67440C433F2;
+        Wed,  1 Apr 2020 12:40:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67440C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [RFT PATCH v2 07/10] drivers: qcom: rpmh-rsc: Warning if
+ tcs_write() used for non-active
+To:     Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        evgreen@chromium.org, Lina Iyer <ilina@codeaurora.org>,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200311231348.129254-1-dianders@chromium.org>
+ <20200311161104.RFT.v2.7.I8e187cdfb7a31f5bb7724f1f937f2862ee464a35@changeid>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <339a7a7b-af4e-d6a9-4b48-2a603ea10172@codeaurora.org>
+Date:   Wed, 1 Apr 2020 18:10:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <146b5dfebf23321c1eed8190ada957e2264ffe65.1585738725.git.amit.kucheria@linaro.org>
+In-Reply-To: <20200311161104.RFT.v2.7.I8e187cdfb7a31f5bb7724f1f937f2862ee464a35@changeid>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-
-On 4/1/20 12:15 PM, Amit Kucheria wrote:
-> As part of moving the thermal bindings to YAML, split it up into 3
-> bindings: thermal sensors, cooling devices and thermal zones.
-> 
-> The property #thermal-sensor-cells is required in each device that acts
-> as a thermal sensor. It is used to uniquely identify the instance of the
-> thermal sensor inside the system.
-> 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+On 3/12/2020 4:43 AM, Douglas Anderson wrote:
+> tcs_write() is documented to only be useful for writing
+> RPMH_ACTIVE_ONLY_STATE.  Let's be loud if someone messes up.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->   .../bindings/thermal/thermal-sensor.yaml      | 72 +++++++++++++++++++
->   1 file changed, 72 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
-> new file mode 100644
-> index 0000000000000..920ee7667591d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
-> @@ -0,0 +1,72 @@
-> +# SPDX-License-Identifier: (GPL-2.0)
-> +# Copyright 2020 Linaro Ltd.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/thermal/thermal-sensor.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>
+> Changes in v2: None
+>
+>   drivers/soc/qcom/rpmh-rsc.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+>
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index 93f5d1fb71ca..ba489d18c20e 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -573,6 +573,12 @@ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
+>   	unsigned long flags;
+>   	int ret;
+>   
+> +	/*
+> +	 * It only makes sense to grab a whole TCS for ourselves if we're
+> +	 * triggering right away, which we only do for ACTIVE_ONLY.
+> +	 */
+> +	WARN_ON(msg->state != RPMH_ACTIVE_ONLY_STATE);
 > +
-> +title: Thermal sensor binding
-> +
-> +maintainers:
-> +  - Amit Kucheria <amitk@kernel.org>
-> +
-> +description: |
-> +  Thermal management is achieved in devicetree by describing the sensor hardware
-> +  and the software abstraction of thermal zones required to take appropriate
-> +  action to mitigate thermal overloads.
-> +
-> +  The following node types are used to completely describe a thermal management
-> +  system in devicetree:
-> +   - thermal-sensor: device that measures temperature, has SoC-specific bindings
-> +   - cooling-device: device used to dissipate heat either passively or artively
 
-s/artively/actively
+Unnecessary check, we will never hit this warning. Lets not add such check.
 
-> +   - thermal-zones: a container of the following node types used to describe all
-> +     thermal data for the platform
-> +
-> +  This binding describes the thermal-sensor.
-> +
-> +  Thermal sensor devices provide temperature sensing capabilities on thermal
-> +  zones. Typical devices are I2C ADC converters and bandgaps. Thermal sensor
-> +  devices may control one or more internal sensors.
-> +
-> +properties:
-> +  "#thermal-sensor-cells":
-> +    description:
-> +      Used to uniquely identify a thermal sensor instance within an IC. Will be
-> +      0 on sensor nodes with only a single sensor and at least 1 on nodes
-> +      containing several internal sensors.
-> +    enum: [0, 1]
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    // Example 1: SDM845 TSENS
-> +    soc: soc@0 {
-> +            #address-cells = <2>;
-> +            #size-cells = <2>;
-> +
-> +            /* ... */
-> +
-> +            tsens0: thermal-sensor@c263000 {
-> +                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-> +                    reg = <0 0x0c263000 0 0x1ff>, /* TM */
-> +                          <0 0x0c222000 0 0x1ff>; /* SROT */
-> +                    #qcom,sensors = <13>;
-> +                    interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-> +                                 <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-> +                    interrupt-names = "uplow", "critical";
-> +                    #thermal-sensor-cells = <1>;
-> +            };
-> +
-> +            tsens1: thermal-sensor@c265000 {
-> +                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-> +                    reg = <0 0x0c265000 0 0x1ff>, /* TM */
-> +                          <0 0x0c223000 0 0x1ff>; /* SROT */
-> +                    #qcom,sensors = <8>;
-> +                    interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-> +                                 <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-> +                    interrupt-names = "uplow", "critical";
-> +                    #thermal-sensor-cells = <1>;
-> +            };
-> +    };
-> +...
-> 
+Saying that you can modify this change to drop below check  from 
+rpmh_rsc_write_ctrl_data() as that never hit.
 
-Apart from the above, looks good.
+         /* Data sent to this API will not be sent immediately */
+         if (msg->state == RPMH_ACTIVE_ONLY_STATE)
+                 return -EINVAL;
 
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+we always call rpmh_rsc_write_ctrl_data() for RPMH_SLEEP_STATE and 
+RPMH_WAKE_ONLY_STATE.
 
-Regards,
-Lukasz
+Thanks,
+Maulik
+>   	/* TODO: get_tcs_for_msg() can return -EAGAIN and nobody handles */
+>   	tcs = get_tcs_for_msg(drv, msg);
+>   	if (IS_ERR(tcs))
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
