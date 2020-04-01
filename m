@@ -2,175 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D172F19B4D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 19:47:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F63F19B68C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 21:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732368AbgDARrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 13:47:05 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40219 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732328AbgDARrE (ORCPT
+        id S1732758AbgDATqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 15:46:52 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:41355 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732554AbgDATqw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 13:47:04 -0400
-Received: by mail-wr1-f65.google.com with SMTP id u10so1095373wro.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 10:47:02 -0700 (PDT)
+        Wed, 1 Apr 2020 15:46:52 -0400
+Received: by mail-pl1-f194.google.com with SMTP id d24so379244pll.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 12:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=W2oQ9hPMrcsBKS7dSFlTLxuPz1aNPGKqUjE98fzZQWY=;
-        b=dJusUEEF2cg+i3OBLnik6DngOnDq5pM40My5RiCA+hNoRlwoi2liK0I16AoiA3rp+E
-         Xwys0n9UmiFadqGCbjGB6ozCVdJT+sK1lCiKBbdi4iP/AjpEV3OrrUH37/zMx2L945I1
-         b8AyzzqukyXoNNxaXOIclu4SzzNn3bdWyDsf+3Z8LUhiw4WtEYv8sRw6/ugc633iXPMz
-         tIJE3l7pOTK2MSVBv+Xx9mia+oT5xuoCEi06XZ1UkHGwrgjV9iwJ8E7RiM0BduQO59AS
-         h/XDFkWwLOtHLasqKzaRW4/jtXzxnNFXwzgorSt9VUinCREcE3BqeRPzNbhMrD6kPZPz
-         2vHA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/ce+l+iRZG0CueQLUqCcAm+FhjXwOeZQvrFD6a+Pdbk=;
+        b=fCc9uE+XYXB06N48E9h3rQ4SJNQfhzwC50G+TMXvj8kfPBe4kbDLR7b1/oJ+uEuxKc
+         /zyiOEwgGh1jAIInwlsgrzgiU0oI90VjnSLlLTNo58X3/wrlUbKCMZCG3LswFVAZjJin
+         LvE7ziv7OG52tAD9ohxETUiLgLpf2qYRWHzUU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=W2oQ9hPMrcsBKS7dSFlTLxuPz1aNPGKqUjE98fzZQWY=;
-        b=VstQPYwPV7aFWDYxTe/iXkjSW7Ru5exDj0+I+S1JiDB4OdMHeh/0KESYBC8rNlARDV
-         zOAHpqfNgP/dIXFwMp9zAnJb3bIp0n+ocLkfJy2NJPE2lHq2vGe/l6AG0jXjDt+GKHpG
-         hadGpa2uZorfactk/h5kkVU5q74QUYeHA8REQHAnvEgt8khduxi6eCzaDW0H1IhPANLx
-         qcEgfvPaut5ut4WRTbCVlyeWqmDZc0OUH9p9qhdL43sZcdpBU++sVt2+Rf5DFRMMDfaS
-         mIAH9NVizYk5d9mxStSyMVa3T7wzJjSULDReJsETAwIvt0ze/876/gJxzKlqBh9vYhzO
-         67fg==
-X-Gm-Message-State: ANhLgQ1JmPy7eQStuQIvkRVSkvZ6U2lY2FCO6nDDkvBFrEzkCDdOjCTr
-        cSKQBJcFDKvaYh9EsXD6Ikm0ig==
-X-Google-Smtp-Source: ADFU+vu7NWnQ3RupG13syE9TsO401tn8jTzVU7/jI8QW96IDZKVfwIjf6D/Em45K1ICfbXc/S1qXLw==
-X-Received: by 2002:a5d:510d:: with SMTP id s13mr26523908wrt.110.1585763222180;
-        Wed, 01 Apr 2020 10:47:02 -0700 (PDT)
-Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id 5sm4062143wrs.20.2020.04.01.10.47.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 01 Apr 2020 10:47:01 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Date:   Wed,  1 Apr 2020 19:50:59 +0200
-Message-Id: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/ce+l+iRZG0CueQLUqCcAm+FhjXwOeZQvrFD6a+Pdbk=;
+        b=D2HeIKL+J4xW4Kmj5sH2k9YZ+q8KyX12hbBIUJgghveHo39ueewZF5n6CMB1HcT+MK
+         MNAYjioV4wc5Z+tRBtJINR4ra63w6r++dkIx3FIBSTRFC4OCbBYwbrgSpuUoVA3qio1b
+         3jqBZGKwxXXPtPtNOPV/pUFyJC6D3o4Ddku5F90n2gE0NvncUwRDded3o1cWLFeXgDrx
+         0iGivOcMb/5PHeLLR9ua1YTTEeAck8DReMGHDlYuV9a9zJxmWexCoxMOUPiXx+crooFQ
+         89syLnqen+Oh7hgHsod0Opfw7Wm5Djn4g+46bquoYT39exV/6Kuasq0SDGf6mREAHBC+
+         fz+A==
+X-Gm-Message-State: ANhLgQ2kH/f/4JEg4XEHfb7iC9sXjjyonajCgTBF7xXAGSuwe4sjl8T1
+        4oD7Bz1gD0cofoSV5/OCDQhJ8Q==
+X-Google-Smtp-Source: ADFU+vt/xdibwjNhNGnnuYkq1gCZsQ2pLfGD9zsm2il2lY1sfEB8MLcew8RkcukpAiHbnqsuWeHD3Q==
+X-Received: by 2002:a17:902:9004:: with SMTP id a4mr21923981plp.275.1585770411176;
+        Wed, 01 Apr 2020 12:46:51 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 132sm2160604pfc.183.2020.04.01.12.46.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Apr 2020 12:46:50 -0700 (PDT)
+Date:   Wed, 1 Apr 2020 12:46:48 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V3 3/8] soc: qcom-geni-se: Add interconnect support to
+ fix earlycon crash
+Message-ID: <20200401194648.GM199755@google.com>
+References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
+ <1585652976-17481-4-git-send-email-akashast@codeaurora.org>
+ <20200331182457.GH199755@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200331182457.GH199755@google.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The highest cpu frequency opps have been dropped because CPR is not
-supported. However, we can simply specify operating voltage so that
-they match the max corner voltages for each freq. With that, we can
-support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
-fine tune operating voltages and optimize power consumption.
+On Tue, Mar 31, 2020 at 11:24:57AM -0700, Matthias Kaehlcke wrote:
+> Hi Akash,
+> 
+> On Tue, Mar 31, 2020 at 04:39:31PM +0530, Akash Asthana wrote:
+> > QUP core clock is shared among all the SE drivers present on particular
+> > QUP wrapper, the system will reset(unclocked access) if earlycon used after
+> > QUP core clock is put to 0 from other SE drivers before real console comes
+> > up.
+> > 
+> > As earlycon can't vote for it's QUP core need, to fix this add ICC
+> > support to common/QUP wrapper driver and put vote for QUP core from
+> > probe on behalf of earlycon and remove vote during earlycon exit call.
+> > 
+> > Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> > Reported-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> > Change is V3:
+> >  - Add geni_remove_earlycon_icc_vote API that will be used by earlycon
+> >    exit function to remove ICC vote for earlyconsole.
+> >  - Remove suspend/resume hook for geni-se driver as we are no longer
+> >    removing earlyconsole ICC vote from system suspend, we are removing
+> >    from earlycon exit.
+> > 
+> >  drivers/soc/qcom/qcom-geni-se.c       | 51 +++++++++++++++++++++++++++++++++++
+> >  drivers/tty/serial/qcom_geni_serial.c |  7 +++++
+> >  include/linux/qcom-geni-se.h          |  2 ++
+> >  3 files changed, 60 insertions(+)
+> > 
+> > diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> > index 9344c14..d30c282 100644
+> > --- a/drivers/soc/qcom/qcom-geni-se.c
+> > +++ b/drivers/soc/qcom/qcom-geni-se.c
+> > @@ -90,8 +90,11 @@ struct geni_wrapper {
+> >  	struct device *dev;
+> >  	void __iomem *base;
+> >  	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
+> > +	struct geni_icc_path to_core;
+> >  };
+> >  
+> > +struct geni_wrapper *earlycon_wrapper;
+> 
+> should be static
+> 
+> > +
+> >  #define QUP_HW_VER_REG			0x4
+> >  
+> >  /* Common SE registers */
+> > @@ -818,6 +821,26 @@ int geni_icc_vote_off(struct geni_se *se)
+> >  }
+> >  EXPORT_SYMBOL(geni_icc_vote_off);
+> >  
+> > +void geni_remove_earlycon_icc_vote(void)
+> > +{
+> > +	struct geni_wrapper *wrapper = earlycon_wrapper;
+> > +	struct device_node *parent = of_get_next_parent(wrapper->dev->of_node);
+> > +	struct device_node *child;
+> > +
+> > +	for_each_child_of_node(parent, child) {
+> > +		if (of_device_is_compatible(child, "qcom,geni-se-qup")) {
+> > +			wrapper = platform_get_drvdata(of_find_device_by_node(
+> > +					child));
+> > +			icc_put(wrapper->to_core.path);
+> > +			wrapper->to_core.path = NULL;
+> > +		}
+> > +	}
+> > +	of_node_put(parent);
+> > +
+> > +	earlycon_wrapper = NULL;
+> > +}
+> > +EXPORT_SYMBOL(geni_remove_earlycon_icc_vote);
+> 
+> I didn't know that consoles have an exit handler, this is way nicer than
+> the miscellaneous triggers we discussed earlier :)
 
-This patch:
-- Adds missing opps and corresponding target voltages to msm8916.dtsi.
-- Adds cpu-supply to apq8016-sbc.dtsi (board level info).
-- Adds pm8916 spmi regulator node to pm8916.dtsi.
+No wonder I 'missed' this when looking at the console code for possible
+triggers, it is brand new and as of now only exists in -next:
 
-Tested with a dragonboard-410c.
+commit ed31685c96e18f773ca11dd1a637974d62130673
+Author: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Date:   Mon Feb 3 15:31:30 2020 +0200
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 24 ++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/msm8916.dtsi     | 24 ++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/pm8916.dtsi      |  6 ++++++
- 3 files changed, 54 insertions(+)
+    console: Introduce ->exit() callback
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-index 037e26b..f1c1216 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-@@ -560,6 +560,30 @@
- 	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
- };
- 
-+&spm_regulators {
-+	vdd_cpu: s2 {
-+		regulator-always-on;
-+		regulator-min-microvolt = <1050000>;
-+		regulator-max-microvolt = <1350000>;
-+	};
-+};
-+
-+&CPU0 {
-+	cpu-supply = <&vdd_cpu>;
-+};
-+
-+&CPU1 {
-+	cpu-supply = <&vdd_cpu>;
-+};
-+
-+&CPU2 {
-+	cpu-supply = <&vdd_cpu>;
-+};
-+
-+&CPU3 {
-+	cpu-supply = <&vdd_cpu>;
-+};
-+
- &smd_rpm_regulators {
- 	vdd_l1_l2_l3-supply = <&pm8916_s3>;
- 	vdd_l5-supply = <&pm8916_s3>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 9f31064..9805af0 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -342,15 +342,39 @@
- 
- 		opp-200000000 {
- 			opp-hz = /bits/ 64 <200000000>;
-+			opp-microvolt = <1050000>;
- 		};
- 		opp-400000000 {
- 			opp-hz = /bits/ 64 <400000000>;
-+			opp-microvolt = <1050000>;
-+		};
-+		opp-533330000 {
-+			opp-hz = /bits/ 64 <533330000>;
-+			opp-microvolt = <1150000>;
- 		};
- 		opp-800000000 {
- 			opp-hz = /bits/ 64 <800000000>;
-+			opp-microvolt = <1150000>;
- 		};
- 		opp-998400000 {
- 			opp-hz = /bits/ 64 <998400000>;
-+			opp-microvolt = <1350000>;
-+		};
-+		opp-1094400000 {
-+			opp-hz = /bits/ 64 <1094400000>;
-+			opp-microvolt = <1350000>;
-+		};
-+		opp-1152000000 {
-+			opp-hz = /bits/ 64 <1152000000>;
-+			opp-microvolt = <1350000>;
-+		};
-+		opp-1209600000 {
-+			opp-hz = /bits/ 64 <1209600000>;
-+			opp-microvolt = <1350000>;
-+		};
-+		opp-1363200000 {
-+			opp-hz = /bits/ 64 <1363200000>;
-+			opp-microvolt = <1350000>;
- 		};
- 	};
- 
-diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-index 0bcdf04..c9b9c4f 100644
---- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-@@ -157,5 +157,11 @@
- 			vdd-micbias-supply = <&pm8916_l13>;
- 			#sound-dai-cells = <1>;
- 		};
-+
-+		spm_regulators: spm_regulators  {
-+			compatible = "qcom,pm8916-regulators";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+		};
- 	};
- };
--- 
-2.7.4
 
+sharp timing!
