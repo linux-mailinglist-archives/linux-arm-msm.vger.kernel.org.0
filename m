@@ -2,200 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CD09E19B911
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 01:46:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8C1919B916
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 01:52:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733008AbgDAXq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 19:46:28 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:52126 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732881AbgDAXq2 (ORCPT
+        id S1733309AbgDAXwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 19:52:16 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:34733 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733304AbgDAXwQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 19:46:28 -0400
-Received: by mail-pj1-f66.google.com with SMTP id w9so778876pjh.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 16:46:27 -0700 (PDT)
+        Wed, 1 Apr 2020 19:52:16 -0400
+Received: by mail-pl1-f193.google.com with SMTP id a23so639964plm.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 16:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=d8oAKXwkItGOcrPfT+tXH6JGRoW8kUhFEuMlXZtfyi4=;
-        b=xM7S3weKJpuuAk67mz0KQDvlzWv/wgjPD3vlwq06bH2XnaPdSAz90wbpGsYKwlDdnp
-         IOqDJ2ttpifcaTGJzpDwl+BRX5hlt4IiJSlOwm7m9XyaOHFw15VXvyFKJ32OBzwKQNM4
-         1MyOg6u7jTEei6e834XKUcSjL2yVAiIUoS5QjiGj9TZO5ZZKtg7pK1O+vkSG3KQMIL4z
-         kzuLDNagO2TBCXYPnAPR2NTfBKhqnoKcZYg8kxxf7htwmSHXGFb3jmphROLVRip8akHL
-         qvmYx0t2VTnjbNUEtKlTd7+mk8ayNf8QQOL12X9467nkQG5QEy81TEMGwGaYf5Hk0Hnw
-         ARAQ==
+        bh=39o7ZeExYpkfTbZoKHgoBseO9KDqeuMtrYpVQ76wHvQ=;
+        b=g7KGE2ct8ZghoiGIERIsopK2WwcCW24r4+BhCyOrIrAO9QA+wACwNYk8KWp7X1ZSF2
+         3ccANG0k3AmbQKvv9Eguif8ww/gMmCGxH7hyLdiqEBSuH5Bt1qIodKPF261uREWWKGGX
+         SV9XzvvE2ok1Ob9eWNoW+M3pLPzRQ39oCDuo+up1xltLUYMcqEa4tHITqqupbx2UMnZC
+         pI3toKLL+KgyHH96V5JHLBew/9cRjcSxFLTDw6f72T0jREZj3xjIO7loC5jxZkZ04F0G
+         d3eB/yjwJk7bJAfQDKjQ4W0ciZ/r73QQbuMpRaIbnZ4t0brMs0Pj2r2b9uuSJCFU3BmZ
+         ZjUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=d8oAKXwkItGOcrPfT+tXH6JGRoW8kUhFEuMlXZtfyi4=;
-        b=mMWQdC3pn3mAfeJEpamiHtlu+vNagyxEWzllhwd+gZu1/0tGJl1yiKzjbkHB+sDNOp
-         CUJ1ILZBuerbH9d/Jza4DxQvEdhu2puRWLtBPi1ADplpCxUYDBIxJC4uu6rQe9jeq5Zp
-         kNgpJhEyRZ6vrk1EhkXV96yhSqVHsx8xslLMJVchzT1sTcqPJTQwZ2EB+jihZEYjp+Uv
-         XiBymCG4wEiN37t/yyud9FXqd73bgAm3eCbqQPtNu4kU/iQ33meG4lS/FbqpR6SAZnKI
-         URGRv2duUCGcQz1GMPhQknxb+TAHjVsoMn4F9WvGVDv3MCN3C2jDk6/I9tbpOsRAbfTK
-         79/Q==
-X-Gm-Message-State: AGi0PuafJF6SogiDacaj1DLndRbUwkVuBTohL8vbAjFX8izt9y92O+I8
-        WZwasUf0F3MZi5CTpgtMOJimlw==
-X-Google-Smtp-Source: APiQypIpKinI8QnrHoZsML8GoxiJ7GIdFGDJUapV4qi3zIwuSlQcylXEkWM8j9oThf+T24+F+STtcQ==
-X-Received: by 2002:a17:90a:25c8:: with SMTP id k66mr606886pje.90.1585784786406;
-        Wed, 01 Apr 2020 16:46:26 -0700 (PDT)
+        bh=39o7ZeExYpkfTbZoKHgoBseO9KDqeuMtrYpVQ76wHvQ=;
+        b=iSLJJPMofn8I6x2RoNSuqO7sCxBhRrA4Logn7sfpAYavbmZ5F/MvjK4mD/Zlzxz72J
+         VPy8tuKn2qz0Umg8ctMMpLIdHIwr56jKqNqCXe+Jv9Q4rhBj1WQje4tE/yYKvmKyDoVx
+         xr18PlWLQiBDtuEgpwjbOlg895sLimdropyrjPFH7J86Ca9cJVUMysK1nQAFm5tDdPNs
+         ttCjbczG0kKWCW6/gQYjAa0IS2K72qZfvcKLrdsPZMqApWp7JUcyaRSW865JH6FQ/Dlj
+         E/A8XJd3ZYNpy4osWt5FyBsFX+WNXxtHWUmFMb6Vi+CFFhsnCdGVtstT/w0oWU30rbbS
+         f1Qg==
+X-Gm-Message-State: AGi0PuYMSwe9GYvi3vPWubIl90YgI8zuOryTmYJ07swPdh8lBx8UJ3sb
+        UuOF2mpTdfb9MCn8GfLdxhMlIA==
+X-Google-Smtp-Source: APiQypLd+V9fUOfcYn6J9ceh3M1sNQNMmr8IkTNDiIx6b9iFuOJavZ+5tEa5M0Ne+AMErvILIozTxQ==
+X-Received: by 2002:a17:902:8b82:: with SMTP id ay2mr332388plb.221.1585785133978;
+        Wed, 01 Apr 2020 16:52:13 -0700 (PDT)
 Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o128sm2365103pfb.58.2020.04.01.16.46.25
+        by smtp.gmail.com with ESMTPSA id i197sm2401468pfe.137.2020.04.01.16.52.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2020 16:46:25 -0700 (PDT)
-Date:   Wed, 1 Apr 2020 16:46:23 -0700
+        Wed, 01 Apr 2020 16:52:13 -0700 (PDT)
+Date:   Wed, 1 Apr 2020 16:52:11 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Message-ID: <20200401234623.GJ254911@minitux>
-References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+To:     ansuelsmth@gmail.com
+Cc:     'Stanimir Varbanov' <svarbanov@mm-sol.com>,
+        'Sham Muthayyan' <smuthayy@codeaurora.org>,
+        'Andy Gross' <agross@kernel.org>,
+        'Bjorn Helgaas' <bhelgaas@google.com>,
+        'Rob Herring' <robh+dt@kernel.org>,
+        'Mark Rutland' <mark.rutland@arm.com>,
+        'Lorenzo Pieralisi' <lorenzo.pieralisi@arm.com>,
+        'Andrew Murray' <amurray@thegoodpenguin.co.uk>,
+        'Philipp Zabel' <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: R: [PATCH 07/12] pcie: qcom: add tx term offset support
+Message-ID: <20200401235211.GK254911@minitux>
+References: <20200320183455.21311-1-ansuelsmth@gmail.com>
+ <20200320183455.21311-7-ansuelsmth@gmail.com>
+ <20200401204007.GG254911@minitux>
+ <006501d60870$3cf99fc0$b6ecdf40$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <006501d60870$3cf99fc0$b6ecdf40$@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 01 Apr 10:50 PDT 2020, Loic Poulain wrote:
+On Wed 01 Apr 14:55 PDT 2020, ansuelsmth@gmail.com wrote:
 
-> The highest cpu frequency opps have been dropped because CPR is not
-> supported. However, we can simply specify operating voltage so that
-> they match the max corner voltages for each freq. With that, we can
-> support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
-> fine tune operating voltages and optimize power consumption.
+> > On Fri 20 Mar 11:34 PDT 2020, Ansuel Smith wrote:
+> > 
+> > > From: Sham Muthayyan <smuthayy@codeaurora.org>
+> > >
+> > > Add tx term offset support to pcie qcom driver
+> > > need in some revision of the ipq806x soc
+> > >
+> > > Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-qcom.c | 61
+> > ++++++++++++++++++++++----
+> > >  1 file changed, 52 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
+> > b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index ecc22fd27ea6..8009e3117765 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -45,7 +45,13 @@
+> > >  #define PCIE_CAP_CPL_TIMEOUT_DISABLE		0x10
+> > >
+> > >  #define PCIE20_PARF_PHY_CTRL			0x40
+> > > +#define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	(0x1f << 16)
+> > > +#define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		(x << 16)
+> > > +
+> > >  #define PCIE20_PARF_PHY_REFCLK			0x4C
+> > > +#define REF_SSP_EN				BIT(16)
+> > > +#define REF_USE_PAD				BIT(12)
+> > > +
+> > >  #define PCIE20_PARF_DBI_BASE_ADDR		0x168
+> > >  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
+> > >  #define PCIE20_PARF_MHI_CLOCK_RESET_CTRL	0x174
+> > > @@ -77,6 +83,18 @@
+> > >  #define DBI_RO_WR_EN				1
+> > >
+> > >  #define PERST_DELAY_US				1000
+> > > +/* PARF registers */
+> > > +#define PCIE20_PARF_PCS_DEEMPH			0x34
+> > > +#define PCS_DEEMPH_TX_DEEMPH_GEN1(x)		(x << 16)
+> > > +#define PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(x)	(x << 8)
+> > > +#define PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(x)	(x << 0)
+> > > +
+> > > +#define PCIE20_PARF_PCS_SWING			0x38
+> > > +#define PCS_SWING_TX_SWING_FULL(x)		(x << 8)
+> > > +#define PCS_SWING_TX_SWING_LOW(x)		(x << 0)
+> > > +
+> > > +#define PCIE20_PARF_CONFIG_BITS			0x50
+> > > +#define PHY_RX0_EQ(x)				(x << 24)
+> > >
+> > >  #define PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE	0x358
+> > >  #define SLV_ADDR_SPACE_SZ			0x10000000
+> > > @@ -97,6 +115,7 @@ struct qcom_pcie_resources_2_1_0 {
+> > >  	struct reset_control *phy_reset;
+> > >  	struct reset_control *ext_reset;
+> > >  	struct regulator_bulk_data
+> > supplies[QCOM_PCIE_2_1_0_MAX_SUPPLY];
+> > > +	uint8_t phy_tx0_term_offset;
+> > >  };
+> > >
+> > >  struct qcom_pcie_resources_1_0_0 {
+> > > @@ -184,6 +203,16 @@ struct qcom_pcie {
+> > >
+> > >  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> > >
+> > > +static inline void
+> > > +writel_masked(void __iomem *addr, u32 clear_mask, u32 set_mask)
+> > > +{
+> > > +	u32 val = readl(addr);
+> > > +
+> > > +	val &= ~clear_mask;
+> > > +	val |= set_mask;
+> > > +	writel(val, addr);
+> > > +}
+> > > +
+> > >  static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
+> > >  {
+> > >  	gpiod_set_value_cansleep(pcie->reset, 1);
+> > > @@ -277,6 +306,10 @@ static int
+> > qcom_pcie_get_resources_2_1_0(struct qcom_pcie *pcie)
+> > >  	if (IS_ERR(res->ext_reset))
+> > >  		return PTR_ERR(res->ext_reset);
+> > >
+> > > +	if (of_property_read_u8(dev->of_node, "phy-tx0-term-offset",
+> > > +				&res->phy_tx0_term_offset))
+> > > +		res->phy_tx0_term_offset = 0;
+> > 
+> > The appropriate way is to encode differences in hardware is to use
+> > different compatibles for the two different versions of the hardware.
+> > 
+> > Regards,
+> > Bjorn
+> > 
 > 
-> This patch:
-> - Adds missing opps and corresponding target voltages to msm8916.dtsi.
-> - Adds cpu-supply to apq8016-sbc.dtsi (board level info).
-> - Adds pm8916 spmi regulator node to pm8916.dtsi.
+> So a better way to handle this would be to check the SoC compatible?
+> AFAIK a different offset is only needed on ipq8064 revision 2 and ipq8065
+> but
+> it looks bad to add a special code just for that 2 SoC. 
+> I would prefer to handle this with the offset definition but If you think
+> this would be
+> the right way, I will follow that. Waiting for your response about this.
 > 
-> Tested with a dragonboard-410c.
-> 
 
-Thanks Loic, happy to see you tying up these loose ends! Just one minor
-nit below.
+Yes, please do this by having different compatibles for the different
+revisions of the hardware block.
 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 24 ++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/msm8916.dtsi     | 24 ++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/pm8916.dtsi      |  6 ++++++
->  3 files changed, 54 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> index 037e26b..f1c1216 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> @@ -560,6 +560,30 @@
->  	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
->  };
->  
-> +&spm_regulators {
-> +	vdd_cpu: s2 {
-> +		regulator-always-on;
-> +		regulator-min-microvolt = <1050000>;
-> +		regulator-max-microvolt = <1350000>;
-> +	};
-> +};
-> +
-> +&CPU0 {
-> +	cpu-supply = <&vdd_cpu>;
-> +};
-> +
-> +&CPU1 {
-> +	cpu-supply = <&vdd_cpu>;
-> +};
-> +
-> +&CPU2 {
-> +	cpu-supply = <&vdd_cpu>;
-> +};
-> +
-> +&CPU3 {
-> +	cpu-supply = <&vdd_cpu>;
-> +};
-> +
->  &smd_rpm_regulators {
->  	vdd_l1_l2_l3-supply = <&pm8916_s3>;
->  	vdd_l5-supply = <&pm8916_s3>;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 9f31064..9805af0 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -342,15 +342,39 @@
->  
->  		opp-200000000 {
->  			opp-hz = /bits/ 64 <200000000>;
-> +			opp-microvolt = <1050000>;
->  		};
->  		opp-400000000 {
->  			opp-hz = /bits/ 64 <400000000>;
-> +			opp-microvolt = <1050000>;
-> +		};
-> +		opp-533330000 {
-> +			opp-hz = /bits/ 64 <533330000>;
-> +			opp-microvolt = <1150000>;
->  		};
->  		opp-800000000 {
->  			opp-hz = /bits/ 64 <800000000>;
-> +			opp-microvolt = <1150000>;
->  		};
->  		opp-998400000 {
->  			opp-hz = /bits/ 64 <998400000>;
-> +			opp-microvolt = <1350000>;
-> +		};
-> +		opp-1094400000 {
-> +			opp-hz = /bits/ 64 <1094400000>;
-> +			opp-microvolt = <1350000>;
-> +		};
-> +		opp-1152000000 {
-> +			opp-hz = /bits/ 64 <1152000000>;
-> +			opp-microvolt = <1350000>;
-> +		};
-> +		opp-1209600000 {
-> +			opp-hz = /bits/ 64 <1209600000>;
-> +			opp-microvolt = <1350000>;
-> +		};
-> +		opp-1363200000 {
-> +			opp-hz = /bits/ 64 <1363200000>;
-> +			opp-microvolt = <1350000>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> index 0bcdf04..c9b9c4f 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> @@ -157,5 +157,11 @@
->  			vdd-micbias-supply = <&pm8916_l13>;
->  			#sound-dai-cells = <1>;
->  		};
-> +
-> +		spm_regulators: spm_regulators  {
-
-There is the SPM regulator interface in the CPU subsystem, which is used
-for hardware assisted entering and exiting of low power modes. And then
-there's the direct PMIC control over SPMI. Except for the fact that the
-SPM hardware uses SPMI for controlling the PMIC these are two different
-things, and this is the SPMI one.
-
-So the label, and node should be
-		spmi_regulators: regulators {
-
+You should be able to use the same implementation for the two
+compatibles, just make the phy_tx0_term_offset depends on which was
+used.
 
 Regards,
 Bjorn
-
-> +			compatible = "qcom,pm8916-regulators";
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +		};
->  	};
->  };
-> -- 
-> 2.7.4
-> 
