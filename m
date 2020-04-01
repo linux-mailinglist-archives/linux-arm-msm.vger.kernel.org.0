@@ -2,196 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E90719B35F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 18:51:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D172F19B4D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 19:47:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388459AbgDAQiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 12:38:20 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36499 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388928AbgDAQiT (ORCPT
+        id S1732368AbgDARrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 13:47:05 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40219 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732328AbgDARrE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 12:38:19 -0400
-Received: by mail-wr1-f66.google.com with SMTP id 31so860838wrs.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 09:38:18 -0700 (PDT)
+        Wed, 1 Apr 2020 13:47:04 -0400
+Received: by mail-wr1-f65.google.com with SMTP id u10so1095373wro.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 10:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=u01MPjpNUTMHsez0F0H9AHhzrsoSor9pky3lmIVAZDI=;
-        b=qY/eIwjWTJXKU3CMhFdA1LcoLfpQ+XQGJxcAMpPitVGg7GUr0q+Gip5HQYnBJNykG9
-         wzz+YsTE/68V7BAzrlqRdKXR+UcQpvqQzlvHstuYoLqTYH3L7t8BZ+sQw9U7pEC/VSQt
-         UR+LYCtHGoOWedutWOaIJRVahsrvvioBitka8d8IdFfNA9XIDizaRUypbKgO5cVl4j4L
-         6uObLc8/uVhhZX1T8sTRUM0PcUKWt21lfBJp7yip+pP2GrjDNE37T+NNWw9qRtuHSOm3
-         CbN1UCpp1mrbdVowPqp0QPh7VVmEZQlw8rl3aVyGP9DZLiyYOJmKdIoYZ0W/190EAnHY
-         /rdg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=W2oQ9hPMrcsBKS7dSFlTLxuPz1aNPGKqUjE98fzZQWY=;
+        b=dJusUEEF2cg+i3OBLnik6DngOnDq5pM40My5RiCA+hNoRlwoi2liK0I16AoiA3rp+E
+         Xwys0n9UmiFadqGCbjGB6ozCVdJT+sK1lCiKBbdi4iP/AjpEV3OrrUH37/zMx2L945I1
+         b8AyzzqukyXoNNxaXOIclu4SzzNn3bdWyDsf+3Z8LUhiw4WtEYv8sRw6/ugc633iXPMz
+         tIJE3l7pOTK2MSVBv+Xx9mia+oT5xuoCEi06XZ1UkHGwrgjV9iwJ8E7RiM0BduQO59AS
+         h/XDFkWwLOtHLasqKzaRW4/jtXzxnNFXwzgorSt9VUinCREcE3BqeRPzNbhMrD6kPZPz
+         2vHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=u01MPjpNUTMHsez0F0H9AHhzrsoSor9pky3lmIVAZDI=;
-        b=gSSenYJGwdPwx6omVWdGMb2TRY54JLm+vx5K1eqhgIBxqrdMCRugc5tZX03kX0E6uo
-         hKIpzuNUqoAe6nxjW9MOkN5UAfz5u01PI0gqkWfIf3hAwM6oXrXsmFt1ybmHnDDFL+dY
-         tjZIdAtY0bwVhc/KC4d3KND4b032TK+zQGufQCh0fbBBJBX1HRLZUDz4OO4Qm0tj8GAs
-         rtz+lH3Zi4EzI05kt1B7UD2OhLUY4j0W7bpx/K/m9MuVVlYXe79bW5GG5pGPsz4qSDlU
-         1f00w7kdL8inKR1/g7bAM7XMBaccHTIHssYh4nAZGI/6TlyA5sjB0PX0TGMMBjs3gV1T
-         txyQ==
-X-Gm-Message-State: ANhLgQ3ofG336Y+yqOq0FPFg6oAxkfr5ksLUK2UGjDcf64VI+bXBKOUd
-        HxNXe34s3igqPlh81fFq1t4sbA==
-X-Google-Smtp-Source: ADFU+vu1nqgecFP77p8CwVLBYzELE8ooG1GeOW2OyfzUyCSFMSM9HZ3jS1LNuW/MdP4VWhz9/hi/7w==
-X-Received: by 2002:adf:e403:: with SMTP id g3mr25456194wrm.333.1585759097402;
-        Wed, 01 Apr 2020 09:38:17 -0700 (PDT)
-Received: from localhost.localdomain (dh207-97-209.xnet.hr. [88.207.97.209])
-        by smtp.googlemail.com with ESMTPSA id t5sm3763573wrr.93.2020.04.01.09.38.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2020 09:38:14 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        devicetree@vger.kernel.org
-Cc:     John Crispin <john@phrozen.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH v6 3/3] ARM: dts: qcom: ipq4019: add USB devicetree nodes
-Date:   Wed,  1 Apr 2020 18:35:45 +0200
-Message-Id: <20200401163542.83278-3-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200401163542.83278-1-robert.marko@sartura.hr>
-References: <20200401163542.83278-1-robert.marko@sartura.hr>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=W2oQ9hPMrcsBKS7dSFlTLxuPz1aNPGKqUjE98fzZQWY=;
+        b=VstQPYwPV7aFWDYxTe/iXkjSW7Ru5exDj0+I+S1JiDB4OdMHeh/0KESYBC8rNlARDV
+         zOAHpqfNgP/dIXFwMp9zAnJb3bIp0n+ocLkfJy2NJPE2lHq2vGe/l6AG0jXjDt+GKHpG
+         hadGpa2uZorfactk/h5kkVU5q74QUYeHA8REQHAnvEgt8khduxi6eCzaDW0H1IhPANLx
+         qcEgfvPaut5ut4WRTbCVlyeWqmDZc0OUH9p9qhdL43sZcdpBU++sVt2+Rf5DFRMMDfaS
+         mIAH9NVizYk5d9mxStSyMVa3T7wzJjSULDReJsETAwIvt0ze/876/gJxzKlqBh9vYhzO
+         67fg==
+X-Gm-Message-State: ANhLgQ1JmPy7eQStuQIvkRVSkvZ6U2lY2FCO6nDDkvBFrEzkCDdOjCTr
+        cSKQBJcFDKvaYh9EsXD6Ikm0ig==
+X-Google-Smtp-Source: ADFU+vu7NWnQ3RupG13syE9TsO401tn8jTzVU7/jI8QW96IDZKVfwIjf6D/Em45K1ICfbXc/S1qXLw==
+X-Received: by 2002:a5d:510d:: with SMTP id s13mr26523908wrt.110.1585763222180;
+        Wed, 01 Apr 2020 10:47:02 -0700 (PDT)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id 5sm4062143wrs.20.2020.04.01.10.47.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 01 Apr 2020 10:47:01 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Date:   Wed,  1 Apr 2020 19:50:59 +0200
+Message-Id: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: John Crispin <john@phrozen.org>
+The highest cpu frequency opps have been dropped because CPR is not
+supported. However, we can simply specify operating voltage so that
+they match the max corner voltages for each freq. With that, we can
+support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
+fine tune operating voltages and optimize power consumption.
 
-Since we now have driver for the USB PHY, lets add the necessary nodes to DTSI.
+This patch:
+- Adds missing opps and corresponding target voltages to msm8916.dtsi.
+- Adds cpu-supply to apq8016-sbc.dtsi (board level info).
+- Adds pm8916 spmi regulator node to pm8916.dtsi.
 
-Signed-off-by: John Crispin <john@phrozen.org>
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
+Tested with a dragonboard-410c.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi | 20 +++++
- arch/arm/boot/dts/qcom-ipq4019.dtsi           | 74 +++++++++++++++++++
- 2 files changed, 94 insertions(+)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 24 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi     | 24 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8916.dtsi      |  6 ++++++
+ 3 files changed, 54 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi b/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi
-index 418f9a022336..2ee5f05d5a43 100644
---- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1.dtsi
-@@ -109,5 +109,25 @@ wifi@a000000 {
- 		wifi@a800000 {
- 			status = "ok";
- 		};
-+
-+		usb3_ss_phy: ssphy@9a000 {
-+			status = "ok";
-+		};
-+
-+		usb3_hs_phy: hsphy@a6000 {
-+			status = "ok";
-+		};
-+
-+		usb3: usb3@8af8800 {
-+			status = "ok";
-+		};
-+
-+		usb2_hs_phy: hsphy@a8000 {
-+			status = "ok";
-+		};
-+
-+		usb2: usb2@60f8800 {
-+			status = "ok";
-+		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+index 037e26b..f1c1216 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+@@ -560,6 +560,30 @@
+ 	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
  };
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index bfa9ce4c6e69..ee45253361cb 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -576,5 +576,79 @@ wifi1: wifi@a800000 {
- 					  "legacy";
- 			status = "disabled";
+ 
++&spm_regulators {
++	vdd_cpu: s2 {
++		regulator-always-on;
++		regulator-min-microvolt = <1050000>;
++		regulator-max-microvolt = <1350000>;
++	};
++};
++
++&CPU0 {
++	cpu-supply = <&vdd_cpu>;
++};
++
++&CPU1 {
++	cpu-supply = <&vdd_cpu>;
++};
++
++&CPU2 {
++	cpu-supply = <&vdd_cpu>;
++};
++
++&CPU3 {
++	cpu-supply = <&vdd_cpu>;
++};
++
+ &smd_rpm_regulators {
+ 	vdd_l1_l2_l3-supply = <&pm8916_s3>;
+ 	vdd_l5-supply = <&pm8916_s3>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 9f31064..9805af0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -342,15 +342,39 @@
+ 
+ 		opp-200000000 {
+ 			opp-hz = /bits/ 64 <200000000>;
++			opp-microvolt = <1050000>;
+ 		};
+ 		opp-400000000 {
+ 			opp-hz = /bits/ 64 <400000000>;
++			opp-microvolt = <1050000>;
++		};
++		opp-533330000 {
++			opp-hz = /bits/ 64 <533330000>;
++			opp-microvolt = <1150000>;
+ 		};
+ 		opp-800000000 {
+ 			opp-hz = /bits/ 64 <800000000>;
++			opp-microvolt = <1150000>;
+ 		};
+ 		opp-998400000 {
+ 			opp-hz = /bits/ 64 <998400000>;
++			opp-microvolt = <1350000>;
++		};
++		opp-1094400000 {
++			opp-hz = /bits/ 64 <1094400000>;
++			opp-microvolt = <1350000>;
++		};
++		opp-1152000000 {
++			opp-hz = /bits/ 64 <1152000000>;
++			opp-microvolt = <1350000>;
++		};
++		opp-1209600000 {
++			opp-hz = /bits/ 64 <1209600000>;
++			opp-microvolt = <1350000>;
++		};
++		opp-1363200000 {
++			opp-hz = /bits/ 64 <1363200000>;
++			opp-microvolt = <1350000>;
+ 		};
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+index 0bcdf04..c9b9c4f 100644
+--- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+@@ -157,5 +157,11 @@
+ 			vdd-micbias-supply = <&pm8916_l13>;
+ 			#sound-dai-cells = <1>;
  		};
 +
-+		usb3_ss_phy: ssphy@9a000 {
-+			compatible = "qcom,usb-ss-ipq4019-phy";
-+			#phy-cells = <0>;
-+			reg = <0x9a000 0x800>;
-+			reg-names = "phy_base";
-+			resets = <&gcc USB3_UNIPHY_PHY_ARES>;
-+			reset-names = "por_rst";
-+			status = "disabled";
-+		};
-+
-+		usb3_hs_phy: hsphy@a6000 {
-+			compatible = "qcom,usb-hs-ipq4019-phy";
-+			#phy-cells = <0>;
-+			reg = <0xa6000 0x40>;
-+			reg-names = "phy_base";
-+			resets = <&gcc USB3_HSPHY_POR_ARES>, <&gcc USB3_HSPHY_S_ARES>;
-+			reset-names = "por_rst", "srif_rst";
-+			status = "disabled";
-+		};
-+
-+		usb3@8af8800 {
-+			compatible = "qcom,dwc3";
-+			reg = <0x8af8800 0x100>;
++		spm_regulators: spm_regulators  {
++			compatible = "qcom,pm8916-regulators";
 +			#address-cells = <1>;
 +			#size-cells = <1>;
-+			clocks = <&gcc GCC_USB3_MASTER_CLK>,
-+				 <&gcc GCC_USB3_SLEEP_CLK>,
-+				 <&gcc GCC_USB3_MOCK_UTMI_CLK>;
-+			clock-names = "master", "sleep", "mock_utmi";
-+			ranges;
-+			status = "disabled";
-+
-+			dwc3@8a00000 {
-+				compatible = "snps,dwc3";
-+				reg = <0x8a00000 0xf8000>;
-+				interrupts = <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>;
-+				phys = <&usb3_hs_phy>, <&usb3_ss_phy>;
-+				phy-names = "usb2-phy", "usb3-phy";
-+				dr_mode = "host";
-+			};
-+		};
-+
-+		usb2_hs_phy: hsphy@a8000 {
-+			compatible = "qcom,usb-hs-ipq4019-phy";
-+			#phy-cells = <0>;
-+			reg = <0xa8000 0x40>;
-+			reg-names = "phy_base";
-+			resets = <&gcc USB2_HSPHY_POR_ARES>, <&gcc USB2_HSPHY_S_ARES>;
-+			reset-names = "por_rst", "srif_rst";
-+			status = "disabled";
-+		};
-+
-+		usb2@60f8800 {
-+			compatible = "qcom,dwc3";
-+			reg = <0x60f8800 0x100>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			clocks = <&gcc GCC_USB2_MASTER_CLK>,
-+				 <&gcc GCC_USB2_SLEEP_CLK>,
-+				 <&gcc GCC_USB2_MOCK_UTMI_CLK>;
-+			clock-names = "master", "sleep", "mock_utmi";
-+			ranges;
-+			status = "disabled";
-+
-+			dwc3@6000000 {
-+				compatible = "snps,dwc3";
-+				reg = <0x6000000 0xf8000>;
-+				interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
-+				phys = <&usb2_hs_phy>;
-+				phy-names = "usb2-phy";
-+				dr_mode = "host";
-+			};
 +		};
  	};
  };
 -- 
-2.26.0
+2.7.4
 
