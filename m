@@ -2,61 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6839319B1A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 18:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E525419B1C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 18:38:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388862AbgDAQgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 12:36:37 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40447 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388853AbgDAQgg (ORCPT
+        id S1733156AbgDAQiD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 12:38:03 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38859 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389050AbgDAQiD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 12:36:36 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a81so421232wmf.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 09:36:34 -0700 (PDT)
+        Wed, 1 Apr 2020 12:38:03 -0400
+Received: by mail-wr1-f67.google.com with SMTP id c7so841191wrx.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 09:38:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NMjjibIIWKkjS3mT8K/LaAOt0umug6ECpFrUMrbf80Q=;
-        b=rd+AwazgQtjycidexmpripXlv6sExR1iyC9NGpGdwXNOdf5HXtivEGNSm7y3HEEW01
-         pO5Jcwx099a+TbdeSZKSCeC1Ws3zT5LF11bALAwwG114zulw0YKnHuONg2uZjPUE5Wti
-         uUMWUreMFRKj/XmfUiQVmXMRDhpHIEPsD+FEv409H2NuerOeYprfUCqL8ETi9Nu8DY0/
-         NqV8nhW4Rbik9ODqKHqhbHvDzLVlOHpluFOP5cGxsy9TQVSda31sUxDJ2wl3M0HABAt6
-         QuVJPJuT2ZIMelKRJBgK/3PeZWTk+MUaG/fVCo1YqRLYzkwalQ9PvsLDmlt3zMGKwAa5
-         cBXQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=43B7TmRxwbH0Kz6LfG5BTdU1pIGsf8HgKKgz0zV5YhQ=;
+        b=t8g4lRjSFxlPhffn+KF0Ov/OJ/X7NMp1BBL1XTnFSCRAblSqCw30mm2ZCXiWToI5/u
+         uQ55QeaBYfR5L8Ro9yETs+vvD2EZc4MyexeAo9U+xh4HovklHxTMo4IUQmEq9BII33W+
+         JtYHbcfmo6dqCOIq42B4xFAUjDUVtSuA+walfIpUwiYy+a5rbDUxgCLqNf6Ms8IxPSFg
+         7gz5vOE57n0jBIJoDROV8lC70N840KzNOxETp1MobF1bbVEDJ2Ork6pr/LsMsvsRT+OI
+         ZwGZ/y9D3xDcD5hAgtc6cz+kdelAI7iLrhzMTNe7jghavldhQgy9VCOlYkRd3SdD+ffL
+         DkIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NMjjibIIWKkjS3mT8K/LaAOt0umug6ECpFrUMrbf80Q=;
-        b=ac5a9eAgbmmwBIAmCVm99wshpc0DKAPSboc0rVVK+O4MZkoarffRvvX793XrzwPTNH
-         B3zMT6EsIqmdJanxUdZ7fx8ZEHfYflJuaxwOrZaUV2+szE1zghBY+yLOmTW5/q4boL6W
-         jfbOc+YqwmuXF/+kkkIk0HORqIZ2ohp44B3DpsNX7knrdX3dfZut6KLi6LgcgXzyjR+k
-         MQXu+ggmT/JbGO/+f/LHrIanMvCNqMF0qG0X+YrINzDzjGWk0olR+EhvKKZCgoWgq3/j
-         /5Y6Xjka0X9ZY77F4pbs+gEQXCht7wNTxIKbFEL2bNJ+xDVJRJ88pYZ/7HB1omoxWBtH
-         MFRA==
-X-Gm-Message-State: AGi0PuZ7lZMXyAIC5oC5obJ1dtQ5TMCLHvoyT+TXQxxuK+2e42A9uvWr
-        3St10+obFtQLvWtN1tJNAVD+2g==
-X-Google-Smtp-Source: APiQypISXBhfigkZ3U0+m3gPPPo3LeeW8N/Ua3b1ew6ttu1W9GvhfhsGF28tOPyyiAZWPly5FNy+Zw==
-X-Received: by 2002:a7b:c45a:: with SMTP id l26mr5149681wmi.22.1585758993767;
-        Wed, 01 Apr 2020 09:36:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=43B7TmRxwbH0Kz6LfG5BTdU1pIGsf8HgKKgz0zV5YhQ=;
+        b=RaQvH8KlhEBfTPd63EIblI2c5T4aAumL5tY1IENVJuehWylJXfr/acX27Jf/LZPOcb
+         7wtDxTVVvHevDzthhW1idLDVoxXRaGriCYknN0R7v1+gRNyUoVal7AmL5gd+BGenU3/U
+         dhK/M7Rs89T3tTDnn8EXSsDje0RLyw/xikKHU3NcbrvtLJFEYf+O4wDJGgwcr6t+D2Q0
+         OGRGJTMcpw1YAxylo8CUmVLVV/NDwgjin1Us5BCPkm8Fv05h1922uZAtGsa+61QNWEMg
+         aJp085t0roPnLYe39GfzTwev58HzX08mi5J7q2OVsO98aOuuc+nguA2RiQDmhJsPuLkR
+         BZMQ==
+X-Gm-Message-State: ANhLgQ3MukN0sE/nFGiQhmrGWNjxQBoHb3X4OTnQnjDz8ROyHgfQjdxX
+        CHuKy7rhmfP+NSWYRXOgrz+QEA==
+X-Google-Smtp-Source: ADFU+vsttNZ8z9NKrPfiUCeOaS/Ky/EMaV1rDxbRCMDp1ELAHbDOcyAhwSzyVU7DFhRG3mSKbgXBwg==
+X-Received: by 2002:a05:6000:1251:: with SMTP id j17mr26858172wrx.228.1585759081007;
+        Wed, 01 Apr 2020 09:38:01 -0700 (PDT)
 Received: from localhost.localdomain (dh207-97-209.xnet.hr. [88.207.97.209])
-        by smtp.googlemail.com with ESMTPSA id t5sm3763573wrr.93.2020.04.01.09.36.31
+        by smtp.googlemail.com with ESMTPSA id t5sm3763573wrr.93.2020.04.01.09.37.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2020 09:36:32 -0700 (PDT)
+        Wed, 01 Apr 2020 09:38:00 -0700 (PDT)
 From:   Robert Marko <robert.marko@sartura.hr>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         robh+dt@kernel.org, mark.rutland@arm.com,
         devicetree@vger.kernel.org
-Cc:     John Crispin <john@phrozen.org>,
-        Robert Marko <robert.marko@sartura.hr>,
+Cc:     Robert Marko <robert.marko@sartura.hr>,
+        John Crispin <john@phrozen.org>,
         Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH v6 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
-Date:   Wed,  1 Apr 2020 18:35:41 +0200
-Message-Id: <20200401163542.83278-1-robert.marko@sartura.hr>
+Subject: [PATCH v6 2/3] dt-bindings: phy-qcom-ipq4019-usb: add binding document
+Date:   Wed,  1 Apr 2020 18:35:43 +0200
+Message-Id: <20200401163542.83278-2-robert.marko@sartura.hr>
 X-Mailer: git-send-email 2.26.0
+In-Reply-To: <20200401163542.83278-1-robert.marko@sartura.hr>
+References: <20200401163542.83278-1-robert.marko@sartura.hr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -64,213 +66,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: John Crispin <john@phrozen.org>
-
-Add a driver to setup the USB phy on Qualcom Dakota SoCs.
-The driver sets up HS and SS phys.
+This patch adds the binding documentation for the HS/SS USB PHY found
+inside Qualcom Dakota SoCs.
 
 Signed-off-by: John Crispin <john@phrozen.org>
 Signed-off-by: Robert Marko <robert.marko@sartura.hr>
 Cc: Luka Perkov <luka.perkov@sartura.hr>
 ---
-Changes from v2 to v3:
-* Remove magic writes as they are not needed
-* Correct commit message
+Changes from v5 to v6:
+* Add missing include for reset defines in example
+* Fix warning for missing # in #phy-cells
 
- drivers/phy/qualcomm/Kconfig                |   7 +
- drivers/phy/qualcomm/Makefile               |   1 +
- drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 152 ++++++++++++++++++++
- 3 files changed, 160 insertions(+)
- create mode 100644 drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+Changes from v4 to v5:
+* Replace tabs with whitespaces
+* Add maintainer property
 
-diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-index e46824da29f6..964bd5d784d2 100644
---- a/drivers/phy/qualcomm/Kconfig
-+++ b/drivers/phy/qualcomm/Kconfig
-@@ -18,6 +18,13 @@ config PHY_QCOM_APQ8064_SATA
- 	depends on OF
- 	select GENERIC_PHY
- 
-+config PHY_QCOM_IPQ4019_USB
-+	tristate "Qualcomm IPQ4019 USB PHY module"
-+	depends on OF && ARCH_QCOM
-+	select GENERIC_PHY
-+	help
-+	  Support for the USB PHY on QCOM IPQ4019/Dakota chipsets.
-+
- config PHY_QCOM_IPQ806X_SATA
- 	tristate "Qualcomm IPQ806x SATA SerDes/PHY driver"
- 	depends on ARCH_QCOM
-diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-index 283251d6a5d9..8afe6c4f5178 100644
---- a/drivers/phy/qualcomm/Makefile
-+++ b/drivers/phy/qualcomm/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_PHY_ATH79_USB)		+= phy-ath79-usb.o
- obj-$(CONFIG_PHY_QCOM_APQ8064_SATA)	+= phy-qcom-apq8064-sata.o
-+obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)	+= phy-qcom-ipq4019-usb.o
- obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)	+= phy-qcom-ipq806x-sata.o
- obj-$(CONFIG_PHY_QCOM_PCIE2)		+= phy-qcom-pcie2.o
- obj-$(CONFIG_PHY_QCOM_QMP)		+= phy-qcom-qmp.o
-diff --git a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+ .../bindings/phy/qcom-usb-ipq4019-phy.yaml    | 50 +++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+
+diff --git a/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml b/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
 new file mode 100644
-index 000000000000..7efebae6b6fd
+index 000000000000..1118fe69b611
 --- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-@@ -0,0 +1,152 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Copyright (C) 2018 John Crispin <john@phrozen.org>
-+ *
-+ * Based on code from
-+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
-+ *
-+ */
++++ b/Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+@@ -0,0 +1,50 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 +
-+#include <linux/delay.h>
-+#include <linux/err.h>
-+#include <linux/io.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/mutex.h>
-+#include <linux/of_platform.h>
-+#include <linux/phy/phy.h>
-+#include <linux/platform_device.h>
-+#include <linux/reset.h>
++title: Qualcom IPQ40xx Dakota HS/SS USB PHY
 +
-+struct ipq4019_usb_phy {
-+	struct device		*dev;
-+	struct phy		*phy;
-+	void __iomem		*base;
-+	struct reset_control	*por_rst;
-+	struct reset_control	*srif_rst;
-+};
++maintainers:
++  - Robert Marko <robert.marko@sartura.hr>
 +
-+static int ipq4019_ss_phy_power_off(struct phy *_phy)
-+{
-+	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
++properties:
++  compatible:
++    enum:
++      - qcom,usb-ss-ipq4019-phy
++      - qcom,usb-hs-ipq4019-phy
 +
-+	reset_control_assert(phy->por_rst);
-+	msleep(10);
++  reg:
++    maxItems: 1
 +
-+	return 0;
-+}
++  resets:
++    maxItems: 2
 +
-+static int ipq4019_ss_phy_power_on(struct phy *_phy)
-+{
-+	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
++  reset-names:
++    items:
++      - const: por_rst
++      - const: srif_rst
 +
-+	ipq4019_ss_phy_power_off(_phy);
++  "#phy-cells":
++    const: 0
 +
-+	reset_control_deassert(phy->por_rst);
++required:
++  - compatible
++  - reg
++  - resets
++  - reset-names
++  - "#phy-cells"
 +
-+	return 0;
-+}
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-ipq4019.h>
 +
-+static struct phy_ops ipq4019_usb_ss_phy_ops = {
-+	.power_on	= ipq4019_ss_phy_power_on,
-+	.power_off	= ipq4019_ss_phy_power_off,
-+};
-+
-+static int ipq4019_hs_phy_power_off(struct phy *_phy)
-+{
-+	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-+
-+	reset_control_assert(phy->por_rst);
-+	msleep(10);
-+
-+	reset_control_assert(phy->srif_rst);
-+	msleep(10);
-+
-+	return 0;
-+}
-+
-+static int ipq4019_hs_phy_power_on(struct phy *_phy)
-+{
-+	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-+
-+	ipq4019_hs_phy_power_off(_phy);
-+
-+	reset_control_deassert(phy->srif_rst);
-+	msleep(10);
-+
-+	reset_control_deassert(phy->por_rst);
-+
-+	return 0;
-+}
-+
-+static struct phy_ops ipq4019_usb_hs_phy_ops = {
-+	.power_on	= ipq4019_hs_phy_power_on,
-+	.power_off	= ipq4019_hs_phy_power_off,
-+};
-+
-+static const struct of_device_id ipq4019_usb_phy_of_match[] = {
-+	{ .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hs_phy_ops},
-+	{ .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ss_phy_ops},
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, ipq4019_usb_phy_of_match);
-+
-+static int ipq4019_usb_phy_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct resource *res;
-+	struct phy_provider *phy_provider;
-+	struct ipq4019_usb_phy *phy;
-+	const struct of_device_id *match;
-+
-+	match = of_match_device(ipq4019_usb_phy_of_match, &pdev->dev);
-+	if (!match)
-+		return -ENODEV;
-+
-+	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
-+	if (!phy)
-+		return -ENOMEM;
-+
-+	phy->dev = &pdev->dev;
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	phy->base = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(phy->base)) {
-+		dev_err(dev, "failed to remap register memory\n");
-+		return PTR_ERR(phy->base);
-+	}
-+
-+	phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
-+	if (IS_ERR(phy->por_rst)) {
-+		if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
-+			dev_err(dev, "POR reset is missing\n");
-+		return PTR_ERR(phy->por_rst);
-+	}
-+
-+	phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
-+	if (IS_ERR(phy->srif_rst))
-+		return PTR_ERR(phy->srif_rst);
-+
-+	phy->phy = devm_phy_create(dev, NULL, match->data);
-+	if (IS_ERR(phy->phy)) {
-+		dev_err(dev, "failed to create PHY\n");
-+		return PTR_ERR(phy->phy);
-+	}
-+	phy_set_drvdata(phy->phy, phy);
-+
-+	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
-+
-+	return PTR_ERR_OR_ZERO(phy_provider);
-+}
-+
-+static struct platform_driver ipq4019_usb_phy_driver = {
-+	.probe	= ipq4019_usb_phy_probe,
-+	.driver = {
-+		.of_match_table	= ipq4019_usb_phy_of_match,
-+		.name  = "ipq4019-usb-phy",
-+	}
-+};
-+module_platform_driver(ipq4019_usb_phy_driver);
-+
-+MODULE_DESCRIPTION("QCOM/IPQ4019 USB phy driver");
-+MODULE_AUTHOR("John Crispin <john@phrozen.org>");
-+MODULE_LICENSE("GPL v2");
++    hsphy@a8000 {
++      #phy-cells = <0>;
++      compatible = "qcom,usb-hs-ipq4019-phy";
++      reg = <0xa8000 0x40>;
++      resets = <&gcc USB2_HSPHY_POR_ARES>,
++               <&gcc USB2_HSPHY_S_ARES>;
++      reset-names = "por_rst", "srif_rst";
++    };
 -- 
 2.26.0
 
