@@ -2,155 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F63F19B68C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 21:46:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6710019B725
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 22:40:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732758AbgDATqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 15:46:52 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:41355 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732554AbgDATqw (ORCPT
+        id S1732337AbgDAUkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 16:40:14 -0400
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:33064 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732350AbgDAUkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 15:46:52 -0400
-Received: by mail-pl1-f194.google.com with SMTP id d24so379244pll.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 12:46:51 -0700 (PDT)
+        Wed, 1 Apr 2020 16:40:14 -0400
+Received: by mail-pj1-f68.google.com with SMTP id jz1so2542384pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 13:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/ce+l+iRZG0CueQLUqCcAm+FhjXwOeZQvrFD6a+Pdbk=;
-        b=fCc9uE+XYXB06N48E9h3rQ4SJNQfhzwC50G+TMXvj8kfPBe4kbDLR7b1/oJ+uEuxKc
-         /zyiOEwgGh1jAIInwlsgrzgiU0oI90VjnSLlLTNo58X3/wrlUbKCMZCG3LswFVAZjJin
-         LvE7ziv7OG52tAD9ohxETUiLgLpf2qYRWHzUU=
+         :content-disposition:in-reply-to;
+        bh=v9Vka5QMn/XO/UM8b8k78cglitDzsEXJjHSdkOZb/q0=;
+        b=kfetSDeBgwtJwdcBDWNtAFEB3mWOU3uOo7ZKw/rliseEH8MwNWgyOQFwVOGViQW5v8
+         cQHhp2H1rR/iXHTnfLCzbKHmDYZG8lNCe92U6VwwTpmM06W3YBuAGseTiVct062ZHYWE
+         q1hcB4HUUPGtUuAew3XrPXlmPlqBtUuV396Afp4x7ipO/RvrtqF4cZE76xXSkWpbOoIk
+         GyDnDOZP0ZEvvi9TqAcX9olTL4xpzHu8PxzONGGt6GIOQr7pHoQSXtDg2VdWlCi9MEFn
+         qFRWFBBAfP9FHGey09SvI3AARj9VU1D8JtKpBwwW07d+N9wOFUy5uv0qm/D66QBWKfxG
+         rBAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/ce+l+iRZG0CueQLUqCcAm+FhjXwOeZQvrFD6a+Pdbk=;
-        b=D2HeIKL+J4xW4Kmj5sH2k9YZ+q8KyX12hbBIUJgghveHo39ueewZF5n6CMB1HcT+MK
-         MNAYjioV4wc5Z+tRBtJINR4ra63w6r++dkIx3FIBSTRFC4OCbBYwbrgSpuUoVA3qio1b
-         3jqBZGKwxXXPtPtNOPV/pUFyJC6D3o4Ddku5F90n2gE0NvncUwRDded3o1cWLFeXgDrx
-         0iGivOcMb/5PHeLLR9ua1YTTEeAck8DReMGHDlYuV9a9zJxmWexCoxMOUPiXx+crooFQ
-         89syLnqen+Oh7hgHsod0Opfw7Wm5Djn4g+46bquoYT39exV/6Kuasq0SDGf6mREAHBC+
-         fz+A==
-X-Gm-Message-State: ANhLgQ2kH/f/4JEg4XEHfb7iC9sXjjyonajCgTBF7xXAGSuwe4sjl8T1
-        4oD7Bz1gD0cofoSV5/OCDQhJ8Q==
-X-Google-Smtp-Source: ADFU+vt/xdibwjNhNGnnuYkq1gCZsQ2pLfGD9zsm2il2lY1sfEB8MLcew8RkcukpAiHbnqsuWeHD3Q==
-X-Received: by 2002:a17:902:9004:: with SMTP id a4mr21923981plp.275.1585770411176;
-        Wed, 01 Apr 2020 12:46:51 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id 132sm2160604pfc.183.2020.04.01.12.46.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Apr 2020 12:46:50 -0700 (PDT)
-Date:   Wed, 1 Apr 2020 12:46:48 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-Subject: Re: [PATCH V3 3/8] soc: qcom-geni-se: Add interconnect support to
- fix earlycon crash
-Message-ID: <20200401194648.GM199755@google.com>
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-4-git-send-email-akashast@codeaurora.org>
- <20200331182457.GH199755@google.com>
+         :mime-version:content-disposition:in-reply-to;
+        bh=v9Vka5QMn/XO/UM8b8k78cglitDzsEXJjHSdkOZb/q0=;
+        b=QcT04b8BbV3jO9iPeNPf48MbpfpuFcd7J1uoiflNYyUOS+YDwMsuxhEYS9zPLnVt93
+         f1aEXl6XS/YBfIHRGF0jZK5G56xskeHFRRtQFHN4xZiL9xxOPSdqLfocM6xaTmlLQbM3
+         aCFupMGoK49Y6RhaYWgHhHCqNr1OZUoItO8pPpdFM9+ePs374xSqz+9IOjBvc7hyEK9c
+         wtTUIcrYhFka4rphSo0LTV3conLd2zvUMFbbLGEiXicKv3sr9J5Kme3Ejcao9TYB0tsP
+         2CAcXSDVNgzdPn+z7OlMHt8tp6j3EqqRTrae3YpfKoOOZA47wDAMAqXjib7dKOB+bQgw
+         d7bA==
+X-Gm-Message-State: AGi0PubnfUnoElO/hE3ZTIpswBWd+SSzBfUDKizszP2EbbbAC/M5mIHC
+        31beCkA7f+b5BaaP//3s27XXdw==
+X-Google-Smtp-Source: APiQypL1nBe7sE+Co1U36LDRm5wknOP+L/1oBikK/k8Bv88DatK1zXkG4ztAPqWBILluLhCQX4huMw==
+X-Received: by 2002:a17:90a:21ac:: with SMTP id q41mr7152193pjc.41.1585773613353;
+        Wed, 01 Apr 2020 13:40:13 -0700 (PDT)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a185sm2265354pfa.27.2020.04.01.13.40.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Apr 2020 13:40:09 -0700 (PDT)
+Date:   Wed, 1 Apr 2020 13:40:07 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Sham Muthayyan <smuthayy@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 07/12] pcie: qcom: add tx term offset support
+Message-ID: <20200401204007.GG254911@minitux>
+References: <20200320183455.21311-1-ansuelsmth@gmail.com>
+ <20200320183455.21311-7-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200331182457.GH199755@google.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200320183455.21311-7-ansuelsmth@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 31, 2020 at 11:24:57AM -0700, Matthias Kaehlcke wrote:
-> Hi Akash,
+On Fri 20 Mar 11:34 PDT 2020, Ansuel Smith wrote:
+
+> From: Sham Muthayyan <smuthayy@codeaurora.org>
 > 
-> On Tue, Mar 31, 2020 at 04:39:31PM +0530, Akash Asthana wrote:
-> > QUP core clock is shared among all the SE drivers present on particular
-> > QUP wrapper, the system will reset(unclocked access) if earlycon used after
-> > QUP core clock is put to 0 from other SE drivers before real console comes
-> > up.
-> > 
-> > As earlycon can't vote for it's QUP core need, to fix this add ICC
-> > support to common/QUP wrapper driver and put vote for QUP core from
-> > probe on behalf of earlycon and remove vote during earlycon exit call.
-> > 
-> > Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> > Reported-by: Matthias Kaehlcke <mka@chromium.org>
-> > ---
-> > Change is V3:
-> >  - Add geni_remove_earlycon_icc_vote API that will be used by earlycon
-> >    exit function to remove ICC vote for earlyconsole.
-> >  - Remove suspend/resume hook for geni-se driver as we are no longer
-> >    removing earlyconsole ICC vote from system suspend, we are removing
-> >    from earlycon exit.
-> > 
-> >  drivers/soc/qcom/qcom-geni-se.c       | 51 +++++++++++++++++++++++++++++++++++
-> >  drivers/tty/serial/qcom_geni_serial.c |  7 +++++
-> >  include/linux/qcom-geni-se.h          |  2 ++
-> >  3 files changed, 60 insertions(+)
-> > 
-> > diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> > index 9344c14..d30c282 100644
-> > --- a/drivers/soc/qcom/qcom-geni-se.c
-> > +++ b/drivers/soc/qcom/qcom-geni-se.c
-> > @@ -90,8 +90,11 @@ struct geni_wrapper {
-> >  	struct device *dev;
-> >  	void __iomem *base;
-> >  	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
-> > +	struct geni_icc_path to_core;
-> >  };
-> >  
-> > +struct geni_wrapper *earlycon_wrapper;
+> Add tx term offset support to pcie qcom driver
+> need in some revision of the ipq806x soc
 > 
-> should be static
+> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 61 ++++++++++++++++++++++----
+>  1 file changed, 52 insertions(+), 9 deletions(-)
 > 
-> > +
-> >  #define QUP_HW_VER_REG			0x4
-> >  
-> >  /* Common SE registers */
-> > @@ -818,6 +821,26 @@ int geni_icc_vote_off(struct geni_se *se)
-> >  }
-> >  EXPORT_SYMBOL(geni_icc_vote_off);
-> >  
-> > +void geni_remove_earlycon_icc_vote(void)
-> > +{
-> > +	struct geni_wrapper *wrapper = earlycon_wrapper;
-> > +	struct device_node *parent = of_get_next_parent(wrapper->dev->of_node);
-> > +	struct device_node *child;
-> > +
-> > +	for_each_child_of_node(parent, child) {
-> > +		if (of_device_is_compatible(child, "qcom,geni-se-qup")) {
-> > +			wrapper = platform_get_drvdata(of_find_device_by_node(
-> > +					child));
-> > +			icc_put(wrapper->to_core.path);
-> > +			wrapper->to_core.path = NULL;
-> > +		}
-> > +	}
-> > +	of_node_put(parent);
-> > +
-> > +	earlycon_wrapper = NULL;
-> > +}
-> > +EXPORT_SYMBOL(geni_remove_earlycon_icc_vote);
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index ecc22fd27ea6..8009e3117765 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -45,7 +45,13 @@
+>  #define PCIE_CAP_CPL_TIMEOUT_DISABLE		0x10
+>  
+>  #define PCIE20_PARF_PHY_CTRL			0x40
+> +#define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	(0x1f << 16)
+> +#define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		(x << 16)
+> +
+>  #define PCIE20_PARF_PHY_REFCLK			0x4C
+> +#define REF_SSP_EN				BIT(16)
+> +#define REF_USE_PAD				BIT(12)
+> +
+>  #define PCIE20_PARF_DBI_BASE_ADDR		0x168
+>  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
+>  #define PCIE20_PARF_MHI_CLOCK_RESET_CTRL	0x174
+> @@ -77,6 +83,18 @@
+>  #define DBI_RO_WR_EN				1
+>  
+>  #define PERST_DELAY_US				1000
+> +/* PARF registers */
+> +#define PCIE20_PARF_PCS_DEEMPH			0x34
+> +#define PCS_DEEMPH_TX_DEEMPH_GEN1(x)		(x << 16)
+> +#define PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(x)	(x << 8)
+> +#define PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(x)	(x << 0)
+> +
+> +#define PCIE20_PARF_PCS_SWING			0x38
+> +#define PCS_SWING_TX_SWING_FULL(x)		(x << 8)
+> +#define PCS_SWING_TX_SWING_LOW(x)		(x << 0)
+> +
+> +#define PCIE20_PARF_CONFIG_BITS			0x50
+> +#define PHY_RX0_EQ(x)				(x << 24)
+>  
+>  #define PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE	0x358
+>  #define SLV_ADDR_SPACE_SZ			0x10000000
+> @@ -97,6 +115,7 @@ struct qcom_pcie_resources_2_1_0 {
+>  	struct reset_control *phy_reset;
+>  	struct reset_control *ext_reset;
+>  	struct regulator_bulk_data supplies[QCOM_PCIE_2_1_0_MAX_SUPPLY];
+> +	uint8_t phy_tx0_term_offset;
+>  };
+>  
+>  struct qcom_pcie_resources_1_0_0 {
+> @@ -184,6 +203,16 @@ struct qcom_pcie {
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+>  
+> +static inline void
+> +writel_masked(void __iomem *addr, u32 clear_mask, u32 set_mask)
+> +{
+> +	u32 val = readl(addr);
+> +
+> +	val &= ~clear_mask;
+> +	val |= set_mask;
+> +	writel(val, addr);
+> +}
+> +
+>  static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
+>  {
+>  	gpiod_set_value_cansleep(pcie->reset, 1);
+> @@ -277,6 +306,10 @@ static int qcom_pcie_get_resources_2_1_0(struct qcom_pcie *pcie)
+>  	if (IS_ERR(res->ext_reset))
+>  		return PTR_ERR(res->ext_reset);
+>  
+> +	if (of_property_read_u8(dev->of_node, "phy-tx0-term-offset",
+> +				&res->phy_tx0_term_offset))
+> +		res->phy_tx0_term_offset = 0;
+
+The appropriate way is to encode differences in hardware is to use
+different compatibles for the two different versions of the hardware.
+
+Regards,
+Bjorn
+
+> +
+>  	res->phy_reset = devm_reset_control_get_exclusive(dev, "phy");
+>  	return PTR_ERR_OR_ZERO(res->phy_reset);
+>  }
+> @@ -304,7 +337,6 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	struct qcom_pcie_resources_2_1_0 *res = &pcie->res.v2_1_0;
+>  	struct dw_pcie *pci = pcie->pci;
+>  	struct device *dev = pci->dev;
+> -	u32 val;
+>  	int ret;
+>  
+>  	ret = reset_control_assert(res->ahb_reset);
+> @@ -355,15 +387,26 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  		goto err_deassert_ahb;
+>  	}
+>  
+> -	/* enable PCIe clocks and resets */
+> -	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+> -	val &= ~BIT(0);
+> -	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +	writel_masked(pcie->parf + PCIE20_PARF_PHY_CTRL, BIT(0), 0);
+> +
+> +	/* Set Tx termination offset */
+> +	writel_masked(pcie->parf + PCIE20_PARF_PHY_CTRL,
+> +		      PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK,
+> +		      PHY_CTRL_PHY_TX0_TERM_OFFSET(res->phy_tx0_term_offset));
+> +
+> +	/* PARF programming */
+> +	writel(PCS_DEEMPH_TX_DEEMPH_GEN1(0x18) |
+> +	       PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(0x18) |
+> +	       PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(0x22),
+> +	       pcie->parf + PCIE20_PARF_PCS_DEEMPH);
+> +	writel(PCS_SWING_TX_SWING_FULL(0x78) |
+> +	       PCS_SWING_TX_SWING_LOW(0x78),
+> +	       pcie->parf + PCIE20_PARF_PCS_SWING);
+> +	writel(PHY_RX0_EQ(0x4), pcie->parf + PCIE20_PARF_CONFIG_BITS);
+>  
+> -	/* enable external reference clock */
+> -	val = readl(pcie->parf + PCIE20_PARF_PHY_REFCLK);
+> -	val |= BIT(16);
+> -	writel(val, pcie->parf + PCIE20_PARF_PHY_REFCLK);
+> +	/* Enable reference clock */
+> +	writel_masked(pcie->parf + PCIE20_PARF_PHY_REFCLK,
+> +		      REF_USE_PAD, REF_SSP_EN);
+>  
+>  	ret = reset_control_deassert(res->phy_reset);
+>  	if (ret) {
+> -- 
+> 2.25.1
 > 
-> I didn't know that consoles have an exit handler, this is way nicer than
-> the miscellaneous triggers we discussed earlier :)
-
-No wonder I 'missed' this when looking at the console code for possible
-triggers, it is brand new and as of now only exists in -next:
-
-commit ed31685c96e18f773ca11dd1a637974d62130673
-Author: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Date:   Mon Feb 3 15:31:30 2020 +0200
-
-    console: Introduce ->exit() callback
-
-
-sharp timing!
