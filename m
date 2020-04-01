@@ -2,103 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 22C8119A713
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 10:20:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0380F19A765
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2020 10:37:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726205AbgDAIUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Apr 2020 04:20:09 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:42492 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730574AbgDAIUI (ORCPT
+        id S1731544AbgDAIhg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Apr 2020 04:37:36 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45735 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729662AbgDAIhf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Apr 2020 04:20:08 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 22so11743547pfa.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 01:20:07 -0700 (PDT)
+        Wed, 1 Apr 2020 04:37:35 -0400
+Received: by mail-ed1-f67.google.com with SMTP id u59so28617603edc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2020 01:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QFO0vf8e8DojHzC7YKKnWcjJKYcUUi6BB0Xvkcc0pJc=;
-        b=w++wGeiNVTv/fz8h/D2fQ8RKq8fKC+9Jz+vX6b4AcyL8KRKHNVMEpwShLa5F1frzO1
-         Bda6A2H/HYR2+N2im+kK3SXARA+hI2/nYP3Rg/qjrlotrlctZaoI88a0rMgsB0NjJO2X
-         xRPmXljSIddgZxEaMvWQmrr/1XcL7P3b4dxEQouwsyj+M4J5AtQktI0mOLrBVSgsvfJp
-         4zgqOV4AYLL92YnuNemUsgQAuIkOdFf09marZjFENI3vt2o9eDR8YOTFrdBx/YG5oh2h
-         k91JvSYSOsM/5h40ZdcVC9RkMvm1/UgZzHQhrj89blEtyUzq19O6zUkoJ4Y0Z8uKd9o0
-         0BhA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=FyEhiVQqCC0n6tZWozoPFO5HZtdSk1NEpUldzxKhYN4=;
+        b=ZTEDs2BQyN8yoxD7A5h1aiqNIAWemIBANASqEaV0nOkgN043uKgdnMoNMFNVvdWhYW
+         iFcvU6YirVUBRdBNdJ3aSOQeWtN9e3dW4IIVsAWFS7TBEmBSWjaxLPJTz5WRnegy/8ZW
+         QCy8BmMOTKyQyfEFzAFmg91p5izsezVbwT3yZjYKuX1WtXuruELJ1sCx4R5AJer2wOfL
+         MeS/MywUilRVPPFV9DHMSdzlobFLDl0+eA5N+o7scVJycty8/lY3yqLTfn8YYcecYOqp
+         iWqwny1YvJB0NacacNBG5WWUj6HLGt6JzfU8djxL4guCmxPl8id2/bLf7SgQTofZdggv
+         dsWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QFO0vf8e8DojHzC7YKKnWcjJKYcUUi6BB0Xvkcc0pJc=;
-        b=Fe0bvHFU45bA7jMchNDSOl9+j8FJlaLSWo8pOAl3x3axB5KjzzeYpp3ZLGQ8PX3oG3
-         bIkgw3C74NP6Hzt9GMQLW2a39TxqA4yoQpKjcMJVHQ304Sm7o530MxINQSAa/W65CuHP
-         J69BR0yrG0ffhfuu9QpTIgTmdrZzYp68oN9HlsKQkGv7I5nm8Cmqgt9KB7TfZEKoQlzL
-         Ppqr+eAaCo0aHdJCBsgp7hyO0FGnR4uzXIX6ClOg6EIkLNZQ884XeCi2hYjePvuMX4Yp
-         EctEnv9KYzuZCogSFu5/Pj8J5aoHAYX+UqxLSrKJvmizTBH/v6wpm4R0LaS09DGoHmRL
-         Kh6g==
-X-Gm-Message-State: ANhLgQ1ZpevvAkJBZi+PeqbjYpKqGp3UzVoV6uU6B6muFC1bEp3+ccjH
-        dPCfL7B96X5zgZB1F6MV+TzV
-X-Google-Smtp-Source: ADFU+vvjnoX9qATo8Ax3smn2g6ng6pV6THrQwh3JlG3wMQgvz0eNY8mwOCDQ51gAvmtCVFlkWsI+zQ==
-X-Received: by 2002:aa7:962d:: with SMTP id r13mr23217262pfg.244.1585729206901;
-        Wed, 01 Apr 2020 01:20:06 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:648c:592d:1580:e843:709d:f3b5])
-        by smtp.gmail.com with ESMTPSA id j21sm908394pgn.30.2020.04.01.01.20.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 Apr 2020 01:20:06 -0700 (PDT)
-Date:   Wed, 1 Apr 2020 13:50:00 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     gregkh@linuxfoundation.org, davem@davemloft.net,
-        smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, clew@codeaurora.org
-Subject: Re: [PATCH 2/3] net: qrtr: Add MHI transport layer
-Message-ID: <20200401082000.GA15627@Mani-XPS-13-9360>
-References: <20200401064435.12676-1-manivannan.sadhasivam@linaro.org>
- <20200401064435.12676-3-manivannan.sadhasivam@linaro.org>
- <20200401071023.GD663905@yoga>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=FyEhiVQqCC0n6tZWozoPFO5HZtdSk1NEpUldzxKhYN4=;
+        b=LtJK1IsDfK+JkXyJOOwRTiVQXsp0+0eCGflktILwechA9x3Jp31jvespf8OWp12ogu
+         gpFRjdyxBxgGyoQnaMu17LWtMs30LtJlRVd5LTzSv3l2U+19AYJemRIZySVPtevN1+iR
+         jFxnF3c6Rq51oNrtN4hnksGOdxJUEykD1GS7B5jWstVNDpH94O8WfwYOjzdhdeXjFdA3
+         s0YBtodA1u3Lft2dCTFYqkrGbk9g39OreoeX6Ahg/C3/uBoDhKnMGqn9agwTBx3JvOJr
+         x/Yk/Vh50iqmq68pRWEVjiZIoiJfVArQcgZGP57Ekk2AFp8FhWcnrWihnErEHO5EiQdQ
+         h85g==
+X-Gm-Message-State: ANhLgQ3qdlJU1vjbY2Fgayub9Fge6PcYjJ5Wz3mH5iuEVM3cmn+GaSOU
+        zEKzSEvgmE9lhvdCVRFNUZ99zg==
+X-Google-Smtp-Source: ADFU+vsEN+s8QxK70fXDxbR3lYOgf1JF4FPA31mNI6F2POdUZYpThQRmL3S6XfZBnxVykWgtSYYkDg==
+X-Received: by 2002:a17:906:1952:: with SMTP id b18mr18407508eje.216.1585730253512;
+        Wed, 01 Apr 2020 01:37:33 -0700 (PDT)
+Received: from [192.168.1.4] (212-5-158-119.ip.btc-net.bg. [212.5.158.119])
+        by smtp.googlemail.com with ESMTPSA id l62sm274693edl.89.2020.04.01.01.37.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Apr 2020 01:37:32 -0700 (PDT)
+Subject: Re: [PATCH][next] media: venus: hfi_cmds.h: Replace zero-length array
+ with flexible-array member
+To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200319222105.GA19104@embeddedor.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <849ddb2c-d022-bd13-89c2-b0c1a4363a23@linaro.org>
+Date:   Wed, 1 Apr 2020 11:37:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200401071023.GD663905@yoga>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200319222105.GA19104@embeddedor.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 01, 2020 at 12:10:23AM -0700, Bjorn Andersson wrote:
-> On Tue 31 Mar 23:44 PDT 2020, Manivannan Sadhasivam wrote:
-> > diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> [..]
-> > +static void qcom_mhi_qrtr_ul_callback(struct mhi_device *mhi_dev,
-> > +				      struct mhi_result *mhi_res)
-> > +{
-> > +	struct sk_buff *skb = (struct sk_buff *)mhi_res->buf_addr;
-> > +
-> > +	consume_skb(skb);
-> > +	if (skb->sk)
-> > +		sock_put(skb->sk);
+Hi Gustavo,
+
+Thanks for the patch!
+
+On 3/20/20 12:21 AM, Gustavo A. R. Silva wrote:
+> The current codebase makes use of the zero-length array language
+> extension to the C90 standard, but the preferred mechanism to declare
+> variable-length types such as these ones is a flexible array member[1][2],
+> introduced in C99:
 > 
-> Don't you need to do this in opposite order, to avoid a use after free?
+> struct foo {
+>         int stuff;
+>         struct boo array[];
+> };
+> 
+> By making use of the mechanism above, we will get a compiler warning
+> in case the flexible array does not occur last in the structure, which
+> will help us prevent some kind of undefined behavior bugs from being
+> inadvertently introduced[3] to the codebase from now on.
+> 
+> Also, notice that, dynamic memory allocations won't be affected by
+> this change:
+> 
+> "Flexible array members have incomplete type, and so the sizeof operator
+> may not be applied. As a quirk of the original implementation of
+> zero-length arrays, sizeof evaluates to zero."[1]
+> 
+> This issue was found with the help of Coccinelle.
+> 
+> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+> [2] https://github.com/KSPP/linux/issues/21
+> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+> 
+> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+> ---
+>  drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
-I thought about it but the socket refcounting postulates in net/sock.h states:
+Acked-by: Stanimir Varbanov <staninmir.varbanov@linaro.org>
 
-"sk_free is called from any context: process, BH, IRQ. When it is called,
-socket has no references from outside -> sk_free may release descendant
-resources allocated by the socket, but to the time when it is called, socket
-is NOT referenced by any hash tables, lists etc."
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> index cae9d5d61c0c..83705e237f1c 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> @@ -107,7 +107,7 @@ struct hfi_session_abort_pkt {
+>  struct hfi_session_set_property_pkt {
+>  	struct hfi_session_hdr_pkt shdr;
+>  	u32 num_properties;
+> -	u32 data[0];
+> +	u32 data[];
+>  };
+>  
+>  struct hfi_session_set_buffers_pkt {
+> 
 
-Here the sock it still referenced by skb, so I don't exactly know if we can
-release the socket using sock_put() before consume_skb(). But on the other hand,
-once skb is freed then accessing its member is clearly a use after free issue.
-
-Maybe someone can clarify this?
-
-Thanks,
-Mani
-
-> Regards,
-> Bjorn
+-- 
+regards,
+Stan
