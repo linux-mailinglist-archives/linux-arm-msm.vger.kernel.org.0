@@ -2,66 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A793119BBB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 08:31:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA00419BBD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 08:40:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728585AbgDBGbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Apr 2020 02:31:51 -0400
-Received: from cmccmta2.chinamobile.com ([221.176.66.80]:3989 "EHLO
-        cmccmta2.chinamobile.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728455AbgDBGbv (ORCPT
+        id S1728234AbgDBGkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Apr 2020 02:40:40 -0400
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:36996 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732537AbgDBGkk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Apr 2020 02:31:51 -0400
-Received: from spf.mail.chinamobile.com (unknown[172.16.121.13]) by rmmx-syy-dmz-app05-12005 (RichMail) with SMTP id 2ee55e8586c69ff-55a97; Thu, 02 Apr 2020 14:31:35 +0800 (CST)
-X-RM-TRANSID: 2ee55e8586c69ff-55a97
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM-FLAG: 00000000
-Received: from localhost.localdomain (unknown[112.25.154.146])
-        by rmsmtp-syy-appsvr07-12007 (RichMail) with SMTP id 2ee75e8586c5e97-90b06;
-        Thu, 02 Apr 2020 14:31:35 +0800 (CST)
-X-RM-TRANSID: 2ee75e8586c5e97-90b06
-From:   Tang Bin <tangbin@cmss.chinamobile.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com
-Cc:     joro@8bytes.org, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        Tang Bin <tangbin@cmss.chinamobile.com>
-Subject: [PATCH] iommu/qcom:fix local_base status check
-Date:   Thu,  2 Apr 2020 14:33:02 +0800
-Message-Id: <20200402063302.20640-1-tangbin@cmss.chinamobile.com>
-X-Mailer: git-send-email 2.20.1.windows.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 2 Apr 2020 02:40:40 -0400
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Apr 2020 12:09:57 +0530
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 02 Apr 2020 12:09:36 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id 3238719F8; Thu,  2 Apr 2020 12:09:36 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v5 0/3] Add QMP V3 USB3 PHY support for SC7180
+Date:   Thu,  2 Apr 2020 12:08:51 +0530
+Message-Id: <1585809534-11244-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Release resources when exiting on error.
+Add QMP V3 USB3 PHY entries for SC7180 in phy driver and
+device tree bindings.
 
-Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
----
- drivers/iommu/qcom_iommu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+changes in v5:
+*Addressed comments from Matthias in yaml file.
+*Dropped PATCH 4/4 as it is landed in linux-next. 
 
-diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index 4328da0b0..c08aa9651 100644
---- a/drivers/iommu/qcom_iommu.c
-+++ b/drivers/iommu/qcom_iommu.c
-@@ -813,8 +813,11 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	qcom_iommu->dev = dev;
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	if (res)
-+	if (res) {
- 		qcom_iommu->local_base = devm_ioremap_resource(dev, res);
-+		if (IS_ERR(qcom_iommu->local_base))
-+			return PTR_ERR(qcom_iommu->local_base);
-+	}
- 
- 	qcom_iommu->iface_clk = devm_clk_get(dev, "iface");
- 	if (IS_ERR(qcom_iommu->iface_clk)) {
+changes in v4:
+*Addressed comments from Matthias and Rob in yaml file.
+
+changes in v3:
+*Addressed Rob's comments in yaml file.
+*Sepearated the SC7180 support in yaml patch.
+*corrected the phy reset entries in device tree.
+
+changes in v2:
+*Remove global phy reset in QMP PHY.
+*Convert QMP PHY bindings to yaml.
+
+Sandeep Maheswaram (3):
+  dt-bindings: phy: qcom,qmp: Convert QMP PHY bindings to yaml
+  dt-bindings: phy: qcom,qmp: Add support for SC7180
+  phy: qcom-qmp: Add QMP V3 USB3 PHY support for SC7180
+
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml      | 336 +++++++++++++++++++++
+ .../devicetree/bindings/phy/qcom-qmp-phy.txt       | 242 ---------------
+ drivers/phy/qualcomm/phy-qcom-qmp.c                |  38 +++
+ 3 files changed, 374 insertions(+), 242 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
+
 -- 
-2.20.1.windows.1
-
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
