@@ -2,54 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DC00219BB70
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 07:55:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A1F819BB7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 08:02:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726653AbgDBFzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Apr 2020 01:55:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50282 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725789AbgDBFza (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Apr 2020 01:55:30 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 23A89206D3;
-        Thu,  2 Apr 2020 05:55:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1585806928;
-        bh=TMOB7xObTXK0rngZ9FmkC9I9d881cIffUOU1cSRb6rI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lYUFGTaf7/8lq9YCS3Lc6Qnzovvd6BiDGcoAxanH/1wLAdCQ0z+71LACMyDzbsWp/
-         jcgAvlDhUhFWHsuXMbTNRFgmSQKNYIHvBUnUnYAQwkUaAT8UVAyzYKYFmA3V8dEA2w
-         CxxsPpqzDNCO45ct/6F91dADVHBTfaf5smgPaaAk=
-Date:   Thu, 2 Apr 2020 07:55:26 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     davem@davemloft.net, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clew@codeaurora.org
-Subject: Re: [PATCH v2 0/3] MHI bus improvements - Part 2
-Message-ID: <20200402055526.GB2636682@kroah.com>
-References: <20200402053610.9345-1-manivannan.sadhasivam@linaro.org>
+        id S1728332AbgDBGCo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Apr 2020 02:02:44 -0400
+Received: from cmccmta1.chinamobile.com ([221.176.66.79]:4101 "EHLO
+        cmccmta1.chinamobile.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbgDBGCo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Apr 2020 02:02:44 -0400
+Received: from spf.mail.chinamobile.com (unknown[172.16.121.11]) by rmmx-syy-dmz-app04-12004 (RichMail) with SMTP id 2ee45e857fdeda6-54efe; Thu, 02 Apr 2020 14:02:07 +0800 (CST)
+X-RM-TRANSID: 2ee45e857fdeda6-54efe
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM-FLAG: 00000000
+Received: from localhost.localdomain (unknown[112.25.154.146])
+        by rmsmtp-syy-appsvr06-12006 (RichMail) with SMTP id 2ee65e857fdd42d-1e2da;
+        Thu, 02 Apr 2020 14:02:06 +0800 (CST)
+X-RM-TRANSID: 2ee65e857fdd42d-1e2da
+From:   Tang Bin <tangbin@cmss.chinamobile.com>
+To:     robdclark@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     joro@8bytes.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Tang Bin <tangbin@cmss.chinamobile.com>
+Subject: [PATCH v2]iommu/qcom:fix local_base status check
+Date:   Thu,  2 Apr 2020 14:03:33 +0800
+Message-Id: <20200402060333.9156-1-tangbin@cmss.chinamobile.com>
+X-Mailer: git-send-email 2.20.1.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200402053610.9345-1-manivannan.sadhasivam@linaro.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 02, 2020 at 11:06:07AM +0530, Manivannan Sadhasivam wrote:
-> Hi Greg,
-> 
-> Here are the remaining patches left from the pervious series. The QRTR MHI
-> client driver has gone a bit of refactoring after incorporating comments from
-> Bjorn and Chris while the MHI suspend/resume patch is unmodified.
+------v2-----------------
+As requested, add some {} around this chunk.
 
-It's the middle of the merge window, we can't do anything until after
--rc1 is out, so please be patient.
+------v1-----------------
+Release resources when exiting on error.
 
-greg k-h
+Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
+---
+ drivers/iommu/qcom_iommu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
+index 4328da0b0..c08aa9651 100644
+--- a/drivers/iommu/qcom_iommu.c
++++ b/drivers/iommu/qcom_iommu.c
+@@ -813,8 +813,11 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	qcom_iommu->dev = dev;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	if (res)
++	if (res) {
+ 		qcom_iommu->local_base = devm_ioremap_resource(dev, res);
++		if (IS_ERR(qcom_iommu->local_base))
++			return PTR_ERR(qcom_iommu->local_base);
++	}
+ 
+ 	qcom_iommu->iface_clk = devm_clk_get(dev, "iface");
+ 	if (IS_ERR(qcom_iommu->iface_clk)) {
+-- 
+2.20.1.windows.1
+
+
+
