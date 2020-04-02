@@ -2,192 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D989619C2F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 15:46:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2121719C77B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2020 19:00:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726425AbgDBNq6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Apr 2020 09:46:58 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:51773 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729213AbgDBNq6 (ORCPT
+        id S2389802AbgDBRAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Apr 2020 13:00:33 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:35820 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387700AbgDBRAc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Apr 2020 09:46:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585835217; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=AuXWxacFMiwuBdrXF2wpRouR9O53pMajubgraeN7JGs=; b=C5j9nH/ttS2ZBirqVKpWKSGal9qKOhzOCoIXig9cpaqg3ggiC99h8eJSRph/TnYGIjdu/Qzu
- iUWpaVy1qLjjMubB0IPde20MGAHOwlTBObysdvOWPnqXgAYHKLOvacWZhWe9o3ZMSC5alUTT
- /I0CAn1k+k1w63+y6n8uEVIDpJo=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e85ecbf.7f9fd0586998-smtp-out-n05;
- Thu, 02 Apr 2020 13:46:39 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E933FC44791; Thu,  2 Apr 2020 13:46:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.13] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E822EC433D2;
-        Thu,  2 Apr 2020 13:46:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E822EC433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V3 2/8] soc: qcom: geni: Support for ICC voting
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-3-git-send-email-akashast@codeaurora.org>
- <20200331175207.GG199755@google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <759e50d2-7938-75b6-ee0b-a9ea3722ea54@codeaurora.org>
-Date:   Thu, 2 Apr 2020 19:16:29 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Thu, 2 Apr 2020 13:00:32 -0400
+Received: by mail-io1-f68.google.com with SMTP id o3so4427551ioh.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Apr 2020 10:00:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yAXnATgltKUt8JMPeZQ2QoLKhjD+I0oS+JV71CRscYo=;
+        b=VWkIwk/U438PU8PFC5RLXzJh+UiWU35S9JxG0hJvmhEm2bVrSQ5PeaOcvJekQUU9RR
+         v9KO+X9c1YK2DPHsRPRQPNs+zLx6pEv+Nba5jUV/kpaKd4nYkJe4YmJnAU8FkoZyolD7
+         RDh+IXARR7NRquZpMHtBg31E/8HjPHu/pifwI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yAXnATgltKUt8JMPeZQ2QoLKhjD+I0oS+JV71CRscYo=;
+        b=Y/RhM5u4igCeRoxCRpW/dWnZ7+c1gGtmD4NozbRQlS4Gqs27Y9D119ZURH9bInQzdo
+         2KVapHTTht83FHQG9ztLsr6Bb/3iOaGD9UJMm9bYF0Cg0QqL39vEsRH9LWppOO/Gc3LF
+         YrrmW26iGMaUaF6tuH+9taFwPN1sfjecCWUNzUNh2uSENqKzTjQxXPNWwjZK0MJObO/r
+         FeneT2WDivxVzDSs5Z9VWprnqx6ucGr1Iff8ywwp8rnLSwpj71oVwFPFbMW6hlrBYbIj
+         xTUoGgM7Nlo/A0/dixhOWHe8dnKzNAQAfBpJ0Xkrv7aTCEoZJBX5xFmRCmvmyOo/ON39
+         CVZw==
+X-Gm-Message-State: AGi0PuZNHZuRpsMcAO6ntLA9Flur0bNQDLHZuEKHUXQY5Mjwme/VYREK
+        3FoXrstIU08yCWohHThg5aH+iKY0sQw=
+X-Google-Smtp-Source: APiQypJOUBD1CdRkCm8C98ubLe1mck5tGTs2I6slKWoWchVPxMsSVL1O30KpQgPk62zwOX4zk7+x9Q==
+X-Received: by 2002:a02:7a18:: with SMTP id a24mr4366154jac.54.1585846827300;
+        Thu, 02 Apr 2020 10:00:27 -0700 (PDT)
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com. [209.85.166.176])
+        by smtp.gmail.com with ESMTPSA id k81sm1914901ilf.44.2020.04.02.10.00.24
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Apr 2020 10:00:25 -0700 (PDT)
+Received: by mail-il1-f176.google.com with SMTP id i75so4274652ild.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Apr 2020 10:00:24 -0700 (PDT)
+X-Received: by 2002:a92:35db:: with SMTP id c88mr4163161ilf.187.1585846823937;
+ Thu, 02 Apr 2020 10:00:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200331175207.GG199755@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <1585660782-23416-1-git-send-email-mkshah@codeaurora.org> <1585660782-23416-5-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1585660782-23416-5-git-send-email-mkshah@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 2 Apr 2020 10:00:12 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X1t5bxgDqg5uPz4NrxfFMSCrGVwMgtnE5snDu330s78Q@mail.gmail.com>
+Message-ID: <CAD=FV=X1t5bxgDqg5uPz4NrxfFMSCrGVwMgtnE5snDu330s78Q@mail.gmail.com>
+Subject: Re: [PATCH v15 4/7] soc: qcom: rpmh-rsc: Save base address of drv
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+Hi,
 
-On 3/31/2020 11:22 PM, Matthias Kaehlcke wrote:
-> Hi Akash,
+On Tue, Mar 31, 2020 at 6:20 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> On Tue, Mar 31, 2020 at 04:39:30PM +0530, Akash Asthana wrote:
->> Add necessary macros and structure variables to support ICC BW
->> voting from individual SE drivers.
->>
->> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
->> ---
->> Changes in V2:
->>   - As per Bjorn's comment dropped enums for ICC paths, given the three
->>     paths individual members
->>
->> Changes in V3:
->>   - Add geni_icc_get, geni_icc_vote_on and geni_icc_vote_off as helper API.
->>   - Add geni_icc_path structure in common header
->>
->>   drivers/soc/qcom/qcom-geni-se.c | 98 +++++++++++++++++++++++++++++++++++++++++
->>   include/linux/qcom-geni-se.h    | 36 +++++++++++++++
->>   2 files changed, 134 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
->> index 7d622ea..9344c14 100644
->> --- a/drivers/soc/qcom/qcom-geni-se.c
->> +++ b/drivers/soc/qcom/qcom-geni-se.c
->> @@ -720,6 +720,104 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
->>   }
->>   EXPORT_SYMBOL(geni_se_rx_dma_unprep);
->>   
->> +int geni_icc_get(struct geni_se *se, const char *icc_core, const char *icc_cpu,
->> +		const char *icc_ddr)
->> +{
->> +	if (icc_core) {
->> +		se->to_core.path = devm_of_icc_get(se->dev, "qup-core");
->> +		if (IS_ERR(se->to_core.path))
->> +			return PTR_ERR(se->to_core.path);
->> +	}
->> +
->> +	if (icc_cpu) {
->> +		se->from_cpu.path = devm_of_icc_get(se->dev, "qup-config");
->> +		if (IS_ERR(se->from_cpu.path))
->> +			return PTR_ERR(se->from_cpu.path);
->> +	}
->> +
->> +	if (icc_ddr) {
->> +		se->to_ddr.path = devm_of_icc_get(se->dev, "qup-memory");
->> +		if (IS_ERR(se->to_ddr.path))
->> +			return PTR_ERR(se->to_ddr.path);
->> +	}
->> +
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL(geni_icc_get);
->> +
->> +int geni_icc_vote_on(struct geni_se *se)
->> +{
->> +	int ret;
->> +
->> +	if (se->to_core.path) {
->> +		ret = icc_set_bw(se->to_core.path, se->to_core.avg_bw,
->> +			se->to_core.peak_bw);
->> +		if (ret) {
->> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for core\n",
->> +						__func__);
->> +			return ret;
->> +		}
->> +	}
->> +
->> +	if (se->from_cpu.path) {
->> +		ret = icc_set_bw(se->from_cpu.path, se->from_cpu.avg_bw,
->> +			se->from_cpu.peak_bw);
->> +		if (ret) {
->> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for cpu\n",
->> +						__func__);
->> +			return ret;
->> +		}
->> +	}
->> +
->> +	if (se->to_ddr.path) {
->> +		ret = icc_set_bw(se->to_ddr.path, se->to_ddr.avg_bw,
->> +			se->to_ddr.peak_bw);
->> +		if (ret) {
->> +			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed for ddr\n",
->> +						__func__);
->> +			return ret;
->> +		}
->> +	}
+> Add changes to save drv's base address for rsc. This is
+> used to read drv's configuration such as solver mode is
+> supported or to write into drv's registers.
 >
-> With an array of 'struct geni_icc_path' pointers the above could be
-> reduced to:
->
-> 	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
-> 		if (!se->icc_paths[i])
-> 			continue;
->
-> 		ret = icc_set_bw(se->icc_paths[i]->path, se->icc_paths[i]->avg_bw,
-> 			se->icc_paths[i]->peak_bw);
-> 		if (ret) {
-> 			dev_err_ratelimited(se->dev, "%s: ICC BW voting failed\n",
-> 						__func__);
-> 			return ret;
-> 		}
-> 	}
->
-> similar for geni_icc_vote_off()
->
-> It's just a suggestion, looks also good to me as is.
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> ---
+>  drivers/soc/qcom/rpmh-internal.h |  2 ++
+>  drivers/soc/qcom/rpmh-rsc.c      | 11 +++++------
+>  2 files changed, 7 insertions(+), 6 deletions(-)
 
-I thought giving individual path name will increase readability. But 
-that doesn't seems to be adding much value on cost of repeated code.
+I still see no usage of "drv->base" outside of the probe function even
+after applying your whole patch series.  That implies that it can just
+stay as a local variable.
 
-So, I will make the suggested change in next version.
+If you have a later patch series that needs "drv->base" in some other
+RPMH function then this patch should be moved to the front of that
+series.  Until then it feels like it should be dropped.
 
-Thanks,
 
-Akash
-
->
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+-Doug
