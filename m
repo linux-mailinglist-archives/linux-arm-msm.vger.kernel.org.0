@@ -2,141 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 651BE19DC9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 19:21:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ABAE19DCFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 19:44:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404322AbgDCRVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 13:21:06 -0400
-Received: from mout.web.de ([212.227.15.4]:60643 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728066AbgDCRVG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 13:21:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1585934437;
-        bh=F9+0iNVN/a+RVMnBnJdNBU74AYqMy21kwnfqkkiNbBE=;
-        h=X-UI-Sender-Class:To:Cc:Subject:From:Date;
-        b=VOphlUdXZfNgudGMpAMjysIP8EgolgN1sg8RY2Yt4FE1d7YfWPhIQJRIDoXRxorkw
-         QUrjRJGLSdxT0dbOJXIvHY077oMlas9lpIS/15JxDqgamHaBg2K4K0xeXOuSi0vRup
-         siaXuqXNWGZC5DRA2YVsB8eQVa7wh19HU1XSGSjQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([93.135.25.116]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MOlTq-1jN9ox2PNm-0068Li; Fri, 03
- Apr 2020 19:20:37 +0200
-To:     Tang Bin <tangbin@cmss.chinamobile.com>,
-        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH v2] iommu/qcom: Fix local_base status check
-From:   Markus Elfring <Markus.Elfring@web.de>
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- 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 FEE=
-Message-ID: <084eb9b2-3f5f-4e87-08aa-fe57ed3f5d35@web.de>
-Date:   Fri, 3 Apr 2020 19:20:35 +0200
+        id S2404010AbgDCRo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 13:44:29 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45485 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403979AbgDCRo2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Apr 2020 13:44:28 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t7so9473338wrw.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 10:44:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3IRCSeovtJ4qPaAlDb+qJfs2WHFPBRzlCPv+uW4BVtM=;
+        b=ZhFmw4awlQGDOQvhue1HPhakCr9If5mP4CbsYz9PdBRq10pZB0yNy2sa8oERY6TFsS
+         7SQUjqfgUXFtXhOgOgLFEdZsxg8p2FhnXEUsWKXWje8Y6qG9vNLAet+PPlvYxDO3gY+A
+         6wN+GZ1AmvYoK3e3gBIWHH/pGKixIOHHFhEdu9LCm+kVUTYkSzJ3J7mKQBZ6j41woqH+
+         86DprRHCk1JOfwIONwulVpSVTb4l4U/0/pEwEhMC+MA+gn/BgypE5CtfOaYszbZ2e8Rs
+         2xLd/Tq6McgT9qmwf0Bc6vyjHTyOlXV+5OcJVNWMQ85wSN4S7yWIeEEalF6ueNoEo0B+
+         vZ4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=3IRCSeovtJ4qPaAlDb+qJfs2WHFPBRzlCPv+uW4BVtM=;
+        b=JXECz7dQkP08D3u5hwNYhdJZc+DhMCS23MEhD4w3+APu8THn+aHPk9zvLzslAKz29L
+         kmyEhXiUUciCJIECNXnA6lcpYPlVOwPoEdhxJ3PyMZxfF3FJHaEARPEb/KMKCS1w/zxh
+         /zMZSyfz7dZL3ZBighyIZZxK38MuThrPshvmvRCKYSq6Jse2x5bHMSnjd2aeFwymKml9
+         sens6/Vze3YkE94pHWPtDpjxEnpK0w8F9+aZE0/HO8bkcXNly7KFMPFbTObLuIcmdlUX
+         D0d+lCOjQhsGpfweBc4oFd6kmdFh5O16tyJHGKcsR9OL9B9ftKnLUK8OFS4/ykmbgpK9
+         S71Q==
+X-Gm-Message-State: AGi0PuYJ3zmqSU99A1fzsuDRDDuSpkvlTKLYMOaNaG725WhrQzanVOvQ
+        VgtbpeUZucG4ryLw28sER+tmLw==
+X-Google-Smtp-Source: APiQypKhA0CqD87QFeE2Zs/PBK+BqNQHI+er4Gl7MSLIOo72Rqlrikz9gwnP4JJCTz7hxBOOvIKAvw==
+X-Received: by 2002:adf:f1ce:: with SMTP id z14mr10216145wro.68.1585935865740;
+        Fri, 03 Apr 2020 10:44:25 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:cc78:8018:8980:25d8? ([2a01:e34:ed2f:f020:cc78:8018:8980:25d8])
+        by smtp.googlemail.com with ESMTPSA id m21sm12083413wmc.6.2020.04.03.10.44.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Apr 2020 10:44:24 -0700 (PDT)
+Subject: Re: [PATCH v5 4/5] thermal: devfreq_cooling: Refactor code and switch
+ to use Energy Model
+To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
+        javi.merino@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200318114548.19916-1-lukasz.luba@arm.com>
+ <20200318114548.19916-5-lukasz.luba@arm.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <f3e9f127-47b1-9f30-2148-3c95a5933a92@linaro.org>
+Date:   Fri, 3 Apr 2020 19:44:17 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ Thunderbird/68.4.1
 MIME-Version: 1.0
+In-Reply-To: <20200318114548.19916-5-lukasz.luba@arm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:hpy7tG+6LUJMeU5uQuElQKaca1QpFU1e+UTi5sL2zkkRxn6H59o
- vs1+rlUxOwVshOR1yyH7Ko1uo+NzsIMD0Srv1fshtmBzLDzFAalzDuzrtzWrR7vd/BzEeWd
- lqPu6oQ0ba8zhHtHocaWc/7MsnkuNp/Iddr5lf1wyO+6+E96x9oVWxCDcdPjV0A0bxxkJ93
- TH3nbYk7kl9UaB/ZSS1VQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:snu08ePOQ4Y=:RERL+WTQn6HpQ6VfYEVlHO
- UXU85GqBFMvttK96XRK6n8M1VBFCKIF016QJ8DKvfQLNy5uEBxcRnXQ3O7AhYHxXS5aBwyymi
- WGqDg5cVVolvhYPG7Of1lEhHvrxozWagv6ElJGNMqb0Q63k2aByZCBBuuS3f4grF2aChqCXSr
- CvunvGRzG8kKN6jFafdW4cP1RrwmSwc70z8QjgmcQa0jRUJ4DbsjEgTS+pcp9I4HeP3dUYy53
- ZVx/gNeVPntplWct/B+SZUWHlpshNGSJrZo1YW9bMLKez/SNd6q0YOTa0Wy+4PPr1RCkLere8
- cqMcMJ9EU8lsUJOGLDWgvlVd4TPG9HKLT86bJtR87Ygl0cLr80R6ck7wsb8Qr+Nmd1uGuBf44
- YLPpNmRPUQsTb2itsRjGtBc/oAtexHl2CI8Oelvj/hT2xVxAdqZjEl7Gpx+L/3LZlywb2/6ar
- j+YHP+YMoZoZGuX95M+FTVJVd+NFljOPUffS6qzTdtqZH9vK0TaBlXQHoYzr4LNE2pKuftF6e
- txYuTXQTwUEqM0Ai6mZu4LiMrDXIjdCIdSNXoZtfiKI0xGzVfeeqIeIYn6Ij+u5lv3Yieipdm
- 259NgBXXMtpEsz0SDT2e/aQs2S2PMJ6kkI9RFCiPUTeyiYK43FT4QmtaTVOHeXXjm9ICB8Jjq
- decirzYn+Fk4bj+ePMTP9iVEvPAfqmhBglHPM3gX+9U5trOLVxsqq8Fa++1rzOG7mj8eYN5iV
- 85m1M1dm1vY5zx2e8fCcmoUtrsPJUc3PH+mfSWksHjjH+vuMyqc47tQFlydyR6j61MTMKbIE5
- HVqmEkGvgnP+zoiNMDp5OEf2c+JQXdft55QDi2hAI4/yNDlcwub2q7gG3d8oa5zo2VfWNQSNr
- 5crK6iUAPmTx3oxUA0EVmVoh4gfDjnWER9hOj99efi5FPBvSoU77IdqL68xvrDcSV7ICo20Gl
- OaXO9q+/Jqg5DRAxhgdxhBGpWrqkqPElcc+b/RAjfRvZVebtsnZGbCtN+TJuMtm7e2B3dAkqO
- sm27odlHxgwxpVg0GHtKgcLs+MMZyohkP8fIEWWpvyif+QFlbqyb35hpvdTFuzHmlfIwOPKJN
- fQo9CEiMI36fdhUFlc/qDZUYBcwD6mO55QhUfLW0aitRUjiehkiTafBoZSeAWUY4J5eXFqBMc
- tcNwHy8M3jdCZTnrq5DwSmytiWNRQ62M4Lvn1wRTvPBIcGQB00q3R+AMSQLCwefWQNxt+vjXk
- vgx5hjJkW3mCFeQOM
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Release resources when exiting on error.
+On 18/03/2020 12:45, Lukasz Luba wrote:
+> The overhauled Energy Model (EM) framework support also devfreq devices.
+> The unified API interface of the EM can be used in the thermal subsystem to
+> not duplicate code. The power table now is taken from EM structure and
+> there is no need to maintain calculation for it locally. In case when the
+> EM is not provided by the device a simple interface for cooling device is
+> used.
+> 
+> There is also an improvement in code related to enabling/disabling OPPs,
+> which prevents from race condition with devfreq governors.
+> 
+> [lkp: Reported the build warning]
+> Reported-by: kbuild test robot <lkp@intel.com>
+> Reviewed-by: Steven Rostedt (VMware) <rostedt@goodmis.org> # for tracing code
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
 
-I have got doubts that such a change description fits to
-the proposed source code adjustment.
+The changes are too big, please split this patch into smaller chunks.
+
+> ---
+>  drivers/thermal/devfreq_cooling.c | 474 ++++++++++++++++--------------
+>  include/linux/devfreq_cooling.h   |  39 +--
+>  include/trace/events/thermal.h    |  19 +-
+>  3 files changed, 277 insertions(+), 255 deletions(-)
+> 
+> diff --git a/drivers/thermal/devfreq_cooling.c b/drivers/thermal/devfreq_cooling.c
+
+[ ... ]
+
+>  struct devfreq_cooling_device {
+>  	int id;
+>  	struct thermal_cooling_device *cdev;
+>  	struct devfreq *devfreq;
+>  	unsigned long cooling_state;
+> -	u32 *power_table;
+>  	u32 *freq_table;
+> -	size_t freq_table_size;
+> +	size_t max_level;
+
+Could you rename it to 'max_state' ?
 
 
-=E2=80=A6
-> +++ b/drivers/iommu/qcom_iommu.c
-> @@ -813,8 +813,11 @@ static int qcom_iommu_device_probe(struct platform_=
-device *pdev)
->  	qcom_iommu->dev =3D dev;
->
->  	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	if (res)
-> +	if (res) {
->  		qcom_iommu->local_base =3D devm_ioremap_resource(dev, res);
-> +		if (IS_ERR(qcom_iommu->local_base))
-> +			return PTR_ERR(qcom_iommu->local_base);
-> +	}
->
->  	qcom_iommu->iface_clk =3D devm_clk_get(dev, "iface");
-=E2=80=A6
+[ ... ]
 
-Will the commit message be improved any further?
 
-Would you like to add the tag =E2=80=9CFixes=E2=80=9D?
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-Regards,
-Markus
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
