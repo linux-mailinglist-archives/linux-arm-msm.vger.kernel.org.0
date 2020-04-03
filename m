@@ -2,433 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C93819D0AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 09:02:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AEC319D26E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 10:40:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388302AbgDCHCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 03:02:10 -0400
-Received: from mail-pg1-f180.google.com ([209.85.215.180]:46296 "EHLO
-        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389191AbgDCHCK (ORCPT
+        id S1727868AbgDCIkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 04:40:31 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:24678 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390403AbgDCIkb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 03:02:10 -0400
-Received: by mail-pg1-f180.google.com with SMTP id k191so3060620pgc.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 00:02:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=l1h6fRRJBqh4XQu4UKJVfQ1c7NUklIDlUPcnvMtodAE=;
-        b=KAOgI47mhmaeZPpMgPZu5lxHkr/DQgjtN4Cuf6etoeoVJRJeintG38rTZzy+ObK3aA
-         EoVyjaHmg3udHMPBKIoBscwNBmRR86p0Lb0ORBV+FRV9TiZsBsAfCMfe2Db+WaOhkg4I
-         tag+ciAVClZvtYCZmJzo6Wg0X0M0dnexMAzrWqibUA5qLcpEpOjgjnexyput4VMiUCFj
-         tGooz9Sfjf80eqd7HZqwqiKsig4u7LK4DvzlMxneupyQdgpbY7Dz9mZt2/1K2VtOsLy/
-         i7BeqJTgJds6EoN2wXGMXY5pbL2GX0kukIW24gWXHqc2YRM+ERQAF1R0LZHc4Af9tFsL
-         IUPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=l1h6fRRJBqh4XQu4UKJVfQ1c7NUklIDlUPcnvMtodAE=;
-        b=Lzp56neHMVK1Lv5HBaLOLTOaDDyocipihHe6l52VBBz7LkA7zVWklnq0L09jtixw9K
-         ZGJx96PfbDv+s4Q9D0r+ieoGNMGTw8iGI03wGNYTfMXHoKtRQ4VGlErpFIhU6kkoi3Xx
-         PcnVE2Q8U1SE0K9MduRjkiljLH0sjm+/WBJIcYl4lkZKEVGa3HvHRx7ms6bu9mRhvpyT
-         ZqyFwqsMAD1SertsvqyftL6OvjdzCStZBYb8J4RwFpVCLAp6Ia85NxY/+bLde1GeoZx6
-         njv13fSdEq0NKicc5FH06bHBxOhjnDsv8r63OzVpCUMnW+zpmEOngAKiakIFlfgulEup
-         SQzg==
-X-Gm-Message-State: AGi0PuYh05wcChdm8ENr16Essi2agrm6QbVF6W27TsRG4CUNJfVG9Lu/
-        55lbZKfgkZIXJ5orogilX9t0iVSytDk=
-X-Google-Smtp-Source: APiQypLMrZKEwq4F1JdF2nJIfSq2/+huOYggfp7fD3EZNNWZpwE126NU17j3zPP4lqg2H2TKrefFiw==
-X-Received: by 2002:a63:a361:: with SMTP id v33mr6696515pgn.324.1585897328422;
-        Fri, 03 Apr 2020 00:02:08 -0700 (PDT)
-Received: from localhost ([45.127.44.53])
-        by smtp.gmail.com with ESMTPSA id a19sm5152553pfk.110.2020.04.03.00.02.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 00:02:07 -0700 (PDT)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, lukasz.luba@arm.com, mka@chromium.org,
-        daniel.lezcano@linaro.org,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     Rob Herring <robh@kernel.org>, linux-pm@vger.kernel.org,
+        Fri, 3 Apr 2020 04:40:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585903230; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=pcPZXHP6kJuCOK+5sj4KXybMGy4D3NvpQrGs0CQsFM0=; b=uMYqZWT9Jr9ygkJaydkcaPtRg5D/kn1KpJGwlzY20NCFYzaKWZkZX6EddR324cwzpjNcHD1X
+ 0eyl2w1TE3OO9ZjnnpWrKvXqe/AIDtLD+dz9R1QG8sQpfVA4jlvma8/kdbifd9XbnVv0p0tZ
+ 46wzoZNHKBvc9olpeZsbkT/e+0k=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e86f675.7f1f14f46d50-smtp-out-n04;
+ Fri, 03 Apr 2020 08:40:21 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 37B75C433BA; Fri,  3 Apr 2020 08:40:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.111.194.152] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgautam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 58944C433D2;
+        Fri,  3 Apr 2020 08:40:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 58944C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mgautam@codeaurora.org
+Subject: Re: [PATCH 1/2] phy: qualcomm: add qcom dwc3 phy
+To:     Ansuel Smith <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>
+Cc:     Andy Gross <agross@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v5 3/3] dt-bindings: thermal: Add yaml bindings for thermal zones
-Date:   Fri,  3 Apr 2020 12:31:48 +0530
-Message-Id: <44e5c68bc654ccaf88945f70dc875fa186dd1480.1585748882.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1585748882.git.amit.kucheria@linaro.org>
-References: <cover.1585748882.git.amit.kucheria@linaro.org>
+References: <20200403002608.946-1-ansuelsmth@gmail.com>
+From:   Manu Gautam <mgautam@codeaurora.org>
+Message-ID: <75326e97-a6fb-3682-9973-22d46e48b58d@codeaurora.org>
+Date:   Fri, 3 Apr 2020 14:10:13 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
+In-Reply-To: <20200403002608.946-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As part of moving the thermal bindings to YAML, split it up into 3
-bindings: thermal sensors, cooling devices and thermal zones.
+Hi,
 
-The thermal-zone binding is a software abstraction to capture the
-properties of each zone - how often they should be checked, the
-temperature thresholds (trips) at which mitigation actions need to be
-taken and the level of mitigation needed at those thresholds.
+On 4/3/2020 5:56 AM, Ansuel Smith wrote:
+> This has lost in the original push for the dwc3 qcom driver.
+> This is needed for ipq806x SoC as without this the usb ports
+> doesn't work at all.
+>
+> Signed-off-by: Andy Gross <agross@codeaurora.org>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  drivers/phy/qualcomm/Kconfig         |  12 +
+>  drivers/phy/qualcomm/Makefile        |   1 +
+>  drivers/phy/qualcomm/phy-qcom-dwc3.c | 578 +++++++++++++++++++++++++++
+>  3 files changed, 591 insertions(+)
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-dwc3.c
+>
+> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+> index e46824da29f6..3d45a9156f85 100644
+> --- a/drivers/phy/qualcomm/Kconfig
+> +++ b/drivers/phy/qualcomm/Kconfig
+> @@ -91,3 +91,15 @@ config PHY_QCOM_USB_HSIC
+>  	select GENERIC_PHY
+>  	help
+>  	  Support for the USB HSIC ULPI compliant PHY on QCOM chipsets.
+> +
+> +config PHY_QCOM_DWC3
+Please rename to PHY_QCOM_IPQ806X_USB
+> +	tristate "QCOM DWC3 USB PHY support"
+> +	depends on ARCH_QCOM
+> +	depends on HAS_IOMEM
+> +	depends on OF
+> +	select GENERIC_PHY
+> +	help
+> +	  This option enables support for the Synopsis PHYs present inside the
+> +	  Qualcomm USB3.0 DWC3 controller.  This driver supports both HS and SS
+> +	  PHY controllers.
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
----
- .../bindings/thermal/thermal-zones.yaml       | 341 ++++++++++++++++++
- 1 file changed, 341 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+Please mention that driver supports only IPQ806x, as it can't  be used
+for all QCOM phy and dwc3 controllers wrappers.
 
-diff --git a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-new file mode 100644
-index 0000000000000..b8515d3eeaa2b
---- /dev/null
-+++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-@@ -0,0 +1,341 @@
-+# SPDX-License-Identifier: (GPL-2.0)
-+# Copyright 2020 Linaro Ltd.
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/thermal/thermal-zones.yaml#
-+$schema: http://devicetree.org/meta-schemas/base.yaml#
-+
-+title: Thermal zone binding
-+
-+maintainers:
-+  - Amit Kucheria <amitk@kernel.org>
-+
-+description: |
-+  Thermal management is achieved in devicetree by describing the sensor hardware
-+  and the software abstraction of cooling devices and thermal zones required to
-+  take appropriate action to mitigate thermal overloads.
-+
-+  The following node types are used to completely describe a thermal management
-+  system in devicetree:
-+   - thermal-sensor: device that measures temperature, has SoC-specific bindings
-+   - cooling-device: device used to dissipate heat either passively or actively
-+   - thermal-zones: a container of the following node types used to describe all
-+     thermal data for the platform
-+
-+  This binding describes the thermal-zones.
-+
-+  The polling-delay properties of a thermal-zone are bound to the maximum dT/dt
-+  (temperature derivative over time) in two situations for a thermal zone:
-+    1. when passive cooling is activated (polling-delay-passive)
-+    2. when the zone just needs to be monitored (polling-delay) or when
-+       active cooling is activated.
-+
-+  The maximum dT/dt is highly bound to hardware power consumption and
-+  dissipation capability. The delays should be chosen to account for said
-+  max dT/dt, such that a device does not cross several trip boundaries
-+  unexpectedly between polls. Choosing the right polling delays shall avoid
-+  having the device in temperature ranges that may damage the silicon structures
-+  and reduce silicon lifetime.
-+
-+properties:
-+  $nodename:
-+    const: thermal-zones
-+    description:
-+      A /thermal-zones node is required in order to use the thermal framework to
-+      manage input from the various thermal zones in the system in order to
-+      mitigate thermal overload conditions. It does not represent a real device
-+      in the system, but acts as a container to link a thermal sensor device,
-+      platform-data regarding temperature thresholds and the mitigation actions
-+      to take when the temperature crosses those thresholds.
-+
-+patternProperties:
-+  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
-+    type: object
-+    description:
-+      Each thermal zone node contains information about how frequently it
-+      must be checked, the sensor responsible for reporting temperature for
-+      this zone, one sub-node containing the various trip points for this
-+      zone and one sub-node containing all the zone cooling-maps.
-+
-+    properties:
-+      polling-delay:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description:
-+          The maximum number of milliseconds to wait between polls when
-+          checking this thermal zone. Setting this to 0 disables the polling
-+          timers setup by the thermal framework and assumes that the thermal
-+          sensors in this zone support interrupts.
-+
-+      polling-delay-passive:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description:
-+          The maximum number of milliseconds to wait between polls when
-+          checking this thermal zone while doing passive cooling. Setting
-+          this to 0 disables the polling timers setup by the thermal
-+          framework and assumes that the thermal sensors in this zone
-+          support interrupts.
-+
-+      thermal-sensors:
-+        $ref: /schemas/types.yaml#/definitions/phandle-array
-+        maxItems: 1
-+        description:
-+          The thermal sensor phandle and sensor specifier used to monitor this
-+          thermal zone.
-+
-+      coefficients:
-+        $ref: /schemas/types.yaml#/definitions/uint32-array
-+        description:
-+          An array of integers containing the coefficients of a linear equation
-+          that binds all the sensors listed in this thermal zone.
-+
-+          The linear equation used is as follows,
-+            z = c0 * x0 + c1 * x1 + ... + c(n-1) * x(n-1) + cn
-+          where c0, c1, .., cn are the coefficients.
-+
-+          Coefficients default to 1 in case this property is not specified. The
-+          coefficients are ordered and are matched with sensors by means of the
-+          sensor ID. Additional coefficients are interpreted as constant offset.
-+
-+      sustainable-power:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description:
-+          An estimate of the sustainable power (in mW) that this thermal zone
-+          can dissipate at the desired control temperature. For reference, the
-+          sustainable power of a 4-inch phone is typically 2000mW, while on a
-+          10-inch tablet is around 4500mW.
-+
-+      trips:
-+        type: object
-+        description:
-+          This node describes a set of points in the temperature domain at
-+          which the thermal framework needs to take action. The actions to
-+          be taken are defined in another node called cooling-maps.
-+
-+        patternProperties:
-+          "^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$":
-+            type: object
-+
-+            properties:
-+              temperature:
-+                $ref: /schemas/types.yaml#/definitions/int32
-+                minimum: -273000
-+                maximum: 200000
-+                description:
-+                  An integer expressing the trip temperature in millicelsius.
-+
-+              hysteresis:
-+                $ref: /schemas/types.yaml#/definitions/uint32
-+                description:
-+                  An unsigned integer expressing the hysteresis delta with
-+                  respect to the trip temperature property above, also in
-+                  millicelsius. Any cooling action initiated by the framework is
-+                  maintained until the temperature falls below
-+                  (trip temperature - hysteresis). This potentially prevents a
-+                  situation where the trip gets constantly triggered soon after
-+                  cooling action is removed.
-+
-+              type:
-+                $ref: /schemas/types.yaml#/definitions/string
-+                enum:
-+                  - active   # enable active cooling e.g. fans
-+                  - passive  # enable passive cooling e.g. throttling cpu
-+                  - hot      # send notification to driver
-+                  - critical # send notification to driver, trigger shutdown
-+                description: |
-+                  There are four valid trip types: active, passive, hot,
-+                  critical.
-+
-+                  The critical trip type is used to set the maximum
-+                  temperature threshold above which the HW becomes
-+                  unstable and underlying firmware might even trigger a
-+                  reboot. Hitting the critical threshold triggers a system
-+                  shutdown.
-+
-+                  The hot trip type can be used to send a notification to
-+                  the thermal driver (if a .notify callback is registered).
-+                  The action to be taken is left to the driver.
-+
-+                  The passive trip type can be used to slow down HW e.g. run
-+                  the CPU, GPU, bus at a lower frequency.
-+
-+                  The active trip type can be used to control other HW to
-+                  help in cooling e.g. fans can be sped up or slowed down
-+
-+            required:
-+              - temperature
-+              - hysteresis
-+              - type
-+            additionalProperties: false
-+
-+        additionalProperties: false
-+
-+      cooling-maps:
-+        type: object
-+        description:
-+          This node describes the action to be taken when a thermal zone
-+          crosses one of the temperature thresholds described in the trips
-+          node. The action takes the form of a mapping relation between a
-+          trip and the target cooling device state.
-+
-+        patternProperties:
-+          "^map[-a-zA-Z0-9]*$":
-+            type: object
-+
-+            properties:
-+              trip:
-+                $ref: /schemas/types.yaml#/definitions/phandle
-+                description:
-+                  A phandle of a trip point node within this thermal zone.
-+
-+              cooling-device:
-+                $ref: /schemas/types.yaml#/definitions/phandle-array
-+                description:
-+                  A list of cooling device phandles along with the minimum
-+                  and maximum cooling state specifiers for each cooling
-+                  device. Using the THERMAL_NO_LIMIT (-1UL) constant in the
-+                  cooling-device phandle limit specifier lets the framework
-+                  use the minimum and maximum cooling state for that cooling
-+                  device automatically.
-+
-+              contribution:
-+                $ref: /schemas/types.yaml#/definitions/uint32
-+                minimum: 0
-+                maximum: 100
-+                description:
-+                  The percentage contribution of the cooling devices at the
-+                  specific trip temperature referenced in this map
-+                  to this thermal zone
-+
-+            required:
-+              - trip
-+              - cooling-device
-+            additionalProperties: false
-+
-+    required:
-+      - polling-delay
-+      - polling-delay-passive
-+      - thermal-sensors
-+      - trips
-+    additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/thermal/thermal.h>
-+
-+    // Example 1: SDM845 TSENS
-+    soc: soc@0 {
-+            #address-cells = <2>;
-+            #size-cells = <2>;
-+
-+            /* ... */
-+
-+            tsens0: thermal-sensor@c263000 {
-+                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-+                    reg = <0 0x0c263000 0 0x1ff>, /* TM */
-+                          <0 0x0c222000 0 0x1ff>; /* SROT */
-+                    #qcom,sensors = <13>;
-+                    interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-+                                 <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-+                    interrupt-names = "uplow", "critical";
-+                    #thermal-sensor-cells = <1>;
-+            };
-+
-+            tsens1: thermal-sensor@c265000 {
-+                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-+                    reg = <0 0x0c265000 0 0x1ff>, /* TM */
-+                          <0 0x0c223000 0 0x1ff>; /* SROT */
-+                    #qcom,sensors = <8>;
-+                    interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-+                                 <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-+                    interrupt-names = "uplow", "critical";
-+                    #thermal-sensor-cells = <1>;
-+            };
-+    };
-+
-+    /* ... */
-+
-+    thermal-zones {
-+            cpu0-thermal {
-+                    polling-delay-passive = <250>;
-+                    polling-delay = <1000>;
-+
-+                    thermal-sensors = <&tsens0 1>;
-+
-+                    trips {
-+                            cpu0_alert0: trip-point0 {
-+                                    temperature = <90000>;
-+                                    hysteresis = <2000>;
-+                                    type = "passive";
-+                            };
-+
-+                            cpu0_alert1: trip-point1 {
-+                                    temperature = <95000>;
-+                                    hysteresis = <2000>;
-+                                    type = "passive";
-+                            };
-+
-+                            cpu0_crit: cpu_crit {
-+                                    temperature = <110000>;
-+                                    hysteresis = <1000>;
-+                                    type = "critical";
-+                            };
-+                    };
-+
-+                    cooling-maps {
-+                            map0 {
-+                                    trip = <&cpu0_alert0>;
-+                                    /* Corresponds to 1400MHz in OPP table */
-+                                    cooling-device = <&CPU0 3 3>, <&CPU1 3 3>,
-+                                                     <&CPU2 3 3>, <&CPU3 3 3>;
-+                            };
-+
-+                            map1 {
-+                                    trip = <&cpu0_alert1>;
-+                                    /* Corresponds to 1000MHz in OPP table */
-+                                    cooling-device = <&CPU0 5 5>, <&CPU1 5 5>,
-+                                                     <&CPU2 5 5>, <&CPU3 5 5>;
-+                            };
-+                    };
-+            };
-+
-+            /* ... */
-+
-+            cluster0-thermal {
-+                    polling-delay-passive = <250>;
-+                    polling-delay = <1000>;
-+
-+                    thermal-sensors = <&tsens0 5>;
-+
-+                    trips {
-+                            cluster0_alert0: trip-point0 {
-+                                    temperature = <90000>;
-+                                    hysteresis = <2000>;
-+                                    type = "hot";
-+                            };
-+                            cluster0_crit: cluster0_crit {
-+                                    temperature = <110000>;
-+                                    hysteresis = <2000>;
-+                                    type = "critical";
-+                            };
-+                    };
-+            };
-+
-+            /* ... */
-+
-+            gpu-top-thermal {
-+                    polling-delay-passive = <250>;
-+                    polling-delay = <1000>;
-+
-+                    thermal-sensors = <&tsens0 11>;
-+
-+                    trips {
-+                            gpu1_alert0: trip-point0 {
-+                                    temperature = <90000>;
-+                                    hysteresis = <2000>;
-+                                    type = "hot";
-+                            };
-+                    };
-+            };
-+    };
-+...
+
+> +
+> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
+> index 283251d6a5d9..04c5a8da941a 100644
+> --- a/drivers/phy/qualcomm/Makefile
+> +++ b/drivers/phy/qualcomm/Makefile
+> @@ -10,3 +10,4 @@ obj-$(CONFIG_PHY_QCOM_UFS_14NM)		+= phy-qcom-ufs-qmp-14nm.o
+>  obj-$(CONFIG_PHY_QCOM_UFS_20NM)		+= phy-qcom-ufs-qmp-20nm.o
+>  obj-$(CONFIG_PHY_QCOM_USB_HS) 		+= phy-qcom-usb-hs.o
+>  obj-$(CONFIG_PHY_QCOM_USB_HSIC) 	+= phy-qcom-usb-hsic.o
+> +obj-$(CONFIG_PHY_QCOM_DWC3)		+= phy-qcom-dwc3.o
+> diff --git a/drivers/phy/qualcomm/phy-qcom-dwc3.c b/drivers/phy/qualcomm/phy-qcom-dwc3.c
+> new file mode 100644
+> index 000000000000..f33da199ddde
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-dwc3.c
+
+Rename to phy-qcom-ip806x-usb.c
+
+Please also add qcom_ipq806x_usb as prefix in the function names and structures etc.
+
+> @@ -0,0 +1,578 @@
+>
 -- 
-2.20.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
