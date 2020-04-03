@@ -2,126 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 610E319DC36
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 18:56:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B11419DC74
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 19:12:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728377AbgDCQ4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 12:56:52 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:29935 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2391008AbgDCQ4u (ORCPT
+        id S1727998AbgDCRML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 13:12:11 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:34435 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728387AbgDCRML (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 12:56:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1585933009; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=9GAbZWuPcTKjEXz3EeVxBNWDn+mYvVxInvRy5MFxrck=; b=exY1mdH5usVAVNjV1pjSINXxmhIkZn2PrpNoO3Ia8XC1gVI+avMdfPCnAwA24rSTCeENORyb
- OUsJD1rxvm1r7l3Jzvq/NZyJX1gi/pw/CaC6E77oVTNKjeK1L5iQBtUd+BHRPEytYd8FDacd
- OF++izEHc3I5NeilEzoxtPDPVmk=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e876ac7.7fc470598378-smtp-out-n01;
- Fri, 03 Apr 2020 16:56:39 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 658F5C44791; Fri,  3 Apr 2020 16:56:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.122.98] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 171CCC433D2;
-        Fri,  3 Apr 2020 16:56:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 171CCC433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH v5 2/5] phy: qcom-snps: Add SNPS USB PHY driver for QCOM
- based SOCs
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <1585880634-15222-1-git-send-email-wcheng@codeaurora.org>
- <1585880634-15222-3-git-send-email-wcheng@codeaurora.org>
- <20200403060127.GM72691@vkoul-mobl>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <91262538-6b1e-afd3-97f8-614bb4a54b5a@codeaurora.org>
-Date:   Fri, 3 Apr 2020 09:56:37 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Fri, 3 Apr 2020 13:12:11 -0400
+Received: by mail-qk1-f193.google.com with SMTP id i6so8797158qke.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 10:12:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eKwWwj3eqf+cZzC5JrJMT4a43JvCqUM+JiOzX9deVL0=;
+        b=hlm6P03s/Sq5PDxZkKnjNhsRznuMMud9tkThiDgQeV7G1rL6qquyi7rq7iMdnRCfLa
+         eWAY/+MOlyXrktAih6k/dfz5ql/Vw70D8AgPa/ajBudMfEzf400Q4yG9I1r7eVo/sMOu
+         OpTDl1bhUsTqqoiyOoYnCzV5tFYSc7pHf6vmI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eKwWwj3eqf+cZzC5JrJMT4a43JvCqUM+JiOzX9deVL0=;
+        b=pMYzVvoCdNO7wDKRtEmCGVW87qgeijHf6S456TmMCakGA4Io/1eqG24TorZrJYymd1
+         n/sx+2AgchvUs+D7F6sFFChbRZ5UyHjweMJZe787MdbqJJGYvgQ1FMKucD91iZ/8iDCj
+         yBhJmnZtHIbeYKmcDpZwlB7DjZ1s2fcoYHqZ7SbkP2Kh1NryMw5YOcuLvavdRIjfT/5v
+         d3lDZyu/nXC7DBO+VAuwk/YSv0DYg2RDxpUR26v53/Uy3X8g0rf9qBq6VW9p/zlRKi0q
+         xONClHVasuxKG111ot5mPRSYC5MxKRoPe9RJf8NGCArat1GJRMAmovD3ImcLGk4g2OWI
+         OocQ==
+X-Gm-Message-State: AGi0PuYGAUGsWAN7czyTL7+3LNVI/OCz/JCLpcx0FL7QnWzXPuBkm41d
+        9iEq0HOdqJYXXNwC70xsD5W3VsKcWv4=
+X-Google-Smtp-Source: APiQypIIXF3vE8F4amjvp9hSQfXtQuYkfksaaTRImUZKSLaqzoTO7MQerIlkDBWFqZZg5gloxCFX8Q==
+X-Received: by 2002:a37:a84c:: with SMTP id r73mr10188447qke.370.1585933928618;
+        Fri, 03 Apr 2020 10:12:08 -0700 (PDT)
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
+        by smtp.gmail.com with ESMTPSA id e17sm3805291qtw.1.2020.04.03.10.12.08
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Apr 2020 10:12:08 -0700 (PDT)
+Received: by mail-yb1-f172.google.com with SMTP id x63so4640284ybx.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 10:12:08 -0700 (PDT)
+X-Received: by 2002:ab0:1d10:: with SMTP id j16mr7491766uak.91.1585933475285;
+ Fri, 03 Apr 2020 10:04:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200403060127.GM72691@vkoul-mobl>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org> <1573220319-4287-3-git-send-email-ppvk@codeaurora.org>
+In-Reply-To: <1573220319-4287-3-git-send-email-ppvk@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 3 Apr 2020 10:04:23 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WGUasS=UZxFeSS0Cg=9WxHPMWVFyYae7CFmOxV2_yhJw@mail.gmail.com>
+Message-ID: <CAD=FV=WGUasS=UZxFeSS0Cg=9WxHPMWVFyYae7CFmOxV2_yhJw@mail.gmail.com>
+Subject: Re: [RFC-v2 2/2] mmc: sdhci-msm: Add support for bus bandwidth voting
+To:     Pradeep P V K <ppvk@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        linux-mmc-owner@vger.kernel.org,
+        Subhash Jadavani <subhashj@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+Hi,
 
-Thanks for the review, I'll address these in the next version.
+On Fri, Nov 8, 2019 at 5:45 AM Pradeep P V K <ppvk@codeaurora.org> wrote:
+>
+> +       if (msm_host->bus_vote_data->curr_vote != VOTE_ZERO)
+> +               queue_delayed_work(system_wq,
+> +                                  &msm_host->bus_vote_work,
+> +                                  msecs_to_jiffies(MSM_MMC_BUS_VOTING_DELAY));
+> +}
 
-On 4/2/2020 11:01 PM, Vinod Koul wrote:
-> On 02-04-20, 19:23, Wesley Cheng wrote:
->> This adds the SNPS FemtoPHY V2 driver used in QCOM SOCs.  There
->> are potentially multiple instances of this UTMI PHY on the
->> SOC, all which can utilize this driver.  The V2 driver will
->> have a different register map compared to V1.
-> 
-> Some nitpicks below, otherwise:
-> 
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> 
->> +/**
->> + * struct qcom_snps_hsphy - structure holding snps hs phy attributes
->> + *
->> + * @phy: generic phy
->> + * @base: iomapped memory space for qubs2 phy
->> + *
->> + * @cfg_ahb_clk: AHB2PHY interface clock
->> + * @ref_clk: phy reference clock
->> + * @iface_clk: phy interface clock
->> + * @phy_reset: phy reset control
->> + * @vregs: regulator supplies bulk data
->> +
-> 
-> This is missing the marker * for kernel doc
-> 
->> + * @phy_initialized: if PHY has been initialized correctly
->> + *
-> 
-> This empty line is redundant
-> 
->> + */
->> +struct qcom_snps_hsphy {
->> +	struct phy *phy;
->> +	void __iomem *base;
->> +
->> +	struct clk *cfg_ahb_clk;
->> +	struct clk *ref_clk;
->> +	struct reset_control *phy_reset;
->> +	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
->> +
->> +	bool phy_initialized;
->> +};
->> +
->> +static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
->> +				    u32 mask, u32 val)
-> 
-> coding style mandates that second line should start at preceeding line
-> opening brace :), so can you please make it:
-> 
-> static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
->                                               u32 mask, u32 val)
-> 
+Drive-by feedback here without any full review of your patch...
+Someone had your patch applied and sent me a stack trace with a
+warning on it.  That warning showed:
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+workqueue: WQ_MEM_RECLAIM kblockd:blk_mq_run_work_fn is flushing
+!WQ_MEM_RECLAIM events:sdhci_msm_bus_work
+
+The trace shown was:
+
+    check_flush_dependency+0x108/0x110
+    __flush_work+0xa8/0x1e8
+    __cancel_work_timer+0x130/0x1c4
+    cancel_delayed_work_sync+0x20/0x30
+    sdhci_msm_bus_cancel_work_and_set_vote+0x3c/0x8c
+    sdhci_msm_bus_voting+0x40/0x7c
+    sdhci_msm_runtime_resume+0xdc/0xf4
+    pm_generic_runtime_resume+0x34/0x48
+    __rpm_callback+0x70/0xfc
+    rpm_callback+0x5c/0x8c
+    rpm_resume+0x3fc/0x534
+    __pm_runtime_resume+0x7c/0xa0
+    __mmc_claim_host+0x1f4/0x230
+    mmc_get_card+0x34/0x40
+    mmc_mq_queue_rq+0x18c/0x244
+    blk_mq_dispatch_rq_list+0x27c/0x560
+    blk_mq_do_dispatch_sched+0xe0/0x140
+    blk_mq_sched_dispatch_requests+0x138/0x1b8
+    __blk_mq_run_hw_queue+0xc0/0x118
+    blk_mq_run_work_fn+0x24/0x30
+
+I believe the way to interpret this is that you need to be running
+your work on a workqueue marked for memory reclaim.  That means you
+can't use the system_wq to queue your work.  Without being an expert,
+a quick guess would be that you should be queueing your work on the
+"kblockd_workqueue" using one of the functions for this.
+
+-Doug
