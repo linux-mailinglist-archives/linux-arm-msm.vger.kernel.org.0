@@ -2,245 +2,359 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DB56819D4A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 12:09:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D022D19D5A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 13:16:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727923AbgDCKJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 06:09:31 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.167]:14238 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727774AbgDCKJb (ORCPT
+        id S2390315AbgDCLQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 07:16:14 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:60585 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390699AbgDCLQO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 06:09:31 -0400
-X-Greylist: delayed 93153 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Apr 2020 06:09:28 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1585908565;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=JgPvAhdZUtxze5wPD1t8wDBIPEo/ihw52rIG25HGMzk=;
-        b=h1SEQVCWWOdtOMOJh0NRUS18C7dqNmzP4SSlvcxhARe9nyMqTZo65UDmdXTBPfLy+p
-        yZ18dUlgwVFD1pyqUAFJ/UfrnF3kk99Y5BuKXmqvK+B9Be47o2+vXeR/3naL3Sz4Xb6h
-        k1XDB13YfXR2lPOtLqU50CbFV0Y827+7eUDuvupWVyszKrGghufl4WongVqeFU8d/c0L
-        Lyn3Slr7z51kDVHt+/cumep3QNPb+8nvHC/67cNrH92FkJUGj2lOMvOnrkSRzzdfEU89
-        n1F9Hf/gXf03E5wf2nuGdn+4Oe9kwcFgq0cRNzgj7o1LPXciKeiqWr9MjeK+S5e0V5qL
-        uB7A==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Ic/NBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.2.1 DYNA|AUTH)
-        with ESMTPSA id u043b8w33A9Oo87
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Fri, 3 Apr 2020 12:09:24 +0200 (CEST)
-Date:   Fri, 3 Apr 2020 12:09:23 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Message-ID: <20200403100923.GB2652@gerhold.net>
-References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
- <20200402081349.GA932@gerhold.net>
- <20200403013119.GB20625@builder.lan>
+        Fri, 3 Apr 2020 07:16:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1585912573; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=mSmG7afz/Gw/5tgEIkf0PoeOsMIBUFVaXaoVhWb0fb4=;
+ b=La6YtZhrdrPerPDe1QAcLinpiYRM1/L4e6bQ/24Ytxd37JIKuwg2vBqoQswnTNejpMGAUdDU
+ 49WbQAzkxrbM8gGj9W3j75d5k3V++BAZHPgQwOEHpFPMhhpgtX1vWPjkbV4FIij9SViV5Tyu
+ yNqzy5NoCSolsv5U7lBmxN9J1Wg=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e871ae9.7f14ccec62d0-smtp-out-n04;
+ Fri, 03 Apr 2020 11:15:53 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 59D0EC44791; Fri,  3 Apr 2020 11:15:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9CE69C433F2;
+        Fri,  3 Apr 2020 11:15:49 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200403013119.GB20625@builder.lan>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 03 Apr 2020 16:45:49 +0530
+From:   kgunda@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH V4 1/4] backlight: qcom-wled: convert the wled bindings to
+ .yaml format
+In-Reply-To: <20200331175401.GA9791@bogus>
+References: <1584985618-25689-1-git-send-email-kgunda@codeaurora.org>
+ <1584985618-25689-2-git-send-email-kgunda@codeaurora.org>
+ <20200331175401.GA9791@bogus>
+Message-ID: <ac8f25113a3bb233c11fd7cd9e62c2cf@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 02, 2020 at 06:31:19PM -0700, Bjorn Andersson wrote:
-> On Thu 02 Apr 01:13 PDT 2020, Stephan Gerhold wrote:
+On 2020-03-31 23:24, Rob Herring wrote:
+> On Mon, Mar 23, 2020 at 11:16:55PM +0530, Kiran Gunda wrote:
+>> Convert the qcom-wled bindings from .txt to .yaml format.
+>> 
+>> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+>> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+>> ---
+>>  .../bindings/leds/backlight/qcom-wled.txt          | 154 
+>> -----------------
+>>  .../bindings/leds/backlight/qcom-wled.yaml         | 184 
+>> +++++++++++++++++++++
+>>  2 files changed, 184 insertions(+), 154 deletions(-)
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
 > 
-> > Hi,
-> > 
-> > On Wed, Apr 01, 2020 at 07:50:59PM +0200, Loic Poulain wrote:
-> > > The highest cpu frequency opps have been dropped because CPR is not
-> > > supported. However, we can simply specify operating voltage so that
-> > > they match the max corner voltages for each freq. With that, we can
-> > > support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
-> > > fine tune operating voltages and optimize power consumption.
-> > 
-> > Thanks for the patch! I was wondering how to enable the higher CPU
-> > frequencies for a while now...
-> > 
-> > I was actually quite excited to see CPR being mainlined for QCS404.
-> > If we are trying to add such a workaround (rather than CPR) for MSM8916
-> > now, does that mean it's unlikely to see CPR working for MSM8916
-> > anytime soon?
-> > 
-> > AFAICT, there is a WIP branch from Niklas Cassel here:
-> > https://git.linaro.org/people/nicolas.dechesne/niklas.cassel/kernel.git/log/?h=cpr-msm8916-mainline
-> > but it hasn't been updated for a while. (Not sure if it was working
-> > already...)
-> > 
-> > Can someone explain what is missing to make CPR work for MSM8916?
-> > 
+>> diff --git 
+>> a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml 
+>> b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+>> new file mode 100644
+>> index 0000000..8a388bf
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+>> @@ -0,0 +1,184 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/leds/backlight/qcom-wled.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Binding for Qualcomm Technologies, Inc. WLED driver
+>> +
+>> +maintainers:
+>> +  - Lee Jones <lee.jones@linaro.org>
 > 
-> CPR needs to control 3 things; VDD_APC, VDD_MX and MEMACC. On QCS404 it
-> seems we don't have to adjust VDD_MX, so the code for this is missing
-> from the driver.
+> Should be the h/w owner (you), not who applies patches.
 > 
-> So, afaict, what's missing is that rpmpd.c needs to gain support for
-> 8916, then the CPR driver needs to gain a cpr_acc_desc and compatible
-> for 8916, it needs to reference the VDDMX power domain and before/after
-> we're adjusting the corner of the CPR we need to adjust the MX according
-> to the mapping specified in the downstream kernel (i.e.  1->4, 2->5 and
-> 3->7).
+will address in next post.
+>> +
+>> +description: |
+>> +  WLED (White Light Emitting Diode) driver is used for controlling 
+>> display
+>> +  backlight that is part of PMIC on Qualcomm Technologies, Inc. 
+>> reference
+>> +  platforms. The PMIC is connected to the host processor via SPMI 
+>> bus.
+>> +
+>> +properties:
+>> +  compatible :
 > 
+> Drop the space ^
 > 
-> Unfortunately, the requirement that VDDMX (VDD_MEM I presume) must be
-> higher than VDD_APC most likely needs to be taken into consideration for
-> Loic's proposed static voltage scaling as well. Unless VDD_MEM is left
-> in Turbo mode from the boot loader I think we need to take VDDMX to
-> corner 7 for speeds 998MHz and above (i.e. where we pull VDD_APC to
-> 1.35V).
+will address in next post.
+>> +    enum:
+>> +       - qcom,pm8941-wled
+>> +       - qcom,pmi8998-wled
+>> +       - qcom,pm660l-wled
 > 
-
-I see! I wonder how hard it would be to add MSM8916 to rpmpd,
-looking at previous commits it's mainly setting up a few defines?
-
-If I understand it correctly, the OPPs from rpmpd could then be
-referenced as "required-opps" in the CPU OPP table so that VDD_MX is
-scaled together with the CPU frequency, and doesn't need to stay at
-turbo mode (like in v3 from Loic) the whole time.
-
-Scaling VDD_APC and VDD_MEM to the maximum necessary for the selected
-CPU frequency sounds like a good (temporary) solution to me until we
-have full CPR eventually at some point.
-
-Thanks,
-Stephan
-
-> > One other minor comment/question below.
-> > 
-> > > 
-> > > This patch:
-> > > - Adds missing opps and corresponding target voltages to msm8916.dtsi.
-> > > - Adds cpu-supply to apq8016-sbc.dtsi (board level info).
-> > > - Adds pm8916 spmi regulator node to pm8916.dtsi.
-> > > 
-> > > Tested with a dragonboard-410c.
-> > > 
-> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 24 ++++++++++++++++++++++++
-> > >  arch/arm64/boot/dts/qcom/msm8916.dtsi     | 24 ++++++++++++++++++++++++
-> > >  arch/arm64/boot/dts/qcom/pm8916.dtsi      |  6 ++++++
-> > >  3 files changed, 54 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > > index 037e26b..f1c1216 100644
-> > > --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > > @@ -560,6 +560,30 @@
-> > >  	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
-> > >  };
-> > >  
-> > > +&spm_regulators {
-> > > +	vdd_cpu: s2 {
-> > > +		regulator-always-on;
-> > > +		regulator-min-microvolt = <1050000>;
-> > > +		regulator-max-microvolt = <1350000>;
-> > > +	};
-> > > +};
-> > > +
-> > > +&CPU0 {
-> > > +	cpu-supply = <&vdd_cpu>;
-> > > +};
-> > > +
-> > > +&CPU1 {
-> > > +	cpu-supply = <&vdd_cpu>;
-> > > +};
-> > > +
-> > > +&CPU2 {
-> > > +	cpu-supply = <&vdd_cpu>;
-> > > +};
-> > > +
-> > > +&CPU3 {
-> > > +	cpu-supply = <&vdd_cpu>;
-> > > +};
-> > > +
-> > 
-> > I'm a bit confused about the separation here. The cpu-supply is defined
-> > in the board-specific device tree, yet the voltages are set in the
-> > common device tree below.
-> > 
-> > Is it even possible that the CPU is supplied by something other than S2
-> > and if yes, how likely is this?
-> > 
-> > I'm asking because I have two other MSM8916 devices in mainline
-> > (and a few more pending upstreaming), and it seems like I would need to
-> > duplicate this into each of them.
-> > 
-> > Thanks,
-> > Stephan
-> > 
-> > >  &smd_rpm_regulators {
-> > >  	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-> > >  	vdd_l5-supply = <&pm8916_s3>;
-> > > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > index 9f31064..9805af0 100644
-> > > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > @@ -342,15 +342,39 @@
-> > >  
-> > >  		opp-200000000 {
-> > >  			opp-hz = /bits/ 64 <200000000>;
-> > > +			opp-microvolt = <1050000>;
-> > >  		};
-> > >  		opp-400000000 {
-> > >  			opp-hz = /bits/ 64 <400000000>;
-> > > +			opp-microvolt = <1050000>;
-> > > +		};
-> > > +		opp-533330000 {
-> > > +			opp-hz = /bits/ 64 <533330000>;
-> > > +			opp-microvolt = <1150000>;
-> > >  		};
-> > >  		opp-800000000 {
-> > >  			opp-hz = /bits/ 64 <800000000>;
-> > > +			opp-microvolt = <1150000>;
-> > >  		};
-> > >  		opp-998400000 {
-> > >  			opp-hz = /bits/ 64 <998400000>;
-> > > +			opp-microvolt = <1350000>;
-> > > +		};
-> > > +		opp-1094400000 {
-> > > +			opp-hz = /bits/ 64 <1094400000>;
-> > > +			opp-microvolt = <1350000>;
-> > > +		};
-> > > +		opp-1152000000 {
-> > > +			opp-hz = /bits/ 64 <1152000000>;
-> > > +			opp-microvolt = <1350000>;
-> > > +		};
-> > > +		opp-1209600000 {
-> > > +			opp-hz = /bits/ 64 <1209600000>;
-> > > +			opp-microvolt = <1350000>;
-> > > +		};
-> > > +		opp-1363200000 {
-> > > +			opp-hz = /bits/ 64 <1363200000>;
-> > > +			opp-microvolt = <1350000>;
-> > >  		};
-> > >  	};
-> > >  
-> > > diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> > > index 0bcdf04..c9b9c4f 100644
-> > > --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> > > @@ -157,5 +157,11 @@
-> > >  			vdd-micbias-supply = <&pm8916_l13>;
-> > >  			#sound-dai-cells = <1>;
-> > >  		};
-> > > +
-> > > +		spm_regulators: spm_regulators  {
-> > > +			compatible = "qcom,pm8916-regulators";
-> > > +			#address-cells = <1>;
-> > > +			#size-cells = <1>;
-> > > +		};
-> > >  	};
-> > >  };
-> > > -- 
-> > > 2.7.4
-> > > 
+> Wrong indent (1 space too many).
+> 
+will address in next post.
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  default-brightness:
+>> +    maxItems: 1
+> 
+> maxItems is for arrays and this is a single scalar.
+> 
+>> +    description:
+>> +      brightness value on boot, value from 0-4095.
+> 
+> 0-4095 sounds like a constraint.
+> 
+will address in next post.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> 
+> There should be a common definition for this.
+> 
+will address in next post.
+>> +        default: 2048
+>> +
+>> +  label:
+>> +    maxItems: 1
+>> +    description:
+>> +      The name of the backlight device.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/string
+> 
+> Already has a type. Just 'label: true' is enough.
+> 
+will address in next post.
+>> +
+>> +  qcom,cs-out:
+>> +    description:
+>> +      enable current sink output.
+>> +      This property is supported only for PM8941.
+>> +    type: boolean
+>> +
+>> +  qcom,cabc:
+>> +    description:
+>> +      enable content adaptive backlight control.
+>> +    type: boolean
+>> +
+>> +  qcom,ext-gen:
+>> +    description:
+>> +      use externally generated modulator signal to dim.
+>> +      This property is supported only for PM8941.
+>> +    type: boolean
+>> +
+>> +  qcom,current-limit:
+>> +    maxItems: 1
+> 
+> Not an array.
+> 
+will address in next post.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      mA; per-string current limit; value from 0 to 25 with
+> 
+> 25 sounds like a constraint.
+> 
+will address in next post.
+>> +      1 mA step. This property is supported only for pm8941.
+>> +    default: 20
+>> +
+>> +  qcom,current-limit-microamp:
+>> +    maxItems: 1
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> 
+> properties with unit suffix already have a type.
+> 
+will address in next post.
+>> +    description:
+>> +      uA; per-string current limit; value from 0 to 30000 with
+>> +      2500 uA step.
+> 
+> steps can be expressed using 'multipleOf'
+> 
+will address in next post.
+>> +    default: 25
+> 
+> 25 can never be a multiple of 2500
+> 
+will correct in next post.
+>> +
+>> +  qcom,current-boost-limit:
+>> +    maxItems: 1
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      mA; boost current limit.
+>> +      For pm8941 one of 105, 385, 525, 805, 980, 1260, 1400, 1680.
+>> +      Default, 805 mA.
+>> +      For pmi8998 one of 105, 280, 450, 620, 970, 1150, 1300,
+>> +      1500. Default 970 mA.
+> 
+> Constraints.
+> 
+will address in next post.
+>> +
+>> +  qcom,switching-freq:
+>> +    maxItems: 1
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      kHz; switching frequency; one of 600, 640, 685, 738,
+>> +      800, 872, 960, 1066, 1200, 1371, 1600, 1920, 2400, 3200,
+>> +      4800, 9600.
+>> +      Default for pm8941 1600 kHz
+>> +               for pmi8998 800 kHz
+> 
+> Constraints!
+> 
+will address in next post.
+>> +
+>> +  qcom,ovp:
+>> +    maxItems: 1
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      V; Over-voltage protection limit; one of 27, 29, 32, 35. 
+>> Default 29V
+>> +      This property is supported only for PM8941.
+>> +
+>> +  qcom,ovp-millivolt:
+>> +    maxItems: 1
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      mV; Over-voltage protection limit;
+>> +      For pmi8998 one of 18100, 19600, 29600, 31100.
+>> +      Default 29600 mV.
+>> +      If this property is not specified for PM8941, it
+>> +      falls back to "qcom,ovp" property.
+>> +
+>> +  qcom,num-strings:
+>> +    maxItems: 1
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      number of led strings attached;
+>> +      value for PM8941 from 1 to 3. Default 2
+>> +      For PMI8998 from 1 to 4.
+>> +
+>> +  interrupts:
+>> +    maxItems: 2
+> 
+> items:
+>   - description: ...
+>   - description: ...
+> 
+will address in next post.
+>> +    description:
+>> +      Interrupts associated with WLED. This should be
+>> +      "short" and "ovp" interrupts. Interrupts can be
+>> +      specified as per the encoding listed under
+>> +      Documentation/devicetree/bindings/spmi/
+>> +      qcom,spmi-pmic-arb.txt.
+> 
+> encoding is outside the scope of the binding.
+> 
+will address in next post.
+>> +
+>> +  interrupt-names:
+>> +    description:
+>> +      Interrupt names associated with the interrupts.
+>> +      Must be "short" and "ovp". The short circuit detection
+>> +      is not supported for PM8941.
+> 
+> Names should be constraints.
+> 
+will address in next post.
+>> +
+>> +  qcom,enabled-strings:
+>> +    maxItems: 1
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    description:
+>> +      Array of the WLED strings numbered from 0 to 3. Each
+>> +      string of leds are operated individually. Specify the
+>> +      list of strings used by the device. Any combination of
+>> +      led strings can be used.
+>> +
+>> +  qcom,external-pfet:
+>> +    description:
+>> +      Specify if external PFET control for short circuit
+>> +      protection is used. This property is supported only
+>> +      for PMI8998.
+>> +    type: boolean
+>> +
+>> +  qcom,auto-string-detection:
+>> +    description:
+>> +      Enables auto-detection of the WLED string configuration.
+>> +      This feature is not supported for PM8941.
+>> +    type: boolean
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - label
+>> +
+>> +examples:
+>> +  - |
+>> +    pm8941-wled@d800 {
+> 
+> backlight@...
+> 
+will add in next post.
+>> +        compatible = "qcom,pm8941-wled";
+>> +        reg = <0xd800 0x100>;
+>> +        label = "backlight";
+>> +
+>> +        qcom,cs-out;
+>> +        qcom,current-limit = <20>;
+>> +        qcom,current-boost-limit = <805>;
+>> +        qcom,switching-freq = <1600>;
+>> +        qcom,ovp = <29>;
+>> +        qcom,num-strings = <2>;
+>> +        qcom,enabled-strings = <0 1>;
+>> +     };
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>>  a Linux Foundation Collaborative Project
+>> 
