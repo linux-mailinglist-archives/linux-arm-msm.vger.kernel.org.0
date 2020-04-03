@@ -2,94 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 85FD619D2FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 11:02:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEBC519D469
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 11:53:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390632AbgDCJBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 05:01:47 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:49570 "EHLO extserv.mm-sol.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390595AbgDCJBr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 05:01:47 -0400
-Received: from [192.168.1.4] (212-5-158-241.ip.btc-net.bg [212.5.158.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id 596D7CFB0;
-        Fri,  3 Apr 2020 12:01:44 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1585904504; bh=EKR3xtECeHY0HmIwexSCYtXNNqfKBdPLj3t2R7S6Qs0=;
-        h=Subject:To:Cc:From:Date:From;
-        b=pMikx87MoPJJH0TpBkHLHZ+/IaFu1zzrYSOTx7Er4YUi9wzhJFhWFnOUIIq2jiQC+
-         pCy8gAk+cmja01Sn1X2EV6JakSIeGxgVu9DOjCNlePqk1oJt3Cl/YUk5M4MNMukF9o
-         bJluTaD9YYPuReHkJNhCkkML8RFpAOtnK6h4fpow3evdBkVyYKYOKDBd27HLLqMaK+
-         yecmZQoZxfKKzXoT7CELbFNRKd57rtJkBymduvk3Y0RFF7gkLXNsHiZYOxib5GOsjG
-         9UN7WGXAJLiBvBfZWfzpUhDEB3gNRdbQNFtffKJvMkEn8YiorqyoLsK7yCelibFHOG
-         34T872L2AfnYQ==
-Subject: Re: [PATCH v2 00/10] Multiple fixes in PCIe qcom driver
-To:     Ansuel Smith <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200402121148.1767-1-ansuelsmth@gmail.com>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <092baa78-24f0-258b-d7c8-fba62b779d96@mm-sol.com>
-Date:   Fri, 3 Apr 2020 12:01:42 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1727950AbgDCJxR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 05:53:17 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.25]:19970 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727947AbgDCJxQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Apr 2020 05:53:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1585907591;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=UdEnWQI4QVmP4n1VO7IEyMuUZm7b7WQTgnfclnbcQzo=;
+        b=K/0LoJRIr/EtVhL8NtmCoCs2urM0HiOl4If2JGqn7olrWwcH86bOA4m2GDUb6sdsmL
+        psnBoHfinorzC4OOF/OnRNnJnQAic1z3lPHGb7iRJ7QNjEe0MbK6mOdMTQeRzElWZzIK
+        qVPN/rjFXde2Lwu+QXf6Q/7LbdFeyIjhOKX/fWWZRJzxqdj7qe7j4iGLpPHK7NzNW1OA
+        XJQV0zpUleHP2fxvAl+0aIEt2UaFYd/pfOWQQ9jT8TZOcjZy80QCWETxh8LN2nKw2tCL
+        e1BbZMfV+Wv1BBLXDtfWUSyFhn0yZLsM2AL6cuULNAaqTiAaj/8bygw+UgaOuEWS/UgM
+        dwTg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Ic/NBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.2.1 DYNA|AUTH)
+        with ESMTPSA id u043b8w339r7nzU
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Fri, 3 Apr 2020 11:53:07 +0200 (CEST)
+Date:   Fri, 3 Apr 2020 11:53:02 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org
+Subject: Re: [PATCH v2] arch: arm64: dts: msm8916: Add missing cpu opps
+Message-ID: <20200403095302.GA2652@gerhold.net>
+References: <1585821635-28324-1-git-send-email-loic.poulain@linaro.org>
+ <20200402111432.GA95396@gerhold.net>
+ <20200403011011.GA20625@builder.lan>
 MIME-Version: 1.0
-In-Reply-To: <20200402121148.1767-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200403011011.GA20625@builder.lan>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ansuel,
+On Thu, Apr 02, 2020 at 06:10:11PM -0700, Bjorn Andersson wrote:
+> On Thu 02 Apr 04:14 PDT 2020, Stephan Gerhold wrote:
+> 
+> > Hi,
+> > 
+> > On Thu, Apr 02, 2020 at 12:00:35PM +0200, Loic Poulain wrote:
+> > > The highest cpu frequency opps have been dropped because CPR is not
+> > > supported. However, we can simply specify operating voltage so that
+> > > they match the max corner voltages for each freq. With that, we can
+> > > support up to 1.2Ghz. Ideally, msm8916 CPR should be implemented to
+> > > fine tune operating voltages and optimize power consumption.
+> > > 
+> > > The SPMI interface is directly used for AP regulator control since
+> > > it offers a minimal transition latency (maximum transition latency
+> > > with spmi is 250us, with rpm is 970us as reported by cpufreq-info).
+> > > 
+> > > This patch:
+> > > - Adds missing opps and corresponding target voltages to msm8916.dtsi.
+> > > - Adds pm8916 spmi regulator node to pm8916.dtsi.
+> > > 
+> > > Tested with a dragonboard-410c.
+> > > 
+> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > > ---
+> > >  v2: - move cpu-supply to msm8916 since pm8916 s2 is tighly coupled
+> > >      to AP core (cf pm8916 specification) + other pm8916 supplies
+> > >      are already defined in msm8916.
+> > 
+> > Thanks for making these changes!
+> > 
+> > I will try to test this on my devices later today,
+> > and will ask some more people to test it on theirs.
+> > 
+> > What is a good way to test that it works correctly?
+> > If the device manages to reach the higher frequencies and still works
+> > correctly it's fine?
+> > 
+> > >      - s2 min/max are specified in pm8916 spec
+> > 
+> > Regarding this I have a small concern below.
+> > 
+> > >      - Removed 1.36GHz op since freq seems capped to 1.21 anyway
+> > > 
+> > >  arch/arm64/boot/dts/qcom/msm8916.dtsi | 25 +++++++++++++++++++++++++
+> > >  arch/arm64/boot/dts/qcom/pm8916.dtsi  | 13 +++++++++++++
+> > >  2 files changed, 38 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > > index 9f31064..7407157 100644
+> > > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> > > @@ -103,6 +103,7 @@
+> > >  			next-level-cache = <&L2_0>;
+> > >  			enable-method = "psci";
+> > >  			clocks = <&apcs>;
+> > > +			cpu-supply = <&pm8916_spmi_s2>;
+> > >  			operating-points-v2 = <&cpu_opp_table>;
+> > >  			#cooling-cells = <2>;
+> > >  			power-domains = <&CPU_PD0>;
+> > > @@ -116,6 +117,7 @@
+> > >  			next-level-cache = <&L2_0>;
+> > >  			enable-method = "psci";
+> > >  			clocks = <&apcs>;
+> > > +			cpu-supply = <&pm8916_spmi_s2>;
+> > >  			operating-points-v2 = <&cpu_opp_table>;
+> > >  			#cooling-cells = <2>;
+> > >  			power-domains = <&CPU_PD1>;
+> > > @@ -129,6 +131,7 @@
+> > >  			next-level-cache = <&L2_0>;
+> > >  			enable-method = "psci";
+> > >  			clocks = <&apcs>;
+> > > +			cpu-supply = <&pm8916_spmi_s2>;
+> > >  			operating-points-v2 = <&cpu_opp_table>;
+> > >  			#cooling-cells = <2>;
+> > >  			power-domains = <&CPU_PD2>;
+> > > @@ -142,6 +145,7 @@
+> > >  			next-level-cache = <&L2_0>;
+> > >  			enable-method = "psci";
+> > >  			clocks = <&apcs>;
+> > > +			cpu-supply = <&pm8916_spmi_s2>;
+> > >  			operating-points-v2 = <&cpu_opp_table>;
+> > >  			#cooling-cells = <2>;
+> > >  			power-domains = <&CPU_PD3>;
+> > > @@ -342,15 +346,35 @@
+> > >  
+> > >  		opp-200000000 {
+> > >  			opp-hz = /bits/ 64 <200000000>;
+> > > +			opp-microvolt = <1050000>;
+> > >  		};
+> > >  		opp-400000000 {
+> > >  			opp-hz = /bits/ 64 <400000000>;
+> > > +			opp-microvolt = <1050000>;
+> > > +		};
+> > > +		opp-533330000 {
+> > > +			opp-hz = /bits/ 64 <533330000>;
+> > > +			opp-microvolt = <1150000>;
+> > >  		};
+> > >  		opp-800000000 {
+> > >  			opp-hz = /bits/ 64 <800000000>;
+> > > +			opp-microvolt = <1150000>;
+> > >  		};
+> > >  		opp-998400000 {
+> > >  			opp-hz = /bits/ 64 <998400000>;
+> > > +			opp-microvolt = <1350000>;
+> > > +		};
+> > > +		opp-1094400000 {
+> > > +			opp-hz = /bits/ 64 <1094400000>;
+> > > +			opp-microvolt = <1350000>;
+> > > +		};
+> > > +		opp-1152000000 {
+> > > +			opp-hz = /bits/ 64 <1152000000>;
+> > > +			opp-microvolt = <1350000>;
+> > > +		};
+> > > +		opp-1209600000 {
+> > > +			opp-hz = /bits/ 64 <1209600000>;
+> > > +			opp-microvolt = <1350000>;
+> > >  		};
+> > >  	};
+> > >  
+> > > @@ -1605,6 +1629,7 @@
+> > >  					compatible = "qcom,rpm-pm8916-regulators";
+> > >  
+> > >  					pm8916_s1: s1 {};
+> > > +					/* s2 is directly controlled via spmi */
+> > >  					pm8916_s3: s3 {};
+> > >  					pm8916_s4: s4 {};
+> > >  
+> > > diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> > > index 0bcdf04..73d3b28 100644
+> > > --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> > > @@ -157,5 +157,18 @@
+> > >  			vdd-micbias-supply = <&pm8916_l13>;
+> > >  			#sound-dai-cells = <1>;
+> > >  		};
+> > > +
+> > > +		spmi_regulators: spmi_regulators  {
+> > > +			compatible = "qcom,pm8916-regulators";
+> > > +			#address-cells = <1>;
+> > > +			#size-cells = <1>;
+> > > +
+> > > +			pm8916_spmi_s2: s2 {
+> > > +				regulator-always-on;
+> > > +				regulator-min-microvolt = <900000>;
+> > > +				regulator-max-microvolt = <1562000>;
+> > 
+> > This might be just me but I'm usually cautious when it comes to setting
+> > up the regulator constraints.
+> > 
+> > One way is to set the regulator constraints based on the capabilities of
+> > the regulator itself (which is what you did here I think)?
+> > 
+> 
+> The capabilities of the regulator goes in the regulator driver, what
+> should be specified in the DT are the constraints on this particular
+> board; i.e. the constraints of the devices attached to the regulator.
+> 
+> > The other way is to only allow voltages that actually make sense;
+> > to ensure that setting incorrect voltages (for whatever reason) will
+> > fail. (I actually know someone who managed to break a board by setting
+> > some regulator voltages incorrectly...)
+> > 
+> > We don't actually set anything < 1050000 or > 1350000.
+> > And if I'm reading the datasheet correctly, the CPU cores are not even
+> > specified to operate correctly at > 1.42V.
+> > 
+> 
+> Right, per the datasheet VDD_APC's operational range is 0.97V to 1.42V.
+> So I would like the min/max here to reflect that - to define the
+> valid range for this regulator on this (these) board(s).
+> 
+> 
+> The fact that we only vote for 1.05-1.35 is presumably a result of us
+> not using CPR, which possible would extend that further. So this feels
+> like a property of the client.
+> 
+> > I would personally prefer to keep the min/max voltages from your
+> > previous patch set, i.e.
+> > 
+> > 	regulator-min-microvolt = <1050000>;
+> > 	regulator-max-microvolt = <1350000>;
+> > 
+> > In case a higher/lower voltage is needed it could still be changed later.
+> > 
+> > But maybe that's just me being overly cautious?
+> > 
+> 
+> I prefer that adjustments in the operating points (or a move to CPR)
+> wouldn't require modifying the valid range of the regulator. I.e. that
+> we match the operating range of VDD_APC here.
+> 
+> But thanks for being cautious, I missed that the specified ranges was
+> outside VDD_APC.
+> 
 
-Please run "checkpatch --strict" for the next version.
+Okay, that seems reasonable :)
 
-On 4/2/20 3:11 PM, Ansuel Smith wrote:
-> This contains multiple fix for PCIe qcom driver.
-> Some optional reset and clocks were missing.
-> Fix a problem with no PARF programming that cause kernel lock on load.
-> Add support to force gen 1 speed if needed. (due to hardware limitation)
-> Add ipq8064 rev 2 support that use a different tx termination offset.
-> 
-> v2:
-> * Drop iATU programming (already done in pcie init)
-> * Use max-link-speed instead of force-gen1 custom definition
-> * Drop MRRS to 256B (Can't find a realy reason why this was suggested)
-> * Introduce a new variant for different revision of ipq8064
-> 
-> Abhishek Sahu (1):
->   PCIe: qcom: change duplicate PCI reset to phy reset
-> 
-> Ansuel Smith (7):
->   PCIe: qcom: add missing ipq806x clocks in PCIe driver
->   devicetree: bindings: pci: add missing clks to qcom,pcie
->   PCIe: qcom: Fixed pcie_phy_clk branch issue
->   PCIe: qcom: add missing reset for ipq806x
->   devicetree: bindings: pci: add ext reset to qcom,pcie
->   PCIe: qcom: fix init problem with missing PARF programming
->   devicetree: bindings: pci: add ipq8064 rev 2 variant to qcom,pcie
-> 
-> Sham Muthayyan (2):
->   PCIe: qcom: add ipq8064 rev2 variant and set tx term offset
->   PCIe: qcom: add Force GEN1 support
-> 
->  .../devicetree/bindings/pci/qcom,pcie.txt     |  56 +++++++-
->  drivers/pci/controller/dwc/pcie-qcom.c        | 134 +++++++++++++++---
->  2 files changed, 167 insertions(+), 23 deletions(-)
-> 
-
--- 
-regards,
-Stan
+Thanks,
+Stephan
