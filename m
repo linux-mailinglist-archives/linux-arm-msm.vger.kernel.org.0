@@ -2,171 +2,387 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E05D19DD1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 19:50:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8990C19DD4C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 20:00:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404148AbgDCRuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 13:50:16 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:46507 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404230AbgDCRuQ (ORCPT
+        id S1728329AbgDCSAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 14:00:34 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.162]:13396 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727989AbgDCSAd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 13:50:16 -0400
-Received: by mail-qk1-f196.google.com with SMTP id u4so8857640qkj.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 10:50:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9cI4scVoKJKw1b/HO6QaDyp3LKbjdrfchQuuiHLWjWc=;
-        b=rLMMh5/uZTRR5enw62HL/VSaxyamFjN4+UGzBnS8klJ3U4s3RFmAAyCL4wGrLkwMpq
-         52GPlvDoYnNkCsbId8slVjxMWH/y2XSa5iO/SWWdtbE1VTehRN2UhVzyxcHcweV6tfe7
-         2trbZ0MYKH6SqYhemT4a9SRZPY9m9xaWs9UVfR90W/8FxBdn/kwXkx4vcMf+OVFV+R+Y
-         MIWBr6DA7YvHjhy/GpAYvvRn0uvyleJk10fTq1YLU2+g57CrXsT8C8V7KL4NSMr6eVf0
-         KAsUBdiCPDu823eqBD98pLdlOHOXeUqHH9DDsP3fbQrEz/lZdyEyaP9WOpvKfIHaww3B
-         Yfnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9cI4scVoKJKw1b/HO6QaDyp3LKbjdrfchQuuiHLWjWc=;
-        b=sDeuRTfjGRU84XRVTieCE314mFq3fuMYHOliw0+XMRaFdx3xpdjhypRDw/gRSy3l77
-         7tOWKJWA9D9Jr9jxGbF9afsjABxsctUoMVKpTE4vjKcD++0+puy6D/1AeSqWyeEVFHU8
-         jyVJmaazguaTdmUzzzffIvpiTANAK7bJmr14Ed+yD077sBAF0dlPXdbZAWn6Bw01yyYG
-         Qh4iAlgVECTcZT0SXLreLq12fKUk4MiDQvZ+ZKY89amLBliPKs4aRXyyHNhZrew6q8Wj
-         cy+hvC2VsMqbuV5+DRjoikk61yDIx7umJhsmgkeJvIsMEBzYQNTE/yFjdPzpb6mPztwV
-         kEdQ==
-X-Gm-Message-State: AGi0PubhH66O53WnmIZeAdKl5DZ9YjbCaWvhki4rn8o6COOPQbkyQbZJ
-        hgU0GDChlU7nzCCemkERcVCWeA==
-X-Google-Smtp-Source: APiQypLbHKb7rWYJp6CQb5HJWjxuJFaOwE+O1MVmtbr6e7yua8Mc9Jgufd4yiFLoFk5gnocLafzasQ==
-X-Received: by 2002:ae9:ee01:: with SMTP id i1mr10181110qkg.498.1585936215146;
-        Fri, 03 Apr 2020 10:50:15 -0700 (PDT)
-Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id 77sm6821225qkh.26.2020.04.03.10.50.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 10:50:14 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>
-Cc:     linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] remoteproc: qcom_q6v5_mss: fix q6v5_probe() error paths
-Date:   Fri,  3 Apr 2020 12:50:05 -0500
-Message-Id: <20200403175005.17130-4-elder@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200403175005.17130-1-elder@linaro.org>
-References: <20200403175005.17130-1-elder@linaro.org>
+        Fri, 3 Apr 2020 14:00:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1585936831;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=nBCuX7REzDwz4iqmUhXnbY65cVvRnb7jf20gvzeR2U4=;
+        b=lg+afOc11gfmXPp6H/oM76trtB5byLXv7w2Ozl3X9dMaGQvwzwIdSolHozaqnAzu9U
+        NcfSVZGAnxLPavbF9Nhrape2bvgrgvttiqhW3BSTwuWr3xjeIrtNKET04q1IV2Afo78h
+        OVaZWtTO+WxbocTXEWYCKwWFhZe1lAVY6hHS4bdsIqlF6DH3GlMVx6OM2bHCNZ+PCbIk
+        VPX8OKZ+JzV9AFzz/K5K6pbPaomXsjKdfi3HIgQXkKGmuz49xXDHjwvTWWbqxczq+l8l
+        ki/RmLxZIrutnOUk2b4hlQjqBzP1SQAP/o/dAkLG3f5WHnEMl5fgi3jGcXoIEyxmeDHI
+        Mryw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Ic/NBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.2.1 DYNA|AUTH)
+        with ESMTPSA id u043b8w33I0VqcB
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Fri, 3 Apr 2020 20:00:31 +0200 (CEST)
+Date:   Fri, 3 Apr 2020 20:00:27 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200403175934.GA96064@gerhold.net>
+References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+ <20200402081349.GA932@gerhold.net>
+ <20200403013119.GB20625@builder.lan>
+ <20200403100923.GB2652@gerhold.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200403100923.GB2652@gerhold.net>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If an error occurs in q6v5_probe() after the proxy power domains
-are attached, but before qcom_add_ipa_notify_subdev() is called,
-qcom_remove_ipa_notify_subdev() is called in the error path, which
-is a bug.  Fix this by having that call be reached through a
-different label.
+On Fri, Apr 03, 2020 at 12:09:25PM +0200, Stephan Gerhold wrote:
+> On Thu, Apr 02, 2020 at 06:31:19PM -0700, Bjorn Andersson wrote:
+> > On Thu 02 Apr 01:13 PDT 2020, Stephan Gerhold wrote:
+> > 
+> > > Hi,
+> > > 
+> > > On Wed, Apr 01, 2020 at 07:50:59PM +0200, Loic Poulain wrote:
+> > > > The highest cpu frequency opps have been dropped because CPR is not
+> > > > supported. However, we can simply specify operating voltage so that
+> > > > they match the max corner voltages for each freq. With that, we can
+> > > > support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
+> > > > fine tune operating voltages and optimize power consumption.
+> > > 
+> > > Thanks for the patch! I was wondering how to enable the higher CPU
+> > > frequencies for a while now...
+> > > 
+> > > I was actually quite excited to see CPR being mainlined for QCS404.
+> > > If we are trying to add such a workaround (rather than CPR) for MSM8916
+> > > now, does that mean it's unlikely to see CPR working for MSM8916
+> > > anytime soon?
+> > > 
+> > > AFAICT, there is a WIP branch from Niklas Cassel here:
+> > > https://git.linaro.org/people/nicolas.dechesne/niklas.cassel/kernel.git/log/?h=cpr-msm8916-mainline
+> > > but it hasn't been updated for a while. (Not sure if it was working
+> > > already...)
+> > > 
+> > > Can someone explain what is missing to make CPR work for MSM8916?
+> > > 
+> > 
+> > CPR needs to control 3 things; VDD_APC, VDD_MX and MEMACC. On QCS404 it
+> > seems we don't have to adjust VDD_MX, so the code for this is missing
+> > from the driver.
+> > 
+> > So, afaict, what's missing is that rpmpd.c needs to gain support for
+> > 8916, then the CPR driver needs to gain a cpr_acc_desc and compatible
+> > for 8916, it needs to reference the VDDMX power domain and before/after
+> > we're adjusting the corner of the CPR we need to adjust the MX according
+> > to the mapping specified in the downstream kernel (i.e.  1->4, 2->5 and
+> > 3->7).
+> > 
+> > 
+> > Unfortunately, the requirement that VDDMX (VDD_MEM I presume) must be
+> > higher than VDD_APC most likely needs to be taken into consideration for
+> > Loic's proposed static voltage scaling as well. Unless VDD_MEM is left
+> > in Turbo mode from the boot loader I think we need to take VDDMX to
+> > corner 7 for speeds 998MHz and above (i.e. where we pull VDD_APC to
+> > 1.35V).
+> > 
+> 
+> I see! I wonder how hard it would be to add MSM8916 to rpmpd,
+> looking at previous commits it's mainly setting up a few defines?
+> 
+> If I understand it correctly, the OPPs from rpmpd could then be
+> referenced as "required-opps" in the CPU OPP table so that VDD_MX is
+> scaled together with the CPU frequency, and doesn't need to stay at
+> turbo mode (like in v3 from Loic) the whole time.
+> 
 
-Additionally, if qcom_add_sysmon_subdev() returns an error, the
-subdevs that had already been added will not be properly removed.
-Fix this by having the added subdevs (including the IPA notify one)
-be removed in this case.
+I have been thinking about this some more and I think I came up with
+some changes that make sense (but not entirely sure).
 
-Finally, arrange for the sysmon subdev to be removed before the rest
-in the event rproc_add() returns an error.
+Based on the available downstream sources I guessed the defines to add
+for MSM8916 to the rpmpd driver. Then I added the VDD_MX OPPs as
+"required-opps" to the CPU OPP table so it would vote for the appopriate
+corners (with the mapping you mentioned above).
 
-Have cleanup activity done in q6v5_remove() be done in the reverse
-order they are set up in q6v5_probe() (the same order they're done
-in the q6v5_probe() error path).  Use a local variable for the
-remoteproc pointer, which is used repeatedly.
+I haven't tested it yet, maybe I can get some feedback first if the code
+seems reasonable or if I'm missing something obvious? :)
 
-Remove errant semicolons at the end of two function blocks.
+Also: Is there a good way to validate these changes?
+I suppose I could check the genpd state but that wouldn't tell me if the
+corner was applied correctly. Maybe I can check the actual voltage
+through the SPMI interface, hm...
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/remoteproc/qcom_q6v5_mss.c | 31 ++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+If this seems like a good approach I can split up the changes in
+reasonable patches and post it separately. For now the full diff below.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 60cdf699ea80..5475d4f808a8 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -367,7 +367,7 @@ static int q6v5_pds_enable(struct q6v5 *qproc, struct device **pds,
- 	}
- 
- 	return ret;
--};
-+}
- 
- static void q6v5_pds_disable(struct q6v5 *qproc, struct device **pds,
- 			     size_t pd_count)
-@@ -1527,7 +1527,7 @@ static int q6v5_pds_attach(struct device *dev, struct device **devs,
- 		dev_pm_domain_detach(devs[i], false);
- 
- 	return ret;
--};
-+}
- 
- static void q6v5_pds_detach(struct q6v5 *qproc, struct device **pds,
- 			    size_t pd_count)
-@@ -1766,17 +1766,23 @@ static int q6v5_probe(struct platform_device *pdev)
- 	qproc->sysmon = qcom_add_sysmon_subdev(rproc, "modem", 0x12);
- 	if (IS_ERR(qproc->sysmon)) {
- 		ret = PTR_ERR(qproc->sysmon);
--		goto detach_proxy_pds;
-+		goto remove_subdevs;
- 	}
- 
- 	ret = rproc_add(rproc);
- 	if (ret)
--		goto detach_proxy_pds;
-+		goto remove_sysmon_subdev;
- 
- 	return 0;
- 
-+remove_sysmon_subdev:
-+	qcom_remove_sysmon_subdev(qproc->sysmon);
-+remove_subdevs:
-+	qcom_remove_ipa_notify_subdev(qproc->rproc, &qproc->ipa_notify_subdev);
-+	qcom_remove_ssr_subdev(rproc, &qproc->ssr_subdev);
-+	qcom_remove_smd_subdev(rproc, &qproc->smd_subdev);
-+	qcom_remove_glink_subdev(rproc, &qproc->glink_subdev);
- detach_proxy_pds:
--	qcom_remove_ipa_notify_subdev(qproc->rproc, &qproc->ipa_notify_subdev);
- 	q6v5_pds_detach(qproc, qproc->proxy_pds, qproc->proxy_pd_count);
- detach_active_pds:
- 	q6v5_pds_detach(qproc, qproc->active_pds, qproc->active_pd_count);
-@@ -1789,19 +1795,20 @@ static int q6v5_probe(struct platform_device *pdev)
- static int q6v5_remove(struct platform_device *pdev)
- {
- 	struct q6v5 *qproc = platform_get_drvdata(pdev);
-+	struct rproc *rproc = qproc->rproc;
- 
--	rproc_del(qproc->rproc);
-+	rproc_del(rproc);
- 
- 	qcom_remove_sysmon_subdev(qproc->sysmon);
--	qcom_remove_ipa_notify_subdev(qproc->rproc, &qproc->ipa_notify_subdev);
--	qcom_remove_glink_subdev(qproc->rproc, &qproc->glink_subdev);
--	qcom_remove_smd_subdev(qproc->rproc, &qproc->smd_subdev);
--	qcom_remove_ssr_subdev(qproc->rproc, &qproc->ssr_subdev);
-+	qcom_remove_ipa_notify_subdev(rproc, &qproc->ipa_notify_subdev);
-+	qcom_remove_ssr_subdev(rproc, &qproc->ssr_subdev);
-+	qcom_remove_smd_subdev(rproc, &qproc->smd_subdev);
-+	qcom_remove_glink_subdev(rproc, &qproc->glink_subdev);
- 
--	q6v5_pds_detach(qproc, qproc->active_pds, qproc->active_pd_count);
- 	q6v5_pds_detach(qproc, qproc->proxy_pds, qproc->proxy_pd_count);
-+	q6v5_pds_detach(qproc, qproc->active_pds, qproc->active_pd_count);
- 
--	rproc_free(qproc->rproc);
-+	rproc_free(rproc);
- 
- 	return 0;
- }
--- 
-2.20.1
+Stephan
 
+ arch/arm64/boot/dts/qcom/msm8916.dtsi  | 65 +++++++++++++++++++++++++++++-----
+ drivers/cpufreq/cpufreq-dt-platdev.c   |  1 +
+ drivers/cpufreq/qcom-cpufreq-nvmem.c   | 11 ++++++
+ drivers/soc/qcom/rpmpd.c               | 21 +++++++++++
+ include/dt-bindings/power/qcom-rpmpd.h |  7 ++++
+ 5 files changed, 96 insertions(+), 9 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index b0a82447976a..5b8fce8609d0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -10,6 +10,7 @@
+ #include <dt-bindings/soc/qcom,apr.h>
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/thermal/thermal.h>
++#include <dt-bindings/power/qcom-rpmpd.h>
+ 
+ / {
+ 	interrupt-parent = <&intc>;
+@@ -108,8 +109,8 @@ CPU0: cpu@0 {
+ 			cpu-supply = <&pm8916_spmi_s2>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+-			power-domains = <&CPU_PD0>;
+-			power-domain-names = "psci";
++			power-domains = <&CPU_PD0>, <&rpmpd MSM8916_VDDMX_AO>;
++			power-domain-names = "psci", "mx";
+ 		};
+ 
+ 		CPU1: cpu@1 {
+@@ -122,8 +123,8 @@ CPU1: cpu@1 {
+ 			cpu-supply = <&pm8916_spmi_s2>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+-			power-domains = <&CPU_PD1>;
+-			power-domain-names = "psci";
++			power-domains = <&CPU_PD1>, <&rpmpd MSM8916_VDDMX_AO>;
++			power-domain-names = "psci", "mx";
+ 		};
+ 
+ 		CPU2: cpu@2 {
+@@ -136,8 +137,8 @@ CPU2: cpu@2 {
+ 			cpu-supply = <&pm8916_spmi_s2>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+-			power-domains = <&CPU_PD2>;
+-			power-domain-names = "psci";
++			power-domains = <&CPU_PD2>, <&rpmpd MSM8916_VDDMX_AO>;
++			power-domain-names = "psci", "mx";
+ 		};
+ 
+ 		CPU3: cpu@3 {
+@@ -150,8 +151,8 @@ CPU3: cpu@3 {
+ 			cpu-supply = <&pm8916_spmi_s2>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+-			power-domains = <&CPU_PD3>;
+-			power-domain-names = "psci";
++			power-domains = <&CPU_PD3>, <&rpmpd MSM8916_VDDMX_AO>;
++			power-domain-names = "psci", "mx";
+ 		};
+ 
+ 		L2_0: l2-cache {
+@@ -343,40 +344,52 @@ modem_alert0: trip-point@0 {
+ 	};
+ 
+ 	cpu_opp_table: cpu_opp_table {
+-		compatible = "operating-points-v2";
++		/*
++		 * FIXME: The naming here is really weird, since MSM8916 does
++		 * not have kyro. Maybe we should add a more generic compatible?
++		 */
++		compatible = "operating-points-v2-kryo-cpu";
+ 		opp-shared;
+ 
+ 		opp-200000000 {
+ 			opp-hz = /bits/ 64 <200000000>;
+ 			opp-microvolt = <1050000>;
++			required-opps = <&rpmpd_opp_svs_soc>;
+ 		};
+ 		opp-400000000 {
+ 			opp-hz = /bits/ 64 <400000000>;
+ 			opp-microvolt = <1050000>;
++			required-opps = <&rpmpd_opp_svs_soc>;
+ 		};
+ 		opp-533330000 {
+ 			opp-hz = /bits/ 64 <533330000>;
+ 			opp-microvolt = <1150000>;
++			required-opps = <&rpmpd_opp_nom>;
+ 		};
+ 		opp-800000000 {
+ 			opp-hz = /bits/ 64 <800000000>;
+ 			opp-microvolt = <1150000>;
++			required-opps = <&rpmpd_opp_nom>;
+ 		};
+ 		opp-998400000 {
+ 			opp-hz = /bits/ 64 <998400000>;
+ 			opp-microvolt = <1350000>;
++			required-opps = <&rpmpd_opp_super_turbo>;
+ 		};
+ 		opp-1094400000 {
+ 			opp-hz = /bits/ 64 <1094400000>;
+ 			opp-microvolt = <1350000>;
++			required-opps = <&rpmpd_opp_super_turbo>;
+ 		};
+ 		opp-1152000000 {
+ 			opp-hz = /bits/ 64 <1152000000>;
+ 			opp-microvolt = <1350000>;
++			required-opps = <&rpmpd_opp_super_turbo>;
+ 		};
+ 		opp-1209600000 {
+ 			opp-hz = /bits/ 64 <1209600000>;
+ 			opp-microvolt = <1350000>;
++			required-opps = <&rpmpd_opp_super_turbo>;
+ 		};
+ 	};
+ 
+@@ -1710,6 +1723,40 @@ rpmcc: qcom,rpmcc {
+ 					#clock-cells = <1>;
+ 				};
+ 
++				rpmpd: power-controller {
++					compatible = "qcom,msm8916-rpmpd";
++					#power-domain-cells = <1>;
++					operating-points-v2 = <&rpmpd_opp_table>;
++
++					rpmpd_opp_table: opp-table {
++						compatible = "operating-points-v2";
++
++						rpmpd_opp_ret: opp1 {
++							opp-level = <1>;
++						};
++
++						rpmpd_opp_svs: opp2 {
++							opp-level = <2>;
++						};
++
++						rpmpd_opp_svs_soc: opp3 {
++							opp-level = <3>;
++						};
++
++						rpmpd_opp_nom: opp4 {
++							opp-level = <4>;
++						};
++
++						rpmpd_opp_turbo: opp5 {
++							opp-level = <5>;
++						};
++
++						rpmpd_opp_super_turbo: opp6 {
++							opp-level = <6>;
++						};
++					};
++				};
++
+ 				smd_rpm_regulators: pm8916-regulators {
+ 					compatible = "qcom,rpm-pm8916-regulators";
+ 
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index f2ae9cd455c1..b0f6bd0fffc1 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -128,6 +128,7 @@ static const struct of_device_id blacklist[] __initconst = {
+ 	{ .compatible = "nvidia,tegra210", },
+ 
+ 	{ .compatible = "qcom,apq8096", },
++	{ .compatible = "qcom,msm8916", },
+ 	{ .compatible = "qcom,msm8996", },
+ 	{ .compatible = "qcom,qcs404", },
+ 
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index f0d2d5035413..c77a30349d08 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -129,6 +129,16 @@ static const struct qcom_cpufreq_match_data match_data_kryo = {
+ 	.get_version = qcom_cpufreq_kryo_name_version,
+ };
+ 
++static const char *msm8916_genpd_names[] = { "mx", NULL };
++
++static const struct qcom_cpufreq_match_data match_data_msm8916 = {
++	/*
++	 * FIXME: Might need to implement .get_version here to handle
++	 * different frequencies depending on speedbin/pvs version.
++	 */
++	.genpd_names = msm8916_genpd_names,
++};
++
+ static const char *qcs404_genpd_names[] = { "cpr", NULL };
+ 
+ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
+@@ -301,6 +311,7 @@ static struct platform_driver qcom_cpufreq_driver = {
+ 
+ static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
+ 	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
++	{ .compatible = "qcom,msm8916", .data = &match_data_msm8916 },
+ 	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
+ 	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
+ 	{},
+diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
+index 2b1834c5609a..192ba9099964 100644
+--- a/drivers/soc/qcom/rpmpd.c
++++ b/drivers/soc/qcom/rpmpd.c
+@@ -115,6 +115,26 @@ struct rpmpd_desc {
+ 
+ static DEFINE_MUTEX(rpmpd_lock);
+ 
++/* msm8916 RPM Power Domains */
++DEFINE_RPMPD_PAIR(msm8916, vddcx, vddcx_ao, SMPA, CORNER, 1);
++DEFINE_RPMPD_PAIR(msm8916, vddmx, vddmx_ao, LDOA, CORNER, 3);
++
++DEFINE_RPMPD_VFC(msm8916, vddcx_vfc, SMPA, 1);
++
++static struct rpmpd *msm8916_rpmpds[] = {
++	[MSM8916_VDDCX] =	&msm8916_vddcx,
++	[MSM8916_VDDCX_AO] =	&msm8916_vddcx_ao,
++	[MSM8916_VDDCX_VFC] =	&msm8916_vddcx_vfc,
++	[MSM8916_VDDMX] =	&msm8916_vddmx,
++	[MSM8916_VDDMX_AO] =	&msm8916_vddmx_ao,
++};
++
++static const struct rpmpd_desc msm8916_desc = {
++	.rpmpds = msm8916_rpmpds,
++	.num_pds = ARRAY_SIZE(msm8916_rpmpds),
++	.max_state = MAX_8996_RPMPD_STATE,
++};
++
+ /* msm8976 RPM Power Domains */
+ DEFINE_RPMPD_PAIR(msm8976, vddcx, vddcx_ao, SMPA, LEVEL, 2);
+ DEFINE_RPMPD_PAIR(msm8976, vddmx, vddmx_ao, SMPA, LEVEL, 6);
+@@ -220,6 +240,7 @@ static const struct rpmpd_desc qcs404_desc = {
+ };
+ 
+ static const struct of_device_id rpmpd_match_table[] = {
++	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
+ 	{ .compatible = "qcom,msm8976-rpmpd", .data = &msm8976_desc },
+ 	{ .compatible = "qcom,msm8996-rpmpd", .data = &msm8996_desc },
+ 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
+diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
+index 3f74096d5a7c..70d304a2deae 100644
+--- a/include/dt-bindings/power/qcom-rpmpd.h
++++ b/include/dt-bindings/power/qcom-rpmpd.h
+@@ -51,6 +51,13 @@
+ #define RPMH_REGULATOR_LEVEL_TURBO	384
+ #define RPMH_REGULATOR_LEVEL_TURBO_L1	416
+ 
++/* MSM8916 Power Domain Indexes */
++#define MSM8916_VDDCX		0
++#define MSM8916_VDDCX_AO	1
++#define MSM8916_VDDCX_VFC	2
++#define MSM8916_VDDMX		3
++#define MSM8916_VDDMX_AO	4
++
+ /* MSM8976 Power Domain Indexes */
+ #define MSM8976_VDDCX		0
+ #define MSM8976_VDDCX_AO	1
