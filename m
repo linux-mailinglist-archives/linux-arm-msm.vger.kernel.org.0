@@ -2,182 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 85CAD19D682
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 14:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 795A119DAC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 18:05:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403859AbgDCMLx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 08:11:53 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:41289 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403941AbgDCMLx (ORCPT
+        id S1728121AbgDCQFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 12:05:09 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42736 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728147AbgDCQFI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 08:11:53 -0400
-Received: by mail-vs1-f68.google.com with SMTP id a63so4733499vsa.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 05:11:51 -0700 (PDT)
+        Fri, 3 Apr 2020 12:05:08 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h15so9139345wrx.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 09:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xYEUwgGx/wc/zC1RH6EQ9oeCu6zgO1eYOfdLmoIOI0s=;
-        b=1V68tdUmUpbPdxA9zVxDDj5a0Gt3IA+mKy1UZgQpP1+s+p7SHY+hCfoSfggwMPCWCF
-         187ZVFfoz/dAxM4C1T8BUOpJ/gxEFWKho/+9dL1xwTzkR//877DID9MVeJJpgmbgxkpN
-         OrDMiTQ8CjeKbYd1Iq8xgpABspcAH+aQu3TPLETjLdwo6H0DEYcgB92V720q2g4eLjVJ
-         hIU7rUbarY6sk4Ku+glgJdjWBG+rJEE3bLxdnkKm5RC12WSbVf98PmBiHLkClMfhajuK
-         4kRzabP+D+MPAvRO68fHdHZqmiqT3jyzIVRTu5Yd+RjjvI35OEPE2vpclKvBUqgffr1H
-         Ij9Q==
+        d=linaro.org; s=google;
+        h=from:subject:to:cc:references:autocrypt:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hs0Zr8WZnTnP6QA5uGZABigWsl4xm1HLGUjuTk55zko=;
+        b=RMb5dqzVzEpKpbcC3UUqr8R9o61kVbkm8nwzw/HPFWg+wEIJxdfJ3k+rnkkqUSUhJM
+         9EvxMV2iSSDfBIFwo6KAJgdbkdEq/vHxsLNu2bgEtSQmAOpPOevBDsaagLSbPk/+R4io
+         2gK3m/sXLldiBl7TtiJoTSDEa8R6nqbajnWTyjLaNa10vPHJZC361JQ7Rn8jJYBD7GcT
+         QeteoxJIUpfPAs+WUwdkFQa9kPchWJBwCr+kY8X7RbjC1cQ/HDTQEiZCiPZdTSo9LmX/
+         URvcMd1hv1yRNHkhtd+7QSprcYQ09Y8WFik1OKQurnFM3fMotdcRe2Ly216wx7IKuCsa
+         OD8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xYEUwgGx/wc/zC1RH6EQ9oeCu6zgO1eYOfdLmoIOI0s=;
-        b=G7hnH7REFYB0nWXE8tVGYOGKOFdeyl1hCBxflosA/WrhplGxxy5hhJogJfXY91YvnR
-         xwU8a1M0+QJI3KxxjUswgfhPDz/SgRW4UINN97i3JFAF9gikoAgJkGilWDQYvkqDM7lf
-         UQvuX5WjYhqa3gwoGOI3m0IYvtI6KG31OtkIjK8gMEsKvVDEAR+2qRPjUWu6vxfGa7xp
-         t/J4hJ9eonSlXJetVADyZlNp5EJZfLVPqDfkuKgdKsq/j+a+2EXzDDrxcwImBH41c+lK
-         N06gO5R9/BJsiq8ToUKIgwJv1C6uPaA4FyF+4dGa/cv5wlg6SrKCPYEqtTs63hJHzgRy
-         6yuA==
-X-Gm-Message-State: AGi0PuaA8IuMPQ84Bgu7Gq3sCZypl40d1CzU/tw640attwh0ngkFMg89
-        dAZ4SaPpVuFesYdzppzo9OCHWDj6HZrPq2+2yXVz3g==
-X-Google-Smtp-Source: APiQypIyBKqzVPKfYyIMWPApMpq5/DhtKduEKFwFD63nSwRmOIgdEA4YlJ78wS4L/6ay0AGmpiwfUA5Pxq0Y1D0WRMI=
-X-Received: by 2002:a67:870f:: with SMTP id j15mr5840117vsd.95.1585915910577;
- Fri, 03 Apr 2020 05:11:50 -0700 (PDT)
+        h=x-gm-message-state:from:subject:to:cc:references:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=hs0Zr8WZnTnP6QA5uGZABigWsl4xm1HLGUjuTk55zko=;
+        b=YDssmxiKXJ1Fd+ydlIDZ6db5BX9Xr1jn3kUG/X+zQ9CFbijDVJU7uRlIZXAZ9qwKIM
+         d+l9FtHd0w4DKbSv9zRV1PSW9zI8wfPVyjk/zWgLMBsMcXUQd3u4IxKfnAsQYXobJmHO
+         t3Qz3Sgm/iRDInWNMD1DMYlwv1c9EocHj95jtXNYKx0nOgwbHeg8W8YX+dePSz+JjK4z
+         ybXZ5hMdDG6cnxY4xwx1t71fEBiqWhrWOAevLAQPGJULADBp1UAhubBtVZuV+i4hIVFU
+         JRcdZeRpKV25e5fIDG4B2qalSbVOCEe7ZQUvjsF4nFCrrYJDzHGQh9SFT6tKHSSP44A3
+         3XxA==
+X-Gm-Message-State: AGi0PuaTGrbyT2Jwm0Ef982Q5SKF2EiW1F+QAkwjBcVs+ek2tTAYHRGx
+        dYwgqQt0PwsD9qHIlJxHv1gY9A==
+X-Google-Smtp-Source: APiQypK8nMsyaQBEIkRVEiPjmWw1a8hEY7TV2tBksz5wl+xU09p0+hlwPEYhClfXWDdYmeMsP1Cr0A==
+X-Received: by 2002:adf:904a:: with SMTP id h68mr9057628wrh.291.1585929906278;
+        Fri, 03 Apr 2020 09:05:06 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:cc78:8018:8980:25d8? ([2a01:e34:ed2f:f020:cc78:8018:8980:25d8])
+        by smtp.googlemail.com with ESMTPSA id p10sm12170013wre.15.2020.04.03.09.05.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Apr 2020 09:05:05 -0700 (PDT)
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: Re: [PATCH v5 1/5] PM / EM: add devices to Energy Model
+To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
+        javi.merino@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200318114548.19916-1-lukasz.luba@arm.com>
+ <20200318114548.19916-2-lukasz.luba@arm.com>
+Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <09b680a5-a118-8c6e-0ae1-03ab5f10c573@linaro.org>
+Date:   Fri, 3 Apr 2020 18:05:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org> <1585064650-16235-3-git-send-email-jprakash@codeaurora.org>
-In-Reply-To: <1585064650-16235-3-git-send-email-jprakash@codeaurora.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Fri, 3 Apr 2020 17:41:39 +0530
-Message-ID: <CAHLCerO6GY4pNAxZucCOv3wSDweA1MsuPh5bGjSWoEUauv0iFA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] iio: adc: Add PMIC7 ADC bindings
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, linux-iio@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200318114548.19916-2-lukasz.luba@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jishnu,
 
-On Tue, Mar 24, 2020 at 9:15 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
->
-> Add documentation for PMIC7 ADC peripheral. For PMIC7 ADC, all SW
-> communication to ADC goes through PMK8350, which communicates with
-> other PMICs through PBS.
-
-What is PMK8350? What is PBS? Please expand the acronyms and describe
-more verbosely.
+Hi Lukasz,
 
 
->
-> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+On 18/03/2020 12:45, Lukasz Luba wrote:
+> Add support of other devices into the Energy Model framework not only the
+> CPUs. Change the interface to be more unified which can handle other
+> devices as well.
+
+thanks for taking care of that. Overall I like the changes in this patch
+but it hard to review in details because the patch is too big :/
+
+Could you split this patch into smaller ones?
+
+eg. (at your convenience)
+
+ - One patch renaming s/cap/perf/
+
+ - One patch adding a new function:
+
+    em_dev_register_perf_domain(struct device *dev,
+				unsigned int nr_states,
+				struct em_data_callback *cb);
+
+   (+ EXPORT_SYMBOL_GPL)
+
+    And em_register_perf_domain() using it.
+
+ - One converting the em_register_perf_domain() user to
+	em_dev_register_perf_domain
+
+ - One adding the different new 'em' functions
+
+ - And finally one removing em_register_perf_domain().
+
+
+> Acked-by: Quentin Perret <qperret@google.com>
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
 > ---
->  .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 28 ++++++++++++++++------
->  1 file changed, 21 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> index 72db14c..20f010c 100644
-> --- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> +++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> @@ -13,7 +13,7 @@ maintainers:
->  description: |
->    SPMI PMIC voltage ADC (VADC) provides interface to clients to read
->    voltage. The VADC is a 15-bit sigma-delta ADC.
-> -  SPMI PMIC5 voltage ADC (ADC) provides interface to clients to read
-> +  SPMI PMIC5/PMIC7 voltage ADC (ADC) provides interface to clients to read
->    voltage. The VADC is a 16-bit sigma-delta ADC.
->
->  properties:
-> @@ -23,6 +23,7 @@ properties:
->        - qcom,spmi-adc5
->        - qcom,spmi-adc-rev2
->        - qcom,pms405-adc
-> +      - qcom,spmi-adc7
->
->    reg:
->      description: VADC base address in the SPMI PMIC register map
-> @@ -65,6 +66,8 @@ patternProperties:
->          description: |
->            ADC channel number.
->            See include/dt-bindings/iio/qcom,spmi-vadc.h
-> +          For PMIC7 ADC, the channel numbers are specified separately per PMIC
-> +          in the PMIC-specific files in include/dt-bindings/iio/.
->
->        label:
->          description: |
-> @@ -72,7 +75,7 @@ patternProperties:
->              For thermistor inputs connected to generic AMUX or GPIO inputs
->              these can vary across platform for the same pins. Hence select
->              the platform schematics name for this channel. It is required
-> -            for "qcom,spmi-adc5" and "qcom,spmi-adc-rev2".
-> +            for "qcom,spmi-adc5", "qcom,spmi-adc7" and "qcom,spmi-adc-rev2".
->          allOf:
->            - $ref: /schemas/types.yaml#/definitions/string
->
-> @@ -85,6 +88,8 @@ patternProperties:
->                of 512 will be used.
->              - For compatible property "qcom,spmi-adc5", valid values are 250, 420
->                and 840. If property is not found, default value of 840 is used.
-> +            - For compatible property "qcom,spmi-adc7", valid values are 85, 340
-> +              and 1360. If property is not found, default value of 1360 is used.
->              - For compatible property "qcom,spmi-adc-rev2", valid values are 256,
->                512 and 1024. If property is not present, default value is 1024.
->          allOf:
-> @@ -109,11 +114,11 @@ patternProperties:
->                channel calibration. If property is not found, channel will be
->                calibrated with 0.625V and 1.25V reference channels, also
->                known as absolute calibration.
-> -            - For compatible property "qcom,spmi-adc5" and "qcom,spmi-adc-rev2",
-> -              if this property is specified VADC will use the VDD reference (1.875V)
-> -              and GND for channel calibration. If property is not found, channel
-> -              will be calibrated with 0V and 1.25V reference channels, also known
-> -              as absolute calibration.
-> +            - For compatible property "qcom,spmi-adc5", "qcom,spmi-adc7" and
-> +              "qcom,spmi-adc-rev2", if this property is specified VADC will use
-> +              the VDD reference (1.875V) and GND for channel calibration. If
-> +              property is not found, channel will be calibrated with 0V and 1.25V
-> +              reference channels, also known as absolute calibration.
->          type: boolean
->
->        qcom,hw-settle-time:
-> @@ -135,6 +140,12 @@ patternProperties:
->                Certain controller digital versions have valid values of
->                15, 100, 200, 300, 400, 500, 600, 700, 1, 2, 4, 8, 16, 32, 64, 128 ms
->                If property is not found, channel will use 15us.
-> +            - For compatible property "qcom,spmi-adc7", delay = 15us for
-> +              value 0, 100us * (value) for values < 8, 1ms for value 8
-> +              and 2ms * (value - 8) otherwise.
-> +              Valid values are: 15, 100, 200, 300, 400, 500, 600, 700, 1000, 2000,
-> +              4000, 8000, 16000, 32000, 64000, 128000 us.
-> +              If property is not found, channel will use 15us.
->          allOf:
->            - $ref: /schemas/types.yaml#/definitions/uint32
->
-> @@ -147,6 +158,9 @@ patternProperties:
->              - For compatible property "qcom,spmi-vadc", valid values
->                are: 1, 2, 4, 8, 16, 32, 64, 128, 256, 512
->                If property is not found, 1 sample will be used.
-> +            - For compatible property "qcom,spmi-adc5", "qcom,spmi-adc7"
-> +              and "qcom,spmi-adc-rev2", valid values are: 1, 2, 4, 8, 16.
-> +              If property is not found, 1 sample will be used.
->          allOf:
->            - $ref: /schemas/types.yaml#/definitions/uint32
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+
+[ ... ]
+
+>  2. Core APIs
+> @@ -70,14 +72,16 @@ CONFIG_ENERGY_MODEL must be enabled to use the EM framework.
+>  Drivers are expected to register performance domains into the EM framework by
+>  calling the following API::
+>  
+> -  int em_register_perf_domain(cpumask_t *span, unsigned int nr_states,
+> -			      struct em_data_callback *cb);
+> +  int em_register_perf_domain(struct device *dev, unsigned int nr_states,
+> +		struct em_data_callback *cb, cpumask_t *cpus);
+
+Isn't possible to get rid of this cpumask by using
+cpufreq_cpu_get() which returns the cpufreq's policy and from their get
+the related cpus ?
+
+[ ... ]
+
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
