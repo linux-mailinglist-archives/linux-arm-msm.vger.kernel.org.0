@@ -2,99 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 94EED19D5EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 13:40:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7574A19D603
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 13:47:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390739AbgDCLk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 07:40:59 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51813 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728068AbgDCLk6 (ORCPT
+        id S2390823AbgDCLq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 07:46:57 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44204 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390803AbgDCLq4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 07:40:58 -0400
-Received: by mail-wm1-f65.google.com with SMTP id z7so6801448wmk.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 04:40:58 -0700 (PDT)
+        Fri, 3 Apr 2020 07:46:56 -0400
+Received: by mail-wr1-f67.google.com with SMTP id m17so8112001wrw.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 04:46:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=O50Gx6rk+wnrYYoowjLyR0iGzy1NO7KyGopLJExdfSE=;
-        b=z9abDNdIei6Jogiontn/W6q8FgmXjboqlQnpVhtcCA7XD7FJVj5qaJyDQcuPm4ZI2o
-         RhbXgNPXza5zxHBVUOseYHCPkUfaH1SCQz5U0OKGUUqNUmzPIFiCbAiiEzPnQu7lvARM
-         5MNmtHpmIkYezDSJPZGNCCvBa/Y0WpEbsMyHdqfLa1yqtA8Vdot6T+XJBPdhS0l6ZhBq
-         2P19Kv+H/K1PLmo74xHKbxd7335m7xzfsLU4m+9+ZqprAeoJsOVLC/lQZw36sgr/Hb/C
-         c1oZPIMkU2EoI7yHNlOaKH7Yk4iVHFx0ISkdwiSpjFKE7T8FNXXhH0rsyZfeODNn2Gc7
-         Tamg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=z4qKFg6qXiNpdW9Pcge07URxEO1f5F1p0WXHLjizMek=;
+        b=cy0xGlAQCTV/PM6ifc1OO1V5FvGLvtNYEZO+HbG8tYM54s+gAqPm4ORNDjdKSXReC8
+         MJzCdiQt4deFeu/7xCrD8ivzBosAwex55PpoXBpQvqwHm1P+pSLvxk14N4wJJtNQlFS8
+         Tse8mAdJ43/j5goZZEBblM/M3/fe8RHWMLaAhDk4dYZ3RVqgFlhddSMH0QjwauU95uzD
+         MEo8Bb9Z7F1+Rho5FivNBOA9FuYeOaPf+KlrloSPCXtAMtK+8FfwQwLFycPjPLmJFzD8
+         EF9x01UeNB7/cxm+NnEBow5LOcfs+7jytKvRDkrzKfjSM1gvmu4OMnEY9KAmpnp4myuE
+         PBbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=O50Gx6rk+wnrYYoowjLyR0iGzy1NO7KyGopLJExdfSE=;
-        b=oWxjIkA6czZzNQFU9lbPjZCKgbM/isbYZK3elNXwFQ61NHJmR+40jRF2FQBAWUE8be
-         lMvkUI9gQAS27e2JZ1TPDbNhAFzcXdLE5d7W0HwNEmlWKBBr/daMoa6sOaCfgw60+4kp
-         tlk4AnnO3qNThpc4/k6LSQz9U+FqvjSs0NFgF7ky0362iwZlKx5HT9JliUkhk+WI7QZp
-         5kXOS9CdlIlCnE2+cT5KyDRAVZxa/yvqh2oJn009kJrIdQQtSOFouD2WT8YRvRSllCo4
-         mB59weS63FNtJlZWQuzmaOdgf337jOUBcwmvhtLHgSkuXqauO5KJ0UTYquuJnYXBJ2x3
-         cNAg==
-X-Gm-Message-State: AGi0PuaniS5JK5Gv7OVKilafvZCwcq0MfxZeqsKrsgIjUINlk/OYvdtx
-        XlKIdNsfghktbt/0VJXkvZRCUQ==
-X-Google-Smtp-Source: APiQypJkSanW+EcNhfC6YNTQD6pFP9FvhotDhVGxwUvZOc++TU5vRmEFsilKl4bwzNtedter13VIiA==
-X-Received: by 2002:a1c:418b:: with SMTP id o133mr8582992wma.165.1585914057449;
-        Fri, 03 Apr 2020 04:40:57 -0700 (PDT)
-Received: from localhost.localdomain (dh207-96-48.xnet.hr. [88.207.96.48])
-        by smtp.googlemail.com with ESMTPSA id s9sm14477643wmc.2.2020.04.03.04.40.55
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=z4qKFg6qXiNpdW9Pcge07URxEO1f5F1p0WXHLjizMek=;
+        b=tu9nu/Y/6fsAC8HQeaizlDW5Yqw/XknUqqAuk30DR0axMsh0KTuKGdettYdpRWO8Fs
+         wwfUG1pjkLoj98SJ6IZ3r+YRijnJOG4ySwQxfnarsug9e9fkfQbLoRSPgIAw0vd6jWCi
+         u3C5RjFp4l9nklslTPldam+5vcALHqtjoaZwZuHDLHb21JpRsN94DsbQe00Xtv3QA8mG
+         4T84Rkv659WIoeNYKOTLsIibEojQzGc8NURQ8a/iG5RTBRxuNBKIgn5s0DUzVFcfDZFq
+         KmjSckoHx2rZR+FDVKYcxSO5Ebjd4mZACOWRwV4XF/Ice6UBjy92zvZQXe/qdgCOBI98
+         gB6w==
+X-Gm-Message-State: AGi0Pubhald/VzPlScMcol4i/t1ef+i+p0MbIuYxyPhVAItkoTnfVNEr
+        15wGXU8u2fUTOsaQnErahAFloQ==
+X-Google-Smtp-Source: APiQypLGVZe/sOG4rt6Fih9z1DA1NrDQgRLiqudSb6Y23oGtTFFmse8DqJw+/x115r+9L2PbKAni/g==
+X-Received: by 2002:a5d:674f:: with SMTP id l15mr8490276wrw.196.1585914414310;
+        Fri, 03 Apr 2020 04:46:54 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id t81sm10970106wmb.15.2020.04.03.04.46.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2020 04:40:56 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Abhishek Sahu <absahu@codeaurora.org>,
-        Pavel Kubelun <be.dissent@gmail.com>,
-        Christian Lamparter <chunkeey@gmail.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH] ARM: dts: qcom: ipq4019: fix high resolution timer
-Date:   Fri,  3 Apr 2020 13:40:40 +0200
-Message-Id: <20200403114040.349787-1-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.0
+        Fri, 03 Apr 2020 04:46:53 -0700 (PDT)
+Date:   Fri, 3 Apr 2020 12:46:51 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     kgunda@codeaurora.org
+Cc:     Rob Herring <robh@kernel.org>, bjorn.andersson@linaro.org,
+        jingoohan1@gmail.com, lee.jones@linaro.org,
+        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH V4 1/4] backlight: qcom-wled: convert the wled bindings
+ to .yaml format
+Message-ID: <20200403114651.m6rholzufzqinanc@holly.lan>
+References: <1584985618-25689-1-git-send-email-kgunda@codeaurora.org>
+ <1584985618-25689-2-git-send-email-kgunda@codeaurora.org>
+ <20200331175401.GA9791@bogus>
+ <ac8f25113a3bb233c11fd7cd9e62c2cf@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ac8f25113a3bb233c11fd7cd9e62c2cf@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Abhishek Sahu <absahu@codeaurora.org>
+On Fri, Apr 03, 2020 at 04:45:49PM +0530, kgunda@codeaurora.org wrote:
+> On 2020-03-31 23:24, Rob Herring wrote:
+> > On Mon, Mar 23, 2020 at 11:16:55PM +0530, Kiran Gunda wrote:
+> > > diff --git
+> > > a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> > > b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> > > new file mode 100644
+> > > index 0000000..8a388bf
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> > > @@ -0,0 +1,184 @@
+> > > +# SPDX-License-Identifier: GPL-2.0-only
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/leds/backlight/qcom-wled.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Binding for Qualcomm Technologies, Inc. WLED driver
+> > > +
+> > > +maintainers:
+> > > +  - Lee Jones <lee.jones@linaro.org>
+> > 
+> > Should be the h/w owner (you), not who applies patches.
+> > 
+> will address in next post.
+> <snip>
+> will address in next post.
+> <snip>
+> will address in next post.
+> <snip>
+> will address in next post.
+> <snip>
+> will address in next post.
+> <snip>
+> will address in next post.
+> <snip>
+> will address in next post.
+> <snip>
+> will address in next post.
+> <snip>
+> will address in next post.
 
-Cherry-picked from CAF QSDK repo.
-Original commit message:
-The kernel is failing in switching the timer for high resolution
-mode and clock source operates in 10ms resolution. The always-on
-property needs to be given for timer device tree node to make
-clock source working in 1ns resolution.
+If you agree on all points raised I doubt there is any need for a point
+by point reply since everyone who reads it will have to scroll down
+simply to find out that you agree on all points.
 
-Signed-off-by: Abhishek Sahu <absahu@codeaurora.org>
-Signed-off-by: Pavel Kubelun <be.dissent@gmail.com>
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Tested-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
----
- arch/arm/boot/dts/qcom-ipq4019.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+Better just to acknowledge the feedback and reply to the first one
+saying you'll agree on all points and will address all feedback in the
+next revision (and then trim the reply to keep it short).
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index ee45253361cb..b4803a428340 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -166,6 +166,7 @@ timer {
- 			     <1 4 0xf08>,
- 			     <1 1 0xf08>;
- 		clock-frequency = <48000000>;
-+		always-on;
- 	};
- 
- 	soc {
--- 
-2.26.0
 
+Daniel.
