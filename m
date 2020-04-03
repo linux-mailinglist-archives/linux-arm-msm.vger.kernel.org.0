@@ -2,99 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D91D219CFFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 08:01:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE12319D0A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2020 09:01:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730889AbgDCGBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Apr 2020 02:01:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39720 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729349AbgDCGBl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Apr 2020 02:01:41 -0400
-Received: from localhost (unknown [171.76.107.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 19CB6206F6;
-        Fri,  3 Apr 2020 06:01:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1585893700;
-        bh=p2IuVwkph+/SUR16YqbpBqb56Vyf1fYOzyLt2WbYoB8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QKav23U/eh6h/UhxXS/ncKxL41JZk1qm0n5hpfLHzXL0ONIxq+/ZuqChX9TyH49dI
-         eKvRgnzQOuoAVCmL62/441OrFBkq2FrvtPqwQ+N7TAlBRl4lJk5QUGCbPOQhfKc8JC
-         Z/x/weXzdPtovzgoqretYp6zsUfL3N1DnfrgIdCc=
-Date:   Fri, 3 Apr 2020 11:31:27 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 2/5] phy: qcom-snps: Add SNPS USB PHY driver for QCOM
- based SOCs
-Message-ID: <20200403060127.GM72691@vkoul-mobl>
-References: <1585880634-15222-1-git-send-email-wcheng@codeaurora.org>
- <1585880634-15222-3-git-send-email-wcheng@codeaurora.org>
+        id S2388780AbgDCHBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Apr 2020 03:01:55 -0400
+Received: from mail-pj1-f42.google.com ([209.85.216.42]:36429 "EHLO
+        mail-pj1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387849AbgDCHBz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Apr 2020 03:01:55 -0400
+Received: by mail-pj1-f42.google.com with SMTP id nu11so2560339pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2020 00:01:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HgoPG2/hUtoLFUXRQ/1yO4KtUHw1u4nUyOY++M662ws=;
+        b=DMxaQSsRl7CS5NyDSZ/t8wiwCsY0U9XznOGwI73DkxF0e/BmAiM8wcDULkbYIYjGHz
+         bp0wxY0EC9dSG7DYy9DO4e302wvfsHWpFvoeOMnN+3HkwdOEHZVZ7QvdtXgE6Ex3EYN+
+         FFuvkXTavd5L9Qcf7N43Ri3HKaYtp8L8jDhDbVVbYhMygGZ062EEYR8bCed4dojPSazX
+         T/G8oDGon5ov4EUFF33CevTBB0lsE11ygi1WgduLxD5+0MTSdDO4HZLY+jag04reDYHu
+         9QWAazfIDfvnjYWTnplrHtoRTKL5qlAbWxZXVFZYQc6NwrXovWy7C4jIII+90qOyOAZB
+         6fSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HgoPG2/hUtoLFUXRQ/1yO4KtUHw1u4nUyOY++M662ws=;
+        b=GDpt1G1oemsgA6sYd1PkzKDGnlb501Z3oUYPvNiMpX0a+zYOqUX0DxN4tTTy7YBUBo
+         fvKbEtRYvbB7qaYpA28JTfES5QB3Pe6iszrXJp6NZsw0SiikYPVnyxIsb6iD5X0MddTW
+         H5l177dN0lTOrABZXlYGnfrxFE433m7tGmBmufRs3HojDD+rheauWf4xqCIHj7uyg2x5
+         cbRoJij3g+pKR+8YQ6fpQVZh+8JNzEktIbCpUrnkhUqiZTG60S1iPeM9yXcaLJddkaWf
+         EhbzJlaEObkXNFC0R2/oynATOVCLKTtDZ4uWavqwsFlqUFssbYfgV+738a8UxJmmArjE
+         o50w==
+X-Gm-Message-State: AGi0PuZaI7+xa+2R202kkjBYvS4S87CnUk2uzONGZVRaU61oLuYHRzLs
+        4BIKI5SfZZiHfPhHv1ncuxfvFg==
+X-Google-Smtp-Source: APiQypKnmLYQGUicA2+nsfU+JyFllI9CLmoA87XeGmP3476ZwWA8qaxKntfwWWuyNHupNQSdYleeOQ==
+X-Received: by 2002:a17:90a:ca09:: with SMTP id x9mr8039389pjt.91.1585897314167;
+        Fri, 03 Apr 2020 00:01:54 -0700 (PDT)
+Received: from localhost ([45.127.44.53])
+        by smtp.gmail.com with ESMTPSA id r189sm4749358pgr.31.2020.04.03.00.01.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Apr 2020 00:01:52 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, lukasz.luba@arm.com, mka@chromium.org,
+        daniel.lezcano@linaro.org,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH v5 0/3] Convert thermal bindings to yaml
+Date:   Fri,  3 Apr 2020 12:31:45 +0530
+Message-Id: <cover.1585748882.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1585880634-15222-3-git-send-email-wcheng@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-04-20, 19:23, Wesley Cheng wrote:
-> This adds the SNPS FemtoPHY V2 driver used in QCOM SOCs.  There
-> are potentially multiple instances of this UTMI PHY on the
-> SOC, all which can utilize this driver.  The V2 driver will
-> have a different register map compared to V1.
+Hi all,
 
-Some nitpicks below, otherwise:
+Here is a series splitting up the thermal bindings into 3 separate bindings
+in YAML, one each of the sensor, cooling-device and the thermal zones.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+A series to remove thermal.txt and change over all references to it will
+follow shortly. Another series to fixup problems found by enforcing this
+yaml definition across dts files will also follow.
 
-> +/**
-> + * struct qcom_snps_hsphy - structure holding snps hs phy attributes
-> + *
-> + * @phy: generic phy
-> + * @base: iomapped memory space for qubs2 phy
-> + *
-> + * @cfg_ahb_clk: AHB2PHY interface clock
-> + * @ref_clk: phy reference clock
-> + * @iface_clk: phy interface clock
-> + * @phy_reset: phy reset control
-> + * @vregs: regulator supplies bulk data
-> +
+Changes since v4:
+- Typo fixes
 
-This is missing the marker * for kernel doc
+Changes since v3:
+- Clarify example by using cooling state numbers and a comment
+- Restrict thermal-sensors to a single reference to reflect actual code
+  where there is a one-to-one mapping between sensors and thermal zones
+- Add two optional properties that were missed in earlier submissions:
+  coefficients and sustainable-power
+- Improve description of hysteresis and contribution properties
+- Added Acks.
 
-> + * @phy_initialized: if PHY has been initialized correctly
-> + *
+Changes since v2:
+- Addressed review comment from Rob
+- Added required properties for thermal-zones node
+- Added select: true to thermal-cooling-devices.yaml
+- Fixed up example to pass dt_binding_check
 
-This empty line is redundant
+Changes since v1:
+- Addressed review comments from Rob
+- Moved the license back to GPLv2, waiting for other authors to give
+  permission to relicense to BSD-2-Clause as well
+- Fixed up warnings thrown by dt_binding_check
 
-> + */
-> +struct qcom_snps_hsphy {
-> +	struct phy *phy;
-> +	void __iomem *base;
-> +
-> +	struct clk *cfg_ahb_clk;
-> +	struct clk *ref_clk;
-> +	struct reset_control *phy_reset;
-> +	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
-> +
-> +	bool phy_initialized;
-> +};
-> +
-> +static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
-> +				    u32 mask, u32 val)
+I have to add that the bindings as they exist today, don't really follow
+the "describe the hardware" model of devicetree. e.g. the entire
+thermal-zone binding is a software abstraction to tie arbitrary,
+board-specific trip points to cooling strategies. This doesn't fit well
+into the model where the same SoC in two different form-factor devices e.g.
+mobile and laptop, will have fairly different thermal profiles and might
+benefit from different trip points and mitigation heuristics. I've started
+some experiments with moving the thermal zone data to a board-specific
+platform data that is used to initialise a "thermal zone driver".
 
-coding style mandates that second line should start at preceeding line
-opening brace :), so can you please make it:
+In any case, if we ever move down that path, it'll probably end up being v2
+of the binding, so this series is still relevant.
 
-static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
-                                              u32 mask, u32 val)
+Regards,
+Amit
+
+Amit Kucheria (3):
+  dt-bindings: thermal: Add yaml bindings for thermal sensors
+  dt-bindings: thermal: Add yaml bindings for thermal cooling-devices
+  dt-bindings: thermal: Add yaml bindings for thermal zones
+
+ .../thermal/thermal-cooling-devices.yaml      | 116 ++++++
+ .../bindings/thermal/thermal-sensor.yaml      |  72 ++++
+ .../bindings/thermal/thermal-zones.yaml       | 341 ++++++++++++++++++
+ 3 files changed, 529 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
+ create mode 100644 Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+ create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
 
 -- 
-~Vinod
+2.20.1
+
