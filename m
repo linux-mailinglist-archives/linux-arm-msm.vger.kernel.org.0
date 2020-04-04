@@ -2,175 +2,263 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7318A19E468
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Apr 2020 12:08:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30E2E19E561
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Apr 2020 16:12:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbgDDKIt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Apr 2020 06:08:49 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36421 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725943AbgDDKIt (ORCPT
+        id S1726246AbgDDOM1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Apr 2020 10:12:27 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:19882 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726039AbgDDOM1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Apr 2020 06:08:49 -0400
-Received: by mail-wm1-f67.google.com with SMTP id d202so10488820wmd.1;
-        Sat, 04 Apr 2020 03:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=k19yJNcLZwMmdgmupRO5KsWO4QfHOYro/tYovVHgC3Y=;
-        b=YSIPidUk/oTQWZpDza0hrpNyBx97HDJ/wmCYAxSpI19LEAUDT+rsQ0bMjdFDPJCqZN
-         pYuVRJGs5iIqj2z2oERMydTKwhtgUmLmJmtYCfmgeAN4xL2J3SZ2rZA7tAka8ox2pDy9
-         QKj02xMWsJqZ/RCmHKODoKcsQ44R2J+JagH4WiAV6HnyZy3Uo6BThcUeJy/cIBKkQnGe
-         sL52N9WoUvs1bLJepcvAQ+r1iLFa4HitrnuW+emaQeUAvhezcdJ7dWlAUlI4qUfJpwLI
-         M74uvKo50gSuTTN8Zf/Nh0UAHHtQQVOuj2/T1yGOyRgles18x3E6Yx2y9U9pQAV+TTsp
-         tP1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=k19yJNcLZwMmdgmupRO5KsWO4QfHOYro/tYovVHgC3Y=;
-        b=DTbYV1NUhxt/IKqB4n6TKKax/PxPGxGSfiOgbS4+iN52NYPOx7kOSAl+j1CtCKMQc6
-         rPgyPkJQx2zoqfEWNO/A4cDMCAhamm4rjHjieL+9RnhcVxUrc27WEadQqjMygd/tUfkG
-         fj1PsMSDJJziaH6Y1w+5974YLGuDIewTnZgLq9YW5Gnp+EAguXFJEG5jcNlS9n7ZK6RJ
-         iGmOSMwmUKvXQhcXU6xzAflo3KockYq3clVNfL41OzQhpS4DYpoZVn9YJwmYcQVDKW4z
-         g/H14uxek1UAqYtGEcQDnhYDWmMUqXm6Nl9OxeuKvK/ClPkwlO8iEZ/a1/5nZcjbcAGz
-         c2eQ==
-X-Gm-Message-State: AGi0PuaX8CuGUMSP7OMHqIetAQ6mlmXfcu4Q8EyYlE8BDz3nokTRglfD
-        ZrgxFhySvx2obnC47q0jCHI4S93EH7U=
-X-Google-Smtp-Source: APiQypIdwL9uZrcwcpY9k0V31zPZlwVuis0vnZlRmrZk+h21HMxt5HUQDLYQem/NbTY2O3XDl0gE4A==
-X-Received: by 2002:a1c:740a:: with SMTP id p10mr13328690wmc.46.1585994925667;
-        Sat, 04 Apr 2020 03:08:45 -0700 (PDT)
-Received: from debian64.daheim (p5B0D7489.dip0.t-ipconnect.de. [91.13.116.137])
-        by smtp.gmail.com with ESMTPSA id r3sm16233561wrm.35.2020.04.04.03.08.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2020 03:08:45 -0700 (PDT)
-Received: from localhost.daheim ([127.0.0.1] helo=debian64.localnet)
-        by debian64.daheim with esmtp (Exim 4.93)
-        (envelope-from <chunkeey@gmail.com>)
-        id 1jKfj8-00020y-DI; Sat, 04 Apr 2020 12:08:34 +0200
-From:   Christian Lamparter <chunkeey@gmail.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mathias Nyman <mathias.nyman@linux.intel.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Andreas =?ISO-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 3/5] usb: xhci: Add support for Renesas controller with memory
-Date:   Sat, 04 Apr 2020 12:08:32 +0200
-Message-ID: <226575470.unBdNOV7p8@debian64>
-In-Reply-To: <20200401161852.GD72691@vkoul-mobl>
-References: <20200323170601.419809-1-vkoul@kernel.org> <9854066.43zovN3OMW@debian64> <20200401161852.GD72691@vkoul-mobl>
+        Sat, 4 Apr 2020 10:12:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586009547; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=1mFW4GvYCJDueYcN+uUWXvjyL3gGkxOhuBmkTrdqcJA=; b=oi3zyLuQMrTvLuK/bMLbKXKMTvVm4x1p0WEbRcb/oOCaZMx9gJuOuBsQ/2T6YL8HhRTN9hIP
+ XBXQh9SYxHWztceYpYiChiTavKuXfBWeG6BzuBII1lgnLh9NMXLtV02pfDCT3ybNLwVeMZV1
+ XdSG3s/dZQXrPSnqnFWbfYij2eM=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e8895c7.7f0a3bf3c6f8-smtp-out-n05;
+ Sat, 04 Apr 2020 14:12:23 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6E60EC433BA; Sat,  4 Apr 2020 14:12:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.79.170.113] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akdwived)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 85C34C433F2;
+        Sat,  4 Apr 2020 14:12:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 85C34C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akdwived@codeaurora.org
+Subject: Re: [PATCH v4 2/2] Embedded USB Debugger (EUD) driver
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ckadabi@codeaurora.org, tsoni@codeaurora.org,
+        bryanh@codeaurora.org, psodagud@codeaurora.org,
+        rnayak@codeaurora.org, satyap@codeaurora.org,
+        pheragu@codeaurora.org
+References: <1580445811-15948-1-git-send-email-akdwived@codeaurora.org>
+ <1580445811-15948-3-git-send-email-akdwived@codeaurora.org>
+ <20200203193533.GL3948@builder>
+ <5008a446-a90c-b68a-aaa4-3e7cd90418fa@linaro.org>
+ <d09f8a1d-0544-838f-e6f8-1c47f58e4f1f@codeaurora.org>
+ <8a854c02-7435-46c6-5bd1-05273e5249e4@linaro.org>
+ <aa942701-d11b-dcf2-d28f-144582af0d2f@codeaurora.org>
+ <a6cbc859-184e-2a0d-bd2b-0ad9653e5ee2@linaro.org>
+From:   "Dwivedi, Avaneesh Kumar (avani)" <akdwived@codeaurora.org>
+Message-ID: <5db1a666-62ec-c850-6626-ad33d337b452@codeaurora.org>
+Date:   Sat, 4 Apr 2020 19:42:13 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+In-Reply-To: <a6cbc859-184e-2a0d-bd2b-0ad9653e5ee2@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Wednesday, 1 April 2020 18:18:52 CEST Vinod Koul wrote:
-> On 01-04-20, 17:39, Christian Lamparter wrote:
-> > On Wednesday, 1 April 2020 14:57:48 CEST Vinod Koul wrote:
-> > > On 26-03-20, 17:21, Vinod Koul wrote:
-> > > > On 26-03-20, 13:29, Mathias Nyman wrote:
-> > > > > On 23.3.2020 19.05, Vinod Koul wrote:
-> > > > > > Some rensas controller like uPD720201 and uPD720202 need firmware to be
-> > > > > > loaded. Add these devices in table and invoke renesas firmware loader
-> > > > > > functions to check and load the firmware into device memory when
-> > > > > > required.
-> > > > > > 
-> > > > > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > > > > ---
-> > > > > >  drivers/usb/host/xhci-pci-renesas.c |  1 +
-> > > > > >  drivers/usb/host/xhci-pci.c         | 29 ++++++++++++++++++++++++++++-
-> > > > > >  drivers/usb/host/xhci-pci.h         |  3 +++
-> > > > > >  3 files changed, 32 insertions(+), 1 deletion(-)
-> > > > > > 
-> > > > > 
-> > > > > It's unfortunate if firmware loading couldn't be initiated in a PCI fixup hook
-> > > > > for this Renesas controller. What was the reason it failed?
-> > > > > 
-> > > > > Nicolas Saenz Julienne just submitted a solution like that for Raspberry Pi 4
-> > > > > where firmware loading is initiated in pci-quirks.c quirk_usb_early_handoff()
-> > > > > 
-> > > > > https://lore.kernel.org/lkml/20200324182812.20420-1-nsaenzjulienne@suse.de
-> > > > > 
-> > > > > Is he doing something different than what was done for the Renesas controller?
-> > > > 
-> > > > I tried and everytime ended up not getting firmware. Though I did not
-> > > > investigate a lot. Christian seemed to have tested sometime back as
-> > > > well.
-> > > > 
-> > > > Another problem is that we dont get driver_data in the quirk and there
-> > > > didnt seem a way to find the firmware name.
-> > > > 
-> > > > > > diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
-> > > > > > index c588277ac9b8..d413d53df94b 100644
-> > > > > > --- a/drivers/usb/host/xhci-pci-renesas.c
-> > > > > > +++ b/drivers/usb/host/xhci-pci-renesas.c
-> > > > > > @@ -336,6 +336,7 @@ static void renesas_fw_callback(const struct firmware *fw,
-> > > > > >  		goto cleanup;
-> > > > > >  	}
-> > > > > >  
-> > > > > > +	xhci_pci_probe(pdev, ctx->id);
-> > > > > >  	return;
-> > > > > 
-> > > > > I haven't looked into this but instead of calling xhci_pci_probe() here in the async fw
-> > > > > loading callback could we just return -EPROBE_DEFER until firmware is loaded when
-> > > > > xhci_pci_probe() is originally called?
-> > > > 
-> > > > Hmm, initially my thinking was how to tell device core to probe again,
-> > > > and then digging up I saw wait_for_device_probe() which can be used, let
-> > > > me try that
-> > > 
-> > > Sorry to report back that it doesn't work as planned :(
-> > > 
-> > > I modified the code to invoke the request_firmware_nowait() which will load
-> > > the firmware and provide the firmware in callback. Meanwhile return -EPROBE_DEFER.
-> > > 
-> > > After a bit, the core invokes the driver probe again and we hit the
-> > > roadblock. The request_firmware uses devres and allocates resources for
-> > > loading the firmware. The problem is that device core checks for this:
-> > > 
-> > > bus: 'pci': really_probe: probing driver xhci_hcd_pci with device 0000:01:00.0
-> > > pci 0000:01:00.0: Resources present before probing
-> > > 
-> > > And here the probe fails. In some cases the firmware_callback finishes
-> > > before this and we can probe again, but that is not very reliable.
-> > > 
-> > > I tested another way to use request_firmware() (sync version) and then
-> > > load the firmware in probe and load. The request is done only for
-> > > renesas devices if they dont have firmware already running.
-> > > So rest of the devices wont have any impact.
-> > > 
-> > > Now should we continue this way in the patchset or move to sync version.
-> > > Am okay either way.
-> > 
-> > Just a word of caution.
-> > 
-> > The problem with the usage of "sync" request_firmware in drivers is that if the
-> > code is built into the kernel the request_firmware() could be called before the
-> > (root) filesystem on which the firmware resides is ready.... So this will get
-> > weird during boot because what is the sync request_firmware() going to do? From what
-> > I know, this is why the funny _async firmware request APIs are even a thing...
-> 
-> So is your usage a module or inbuilt. I am using it as a module, so
-> seems okay. For inbuilt, someone needs to do make it in kernel or make
-> sure the initramfs has this :)
+On 2/18/2020 8:18 PM, Bryan O'Donoghue wrote:
+> On 18/02/2020 13:23, Dwivedi, Avaneesh Kumar (avani) wrote:
+>>
+>> On 2/18/2020 1:14 AM, Bryan O'Donoghue wrote:
+>>> On 16/02/2020 16:07, Dwivedi, Avaneesh Kumar (avani) wrote:
+>>>>
+>>>> On 2/4/2020 8:40 AM, Bryan O'Donoghue wrote:
+>>>>> On 03/02/2020 19:35, Bjorn Andersson wrote:
+>>>>>> On Thu 30 Jan 20:43 PST 2020, Avaneesh Kumar Dwivedi wrote:
+>>>>>
+>>>>> Hi Avaneesh.
+>>>>
+>>>> Hello Bryan, Thank you very much for your review comments.
+>>>>
+>>>> Will be replying to your comments and will be posting new patchset 
+>>>> soon as per review comments.
+>>>>
+>>>>>
+>>>>>> Please aim for keeping the sort order in this file (ignore QCOM_APR
+>>>>>> which obviously is in the wrong place)
+>>>>>>
+>>>>>>> +       tristate "QTI Embedded USB Debugger (EUD)"
+>>>>>>> +       depends on ARCH_QCOM
+>>>>>
+>>>>> If we persist with the model of EXTCON you should "select EXTCON" 
+>>>>> here.
+>>>
+>>>> I have asked this query with Bjorn Also against his review 
+>>>> comments, whether we need to persist with extcon or need to switch 
+>>>> to usb role switch framework, as we are notifying not only to usb 
+>>>> controller but also to pmic charger so in case we adopt usb role 
+>>>> switch then how we will notify to pmic charger to enable charging 
+>>>> battery ? Also as i mentioned there my dilema is it does not look 
+>>>> very apt to model EUD hw IP as c type connector, so please let me 
+>>>> know your views.
+>>>
+>>> I think there's a desire to model USB ports as connector child nodes 
+>>> of a USB controllers as opposed to the more generic extcon so, I 
+>>> think the effort should probably be made to model it up as typec.
+>> this comment is irrespective of your below comment (If we were to 
+>> support Control Peripheral where the local DWC3 controller has the 
+>> signals routed away entirely, then I think we would need to look into 
+>> modelling that in device tree - and using an overlay to show the DWC3 
+>> controller going away in Control Peripheral mode and coming back. )?
+>
+> Yes, I think irrespective we should model this as a connector not an 
+> extcon and I think you could do think you could do that as a typec
+>
+> 1. Using role-switch
+> 2. Use the regulator API to capture EUD related charger messages
+>    and trigger changes in the PMIC as opposed to using extcon
+>    to notify.
+>
+> I could be wrong about #2
 
-Yes, after testing on the device, I can state that everything went as intended :-).
+HI Bryan,
 
-Cheers,
-Christian
+Sorry for long pause on this thread, I went through USB role switch 
+framework  and yes we can move to it for notification of VBUS event, but 
+i am not able to find a good example in upstream, of how battery charger 
+module can be notified about charger stop and charger start event if we 
+don't use extcon interface for notification. I am not sure it would be 
+simple regulator enable and disable call, i will discuss with PMIC guys 
+on this and will come back.
 
+>
+>>> Can that work for you ?
+>> Did not comprehend this comment fully. if possible can you give some 
+>> example.
+>
+> My understanding is we are generally being encouraged to model ports 
+> as connectors instead of extcon. I think it is possible to model your 
+> port driver as a typec connector using USB role-switching and the 
+> regulator API i.e. I don't think you really need extcon here.
+>
+>>> Ah so, the EUD is a mux, that sits between the connector and the 
+>>> controller, routing UTMI signals to an internal USB hub, which 
+>>> in-turn has debug functions attached to the hub...
+>> Yes that is correct understanding.
+>>>
+>>> Can the Arm core see the hub ? I assume not ?
+>> Not sure what is it mean by "Can the Arm core see the hub"?
+>
+> In Debug mode will a DWC3 controller in host mode enumerate the 
+> internal hub ? If so, is that a supported use-case ?
+In debug mode DWC3 controller will only enumerate in device mode.
+>
+>>> There are a few different modes - you should probably be clear on 
+>>> which mode it is you are supporting.
+>>>
+>>> Normal mode: (Bypass)
+>>> Port | EUD | Controller
+>>>
+>>> Normal + debug hub mode: (Debug)
+>>> Port | EUD | Controller + HUB -> debug functions
+>>>
+>>> Debug hub mode: (Control Peripheral)
+>>> Port | EUD | HUB -> debug functions
+>>>
+>>> its not clear to me from the documentation or the code which mode it 
+>>> is we are targeting to be supported here.
+>> Its debug mode which we are supporting in driver.
+>>>
+>>> I think you should support Debug mode only here, so that the Arm 
+>>> core never has to deal with the situation where the USB connector 
+>>> "goes away".
+>> Can you please help what you mean by "so that the Arm core never has 
+>> to deal with the situation where the USB connector "goes away""
+>
+> So my thinking is
+>
+> - DWC3 in host mode
+>   For argument sake, lets say an external self-powered hub is connected
+>   and a number of USB devices are enumerated
+> - EUD switches to Control Peripheral mode
+>
+> In this case what would happen ?
+I am not getting clarity about this from spec document, what i 
+understand is in this case PHY signal to USB controller will get 
+stop(UTMI switch will block signal from USB PHY to USB controller), so 
+before to switching to control peripheral mode EUD should send detach 
+event to USB controller so that it can enter low power mode, let me know 
+if it is grossly wrong understanding. In any case we are not supporting 
+control peripheral mode in present state of driver.
+>
+>>>
+>>> If we were to support Control Peripheral where the local DWC3 
+>>> controller has the signals routed away entirely, then I think we 
+>>> would need to look into modelling that in device tree - and using an 
+>>> overlay to show the DWC3 controller going away in Control Peripheral 
+>>> mode and coming back.
+>> debug mode is set run time via user, i will check how we can model 
+>> such scenario where device tree corresponding to a h/w module is only 
+>> valid in some scenario at run time. if possible please elaborate bit 
+>> more on your suggestion
+>
+> If Debug mode is all you are trying to do support then I don't think 
+> you really need to model that in DT.
+>
+> However if intend to support Control Peripheral mode which as I 
+> understand it, switches the UTMI signals away from a DWC3 controller 
+> in Host mode, then I think you would need to use a DT overlay to 
+> switch off the controller, before switching.
+>
+> That's why I'm asking you about Control Peripheral mode - do you want 
+> to support it - and if so, then what happens to DWC3 in host mode when 
+> the UTMI signals go away ?
+>
+> I think you've said you only want to support Debug mode, which makes 
+> more sense to me.
+>
+> Is Debug mode only valid when the DWC3 controller is in 
+> peripheral/device mode and if so, should we be checking/enforcing that 
+> somewhere - DT or EUD-driver code ?
 
+Yes in debug mode DWC3 controller should always be in device mode, and i 
+believe this we can insure when we inform USB controller about attach 
+event after starting in debug mode, using role-switch framework isnt it? 
+may be i am not getting your statement, how device mode enumeration can 
+be enforced using DT ?
 
+>
+>>> Also final thought since the EUD can operate in different modes, it 
+>>> really should be a string that gets passed in - with the string name 
+>>> aligning to the documentation "bypass", "debug" and so on, so that 
+>>> the mode we are switching to is obvious to anybody who has the spec 
+>>> and the driver.
+>>
+>> you mean we should document that this driver works in debug mode 
+>> only? not clear on where one should pass "debug" and "bypass" string?
+>
+> You have a routine to switch to debug mode that takes a parameter from 
+> user-space right ?
+>
+> Bjorn mentioned you could write 42. My question/suggestion is why 
+> isn't the value written a string which corresponds to the supported 
+> modes from the EUD spec ?
+> "bypass" as default "debug" the mode you want to add, at a later time 
+> you could optionally add in "control-periperhal" mode.
+>
+> Makes a little more sense to me than writing just 0, 1 or 42 :) into 
+> your store routine.
+OK.
+>
+> ---
+> bod
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project.
