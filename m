@@ -2,138 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4832319EA60
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2020 12:28:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C084F19EAC0
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2020 13:30:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726417AbgDEK2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Apr 2020 06:28:50 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:63538 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726452AbgDEK2u (ORCPT
+        id S1726410AbgDELaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Apr 2020 07:30:04 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:7406 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726388AbgDELaE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Apr 2020 06:28:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586082530; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=vwamyz2dyPtvYzpgk3HF8HpV6xwHSgtU6f/aZSZ1WTc=; b=VpEJkI/qvCTYNlPqlg85qB0b4kOYY2DkF5cHxtr72WjYRXR9DSd7BfRxyHoSnInbcDv+tMFA
- axDtFwYYu4E1Tl2v9IUwCStnPzTCrRoEccsI4t6qN4fV2HCO1S+4O03TnhFM/W3XwsSpew6U
- W/o5s8/Secn2raFJHXoT4Xi4680=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e89b2d0.7f736defe148-smtp-out-n04;
- Sun, 05 Apr 2020 10:28:32 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6E933C43637; Sun,  5 Apr 2020 10:28:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC77DC433F2;
-        Sun,  5 Apr 2020 10:28:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC77DC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [RFC PATCH] coresight: dynamic-replicator: Fix handling of multiple connections
-Date:   Sun,  5 Apr 2020 15:58:19 +0530
-Message-Id: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sun, 5 Apr 2020 07:30:04 -0400
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Apr 2020 04:30:03 -0700
+Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
+  by ironmsg05-sd.qualcomm.com with ESMTP; 05 Apr 2020 04:29:59 -0700
+Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
+        id C52C9215F4; Sun,  5 Apr 2020 16:59:57 +0530 (IST)
+From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sivaprak@codeaurora.org
+Subject: [PATCH V2 0/8] Add APSS clock controller support for IPQ6018
+Date:   Sun,  5 Apr 2020 16:59:17 +0530
+Message-Id: <1586086165-19426-1-git-send-email-sivaprak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since commit 30af4fb619e5 ("coresight: dynamic-replicator:
-Handle multiple connections"), we do not make sure that
-the other port is disabled when the dynamic replicator is
-enabled. This is seen to cause the CPU hardlockup atleast
-on SC7180 SoC when enabling ETM with ETR as the sink via
-sysfs.
+The CPU on Qualcomm's IPQ6018 devices are primarily fed by A53 PLL and XO,
+these are connected to a clock mux and enable block.
 
-  Kernel panic - not syncing: Watchdog detected hard LOCKUP on cpu 0
-  CPU: 7 PID: 0 Comm: swapper/7 Tainted: G S  B             5.4.25 #100
-  Hardware name: Qualcomm Technologies, Inc. SC7180 IDP (DT)
-  Call trace:
-   dump_backtrace+0x0/0x188
-   show_stack+0x20/0x2c
-   dump_stack+0xdc/0x144
-   panic+0x168/0x370
-   arch_seccomp_spec_mitigate+0x0/0x14
-   watchdog_timer_fn+0x68/0x290
-   __hrtimer_run_queues+0x264/0x498
-   hrtimer_interrupt+0xf0/0x22c
-   arch_timer_handler_phys+0x40/0x50
-   handle_percpu_devid_irq+0x8c/0x158
-   __handle_domain_irq+0x84/0xc4
-   gic_handle_irq+0x100/0x1c4
-   el1_irq+0xbc/0x180
-   arch_cpu_idle+0x3c/0x5c
-   default_idle_call+0x1c/0x38
-   do_idle+0x100/0x280
-   cpu_startup_entry+0x24/0x28
-   secondary_start_kernel+0x15c/0x170
-  SMP: stopping secondary CPUs
+This patch series adds support for these clocks and inturn enables
+clocks required for CPU freq.
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- .../hwtracing/coresight/coresight-replicator.c    | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+[V2]
+ * Restructred the patch series as there are two different HW blocks,
+   the mux and enable belongs to the apcs block and PLL has a separate HW
+   block.
+ * Converted qcom mailbox and qcom a53 pll documentation to yaml.
+ * Addressed review comments from Stephen, Rob and Sibi where it is applicable.
+ * Changed this cover letter to state the purpose of this patch series
 
-diff --git a/drivers/hwtracing/coresight/coresight-replicator.c b/drivers/hwtracing/coresight/coresight-replicator.c
-index e7dc1c31d20d..f4eaa38f8f43 100644
---- a/drivers/hwtracing/coresight/coresight-replicator.c
-+++ b/drivers/hwtracing/coresight/coresight-replicator.c
-@@ -66,14 +66,16 @@ static int dynamic_replicator_enable(struct replicator_drvdata *drvdata,
- 				     int inport, int outport)
- {
- 	int rc = 0;
--	u32 reg;
-+	u32 reg0, reg1;
- 
- 	switch (outport) {
- 	case 0:
--		reg = REPLICATOR_IDFILTER0;
-+		reg0 = REPLICATOR_IDFILTER0;
-+		reg1 = REPLICATOR_IDFILTER1;
- 		break;
- 	case 1:
--		reg = REPLICATOR_IDFILTER1;
-+		reg0 = REPLICATOR_IDFILTER1;
-+		reg1 = REPLICATOR_IDFILTER0;
- 		break;
- 	default:
- 		WARN_ON(1);
-@@ -87,8 +89,11 @@ static int dynamic_replicator_enable(struct replicator_drvdata *drvdata,
- 		rc = coresight_claim_device_unlocked(drvdata->base);
- 
- 	/* Ensure that the outport is enabled. */
--	if (!rc)
--		writel_relaxed(0x00, drvdata->base + reg);
-+	if (!rc) {
-+		writel_relaxed(0x00, drvdata->base + reg0);
-+		writel_relaxed(0xff, drvdata->base + reg1);
-+	}
-+
- 	CS_LOCK(drvdata->base);
- 
- 	return rc;
+Sivaprakash Murugesan (8):
+  dt-bindings: mailbox: Add YAML schemas for QCOM APCS global block
+  dt-bindings: clock: Add YAML schemas for QCOM A53 PLL
+  clk: qcom: Add A53 PLL support for ipq6018 devices
+  clk: qcom: Add DT bindings for ipq6018 apss clock controller
+  clk: qcom: Add ipq apss clock controller
+  dt-bindings: mailbox: Add dt-bindings for ipq6018 apcs global block
+  mailbox: qcom: Add ipq6018 apcs compatible
+  arm64: dts: ipq6018: Add a53 pll and apcs clock
+
+ .../devicetree/bindings/clock/qcom,a53pll.txt      |  22 ----
+ .../devicetree/bindings/clock/qcom,a53pll.yaml     |  60 +++++++++
+ .../bindings/mailbox/qcom,apcs-kpss-global.txt     |  88 -------------
+ .../bindings/mailbox/qcom,apcs-kpss-global.yaml    | 101 +++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  16 ++-
+ drivers/clk/qcom/Kconfig                           |  10 ++
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/a53-pll.c                         | 136 +++++++++++++++++----
+ drivers/clk/qcom/apss-ipq.c                        | 107 ++++++++++++++++
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c            |  22 ++--
+ include/dt-bindings/clock/qcom,apss-ipq.h          |  12 ++
+ 11 files changed, 430 insertions(+), 145 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,a53pll.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+ delete mode 100644 Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt
+ create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+ create mode 100644 drivers/clk/qcom/apss-ipq.c
+ create mode 100644 include/dt-bindings/clock/qcom,apss-ipq.h
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
+
