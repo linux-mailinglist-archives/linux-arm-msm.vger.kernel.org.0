@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0536B19EAC4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2020 13:30:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF7EA19EADB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2020 13:30:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726599AbgDELaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Apr 2020 07:30:08 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:52995 "EHLO
+        id S1726647AbgDELa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Apr 2020 07:30:26 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:5756 "EHLO
         alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726388AbgDELaH (ORCPT
+        by vger.kernel.org with ESMTP id S1726626AbgDELaJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Apr 2020 07:30:07 -0400
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 05 Apr 2020 04:30:06 -0700
+        Sun, 5 Apr 2020 07:30:09 -0400
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 05 Apr 2020 04:30:07 -0700
 Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
-  by ironmsg03-sd.qualcomm.com with ESMTP; 05 Apr 2020 04:30:03 -0700
+  by ironmsg02-sd.qualcomm.com with ESMTP; 05 Apr 2020 04:30:03 -0700
 Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id 72B4E213E1; Sun,  5 Apr 2020 17:00:02 +0530 (IST)
+        id 8112621641; Sun,  5 Apr 2020 17:00:02 +0530 (IST)
 From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
         mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
         jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, sivaprak@codeaurora.org
-Subject: [PATCH V2 2/8] dt-bindings: clock: Add YAML schemas for QCOM A53 PLL
-Date:   Sun,  5 Apr 2020 16:59:19 +0530
-Message-Id: <1586086165-19426-3-git-send-email-sivaprak@codeaurora.org>
+Subject: [PATCH V2 3/8] clk: qcom: Add A53 PLL support for ipq6018 devices
+Date:   Sun,  5 Apr 2020 16:59:20 +0530
+Message-Id: <1586086165-19426-4-git-send-email-sivaprak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1586086165-19426-1-git-send-email-sivaprak@codeaurora.org>
 References: <1586086165-19426-1-git-send-email-sivaprak@codeaurora.org>
@@ -35,111 +35,203 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds schema for primary CPU PLL found on few Qualcomm
-platforms.
+The CPUs on Qualcomm IPQ6018 platform is primarily clocked by A53 PLL.
+This patch adds support for the A53 PLL on IPQ6018 devices which can
+support CPU frequencies above 1Ghz.
 
 Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
 ---
- .../devicetree/bindings/clock/qcom,a53pll.txt      | 22 --------
- .../devicetree/bindings/clock/qcom,a53pll.yaml     | 60 ++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 22 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/clock/qcom,a53pll.txt
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+ drivers/clk/qcom/a53-pll.c | 136 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 111 insertions(+), 25 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,a53pll.txt b/Documentation/devicetree/bindings/clock/qcom,a53pll.txt
-deleted file mode 100644
-index e3fa811..0000000
---- a/Documentation/devicetree/bindings/clock/qcom,a53pll.txt
-+++ /dev/null
-@@ -1,22 +0,0 @@
--Qualcomm MSM8916 A53 PLL Binding
----------------------------------
--The A53 PLL on MSM8916 platforms is the main CPU PLL used used for frequencies
--above 1GHz.
+diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
+index 45cfc57..a95351c 100644
+--- a/drivers/clk/qcom/a53-pll.c
++++ b/drivers/clk/qcom/a53-pll.c
+@@ -11,11 +11,40 @@
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <linux/module.h>
++#include <linux/of_device.h>
+ 
+ #include "clk-pll.h"
+ #include "clk-regmap.h"
++#include "clk-alpha-pll.h"
+ 
+-static const struct pll_freq_tbl a53pll_freq[] = {
++struct a53_alpha_pll {
++	struct alpha_pll_config *pll_config;
++	struct clk_alpha_pll *pll;
++};
++
++union a53pll {
++	struct clk_pll *pll;
++	struct a53_alpha_pll alpha_pll;
++};
++
++struct a53pll_data {
++#define PLL_IS_ALPHA BIT(0)
++	u8 flags;
++	union a53pll a53pll;
++};
++
++static const u8 ipq_pll_offsets[] = {
++	[PLL_OFF_L_VAL] = 0x08,
++	[PLL_OFF_ALPHA_VAL] = 0x10,
++	[PLL_OFF_USER_CTL] = 0x18,
++	[PLL_OFF_CONFIG_CTL] = 0x20,
++	[PLL_OFF_CONFIG_CTL_U] = 0x24,
++	[PLL_OFF_STATUS] = 0x28,
++	[PLL_OFF_TEST_CTL] = 0x30,
++	[PLL_OFF_TEST_CTL_U] = 0x34,
++};
++
++static const struct pll_freq_tbl msm8996_a53pll_freq[] = {
+ 	{  998400000, 52, 0x0, 0x1, 0 },
+ 	{ 1094400000, 57, 0x0, 0x1, 0 },
+ 	{ 1152000000, 62, 0x0, 0x1, 0 },
+@@ -26,6 +55,64 @@ static const struct pll_freq_tbl a53pll_freq[] = {
+ 	{ }
+ };
+ 
++static struct clk_pll msm8996_pll = {
++	.mode_reg = 0x0,
++	.l_reg = 0x04,
++	.m_reg = 0x08,
++	.n_reg = 0x0c,
++	.config_reg = 0x14,
++	.status_reg = 0x1c,
++	.status_bit = 16,
++	.freq_tbl = msm8996_a53pll_freq,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "a53pll",
++		.flags = CLK_IS_CRITICAL,
++		.parent_data = &(const struct clk_parent_data){
++			.fw_name = "xo",
++			.name = "xo",
++		},
++		.num_parents = 1,
++		.ops = &clk_pll_sr2_ops,
++	},
++};
++
++static struct clk_alpha_pll ipq6018_pll = {
++	.offset = 0x0,
++	.regs = ipq_pll_offsets,
++	.flags = SUPPORTS_DYNAMIC_UPDATE,
++	.clkr = {
++		.enable_reg = 0x0,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "a53pll",
++			.flags = CLK_IS_CRITICAL,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "xo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_huayra_ops,
++		},
++	},
++};
++
++static struct alpha_pll_config ipq6018_pll_config = {
++	.l = 0x37,
++	.config_ctl_val = 0x04141200,
++	.config_ctl_hi_val = 0x0,
++	.early_output_mask = BIT(3),
++	.main_output_mask = BIT(0),
++};
++
++static struct a53pll_data msm8996pll_data = {
++	.a53pll.pll = &msm8996_pll,
++};
++
++static struct a53pll_data ipq6018pll_data = {
++	.flags = PLL_IS_ALPHA,
++	.a53pll.alpha_pll.pll = &ipq6018_pll,
++	.a53pll.alpha_pll.pll_config = &ipq6018_pll_config,
++};
++
+ static const struct regmap_config a53pll_regmap_config = {
+ 	.reg_bits		= 32,
+ 	.reg_stride		= 4,
+@@ -39,14 +126,16 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct regmap *regmap;
+ 	struct resource *res;
+-	struct clk_pll *pll;
++	const struct a53pll_data *pll_data;
++	struct clk_regmap *clkr;
+ 	void __iomem *base;
+-	struct clk_init_data init = { };
+ 	int ret;
+ 
+-	pll = devm_kzalloc(dev, sizeof(*pll), GFP_KERNEL);
+-	if (!pll)
+-		return -ENOMEM;
++	pll_data = of_device_get_match_data(dev);
++	if (!pll_data) {
++		dev_err(dev, "failed to get platform data\n");
++		return -ENODEV;
++	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	base = devm_ioremap_resource(dev, res);
+@@ -57,30 +146,26 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+-	pll->l_reg = 0x04;
+-	pll->m_reg = 0x08;
+-	pll->n_reg = 0x0c;
+-	pll->config_reg = 0x14;
+-	pll->mode_reg = 0x00;
+-	pll->status_reg = 0x1c;
+-	pll->status_bit = 16;
+-	pll->freq_tbl = a53pll_freq;
 -
--Required properties :
--- compatible : Shall contain only one of the following:
+-	init.name = "a53pll";
+-	init.parent_names = (const char *[]){ "xo" };
+-	init.num_parents = 1;
+-	init.ops = &clk_pll_sr2_ops;
+-	init.flags = CLK_IS_CRITICAL;
+-	pll->clkr.hw.init = &init;
 -
--		"qcom,msm8916-a53pll"
--
--- reg : shall contain base register location and length
--
--- #clock-cells : must be set to <0>
--
--Example:
--
--	a53pll: clock@b016000 {
--		compatible = "qcom,msm8916-a53pll";
--		reg = <0xb016000 0x40>;
--		#clock-cells = <0>;
--	};
--
-diff --git a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
-new file mode 100644
-index 0000000..97b234e
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
-@@ -0,0 +1,60 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/bindings/clock/qcom,a53pll.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+-	ret = devm_clk_register_regmap(dev, &pll->clkr);
++	if (pll_data->flags & PLL_IS_ALPHA) {
++		struct clk_alpha_pll *alpha_pll =
++			pll_data->a53pll.alpha_pll.pll;
++		struct alpha_pll_config *alpha_pll_config =
++			pll_data->a53pll.alpha_pll.pll_config;
 +
-+title: Qualcomm A53 PLL Binding
++		clk_alpha_pll_configure(alpha_pll, regmap, alpha_pll_config);
++		clkr = &pll_data->a53pll.alpha_pll.pll->clkr;
++	} else {
++		clkr = &pll_data->a53pll.pll->clkr;
++	}
 +
-+maintainers:
-+  - Sivaprakash Murugesan <sivaprak@codeaurora.org>
-+
-+description:
-+  The A53 PLL on few Qualcomm platforms is the main CPU PLL used used for
-+  frequencies above 1GHz.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,msm8916-a53pll
-+      - qcom,ipq6018-a53pll
-+
-+  reg:
-+    maxItems: 1
-+
-+  '#clock-cells':
-+    const: 0
-+
-+  clocks:
-+    description: clocks required for this controller.
-+    maxItems: 1
-+
-+  clock-names:
-+    description: clock output names of required clocks.
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - '#clock-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  #Example 1 - A53 PLL found on MSM8916 devices
-+  - |
-+    a53pll: clock@b016000 {
-+        compatible = "qcom,msm8916-a53pll";
-+        reg = <0xb016000 0x40>;
-+        #clock-cells = <0>;
-+    };
-+
-+  #Example 2 - A53 PLL found on IPQ6018 devices
-+  - |
-+    a53pll_ipq: clock@b116000 {
-+        compatible = "qcom,ipq6018-a53pll";
-+        reg = <0x0b116000 0x40>;
-+        #clock-cells = <0>;
-+        clocks = <&xo>;
-+        clock-names = "xo";
-+    };
++	ret = devm_clk_register_regmap(dev, clkr);
+ 	if (ret) {
+ 		dev_err(dev, "failed to register regmap clock: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+ 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
+-					  &pll->clkr.hw);
++					  &clkr->hw);
+ 	if (ret) {
+ 		dev_err(dev, "failed to add clock provider: %d\n", ret);
+ 		return ret;
+@@ -90,7 +175,8 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id qcom_a53pll_match_table[] = {
+-	{ .compatible = "qcom,msm8916-a53pll" },
++	{ .compatible = "qcom,msm8916-a53pll", .data = &msm8996pll_data},
++	{ .compatible = "qcom,ipq6018-a53pll", .data = &ipq6018pll_data},
+ 	{ }
+ };
+ 
 -- 
 2.7.4
 
