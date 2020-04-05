@@ -2,261 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4014919E69F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Apr 2020 19:17:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38C9819E87D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2020 04:09:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726224AbgDDRRE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Apr 2020 13:17:04 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:33432 "EHLO
+        id S1726380AbgDECJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Apr 2020 22:09:51 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:35559 "EHLO
         mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726057AbgDDRRE (ORCPT
+        with ESMTP id S1726283AbgDECJv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Apr 2020 13:17:04 -0400
-Received: by mail-io1-f67.google.com with SMTP id o127so11130301iof.0;
-        Sat, 04 Apr 2020 10:17:03 -0700 (PDT)
+        Sat, 4 Apr 2020 22:09:51 -0400
+Received: by mail-io1-f67.google.com with SMTP id o3so12036033ioh.2;
+        Sat, 04 Apr 2020 19:09:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LbvmpO8/bPCuPHRYyiVH18tDMFLwI93Ii9fpZRHXa24=;
-        b=ReT+lp7J0yRDoeB5Fc6+sosj5kigItmmvilMvz/otfDzISJVpLNTytcv2xQVns1um8
-         3OWe5v+1HXVA7suEN8Pt/UCNgoxfLQ8eqveDQxV+Pc8K1LWPdHIntL4LIcAYRwSxp8fN
-         X1ZcyD98IkD4PSqMI3b60AK/aaG7zkBcTxoRRiAJgU+YZKqFR24AVFkOm77J2/T3fbek
-         v3N9aW6ldrKBgzFXHWDDG1VGphjTZ2fgIK0RYWyHIwrfAmZa5fMeuuU8dLuTPGKPjaHo
-         m/104JG5JURV25h0EP6m9LwjaW1HRouXVfXh0wn+9E84cqgeFMBU++tWoJdmIg6iVhzf
-         hOtQ==
-X-Gm-Message-State: AGi0PuY7JtHmIFh25HRkVi0mogmgFvt46kw0ICaYwA7iGb6KhRY63uDf
-        gK9NehIyEK8FH5AwmROqxQ==
-X-Google-Smtp-Source: APiQypLFu5Hc0JAC3bpktegAn7G91KQCfoP4OvP8MY4BArxOHkzgelADg0pN6T66oqTT+a47UjxOEg==
-X-Received: by 2002:a5d:894a:: with SMTP id b10mr12955179iot.38.1586020622686;
-        Sat, 04 Apr 2020 10:17:02 -0700 (PDT)
+        bh=HGvGldYqzcPwlD+W1QgZLducQvHDHG5zRE8/3hy9qmE=;
+        b=ZGiWJcKk5rA0RoQ9U4nQaFTbO/P84py6g8caDWaiK3W6urNUEKd44N0aZbaVt80AsY
+         aAqSZVzAZT7vROPohdF3K5YkZmfYjT0PuawPgXGa9M+MdHveUW5X2Z/6LR0Ad/cm3Wjj
+         nnJDl6npYLFfQJIKQM76y0BmSayv/LEBuP1XtHLU8Af2G8FA1zd0wOWjjTpbQUlbbygd
+         0+efNSCOseJznNB/OViPMONEPGT0e3XdrZSi+iuAbrMCXXoXST/X6d6sBmOw7shohKOj
+         1HVCQMf2eEjufXsbKJQhAVy3sGyRauZRQWhwTbSpuMZ9XOjOE1gj9fyJB6oDa+xUDLn3
+         Ukmw==
+X-Gm-Message-State: AGi0PuYcTzOB+aByDcGLXblKjkJDcBhOnQh7PwF7/g/B2btUmpdSA1/p
+        9mLYXBLWi0GVF2odDoYdVg==
+X-Google-Smtp-Source: APiQypLR+L4TyzsQ18uH/T8q5XIdKfhiVKmP6auhisbFB8B7HRQkYCMpG4OowZonWrf8jyvc8VdSIQ==
+X-Received: by 2002:a02:2a47:: with SMTP id w68mr3890967jaw.76.1586052589693;
+        Sat, 04 Apr 2020 19:09:49 -0700 (PDT)
 Received: from rob-hp-laptop ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id v11sm4005446ilk.68.2020.04.04.10.17.01
+        by smtp.gmail.com with ESMTPSA id b6sm3770146iok.19.2020.04.04.19.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2020 10:17:01 -0700 (PDT)
-Received: (nullmailer pid 22176 invoked by uid 1000);
-        Sat, 04 Apr 2020 17:17:00 -0000
-Date:   Sat, 4 Apr 2020 11:17:00 -0600
+        Sat, 04 Apr 2020 19:09:48 -0700 (PDT)
+Received: (nullmailer pid 11718 invoked by uid 1000);
+        Sun, 05 Apr 2020 02:09:46 -0000
+Date:   Sat, 4 Apr 2020 20:09:46 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v5 1/2] dt-bindings: usb: qcom,dwc3: Convert USB DWC3
- bindings
-Message-ID: <20200404171700.GA10096@bogus>
-References: <1585206368-685-1-git-send-email-sanm@codeaurora.org>
- <1585206368-685-2-git-send-email-sanm@codeaurora.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>, David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v1 2/4] dt-bindings: clock: Add YAML schemas for LPASS
+ clocks on SC7180
+Message-ID: <20200405020946.GA6110@bogus>
+References: <1585338485-31820-1-git-send-email-tdas@codeaurora.org>
+ <1585338485-31820-3-git-send-email-tdas@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1585206368-685-2-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <1585338485-31820-3-git-send-email-tdas@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 26, 2020 at 12:36:07PM +0530, Sandeep Maheswaram wrote:
-> Convert USB DWC3 bindings to DT schema format using json-schema.
+On Sat, Mar 28, 2020 at 01:18:03AM +0530, Taniya Das wrote:
+> The LPASS(Low Power Audio Subsystem) clock provider have a bunch of generic
+> properties that are needed in a device tree. Also add clock ids for GCC
+> LPASS and LPASS Core clock IDs for LPASS client to request for the clocks.
 > 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  .../devicetree/bindings/usb/qcom,dwc3.txt          | 104 --------------
->  .../devicetree/bindings/usb/qcom,dwc3.yaml         | 158 +++++++++++++++++++++
->  2 files changed, 158 insertions(+), 104 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/usb/qcom,dwc3.txt
->  create mode 100644 Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-
-
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>  .../bindings/clock/qcom,sc7180-lpasscorecc.yaml    | 81 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,gcc-sc7180.h        |  1 +
+>  .../dt-bindings/clock/qcom,lpasscorecc-sc7180.h    | 28 ++++++++
+>  3 files changed, 110 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,lpasscorecc-sc7180.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml
 > new file mode 100644
-> index 0000000..0f69475
+> index 0000000..d040bd1
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> @@ -0,0 +1,158 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml
+> @@ -0,0 +1,81 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+> +$id: http://devicetree.org/schemas/clock/qcom,sc7180-lpasscorecc.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm SuperSpeed DWC3 USB SoC controller
+> +title: Qualcomm LPASS Core Clock Controller Binding for SC7180
 > +
 > +maintainers:
-> +  - Manu Gautam <mgautam@codeaurora.org>
+> +  - Taniya Das <tdas@codeaurora.org>
+> +
+> +description: |
+> +  Qualcomm LPASS core clock control module which supports the clocks and
+> +  power domains on SC7180.
+> +
+> +  See also:
+> +  - dt-bindings/clock/qcom,lpasscorecc-sc7180.h
 > +
 > +properties:
 > +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,msm8996-dwc3
-> +          - qcom,msm8998-dwc3
-> +          - qcom,sdm845-dwc3
-> +      - const: qcom,dwc3
-> +
-> +  reg:
-> +    description: Offset and length of register set for QSCRATCH wrapper
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    enum: [ 1, 2 ]
-> +
-> +  "#size-cells":
-> +    enum: [ 1, 2 ]
-> +
-> +  power-domains:
-> +    description: specifies a phandle to PM domain provider node
-> +    maxItems: 1
+> +    enum:
+> +      - qcom,sc7180-lpasshm
+> +      - qcom,sc7180-lpasscorecc
 > +
 > +  clocks:
-> +    description:
-> +      A list of phandle and clock-specifier pairs for the clocks
-> +      listed in clock-names.
 > +    items:
-> +      - description: System Config NOC clock.
-> +      - description: Master/Core clock, has to be >= 125 MHz
-> +          for SS operation and >= 60MHz for HS operation.
-> +      - description: System bus AXI clock.
-> +      - description: Mock utmi clock needed for ITP/SOF generation
-> +          in host mode. Its frequency should be 19.2MHz.
-> +      - description: Sleep clock, used for wakeup when
-> +          USB3 core goes into low power mode (U3).
+> +      - description: gcc_lpass_sway clock from GCC
 > +
 > +  clock-names:
 > +    items:
-> +      - const: cfg_noc
-> +      - const: core
-> +      - const: iface
-> +      - const: mock_utmi
-> +      - const: sleep
+> +      - const: gcc_lpass_sway
 > +
-> +  assigned-clocks:
+> +  power-domains:
 > +    items:
-> +      - description: Phandle and clock specifier of MOCK_UTMI_CLK.
-> +      - description: Phandle and clock specifoer of MASTER_CLK.
+> +      - description: LPASS CORE HM GSDCR
 > +
-> +  assigned-clock-rates:
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    minItems: 1
 > +    maxItems: 2
 
-Need to drop this as it is redundant. Soon this will generate an error.
+Need to define what each one is when there are 2.
 
-> +    items:
-> +      - description: Must be 19.2MHz (19200000).
-
-Sounds like a constraint:
-
-- const: 19200000
-
-> +      - description: Must be >= 60 MHz in HS mode, >= 125 MHz in SS mode.
-
-- minimum: 60000000
-  maximum: ?
-
-> +
-> +  resets:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    items:
-> +      - description: The interrupt that is asserted
-> +          when a wakeup event is received on USB2 bus.
-> +      - description: The interrupt that is asserted
-> +          when a wakeup event is received on USB3 bus.
-> +      - description: Wakeup event on DM line.
-> +      - description: Wakeup event on DP line.
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: hs_phy_irq
-> +      - const: ss_phy_irq
-> +      - const: dm_hs_phy_irq
-> +      - const: dp_hs_phy_irq
-> +
-> +  qcom,select-utmi-as-pipe-clk:
-> +    description:
-> +      If present, disable USB3 pipe_clk requirement.
-> +      Used when dwc3 operates without SSPHY and only
-> +      HS/FS/LS modes are supported.
-> +    type: boolean
-> +
-> +# Required child node:
-> +
-> +patternProperties:
-> +  "^dwc3@[0-9a-f]+$":
-> +    type: object
-> +    description:
-> +      A child node must exist to represent the core DWC3 IP block
-> +      The content of the node is defined in dwc3.txt.
 > +
 > +required:
 > +  - compatible
 > +  - reg
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - power-domains
 > +  - clocks
 > +  - clock-names
+> +  - '#clock-cells'
+> +  - '#power-domain-cells'
+> +
+> +additionalProperties: false
 > +
 > +examples:
 > +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    usb@a6f8800 {
-> +        compatible = "qcom,sdm845-dwc3", "qcom,dwc3";
-> +        reg = <0 0x0a6f8800 0 0x400>;
-> +
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +
-> +        clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
-> +                 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
-> +                 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-> +                 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-> +                 <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
-> +        clock-names = "cfg_noc", "core", "iface", "mock_utmi",
-> +                      "sleep";
-> +
-> +        assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-> +                          <&gcc GCC_USB30_PRIM_MASTER_CLK>;
-> +        assigned-clock-rates = <19200000>, <150000000>;
-> +
-> +        interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-names = "hs_phy_irq", "ss_phy_irq",
-> +                          "dm_hs_phy_irq", "dp_hs_phy_irq";
-> +
-> +        power-domains = <&gcc USB30_PRIM_GDSC>;
-> +
-> +        resets = <&gcc GCC_USB30_PRIM_BCR>;
-> +
-> +        dwc3@a600000 {
-> +            compatible = "snps,dwc3";
-> +            reg = <0 0x0a600000 0 0xcd00>;
-
-You need 'ranges' in the parent for this address to be translatable.
-
-> +            interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> +            iommus = <&apps_smmu 0x740 0>;
-> +            snps,dis_u2_susphy_quirk;
-> +            snps,dis_enblslpm_quirk;
-> +            phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-> +            phy-names = "usb2-phy", "usb3-phy";
-> +        };
+> +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+> +    #include <dt-bindings/clock/qcom,lpasscorecc-sc7180.h>
+> +    clock-controller@63000000 {
+> +      compatible = "qcom,sc7180-lpasshm";
+> +        reg = <0 0x63000000 0 0x28>;
+> +        clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>;
+> +        clock-names = "gcc_lpass_sway";
+> +        #clock-cells = <1>;
+> +        #power-domain-cells = <1>;
 > +    };
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> +
+> +  - |
+> +    clock-controller@62d00000 {
+> +        compatible = "qcom,sc7180-lpasscorecc";
+> +        reg = <0 0x62d00000 0 0x50000>,
+> +            <0 0x62780000 0 0x30000>;
+> +        clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>;
+> +        clock-names = "gcc_lpass_sway";
+> +        power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+> +        #clock-cells = <1>;
+> +        #power-domain-cells = <1>;
+> +    };
+> +...
+> diff --git a/include/dt-bindings/clock/qcom,gcc-sc7180.h b/include/dt-bindings/clock/qcom,gcc-sc7180.h
+> index 1258fd0..439476c 100644
+> --- a/include/dt-bindings/clock/qcom,gcc-sc7180.h
+> +++ b/include/dt-bindings/clock/qcom,gcc-sc7180.h
+> @@ -137,6 +137,7 @@
+>  #define GCC_MSS_NAV_AXI_CLK					127
+>  #define GCC_MSS_Q6_MEMNOC_AXI_CLK				128
+>  #define GCC_MSS_SNOC_AXI_CLK					129
+> +#define GCC_LPASS_CFG_NOC_SWAY_CLK				130
+> 
+>  /* GCC resets */
+>  #define GCC_QUSB2PHY_PRIM_BCR					0
+> diff --git a/include/dt-bindings/clock/qcom,lpasscorecc-sc7180.h b/include/dt-bindings/clock/qcom,lpasscorecc-sc7180.h
+> new file mode 100644
+> index 0000000..9466d5e
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,lpasscorecc-sc7180.h
+> @@ -0,0 +1,28 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_CLK_QCOM_LPASS_CORE_CC_SC7180_H
+> +#define _DT_BINDINGS_CLK_QCOM_LPASS_CORE_CC_SC7180_H
+> +
+> +/* LPASS_CORE_CC clocks */
+> +#define LPASS_LPAAUDIO_DIG_PLL				0
+> +#define LPASS_LPAAUDIO_DIG_PLL_OUT_ODD			1
+> +#define CORE_CLK_SRC					2
+> +#define EXT_MCLK0_CLK_SRC				3
+> +#define LPAIF_PRI_CLK_SRC				4
+> +#define LPAIF_SEC_CLK_SRC				5
+> +#define LPASS_AUDIO_CORE_CORE_CLK			6
+> +#define LPASS_AUDIO_CORE_EXT_MCLK0_CLK			7
+> +#define LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK		8
+> +#define LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK		9
+> +#define LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK		10
+> +
+> +/* LPASS power domains */
+> +#define LPASS_CORE_HM_GDSCR				0
+> +
+> +#define LPASS_AUDIO_HM_GDSCR				0
+
+Kind of odd that 2 are the same value.
+
+> +#define LPASS_PDC_HM_GDSCR				1
+> +
+> +#endif
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
 > 
