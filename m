@@ -2,91 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 681F019E8CB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2020 05:10:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA66219E9DE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2020 10:19:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbgDEDK6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Apr 2020 23:10:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55432 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726057AbgDEDK6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Apr 2020 23:10:58 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726380AbgDEITv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Apr 2020 04:19:51 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:35305 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726308AbgDEITv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 5 Apr 2020 04:19:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586074790; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=KyBwcU84B4N0unkwU2I9YtySGgP2/DWULK5tSFWSoOI=; b=RrSDAQr7F0dYZBvp5sVJTXbuAK+xF5JSuULr2ZfhNwUMLv83noyJNZj4FIg67pWcA2552I4/
+ /R76ioSzzn4/hqFyGPF3rqxaxxVfndE7vgnuZeedTaqDCT8Is2LC1nbMm842Leq2bQL0E/+x
+ HLaq4MOjrwgjmscjpt+Bg8RUeF4=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e899499.7f9e5f610ca8-smtp-out-n02;
+ Sun, 05 Apr 2020 08:19:37 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 770DDC433D2; Sun,  5 Apr 2020 08:19:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.100] (unknown [49.206.125.103])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B8897206A3;
-        Sun,  5 Apr 2020 03:10:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586056257;
-        bh=JT+cqz7qLQP4SxN8BKeesGICXxCLM/dtqRMyPQ3Sypg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=gH6i3tO5MVQB3uPNo+huaHmkejxuBY4nUhUoCunnAqMsmF7anDqq0ZyFOb0Cm/062
-         oNFKVzSEKGRTGILKizSs4A5zAnTdvUWnRrLd++9JV+COQo8DjgElxvI+U+quW9jfPU
-         7JXLOLw2oTI3bIOEozn/Lfqjau/wBp5VXM3Uw6hE=
-Content-Type: text/plain; charset="utf-8"
+        (Authenticated sender: sivaprak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AED5CC433F2;
+        Sun,  5 Apr 2020 08:19:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AED5CC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
+Subject: Re: [PATCH 1/2] clk: qcom: Add DT bindings for ipq6018 apss clock
+ controller
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+References: <1582797318-26288-1-git-send-email-sivaprak@codeaurora.org>
+ <1582797318-26288-2-git-send-email-sivaprak@codeaurora.org>
+ <e94805e32d1264ca9a162891db26730e@codeaurora.org>
+From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Message-ID: <5388bacc-217c-d14a-1e7e-26c72588a035@codeaurora.org>
+Date:   Sun, 5 Apr 2020 13:49:31 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <00f701d60958$a9ed46c0$fdc7d440$@gmail.com>
-References: <20200330205647.24806-1-ansuelsmth@gmail.com> <158587766752.125146.7582840761926137726@swboyd.mtv.corp.google.com> <00f701d60958$a9ed46c0$fdc7d440$@gmail.com>
-Subject: Re: R: [PATCH v2] ARM: qcom: Disable i2c device on gsbi4 for ipq806x
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     'Mathieu Olivari' <mathieu@codeaurora.org>,
-        'Bjorn Andersson' <bjorn.andersson@linaro.org>,
-        'Rob Herring' <robh+dt@kernel.org>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        'Michael Turquette' <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-To:     'Andy Gross' <agross@kernel.org>, ansuelsmth@gmail.com
-Date:   Sat, 04 Apr 2020 20:10:56 -0700
-Message-ID: <158605625697.158626.12280118012638752686@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+In-Reply-To: <e94805e32d1264ca9a162891db26730e@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting ansuelsmth@gmail.com (2020-04-02 18:39:04)
->=20
->=20
-> > -----Messaggio originale-----
-> > Da: Stephen Boyd <sboyd@kernel.org>
-> > Inviato: venerd=C3=AC 3 aprile 2020 03:34
-> > A: Andy Gross <agross@kernel.org>; Ansuel Smith
-> > <ansuelsmth@gmail.com>
-> > Cc: Ansuel Smith <ansuelsmth@gmail.com>; Mathieu Olivari
-> > <mathieu@codeaurora.org>; Bjorn Andersson
-> > <bjorn.andersson@linaro.org>; Rob Herring <robh+dt@kernel.org>; Mark
-> > Rutland <mark.rutland@arm.com>; Michael Turquette
-> > <mturquette@baylibre.com>; linux-arm-msm@vger.kernel.org;
-> > devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-
-> > clk@vger.kernel.org
-> > Oggetto: Re: [PATCH v2] ARM: qcom: Disable i2c device on gsbi4 for
-> > ipq806x
-> >=20
-> > Quoting Ansuel Smith (2020-03-30 13:56:46)
-> > > diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-
-> > ipq806x.c
-> > > index b0eee0903807..f7d7a2bc84c1 100644
-> > > --- a/drivers/clk/qcom/gcc-ipq806x.c
-> > > +++ b/drivers/clk/qcom/gcc-ipq806x.c
-> > > @@ -991,6 +991,7 @@ static struct clk_branch gsbi4_h_clk =3D {
-> > >                 .hw.init =3D &(struct clk_init_data){
-> > >                         .name =3D "gsbi4_h_clk",
-> > >                         .ops =3D &clk_branch_ops,
-> > > +                       .flags =3D CLK_IGNORE_UNUSED,
-> >=20
-> > Is this necessary? Shouldn't we skip clks that are protected during the
-> > unused phase?
-> >=20
->=20
-> gsbi4_h_clk is not protected. gsbi4_h_clk needs to not be disabled if unu=
-sed
-> (as it's used by rpm) but can't be protected since it's used by uart gsbi=
-4.
-> (With some test protecting also this clk cause the malfunction of uart gs=
-b4)
->=20
+Hi Sibi,
 
-Who owns gsbi4 on this platform? Is it RPM? If so, it should be
-protected and we shouldn't touch this clk from the kernel.
+Thanks for the review.
+
+On 2/27/2020 4:08 PM, Sibi Sankar wrote:
+> Hey Sivaprakash,
+>
+> On 2020-02-27 15:25, Sivaprakash Murugesan wrote:
+>> add dt-binding for ipq6018 apss clock controller
+>>
+>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>> ---
+>>  .../devicetree/bindings/clock/qcom,apsscc.yaml     | 58 
+>> ++++++++++++++++++++++
+>>  include/dt-bindings/clock/qcom,apss-ipq6018.h      | 26 ++++++++++
+>>  2 files changed, 84 insertions(+)
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/clock/qcom,apsscc.yaml
+>>  create mode 100644 include/dt-bindings/clock/qcom,apss-ipq6018.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,apsscc.yaml
+>> b/Documentation/devicetree/bindings/clock/qcom,apsscc.yaml
+>> new file mode 100644
+>> index 0000000..7433721
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,apsscc.yaml
+>> @@ -0,0 +1,58 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>
+> Dual license
+ok.
+>
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/bindings/clock/qcom,apsscc.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm IPQ6018 APSS Clock Controller Binding
+>> +
+>> +maintainers:
+>> +  - Stephen Boyd <sboyd@kernel.org>
+>> +
+>> +description: |
+>> +  Qualcomm IPQ6018 APSS clock control module which supports the 
+>> clocks with
+>> +  frequencies above 800Mhz.
+>> +
+>> +properties:
+>> +  compatible :
+>> +    const: qcom,apss-ipq6018
+>
+> Please use qcom,<chip>-<device>
+> instead.
+>
+ok.
+>> +
+>> +  clocks:
+>> +    description: clocks required for this controller.
+>> +    maxItems: 4
+>> +
+>> +  clock-names:
+>> +    description: clock output names of required clocks.
+>> +    maxItems: 4
+>> +
+>> +  '#clock-cells':
+>> +    const: 1
+>> +
+>> +  '#reset-cells':
+>> +    const: 1
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - '#clock-cells'
+>> +  - '#reset-cells'
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +      #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+>> +      apss_clk: qcom,apss_clk@b111000 {
+>> +            compatible = "qcom,apss-ipq6018";
+>> +            clocks = <&xo>, <&gcc GPLL0>,
+>> +                        <&gcc GPLL2>, <&gcc GPLL4>;
+>> +            clock-names = "xo", "gpll0",
+>> +                         "gpll2", "gpll4";
+>> +            reg = <0xb11100c 0x5ff4>;
+>> +            #clock-cells = <1>;
+>> +            #reset-cells = <1>;
+>> +      };
+>> +...
+>> diff --git a/include/dt-bindings/clock/qcom,apss-ipq6018.h
+>> b/include/dt-bindings/clock/qcom,apss-ipq6018.h
+>> new file mode 100644
+>> index 0000000..ed9d7d8
+>> --- /dev/null
+>> +++ b/include/dt-bindings/clock/qcom,apss-ipq6018.h
+>> @@ -0,0 +1,26 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/*
+>> + * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+>> + *
+>> + * Permission to use, copy, modify, and/or distribute this software 
+>> for any
+>> + * purpose with or without fee is hereby granted, provided that the 
+>> above
+>> + * copyright notice and this permission notice appear in all copies.
+>> + *
+>> + * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL 
+>> WARRANTIES
+>> + * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+>> + * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE 
+>> LIABLE FOR
+>> + * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY 
+>> DAMAGES
+>> + * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER 
+>> IN AN
+>> + * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING 
+>> OUT OF
+>> + * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+>
+> ^^ is not needed just the SPDX
+> license identifier is enough.
+ok.
+>
+>> + */
+>> +
+>> +#ifndef _DT_BINDINGS_CLOCK_QCA_APSS_IPQ6018_H
+>> +#define _DT_BINDINGS_CLOCK_QCA_APSS_IPQ6018_H
+>> +
+>> +#define APSS_PLL_EARLY                0
+>> +#define APSS_PLL                1
+>> +#define APCS_ALIAS0_CLK_SRC            2
+>> +#define APCS_ALIAS0_CORE_CLK            3
+>> +
+>> +#endif
+>
