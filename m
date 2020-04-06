@@ -2,179 +2,286 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A063119F9C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 18:07:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8893D19FA49
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 18:39:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729202AbgDFQHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 12:07:24 -0400
-Received: from foss.arm.com ([217.140.110.172]:47474 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729075AbgDFQHY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 12:07:24 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5D1B01FB;
-        Mon,  6 Apr 2020 09:07:23 -0700 (PDT)
-Received: from [10.37.12.4] (unknown [10.37.12.4])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3C9D73F68F;
-        Mon,  6 Apr 2020 09:07:13 -0700 (PDT)
-Subject: Re: [PATCH v5 1/5] PM / EM: add devices to Energy Model
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
-        javi.merino@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200318114548.19916-1-lukasz.luba@arm.com>
- <20200318114548.19916-2-lukasz.luba@arm.com>
- <09b680a5-a118-8c6e-0ae1-03ab5f10c573@linaro.org>
- <cb7f670a-a04f-ba6f-1486-0421f3cce2e9@arm.com>
- <6b980e2a-c15c-0718-14b8-e8aa7510c832@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <2a70b4ed-f18f-c1e6-1e8c-e4747807f276@arm.com>
-Date:   Mon, 6 Apr 2020 17:07:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1729527AbgDFQji (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 12:39:38 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:47639 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729098AbgDFQji (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Apr 2020 12:39:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586191177; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=p0XtF/zhQFXWOlfW1YKM6MOQlK8lTjQ5wMkXZkRGCnY=; b=BrxzIhzVOa8UKyaxbR3jwpyICwlC5DoHM0zTm4kPGkmMIzIY4Ynt0QOrpYoCzUUkZ73/AIfa
+ dIfWMjUeLNEBJM2W/FvBcd7BMl+nQmXedhV4b9MpNcNiscdPejMWsPzyUCH5sOT9JtrVACN4
+ mMqzejB0aiN9oOm7i9eHVLOS6uI=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e8b5b3d.7f0a1db726c0-smtp-out-n05;
+ Mon, 06 Apr 2020 16:39:25 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 67E3DC4478C; Mon,  6 Apr 2020 16:39:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.24.160] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01CCEC433D2;
+        Mon,  6 Apr 2020 16:39:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01CCEC433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sanm@codeaurora.org
+Subject: Re: [PATCH v5 1/2] dt-bindings: usb: qcom,dwc3: Convert USB DWC3
+ bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+References: <1585206368-685-1-git-send-email-sanm@codeaurora.org>
+ <1585206368-685-2-git-send-email-sanm@codeaurora.org>
+ <20200404171700.GA10096@bogus>
+From:   "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Message-ID: <5e2eb0a4-ed70-4212-fc70-6ee850507a7e@codeaurora.org>
+Date:   Mon, 6 Apr 2020 22:09:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <6b980e2a-c15c-0718-14b8-e8aa7510c832@linaro.org>
+In-Reply-To: <20200404171700.GA10096@bogus>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Rob,
 
+On 4/4/2020 10:47 PM, Rob Herring wrote:
+> On Thu, Mar 26, 2020 at 12:36:07PM +0530, Sandeep Maheswaram wrote:
+>> Convert USB DWC3 bindings to DT schema format using json-schema.
+>>
+>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/usb/qcom,dwc3.txt          | 104 --------------
+>>   .../devicetree/bindings/usb/qcom,dwc3.yaml         | 158 +++++++++++++++++++++
+>>   2 files changed, 158 insertions(+), 104 deletions(-)
+>>   delete mode 100644 Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+>>   create mode 100644 Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>
+>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> new file mode 100644
+>> index 0000000..0f69475
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> @@ -0,0 +1,158 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SuperSpeed DWC3 USB SoC controller
+>> +
+>> +maintainers:
+>> +  - Manu Gautam <mgautam@codeaurora.org>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - enum:
+>> +          - qcom,msm8996-dwc3
+>> +          - qcom,msm8998-dwc3
+>> +          - qcom,sdm845-dwc3
+>> +      - const: qcom,dwc3
+>> +
+>> +  reg:
+>> +    description: Offset and length of register set for QSCRATCH wrapper
+>> +    maxItems: 1
+>> +
+>> +  "#address-cells":
+>> +    enum: [ 1, 2 ]
+>> +
+>> +  "#size-cells":
+>> +    enum: [ 1, 2 ]
+>> +
+>> +  power-domains:
+>> +    description: specifies a phandle to PM domain provider node
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    description:
+>> +      A list of phandle and clock-specifier pairs for the clocks
+>> +      listed in clock-names.
+>> +    items:
+>> +      - description: System Config NOC clock.
+>> +      - description: Master/Core clock, has to be >= 125 MHz
+>> +          for SS operation and >= 60MHz for HS operation.
+>> +      - description: System bus AXI clock.
+>> +      - description: Mock utmi clock needed for ITP/SOF generation
+>> +          in host mode. Its frequency should be 19.2MHz.
+>> +      - description: Sleep clock, used for wakeup when
+>> +          USB3 core goes into low power mode (U3).
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: cfg_noc
+>> +      - const: core
+>> +      - const: iface
+>> +      - const: mock_utmi
+>> +      - const: sleep
+>> +
+>> +  assigned-clocks:
+>> +    items:
+>> +      - description: Phandle and clock specifier of MOCK_UTMI_CLK.
+>> +      - description: Phandle and clock specifoer of MASTER_CLK.
+>> +
+>> +  assigned-clock-rates:
+>> +    maxItems: 2
+> Need to drop this as it is redundant. Soon this will generate an error.
+Will do in next version.
+>> +    items:
+>> +      - description: Must be 19.2MHz (19200000).
+> Sounds like a constraint:
+>
+> - const: 19200000
+>
+>> +      - description: Must be >= 60 MHz in HS mode, >= 125 MHz in SS mode.
+> - minimum: 60000000
+>    maximum: ?
 
-On 4/6/20 3:58 PM, Daniel Lezcano wrote:
-> 
-> Hi Lukasz,
-> 
-> 
-> On 06/04/2020 15:29, Lukasz Luba wrote:
->> Hi Daniel,
->>
->> Thank you for the review.
->>
->> On 4/3/20 5:05 PM, Daniel Lezcano wrote:
->>>
->>> Hi Lukasz,
->>>
->>>
->>> On 18/03/2020 12:45, Lukasz Luba wrote:
->>>> Add support of other devices into the Energy Model framework not only
->>>> the
->>>> CPUs. Change the interface to be more unified which can handle other
->>>> devices as well.
->>>
->>> thanks for taking care of that. Overall I like the changes in this patch
->>> but it hard to review in details because the patch is too big :/
->>>
->>> Could you split this patch into smaller ones?
->>>
->>> eg. (at your convenience)
->>>
->>>    - One patch renaming s/cap/perf/
->>>
->>>    - One patch adding a new function:
->>>
->>>       em_dev_register_perf_domain(struct device *dev,
->>>                  unsigned int nr_states,
->>>                  struct em_data_callback *cb);
->>>
->>>      (+ EXPORT_SYMBOL_GPL)
->>>
->>>       And em_register_perf_domain() using it.
->>>
->>>    - One converting the em_register_perf_domain() user to
->>>      em_dev_register_perf_domain
->>>
->>>    - One adding the different new 'em' functions
->>>
->>>    - And finally one removing em_register_perf_domain().
->>
->> I agree and will do the split. I could also break the dependencies
->> for future easier merge.
->>
->>>
->>>
->>>> Acked-by: Quentin Perret <qperret@google.com>
->>>> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
->>>> ---
->>>
->>> [ ... ]
->>>
->>>>    2. Core APIs
->>>> @@ -70,14 +72,16 @@ CONFIG_ENERGY_MODEL must be enabled to use the EM
->>>> framework.
->>>>    Drivers are expected to register performance domains into the EM
->>>> framework by
->>>>    calling the following API::
->>>>    -  int em_register_perf_domain(cpumask_t *span, unsigned int
->>>> nr_states,
->>>> -                  struct em_data_callback *cb);
->>>> +  int em_register_perf_domain(struct device *dev, unsigned int
->>>> nr_states,
->>>> +        struct em_data_callback *cb, cpumask_t *cpus);
->>>
->>> Isn't possible to get rid of this cpumask by using
->>> cpufreq_cpu_get() which returns the cpufreq's policy and from their get
->>> the related cpus ?
->>
->> We had similar thoughts with Quentin and I've checked this.
-> 
-> Yeah, I suspected you already think about that :)
-> 
->> Unfortunately, if the policy is a 'new policy' [1] it gets
->> allocated and passed into cpufreq driver ->init(policy) [2].
->> Then that policy is set into per_cpu pointer for each related_cpu [3]:
->>
->> for_each_cpu(j, policy->related_cpus)
->>      per_cpu(cpufreq_cpu_data, j) = policy;
->>
->>   
->> Thus, any calls of functions (i.e. cpufreq_cpu_get()) which try to
->> take this ptr before [3] won't work.
->>
->> We are trying to register EM from cpufreq_driver->init(policy) and the
->> per_cpu policy is likely to be not populated at that phase.
-> 
-> What is the problem of registering at the end of the cpufreq_online ?
+Tried  as below but facing errors
 
-We want to enable driver developers to choose one of two options for the
-registration of Energy Model:
-1. a simple one via dev_pm_opp_of_register_em(), which uses default
-    callback function calculating power based on: voltage, freq
-    and DT entry 'dynamic-power-coefficient' for each OPP
-2. a more sophisticated, when driver provides callback function, which
-   will be called from EM for each OPP to ask for related power;
-   This interface could also be used by devices which relay not only
-   on one source of 'voltage', i.e. manipulate body bias or have
-   other controlling voltage for gates in the new 3D transistors. They
-   might provide custom callback function in their cpufreq driver.
-   This is used i.e. in cpufreq drivers which use firmware to get power,
-   like scmi-cpufreq.c;
+assigned-clock-rates:
+     items:
+       - const: 19200000
+       - minimum: 60000000
+         maximum: 150000000
 
-To meet this requirement the registration of EM is moved into cpufreq
-drivers, not in the framework i.e cpufreq_online(). If we could limit
-the support for only option 1. then we could move the registration
-call into cpufreq framework and clean the cpufreq drivers.
+Errors
 
-Regards,
-Lukasz
+linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dt.yaml: 
+usb@a6f8800: assigned-clock-rates: Additional items are not allowed 
+([150000000] was unexpected)
+linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dt.yaml: 
+usb@a6f8800: assigned-clock-rates:0: [19200000] is too short
+linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dt.yaml: 
+usb@a6f8800: assigned-clock-rates: [[19200000], [150000000]] is too long
+
+>> +
+>> +  resets:
+>> +    maxItems: 1
+>> +
+>> +  interrupts:
+>> +    items:
+>> +      - description: The interrupt that is asserted
+>> +          when a wakeup event is received on USB2 bus.
+>> +      - description: The interrupt that is asserted
+>> +          when a wakeup event is received on USB3 bus.
+>> +      - description: Wakeup event on DM line.
+>> +      - description: Wakeup event on DP line.
+>> +
+>> +  interrupt-names:
+>> +    items:
+>> +      - const: hs_phy_irq
+>> +      - const: ss_phy_irq
+>> +      - const: dm_hs_phy_irq
+>> +      - const: dp_hs_phy_irq
+>> +
+>> +  qcom,select-utmi-as-pipe-clk:
+>> +    description:
+>> +      If present, disable USB3 pipe_clk requirement.
+>> +      Used when dwc3 operates without SSPHY and only
+>> +      HS/FS/LS modes are supported.
+>> +    type: boolean
+>> +
+>> +# Required child node:
+>> +
+>> +patternProperties:
+>> +  "^dwc3@[0-9a-f]+$":
+>> +    type: object
+>> +    description:
+>> +      A child node must exist to represent the core DWC3 IP block
+>> +      The content of the node is defined in dwc3.txt.
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - "#address-cells"
+>> +  - "#size-cells"
+>> +  - power-domains
+>> +  - clocks
+>> +  - clock-names
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +    #include <dt-bindings/interrupt-controller/irq.h>
+>> +    usb@a6f8800 {
+>> +        compatible = "qcom,sdm845-dwc3", "qcom,dwc3";
+>> +        reg = <0 0x0a6f8800 0 0x400>;
+>> +
+>> +        #address-cells = <2>;
+>> +        #size-cells = <2>;
+>> +
+>> +        clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+>> +                 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+>> +                 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+>> +                 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+>> +                 <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
+>> +        clock-names = "cfg_noc", "core", "iface", "mock_utmi",
+>> +                      "sleep";
+>> +
+>> +        assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+>> +                          <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+>> +        assigned-clock-rates = <19200000>, <150000000>;
+>> +
+>> +        interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+>> +                     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+>> +                     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+>> +                     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+>> +        interrupt-names = "hs_phy_irq", "ss_phy_irq",
+>> +                          "dm_hs_phy_irq", "dp_hs_phy_irq";
+>> +
+>> +        power-domains = <&gcc USB30_PRIM_GDSC>;
+>> +
+>> +        resets = <&gcc GCC_USB30_PRIM_BCR>;
+>> +
+>> +        dwc3@a600000 {
+>> +            compatible = "snps,dwc3";
+>> +            reg = <0 0x0a600000 0 0xcd00>;
+> You need 'ranges' in the parent for this address to be translatable.
+Will add in next version.
+>
+>> +            interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+>> +            iommus = <&apps_smmu 0x740 0>;
+>> +            snps,dis_u2_susphy_quirk;
+>> +            snps,dis_enblslpm_quirk;
+>> +            phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+>> +            phy-names = "usb2-phy", "usb3-phy";
+>> +        };
+>> +    };
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>>
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
