@@ -2,129 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9023119F063
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 08:33:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D495919F1CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 10:49:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726675AbgDFGdq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 02:33:46 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:17475 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726475AbgDFGdq (ORCPT
+        id S1726703AbgDFItd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 04:49:33 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55174 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726648AbgDFItc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 02:33:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586154825; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=GHPkfZdKpWokGkMHpjNdxNE7lxqzRlwomEdxFWcpnmE=; b=tBPqvChmS5DrvnhSb6CSFVAwcQVk9IgNWcKDnrnHHC2Ma/roqArxfmG/IUHOpzqL5lrelUbx
- nRvWrLF+WclNhasUJ+iYmQ+oGrPQEAXzZFCWh2NRBTTyU1+emxhTyzCg+RrWnnQW4JewDDyD
- 5qRm2XMXUedTfpgmW1PCB99jyng=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8acd32.7fc47178e030-smtp-out-n01;
- Mon, 06 Apr 2020 06:33:22 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EDA88C433BA; Mon,  6 Apr 2020 06:33:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA6EEC433F2;
-        Mon,  6 Apr 2020 06:33:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EA6EEC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, mka@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v16 6/6] soc: qcom: rpmh-rsc: Allow using free WAKE TCS for active request
-Date:   Mon,  6 Apr 2020 12:02:21 +0530
-Message-Id: <1586154741-8293-7-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1586154741-8293-1-git-send-email-mkshah@codeaurora.org>
-References: <1586154741-8293-1-git-send-email-mkshah@codeaurora.org>
+        Mon, 6 Apr 2020 04:49:32 -0400
+Received: by mail-wm1-f65.google.com with SMTP id h2so5814254wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2020 01:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=hB/cttD2PIQJrbz4bzuL3i++GH0OSgasFqo3xqjEQAo=;
+        b=KlcQa7lIt+n/wVEV8JdYNkiUDQQp+hGTfkU1Mu02PywtjHqp63UeXe/YmyUw018Kdc
+         lpl1WphuIEEQUPCuEbfiYH37JUXWUTrg26Sf4c64ZSxRRDOVgszt6TP6yfeIKKv4bnBC
+         w3jj2IBcjWCz177Pxk5VvdWa2Y40lDC/vS6pXi98sdU+jDGOH7l9ozbD6p+C4Ah8Nsap
+         AB/D6Od+pOXPDjy792trBcGT+iJ0/81trVcYIVx4YxoA9gCgCvFxxtHf0GNkk09CRmxo
+         BTql6k2kwaGkNcIiaIY/53x86i7F0xHwY9eXlCwZPZzQEaMUhBuLdt9X9dmS8LyJB3ZM
+         EsVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=hB/cttD2PIQJrbz4bzuL3i++GH0OSgasFqo3xqjEQAo=;
+        b=n40mPq5WQZ0XcoGFp1EXaB+xrQ+IEaPOQL20NxV3/EyM/zdGQUhVdYo6rL18p8hDwY
+         Jb7kkn6NUnCmB3hkOOFUpvrYLbXCEEUoulOUZa/Yrf3wJGiGVYzVeb3QlFzryDxsO3Qj
+         fu1ze0PlzHumsXGw1TkqSIEaogc5R7Fr0dx5x8eNgvXXM4l6rO8nklM3cNhtXlsEGlwn
+         mOlWed59H2Ih5/CELKz5JMCyePgRr5YvSZHof9KvCkYJP188Rldc2HdnXgUl6ouqkSi/
+         6T8wfeM6KADXHVWVFjyduOZumMQK4x/B6s0rW3nvqs4ouI0S1HpNowUl0XH1JbPiFqLO
+         zpHw==
+X-Gm-Message-State: AGi0PuatX0JdG7BdaSJHmwYVYKPQKzUHL0/OOiFpsxlth9+CUjnRsnSX
+        2argDcyCmsOk4fU91wE45vNOFw==
+X-Google-Smtp-Source: APiQypL6NsZE4UH6W7CHGi4ojlUeqMxw4vdKpXkAYqw432CMd+116S8Nw19uLsayC9FcZNch4FCf5A==
+X-Received: by 2002:a1c:9d84:: with SMTP id g126mr6730754wme.184.1586162968744;
+        Mon, 06 Apr 2020 01:49:28 -0700 (PDT)
+Received: from dell ([2.27.35.179])
+        by smtp.gmail.com with ESMTPSA id t26sm14548888wmj.12.2020.04.06.01.49.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Apr 2020 01:49:27 -0700 (PDT)
+Date:   Mon, 6 Apr 2020 09:50:24 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     kgunda@codeaurora.org, Rob Herring <robh@kernel.org>,
+        bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH V4 1/4] backlight: qcom-wled: convert the wled bindings
+ to .yaml format
+Message-ID: <20200406085024.GF30614@dell>
+References: <1584985618-25689-1-git-send-email-kgunda@codeaurora.org>
+ <1584985618-25689-2-git-send-email-kgunda@codeaurora.org>
+ <20200331175401.GA9791@bogus>
+ <ac8f25113a3bb233c11fd7cd9e62c2cf@codeaurora.org>
+ <20200403114651.m6rholzufzqinanc@holly.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200403114651.m6rholzufzqinanc@holly.lan>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When there are more than one WAKE TCS available and there is no dedicated
-ACTIVE TCS available, invalidating all WAKE TCSes and waiting for current
-transfer to complete in first WAKE TCS blocks using another free WAKE TCS
-to complete current request.
+On Fri, 03 Apr 2020, Daniel Thompson wrote:
 
-Remove rpmh_rsc_invalidate() to happen from tcs_write() when WAKE TCSes
-is re-purposed to be used for Active mode. Clear only currently used
-WAKE TCS's register configuration.
+> On Fri, Apr 03, 2020 at 04:45:49PM +0530, kgunda@codeaurora.org wrote:
+> > On 2020-03-31 23:24, Rob Herring wrote:
+> > > On Mon, Mar 23, 2020 at 11:16:55PM +0530, Kiran Gunda wrote:
+> > > > diff --git
+> > > > a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> > > > b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> > > > new file mode 100644
+> > > > index 0000000..8a388bf
+> > > > --- /dev/null
+> > > > +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> > > > @@ -0,0 +1,184 @@
+> > > > +# SPDX-License-Identifier: GPL-2.0-only
+> > > > +%YAML 1.2
+> > > > +---
+> > > > +$id: http://devicetree.org/schemas/leds/backlight/qcom-wled.yaml#
+> > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > > +
+> > > > +title: Binding for Qualcomm Technologies, Inc. WLED driver
+> > > > +
+> > > > +maintainers:
+> > > > +  - Lee Jones <lee.jones@linaro.org>
+> > > 
+> > > Should be the h/w owner (you), not who applies patches.
+> > > 
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> > <snip>
+> > will address in next post.
+> 
+> If you agree on all points raised I doubt there is any need for a point
+> by point reply since everyone who reads it will have to scroll down
+> simply to find out that you agree on all points.
+> 
+> Better just to acknowledge the feedback and reply to the first one
+> saying you'll agree on all points and will address all feedback in the
+> next revision (and then trim the reply to keep it short).
 
-Fixes: 2de4b8d33eab (drivers: qcom: rpmh-rsc: allow active requests from wake TCS)
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
- drivers/soc/qcom/rpmh-rsc.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+Or better still, just submit the next revision with all the fixes. :)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 5128e13..34b0e14 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -154,7 +154,7 @@ int rpmh_rsc_invalidate(struct rsc_drv *drv)
- static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
- 					 const struct tcs_request *msg)
- {
--	int type, ret;
-+	int type;
- 	struct tcs_group *tcs;
- 
- 	switch (msg->state) {
-@@ -175,19 +175,10 @@ static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
- 	 * If we are making an active request on a RSC that does not have a
- 	 * dedicated TCS for active state use, then re-purpose a wake TCS to
- 	 * send active votes.
--	 * NOTE: The driver must be aware that this RSC does not have a
--	 * dedicated AMC, and therefore would invalidate the sleep and wake
--	 * TCSes before making an active state request.
- 	 */
- 	tcs = get_tcs_of_type(drv, type);
--	if (msg->state == RPMH_ACTIVE_ONLY_STATE && !tcs->num_tcs) {
-+	if (msg->state == RPMH_ACTIVE_ONLY_STATE && !tcs->num_tcs)
- 		tcs = get_tcs_of_type(drv, WAKE_TCS);
--		if (tcs->num_tcs) {
--			ret = rpmh_rsc_invalidate(drv);
--			if (ret)
--				return ERR_PTR(ret);
--		}
--	}
- 
- 	return tcs;
- }
-@@ -412,8 +403,16 @@ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
- 
- 	tcs->req[tcs_id - tcs->offset] = msg;
- 	set_bit(tcs_id, drv->tcs_in_use);
--	if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS)
-+	if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS) {
-+		/*
-+		 * Clear previously programmed WAKE commands in selected
-+		 * repurposed TCS to avoid triggering them. tcs->slots will be
-+		 * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
-+		 */
-+		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
-+		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, 0);
- 		enable_tcs_irq(drv, tcs_id, true);
-+	}
- 	spin_unlock(&drv->lock);
- 
- 	__tcs_buffer_write(drv, tcs_id, 0, msg);
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Lee Jones [李琼斯]
+Linaro Services Technical Lead
+Linaro.org │ Open source software for ARM SoCs
+Follow Linaro: Facebook | Twitter | Blog
