@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BB2619F007
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 07:09:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43C7519F00E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 07:13:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726436AbgDFFIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 01:08:47 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:44350 "EHLO
+        id S1725768AbgDFFNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 01:13:09 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:22614 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726455AbgDFFIr (ORCPT
+        by vger.kernel.org with ESMTP id S1726475AbgDFFNI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 01:08:47 -0400
+        Mon, 6 Apr 2020 01:13:08 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586149726; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1586149987; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=e9dLjINQKPN1LVIoIlwlnA22th7UlgTMqbgS6SOqu/E=; b=cI1x1u94PhoZGRToYKYHPO6BNjD4t24DSQ1F9UDSkf5Nm/9ASvNi/f5gdWmUWiCP9FZ6PIbQ
- jNTXOI7T8pcWex2B8pI/vqN3DZFwds0w5uKiCd2nTfJNi3FBIVn40OQSeImTkPgJrHOcR+LS
- 2ckMR8PwYLQEn7BYat0mwBpqcO4=
+ Subject: Sender; bh=tANryGArsikEbRKGuh59UuK8NiPOtSWy4smmXqPMdlM=; b=xkBFUOtgjUy+BACJou/PX894I351QjyBPVfhQksEmEiUYAJXtTr/OncEVsYseYIvqZhdKwhX
+ zKO321LQUA6I17qNClxa2s4hBQCUaLCa5bBvaum96/WJsyjrTeCZifD3xlW7Xc7zb7P52Klz
+ hQEa2El08npmSdUQecgFEYQJuus=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8ab95d.7f51098a1420-smtp-out-n04;
- Mon, 06 Apr 2020 05:08:45 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e8aba5a.7fdc353a9ed8-smtp-out-n05;
+ Mon, 06 Apr 2020 05:12:58 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EBF7DC43636; Mon,  6 Apr 2020 05:08:44 +0000 (UTC)
+        id 7911BC43637; Mon,  6 Apr 2020 05:12:58 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,13 +34,13 @@ Received: from [192.168.43.137] (unknown [106.213.172.166])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D2CE7C433D2;
-        Mon,  6 Apr 2020 05:08:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D2CE7C433D2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 00075C433D2;
+        Mon,  6 Apr 2020 05:12:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 00075C433D2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v15 6/7] soc: qcom: rpmh-rsc: Clear active mode
- configuration for wake TCS
+Subject: Re: [PATCH v15 7/7] soc: qcom: rpmh-rsc: Allow using free WAKE TCS
+ for active request
 To:     Doug Anderson <dianders@chromium.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         Evan Green <evgreen@chromium.org>,
@@ -50,18 +50,17 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org,
-        "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
 References: <1585660782-23416-1-git-send-email-mkshah@codeaurora.org>
- <1585660782-23416-7-git-send-email-mkshah@codeaurora.org>
- <CAD=FV=UqaTR7=i=5BApvnptZXpqVJiF1AE+Q+6H9Y4QdYfjfUQ@mail.gmail.com>
+ <1585660782-23416-8-git-send-email-mkshah@codeaurora.org>
+ <CAD=FV=X_JJWAb9BBkhWGZJ+jUvtO3ipf-OxFRYo38YY25cA42Q@mail.gmail.com>
 From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <855bb87e-6c5c-8fee-e237-f48f9d95e2ac@codeaurora.org>
-Date:   Mon, 6 Apr 2020 10:38:36 +0530
+Message-ID: <dd447c2a-c2b7-c40f-e3e9-27a9ba9614c7@codeaurora.org>
+Date:   Mon, 6 Apr 2020 10:42:50 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=UqaTR7=i=5BApvnptZXpqVJiF1AE+Q+6H9Y4QdYfjfUQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=X_JJWAb9BBkhWGZJ+jUvtO3ipf-OxFRYo38YY25cA42Q@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-GB
@@ -72,39 +71,37 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On 4/3/2020 1:44 AM, Doug Anderson wrote:
+On 4/3/2020 1:43 AM, Doug Anderson wrote:
 > Hi,
 >
 > On Tue, Mar 31, 2020 at 6:21 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->> @@ -243,6 +279,14 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
->>                  }
+>> When there are more than one WAKE TCS available and there is no dedicated
+>> ACTIVE TCS available, invalidating all WAKE TCSes and waiting for current
+>> transfer to complete in first WAKE TCS blocks using another free WAKE TCS
+>> to complete current request.
 >>
->>                  trace_rpmh_tx_done(drv, i, req, err);
->> +
->> +               /*
->> +                * If wake tcs was re-purposed for sending active
->> +                * votes, clear AMC trigger & enable modes and
->> +                * disable interrupt for this TCS
->> +                */
->> +               if (!drv->tcs[ACTIVE_TCS].num_tcs)
->> +                       __tcs_set_trigger(drv, i, false);
-> Still seems weird that we have to do the untrigger in the IRQ routine
-> here and also weird that we _don't_ do it in the IRQ routine for
-> non-borrowed TCSes.  I guess it's not the end of the world, though.
+>> Remove rpmh_rsc_invalidate() to happen from tcs_write() when WAKE TCSes
+>> is re-purposed to be used for Active mode. Clear only currently used
+>> WAKE TCS's register configuration.
+>>
+>> Mark the caches as dirty so next time when rpmh_flush() is invoked it
+>> can invalidate and program cached sleep and wake sets again.
+> Comment above is no longer right now that you've removed the place
+> that marks caches as dirty.
+>
+>
+>> Fixes: 2de4b8d33eab (drivers: qcom: rpmh-rsc: allow active requests from wake TCS)
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> ---
+>>   drivers/soc/qcom/rpmh-rsc.c | 23 +++++++++++------------
+>>   1 file changed, 11 insertions(+), 12 deletions(-)
+> Other than the comment nit:
 >
 > Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
 Thanks Doug for the review.
 
-IRQ is only needed to be enabled for TCSes used as ACTIVE_TCS.
-
-When we have dedicated ACTIVE_TCS, we leave IRQ always enabled from 
-probe (one time configuration), since the TCS won't be used for anything 
-other than to send ACTIVE transaction.
-
-When we don't have dedicated ACTIVE_TCS, we enable it when borrowed TCS 
-is used for ACTIVE transaction and then once its done using it, we 
-disable it again to leave it in its original configuration.
+I will remove last paragraph from commit message.
 
 Thanks,
 Maulik
