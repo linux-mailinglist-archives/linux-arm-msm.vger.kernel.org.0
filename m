@@ -2,125 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4949B19F9AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 18:06:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A063119F9C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 18:07:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728994AbgDFQGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 12:06:09 -0400
-Received: from lhrrgout.huawei.com ([185.176.76.210]:2634 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728878AbgDFQGJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 12:06:09 -0400
-Received: from lhreml710-chm.china.huawei.com (unknown [172.18.7.107])
-        by Forcepoint Email with ESMTP id 9AEACEE0DA8BD16DC166;
-        Mon,  6 Apr 2020 17:06:06 +0100 (IST)
-Received: from localhost (10.47.92.64) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1913.5; Mon, 6 Apr 2020
- 17:06:05 +0100
-Date:   Mon, 6 Apr 2020 17:05:54 +0100
-From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-CC:     Jonathan Cameron <jic23@kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
-        <linus.walleij@linaro.org>, <sboyd@codeaurora.org>,
-        <smohanad@codeaurora.org>, <kgunda@codeaurora.org>,
-        <aghayal@codeaurora.org>, Hartmut Knaack <knaack.h@gmx.de>,
-        "Lars-Peter Clausen" <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        <linux-iio@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-msm-owner@vger.kernel.org>
-Subject: Re: [PATCH 2/3] iio: adc: Add PMIC7 ADC bindings
-Message-ID: <20200406170554.00003887@Huawei.com>
-In-Reply-To: <fe8056c5-9480-a9a3-9626-5ebab8031b08@codeaurora.org>
-References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
-        <1585064650-16235-3-git-send-email-jprakash@codeaurora.org>
-        <20200328165410.7db48818@archlinux>
-        <fe8056c5-9480-a9a3-9626-5ebab8031b08@codeaurora.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; i686-w64-mingw32)
+        id S1729202AbgDFQHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 12:07:24 -0400
+Received: from foss.arm.com ([217.140.110.172]:47474 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729075AbgDFQHY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Apr 2020 12:07:24 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5D1B01FB;
+        Mon,  6 Apr 2020 09:07:23 -0700 (PDT)
+Received: from [10.37.12.4] (unknown [10.37.12.4])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3C9D73F68F;
+        Mon,  6 Apr 2020 09:07:13 -0700 (PDT)
+Subject: Re: [PATCH v5 1/5] PM / EM: add devices to Energy Model
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
+        javi.merino@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200318114548.19916-1-lukasz.luba@arm.com>
+ <20200318114548.19916-2-lukasz.luba@arm.com>
+ <09b680a5-a118-8c6e-0ae1-03ab5f10c573@linaro.org>
+ <cb7f670a-a04f-ba6f-1486-0421f3cce2e9@arm.com>
+ <6b980e2a-c15c-0718-14b8-e8aa7510c832@linaro.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <2a70b4ed-f18f-c1e6-1e8c-e4747807f276@arm.com>
+Date:   Mon, 6 Apr 2020 17:07:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.47.92.64]
-X-ClientProxiedBy: lhreml706-chm.china.huawei.com (10.201.108.55) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
+In-Reply-To: <6b980e2a-c15c-0718-14b8-e8aa7510c832@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Apr 2020 17:15:21 +0530
-Jishnu Prakash <jprakash@codeaurora.org> wrote:
 
-> Hi Jonathan,
+
+On 4/6/20 3:58 PM, Daniel Lezcano wrote:
 > 
-> On 3/28/2020 10:24 PM, Jonathan Cameron wrote:
-> > On Tue, 24 Mar 2020 21:14:09 +0530
-> > Jishnu Prakash <jprakash@codeaurora.org> wrote:
-> >  
-> >> Add documentation for PMIC7 ADC peripheral. For PMIC7 ADC, all SW
-> >> communication to ADC goes through PMK8350, which communicates with
-> >> other PMICs through PBS.
-> >>
-> >> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
-> >> ---
-> >>   .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 28 ++++++++++++++++------
-> >>   1 file changed, 21 insertions(+), 7 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> >> index 72db14c..20f010c 100644
-> >> --- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> >> +++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> >> @@ -13,7 +13,7 @@ maintainers:
-> >>   description: |
-> >>     SPMI PMIC voltage ADC (VADC) provides interface to clients to read
-> >>     voltage. The VADC is a 15-bit sigma-delta ADC.
-> >> -  SPMI PMIC5 voltage ADC (ADC) provides interface to clients to read
-> >> +  SPMI PMIC5/PMIC7 voltage ADC (ADC) provides interface to clients to read
-> >>     voltage. The VADC is a 16-bit sigma-delta ADC.
-> >>   
-> >>   properties:
-> >> @@ -23,6 +23,7 @@ properties:
-> >>         - qcom,spmi-adc5
-> >>         - qcom,spmi-adc-rev2
-> >>         - qcom,pms405-adc
-> >> +      - qcom,spmi-adc7
-> >>   
-> >>     reg:
-> >>       description: VADC base address in the SPMI PMIC register map
-> >> @@ -65,6 +66,8 @@ patternProperties:
-> >>           description: |
-> >>             ADC channel number.
-> >>             See include/dt-bindings/iio/qcom,spmi-vadc.h
-> >> +          For PMIC7 ADC, the channel numbers are specified separately per PMIC
-> >> +          in the PMIC-specific files in include/dt-bindings/iio/.  
-> > That makes me thing we really should have separate compatibles.  The
-> > parts clearly have differences, even if we haven't needed to use them
-> > explicitly as yet.  
-> I'm not sure what you mean by this. We have added a new compatible 
-> property "qcom,spmi-adc7" for PMIC7 ADC.
+> Hi Lukasz,
+> 
+> 
+> On 06/04/2020 15:29, Lukasz Luba wrote:
+>> Hi Daniel,
+>>
+>> Thank you for the review.
+>>
+>> On 4/3/20 5:05 PM, Daniel Lezcano wrote:
+>>>
+>>> Hi Lukasz,
+>>>
+>>>
+>>> On 18/03/2020 12:45, Lukasz Luba wrote:
+>>>> Add support of other devices into the Energy Model framework not only
+>>>> the
+>>>> CPUs. Change the interface to be more unified which can handle other
+>>>> devices as well.
+>>>
+>>> thanks for taking care of that. Overall I like the changes in this patch
+>>> but it hard to review in details because the patch is too big :/
+>>>
+>>> Could you split this patch into smaller ones?
+>>>
+>>> eg. (at your convenience)
+>>>
+>>>    - One patch renaming s/cap/perf/
+>>>
+>>>    - One patch adding a new function:
+>>>
+>>>       em_dev_register_perf_domain(struct device *dev,
+>>>                  unsigned int nr_states,
+>>>                  struct em_data_callback *cb);
+>>>
+>>>      (+ EXPORT_SYMBOL_GPL)
+>>>
+>>>       And em_register_perf_domain() using it.
+>>>
+>>>    - One converting the em_register_perf_domain() user to
+>>>      em_dev_register_perf_domain
+>>>
+>>>    - One adding the different new 'em' functions
+>>>
+>>>    - And finally one removing em_register_perf_domain().
+>>
+>> I agree and will do the split. I could also break the dependencies
+>> for future easier merge.
+>>
+>>>
+>>>
+>>>> Acked-by: Quentin Perret <qperret@google.com>
+>>>> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+>>>> ---
+>>>
+>>> [ ... ]
+>>>
+>>>>    2. Core APIs
+>>>> @@ -70,14 +72,16 @@ CONFIG_ENERGY_MODEL must be enabled to use the EM
+>>>> framework.
+>>>>    Drivers are expected to register performance domains into the EM
+>>>> framework by
+>>>>    calling the following API::
+>>>>    -  int em_register_perf_domain(cpumask_t *span, unsigned int
+>>>> nr_states,
+>>>> -                  struct em_data_callback *cb);
+>>>> +  int em_register_perf_domain(struct device *dev, unsigned int
+>>>> nr_states,
+>>>> +        struct em_data_callback *cb, cpumask_t *cpus);
+>>>
+>>> Isn't possible to get rid of this cpumask by using
+>>> cpufreq_cpu_get() which returns the cpufreq's policy and from their get
+>>> the related cpus ?
+>>
+>> We had similar thoughts with Quentin and I've checked this.
+> 
+> Yeah, I suspected you already think about that :)
+> 
+>> Unfortunately, if the policy is a 'new policy' [1] it gets
+>> allocated and passed into cpufreq driver ->init(policy) [2].
+>> Then that policy is set into per_cpu pointer for each related_cpu [3]:
+>>
+>> for_each_cpu(j, policy->related_cpus)
+>>      per_cpu(cpufreq_cpu_data, j) = policy;
+>>
+>>   
+>> Thus, any calls of functions (i.e. cpufreq_cpu_get()) which try to
+>> take this ptr before [3] won't work.
+>>
+>> We are trying to register EM from cpufreq_driver->init(policy) and the
+>> per_cpu policy is likely to be not populated at that phase.
+> 
+> What is the problem of registering at the end of the cpufreq_online ?
 
-I've no idea what I meant either :)
+We want to enable driver developers to choose one of two options for the
+registration of Energy Model:
+1. a simple one via dev_pm_opp_of_register_em(), which uses default
+    callback function calculating power based on: voltage, freq
+    and DT entry 'dynamic-power-coefficient' for each OPP
+2. a more sophisticated, when driver provides callback function, which
+   will be called from EM for each OPP to ask for related power;
+   This interface could also be used by devices which relay not only
+   on one source of 'voltage', i.e. manipulate body bias or have
+   other controlling voltage for gates in the new 3D transistors. They
+   might provide custom callback function in their cpufreq driver.
+   This is used i.e. in cpufreq drivers which use firmware to get power,
+   like scmi-cpufreq.c;
 
-Jonathan
-> >  
-> >>   
-> >>         label:
-> >>           description: |
-> >> @@ -72,7 +75,7 @@ patternProperties:
-> >>               For thermistor inputs connected to generic AMUX or GPIO inputs
-> >>               these can vary across platform for the same pins. Hence select
-> >>               the platform schematics name for this channel. It is required
-> >> -            for "qcom,spmi-adc5" and "qcom,spmi-adc-rev2".
-> >> +            for "qcom,spmi-adc5", "qcom,spmi-adc7" and "qcom,spmi-adc-rev2".
-> >>           allOf:
-> >>             - $ref: /schemas/types.yaml#/definitions/string
-> >>   
-> >>  
+To meet this requirement the registration of EM is moved into cpufreq
+drivers, not in the framework i.e cpufreq_online(). If we could limit
+the support for only option 1. then we could move the registration
+call into cpufreq framework and clean the cpufreq drivers.
 
-
+Regards,
+Lukasz
