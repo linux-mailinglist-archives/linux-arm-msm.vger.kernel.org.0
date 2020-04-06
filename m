@@ -2,105 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F1E219F510
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 13:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7059319F6F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 15:30:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727349AbgDFLru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 07:47:50 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:36278 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727469AbgDFLru (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 07:47:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586173669; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=FgPDoydCs+DhGKztcRPMXkbqhx2Dj1OriztFjPgeMag=; b=Io+muzxg7z/GyodYqthm9m+uKkEy2sdFqtLj6JS/f0eZnVddTA3xHghvJeYTk+k84ami6Jjo
- o1W8pdS+IzrE1ft5rEESlCevUlsOv1lP7cau6vcEI4pXzaH/kIplO6o/7IyHTusGeGGnqBRj
- +HrmFo5/riEAZgQVjEMywnon2Rg=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8b16c6.7f69c7495ab0-smtp-out-n04;
- Mon, 06 Apr 2020 11:47:18 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6BC51C433D2; Mon,  6 Apr 2020 11:47:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.100] (unknown [157.44.182.98])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jprakash)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2F5BC433BA;
-        Mon,  6 Apr 2020 11:47:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E2F5BC433BA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
-Subject: Re: [PATCH 3/3] iio: adc: Add support for PMIC7 ADC
-To:     Rob Herring <robh@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, linus.walleij@linaro.org, sboyd@codeaurora.org,
-        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
- <1585064650-16235-4-git-send-email-jprakash@codeaurora.org>
- <20200331200611.GA10950@bogus>
-From:   Jishnu Prakash <jprakash@codeaurora.org>
-Message-ID: <46f4f206-ab75-31ad-66cc-71d1e458b76e@codeaurora.org>
-Date:   Mon, 6 Apr 2020 17:17:04 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        id S1728304AbgDFNaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 09:30:10 -0400
+Received: from foss.arm.com ([217.140.110.172]:45722 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728200AbgDFNaK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Apr 2020 09:30:10 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 313E231B;
+        Mon,  6 Apr 2020 06:30:09 -0700 (PDT)
+Received: from [10.37.12.4] (unknown [10.37.12.4])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BC4473F7D8;
+        Mon,  6 Apr 2020 06:29:58 -0700 (PDT)
+Subject: Re: [PATCH v5 1/5] PM / EM: add devices to Energy Model
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
+        javi.merino@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200318114548.19916-1-lukasz.luba@arm.com>
+ <20200318114548.19916-2-lukasz.luba@arm.com>
+ <09b680a5-a118-8c6e-0ae1-03ab5f10c573@linaro.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <cb7f670a-a04f-ba6f-1486-0421f3cce2e9@arm.com>
+Date:   Mon, 6 Apr 2020 14:29:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200331200611.GA10950@bogus>
+In-Reply-To: <09b680a5-a118-8c6e-0ae1-03ab5f10c573@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob
+Hi Daniel,
 
-On 4/1/2020 1:36 AM, Rob Herring wrote:
-> On Tue, Mar 24, 2020 at 09:14:10PM +0530, Jishnu Prakash wrote:
->> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
->> major change from PMIC5 is that all SW communication to ADC goes through
->> PMK8350, which communicates with other PMICs through PBS when the ADC
->> on PMK8350 works in master mode. The SID register is used to identify the
->> PMICs with which the PBS needs to communicate. Add support for the same.
->>
->> In addition, add definitions for ADC channels and virtual channel
->> definitions per PMIC, to be used by ADC clients for PMIC7.
->>
->> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+Thank you for the review.
+
+On 4/3/20 5:05 PM, Daniel Lezcano wrote:
+> 
+> Hi Lukasz,
+> 
+> 
+> On 18/03/2020 12:45, Lukasz Luba wrote:
+>> Add support of other devices into the Energy Model framework not only the
+>> CPUs. Change the interface to be more unified which can handle other
+>> devices as well.
+> 
+> thanks for taking care of that. Overall I like the changes in this patch
+> but it hard to review in details because the patch is too big :/
+> 
+> Could you split this patch into smaller ones?
+> 
+> eg. (at your convenience)
+> 
+>   - One patch renaming s/cap/perf/
+> 
+>   - One patch adding a new function:
+> 
+>      em_dev_register_perf_domain(struct device *dev,
+> 				unsigned int nr_states,
+> 				struct em_data_callback *cb);
+> 
+>     (+ EXPORT_SYMBOL_GPL)
+> 
+>      And em_register_perf_domain() using it.
+> 
+>   - One converting the em_register_perf_domain() user to
+> 	em_dev_register_perf_domain
+> 
+>   - One adding the different new 'em' functions
+> 
+>   - And finally one removing em_register_perf_domain().
+
+I agree and will do the split. I could also break the dependencies
+for future easier merge.
+
+> 
+> 
+>> Acked-by: Quentin Perret <qperret@google.com>
+>> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
 >> ---
->>   drivers/iio/adc/qcom-spmi-adc5.c                 | 239 ++++++++++++++++++++-
->>   drivers/iio/adc/qcom-vadc-common.c               | 260 +++++++++++++++++++++++
->>   drivers/iio/adc/qcom-vadc-common.h               |  14 ++
->>   include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h  |  67 ++++++
->>   include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h |  88 ++++++++
->>   include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h |  46 ++++
->>   include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h |  28 +++
->>   include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h |  28 +++
->>   include/dt-bindings/iio/qcom,spmi-vadc.h         |  78 ++++++-
-> DT headers go in the binding patch(es).
-I'll move these to the bindings patch in the next post.
->
->>   9 files changed, 843 insertions(+), 5 deletions(-)
->>   create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
->>   create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h
->>   create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
->>   create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h
->>   create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h
+> 
+> [ ... ]
+> 
+>>   2. Core APIs
+>> @@ -70,14 +72,16 @@ CONFIG_ENERGY_MODEL must be enabled to use the EM framework.
+>>   Drivers are expected to register performance domains into the EM framework by
+>>   calling the following API::
+>>   
+>> -  int em_register_perf_domain(cpumask_t *span, unsigned int nr_states,
+>> -			      struct em_data_callback *cb);
+>> +  int em_register_perf_domain(struct device *dev, unsigned int nr_states,
+>> +		struct em_data_callback *cb, cpumask_t *cpus);
+> 
+> Isn't possible to get rid of this cpumask by using
+> cpufreq_cpu_get() which returns the cpufreq's policy and from their get
+> the related cpus ?
+
+We had similar thoughts with Quentin and I've checked this.
+Unfortunately, if the policy is a 'new policy' [1] it gets
+allocated and passed into cpufreq driver ->init(policy) [2].
+Then that policy is set into per_cpu pointer for each related_cpu [3]:
+
+for_each_cpu(j, policy->related_cpus)
+	per_cpu(cpufreq_cpu_data, j) = policy;
+
+
+Thus, any calls of functions (i.e. cpufreq_cpu_get()) which try to
+take this ptr before [3] won't work.
+
+We are trying to register EM from cpufreq_driver->init(policy) and the
+per_cpu policy is likely to be not populated at that phase.
+
+Regards,
+Lukasz
+
+[1] 
+https://elixir.bootlin.com/linux/latest/source/drivers/cpufreq/cpufreq.c#L1328
+[2] 
+https://elixir.bootlin.com/linux/latest/source/drivers/cpufreq/cpufreq.c#L1350
+[3] 
+https://elixir.bootlin.com/linux/latest/source/drivers/cpufreq/cpufreq.c#L1374
+
+
