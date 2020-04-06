@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E6A6E19F4FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 13:45:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C84019F500
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 13:46:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727461AbgDFLpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 07:45:51 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:23474 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727409AbgDFLpu (ORCPT
+        id S1727489AbgDFLqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 07:46:11 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:62054 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727473AbgDFLqK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 07:45:50 -0400
+        Mon, 6 Apr 2020 07:46:10 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586173550; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1586173570; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=2+XLDFyllu+4TOOlUpzdZnIXvnsHfp4IHdrdajS4ZAc=; b=F9EeGkJOD9lui3Q+YukBWNbsowksKVPOMTRzEThpaOxs80W0m5/OE48gb3D8CnwwTAJInsjK
- IleO0jVpd0+NKBbcB3G9JTKqIptlyIQPT72EW0n8iM/6ScgwujvsGDGhkX9BVapqcndEF0jG
- h6aJN1PhOnzILU5+HqWh/60t2qg=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ Subject: Sender; bh=fwS8B2ZENTJa//1JM/Tb3FQEjJEuwZJOlzrKeFY+6hA=; b=FoP7Z2BYzo9e3+b4+ERF7Ax/AcMgqRsFpRvKVKdSSHrekZB7+7yKjsECTnxS8c0MLlzLizIh
+ 91z4xjykbNgxXutcxM/k+D2C5LRmKgTQym53ahYuW7wNE7Wqw0mWacvohcX/vhfwyedAU1sr
+ maRKiXSyxvnitdMcG51sjWOW77M=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8b165e.7f88124d8d50-smtp-out-n03;
- Mon, 06 Apr 2020 11:45:34 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e8b1676.7fa8d21966f8-smtp-out-n04;
+ Mon, 06 Apr 2020 11:45:58 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EACEFC433D2; Mon,  6 Apr 2020 11:45:33 +0000 (UTC)
+        id 1F0FFC4478F; Mon,  6 Apr 2020 11:45:58 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,34 +34,40 @@ Received: from [192.168.1.100] (unknown [157.44.182.98])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jprakash)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DE891C433BA;
-        Mon,  6 Apr 2020 11:45:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DE891C433BA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8662C433D2;
+        Mon,  6 Apr 2020 11:45:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A8662C433D2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
 Subject: Re: [PATCH 2/3] iio: adc: Add PMIC7 ADC bindings
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, linus.walleij@linaro.org, sboyd@codeaurora.org,
+To:     Amit Kucheria <amit.kucheria@verdurent.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
         Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
         kgunda@codeaurora.org, aghayal@codeaurora.org,
+        Jonathan Cameron <jic23@kernel.org>,
         Hartmut Knaack <knaack.h@gmx.de>,
         Lars-Peter Clausen <lars@metafoo.de>,
         Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>, linux-iio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-arm-msm-owner@vger.kernel.org
 References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
  <1585064650-16235-3-git-send-email-jprakash@codeaurora.org>
- <20200328165410.7db48818@archlinux>
+ <CAHLCerO6GY4pNAxZucCOv3wSDweA1MsuPh5bGjSWoEUauv0iFA@mail.gmail.com>
 From:   Jishnu Prakash <jprakash@codeaurora.org>
-Message-ID: <fe8056c5-9480-a9a3-9626-5ebab8031b08@codeaurora.org>
-Date:   Mon, 6 Apr 2020 17:15:21 +0530
+Message-ID: <a8d02f55-ef32-82e5-d261-f644d4c725ed@codeaurora.org>
+Date:   Mon, 6 Apr 2020 17:15:41 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <20200328165410.7db48818@archlinux>
+In-Reply-To: <CAHLCerO6GY4pNAxZucCOv3wSDweA1MsuPh5bGjSWoEUauv0iFA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -70,16 +76,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jonathan,
+Hi Amit,
 
-On 3/28/2020 10:24 PM, Jonathan Cameron wrote:
-> On Tue, 24 Mar 2020 21:14:09 +0530
-> Jishnu Prakash <jprakash@codeaurora.org> wrote:
+On 4/3/2020 5:41 PM, Amit Kucheria wrote:
+> Hi Jishnu,
 >
+> On Tue, Mar 24, 2020 at 9:15 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
 >> Add documentation for PMIC7 ADC peripheral. For PMIC7 ADC, all SW
 >> communication to ADC goes through PMK8350, which communicates with
 >> other PMICs through PBS.
->>
+> What is PMK8350? What is PBS? Please expand the acronyms and describe
+> more verbosely.
+PMK8350 is just the name of one of the PMIC7 family of PMICs. I'll 
+expand the description in the next post.
+>
 >> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
 >> ---
 >>   .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 28 ++++++++++++++++------
@@ -96,38 +106,5 @@ On 3/28/2020 10:24 PM, Jonathan Cameron wrote:
 >> -  SPMI PMIC5 voltage ADC (ADC) provides interface to clients to read
 >> +  SPMI PMIC5/PMIC7 voltage ADC (ADC) provides interface to clients to read
 >>     voltage. The VADC is a 16-bit sigma-delta ADC.
->>   
->>   properties:
->> @@ -23,6 +23,7 @@ properties:
->>         - qcom,spmi-adc5
->>         - qcom,spmi-adc-rev2
->>         - qcom,pms405-adc
->> +      - qcom,spmi-adc7
->>   
->>     reg:
->>       description: VADC base address in the SPMI PMIC register map
->> @@ -65,6 +66,8 @@ patternProperties:
->>           description: |
->>             ADC channel number.
->>             See include/dt-bindings/iio/qcom,spmi-vadc.h
->> +          For PMIC7 ADC, the channel numbers are specified separately per PMIC
->> +          in the PMIC-specific files in include/dt-bindings/iio/.
-> That makes me thing we really should have separate compatibles.  The
-> parts clearly have differences, even if we haven't needed to use them
-> explicitly as yet.
-I'm not sure what you mean by this. We have added a new compatible 
-property "qcom,spmi-adc7" for PMIC7 ADC.
->
->>   
->>         label:
->>           description: |
->> @@ -72,7 +75,7 @@ patternProperties:
->>               For thermistor inputs connected to generic AMUX or GPIO inputs
->>               these can vary across platform for the same pins. Hence select
->>               the platform schematics name for this channel. It is required
->> -            for "qcom,spmi-adc5" and "qcom,spmi-adc-rev2".
->> +            for "qcom,spmi-adc5", "qcom,spmi-adc7" and "qcom,spmi-adc-rev2".
->>           allOf:
->>             - $ref: /schemas/types.yaml#/definitions/string
->>   
+>>
 >>
