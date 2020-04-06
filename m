@@ -2,135 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D495919F1CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 10:49:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B380019F280
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 11:28:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbgDFItd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 04:49:33 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55174 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbgDFItc (ORCPT
+        id S1726817AbgDFJ2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 05:28:20 -0400
+Received: from mailgw02.mediatek.com ([1.203.163.81]:34236 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726670AbgDFJ2U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 04:49:32 -0400
-Received: by mail-wm1-f65.google.com with SMTP id h2so5814254wmb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2020 01:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=hB/cttD2PIQJrbz4bzuL3i++GH0OSgasFqo3xqjEQAo=;
-        b=KlcQa7lIt+n/wVEV8JdYNkiUDQQp+hGTfkU1Mu02PywtjHqp63UeXe/YmyUw018Kdc
-         lpl1WphuIEEQUPCuEbfiYH37JUXWUTrg26Sf4c64ZSxRRDOVgszt6TP6yfeIKKv4bnBC
-         w3jj2IBcjWCz177Pxk5VvdWa2Y40lDC/vS6pXi98sdU+jDGOH7l9ozbD6p+C4Ah8Nsap
-         AB/D6Od+pOXPDjy792trBcGT+iJ0/81trVcYIVx4YxoA9gCgCvFxxtHf0GNkk09CRmxo
-         BTql6k2kwaGkNcIiaIY/53x86i7F0xHwY9eXlCwZPZzQEaMUhBuLdt9X9dmS8LyJB3ZM
-         EsVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=hB/cttD2PIQJrbz4bzuL3i++GH0OSgasFqo3xqjEQAo=;
-        b=n40mPq5WQZ0XcoGFp1EXaB+xrQ+IEaPOQL20NxV3/EyM/zdGQUhVdYo6rL18p8hDwY
-         Jb7kkn6NUnCmB3hkOOFUpvrYLbXCEEUoulOUZa/Yrf3wJGiGVYzVeb3QlFzryDxsO3Qj
-         fu1ze0PlzHumsXGw1TkqSIEaogc5R7Fr0dx5x8eNgvXXM4l6rO8nklM3cNhtXlsEGlwn
-         mOlWed59H2Ih5/CELKz5JMCyePgRr5YvSZHof9KvCkYJP188Rldc2HdnXgUl6ouqkSi/
-         6T8wfeM6KADXHVWVFjyduOZumMQK4x/B6s0rW3nvqs4ouI0S1HpNowUl0XH1JbPiFqLO
-         zpHw==
-X-Gm-Message-State: AGi0PuatX0JdG7BdaSJHmwYVYKPQKzUHL0/OOiFpsxlth9+CUjnRsnSX
-        2argDcyCmsOk4fU91wE45vNOFw==
-X-Google-Smtp-Source: APiQypL6NsZE4UH6W7CHGi4ojlUeqMxw4vdKpXkAYqw432CMd+116S8Nw19uLsayC9FcZNch4FCf5A==
-X-Received: by 2002:a1c:9d84:: with SMTP id g126mr6730754wme.184.1586162968744;
-        Mon, 06 Apr 2020 01:49:28 -0700 (PDT)
-Received: from dell ([2.27.35.179])
-        by smtp.gmail.com with ESMTPSA id t26sm14548888wmj.12.2020.04.06.01.49.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2020 01:49:27 -0700 (PDT)
-Date:   Mon, 6 Apr 2020 09:50:24 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     kgunda@codeaurora.org, Rob Herring <robh@kernel.org>,
-        bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
-        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
-        linux-arm-msm@vger.kernel.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH V4 1/4] backlight: qcom-wled: convert the wled bindings
- to .yaml format
-Message-ID: <20200406085024.GF30614@dell>
-References: <1584985618-25689-1-git-send-email-kgunda@codeaurora.org>
- <1584985618-25689-2-git-send-email-kgunda@codeaurora.org>
- <20200331175401.GA9791@bogus>
- <ac8f25113a3bb233c11fd7cd9e62c2cf@codeaurora.org>
- <20200403114651.m6rholzufzqinanc@holly.lan>
+        Mon, 6 Apr 2020 05:28:20 -0400
+X-UUID: 3656757b538e40b09f487adb9db2799c-20200406
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=Eb9PeHDUAD6Sk82KJ2hdDxB7g4C2DRSe1cr+DuQ+Mn4=;
+        b=KGR+0bgKXMvM7qweK5tOETDijq2A0M6NHep2PzMwb/R2lqJzZBMKL8AAVZe8kFJJy7xdnxuumU6FMbt7Vr2MOZFuLS4tBBrCedqrVBAHTCl0RrHf4zCvSSilap1ceUVQxSYs7f9PfHWrjwOpcl8Y8TG6MAheFMzLPVgVryhQdsE=;
+X-UUID: 3656757b538e40b09f487adb9db2799c-20200406
+Received: from mtkcas32.mediatek.inc [(172.27.4.253)] by mailgw02.mediatek.com
+        (envelope-from <chun-hung.wu@mediatek.com>)
+        (mailgw01.mediatek.com ESMTP with TLS)
+        with ESMTP id 80571671; Mon, 06 Apr 2020 17:28:03 +0800
+Received: from mtkcas08.mediatek.inc (172.21.101.126) by
+ MTKMBS31N1.mediatek.inc (172.27.4.69) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Mon, 6 Apr 2020 17:28:02 +0800
+Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas08.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Mon, 6 Apr 2020 17:28:01 +0800
+From:   Chun-Hung Wu <chun-hung.wu@mediatek.com>
+To:     <mirq-linux@rere.qmqm.pl>, Jonathan Hunter <jonathanh@nvidia.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Pan Bian <bianpan2016@163.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mathieu Malaterre <malat@debian.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Kuohong Wang <kuohong.wang@mediatek.com>
+CC:     <kernel-team@android.com>, <linux-kernel@vger.kernel.org>,
+        <linux-mmc@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <wsd_upstream@mediatek.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        Chun-Hung Wu <chun-hung.wu@mediatek.com>
+Subject: [PATCH v4 0/5] mmc: mediatek: add mmc cqhci support
+Date:   Mon, 6 Apr 2020 17:27:56 +0800
+Message-ID: <1586165281-11888-1-git-send-email-chun-hung.wu@mediatek.com>
+X-Mailer: git-send-email 1.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200403114651.m6rholzufzqinanc@holly.lan>
+Content-Type: text/plain
+X-TM-SNTS-SMTP: 5837B5355725B33750F6938581113CF1D07BE672A4C9846C0BF9FD8664FE73292000:8
+X-MTK:  N
+Content-Transfer-Encoding: base64
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 03 Apr 2020, Daniel Thompson wrote:
+VGhpcyBzZXJpZXMgcHJvdmlkZXMgTWVkaWFUZWsgY3FoY2kgaW1wbGVtZW50YXRpb25zIGFzIGJl
+bG93Og0KICAtIEV4dGVuZCBtbWNfb2ZfcGFyc2UoKSB0byBwYXJzZSBDUUUgYmluZGluZ3MNCiAg
+LSBSZW1vdmUgcmVkdW5kYW50IGhvc3QgQ1FFIGJpbmRpbmdzDQogIC0gUmVmaW5lIG1zZGMgdGlt
+ZW91dCBhcGkgdG8gcmVkdWNlIHJlZHVuZGFudCBjb2RlDQogIC0gTWVkaWFUZWsgY29tbWFuZCBx
+dWV1ZSBzdXBwb3J0DQogIC0gZHQtYmluZGluZ3MgZm9yIG10Njc3OQ0KDQp2MSAtPiB2MjoNCiAg
+LSBBZGQgbW9yZSBwYXRjaCBkZXRhaWxzIGluIGNvbW1pdCBtZXNzYWdlDQogIC0gU2VwYXJhdGUg
+bXNkYyB0aW1lb3V0IGFwaSByZWZpbmUgdG8gaW5kaXZpZHVhbCBwYXRjaA0KDQp2MiAtPiB2MzoN
+CiAgLSBSZW1vdmUgQ1ItSWQsIENoYW5nZS1JZCBhbmQgRmVhdHVyZSBpbiBwYXRjaGVzDQogIC0g
+QWRkIFNpZ25lZC1vZmYtYnkgaW4gcGF0Y2hlcw0KDQp2MyAtPiB2NDoNCiAgLSBSZWZpbmUgQ1FF
+IGJpbmRpbmdzIGluIG1tY19vZl9wYXJzZSAoVWxmIEhhbnNzb24pDQogIC0gUmVtb3ZlIHJlZHVu
+ZGFudCBob3N0IENRRSBiaW5kaW5ncyAoTGludXggV2FsbGVpaikNCg0KQ2h1bi1IdW5nIFd1ICg1
+KToNCiAgWzEvNV0gbW1jOiBjb3JlOiBFeHRlbmQgbW1jX29mX3BhcnNlKCkgdG8gcGFyc2UgQ1FF
+IGJpbmRpbmdzDQogIFsyLzVdIG1tYzogaG9zdDogUmVtb3ZlIHJlZHVuZGFudCBDUUUgYmluZGlu
+Z3MNCiAgWzMvNV0gbW1jOiBtZWRpYXRlazogcmVmaW5lIG1zZGMgdGltZW91dCBhcGkNCiAgWzQv
+NV0gbW1jOiBtZWRpYXRlazogY29tbWFuZCBxdWV1ZSBzdXBwb3J0DQogIFs1LzVdIGR0LWJpbmRp
+bmdzOiBtbWM6IG1lZGlhdGVrOiBBZGQgZG9jdW1lbnQgZm9yIG10Njc3OQ0KDQogRG9jdW1lbnRh
+dGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL21tYy9tdGstc2QudHh0IHwgICAxICsNCiBkcml2ZXJz
+L21tYy9jb3JlL2hvc3QuYyAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDUgKw0KIGRyaXZl
+cnMvbW1jL2hvc3QvbXRrLXNkLmMgICAgICAgICAgICAgICAgICAgICAgICB8IDE1MSArKysrKysr
+KysrKysrKysrKysrKystLQ0KIGRyaXZlcnMvbW1jL2hvc3Qvc2RoY2ktYnJjbXN0Yi5jICAgICAg
+ICAgICAgICAgICB8ICAxMSArLQ0KIGRyaXZlcnMvbW1jL2hvc3Qvc2RoY2ktbXNtLmMgICAgICAg
+ICAgICAgICAgICAgICB8ICAgMyArLQ0KIGRyaXZlcnMvbW1jL2hvc3Qvc2RoY2ktb2YtYXJhc2Fu
+LmMgICAgICAgICAgICAgICB8ICAgMyAtDQogZHJpdmVycy9tbWMvaG9zdC9zZGhjaS10ZWdyYS5j
+ICAgICAgICAgICAgICAgICAgIHwgICAyICstDQogNyBmaWxlcyBjaGFuZ2VkLCAxNTUgaW5zZXJ0
+aW9ucygrKSwgMjEgZGVsZXRpb25zKC0pDQoNCi0tIA0KMS45LjENCg==
 
-> On Fri, Apr 03, 2020 at 04:45:49PM +0530, kgunda@codeaurora.org wrote:
-> > On 2020-03-31 23:24, Rob Herring wrote:
-> > > On Mon, Mar 23, 2020 at 11:16:55PM +0530, Kiran Gunda wrote:
-> > > > diff --git
-> > > > a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> > > > b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> > > > new file mode 100644
-> > > > index 0000000..8a388bf
-> > > > --- /dev/null
-> > > > +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> > > > @@ -0,0 +1,184 @@
-> > > > +# SPDX-License-Identifier: GPL-2.0-only
-> > > > +%YAML 1.2
-> > > > +---
-> > > > +$id: http://devicetree.org/schemas/leds/backlight/qcom-wled.yaml#
-> > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > > +
-> > > > +title: Binding for Qualcomm Technologies, Inc. WLED driver
-> > > > +
-> > > > +maintainers:
-> > > > +  - Lee Jones <lee.jones@linaro.org>
-> > > 
-> > > Should be the h/w owner (you), not who applies patches.
-> > > 
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> > <snip>
-> > will address in next post.
-> 
-> If you agree on all points raised I doubt there is any need for a point
-> by point reply since everyone who reads it will have to scroll down
-> simply to find out that you agree on all points.
-> 
-> Better just to acknowledge the feedback and reply to the first one
-> saying you'll agree on all points and will address all feedback in the
-> next revision (and then trim the reply to keep it short).
-
-Or better still, just submit the next revision with all the fixes. :)
-
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
