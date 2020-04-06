@@ -2,139 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8007419F8E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 17:34:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4949B19F9AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2020 18:06:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728773AbgDFPeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Apr 2020 11:34:14 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:35347 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728792AbgDFPeO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Apr 2020 11:34:14 -0400
-Received: by mail-vs1-f67.google.com with SMTP id u11so99513vsg.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2020 08:34:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9cMvg7h/oulOhGRqUiRCctY34trH980/U/Kq5XqfKrw=;
-        b=E0DvGB4hrP97mss+BsJg46f1cmsxu437DfT1QJitEIvdJiVPNsiOco+dY5/jRQAV/D
-         IJNRoFnMdOoGbnrlvm3TqWUo79zzcAE49wFNBdiONcfRXyfP6ckrH/oUSV6HAiQNbJYy
-         cXLsNIH66kgWP2PmQG/RhlOhDCsS1MW4gKPx8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9cMvg7h/oulOhGRqUiRCctY34trH980/U/Kq5XqfKrw=;
-        b=kiHVvCfQk937YB84LJ24EaEDKy8Ry/sDC3ER6bP78GNoYWmOhGrPpCCl/5Sgquoyeq
-         GxPU9kyaZsVJr772H9SIJwncSFMBRug+1rxZhPrxmqjrR0ZTurvSJEsRZ8GEfVoPg0gK
-         sBZDM9+EsPBmnyMQKRGR+BrJe8gkN83axdqQOQWl3LIMVoFeuvGbAH5+A78aOEnQ5w/F
-         T6KILKftXeqPC0eHBPj3/jE/oSGMpPe8KFxVkC48mBQDO55NM14YsYkHiXtcgGZ9EOPF
-         jvAb+xjsX4j/3SFDUise04mI4ZCQF0GzKB8oyJaUS67eGTu2hG187pdat+1alF9TRPlz
-         tOHQ==
-X-Gm-Message-State: AGi0PuaOFN9VLe5JZZNNEWUcDAR2/VARlrzPa7Ltu6hNQ5yqxjJlUECx
-        MotoR8zLxcPIEF9VGaSNjczUCp2dF/s=
-X-Google-Smtp-Source: APiQypIX1F4NTgDR/Nv7Uln3Jmr5RTlofK+sDuBCVGGCR0V/NRRsIlBtO/QgyC8Rs9YlJroPzpRCyQ==
-X-Received: by 2002:a67:f4d5:: with SMTP id s21mr210800vsn.8.1586187252754;
-        Mon, 06 Apr 2020 08:34:12 -0700 (PDT)
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com. [209.85.222.41])
-        by smtp.gmail.com with ESMTPSA id z4sm3511237uam.6.2020.04.06.08.34.10
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Apr 2020 08:34:11 -0700 (PDT)
-Received: by mail-ua1-f41.google.com with SMTP id r47so65072uad.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2020 08:34:10 -0700 (PDT)
-X-Received: by 2002:ab0:1d10:: with SMTP id j16mr26743uak.91.1586187250041;
- Mon, 06 Apr 2020 08:34:10 -0700 (PDT)
+        id S1728994AbgDFQGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Apr 2020 12:06:09 -0400
+Received: from lhrrgout.huawei.com ([185.176.76.210]:2634 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728878AbgDFQGJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Apr 2020 12:06:09 -0400
+Received: from lhreml710-chm.china.huawei.com (unknown [172.18.7.107])
+        by Forcepoint Email with ESMTP id 9AEACEE0DA8BD16DC166;
+        Mon,  6 Apr 2020 17:06:06 +0100 (IST)
+Received: from localhost (10.47.92.64) by lhreml710-chm.china.huawei.com
+ (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1913.5; Mon, 6 Apr 2020
+ 17:06:05 +0100
+Date:   Mon, 6 Apr 2020 17:05:54 +0100
+From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+CC:     Jonathan Cameron <jic23@kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
+        <linus.walleij@linaro.org>, <sboyd@codeaurora.org>,
+        <smohanad@codeaurora.org>, <kgunda@codeaurora.org>,
+        <aghayal@codeaurora.org>, Hartmut Knaack <knaack.h@gmx.de>,
+        "Lars-Peter Clausen" <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        <linux-iio@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>
+Subject: Re: [PATCH 2/3] iio: adc: Add PMIC7 ADC bindings
+Message-ID: <20200406170554.00003887@Huawei.com>
+In-Reply-To: <fe8056c5-9480-a9a3-9626-5ebab8031b08@codeaurora.org>
+References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
+        <1585064650-16235-3-git-send-email-jprakash@codeaurora.org>
+        <20200328165410.7db48818@archlinux>
+        <fe8056c5-9480-a9a3-9626-5ebab8031b08@codeaurora.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; i686-w64-mingw32)
 MIME-Version: 1.0
-References: <1585660782-23416-1-git-send-email-mkshah@codeaurora.org>
- <1585660782-23416-7-git-send-email-mkshah@codeaurora.org> <CAD=FV=UqaTR7=i=5BApvnptZXpqVJiF1AE+Q+6H9Y4QdYfjfUQ@mail.gmail.com>
- <855bb87e-6c5c-8fee-e237-f48f9d95e2ac@codeaurora.org>
-In-Reply-To: <855bb87e-6c5c-8fee-e237-f48f9d95e2ac@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 6 Apr 2020 08:33:58 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Wi1bbc-Q2PYq3+tohYcx+hguFJ8A8FyuQCzgUYjEJOHw@mail.gmail.com>
-Message-ID: <CAD=FV=Wi1bbc-Q2PYq3+tohYcx+hguFJ8A8FyuQCzgUYjEJOHw@mail.gmail.com>
-Subject: Re: [PATCH v15 6/7] soc: qcom: rpmh-rsc: Clear active mode
- configuration for wake TCS
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org,
-        "Raju P.L.S.S.S.N" <rplsssn@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.47.92.64]
+X-ClientProxiedBy: lhreml706-chm.china.huawei.com (10.201.108.55) To
+ lhreml710-chm.china.huawei.com (10.201.108.61)
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon, 6 Apr 2020 17:15:21 +0530
+Jishnu Prakash <jprakash@codeaurora.org> wrote:
 
-On Sun, Apr 5, 2020 at 10:08 PM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> Hi,
->
-> On 4/3/2020 1:44 AM, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Tue, Mar 31, 2020 at 6:21 AM Maulik Shah <mkshah@codeaurora.org> wrote:
-> >> @@ -243,6 +279,14 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
-> >>                  }
+> Hi Jonathan,
+> 
+> On 3/28/2020 10:24 PM, Jonathan Cameron wrote:
+> > On Tue, 24 Mar 2020 21:14:09 +0530
+> > Jishnu Prakash <jprakash@codeaurora.org> wrote:
+> >  
+> >> Add documentation for PMIC7 ADC peripheral. For PMIC7 ADC, all SW
+> >> communication to ADC goes through PMK8350, which communicates with
+> >> other PMICs through PBS.
 > >>
-> >>                  trace_rpmh_tx_done(drv, i, req, err);
-> >> +
-> >> +               /*
-> >> +                * If wake tcs was re-purposed for sending active
-> >> +                * votes, clear AMC trigger & enable modes and
-> >> +                * disable interrupt for this TCS
-> >> +                */
-> >> +               if (!drv->tcs[ACTIVE_TCS].num_tcs)
-> >> +                       __tcs_set_trigger(drv, i, false);
-> > Still seems weird that we have to do the untrigger in the IRQ routine
-> > here and also weird that we _don't_ do it in the IRQ routine for
-> > non-borrowed TCSes.  I guess it's not the end of the world, though.
-> >
-> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
->
-> Thanks Doug for the review.
->
-> IRQ is only needed to be enabled for TCSes used as ACTIVE_TCS.
->
-> When we have dedicated ACTIVE_TCS, we leave IRQ always enabled from
-> probe (one time configuration), since the TCS won't be used for anything
-> other than to send ACTIVE transaction.
->
-> When we don't have dedicated ACTIVE_TCS, we enable it when borrowed TCS
-> is used for ACTIVE transaction and then once its done using it, we
-> disable it again to leave it in its original configuration.
+> >> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+> >> ---
+> >>   .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 28 ++++++++++++++++------
+> >>   1 file changed, 21 insertions(+), 7 deletions(-)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+> >> index 72db14c..20f010c 100644
+> >> --- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+> >> +++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+> >> @@ -13,7 +13,7 @@ maintainers:
+> >>   description: |
+> >>     SPMI PMIC voltage ADC (VADC) provides interface to clients to read
+> >>     voltage. The VADC is a 15-bit sigma-delta ADC.
+> >> -  SPMI PMIC5 voltage ADC (ADC) provides interface to clients to read
+> >> +  SPMI PMIC5/PMIC7 voltage ADC (ADC) provides interface to clients to read
+> >>     voltage. The VADC is a 16-bit sigma-delta ADC.
+> >>   
+> >>   properties:
+> >> @@ -23,6 +23,7 @@ properties:
+> >>         - qcom,spmi-adc5
+> >>         - qcom,spmi-adc-rev2
+> >>         - qcom,pms405-adc
+> >> +      - qcom,spmi-adc7
+> >>   
+> >>     reg:
+> >>       description: VADC base address in the SPMI PMIC register map
+> >> @@ -65,6 +66,8 @@ patternProperties:
+> >>           description: |
+> >>             ADC channel number.
+> >>             See include/dt-bindings/iio/qcom,spmi-vadc.h
+> >> +          For PMIC7 ADC, the channel numbers are specified separately per PMIC
+> >> +          in the PMIC-specific files in include/dt-bindings/iio/.  
+> > That makes me thing we really should have separate compatibles.  The
+> > parts clearly have differences, even if we haven't needed to use them
+> > explicitly as yet.  
+> I'm not sure what you mean by this. We have added a new compatible 
+> property "qcom,spmi-adc7" for PMIC7 ADC.
 
-Sure, I get the concept.  ...but:
+I've no idea what I meant either :)
 
-* It seems like it would be ideal to not call __tcs_set_trigger() from
-the IRQ handler.  It uses write_tcs_reg_sync() which has a wait loop
-in it.  That's not something you normally want in an IRQ handler.
+Jonathan
+> >  
+> >>   
+> >>         label:
+> >>           description: |
+> >> @@ -72,7 +75,7 @@ patternProperties:
+> >>               For thermistor inputs connected to generic AMUX or GPIO inputs
+> >>               these can vary across platform for the same pins. Hence select
+> >>               the platform schematics name for this channel. It is required
+> >> -            for "qcom,spmi-adc5" and "qcom,spmi-adc-rev2".
+> >> +            for "qcom,spmi-adc5", "qcom,spmi-adc7" and "qcom,spmi-adc-rev2".
+> >>           allOf:
+> >>             - $ref: /schemas/types.yaml#/definitions/string
+> >>   
+> >>  
 
-* It seems like it would be a common case for the WAKE_TCS to be
-borrowed several times in-between actually using it as a WAKE_TCS.
 
-To make both of the above things better, it seems like you could just
-leave the WAKE_TCS configured for active-mode transfers and just
-switch all that stuff off when you actually need it as a WAKE_TCS.  To
-some extent we could conceptually re-envision this and think of this
-as being the ACTIVE_TCS that is occasionally borrowed to make up for
-not having a WAKE_TCS.
-
-
-In any case, I think the patch you have right now is good enough and
-it feels like it's overdue to land this series.  I'd suggest against
-spinning at this point.  Maybe we can try to improve this in a future
-patch after your series lands.
-
--Doug
