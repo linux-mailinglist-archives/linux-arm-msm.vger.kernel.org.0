@@ -2,174 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D3E331A09EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 11:19:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EC421A0A3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 11:34:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726637AbgDGJTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 05:19:48 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:33489 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728061AbgDGJTs (ORCPT
+        id S1728140AbgDGJeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 05:34:00 -0400
+Received: from aserp2120.oracle.com ([141.146.126.78]:53744 "EHLO
+        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726767AbgDGJeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 05:19:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586251187; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=JkT2sTUJ8FGclBebPphK1ZlCoEL/hiXwiZW3sDem2YU=; b=NiBOV22fwWYMgAj0vLAycM9oWifo98OQznFA/pyEzXrzrIwu1dKLWjWWeFMT5qLXZa6aoY84
- 8Bl27Mx1ms3Ao/A7hSy4LH0J22+mRnjNvg+TTKnvZUGjlJk35UgChDXI90Kdu90kGfdDh4ig
- eYE2tc8asIJndtsJEZHe1ac5AYY=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8c45a9.7fb55a6fa688-smtp-out-n03;
- Tue, 07 Apr 2020 09:19:37 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B635FC4478C; Tue,  7 Apr 2020 09:19:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.6] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 26D7AC433F2;
-        Tue,  7 Apr 2020 09:19:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 26D7AC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V3 6/8] tty: serial: qcom_geni_serial: Add interconnect
- support
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-7-git-send-email-akashast@codeaurora.org>
- <20200331193949.GK199755@google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <db7d1369-33aa-b0b3-ec44-2018ea382887@codeaurora.org>
-Date:   Tue, 7 Apr 2020 14:49:20 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Tue, 7 Apr 2020 05:34:00 -0400
+Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
+        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0379Xooq042120;
+        Tue, 7 Apr 2020 09:33:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : mime-version : content-type; s=corp-2020-01-29;
+ bh=qcmA2k2UwC4imiuARVmbmTLIEvubWj//Z2k36MvdxtE=;
+ b=ZeZ6N1Y1EEjkLRdUdneRzCv6B6vuAwBBvW2gzit89rzQpCkn7Dvb7tf8xOwCyY37/jZp
+ ETym6Mo6eHnJjQ/Xg6iyUhCMSq16AhHYd0EMA/K5xIWUN6UDNiOjVGpan6YSyrFAkFYO
+ MVUpXxc5OUqpvtOKZoWvq2KsQXPKrYGbmD1yIKJ9lDyO0BQRpuw+JoVE22TOJ8U35jMi
+ FRHHyJglDo0oiX3hrv4agAHgVdls4bQ8KErxCR8EQO2tFPtLVxulxNFrn6EwldINmHBT
+ 3F83ZgeABH9jtuaadYZ3frt60pFt9mMxHGk8AVGksGXfBCVjOCFR42XPQTWS7It0AckJ ag== 
+Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
+        by aserp2120.oracle.com with ESMTP id 306j6mbrgn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 07 Apr 2020 09:33:50 +0000
+Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
+        by userp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0379RGdW041436;
+        Tue, 7 Apr 2020 09:31:43 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+        by userp3030.oracle.com with ESMTP id 3073qfgg4y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 07 Apr 2020 09:31:43 +0000
+Received: from abhmp0011.oracle.com (abhmp0011.oracle.com [141.146.116.17])
+        by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 0379VfL9028581;
+        Tue, 7 Apr 2020 09:31:42 GMT
+Received: from mwanda (/41.57.98.10)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Tue, 07 Apr 2020 02:31:41 -0700
+Date:   Tue, 7 Apr 2020 12:31:33 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH] bus: mhi: core: Fix a NULL vs IS_ERR check in
+ mhi_create_devices()
+Message-ID: <20200407093133.GM68494@mwanda>
 MIME-Version: 1.0
-In-Reply-To: <20200331193949.GK199755@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9583 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxscore=0 mlxlogscore=999
+ spamscore=0 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004070080
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9583 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=999 spamscore=0
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 mlxscore=0 phishscore=0 adultscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004070081
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+The mhi_alloc_device() function never returns NULL, it returns error
+pointers.
 
-On 4/1/2020 1:09 AM, Matthias Kaehlcke wrote:
-> Hi Akash,
->
-> On Tue, Mar 31, 2020 at 04:39:34PM +0530, Akash Asthana wrote:
->> Get the interconnect paths for Uart based Serial Engine device
->> and vote according to the baud rate requirement of the driver.
->>
->> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
->> ---
->> Changes in V2:
->>   - As per Bjorn's comment, removed se == NULL check from geni_serial_icc_get
->>   - As per Bjorn's comment, removed code to set se->icc_path* to NULL in failure
->>   - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
->>     path handle
->>   - As per Matthias comment, added error handling for icc_set_bw call
->>
->> Changes in V3:
->>   - As per Matthias comment, use common library APIs defined in geni-se
->>     driver for ICC functionality.
->>
->>   drivers/tty/serial/qcom_geni_serial.c | 28 +++++++++++++++++++++++++---
->>   1 file changed, 25 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index 8c5d97c..2befe72 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -965,6 +965,14 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->>   	ser_clk_cfg = SER_CLK_EN;
->>   	ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
->>   
->> +	/*
->> +	 * Bump up BW vote on CPU path as driver supports FIFO mode only.
->> +	 * Assume peak_bw as twice of avg_bw.
->> +	 */
->> +	port->se.from_cpu.avg_bw = Bps_to_icc(baud);
->> +	port->se.from_cpu.peak_bw = Bps_to_icc(2 * baud);
->> +	geni_icc_vote_on(&port->se);
->> +
->>   	/* parity */
->>   	tx_trans_cfg = readl(uport->membase + SE_UART_TX_TRANS_CFG);
->>   	tx_parity_cfg = readl(uport->membase + SE_UART_TX_PARITY_CFG);
->> @@ -1202,11 +1210,14 @@ static void qcom_geni_serial_pm(struct uart_port *uport,
->>   	if (old_state == UART_PM_STATE_UNDEFINED)
->>   		old_state = UART_PM_STATE_OFF;
->>   
->> -	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
->> +	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF) {
->> +		geni_icc_vote_on(&port->se);
->>   		geni_se_resources_on(&port->se);
->> -	else if (new_state == UART_PM_STATE_OFF &&
->> -			old_state == UART_PM_STATE_ON)
->> +	} else if (new_state == UART_PM_STATE_OFF &&
->> +			old_state == UART_PM_STATE_ON) {
->>   		geni_se_resources_off(&port->se);
->> +		geni_icc_vote_off(&port->se);
->> +	}
->>   }
->>   
->>   static const struct uart_ops qcom_geni_console_pops = {
->> @@ -1304,6 +1315,17 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->>   			return -ENOMEM;
->>   	}
->>   
->> +	ret = geni_icc_get(&port->se, "qup-core", "qup-config", NULL);
->> +	if (ret)
->> +		return ret;
->> +	/* Set the bus quota to a reasonable value */
->> +	port->se.to_core.avg_bw = console ? GENI_DEFAULT_BW :
->> +		Bps_to_icc(CORE_2X_50_MHZ);
->> +	port->se.to_core.peak_bw = console ? GENI_DEFAULT_BW :
->> +		Bps_to_icc(CORE_2X_100_MHZ);
-> I'm still unconvinced about the setting of the core bandwidth based on
-> whether the port is used as console or not. It could possibly break
-> consoles working at speeds > 115kbs and reserve more bandwidth than
-> necessary for ports with 'slow' devices.
->
-> Why not scale the core bandwidth dynamically? You said earlier that there
-> is no clear/linear translation of port speed to bandwidth, but you could
-> use the same logic that is implicitly used here:
->
-> 	if (baudrate <= 115200) {
-> 		avg_bw = GENI_DEFAULT_BW;
-> 		peak_bw = GENI_DEFAULT_BW;
-> 	} else {
-> 		avg_bw = Bps_to_icc(CORE_2X_50_MHZ);
-> 		peak_bw = Bps_to_icc(CORE_2X_100_MHZ);
-> 	}
->
-> This would be more robust, power efficient and future readers of the
-> code don't have to wonder "why is the console special?" when our
-> discussions on this will be long forgotten.
+Fixes: da1c4f856924 ("bus: mhi: core: Add support for creating and destroying MHI devices")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+---
+ drivers/bus/mhi/core/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Okay, I will add this piece of code in set_termios call of the driver 
-because I don't have baudrate information during probe. It covers the 
-console case mentioned in probe function.
-
-Regards,
-
-Akash
-
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index eb4256b81406..55928feea0c9 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -294,7 +294,7 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
+ 		    !(mhi_chan->ee_mask & BIT(mhi_cntrl->ee)))
+ 			continue;
+ 		mhi_dev = mhi_alloc_device(mhi_cntrl);
+-		if (!mhi_dev)
++		if (IS_ERR(mhi_dev))
+ 			return;
+ 
+ 		mhi_dev->dev_type = MHI_DEVICE_XFER;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.25.1
+
