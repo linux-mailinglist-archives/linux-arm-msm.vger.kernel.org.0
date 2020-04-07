@@ -2,114 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B8B171A17B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 00:07:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE2491A17F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 00:24:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726421AbgDGWH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 18:07:27 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:42863 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726393AbgDGWH1 (ORCPT
+        id S1726530AbgDGWYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 18:24:03 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:43100 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726527AbgDGWYC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 18:07:27 -0400
-Received: by mail-pg1-f194.google.com with SMTP id g6so2367894pgs.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 15:07:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xQ0CMqBW6HOiKsmKZ6VgVvjTVRhpyHMNm3H4n2IX4C8=;
-        b=Rw68i3XJ5JnnwX/K/8I3yzixlUVsVtJ2etjO5TZhfnYbsajRHoeks03BiJgc4IfBou
-         pplNLgCJb4AibRRMSKpOE+MgNY2ShgtRSuFxsEr0E7TMIntadjYbMmCzEJM82pfk37t5
-         7ySqepJeD5kpr2jRBpC2O3hCv5zKx89jMhXvZIFEkqcwpMe0Zetu9YvY924vkJS9kNyA
-         fq2slWBlcJ0DDuF/xaFlnd5Kx7z+uNpxn1I5a7EeBT7muxR+VxQ0iBnYWNlYN6s/07Gf
-         3u0ljmf5E8+2Jg2asB/+5DNamV2GqzhneAUcBvpTDHXD8SF4Flpjfu8WvXugWRFK67OK
-         pP9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xQ0CMqBW6HOiKsmKZ6VgVvjTVRhpyHMNm3H4n2IX4C8=;
-        b=psfXfrrAy/GMojp8efqG9h0jRtdFDaKmWBswfCCWYR6raGWfhSXQ3t9by5/NIq+CfC
-         V/4QXD4w1ZKs7u6vc3x0HJm1V8RyVZkMnTMbEhzlTQDwNggahlV4kobzsSWYUep1Li+l
-         ghgmr7aP8ksDoqAKInzZ0mtPCHGOLzHoiiB0+8mPCwBLpo8wMypsjkgA2bT6o0f0H1lf
-         yn4K29J2W8uBDCqq4eGtT0qcIISb/v+9X6vmSTpwf7IIcCjVEUUV+bSe2YCWoeN+7W86
-         70U3TLMHgbUeQffxWJSCUG2BpVz4h4OjZ+MnM30ZRk8f+HDHkEm+S1tqHeRdDhqfm0JI
-         pajQ==
-X-Gm-Message-State: AGi0Pub8Wsp+gFjVUCcm7yYotu9V0FNsBb98FM3Ox8+7wdMwc8Jd5203
-        e2zR2rte2XgHErIAMi/L/NZXVg==
-X-Google-Smtp-Source: APiQypImyD5jkZCA6R9BSgJ+PmtBP9/LG4f/aJX6aezk6OZplkgeFKHReg6Bg6r/hmACeL/V74aYKw==
-X-Received: by 2002:a62:75d0:: with SMTP id q199mr4566702pfc.72.1586297245671;
-        Tue, 07 Apr 2020 15:07:25 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r9sm14091252pfg.2.2020.04.07.15.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2020 15:07:24 -0700 (PDT)
-Date:   Tue, 7 Apr 2020 15:07:30 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org, wsa@the-dreams.de,
-        broonie@kernel.org, mark.rutland@arm.com, robh+dt@kernel.org,
-        georgi.djakov@linaro.org, linux-i2c@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        swboyd@chromium.org, mgautam@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mka@chromium.org, dianders@chromium.org, evgreen@chromium.org
-Subject: Re: [PATCH V3 2/8] soc: qcom: geni: Support for ICC voting
-Message-ID: <20200407220730.GK20625@builder.lan>
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-3-git-send-email-akashast@codeaurora.org>
- <20200331233209.GF254911@minitux>
- <45191b98-60fa-cd49-3067-d58c128d2c9c@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <45191b98-60fa-cd49-3067-d58c128d2c9c@codeaurora.org>
+        Tue, 7 Apr 2020 18:24:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586298242; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=zb9gBubLqpCRCY9HKdRqpmX1NGtX4V5sdNkRDWjR9R0=; b=RshdiCx50/XB/A2uwL2anIUf9SKBkW6eKr5bzUPrXp1uRvACxuXWRWwxfKUbszLEbsl8Pzgi
+ ocO6pUieyv49t66hXGDYGH/inhCESsYDDcw8RubmT4iyKU3YGwdIeMTPFH1PXOSlqawd0k09
+ tTUn0Q41LF6clhDzJWZ1M36POFs=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e8cfd6a.7f90da0bbce0-smtp-out-n05;
+ Tue, 07 Apr 2020 22:23:38 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 55505C43637; Tue,  7 Apr 2020 22:23:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5246BC433F2;
+        Tue,  7 Apr 2020 22:23:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5246BC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        vinod.koul@linaro.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v3 0/4] Add SS/HS-USB changes for Qualcomm SM8150 chipset
+Date:   Tue,  7 Apr 2020 15:23:25 -0700
+Message-Id: <1586298209-4589-1-git-send-email-wcheng@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 06 Apr 23:45 PDT 2020, Akash Asthana wrote:
+This series adds support for the Synopsis 7nm HSPHY USB driver being
+used in QCOM chipsets.  The HSPHY register map differs compared to 
+other PHY revisions.  In addition, modifications and updates are done
+to the QMP driver to add new registers/offsets, and to update the
+initialization sequence for enabling the SSUSB path on SM8150.
 
-> Hi Bjorn,
-> 
-> On 4/1/2020 5:02 AM, Bjorn Andersson wrote:
-> > On Tue 31 Mar 04:09 PDT 2020, Akash Asthana wrote:
-> > 
-> > > Add necessary macros and structure variables to support ICC BW
-> > > voting from individual SE drivers.
-> > > 
-> > > Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> > > ---
-> > > Changes in V2:
-> > >   - As per Bjorn's comment dropped enums for ICC paths, given the three
-> > >     paths individual members
-> > > 
-> > > Changes in V3:
-> > >   - Add geni_icc_get, geni_icc_vote_on and geni_icc_vote_off as helper API.
-> > >   - Add geni_icc_path structure in common header
-> > > 
-> > >   drivers/soc/qcom/qcom-geni-se.c | 98 +++++++++++++++++++++++++++++++++++++++++
-> > >   include/linux/qcom-geni-se.h    | 36 +++++++++++++++
-> > >   2 files changed, 134 insertions(+)
-> > > 
-> > > diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> > > index 7d622ea..9344c14 100644
-> > > --- a/drivers/soc/qcom/qcom-geni-se.c
-> > > +++ b/drivers/soc/qcom/qcom-geni-se.c
-> > > @@ -720,6 +720,104 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
-> > >   }
-> > >   EXPORT_SYMBOL(geni_se_rx_dma_unprep);
-> > > +int geni_icc_get(struct geni_se *se, const char *icc_core, const char *icc_cpu,
-> > > +		const char *icc_ddr)
-> > > +{
-> > > +	if (icc_core) {
-> > Afaict it's only this that might be passed as NULL, so please drop these
-> > conditionals (keep the last one).
-> IIUC you're suggesting to drop if (icc_core/cpu) but keep if (icc_ddr) ?
+Changes in v3:
+ - Use devm_reset_control_get_exclusive instead of referencing index for
+   reset handle
 
-Correct
+Changes in v2:
+ - Fixed YAML errors caught by dt_binding_check
 
-Thanks,
-Bjorn
+Jack Pham (1):
+  phy: qcom-qmp: Add SM8150 QMP USB3 PHY support
+
+Wesley Cheng (3):
+  dt-bindings: phy: Add binding for qcom,usb-hs-7nm
+  phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs
+  phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB
+
+ .../devicetree/bindings/phy/qcom,usb-hs-7nm.yaml   |  76 ++++++
+ drivers/phy/qualcomm/Kconfig                       |  10 +
+ drivers/phy/qualcomm/Makefile                      |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c                | 157 +++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h                | 198 +++++++++++++-
+ drivers/phy/qualcomm/phy-qcom-snps-7nm.c           | 294 +++++++++++++++++++++
+ 6 files changed, 734 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-snps-7nm.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
