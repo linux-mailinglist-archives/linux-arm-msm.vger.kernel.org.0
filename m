@@ -2,100 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BFC01A0C50
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 12:55:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBCF41A0CD3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 13:29:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728191AbgDGKzq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 06:55:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47712 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726562AbgDGKzq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 06:55:46 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726591AbgDGL3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 07:29:10 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:31479 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725883AbgDGL3J (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Apr 2020 07:29:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586258949; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ZqIKa/adNoURxS84sdyk+/pbhzhboQnmhn2fnf8Bnbk=;
+ b=kd8zdTt4EtGCLYi/lZVeD1YROJ3KMvW8AQccirKMmStmaxO51euCleSR7+U8e5WzxlmhknXt
+ Xj8QyxtFyElwP//OJCPfkTDwowM8LE5Fk+Mzm6RVXtHZfmR3QaxllC0hlX5fJ42ZrN22gk3s
+ MBLUmMOXTvVmIcsIA97flZQA9Io=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e8c6402.7ff5dc09b8b8-smtp-out-n03;
+ Tue, 07 Apr 2020 11:29:06 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0D972C44788; Tue,  7 Apr 2020 11:29:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B77652063A;
-        Tue,  7 Apr 2020 10:55:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586256945;
-        bh=2l/vT4Iy6bAQT51YE8e9gRnPs3uL+EMeRJhWtbxLAzY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=D3wNVWTzel205i3JqikhF9KThBjcP8CzuSMSS70nQvmcBh2hJr/ytGlwpGBWxFkI7
-         Oe16Rc5btc8qctc0NhSUJo6552xtmcxoX+73Eb+yO6Sl4R/FpWd6qrBsMXBAI7Tngz
-         ncOrA7NSjao9QmXfU5GDGKGQlnfFt4y5UkV2s2AE=
-Date:   Tue, 7 Apr 2020 11:55:42 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, evgreen@chromium.org
-Subject: Re: [PATCH V3 7/8] spi: spi-qcom-qspi: Add interconnect support
-Message-ID: <20200407105542.GA5247@sirena.org.uk>
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-8-git-send-email-akashast@codeaurora.org>
- <20200331112352.GB4802@sirena.org.uk>
- <f896d6e4-cc86-db46-a9b9-d7c98071b524@codeaurora.org>
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 760AEC433F2;
+        Tue,  7 Apr 2020 11:29:05 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="C7zPtVaVf+AK4Oqc"
-Content-Disposition: inline
-In-Reply-To: <f896d6e4-cc86-db46-a9b9-d7c98071b524@codeaurora.org>
-X-Cookie: Just to have it is enough.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 07 Apr 2020 16:59:05 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     mike.leach@linaro.org, mathieu.poirier@linaro.org,
+        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
+        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC PATCH] coresight: dynamic-replicator: Fix handling of
+ multiple connections
+In-Reply-To: <906d374d-a4d6-f2f2-6845-88b97a5ff7d9@arm.com>
+References: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
+ <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
+ <906d374d-a4d6-f2f2-6845-88b97a5ff7d9@arm.com>
+Message-ID: <39a2b3fff165a108fa59d72b630b5f14@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Suzuki,
 
---C7zPtVaVf+AK4Oqc
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for looking into this issue.
 
-On Tue, Apr 07, 2020 at 03:24:42PM +0530, Akash Asthana wrote:
-> On 3/31/2020 4:53 PM, Mark Brown wrote:
+On 2020-04-07 15:54, Suzuki K Poulose wrote:
+> On 04/07/2020 10:46 AM, Sai Prakash Ranjan wrote:
+> 
+> There seems to be two replicators back to back here. What is connected
+> to the other output of both of them ? Are there any TPIUs ? What 
+> happens
+> if you choose a sink on the other end of "swao_replicator" (ETB ?)
+> 
 
-> > > +	ctrl->avg_bw_cpu =3D Bps_to_icc(speed_hz);
-> > > +	ctrl->peak_bw_cpu =3D Bps_to_icc(2 * speed_hz);
+The other outport of swao replicator is connected to EUD which is a
+QCOM specific HW which can be used as a sink like USB.
+And the other outport of other replicator(replicator_out) is connected 
+to
+TPIU.
 
-> > I thought you were going to factor this best guess handling of peak
-> > bandwidth out into the core?
+> After boot, what do the idfilter registers read for both the 
+> replicators ?
+> 
 
-> I can centralize this for SPI, I2C and UART=A0 in Common driver(QUP wrapp=
-er)
-> but still for QSPI I have to keep this piece of code as is because It is =
-not
-> child of QUP wrapper(it doesn't use common code).
+Added some prints in replicator_probe.
 
-Why not?
+  replicator probe ret=-517 devname=6046000.replicator idfilter0=0x0 
+idfilter1=0x0
+  replicator probe ret=0 devname=6b06000.replicator idfilter0=0xff 
+idfilter1=0xff
+  replicator probe ret=0 devname=6046000.replicator idfilter0=0xff 
+idfilter1=0xff
 
-> I am not sure whether I can move this " Assume peak_bw as twice of avg_bw=
- if
-> nothing is mentioned explicitly" to ICC core because the factor of 2 is
-> chosen randomly by me.
+> 
+> I believe we need to properly assign the TRACE_IDs for tracing 
+> sessions,
+> (rather than static ids) in a way such that we could filter them and 
+> use
+> the multiple sinks in parallel for separate trace sessions and this is
+> not simple (involves kernel driver changes and the perf tool to be able
+> to decode the trace id changes too).
+> 
+> 
+> So for the moment, we need to :
+> 
+> 1) Disallow turning the replicator ON, when it is already turned ON
+> 2) Do what your patch does. i.e, disable the other end while one end
+>    is turned on.
+> 
+> Thoughts ?
+> 
 
-That's the whole point - if this is just a random number then we may as
-well at least be consistently random.
+Sounds good to me, Mike would have some comments.
 
---C7zPtVaVf+AK4Oqc
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
+Sai
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6MXCkACgkQJNaLcl1U
-h9CEeQf/eaVfeJR9ovqStt0V0zniW7RMpZKG29cmxTS4fPcK6lCpnIJkuFHsCsw6
-OJBjpy9Uyb1eKn0tV79iCLQx428YeoOeJFhp7d/JwAOG+lIc4Jp3HIh3mJ+eRmrt
-i0HmoPaJygm8PSz/MsgvFQEsuwGhJJ/DKUpAjcYbaa08Y24VKDZgRcvaMk4Xp3x1
-bOTk96XEtzCXyQU5uQ9EBJL8PyRO1kAVp5xeUGVNiqT4TKEFd95YWrTrrQa/Z8/w
-UDBToWopSQZJjXIBB5xIbxyIdNB1yXAaOKdSjmja/cIqiNYn1pzog0nJBOwANsxj
-YRYqsbzHbmLNuoeCBVX9CoSBVOlpFw==
-=Rxn1
------END PGP SIGNATURE-----
-
---C7zPtVaVf+AK4Oqc--
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
