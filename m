@@ -2,332 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B7C11A0854
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 09:32:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58F4D1A0929
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 10:15:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726591AbgDGHc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 03:32:28 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:63203 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726393AbgDGHc2 (ORCPT
+        id S1727945AbgDGIPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 04:15:36 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43581 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727883AbgDGIPe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 03:32:28 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Apr 2020 13:02:25 +0530
-Received: from c-rkambl-linux1.qualcomm.com ([10.242.50.190])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Apr 2020 13:02:07 +0530
-Received: by c-rkambl-linux1.qualcomm.com (Postfix, from userid 2344811)
-        id 93F8F3A46; Tue,  7 Apr 2020 13:02:06 +0530 (IST)
-From:   Rajeshwari <rkambl@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sivaa@codeaurora.org,
-        sanm@codeaurora.org, Doug Anderson <dianders@chromium.org>,
-        Rajeshwari <rkambl@codeaurora.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc7180: Changed polling mode in Thermal-zones node
-Date:   Tue,  7 Apr 2020 13:01:16 +0530
-Message-Id: <1586244677-14399-1-git-send-email-rkambl@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 7 Apr 2020 04:15:34 -0400
+Received: by mail-ed1-f67.google.com with SMTP id bd14so2895917edb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 01:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:subject:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gYSBPF0kqvjFsMt96b7gq4l3LXMLVPqJ/kTyN1DMzC4=;
+        b=Q14xEyVQtMB9EutZZR+8RRGK9Zf6kbBWZ940ZDnrulLNn06x2V6BdqqTY2KwOAjyB+
+         1DdDvh7XDSL4+3ENES1jPazifAXGACgRDQvf0o+WckllB05VtC07VQtxp5jqxhZ6d/eR
+         WeKjYa+zIP4PHVwh7H5LDDCwXUji2Fwa4ck0haiajLbrZDkCi5jtKF1hG3ufUc5eTZ8H
+         6m7ABzlJ52jurXp5oBrWaT1HUSbM050utDGxa3mSEyoxo+k5GV8pbgtpJWAeCZiOi9GZ
+         yX8FHXHvMF9IZcCQCa+KgmcKzoSF61oPZXSv736Xf+ztL8g9HFRTcyVQfFmOUNuMmZA5
+         4AkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gYSBPF0kqvjFsMt96b7gq4l3LXMLVPqJ/kTyN1DMzC4=;
+        b=AZbKWUwPDThGZg9ESGvlDgCj7FrA8grvN6X0ScxW4PMbKDQpV6SoAbU61kTSPYw9sD
+         JvMtcvMZhedjWgJTpr2v2+3snxDOqAlwrhcw1LS3i3RcXNzRr0MlrPsMXtek1EY6CjUg
+         EKA3ecOoHYQs+XOmKOj9JsWRuvLAAksePTH2KMAxepwQfRf9hsagPvypW5ZuQ9RK3FZa
+         VE95628d8PavCKeBqz5aiTzXS5q/zH/gQ374XDIw1eh6q7xGx4CFyufN8nHv0yqeDBPb
+         Y0REUOXF0vy09EFUehzwbJ6RN84BB7AExuyGoUixiAhhrI8/jupwcMFVwP+KM0zjHHzk
+         fs0g==
+X-Gm-Message-State: AGi0PuYQEi76btl5sy6MpMKPGmdDOmQmplGLjJHkbqoPidV39dSn/ixy
+        JAvV97Q7NuG26KJf1++xOSso5A==
+X-Google-Smtp-Source: APiQypJsinurJQlKKhBli7w6pCn0J6twQ6wYYsj5qr8ytdr2SAZP7IWJnQE1AJwhokOlwmwPMtM1cg==
+X-Received: by 2002:a17:907:b1a:: with SMTP id h26mr879545ejl.321.1586247331125;
+        Tue, 07 Apr 2020 01:15:31 -0700 (PDT)
+Received: from [192.168.1.4] (212-5-158-179.ip.btc-net.bg. [212.5.158.179])
+        by smtp.googlemail.com with ESMTPSA id a24sm3175976ejy.38.2020.04.07.01.15.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Apr 2020 01:15:30 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: Re: [PATCH] [PATCH] venus: core: remove CNOC voting while device
+ suspend
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1581940891-2376-1-git-send-email-mansur@codeaurora.org>
+Message-ID: <e5b94b17-5864-e02d-435d-beceeceed375@linaro.org>
+Date:   Tue, 7 Apr 2020 11:15:28 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <1581940891-2376-1-git-send-email-mansur@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changed polling-delay and polling-delay-passive to zero to disable
-polling mode of the framework as interrupts for tsens are already
-configured.
+Hi Mansur,
 
-Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 100 +++++++++++++++++------------------
- 1 file changed, 50 insertions(+), 50 deletions(-)
+The patch looks fine and correct but the description should be better.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 998f101..45a2b32 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2011,8 +2011,8 @@
- 
- 	thermal-zones {
- 		cpu0-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 1>;
- 
-@@ -2059,8 +2059,8 @@
- 		};
- 
- 		cpu1-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 2>;
- 
-@@ -2107,8 +2107,8 @@
- 		};
- 
- 		cpu2-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 3>;
- 
-@@ -2155,8 +2155,8 @@
- 		};
- 
- 		cpu3-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 4>;
- 
-@@ -2203,8 +2203,8 @@
- 		};
- 
- 		cpu4-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 5>;
- 
-@@ -2251,8 +2251,8 @@
- 		};
- 
- 		cpu5-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 6>;
- 
-@@ -2299,8 +2299,8 @@
- 		};
- 
- 		cpu6-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 9>;
- 
-@@ -2339,8 +2339,8 @@
- 		};
- 
- 		cpu7-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 10>;
- 
-@@ -2379,8 +2379,8 @@
- 		};
- 
- 		cpu8-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 11>;
- 
-@@ -2419,8 +2419,8 @@
- 		};
- 
- 		cpu9-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 12>;
- 
-@@ -2459,8 +2459,8 @@
- 		};
- 
- 		aoss0-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 0>;
- 
-@@ -2480,8 +2480,8 @@
- 		};
- 
- 		cpuss0-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 7>;
- 
-@@ -2500,8 +2500,8 @@
- 		};
- 
- 		cpuss1-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 8>;
- 
-@@ -2520,8 +2520,8 @@
- 		};
- 
- 		gpuss0-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 13>;
- 
-@@ -2541,8 +2541,8 @@
- 		};
- 
- 		gpuss1-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens0 14>;
- 
-@@ -2562,8 +2562,8 @@
- 		};
- 
- 		aoss1-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 0>;
- 
-@@ -2583,8 +2583,8 @@
- 		};
- 
- 		cwlan-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 1>;
- 
-@@ -2604,8 +2604,8 @@
- 		};
- 
- 		audio-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 2>;
- 
-@@ -2625,8 +2625,8 @@
- 		};
- 
- 		ddr-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 3>;
- 
-@@ -2646,8 +2646,8 @@
- 		};
- 
- 		q6-hvx-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 4>;
- 
-@@ -2667,8 +2667,8 @@
- 		};
- 
- 		camera-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 5>;
- 
-@@ -2688,8 +2688,8 @@
- 		};
- 
- 		mdm-core-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 6>;
- 
-@@ -2709,8 +2709,8 @@
- 		};
- 
- 		mdm-dsp-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 7>;
- 
-@@ -2730,8 +2730,8 @@
- 		};
- 
- 		npu-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 8>;
- 
-@@ -2751,8 +2751,8 @@
- 		};
- 
- 		video-thermal {
--			polling-delay-passive = <250>;
--			polling-delay = <1000>;
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
- 
- 			thermal-sensors = <&tsens1 9>;
- 
+On 2/17/20 2:01 PM, Mansur Alisha Shaik wrote:
+> video driver is voting for CNOC during probe and not clear
+> while device suspend. Because of which XO shutdown is
+> happing(BCM42: VALID: 0x1 VOTE_X: 0x0000 VOTE_Y: 0x0004).
+> 
+> So, clearing CNOC voting while device suspend.
+
+Maybe something like this ?
+
+The Venus driver is voting Configuration NoC during .probe but not clear
+voting in .suspend. As a consequence the whole device could leak energy
+while in suspend. Correct this by moving voting in .resume and unvoting
+in .suspend.
+
+> 
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index e7995cb..153effe 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -244,10 +244,6 @@ static int venus_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> -	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
+> -	if (ret)
+> -		return ret;
+> -
+>  	ret = hfi_create(core, &venus_core_ops);
+>  	if (ret)
+>  		return ret;
+> @@ -353,6 +349,10 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	ret = icc_set_bw(core->cpucfg_path, 0, 0);
+> +	if (ret)
+> +		return ret;
+> +
+>  	if (pm_ops->core_power)
+>  		ret = pm_ops->core_power(dev, POWER_OFF);
+>  
+> @@ -371,6 +371,10 @@ static __maybe_unused int venus_runtime_resume(struct device *dev)
+>  			return ret;
+>  	}
+>  
+> +	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
+> +	if (ret)
+> +		return ret;
+> +
+>  	return hfi_core_resume(core, false);
+>  }
+>  
+> 
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+regards,
+Stan
 
+-- 
+regards,
+Stan
