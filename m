@@ -2,99 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EC421A0A3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 11:34:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E0DE1A0A34
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 11:33:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728140AbgDGJeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 05:34:00 -0400
-Received: from aserp2120.oracle.com ([141.146.126.78]:53744 "EHLO
-        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726767AbgDGJeA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 05:34:00 -0400
-Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
-        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0379Xooq042120;
-        Tue, 7 Apr 2020 09:33:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : mime-version : content-type; s=corp-2020-01-29;
- bh=qcmA2k2UwC4imiuARVmbmTLIEvubWj//Z2k36MvdxtE=;
- b=ZeZ6N1Y1EEjkLRdUdneRzCv6B6vuAwBBvW2gzit89rzQpCkn7Dvb7tf8xOwCyY37/jZp
- ETym6Mo6eHnJjQ/Xg6iyUhCMSq16AhHYd0EMA/K5xIWUN6UDNiOjVGpan6YSyrFAkFYO
- MVUpXxc5OUqpvtOKZoWvq2KsQXPKrYGbmD1yIKJ9lDyO0BQRpuw+JoVE22TOJ8U35jMi
- FRHHyJglDo0oiX3hrv4agAHgVdls4bQ8KErxCR8EQO2tFPtLVxulxNFrn6EwldINmHBT
- 3F83ZgeABH9jtuaadYZ3frt60pFt9mMxHGk8AVGksGXfBCVjOCFR42XPQTWS7It0AckJ ag== 
-Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
-        by aserp2120.oracle.com with ESMTP id 306j6mbrgn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 07 Apr 2020 09:33:50 +0000
-Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
-        by userp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0379RGdW041436;
-        Tue, 7 Apr 2020 09:31:43 GMT
-Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
-        by userp3030.oracle.com with ESMTP id 3073qfgg4y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 07 Apr 2020 09:31:43 +0000
-Received: from abhmp0011.oracle.com (abhmp0011.oracle.com [141.146.116.17])
-        by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 0379VfL9028581;
-        Tue, 7 Apr 2020 09:31:42 GMT
-Received: from mwanda (/41.57.98.10)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 07 Apr 2020 02:31:41 -0700
-Date:   Tue, 7 Apr 2020 12:31:33 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: [PATCH] bus: mhi: core: Fix a NULL vs IS_ERR check in
- mhi_create_devices()
-Message-ID: <20200407093133.GM68494@mwanda>
+        id S1726720AbgDGJdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 05:33:09 -0400
+Received: from foss.arm.com ([217.140.110.172]:54020 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726716AbgDGJdJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Apr 2020 05:33:09 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1A29930E;
+        Tue,  7 Apr 2020 02:33:08 -0700 (PDT)
+Received: from [10.37.12.4] (unknown [10.37.12.4])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E5A483F73D;
+        Tue,  7 Apr 2020 02:32:57 -0700 (PDT)
+Subject: Re: [PATCH v5 1/5] PM / EM: add devices to Energy Model
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
+        javi.merino@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200318114548.19916-1-lukasz.luba@arm.com>
+ <20200318114548.19916-2-lukasz.luba@arm.com>
+ <09b680a5-a118-8c6e-0ae1-03ab5f10c573@linaro.org>
+ <cb7f670a-a04f-ba6f-1486-0421f3cce2e9@arm.com>
+ <6b980e2a-c15c-0718-14b8-e8aa7510c832@linaro.org>
+ <2a70b4ed-f18f-c1e6-1e8c-e4747807f276@arm.com>
+ <4cee98ce-62a6-7448-a99c-3a1af6c87cf4@linaro.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <6c2fcd42-5245-ff45-1852-0f2ec800517f@arm.com>
+Date:   Tue, 7 Apr 2020 10:32:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9583 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxscore=0 mlxlogscore=999
- spamscore=0 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004070080
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9583 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=999 spamscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 malwarescore=0
- impostorscore=0 mlxscore=0 phishscore=0 adultscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004070081
+In-Reply-To: <4cee98ce-62a6-7448-a99c-3a1af6c87cf4@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The mhi_alloc_device() function never returns NULL, it returns error
-pointers.
 
-Fixes: da1c4f856924 ("bus: mhi: core: Add support for creating and destroying MHI devices")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
----
- drivers/bus/mhi/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index eb4256b81406..55928feea0c9 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -294,7 +294,7 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
- 		    !(mhi_chan->ee_mask & BIT(mhi_cntrl->ee)))
- 			continue;
- 		mhi_dev = mhi_alloc_device(mhi_cntrl);
--		if (!mhi_dev)
-+		if (IS_ERR(mhi_dev))
- 			return;
- 
- 		mhi_dev->dev_type = MHI_DEVICE_XFER;
--- 
-2.25.1
+On 4/6/20 10:17 PM, Daniel Lezcano wrote:
+> On 06/04/2020 18:07, Lukasz Luba wrote:
+>>
+>>
+>> On 4/6/20 3:58 PM, Daniel Lezcano wrote:
+>>>
+>>> Hi Lukasz,
+>>>
+>>>
+>>> On 06/04/2020 15:29, Lukasz Luba wrote:
+>>>> Hi Daniel,
+>>>>
+>>>> Thank you for the review.
+>>>>
+>>>> On 4/3/20 5:05 PM, Daniel Lezcano wrote:
+>>>>>
+>>>>> Hi Lukasz,
+>>>>>
+>>>>>
+>>>>> On 18/03/2020 12:45, Lukasz Luba wrote:
+>>>>>> Add support of other devices into the Energy Model framework not only
+>>>>>> the
+>>>>>> CPUs. Change the interface to be more unified which can handle other
+>>>>>> devices as well.
+>>>>>
+>>>>> thanks for taking care of that. Overall I like the changes in this
+>>>>> patch
+>>>>> but it hard to review in details because the patch is too big :/
+>>>>>
+>>>>> Could you split this patch into smaller ones?
+>>>>>
+>>>>> eg. (at your convenience)
+>>>>>
+>>>>>     - One patch renaming s/cap/perf/
+>>>>>
+>>>>>     - One patch adding a new function:
+>>>>>
+>>>>>        em_dev_register_perf_domain(struct device *dev,
+>>>>>                   unsigned int nr_states,
+>>>>>                   struct em_data_callback *cb);
+>>>>>
+>>>>>       (+ EXPORT_SYMBOL_GPL)
+>>>>>
+>>>>>        And em_register_perf_domain() using it.
+>>>>>
+>>>>>     - One converting the em_register_perf_domain() user to
+>>>>>       em_dev_register_perf_domain
+>>>>>
+>>>>>     - One adding the different new 'em' functions
+>>>>>
+>>>>>     - And finally one removing em_register_perf_domain().
+>>>>
+>>>> I agree and will do the split. I could also break the dependencies
+>>>> for future easier merge.
+>>>>
+>>>>>
+>>>>>
+>>>>>> Acked-by: Quentin Perret <qperret@google.com>
+>>>>>> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+>>>>>> ---
+>>>>>
+>>>>> [ ... ]
+>>>>>
+>>>>>>     2. Core APIs
+>>>>>> @@ -70,14 +72,16 @@ CONFIG_ENERGY_MODEL must be enabled to use the EM
+>>>>>> framework.
+>>>>>>     Drivers are expected to register performance domains into the EM
+>>>>>> framework by
+>>>>>>     calling the following API::
+>>>>>>     -  int em_register_perf_domain(cpumask_t *span, unsigned int
+>>>>>> nr_states,
+>>>>>> -                  struct em_data_callback *cb);
+>>>>>> +  int em_register_perf_domain(struct device *dev, unsigned int
+>>>>>> nr_states,
+>>>>>> +        struct em_data_callback *cb, cpumask_t *cpus);
+>>>>>
+>>>>> Isn't possible to get rid of this cpumask by using
+>>>>> cpufreq_cpu_get() which returns the cpufreq's policy and from their get
+>>>>> the related cpus ?
+>>>>
+>>>> We had similar thoughts with Quentin and I've checked this.
+>>>
+>>> Yeah, I suspected you already think about that :)
+>>>
+>>>> Unfortunately, if the policy is a 'new policy' [1] it gets
+>>>> allocated and passed into cpufreq driver ->init(policy) [2].
+>>>> Then that policy is set into per_cpu pointer for each related_cpu [3]:
+>>>>
+>>>> for_each_cpu(j, policy->related_cpus)
+>>>>       per_cpu(cpufreq_cpu_data, j) = policy;
+>>>>
+>>>>    Thus, any calls of functions (i.e. cpufreq_cpu_get()) which try to
+>>>> take this ptr before [3] won't work.
+>>>>
+>>>> We are trying to register EM from cpufreq_driver->init(policy) and the
+>>>> per_cpu policy is likely to be not populated at that phase.
+>>>
+>>> What is the problem of registering at the end of the cpufreq_online ?
+>>
+>> We want to enable driver developers to choose one of two options for the
+>> registration of Energy Model:
+>> 1. a simple one via dev_pm_opp_of_register_em(), which uses default
+>>     callback function calculating power based on: voltage, freq
+>>     and DT entry 'dynamic-power-coefficient' for each OPP
+>> 2. a more sophisticated, when driver provides callback function, which
+>>    will be called from EM for each OPP to ask for related power;
+>>    This interface could also be used by devices which relay not only
+>>    on one source of 'voltage', i.e. manipulate body bias or have
+>>    other controlling voltage for gates in the new 3D transistors. They
+>>    might provide custom callback function in their cpufreq driver.
+>>    This is used i.e. in cpufreq drivers which use firmware to get power,
+>>    like scmi-cpufreq.c;
+>>
+>> To meet this requirement the registration of EM is moved into cpufreq
+>> drivers, not in the framework i.e cpufreq_online(). If we could limit
+>> the support for only option 1. then we could move the registration
+>> call into cpufreq framework and clean the cpufreq drivers.
+> 
+> I'm not sure to get your point but I think a series setting the scene by
+> moving the dev_pm_opp_of_register_em() to cpufreq_online() and remove
+> the cpumask may make sense.
 
+Some of the cpufreq drivers don't use dev_pm_opp_of_register_em() but 
+instead em_register_perf_domain() with their em_data_callback [1].
+It is because of point 2. described above. The dev_pm_opp_of_register_em
+won't work for them, so it's not a good candidate to cover all use cases
+in the framework.
+
+> 
+> Can you send the split version of patch 1/5 as a series without the
+> other changes ? So we can focus on first ?
+
+Sure, I will only split patch 1/5 as you suggested and send v6.
+Thank you for your time and help.
+
+Regards,
+Lukasz
+
+[1] 
+https://elixir.bootlin.com/linux/latest/source/drivers/cpufreq/scmi-cpufreq.c#L203
