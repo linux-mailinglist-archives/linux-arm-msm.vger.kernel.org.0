@@ -2,17 +2,17 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5371D1A1460
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 20:39:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F9001A146C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 20:39:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgDGSiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727935AbgDGSiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 7 Apr 2020 14:38:51 -0400
-Received: from 8bytes.org ([81.169.241.247]:57434 "EHLO theia.8bytes.org"
+Received: from 8bytes.org ([81.169.241.247]:57578 "EHLO theia.8bytes.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726977AbgDGSiC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1727026AbgDGSiC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 7 Apr 2020 14:38:02 -0400
 Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id D53E25D8; Tue,  7 Apr 2020 20:37:52 +0200 (CEST)
+        id 16E6C5ED; Tue,  7 Apr 2020 20:37:53 +0200 (CEST)
 From:   Joerg Roedel <joro@8bytes.org>
 To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         Robin Murphy <robin.murphy@arm.com>,
@@ -37,9 +37,9 @@ Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org,
         Joerg Roedel <jroedel@suse.de>
-Subject: [RFC PATCH 24/34] iommu/mediatek-v1 Convert to probe/release_device() call-backs
-Date:   Tue,  7 Apr 2020 20:37:32 +0200
-Message-Id: <20200407183742.4344-25-joro@8bytes.org>
+Subject: [RFC PATCH 25/34] iommu/qcom: Convert to probe/release_device() call-backs
+Date:   Tue,  7 Apr 2020 20:37:33 +0200
+Message-Id: <20200407183742.4344-26-joro@8bytes.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200407183742.4344-1-joro@8bytes.org>
 References: <20200407183742.4344-1-joro@8bytes.org>
@@ -50,109 +50,79 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Joerg Roedel <jroedel@suse.de>
 
-Convert the Mediatek-v1 IOMMU driver to use the probe_device() and
+Convert the QCOM IOMMU driver to use the probe_device() and
 release_device() call-backs of iommu_ops, so that the iommu core code
 does the group and sysfs setup.
 
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 ---
- drivers/iommu/mtk_iommu_v1.c | 50 +++++++++++++++---------------------
- 1 file changed, 20 insertions(+), 30 deletions(-)
+ drivers/iommu/qcom_iommu.c | 24 +++++++-----------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index a31be05601c9..7bdd74c7cb9f 100644
---- a/drivers/iommu/mtk_iommu_v1.c
-+++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -416,14 +416,12 @@ static int mtk_iommu_create_mapping(struct device *dev,
- 	return 0;
+diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
+index 0e2a96467767..054e476ebd49 100644
+--- a/drivers/iommu/qcom_iommu.c
++++ b/drivers/iommu/qcom_iommu.c
+@@ -524,14 +524,13 @@ static bool qcom_iommu_capable(enum iommu_cap cap)
+ 	}
  }
  
--static int mtk_iommu_add_device(struct device *dev)
-+static struct iommu_device *mtk_iommu_probe_device(struct device *dev)
+-static int qcom_iommu_add_device(struct device *dev)
++static struct iommu_device *qcom_iommu_probe_device(struct device *dev)
  {
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
--	struct dma_iommu_mapping *mtk_mapping;
- 	struct of_phandle_args iommu_spec;
- 	struct of_phandle_iterator it;
- 	struct mtk_iommu_data *data;
+ 	struct qcom_iommu_dev *qcom_iommu = to_iommu(dev);
 -	struct iommu_group *group;
- 	int err;
+ 	struct device_link *link;
  
- 	of_for_each_phandle(&it, err, dev->of_node, "iommus",
-@@ -442,35 +440,28 @@ static int mtk_iommu_add_device(struct device *dev)
+ 	if (!qcom_iommu)
+-		return -ENODEV;
++		return ERR_PTR(-ENODEV);
+ 
+ 	/*
+ 	 * Establish the link between iommu and master, so that the
+@@ -542,28 +541,19 @@ static int qcom_iommu_add_device(struct device *dev)
+ 	if (!link) {
+ 		dev_err(qcom_iommu->dev, "Unable to create device link between %s and %s\n",
+ 			dev_name(qcom_iommu->dev), dev_name(dev));
+-		return -ENODEV;
++		return ERR_PTR(-ENODEV);
  	}
  
- 	if (!fwspec || fwspec->ops != &mtk_iommu_ops)
--		return -ENODEV; /* Not a iommu client device */
-+		return ERR_PTR(-ENODEV); /* Not a iommu client device */
- 
--	/*
--	 * This is a short-term bodge because the ARM DMA code doesn't
--	 * understand multi-device groups, but we have to call into it
--	 * successfully (and not just rely on a normal IOMMU API attach
--	 * here) in order to set the correct DMA API ops on @dev.
--	 */
--	group = iommu_group_alloc();
+-	group = iommu_group_get_for_dev(dev);
 -	if (IS_ERR(group))
 -		return PTR_ERR(group);
-+	data = dev_iommu_priv_get(dev);
- 
--	err = iommu_group_add_device(group, dev);
+-
 -	iommu_group_put(group);
--	if (err)
--		return err;
-+	return &data->iommu;
-+}
- 
--	data = dev_iommu_priv_get(dev);
-+static void mtk_iommu_probe_finalize(struct device *dev)
-+{
-+	struct dma_iommu_mapping *mtk_mapping;
-+	struct mtk_iommu_data *data;
-+	int err;
-+
-+	data        = dev_iommu_priv_get(dev);
- 	mtk_mapping = data->dev->archdata.iommu;
--	err = arm_iommu_attach_device(dev, mtk_mapping);
--	if (err) {
--		iommu_group_remove_device(dev);
--		return err;
--	}
- 
--	return iommu_device_link(&data->iommu, dev);
-+	err = arm_iommu_attach_device(dev, mtk_mapping);
-+	if (err)
-+		dev_err(dev, "Can't create IOMMU mapping - DMA-OPS will not work\n");
+-	iommu_device_link(&qcom_iommu->iommu, dev);
+-
+-	return 0;
++	return &qcom_iommu->iommu;
  }
  
--static void mtk_iommu_remove_device(struct device *dev)
-+static void mtk_iommu_release_device(struct device *dev)
+-static void qcom_iommu_remove_device(struct device *dev)
++static void qcom_iommu_release_device(struct device *dev)
  {
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 	struct mtk_iommu_data *data;
-@@ -479,9 +470,6 @@ static void mtk_iommu_remove_device(struct device *dev)
+ 	struct qcom_iommu_dev *qcom_iommu = to_iommu(dev);
+ 
+ 	if (!qcom_iommu)
  		return;
  
- 	data = dev_iommu_priv_get(dev);
--	iommu_device_unlink(&data->iommu, dev);
--
+-	iommu_device_unlink(&qcom_iommu->iommu, dev);
 -	iommu_group_remove_device(dev);
  	iommu_fwspec_free(dev);
  }
  
-@@ -534,8 +522,10 @@ static const struct iommu_ops mtk_iommu_ops = {
- 	.map		= mtk_iommu_map,
- 	.unmap		= mtk_iommu_unmap,
- 	.iova_to_phys	= mtk_iommu_iova_to_phys,
--	.add_device	= mtk_iommu_add_device,
--	.remove_device	= mtk_iommu_remove_device,
-+	.probe_device	= mtk_iommu_probe_device,
-+	.probe_finalize = mtk_iommu_probe_finalize,
-+	.release_device	= mtk_iommu_release_device,
-+	.device_group	= generic_device_group,
- 	.pgsize_bitmap	= ~0UL << MT2701_IOMMU_PAGE_SHIFT,
- };
- 
+@@ -619,8 +609,8 @@ static const struct iommu_ops qcom_iommu_ops = {
+ 	.flush_iotlb_all = qcom_iommu_flush_iotlb_all,
+ 	.iotlb_sync	= qcom_iommu_iotlb_sync,
+ 	.iova_to_phys	= qcom_iommu_iova_to_phys,
+-	.add_device	= qcom_iommu_add_device,
+-	.remove_device	= qcom_iommu_remove_device,
++	.probe_device	= qcom_iommu_probe_device,
++	.release_device	= qcom_iommu_release_device,
+ 	.device_group	= generic_device_group,
+ 	.of_xlate	= qcom_iommu_of_xlate,
+ 	.pgsize_bitmap	= SZ_4K | SZ_64K | SZ_1M | SZ_16M,
 -- 
 2.17.1
 
