@@ -2,149 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B74F1A1040
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 17:32:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85AF41A1086
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 17:47:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729409AbgDGPcx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 11:32:53 -0400
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:55306 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728306AbgDGPcw (ORCPT
+        id S1727070AbgDGPrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 11:47:42 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:19056 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726910AbgDGPrl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 11:32:52 -0400
-Received: by mail-pj1-f67.google.com with SMTP id fh8so904557pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 08:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FghI9CGje7bQZiVsZZ6C1elOlQeB+Hd1LlrvzJxqs+E=;
-        b=Vo5B1mguXpOlYk6Y0joNe6L7wU6R9dxOzmjXbWxzDMjzBlQwsC90H68Oe0TnyxTw/z
-         z/c+L1r8BIJE0yPZyDCzbdCpcz2H5GIUEkKuV3gYp9QSgCe2vGVnOXbr1AD2VfyKHfiA
-         Xgd1jK9yCZkzT1GiUc9oSsJvAW7v66Xk1d9M5uaK/zqRzFm1mC2glXrM0z/IWBe/Bh22
-         yPCuWYAvFBNPOtcOJITbvKkGk3LcoClCxK24YSaQDodDGy/t4JaKdetIn4mjPogy+GQT
-         585HLXflcH5lwXtjZOWKu6PFL5oA6H86LRzvD5AKhOdedXDnBl2xd08F42ytaRoL+YC0
-         LSqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FghI9CGje7bQZiVsZZ6C1elOlQeB+Hd1LlrvzJxqs+E=;
-        b=iTSEBlVIHcsdNf+BnY2TL/9tYSPLVCzhKdk0PSdDEYi9ybQI04htxeWP90CW+TNPYT
-         F5/ZAqwsDAgKq9tJcfFLJIaYcst5tFdK76CW1SWSgUzt4wAypYV9rk176iofic6iXPaB
-         d+pSAFLV7aJ7gFVU7cJImH4ILRO3kdQc33ttoS5qrKvWgU0VeOc+tiLvl+ijOTTRBz7K
-         ya9jre5cSVEBd+XlCOBP4/jbe17tPGCMiAYjVQpG5Jj/LTETeOpiQePp/EcPwoYx5f2p
-         jOT3gj17SsA1WpK4PdrYV/C+ypQ7NIKmRs7zg7CfX3hfnqmPQ10Qnekt3t84eKEOezRk
-         hadA==
-X-Gm-Message-State: AGi0PuZcQ95jCtwsPsCP6qc9KXk0Ya2Rc9lNUIMDNoUauqeZqqX0A2t3
-        39QPIF5LVl2C30NEZ6SxI0Cr
-X-Google-Smtp-Source: APiQypLCHMymCfBwKdznDru4hE2vjy8+J10/HPuhKamSykwdzpUXXiqcWIT7rE0CpA7M4vGl4ewSmA==
-X-Received: by 2002:a17:90a:2a89:: with SMTP id j9mr3370974pjd.64.1586273569513;
-        Tue, 07 Apr 2020 08:32:49 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6e86:d03b:65ee:cb40:6d79:8376])
-        by smtp.gmail.com with ESMTPSA id r63sm14379471pfr.42.2020.04.07.08.32.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Apr 2020 08:32:48 -0700 (PDT)
-Date:   Tue, 7 Apr 2020 21:02:44 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] bus: mhi: core: Handle syserr during power_up
-Message-ID: <20200407153244.GJ2442@Mani-XPS-13-9360>
-References: <1586207077-22361-1-git-send-email-jhugo@codeaurora.org>
- <1586207077-22361-2-git-send-email-jhugo@codeaurora.org>
- <20200407062641.GC2442@Mani-XPS-13-9360>
- <f63b0a23-97d3-e690-70ae-a4485d42b28f@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f63b0a23-97d3-e690-70ae-a4485d42b28f@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        Tue, 7 Apr 2020 11:47:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586274461; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=9T9i2bhqi3VLaEw0ff7UrAhvelqlEdAg6Xi/18D6Cic=; b=qLfgk9RcwFz2kRIn5bHqsgNj1bBlyMLFhNTGOYGWXy7ZwtzvCHvhNZXnvjcQJr3CCTsxsLTR
+ lgyX1f6lV3+Qk61HFjKfNqpOld8DAoxFCS9SSvtn1RKmp1TJaPu65SKyXPOmiB9UPVpWe/uo
+ YBvTxqiMaVNGYRvSJs6NWJMhNNs=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e8ca095.7f2f4870f848-smtp-out-n02;
+ Tue, 07 Apr 2020 15:47:33 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0686EC4478F; Tue,  7 Apr 2020 15:47:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from kgunda-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1695C433F2;
+        Tue,  7 Apr 2020 15:47:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1695C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kgunda@codeaurora.org
+From:   Kiran Gunda <kgunda@codeaurora.org>
+To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
+Subject: [PATCH V5 0/4] Add support for WLED5
+Date:   Tue,  7 Apr 2020 21:17:06 +0530
+Message-Id: <1586274430-28402-1-git-send-email-kgunda@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 09:11:33AM -0600, Jeffrey Hugo wrote:
-> On 4/7/2020 12:26 AM, Manivannan Sadhasivam wrote:
-> > On Mon, Apr 06, 2020 at 03:04:35PM -0600, Jeffrey Hugo wrote:
-> > > The MHI device may be in the syserr state when we attempt to init it in
-> > > power_up().  Since we have no local state, the handling is simple -
-> > > reset the device and wait for it to transition out of the reset state.
-> > > 
-> > > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> > > ---
-> > >   drivers/bus/mhi/core/pm.c | 20 ++++++++++++++++++++
-> > >   1 file changed, 20 insertions(+)
-> > > 
-> > > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> > > index 52690cb..cd6ba23 100644
-> > > --- a/drivers/bus/mhi/core/pm.c
-> > > +++ b/drivers/bus/mhi/core/pm.c
-> > > @@ -9,6 +9,7 @@
-> > >   #include <linux/dma-direction.h>
-> > >   #include <linux/dma-mapping.h>
-> > >   #include <linux/interrupt.h>
-> > > +#include <linux/iopoll.h>
-> > >   #include <linux/list.h>
-> > >   #include <linux/mhi.h>
-> > >   #include <linux/module.h>
-> > > @@ -760,6 +761,7 @@ static void mhi_deassert_dev_wake(struct mhi_controller *mhi_cntrl,
-> > >   int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
-> > >   {
-> > > +	enum mhi_state state;
-> > >   	enum mhi_ee_type current_ee;
-> > >   	enum dev_st_transition next_state;
-> > >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> > > @@ -829,6 +831,24 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
-> > >   		goto error_bhi_offset;
-> > >   	}
-> > > +	state = mhi_get_mhi_state(mhi_cntrl);
-> > > +	if (state == MHI_STATE_SYS_ERR) {
-> > > +		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
-> > > +		ret = readl_poll_timeout(mhi_cntrl->regs + MHICTRL, val,
-> > > +					 !(val & MHICTRL_RESET_MASK), 1000,
-> > 
-> > Hmm. Do we really need a max 1ms delay between each read? I'd prefer to have
-> > 100ns to reduce the wait time.
-> 
-> 
-> I assume you mean 100us since that's the units of the parameter, and
-> usleep_range is the actual delay mechanism.  Please correct me if that is a
-> bad assumption.
-> 
+Currently, WLED driver supports only WLED4 peripherals that is present
+on pmi8998 and pm660L. This patch series  converts the existing WLED4
+bindings from .txt to .yaml format and adds the support for WLED5 peripheral
+that is present on PM8150L.
 
-Yep, it will get extended to:
+PM8150L WLED supports the following.
+    - Two modulators and each sink can use any of the modulator
+    - Multiple CABC selection options
+    - Multiple brightness width selection (12 bits to 15 bits)
 
-usleep_range((__sleep_us >> 2) + 1, __sleep_us)
+Changes from V1:
+	- Rebased on top of the below commit.
+	  backlight: qcom-wled: Fix unsigned comparison to zero
 
-So the max delay (range) here would be 100ns. Anyway, I'm okay with 1ms. Please
-see below.
+Changes from V2:
+	- Addressed Bjorn's comments by splitting the WLED4 changes
+	  in a seperate patch.
+	- Added WLED5 auto calibration support
 
-> I chose 1ms to try to avoid flooding the bus, since on one system we care
-> about, the round trip time was observed to be ~1ms.  However, that is fairly
-> arbitrary, so a factor of 10 reduction don't seem like a significant issue.
-> 
+Changes from V3:
+        - Addressed comments from Daniel Thompson and Rob Herring
+        - Seperated the WLED5 bindings from the driver changes
+        - Squashed wled5 auto string detection and wled5 basic changes
+          to avoid the NULL callback function pointer issue.
 
-Hmm. I thought 1ms is too much wait time but just looked into some downstream
-controller implementation and they seem to be allowing the timeout value upto
-2000ms. So this is fine. Sorry for the noise!
+Changes from V4:
+        - Addressed the yaml formatting comments from Rob Herring.
+        - Addressed the comments from Daniel Thompson on the below patch
+  	  "backlight: qcom-wled: Add callback functions"
 
-Thanks,
-Mani
+Kiran Gunda (3):
+  backlight: qcom-wled: convert the wled bindings to .yaml format
+  backlight: qcom-wled: Add callback functions
+  backlight: qcom-wled: Add WLED5 bindings
 
-> > 
-> > > +					 mhi_cntrl->timeout_ms * 1000);
-> > > +		if (ret) {
-> > > +			dev_info(dev, "Failed to reset syserr\n");
-> > 
-> > dev_info(dev, "Failed to reset MHI due to syserr state\n"); ?
-> > 
-> 
-> Ah yes, that is clearer.  Thanks
-> 
-> -- 
-> Jeffrey Hugo
-> Qualcomm Technologies, Inc. is a member of the
-> Code Aurora Forum, a Linux Foundation Collaborative Project.
+Subbaraman Narayanamurthy (1):
+  backlight: qcom-wled: Add support for WLED5 peripheral that is present
+    on PM8150L PMICs
+
+ .../bindings/leds/backlight/qcom-wled.txt          | 154 -----
+ .../bindings/leds/backlight/qcom-wled.yaml         | 255 ++++++++
+ drivers/video/backlight/qcom-wled.c                | 659 ++++++++++++++++++---
+ 3 files changed, 841 insertions(+), 227 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+ create mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
