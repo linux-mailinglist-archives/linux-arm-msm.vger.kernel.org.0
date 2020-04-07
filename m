@@ -2,87 +2,332 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 524E41A07FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 09:11:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B7C11A0854
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 09:32:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726393AbgDGHLo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 03:11:44 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:62586 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726767AbgDGHLn (ORCPT
+        id S1726591AbgDGHc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 03:32:28 -0400
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:63203 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726393AbgDGHc2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 03:11:43 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586243503; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=E1R6nDQwxnv/zhYTF1086Nuhe2DWYwOBixad7z/PWBo=; b=ka2OhBAJ1AYYWdsgZAOZfC8kRegg3XETNIZtou1Q5R47Oo0BSNVTWEW5zVFX6chad3Z/LaH3
- N7nWtsveQmrMVXxS9ABOUMotrocL1lOD3HqQhoIHRxLs5onvohWx0aM5Dw6sOVrYzni+QCeo
- VNsihzt+j5vGY/0jLtVepcU5ZOQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8c27a7.7f94c6768688-smtp-out-n03;
- Tue, 07 Apr 2020 07:11:35 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8739DC43636; Tue,  7 Apr 2020 07:11:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.6] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1B410C433D2;
-        Tue,  7 Apr 2020 07:11:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1B410C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V3 5/8] spi: spi-geni-qcom: Add interconnect support
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-6-git-send-email-akashast@codeaurora.org>
- <20200331190249.GJ199755@google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <fd9bf941-16fa-2d66-31f4-e4e210097b00@codeaurora.org>
-Date:   Tue, 7 Apr 2020 12:41:19 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-MIME-Version: 1.0
-In-Reply-To: <20200331190249.GJ199755@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Tue, 7 Apr 2020 03:32:28 -0400
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Apr 2020 13:02:25 +0530
+Received: from c-rkambl-linux1.qualcomm.com ([10.242.50.190])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Apr 2020 13:02:07 +0530
+Received: by c-rkambl-linux1.qualcomm.com (Postfix, from userid 2344811)
+        id 93F8F3A46; Tue,  7 Apr 2020 13:02:06 +0530 (IST)
+From:   Rajeshwari <rkambl@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sivaa@codeaurora.org,
+        sanm@codeaurora.org, Doug Anderson <dianders@chromium.org>,
+        Rajeshwari <rkambl@codeaurora.org>
+Subject: [PATCH v2] arm64: dts: qcom: sc7180: Changed polling mode in Thermal-zones node
+Date:   Tue,  7 Apr 2020 13:01:16 +0530
+Message-Id: <1586244677-14399-1-git-send-email-rkambl@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+Changed polling-delay and polling-delay-passive to zero to disable
+polling mode of the framework as interrupts for tsens are already
+configured.
 
->>   
->> +	ret = geni_icc_get(&mas->se, "qup-core", "qup-config", NULL);
->> +	if (ret)
->> +		goto spi_geni_probe_runtime_disable;
-> This fails without providing any hints why, besides the error code.
-> It might be worth to add error logging to geni_icc_get().
->
-As per Bjorn's comment, I will add error logs inside geni_icc_get API 
-incase it returns something other than -EPROBE_DEFER . 
-https://patchwork.kernel.org/patch/11467511/
+Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 100 +++++++++++++++++------------------
+ 1 file changed, 50 insertions(+), 50 deletions(-)
 
-regards,
-
-Akash
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 998f101..45a2b32 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2011,8 +2011,8 @@
+ 
+ 	thermal-zones {
+ 		cpu0-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 1>;
+ 
+@@ -2059,8 +2059,8 @@
+ 		};
+ 
+ 		cpu1-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 2>;
+ 
+@@ -2107,8 +2107,8 @@
+ 		};
+ 
+ 		cpu2-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 3>;
+ 
+@@ -2155,8 +2155,8 @@
+ 		};
+ 
+ 		cpu3-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 4>;
+ 
+@@ -2203,8 +2203,8 @@
+ 		};
+ 
+ 		cpu4-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 5>;
+ 
+@@ -2251,8 +2251,8 @@
+ 		};
+ 
+ 		cpu5-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 6>;
+ 
+@@ -2299,8 +2299,8 @@
+ 		};
+ 
+ 		cpu6-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 9>;
+ 
+@@ -2339,8 +2339,8 @@
+ 		};
+ 
+ 		cpu7-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 10>;
+ 
+@@ -2379,8 +2379,8 @@
+ 		};
+ 
+ 		cpu8-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 11>;
+ 
+@@ -2419,8 +2419,8 @@
+ 		};
+ 
+ 		cpu9-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 12>;
+ 
+@@ -2459,8 +2459,8 @@
+ 		};
+ 
+ 		aoss0-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 0>;
+ 
+@@ -2480,8 +2480,8 @@
+ 		};
+ 
+ 		cpuss0-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 7>;
+ 
+@@ -2500,8 +2500,8 @@
+ 		};
+ 
+ 		cpuss1-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 8>;
+ 
+@@ -2520,8 +2520,8 @@
+ 		};
+ 
+ 		gpuss0-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 13>;
+ 
+@@ -2541,8 +2541,8 @@
+ 		};
+ 
+ 		gpuss1-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 14>;
+ 
+@@ -2562,8 +2562,8 @@
+ 		};
+ 
+ 		aoss1-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 0>;
+ 
+@@ -2583,8 +2583,8 @@
+ 		};
+ 
+ 		cwlan-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 1>;
+ 
+@@ -2604,8 +2604,8 @@
+ 		};
+ 
+ 		audio-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 2>;
+ 
+@@ -2625,8 +2625,8 @@
+ 		};
+ 
+ 		ddr-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 3>;
+ 
+@@ -2646,8 +2646,8 @@
+ 		};
+ 
+ 		q6-hvx-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 4>;
+ 
+@@ -2667,8 +2667,8 @@
+ 		};
+ 
+ 		camera-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 5>;
+ 
+@@ -2688,8 +2688,8 @@
+ 		};
+ 
+ 		mdm-core-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 6>;
+ 
+@@ -2709,8 +2709,8 @@
+ 		};
+ 
+ 		mdm-dsp-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 7>;
+ 
+@@ -2730,8 +2730,8 @@
+ 		};
+ 
+ 		npu-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 8>;
+ 
+@@ -2751,8 +2751,8 @@
+ 		};
+ 
+ 		video-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <1000>;
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 9>;
+ 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
