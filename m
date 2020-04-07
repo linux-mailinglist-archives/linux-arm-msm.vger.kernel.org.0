@@ -2,111 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A1F851A18B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 01:38:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20DDE1A18CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 01:50:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726582AbgDGXio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 19:38:44 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:36299 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbgDGXio (ORCPT
+        id S1726416AbgDGXu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 19:50:57 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36227 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726406AbgDGXu5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 19:38:44 -0400
-Received: by mail-pf1-f195.google.com with SMTP id n10so1541273pff.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 16:38:43 -0700 (PDT)
+        Tue, 7 Apr 2020 19:50:57 -0400
+Received: by mail-pl1-f195.google.com with SMTP id g2so1843872plo.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 16:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mOG8uXDl25YkIY1KwvU7WP+vA59IBuf+1/ymXSgkT1I=;
-        b=qaqchf5jB5Eqy41fV6WU2Pz9vxP8irw80dxERZBvo8vJlEUyLvQcVHqo4d7BqKi5mk
-         OzWDY3XOoxKXqyjI/WiJMwIx732T7Zasabr7mN8xRgxLdQugRkuLklMqQo+Ko7LHb3Jk
-         s6ekr19+LwPrmvkJCNgUquIJZGlUv7tY+a1Ynp/veuOitVrFvnVN0CibRse67tRCbWoB
-         Da7DlOB6sd3vxeH/eOHhilb8y74yZqq9KWgdDEQqkEVeKW/CelXsOB1V4m/Bl+mWGGG6
-         QCv8SivvGUS3W6VPJQSAru20CvvFR1SUImMZ681gh306B9PWC+k/syh4IpzC6qvd+HEq
-         lmCA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eT68veUdahfIguyUyBYQoqVQI3dpUpP+dfw8Z1rw5oQ=;
+        b=dKeiEDM/PDcbX+fPQvAgtDORBZqcmvJ6BvEJWJJCDxNNCyzNjQhJpBTP3d3xIgQ439
+         EHC2t7qMFaU01TDtZvzIdZZOe6jtOMYFF/FRidLta6hxWbb/2We2PvfJ/+zG1YUfx0B6
+         MOFHzw0uf5F6afuyvwkxKCU7CNR4pj5q4Pv3c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mOG8uXDl25YkIY1KwvU7WP+vA59IBuf+1/ymXSgkT1I=;
-        b=cSA0GouBcbwo502qumZQp/Qa0/koNnJLwwoDqNTdue3kXBIERWN0QTvr0FLrQKTPWD
-         txp90+vaL/N8ZkcSXda54FPeftH9Y0Ey18u+2AIGtk9c7WyVcEv1aangOevJd6kpUIKh
-         q4ATn02r/WD2bAo2fWixScx8FgFRIwCokSNVHBzRGRuaL0KOhipB4OwwKkb4X8BdNi/6
-         aDu3GHGt29KXX1qqE4dYFVdMICMCKVwYdLfFCCilcR/ZPJKpQBSEy6Btwmcob61tPEau
-         H7LJrdH6CKeujguNFnxItXQ9E0JGVu02Uob45TzoLIHFb1mlzaVZbbVykf9QCjppKZtV
-         4W/g==
-X-Gm-Message-State: AGi0PuaQa1ze1W6G30xw+ZWrDFYKVdEa2xcXf3VK7ev5LwT7qTTAIVTC
-        z0CGr3hqRFdEJ89WbTPI5N8H8Q==
-X-Google-Smtp-Source: APiQypLJ4W6r4lUs3kl4+KovCBimfVWxesaytHb1fY7SpaerFs+CbFQPc75tWHX2dn9mukWlYUgjuw==
-X-Received: by 2002:a63:2e44:: with SMTP id u65mr4419244pgu.142.1586302722857;
-        Tue, 07 Apr 2020 16:38:42 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id hg20sm2573036pjb.3.2020.04.07.16.38.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eT68veUdahfIguyUyBYQoqVQI3dpUpP+dfw8Z1rw5oQ=;
+        b=fS4+5eeKiZduGVropbsxWTn17fSSO+lzE5+FpHyl9J6YGd4kJTVjPJtHVv8o7VAOcz
+         ywARMSAwlDZmKPRnjKxHvZtFVXgUJsd6B9AKgaeXtvMsTXIPAXKMVOoTKdwePrGa/Bo1
+         79OmX13xq1HUtXgWEPPMc3PkLZhOKhQfqhRMX1KuXVUnktE54h9mj/XLmmvrQHJIjAq5
+         6IodIr5ZoNdZTJekUHSnjT05JukDzKcTfIYsacgiDXnAOJELrADpllP6jJpodSoormqZ
+         pZCjqtFmS2wNLiyTPWCG5JSecuS+Oic7eJ7YZ/0MAj32CZvRmf1bQ8qDIpCuLe9iKziW
+         9zrg==
+X-Gm-Message-State: AGi0PuYTRwUpEQ2OcPQOJ3R5i0j6FRP+bORuUp69Zhslmzc/H37TgqcF
+        8/s+nmqp8+itiNPh2ZKylCLM5YjQU876VA==
+X-Google-Smtp-Source: APiQypJYTmO0cbgnxZFQZqkN1iaxMEolwKi85hzl9BR9MlhjVCBjNxuHbd1evldXYryQV0IDGem+MA==
+X-Received: by 2002:a17:90a:ba09:: with SMTP id s9mr2081513pjr.20.1586303455987;
+        Tue, 07 Apr 2020 16:50:55 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id s27sm14467165pgn.90.2020.04.07.16.50.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2020 16:38:42 -0700 (PDT)
-Date:   Tue, 7 Apr 2020 16:38:48 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        vinod.koul@linaro.org, Jack Pham <jackp@codeaurora.org>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sm8150: Add USB and PHY device
- nodes
-Message-ID: <20200407233848.GN20625@builder.lan>
-References: <1586298267-4722-1-git-send-email-wcheng@codeaurora.org>
- <1586298267-4722-3-git-send-email-wcheng@codeaurora.org>
+        Tue, 07 Apr 2020 16:50:55 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Cc:     mka@chromium.org, Lina Iyer <ilina@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, swboyd@chromium.org,
+        evgreen@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 00/10] drivers: qcom: rpmh-rsc: Cleanup / add lots of comments
+Date:   Tue,  7 Apr 2020 16:50:14 -0700
+Message-Id: <20200407235024.260460-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.26.0.292.g33ef6b2f38-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1586298267-4722-3-git-send-email-wcheng@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 07 Apr 15:24 PDT 2020, Wesley Cheng wrote:
+In order to review Maulik's latest "rpmh_flush for non OSI targets"
+patch series I've found myself trying to understand rpmh-rsc better.
+To make it easier for others to do this in the future, add a whole lot
+of comments / documentation.
 
-> From: Jack Pham <jackp@codeaurora.org>
-> 
-> Add device nodes for the USB3 controller, QMP SS PHY and
-> SNPS HS PHY.
-> 
+As part of this there are a very small number of functional changes.
+- We'll get a tiny performance boost by getting rid of the "cmd_cache"
+  which I believe was unnecessary.
+- We now assume someone else is in charge of exclusivity for
+  tcs_invalidate() and have removed a lock in there. As per the
+  comments in the patch, this isn't expected to cause problems.
+- tcs_is_free() no longer checks hardware state, but we think it
+  didn't need to.
 
-Thanks for the respin Wesley, and thanks for testing Vinod. Just spotted
-one little details below.
+These changes touch a lot of code in rpmh-rsc, so hopefully someone at
+Qualcomm can test them out better than I did (I don't have every last
+client of RPMH in my tree).
 
-> Signed-off-by: Jack Pham <jackp@codeaurora.org>
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Tested-by: Vinod Koul <vinod.koul@linaro.org>
-> ---
+I've tried to structure the patches so that simpler / less
+controversial patches are first. Those could certainly land on their
+own without later patches. Many of the patches could also be dropped
+and the others would still apply if they are controversial.  If you
+need help doing this then please yell.
 
-Please make a habit of documenting what changed since the previous
-version here, below the ---.
+These patches are based on Maulik's v16 series, AKA:
+https://lore.kernel.org/r/1586154741-8293-1-git-send-email-mkshah@codeaurora.org/
 
->  arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 21 ++++++++
->  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 92 +++++++++++++++++++++++++++++++++
->  2 files changed, 113 insertions(+)
-[..]
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-[..]
-> +		usb_1_hsphy: phy@88e2000 {
-> +			compatible = "qcom,usb-snps-hs-7nm-phy",
-> +							"qcom,sm8150-usb-hs-phy";
-[..]
-> +		usb_1: usb@a6f8800 {
-> +			compatible = "qcom,sdm845-dwc3", "qcom,dwc3";
+With all that, enjoy.
 
-The first cell here should be qcom,sm8150-dwc3. The Linux driver will
-"fall through" and match on the less specific "qcom,dwc3", but if we in
-the future realize that we have sm8150 specific behavior/quirks we can
-make the driver match on the more specific one to implement this.
+Changes in v3:
+- ("...are not for IRQ") is new for v3.
+- ("Don't double-check rpmh") replaces ("Warning if tcs_write...")
+- Add "TCS" in title (Maulik).
+- Adjusted comments for rpmh_rsc_write_ctrl_data().
+- Comments for new enable_tcs_irq() function.
+- Comments for new rpmh_rsc_cpu_pm_callback() function.
+- Extra blank line removed (Maulik).
+- IRQ registers aren't in TCS0 (Maulik).
+- Kill find_match moves from patch #9 to patch #5 (Maulik).
+- Mention in message that I also fixed up kernel-doc stuff.
+- Moved comments patch after ("Kill cmd_cache and find_match...").
+- One space after a period now (Maulik).
+- Plural of TCS fixed to TCSes following Maulik's example.
+- Re-added comment in tcs_write() about checking for same address.
+- Rebased atop v16 ('Invoke rpmh_flush...') series.
+- Replace ("...warn if state mismatch") w/ ("...just check tcs_in_use")
+- Replaced ("irqsave()...") + ("...never -EBUSY") w/ ("Caller handles...")
+- Rewrote commit message to adjust for patch order.
+- __tcs_set_trigger() comments adjusted now that it can set or unset.
+- get_tcs_for_msg() documents why it's safe to borrow the wake TCS.
+- get_tcs_for_msg() no longer returns -EAGAIN.
 
-And similarly the order of the compatibles in &usb_1_hsphy should be
-reversed as well.
+Changes in v2:
+- Comment tcs_is_free() new for v2; replaces old patch 6.
+- Document bug of tcs_write() not handling -EAGAIN.
+- Document get_tcs_for_msg() => -EAGAIN only for ACTIVE_ONLY.
+- Document locks for updating "tcs_in_use" more.
+- Document tcs_is_free() without drv->lock OK for tcs_invalidate().
+- Document that rpmh_rsc_send_data() can be an implicit invalidate.
+- Document two get_tcs_for_msg() issues if zero-active TCS.
+- Fixed documentation of "tcs" param in find_slots().
+- Got rid of useless "if (x) continue" at end of for loop.
+- More clear that active-only xfers can happen on wake TCS sometimes.
+- Now prose in comments instead of struct definitions.
+- Pretty ASCII art from Stephen.
+- Reword tcs_write() doc a bit.
 
-Regards,
-Bjorn
+Douglas Anderson (10):
+  drivers: qcom: rpmh-rsc: Clean code reading/writing TCS regs/cmds
+  drivers: qcom: rpmh-rsc: Document the register layout better
+  drivers: qcom: rpmh-rsc: Fold tcs_ctrl_write() into its single caller
+  drivers: qcom: rpmh-rsc: Remove get_tcs_of_type() abstraction
+  drivers: qcom: rpmh-rsc: Kill cmd_cache and find_match() with fire
+  drivers: qcom: rpmh-rsc: A lot of comments
+  drivers: qcom: rpmh-rsc: tcs_is_free() can just check tcs_in_use
+  drivers: qcom: rpmh-rsc: Don't double-check rpmh
+  drivers: qcom: rpmh-rsc: Caller handles tcs_invalidate() exclusivity
+  drivers: qcom: rpmh-rsc: read_tcs_reg()/write_tcs_reg() are not for
+    IRQ
+
+ drivers/soc/qcom/rpmh-internal.h |  66 +++--
+ drivers/soc/qcom/rpmh-rsc.c      | 465 +++++++++++++++++++++----------
+ drivers/soc/qcom/rpmh.c          |   5 +-
+ 3 files changed, 363 insertions(+), 173 deletions(-)
+
+-- 
+2.26.0.292.g33ef6b2f38-goog
+
