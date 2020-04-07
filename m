@@ -2,104 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2C221A0C3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 12:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BFC01A0C50
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 12:55:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728191AbgDGKrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 06:47:01 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37190 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728176AbgDGKrA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 06:47:00 -0400
-Received: by mail-pf1-f194.google.com with SMTP id u65so620210pfb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 03:47:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4YtfqkIGgXW1xusWEASGyU+2zFmL2OCHZ96I1LCBisM=;
-        b=jrywjZgHRoaeZuIgBosPgfb1HAm9Oz46S+PE45x5nVT0Exh7oWjltxfsQV1URfaL+M
-         e+2tSCbR3ygDI6yJb8Kg9CEAI67D/E4gbityQ7++hX2Qdo87mjWzX32bISfp5fudi3ed
-         BJj4TkA8EAxK0nD9SDpeAjJr+/81GEzVaqMqbHyAw9Xjh95gv5GvS2hKz/xPXhV+pxv1
-         w8aEvM4hd4aKFP/yXPK9HvYbXMl3ujdDK2Ea9D3yMqb3MfFfNNXHslIxNCnWmwjMuJgr
-         Kvzeb1XqwyUQChhL3NE8TbKJs60H51gbSmsSO9jU6LY3D7N/hoe88G0NKk8dj3e41a1j
-         w25A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4YtfqkIGgXW1xusWEASGyU+2zFmL2OCHZ96I1LCBisM=;
-        b=oKz1Xj1/PxEXNyDvToXrw1+sBi9STMlmxX2cGe3lMDH+9BRXkqn5mAuvTevjVDHyEX
-         5hOTe9bqP/N8FlVOWKuXSuLY4d/epki4S37ds/l8Pr7m5ql/08k8jEB9FJos7iqMrvkL
-         pMjBtrjUYVDTN4Zv99ksGphFP2AwM6CqaIpO/KiV7AJ7zUyoLVVlhwFIT4oegyU94i0v
-         dxG8PRltjCRj+I311ump8U2cN0hhEahFOfBHveDOGZ4oIPNmyDoTB6qWnuFyBROnw/DV
-         Dha+hYVZZbEngxodSY90JhYQbtBjq7YvmMCYWy60T1EH99BvKGkZIDB9mkEyQkfH+ZnE
-         Vg5g==
-X-Gm-Message-State: AGi0PuYX4pDUg6byKVsU99VCKCq1PM9faoHtiys/qkjf/sguhd6ghNRa
-        jyXWxmkP8AlKLLFpfx7c/n0V
-X-Google-Smtp-Source: APiQypKsO/kAkqhUjki9LOTVcMhhtoabGVkmmzOG391e8eHnzPHxXUkh2cilEXxWItXrajqpv3whvQ==
-X-Received: by 2002:a63:34c9:: with SMTP id b192mr101158pga.275.1586256419192;
-        Tue, 07 Apr 2020 03:46:59 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6e86:d03b:4d11:a99a:dd42:277d])
-        by smtp.gmail.com with ESMTPSA id fa16sm1252642pjb.35.2020.04.07.03.46.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Apr 2020 03:46:58 -0700 (PDT)
-Date:   Tue, 7 Apr 2020 16:16:51 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: core: Fix a NULL vs IS_ERR check in
- mhi_create_devices()
-Message-ID: <20200407104651.GE2442@Mani-XPS-13-9360>
-References: <20200407093133.GM68494@mwanda>
+        id S1728191AbgDGKzq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 06:55:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47712 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726562AbgDGKzq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Apr 2020 06:55:46 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B77652063A;
+        Tue,  7 Apr 2020 10:55:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1586256945;
+        bh=2l/vT4Iy6bAQT51YE8e9gRnPs3uL+EMeRJhWtbxLAzY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=D3wNVWTzel205i3JqikhF9KThBjcP8CzuSMSS70nQvmcBh2hJr/ytGlwpGBWxFkI7
+         Oe16Rc5btc8qctc0NhSUJo6552xtmcxoX+73Eb+yO6Sl4R/FpWd6qrBsMXBAI7Tngz
+         ncOrA7NSjao9QmXfU5GDGKGQlnfFt4y5UkV2s2AE=
+Date:   Tue, 7 Apr 2020 11:55:42 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org
+Subject: Re: [PATCH V3 7/8] spi: spi-qcom-qspi: Add interconnect support
+Message-ID: <20200407105542.GA5247@sirena.org.uk>
+References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
+ <1585652976-17481-8-git-send-email-akashast@codeaurora.org>
+ <20200331112352.GB4802@sirena.org.uk>
+ <f896d6e4-cc86-db46-a9b9-d7c98071b524@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="C7zPtVaVf+AK4Oqc"
 Content-Disposition: inline
-In-Reply-To: <20200407093133.GM68494@mwanda>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <f896d6e4-cc86-db46-a9b9-d7c98071b524@codeaurora.org>
+X-Cookie: Just to have it is enough.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 12:31:33PM +0300, Dan Carpenter wrote:
-> The mhi_alloc_device() function never returns NULL, it returns error
-> pointers.
-> 
-> Fixes: da1c4f856924 ("bus: mhi: core: Add support for creating and destroying MHI devices")
-> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+--C7zPtVaVf+AK4Oqc
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks Dan!
+On Tue, Apr 07, 2020 at 03:24:42PM +0530, Akash Asthana wrote:
+> On 3/31/2020 4:53 PM, Mark Brown wrote:
 
-Regards,
-Mani
+> > > +	ctrl->avg_bw_cpu =3D Bps_to_icc(speed_hz);
+> > > +	ctrl->peak_bw_cpu =3D Bps_to_icc(2 * speed_hz);
 
-> ---
->  drivers/bus/mhi/core/main.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index eb4256b81406..55928feea0c9 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -294,7 +294,7 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
->  		    !(mhi_chan->ee_mask & BIT(mhi_cntrl->ee)))
->  			continue;
->  		mhi_dev = mhi_alloc_device(mhi_cntrl);
-> -		if (!mhi_dev)
-> +		if (IS_ERR(mhi_dev))
->  			return;
->  
->  		mhi_dev->dev_type = MHI_DEVICE_XFER;
-> -- 
-> 2.25.1
-> 
+> > I thought you were going to factor this best guess handling of peak
+> > bandwidth out into the core?
+
+> I can centralize this for SPI, I2C and UART=A0 in Common driver(QUP wrapp=
+er)
+> but still for QSPI I have to keep this piece of code as is because It is =
+not
+> child of QUP wrapper(it doesn't use common code).
+
+Why not?
+
+> I am not sure whether I can move this " Assume peak_bw as twice of avg_bw=
+ if
+> nothing is mentioned explicitly" to ICC core because the factor of 2 is
+> chosen randomly by me.
+
+That's the whole point - if this is just a random number then we may as
+well at least be consistently random.
+
+--C7zPtVaVf+AK4Oqc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl6MXCkACgkQJNaLcl1U
+h9CEeQf/eaVfeJR9ovqStt0V0zniW7RMpZKG29cmxTS4fPcK6lCpnIJkuFHsCsw6
+OJBjpy9Uyb1eKn0tV79iCLQx428YeoOeJFhp7d/JwAOG+lIc4Jp3HIh3mJ+eRmrt
+i0HmoPaJygm8PSz/MsgvFQEsuwGhJJ/DKUpAjcYbaa08Y24VKDZgRcvaMk4Xp3x1
+bOTk96XEtzCXyQU5uQ9EBJL8PyRO1kAVp5xeUGVNiqT4TKEFd95YWrTrrQa/Z8/w
+UDBToWopSQZJjXIBB5xIbxyIdNB1yXAaOKdSjmja/cIqiNYn1pzog0nJBOwANsxj
+YRYqsbzHbmLNuoeCBVX9CoSBVOlpFw==
+=Rxn1
+-----END PGP SIGNATURE-----
+
+--C7zPtVaVf+AK4Oqc--
