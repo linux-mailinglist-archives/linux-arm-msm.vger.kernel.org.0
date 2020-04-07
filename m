@@ -2,132 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 965A81A0A50
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 11:41:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53F231A0A5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 11:46:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726562AbgDGJlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 05:41:25 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:29691 "EHLO
+        id S1726725AbgDGJqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 05:46:37 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:41421 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725883AbgDGJlY (ORCPT
+        by vger.kernel.org with ESMTP id S1726767AbgDGJqh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 05:41:24 -0400
+        Tue, 7 Apr 2020 05:46:37 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586252483; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
- Subject: Sender; bh=++wZMu6+upyOo/X2jGPlQvmS8PlK2mzO0cecdjSV+I8=; b=vqPBKaBwUBZZPyS2WEb3TNOHXm7K3jgMu1Gtm08PJv761+PMC0VQmKlf5N20PuSGGIKWKoHS
- jNMgp8jbj4z6QL2cyORf8AsJF58k6tUkn4R8PvZW52AonR3V4NiUkW+jb84aBX+MjjWJYEoE
- F1zrY9zO7tkodLl+9TwDlpLpgnA=
+ s=smtp; t=1586252796; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Ul3YhDd1rPscgFpO4CCJ18JVqPLmuQ5bBOiQ1R8owsk=;
+ b=V9j7NvrkmWPKQd6ECIQqP6Xxc/2RryYtFG1ePOcuHNZLYkwuTRldCtKTQ3Xl9YXSUCiD4S4I
+ G2/Bng8yf9b6aIPm78wqmYi/pdRSdsxBK5TFZKn2mokBSh5ZkEGgUVHy9DihsKow+nH6w6Z0
+ KIyvCj0lMHpcFY5hng3BMj0UaPc=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8c4aac.7fcfe2b38298-smtp-out-n03;
- Tue, 07 Apr 2020 09:41:00 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e8c4bfb.7fc0072c6490-smtp-out-n03;
+ Tue, 07 Apr 2020 09:46:35 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 11AB9C44791; Tue,  7 Apr 2020 09:40:58 +0000 (UTC)
+        id BB59AC44788; Tue,  7 Apr 2020 09:46:35 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.6] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 39832C43636;
-        Tue,  7 Apr 2020 09:40:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 39832C43636
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V3 6/8] tty: serial: qcom_geni_serial: Add interconnect
- support
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
- <1585652976-17481-7-git-send-email-akashast@codeaurora.org>
- <20200331193949.GK199755@google.com>
- <db7d1369-33aa-b0b3-ec44-2018ea382887@codeaurora.org>
-Message-ID: <694f2664-3ef2-b3a6-c447-c33086172b02@codeaurora.org>
-Date:   Tue, 7 Apr 2020 15:10:50 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 38318C433F2;
+        Tue,  7 Apr 2020 09:46:35 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <db7d1369-33aa-b0b3-ec44-2018ea382887@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 07 Apr 2020 15:16:35 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mike Leach <mike.leach@linaro.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC PATCH] coresight: dynamic-replicator: Fix handling of
+ multiple connections
+In-Reply-To: <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
+References: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
+Message-ID: <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+Hi Mike,
+
+Thanks for taking a look.
+
+On 2020-04-06 16:25, Mike Leach wrote:
+> Hi,
+> 
+> The programmable replicator hardware by design enables trace through
+> both ports on reset. (see 1, section 4.4, 9.11)  The replicator driver
+> overrides this functionality to disable output, until the Coresight
+> infrastructure chooses a path from source to sink.
+> Now given that the hardware design is such that we must be able to
+> allow trace to be sent to both ports, a generic patch to prevent this
+> does not seem appropriate here.
+> 
+> I think this needs further investigation - to determine why this
+> appears to be failing in this particular instance.
+> 
+
+Yes, this probably needs further investigation, but CPU hardlock stack
+trace doesnt help much. I could always trigger this hard lockup without
+this patch on SC7180 SoC and this is only seen when ETR is used as the 
+sink.
+
+The only difference I could see between non working case (on SC7180 [1]) 
+and
+the working case (on SDM845 [2]) is the path from source to sink.
+
+SC7180 source to sink path(Not working):
+----------------------------------------
+
+       etm0_out
+	 |
+   apss_funnel_in0
+          |
+  apss_merge_funnel_in
+          |
+      funnel1_in4
+	 |
+   merge_funnel_in1
+	 |
+    swao_funnel_in
+          |
+        etf_in
+	 |
+  swao_replicator_in
+          |
+   replicator_in
+	 |
+        etr_in
 
 
->>>     static const struct uart_ops qcom_geni_console_pops = {
->>> @@ -1304,6 +1315,17 @@ static int qcom_geni_serial_probe(struct 
->>> platform_device *pdev)
->>>               return -ENOMEM;
->>>       }
->>>   +    ret = geni_icc_get(&port->se, "qup-core", "qup-config", NULL);
->>> +    if (ret)
->>> +        return ret;
->>> +    /* Set the bus quota to a reasonable value */
->>> +    port->se.to_core.avg_bw = console ? GENI_DEFAULT_BW :
->>> +        Bps_to_icc(CORE_2X_50_MHZ);
->>> +    port->se.to_core.peak_bw = console ? GENI_DEFAULT_BW :
->>> +        Bps_to_icc(CORE_2X_100_MHZ);
->> I'm still unconvinced about the setting of the core bandwidth based on
->> whether the port is used as console or not. It could possibly break
->> consoles working at speeds > 115kbs and reserve more bandwidth than
->> necessary for ports with 'slow' devices.
->>
->> Why not scale the core bandwidth dynamically? You said earlier that 
->> there
->> is no clear/linear translation of port speed to bandwidth, but you could
->> use the same logic that is implicitly used here:
->>
->>     if (baudrate <= 115200) {
->>         avg_bw = GENI_DEFAULT_BW;
->>         peak_bw = GENI_DEFAULT_BW;
+SDM845 source to sink path(Working):
+------------------------------------
 
-I will make peak_bw = 2 * DEFAULT  to generalize this logic and will 
-factor it out in common driver.
-
-Anyway with  peak_bw = GENI_DEFAULT_BW or 2 * GENI_DEFAULT_BW core clock 
-is going to tick at 50 MHz.
-
-9600(19.2 MHz) < GENI_DEFAULT_BW, 2 * GENI_DEFAULT_BW < 2500(50 MHz).
+       etm0_out
+          |
+    apss_funnel_in0
+          |
+  apss_merge_funnel_in
+          |
+     funnel2_in5
+	 |
+   merge_funnel_in2
+          |
+       etf_in
+	 |
+   replicator_in
+	 |
+        etr_in
 
 
-Regards,
+[1] - https://lore.kernel.org/patchwork/patch/1212946/
+[2] - 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sdm845.dtsi?h=v5.6#n1910
 
-Akash
 
->>     } else {
->>         avg_bw = Bps_to_icc(CORE_2X_50_MHZ);
->>         peak_bw = Bps_to_icc(CORE_2X_100_MHZ);
->>     }
->>
->> This would be more robust, power efficient and future readers of the
->> code don't have to wonder "why is the console special?" when our
->> discussions on this will be long forgotten.
->
-> Okay, I will add this piece of code in set_termios call of the driver 
-> because I don't have baudrate information during probe. It covers the 
-> console case mentioned in probe function.
->
-> Regards,
->
-> Akash
->
+Thanks,
+Sai
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
