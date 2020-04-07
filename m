@@ -2,122 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 08B8E1A0AEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 12:19:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2C221A0C3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2020 12:47:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728143AbgDGKT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 06:19:57 -0400
-Received: from foss.arm.com ([217.140.110.172]:54460 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726399AbgDGKT5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 06:19:57 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CC2CC1FB;
-        Tue,  7 Apr 2020 03:19:56 -0700 (PDT)
-Received: from [10.37.12.154] (unknown [10.37.12.154])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 10FA63F73D;
-        Tue,  7 Apr 2020 03:19:54 -0700 (PDT)
-Subject: Re: [RFC PATCH] coresight: dynamic-replicator: Fix handling of
- multiple connections
-To:     saiprakash.ranjan@codeaurora.org, mike.leach@linaro.org
-Cc:     mathieu.poirier@linaro.org, leo.yan@linaro.org,
-        alexander.shishkin@linux.intel.com, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
- <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
- <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-Message-ID: <906d374d-a4d6-f2f2-6845-88b97a5ff7d9@arm.com>
-Date:   Tue, 7 Apr 2020 11:24:55 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1728191AbgDGKrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 06:47:01 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:37190 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728176AbgDGKrA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Apr 2020 06:47:00 -0400
+Received: by mail-pf1-f194.google.com with SMTP id u65so620210pfb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 03:47:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4YtfqkIGgXW1xusWEASGyU+2zFmL2OCHZ96I1LCBisM=;
+        b=jrywjZgHRoaeZuIgBosPgfb1HAm9Oz46S+PE45x5nVT0Exh7oWjltxfsQV1URfaL+M
+         e+2tSCbR3ygDI6yJb8Kg9CEAI67D/E4gbityQ7++hX2Qdo87mjWzX32bISfp5fudi3ed
+         BJj4TkA8EAxK0nD9SDpeAjJr+/81GEzVaqMqbHyAw9Xjh95gv5GvS2hKz/xPXhV+pxv1
+         w8aEvM4hd4aKFP/yXPK9HvYbXMl3ujdDK2Ea9D3yMqb3MfFfNNXHslIxNCnWmwjMuJgr
+         Kvzeb1XqwyUQChhL3NE8TbKJs60H51gbSmsSO9jU6LY3D7N/hoe88G0NKk8dj3e41a1j
+         w25A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4YtfqkIGgXW1xusWEASGyU+2zFmL2OCHZ96I1LCBisM=;
+        b=oKz1Xj1/PxEXNyDvToXrw1+sBi9STMlmxX2cGe3lMDH+9BRXkqn5mAuvTevjVDHyEX
+         5hOTe9bqP/N8FlVOWKuXSuLY4d/epki4S37ds/l8Pr7m5ql/08k8jEB9FJos7iqMrvkL
+         pMjBtrjUYVDTN4Zv99ksGphFP2AwM6CqaIpO/KiV7AJ7zUyoLVVlhwFIT4oegyU94i0v
+         dxG8PRltjCRj+I311ump8U2cN0hhEahFOfBHveDOGZ4oIPNmyDoTB6qWnuFyBROnw/DV
+         Dha+hYVZZbEngxodSY90JhYQbtBjq7YvmMCYWy60T1EH99BvKGkZIDB9mkEyQkfH+ZnE
+         Vg5g==
+X-Gm-Message-State: AGi0PuYX4pDUg6byKVsU99VCKCq1PM9faoHtiys/qkjf/sguhd6ghNRa
+        jyXWxmkP8AlKLLFpfx7c/n0V
+X-Google-Smtp-Source: APiQypKsO/kAkqhUjki9LOTVcMhhtoabGVkmmzOG391e8eHnzPHxXUkh2cilEXxWItXrajqpv3whvQ==
+X-Received: by 2002:a63:34c9:: with SMTP id b192mr101158pga.275.1586256419192;
+        Tue, 07 Apr 2020 03:46:59 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6e86:d03b:4d11:a99a:dd42:277d])
+        by smtp.gmail.com with ESMTPSA id fa16sm1252642pjb.35.2020.04.07.03.46.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 Apr 2020 03:46:58 -0700 (PDT)
+Date:   Tue, 7 Apr 2020 16:16:51 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: core: Fix a NULL vs IS_ERR check in
+ mhi_create_devices()
+Message-ID: <20200407104651.GE2442@Mani-XPS-13-9360>
+References: <20200407093133.GM68494@mwanda>
 MIME-Version: 1.0
-In-Reply-To: <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200407093133.GM68494@mwanda>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/07/2020 10:46 AM, Sai Prakash Ranjan wrote:
-> Hi Mike,
+On Tue, Apr 07, 2020 at 12:31:33PM +0300, Dan Carpenter wrote:
+> The mhi_alloc_device() function never returns NULL, it returns error
+> pointers.
 > 
-> Thanks for taking a look.
+> Fixes: da1c4f856924 ("bus: mhi: core: Add support for creating and destroying MHI devices")
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks Dan!
+
+Regards,
+Mani
+
+> ---
+>  drivers/bus/mhi/core/main.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> On 2020-04-06 16:25, Mike Leach wrote:
->> Hi,
->>
->> The programmable replicator hardware by design enables trace through
->> both ports on reset. (see 1, section 4.4, 9.11)  The replicator driver
->> overrides this functionality to disable output, until the Coresight
->> infrastructure chooses a path from source to sink.
->> Now given that the hardware design is such that we must be able to
->> allow trace to be sent to both ports, a generic patch to prevent this
->> does not seem appropriate here.
->>
->> I think this needs further investigation - to determine why this
->> appears to be failing in this particular instance.
->>
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index eb4256b81406..55928feea0c9 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -294,7 +294,7 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
+>  		    !(mhi_chan->ee_mask & BIT(mhi_cntrl->ee)))
+>  			continue;
+>  		mhi_dev = mhi_alloc_device(mhi_cntrl);
+> -		if (!mhi_dev)
+> +		if (IS_ERR(mhi_dev))
+>  			return;
+>  
+>  		mhi_dev->dev_type = MHI_DEVICE_XFER;
+> -- 
+> 2.25.1
 > 
-> Yes, this probably needs further investigation, but CPU hardlock stack
-> trace doesnt help much. I could always trigger this hard lockup without
-> this patch on SC7180 SoC and this is only seen when ETR is used as the 
-> sink.
-> 
-> The only difference I could see between non working case (on SC7180 [1]) 
-> and
-> the working case (on SDM845 [2]) is the path from source to sink.
-
-
-> 
-> SC7180 source to sink path(Not working):
-> ----------------------------------------
-> 
->        etm0_out
->       |
->    apss_funnel_in0
->           |
->   apss_merge_funnel_in
->           |
->       funnel1_in4
->       |
->    merge_funnel_in1
->       |
->     swao_funnel_in
->           |
->         etf_in
->       |
->   swao_replicator_in
->           |
->    replicator_in
->       |
->         etr_in
-
-
-There seems to be two replicators back to back here. What is connected
-to the other output of both of them ? Are there any TPIUs ? What happens
-if you choose a sink on the other end of "swao_replicator" (ETB ?)
-
-After boot, what do the idfilter registers read for both the replicators ?
-
-
-I believe we need to properly assign the TRACE_IDs for tracing sessions,
-(rather than static ids) in a way such that we could filter them and use
-the multiple sinks in parallel for separate trace sessions and this is
-not simple (involves kernel driver changes and the perf tool to be able
-to decode the trace id changes too).
-
-
-So for the moment, we need to :
-
-1) Disallow turning the replicator ON, when it is already turned ON
-2) Do what your patch does. i.e, disable the other end while one end
-    is turned on.
-
-Thoughts ?
-
-Kind regards
-Suzuki
