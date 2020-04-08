@@ -2,107 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E84161A2705
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 18:19:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16D2C1A27BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 19:09:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728200AbgDHQTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 12:19:20 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:12187 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728294AbgDHQTR (ORCPT
+        id S1730508AbgDHRJk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 13:09:40 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38375 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbgDHRJk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 12:19:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586362756; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=9qm8hDJTcDfjcVlKai6quTHvfy91QJtAPqo8V+4TU8w=; b=tzaaxZmQvEVuOq8OETHSWP9OeP2jAYzrAgyVAd+MIx0yaskocC59fWr+6A3T1ClJUeTjkGZe
- g5Zk8zhyTMevpBOJKKMwx/TT+leDMxHJDS+TzuqRe1lycLw9GWKl1WIYpfsf++CVXx04Yjsu
- yi3GvWTi/sRZte2MjeOGGRDw0Qw=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8df97f.7fd356b94458-smtp-out-n02;
- Wed, 08 Apr 2020 16:19:11 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 65F9DC433BA; Wed,  8 Apr 2020 16:19:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9358AC433D2;
-        Wed,  8 Apr 2020 16:19:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9358AC433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v2 2/5] bus: mhi: core: Make sure to powerdown if
- mhi_sync_power_up fails
-To:     hemantk@codeaurora.org
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-References: <1586278230-29565-1-git-send-email-jhugo@codeaurora.org>
- <1586278230-29565-3-git-send-email-jhugo@codeaurora.org>
- <7249d9608f41e4528c87c2b1c464d615@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <88f9b443-4a1f-918b-297c-203909d8e219@codeaurora.org>
-Date:   Wed, 8 Apr 2020 10:19:09 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        Wed, 8 Apr 2020 13:09:40 -0400
+Received: by mail-pf1-f195.google.com with SMTP id c21so2691936pfo.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Apr 2020 10:09:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=AHziH+dvb20W54djSeStIqMRFUtsTKUD7rAxti8gSRo=;
+        b=UfCqr7nW9oVwE/+3fDL2f/0drVAie/Gdd49JNzuAxmorHNRLKlrYPhlG11rr3bgejy
+         xkUe3E27ZRhPnu1zmh6s8BOyTOxFWxFtBYB6VVdIzkwz1k1M39weBC9nYeM17DDXtam8
+         cup6jFVztqp+DixZ5tXPe13GR4v5OaprUy27s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=AHziH+dvb20W54djSeStIqMRFUtsTKUD7rAxti8gSRo=;
+        b=LCurfgMTEPWRiwRDouGpCNw1vXxJYoUC0nhIn0D5wXIJinlWe9iMEG3ZNjwxbiKeua
+         F9YvPrehes7hCK1XCcqV9l7fxF9W3Q6tVPebYFv2NTbcK2Qv2XA4zYavJzoxVjU0vQ9q
+         leXP21a/7ixDaVV8Rf7e/zzUeYvoa+vHdLmOihYwZCAXp7HlpFN4DaCzI/jgE7/q/PHs
+         XUL8Xw9Oc+jP6nL8dMltB/JZBkd4YfWfBoSyaTsZDVGDGOw7gysOXnVZjwZw3z2w55Wy
+         9jAI0pLFwtwi2IhWcEJZjSw7MM6iYUBkf0E2NIlGXEqr3Z/Ef7CyB9hZ+UQq9AD/bsUN
+         wuIw==
+X-Gm-Message-State: AGi0PuaREsnbpVNVS9EXIXsE5NF6aYuO3QThXhhSagj5veUa7/3BO/bI
+        Itr+QiwUodNkITU9BH1seNCgTg==
+X-Google-Smtp-Source: APiQypKGNnlb36etT59dCY18zVMEKPnBzgK1wnTk5VhhNMgMuyWQeel0X5RkoYsKiR6opA9JBVYRoA==
+X-Received: by 2002:a63:1f14:: with SMTP id f20mr7742513pgf.411.1586365778377;
+        Wed, 08 Apr 2020 10:09:38 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id s10sm2317753pfd.124.2020.04.08.10.09.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Apr 2020 10:09:37 -0700 (PDT)
+Date:   Wed, 8 Apr 2020 10:09:36 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V3 3/8] soc: qcom-geni-se: Add interconnect support to
+ fix earlycon crash
+Message-ID: <20200408170936.GR199755@google.com>
+References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
+ <1585652976-17481-4-git-send-email-akashast@codeaurora.org>
+ <20200331182457.GH199755@google.com>
+ <7a4e13bf-a4b7-d75b-df42-bf5e4125258a@codeaurora.org>
+ <20200407172604.GQ199755@google.com>
+ <9e91aaa8-88f0-656f-b9f5-7e64014bad7a@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <7249d9608f41e4528c87c2b1c464d615@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <9e91aaa8-88f0-656f-b9f5-7e64014bad7a@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/7/2020 7:34 PM, hemantk@codeaurora.org wrote:
-> On 2020-04-07 09:50, Jeffrey Hugo wrote:
->> Powerdown is necessary if mhi_sync_power_up fails due to a timeout, to
->> clean up the resources.  Otherwise a BUG could be triggered when
->> attempting to clean up MSIs because the IRQ is still active from a
->> request_irq().
->>
->> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/pm.c | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index 3285c9e..fbffc6b 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -922,7 +922,11 @@ int mhi_sync_power_up(struct mhi_controller 
->> *mhi_cntrl)
->>                 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
->>                 msecs_to_jiffies(mhi_cntrl->timeout_ms));
->>
->> -    return (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -EIO;
->> +    ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -EIO;
+On Wed, Apr 08, 2020 at 05:08:01PM +0530, Akash Asthana wrote:
+> Hi Matthias,
 > 
-> Does it make sense to return -ETIMEDOUT instead of -EIO if device fails 
-> to move to mission mode?
-> Controller can use this info as mhi_async_power_up() would not return 
-> -ETIMEDOUT.
-
-It seems sensible to change this to ETIMEDOUT.  I'll queue that up for V3.
-
+> On 4/7/2020 10:56 PM, Matthias Kaehlcke wrote:
+> > Hi Akash,
+> > 
+> > On Tue, Apr 07, 2020 at 05:04:17PM +0530, Akash Asthana wrote:
+> > > Hi Matthias,
+> > > 
+> > > 
+> > > > >    static int geni_se_probe(struct platform_device *pdev)
+> > > > >    {
+> > > > >    	struct device *dev = &pdev->dev;
+> > > > > @@ -845,6 +868,34 @@ static int geni_se_probe(struct platform_device *pdev)
+> > > > >    		}
+> > > > >    	}
+> > > > > +#ifdef CONFIG_SERIAL_EARLYCON
+> > > > > +	wrapper->to_core.path = devm_of_icc_get(dev, "qup-core");
+> > > > > +	if (IS_ERR(wrapper->to_core.path))
+> > > > > +		return PTR_ERR(wrapper->to_core.path);
+> > > > > +	/*
+> > > > > +	 * Put minmal BW request on core clocks on behalf of early console.
+> > > > > +	 * The vote will be removed earlycon exit function.
+> > > > > +	 *
+> > > > > +	 * Note: We are putting vote on each QUP wrapper instead only to which
+> > > > > +	 * earlycon is connected because QUP core clock of different wrapper
+> > > > > +	 * share same voltage domain. If core1 is put to 0, then core2 will
+> > > > > +	 * also run at 0, if not voted. Default ICC vote will be removed ASA
+> > > > > +	 * we touch any of the core clock.
+> > > > > +	 * core1 = core2 = max(core1, core2)
+> > > > > +	 */
+> > > > I don't really understand this part. According to the comment if we vote
+> > > > (let's say) for core2 but not for core1 then:
+> > > > 
+> > > > core1: 0
+> > > > core2: GENI_DEFAULT_BW
+> > > > 
+> > > > core1 = core2 = max(core1, core2)
+> > > >     or
+> > > > core1 = core2 = max(0, GENI_DEFAULT_BW)
+> > > > 
+> > > > hence
+> > > > 
+> > > > core1 = core2 = GENI_DEFAULT_BW
+> > > > 
+> > > > What am I missing, why is it necessary to vote for both/all?
+> > > say core1 is for earlycon usecase
+> > > 
+> > > There is common switch to control both the QUP core clock. I guess most
+> > > appropriate description would be     switch = max(vote_on_core1,
+> > > vote_on_core2) + default_vote.
+> > > 
+> > > During early bootup, vote_on_core1 = 0, vote_on_core2 = 0;
+> > > 
+> > > As earlycon was working even without voting it's core need because there was
+> > > some default vote present on the core switch by ICC during bootup.
+> > > 
+> > > So if any child(say SPI) of other QUP wrapper resumed and suspended before
+> > > earlycon wrapper comes up. This will make core clock to run at zero and will
+> > > cause NOC issue because vote_on_core1 = 0, vote_on_core2 = 0; and it seems
+> > > default votes from core switch is removed  ASA it's voted on any core.
+> > Thanks for the explication!
+> > 
+> > You are probably totally right, but for some reason my brain still resists
+> > to get it ...
+> > 
+> > With the above my current interpretation is (assuming earlycon only votes on
+> > core1):
+> > 
+> >                        core1   core2  default  switch
+> > early boot              0       0        1       1
+> > SPI resume (core2)      0       1        0       1
+> > SPI suspend (core2)     0       0        0       0
+> > earlycon init 		1	0        0       1
+> > 
+> > 
+> > What is wrong in the above table?
+> > 
+> > Thanks for bearing with me :)
+> NP :)
 > 
->> +    if (ret)
->> +        mhi_power_down(mhi_cntrl, false);
->> +
->> +    return ret;
->>  }
->>  EXPORT_SYMBOL(mhi_sync_power_up);
+> I guess you meant QUP WRAPPER 1 probe by "earlycon init".
+> 
+>                       core1   core2  default  switch	Time
+> early boot              0       0        1       1	0s
+> SPI resume (core2)      0       1        0       1	3.2s
+> SPI suspend (core2)     0       0        0       0	3.3s
+> QUP WRAPPER 1(probe)	1	0        0       1	5s (say)
+> 
+> So switch is at 0 in time interval [3.3, 5] that will make core clock to run at 0.
+> If we use earlycon during this time interval it will reset the board.
+> 
+> Did above answered the query?
 
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+now it finally made 'click', thanks :)
