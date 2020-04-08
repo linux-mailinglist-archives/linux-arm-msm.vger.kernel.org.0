@@ -2,60 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 20CF51A18DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 01:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 092EB1A1989
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 03:29:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726648AbgDGXvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 19:51:09 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45762 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726636AbgDGXvI (ORCPT
+        id S1726416AbgDHB3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 21:29:12 -0400
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:33901 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726407AbgDHB3M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 19:51:08 -0400
-Received: by mail-pf1-f194.google.com with SMTP id r14so1534718pfl.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 16:51:07 -0700 (PDT)
+        Tue, 7 Apr 2020 21:29:12 -0400
+Received: by mail-pj1-f66.google.com with SMTP id q16so1642275pje.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 18:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KvEJzMH6Rxi8JFDstC273KQ0bdGB37YijaATrtjA+Oo=;
-        b=OT/L+d2sOkBze7u7kCa/ul9nbt7FBPk4UFbvoXf7evUw860Zm7kdOTvn+/o1kPqp4C
-         1Y0MaFQ01GRIGs3AAZfSuNfnwO66ph7dkS6vDmTcUTZl5i6jIw+1+KFcO9KXV1wjqlrZ
-         PPO7T+JbzB1wgA8vitRJDvxObqOOuYYVZDiYo=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gUT1UBZ/cLdcgRruxv8fykLkslu1hy1Oai+1Js7WnQs=;
+        b=bA7POAMDBBVIblwxUFl2kEbwTY3Tw7ahb5M/3q7FRqpXxgzBjyE8ONfnWPNoIIeODE
+         eIfZcygsSA8vidjqzP8s59euw270sdyai/R3Jh5gME3xD/CAFkcQl8iQdnJx9OkPP8an
+         7yRiifnSgZPxPd6MJU3VRrn2CbANyBThV5xRjEUAOmeVCqXBG6wcXz59ZgPy2Y87pbz+
+         dcQt1a2tpIvRiZ5Uia0VnSakP7Z5GFJxriDWP+CbCJLccbjA6hha8UIPcpvygY0nZw98
+         aw4wt/8NQu7E3aMZRdhM6zp4L2InuyjhbRb5zQP+N4NpHBuhCrejd7i5wcU6OEmHjBCU
+         WOoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KvEJzMH6Rxi8JFDstC273KQ0bdGB37YijaATrtjA+Oo=;
-        b=ol5mtBnXZOz9LjDnQj2MHSwT2EACBH6kSLAV52G3VXokzSB/K0avTzec/GZTNUKGSA
-         4D1v07FYjwUjyRGJGSJW5pfIE+WLkDhsCwuH5hdtNqJDEJWOmqvV6Adobvqw+EsnhoTf
-         N1qbYDu5ar7r4RheaVqq5ttzRsRIOLYegT39x0nJX3DFD9Vr87eaoi58TJBoxTZrWDGu
-         DiR/EVP8Ee0JHoTCe3LSsNPu9xD9RDH1kypRDIGa3rsxTsna3izJHn3edtmECCMrNAj+
-         TvKCHJU8vyKD09BS59YjMUWv3PbsJmUIerWXavG5xAYuByCYaOByNjztzYutkVn5FZIb
-         QEcA==
-X-Gm-Message-State: AGi0Pua0Wa7jgUMMu1giF48B/kgm/29KPhFV/iCn7GM9Tma1PKwzc10n
-        py4nboaSNNRamcEehcoCJfBfRg==
-X-Google-Smtp-Source: APiQypJMr4oUHM0Ta88xT7+6ntyKOqf33TdlrkpIUfBkSR/NP5bMYzT+8z/Iix1PO7MN42gvKmsSlg==
-X-Received: by 2002:aa7:8d90:: with SMTP id i16mr3456900pfr.126.1586303467414;
-        Tue, 07 Apr 2020 16:51:07 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id s27sm14467165pgn.90.2020.04.07.16.51.06
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gUT1UBZ/cLdcgRruxv8fykLkslu1hy1Oai+1Js7WnQs=;
+        b=D/LzxlJb8f8uUUbdZ3ldNRn9i71ZLFzqz4TJRuQZfcjZFGbdteUHXGrxONVp/EKemN
+         ovZUxP47pp1naiCsCn6aQAqg4MqeNjOTj629dP6ygvVNWiv//EqVT9kaLse4Eup8HeCG
+         rh2PgQLJvW61M222iDTUBDwE2oeqFQGke7g5kFei62XO/PmErQSPso8SBSAiYM9SXmkv
+         /qNaKmePwgWCCG5xNXxup7Szo0jdjNIE2A6+/fnjDfoFHicoGzafOk3bRSwzMcrPQCwa
+         vW8B5f1a5wVN4oIKY6GFVGApU8K6rl7U4G61u+2rcWyvxhD08pF7KQ2iUtYgtQqxvWNd
+         Lfmw==
+X-Gm-Message-State: AGi0PuZOJouHqTsGX6mUmL5C/qUZhaban4OXyIyyMK0ZSZp/yE0oJUgi
+        IQuUXmU7TBAZBjAWOX1iPC+u6g==
+X-Google-Smtp-Source: APiQypJLGWK8bVJyTIV0UUYPYJaONdblV0C0myaNUlIYg3H2zGorOc4XQDGwfLNAIVYK6yv0Yhsdww==
+X-Received: by 2002:a17:90a:1b42:: with SMTP id q60mr2461669pjq.84.1586309351560;
+        Tue, 07 Apr 2020 18:29:11 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id u129sm15007868pfb.101.2020.04.07.18.29.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2020 16:51:06 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Cc:     mka@chromium.org, Lina Iyer <ilina@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, swboyd@chromium.org,
-        evgreen@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 10/10] drivers: qcom: rpmh-rsc: read_tcs_reg()/write_tcs_reg() are not for IRQ
-Date:   Tue,  7 Apr 2020 16:50:24 -0700
-Message-Id: <20200407164915.v3.10.I2adf93809c692d0b673e1a86ea97c45644aa8d97@changeid>
-X-Mailer: git-send-email 2.26.0.292.g33ef6b2f38-goog
-In-Reply-To: <20200407235024.260460-1-dianders@chromium.org>
-References: <20200407235024.260460-1-dianders@chromium.org>
+        Tue, 07 Apr 2020 18:29:10 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] phy: qualcomm: usb-hs-28nm: Prepare clocks in init
+Date:   Tue,  7 Apr 2020 18:28:54 -0700
+Message-Id: <20200408012854.3070187-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -63,70 +61,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The RSC_DRV_IRQ_ENABLE, RSC_DRV_IRQ_STATUS, and RSC_DRV_IRQ_CLEAR
-registers are not part of TCS 0.  Let's not pretend that they are by
-using read_tcs_reg() and write_tcs_reg() and passing a bogus tcs_id of
-0.  We could introduce a new wrapper for these registers but it
-wouldn't buy us much.  Let's just read/write directly.
+The AHB clock must be on for qcom_snps_hsphy_init() to be able to write
+the initialization sequence to the hardware, so move the clock
+enablement to phy init and exit.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Fixes: 67b27dbeac4d ("phy: qualcomm: Add Synopsys 28nm Hi-Speed USB PHY driver")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
+ drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c | 32 ++++++++++++++-------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
-Changes in v3:
-- ("...are not for IRQ") is new for v3.
-
-Changes in v2: None
-
- drivers/soc/qcom/rpmh-rsc.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index a3b015196f15..31a998e6f2e9 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -363,12 +363,12 @@ static void enable_tcs_irq(struct rsc_drv *drv, int tcs_id, bool enable)
- {
- 	u32 data;
+diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c b/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
+index d998e65c89c8..a52a9bf13b75 100644
+--- a/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
++++ b/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
+@@ -160,18 +160,11 @@ static int qcom_snps_hsphy_power_on(struct phy *phy)
+ 	ret = regulator_bulk_enable(VREG_NUM, priv->vregs);
+ 	if (ret)
+ 		return ret;
+-	ret = clk_bulk_prepare_enable(priv->num_clks, priv->clks);
+-	if (ret)
+-		goto err_disable_regulator;
++
+ 	qcom_snps_hsphy_disable_hv_interrupts(priv);
+ 	qcom_snps_hsphy_exit_retention(priv);
  
--	data = read_tcs_reg(drv, RSC_DRV_IRQ_ENABLE, 0);
-+	data = readl_relaxed(drv->tcs_base + RSC_DRV_IRQ_ENABLE);
- 	if (enable)
- 		data |= BIT(tcs_id);
- 	else
- 		data &= ~BIT(tcs_id);
--	write_tcs_reg(drv, RSC_DRV_IRQ_ENABLE, 0, data);
-+	writel_relaxed(data, drv->tcs_base + RSC_DRV_IRQ_ENABLE);
+ 	return 0;
+-
+-err_disable_regulator:
+-	regulator_bulk_disable(VREG_NUM, priv->vregs);
+-
+-	return ret;
  }
  
- /**
-@@ -389,7 +389,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
- 	const struct tcs_request *req;
- 	struct tcs_cmd *cmd;
+ static int qcom_snps_hsphy_power_off(struct phy *phy)
+@@ -180,7 +173,6 @@ static int qcom_snps_hsphy_power_off(struct phy *phy)
  
--	irq_status = read_tcs_reg(drv, RSC_DRV_IRQ_STATUS, 0);
-+	irq_status = readl_relaxed(drv->tcs_base + RSC_DRV_IRQ_STATUS);
+ 	qcom_snps_hsphy_enter_retention(priv);
+ 	qcom_snps_hsphy_enable_hv_interrupts(priv);
+-	clk_bulk_disable_unprepare(priv->num_clks, priv->clks);
+ 	regulator_bulk_disable(VREG_NUM, priv->vregs);
  
- 	for_each_set_bit(i, &irq_status, BITS_PER_LONG) {
- 		req = get_req_from_tcs(drv, i);
-@@ -426,7 +426,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
- 		/* Reclaim the TCS */
- 		write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i, 0);
- 		write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, i, 0);
--		write_tcs_reg(drv, RSC_DRV_IRQ_CLEAR, 0, BIT(i));
-+		writel_relaxed(BIT(i), drv->tcs_base + RSC_DRV_IRQ_CLEAR);
- 		spin_lock(&drv->lock);
- 		clear_bit(i, drv->tcs_in_use);
- 		/*
-@@ -969,7 +969,8 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	}
+ 	return 0;
+@@ -266,21 +258,39 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 	struct hsphy_priv *priv = phy_get_drvdata(phy);
+ 	int ret;
  
- 	/* Enable the active TCS to send requests immediately */
--	write_tcs_reg(drv, RSC_DRV_IRQ_ENABLE, 0, drv->tcs[ACTIVE_TCS].mask);
-+	writel_relaxed(drv->tcs[ACTIVE_TCS].mask,
-+		       drv->tcs_base + RSC_DRV_IRQ_ENABLE);
+-	ret = qcom_snps_hsphy_reset(priv);
++	ret = clk_bulk_prepare_enable(priv->num_clks, priv->clks);
+ 	if (ret)
+ 		return ret;
  
- 	spin_lock_init(&drv->client.cache_lock);
- 	INIT_LIST_HEAD(&drv->client.cache);
++	ret = qcom_snps_hsphy_reset(priv);
++	if (ret)
++		goto disable_clocks;
++
+ 	qcom_snps_hsphy_init_sequence(priv);
+ 
+ 	ret = qcom_snps_hsphy_por_reset(priv);
+ 	if (ret)
+-		return ret;
++		goto disable_clocks;
++
++	return 0;
++
++disable_clocks:
++	clk_bulk_disable_unprepare(priv->num_clks, priv->clks);
++	return ret;
++}
++
++static int qcom_snps_hsphy_exit(struct phy *phy)
++{
++	struct hsphy_priv *priv = phy_get_drvdata(phy);
++
++	clk_bulk_disable_unprepare(priv->num_clks, priv->clks);
+ 
+ 	return 0;
+ }
+ 
+ static const struct phy_ops qcom_snps_hsphy_ops = {
+ 	.init = qcom_snps_hsphy_init,
++	.exit = qcom_snps_hsphy_exit,
+ 	.power_on = qcom_snps_hsphy_power_on,
+ 	.power_off = qcom_snps_hsphy_power_off,
+ 	.set_mode = qcom_snps_hsphy_set_mode,
 -- 
-2.26.0.292.g33ef6b2f38-goog
+2.24.0
 
