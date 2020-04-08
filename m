@@ -2,94 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 61FB11A1995
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 03:34:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E11931A19B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 03:45:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726464AbgDHBeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Apr 2020 21:34:19 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:60178 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726453AbgDHBeT (ORCPT
+        id S1726481AbgDHBpD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Apr 2020 21:45:03 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33676 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726417AbgDHBpD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Apr 2020 21:34:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586309659; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=XoOYi2TV+UeP2kOoRrpUAk9Ku3EzZ9BU0fhtMfFP28s=;
- b=Pvpf7CZVEMApbiorlvaY+4vDU7H11aMv5kzGWZoi54RqlQH8ndO6FXfsEmeyH4tNQBo5ENc1
- Nr9kfpsM6j7tYVgKa89kHBif2+NfR6fAENTJ3yB9tu+FSPhv+cNCFERzP7rdq/JN8ayIcygs
- yNxhJhb/D0hHEo1GXS6ht9Jvxoc=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8d2a0f.7f5cd5569340-smtp-out-n02;
- Wed, 08 Apr 2020 01:34:07 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5D7ACC433D2; Wed,  8 Apr 2020 01:34:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3AD1C433F2;
-        Wed,  8 Apr 2020 01:34:05 +0000 (UTC)
+        Tue, 7 Apr 2020 21:45:03 -0400
+Received: by mail-pg1-f194.google.com with SMTP id d17so2617840pgo.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2020 18:45:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mCRX+u0EzkouFlVj2I8+tMZ9dUXOFhMUWExUwyGm5Rg=;
+        b=p03uQJ7ud8vwzag3CvCsja1s50qF/SREZ9xucJouNwLDaRVbhNPRB0pXqqFbkUpqjx
+         rT54kt2OIhSYy5DIj3LnCVl7qBw92oH9FJR1qqsnzSx/FPK9aoCVFoZOZk7nJPNhJ4WP
+         W7AOMORt78aqK7s9YKYT8wjBChTKV6x8emy5JtV3XBRe1Us5StqL956d8667Gw4mfhdt
+         lcNOw7RsLpHvVqrS9H3bCfQntZwMtOjF2Duiy1SntiynuTyIxM2UWeMQlCrJZ0W+vqsC
+         jYVKofj38UNQrbWjz4vsfYFYL64TPTK/RzjctHu+DzkuZ5tUuxkL705uNY/NWJ0UycPT
+         FdsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mCRX+u0EzkouFlVj2I8+tMZ9dUXOFhMUWExUwyGm5Rg=;
+        b=oIVlUnyxqEuANuLkolgXjtPDltoyE3FnSPawbPfMRIbLOG1xyO/9mgFW5lfKh1MVm9
+         WXWEOXeUWL4xUi0lyFC7GW6r+br+J3rIA9y7KXYFZK2B009IEhqGmy+cYMEKtJaazl+A
+         NZ89bYkaNijsIFQvG+6qZYCJdvx0fo2ZxhZs9uxgBRAjAq/vO/UkZS7z5J/plIU76csV
+         DngW2lnCaDynhl3qcvf2J1TaN1LRg0OdawgCmtONObPo1HSF0sxkBHsn6H9Is3L5o7RO
+         uFd+Aw9jORIRJOkb7auvUCJodeNFrpO21nGWqGp2EYDwymvmRS5radx1AxiVYqKRVBPr
+         d/GA==
+X-Gm-Message-State: AGi0PuYzqonrhNjri8h57ljlREXhf/gAjHVOqIdfV+f7p2pRadctx3qS
+        WnDyfXnq3INsbXEaoE3ej5komg==
+X-Google-Smtp-Source: APiQypJHbdsjUjdO3GZGBGPjNOIcwZNKSGxUxtc39Bq+YhExFx7WLZMfvsazzbjAusJ/x+6bnuZ29A==
+X-Received: by 2002:a63:1716:: with SMTP id x22mr4646155pgl.89.1586310300198;
+        Tue, 07 Apr 2020 18:45:00 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id iq23sm2735889pjb.18.2020.04.07.18.44.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2020 18:44:59 -0700 (PDT)
+Date:   Tue, 7 Apr 2020 18:45:05 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jackp@codeaurora.org, robh@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: qcs404-evb: Enable USB controllers
+Message-ID: <20200408014505.GB576963@builder.lan>
+References: <20200311191517.8221-1-bryan.odonoghue@linaro.org>
+ <20200311191517.8221-7-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 07 Apr 2020 18:34:05 -0700
-From:   hemantk@codeaurora.org
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] bus: mhi: core: Make sure to powerdown if
- mhi_sync_power_up fails
-In-Reply-To: <1586278230-29565-3-git-send-email-jhugo@codeaurora.org>
-References: <1586278230-29565-1-git-send-email-jhugo@codeaurora.org>
- <1586278230-29565-3-git-send-email-jhugo@codeaurora.org>
-Message-ID: <7249d9608f41e4528c87c2b1c464d615@codeaurora.org>
-X-Sender: hemantk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200311191517.8221-7-bryan.odonoghue@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-04-07 09:50, Jeffrey Hugo wrote:
-> Powerdown is necessary if mhi_sync_power_up fails due to a timeout, to
-> clean up the resources.  Otherwise a BUG could be triggered when
-> attempting to clean up MSIs because the IRQ is still active from a
-> request_irq().
+On Wed 11 Mar 12:15 PDT 2020, Bryan O'Donoghue wrote:
+
+> This patch enables the primary and secondary USB controllers on the
+> qcs404-evb.
 > 
-> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> Primary:
+> The primary USB controller has
+> 
+> - One USB3 SS PHY using gpio-usb-conn
+> - One USB2 HS PHY in device mode only and no connector driver
+>   associated.
+> 
+> Secondary:
+> The second DWC3 controller which has one USB Hi-Speed PHY attached to it.
+> 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+Hi Bryan,
+
+I dropped the role switching for now, did some testing and applied the
+series for v5.8. Let's follow up with a patch adding the role switching
+once the dwc3 discussion is sorted out.
+
+Thanks,
+Bjorn
+
 > ---
->  drivers/bus/mhi/core/pm.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 40 ++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index 3285c9e..fbffc6b 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -922,7 +922,11 @@ int mhi_sync_power_up(struct mhi_controller 
-> *mhi_cntrl)
->  			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
->  			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
-> 
-> -	return (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -EIO;
-> +	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -EIO;
-
-Does it make sense to return -ETIMEDOUT instead of -EIO if device fails 
-to move to mission mode?
-Controller can use this info as mhi_async_power_up() would not return 
--ETIMEDOUT.
-
-> +	if (ret)
-> +		mhi_power_down(mhi_cntrl, false);
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> index 44c7dda1e1fc..4dc3f45282fe 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+> @@ -319,6 +319,46 @@ pinconf {
+>  	};
+>  };
+>  
+> +&usb2 {
+> +	status = "okay";
+> +};
 > +
-> +	return ret;
->  }
->  EXPORT_SYMBOL(mhi_sync_power_up);
+> +&usb2_phy_sec {
+> +	vdd-supply = <&vreg_l4_1p2>;
+> +	vdda1p8-supply = <&vreg_l5_1p8>;
+> +	vdda3p3-supply = <&vreg_l12_3p3>;
+> +	status = "okay";
+> +};
+> +
+> +&usb3 {
+> +	status = "okay";
+> +	dwc3@7580000 {
+> +		usb-role-switch;
+> +		usb_con: connector {
+> +			compatible = "gpio-usb-b-connector";
+> +			label = "USB-C";
+> +			id-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
+> +			vbus-supply = <&usb3_vbus_reg>;
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&usb3_id_pin>, <&usb3_vbus_pin>;
+> +			status = "okay";
+> +		};
+> +	};
+> +};
+> +
+> +&usb2_phy_prim {
+> +	vdd-supply = <&vreg_l4_1p2>;
+> +	vdda1p8-supply = <&vreg_l5_1p8>;
+> +	vdda3p3-supply = <&vreg_l12_3p3>;
+> +	status = "okay";
+> +};
+> +
+> +&usb3_phy {
+> +	vdd-supply = <&vreg_l3_1p05>;
+> +	vdda1p8-supply = <&vreg_l5_1p8>;
+> +	status = "okay";
+> +};
+> +
+>  &wifi {
+>  	status = "okay";
+>  	vdd-0.8-cx-mx-supply = <&vreg_l2_1p275>;
+> -- 
+> 2.25.1
+> 
