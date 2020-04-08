@@ -2,22 +2,21 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 45F3D1A2425
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 16:37:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C68F1A2475
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 17:00:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbgDHOhL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 10:37:11 -0400
-Received: from 8bytes.org ([81.169.241.247]:58590 "EHLO theia.8bytes.org"
+        id S1728740AbgDHPAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 11:00:18 -0400
+Received: from 8bytes.org ([81.169.241.247]:58646 "EHLO theia.8bytes.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726605AbgDHOhL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 10:37:11 -0400
+        id S1727929AbgDHPAS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Apr 2020 11:00:18 -0400
 Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 3E3B4387; Wed,  8 Apr 2020 16:37:09 +0200 (CEST)
-Date:   Wed, 8 Apr 2020 16:37:07 +0200
+        id 7190D387; Wed,  8 Apr 2020 17:00:16 +0200 (CEST)
+Date:   Wed, 8 Apr 2020 17:00:15 +0200
 From:   Joerg Roedel <joro@8bytes.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Will Deacon <will@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
         Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         David Woodhouse <dwmw2@infradead.org>,
@@ -38,51 +37,43 @@ Cc:     Will Deacon <will@kernel.org>,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org,
         Joerg Roedel <jroedel@suse.de>
-Subject: Re: [RFC PATCH 17/34] iommu/arm-smmu: Store device instead of group
- in arm_smmu_s2cr
-Message-ID: <20200408143707.GK3103@8bytes.org>
+Subject: Re: [RFC PATCH 31/34] iommu/exynos: Create iommu_device in struct
+ exynos_iommu_owner
+Message-ID: <20200408150014.GM3103@8bytes.org>
 References: <20200407183742.4344-1-joro@8bytes.org>
- <20200407183742.4344-18-joro@8bytes.org>
- <98c10a41-d223-e375-9742-b6471c3dc33c@arm.com>
+ <CGME20200407184501eucas1p25407bc96e4345df406cf6ba061ae6a82@eucas1p2.samsung.com>
+ <20200407183742.4344-32-joro@8bytes.org>
+ <449e7f16-e719-9617-ec92-63b82c0bc33f@samsung.com>
+ <f59b0bb3-8c08-9cc9-bb1a-e69b7b226f60@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <98c10a41-d223-e375-9742-b6471c3dc33c@arm.com>
+In-Reply-To: <f59b0bb3-8c08-9cc9-bb1a-e69b7b226f60@samsung.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robin,
+Hi Marek,
 
-thanks for looking into this.
+On Wed, Apr 08, 2020 at 04:23:05PM +0200, Marek Szyprowski wrote:
+> I need a place to initialize properly all the structures for the given 
+> master (IOMMU client device, the one which performs DMA operations).
 
-On Wed, Apr 08, 2020 at 01:09:40PM +0100, Robin Murphy wrote:
-> For a hot-pluggable bus where logical devices may share Stream IDs (like
-> fsl-mc), this could happen:
-> 
->   create device A
->   iommu_probe_device(A)
->     iommu_device_group(A) -> alloc group X
->   create device B
->   iommu_probe_device(B)
->     iommu_device_group(A) -> lookup returns group X
->   ...
->   iommu_remove_device(A)
->   delete device A
->   create device C
->   iommu_probe_device(C)
->     iommu_device_group(C) -> use-after-free of A
-> 
-> Preserving the logical behaviour here would probably look *something* like
-> the mangled diff below, but I haven't thought it through 100%.
+That could be in the probe_device() call-back, no?
 
-Yeah, I think you are right. How about just moving the loop which sets
-s2crs[idx].group to arm_smmu_device_group()? In that case I can drop
-this patch and leave the group pointer in place.
+> I tried to move all the initialization from xlate() to device_probe(), 
+> but such approach doesn't work.
+
+device_probe() is exynos_sysmmu_probe(), then yes, this is called before
+any of the xlate() calls are made.
+
+Would it work to keep the iommu_device structures in the sysmmus and
+also create them for the owners? This isn't really a nice solution but
+should work the the IOMMU driver until there is a better way to fix
+this.
 
 Regards,
 
 	Joerg
-
