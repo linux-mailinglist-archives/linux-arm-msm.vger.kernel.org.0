@@ -2,113 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A01531A22A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 15:11:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 711241A22CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 15:18:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729099AbgDHNK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 09:10:57 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40800 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729089AbgDHNK5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 09:10:57 -0400
-Received: by mail-wm1-f68.google.com with SMTP id a81so5368228wmf.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Apr 2020 06:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HSMVnMgP4upKQElf5JgAZWIAcGCpvndMYRb9Vat/nes=;
-        b=jTY7ueTTsIQBFnXQvHWdLsvwO1hONi41sVbUlwZ/VUcwNdlqIdWBAQsD9nxJ0K+TVf
-         8NMjHWmXWYNwSu8kCRyJpvnUsLhXUO2DIlmKGobnOokpOtR0uFywBeNceQIgOaPGAXeH
-         9cVDwKsyAXOkmsnXkdztrirkb9eBgQU22nZSZ8EppmCaWbkz/qDrqZiAziZ2x3ocvfMM
-         AfJDvQRSDknm+9YHWF9eqB21A/INWL61t2kxFlMoGrTZXHSvEqopW6jdo5eSPKD88Ie5
-         lrqoNff86K8IgVHW+5cG5+GQGHD+pf9LJZ/iT+v6WsAsZ/iqS0gWDmJppXPleskAyveD
-         w8Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HSMVnMgP4upKQElf5JgAZWIAcGCpvndMYRb9Vat/nes=;
-        b=q2kfxFoc5AEHNIhHau+JnNYvPgANRA2i3jkku11B6Bf1qCHPgDfPw6DGuB2KCo6kXI
-         j4XmEtLXJsXQOtrsBXgbFTGUscikSlWkkTEzQYUBWYs8Hxww52p0uJJohUMwYSsO4OS7
-         GarhgykNZdcxXphmGXr3vEa6Zn2YpPBtAm3jDtPEZQLXOqU56cwIJGI83Z9l54UXlX67
-         r1jzIM7KTbWe5NL/a3fNghn0oYp4fiQHRsENA6Z4GG3zHR8BB8jcbpT/cdlT35Dlp/vh
-         ++yhtdrreR4ajFukRzV2r9I0w/IVoklyauPj9e+Cpl6kSycWH3VFaYd4A3bBCGQEKMLg
-         fzNQ==
-X-Gm-Message-State: AGi0PuZUZy3dwbu+aieKnuW6G1qWZuO8uel2844lycYu1AOjBKzvCUqT
-        YD+3nmD5DXx95i5w4Eaid4iF4Q==
-X-Google-Smtp-Source: APiQypLR7c3obm73L6raxreYTOjlint94xmBRATqvnqD/s3kybG5fJuCWGpEqrfbhkYkl15QKdl+NA==
-X-Received: by 2002:a7b:c445:: with SMTP id l5mr4760057wmi.61.1586351454571;
-        Wed, 08 Apr 2020 06:10:54 -0700 (PDT)
-Received: from localhost.localdomain ([37.120.50.78])
-        by smtp.gmail.com with ESMTPSA id f4sm18428044wrp.80.2020.04.08.06.10.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Apr 2020 06:10:54 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
-        leoyang.li@nxp.com, Anson.Huang@nxp.com, olof@lixom.net,
-        leonard.crestez@nxp.com, geert+renesas@glider.be,
-        marcin.juszkiewicz@linaro.org, valentin.schneider@arm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v4 6/6] arm64: defconfig: Enable QCOM CAMCC, CAMSS and CCI drivers
-Date:   Wed,  8 Apr 2020 15:09:59 +0200
-Message-Id: <20200408130959.2717409-7-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200408130959.2717409-1-robert.foss@linaro.org>
-References: <20200408130959.2717409-1-robert.foss@linaro.org>
+        id S1726634AbgDHNSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 09:18:05 -0400
+Received: from ns.mm-sol.com ([37.157.136.199]:38172 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728062AbgDHNSF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Apr 2020 09:18:05 -0400
+Received: from [192.168.1.4] (212-5-158-69.ip.btc-net.bg [212.5.158.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id A35B7CFB4;
+        Wed,  8 Apr 2020 16:18:02 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1586351883; bh=6jsS54DDAbAVWAIdONxSTHUhrCNzAC7cdn2dSGdXnBg=;
+        h=Subject:To:Cc:From:Date:From;
+        b=H5BsiIzB8AZxY0Wq3Tf16IwYzzmNiusO9OkRSYpYmfdIUGLh+BC4cjiSyKjjdU/20
+         OLzEOj8NRb7KFq6sCwZk+L+B6rEFumPkXkvAJMAq6ekGwk0ahP8ztFLDQrwpuhC8az
+         VfQp97J1Ov1sFxv2bnMBcDblhbNWtSDtgT1MqIfpq0WJYQ+RJDEoeEPUHzhvhksk0e
+         ElRZ//uN6BAO1ZDzMx++hPMrGd1TycYo+7c46ge4WdqAVyVgYJ5JOCxosA8l+a1WaL
+         koBe23FyOZtaShYFn51cpiPYHIJvnGbhnOIv0w+2XPhYSx4hZr0WjoTsauBcJ1DYSc
+         SUs2QL8bsicTQ==
+Subject: Re: R: [PATCH v2 07/10] PCIe: qcom: fix init problem with missing
+ PARF programming
+To:     ansuelsmth@gmail.com, 'Andy Gross' <agross@kernel.org>
+Cc:     'Bjorn Andersson' <bjorn.andersson@linaro.org>,
+        'Bjorn Helgaas' <bhelgaas@google.com>,
+        'Rob Herring' <robh+dt@kernel.org>,
+        'Mark Rutland' <mark.rutland@arm.com>,
+        'Lorenzo Pieralisi' <lorenzo.pieralisi@arm.com>,
+        'Andrew Murray' <amurray@thegoodpenguin.co.uk>,
+        'Philipp Zabel' <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200402121148.1767-1-ansuelsmth@gmail.com>
+ <20200402121148.1767-8-ansuelsmth@gmail.com>
+ <fea9cfd1-2bc7-0141-444e-9c781877ad02@mm-sol.com>
+ <053e01d60da2$984f1170$c8ed3450$@gmail.com>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <2c5dcc8e-fc65-bc72-64c4-b5c69a21f7ca@mm-sol.com>
+Date:   Wed, 8 Apr 2020 16:18:02 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <053e01d60da2$984f1170$c8ed3450$@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Build camera clock, isp and controller drivers as modules.
+Hi Ansuel,
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+On 4/8/20 3:38 PM, ansuelsmth@gmail.com wrote:
+>> PARF programming
+>>
+>> Hi Ansuel,
+>>
+>> Please fix the patch subject for all patches in the series per Bjorn H.
+>> request.
+>>
+>> PCI: qcom: Fix init problem with missing PARF programming
+>>
+>> Also the patch subject is misleading to me. Actually you change few phy
+>> parameters: Tx De-Emphasis, Tx Swing and Rx equalization. On the other
+>> side I guess those parameters are board specific and I'm not sure how
+>> this change will reflect on apq8064 boards.
+>>
+> 
+> I also think that this would brake apq8064, on ipq8064 this is needed or 
+> the system doesn't boot. 
+> Should I move this to the dts and set this params only if they are present
+> in dts or also here check for compatible and set accordingly? 
+> 
 
-Changes since v2:
- - Removed duplicated CONFIG_SDM_CAMCC_845 defconfig
+I also think that these phy params should be per board (and they are
+tunable).
 
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+Maybe you can propose those as generic phy params in pci.txt binding
+document and then we can ask DT maintainers for opinion. If they refuse
+such generic bindings, we could switch to custom qcom,phy properties.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 24e534d85045..46ee13b6df27 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -410,6 +410,7 @@ CONFIG_I2C_MESON=y
- CONFIG_I2C_MV64XXX=y
- CONFIG_I2C_OWL=y
- CONFIG_I2C_PXA=y
-+CONFIG_I2C_QCOM_CCI=m
- CONFIG_I2C_QCOM_GENI=m
- CONFIG_I2C_QUP=y
- CONFIG_I2C_RK3X=y
-@@ -582,6 +583,7 @@ CONFIG_VIDEO_RENESAS_FDP1=m
- CONFIG_VIDEO_RENESAS_FCP=m
- CONFIG_VIDEO_RENESAS_VSP1=m
- CONFIG_SDR_PLATFORM_DRIVERS=y
-+CONFIG_VIDEO_QCOM_CAMSS=m
- CONFIG_VIDEO_RCAR_DRIF=m
- CONFIG_DRM=m
- CONFIG_DRM_I2C_NXP_TDA998X=m
-@@ -802,6 +804,7 @@ CONFIG_MSM_GCC_8994=y
- CONFIG_MSM_MMCC_8996=y
- CONFIG_MSM_GCC_8998=y
- CONFIG_QCS_GCC_404=y
-+CONFIG_SDM_CAMCC_845=m
- CONFIG_SDM_GCC_845=y
- CONFIG_SDM_GPUCC_845=y
- CONFIG_SDM_DISPCC_845=y
 -- 
-2.25.1
-
+regards,
+Stan
