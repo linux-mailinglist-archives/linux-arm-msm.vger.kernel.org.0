@@ -2,157 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E65B21A226A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 14:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B46E1A2292
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 15:06:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728855AbgDHM6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 08:58:39 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:28443 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727077AbgDHM6j (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 08:58:39 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586350718; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=rDotgWx7+QnovFlw+0TZ4RXvaXTL+HaoABydwwavrc0=; b=bw7lpThJWfu8eEufupBgjVNASFSNl9rly7nxF0pfopJpBdBgPZa6SeT6fpxhZC+OTci1SmH1
- z272PHsdArvvzzIliwOgKHg/cuPhv7aPzRHUbYFHnWlEz3M6sRkMDW2JXynTwMVLPQEBEHM5
- rPNsYhN9ja+53QLXfDYJrRGqub8=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8dca72.7f930f153c38-smtp-out-n03;
- Wed, 08 Apr 2020 12:58:26 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 52DF5C44788; Wed,  8 Apr 2020 12:58:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pragalla (unknown [203.109.108.86])
+        id S1728973AbgDHNG2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 09:06:28 -0400
+Received: from ns.mm-sol.com ([37.157.136.199]:36970 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727902AbgDHNG1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Apr 2020 09:06:27 -0400
+Received: from [192.168.1.4] (212-5-158-69.ip.btc-net.bg [212.5.158.69])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ppvk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 28783C433D2;
-        Wed,  8 Apr 2020 12:58:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 28783C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=ppvk@codeaurora.org
-From:   <ppvk@codeaurora.org>
-To:     "'Doug Anderson'" <dianders@chromium.org>
-Cc:     "'Adrian Hunter'" <adrian.hunter@intel.com>,
-        "'Georgi Djakov'" <georgi.djakov@linaro.org>,
-        "'Rob Herring'" <robh+dt@kernel.org>,
-        "'Ulf Hansson'" <ulf.hansson@linaro.org>,
-        "'Asutosh Das'" <asutoshd@codeaurora.org>,
-        "'Veerabhadrarao Badiganti'" <vbadigan@codeaurora.org>,
-        "'Sahitya Tummala'" <stummala@codeaurora.org>,
-        "'Sayali Lokhande'" <sayalil@codeaurora.org>,
-        "'Ram Prakash Gupta'" <rampraka@codeaurora.org>,
-        "'Stephen Boyd'" <sboyd@kernel.org>,
-        "'Linux MMC List'" <linux-mmc@vger.kernel.org>,
-        "'LKML'" <linux-kernel@vger.kernel.org>,
-        "'linux-arm-msm'" <linux-arm-msm@vger.kernel.org>,
-        "'open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS'" 
-        <devicetree@vger.kernel.org>, "'Andy Gross'" <agross@kernel.org>,
-        <linux-mmc-owner@vger.kernel.org>,
-        "'Subhash Jadavani'" <subhashj@codeaurora.org>,
-        <sbhanu@codeaurora.org>
-References: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org> <1573220319-4287-3-git-send-email-ppvk@codeaurora.org> <CAD=FV=WGUasS=UZxFeSS0Cg=9WxHPMWVFyYae7CFmOxV2_yhJw@mail.gmail.com>
-In-Reply-To: <CAD=FV=WGUasS=UZxFeSS0Cg=9WxHPMWVFyYae7CFmOxV2_yhJw@mail.gmail.com>
-Subject: RE: [RFC-v2 2/2] mmc: sdhci-msm: Add support for bus bandwidth voting
-Date:   Wed, 8 Apr 2020 18:28:05 +0530
-Message-ID: <001601d60da5$630168d0$29043a70$@codeaurora.org>
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id AC2DFCFB4;
+        Wed,  8 Apr 2020 16:06:24 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1586351185; bh=b49iDG8IN2LwQuXCivPrSYLmA+u1Ox/a/HqsWubR/cs=;
+        h=Subject:To:Cc:From:Date:From;
+        b=YnZae3dtnDweNils7UPkECsSFUcxag0g6B9OS0FcGO4iTuvphscpte+fPB9x1aHok
+         chukJ1sx8kdHSZ54RXmoGFny7C33xmNV01xNjmcUKWq8FflRs3Bh3PvMNpNS6i3ZL7
+         DnRBlD5hKjrv0/a8LnouZF5aZakeoKMkJkggOZH6gW26E0LUV6o6eWWlam76/AxC8N
+         7pUBVXQoMmGLEi1HTp91BVrHpToaY/VIoG6XkImVnJwZLBfKb1bNCye3UNXFv31wVb
+         Sn3PQTR+25cq/oCfXwcdNU+0ybwMNoN+Ik5tzkHdowDUdfGxufuZnVATQqIU2wFRuf
+         oPd6kuKim7P9g==
+Subject: Re: R: R: [PATCH v2 01/10] PCIe: qcom: add missing ipq806x clocks in
+ PCIe driver
+To:     ansuelsmth@gmail.com, 'Andy Gross' <agross@kernel.org>
+Cc:     'Sham Muthayyan' <smuthayy@codeaurora.org>,
+        'Bjorn Andersson' <bjorn.andersson@linaro.org>,
+        'Bjorn Helgaas' <bhelgaas@google.com>,
+        'Rob Herring' <robh+dt@kernel.org>,
+        'Mark Rutland' <mark.rutland@arm.com>,
+        'Lorenzo Pieralisi' <lorenzo.pieralisi@arm.com>,
+        'Andrew Murray' <amurray@thegoodpenguin.co.uk>,
+        'Philipp Zabel' <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200402121148.1767-1-ansuelsmth@gmail.com>
+ <20200402121148.1767-2-ansuelsmth@gmail.com>
+ <b09627a8-d928-cf5d-c765-406959138a29@mm-sol.com>
+ <053d01d60da2$49e0ca60$dda25f20$@gmail.com>
+ <f333d990-6d76-0e04-5949-54ffe31bc0e9@mm-sol.com>
+ <000401d60da5$0669a4c0$133cee40$@gmail.com>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <98b7eba1-4ab4-8d39-655f-01d31ca12406@mm-sol.com>
+Date:   Wed, 8 Apr 2020 16:06:24 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHo/qvz39tvwFARdq04gcBr6mq1JgIkxMVEAUfxRSCoLeR7IA==
-Content-Language: en-us
+In-Reply-To: <000401d60da5$0669a4c0$133cee40$@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
 
-You no longer seeing this warning stack with the latest patch set.
-https://lkml.org/lkml/2020/3/23/407
 
-The latest patch set is based on OPP framework and no workqueue's used =
-to queue the work.
-Can you give a try with the latest patch and check if this helps ?
+On 4/8/20 3:55 PM, ansuelsmth@gmail.com wrote:
+>> in PCIe driver
+>>
+>> Hi Ansuel,
+>>
+>> On 4/8/20 3:36 PM, ansuelsmth@gmail.com wrote:
+>>>> PCIe driver
+>>>>
+>>>> Ansuel,
+>>>>
+>>>> On 4/2/20 3:11 PM, Ansuel Smith wrote:
+>>>>> Aux and Ref clk are missing in pcie qcom driver.
+>>>>> Add support in the driver to fix pcie inizialization in ipq806x.
+>>>>>
+>>>>> Fixes: 82a82383 PCI: qcom: Add Qualcomm PCIe controller driver
+>>>>
+>>>> this should be:
+>>>>
+>>>> Fixes: 82a823833f4e PCI: qcom: Add Qualcomm PCIe controller driver
+>>>>
+>>>> and add:
+>>>>
+>>>> Cc: stable@vger.kernel.org # v4.5+
+>>>>
+>>>> But, I wonder, as apq8064 shares the same ops_2_1_0 how it worked
+>> until
+>>>> now. Something more I cannot find such clocks for apq8064, which
+>> means
+>>>> that this patch will break it.
+>>>>
+>>>> One option is to use those new clocks only for ipq806x.
+>>>>
+>>>
+>>> How to add this new clocks only for ipq806x? Check the compatible and
+>> add
+>>> them accordingly?
+>>>
+>>
+>> Yes, through of_device_is_compatible(). See how we done this in
+>> qcom_pcie_get_resources_2_4_0.
+>>
+>> I thought about second option though - encoder what clocks we have for
+>> any SoC but if you take into that direction you have to change the whole
+>> driver :)
+>>
+>> Another option is to use clk_get_optional() for the clocks which you
+>> have on ipq806x (and don't have on apq8064). Please research this one
+>> first.
+>>
+>> --
+>> regards,
+>> Stan
+> 
+> Ok I will use get optional for the extra clocks. Should I add a warning if they 
+> are not present? Also what about the extra reset? Should I follow the same
+> approach? 
+> Thx for the suggestions. 
+> 
 
-Thanks and Regards,
-Pradeep
+No warnings please. You should follow the same rules for resets.
 
------Original Message-----
-From: Doug Anderson <dianders@chromium.org>=20
-Sent: Friday, April 3, 2020 10:34 PM
-To: Pradeep P V K <ppvk@codeaurora.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>; Georgi Djakov =
-<georgi.djakov@linaro.org>; Rob Herring <robh+dt@kernel.org>; Ulf =
-Hansson <ulf.hansson@linaro.org>; Asutosh Das <asutoshd@codeaurora.org>; =
-Veerabhadrarao Badiganti <vbadigan@codeaurora.org>; Sahitya Tummala =
-<stummala@codeaurora.org>; Sayali Lokhande <sayalil@codeaurora.org>; Ram =
-Prakash Gupta <rampraka@codeaurora.org>; Stephen Boyd =
-<sboyd@kernel.org>; Linux MMC List <linux-mmc@vger.kernel.org>; LKML =
-<linux-kernel@vger.kernel.org>; linux-arm-msm =
-<linux-arm-msm@vger.kernel.org>; open list:OPEN FIRMWARE AND FLATTENED =
-DEVICE TREE BINDINGS <devicetree@vger.kernel.org>; Andy Gross =
-<agross@kernel.org>; linux-mmc-owner@vger.kernel.org; Subhash Jadavani =
-<subhashj@codeaurora.org>
-Subject: Re: [RFC-v2 2/2] mmc: sdhci-msm: Add support for bus bandwidth =
-voting
-
-Hi,
-
-On Fri, Nov 8, 2019 at 5:45 AM Pradeep P V K <ppvk@codeaurora.org> =
-wrote:
->
-> +       if (msm_host->bus_vote_data->curr_vote !=3D VOTE_ZERO)
-> +               queue_delayed_work(system_wq,
-> +                                  &msm_host->bus_vote_work,
-> +                                 =20
-> +msecs_to_jiffies(MSM_MMC_BUS_VOTING_DELAY));
-> +}
-
-Drive-by feedback here without any full review of your patch...
-Someone had your patch applied and sent me a stack trace with a warning =
-on it.  That warning showed:
-
-workqueue: WQ_MEM_RECLAIM kblockd:blk_mq_run_work_fn is flushing =
-!WQ_MEM_RECLAIM events:sdhci_msm_bus_work
-
-The trace shown was:
-
-    check_flush_dependency+0x108/0x110
-    __flush_work+0xa8/0x1e8
-    __cancel_work_timer+0x130/0x1c4
-    cancel_delayed_work_sync+0x20/0x30
-    sdhci_msm_bus_cancel_work_and_set_vote+0x3c/0x8c
-    sdhci_msm_bus_voting+0x40/0x7c
-    sdhci_msm_runtime_resume+0xdc/0xf4
-    pm_generic_runtime_resume+0x34/0x48
-    __rpm_callback+0x70/0xfc
-    rpm_callback+0x5c/0x8c
-    rpm_resume+0x3fc/0x534
-    __pm_runtime_resume+0x7c/0xa0
-    __mmc_claim_host+0x1f4/0x230
-    mmc_get_card+0x34/0x40
-    mmc_mq_queue_rq+0x18c/0x244
-    blk_mq_dispatch_rq_list+0x27c/0x560
-    blk_mq_do_dispatch_sched+0xe0/0x140
-    blk_mq_sched_dispatch_requests+0x138/0x1b8
-    __blk_mq_run_hw_queue+0xc0/0x118
-    blk_mq_run_work_fn+0x24/0x30
-
-I believe the way to interpret this is that you need to be running your =
-work on a workqueue marked for memory reclaim.  That means you can't use =
-the system_wq to queue your work.  Without being an expert, a quick =
-guess would be that you should be queueing your work on the =
-"kblockd_workqueue" using one of the functions for this.
-
--Doug
+-- 
+regards,
+Stan
