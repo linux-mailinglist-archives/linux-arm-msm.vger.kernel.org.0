@@ -2,274 +2,308 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 666DC1A2197
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 14:20:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01FCD1A21D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 14:23:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727469AbgDHMUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 08:20:19 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:58590 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726769AbgDHMUT (ORCPT
+        id S1727800AbgDHMXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 08:23:21 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:40207 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726605AbgDHMXV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 08:20:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586348419; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=uxrIDtB/jOhAPmjTIB8iD89D5eovr0qySBws36IDfuc=;
- b=FqJ9QSgPxd6ABq7cWHKNi+dsZ/xZVDbAUbWKVJEdpppJKTy9TR4v9lQAHm2llXZbTofWkHuT
- 4c87kflP7wrEecxli9r/SBhM7AI15SWYwI7PJNMju64IbjMwlupTLe8MELB5Eih891/t95HG
- aNjiWIjKHq/M+ZfLZowvYepyZfI=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8dc180.7f33284917d8-smtp-out-n01;
- Wed, 08 Apr 2020 12:20:16 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 03244C433BA; Wed,  8 Apr 2020 12:20:15 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0F445C433F2;
-        Wed,  8 Apr 2020 12:20:14 +0000 (UTC)
+        Wed, 8 Apr 2020 08:23:21 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200408122318euoutp02587418e6886bb45af8b26649236bb30e~D16UlyqB32501725017euoutp029
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Apr 2020 12:23:18 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200408122318euoutp02587418e6886bb45af8b26649236bb30e~D16UlyqB32501725017euoutp029
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1586348598;
+        bh=C6hOGADV2N8VHfBhoqvkcY7aLHRGpJSRBFxTuaQ0adc=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=eq7YTdEjrPoV1qaEHG3N0Y3STIRTSncARtOyUtO/9JzD+X0KfqPx1deMcS1ku4Vff
+         a8Paw9xH5FcpZsscY9L1Qd1KuynvNkDzJjQy2Vx0oeqIfg64pLwDYlx1dLq/nDSNl3
+         dX9HHrf3q2lqywK9fiU+ciWroqbteuj4wmzt7yGs=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20200408122317eucas1p131bb3e9be76ee1155b4bea50e76fba0c~D16UH4SK20693706937eucas1p1d;
+        Wed,  8 Apr 2020 12:23:17 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id EC.B6.60698.532CD8E5; Wed,  8
+        Apr 2020 13:23:17 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20200408122316eucas1p14d6cdb0b7291316c7825fc6d4373d43e~D16Tl4ECL1118111181eucas1p1V;
+        Wed,  8 Apr 2020 12:23:16 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200408122316eusmtrp16a34672cfea082ba29cf649d44fce50b~D16Tk1AYA2798627986eusmtrp1M;
+        Wed,  8 Apr 2020 12:23:16 +0000 (GMT)
+X-AuditID: cbfec7f5-a0fff7000001ed1a-11-5e8dc235c4f6
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id B7.E3.07950.432CD8E5; Wed,  8
+        Apr 2020 13:23:16 +0100 (BST)
+Received: from [106.210.88.143] (unknown [106.210.88.143]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200408122315eusmtip1e5b8980e40ac1be62aedae60a4eacaed~D16SVJetc3016230162eusmtip10;
+        Wed,  8 Apr 2020 12:23:15 +0000 (GMT)
+Subject: Re: [RFC PATCH 31/34] iommu/exynos: Create iommu_device in struct
+ exynos_iommu_owner
+To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Joerg Roedel <jroedel@suse.de>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <449e7f16-e719-9617-ec92-63b82c0bc33f@samsung.com>
+Date:   Wed, 8 Apr 2020 14:23:16 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200407183742.4344-32-joro@8bytes.org>
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 08 Apr 2020 17:50:14 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, ohad@wizery.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: qcom_q6v5_mss: map/unmap mpss region
- before/after use
-In-Reply-To: <20200408021026.GP20625@builder.lan>
-References: <20200317191918.4123-1-sibis@codeaurora.org>
- <20200408021026.GP20625@builder.lan>
-Message-ID: <940b74388c744ef5bbfcf15709c4ae05@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0gUURTHuXtnZ0ZrZVwtDxYVWwQF+cisCxti0Yehgh7Ul0Brq8k0d5Xd
+        tNeH1JVIUdLs5aSbiqmZlbppKlvqopktrqYlW1j4It9amZQVmuv08Nv5/8/v3HP+cFmsLKO9
+        2XDdaUGv00SqaFeq8vm0fUOgNTXU77plGbH3/aSIOb2CJrbacYqk38vApHp0kCazvSNyklOr
+        JnH32+QkUcyjSNLtUoZkvMyWkSt9I5i0ts7J9NoWhnTUZNGkw/gKkS/ds5ik5RoxudX6TEaS
+        voo0SUgMIAO53zGp/9QvJ9M1JooUtphoktgVGOzN99ebZHyJqQTx9b1Wmq8W3zO8uWg9X16c
+        RPNdnRaaNzXv4835F/kMRyHiU43jNP+k04R5s+0CP1m+Yq/bIdetx4XI8FhB7xt0xPXkW1Md
+        ijb6nK2zDDJxqHFNMnJhgdsE8eK4LBm5skquCMFMpw1J4iuCj5mzlCQmEVSOXKP/jlT0fPlD
+        FSIwP+hmJDGB4HnxO7mT8uAOw1jeDHY2PLlvFOQ0VswLzDlkUDBRzjgpmvOH5LHk+XcVXBC8
+        v1E19y7LUtwa6KvUOu0lXAjYex1yCXGH5sx+yom4cIFwuX0ewdxKeDKWhaXaC97135kPBNwo
+        C9P5w4x09g4QWzpkUu0Bw02P//jLwZaRQkkDRgQ99geMJFIQdCTcQhKlhi77D9q5GXPr4FGN
+        r2RvgyZ7LuO0gXMDx5i7dIQbXK28iSVbAZcvKSV6LYhND/+trW9rx2lIJS5IJi6IIy6II/7f
+        m4OoYuQlxBi0YYIhQCec8TFotIYYXZjPsShtOZr7yLaZpqkq9OzXUSviWKRarKizpIYq5ZpY
+        wzmtFQGLVZ6KXQlzluK45tx5QR91WB8TKRisaBlLqbwUAXlDIUouTHNaOCUI0YL+b1fGunjH
+        oVrH8oLAg1PhtqSU3dca9jd6qyyrTryJVQdnZ01lF+c3H4gw6hqCVjkOjW6Obm9+unTSduam
+        3stPGx01NOF/e9CjKH6PZXvpx8LMjREf1mrz2reE+KZbE16n7RbvqvHwTvWO/LOLgg8M7Xvh
+        9nlAYFsLyn7cKTm63x5ydfWR1ajNZ1ZFGU5q/NdjvUHzG9B810LEAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUhTYRTHeXbvrtfR4jrfnsyyLn6Smk2deyyTyIJLQZRSH8yXhl7Ucpvs
+        bpJFpE5CB5ZipU5baoZlWrFl5kvqBiomunIgVgq+UYYpZYKp5dpagd/+5/z/v8M5cEhMZOUH
+        kJlKDatWyrNoQoAPbQ5M7o+wliQfqLYiNDK7gSNzWSuBhnqWcFT2uBxD7V/nCeSYWeCj2p5D
+        KO/JWz4qNNTjqLj6uQcqf3OPh27NLmDIZnOWZT3DHsjeUUMgu+4dQMtTDgyV1ukwVGnr5qHi
+        FQOBCgrD0ee6nxiyfJvjo7UOI44ah40EKpyQHglg5ixGHtNsbAaMZcZKMO2GSQ/G/CiEMTUV
+        E8zEWBfBGAfPMOaG60z5eCNgSnRLBNM2ZsQY89BV5odp9+ntCeJotUqrYfdkqDjNYfq8BIWJ
+        JVFIHBYRJZaEy5IOhknp0JjoNDYrM4dVh8ZcEGe8N/aCbJ34cm/XvEce6AvWA08SUhGwdXoZ
+        6IGAFFEPAez/ts5zG4Fw8G4e36294a8xPeEOLQJoXykFLsObSoGL9ZuYy/ChNnDYMN5JuAyM
+        GufBvkY/N2EC8EHJa8xlEJQE6hf1f0NCKgZO3n3lnESSOBUMZ18qXG1fKgne0nUCd8QLDlbN
+        4a6IJyWFRaMK9/hIaDRPY24dBNsWa/5pf/hh7j6vFIgMW2jDFsSwBTFsQWoB3gR8WC2nSFdw
+        YWJOruC0ynRxqkphAs7/edm/9sK56VK8FVAkoLcJe7tKkkV8eQ6Xq7ACSGK0j/BkgbMlTJPn
+        XmHVqhS1NovlrEDqPK0MC/BNVTm/UalJkUglMhQlkYXLwiMR7S8soiyJIipdrmEvsWw2q/7P
+        8UjPgDxganY0dser76zVjS4n2LpjfsevVkyZKgcdF+njx6r2HfdsWT600FmkjB1p0D71PZuf
+        dq2mdafAz2wnHHGCo8E7vJJORHxUZd4GQW0D8EaDvCJ7dv2T//DEzQt0rFkQWie1FPBO5ez6
+        BUHgmt22MW4Zzk9c/f7lasveadszZdw5Gucy5JIQTM3J/wCebPzxVQMAAA==
+X-CMS-MailID: 20200408122316eucas1p14d6cdb0b7291316c7825fc6d4373d43e
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200407184501eucas1p25407bc96e4345df406cf6ba061ae6a82
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200407184501eucas1p25407bc96e4345df406cf6ba061ae6a82
+References: <20200407183742.4344-1-joro@8bytes.org>
+        <CGME20200407184501eucas1p25407bc96e4345df406cf6ba061ae6a82@eucas1p2.samsung.com>
+        <20200407183742.4344-32-joro@8bytes.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Bjorn,
-Thanks for review!
+Hi Joerg,
 
-On 2020-04-08 07:40, Bjorn Andersson wrote:
-> On Tue 17 Mar 12:19 PDT 2020, Sibi Sankar wrote:
-> 
->> The application processor accessing the mpss region when the Q6 modem
->> is running will lead to an XPU violation. Fix this by un-mapping the
->> mpss region post copy during processor out of reset sequence and
->> coredumps.
->> 
-> 
-> Does this problem not apply to the "mba" region?
+On 07.04.2020 20:37, Joerg Roedel wrote:
+> From: Joerg Roedel <jroedel@suse.de>
+>
+> The 'struct exynos_iommu_owner' is an umbrella for multiple SYSMMU
+> instances attached to one master. As such all these instances are
+> handled the same, they are all configured with the same iommu_domain,
+> for example.
+>
+> The IOMMU core code expects each device to have only one IOMMU
+> attached, so create the IOMMU-device for the umbrella instead of each
+> hardware SYSMMU.
+>
+> Signed-off-by: Joerg Roedel <jroedel@suse.de>
+> ---
+>   drivers/iommu/exynos-iommu.c | 96 +++++++++++++++++++++++++++---------
+>   1 file changed, 73 insertions(+), 23 deletions(-)
+>
+> diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
+> index 186ff5cc975c..86ecccbf0438 100644
+> --- a/drivers/iommu/exynos-iommu.c
+> +++ b/drivers/iommu/exynos-iommu.c
+> @@ -235,6 +235,8 @@ struct exynos_iommu_owner {
+>   	struct list_head controllers;	/* list of sysmmu_drvdata.owner_node */
+>   	struct iommu_domain *domain;	/* domain this device is attached */
+>   	struct mutex rpm_lock;		/* for runtime pm of all sysmmus */
+> +
+> +	struct iommu_device iommu;	/* IOMMU core handle */
+>   };
+>   
+>   /*
+> @@ -274,8 +276,6 @@ struct sysmmu_drvdata {
+>   	struct list_head owner_node;	/* node for owner controllers list */
+>   	phys_addr_t pgtable;		/* assigned page table structure */
+>   	unsigned int version;		/* our version */
+> -
+> -	struct iommu_device iommu;	/* IOMMU core handle */
+>   };
+>   
+>   static struct exynos_iommu_domain *to_exynos_domain(struct iommu_domain *dom)
+> @@ -625,18 +625,6 @@ static int exynos_sysmmu_probe(struct platform_device *pdev)
+>   	data->sysmmu = dev;
+>   	spin_lock_init(&data->lock);
+>   
+> -	ret = iommu_device_sysfs_add(&data->iommu, &pdev->dev, NULL,
+> -				     dev_name(data->sysmmu));
+> -	if (ret)
+> -		return ret;
+> -
+> -	iommu_device_set_ops(&data->iommu, &exynos_iommu_ops);
+> -	iommu_device_set_fwnode(&data->iommu, &dev->of_node->fwnode);
 
-For mba region, memcpy is expected
-to be completed before bringing
-the Q6 out of reset. Downstream they
-seem to use a wmb() to accomplish
-this. Since we havn't observed any
-issues until now, we can defer adding
-any fixes related to mba region.
+The iommu_device_set_fwnode() call is lost during this conversion, what breaks driver operation. Most of the above IOMMU fw calls you have moved to xlate function. I've checked briefly but it looks that there is a chicken-egg problem here. The owner structure is allocated and initialized from of_xlate(), which won't be called without linking the problem iommu structure with the fwnode first, what might be done only in sysmmu_probe(). I will check how to handle this in a different way.
 
-> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->>  drivers/remoteproc/qcom_q6v5_mss.c | 53 
->> ++++++++++++++++--------------
->>  1 file changed, 29 insertions(+), 24 deletions(-)
->> 
->> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c 
->> b/drivers/remoteproc/qcom_q6v5_mss.c
->> index ce49c3236ff7c..b1ad4de179019 100644
->> --- a/drivers/remoteproc/qcom_q6v5_mss.c
->> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
->> @@ -196,7 +196,6 @@ struct q6v5 {
->> 
->>  	phys_addr_t mpss_phys;
->>  	phys_addr_t mpss_reloc;
->> -	void *mpss_region;
->>  	size_t mpss_size;
->> 
->>  	struct qcom_rproc_glink glink_subdev;
->> @@ -1061,6 +1060,18 @@ static int q6v5_reload_mba(struct rproc *rproc)
->>  	return ret;
->>  }
->> 
->> +static void *q6v5_da_to_va(struct rproc *rproc, u64 da, size_t len)
->> +{
->> +	struct q6v5 *qproc = rproc->priv;
->> +	int offset;
->> +
->> +	offset = da - qproc->mpss_reloc;
->> +	if (offset < 0 || offset + len > qproc->mpss_size)
->> +		return NULL;
->> +
->> +	return devm_ioremap_wc(qproc->dev, qproc->mpss_phys + offset, len);
-> 
-> This function isn't expected to have side effects.
+> -
+> -	ret = iommu_device_register(&data->iommu);
+> -	if (ret)
+> -		return ret;
+> -
+>   	platform_set_drvdata(pdev, data);
+>   
+>   	__sysmmu_get_version(data);
+> @@ -1261,6 +1249,8 @@ static int exynos_iommu_add_device(struct device *dev)
+>   	}
+>   	iommu_group_put(group);
+>   
+> +	iommu_device_link(&owner->iommu, dev);
+> +
+>   	return 0;
+>   }
+>   
+> @@ -1282,18 +1272,82 @@ static void exynos_iommu_remove_device(struct device *dev)
+>   			iommu_group_put(group);
+>   		}
+>   	}
+> +	iommu_device_unlink(&owner->iommu, dev);
+>   	iommu_group_remove_device(dev);
+>   
+>   	list_for_each_entry(data, &owner->controllers, owner_node)
+>   		device_link_del(data->link);
+>   }
+>   
+> +static int exynos_iommu_device_init(struct exynos_iommu_owner *owner)
+> +{
+> +	static u32 counter = 0;
+> +	int ret;
+> +
+> +	/*
+> +	 * Create a virtual IOMMU device. In reality it is an umbrella for a
+> +	 * number of SYSMMU platform devices, but that also means that any
+> +	 * master can have more than one real IOMMU device. This drivers handles
+> +	 * all the real devices for one master synchronously, so they appear as
+> +	 * one anyway.
+> +	 */
+> +	ret = iommu_device_sysfs_add(&owner->iommu, NULL, NULL,
+> +				     "sysmmu-owner-%d", counter++);
+> +	if (ret)
+> +		return ret;
+> +
+> +	iommu_device_set_ops(&owner->iommu, &exynos_iommu_ops);
+> +
+> +	return 0;
+> +}
+> +
+> +static void exynos_iommu_device_remove(struct exynos_iommu_owner *owner)
+> +{
+> +	iommu_device_set_ops(&owner->iommu, NULL);
+> +	iommu_device_sysfs_remove(&owner->iommu);
+> +}
+> +
+> +static int exynos_owner_init(struct device *dev)
+> +{
+> +	struct exynos_iommu_owner *owner = dev->archdata.iommu;
+> +	int ret;
+> +
+> +	if (owner)
+> +		return 0;
+> +
+> +	owner = kzalloc(sizeof(*owner), GFP_KERNEL);
+> +	if (!owner)
+> +		return -ENOMEM;
+> +
+> +	ret = exynos_iommu_device_init(owner);
+> +	if (ret)
+> +		goto out_free_owner;
+> +
+> +	ret = iommu_device_register(&owner->iommu);
+> +	if (ret)
+> +		goto out_remove_iommu_device;
+> +
+> +	INIT_LIST_HEAD(&owner->controllers);
+> +	mutex_init(&owner->rpm_lock);
+> +	dev->archdata.iommu = owner;
+> +
+> +	return 0;
+> +
+> +out_remove_iommu_device:
+> +	exynos_iommu_device_remove(owner);
+> +out_free_owner:
+> +	kfree(owner);
+> +
+> +	return ret;
+> +}
+> +
+>   static int exynos_iommu_of_xlate(struct device *dev,
+>   				 struct of_phandle_args *spec)
+>   {
+> -	struct exynos_iommu_owner *owner = dev->archdata.iommu;
+>   	struct platform_device *sysmmu = of_find_device_by_node(spec->np);
+>   	struct sysmmu_drvdata *data, *entry;
+> +	struct exynos_iommu_owner *owner;
+> +	int ret;
+>   
+>   	if (!sysmmu)
+>   		return -ENODEV;
+> @@ -1302,15 +1356,11 @@ static int exynos_iommu_of_xlate(struct device *dev,
+>   	if (!data)
+>   		return -ENODEV;
+>   
+> -	if (!owner) {
+> -		owner = kzalloc(sizeof(*owner), GFP_KERNEL);
+> -		if (!owner)
+> -			return -ENOMEM;
+> +	ret = exynos_owner_init(dev);
+> +	if (ret)
+> +		return ret;
+>   
+> -		INIT_LIST_HEAD(&owner->controllers);
+> -		mutex_init(&owner->rpm_lock);
+> -		dev->archdata.iommu = owner;
+> -	}
+> +	owner = dev->archdata.iommu;
+>   
+>   	list_for_each_entry(entry, &owner->controllers, owner_node)
+>   		if (entry == data)
 
-unfortunately doing ioremap/iounmap
-for the entire region isn't sufficient,
-while testing I found per region remap
-/unmap was required i.e after we moved to
-away from the validating the entire blog
-in a single pass.
-
-Now with the mpss_region out of the picture
-da_to_va really made no sense without having
-ioremap function in it. Let me know what you
-think.
-
-> 
-> So I think you should add the ioremap/iounmap to the beginning/end of
-> mpss_load and the dump_segment directly instead.
-> 
->> +}
->> +
->>  static int q6v5_mpss_load(struct q6v5 *qproc)
->>  {
->>  	const struct elf32_phdr *phdrs;
->> @@ -1156,7 +1167,11 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->>  			goto release_firmware;
->>  		}
->> 
->> -		ptr = qproc->mpss_region + offset;
->> +		ptr = q6v5_da_to_va(qproc->rproc, phdr->p_paddr, phdr->p_memsz);
-> 
-> rproc_da_to_va() here.
-
-sure
-
-> 
->> +		if (!ptr) {
->> +			dev_err(qproc->dev, "failed to map memory\n");
-> 
-> Now this will be able to fail, so you should add this error handling
-> snippet, just with a slightly different message.
-
-sure
-
-> 
->> +			goto release_firmware;
->> +		}
->> 
->>  		if (phdr->p_filesz && phdr->p_offset < fw->size) {
->>  			/* Firmware is large enough to be non-split */
->> @@ -1165,6 +1180,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->>  					"failed to load segment %d from truncated file %s\n",
->>  					i, fw_name);
->>  				ret = -EINVAL;
->> +				devm_iounmap(qproc->dev, ptr);
->>  				goto release_firmware;
->>  			}
->> 
->> @@ -1175,6 +1191,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->>  			ret = request_firmware(&seg_fw, fw_name, qproc->dev);
->>  			if (ret) {
->>  				dev_err(qproc->dev, "failed to load %s\n", fw_name);
->> +				devm_iounmap(qproc->dev, ptr);
->>  				goto release_firmware;
->>  			}
->> 
->> @@ -1187,6 +1204,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->>  			memset(ptr + phdr->p_filesz, 0,
->>  			       phdr->p_memsz - phdr->p_filesz);
->>  		}
->> +		devm_iounmap(qproc->dev, ptr);
-> 
-> Move this to the end an unmap the entire thing.
-> 
-> And generally, please avoid devm for things where you manually unmap.
-
-will take care of ^^ in the next re-spin.
-
-> 
-> Regards,
-> Bjorn
-> 
->>  		size += phdr->p_memsz;
->> 
->>  		code_length = readl(qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
->> @@ -1236,7 +1254,7 @@ static void qcom_q6v5_dump_segment(struct rproc 
->> *rproc,
->>  	int ret = 0;
->>  	struct q6v5 *qproc = rproc->priv;
->>  	unsigned long mask = BIT((unsigned long)segment->priv);
->> -	void *ptr = rproc_da_to_va(rproc, segment->da, segment->size);
->> +	void *ptr = NULL;
->> 
->>  	/* Unlock mba before copying segments */
->>  	if (!qproc->dump_mba_loaded) {
->> @@ -1250,10 +1268,15 @@ static void qcom_q6v5_dump_segment(struct 
->> rproc *rproc,
->>  		}
->>  	}
->> 
->> -	if (!ptr || ret)
->> -		memset(dest, 0xff, segment->size);
->> -	else
->> +	if (!ret)
->> +		ptr = rproc_da_to_va(rproc, segment->da, segment->size);
->> +
->> +	if (ptr) {
->>  		memcpy(dest, ptr, segment->size);
->> +		devm_iounmap(qproc->dev, ptr);
->> +	} else {
->> +		memset(dest, 0xff, segment->size);
->> +	}
->> 
->>  	qproc->dump_segment_mask |= mask;
->> 
->> @@ -1327,18 +1350,6 @@ static int q6v5_stop(struct rproc *rproc)
->>  	return 0;
->>  }
->> 
->> -static void *q6v5_da_to_va(struct rproc *rproc, u64 da, size_t len)
->> -{
->> -	struct q6v5 *qproc = rproc->priv;
->> -	int offset;
->> -
->> -	offset = da - qproc->mpss_reloc;
->> -	if (offset < 0 || offset + len > qproc->mpss_size)
->> -		return NULL;
->> -
->> -	return qproc->mpss_region + offset;
->> -}
->> -
->>  static int qcom_q6v5_register_dump_segments(struct rproc *rproc,
->>  					    const struct firmware *mba_fw)
->>  {
->> @@ -1595,12 +1606,6 @@ static int q6v5_alloc_memory_region(struct q6v5 
->> *qproc)
->> 
->>  	qproc->mpss_phys = qproc->mpss_reloc = r.start;
->>  	qproc->mpss_size = resource_size(&r);
->> -	qproc->mpss_region = devm_ioremap_wc(qproc->dev, qproc->mpss_phys, 
->> qproc->mpss_size);
->> -	if (!qproc->mpss_region) {
->> -		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
->> -			&r.start, qproc->mpss_size);
->> -		return -EBUSY;
->> -	}
->> 
->>  	return 0;
->>  }
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
-
+Best regards
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
