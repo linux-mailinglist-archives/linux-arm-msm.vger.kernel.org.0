@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9271A2379
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 15:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71A391A237C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 15:48:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727903AbgDHNsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 09:48:09 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:50843 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729359AbgDHNsI (ORCPT
+        id S1729387AbgDHNsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 09:48:15 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:45503 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729380AbgDHNsP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 09:48:08 -0400
+        Wed, 8 Apr 2020 09:48:15 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586353687; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1586353694; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=D2cYIBvDICqcglTSXXtUO6r86gjQu4uxEWBa7lU9kL8=; b=sUnleAPjRCbynTf2+rzMH6Hr1o4rHBdbZmirJDpZrIrIzADI8xcHWOIx8qlYWjnFR+hW+nMZ
- A3NV52zVkz8I2Ylqj3LCVABpJ200JWGuV5+MK/lDgLSnAtKpNdbGuNcTGx7rG5nGusCwV3aL
- eO79Y60P844t7xcqJsBBjcQ5XlI=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ bh=4iV1pSiABAC/oxWO6ViRxVjEkAmjAJaWDT5iApcRsfk=; b=drKnBpUXuJ7eFBaU0flNjTuabZYxjJiKDpTLFVJ+B3JZCSRdEuw1/tGK8qnOUxym2OdybkPW
+ fNZTSI6St2R7+DOhlYvBYoR05Vw9xMAM0bvZ+NtLq8XNmm92AgvdcZsJEuTiRxDFgS/TgXat
+ Elt2+ou9uBK+y9Ejrvt3m5djzCg=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8dd614.7fea484ce0a0-smtp-out-n03;
- Wed, 08 Apr 2020 13:48:04 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e8dd615.7fe552cc6490-smtp-out-n03;
+ Wed, 08 Apr 2020 13:48:05 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 74DDEC072B7; Wed,  8 Apr 2020 13:48:03 +0000 (UTC)
+        id 63724C44788; Wed,  8 Apr 2020 13:48:05 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 65784C44BC3;
-        Wed,  8 Apr 2020 13:47:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 65784C44BC3
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 55090C43637;
+        Wed,  8 Apr 2020 13:48:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 55090C43637
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
@@ -44,15 +44,10 @@ To:     viresh.kumar@linaro.org, sboyd@kernel.org,
         bjorn.andersson@linaro.org, agross@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pradeep P V K <ppvk@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        linux-mmc@vger.kernel.org
-Subject: [PATCH 13/21] mmc: sdhci-msm: Use OPP API to set clk/perf state
-Date:   Wed,  8 Apr 2020 19:16:39 +0530
-Message-Id: <1586353607-32222-14-git-send-email-rnayak@codeaurora.org>
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH 14/21] arm64: dts: sdm845: Add sdhc opps and power-domains
+Date:   Wed,  8 Apr 2020 19:16:40 +0530
+Message-Id: <1586353607-32222-15-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1586353607-32222-1-git-send-email-rnayak@codeaurora.org>
 References: <1586353607-32222-1-git-send-email-rnayak@codeaurora.org>
@@ -61,118 +56,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some qualcomm SoCs we need to vote on a performance state of a power
-domain depending on the clock rates. Hence move to using OPP api to set
-the clock rate and performance state specified in the OPP table.
-On platforms without an OPP table, dev_pm_opp_set_rate() is eqvivalent to
-clk_set_rate()
+Add the power domain supporting performance state and the corresponding
+OPP tables for the sdhc device on sdm845.
 
 Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Pradeep P V K <ppvk@codeaurora.org>
-Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc: Subhash Jadavani <subhashj@codeaurora.org>
-Cc: linux-mmc@vger.kernel.org
 ---
- drivers/mmc/host/sdhci-msm.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 09ff731..d82075a 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -10,6 +10,7 @@
- #include <linux/delay.h>
- #include <linux/mmc/mmc.h>
- #include <linux/pm_runtime.h>
-+#include <linux/pm_opp.h>
- #include <linux/slab.h>
- #include <linux/iopoll.h>
- #include <linux/regulator/consumer.h>
-@@ -242,6 +243,7 @@ struct sdhci_msm_host {
- 	struct clk *xo_clk;	/* TCXO clk needed for FLL feature of cm_dll*/
- 	struct clk_bulk_data bulk_clks[4]; /* core, iface, cal, sleep clocks */
- 	unsigned long clk_rate;
-+	struct opp_table *opp;
- 	struct mmc_host *mmc;
- 	bool use_14lpp_dll_reset;
- 	bool tuning_done;
-@@ -332,7 +334,7 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
- 	int rc;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 7e3f022..6f2d503 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2994,6 +2994,30 @@
+ 			};
+ 		};
  
- 	clock = msm_get_clock_rate_for_bus_mode(host, clock);
--	rc = clk_set_rate(core_clk, clock);
-+	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), clock);
- 	if (rc) {
- 		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
- 		       mmc_hostname(host->mmc), clock,
-@@ -1963,7 +1965,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	msm_host->bulk_clks[0].clk = clk;
- 
- 	/* Vote for maximum clock rate for maximum performance */
--	ret = clk_set_rate(clk, INT_MAX);
-+	ret = dev_pm_opp_set_rate(&pdev->dev, INT_MAX);
- 	if (ret)
- 		dev_warn(&pdev->dev, "core clock boost failed\n");
- 
-@@ -2087,6 +2089,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 		goto clk_disable;
- 	}
- 
-+	msm_host->opp = dev_pm_opp_set_clkname(&pdev->dev, "core");
-+	dev_pm_opp_of_add_table(&pdev->dev);
++		sdhc2_opp_table: sdhc2-opp-table {
++			compatible = "operating-points-v2";
 +
- 	pm_runtime_get_noresume(&pdev->dev);
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
-@@ -2109,10 +2114,12 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	return 0;
- 
- pm_runtime_disable:
-+	dev_pm_opp_of_remove_table(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- clk_disable:
-+	dev_pm_opp_set_rate(&pdev->dev, 0);
- 	clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
- 				   msm_host->bulk_clks);
- bus_clk_disable:
-@@ -2133,10 +2140,12 @@ static int sdhci_msm_remove(struct platform_device *pdev)
- 
- 	sdhci_remove_host(host, dead);
- 
-+	dev_pm_opp_of_remove_table(&pdev->dev);
- 	pm_runtime_get_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- 
-+	dev_pm_opp_set_rate(&pdev->dev, 0);
- 	clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
- 				   msm_host->bulk_clks);
- 	if (!IS_ERR(msm_host->bus_clk))
-@@ -2151,6 +2160,7 @@ static __maybe_unused int sdhci_msm_runtime_suspend(struct device *dev)
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
- 
-+	dev_pm_opp_set_rate(dev, 0);
- 	clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
- 				   msm_host->bulk_clks);
- 
-@@ -2173,9 +2183,11 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
- 	 * restore the SDR DLL settings when the clock is ungated.
- 	 */
- 	if (msm_host->restore_dll_config && msm_host->clk_rate)
--		return sdhci_msm_restore_sdr_dll_config(host);
-+		ret = sdhci_msm_restore_sdr_dll_config(host);
- 
--	return 0;
-+	dev_pm_opp_set_rate(dev, msm_host->clk_rate);
++			opp-9600000 {
++				opp-hz = /bits/ 64 <9600000>;
++				required-opps = <&rpmhpd_opp_min_svs>;
++			};
 +
-+	return ret;
- }
++			opp-19200000 {
++				opp-hz = /bits/ 64 <19200000>;
++				required-opps = <&rpmhpd_opp_low_svs>;
++			};
++
++			opp-100000000 {
++				opp-hz = /bits/ 64 <100000000>;
++				required-opps = <&rpmhpd_opp_svs>;
++			};
++
++			opp-201500000 {
++				opp-hz = /bits/ 64 <201500000>;
++				required-opps = <&rpmhpd_opp_svs_l1>;
++			};
++		};
++
+ 		sdhc_2: sdhci@8804000 {
+ 			compatible = "qcom,sdm845-sdhci", "qcom,sdhci-msm-v5";
+ 			reg = <0 0x08804000 0 0x1000>;
+@@ -3006,6 +3030,8 @@
+ 				 <&gcc GCC_SDCC2_APPS_CLK>;
+ 			clock-names = "iface", "core";
+ 			iommus = <&apps_smmu 0xa0 0xf>;
++			power-domains = <&rpmhpd SDM845_CX>;
++			operating-points-v2 = <&sdhc2_opp_table>;
  
- static const struct dev_pm_ops sdhci_msm_pm_ops = {
+ 			status = "disabled";
+ 		};
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
