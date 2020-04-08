@@ -2,81 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E1B91A25D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 17:46:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BAC31A2653
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 17:51:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729726AbgDHPqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 11:46:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49558 "EHLO mail.kernel.org"
+        id S1729705AbgDHPv5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 11:51:57 -0400
+Received: from mx2.suse.de ([195.135.220.15]:47750 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729690AbgDHPqd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 11:46:33 -0400
-Received: from mail.kernel.org (ip5f5ad4d8.dynamic.kabel-deutschland.de [95.90.212.216])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F1957221ED;
-        Wed,  8 Apr 2020 15:46:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586360792;
-        bh=9Y31naY1EvKUzeBtNXH9yLcsi4Q9S83JSI6RN3kfVpY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tsgcmjmKJvEsykOhbhneuXgALWi3DZUG6PeK6tKsuiCpyxAF0eRNcJQW+kOLQ23Jo
-         TiuMKmNUD04eGycwukqX37pEATv3blbXtUprAgSohyoGT/IjUULpxWsDlglsFYurNQ
-         IcV2ozRTLNNwG7Pijm3ZElFADoHObDJ4PrXz9SO0=
-Received: from mchehab by mail.kernel.org with local (Exim 4.92.3)
-        (envelope-from <mchehab@kernel.org>)
-        id 1jMCuM-000cCV-3n; Wed, 08 Apr 2020 17:46:30 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Linux Doc Mailing List <linux-doc@vger.kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        id S1728062AbgDHPv5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Apr 2020 11:51:57 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id D9CC7AF6E;
+        Wed,  8 Apr 2020 15:51:51 +0000 (UTC)
+Received: by ds.suse.cz (Postfix, from userid 10065)
+        id 0B140DA730; Wed,  8 Apr 2020 17:51:10 +0200 (CEST)
+Date:   Wed, 8 Apr 2020 17:51:10 +0200
+From:   David Sterba <dsterba@suse.cz>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
         linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jan Kara <jack@suse.cz>, Amir Goldstein <amir73il@gmail.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Federico Vaga <federico.vaga@vaga.pv.it>,
+        Harry Wei <harryxiyou@gmail.com>,
+        Alex Shi <alex.shi@linux.alibaba.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH 28/35] docs: dt: qcom,dwc3.txt: fix cross-reference for a converted file
-Date:   Wed,  8 Apr 2020 17:46:20 +0200
-Message-Id: <24b30222392569e7aa5d61d46642a4c38a964512.1586359676.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.25.2
-In-Reply-To: <cover.1586359676.git.mchehab+huawei@kernel.org>
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        David Sterba <dsterba@suse.com>,
+        David Howells <dhowells@redhat.com>,
+        "Tigran A. Aivazian" <aivazian.tigran@gmail.com>,
+        Nicolas Pitre <nico@fluxnic.net>,
+        Tyler Hicks <code@tyhicks.com>,
+        Mikulas Patocka <mikulas@artax.karlin.mff.cuni.cz>,
+        Anton Altaparmakov <anton@tuxera.com>,
+        Mark Fasheh <mark@fasheh.com>,
+        Joel Becker <jlbec@evilplan.org>,
+        Joseph Qi <joseph.qi@linux.alibaba.com>,
+        Alexey Dobriyan <adobriyan@gmail.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-afs@lists.infradead.org,
+        ecryptfs@vger.kernel.org, linux-ntfs-dev@lists.sourceforge.net,
+        ocfs2-devel@oss.oracle.com
+Subject: Re: [PATCH 05/35] docs: filesystems: fix renamed references
+Message-ID: <20200408155110.GW5920@suse.cz>
+Reply-To: dsterba@suse.cz
+Mail-Followup-To: dsterba@suse.cz,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
+        Jan Kara <jack@suse.cz>, Amir Goldstein <amir73il@gmail.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Federico Vaga <federico.vaga@vaga.pv.it>,
+        Harry Wei <harryxiyou@gmail.com>,
+        Alex Shi <alex.shi@linux.alibaba.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        David Sterba <dsterba@suse.com>,
+        David Howells <dhowells@redhat.com>,
+        "Tigran A. Aivazian" <aivazian.tigran@gmail.com>,
+        Nicolas Pitre <nico@fluxnic.net>, Tyler Hicks <code@tyhicks.com>,
+        Mikulas Patocka <mikulas@artax.karlin.mff.cuni.cz>,
+        Anton Altaparmakov <anton@tuxera.com>,
+        Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>,
+        Joseph Qi <joseph.qi@linux.alibaba.com>,
+        Alexey Dobriyan <adobriyan@gmail.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-afs@lists.infradead.org,
+        ecryptfs@vger.kernel.org, linux-ntfs-dev@lists.sourceforge.net,
+        ocfs2-devel@oss.oracle.com
 References: <cover.1586359676.git.mchehab+huawei@kernel.org>
+ <bcfddf36f60d928c78473af4e6a0b29904213c44.1586359676.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bcfddf36f60d928c78473af4e6a0b29904213c44.1586359676.git.mchehab+huawei@kernel.org>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qcom-qusb2-phy.txt file was converted and renamed to yaml.
-Update cross-reference accordingly.
+On Wed, Apr 08, 2020 at 05:45:57PM +0200, Mauro Carvalho Chehab wrote:
+> Some filesystem references got broken by a previous patch
+> series I submitted. Address those.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Fixes: 8ce65d8d38df ("dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy bindings to yaml")
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+For
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-index cb695aa3fba4..fbdd01756752 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-@@ -52,8 +52,8 @@ A child node must exist to represent the core DWC3 IP block. The name of
- the node is not important. The content of the node is defined in dwc3.txt.
- 
- Phy documentation is provided in the following places:
--Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt   - USB3 QMP PHY
--Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt - USB2 QUSB2 PHY
-+Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt    - USB3 QMP PHY
-+Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml - USB2 QUSB2 PHY
- 
- Example device nodes:
- 
--- 
-2.25.2
+>  fs/affs/Kconfig                                             | 2 +-
 
+Acked-by: David Sterba <dsterba@suse.com>
