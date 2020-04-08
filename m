@@ -2,139 +2,420 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 816F11A2BD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2020 00:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBA7D1A2BFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2020 00:43:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726622AbgDHWTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 18:19:31 -0400
-Received: from mail-il1-f193.google.com ([209.85.166.193]:33654 "EHLO
-        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726527AbgDHWT3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 18:19:29 -0400
-Received: by mail-il1-f193.google.com with SMTP id k29so8378394ilg.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Apr 2020 15:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qniumfFvLliMhVFnxnrnB7Q2WNhjy7ZRmIrlX3T4sxk=;
-        b=g2AO+xIkAkescIVWRA2GPbu6jSL6GUSozW16kCmcsLWRJYzFSv2OkLIX9SMR0nz6B9
-         FiO5toadCf87F3YSjodNMUwO1DRG8iBbBQYFOPf1rGwzK14fKlPGqhA5JFonTHjdjjbR
-         p3GvJT4dQKxEzlSzshcRqzcqaTyvCqZ1jDfkh+DO0hH7osrAYDUj7br8bFRy9nod6I4Y
-         9jIEEXq5pQljiu/OH0vDK86GcEp249O6WuFiyBUqPts8oiktmGC2C6rMnzq9/uk2Arc6
-         niRlCsxH/FSjqRhNieNzimE2XSN3kMykP9ZGodOQ6tBsSP8i8UYCzoC0BeRz8QBjOtOB
-         JzsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=qniumfFvLliMhVFnxnrnB7Q2WNhjy7ZRmIrlX3T4sxk=;
-        b=dvhPhfNtOKBop9XzlC00XvsSSN47o2USknhi3jT6FdmuBo3HyQJUbrGH2zBGn6gpB1
-         9ZK/mmYjRZC0EaFR8hiE0jqXl5JuaxwT2MKJq1gwukWtBULdQ7w6HIXxVV3mvKoI5mLG
-         S/XEqH5Afd/82a2T2ufmwL/TIa3bFP6m1L0N/t+HSqydvPExiZY45Z0CN7FOJ3jxV1b2
-         lUYUoQCC6sStwgsmP/hWmjRFNXYitm6zSwgjb8YiErt4YkEv5rdh0T3kobnlH17W28hf
-         2v8wSxmdX7SJNO7zAz5VV0lzgihoZ1HPRDYyaA68miOj9kneCf7hIEaDqOq7n26aE9wT
-         I4yw==
-X-Gm-Message-State: AGi0Pua/i3IObbwK5yV99waC+j3XDd7vo0i4hsiT2zp4VXa1NY8JJcaH
-        31peiPi6rU8MGfzG0NMtECE4og==
-X-Google-Smtp-Source: APiQypJlQ4pCg3c6kRw4kbM5us3jsIhB7uNITvlnj8wNX6hNeoZOozNjSRwRazJUGvIwcGLTHcYMjw==
-X-Received: by 2002:a92:9edc:: with SMTP id s89mr10655671ilk.229.1586384366878;
-        Wed, 08 Apr 2020 15:19:26 -0700 (PDT)
-Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id w7sm5153940ior.51.2020.04.08.15.19.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Apr 2020 15:19:26 -0700 (PDT)
-Subject: Re: [PATCH 1/3] remoteproc: fix a bug in rproc_alloc()
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20200403175005.17130-1-elder@linaro.org>
- <20200403175005.17130-2-elder@linaro.org>
- <CANLsYkx4pSs+j83ewJpOkQmY7=q=k71xg7N9A=sDWrDZKzzQTA@mail.gmail.com>
-From:   Alex Elder <elder@linaro.org>
-Message-ID: <9695b13b-77e1-6a5f-9cff-e4c15c46f311@linaro.org>
-Date:   Wed, 8 Apr 2020 17:18:47 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        id S1726504AbgDHWn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 18:43:57 -0400
+Received: from foss.arm.com ([217.140.110.172]:43850 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726483AbgDHWn5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Apr 2020 18:43:57 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 59CFA30E;
+        Wed,  8 Apr 2020 15:43:56 -0700 (PDT)
+Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0878B3F52E;
+        Wed,  8 Apr 2020 15:43:54 -0700 (PDT)
+Date:   Wed, 8 Apr 2020 23:43:47 +0100
+From:   Suzuki K Poulose <Suzuki.Poulose@arm.com>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     mike.leach@linaro.org, mathieu.poirier@linaro.org,
+        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
+        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        suzuki.poulose@arm.com
+Subject: Re: [RFC PATCH] coresight: dynamic-replicator: Fix handling of
+ multiple connections
+Message-ID: <20200408224347.GA388414@ewhatever.cambridge.arm.com>
+References: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
+ <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
+ <906d374d-a4d6-f2f2-6845-88b97a5ff7d9@arm.com>
+ <39a2b3fff165a108fa59d72b630b5f14@codeaurora.org>
+ <bb209f80-ac02-6321-dac4-ebf9ee6fa9a0@arm.com>
+ <bd05b31c2391edfff5044f22f2f83edf@codeaurora.org>
+ <e9c299c4-caeb-9eb8-f019-b311bfce756a@arm.com>
+ <a7074f44ebbde720b5e0189801eab7c9@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <CANLsYkx4pSs+j83ewJpOkQmY7=q=k71xg7N9A=sDWrDZKzzQTA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a7074f44ebbde720b5e0189801eab7c9@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/8/20 5:16 PM, Mathieu Poirier wrote:
-> Hi Alex,
+On Tue, Apr 07, 2020 at 08:48:54PM +0530, Sai Prakash Ranjan wrote:
+> Hi Suzuki,
 > 
-> On Fri, 3 Apr 2020 at 11:50, Alex Elder <elder@linaro.org> wrote:
->>
->> If ida_simple_get() returns an error when called in rproc_alloc(),
->> put_device() is called to clean things up.  By this time the rproc
->> device type has been assigned, with rproc_type_release() as the
->> release function.
->>
->> The first thing rproc_type_release() does is call:
->>     idr_destroy(&rproc->notifyids);
->>
->> But at the time the ida_simple_get() call is made, the notifyids
->> field in the remoteproc structure has not been initialized.
->>
->> I'm not actually sure this case causes an observable problem, but
->> it's incorrect.  Fix this by initializing the notifyids field before
->> calling ida_simple_get() in rproc_alloc().
->>
+> On 2020-04-07 20:23, Suzuki K Poulose wrote:
+> > On 04/07/2020 02:56 PM, Sai Prakash Ranjan wrote:
+> > > Hi Suzuki,
+> > > 
+> > > On 2020-04-07 18:38, Suzuki K Poulose wrote:
+> > > > On 04/07/2020 12:29 PM, Sai Prakash Ranjan wrote:
+> > > > > Hi Suzuki,
+> > > > > 
+> > > > > Thanks for looking into this issue.
+> > > > > 
+> > > > > On 2020-04-07 15:54, Suzuki K Poulose wrote:
+> > > > > > On 04/07/2020 10:46 AM, Sai Prakash Ranjan wrote:
+> > > > > > 
+> > > > > > There seems to be two replicators back to back here.
+> > > > > > What is connected
+> > > > > > to the other output of both of them ? Are there any
+> > > > > > TPIUs ? What happens
+> > > > > > if you choose a sink on the other end of "swao_replicator" (ETB ?)
+> > > > > > 
+> > > > > 
+> > > > > The other outport of swao replicator is connected to EUD which is a
+> > > > > QCOM specific HW which can be used as a sink like USB.
+> > > > > And the other outport of other replicator(replicator_out) is
+> > > > > connected to
+> > > > > TPIU.
+> > > > > 
+> > > > > > After boot, what do the idfilter registers read for both
+> > > > > > the replicators ?
+> > > > > > 
+> > > > > 
+> > > > > Added some prints in replicator_probe.
+> > > > > 
+> > > > >   replicator probe ret=-517 devname=6046000.replicator
+> > > > > idfilter0=0x0 idfilter1=0x0
+> > > > >   replicator probe ret=0 devname=6b06000.replicator
+> > > > > idfilter0=0xff idfilter1=0xff
+> > > > >   replicator probe ret=0 devname=6046000.replicator
+> > > > > idfilter0=0xff idfilter1=0xff
+> > > > 
+> > > > Curious to see how the idfilterX is set to 0:
+> > > >      if that is never used.
+> > > >         Or
+> > > >      if the user doesn't reset it back to 0xff.
+> > > > 
+> > > 
+> > > For both replicators, the default value seems to be 0x0.
+> > > 
+> > >   replicator probe in res ret=0 devname=6046000.replicator
+> > > idfilter0=0x0 idfilter1=0x0
+> > >   replicator probe ret=-517 devname=6046000.replicator idfilter0=0x0
+> > > idfilter1=0x0
+> > >   replicator probe in res ret=0 devname=6b06000.replicator
+> > > idfilter0=0x0 idfilter1=0x0
+> > >   replicator probe ret=0 devname=6b06000.replicator idfilter0=0xff
+> > > idfilter1=0xff
+> > >   replicator probe in res ret=0 devname=6046000.replicator
+> > > idfilter0=0x0 idfilter1=0x0
+> > >   replicator probe ret=0 devname=6046000.replicator idfilter0=0xff
+> > > idfilter1=0xff
+> > 
+> > I am not sure how you have added the debugs, but it looks like the
+> > drivers set 0xff for both the port filters on a successful probe.
+> > 
 > 
-> Both Suman and I are meddling in function rproc_alloc() for our
-> respective work [1][2].  I will add this patch to a set that refactors
-> rproc_alloc() as soon as v5.7-rc1 comes out.  That way we can all base
-> our work on the same foundation and Bjorn doesn't have to fix 3
-> different merge conflicts.
+> Yes, thats done by replicator_reset in probe right? Below is the diff:
 > 
-> Thanks,
-> Mathieu
+> @@ -242,6 +244,9 @@ static int replicator_probe(struct device *dev, struct
+> resource *res)
+>                 }
+>                 drvdata->base = base;
+>                 desc.groups = replicator_groups;
+> +               pr_info("replicator probe in res ret=%d devname=%s
+> idfilter0=%#lx idfilter1=%#lx\n",
+> +                       ret, dev_name(dev), (readl_relaxed(base +
+> REPLICATOR_IDFILTER0)),
+> +                       (readl_relaxed(base + REPLICATOR_IDFILTER1)));
+>         }
+> 
+>         dev_set_drvdata(dev, drvdata);
+> @@ -272,6 +277,12 @@ static int replicator_probe(struct device *dev, struct
+> resource *res)
+>  out_disable_clk:
+>         if (ret && !IS_ERR_OR_NULL(drvdata->atclk))
+>                 clk_disable_unprepare(drvdata->atclk);
+> +
+> +       if (res)
+> +               pr_info("replicator probe ret=%d devname=%s idfilter0=%#lx
+> idfilter1=%#lx\n",
+> +                       ret, dev_name(dev), (readl_relaxed(base +
+> REPLICATOR_IDFILTER0)),
+> +                       (readl_relaxed(base + REPLICATOR_IDFILTER1)));
+> +
+>         return ret;
+>  }
+> 
+> > > 
+> > > > Does your test ever touch EUD (enable the port for EUD at
+> > > > swao-replicator) ? What are the values before you run your test ?
+> > > > 
+> > > > 
+> > > 
+> > > No, we do not use EUD, downstream it is used as dummy sink.
+> > > And I just try to select the ETR as the sink and enable ETM0 as the
+> > > trace source.
+> > > 
+> > > echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+> > > echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+> > > 
+> > > Also I see the KASAN warning but that seems like some other issue.
+> > > 
+> > 
+> > Does your funnel have sparse input described ? I think we have an
+> > issue with the "refcnt" tracking for funnels (especially). When we
+> > have a sparse input ports described (ie. if only input ports 0, 3,
+> > 5 are described to protect the secure side connections), we could
+> > end up accessing beyond the memory allocated for csdev->refcnts.
+> > i.e, csdev->pdata->nr_inport = 3, and we could access csdev->refcnts[5],
+> > while sizeof(csdev->refcnts) = sizeof(atomic_t) * 3.
+> > 
+> > I will send a patch.
+> > 
+> 
+> Thanks, I can test it out.
 
-Fine with me.  Thanks a lot.	-Alex
+Please find the untested patch below.
 
-> [1]. https://patchwork.kernel.org/patch/11456385/
-> [2]. https://patchwork.kernel.org/project/linux-remoteproc/list/?series=261069
-> 
->> Signed-off-by: Alex Elder <elder@linaro.org>
->> ---
->>  drivers/remoteproc/remoteproc_core.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
->> index e12a54e67588..59b6eb22f01c 100644
->> --- a/drivers/remoteproc/remoteproc_core.c
->> +++ b/drivers/remoteproc/remoteproc_core.c
->> @@ -2054,6 +2054,8 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
->>         rproc->dev.class = &rproc_class;
->>         rproc->dev.driver_data = rproc;
->>
->> +       idr_init(&rproc->notifyids);
->> +
->>         /* Assign a unique device index and name */
->>         rproc->index = ida_simple_get(&rproc_dev_index, 0, 0, GFP_KERNEL);
->>         if (rproc->index < 0) {
->> @@ -2078,8 +2080,6 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
->>
->>         mutex_init(&rproc->lock);
->>
->> -       idr_init(&rproc->notifyids);
->> -
->>         INIT_LIST_HEAD(&rproc->carveouts);
->>         INIT_LIST_HEAD(&rproc->mappings);
->>         INIT_LIST_HEAD(&rproc->traces);
->> --
->> 2.20.1
->>
+---8>---
+
+[untested] coresight: Fix support for sparse port numbers
+
+On some systems the firmware may not describe all the ports
+connected to a component (e.g, for security reasons). This
+could be especially problematic for "funnels" where we could
+end up in modifying memory beyond the allocated space for
+refcounts.
+
+e.g, for a funnel with input ports listed 0, 3, 5, nr_inport = 3.
+However the we could access refcnts[5] while checking for
+references.
+
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+---
+ .../hwtracing/coresight/coresight-platform.c  | 74 ++++++++++++-------
+ drivers/hwtracing/coresight/coresight.c       |  8 +-
+ 2 files changed, 56 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+index 3c5bee429105..1c610d6e944b 100644
+--- a/drivers/hwtracing/coresight/coresight-platform.c
++++ b/drivers/hwtracing/coresight/coresight-platform.c
+@@ -67,6 +67,7 @@ static void of_coresight_get_ports_legacy(const struct device_node *node,
+ 					  int *nr_inport, int *nr_outport)
+ {
+ 	struct device_node *ep = NULL;
++	struct of_endpoint endpoint;
+ 	int in = 0, out = 0;
+ 
+ 	do {
+@@ -74,10 +75,16 @@ static void of_coresight_get_ports_legacy(const struct device_node *node,
+ 		if (!ep)
+ 			break;
+ 
+-		if (of_coresight_legacy_ep_is_input(ep))
+-			in++;
+-		else
+-			out++;
++		if (of_graph_parse_endpoint(ep, &endpoint))
++			continue;
++
++		if (of_coresight_legacy_ep_is_input(ep)) {
++			in = (endpoint.port + 1 > in) ?
++				endpoint.port + 1 : in;
++		} else {
++			out = (endpoint.port + 1) > out ?
++				endpoint.port + 1 : out;
++		}
+ 
+ 	} while (ep);
+ 
+@@ -117,9 +124,16 @@ of_coresight_count_ports(struct device_node *port_parent)
+ {
+ 	int i = 0;
+ 	struct device_node *ep = NULL;
++	struct of_endpoint endpoint;
++
++	while ((ep = of_graph_get_next_endpoint(port_parent, ep))) {
++		/* Defer error handling to parsing */
++		if (of_graph_parse_endpoint(ep, &endpoint))
++			continue;
++		if (endpoint.port + 1 > i)
++			i = endpoint.port + 1;
++	}
+ 
+-	while ((ep = of_graph_get_next_endpoint(port_parent, ep)))
+-		i++;
+ 	return i;
+ }
+ 
+@@ -171,14 +185,12 @@ static int of_coresight_get_cpu(struct device *dev)
+  * Parses the local port, remote device name and the remote port.
+  *
+  * Returns :
+- *	 1	- If the parsing is successful and a connection record
+- *		  was created for an output connection.
+  *	 0	- If the parsing completed without any fatal errors.
+  *	-Errno	- Fatal error, abort the scanning.
+  */
+ static int of_coresight_parse_endpoint(struct device *dev,
+ 				       struct device_node *ep,
+-				       struct coresight_connection *conn)
++				       struct coresight_platform_data *pdata)
+ {
+ 	int ret = 0;
+ 	struct of_endpoint endpoint, rendpoint;
+@@ -186,6 +198,7 @@ static int of_coresight_parse_endpoint(struct device *dev,
+ 	struct device_node *rep = NULL;
+ 	struct device *rdev = NULL;
+ 	struct fwnode_handle *rdev_fwnode;
++	struct coresight_connection *conn;
+ 
+ 	do {
+ 		/* Parse the local port details */
+@@ -212,6 +225,12 @@ static int of_coresight_parse_endpoint(struct device *dev,
+ 			break;
+ 		}
+ 
++		conn = &pdata->conns[endpoint.port];
++		if (conn->child_fwnode) {
++			dev_warn(dev, "Duplicate output port %d\n", endpoint.port);
++			ret = -EINVAL;
++			break;
++		}
+ 		conn->outport = endpoint.port;
+ 		/*
+ 		 * Hold the refcount to the target device. This could be
+@@ -224,7 +243,6 @@ static int of_coresight_parse_endpoint(struct device *dev,
+ 		conn->child_fwnode = fwnode_handle_get(rdev_fwnode);
+ 		conn->child_port = rendpoint.port;
+ 		/* Connection record updated */
+-		ret = 1;
+ 	} while (0);
+ 
+ 	of_node_put(rparent);
+@@ -238,7 +256,6 @@ static int of_get_coresight_platform_data(struct device *dev,
+ 					  struct coresight_platform_data *pdata)
+ {
+ 	int ret = 0;
+-	struct coresight_connection *conn;
+ 	struct device_node *ep = NULL;
+ 	const struct device_node *parent = NULL;
+ 	bool legacy_binding = false;
+@@ -267,8 +284,6 @@ static int of_get_coresight_platform_data(struct device *dev,
+ 		dev_warn_once(dev, "Uses obsolete Coresight DT bindings\n");
+ 	}
+ 
+-	conn = pdata->conns;
+-
+ 	/* Iterate through each output port to discover topology */
+ 	while ((ep = of_graph_get_next_endpoint(parent, ep))) {
+ 		/*
+@@ -280,15 +295,9 @@ static int of_get_coresight_platform_data(struct device *dev,
+ 		if (legacy_binding && of_coresight_legacy_ep_is_input(ep))
+ 			continue;
+ 
+-		ret = of_coresight_parse_endpoint(dev, ep, conn);
+-		switch (ret) {
+-		case 1:
+-			conn++;		/* Fall through */
+-		case 0:
+-			break;
+-		default:
++		ret = of_coresight_parse_endpoint(dev, ep, pdata);
++		if (ret)
+ 			return ret;
+-		}
+ 	}
+ 
+ 	return 0;
+@@ -627,6 +636,11 @@ static int acpi_coresight_parse_link(struct acpi_device *adev,
+ 		 *    coresight_remove_match().
+ 		 */
+ 		conn->child_fwnode = fwnode_handle_get(&r_adev->fwnode);
++	} else if (dir == ACPI_CORESIGHT_LINK_SLAVE) {
++		conn->child_port = fields[0].integer.value;
++	} else {
++		/* Invalid direction */
++		return -EINVAL;
+ 	}
+ 
+ 	return dir;
+@@ -672,10 +686,14 @@ static int acpi_coresight_parse_graph(struct acpi_device *adev,
+ 			return dir;
+ 
+ 		if (dir == ACPI_CORESIGHT_LINK_MASTER) {
+-			pdata->nr_outport++;
++			if (ptr->outport > pdata->nr_outport)
++				pdata->nr_outport = ptr->outport;
+ 			ptr++;
+ 		} else {
+-			pdata->nr_inport++;
++			WARN_ON(pdata->nr_inport == ptr->child_port);
++			/* Do not move the ptr for input connections */
++			if (ptr->child_port > pdata->nr_inport)
++				pdata->nr_inport = ptr->child_port;
+ 		}
+ 	}
+ 
+@@ -684,8 +702,13 @@ static int acpi_coresight_parse_graph(struct acpi_device *adev,
+ 		return rc;
+ 
+ 	/* Copy the connection information to the final location */
+-	for (i = 0; i < pdata->nr_outport; i++)
+-		pdata->conns[i] = conns[i];
++	for (i = 0; conns + i < ptr; i++) {
++		int port = conns[i].outport;
++
++		/* Duplicate output port */
++		WARN_ON(pdata->conns[port].child_fwnode);
++		pdata->conns[port] = conns[i];
++	}
+ 
+ 	devm_kfree(&adev->dev, conns);
+ 	return 0;
+@@ -787,6 +810,7 @@ coresight_get_platform_data(struct device *dev)
+ 		goto error;
+ 
+ 	pdata = devm_kzalloc(dev, sizeof(*pdata), GFP_KERNEL);
++	pdata->nr_outport = pdata->nr_inport = -1;
+ 	if (!pdata) {
+ 		ret = -ENOMEM;
+ 		goto error;
+diff --git a/drivers/hwtracing/coresight/coresight.c b/drivers/hwtracing/coresight/coresight.c
+index ef20f74c85fa..f07bc0a7ab88 100644
+--- a/drivers/hwtracing/coresight/coresight.c
++++ b/drivers/hwtracing/coresight/coresight.c
+@@ -990,6 +990,9 @@ static int coresight_orphan_match(struct device *dev, void *data)
+ 	for (i = 0; i < i_csdev->pdata->nr_outport; i++) {
+ 		conn = &i_csdev->pdata->conns[i];
+ 
++		/* Skip the port if FW doesn't describe it */
++		if (!conn->child_fwnode)
++			continue;
+ 		/* We have found at least one orphan connection */
+ 		if (conn->child_dev == NULL) {
+ 			/* Does it match this newly added device? */
+@@ -1029,6 +1032,9 @@ static void coresight_fixup_device_conns(struct coresight_device *csdev)
+ 		struct coresight_connection *conn = &csdev->pdata->conns[i];
+ 		struct device *dev = NULL;
+ 
++		if (!conn->child_fwnode)
++			continue;
++
+ 		dev = bus_find_device_by_fwnode(&coresight_bustype, conn->child_fwnode);
+ 		if (dev) {
+ 			conn->child_dev = to_coresight_device(dev);
+@@ -1061,7 +1067,7 @@ static int coresight_remove_match(struct device *dev, void *data)
+ 	for (i = 0; i < iterator->pdata->nr_outport; i++) {
+ 		conn = &iterator->pdata->conns[i];
+ 
+-		if (conn->child_dev == NULL)
++		if (conn->child_dev == NULL || conn->child_fwnode == NULL)
+ 			continue;
+ 
+ 		if (csdev->dev.fwnode == conn->child_fwnode) {
+-- 
+2.24.1
+
+
 
