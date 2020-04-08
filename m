@@ -2,161 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E7E31A1C4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 09:09:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DCD41A1D94
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2020 10:50:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726595AbgDHHJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Apr 2020 03:09:16 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:12833 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726436AbgDHHJP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Apr 2020 03:09:15 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586329754; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=NrED2xtLUvxCV8eFeyJOX2iWBud2d45F2W2UntyzGM4=; b=alnSaxdsjVYEyEMOsXITT8xd4Btnks8Jj8sSCG6U4CnIa+BGd4HTQ7kSQEl2OlGt3OKCUHyR
- /7OLztZbL9hcV9Jf//qcRaOsBzzPrAgzU4mpb52KZXugVZbpi33g6iRderFIegEyAeDNrBto
- sAhNmh3en2yKO9uCBVBrQtMsxs8=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8d788b.7f8e8a1c8ce0-smtp-out-n02;
- Wed, 08 Apr 2020 07:08:59 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AA133C433F2; Wed,  8 Apr 2020 07:08:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.137] (unknown [106.213.204.224])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8B416C433D2;
-        Wed,  8 Apr 2020 07:08:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8B416C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v16 4/6] soc: qcom: rpmh: Invoke rpmh_flush() for dirty
- caches
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        dianders@chromium.org, evgreen@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, mka@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-References: <1586154741-8293-1-git-send-email-mkshah@codeaurora.org>
- <1586154741-8293-5-git-send-email-mkshah@codeaurora.org>
- <158631424318.216820.1843109743502322053@swboyd.mtv.corp.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <8553ce0f-6dda-b0e0-d67a-f76ce3c0f945@codeaurora.org>
-Date:   Wed, 8 Apr 2020 12:38:48 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        id S1726873AbgDHIug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Apr 2020 04:50:36 -0400
+Received: from ns.mm-sol.com ([37.157.136.199]:45587 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725932AbgDHIuf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Apr 2020 04:50:35 -0400
+Received: from [192.168.1.4] (212-5-158-69.ip.btc-net.bg [212.5.158.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 4BBD8CFC0;
+        Wed,  8 Apr 2020 11:50:33 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1586335833; bh=VUmYcFEO7NNN/MSIoiBKEvvOXuA+7rJ5pDAjZuR1kLA=;
+        h=From:Subject:To:Cc:Date:From;
+        b=ci40BPENwwbDsTVXirwhkCoHnfcqaECTX+P+T2Zo7BlWq3QtcDsyMpea8HgDqug3B
+         0Oh02x0lgO2Km97tBsuHUFMc2CgKhjUys9jBhFbGciyt18Vcj0nb13W8qU13Pl+gW0
+         KoGFEl+SZyR10R3YE5UzMjU3KYaQ9wrei75E2kPT+iPnvjKwPE+kcxf8jhFh7qnsWn
+         lotLrB1xPkCVTOegQ8aQvIq047VckOLlxl9v37SLMS21K6oz5ckqZBjiRhi+DfsK8j
+         uajRDM3gnncYuwjTxN06uP6ObcrFtR8RM+lcS2rbSe/O7XYKSZTFDIhZfiHrrOdiU0
+         lIlUGza6Flyqw==
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Subject: Re: [PATCH v2 01/10] PCIe: qcom: add missing ipq806x clocks in PCIe
+ driver
+To:     Ansuel Smith <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>
+Cc:     Sham Muthayyan <smuthayy@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200402121148.1767-1-ansuelsmth@gmail.com>
+ <20200402121148.1767-2-ansuelsmth@gmail.com>
+Message-ID: <b09627a8-d928-cf5d-c765-406959138a29@mm-sol.com>
+Date:   Wed, 8 Apr 2020 11:50:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <158631424318.216820.1843109743502322053@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+In-Reply-To: <20200402121148.1767-2-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Ansuel,
 
-On 4/8/2020 8:20 AM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2020-04-05 23:32:19)
->> Add changes to invoke rpmh flush() from CPU PM notification.
->> This is done when the last the cpu is entering power collapse and
->> controller is not busy.
->>
->> Controllers that do have 'HW solver' mode do not need to register
-> Controllers that have 'HW solver' mode don't need to register? The 'do
-> have' is throwing me off.
-Okay i will remove 'do' from this line.
->> for CPU PM notification. They may be in autonomous mode executing
->> low power mode and do not require rpmh_flush() to happen from CPU
->> PM notification.
->>
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->> ---
->>   drivers/soc/qcom/rpmh-internal.h |  25 +++++---
->>   drivers/soc/qcom/rpmh-rsc.c      | 123 +++++++++++++++++++++++++++++++++++----
->>   drivers/soc/qcom/rpmh.c          |  26 +++------
->>   3 files changed, 137 insertions(+), 37 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
->> index b718221..fbe1f3e 100644
->> --- a/drivers/soc/qcom/rpmh-rsc.c
->> +++ b/drivers/soc/qcom/rpmh-rsc.c
->> @@ -6,6 +6,7 @@
-> [...]
->> +
->> +static int rpmh_rsc_cpu_pm_callback(struct notifier_block *nfb,
->> +                                   unsigned long action, void *v)
->> +{
->> +       struct rsc_drv *drv = container_of(nfb, struct rsc_drv, rsc_pm);
->> +       int ret = NOTIFY_OK;
->> +
->> +       spin_lock(&drv->pm_lock);
->> +
->> +       switch (action) {
->> +       case CPU_PM_ENTER:
-> I thought CPU_PM notifiers weren't supposed to be used anymore? Or at
-> least, the genpd work that has gone on for cpuidle could be used here in
-> place of CPU_PM notifiers?
+On 4/2/20 3:11 PM, Ansuel Smith wrote:
+> Aux and Ref clk are missing in pcie qcom driver.
+> Add support in the driver to fix pcie inizialization in ipq806x.
+> 
+> Fixes: 82a82383 PCI: qcom: Add Qualcomm PCIe controller driver
 
-genpd was used in v3 and v4 of this series, where from pd's .power_off  
-function, rpmh_flush() was invoked.
+this should be:
 
-genpd can be useful if target firmware supports PSCI's OSI mode, while 
-sc7180 is non-OSI target.
+Fixes: 82a823833f4e PCI: qcom: Add Qualcomm PCIe controller driver
 
-The current approch (using cpu pm notification) can be used for both OSI 
-and non-OSI targets to invoke rpmh_flush() when last cpu goes to power down.
+and add:
 
-> And so this isn't actually any different
-> than what was proposed originally to use genpd for this?
->
->> +               cpumask_set_cpu(raw_smp_processor_id(),
-> Why do we need to use raw_smp_processor_id()? smp_processor_id() should
-> work just as well?
-Yes, seems it will work as well. I will change to use smp_processor_id().
->
->> +                               &drv->cpus_entered_pm);
->> +
->> +               if (!cpumask_equal(&drv->cpus_entered_pm, cpu_online_mask))
->> +                       goto exit;
->> +               break;
->> +       case CPU_PM_ENTER_FAILED:
->> +       case CPU_PM_EXIT:
->> +               cpumask_clear_cpu(raw_smp_processor_id(),
->> +                                 &drv->cpus_entered_pm);
->> +               goto exit;
->> +       }
->> +
->> +       ret = rpmh_rsc_ctrlr_is_busy(drv);
->> +       if (ret) {
->> +               ret = NOTIFY_BAD;
->> +               goto exit;
->> +       }
->> +
->> +       ret = rpmh_flush(&drv->client);
->> +       if (ret)
->> +               ret = NOTIFY_BAD;
->> +       else
->> +               ret = NOTIFY_OK;
->> +
->> +exit:
->> +       spin_unlock(&drv->pm_lock);
->> +       return ret;
->> +}
->> +
-Thanks,
-Maulik
+Cc: stable@vger.kernel.org # v4.5+
+
+But, I wonder, as apq8064 shares the same ops_2_1_0 how it worked until
+now. Something more I cannot find such clocks for apq8064, which means
+that this patch will break it.
+
+One option is to use those new clocks only for ipq806x.
+
+> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 38 ++++++++++++++++++++++----
+>  1 file changed, 33 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 5ea527a6bd9f..f958c535de6e 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -88,6 +88,8 @@ struct qcom_pcie_resources_2_1_0 {
+>  	struct clk *iface_clk;
+>  	struct clk *core_clk;
+>  	struct clk *phy_clk;
+> +	struct clk *aux_clk;
+> +	struct clk *ref_clk;
+>  	struct reset_control *pci_reset;
+>  	struct reset_control *axi_reset;
+>  	struct reset_control *ahb_reset;
+> @@ -246,6 +248,14 @@ static int qcom_pcie_get_resources_2_1_0(struct qcom_pcie *pcie)
+>  	if (IS_ERR(res->phy_clk))
+>  		return PTR_ERR(res->phy_clk);
+>  
+> +	res->aux_clk = devm_clk_get(dev, "aux");
+> +	if (IS_ERR(res->aux_clk))
+> +		return PTR_ERR(res->aux_clk);
+> +
+> +	res->ref_clk = devm_clk_get(dev, "ref");
+> +	if (IS_ERR(res->ref_clk))
+> +		return PTR_ERR(res->ref_clk);
+> +
+>  	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
+>  	if (IS_ERR(res->pci_reset))
+>  		return PTR_ERR(res->pci_reset);
+> @@ -278,6 +288,8 @@ static void qcom_pcie_deinit_2_1_0(struct qcom_pcie *pcie)
+>  	clk_disable_unprepare(res->iface_clk);
+>  	clk_disable_unprepare(res->core_clk);
+>  	clk_disable_unprepare(res->phy_clk);
+> +	clk_disable_unprepare(res->aux_clk);
+> +	clk_disable_unprepare(res->ref_clk);
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+>  }
+>  
+> @@ -307,16 +319,28 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  		goto err_assert_ahb;
+>  	}
+>  
+> +	ret = clk_prepare_enable(res->core_clk);
+> +	if (ret) {
+> +		dev_err(dev, "cannot prepare/enable core clock\n");
+> +		goto err_clk_core;
+> +	}
+> +
+>  	ret = clk_prepare_enable(res->phy_clk);
+>  	if (ret) {
+>  		dev_err(dev, "cannot prepare/enable phy clock\n");
+>  		goto err_clk_phy;
+>  	}
+>  
+> -	ret = clk_prepare_enable(res->core_clk);
+> +	ret = clk_prepare_enable(res->aux_clk);
+>  	if (ret) {
+> -		dev_err(dev, "cannot prepare/enable core clock\n");
+> -		goto err_clk_core;
+> +		dev_err(dev, "cannot prepare/enable aux clock\n");
+> +		goto err_clk_aux;
+> +	}
+> +
+> +	ret = clk_prepare_enable(res->ref_clk);
+> +	if (ret) {
+> +		dev_err(dev, "cannot prepare/enable ref clock\n");
+> +		goto err_clk_ref;
+>  	}
+>  
+>  	ret = reset_control_deassert(res->ahb_reset);
+> @@ -372,10 +396,14 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	return 0;
+>  
+>  err_deassert_ahb:
+> -	clk_disable_unprepare(res->core_clk);
+> -err_clk_core:
+> +	clk_disable_unprepare(res->ref_clk);
+> +err_clk_ref:
+> +	clk_disable_unprepare(res->aux_clk);
+> +err_clk_aux:
+>  	clk_disable_unprepare(res->phy_clk);
+>  err_clk_phy:
+> +	clk_disable_unprepare(res->core_clk);
+> +err_clk_core:
+>  	clk_disable_unprepare(res->iface_clk);
+>  err_assert_ahb:
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+> 
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+regards,
+Stan
