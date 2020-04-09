@@ -2,95 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 970FC1A3CB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 01:02:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04C491A3CDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 01:31:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727049AbgDIXCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 19:02:17 -0400
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:50518 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726734AbgDIXCR (ORCPT
+        id S1726980AbgDIXb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 19:31:28 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42007 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726949AbgDIXb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 19:02:17 -0400
-Received: by mail-pj1-f68.google.com with SMTP id b7so110133pju.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2020 16:02:15 -0700 (PDT)
+        Thu, 9 Apr 2020 19:31:28 -0400
+Received: by mail-pf1-f195.google.com with SMTP id 22so262973pfa.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2020 16:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jIJZPEFSJM6M841dNh5jrpNBXHFJZg4bAqyw0T0WdHE=;
-        b=ANBR9gXiPJlUP4KqtSzKrzX1Ak8sTYrUghswcXNY9U8cscQY4540c0VsZEA6K/8ao3
-         jPhjSCQ21IAtwFhO3NkSGdBcojwh3c38e4NEWBxrnSlI7RvQ5BhZcNdbISrJjwEYOqj0
-         ujTCKq1g/xKEcJcziaTGi4v9yBbZSwRIn4DkA=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZkCPBxxxyjSx1oGDDyt3nqc/uvcZpVvRJITDOMA3zxE=;
+        b=fuWEoD/XFcHkrla7dX8M4ijHH1Z+/O/saTKokpSm7SO9G2hVpT7AB3ekqHRvcftqVU
+         yX59m7l+c9k2M/J1FKQtnPpz+9HwqkPIS42tskaufVbXLMtZXYFW0apDvgLoQca/ykdF
+         eRmD7/0a4g8vckwgsGXGoj6mqkGyP+VmyUVj4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jIJZPEFSJM6M841dNh5jrpNBXHFJZg4bAqyw0T0WdHE=;
-        b=JAjeiQ+Q1WaYFIjfOPCXaXI0vj87cZ6wI73wgZDrigyz6rp4HOC3hM713ikJ2OQv2V
-         w8tb+GBJ7nfEM1Xx+EVqSlGaHKrXzlzkk7p4hNVA56JFxQAHHFN/4bel5wqfdg96m/0s
-         p49/J4OfgAYNdIJ8jBtEGSffW3FOi5PoPAUfA6MIFHY1DBYh9vtG+zSVllLM22G+w6lZ
-         E/ukUBGE+aNOJKtUBR+1Ew0vqRvjFEbp4uQ5KGMqnggoWDfgHO4vGP5xWR9o2uTERAh+
-         nvx/MCVi9BCCm4sKiNIfx4Sg/nRh9YuvoU/56AJAe7mCq3sB+tam9T1mJcfsyEKLIDbP
-         msyA==
-X-Gm-Message-State: AGi0PuZSv4sGqPrnwY9GzEOGWwb7PdtWctcBxU1LqzqTU3ESxo3v9hHV
-        NorbBKGBXxPy2juciGU++HtO8w==
-X-Google-Smtp-Source: APiQypJimvMon4Q5xA3ushKRx69V1ZLH9Zjeu2mLaa2PHnrgD0D5csP5QZfQPbyVxlVj+rBz/B3XcA==
-X-Received: by 2002:a17:902:14b:: with SMTP id 69mr1894090plb.121.1586473335201;
-        Thu, 09 Apr 2020 16:02:15 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZkCPBxxxyjSx1oGDDyt3nqc/uvcZpVvRJITDOMA3zxE=;
+        b=qfSHtQzumUSbzaQf7aflSvHE453NP9rmBwcSsItdQ0FSkwtycHPWpMcckN7iKemhXp
+         la0ujQh7kFox0Dl8HLI9guhcdbhpNSLEulYreTJMU+S5LGKCanS3N6rqmT5JtwA1l/WF
+         32WUGz52zEbj1r6FG49DndATK1SbLcF9GC2rktBky9JywU9V2dwm+GEZm8X/HEqLWzoe
+         5ll/EaSEm/D48CtCw9eF5f9psSeF6pmRKR/fEyCrenjsXIv1DAWqzft9muAdjErvRNwh
+         ckBK81R4DdXXkWEdo5QTJr1FDx5H04M8+NpJ/t7eNM7ZZRW6W+9F5hytvOjtwcGn5Xe3
+         agGA==
+X-Gm-Message-State: AGi0PubhIqENAsgg4b0OzNho9JdFj3dk5AxnxJeLtFUSlJVZImavRPZ/
+        msMkfVLhozdqmw7JlZMBCalr3Q==
+X-Google-Smtp-Source: APiQypLeHsiNvXa0fC/JPIAYREoiHIIj7McMv+L0VkX3HCS8JHN0sjKPyH19uJztvV+NMbXtBVLxZg==
+X-Received: by 2002:a63:ee4f:: with SMTP id n15mr1817524pgk.149.1586475087419;
+        Thu, 09 Apr 2020 16:31:27 -0700 (PDT)
 Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id x68sm164227pfb.5.2020.04.09.16.02.14
+        by smtp.gmail.com with ESMTPSA id v25sm186190pgl.55.2020.04.09.16.31.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2020 16:02:14 -0700 (PDT)
+        Thu, 09 Apr 2020 16:31:26 -0700 (PDT)
+Date:   Thu, 9 Apr 2020 16:31:24 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Jeffrey Kardatzke <jkardatzke@google.com>,
-        devicetree@vger.kernel.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Atul Dhudase <adhudase@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180: Add interconnect paths for the video codec
-Date:   Thu,  9 Apr 2020 16:02:08 -0700
-Message-Id: <20200409160206.1.Icf877f5cd50ef5e56d14ee014ca196d76242cb89@changeid>
-X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Tomasz Figa <tfiga@chromium.org>
+Subject: Re: [PATCH 0/2] iommu/arm-smmu: Allow client devices to select
+ direct mapping
+Message-ID: <20200409233124.GW199755@google.com>
+References: <cover.1579692800.git.saiprakash.ranjan@codeaurora.org>
+ <7761534cdb4f1891d993e73931894a63@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7761534cdb4f1891d993e73931894a63@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the interconnect path configuration for the venus video codec of
-the SC7180.
+On Tue, Feb 04, 2020 at 11:12:17PM +0530, Sai Prakash Ranjan wrote:
+> Hello Robin, Will
+> 
+> On 2020-01-22 17:18, Sai Prakash Ranjan wrote:
+> > This series allows drm devices to set a default identity
+> > mapping using iommu_request_dm_for_dev(). First patch is
+> > a cleanup to support other SoCs to call into QCOM specific
+> > implementation and preparation for second patch.
+> > Second patch sets the default identity domain for drm devices.
+> > 
+> > Jordan Crouse (1):
+> >   iommu/arm-smmu: Allow client devices to select direct mapping
+> > 
+> > Sai Prakash Ranjan (1):
+> >   iommu: arm-smmu-impl: Convert to a generic reset implementation
+> > 
+> >  drivers/iommu/arm-smmu-impl.c |  8 +++--
+> >  drivers/iommu/arm-smmu-qcom.c | 55 +++++++++++++++++++++++++++++++++--
+> >  drivers/iommu/arm-smmu.c      |  3 ++
+> >  drivers/iommu/arm-smmu.h      |  5 ++++
+> >  4 files changed, 65 insertions(+), 6 deletions(-)
+> 
+> Any review comments?
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
-The interconnect paths were originally part of the patch "arm64: dts:
-sc7180: Add Venus video codec DT node" (https://patchwork.kernel.org/patch/11332131/),
-they were removed because the ICC provider nodes hadn't landed yet.
+Ping
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+What is the status of this series, is it ready to land or are any changes
+needed?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 998f101ad623b7..2e11d4ce995778 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1475,6 +1475,9 @@ venus: video-codec@aa00000 {
- 				      "vcodec0_core", "vcodec0_bus";
- 			iommus = <&apps_smmu 0x0c00 0x60>;
- 			memory-region = <&venus_mem>;
-+			interconnects = <&mmss_noc MASTER_VIDEO_P0 &mc_virt SLAVE_EBI1>,
-+					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_VENUS_CFG>;
-+			interconnect-names = "video-mem", "cpu-cfg";
- 
- 			video-decoder {
- 				compatible = "venus-decoder";
--- 
-2.26.0.110.g2183baf09c-goog
+Thanks
 
+Matthias
