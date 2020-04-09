@@ -2,400 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A68B1A3376
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2020 13:46:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD7621A34B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2020 15:17:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbgDILq1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 07:46:27 -0400
-Received: from 8bytes.org ([81.169.241.247]:58840 "EHLO theia.8bytes.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726082AbgDILq0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 07:46:26 -0400
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 60A51398; Thu,  9 Apr 2020 13:46:25 +0200 (CEST)
-Date:   Thu, 9 Apr 2020 13:46:20 +0200
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH] iommu/exynos: Get rid of 'struct exynos_iommu_owner'
- exynos_iommu_owner
-Message-ID: <20200409114620.GA16298@8bytes.org>
-References: <20200407183742.4344-1-joro@8bytes.org>
- <CGME20200407184501eucas1p25407bc96e4345df406cf6ba061ae6a82@eucas1p2.samsung.com>
- <20200407183742.4344-32-joro@8bytes.org>
- <449e7f16-e719-9617-ec92-63b82c0bc33f@samsung.com>
- <f59b0bb3-8c08-9cc9-bb1a-e69b7b226f60@samsung.com>
+        id S1726741AbgDINR2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 09:17:28 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33265 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726812AbgDINR2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Apr 2020 09:17:28 -0400
+Received: by mail-wr1-f65.google.com with SMTP id a25so11904603wrd.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2020 06:17:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mTnex79CtdigT0VNtFXMjo4/xiqMFaY8SJsSC1YXsZQ=;
+        b=i4GkCMYZphn/rPuFJoY1i6sP6qlnoDtHddl3q2c32Y6oJOwFS+LlVDD2PqpuOh1xfh
+         DQyvqnLd1QbkjEUlDpr7BzHC4xcoWFmVM1dQPUGY7lHOyph1vg7Hwb2Xl55+tHkghQT9
+         B3DSab/jWN1yZ1RzVLeNSRbFoA7h8ZXqU9DoJPDWhlfZBxs0eEoCsla5lwj1LAu7nL1n
+         VamxDyE+SXqNxoE0y1u8zr/k5JienP/Ac8U6x9uTBI0JKxeRZ43fwpKhwIojY34ZcnMu
+         VvmDxYc6wskTNp6Gg5ed3Kzy3xQqxMo3T1/4NL842eV9AfksmJ0OTeowmaAm5mtD6jfB
+         oPKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mTnex79CtdigT0VNtFXMjo4/xiqMFaY8SJsSC1YXsZQ=;
+        b=QM6ENhQ0rh0FTPspRVvxZyK2HbarO/tXJ9r/S2pO2OwcMGVRhh0NBmVyRibkXQMXUh
+         y0AjHeRlWCtbwu97E8DX1/v+w92+/QQaZ/fYkFBIZy/xT3qr5MsKxUextOLR+ojg7QIP
+         L0UwC6iTRBpoaH0pjTys3GvH1uGY9Ganil7rueAfZYu8N9t5nxF5s7N/FM92s/8Do41m
+         vD/qA1ejz6lxk+zz/51MQRU1OtYmFAQnqtsnLHXdY7Vrs5PR0BDzFF8K+38cmlbvU9NE
+         Wq52f469KjsRUP8gVd8sCrZ3kQN6rOixfuz2Q5NcZIZh5o9/qf/Aj1icFJy/571ZykAF
+         wHiw==
+X-Gm-Message-State: AGi0PuZgquMydh0FSE2hjoFY0PhOVpYDLbaZlmM8BX51DIJB+6J3NCPs
+        1Be7v9GCBFISVJTesYlz/TQ8gA==
+X-Google-Smtp-Source: APiQypKBcY5U3USisMtEyA3iJ5o4LxW7UbvIircxnwDub5HZ41PeXlZ2zYbPiX0O51jj9M5GXg0W9Q==
+X-Received: by 2002:a5d:6a47:: with SMTP id t7mr13737422wrw.131.1586438245098;
+        Thu, 09 Apr 2020 06:17:25 -0700 (PDT)
+Received: from [192.168.0.136] ([87.120.218.65])
+        by smtp.googlemail.com with ESMTPSA id f63sm3427932wma.47.2020.04.09.06.17.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Apr 2020 06:17:24 -0700 (PDT)
+Subject: Re: [PATCH V3 7/8] spi: spi-qcom-qspi: Add interconnect support
+To:     Akash Asthana <akashast@codeaurora.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org
+References: <1585652976-17481-1-git-send-email-akashast@codeaurora.org>
+ <1585652976-17481-8-git-send-email-akashast@codeaurora.org>
+ <20200331112352.GB4802@sirena.org.uk>
+ <f896d6e4-cc86-db46-a9b9-d7c98071b524@codeaurora.org>
+ <20200407105542.GA5247@sirena.org.uk>
+ <48c60fdf-03c6-650a-2671-b8f7cc1e5c82@codeaurora.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ mQINBFjTuRcBEACyAOVzghvyN19Sa/Nit4LPBWkICi5W20p6bwiZvdjhtuh50H5q4ktyxJtp
+ 1+s8dMSa/j58hAWhrc2SNL3fttOCo+MM1bQWwe8uMBQJP4swgXf5ZUYkSssQlXxGKqBSbWLB
+ uFHOOBTzaQBaNgsdXo+mQ1h8UCgM0zQOmbs2ort8aHnH2i65oLs5/Xgv/Qivde/FcFtvEFaL
+ 0TZ7odM67u+M32VetH5nBVPESmnEDjRBPw/DOPhFBPXtal53ZFiiRr6Bm1qKVu3dOEYXHHDt
+ nF13gB+vBZ6x5pjl02NUEucSHQiuCc2Aaavo6xnuBc3lnd4z/xk6GLBqFP3P/eJ56eJv4d0B
+ 0LLgQ7c1T3fU4/5NDRRCnyk6HJ5+HSxD4KVuluj0jnXW4CKzFkKaTxOp7jE6ZD/9Sh74DM8v
+ etN8uwDjtYsM07I3Szlh/I+iThxe/4zVtUQsvgXjwuoOOBWWc4m4KKg+W4zm8bSCqrd1DUgL
+ f67WiEZgvN7tPXEzi84zT1PiUOM98dOnmREIamSpKOKFereIrKX2IcnZn8jyycE12zMkk+Sc
+ ASMfXhfywB0tXRNmzsywdxQFcJ6jblPNxscnGMh2VlY2rezmqJdcK4G4Lprkc0jOHotV/6oJ
+ mj9h95Ouvbq5TDHx+ERn8uytPygDBR67kNHs18LkvrEex/Z1cQARAQABtChHZW9yZ2kgRGph
+ a292IDxnZW9yZ2kuZGpha292QGxpbmFyby5vcmc+iQI+BBMBAgAoBQJY07kXAhsDBQkHhM4A
+ BgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCyi/eZcnWWUuvsD/4miikUeAO6fU2Xy3fT
+ l7RUCeb2Uuh1/nxYoE1vtXcow6SyAvIVTD32kHXucJJfYy2zFzptWpvD6Sa0Sc58qe4iLY4j
+ M54ugOYK7XeRKkQHFqqR2T3g/toVG1BOLS2atooXEU+8OFbpLkBXbIdItqJ1M1SEw8YgKmmr
+ JlLAaKMq3hMb5bDQx9erq7PqEKOB/Va0nNu17IL58q+Q5Om7S1x54Oj6LiG/9kNOxQTklOQZ
+ t61oW1Ewjbl325fW0/Lk0QzmfLCrmGXXiedFEMRLCJbVImXVKdIt/Ubk6SAAUrA5dFVNBzm2
+ L8r+HxJcfDeEpdOZJzuwRyFnH96u1Xz+7X2V26zMU6Wl2+lhvr2Tj7spxjppR+nuFiybQq7k
+ MIwyEF0mb75RLhW33sdGStCZ/nBsXIGAUS7OBj+a5fm47vQKv6ekg60oRTHWysFSJm1mlRyq
+ exhI6GwUo5GM/vE36rIPSJFRRgkt6nynoba/1c4VXxfhok2rkP0x3CApJ5RimbvITTnINY0o
+ CU6f1ng1I0A1UTi2YcLjFq/gmCdOHExT4huywfu1DDf0p1xDyPA1FJaii/gJ32bBP3zK53hM
+ dj5S7miqN7F6ZpvGSGXgahQzkGyYpBR5pda0m0k8drV2IQn+0W8Qwh4XZ6/YdfI81+xyFlXc
+ CJjljqsMCJW6PdgEH7kCDQRY07kXARAAvupGd4Jdd8zRRiF+jMpv6ZGz8L55Di1fl1YRth6m
+ lIxYTLwGf0/p0oDLIRldKswena3fbWh5bbTMkJmRiOQ/hffhPSNSyyh+WQeLY2kzl6geiHxD
+ zbw37e2hd3rWAEfVFEXOLnmenaUeJFyhA3Wd8OLdRMuoV+RaLhNfeHctiEn1YGy2gLCq4VNb
+ 4Wj5hEzABGO7+LZ14hdw3hJIEGKtQC65Jh/vTayGD+qdwedhINnIqslk9tCQ33a+jPrCjXLW
+ X29rcgqigzsLHH7iVHWA9R5Aq7pCy5hSFsl4NBn1uV6UHlyOBUuiHBDVwTIAUnZ4S8EQiwgv
+ WQxEkXEWLM850V+G6R593yZndTr3yydPgYv0xEDACd6GcNLR/x8mawmHKzNmnRJoOh6Rkfw2
+ fSiVGesGo83+iYq0NZASrXHAjWgtZXO1YwjW9gCQ2jYu9RGuQM8zIPY1VDpQ6wJtjO/KaOLm
+ NehSR2R6tgBJK7XD9it79LdbPKDKoFSqxaAvXwWgXBj0Oz+Y0BqfClnAbxx3kYlSwfPHDFYc
+ R/ppSgnbR5j0Rjz/N6Lua3S42MDhQGoTlVkgAi1btbdV3qpFE6jglJsJUDlqnEnwf03EgjdJ
+ 6KEh0z57lyVcy5F/EUKfTAMZweBnkPo+BF2LBYn3Qd+CS6haZAWaG7vzVJu4W/mPQzsAEQEA
+ AYkCJQQYAQIADwUCWNO5FwIbDAUJB4TOAAAKCRCyi/eZcnWWUhlHD/0VE/2x6lKh2FGP+QHH
+ UTKmiiwtMurYKJsSJlQx0T+j/1f+zYkY3MDX+gXa0d0xb4eFv8WNlEjkcpSPFr+pQ7CiAI33
+ 99kAVMQEip/MwoTYvM9NXSMTpyRJ/asnLeqa0WU6l6Z9mQ41lLzPFBAJ21/ddT4xeBDv0dxM
+ GqaH2C6bSnJkhSfSja9OxBe+F6LIAZgCFzlogbmSWmUdLBg+sh3K6aiBDAdZPUMvGHzHK3fj
+ gHK4GqGCFK76bFrHQYgiBOrcR4GDklj4Gk9osIfdXIAkBvRGw8zg1zzUYwMYk+A6v40gBn00
+ OOB13qJe9zyKpReWMAhg7BYPBKIm/qSr82aIQc4+FlDX2Ot6T/4tGUDr9MAHaBKFtVyIqXBO
+ xOf0vQEokkUGRKWBE0uA3zFVRfLiT6NUjDQ0vdphTnsdA7h01MliZLQ2lLL2Mt5lsqU+6sup
+ Tfql1omgEpjnFsPsyFebzcKGbdEr6vySGa3Cof+miX06hQXKe99a5+eHNhtZJcMAIO89wZmj
+ 7ayYJIXFqjl/X0KBcCbiAl4vbdBw1bqFnO4zd1lMXKVoa29UHqby4MPbQhjWNVv9kqp8A39+
+ E9xw890l1xdERkjVKX6IEJu2hf7X3MMl9tOjBK6MvdOUxvh1bNNmXh7OlBL1MpJYY/ydIm3B
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <5644ef02-f984-0f5b-d745-eca3c9573726@linaro.org>
+Date:   Thu, 9 Apr 2020 16:17:22 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f59b0bb3-8c08-9cc9-bb1a-e69b7b226f60@samsung.com>
+In-Reply-To: <48c60fdf-03c6-650a-2671-b8f7cc1e5c82@codeaurora.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marek,
+Hi Akash,
 
-I had some more thoughts and discussions with Robin about how to make
-this work with the Exynos driver. The result is the patch below, can you
-please test it and report back? Even better if you can fix up any
-breakage it might cause :)
+On 4/8/20 15:17, Akash Asthana wrote:
+> Hi Mark, Evan, Georgi,
+> 
+> On 4/7/2020 4:25 PM, Mark Brown wrote:
+>> On Tue, Apr 07, 2020 at 03:24:42PM +0530, Akash Asthana wrote:
+>>> On 3/31/2020 4:53 PM, Mark Brown wrote:
+>>>>> +    ctrl->avg_bw_cpu = Bps_to_icc(speed_hz);
+>>>>> +    ctrl->peak_bw_cpu = Bps_to_icc(2 * speed_hz);
+>>>> I thought you were going to factor this best guess handling of peak
+>>>> bandwidth out into the core?
+>>> I can centralize this for SPI, I2C and UART  in Common driver(QUP wrapper)
+>>> but still for QSPI I have to keep this piece of code as is because It is not
+>>> child of QUP wrapper(it doesn't use common code).
+>> Why not?
+>>
+>>> I am not sure whether I can move this " Assume peak_bw as twice of avg_bw if
+>>> nothing is mentioned explicitly" to ICC core because the factor of 2 is
+>>> chosen randomly by me.
+>> That's the whole point - if this is just a random number then we may as
+>> well at least be consistently random.
+> 
+> Can we centralize below logic of peak_bw selection for all the clients to ICC core?
 
-From 60a288509baa34df6a0bf437c977925a0a617c72 Mon Sep 17 00:00:00 2001
-From: Joerg Roedel <jroedel@suse.de>
-Date: Thu, 9 Apr 2020 13:38:18 +0200
-Subject: [PATCH] iommu/exynos: Get rid of 'struct exynos_iommu_owner'
+I don't think this is a good idea for now, because this is very hardware
+specific. A scaling factor that works for one client might not work for another.
 
-Remove 'struct exynos_iommu_owner' and replace it with a single-linked
-list of 'struct sysmmu_drvdata'. The first item in the list acts as a
-replacement for the previous exynos_iommu_owner structure. The
-iommu_device member of the first list item is reported to the IOMMU
-core code for the master device.
+My questions here is how did you decide on this "multiply by two"? I can imagine
+that the traffic can be bursty on some interfaces, but is the factor here really
+a "random number" or is this based on some data patterns or performance
+analysis?
 
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
----
- drivers/iommu/exynos-iommu.c | 155 ++++++++++++++++++++---------------
- 1 file changed, 88 insertions(+), 67 deletions(-)
-
-diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
-index 186ff5cc975c..e70eb360093f 100644
---- a/drivers/iommu/exynos-iommu.c
-+++ b/drivers/iommu/exynos-iommu.c
-@@ -225,18 +225,6 @@ static const struct sysmmu_fault_info sysmmu_v5_faults[] = {
- 	{ 20, REG_V5_FAULT_AW_VA, "AW SECURITY PROTECTION", IOMMU_FAULT_WRITE },
- };
- 
--/*
-- * This structure is attached to dev.archdata.iommu of the master device
-- * on device add, contains a list of SYSMMU controllers defined by device tree,
-- * which are bound to given master device. It is usually referenced by 'owner'
-- * pointer.
--*/
--struct exynos_iommu_owner {
--	struct list_head controllers;	/* list of sysmmu_drvdata.owner_node */
--	struct iommu_domain *domain;	/* domain this device is attached */
--	struct mutex rpm_lock;		/* for runtime pm of all sysmmus */
--};
--
- /*
-  * This structure exynos specific generalization of struct iommu_domain.
-  * It contains list of SYSMMU controllers from all master devices, which has
-@@ -271,13 +259,23 @@ struct sysmmu_drvdata {
- 	bool active;			/* current status */
- 	struct exynos_iommu_domain *domain; /* domain we belong to */
- 	struct list_head domain_node;	/* node for domain clients list */
--	struct list_head owner_node;	/* node for owner controllers list */
-+	struct sysmmu_drvdata *next;	/* Single-linked list to group SMMUs for
-+					   one master. NULL means not in any
-+					   list, ERR_PTR(-ENODEV) means end of
-+					   list */
-+	struct mutex rpm_lock;		/* for runtime pm of all sysmmus */
- 	phys_addr_t pgtable;		/* assigned page table structure */
- 	unsigned int version;		/* our version */
- 
- 	struct iommu_device iommu;	/* IOMMU core handle */
- };
- 
-+/* Helper to iterate over all SYSMMUs for a given platform device */
-+#define for_each_sysmmu(dev, drvdata)			\
-+	for (drvdata = (dev)->archdata.iommu;		\
-+	     drvdata != ERR_PTR(-ENODEV);		\
-+	     drvdata = drvdata->next)
-+
- static struct exynos_iommu_domain *to_exynos_domain(struct iommu_domain *dom)
- {
- 	return container_of(dom, struct exynos_iommu_domain, domain);
-@@ -624,6 +622,8 @@ static int exynos_sysmmu_probe(struct platform_device *pdev)
- 
- 	data->sysmmu = dev;
- 	spin_lock_init(&data->lock);
-+	data->next = NULL;
-+	mutex_init(&data->rpm_lock);
- 
- 	ret = iommu_device_sysfs_add(&data->iommu, &pdev->dev, NULL,
- 				     dev_name(data->sysmmu));
-@@ -668,17 +668,20 @@ static int __maybe_unused exynos_sysmmu_suspend(struct device *dev)
- {
- 	struct sysmmu_drvdata *data = dev_get_drvdata(dev);
- 	struct device *master = data->master;
-+	struct sysmmu_drvdata *master_data;
- 
--	if (master) {
--		struct exynos_iommu_owner *owner = master->archdata.iommu;
-+	if (!master)
-+		return 0;
- 
--		mutex_lock(&owner->rpm_lock);
--		if (data->domain) {
--			dev_dbg(data->sysmmu, "saving state\n");
--			__sysmmu_disable(data);
--		}
--		mutex_unlock(&owner->rpm_lock);
-+	master_data = master->archdata.iommu;
-+
-+	mutex_lock(&master_data->rpm_lock);
-+	if (data->domain) {
-+		dev_dbg(data->sysmmu, "saving state\n");
-+		__sysmmu_disable(data);
- 	}
-+	mutex_unlock(&master_data->rpm_lock);
-+
- 	return 0;
- }
- 
-@@ -686,17 +689,20 @@ static int __maybe_unused exynos_sysmmu_resume(struct device *dev)
- {
- 	struct sysmmu_drvdata *data = dev_get_drvdata(dev);
- 	struct device *master = data->master;
-+	struct sysmmu_drvdata *master_data;
- 
--	if (master) {
--		struct exynos_iommu_owner *owner = master->archdata.iommu;
-+	if (!master)
-+		return 0;
- 
--		mutex_lock(&owner->rpm_lock);
--		if (data->domain) {
--			dev_dbg(data->sysmmu, "restoring state\n");
--			__sysmmu_enable(data);
--		}
--		mutex_unlock(&owner->rpm_lock);
-+	master_data = master->archdata.iommu;
-+
-+	mutex_lock(&master_data->rpm_lock);
-+	if (data->domain) {
-+		dev_dbg(data->sysmmu, "restoring state\n");
-+		__sysmmu_enable(data);
- 	}
-+	mutex_unlock(&master_data->rpm_lock);
-+
- 	return 0;
- }
- 
-@@ -834,21 +840,21 @@ static void exynos_iommu_domain_free(struct iommu_domain *iommu_domain)
- 	kfree(domain);
- }
- 
--static void exynos_iommu_detach_device(struct iommu_domain *iommu_domain,
--				    struct device *dev)
-+static void __exynos_iommu_detach_device(struct exynos_iommu_domain *domain,
-+					 struct device *dev)
- {
--	struct exynos_iommu_owner *owner = dev->archdata.iommu;
--	struct exynos_iommu_domain *domain = to_exynos_domain(iommu_domain);
- 	phys_addr_t pagetable = virt_to_phys(domain->pgtable);
--	struct sysmmu_drvdata *data, *next;
-+	struct sysmmu_drvdata *dev_data, *data, *next;
- 	unsigned long flags;
- 
--	if (!has_sysmmu(dev) || owner->domain != iommu_domain)
-+	dev_data = dev->archdata.iommu;
-+
-+	if (!has_sysmmu(dev) || dev_data->domain != domain)
- 		return;
- 
--	mutex_lock(&owner->rpm_lock);
-+	mutex_lock(&dev_data->rpm_lock);
- 
--	list_for_each_entry(data, &owner->controllers, owner_node) {
-+	for_each_sysmmu(dev, data) {
- 		pm_runtime_get_noresume(data->sysmmu);
- 		if (pm_runtime_active(data->sysmmu))
- 			__sysmmu_disable(data);
-@@ -863,51 +869,59 @@ static void exynos_iommu_detach_device(struct iommu_domain *iommu_domain,
- 		list_del_init(&data->domain_node);
- 		spin_unlock(&data->lock);
- 	}
--	owner->domain = NULL;
- 	spin_unlock_irqrestore(&domain->lock, flags);
- 
--	mutex_unlock(&owner->rpm_lock);
-+	mutex_unlock(&dev_data->rpm_lock);
- 
- 	dev_dbg(dev, "%s: Detached IOMMU with pgtable %pa\n", __func__,
- 		&pagetable);
- }
- 
-+static void exynos_iommu_detach_device(struct iommu_domain *iommu_domain,
-+				       struct device *dev)
-+{
-+	struct exynos_iommu_domain *domain = to_exynos_domain(iommu_domain);
-+
-+	__exynos_iommu_detach_device(domain, dev);
-+}
-+
- static int exynos_iommu_attach_device(struct iommu_domain *iommu_domain,
- 				   struct device *dev)
- {
--	struct exynos_iommu_owner *owner = dev->archdata.iommu;
- 	struct exynos_iommu_domain *domain = to_exynos_domain(iommu_domain);
--	struct sysmmu_drvdata *data;
-+	struct sysmmu_drvdata *dev_data, *data;
- 	phys_addr_t pagetable = virt_to_phys(domain->pgtable);
- 	unsigned long flags;
- 
- 	if (!has_sysmmu(dev))
- 		return -ENODEV;
- 
--	if (owner->domain)
--		exynos_iommu_detach_device(owner->domain, dev);
-+	dev_data = dev->archdata.iommu;
- 
--	mutex_lock(&owner->rpm_lock);
-+	if (dev_data->domain)
-+		__exynos_iommu_detach_device(dev_data->domain, dev);
-+
-+	mutex_lock(&dev_data->rpm_lock);
- 
- 	spin_lock_irqsave(&domain->lock, flags);
--	list_for_each_entry(data, &owner->controllers, owner_node) {
-+	for_each_sysmmu(dev, data) {
- 		spin_lock(&data->lock);
- 		data->pgtable = pagetable;
- 		data->domain = domain;
- 		list_add_tail(&data->domain_node, &domain->clients);
- 		spin_unlock(&data->lock);
- 	}
--	owner->domain = iommu_domain;
- 	spin_unlock_irqrestore(&domain->lock, flags);
- 
--	list_for_each_entry(data, &owner->controllers, owner_node) {
-+
-+	for_each_sysmmu(dev, data) {
- 		pm_runtime_get_noresume(data->sysmmu);
- 		if (pm_runtime_active(data->sysmmu))
- 			__sysmmu_enable(data);
- 		pm_runtime_put(data->sysmmu);
- 	}
- 
--	mutex_unlock(&owner->rpm_lock);
-+	mutex_unlock(&dev_data->rpm_lock);
- 
- 	dev_dbg(dev, "%s: Attached IOMMU with pgtable %pa\n", __func__,
- 		&pagetable);
-@@ -1237,7 +1251,6 @@ static phys_addr_t exynos_iommu_iova_to_phys(struct iommu_domain *iommu_domain,
- 
- static int exynos_iommu_add_device(struct device *dev)
- {
--	struct exynos_iommu_owner *owner = dev->archdata.iommu;
- 	struct sysmmu_drvdata *data;
- 	struct iommu_group *group;
- 
-@@ -1249,7 +1262,7 @@ static int exynos_iommu_add_device(struct device *dev)
- 	if (IS_ERR(group))
- 		return PTR_ERR(group);
- 
--	list_for_each_entry(data, &owner->controllers, owner_node) {
-+	for_each_sysmmu(dev, data) {
- 		/*
- 		 * SYSMMU will be runtime activated via device link
- 		 * (dependency) to its master device, so there are no
-@@ -1261,37 +1274,39 @@ static int exynos_iommu_add_device(struct device *dev)
- 	}
- 	iommu_group_put(group);
- 
-+	data = dev->archdata.iommu;
-+	iommu_device_link(&data->iommu, dev);
-+
- 	return 0;
- }
- 
- static void exynos_iommu_remove_device(struct device *dev)
- {
--	struct exynos_iommu_owner *owner = dev->archdata.iommu;
--	struct sysmmu_drvdata *data;
-+	struct sysmmu_drvdata *data = dev->archdata.iommu;
- 
- 	if (!has_sysmmu(dev))
- 		return;
- 
--	if (owner->domain) {
-+	if (data->domain) {
- 		struct iommu_group *group = iommu_group_get(dev);
- 
- 		if (group) {
--			WARN_ON(owner->domain !=
-+			WARN_ON(&data->domain->domain !=
- 				iommu_group_default_domain(group));
--			exynos_iommu_detach_device(owner->domain, dev);
-+			__exynos_iommu_detach_device(data->domain, dev);
- 			iommu_group_put(group);
- 		}
- 	}
-+	iommu_device_unlink(&data->iommu, dev);
- 	iommu_group_remove_device(dev);
- 
--	list_for_each_entry(data, &owner->controllers, owner_node)
-+	for_each_sysmmu(dev, data)
- 		device_link_del(data->link);
- }
- 
- static int exynos_iommu_of_xlate(struct device *dev,
- 				 struct of_phandle_args *spec)
- {
--	struct exynos_iommu_owner *owner = dev->archdata.iommu;
- 	struct platform_device *sysmmu = of_find_device_by_node(spec->np);
- 	struct sysmmu_drvdata *data, *entry;
- 
-@@ -1302,22 +1317,28 @@ static int exynos_iommu_of_xlate(struct device *dev,
- 	if (!data)
- 		return -ENODEV;
- 
--	if (!owner) {
--		owner = kzalloc(sizeof(*owner), GFP_KERNEL);
--		if (!owner)
--			return -ENOMEM;
-+	data->master = dev;
- 
--		INIT_LIST_HEAD(&owner->controllers);
--		mutex_init(&owner->rpm_lock);
--		dev->archdata.iommu = owner;
-+	if (!dev->archdata.iommu) {
-+		WARN_ON(data->next != NULL);
-+
-+		/* SYSMMU list is empty - add drvdata and return */
-+		data->next = ERR_PTR(-ENODEV);
-+		dev->archdata.iommu = data;
-+
-+		return 0;
- 	}
- 
--	list_for_each_entry(entry, &owner->controllers, owner_node)
-+	/* Check if SYSMMU is already in the list */
-+	for_each_sysmmu(dev, entry)
- 		if (entry == data)
- 			return 0;
- 
--	list_add_tail(&data->owner_node, &owner->controllers);
--	data->master = dev;
-+	/* Not in the list yet */
-+	WARN_ON(data->next != NULL);
-+	entry = dev->archdata.iommu;
-+	data->next  = entry->next;
-+	entry->next = data;
- 
- 	return 0;
- }
--- 
-2.25.1
-
+Thanks,
+Georgi
