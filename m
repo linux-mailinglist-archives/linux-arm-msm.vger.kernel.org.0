@@ -2,153 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EE3F1A30BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2020 10:16:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1ED31A3197
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2020 11:12:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726082AbgDIIQS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 04:16:18 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:45974 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbgDIIQS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 04:16:18 -0400
-Received: by mail-pg1-f193.google.com with SMTP id w11so471455pga.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2020 01:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=XCQYTOYKkewyzGEcrkL/TPuusUnX/PYbV/+OIgYCWvQ=;
-        b=Vmm10K769J1HIMC7p1bb5XvOdIpocHqm8j0y9IBwFe4G23ehp2zyzcQjIPELsa/Sr3
-         I4YkJg9W5ekMScQSLrRa7iNKsSGbye8bWDns7OLjaNv+ecLmlZyX5T8LtN7ekwhyQJTa
-         SkKw8EPdXlE4sGbstb5D5ZpUE/IJdnVzDXRRc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=XCQYTOYKkewyzGEcrkL/TPuusUnX/PYbV/+OIgYCWvQ=;
-        b=nDziwED8nuxtbjP47KEi6fyedrXh93G6gA/SsN0Ej6k9LVZOGlQNmMcEYAaBbyaFCD
-         QS4thhkwbaGf97n+mwmevwJzksIU5r6D3NZzsThtPPl4vLDW9SezzG2wkdB2U613VSiG
-         zo6gHcK3Ayja5eCtpYv3BZOUF7/GESU+nMmBrUi5XJAEOT2lRT0AsyUmYXgtrWOBxcgG
-         ppp2brPEoB+07Pp7BmO7q13RMOStkrkJvU7152G8v/8q0d/L7t0YK3JGTG957gke1UCX
-         8wkGRpw1rqaK0XArjC4vyPPZdKmyQR02Nr+FTzLacY3kww5nal5GZLXqSO2gqGRz+KE6
-         mOcQ==
-X-Gm-Message-State: AGi0PuY6yl52oJfwZboLJLnd9Gla/Eg+7NJXv7iUnsP8pOGXIep7wMtr
-        wyNFguNkQJtIpJWiFoDH1uu3SA==
-X-Google-Smtp-Source: APiQypJQ1I6e+EfrgM2OYM3xD+1/9Nx4wNrauyUjPBovQPpK7Q3a1uSLtv/N2GNalrOSPd1O2KBobg==
-X-Received: by 2002:aa7:97a6:: with SMTP id d6mr12498752pfq.154.1586420177564;
-        Thu, 09 Apr 2020 01:16:17 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id y9sm19190490pfo.135.2020.04.09.01.16.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Apr 2020 01:16:16 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S1726082AbgDIJMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 05:12:23 -0400
+Received: from foss.arm.com ([217.140.110.172]:47422 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725972AbgDIJMW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Apr 2020 05:12:22 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8850331B;
+        Thu,  9 Apr 2020 02:12:22 -0700 (PDT)
+Received: from [10.37.12.112] (unknown [10.37.12.112])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6A2AC3F73D;
+        Thu,  9 Apr 2020 02:12:20 -0700 (PDT)
+Subject: Re: [RFC PATCH] coresight: dynamic-replicator: Fix handling of
+ multiple connections
+To:     saiprakash.ranjan@codeaurora.org
+Cc:     mike.leach@linaro.org, mathieu.poirier@linaro.org,
+        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
+        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
+ <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
+ <906d374d-a4d6-f2f2-6845-88b97a5ff7d9@arm.com>
+ <39a2b3fff165a108fa59d72b630b5f14@codeaurora.org>
+ <bb209f80-ac02-6321-dac4-ebf9ee6fa9a0@arm.com>
+ <bd05b31c2391edfff5044f22f2f83edf@codeaurora.org>
+ <e9c299c4-caeb-9eb8-f019-b311bfce756a@arm.com>
+ <a7074f44ebbde720b5e0189801eab7c9@codeaurora.org>
+ <20200408224347.GA388414@ewhatever.cambridge.arm.com>
+ <9ad167836b0a22694d58d24f39db89a6@codeaurora.org>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <671892c3-b90d-73f0-4706-b74b40002260@arm.com>
+Date:   Thu, 9 Apr 2020 10:17:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <8553ce0f-6dda-b0e0-d67a-f76ce3c0f945@codeaurora.org>
-References: <1586154741-8293-1-git-send-email-mkshah@codeaurora.org> <1586154741-8293-5-git-send-email-mkshah@codeaurora.org> <158631424318.216820.1843109743502322053@swboyd.mtv.corp.google.com> <8553ce0f-6dda-b0e0-d67a-f76ce3c0f945@codeaurora.org>
-Subject: Re: [PATCH v16 4/6] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, mka@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        dianders@chromium.org, evgreen@chromium.org
-Date:   Thu, 09 Apr 2020 01:16:16 -0700
-Message-ID: <158642017601.126188.6125314877042857783@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+In-Reply-To: <9ad167836b0a22694d58d24f39db89a6@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-04-08 00:08:48)
-> Hi,
->=20
-> On 4/8/2020 8:20 AM, Stephen Boyd wrote:
-> > Quoting Maulik Shah (2020-04-05 23:32:19)
-> >> for CPU PM notification. They may be in autonomous mode executing
-> >> low power mode and do not require rpmh_flush() to happen from CPU
-> >> PM notification.
-> >>
-> >> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> >> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> >> ---
-> >>   drivers/soc/qcom/rpmh-internal.h |  25 +++++---
-> >>   drivers/soc/qcom/rpmh-rsc.c      | 123 +++++++++++++++++++++++++++++=
-++++++----
-> >>   drivers/soc/qcom/rpmh.c          |  26 +++------
-> >>   3 files changed, 137 insertions(+), 37 deletions(-)
-> >>
-> >> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> >> index b718221..fbe1f3e 100644
-> >> --- a/drivers/soc/qcom/rpmh-rsc.c
-> >> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> >> @@ -6,6 +6,7 @@
-> > [...]
-> >> +
-> >> +static int rpmh_rsc_cpu_pm_callback(struct notifier_block *nfb,
-> >> +                                   unsigned long action, void *v)
-> >> +{
-> >> +       struct rsc_drv *drv =3D container_of(nfb, struct rsc_drv, rsc_=
-pm);
-> >> +       int ret =3D NOTIFY_OK;
-> >> +
-> >> +       spin_lock(&drv->pm_lock);
-> >> +
-> >> +       switch (action) {
-> >> +       case CPU_PM_ENTER:
-> > I thought CPU_PM notifiers weren't supposed to be used anymore? Or at
-> > least, the genpd work that has gone on for cpuidle could be used here in
-> > place of CPU_PM notifiers?
->=20
-> genpd was used in v3 and v4 of this series, where from pd's .power_off=C2=
-=A0=20
-> function, rpmh_flush() was invoked.
->=20
-> genpd can be useful if target firmware supports PSCI's OSI mode, while=20
-> sc7180 is non-OSI target.
->=20
-> The current approch (using cpu pm notification) can be used for both OSI =
+Hi Sai,
 
-> and non-OSI targets to invoke rpmh_flush() when last cpu goes to power do=
-wn.
 
-Ok. Doug and I talked today and I re-read the earlier series and I think
-Sudeep was suggesting that if we're doing last man down activities here
-then we're better off using OSI vs. PC mode. But I can only assume
-that's because the concern is something here requires software's help
-for last man down activities like lowering a CPU voltage setting or
-turning off some power switch to a hardware block through some i2c
-message. The way I understand it the last man down activities here are
-just setting up the sleep and wake TCS FIFOs to "do the right thing"
-when the last CPU actually goes down and the first CPU wakes up by
-running through the pile of "instructions" that we program into the
-FIFOs.
+Thanks for the quick testing ! Please see below for the
+tmc_etr probe failure.
 
-The execution of those instructions is all done in hardware so any
-aggregation or coordination between CPUs is not really important here.
-All that matters is that we set up the sleep and wake TCS FIFOs properly
-so that _if_ the whole CPU subsystem goes to sleep we're going to let
-the hardware turn off the right stuff and lower voltages, etc. and
-vice-versa for wake. If we didn't have to share the TCS FIFOs with
-active mode control then we could just tweak the sleep and wake TCS
-buckets at runtime and let the hardware state of the CPUs decide to
-trigger them at the right time. Unfortunately, we don't have that luxury
-and we're stuck repurposing the sleep TCS FIFO to control things like
-regulator voltages when the CPU is awake. Yuck!
+On 04/09/2020 08:51 AM, Sai Prakash Ranjan wrote:
+> Hi Suzuki,
+> 
+> On 2020-04-09 04:13, Suzuki K Poulose wrote:
+>> On Tue, Apr 07, 2020 at 08:48:54PM +0530, Sai Prakash Ranjan wrote:
+>>
+>> Please find the untested patch below.
+>>
+>> ---8>---
+>>
+>> [untested] coresight: Fix support for sparse port numbers
+>>
+>> On some systems the firmware may not describe all the ports
+>> connected to a component (e.g, for security reasons). This
+>> could be especially problematic for "funnels" where we could
+>> end up in modifying memory beyond the allocated space for
+>> refcounts.
+>>
+>> e.g, for a funnel with input ports listed 0, 3, 5, nr_inport = 3.
+>> However the we could access refcnts[5] while checking for
+>> references.
+>>
+>> Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+>> ---
+>>  .../hwtracing/coresight/coresight-platform.c  | 74 ++++++++++++-------
+>>  drivers/hwtracing/coresight/coresight.c       |  8 +-
+>>  2 files changed, 56 insertions(+), 26 deletions(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-platform.c
+>> b/drivers/hwtracing/coresight/coresight-platform.c
+>> index 3c5bee429105..1c610d6e944b 100644
+>> --- a/drivers/hwtracing/coresight/coresight-platform.c
+>> +++ b/drivers/hwtracing/coresight/coresight-platform.c
+>> @@ -67,6 +67,7 @@ static void of_coresight_get_ports_legacy(const
 
->=20
-> > And so this isn't actually any different
-> > than what was proposed originally to use genpd for this?
-> >
+[...]
 
-I guess this answer to this is yes. Which is fine. CPU PM notifiers are
-still used by various drivers to do things like save/restore state of
-devices that lose state when the CPUs power down. The use of genpd is
-helpful for OSI mode because it can describe how/when big and little
-clusters are powered off by putting them in different genpds. For
-counting the last CPU to turn off it seems simpler to just register for
-CPU PM notifiers and not care about genpd logic and nesting clusters,
-etc. I'm happy to see this not be a blocker.
+>> @@ -684,8 +702,13 @@ static int acpi_coresight_parse_graph(struct
+>> acpi_device *adev,
+>>          return rc;
+>>
+>>      /* Copy the connection information to the final location */
+>> -    for (i = 0; i < pdata->nr_outport; i++)
+>> -        pdata->conns[i] = conns[i];
+>> +    for (i = 0; conns + i < ptr; i++) {
+>> +        int port = conns[i].outport;
+>> +
+>> +        /* Duplicate output port */
+>> +        WARN_ON(pdata->conns[port].child_fwnode);
+>> +        pdata->conns[port] = conns[i];
+>> +    }
+>>
+>>      devm_kfree(&adev->dev, conns);
+>>      return 0;
+>> @@ -787,6 +810,7 @@ coresight_get_platform_data(struct device *dev)
+>>          goto error;
+>>
+>>      pdata = devm_kzalloc(dev, sizeof(*pdata), GFP_KERNEL);
+>> +    pdata->nr_outport = pdata->nr_inport = -1;
+
+
+Please could you remove this hunk and test it ? I forgot to update the
+commit before I sent this over.
+
+
+>>              /* Does it match this newly added device? */
+>> @@ -1029,6 +1032,9 @@ static void coresight_fixup_device_conns(struct
+>> coresight_device *csdev)
+>>          struct coresight_connection *conn = &csdev->pdata->conns[i];
+>>          struct device *dev = NULL;
+>>
+>> +        if (!conn->child_fwnode)
+>> +            continue;
+>> +
+>>          dev = bus_find_device_by_fwnode(&coresight_bustype, 
+>> conn->child_fwnode);
+>>          if (dev) {
+>>              conn->child_dev = to_coresight_device(dev);
+>> @@ -1061,7 +1067,7 @@ static int coresight_remove_match(struct device
+>> *dev, void *data)
+>>      for (i = 0; i < iterator->pdata->nr_outport; i++) {
+>>          conn = &iterator->pdata->conns[i];
+>>
+>> -        if (conn->child_dev == NULL)
+>> +        if (conn->child_dev == NULL || conn->child_fwnode == NULL)
+>>              continue;
+>>
+>>          if (csdev->dev.fwnode == conn->child_fwnode) {
+> 
+> 
+> Thanks Suzuki, I don't see the KASAN warning anymore with this patch.
+> But somehow tmc_etr probe fails with error -12(ENOMEM).
+
+See the above suggestion.
+
+Cheers
+Suzuki
