@@ -2,86 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D54EF1A3CAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 01:00:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 970FC1A3CB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 01:02:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726871AbgDIXAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 19:00:46 -0400
-Received: from mail-il1-f193.google.com ([209.85.166.193]:36342 "EHLO
-        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726875AbgDIXAq (ORCPT
+        id S1727049AbgDIXCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 19:02:17 -0400
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:50518 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726734AbgDIXCR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 19:00:46 -0400
-Received: by mail-il1-f193.google.com with SMTP id p13so355435ilp.3;
-        Thu, 09 Apr 2020 16:00:46 -0700 (PDT)
+        Thu, 9 Apr 2020 19:02:17 -0400
+Received: by mail-pj1-f68.google.com with SMTP id b7so110133pju.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2020 16:02:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jIJZPEFSJM6M841dNh5jrpNBXHFJZg4bAqyw0T0WdHE=;
+        b=ANBR9gXiPJlUP4KqtSzKrzX1Ak8sTYrUghswcXNY9U8cscQY4540c0VsZEA6K/8ao3
+         jPhjSCQ21IAtwFhO3NkSGdBcojwh3c38e4NEWBxrnSlI7RvQ5BhZcNdbISrJjwEYOqj0
+         ujTCKq1g/xKEcJcziaTGi4v9yBbZSwRIn4DkA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Uc46kdVNduykSvXO5lVtxr8veYg7KgzN/ssrZ47l1hg=;
-        b=qRk/AmNRkiM64e9flKAXC/e8RiPLXo2PZgzorxNcPH9k2kN/nRo9gHLZvSYP4Jab4J
-         7/F2srfnI4nBlTYsxmmj/MPxs4W2/m6FtfuTyRRwbeoK+2zObh8OrPt6PJyezsqjit+g
-         2FWp/l0UTXScdOBgR8FiQGXLBZvYI6qVbxLT830dMVsAE6L7vSOaHjSW10BPd90U1LmQ
-         X1Vc1ZL4Niy54WrdhMjVr0QlHlPkIRy/F4SMoPO9DfSGwEYiFY7hbcvCUrvP44tdMmdY
-         z2QS3kwfzqX0H3mF6gfAVyGYspwg7fS3Auut/kx7DaM0H9xAbShH3bAsiZ9+k5E0ahIZ
-         /wtA==
-X-Gm-Message-State: AGi0PuaG3XddwGEcF9w/kzqijGL81lCYygcrBrxbyOrpCSH0HrnEkloa
-        mMVbDEydj/cu8m2HFm3+jQ==
-X-Google-Smtp-Source: APiQypILccj1GZ4l+HD6IM1kuuB93JyalMoaWIKBSZb2y88Xpbg2XvHKiX5upl96mrxT+spAIxQLZA==
-X-Received: by 2002:a92:359b:: with SMTP id c27mr2249082ilf.148.1586473245487;
-        Thu, 09 Apr 2020 16:00:45 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id e11sm147208ilr.30.2020.04.09.16.00.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Apr 2020 16:00:44 -0700 (PDT)
-Received: (nullmailer pid 5080 invoked by uid 1000);
-        Thu, 09 Apr 2020 23:00:40 -0000
-Date:   Thu, 9 Apr 2020 17:00:40 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sivaprak@codeaurora.org
-Subject: Re: [PATCH V2 2/8] dt-bindings: clock: Add YAML schemas for QCOM A53
- PLL
-Message-ID: <20200409230040.GA1782@bogus>
-References: <1586086165-19426-1-git-send-email-sivaprak@codeaurora.org>
- <1586086165-19426-3-git-send-email-sivaprak@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jIJZPEFSJM6M841dNh5jrpNBXHFJZg4bAqyw0T0WdHE=;
+        b=JAjeiQ+Q1WaYFIjfOPCXaXI0vj87cZ6wI73wgZDrigyz6rp4HOC3hM713ikJ2OQv2V
+         w8tb+GBJ7nfEM1Xx+EVqSlGaHKrXzlzkk7p4hNVA56JFxQAHHFN/4bel5wqfdg96m/0s
+         p49/J4OfgAYNdIJ8jBtEGSffW3FOi5PoPAUfA6MIFHY1DBYh9vtG+zSVllLM22G+w6lZ
+         E/ukUBGE+aNOJKtUBR+1Ew0vqRvjFEbp4uQ5KGMqnggoWDfgHO4vGP5xWR9o2uTERAh+
+         nvx/MCVi9BCCm4sKiNIfx4Sg/nRh9YuvoU/56AJAe7mCq3sB+tam9T1mJcfsyEKLIDbP
+         msyA==
+X-Gm-Message-State: AGi0PuZSv4sGqPrnwY9GzEOGWwb7PdtWctcBxU1LqzqTU3ESxo3v9hHV
+        NorbBKGBXxPy2juciGU++HtO8w==
+X-Google-Smtp-Source: APiQypJimvMon4Q5xA3ushKRx69V1ZLH9Zjeu2mLaa2PHnrgD0D5csP5QZfQPbyVxlVj+rBz/B3XcA==
+X-Received: by 2002:a17:902:14b:: with SMTP id 69mr1894090plb.121.1586473335201;
+        Thu, 09 Apr 2020 16:02:15 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id x68sm164227pfb.5.2020.04.09.16.02.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Apr 2020 16:02:14 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Jeffrey Kardatzke <jkardatzke@google.com>,
+        devicetree@vger.kernel.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Atul Dhudase <adhudase@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Add interconnect paths for the video codec
+Date:   Thu,  9 Apr 2020 16:02:08 -0700
+Message-Id: <20200409160206.1.Icf877f5cd50ef5e56d14ee014ca196d76242cb89@changeid>
+X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1586086165-19426-3-git-send-email-sivaprak@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun,  5 Apr 2020 16:59:19 +0530, Sivaprakash Murugesan wrote:
-> This patch adds schema for primary CPU PLL found on few Qualcomm
-> platforms.
-> 
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> ---
->  .../devicetree/bindings/clock/qcom,a53pll.txt      | 22 --------
->  .../devicetree/bindings/clock/qcom,a53pll.yaml     | 60 ++++++++++++++++++++++
->  2 files changed, 60 insertions(+), 22 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,a53pll.txt
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
-> 
+Add the interconnect path configuration for the venus video codec of
+the SC7180.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+The interconnect paths were originally part of the patch "arm64: dts:
+sc7180: Add Venus video codec DT node" (https://patchwork.kernel.org/patch/11332131/),
+they were removed because the ICC provider nodes hadn't landed yet.
 
-Documentation/devicetree/bindings/clock/qcom,a53pll.yaml: $id: relative path/filename doesn't match actual path or filename
-	expected: http://devicetree.org/schemas/clock/qcom,a53pll.yaml#
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-See https://patchwork.ozlabs.org/patch/1266526
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 998f101ad623b7..2e11d4ce995778 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1475,6 +1475,9 @@ venus: video-codec@aa00000 {
+ 				      "vcodec0_core", "vcodec0_bus";
+ 			iommus = <&apps_smmu 0x0c00 0x60>;
+ 			memory-region = <&venus_mem>;
++			interconnects = <&mmss_noc MASTER_VIDEO_P0 &mc_virt SLAVE_EBI1>,
++					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_VENUS_CFG>;
++			interconnect-names = "video-mem", "cpu-cfg";
+ 
+ 			video-decoder {
+ 				compatible = "venus-decoder";
+-- 
+2.26.0.110.g2183baf09c-goog
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
