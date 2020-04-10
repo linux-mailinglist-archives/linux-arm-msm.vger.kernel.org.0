@@ -2,59 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E25AA1A3E53
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 04:33:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 599801A3E56
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 04:33:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbgDJCcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 22:32:51 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:40156 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726776AbgDJCcv (ORCPT
+        id S1726812AbgDJCcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 22:32:55 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:44091 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725987AbgDJCcw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 22:32:51 -0400
-Received: by mail-lf1-f68.google.com with SMTP id 198so381031lfo.7;
-        Thu, 09 Apr 2020 19:32:48 -0700 (PDT)
+        Thu, 9 Apr 2020 22:32:52 -0400
+Received: by mail-lf1-f66.google.com with SMTP id 131so368065lfh.11;
+        Thu, 09 Apr 2020 19:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VWKi6VRDm5SDW3y0ubYhqiYe82Hc9AZr1BHz5r8B5mA=;
-        b=en6Vh+d1e9XamkEvUkTUxnRAjg7pJmsXs+ztaaiCVXZKTn2sWLWn3wbRwuHlScA4Xr
-         5IR8v6yHAfPI1rNoQWJxBEMG1b8kbkww0ReDLl0pLCfeEll4PTAfkM0h/9MMXqBJkHe9
-         WuOmXBqjU26af2jNTRQapA/oLaONrsXCBEVZLHszv1v6fKunB+x8TLi0P95+UtBbI86K
-         k+88BzWoDE00vPJ6eHl2cSO0fxdoditbmVrI5thrjtomwzJxtvGvPGmRqCI+o69yEzQ+
-         TNmINHtsWsXi4McxM1Pt3fg94tHWj9nlc45iWoHycm1nvCT1WNVecvA1EqTrheV9Shnf
-         nFIg==
+        bh=GRYexHiGlHYS2OWu1UqqdC4MhAnmblXrqW381GPECfY=;
+        b=BBAYw+BG3rrs+XEE4ed6Qv/Qmwavu8nNLw7Re8Pv9v8p7xNHcZK3AaLVX9cPOTmIFx
+         yUmOdmugsHW1ydXn0383VDZ31hDFyRIeiZlOAlZltuINRu/J2KcXF75SIMbTcEbVG84I
+         R5JBPn37l2mIxcAh8+JK/wve3Shc1S2zQ89bi9MYHoL7fEBRT5KJucWXBaWj7UCsHCjw
+         XyVrDnk77E/SCB2OxW6qmAjVS29vZd0r0hEdtJEBG5PuHDJDyuJFX0qRZBZXaPp++iCp
+         VhkjaQBCr5AzdJnlv90zVh1YDxp1jI+NikU9eNSGAmvfmXwy3YaDYiL0xN6yrhEsx3RN
+         1w3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VWKi6VRDm5SDW3y0ubYhqiYe82Hc9AZr1BHz5r8B5mA=;
-        b=RIWeaVgpexRB2pxcRU40j7vov/gP/hHvKUFFtW401DdN2e+sN09+Kq+5gYNCtat69u
-         iVTNp72ij+xr6jsmVLpRq9IFt5oHnfIdcU4abYCImSZRmRPmCqDfPtFqFw3kTWYVzLG0
-         e8/FMYJ8Na8YMw0NfzT5swmX8/ZNUqlFw7GJfpkfQ/4QV+yW4oNESJN1X1qlbVFBPt/0
-         vDsMf+F3UB8vDiQgVkOXWmQr0Gx/WrCypbOrig1xOxR0DhEhxHm3MYNjwmBqzIHuWZaQ
-         xBZ12Q2yzrpLvIaoDMX4jn4jWKXGYSVyIeF5QcJnzMTJ0MY4brUX8bQztl/d/tt6UsS0
-         Cteg==
-X-Gm-Message-State: AGi0PubBwUPbOVzm0BQyS+cw6gSxpEE6Q1qLG6MaaVdDU28h+hJxCbVi
-        Cpm0o5/EryGFThJM/QYWCo8P8I5gP+ay6w==
-X-Google-Smtp-Source: APiQypKHmu6pb2IVpV0u1Uuc4X5XVu8meQGR4TaY71qteOknvUfldY2eA2qlks7OFDj/XazjtchAcg==
-X-Received: by 2002:a05:6512:3135:: with SMTP id p21mr1274558lfd.36.1586485967642;
-        Thu, 09 Apr 2020 19:32:47 -0700 (PDT)
+        bh=GRYexHiGlHYS2OWu1UqqdC4MhAnmblXrqW381GPECfY=;
+        b=ZRBIP/ebmdt8kB2Nnubzg1VHE7jCbBFSygEN7cLqyBCBWxwzVpFK53w5vxOTaugBry
+         63oaHKavWxhN7zCzNcQK1xp8qUE5ldSmEgwZg5frXfsTISjz2WvyE5c1qEgzZIN0TkR8
+         V1qJq2at/1ur9LgMINBzpqJpf/zTtV4Fa1gQvmL05VrTvur3TBr53UIhjutRO13QdBqR
+         qveJZYRevRIVQq3/kjcSSJtB1MpB+yUjeDbFpylurFH4fANO96jak2IyWGA9BUL2Iwz4
+         QQqQsUFUPXAlnpMwECOrLFnlsn5sFCnzo2wA0PcOGLNneIHV6ILMVhYWE0B33XXrA2u1
+         HYRQ==
+X-Gm-Message-State: AGi0PuZFJWsVeSyYGk6AvS/WIRiY+QtvaRAzwjubyQo5HFNjwH7VYTGq
+        0EC+SQnl7+r2ia8KMG2b7roe5OR1YLxukA==
+X-Google-Smtp-Source: APiQypIAaoBNNNTErcLAiMjEaEPexcgivbo0e3XytA6AzZFotVDr8zQ4mmaN/zExBKg4F1qjX0VgIA==
+X-Received: by 2002:a05:6512:3049:: with SMTP id b9mr1320447lfb.176.1586485970329;
+        Thu, 09 Apr 2020 19:32:50 -0700 (PDT)
 Received: from localhost ([213.191.183.145])
-        by smtp.gmail.com with ESMTPSA id u7sm433361lfu.3.2020.04.09.19.32.46
+        by smtp.gmail.com with ESMTPSA id v3sm415033lfo.62.2020.04.09.19.32.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2020 19:32:47 -0700 (PDT)
+        Thu, 09 Apr 2020 19:32:49 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Daniele Debernardi <drebrez@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH 4/6] ARM: dts: qcom: msm8974-klte: Add sdhci1 node
-Date:   Fri, 10 Apr 2020 05:32:01 +0300
-Message-Id: <20200410023203.192048-5-iskren.chernev@gmail.com>
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH 5/6] ARM: dts: qcom: msm8974-klte: Remove inherited vreg_boost node
+Date:   Fri, 10 Apr 2020 05:32:02 +0300
+Message-Id: <20200410023203.192048-6-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.26.0
 In-Reply-To: <20200410023203.192048-1-iskren.chernev@gmail.com>
 References: <20200410023203.192048-1-iskren.chernev@gmail.com>
@@ -67,63 +69,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Daniele Debernardi <drebrez@gmail.com>
 
-This introduces the eMMC sdhci node and its pinctrl state
+The Samsung klte does not have a vreg_boost node. vreg_boost also
+depends on pm8941-gpio which are not present on the klte.
 
 Signed-off-by: Daniele Debernardi <drebrez@gmail.com>
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 ---
- .../boot/dts/qcom-msm8974-samsung-klte.dts    | 32 +++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-index 21335999a024..de0bf6b7e732 100644
+index de0bf6b7e732..ad26c83fee81 100644
 --- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
 +++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-@@ -153,6 +153,9 @@ l19 {
- 					l20 {
- 						regulator-min-microvolt = <2950000>;
- 						regulator-max-microvolt = <2950000>;
-+
-+						regulator-allow-set-load;
-+						regulator-system-load = <200000>;
- 					};
- 
- 					l21 {
-@@ -232,6 +235,35 @@ volume-up {
- 			debounce-interval = <15>;
+@@ -1,7 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include "qcom-msm8974pro.dtsi"
+-#include "qcom-pm8841.dtsi"
+-#include "qcom-pm8941.dtsi"
+ #include "qcom-pma8084.dtsi"
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/input/input.h>
+@@ -196,6 +194,8 @@ l27 {
+ 			};
  		};
  	};
 +
-+	pinctrl@fd510000 {
-+		sdhc1_pin_a: sdhc1-pin-active {
-+			clk {
-+				pins = "sdc1_clk";
-+				drive-strength = <4>;
-+				bias-disable;
-+			};
-+
-+			cmd-data {
-+				pins = "sdc1_cmd", "sdc1_data";
-+				drive-strength = <4>;
-+				bias-pull-up;
-+			};
-+		};
-+	};
-+
-+	sdhci@f9824900 {
-+		status = "ok";
-+
-+		vmmc-supply = <&pma8084_l20>;
-+		vqmmc-supply = <&pma8084_s4>;
-+
-+		bus-width = <8>;
-+		non-removable;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&sdhc1_pin_a>;
-+	};
++	/delete-node/ vreg-boost;
  };
  
- &spmi_bus {
+ &soc {
 -- 
 2.26.0
 
