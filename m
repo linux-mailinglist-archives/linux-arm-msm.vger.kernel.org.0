@@ -2,146 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E34B1A3CEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 01:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5DA71A3D8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 02:55:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbgDIXeK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 19:34:10 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:64359 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727359AbgDIXeK (ORCPT
+        id S1725970AbgDJAzj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 20:55:39 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:22072 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726858AbgDJAzj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 19:34:10 -0400
+        Thu, 9 Apr 2020 20:55:39 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586475250; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=JX36OsMOhg3j8cE6jmtJp/2wzT5Rnaj1Sk4+vnaS0Bs=; b=fYHcS13a446pMQ/buhjT++F6cUUS7nfgA0PnAMiCsPLLiYOUtGk7xSdNeCKoonr5/5Q1QgW4
- ipO9OZ1FVm/gaETTZkxsucZDitXv2c4ab6d1+fDp/ACS/U/DEcXng9SqVtA8GYr3h/kJSydY
- wBq/6X7GERs/Y0scRWK1FdpNbU4=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1586480138; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=U7DZcbslve7IXk4DQ4UcUwvrYxE7nmOSD3B0DRfj2Yo=; b=d+cJsbwmfxZpwtCklW/rDMMSAFew7G4w9fi5Ugu3+fvuTy+LMY0FU86wY4/fXd102fgJ7go/
+ gXPBDoQOfo/o3Cki0iCHsmOCGLbhSvzRWx5akb7rKS1aEgxvVwxD12XXUOTEoaaWtMmJVExO
+ jvFbPXi/d6Qj/qqcR8Lei0NaVdw=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e8fb0f1.7f7bb8d75880-smtp-out-n05;
- Thu, 09 Apr 2020 23:34:09 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e8fc401.7f2b727ce8b8-smtp-out-n03;
+ Fri, 10 Apr 2020 00:55:29 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7A1ACC4478F; Thu,  9 Apr 2020 23:34:08 +0000 (UTC)
+        id 43DDBC433BA; Fri, 10 Apr 2020 00:55:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from localhost.localdomain (c-71-237-101-98.hsd1.co.comcast.net [71.237.101.98])
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05AA8C58A03;
-        Thu,  9 Apr 2020 23:34:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 05AA8C58A03
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12375C433D2;
+        Fri, 10 Apr 2020 00:55:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 12375C433D2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     iommu@lists.linux-foundation.org
-Cc:     linux-arm-msm@vger.kernel.org, robin.murphy@arm.com,
-        will@kernel.org, linux-arm-kernel@lists.infradead.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v2 1/5] bus: mhi: core: Handle syserr during power_up
+To:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     "linux-arm-msm@vger.kernel.org; bbhatt"@codeaurora.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v6 5/5] drm/msm/a6xx: Support split pagetables
-Date:   Thu,  9 Apr 2020 17:33:50 -0600
-Message-Id: <20200409233350.6343-6-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200409233350.6343-1-jcrouse@codeaurora.org>
-References: <20200409233350.6343-1-jcrouse@codeaurora.org>
+References: <1586278230-29565-1-git-send-email-jhugo@codeaurora.org>
+ <1586278230-29565-2-git-send-email-jhugo@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <1768ba6e-12c2-7b4f-0f17-44fecc6473b9@codeaurora.org>
+Date:   Thu, 9 Apr 2020 17:55:27 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <1586278230-29565-2-git-send-email-jhugo@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Attempt to enable split pagetables if the arm-smmu driver supports it.
-This will move the default address space from the default region to
-the address range assigned to TTBR1. The behavior should be transparent
-to the driver for now but it gets the default buffers out of the way
-when we want to start swapping TTBR0 for context-specific pagetables.
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+On 4/7/20 9:50 AM, Jeffrey Hugo wrote:
+> The MHI device may be in the syserr state when we attempt to init it in
+> power_up().  Since we have no local state, the handling is simple -
+> reset the device and wait for it to transition out of the reset state.
+>
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> ---
+>   drivers/bus/mhi/core/pm.c | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
+>
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index 52690cb..3285c9e 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -9,6 +9,7 @@
+>   #include <linux/dma-direction.h>
+>   #include <linux/dma-mapping.h>
+>   #include <linux/interrupt.h>
+> +#include <linux/iopoll.h>
+>   #include <linux/list.h>
+>   #include <linux/mhi.h>
+>   #include <linux/module.h>
+> @@ -760,6 +761,7 @@ static void mhi_deassert_dev_wake(struct mhi_controller *mhi_cntrl,
+>   
+>   int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>   {
+> +	enum mhi_state state;
+>   	enum mhi_ee_type current_ee;
+>   	enum dev_st_transition next_state;
+>   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> @@ -829,6 +831,24 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>   		goto error_bhi_offset;
+>   	}
+>   
+> +	state = mhi_get_mhi_state(mhi_cntrl);
+> +	if (state == MHI_STATE_SYS_ERR) {
+> +		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+> +		ret = readl_poll_timeout(mhi_cntrl->regs + MHICTRL, val,
+> +					 !(val & MHICTRL_RESET_MASK), 1000,
+> +					 mhi_cntrl->timeout_ms * 1000);
+can we use this instead of polling because MSI is configures and int_vec 
+handler is registered
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 52 ++++++++++++++++++++++++++-
- 1 file changed, 51 insertions(+), 1 deletion(-)
+     wait_event_timeout(mhi_cntrl->state_event,
+                MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
+               mhi_read_reg_field(mhi_cntrl, base, MHICTRL,
+                           MHICTRL_RESET_MASK,
+                           MHICTRL_RESET_SHIFT, &reset) || !reset ,
+                msecs_to_jiffies(mhi_cntrl->timeout_ms));
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 02ade43d6335..b27daa77723c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -825,6 +825,56 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
- 	return (unsigned long)busy_time;
- }
- 
-+static struct msm_gem_address_space *
-+a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
-+{
-+	struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
-+	struct msm_gem_address_space *aspace;
-+	struct msm_mmu *mmu;
-+	u64 start, size;
-+	u32 val = 1;
-+	int ret;
-+
-+	if (!iommu)
-+		return ERR_PTR(-ENOMEM);
-+
-+	/*
-+	 * Try to request split pagetables - the request has to be made before
-+	 * the domian is attached
-+	 */
-+	iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
-+
-+	mmu = msm_iommu_new(&pdev->dev, iommu);
-+	if (IS_ERR(mmu)) {
-+		iommu_domain_free(iommu);
-+		return ERR_CAST(mmu);
-+	}
-+
-+	/*
-+	 * After the domain is attached, see if the split tables were actually
-+	 * successful.
-+	 */
-+	ret = iommu_domain_get_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
-+	if (!ret && val) {
-+		/*
-+		 * The aperture start will be at the beginning of the TTBR1
-+		 * space so use that as a base
-+		 */
-+		start = iommu->geometry.aperture_start;
-+		size = 0xffffffff;
-+	} else {
-+		/* Otherwise use the legacy 32 bit region */
-+		start = SZ_16M;
-+		size = 0xffffffff - SZ_16M;
-+	}
-+
-+	aspace = msm_gem_address_space_create(mmu, "gpu", start, size);
-+	if (IS_ERR(aspace))
-+		iommu_domain_free(iommu);
-+
-+	return aspace;
-+}
-+
- static const struct adreno_gpu_funcs funcs = {
- 	.base = {
- 		.get_param = adreno_get_param,
-@@ -847,7 +897,7 @@ static const struct adreno_gpu_funcs funcs = {
- 		.gpu_state_get = a6xx_gpu_state_get,
- 		.gpu_state_put = a6xx_gpu_state_put,
- #endif
--		.create_address_space = adreno_iommu_create_address_space,
-+		.create_address_space = a6xx_create_address_space,
- 	},
- 	.get_timestamp = a6xx_get_timestamp,
- };
+1) In case of MHI_PM_IN_FATAL_STATE we would not be accessing MHI reg
+2) Consistent with current MHI driver code.
+> +		if (ret) {
+> +			dev_info(dev, "Failed to reset MHI due to syserr state\n");
+> +			goto error_bhi_offset;
+> +		}
+> +
+> +		/*
+> +		 * device cleares INTVEC as part of RESET processing,
+> +		 * re-program it
+> +		 */
+> +		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
+> +	}
+> +
+>   	/* Transition to next state */
+>   	next_state = MHI_IN_PBL(current_ee) ?
+>   		DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
+
 -- 
-2.17.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
