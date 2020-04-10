@@ -2,108 +2,317 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 92D631A3DBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 03:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 160D91A3E12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 04:15:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726082AbgDJB3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 21:29:12 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:34841 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726327AbgDJB3L (ORCPT
+        id S1726699AbgDJCPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 22:15:24 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43951 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726582AbgDJCPY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 21:29:11 -0400
-Received: by mail-pf1-f196.google.com with SMTP id a13so411492pfa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2020 18:29:11 -0700 (PDT)
+        Thu, 9 Apr 2020 22:15:24 -0400
+Received: by mail-pg1-f194.google.com with SMTP id s4so375166pgk.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2020 19:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=nN8xwvqZ4ahN4tlReVAi/RVQy676gCX473FCAHCL3fg=;
-        b=UBP9+WYQjNxRjKr+51/Qa6T9+gHFoX0+gwGNYylPV15IvRDx7YYOcGu72q8lRcX4/w
-         xDO0AL5qEJ0F4u12luB9Dgw+Pqjy+GZ4j2nH82BvrQWCf2zxOGvIwrpDOOVnVhHFiF35
-         YUhufF6/ix5n/gDXtC1mUIoY3W8AsD1E6isd90H0G/UhCy0zN/ywbRCrn1WVMOdO2N06
-         GNIwK3pF8yr1Sru7lb63vBbRaArbOV+hJUeXYhEhjjvEBvsfBt/wIpuz9Ar5s78ASgzy
-         mijTJv5KdZSIJJqrNX1Z9YS6uAnp79zjei+j04oM+fTQx2rlZWO9l/HZ0pEwHVrv7Hjl
-         wLqg==
+        bh=d7TfN17oK8F2t6OALSAXlrRz8ePlocQcOt3Tf7Trm+w=;
+        b=IAv54bR49HatWrnIw+HDgyEN9L0d+xo2Xv+gqO9biP9UAG4TQxLCmG7iTpbSCq+NuC
+         0eAR4r4KUVa6eR6XU7d3tZ5fOUaNT6Wg4F97lpYfpU8MSjA8SlYyhx+b4yh9uNhsbG4n
+         oNawBTi8CBRoYEvBS4wq84IRWkzfMxdsNljhCX1BARiGTmfgxw2N4TkfQs4duPM6QRsC
+         +daKrgaq3RS/hpXvWAQJFLUKT7QBBqjbgFTKz8Z3KRYGMMv2EvUymel++H5RKt+zsyd6
+         f8RHaCLC6Lghb4Nbso62VAu3g8UE9aQ8Yv6ZVW9+JjeIw9YffkFE9T6mZb2/j2IDS2WA
+         XF9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=nN8xwvqZ4ahN4tlReVAi/RVQy676gCX473FCAHCL3fg=;
-        b=uj79v96pbVAf0MEbJh6HnHNMj5UX4VgCMXE7zQXPvlNTaoUWkRB9k4OQuEJXzltfat
-         R6jMSgEtOyj5LatfcyqkjkmpahIvLgZ91B2mhe1caAwkztFYc8CGFD30VbgovC79sDDu
-         Oo+atEldifLEuPGJfzIFTpw4XDNKyGhWExAZH1lwyT+rHUkPo0oke9XKFPQkwPiwCScI
-         JmLs2J0d1j0FdFd5cd1TuExpHD6LViQ/hHhE2inpFBD5nMQo1OyYwMQ8PU8KsOpudQZ6
-         Ezs8tqs8bgmspuBKpQBo0ApBQawMbB8oHlmrDWO7XaG9aRbuhmkAe8y8JQM0XtsJ3SOc
-         0dYg==
-X-Gm-Message-State: AGi0PuYm2is6WaznBll+8uTdpahoZR7q084S8Y+kCmAplM5VVZgxg6P5
-        cl0CJ3MGZaJ6fmSUdazY8tLjSQ==
-X-Google-Smtp-Source: APiQypL3buBWpQzlgFFQmY0P9M+5wVLAzIqpm2p8VIUbBN27OoqhVsPZTiuNQoUe8y6dFl1x74NTEg==
-X-Received: by 2002:a63:e749:: with SMTP id j9mr2140127pgk.319.1586482150941;
-        Thu, 09 Apr 2020 18:29:10 -0700 (PDT)
+        bh=d7TfN17oK8F2t6OALSAXlrRz8ePlocQcOt3Tf7Trm+w=;
+        b=lrFgJBZ17ZH37lJw26MHOXR0GkIszKkgcMiWp+FkIcgqL/tMp+y9reILynhryS0mF+
+         jckVY5q11QlRsB0XME3UpMI/UbdzWqAh9v4cHCrEVi5wfnZ6ckJ2JVkGV9Ec6zzURAbk
+         76OVclEQlzuNLF1tCQFfca4SM9mjDSGtBvyMl7mgPfC1xx/9bxRvDsmGi1PkMP9qRdVB
+         X6aMsa3ZUYsuq4/TwzeDuNQehG+eogGM7W5GN1eWEmifWie2ro4ZBFAIeYxrQXkBDsTW
+         m5LJhno+gLgyA1GcFvgidFXgLh33fDOkVNWIugWsaF8aZo/fmPY4kI4R6R9QWqMx4n7Q
+         J0xA==
+X-Gm-Message-State: AGi0PuZfVpc7UPrMl9/R0DSCZFKiUYF4+2RD2N9F+f1klXonybOYc/6+
+        E99dUCNdkxBWkZXIEI+K6hlLBw==
+X-Google-Smtp-Source: APiQypJ9lhmlgi5PbLI3Ia4+q4YouJOhuN2AbjSX8A9OMK0E/D5AZg24FRtaKX79pzagH8HcG/UleQ==
+X-Received: by 2002:a65:424b:: with SMTP id d11mr2245592pgq.17.1586484921064;
+        Thu, 09 Apr 2020 19:15:21 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e187sm329384pfe.143.2020.04.09.18.29.09
+        by smtp.gmail.com with ESMTPSA id e26sm388588pff.167.2020.04.09.19.15.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Apr 2020 18:29:10 -0700 (PDT)
-Date:   Thu, 9 Apr 2020 18:29:19 -0700
+        Thu, 09 Apr 2020 19:15:20 -0700 (PDT)
+Date:   Thu, 9 Apr 2020 19:15:28 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jason Yan <yanaijie@huawei.com>
-Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] regulator: qcom_rpm: remove defined but not used
- 'pm8921_ftsmps'
-Message-ID: <20200410012919.GW20625@builder.lan>
-References: <20200409114026.38383-1-yanaijie@huawei.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Nuno S? <nuno.sa@analog.com>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Matt Mackall <mpm@selenic.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Mark Brown <broonie@kernel.org>, linux-hwmon@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org, linux-spi@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: Fix dtc warnings on reg and ranges in
+ examples
+Message-ID: <20200410021528.GY20625@builder.lan>
+References: <20200409202458.24509-1-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200409114026.38383-1-yanaijie@huawei.com>
+In-Reply-To: <20200409202458.24509-1-robh@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 Apr 04:40 PDT 2020, Jason Yan wrote:
+On Thu 09 Apr 13:24 PDT 2020, Rob Herring wrote:
 
-> Fix the following gcc warning:
+> A recent update to dtc and changes to the default warnings introduced
+> some new warnings in the DT binding examples:
 > 
-> drivers/regulator/qcom_rpm-regulator.c:607:34: warning: ‘pm8921_ftsmps’
-> defined but not used [-Wunused-const-variable=]
->  static const struct qcom_rpm_reg pm8921_ftsmps = {
->                                   ^~~~~~~~~~~~~
+> Documentation/devicetree/bindings/arm/sunxi/allwinner,sun4i-a10-mbus.example.dts:23.13-61:
+>  Warning (dma_ranges_format): /example-0/dram-controller@1c01000:dma-ranges: "dma-ranges" property has invalid length (12 bytes) (parent #address-cells == 1, child #address-cells == 2, #size-cells == 1)
+> Documentation/devicetree/bindings/hwmon/adi,axi-fan-control.example.dts:17.22-28.11:
+>  Warning (unit_address_vs_reg): /example-0/fpga-axi@0: node has a unit name, but no reg or ranges property
+> Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.example.dts:34.13-54:
+>  Warning (dma_ranges_format): /example-0/memory-controller@2c00000:dma-ranges: "dma-ranges" property has invalid length (24 bytes) (parent #address-cells == 1, child #address-cells == 2, #size-cells == 2)
+> Documentation/devicetree/bindings/mfd/st,stpmic1.example.dts:19.15-79.11:
+>  Warning (unit_address_vs_reg): /example-0/i2c@0: node has a unit name, but no reg or ranges property
+> Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.example.dts:28.23-31.15:
+>  Warning (unit_address_vs_reg): /example-0/mdio@37000000/switch@10: node has a unit name, but no reg or ranges property
+> Documentation/devicetree/bindings/rng/brcm,bcm2835.example.dts:17.5-21.11:
+>  Warning (unit_address_vs_reg): /example-0/rng: node has a reg or ranges property, but no unit name
+> Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.example.dts:20.20-43.11:
+>  Warning (unit_address_vs_reg): /example-0/soc@0: node has a unit name, but no reg or ranges property
+> Documentation/devicetree/bindings/usb/ingenic,musb.example.dts:18.28-21.11:
+>  Warning (unit_address_vs_reg): /example-0/usb-phy@0: node has a unit name, but no reg or ranges property
 > 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Jason Yan <yanaijie@huawei.com>
+> Cc: Maxime Ripard <mripard@kernel.org>
+> Cc: Chen-Yu Tsai <wens@csie.org>
+> Cc: "Nuno Sá" <nuno.sa@analog.com>
+> Cc: Jean Delvare <jdelvare@suse.com>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Cc: Thierry Reding <thierry.reding@gmail.com>
+> Cc: Jonathan Hunter <jonathanh@nvidia.com>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: Matt Mackall <mpm@selenic.com>
+> Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> Cc: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+> Cc: Florian Fainelli <f.fainelli@gmail.com>
+> Cc: Ray Jui <rjui@broadcom.com>
+> Cc: Scott Branden <sbranden@broadcom.com>
+> Cc: bcm-kernel-feedback-list@broadcom.com
+> Cc: Mark Brown <broonie@kernel.org>
+> Cc: linux-hwmon@vger.kernel.org
+> Cc: linux-tegra@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: netdev@vger.kernel.org
+> Cc: linux-crypto@vger.kernel.org
+> Cc: linux-rpi-kernel@lists.infradead.org
+> Cc: linux-spi@vger.kernel.org
+> Cc: linux-usb@vger.kernel.org
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
 > ---
->  drivers/regulator/qcom_rpm-regulator.c | 10 ----------
->  1 file changed, 10 deletions(-)
+> Will take this via the DT tree.
 > 
-> diff --git a/drivers/regulator/qcom_rpm-regulator.c b/drivers/regulator/qcom_rpm-regulator.c
-> index 7fc97f23fcf4..1ee8ec686ed3 100644
-> --- a/drivers/regulator/qcom_rpm-regulator.c
-> +++ b/drivers/regulator/qcom_rpm-regulator.c
-> @@ -604,16 +604,6 @@ static const struct qcom_rpm_reg pm8921_smps = {
->  	.supports_force_mode_bypass = false,
->  };
+> Rob
+> 
+>  .../arm/sunxi/allwinner,sun4i-a10-mbus.yaml   |  6 +++
+>  .../bindings/hwmon/adi,axi-fan-control.yaml   |  2 +-
+>  .../nvidia,tegra186-mc.yaml                   | 41 +++++++++++--------
+>  .../devicetree/bindings/mfd/st,stpmic1.yaml   |  2 +-
+>  .../bindings/net/qcom,ipq8064-mdio.yaml       |  1 +
+>  .../devicetree/bindings/rng/brcm,bcm2835.yaml |  2 +-
+>  .../bindings/spi/qcom,spi-qcom-qspi.yaml      |  2 +-
+>  .../devicetree/bindings/usb/ingenic,musb.yaml |  2 +-
+>  8 files changed, 35 insertions(+), 23 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/sunxi/allwinner,sun4i-a10-mbus.yaml b/Documentation/devicetree/bindings/arm/sunxi/allwinner,sun4i-a10-mbus.yaml
+> index aa0738b4d534..e713a6fe4cf7 100644
+> --- a/Documentation/devicetree/bindings/arm/sunxi/allwinner,sun4i-a10-mbus.yaml
+> +++ b/Documentation/devicetree/bindings/arm/sunxi/allwinner,sun4i-a10-mbus.yaml
+> @@ -42,6 +42,10 @@ properties:
+>      description:
+>        See section 2.3.9 of the DeviceTree Specification.
 >  
-> -static const struct qcom_rpm_reg pm8921_ftsmps = {
-> -	.desc.linear_ranges = ftsmps_ranges,
-> -	.desc.n_linear_ranges = ARRAY_SIZE(ftsmps_ranges),
-> -	.desc.n_voltages = 101,
-> -	.desc.ops = &uV_ops,
-> -	.parts = &rpm8960_smps_parts,
-> -	.supports_force_mode_auto = true,
-> -	.supports_force_mode_bypass = false,
-> -};
+> +  '#address-cells': true
+> +
+> +  '#size-cells': true
+> +
+>  required:
+>    - "#interconnect-cells"
+>    - compatible
+> @@ -59,6 +63,8 @@ examples:
+>          compatible = "allwinner,sun5i-a13-mbus";
+>          reg = <0x01c01000 0x1000>;
+>          clocks = <&ccu CLK_MBUS>;
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+>          dma-ranges = <0x00000000 0x40000000 0x20000000>;
+>          #interconnect-cells = <1>;
+>      };
+> diff --git a/Documentation/devicetree/bindings/hwmon/adi,axi-fan-control.yaml b/Documentation/devicetree/bindings/hwmon/adi,axi-fan-control.yaml
+> index 57a240d2d026..29bb2c778c59 100644
+> --- a/Documentation/devicetree/bindings/hwmon/adi,axi-fan-control.yaml
+> +++ b/Documentation/devicetree/bindings/hwmon/adi,axi-fan-control.yaml
+> @@ -47,7 +47,7 @@ required:
+>  
+>  examples:
+>    - |
+> -    fpga_axi: fpga-axi@0 {
+> +    fpga_axi: fpga-axi {
+>              #address-cells = <0x2>;
+>              #size-cells = <0x1>;
+>  
+> diff --git a/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml b/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml
+> index 12516bd89cf9..611bda38d187 100644
+> --- a/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml
+> +++ b/Documentation/devicetree/bindings/memory-controllers/nvidia,tegra186-mc.yaml
+> @@ -97,30 +97,35 @@ examples:
+>      #include <dt-bindings/clock/tegra186-clock.h>
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  
+> -    memory-controller@2c00000 {
+> -        compatible = "nvidia,tegra186-mc";
+> -        reg = <0x0 0x02c00000 0x0 0xb0000>;
+> -        interrupts = <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
 > -
->  static const struct qcom_rpm_reg pm8921_ncp = {
->  	.desc.linear_ranges = ncp_ranges,
->  	.desc.n_linear_ranges = ARRAY_SIZE(ncp_ranges),
+> +    bus {
+>          #address-cells = <2>;
+>          #size-cells = <2>;
+>  
+> -        ranges = <0x0 0x02c00000 0x02c00000 0x0 0xb0000>;
+> +        memory-controller@2c00000 {
+> +            compatible = "nvidia,tegra186-mc";
+> +            reg = <0x0 0x02c00000 0x0 0xb0000>;
+> +            interrupts = <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +            #address-cells = <2>;
+> +            #size-cells = <2>;
+> +
+> +            ranges = <0x0 0x02c00000 0x0 0x02c00000 0x0 0xb0000>;
+>  
+> -        /*
+> -         * Memory clients have access to all 40 bits that the memory
+> -         * controller can address.
+> -         */
+> -        dma-ranges = <0x0 0x0 0x0 0x0 0x100 0x0>;
+> +            /*
+> +             * Memory clients have access to all 40 bits that the memory
+> +             * controller can address.
+> +             */
+> +            dma-ranges = <0x0 0x0 0x0 0x0 0x100 0x0>;
+>  
+> -        external-memory-controller@2c60000 {
+> -            compatible = "nvidia,tegra186-emc";
+> -            reg = <0x0 0x02c60000 0x0 0x50000>;
+> -            interrupts = <GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>;
+> -            clocks = <&bpmp TEGRA186_CLK_EMC>;
+> -            clock-names = "emc";
+> +            external-memory-controller@2c60000 {
+> +                compatible = "nvidia,tegra186-emc";
+> +                reg = <0x0 0x02c60000 0x0 0x50000>;
+> +                interrupts = <GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>;
+> +                clocks = <&bpmp TEGRA186_CLK_EMC>;
+> +                clock-names = "emc";
+>  
+> -            nvidia,bpmp = <&bpmp>;
+> +                nvidia,bpmp = <&bpmp>;
+> +            };
+>          };
+>      };
+>  
+> diff --git a/Documentation/devicetree/bindings/mfd/st,stpmic1.yaml b/Documentation/devicetree/bindings/mfd/st,stpmic1.yaml
+> index d9ad9260e348..f88d13d70441 100644
+> --- a/Documentation/devicetree/bindings/mfd/st,stpmic1.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/st,stpmic1.yaml
+> @@ -274,7 +274,7 @@ examples:
+>    - |
+>      #include <dt-bindings/mfd/st,stpmic1.h>
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+> -    i2c@0 {
+> +    i2c {
+>        #address-cells = <1>;
+>        #size-cells = <0>;
+>        pmic@33 {
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+> index b9f90081046f..67df3fe861ee 100644
+> --- a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+> +++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+> @@ -48,6 +48,7 @@ examples:
+>  
+>          switch@10 {
+>              compatible = "qca,qca8337";
+> +            reg = <0x10>;
+>              /* ... */
+>          };
+>      };
+> diff --git a/Documentation/devicetree/bindings/rng/brcm,bcm2835.yaml b/Documentation/devicetree/bindings/rng/brcm,bcm2835.yaml
+> index 89ab67f20a7f..c147900f9041 100644
+> --- a/Documentation/devicetree/bindings/rng/brcm,bcm2835.yaml
+> +++ b/Documentation/devicetree/bindings/rng/brcm,bcm2835.yaml
+> @@ -39,7 +39,7 @@ additionalProperties: false
+>  
+>  examples:
+>    - |
+> -    rng {
+> +    rng@7e104000 {
+>          compatible = "brcm,bcm2835-rng";
+>          reg = <0x7e104000 0x10>;
+>          interrupts = <2 29>;
+> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
+> index 0cf470eaf2a0..5c16cf59ca00 100644
+> --- a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
+> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
+> @@ -61,7 +61,7 @@ examples:
+>      #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  
+> -    soc: soc@0 {
+> +    soc: soc {
+>          #address-cells = <2>;
+>          #size-cells = <2>;
+>  
+> diff --git a/Documentation/devicetree/bindings/usb/ingenic,musb.yaml b/Documentation/devicetree/bindings/usb/ingenic,musb.yaml
+> index 1d6877875077..c2d2ee43ba67 100644
+> --- a/Documentation/devicetree/bindings/usb/ingenic,musb.yaml
+> +++ b/Documentation/devicetree/bindings/usb/ingenic,musb.yaml
+> @@ -56,7 +56,7 @@ additionalProperties: false
+>  examples:
+>    - |
+>      #include <dt-bindings/clock/jz4740-cgu.h>
+> -    usb_phy: usb-phy@0 {
+> +    usb_phy: usb-phy {
+>        compatible = "usb-nop-xceiv";
+>        #phy-cells = <0>;
+>      };
 > -- 
-> 2.17.2
+> 2.20.1
 > 
