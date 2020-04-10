@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0254C1A42C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 09:08:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 653211A42DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 09:17:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725839AbgDJHIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Apr 2020 03:08:05 -0400
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:21196 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725776AbgDJHIF (ORCPT
+        id S1725861AbgDJHRe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Apr 2020 03:17:34 -0400
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:2025 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725858AbgDJHRd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Apr 2020 03:08:05 -0400
+        Fri, 10 Apr 2020 03:17:33 -0400
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Apr 2020 12:37:12 +0530
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Apr 2020 12:47:31 +0530
 Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Apr 2020 12:37:04 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Apr 2020 12:47:29 +0530
 Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id B91CC218D0; Fri, 10 Apr 2020 12:37:03 +0530 (IST)
+        id D5F69218D0; Fri, 10 Apr 2020 12:47:27 +0530 (IST)
 From:   Mansur Alisha Shaik <mansur@codeaurora.org>
 To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org, mansur@codeaurora.org
-Subject: [PATCH] venus: core: remove CNOC voting while device suspend
-Date:   Fri, 10 Apr 2020 12:36:56 +0530
-Message-Id: <1586502416-15157-1-git-send-email-mansur@codeaurora.org>
+Subject: [PATCH V2] venus: core: remove CNOC voting while device suspend
+Date:   Fri, 10 Apr 2020 12:47:25 +0530
+Message-Id: <1586503045-18630-1-git-send-email-mansur@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -40,6 +40,9 @@ in .suspend
 
 signed-off-by: mansur alisha shaik <mansur@codeaurora.org>
 ---
+Changes in V2:
+- As per stanimir comment changed the commit message.
+
  drivers/media/platform/qcom/venus/core.c | 12 ++++++++----
  1 file changed, 8 insertions(+), 4 deletions(-)
 
