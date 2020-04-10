@@ -2,114 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FE0F1A3E58
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 04:33:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C45101A3EF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 05:47:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbgDJCdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 22:33:02 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:43212 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgDJCdC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 22:33:02 -0400
-Received: by mail-lj1-f196.google.com with SMTP id h25so599718lja.10;
-        Thu, 09 Apr 2020 19:32:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Jl9+MFoz9FOVeQYZvGEhfQsUzeR6H5+fWjwrI15x2z4=;
-        b=hzo34WeHzqF2MRVekRCB6qQ2to+82InUQzzrEI3aHJE38TD2HK0mkYL8XmXe5U8/Ug
-         dhkFmz32aonURvzYSQmBfDf4Y5bJgSRmK4c/7iZyejYluqqpH4j/cdkNAIVPEzkUNcEU
-         YJIXvLVax7P5GiAiNrZ8t86nFtsj3YK+PWZHSIsW6XIx+hHG0QQaG/fP+tDfiOeOD/d4
-         WeJXYjrHaWkGter4N//y0HIxIPAnlIfIB8R3jZC4kxgZx4ddyedcSUVXzBPuFem+41mw
-         i30TJGB5Bg+3URW5FqjCBBj8Tubreog0XYXPiXZoUcvH6VjSmEQwD40PZBHvtRG/JWhm
-         CjBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Jl9+MFoz9FOVeQYZvGEhfQsUzeR6H5+fWjwrI15x2z4=;
-        b=YbIeg6alQIoT0HOQs21zl/a80TgndsLvLBI+DQpEup866Fy+SXBC2AP05fL7CiGJn3
-         3A5cEuwSPS6nYLJVWfOjAnCS6MgBlRMjOIjlQYFEQdeN4XFtb2sq6J4edwpAXXIAFTkA
-         WybErX7XDE4flRUD876gvbMtJ9JiumdH/v7FjIL0N15DnXWn16cvotDj1f6fYhIHEnG1
-         p28nFM+iEfMze2BXmfZLAezGkXpV9fDaRt7gDA8hlKWiv7EpcyHPaB7VFkfp/D5sISrW
-         EFBVx+e5fx4S5MH1ZxqFVuMx7/F1Fkk9iG6H+DHitcNij8bwMw2AUDD5ibJ4pIaJEK3i
-         Ikzg==
-X-Gm-Message-State: AGi0PuZQ5c+rSeTZ4B8CxMf1SBmXUd03H88C+aw8bpStoX2b1vvZLfIA
-        kZwV1wez6Ooy5PXnB8IYocIaG7SE9BT84Q==
-X-Google-Smtp-Source: APiQypJWofmM8Qlyb2FI7O0p2padX/aOtgYx9otx/2dnfLObyekNxIuKl5+r6b20D5ZTWeEQ44DyKw==
-X-Received: by 2002:a2e:b52f:: with SMTP id z15mr1642957ljm.38.1586485973083;
-        Thu, 09 Apr 2020 19:32:53 -0700 (PDT)
-Received: from localhost ([213.191.183.145])
-        by smtp.gmail.com with ESMTPSA id f7sm274127ljj.4.2020.04.09.19.32.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2020 19:32:52 -0700 (PDT)
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Daniele Debernardi <drebrez@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH 6/6] ARM: dts: qcom: msm8974-klte: Add USB node
-Date:   Fri, 10 Apr 2020 05:32:03 +0300
-Message-Id: <20200410023203.192048-7-iskren.chernev@gmail.com>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200410023203.192048-1-iskren.chernev@gmail.com>
-References: <20200410023203.192048-1-iskren.chernev@gmail.com>
+        id S1726797AbgDJDqq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 23:46:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56864 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726792AbgDJDqq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Apr 2020 23:46:46 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C9F68212CC;
+        Fri, 10 Apr 2020 03:46:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1586490406;
+        bh=idCS/o2KJWKLuG5YYj/PRV53FPx4L/x7Hh2m9+2AenI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=yVUk49vO0Tzai0p37Gmy8vRynYZPMDvlWRYSgqivmpU9PasEwgNFhaBtJCNMIp+rw
+         iUUxAjXRsooaIl+Vs/235Vp8e7oCePfdNkid1CJ/xbs1jvWgB1oFG3Fju+bM87jwSk
+         z1opBEiq1eYmD27sFyERs1GrFwGoDs56qXw7+6E0=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 09/68] media: venus: hfi_parser: Ignore HEVC encoding for V1
+Date:   Thu,  9 Apr 2020 23:45:34 -0400
+Message-Id: <20200410034634.7731-9-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200410034634.7731-1-sashal@kernel.org>
+References: <20200410034634.7731-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Daniele Debernardi <drebrez@gmail.com>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-This introduces the usb node which can be used e.g. for USB_ETH
+[ Upstream commit c50cc6dc6c48300af63a6fbc71b647053c15fc80 ]
 
-Signed-off-by: Daniele Debernardi <drebrez@gmail.com>
+Some older MSM8916 Venus firmware versions also seem to indicate
+support for encoding HEVC, even though they really can't.
+This will lead to errors later because hfi_session_init() fails
+in this case.
+
+HEVC is already ignored for "dec_codecs", so add the same for
+"enc_codecs" to make these old firmware versions work correctly.
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom-msm8974-samsung-klte.dts    | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_parser.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-index ad26c83fee81..691a3cf2dd96 100644
---- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-@@ -264,6 +264,31 @@ sdhci@f9824900 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&sdhc1_pin_a>;
- 	};
-+
-+	usb@f9a55000 {
-+		status = "ok";
-+
-+		phys = <&usb_hs1_phy>;
-+		phy-select = <&tcsr 0xb000 0>;
-+		/*extcon = <&smbb>, <&usb_id>;*/
-+		/*vbus-supply = <&chg_otg>;*/
-+
-+		hnp-disable;
-+		srp-disable;
-+		adp-disable;
-+
-+		ulpi {
-+			phy@a {
-+				status = "ok";
-+
-+				v1p8-supply = <&pma8084_l6>;
-+				v3p3-supply = <&pma8084_l24>;
-+
-+				/*extcon = <&smbb>;*/
-+				qcom,init-seq = /bits/ 8 <0x1 0x64>;
-+			};
-+		};
-+	};
- };
+diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+index 2293d936e49ca..7f515a4b9bd12 100644
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -181,6 +181,7 @@ static void parse_codecs(struct venus_core *core, void *data)
+ 	if (IS_V1(core)) {
+ 		core->dec_codecs &= ~HFI_VIDEO_CODEC_HEVC;
+ 		core->dec_codecs &= ~HFI_VIDEO_CODEC_SPARK;
++		core->enc_codecs &= ~HFI_VIDEO_CODEC_HEVC;
+ 	}
+ }
  
- &spmi_bus {
 -- 
-2.26.0
+2.20.1
 
