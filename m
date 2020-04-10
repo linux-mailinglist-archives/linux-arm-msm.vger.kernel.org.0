@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F24CD1A49D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 20:29:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2480A1A49DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 20:29:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726712AbgDJS3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Apr 2020 14:29:42 -0400
+        id S1726736AbgDJS3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Apr 2020 14:29:43 -0400
 Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:46018 "EHLO
         alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726177AbgDJS3m (ORCPT
+        by vger.kernel.org with ESMTP id S1726725AbgDJS3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Apr 2020 14:29:42 -0400
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+        Fri, 10 Apr 2020 14:29:43 -0400
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
   by alexa-out-sd-02.qualcomm.com with ESMTP; 10 Apr 2020 11:29:40 -0700
 Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 10 Apr 2020 11:29:37 -0700
+  by ironmsg03-sd.qualcomm.com with ESMTP; 10 Apr 2020 11:29:37 -0700
 Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id 5006A2168C; Fri, 10 Apr 2020 23:59:36 +0530 (IST)
+        id 625632168E; Fri, 10 Apr 2020 23:59:36 +0530 (IST)
 From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
         robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>,
         Balaji Prakash J <bjagadee@codeaurora.org>
-Subject: [PATCH 2/3] phy: qcom-qmp: Add USB QMP PHY support for IPQ8074
-Date:   Fri, 10 Apr 2020 23:59:31 +0530
-Message-Id: <1586543372-13969-3-git-send-email-sivaprak@codeaurora.org>
+Subject: [PATCH 3/3] arm64: dts: ipq8074: enable USB support
+Date:   Fri, 10 Apr 2020 23:59:32 +0530
+Message-Id: <1586543372-13969-4-git-send-email-sivaprak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1586543372-13969-1-git-send-email-sivaprak@codeaurora.org>
 References: <1586543372-13969-1-git-send-email-sivaprak@codeaurora.org>
@@ -35,142 +35,245 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add QMP USB PHY found in IPQ8074
+IPQ8074 has two super speed usb ports, add phy and dwc3 nodes
+to enable them.
 
 Co-developed-by: Balaji Prakash J <bjagadee@codeaurora.org>
 Signed-off-by: Balaji Prakash J <bjagadee@codeaurora.org>
 Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.c | 102 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 102 insertions(+)
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts |  24 +++++
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi     | 168 ++++++++++++++++++++++++++++++
+ 2 files changed, 192 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index c190406..8e9a8a4 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -188,6 +188,81 @@ static const unsigned int sm8150_ufsphy_regs_layout[] = {
- 	[QPHY_SW_RESET]			= QPHY_V4_SW_RESET,
- };
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+index 70be3f9..dd27d84 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+@@ -26,6 +26,22 @@
+ 	};
  
-+static const struct qmp_phy_init_tbl ipq8074_usb3_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x1a),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x30),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BG_TRIM, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_FASTLOCK_FO_GAIN, 0x0b),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SVS_MODE_CLK_SEL, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_IVCO, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SYS_CLK_CTRL, 0x06),
-+	/* PLL and Loop filter settings */
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x82),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0x55),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0x55),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CP_CTRL_MODE0, 0x0b),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_RCTRL_MODE0, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_CCTRL_MODE0, 0x28),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN0_MODE0, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0x15),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x34),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CORE_CLK_EN, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_CFG, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BG_TIMER, 0x0a),
-+	/* SSC settings */
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_EN_CENTER, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER1, 0x31),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER2, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_ADJ_PER1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_ADJ_PER2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE1, 0xde),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE2, 0x07),
-+};
+ 	soc {
++		ssphy@58000 {
++			status = "ok";
++		};
 +
-+static const struct qmp_phy_init_tbl ipq8074_usb3_rx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_SO_GAIN, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL2, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL3, 0x4c),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL4, 0xb8),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x77),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_CNTRL, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_DEGLITCH_CNTRL, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_ENABLES, 0x0),
-+};
++		qusb@59000 {
++			status = "ok";
++		};
 +
-+static const struct qmp_phy_init_tbl ipq8074_usb3_pcs_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V0, 0x15),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V0, 0x0e),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL2, 0x83),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL1, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_L, 0x09),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_H_TOL, 0xa2),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_MAN_CODE, 0x85),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG1, 0xd1),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG2, 0x1f),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG3, 0x47),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_POWER_STATE_CONFIG2, 0x1b),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_WAIT_TIME, 0x75),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_RUN_TIME, 0x13),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LFPS_TX_ECSTART_EQTLOCK, 0x86),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_PWRUP_RESET_DLY_TIME_AUXCLK, 0x04),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TSYNC_RSYNC_TIME, 0x44),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_L, 0xe7),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_L, 0x40),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_H, 0x00),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0x88),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V0, 0x17),
-+	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V0, 0x0f),
-+};
++		ssphy@78000 {
++			status = "ok";
++		};
 +
- static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
- 	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_ENABLE1, 0x10),
-@@ -1467,6 +1542,30 @@ static const char * const qmp_phy_vreg_l[] = {
- 	"vdda-phy", "vdda-pll",
- };
++		qusb@79000 {
++			status = "ok";
++		};
++
+ 		serial@78b3000 {
+ 			status = "ok";
+ 		};
+@@ -65,6 +81,14 @@
+ 			};
+ 		};
  
-+static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
-+	.type			= PHY_TYPE_USB3,
-+	.nlanes			= 1,
++		usb3@8A00000 {
++			status = "ok";
++		};
 +
-+	.serdes_tbl		= ipq8074_usb3_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_usb3_serdes_tbl),
-+	.tx_tbl			= msm8996_usb3_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(msm8996_usb3_tx_tbl),
-+	.rx_tbl			= ipq8074_usb3_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(ipq8074_usb3_rx_tbl),
-+	.pcs_tbl		= ipq8074_usb3_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_usb3_pcs_tbl),
-+	.clk_list		= msm8996_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(msm8996_phy_clk_l),
-+	.reset_list		= msm8996_usb3phy_reset_l,
-+	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= usb3phy_regs_layout,
++		usb3@8C00000 {
++			status = "ok";
++		};
 +
-+	.start_ctrl		= SERDES_START | PCS_START,
-+	.pwrdn_ctrl		= SW_PWRDN,
-+};
-+
- static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
- 	.type			= PHY_TYPE_PCIE,
- 	.nlanes			= 3,
-@@ -2498,6 +2597,9 @@ int qcom_qmp_phy_create(struct device *dev, struct device_node *np, int id)
+ 		phy@86000 {
+ 			status = "ok";
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 2b31823..47bb9ad 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -16,6 +16,92 @@
+ 		ranges = <0 0 0 0xffffffff>;
+ 		compatible = "simple-bus";
  
- static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	{
-+		.compatible = "qcom,ipq8074-qmp-usb3-phy",
-+		.data = &ipq8074_usb3phy_cfg,
-+	}, {
- 		.compatible = "qcom,msm8996-qmp-pcie-phy",
- 		.data = &msm8996_pciephy_cfg,
- 	}, {
++		ssphy_1: ssphy@58000 {
++			compatible = "qcom,ipq8074-qmp-usb3-phy";
++			reg = <0x00058000 0x1c4>;
++			status = "disabled";
++			#clock-cells = <1>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++
++			clocks = <&gcc GCC_USB1_AUX_CLK>,
++				 <&gcc GCC_USB1_PHY_CFG_AHB_CLK>,
++				 <&xo>;
++			clock-names = "aux", "cfg_ahb", "ref";
++
++			resets =  <&gcc GCC_USB1_PHY_BCR>,
++				 <&gcc GCC_USB3PHY_1_PHY_BCR>;
++			reset-names = "phy","common";
++
++			usb1_ssphy: lane@58200 {
++				reg = <0x00058200 0x130>,	/* Tx */
++				      <0x00058400 0x200>,	/* Rx */
++				      <0x00058800 0x1F8>,	/* PCS  */
++				      <0x00058600 0x044>;	/* PCS misc */
++				#phy-cells = <0>;
++				clocks = <&gcc GCC_USB1_PIPE_CLK>;
++				clock-names = "pipe0";
++				clock-output-names = "gcc_usb1_pipe_clk_src";
++			};
++		};
++
++		qusb_phy_1: qusb@59000 {
++		    compatible = "qcom,msm8996-qusb2-phy";
++		    reg = <0x00059000 0x180>;
++		    status = "disabled";
++		    #phy-cells = <0>;
++
++		    clocks = <&gcc GCC_USB1_PHY_CFG_AHB_CLK>,
++			     <&xo>;
++		    clock-names = "cfg_ahb", "ref";
++
++		    resets = <&gcc GCC_QUSB2_1_PHY_BCR>;
++		};
++
++		ssphy_0: ssphy@78000 {
++			compatible = "qcom,ipq8074-qmp-usb3-phy";
++			reg = <0x00078000 0x1c4>;
++			status = "disabled";
++			#clock-cells = <1>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++
++			clocks = <&gcc GCC_USB0_AUX_CLK>,
++				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
++				 <&xo>;
++			clock-names = "aux", "cfg_ahb", "ref";
++
++			resets =  <&gcc GCC_USB0_PHY_BCR>,
++				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
++			reset-names = "phy","common";
++
++			usb0_ssphy: lane@78200 {
++				reg = <0x00078200 0x130>,	/* Tx */
++				      <0x00078400 0x200>,	/* Rx */
++				      <0x00078800 0x1F8>,	/* PCS  */
++				      <0x00078600 0x044>;	/* PCS misc */
++				#phy-cells = <0>;
++				clocks = <&gcc GCC_USB0_PIPE_CLK>;
++				clock-names = "pipe0";
++				clock-output-names = "gcc_usb0_pipe_clk_src";
++			};
++		};
++
++		qusb_phy_0: qusb@79000 {
++		    compatible = "qcom,msm8996-qusb2-phy";
++		    reg = <0x00079000 0x180>;
++		    status = "disabled";
++		    #phy-cells = <0>;
++
++		    clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
++			     <&xo>;
++		    clock-names = "cfg_ahb", "ref";
++
++		    resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
++		};
++
+ 		tlmm: pinctrl@1000000 {
+ 			compatible = "qcom,ipq8074-pinctrl";
+ 			reg = <0x1000000 0x300000>;
+@@ -272,6 +358,88 @@
+ 			status = "disabled";
+ 		};
+ 
++		usb3_0: usb3@8A00000 {
++			compatible = "qcom,dwc3";
++			reg = <0x08af8800 0x400>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++
++			clocks = <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
++				<&gcc GCC_USB0_MASTER_CLK>,
++				<&gcc GCC_USB0_SLEEP_CLK>,
++				<&gcc GCC_USB0_MOCK_UTMI_CLK>;
++			clock-names = "sys_noc_axi",
++				"master",
++				"sleep",
++				"mock_utmi";
++
++			assigned-clocks = <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
++					  <&gcc GCC_USB0_MASTER_CLK>,
++					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
++			assigned-clock-rates = <133330000>,
++					       <133330000>,
++					       <19200000>;
++
++			resets = <&gcc GCC_USB0_BCR>;
++			status = "disabled";
++
++			dwc_0: dwc3@8A00000 {
++				compatible = "snps,dwc3";
++				reg = <0x8A00000 0xcd00>;
++				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
++				phys = <&qusb_phy_0>, <&usb0_ssphy>;
++				phy-names = "usb2-phy", "usb3-phy";
++				tx-fifo-resize;
++				snps,is-utmi-l1-suspend;
++				snps,hird-threshold = /bits/ 8 <0x0>;
++				snps,dis_u2_susphy_quirk;
++				snps,dis_u3_susphy_quirk;
++				dr_mode = "host";
++			};
++		};
++
++		usb3_1: usb3@8C00000 {
++			compatible = "qcom,dwc3";
++			reg = <0x08cf8800 0x400>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++
++			clocks = <&gcc GCC_SYS_NOC_USB1_AXI_CLK>,
++				<&gcc GCC_USB1_MASTER_CLK>,
++				<&gcc GCC_USB1_SLEEP_CLK>,
++				<&gcc GCC_USB1_MOCK_UTMI_CLK>;
++			clock-names = "sys_noc_axi",
++				"master",
++				"sleep",
++				"mock_utmi";
++
++			assigned-clocks = <&gcc GCC_SYS_NOC_USB1_AXI_CLK>,
++					  <&gcc GCC_USB1_MASTER_CLK>,
++					  <&gcc GCC_USB1_MOCK_UTMI_CLK>;
++			assigned-clock-rates = <133330000>,
++					       <133330000>,
++					       <19200000>;
++
++			resets = <&gcc GCC_USB1_BCR>;
++			status = "disabled";
++
++			dwc_1: dwc3@8C00000 {
++				compatible = "snps,dwc3";
++				reg = <0x8C00000 0xcd00>;
++				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
++				phys = <&qusb_phy_1>, <&usb1_ssphy>;
++				phy-names = "usb2-phy", "usb3-phy";
++				tx-fifo-resize;
++				snps,is-utmi-l1-suspend;
++				snps,hird-threshold = /bits/ 8 <0x0>;
++				snps,dis_u2_susphy_quirk;
++				snps,dis_u3_susphy_quirk;
++				dr_mode = "host";
++			};
++		};
++
+ 		pcie_phy0: phy@86000 {
+ 			compatible = "qcom,ipq8074-qmp-pcie-phy";
+ 			reg = <0x86000 0x1000>;
 -- 
 2.7.4
 
