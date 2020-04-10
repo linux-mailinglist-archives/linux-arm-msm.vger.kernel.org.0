@@ -2,278 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2480A1A49DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 20:29:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F4381A4AE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 22:10:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbgDJS3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Apr 2020 14:29:43 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:46018 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726725AbgDJS3n (ORCPT
+        id S1726626AbgDJUKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Apr 2020 16:10:44 -0400
+Received: from mail-pj1-f41.google.com ([209.85.216.41]:40179 "EHLO
+        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726263AbgDJUKo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Apr 2020 14:29:43 -0400
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 10 Apr 2020 11:29:40 -0700
-Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
-  by ironmsg03-sd.qualcomm.com with ESMTP; 10 Apr 2020 11:29:37 -0700
-Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id 625632168E; Fri, 10 Apr 2020 23:59:36 +0530 (IST)
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>
-Subject: [PATCH 3/3] arm64: dts: ipq8074: enable USB support
-Date:   Fri, 10 Apr 2020 23:59:32 +0530
-Message-Id: <1586543372-13969-4-git-send-email-sivaprak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1586543372-13969-1-git-send-email-sivaprak@codeaurora.org>
-References: <1586543372-13969-1-git-send-email-sivaprak@codeaurora.org>
+        Fri, 10 Apr 2020 16:10:44 -0400
+Received: by mail-pj1-f41.google.com with SMTP id kx8so1121603pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2020 13:10:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=TEzQStdSYdhloLcug4DXaAnsCMxdJyW9nYr3FtVVCZk=;
+        b=QWTv+hK72PdZq5cqJ7faaym6w0I7k0RD2/G97HiSTKyWdnBydSLmeL4KPnOjc1zL6h
+         gc6MnWlVNfUObGSG4VMXLd0lw+dReCzVaWQmPvdirC7w9gWEq6i2a29r/lcln13S3x4s
+         R+Wcur2VGIs9mWG2AKRVLoR93+kDA2PNMsAWs1S1yVXLbeEaQRglq0OI34HjHTEwHiD8
+         vL3xwl0TpMIZe1CCHqRHAVF35seNl0fNpwpnBBsNjJ6FK9YQGy0dfEVjOrPArPmWPJ29
+         RpjzOczgpSHpnxu0/2/DyhqrzIIh54gwCYUvrJcJzkyANbd0zuIFLnVBcycvr9XTjSng
+         2VVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=TEzQStdSYdhloLcug4DXaAnsCMxdJyW9nYr3FtVVCZk=;
+        b=N1m2pSR4jwR7wKSWQTzsRLGby2LfCzdjN4E8XygNcSD/8Xaweun9g8GxXOgm3FEwwm
+         BKC3OXLNyUMu18+gMgQc3ZuUM/cYKXjOuYxEz/xMAzPqXxkmHPOeXgIr3rtK9KBAWQl6
+         VML2ZU3XIfUbFjYpoXht9iwmkJm81MAJKsRAfhxUrodGkJwvwv4LHz+3Q83sf38jVOpa
+         auX/U7TcTq3nc2svr/pfX9bHujMoUJdvO2U6VoJASgFTABoCKpOgmsdgFuDZxZDamaVj
+         I9XqkEuH6V3W+ko9vYgy5/FCs3w1bdL2jb6n01W3KlXif+9N7kfLd+9qj/wzW2M/+0+C
+         Co8A==
+X-Gm-Message-State: AGi0PuYYKXlIfzPNtFSMJevMe7xsXhYG+i6Z3lzy23JdeE1iELkpkJ71
+        QuDI/gylWLRhHHe2I8v++9JI0VEt2pU=
+X-Google-Smtp-Source: APiQypI7S2whQTGYjYEhhnPjoGTyT8li+FcpyC69dz50ZAB2r1GAlmkjf/Sm1dufiH/flEcyV21yuA==
+X-Received: by 2002:a17:902:7886:: with SMTP id q6mr6207612pll.237.1586549443589;
+        Fri, 10 Apr 2020 13:10:43 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id c126sm2518345pfb.83.2020.04.10.13.10.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Apr 2020 13:10:42 -0700 (PDT)
+Date:   Fri, 10 Apr 2020 13:10:53 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     linux-firmware@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: qcom: Add SDM845 Adreno ZAP shader firmware
+Message-ID: <20200410201053.GA786355@builder.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has two super speed usb ports, add phy and dwc3 nodes
-to enable them.
+The following changes since commit edf390c23a4e185ff36daded36575f669f5059f7:
 
-Co-developed-by: Balaji Prakash J <bjagadee@codeaurora.org>
-Signed-off-by: Balaji Prakash J <bjagadee@codeaurora.org>
-Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/ipq8074-hk01.dts |  24 +++++
- arch/arm64/boot/dts/qcom/ipq8074.dtsi     | 168 ++++++++++++++++++++++++++++++
- 2 files changed, 192 insertions(+)
+  Merge branch 'v12573.77' of https://github.com/erinlo/linux_fw_scp (2020-03-20 07:39:19 -0400)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-index 70be3f9..dd27d84 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-@@ -26,6 +26,22 @@
- 	};
- 
- 	soc {
-+		ssphy@58000 {
-+			status = "ok";
-+		};
-+
-+		qusb@59000 {
-+			status = "ok";
-+		};
-+
-+		ssphy@78000 {
-+			status = "ok";
-+		};
-+
-+		qusb@79000 {
-+			status = "ok";
-+		};
-+
- 		serial@78b3000 {
- 			status = "ok";
- 		};
-@@ -65,6 +81,14 @@
- 			};
- 		};
- 
-+		usb3@8A00000 {
-+			status = "ok";
-+		};
-+
-+		usb3@8C00000 {
-+			status = "ok";
-+		};
-+
- 		phy@86000 {
- 			status = "ok";
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 2b31823..47bb9ad 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -16,6 +16,92 @@
- 		ranges = <0 0 0 0xffffffff>;
- 		compatible = "simple-bus";
- 
-+		ssphy_1: ssphy@58000 {
-+			compatible = "qcom,ipq8074-qmp-usb3-phy";
-+			reg = <0x00058000 0x1c4>;
-+			status = "disabled";
-+			#clock-cells = <1>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_USB1_AUX_CLK>,
-+				 <&gcc GCC_USB1_PHY_CFG_AHB_CLK>,
-+				 <&xo>;
-+			clock-names = "aux", "cfg_ahb", "ref";
-+
-+			resets =  <&gcc GCC_USB1_PHY_BCR>,
-+				 <&gcc GCC_USB3PHY_1_PHY_BCR>;
-+			reset-names = "phy","common";
-+
-+			usb1_ssphy: lane@58200 {
-+				reg = <0x00058200 0x130>,	/* Tx */
-+				      <0x00058400 0x200>,	/* Rx */
-+				      <0x00058800 0x1F8>,	/* PCS  */
-+				      <0x00058600 0x044>;	/* PCS misc */
-+				#phy-cells = <0>;
-+				clocks = <&gcc GCC_USB1_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "gcc_usb1_pipe_clk_src";
-+			};
-+		};
-+
-+		qusb_phy_1: qusb@59000 {
-+		    compatible = "qcom,msm8996-qusb2-phy";
-+		    reg = <0x00059000 0x180>;
-+		    status = "disabled";
-+		    #phy-cells = <0>;
-+
-+		    clocks = <&gcc GCC_USB1_PHY_CFG_AHB_CLK>,
-+			     <&xo>;
-+		    clock-names = "cfg_ahb", "ref";
-+
-+		    resets = <&gcc GCC_QUSB2_1_PHY_BCR>;
-+		};
-+
-+		ssphy_0: ssphy@78000 {
-+			compatible = "qcom,ipq8074-qmp-usb3-phy";
-+			reg = <0x00078000 0x1c4>;
-+			status = "disabled";
-+			#clock-cells = <1>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_USB0_AUX_CLK>,
-+				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-+				 <&xo>;
-+			clock-names = "aux", "cfg_ahb", "ref";
-+
-+			resets =  <&gcc GCC_USB0_PHY_BCR>,
-+				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
-+			reset-names = "phy","common";
-+
-+			usb0_ssphy: lane@78200 {
-+				reg = <0x00078200 0x130>,	/* Tx */
-+				      <0x00078400 0x200>,	/* Rx */
-+				      <0x00078800 0x1F8>,	/* PCS  */
-+				      <0x00078600 0x044>;	/* PCS misc */
-+				#phy-cells = <0>;
-+				clocks = <&gcc GCC_USB0_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "gcc_usb0_pipe_clk_src";
-+			};
-+		};
-+
-+		qusb_phy_0: qusb@79000 {
-+		    compatible = "qcom,msm8996-qusb2-phy";
-+		    reg = <0x00079000 0x180>;
-+		    status = "disabled";
-+		    #phy-cells = <0>;
-+
-+		    clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-+			     <&xo>;
-+		    clock-names = "cfg_ahb", "ref";
-+
-+		    resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,ipq8074-pinctrl";
- 			reg = <0x1000000 0x300000>;
-@@ -272,6 +358,88 @@
- 			status = "disabled";
- 		};
- 
-+		usb3_0: usb3@8A00000 {
-+			compatible = "qcom,dwc3";
-+			reg = <0x08af8800 0x400>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
-+				<&gcc GCC_USB0_MASTER_CLK>,
-+				<&gcc GCC_USB0_SLEEP_CLK>,
-+				<&gcc GCC_USB0_MOCK_UTMI_CLK>;
-+			clock-names = "sys_noc_axi",
-+				"master",
-+				"sleep",
-+				"mock_utmi";
-+
-+			assigned-clocks = <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
-+					  <&gcc GCC_USB0_MASTER_CLK>,
-+					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-+			assigned-clock-rates = <133330000>,
-+					       <133330000>,
-+					       <19200000>;
-+
-+			resets = <&gcc GCC_USB0_BCR>;
-+			status = "disabled";
-+
-+			dwc_0: dwc3@8A00000 {
-+				compatible = "snps,dwc3";
-+				reg = <0x8A00000 0xcd00>;
-+				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-+				phys = <&qusb_phy_0>, <&usb0_ssphy>;
-+				phy-names = "usb2-phy", "usb3-phy";
-+				tx-fifo-resize;
-+				snps,is-utmi-l1-suspend;
-+				snps,hird-threshold = /bits/ 8 <0x0>;
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_u3_susphy_quirk;
-+				dr_mode = "host";
-+			};
-+		};
-+
-+		usb3_1: usb3@8C00000 {
-+			compatible = "qcom,dwc3";
-+			reg = <0x08cf8800 0x400>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_SYS_NOC_USB1_AXI_CLK>,
-+				<&gcc GCC_USB1_MASTER_CLK>,
-+				<&gcc GCC_USB1_SLEEP_CLK>,
-+				<&gcc GCC_USB1_MOCK_UTMI_CLK>;
-+			clock-names = "sys_noc_axi",
-+				"master",
-+				"sleep",
-+				"mock_utmi";
-+
-+			assigned-clocks = <&gcc GCC_SYS_NOC_USB1_AXI_CLK>,
-+					  <&gcc GCC_USB1_MASTER_CLK>,
-+					  <&gcc GCC_USB1_MOCK_UTMI_CLK>;
-+			assigned-clock-rates = <133330000>,
-+					       <133330000>,
-+					       <19200000>;
-+
-+			resets = <&gcc GCC_USB1_BCR>;
-+			status = "disabled";
-+
-+			dwc_1: dwc3@8C00000 {
-+				compatible = "snps,dwc3";
-+				reg = <0x8C00000 0xcd00>;
-+				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
-+				phys = <&qusb_phy_1>, <&usb1_ssphy>;
-+				phy-names = "usb2-phy", "usb3-phy";
-+				tx-fifo-resize;
-+				snps,is-utmi-l1-suspend;
-+				snps,hird-threshold = /bits/ 8 <0x0>;
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_u3_susphy_quirk;
-+				dr_mode = "host";
-+			};
-+		};
-+
- 		pcie_phy0: phy@86000 {
- 			compatible = "qcom,ipq8074-qmp-pcie-phy";
- 			reg = <0x86000 0x1000>;
--- 
-2.7.4
+are available in the Git repository at:
 
+  https://github.com/andersson/linux-firmware.git a630-zap
+
+for you to fetch changes up to e6ff1e706e8befd0530f7300bc7f89203d4fe90a:
+
+  qcom: Add SDM845 Adreno ZAP shader firmware (2020-04-10 13:05:22 -0700)
+
+----------------------------------------------------------------
+Bjorn Andersson (1):
+      qcom: Add SDM845 Adreno ZAP shader firmware
+
+ WHENCE                   |   1 +
+ qcom/sdm845/a630_zap.mbn | Bin 0 -> 14256 bytes
+ 2 files changed, 1 insertion(+)
+ create mode 100644 qcom/sdm845/a630_zap.mbn
