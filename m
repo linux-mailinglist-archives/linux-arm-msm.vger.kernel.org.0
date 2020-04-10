@@ -2,61 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 599801A3E56
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 04:33:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FE0F1A3E58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 04:33:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726812AbgDJCcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Apr 2020 22:32:55 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:44091 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgDJCcw (ORCPT
+        id S1726571AbgDJCdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Apr 2020 22:33:02 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:43212 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725987AbgDJCdC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Apr 2020 22:32:52 -0400
-Received: by mail-lf1-f66.google.com with SMTP id 131so368065lfh.11;
-        Thu, 09 Apr 2020 19:32:51 -0700 (PDT)
+        Thu, 9 Apr 2020 22:33:02 -0400
+Received: by mail-lj1-f196.google.com with SMTP id h25so599718lja.10;
+        Thu, 09 Apr 2020 19:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GRYexHiGlHYS2OWu1UqqdC4MhAnmblXrqW381GPECfY=;
-        b=BBAYw+BG3rrs+XEE4ed6Qv/Qmwavu8nNLw7Re8Pv9v8p7xNHcZK3AaLVX9cPOTmIFx
-         yUmOdmugsHW1ydXn0383VDZ31hDFyRIeiZlOAlZltuINRu/J2KcXF75SIMbTcEbVG84I
-         R5JBPn37l2mIxcAh8+JK/wve3Shc1S2zQ89bi9MYHoL7fEBRT5KJucWXBaWj7UCsHCjw
-         XyVrDnk77E/SCB2OxW6qmAjVS29vZd0r0hEdtJEBG5PuHDJDyuJFX0qRZBZXaPp++iCp
-         VhkjaQBCr5AzdJnlv90zVh1YDxp1jI+NikU9eNSGAmvfmXwy3YaDYiL0xN6yrhEsx3RN
-         1w3g==
+        bh=Jl9+MFoz9FOVeQYZvGEhfQsUzeR6H5+fWjwrI15x2z4=;
+        b=hzo34WeHzqF2MRVekRCB6qQ2to+82InUQzzrEI3aHJE38TD2HK0mkYL8XmXe5U8/Ug
+         dhkFmz32aonURvzYSQmBfDf4Y5bJgSRmK4c/7iZyejYluqqpH4j/cdkNAIVPEzkUNcEU
+         YJIXvLVax7P5GiAiNrZ8t86nFtsj3YK+PWZHSIsW6XIx+hHG0QQaG/fP+tDfiOeOD/d4
+         WeJXYjrHaWkGter4N//y0HIxIPAnlIfIB8R3jZC4kxgZx4ddyedcSUVXzBPuFem+41mw
+         i30TJGB5Bg+3URW5FqjCBBj8Tubreog0XYXPiXZoUcvH6VjSmEQwD40PZBHvtRG/JWhm
+         CjBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GRYexHiGlHYS2OWu1UqqdC4MhAnmblXrqW381GPECfY=;
-        b=ZRBIP/ebmdt8kB2Nnubzg1VHE7jCbBFSygEN7cLqyBCBWxwzVpFK53w5vxOTaugBry
-         63oaHKavWxhN7zCzNcQK1xp8qUE5ldSmEgwZg5frXfsTISjz2WvyE5c1qEgzZIN0TkR8
-         V1qJq2at/1ur9LgMINBzpqJpf/zTtV4Fa1gQvmL05VrTvur3TBr53UIhjutRO13QdBqR
-         qveJZYRevRIVQq3/kjcSSJtB1MpB+yUjeDbFpylurFH4fANO96jak2IyWGA9BUL2Iwz4
-         QQqQsUFUPXAlnpMwECOrLFnlsn5sFCnzo2wA0PcOGLNneIHV6ILMVhYWE0B33XXrA2u1
-         HYRQ==
-X-Gm-Message-State: AGi0PuZFJWsVeSyYGk6AvS/WIRiY+QtvaRAzwjubyQo5HFNjwH7VYTGq
-        0EC+SQnl7+r2ia8KMG2b7roe5OR1YLxukA==
-X-Google-Smtp-Source: APiQypIAaoBNNNTErcLAiMjEaEPexcgivbo0e3XytA6AzZFotVDr8zQ4mmaN/zExBKg4F1qjX0VgIA==
-X-Received: by 2002:a05:6512:3049:: with SMTP id b9mr1320447lfb.176.1586485970329;
-        Thu, 09 Apr 2020 19:32:50 -0700 (PDT)
+        bh=Jl9+MFoz9FOVeQYZvGEhfQsUzeR6H5+fWjwrI15x2z4=;
+        b=YbIeg6alQIoT0HOQs21zl/a80TgndsLvLBI+DQpEup866Fy+SXBC2AP05fL7CiGJn3
+         3A5cEuwSPS6nYLJVWfOjAnCS6MgBlRMjOIjlQYFEQdeN4XFtb2sq6J4edwpAXXIAFTkA
+         WybErX7XDE4flRUD876gvbMtJ9JiumdH/v7FjIL0N15DnXWn16cvotDj1f6fYhIHEnG1
+         p28nFM+iEfMze2BXmfZLAezGkXpV9fDaRt7gDA8hlKWiv7EpcyHPaB7VFkfp/D5sISrW
+         EFBVx+e5fx4S5MH1ZxqFVuMx7/F1Fkk9iG6H+DHitcNij8bwMw2AUDD5ibJ4pIaJEK3i
+         Ikzg==
+X-Gm-Message-State: AGi0PuZQ5c+rSeTZ4B8CxMf1SBmXUd03H88C+aw8bpStoX2b1vvZLfIA
+        kZwV1wez6Ooy5PXnB8IYocIaG7SE9BT84Q==
+X-Google-Smtp-Source: APiQypJWofmM8Qlyb2FI7O0p2padX/aOtgYx9otx/2dnfLObyekNxIuKl5+r6b20D5ZTWeEQ44DyKw==
+X-Received: by 2002:a2e:b52f:: with SMTP id z15mr1642957ljm.38.1586485973083;
+        Thu, 09 Apr 2020 19:32:53 -0700 (PDT)
 Received: from localhost ([213.191.183.145])
-        by smtp.gmail.com with ESMTPSA id v3sm415033lfo.62.2020.04.09.19.32.48
+        by smtp.gmail.com with ESMTPSA id f7sm274127ljj.4.2020.04.09.19.32.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2020 19:32:49 -0700 (PDT)
+        Thu, 09 Apr 2020 19:32:52 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Daniele Debernardi <drebrez@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [PATCH 5/6] ARM: dts: qcom: msm8974-klte: Remove inherited vreg_boost node
-Date:   Fri, 10 Apr 2020 05:32:02 +0300
-Message-Id: <20200410023203.192048-6-iskren.chernev@gmail.com>
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH 6/6] ARM: dts: qcom: msm8974-klte: Add USB node
+Date:   Fri, 10 Apr 2020 05:32:03 +0300
+Message-Id: <20200410023203.192048-7-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.26.0
 In-Reply-To: <20200410023203.192048-1-iskren.chernev@gmail.com>
 References: <20200410023203.192048-1-iskren.chernev@gmail.com>
@@ -69,36 +67,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Daniele Debernardi <drebrez@gmail.com>
 
-The Samsung klte does not have a vreg_boost node. vreg_boost also
-depends on pm8941-gpio which are not present on the klte.
+This introduces the usb node which can be used e.g. for USB_ETH
 
 Signed-off-by: Daniele Debernardi <drebrez@gmail.com>
-Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 ---
- arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../boot/dts/qcom-msm8974-samsung-klte.dts    | 25 +++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-index de0bf6b7e732..ad26c83fee81 100644
+index ad26c83fee81..691a3cf2dd96 100644
 --- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
 +++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-@@ -1,7 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
- #include "qcom-msm8974pro.dtsi"
--#include "qcom-pm8841.dtsi"
--#include "qcom-pm8941.dtsi"
- #include "qcom-pma8084.dtsi"
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
-@@ -196,6 +194,8 @@ l27 {
- 			};
- 		};
+@@ -264,6 +264,31 @@ sdhci@f9824900 {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&sdhc1_pin_a>;
  	};
 +
-+	/delete-node/ vreg-boost;
++	usb@f9a55000 {
++		status = "ok";
++
++		phys = <&usb_hs1_phy>;
++		phy-select = <&tcsr 0xb000 0>;
++		/*extcon = <&smbb>, <&usb_id>;*/
++		/*vbus-supply = <&chg_otg>;*/
++
++		hnp-disable;
++		srp-disable;
++		adp-disable;
++
++		ulpi {
++			phy@a {
++				status = "ok";
++
++				v1p8-supply = <&pma8084_l6>;
++				v3p3-supply = <&pma8084_l24>;
++
++				/*extcon = <&smbb>;*/
++				qcom,init-seq = /bits/ 8 <0x1 0x64>;
++			};
++		};
++	};
  };
  
- &soc {
+ &spmi_bus {
 -- 
 2.26.0
 
