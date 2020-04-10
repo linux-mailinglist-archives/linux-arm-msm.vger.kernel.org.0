@@ -2,110 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D48FD1A47A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 16:53:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 258E81A47BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2020 17:03:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726234AbgDJOxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Apr 2020 10:53:06 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:34343 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726080AbgDJOxG (ORCPT
+        id S1726082AbgDJPDL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Apr 2020 11:03:11 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:26835 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726009AbgDJPDL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Apr 2020 10:53:06 -0400
-Received: by mail-ua1-f67.google.com with SMTP id d23so701800uak.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2020 07:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sXbs2eSo2cip0Bhx0gise5pTsMBWhGiPepQWudlrrKs=;
-        b=IQaN9KussGunjaHK0pdxgBSCx4RVNoghmD135k0hs2w75kdaoTKcoRE1PJ5lbo93ww
-         lGQAaiETFOrzVMXrOQGyjT5Xw7dQCwQsxq8RN1dcYWo8GLAEt4ygV3NHbzzeGeRNmO1k
-         cewZcsSAJHMTeay1xQEeMe5Po0m1DEfvIB4yE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sXbs2eSo2cip0Bhx0gise5pTsMBWhGiPepQWudlrrKs=;
-        b=mCgvJRq7Tckb5zHUg77Ed475n1nim8oGy7rb4svt14SifCMgM6PMccboSk1L/Sqqm4
-         2nY4aZHvILwrCA/re8Hs79GMof6a/IqePKQdyrk54TNdgWSb+iUn9jSCadKevAwbWyBT
-         TJudRTo129jlP+MziOf5SH1kRZj+jBXa+/s/m2/JyDIvD7l69tNEk+wTXkyNKV4UE3Dd
-         AA4YQLpJs1/JBteqIs6w95YG1hSWAh3YkH1kfIq9LZIf35/Nje8vp5PQ5CTLqaXBEhyg
-         mulm0sUYRtgPOAqHW4Ln3KknWFsfeWvAUYpoJWq8ZI1QcEXTtqhPC2lRseU39grTlxfh
-         3aJQ==
-X-Gm-Message-State: AGi0PuaKdxnE3tunPf7uWPBVASv/VUQXPJ5dTNSEvEp3A/vLLpAYwuLa
-        pgdf8EgvCWVU8/eMDR575r8xEG8RPKM=
-X-Google-Smtp-Source: APiQypIm9w4oMAMLjtADx6o5Ifdd2xoMePB51ScsSufYGzeoCOio/cuyPSVZvbNxmyeWb1EgsmTWJw==
-X-Received: by 2002:ab0:1869:: with SMTP id j41mr3109040uag.99.1586530385541;
-        Fri, 10 Apr 2020 07:53:05 -0700 (PDT)
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com. [209.85.222.42])
-        by smtp.gmail.com with ESMTPSA id c12sm173677uaj.11.2020.04.10.07.53.04
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Apr 2020 07:53:04 -0700 (PDT)
-Received: by mail-ua1-f42.google.com with SMTP id v24so692348uaj.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2020 07:53:04 -0700 (PDT)
-X-Received: by 2002:a9f:27ca:: with SMTP id b68mr1030762uab.8.1586530383958;
- Fri, 10 Apr 2020 07:53:03 -0700 (PDT)
+        Fri, 10 Apr 2020 11:03:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586530991; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=foCeyV/z0t49w5bVxOJQj4+zK6wslN2wsA7w5SqlfIs=; b=xl9vbv527bPXxsyZJNE34VFf+2tdvHDJ3HOt5aE3I12tL4tlsfjydh5DlmFihKi9xQ1DGjx5
+ VvsUKHrrhFdvVgeQVBLPLKg1K6skWjVpvDfti31eve9T5vxaJSTEjWmf0ucyfIIODctkbYG9
+ FJ9NCO2zCa/c9Z8poPUyoCJs+fU=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e908aae.7f4fdf336c38-smtp-out-n03;
+ Fri, 10 Apr 2020 15:03:10 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CCF6CC433BA; Fri, 10 Apr 2020 15:03:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 042EAC433F2;
+        Fri, 10 Apr 2020 15:03:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 042EAC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v2 1/5] bus: mhi: core: Handle syserr during power_up
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     "linux-arm-msm@vger.kernel.org; bbhatt"@codeaurora.org,
+        linux-kernel@vger.kernel.org
+References: <1586278230-29565-1-git-send-email-jhugo@codeaurora.org>
+ <1586278230-29565-2-git-send-email-jhugo@codeaurora.org>
+ <1768ba6e-12c2-7b4f-0f17-44fecc6473b9@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <11d9f35b-b911-7985-8846-0a45904ceed1@codeaurora.org>
+Date:   Fri, 10 Apr 2020 09:03:08 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-References: <1586154741-8293-1-git-send-email-mkshah@codeaurora.org>
- <1586154741-8293-5-git-send-email-mkshah@codeaurora.org> <158649213142.77611.5740203322498170248@swboyd.mtv.corp.google.com>
-In-Reply-To: <158649213142.77611.5740203322498170248@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 10 Apr 2020 07:52:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UkiR+xLeowOT+H3ZKNCesf84AJi6mHiHNpJ2P9-DiXaQ@mail.gmail.com>
-Message-ID: <CAD=FV=UkiR+xLeowOT+H3ZKNCesf84AJi6mHiHNpJ2P9-DiXaQ@mail.gmail.com>
-Subject: Re: [PATCH v16 4/6] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1768ba6e-12c2-7b4f-0f17-44fecc6473b9@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 4/9/2020 6:55 PM, Hemant Kumar wrote:
+> 
+> On 4/7/20 9:50 AM, Jeffrey Hugo wrote:
+>> The MHI device may be in the syserr state when we attempt to init it in
+>> power_up().  Since we have no local state, the handling is simple -
+>> reset the device and wait for it to transition out of the reset state.
+>>
+>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>> ---
+>>   drivers/bus/mhi/core/pm.c | 20 ++++++++++++++++++++
+>>   1 file changed, 20 insertions(+)
+>>
+>> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+>> index 52690cb..3285c9e 100644
+>> --- a/drivers/bus/mhi/core/pm.c
+>> +++ b/drivers/bus/mhi/core/pm.c
+>> @@ -9,6 +9,7 @@
+>>   #include <linux/dma-direction.h>
+>>   #include <linux/dma-mapping.h>
+>>   #include <linux/interrupt.h>
+>> +#include <linux/iopoll.h>
+>>   #include <linux/list.h>
+>>   #include <linux/mhi.h>
+>>   #include <linux/module.h>
+>> @@ -760,6 +761,7 @@ static void mhi_deassert_dev_wake(struct 
+>> mhi_controller *mhi_cntrl,
+>>   int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>>   {
+>> +    enum mhi_state state;
+>>       enum mhi_ee_type current_ee;
+>>       enum dev_st_transition next_state;
+>>       struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>> @@ -829,6 +831,24 @@ int mhi_async_power_up(struct mhi_controller 
+>> *mhi_cntrl)
+>>           goto error_bhi_offset;
+>>       }
+>> +    state = mhi_get_mhi_state(mhi_cntrl);
+>> +    if (state == MHI_STATE_SYS_ERR) {
+>> +        mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+>> +        ret = readl_poll_timeout(mhi_cntrl->regs + MHICTRL, val,
+>> +                     !(val & MHICTRL_RESET_MASK), 1000,
+>> +                     mhi_cntrl->timeout_ms * 1000);
+> can we use this instead of polling because MSI is configures and int_vec 
+> handler is registered
+> 
+>      wait_event_timeout(mhi_cntrl->state_event,
+>                 MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
+>                mhi_read_reg_field(mhi_cntrl, base, MHICTRL,
+>                            MHICTRL_RESET_MASK,
+>                            MHICTRL_RESET_SHIFT, &reset) || !reset ,
+>                 msecs_to_jiffies(mhi_cntrl->timeout_ms));
+> 
+> 1) In case of MHI_PM_IN_FATAL_STATE we would not be accessing MHI reg
+> 2) Consistent with current MHI driver code.
 
-On Thu, Apr 9, 2020 at 9:15 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> >  int rpmh_flush(struct rpmh_ctrlr *ctrlr)
->
-> This function name keeps throwing me off. Can we please call it
-> something like rpmh_configure_tcs_sleep_wake()? The word "flush" seems
-> to imply there's some sort of cache going on, but that's not really the
-> case. We're programming a couple TCS FIFOs so that they can be used
-> across deep CPU sleep states.
+I'm not sure this works in the way you intend.
 
-I'm hoping this rename can be deferred until Maulik's series and my
-cleanup series land.  While I agree that rpmh_flush() is a bit of a
-confusing name, it's not a new name and renaming it midway through
-when there are a bunch of patches in-flight is going to be a hassle.
+state_event is linked to the intvec, which is the BHI interrupt.  I 
+don't see that the state_event is triggered in the MHI interrupt path 
+(mhi_irq_handler).  So, if we are in the PBL EE, we would expect to see 
+the BHI interrupt, but if we are in the AMSS EE, we would expect to see 
+a MHI interrupt.
 
-Assuming others agree, my thought is that Maulik will do one more v17
-spin with small nits fixed up, then his series can land early next
-week when (presumably) -rc1 comes out.  If my current cleanup doesn't
-apply cleanly (or if Bjorn/Andy don't want to fix the two nits in
-commit messages when applying) I can repost my series and that can
-land in short order.  Once those land:
+Now, for my concerned usecase, those two interrupts happen to be the 
+same interrupt, so both will get triggered, but I don't expect that to 
+be the same for all usecases.
 
-* Maulik can post this rpmh_flush() rename atop.
+So, with the solution I propose, we exit the wait (poll loop) as soon as 
+we see the register change values.
 
-* I can post the patch to remove the "pm_lock" that was introduced in
-this series.  A preview at <https://crrev.com/c/2142823>.
+With the solution you propose, if we only get the MHI interrupt, we'll 
+have to wait out the entire timeout value, and then check the register. 
+In this scenario, we are almost guaranteed to wait for longer than 
+necessary.
 
-* Maulik can post some of the cleanups that Maulik wanted to do in
-rpmh.c with regards to __fill_rpmh_msg()
+Did I miss something?
 
-...assuming those are not controversial perhaps they can be reviewed
-quickly and land quickly?  I suppose I can always dream...
+>> +        if (ret) {
+>> +            dev_info(dev, "Failed to reset MHI due to syserr state\n");
+>> +            goto error_bhi_offset;
+>> +        }
+>> +
+>> +        /*
+>> +         * device cleares INTVEC as part of RESET processing,
+>> +         * re-program it
+>> +         */
+>> +        mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
+>> +    }
+>> +
+>>       /* Transition to next state */
+>>       next_state = MHI_IN_PBL(current_ee) ?
+>>           DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
+> 
 
 
--Doug
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
