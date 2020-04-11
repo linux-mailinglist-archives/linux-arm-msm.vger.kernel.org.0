@@ -2,219 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 648EA1A4D1A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 03:01:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A5FD1A4D36
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 03:29:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726797AbgDKBBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Apr 2020 21:01:37 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41849 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726791AbgDKBBh (ORCPT
+        id S1726654AbgDKB3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Apr 2020 21:29:36 -0400
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:40881 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726754AbgDKB3g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Apr 2020 21:01:37 -0400
-Received: by mail-pl1-f195.google.com with SMTP id d24so1195075pll.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2020 18:01:35 -0700 (PDT)
+        Fri, 10 Apr 2020 21:29:36 -0400
+Received: by mail-pj1-f67.google.com with SMTP id kx8so1350558pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2020 18:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=JnweRSJzbFA/HZJs3MpjVTk2omd0xC4ncUbfKrlGFuw=;
-        b=AfK1WVnxwG7uZsgDtL5AKGrzGbqbYwkb8OQZXU/szpAPWTNX6mXt+fKCDUlEzTSfiU
-         mLTrYajKIcfrWwHNlBUDmjK+Se8AzofhAE6/K6QCFv+rXvBaAUetqsAw3Hb1ILyYwV0J
-         x8IwGn2qVx0vwZJQubgBtUcJCxVwk/filqEKSGbYjn9yHHdxJRKAvpdjHNd++IC48jPK
-         1iZ44mTgC9JT79eoM1jiZ84QDPlHHVaiVXmzMcMRF/W7t0BiihsGiPGztaQR8p0t+UEM
-         5VFMARXC+qvLvhXpjtvErOQUPmh1STEAp24Ci59/RVXQBOtHvzuOxwgeEPXQCL8Vy48P
-         QkYw==
+        bh=jjYLKh9SotG0YtERlH9bytRNUj0Elct+prFzmtVxREo=;
+        b=GW+/vmRNntb92CWhFIBWUecdvoGXMm6YrEN1iqYZtDMGkJ49tVRIB1slxM+BJeyVfV
+         +xuGD965x3wSdTf+3t8yIRIWQe3Wsx0WP/hfBfoovLdSJFm6X/xCj+wfpk9dlz2XSI/Z
+         +KB++MoNQX1cHGbkASro0MgITL/J5PNihPiRrK+fJgAlSxgmJk16IhqYi4nHgVhfqaND
+         EeRVTXjh9e7w5Q7RpmQDotl1z34P05+8M6dQ2u6FqPre99509jKhOb8YzP0HgholBBXI
+         Jx16vnM0on7TZxW9md5IxS3gUv8wX/HOmRRQ97jMzbF5voNLZL1uC0IPVtsyk7xjKT13
+         /A+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=JnweRSJzbFA/HZJs3MpjVTk2omd0xC4ncUbfKrlGFuw=;
-        b=C/S70odS3a090l57T8chwL9rtzrmEMuaPMdJbHOu94vgBQTg7JvGiPrGyl5qpsA1Ci
-         rAb7v7atMH1rHGuAL9MDX1IL3Zl5cEh+u55+nKM0z7azhcwzSrFX/Oj1MAiNTH5ZJmHg
-         eSq/SI9eN2H37Zf6MzAr2OeiUu+KvEUUXVvbW6Ls8q50Jsgb2ffSaY7hw9qu5zH75W3O
-         TUOhg4Ws5jvjfYUhx2tQRo7aBh6ZwXEk3/SmSCm/KtQBeHH5ywCW0KtPFaprhWTCdTOZ
-         OnIjSnU7f0+JD4ZFEX1CD+c4QUy/sdNCR7+iLUI3wMP2axKcOvWonoRLiaFN8vHszPtp
-         /zdA==
-X-Gm-Message-State: AGi0PubuRg8A1zlFwMrpJ6uKt3EobtYtHIuQcTqO9ezgwu+YWP/dtfN6
-        Nl//mM0Lrx3/w+skCq8if7vFRQ==
-X-Google-Smtp-Source: APiQypJdhHrHpSQZULqAtlQ5+75We8n8BQ7hLwWMFPX17WGan0vJQ+38ci68Rc0D56ubTYTUgx+RnQ==
-X-Received: by 2002:a17:902:8b87:: with SMTP id ay7mr7208355plb.281.1586566894101;
-        Fri, 10 Apr 2020 18:01:34 -0700 (PDT)
+        bh=jjYLKh9SotG0YtERlH9bytRNUj0Elct+prFzmtVxREo=;
+        b=FhG9feiU3V0teW3aQVjkZ//T1glUsnmcee9FGQBc57pp9RC8irZJ5iZS66eCR5b6ha
+         1+vkyj4/XC3HeUw2ras6djJ6P02/wBTiRnTMU9lK6yY0bXyjDG8N8L2IHhjhfa1LxbNZ
+         K0YAAXkIIKq5vJpxCaBm6OQ0pOqecVWC35gWEWGGodwOuHqnJlNcIa/aJ+uS4i1Vj61V
+         JkAxoNzzshhijERyBMFIFtdZ4SQ3mkRiHnMnuHmjkWiEZNEsuYN7/gTCyzFQmesUKPTh
+         KcLb3+Fckgtqnv8U1yWpftmx4q4qJbZ9aHDkhgdV6PJf1cyfvnQNYj75Y9Mgo8QmEE4s
+         DYXA==
+X-Gm-Message-State: AGi0PuZolDxtgiexbyzJbdyEVwz/BOK1P2LX+hjEOhQ4PmRA8FQ+kxuN
+        CAWwuDKmLw8vr7SSJS69sVDDrw==
+X-Google-Smtp-Source: APiQypIQLhZvVNf+E+zRbulkesaX5wgMjA4fNlnHIAiRrCty7EwiCQPbiGtO00aszYz0p9cR8hTNBg==
+X-Received: by 2002:a17:902:8ec7:: with SMTP id x7mr7155503plo.3.1586568573216;
+        Fri, 10 Apr 2020 18:29:33 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id i190sm823811pfc.119.2020.04.10.18.01.32
+        by smtp.gmail.com with ESMTPSA id d84sm2859696pfd.197.2020.04.10.18.29.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2020 18:01:33 -0700 (PDT)
-Date:   Fri, 10 Apr 2020 18:01:43 -0700
+        Fri, 10 Apr 2020 18:29:32 -0700 (PDT)
+Date:   Fri, 10 Apr 2020 18:29:42 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        vinod.koul@linaro.org
-Subject: Re: [PATCH v4 1/2] clk: qcom: gcc: Add USB3 PIPE clock and GDSC for
- SM8150
-Message-ID: <20200411010143.GF20625@builder.lan>
-References: <1586566362-21450-1-git-send-email-wcheng@codeaurora.org>
- <1586566362-21450-2-git-send-email-wcheng@codeaurora.org>
+To:     Clement Leger <cleger@kalray.eu>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 1/2] remoteproc: add rproc_coredump_set_elf_info
+Message-ID: <20200411012942.GF576963@builder.lan>
+References: <20200410102433.2672-1-cleger@kalray.eu>
+ <20200410102433.2672-2-cleger@kalray.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1586566362-21450-2-git-send-email-wcheng@codeaurora.org>
+In-Reply-To: <20200410102433.2672-2-cleger@kalray.eu>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 10 Apr 17:52 PDT 2020, Wesley Cheng wrote:
+On Fri 10 Apr 03:24 PDT 2020, Clement Leger wrote:
 
-> This adds the USB3 PIPE clock and GDSC structures, so
-> that the USB driver can vote for these resources to be
-> enabled/disabled when required.  Both are needed for SS
-> and HS USB paths to operate properly.  The GDSC will
-> allow the USB system to be brought out of reset, while
-> the PIPE clock is needed for data transactions between
-> the PHY and controller.
+> This function allows drivers to correctly setup the coredump output
+> elf information.
 > 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+> Signed-off-by: Clement Leger <cleger@kalray.eu>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-
-Stephen, let me know when you take this patch and I'll take the dts one.
-
-Regards,
-Bjorn
-
 > ---
->  drivers/clk/qcom/gcc-sm8150.c               | 52 +++++++++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,gcc-sm8150.h |  4 +++
->  2 files changed, 56 insertions(+)
+>  drivers/remoteproc/remoteproc_core.c       | 32 ++++++++++++++++++++--
+>  drivers/remoteproc/remoteproc_elf_loader.c |  3 --
+>  include/linux/remoteproc.h                 |  2 ++
+>  3 files changed, 32 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-> index 2087721..ef98fdc 100644
-> --- a/drivers/clk/qcom/gcc-sm8150.c
-> +++ b/drivers/clk/qcom/gcc-sm8150.c
-> @@ -21,6 +21,7 @@
->  #include "clk-rcg.h"
->  #include "clk-regmap.h"
->  #include "reset.h"
-> +#include "gdsc.h"
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index a9ac1d01e09b..382443bab583 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -1562,6 +1562,28 @@ int rproc_coredump_add_custom_segment(struct rproc *rproc,
+>  }
+>  EXPORT_SYMBOL(rproc_coredump_add_custom_segment);
 >  
->  enum {
->  	P_BI_TCXO,
-> @@ -3171,6 +3172,18 @@ enum {
->  	},
+> +/**
+> + * rproc_coredump_set_elf_info() - set coredump elf information
+> + * @rproc:	handle of a remote processor
+> + * @class:	elf class for coredump elf file
+> + * @size:	elf machine for coredump elf file
+> + *
+> + * Set elf information which will be used for coredump elf file.
+> + *
+> + * Return: 0 on success, negative errno on error.
+> + */
+> +int rproc_coredump_set_elf_info(struct rproc *rproc, u8 class, u16 machine)
+> +{
+> +	if (class != ELFCLASS64 && class != ELFCLASS32)
+> +		return -EINVAL;
+> +
+> +	rproc->elf_class = class;
+> +	rproc->elf_machine = machine;
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL(rproc_coredump_set_elf_info);
+> +
+>  /**
+>   * rproc_coredump() - perform coredump
+>   * @rproc:	rproc handle
+> @@ -1584,6 +1606,11 @@ static void rproc_coredump(struct rproc *rproc)
+>  	if (list_empty(&rproc->dump_segments))
+>  		return;
+>  
+> +	if (class == ELFCLASSNONE) {
+> +		dev_err(&rproc->dev, "Elf class is not set\n");
+> +		return;
+> +	}
+> +
+>  	data_size = elf_size_of_hdr(class);
+>  	list_for_each_entry(segment, &rproc->dump_segments, node) {
+>  		data_size += elf_size_of_phdr(class) + segment->size;
+> @@ -1602,7 +1629,7 @@ static void rproc_coredump(struct rproc *rproc)
+>  	elf_hdr_init_ident(ehdr, class);
+>  
+>  	elf_hdr_set_e_type(class, ehdr, ET_CORE);
+> -	elf_hdr_set_e_machine(class, ehdr, EM_NONE);
+> +	elf_hdr_set_e_machine(class, ehdr, rproc->elf_machine);
+>  	elf_hdr_set_e_version(class, ehdr, EV_CURRENT);
+>  	elf_hdr_set_e_entry(class, ehdr, rproc->bootaddr);
+>  	elf_hdr_set_e_phoff(class, ehdr, elf_size_of_hdr(class));
+> @@ -2043,7 +2070,8 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
+>  	rproc->name = name;
+>  	rproc->priv = &rproc[1];
+>  	rproc->auto_boot = true;
+> -	rproc->elf_class = ELFCLASS32;
+> +	rproc->elf_class = ELFCLASSNONE;
+> +	rproc->elf_machine = EM_NONE;
+>  
+>  	device_initialize(&rproc->dev);
+>  	rproc->dev.parent = dev;
+> diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
+> index 16e2c496fd45..4869fb7d8fe4 100644
+> --- a/drivers/remoteproc/remoteproc_elf_loader.c
+> +++ b/drivers/remoteproc/remoteproc_elf_loader.c
+> @@ -248,9 +248,6 @@ int rproc_elf_load_segments(struct rproc *rproc, const struct firmware *fw)
+>  			memset(ptr + filesz, 0, memsz - filesz);
+>  	}
+>  
+> -	if (ret == 0)
+> -		rproc->elf_class = class;
+> -
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL(rproc_elf_load_segments);
+> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+> index ed127b2d35ca..d67eb5a40476 100644
+> --- a/include/linux/remoteproc.h
+> +++ b/include/linux/remoteproc.h
+> @@ -515,6 +515,7 @@ struct rproc {
+>  	struct list_head dump_segments;
+>  	int nb_vdev;
+>  	u8 elf_class;
+> +	u16 elf_machine;
 >  };
 >  
-> +static struct clk_branch gcc_usb3_prim_phy_pipe_clk = {
-> +	.halt_check = BRANCH_HALT_SKIP,
-> +	.clkr = {
-> +		.enable_reg = 0xf058,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gcc_usb3_prim_phy_pipe_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
->  static struct clk_branch gcc_usb3_sec_clkref_clk = {
->  	.halt_reg = 0x8c028,
->  	.halt_check = BRANCH_HALT,
-> @@ -3218,6 +3231,18 @@ enum {
->  	},
->  };
+>  /**
+> @@ -619,6 +620,7 @@ int rproc_coredump_add_custom_segment(struct rproc *rproc,
+>  						     struct rproc_dump_segment *segment,
+>  						     void *dest),
+>  				      void *priv);
+> +int rproc_coredump_set_elf_info(struct rproc *rproc, u8 class, u16 machine);
 >  
-> +static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
-> +	.halt_check = BRANCH_HALT_SKIP,
-> +	.clkr = {
-> +		.enable_reg = 0x10058,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gcc_usb3_sec_phy_pipe_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
->  /*
->   * Clock ON depends on external parent 'config noc', so cant poll
->   * delay and also mark as crtitical for video boot
-> @@ -3292,6 +3317,24 @@ enum {
->  	},
->  };
->  
-> +static struct gdsc usb30_prim_gdsc = {
-> +		.gdscr = 0xf004,
-> +		.pd = {
-> +			.name = "usb30_prim_gdsc",
-> +		},
-> +		.pwrsts = PWRSTS_OFF_ON,
-> +		.flags = POLL_CFG_GDSCR,
-> +};
-> +
-> +static struct gdsc usb30_sec_gdsc = {
-> +		.gdscr = 0x10004,
-> +		.pd = {
-> +			.name = "usb30_sec_gdsc",
-> +		},
-> +		.pwrsts = PWRSTS_OFF_ON,
-> +		.flags = POLL_CFG_GDSCR,
-> +};
-> +
->  static struct clk_regmap *gcc_sm8150_clocks[] = {
->  	[GCC_AGGRE_NOC_PCIE_TBU_CLK] = &gcc_aggre_noc_pcie_tbu_clk.clkr,
->  	[GCC_AGGRE_UFS_CARD_AXI_CLK] = &gcc_aggre_ufs_card_axi_clk.clkr,
-> @@ -3480,10 +3523,12 @@ enum {
->  	[GCC_USB3_PRIM_PHY_AUX_CLK] = &gcc_usb3_prim_phy_aux_clk.clkr,
->  	[GCC_USB3_PRIM_PHY_AUX_CLK_SRC] = &gcc_usb3_prim_phy_aux_clk_src.clkr,
->  	[GCC_USB3_PRIM_PHY_COM_AUX_CLK] = &gcc_usb3_prim_phy_com_aux_clk.clkr,
-> +	[GCC_USB3_PRIM_PHY_PIPE_CLK] = &gcc_usb3_prim_phy_pipe_clk.clkr,
->  	[GCC_USB3_SEC_CLKREF_CLK] = &gcc_usb3_sec_clkref_clk.clkr,
->  	[GCC_USB3_SEC_PHY_AUX_CLK] = &gcc_usb3_sec_phy_aux_clk.clkr,
->  	[GCC_USB3_SEC_PHY_AUX_CLK_SRC] = &gcc_usb3_sec_phy_aux_clk_src.clkr,
->  	[GCC_USB3_SEC_PHY_COM_AUX_CLK] = &gcc_usb3_sec_phy_com_aux_clk.clkr,
-> +	[GCC_USB3_SEC_PHY_PIPE_CLK] = &gcc_usb3_sec_phy_pipe_clk.clkr,
->  	[GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
->  	[GCC_VIDEO_AXI0_CLK] = &gcc_video_axi0_clk.clkr,
->  	[GCC_VIDEO_AXI1_CLK] = &gcc_video_axi1_clk.clkr,
-> @@ -3527,6 +3572,11 @@ enum {
->  	[GCC_USB_PHY_CFG_AHB2PHY_BCR] = { 0x6a000 },
->  };
->  
-> +static struct gdsc *gcc_sm8150_gdscs[] = {
-> +	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
-> +	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
-> +};
-> +
->  static const struct regmap_config gcc_sm8150_regmap_config = {
->  	.reg_bits	= 32,
->  	.reg_stride	= 4,
-> @@ -3541,6 +3591,8 @@ enum {
->  	.num_clks = ARRAY_SIZE(gcc_sm8150_clocks),
->  	.resets = gcc_sm8150_resets,
->  	.num_resets = ARRAY_SIZE(gcc_sm8150_resets),
-> +	.gdscs = gcc_sm8150_gdscs,
-> +	.num_gdscs = ARRAY_SIZE(gcc_sm8150_gdscs),
->  };
->  
->  static const struct of_device_id gcc_sm8150_match_table[] = {
-> diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> index 90d60ef..3e1a918 100644
-> --- a/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> +++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> @@ -240,4 +240,8 @@
->  #define GCC_USB30_SEC_BCR					27
->  #define GCC_USB_PHY_CFG_AHB2PHY_BCR				28
->  
-> +/* GCC GDSCRs */
-> +#define USB30_PRIM_GDSC                     4
-> +#define USB30_SEC_GDSC						5
-> +
->  #endif
+>  static inline struct rproc_vdev *vdev_to_rvdev(struct virtio_device *vdev)
+>  {
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.17.1
+> 
