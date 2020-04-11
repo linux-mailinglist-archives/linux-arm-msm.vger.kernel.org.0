@@ -2,112 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 21A331A4D53
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 03:38:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96EFB1A4D69
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 04:13:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbgDKBi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Apr 2020 21:38:27 -0400
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:50813 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726678AbgDKBiY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Apr 2020 21:38:24 -0400
-Received: by mail-pj1-f65.google.com with SMTP id b7so1406150pju.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2020 18:38:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=swcitsqOrp58FORQR6T5KNfMtaqgZ3ciuAXDoS3Hbqo=;
-        b=PuxOgWKDl1hgeYSMVpjOVmwtTETL3LXwNZADwUOqPmnBYuhipAD2GY8W6C5ReWqEvx
-         Z+W6Bv+9WKGL2PfJo9IAtujh9iieBrSf+U8mM+/b3D0o66miYllbwPB4YqmUq9+U8HQF
-         JbbWx5lC91J/G7oZPDRfMXNopsd4hcagAyzq6zGujyq4Hh639JIDkI+/9e27Q6iG++HA
-         I1NqSwaE51xW6YOWuHftsR0L15rIjCxdKQBEAVuJl7f0XDNXF3m7CDx4Y+Cm/+GnsNeC
-         JJXmqIhc53suaJYWR+7c9SvSd3IGDHwzzEu1Pdx8mh06pwZd+rZON9qkbM970HOnUShP
-         DOZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=swcitsqOrp58FORQR6T5KNfMtaqgZ3ciuAXDoS3Hbqo=;
-        b=aKyVAOsFVqrpZBcG4pHK9O7iCpm1TFfPlzvTfsu489RPvN1zaHeEFubO28XwbWsZdP
-         xDjiVI2H/3YqSY/jC0xmC/oe4xagpW57bMX694qBLihIfrfsu9mI3WYIR3h9qxKrbr35
-         XJoZwVH/uDjX0f+65XuoVpSOxBrnGmRAf29mgrHEJO7v9lmCIkqEtNoJPrOBD1smvZCz
-         2cVlXT6qk/VLKQeU5WihRU5JVU3bRBXE8AA2xbq6uKuM11lRWNQJw2Fg38RsHq4S/Wd0
-         5GClqt0tzSJscY+DAmjBL/VaREhp2BCXvXmpTcWx4ox0lFTDQTVIZs/BocBFcBBU0bfT
-         6k0g==
-X-Gm-Message-State: AGi0PuanxWUafPmB0Vib23YtEYKO3AbcMeySWCFSvrtcREeUHE2fqsj8
-        +JEBPtb2rMuFliIUBXr+FEoMaA==
-X-Google-Smtp-Source: APiQypJ0hK8rOYfRRiqeUhwUyZ3mwi2rgoHu5r2CQteEA4e2TZZYQ4yTZm1FMIjHH84L6jDIce6XwA==
-X-Received: by 2002:a17:90a:c708:: with SMTP id o8mr7232843pjt.190.1586569103585;
-        Fri, 10 Apr 2020 18:38:23 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u10sm2825089pjd.13.2020.04.10.18.38.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2020 18:38:23 -0700 (PDT)
-Date:   Fri, 10 Apr 2020 18:38:33 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Daniele Debernardi <drebrez@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 5/6] ARM: dts: qcom: msm8974-klte: Remove inherited
- vreg_boost node
-Message-ID: <20200411013833.GI576963@builder.lan>
-References: <20200410023203.192048-1-iskren.chernev@gmail.com>
- <20200410023203.192048-6-iskren.chernev@gmail.com>
+        id S1726701AbgDKCNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Apr 2020 22:13:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45816 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726678AbgDKCNI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Apr 2020 22:13:08 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A02A92078E;
+        Sat, 11 Apr 2020 02:13:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1586571188;
+        bh=YgaDIcJ5xzL8CSiHnhaJpN1YTHxXZE4mV6g69AnHIx0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=vj0F8V1OiL4EYeKy/c6xUGDiz2Aeipk/uYW1PLLcfJWzOlLdSzg47sxjhJlvgXvz0
+         tOQIg04fzd2zupngGMFTLULKjV7SfVMkhLheQMYTZZSpDfzrQdzoRd5a3z/mGAmdCg
+         wbjfzN4OL6rEVD37s/VeW1qbfNCuHjV31sHqTRcc=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200410023203.192048-6-iskren.chernev@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1586298209-4589-2-git-send-email-wcheng@codeaurora.org>
+References: <1586298209-4589-1-git-send-email-wcheng@codeaurora.org> <1586298209-4589-2-git-send-email-wcheng@codeaurora.org>
+Subject: Re: [PATCH v3 1/4] dt-bindings: phy: Add binding for qcom,usb-hs-7nm
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        vinod.koul@linaro.org, Wesley Cheng <wcheng@codeaurora.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mark.rutland@arm.com,
+        mturquette@baylibre.com, robh+dt@kernel.org
+Date:   Fri, 10 Apr 2020 19:13:07 -0700
+Message-ID: <158657118788.199533.6157625397469536329@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 Apr 19:32 PDT 2020, Iskren Chernev wrote:
-
-> From: Daniele Debernardi <drebrez@gmail.com>
-> 
-> The Samsung klte does not have a vreg_boost node. vreg_boost also
-> depends on pm8941-gpio which are not present on the klte.
-> 
-
-May I ask what PMICs this device actually has, if it doesn't have a
-PM8941 GPIO?
-
-Regards,
-Bjorn
-
-> Signed-off-by: Daniele Debernardi <drebrez@gmail.com>
-> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
-> ---
->  arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-> index de0bf6b7e732..ad26c83fee81 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-> @@ -1,7 +1,5 @@
->  // SPDX-License-Identifier: GPL-2.0
->  #include "qcom-msm8974pro.dtsi"
-> -#include "qcom-pm8841.dtsi"
-> -#include "qcom-pm8941.dtsi"
->  #include "qcom-pma8084.dtsi"
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/input/input.h>
-> @@ -196,6 +194,8 @@ l27 {
->  			};
->  		};
->  	};
+Quoting Wesley Cheng (2020-04-07 15:23:26)
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml b=
+/Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
+> new file mode 100644
+> index 0000000..7292e27
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-7nm.yaml
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,usb-hs-7nm.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 > +
-> +	/delete-node/ vreg-boost;
->  };
->  
->  &soc {
-> -- 
-> 2.26.0
-> 
+> +title: Qualcomm Synopsys 7nm High-Speed USB PHY
+> +
+> +maintainers:
+> +  - Wesley Cheng <wcheng@codeaurora.org>
+> +
+> +description: |
+> +  Qualcomm Hi-Speed 7nm USB PHY
+
+High?
+
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,usb-snps-hs-7nm-phy
+> +      - qcom,sm8150-usb-hs-phy
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  clocks:
+> +    items:
+> +      - description: rpmhcc ref clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ref
+> +
+> +  resets:
+> +    items:
+> +      - description: PHY core reset
+> +
+> +  vdda-pll-supply:
+> +    description: phandle to the regulator VDD supply node.
+> +
+> +  vdda18-supply:
+> +    description: phandle to the regulator 1.8V supply node.
+> +
+> +  vdda33-supply:
+> +    description: phandle to the regulator 3.3V supply node.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - "#phy-cells"
+> +  - clocks
+> +  - clock-names
+> +  - resets
+> +  - vdda-pll-supply
+> +  - vdda18-supply
+> +  - vdda33-supply
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sm8150.h>
+> +    usb_1_hsphy: phy@88e2000 {
+
+Is the label necessary? Best to drop it if not.
+
+> +        compatible =3D "qcom,sm8150-usb-hs-phy";
+> +        reg =3D <0 0x088e2000 0 0x400>;
+> +        status =3D "disabled";
+
+I think we can leave out status in examples.
+
+> +        #phy-cells =3D <0>;
+> +
+> +        clocks =3D <&rpmhcc RPMH_CXO_CLK>;
+> +        clock-names =3D "ref";
+> +
+> +        resets =3D <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +    };
+> +...
+> \ No newline at end of file
+
+Why no newline at end of file?
+
+> --=20
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
