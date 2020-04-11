@@ -2,36 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EE03E1A5845
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 01:29:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A51141A57FE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 01:27:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729860AbgDKXLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Apr 2020 19:11:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50754 "EHLO mail.kernel.org"
+        id S1730128AbgDKX1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Apr 2020 19:27:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51462 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728957AbgDKXLR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Apr 2020 19:11:17 -0400
+        id S1728366AbgDKXLn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:11:43 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F01A620CC7;
-        Sat, 11 Apr 2020 23:11:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1F6342173E;
+        Sat, 11 Apr 2020 23:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586646676;
-        bh=wS3jFTMM2C4qr3WLroCLDV8LJ8TkwN/96ofrMrcEvqQ=;
+        s=default; t=1586646704;
+        bh=Oz8l4a2+DuHtBPXpl9y0K8v+0yx9MzbKD4iUyuOn2i4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PShKxyJuqDRFJ9sSUQ1buuW7vNtLlL9XO8ENozNo7g7wruWwR2D6V9foICHzmclLm
-         bxjyHE00x7pR84Lzk7P77Tf4Txij98TEv5mOi1eb6//1El9arLvZ+/+i/XODo/1RSA
-         +eTLi8MviqPIhtOHlgVXpgvXoJARzCws4IBTEWQk=
+        b=ZbnHuQrP9PA23Et/z1q6vFvBDR0x9/JLUc9xuDbCkZT+hucK5D1rBb3nSUmFiGDFq
+         Xt6X285SUYNKnz+lpLmvtVvFQTnIz/E3cb0c/9WOgDcV1Su0fLFJ135Gzwl+xsn0AT
+         8C+7mubO2dkvUssLZqprqSl1x1TSXKhDZ3fA616o=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Michael Srba <Michael.Srba@seznam.cz>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.4 074/108] drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP buffers
-Date:   Sat, 11 Apr 2020 19:09:09 -0400
-Message-Id: <20200411230943.24951-74-sashal@kernel.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 096/108] arm64: dts: qcom: msm8916-samsung-a2015: Reserve Samsung firmware memory
+Date:   Sat, 11 Apr 2020 19:09:31 -0400
+Message-Id: <20200411230943.24951-96-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200411230943.24951-1-sashal@kernel.org>
 References: <20200411230943.24951-1-sashal@kernel.org>
@@ -44,116 +45,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit e515af8d4a6f18f96c360724568a7497868101a8 ]
+[ Upstream commit 8f4a7a00c1019df72cda3002643fb5823ef39183 ]
 
-Also log buffers with the DUMP flag set, to ensure we capture all useful
-cmdstream in crashdump state with modern mesa.
+At the moment, writing large amounts of data to the eMMC causes the device
+to freeze. The symptoms vary, sometimes the device reboots immediately,
+but usually it will just get stuck.
 
-Otherwise we miss out on the contents of "state object" cmdstream
-buffers.
+It turns out that the issue is not actually related to the eMMC:
+Apparently, Samsung has made some modifications to the TrustZone firmware.
+These require additional memory which is reserved at 0x85500000-0x86000000.
+The downstream kernel describes this memory reservation as:
 
-v2: add missing 'inline'
+/* Additionally Reserved 6MB for TIMA and Increased the TZ app size
+ * by 2MB [total 8 MB ]
+ */
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+This suggests that it is used for additional TZ apps, although the extra
+memory is actually 11 MB instead of the 8 MB mentioned in the comment.
+
+Writing to the protected memory causes the kernel to crash or freeze.
+In our case, writing to the eMMC causes the disk cache to fill
+the available RAM, until the kernel eventually crashes
+when attempting to use the reserved memory.
+
+Add the additional memory as reserved-memory to fix this problem.
+
+Fixes: 1329c1ab0730 ("arm64: dts: qcom: Add device tree for Samsung Galaxy A3U/A5U")
+Reported-by: Michael Srba <Michael.Srba@seznam.cz>
+Tested-by: Michael Srba <Michael.Srba@seznam.cz> # a3u
+Tested-by: Stephan Gerhold <stephan@gerhold.net> # a5u
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Link: https://lore.kernel.org/r/20191231112511.83342-1-stephan@gerhold.net
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem.h | 10 ++++++++++
- drivers/gpu/drm/msm/msm_gpu.c | 28 +++++++++++++++++++++++-----
- drivers/gpu/drm/msm/msm_rd.c  |  8 +-------
- 3 files changed, 34 insertions(+), 12 deletions(-)
+ .../arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 9e0953c2b7cea..dcee0e223ed86 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -160,4 +160,14 @@ struct msm_gem_submit {
- 	} bos[0];
- };
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+index e675ff48fdd24..0cc5c5be0c21e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+@@ -14,6 +14,14 @@
+ 		stdout-path = "serial0";
+ 	};
  
-+/* helper to determine of a buffer in submit should be dumped, used for both
-+ * devcoredump and debugfs cmdstream dumping:
-+ */
-+static inline bool
-+should_dump(struct msm_gem_submit *submit, int idx)
-+{
-+	extern bool rd_full;
-+	return rd_full || (submit->bos[idx].flags & MSM_SUBMIT_BO_DUMP);
-+}
++	reserved-memory {
++		/* Additional memory used by Samsung firmware modifications */
++		tz-apps@85500000 {
++			reg = <0x0 0x85500000 0x0 0xb00000>;
++			no-map;
++		};
++	};
 +
- #endif /* __MSM_GEM_H__ */
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index edd45f434ccd6..aea93e5035758 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -355,16 +355,34 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
- 	state->cmd = kstrdup(cmd, GFP_KERNEL);
- 
- 	if (submit) {
--		int i;
--
--		state->bos = kcalloc(submit->nr_cmds,
-+		int i, nr = 0;
-+
-+		/* count # of buffers to dump: */
-+		for (i = 0; i < submit->nr_bos; i++)
-+			if (should_dump(submit, i))
-+				nr++;
-+		/* always dump cmd bo's, but don't double count them: */
-+		for (i = 0; i < submit->nr_cmds; i++)
-+			if (!should_dump(submit, submit->cmd[i].idx))
-+				nr++;
-+
-+		state->bos = kcalloc(nr,
- 			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
- 
-+		for (i = 0; i < submit->nr_bos; i++) {
-+			if (should_dump(submit, i)) {
-+				msm_gpu_crashstate_get_bo(state, submit->bos[i].obj,
-+					submit->bos[i].iova, submit->bos[i].flags);
-+			}
-+		}
-+
- 		for (i = 0; state->bos && i < submit->nr_cmds; i++) {
- 			int idx = submit->cmd[i].idx;
- 
--			msm_gpu_crashstate_get_bo(state, submit->bos[idx].obj,
--				submit->bos[idx].iova, submit->bos[idx].flags);
-+			if (!should_dump(submit, submit->cmd[i].idx)) {
-+				msm_gpu_crashstate_get_bo(state, submit->bos[idx].obj,
-+					submit->bos[idx].iova, submit->bos[idx].flags);
-+			}
- 		}
- 	}
- 
-diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-index c7832a951039f..4acebaefaed74 100644
---- a/drivers/gpu/drm/msm/msm_rd.c
-+++ b/drivers/gpu/drm/msm/msm_rd.c
-@@ -43,7 +43,7 @@
- #include "msm_gpu.h"
- #include "msm_gem.h"
- 
--static bool rd_full = false;
-+bool rd_full = false;
- MODULE_PARM_DESC(rd_full, "If true, $debugfs/.../rd will snapshot all buffer contents");
- module_param_named(rd_full, rd_full, bool, 0600);
- 
-@@ -333,12 +333,6 @@ static void snapshot_buf(struct msm_rd_state *rd,
- 	msm_gem_put_vaddr(&obj->base);
- }
- 
--static bool
--should_dump(struct msm_gem_submit *submit, int idx)
--{
--	return rd_full || (submit->bos[idx].flags & MSM_SUBMIT_BO_DUMP);
--}
--
- /* called under struct_mutex */
- void msm_rd_dump_submit(struct msm_rd_state *rd, struct msm_gem_submit *submit,
- 		const char *fmt, ...)
+ 	soc {
+ 		sdhci@7824000 {
+ 			status = "okay";
 -- 
 2.20.1
 
