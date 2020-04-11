@@ -2,97 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F5EF1A5313
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 19:21:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDAC71A534B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 20:21:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbgDKRVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Apr 2020 13:21:18 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:32807 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726689AbgDKRVS (ORCPT
+        id S1726729AbgDKSVy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Apr 2020 14:21:54 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:42226 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726129AbgDKSVx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Apr 2020 13:21:18 -0400
-Received: by mail-lf1-f66.google.com with SMTP id h6so3530695lfc.0;
-        Sat, 11 Apr 2020 10:21:15 -0700 (PDT)
+        Sat, 11 Apr 2020 14:21:53 -0400
+Received: by mail-lj1-f195.google.com with SMTP id q19so4942396ljp.9;
+        Sat, 11 Apr 2020 11:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=oyBmc4xjNn3SLXRrYaMJxMSegPacZmPs2u2arwCQFwM=;
-        b=VR/wGsp6AL6Cgg3JswO7WRYpRv1nWBBEmrdCY+rNoLnt8YCpj8wbVXp3eIYczY8jFh
-         3XmMhQJnFPAzG7c0GvVfa/DN0/vBVx7G5vavJen+1HcXbtV67PXuyB+ffigY7AhNru+q
-         oPUxJhXgHzRo/5k0mEen8hRHKRet3vc39nuHlop3L2UEhFK2vtdRPkpFdCNXF4Q1kYMB
-         LKe05KupQYlHVjIBoW7I8/li2KsvyNDwGNYk3QzYI4ZaDtCprcwDBlzmQZwsA3Xs6l29
-         G0jQU+vTCzCEJHXKNmOGd2w93ip4Bicf1M0+D7ujgIUchKoKdS0k5gNPtvslEa107Xkh
-         e0OA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ASv+/VA0JLllwIfA9iH/eNy9Ro4gJxQYRzDP5e5zYwM=;
+        b=ZOklp3B6Wwr6hQCeRz5UVPsq9df/Nw+eRRo7wtvtHSGHqJnO13b4BtcNraGHZ4+7Mh
+         6xqu1eyLxKjuNxoPesFDzn8yiomWOp9ONbkEVTt1DUWGKBUEcnwhujaYD9VAJ0/Fu3Wx
+         ufaEli6G49GOdpSMSfpqGnMEXrMpKFC0etzZnm0nY1pSmLwyC5eHBSR2Vz14+w6ITOQg
+         6c/ElanFrfKVo4e6XApxxf4KRJP1SikOeG++P5GY8fqZ2sKYEzoyQ3UalkjWL0Un32MR
+         oAdNoQH4ak9rps/KwHZ8kqc+kisItvlGQqDz/awA6rgUBK2KEuundJD6Bg4FfgebQY4l
+         52KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=oyBmc4xjNn3SLXRrYaMJxMSegPacZmPs2u2arwCQFwM=;
-        b=CjmaQFKJMM67bQa2GWyUX49SW6Fpd4CoLYuHcjqPYJNFmXwrayws5Xm5d/I8yM2ttU
-         PECeHXOzthdyoOFytvBYp+7W1eNtqgEk1IN9l7ilE89fl4u4IU8EyT4n0gtkiAGea37Q
-         qKda2HE28gGFhuRmW5aSjQ0cpGkf85G1czPQQUpuDkDKogv2ZKqM+6gYPNdx/qxdTFC6
-         5LwajHvtC9KwPXE8x+Vp5UjBNOCQlJ1/+jUlfF2EGiihHUJxD7mSsmp4u5ZDskgfutEe
-         4sCXm4nslTjUhBKMteHWsSZUYb3sndl4i3BhA+D1wrfc8mRjXXt8oOdczmag5c+MC696
-         GbFg==
-X-Gm-Message-State: AGi0PuZFD9DqVqDAz7/G0TLLdjuS5XKN0pziD8HXk7xnLgWdEe9MhqKm
-        kAA7cj+O0IYZXuGejeCrpFqCKsTEiqyjzQ==
-X-Google-Smtp-Source: APiQypLeAJWvRiG4SW+wcKx7r0BSGgtySOu0j274CfwZ+izdGwEBBMzpQfpHUf4ztsokzU3wEqKAOQ==
-X-Received: by 2002:ac2:5930:: with SMTP id v16mr5715089lfi.103.1586625674889;
-        Sat, 11 Apr 2020 10:21:14 -0700 (PDT)
-Received: from [192.168.86.24] ([213.191.183.145])
-        by smtp.gmail.com with ESMTPSA id q21sm3769305ljh.38.2020.04.11.10.21.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ASv+/VA0JLllwIfA9iH/eNy9Ro4gJxQYRzDP5e5zYwM=;
+        b=BOA9ccZO6A1kiq2depUCdP+5iRloSGYKwZ160PQpRQPeUvSu5E27ur3hSe9ACym+E8
+         Jj47Z1KAPOVcptRFQvX2fy8S/DzI90MnMLsrZIT9w82s2cAJiDqHI4uBMnkA7d8qiKhS
+         rNtVMy5Q8kQ3moJ+yHNxtDng78m1ur6Ucb8Op9zkKc96H5EX8LSJAoRTi+AWHAS5tAGN
+         iA4oDfJOaCuJivhdNKvZakBhL4kmou7lIUBTfZePu6p3kgTfbxyGoC+gEDABZM3SH2Vu
+         VPO4nJi/+jLJ1O814RyBby/4/OmxazeFIOUqQj6am+XufhZt3eJGlzrn5rxWGlNCi0xG
+         Cyug==
+X-Gm-Message-State: AGi0PuZxz9fTkfLAB7ypIJ3s95kiMoTCHcTRi+YAqlmfiAsGm9lUQD0c
+        KW+Cpxql2uJ3+7Qf21IpnskgXzks1VpKBg==
+X-Google-Smtp-Source: APiQypLA+zDlsQCYdRbHZB7BmugazrgJAOGPZg0aIqZ7CO78HcQ55wumux8mR1QAUKf5l+Mtt9cw+Q==
+X-Received: by 2002:a2e:b4d1:: with SMTP id r17mr6125610ljm.117.1586629311627;
+        Sat, 11 Apr 2020 11:21:51 -0700 (PDT)
+Received: from localhost ([213.191.183.145])
+        by smtp.gmail.com with ESMTPSA id o6sm2035558lja.70.2020.04.11.11.21.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Apr 2020 10:21:14 -0700 (PDT)
-Subject: Re: [PATCH 5/6] ARM: dts: qcom: msm8974-klte: Remove inherited
- vreg_boost node
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Daniele Debernardi <drebrez@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20200410023203.192048-1-iskren.chernev@gmail.com>
- <20200410023203.192048-6-iskren.chernev@gmail.com>
- <20200411013833.GI576963@builder.lan>
+        Sat, 11 Apr 2020 11:21:50 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
-Message-ID: <b43ee298-50b2-ec1d-9b40-5683663e96c5@gmail.com>
-Date:   Sat, 11 Apr 2020 20:21:12 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Daniele Debernardi <drebrez@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v2 0/5] ARM: dts: qcom: klte: Add support for hw keys, flash and usb
+Date:   Sat, 11 Apr 2020 21:21:17 +0300
+Message-Id: <20200411182122.2677248-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
-In-Reply-To: <20200411013833.GI576963@builder.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Enable support for gpio-keys (volume up/down + home), internal flash storage
+(sdhci), and usb (for usb-ethernet) for the Samsung Galaxy S5, codename klte.
 
-On 4/11/20 4:38 AM, Bjorn Andersson wrote:
-> May I ask what PMICs this device actually has, if it doesn't have a
-> PM8941 GPIO?
+v1: https://lkml.org/lkml/2020/4/9/927
 
-In terms of power, the device has PMA8084, MAX77826 (pure PMIC for
-touchpad, camera, other peripherals), MAX77804k (MFD with fuel gauge,
-charger, a few regulators + other). I'm sending a MAX77826 patch
-shortly :)
+changes in v2:
+- do not include PMA8084 PMIC node in the msm8974 dtsi, instead only declare it
+  in the device dts.
 
-In terms of GPIO controllers, PMA8084 has some pins, and the SoC
-itself (qcom,msm8974-pinctrl) has gpio pins.
+Daniele Debernardi (5):
+  ARM: dts: qcom: msm8974-klte: Add pma8084 regulator nodes
+  ARM: dts: qcom: msm8974-klte: Remove inherited vreg_boost node
+  ARM: dts: qcom: msm8974-klte: Add gpio-keys nodes
+  ARM: dts: qcom: msm8974-klte: Add sdhci1 node
+  ARM: dts: qcom: msm8974-klte: Add USB node
 
-According to ./drivers/platform/msm/qpnp-revid.c from downstream,
-these devices are covered by similar drivers: "PM8941", "PM8841",
-"PM8019", "PM8226", "PM8110", "PMA8084", "PMI8962", "PMD9635", and my
-KLTE prints the PMA8084, after querying the hardware.
+ .../boot/dts/qcom-msm8974-samsung-klte.dts    | 294 +++++++++++++++++-
+ 1 file changed, 292 insertions(+), 2 deletions(-)
 
-I still don't have the full picture yet, but I'm pretty confident
-there is no PM8941/PM8841 on the klte.
 
-Regards,
-Iskren
+base-commit: 873e37a44b1ee8ad4628ca257dc51c0c7c654326
+--
+2.26.0
 
