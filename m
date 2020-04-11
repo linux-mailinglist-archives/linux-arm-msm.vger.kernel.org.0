@@ -2,113 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A5CD1A4F14
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 11:20:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F5EF1A5313
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 19:21:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725900AbgDKJU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Apr 2020 05:20:27 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:60940 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725905AbgDKJU1 (ORCPT
+        id S1726695AbgDKRVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Apr 2020 13:21:18 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:32807 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726689AbgDKRVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Apr 2020 05:20:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586596827; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=m64rlGIY/ze74hM+6TJxI24Fs9sSBQEMm8EnQhf5+Gs=;
- b=DseFGZDVKeLKQbyMLjK9d0Oh15b/EKcDQy1gmuQqxhNSpOGroBmWRSaR2M/lO7ZZsPCdb7Kt
- rO3cpvqAL1421nBCyhxgB+K6veJ5ENrTINW1h94dXruZ8WHk75UGv1nagV3sd9OrzQmrRaGE
- uBOQ3oxpUwyxIza4tpmE1Ib3R4M=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e918bce.7fea463b8b58-smtp-out-n03;
- Sat, 11 Apr 2020 09:20:14 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AAD9CC4478F; Sat, 11 Apr 2020 09:20:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01845C433CB;
-        Sat, 11 Apr 2020 09:20:12 +0000 (UTC)
+        Sat, 11 Apr 2020 13:21:18 -0400
+Received: by mail-lf1-f66.google.com with SMTP id h6so3530695lfc.0;
+        Sat, 11 Apr 2020 10:21:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=oyBmc4xjNn3SLXRrYaMJxMSegPacZmPs2u2arwCQFwM=;
+        b=VR/wGsp6AL6Cgg3JswO7WRYpRv1nWBBEmrdCY+rNoLnt8YCpj8wbVXp3eIYczY8jFh
+         3XmMhQJnFPAzG7c0GvVfa/DN0/vBVx7G5vavJen+1HcXbtV67PXuyB+ffigY7AhNru+q
+         oPUxJhXgHzRo/5k0mEen8hRHKRet3vc39nuHlop3L2UEhFK2vtdRPkpFdCNXF4Q1kYMB
+         LKe05KupQYlHVjIBoW7I8/li2KsvyNDwGNYk3QzYI4ZaDtCprcwDBlzmQZwsA3Xs6l29
+         G0jQU+vTCzCEJHXKNmOGd2w93ip4Bicf1M0+D7ujgIUchKoKdS0k5gNPtvslEa107Xkh
+         e0OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=oyBmc4xjNn3SLXRrYaMJxMSegPacZmPs2u2arwCQFwM=;
+        b=CjmaQFKJMM67bQa2GWyUX49SW6Fpd4CoLYuHcjqPYJNFmXwrayws5Xm5d/I8yM2ttU
+         PECeHXOzthdyoOFytvBYp+7W1eNtqgEk1IN9l7ilE89fl4u4IU8EyT4n0gtkiAGea37Q
+         qKda2HE28gGFhuRmW5aSjQ0cpGkf85G1czPQQUpuDkDKogv2ZKqM+6gYPNdx/qxdTFC6
+         5LwajHvtC9KwPXE8x+Vp5UjBNOCQlJ1/+jUlfF2EGiihHUJxD7mSsmp4u5ZDskgfutEe
+         4sCXm4nslTjUhBKMteHWsSZUYb3sndl4i3BhA+D1wrfc8mRjXXt8oOdczmag5c+MC696
+         GbFg==
+X-Gm-Message-State: AGi0PuZFD9DqVqDAz7/G0TLLdjuS5XKN0pziD8HXk7xnLgWdEe9MhqKm
+        kAA7cj+O0IYZXuGejeCrpFqCKsTEiqyjzQ==
+X-Google-Smtp-Source: APiQypLeAJWvRiG4SW+wcKx7r0BSGgtySOu0j274CfwZ+izdGwEBBMzpQfpHUf4ztsokzU3wEqKAOQ==
+X-Received: by 2002:ac2:5930:: with SMTP id v16mr5715089lfi.103.1586625674889;
+        Sat, 11 Apr 2020 10:21:14 -0700 (PDT)
+Received: from [192.168.86.24] ([213.191.183.145])
+        by smtp.gmail.com with ESMTPSA id q21sm3769305ljh.38.2020.04.11.10.21.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Apr 2020 10:21:14 -0700 (PDT)
+Subject: Re: [PATCH 5/6] ARM: dts: qcom: msm8974-klte: Remove inherited
+ vreg_boost node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Daniele Debernardi <drebrez@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20200410023203.192048-1-iskren.chernev@gmail.com>
+ <20200410023203.192048-6-iskren.chernev@gmail.com>
+ <20200411013833.GI576963@builder.lan>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+Message-ID: <b43ee298-50b2-ec1d-9b40-5683663e96c5@gmail.com>
+Date:   Sat, 11 Apr 2020 20:21:12 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200411013833.GI576963@builder.lan>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Date:   Sat, 11 Apr 2020 14:50:12 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Tomasz Figa <tfiga@chromium.org>
-Subject: Re: [PATCH 0/2] iommu/arm-smmu: Allow client devices to select direct
- mapping
-In-Reply-To: <20200409233124.GW199755@google.com>
-References: <cover.1579692800.git.saiprakash.ranjan@codeaurora.org>
- <7761534cdb4f1891d993e73931894a63@codeaurora.org>
- <20200409233124.GW199755@google.com>
-Message-ID: <6714ba4f73f6518e5f2f427a0bcc6c53@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
 
-On 2020-04-10 05:01, Matthias Kaehlcke wrote:
-> On Tue, Feb 04, 2020 at 11:12:17PM +0530, Sai Prakash Ranjan wrote:
->> Hello Robin, Will
->> 
->> On 2020-01-22 17:18, Sai Prakash Ranjan wrote:
->> > This series allows drm devices to set a default identity
->> > mapping using iommu_request_dm_for_dev(). First patch is
->> > a cleanup to support other SoCs to call into QCOM specific
->> > implementation and preparation for second patch.
->> > Second patch sets the default identity domain for drm devices.
->> >
->> > Jordan Crouse (1):
->> >   iommu/arm-smmu: Allow client devices to select direct mapping
->> >
->> > Sai Prakash Ranjan (1):
->> >   iommu: arm-smmu-impl: Convert to a generic reset implementation
->> >
->> >  drivers/iommu/arm-smmu-impl.c |  8 +++--
->> >  drivers/iommu/arm-smmu-qcom.c | 55 +++++++++++++++++++++++++++++++++--
->> >  drivers/iommu/arm-smmu.c      |  3 ++
->> >  drivers/iommu/arm-smmu.h      |  5 ++++
->> >  4 files changed, 65 insertions(+), 6 deletions(-)
->> 
->> Any review comments?
-> 
-> Ping
-> 
-> What is the status of this series, is it ready to land or are any 
-> changes
-> needed?
-> 
+On 4/11/20 4:38 AM, Bjorn Andersson wrote:
+> May I ask what PMICs this device actually has, if it doesn't have a
+> PM8941 GPIO?
 
-I am wondering the same :)
+In terms of power, the device has PMA8084, MAX77826 (pure PMIC for
+touchpad, camera, other peripherals), MAX77804k (MFD with fuel gauge,
+charger, a few regulators + other). I'm sending a MAX77826 patch
+shortly :)
 
-Thanks,
-Sai
+In terms of GPIO controllers, PMA8084 has some pins, and the SoC
+itself (qcom,msm8974-pinctrl) has gpio pins.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+According to ./drivers/platform/msm/qpnp-revid.c from downstream,
+these devices are covered by similar drivers: "PM8941", "PM8841",
+"PM8019", "PM8226", "PM8110", "PMA8084", "PMI8962", "PMD9635", and my
+KLTE prints the PMA8084, after querying the hardware.
+
+I still don't have the full picture yet, but I'm pretty confident
+there is no PM8941/PM8841 on the klte.
+
+Regards,
+Iskren
+
