@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 524C81A4D05
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 02:52:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 245AB1A4D0D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 02:53:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726648AbgDKAwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Apr 2020 20:52:54 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:35095 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726652AbgDKAwy (ORCPT
+        id S1726678AbgDKAxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Apr 2020 20:53:06 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:17355 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726821AbgDKAxF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Apr 2020 20:52:54 -0400
+        Fri, 10 Apr 2020 20:53:05 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586566373; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1586566384; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=sYEP7fr+H1lt1NOfyJumJYSAn2sz22a8EDdkt4TaDHE=; b=ez1r5b7QjRN/yNBzw9ae6ROVX1MARmOCSBjs1LMvQPqFvZ4oGvnIXvlZVua8W5C34mDMlD1V
- 1RGMlzTG/m8pw7gEndMKxZa8wwRWheMku7ADacgpvhl2fpCg+Kj4lPkdsf8dkMXiMmjKQWtD
- My6zXgnUYjx0OoLBCQBDLAPVQcY=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=tXgJHnruTE7JJJpQBKFjjW9EiDNiUmdUuus915BuRfU=; b=cLqPy/GUTNnQQ/kKVhBHPs52+1H2I6jZLdQkSvixCsJocno2t3swkW9W0V/1dR3+zKTGZuAd
+ kEYt+50/zrHZIFoVJlTOBaFE9Nii3w+UfiQKoKx94eONAnufkjiIpXMGj2CYF0EKHrIOgvf4
+ ibyGUPoGUV87pdOvG4TZ4KD7Jrc=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9114e5.7f06cc059ab0-smtp-out-n01;
+ by mxa.mailgun.org with ESMTP id 5e9114e5.7ff692243b58-smtp-out-n02;
  Sat, 11 Apr 2020 00:52:53 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 84988C4478C; Sat, 11 Apr 2020 00:52:51 +0000 (UTC)
+        id B6F29C43637; Sat, 11 Apr 2020 00:52:52 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7DE3FC433F2;
-        Sat, 11 Apr 2020 00:52:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7DE3FC433F2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2ADF7C43636;
+        Sat, 11 Apr 2020 00:52:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2ADF7C43636
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
 From:   Wesley Cheng <wcheng@codeaurora.org>
@@ -45,10 +45,11 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org,
         mark.rutland@arm.com
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        vinod.koul@linaro.org, Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v4 1/2] clk: qcom: gcc: Add USB3 PIPE clock and GDSC for SM8150
-Date:   Fri, 10 Apr 2020 17:52:41 -0700
-Message-Id: <1586566362-21450-2-git-send-email-wcheng@codeaurora.org>
+        vinod.koul@linaro.org, Jack Pham <jackp@codeaurora.org>,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v4 2/2] arm64: dts: qcom: sm8150: Add USB and PHY device nodes
+Date:   Fri, 10 Apr 2020 17:52:42 -0700
+Message-Id: <1586566362-21450-3-git-send-email-wcheng@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1586566362-21450-1-git-send-email-wcheng@codeaurora.org>
 References: <1586566362-21450-1-git-send-email-wcheng@codeaurora.org>
@@ -57,143 +58,153 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds the USB3 PIPE clock and GDSC structures, so
-that the USB driver can vote for these resources to be
-enabled/disabled when required.  Both are needed for SS
-and HS USB paths to operate properly.  The GDSC will
-allow the USB system to be brought out of reset, while
-the PIPE clock is needed for data transactions between
-the PHY and controller.
+From: Jack Pham <jackp@codeaurora.org>
 
+Add device nodes for the USB3 controller, QMP SS PHY and
+SNPS HS PHY.
+
+Signed-off-by: Jack Pham <jackp@codeaurora.org>
 Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Tested-by: Vinod Koul <vinod.koul@linaro.org>
 ---
- drivers/clk/qcom/gcc-sm8150.c               | 52 +++++++++++++++++++++++++++++
- include/dt-bindings/clock/qcom,gcc-sm8150.h |  4 +++
- 2 files changed, 56 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 21 ++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi    | 92 +++++++++++++++++++++++++++++++++
+ 2 files changed, 113 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 2087721..ef98fdc 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -21,6 +21,7 @@
- #include "clk-rcg.h"
- #include "clk-regmap.h"
- #include "reset.h"
-+#include "gdsc.h"
- 
- enum {
- 	P_BI_TCXO,
-@@ -3171,6 +3172,18 @@ enum {
- 	},
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+index 8ab1661..6c6325c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+@@ -408,3 +408,24 @@
+ 	vdda-pll-supply = <&vreg_l3c_1p2>;
+ 	vdda-pll-max-microamp = <19000>;
  };
- 
-+static struct clk_branch gcc_usb3_prim_phy_pipe_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0xf058,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_usb3_prim_phy_pipe_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
++
++&usb_1_hsphy {
++	status = "okay";
++	vdda-pll-supply = <&vdd_usb_hs_core>;
++	vdda33-supply = <&vdda_usb_hs_3p1>;
++	vdda18-supply = <&vdda_usb_hs_1p8>;
 +};
 +
- static struct clk_branch gcc_usb3_sec_clkref_clk = {
- 	.halt_reg = 0x8c028,
- 	.halt_check = BRANCH_HALT,
-@@ -3218,6 +3231,18 @@ enum {
- 	},
- };
- 
-+static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x10058,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_usb3_sec_phy_pipe_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
++&usb_1_qmpphy {
++	status = "okay";
++	vdda-phy-supply = <&vreg_l3c_1p2>;
++	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
 +};
 +
- /*
-  * Clock ON depends on external parent 'config noc', so cant poll
-  * delay and also mark as crtitical for video boot
-@@ -3292,6 +3317,24 @@ enum {
- 	},
- };
- 
-+static struct gdsc usb30_prim_gdsc = {
-+		.gdscr = 0xf004,
-+		.pd = {
-+			.name = "usb30_prim_gdsc",
-+		},
-+		.pwrsts = PWRSTS_OFF_ON,
-+		.flags = POLL_CFG_GDSCR,
++&usb_1 {
++	status = "okay";
 +};
 +
-+static struct gdsc usb30_sec_gdsc = {
-+		.gdscr = 0x10004,
-+		.pd = {
-+			.name = "usb30_sec_gdsc",
-+		},
-+		.pwrsts = PWRSTS_OFF_ON,
-+		.flags = POLL_CFG_GDSCR,
++&usb_1_dwc3 {
++	dr_mode = "peripheral";
 +};
-+
- static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_AGGRE_NOC_PCIE_TBU_CLK] = &gcc_aggre_noc_pcie_tbu_clk.clkr,
- 	[GCC_AGGRE_UFS_CARD_AXI_CLK] = &gcc_aggre_ufs_card_axi_clk.clkr,
-@@ -3480,10 +3523,12 @@ enum {
- 	[GCC_USB3_PRIM_PHY_AUX_CLK] = &gcc_usb3_prim_phy_aux_clk.clkr,
- 	[GCC_USB3_PRIM_PHY_AUX_CLK_SRC] = &gcc_usb3_prim_phy_aux_clk_src.clkr,
- 	[GCC_USB3_PRIM_PHY_COM_AUX_CLK] = &gcc_usb3_prim_phy_com_aux_clk.clkr,
-+	[GCC_USB3_PRIM_PHY_PIPE_CLK] = &gcc_usb3_prim_phy_pipe_clk.clkr,
- 	[GCC_USB3_SEC_CLKREF_CLK] = &gcc_usb3_sec_clkref_clk.clkr,
- 	[GCC_USB3_SEC_PHY_AUX_CLK] = &gcc_usb3_sec_phy_aux_clk.clkr,
- 	[GCC_USB3_SEC_PHY_AUX_CLK_SRC] = &gcc_usb3_sec_phy_aux_clk_src.clkr,
- 	[GCC_USB3_SEC_PHY_COM_AUX_CLK] = &gcc_usb3_sec_phy_com_aux_clk.clkr,
-+	[GCC_USB3_SEC_PHY_PIPE_CLK] = &gcc_usb3_sec_phy_pipe_clk.clkr,
- 	[GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
- 	[GCC_VIDEO_AXI0_CLK] = &gcc_video_axi0_clk.clkr,
- 	[GCC_VIDEO_AXI1_CLK] = &gcc_video_axi1_clk.clkr,
-@@ -3527,6 +3572,11 @@ enum {
- 	[GCC_USB_PHY_CFG_AHB2PHY_BCR] = { 0x6a000 },
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 141c21d..a36512d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -621,6 +621,98 @@
+ 			};
+ 		};
  
-+static struct gdsc *gcc_sm8150_gdscs[] = {
-+	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
-+	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
-+};
++		usb_1_hsphy: phy@88e2000 {
++			compatible = "qcom,sm8150-usb-hs-phy",
++							"qcom,usb-snps-hs-7nm-phy";
++			reg = <0 0x088e2000 0 0x400>;
++			status = "disabled";
++			#phy-cells = <0>;
 +
- static const struct regmap_config gcc_sm8150_regmap_config = {
- 	.reg_bits	= 32,
- 	.reg_stride	= 4,
-@@ -3541,6 +3591,8 @@ enum {
- 	.num_clks = ARRAY_SIZE(gcc_sm8150_clocks),
- 	.resets = gcc_sm8150_resets,
- 	.num_resets = ARRAY_SIZE(gcc_sm8150_resets),
-+	.gdscs = gcc_sm8150_gdscs,
-+	.num_gdscs = ARRAY_SIZE(gcc_sm8150_gdscs),
- };
- 
- static const struct of_device_id gcc_sm8150_match_table[] = {
-diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-index 90d60ef..3e1a918 100644
---- a/include/dt-bindings/clock/qcom,gcc-sm8150.h
-+++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-@@ -240,4 +240,8 @@
- #define GCC_USB30_SEC_BCR					27
- #define GCC_USB_PHY_CFG_AHB2PHY_BCR				28
- 
-+/* GCC GDSCRs */
-+#define USB30_PRIM_GDSC                     4
-+#define USB30_SEC_GDSC						5
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "ref";
 +
- #endif
++			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
++		};
++
++		usb_1_qmpphy: phy@88e9000 {
++			compatible = "qcom,sm8150-qmp-usb3-phy";
++			reg = <0 0x088e9000 0 0x18c>,
++			      <0 0x088e8000 0 0x10>;
++			reg-names = "reg-base", "dp_com";
++			status = "disabled";
++			#clock-cells = <1>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
++				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
++			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
++
++			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
++				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
++			reset-names = "phy", "common";
++
++			usb_1_ssphy: lanes@88e9200 {
++				reg = <0 0x088e9200 0 0x200>,
++				      <0 0x088e9400 0 0x200>,
++				      <0 0x088e9c00 0 0x218>,
++				      <0 0x088e9600 0 0x200>,
++				      <0 0x088e9800 0 0x200>,
++				      <0 0x088e9a00 0 0x100>;
++				#phy-cells = <0>;
++				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
++				clock-names = "pipe0";
++				clock-output-names = "usb3_phy_pipe_clk_src";
++			};
++		};
++
++		usb_1: usb@a6f8800 {
++			compatible = "qcom,sm8150-dwc3", "qcom,dwc3";
++			reg = <0 0x0a6f8800 0 0x400>;
++			status = "disabled";
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++			dma-ranges;
++
++			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
++				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
++				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
++				 <&gcc GCC_USB3_SEC_CLKREF_CLK>;
++			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
++				      "sleep", "xo";
++
++			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
++					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
++			assigned-clock-rates = <19200000>, <150000000>;
++
++			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hs_phy_irq", "ss_phy_irq",
++					  "dm_hs_phy_irq", "dp_hs_phy_irq";
++
++			power-domains = <&gcc USB30_PRIM_GDSC>;
++
++			resets = <&gcc GCC_USB30_PRIM_BCR>;
++
++			usb_1_dwc3: dwc3@a600000 {
++				compatible = "snps,dwc3";
++				reg = <0 0x0a600000 0 0xcd00>;
++				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
++				snps,dis_u2_susphy_quirk;
++				snps,dis_enblslpm_quirk;
++				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
++				phy-names = "usb2-phy", "usb3-phy";
++			};
++		};
++
+ 		aoss_qmp: power-controller@c300000 {
+ 			compatible = "qcom,sm8150-aoss-qmp";
+ 			reg = <0x0 0x0c300000 0x0 0x100000>;
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
