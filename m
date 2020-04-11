@@ -2,37 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D48DA1A5A5D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 01:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A76A1A54B3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 01:07:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727531AbgDKXml (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Apr 2020 19:42:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42062 "EHLO mail.kernel.org"
+        id S1727728AbgDKXGp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Apr 2020 19:06:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42248 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728457AbgDKXGg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Apr 2020 19:06:36 -0400
+        id S1727602AbgDKXGo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:06:44 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 96D0821D79;
-        Sat, 11 Apr 2020 23:06:35 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0D17F217D8;
+        Sat, 11 Apr 2020 23:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586646396;
-        bh=YwOEWJys0ZVCDYmhC/244uFd8fv9w4ppVjzDJ/nl4ZA=;
+        s=default; t=1586646404;
+        bh=/GonmYKtW5Cf9hF+Kz8M2dBkwVtojYdg7j4tQNIOrPk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NO15dSQmtHhTlmmU+3Cd7c4Eq8Y6Nk3BHDhfbZEICIq08tfBC00jsjwaPJ1mfd2H4
-         bS2P0tZvfMGB5GvunmA2ldZV/HN+Mg1wKyJFvH2keIeBrS3jo73yiyJB/mVinU8DDW
-         39VL2+sB52rJfZRSDJHZ1pcrFbevBYLbqvgbu7Lc=
+        b=oG3GcSW1kOouDZDsoGhIJdxj6God/q4pH6rqvFxY6TphqZwJt9Ly6nQLeRRpgBdiS
+         I9F6Fqv/MjUMPmMGV9ng0A0tF/dn+Sh50NVbx+qAQI232cmdDL9sQXQRTK2vFAI/l5
+         r8091uYLd+jQFm3W35G9/Xk5blha4hSpLJxGf4ts=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Michael Srba <Michael.Srba@seznam.cz>,
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 134/149] arm64: dts: qcom: msm8916-samsung-a2015: Reserve Samsung firmware memory
-Date:   Sat, 11 Apr 2020 19:03:31 -0400
-Message-Id: <20200411230347.22371-134-sashal@kernel.org>
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 140/149] drivers: qcom: rpmh-rsc: Use rcuidle tracepoints for rpmh
+Date:   Sat, 11 Apr 2020 19:03:37 -0400
+Message-Id: <20200411230347.22371-140-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200411230347.22371-1-sashal@kernel.org>
 References: <20200411230347.22371-1-sashal@kernel.org>
@@ -45,64 +46,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit 8f4a7a00c1019df72cda3002643fb5823ef39183 ]
+[ Upstream commit efde2659b0fe835732047357b2902cca14f054d9 ]
 
-At the moment, writing large amounts of data to the eMMC causes the device
-to freeze. The symptoms vary, sometimes the device reboots immediately,
-but usually it will just get stuck.
+This tracepoint is hit now that we call into the rpmh code from the cpu
+idle path. Let's move this to be an rcuidle tracepoint so that we avoid
+the RCU idle splat below
 
-It turns out that the issue is not actually related to the eMMC:
-Apparently, Samsung has made some modifications to the TrustZone firmware.
-These require additional memory which is reserved at 0x85500000-0x86000000.
-The downstream kernel describes this memory reservation as:
+ =============================
+ WARNING: suspicious RCU usage
+ 5.4.10 #68 Tainted: G S
+ -----------------------------
+ drivers/soc/qcom/trace-rpmh.h:72 suspicious rcu_dereference_check() usage!
 
-/* Additionally Reserved 6MB for TIMA and Increased the TZ app size
- * by 2MB [total 8 MB ]
- */
+ other info that might help us debug this:
 
-This suggests that it is used for additional TZ apps, although the extra
-memory is actually 11 MB instead of the 8 MB mentioned in the comment.
+ RCU used illegally from idle CPU!
+ rcu_scheduler_active = 2, debug_locks = 1
+ RCU used illegally from extended quiescent state!
+ 5 locks held by swapper/2/0:
+  #0: ffffff81745d6ee8 (&(&genpd->slock)->rlock){+.+.}, at: genpd_lock_spin+0x1c/0x2c
+  #1: ffffff81745da6e8 (&(&genpd->slock)->rlock/1){....}, at: genpd_lock_nested_spin+0x24/0x34
+  #2: ffffff8174f2ca20 (&(&genpd->slock)->rlock/2){....}, at: genpd_lock_nested_spin+0x24/0x34
+  #3: ffffff8174f2c300 (&(&drv->client.cache_lock)->rlock){....}, at: rpmh_flush+0x48/0x24c
+  #4: ffffff8174f2c150 (&(&tcs->lock)->rlock){+.+.}, at: rpmh_rsc_write_ctrl_data+0x74/0x270
 
-Writing to the protected memory causes the kernel to crash or freeze.
-In our case, writing to the eMMC causes the disk cache to fill
-the available RAM, until the kernel eventually crashes
-when attempting to use the reserved memory.
+ stack backtrace:
+ CPU: 2 PID: 0 Comm: swapper/2 Tainted: G S                5.4.10 #68
+ Call trace:
+  dump_backtrace+0x0/0x174
+  show_stack+0x20/0x2c
+  dump_stack+0xc8/0x124
+  lockdep_rcu_suspicious+0xe4/0x104
+  __tcs_buffer_write+0x230/0x2d0
+  rpmh_rsc_write_ctrl_data+0x210/0x270
+  rpmh_flush+0x84/0x24c
+  rpmh_domain_power_off+0x78/0x98
+  _genpd_power_off+0x40/0xc0
+  genpd_power_off+0x168/0x208
+  genpd_power_off+0x1e0/0x208
+  genpd_power_off+0x1e0/0x208
+  genpd_runtime_suspend+0x1ac/0x220
+  __rpm_callback+0x70/0xfc
+  rpm_callback+0x34/0x8c
+  rpm_suspend+0x218/0x4a4
+  __pm_runtime_suspend+0x88/0xac
+  psci_enter_domain_idle_state+0x3c/0xb4
+  cpuidle_enter_state+0xb8/0x284
+  cpuidle_enter+0x38/0x4c
+  call_cpuidle+0x3c/0x68
+  do_idle+0x194/0x260
+  cpu_startup_entry+0x24/0x28
+  secondary_start_kernel+0x150/0x15c
 
-Add the additional memory as reserved-memory to fix this problem.
-
-Fixes: 1329c1ab0730 ("arm64: dts: qcom: Add device tree for Samsung Galaxy A3U/A5U")
-Reported-by: Michael Srba <Michael.Srba@seznam.cz>
-Tested-by: Michael Srba <Michael.Srba@seznam.cz> # a3u
-Tested-by: Stephan Gerhold <stephan@gerhold.net> # a5u
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20191231112511.83342-1-stephan@gerhold.net
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Fixes: a65a397f2451 ("cpuidle: psci: Add support for PM domains by using genpd")
+Reported-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20200115013751.249588-1-swboyd@chromium.org
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index bd1eb3eeca53f..43c5e0f882f14 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -15,6 +15,14 @@
- 		stdout-path = "serial0";
- 	};
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index e278fc11fe5cf..b71822131f598 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -277,7 +277,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+ 		write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
+ 		write_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j, cmd->addr);
+ 		write_tcs_cmd(drv, RSC_DRV_CMD_DATA, tcs_id, j, cmd->data);
+-		trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
++		trace_rpmh_send_msg_rcuidle(drv, tcs_id, j, msgid, cmd);
+ 	}
  
-+	reserved-memory {
-+		/* Additional memory used by Samsung firmware modifications */
-+		tz-apps@85500000 {
-+			reg = <0x0 0x85500000 0x0 0xb00000>;
-+			no-map;
-+		};
-+	};
-+
- 	soc {
- 		sdhci@7824000 {
- 			status = "okay";
+ 	write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
 -- 
 2.20.1
 
