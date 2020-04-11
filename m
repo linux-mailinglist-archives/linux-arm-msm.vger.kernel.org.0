@@ -2,39 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 401351A57F6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 01:27:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 501901A5754
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 01:23:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730040AbgDKX1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Apr 2020 19:27:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51572 "EHLO mail.kernel.org"
+        id S1730098AbgDKXNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Apr 2020 19:13:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53802 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729076AbgDKXLt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Apr 2020 19:11:49 -0400
+        id S1730316AbgDKXNB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:13:01 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1565421744;
-        Sat, 11 Apr 2020 23:11:48 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id BBEFB21835;
+        Sat, 11 Apr 2020 23:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586646709;
-        bh=aWqExgihGyj1TfMUyTA5tPHVlHKweus6wnZ2PJwW7Yo=;
+        s=default; t=1586646781;
+        bh=k+HtzTIFd+fXXiVKekcLzGuQPzWQbVWRP6oOPwdIAbQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rnX/kuH21wyqrBvcdmBhhI9bSzj6TopufpTqO5Ol3fGY6vaeec4ABlNJmiKOWSFVH
-         1KN4PwM2rsmd+KjzN5vXIlOZMS3tYLSHUyHNWVJwOrJnKI0Y7K/HP6JCtAMa3MMz1w
-         /xwiC6mJojx0v5MN0RdPvCgIkNdBZBT/Oaiytui0=
+        b=BgfqJaGO0yLAy0xanJPbZ4R74e97JrdCnDRpPgZmNvNg0ODMQ6T4jflDrkkzuUEsx
+         REcMJjswK1s3RaGeV9qCGY18Kcf8CmlY/pcq7+qNHOAccX7oVp/eeKJJi9EqADwqNO
+         ISX7q3o+3vwpNnxKSgIRZQ6vMqn/0LYAb1YqVYIw=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+Cc:     Pavel Machek <pavel@denx.de>, Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 101/108] arm64: dts: qcom: msm8998-mtp: Disable funnel 4 and 5
-Date:   Sat, 11 Apr 2020 19:09:36 -0400
-Message-Id: <20200411230943.24951-101-sashal@kernel.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.19 47/66] drm/msm: fix leaks if initialization fails
+Date:   Sat, 11 Apr 2020 19:11:44 -0400
+Message-Id: <20200411231203.25933-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200411230943.24951-1-sashal@kernel.org>
-References: <20200411230943.24951-1-sashal@kernel.org>
+In-Reply-To: <20200411231203.25933-1-sashal@kernel.org>
+References: <20200411231203.25933-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,44 +43,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Pavel Machek <pavel@denx.de>
 
-[ Upstream commit 3498d9c05f804414c4645a2c0bba0187630fe5f0 ]
+[ Upstream commit 66be340f827554cb1c8a1ed7dea97920b4085af2 ]
 
-Disable Coresight funnel 4 and 5, for now, as these causes the MTP to
-crash when clock late_initcall disables unused clocks.
+We should free resources in unlikely case of allocation failure.
 
-Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20200308055445.1992189-1-bjorn.andersson@linaro.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Pavel Machek <pavel@denx.de>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-index 8d15572d18e64..2c8b8e7218b90 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-@@ -80,11 +80,15 @@
- };
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 6f81de85fb860..01524009dede8 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -495,8 +495,10 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+ 	if (!dev->dma_parms) {
+ 		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
+ 					      GFP_KERNEL);
+-		if (!dev->dma_parms)
+-			return -ENOMEM;
++		if (!dev->dma_parms) {
++			ret = -ENOMEM;
++			goto err_msm_uninit;
++		}
+ 	}
+ 	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
  
- &funnel4 {
--	status = "okay";
-+	// FIXME: Figure out why clock late_initcall crashes the board with
-+	// this enabled.
-+	// status = "okay";
- };
- 
- &funnel5 {
--	status = "okay";
-+	// FIXME: Figure out why clock late_initcall crashes the board with
-+	// this enabled.
-+	// status = "okay";
- };
- 
- &pm8005_lsid1 {
 -- 
 2.20.1
 
