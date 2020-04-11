@@ -2,114 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F44F1A535A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2020 20:22:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA5001A5496
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 01:07:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbgDKSWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Apr 2020 14:22:16 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:33848 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726824AbgDKSWQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Apr 2020 14:22:16 -0400
-Received: by mail-lf1-f65.google.com with SMTP id x23so3596832lfq.1;
-        Sat, 11 Apr 2020 11:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+niRBGbpnV97QyKJ3armXwVilZlDGTWi89SgKtqNxcs=;
-        b=LZd3cbNwMfr96h4aHJVMGsPGGphTrI0WaypcHWdTscqXOGKrDkU3y8XfnNZo0nDS38
-         yBdcgxviRe8DtOIZHk9gkyaRdcCKL1q/sTWjp5ek09OAYGz6s5qnTOI7+F7utg6NjEH/
-         lpKpSNoDo5EXWJJZGYP7YGnv4a3IK+VVykQo8cv6PS8u2xu9YgReC2HJgx3sQT2wh3kz
-         pNbFSZqcP3ny2KrwnRU8NiRn+D7FnDwAF5eIDluFryMUhZ3j9Rm5In2YSQNidZ8dbSyt
-         07NNnWdOvC5sl5WNUh0zgdeL8gtXiu6I4P6jIPCH3vx49L4aD9SuR1467936lJp0T3m4
-         s87g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+niRBGbpnV97QyKJ3armXwVilZlDGTWi89SgKtqNxcs=;
-        b=NLowynUKVrysuN1LwCNs+0tsI0EIyCKokCW8U0NBtWD84k5wpjzS/1JHAIF4ZLdvQq
-         zDUMfyNGF4CKBG8TgwSO8E2YGzId2eY8JkEG3REmPCI9EdAhysl8tSiMceJaimlcW3fp
-         ovc1N8MziOTWNopxbw72GUCZ7OAVmej4W1XjyUg30IM+lVzB4UU0YHO6fy/1tdTRBDY2
-         JA7Rq5F2879Xl+42gZPuO5Sb/ozd41LN3Yp9qOCWDNv/3b+LJA08CLiu9MiQkFQY3ALO
-         8+PRWU2ky+2iwOjXsdZoF0XVrEerIZde2A+uQa3dwZojmMDE6LqwFEMfd4cf0xYNiYRx
-         h3TQ==
-X-Gm-Message-State: AGi0PubR1bAhX+dcvbrfZWFGk8UZEjupbsgTxXQ6tiAPhdf/XmiOGxVT
-        xZpsRgPbnXzv2z12kiXPin6FL7zInabZSw==
-X-Google-Smtp-Source: APiQypJdbNROJyWqpa9aZFh03QK652AMqEDi/LOUvENUP1mgL6ZYk1u1bYXbNSE/Vepi4AHaSa6Hyg==
-X-Received: by 2002:a19:c14e:: with SMTP id r75mr5879342lff.62.1586629333903;
-        Sat, 11 Apr 2020 11:22:13 -0700 (PDT)
-Received: from localhost ([213.191.183.145])
-        by smtp.gmail.com with ESMTPSA id t28sm3860774ljk.40.2020.04.11.11.22.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Apr 2020 11:22:13 -0700 (PDT)
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Daniele Debernardi <drebrez@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v2 5/5] ARM: dts: qcom: msm8974-klte: Add USB node
-Date:   Sat, 11 Apr 2020 21:21:22 +0300
-Message-Id: <20200411182122.2677248-6-iskren.chernev@gmail.com>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200411182122.2677248-1-iskren.chernev@gmail.com>
-References: <20200411182122.2677248-1-iskren.chernev@gmail.com>
+        id S1728191AbgDKXF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Apr 2020 19:05:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40642 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728085AbgDKXFy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Apr 2020 19:05:54 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D44BA21775;
+        Sat, 11 Apr 2020 23:05:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1586646354;
+        bh=+lFFMlwyVy2Dn2wL/Yyf/vR4wmq5UAv5dX6mWo9UFgY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=eETl8qcB7x9TwhdcGjdXwNY5OY1rvcrzQa33cSYHfDNQYAUq192118AyKhGW50UNz
+         /Sh+9xLL2H7jPI6xHfMMS/0m8uEfr/CzEu+QbP2gAP/rMVKSsKUxVtN+PeDMRkZgFn
+         lbWp6XhrISn+EfXP2JmeXAwUAOjMcr64OpPMoVnw=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 101/149] tty: serial: qcom_geni_serial: No need to stop tx/rx on UART shutdown
+Date:   Sat, 11 Apr 2020 19:02:58 -0400
+Message-Id: <20200411230347.22371-101-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200411230347.22371-1-sashal@kernel.org>
+References: <20200411230347.22371-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Daniele Debernardi <drebrez@gmail.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-This introduces the usb node which can be used e.g. for USB_ETH
+[ Upstream commit e83766334f96b3396a71c7baa3b0b53dfd5190cd ]
 
-Signed-off-by: Daniele Debernardi <drebrez@gmail.com>
+On a board using qcom_geni_serial I found that I could no longer
+interact with kdb if I got a crash after the "agetty" running on the
+same serial port was killed.  This meant that various classes of
+crashes that happened at reboot time were undebuggable.
+
+Reading through the code, I couldn't figure out why qcom_geni_serial
+felt the need to run so much code at port shutdown time.  All we need
+to do is disable the interrupt.
+
+After I make this change then a hardcoded kgdb_breakpoint in some late
+shutdown code now allows me to interact with the debugger.  I also
+could freely close / re-open the port without problems.
+
+Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20200313134635.1.Icf54c533065306b02b880c46dfd401d8db34e213@changeid
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom-msm8974-samsung-klte.dts    | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-index 42fc18804021..df85d90100d9 100644
---- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-@@ -272,6 +272,31 @@ sdhci@f9824900 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&sdhc1_pin_a>;
- 	};
-+
-+	usb@f9a55000 {
-+		status = "ok";
-+
-+		phys = <&usb_hs1_phy>;
-+		phy-select = <&tcsr 0xb000 0>;
-+		/*extcon = <&smbb>, <&usb_id>;*/
-+		/*vbus-supply = <&chg_otg>;*/
-+
-+		hnp-disable;
-+		srp-disable;
-+		adp-disable;
-+
-+		ulpi {
-+			phy@a {
-+				status = "ok";
-+
-+				v1p8-supply = <&pma8084_l6>;
-+				v3p3-supply = <&pma8084_l24>;
-+
-+				/*extcon = <&smbb>;*/
-+				qcom,init-seq = /bits/ 8 <0x1 0x64>;
-+			};
-+		};
-+	};
- };
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 0bd1684cabb39..043c6141f661e 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -818,17 +818,11 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
  
- &spmi_bus {
+ static void qcom_geni_serial_shutdown(struct uart_port *uport)
+ {
+-	unsigned long flags;
+-
+ 	/* Stop the console before stopping the current tx */
+ 	if (uart_console(uport))
+ 		console_stop(uport->cons);
+ 
+ 	disable_irq(uport->irq);
+-	spin_lock_irqsave(&uport->lock, flags);
+-	qcom_geni_serial_stop_tx(uport);
+-	qcom_geni_serial_stop_rx(uport);
+-	spin_unlock_irqrestore(&uport->lock, flags);
+ }
+ 
+ static int qcom_geni_serial_port_setup(struct uart_port *uport)
 -- 
-2.26.0
+2.20.1
 
