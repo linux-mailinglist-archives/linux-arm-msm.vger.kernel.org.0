@@ -2,117 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EC0A61A5EE3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 16:11:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C5791A5F07
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2020 16:35:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727068AbgDLOLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Apr 2020 10:11:18 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:58324 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726805AbgDLOLR (ORCPT
+        id S1726962AbgDLOfO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Apr 2020 10:35:14 -0400
+Received: from smtp01.smtpout.orange.fr ([80.12.242.123]:54363 "EHLO
+        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726805AbgDLOfO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Apr 2020 10:11:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586700677; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Fs11ZYNs11KRXX0CMgRlVZnl3dBXHk7slByjIz5Iuj4=; b=DmcUhIftEpzZYRPqYmxxJp89cTQJz+GwVpER5IahYOFwaOR6xvJPQY/MZMDlVYW/R/aBedSY
- UjNsERtx4U+EMGE2f2rfssuACrNBCk3fskhkxnmTOQIfH4tH+V9PhBr9tDbceZl0oKcBgi81
- cKj9qvlIPG1M3//HNvrn5qwqaII=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e932174.7f4af2710ed8-smtp-out-n02;
- Sun, 12 Apr 2020 14:11:00 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 886CFC432C2; Sun, 12 Apr 2020 14:11:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.137] (unknown [106.213.136.116])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA686C433F2;
-        Sun, 12 Apr 2020 14:10:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AA686C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v16 4/6] soc: qcom: rpmh: Invoke rpmh_flush() for dirty
- caches
-To:     Doug Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-References: <1586154741-8293-1-git-send-email-mkshah@codeaurora.org>
- <1586154741-8293-5-git-send-email-mkshah@codeaurora.org>
- <158649213142.77611.5740203322498170248@swboyd.mtv.corp.google.com>
- <CAD=FV=UkiR+xLeowOT+H3ZKNCesf84AJi6mHiHNpJ2P9-DiXaQ@mail.gmail.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <11c37c89-aa1f-7297-9ecf-4d77a20deebd@codeaurora.org>
-Date:   Sun, 12 Apr 2020 19:40:52 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Sun, 12 Apr 2020 10:35:14 -0400
+Received: from localhost.localdomain ([93.22.37.28])
+        by mwinf5d36 with ME
+        id RqbA2200b0cS4cl03qbBFc; Sun, 12 Apr 2020 16:35:12 +0200
+X-ME-Helo: localhost.localdomain
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sun, 12 Apr 2020 16:35:12 +0200
+X-ME-IP: 93.22.37.28
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] drm/msm: Fix typo
+Date:   Sun, 12 Apr 2020 16:35:09 +0200
+Message-Id: <20200412143509.11353-1-christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=UkiR+xLeowOT+H3ZKNCesf84AJi6mHiHNpJ2P9-DiXaQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Duplicated 'we'
 
-On 4/10/2020 8:22 PM, Doug Anderson wrote:
-> Hi,
->
-> On Thu, Apr 9, 2020 at 9:15 PM Stephen Boyd <swboyd@chromium.org> wrote:
->>>   int rpmh_flush(struct rpmh_ctrlr *ctrlr)
->> This function name keeps throwing me off. Can we please call it
->> something like rpmh_configure_tcs_sleep_wake()? The word "flush" seems
->> to imply there's some sort of cache going on, but that's not really the
->> case. We're programming a couple TCS FIFOs so that they can be used
->> across deep CPU sleep states.
-> I'm hoping this rename can be deferred until Maulik's series and my
-> cleanup series land.  While I agree that rpmh_flush() is a bit of a
-> confusing name, it's not a new name and renaming it midway through
-> when there are a bunch of patches in-flight is going to be a hassle.
->
-> Assuming others agree, my thought is that Maulik will do one more v17
-> spin with small nits fixed up, then his series can land early next
-> week when (presumably) -rc1 comes out.  If my current cleanup doesn't
-> apply cleanly (or if Bjorn/Andy don't want to fix the two nits in
-> commit messages when applying) I can repost my series and that can
-> land in short order.  Once those land:
->
-> * Maulik can post this rpmh_flush() rename atop.
->
-> * I can post the patch to remove the "pm_lock" that was introduced in
-> this series.  A preview at <https://crrev.com/c/2142823>.
->
-> * Maulik can post some of the cleanups that Maulik wanted to do in
-> rpmh.c with regards to __fill_rpmh_msg()
->
-> ...assuming those are not controversial perhaps they can be reviewed
-> quickly and land quickly?  I suppose I can always dream...
->
->
-> -Doug
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Agree, I can defer rename until this series lands and then post above 
-listed changes.
-
-Thanks,
-Maulik
-
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index 998bef1190a3..b5fed67c4651 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -959,7 +959,7 @@ static int mdp5_crtc_cursor_set(struct drm_crtc *crtc,
+ 	if (!ctl)
+ 		return -EINVAL;
+ 
+-	/* don't support LM cursors when we we have source split enabled */
++	/* don't support LM cursors when we have source split enabled */
+ 	if (mdp5_cstate->pipeline.r_mixer)
+ 		return -EINVAL;
+ 
+@@ -1030,7 +1030,7 @@ static int mdp5_crtc_cursor_move(struct drm_crtc *crtc, int x, int y)
+ 		return -EINVAL;
+ 	}
+ 
+-	/* don't support LM cursors when we we have source split enabled */
++	/* don't support LM cursors when we have source split enabled */
+ 	if (mdp5_cstate->pipeline.r_mixer)
+ 		return -EINVAL;
+ 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.20.1
+
