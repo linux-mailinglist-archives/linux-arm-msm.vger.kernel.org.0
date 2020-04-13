@@ -2,224 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 269351A6A2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 18:45:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D07331A6AA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 18:57:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731749AbgDMQpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 12:45:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45186 "EHLO
+        id S1731673AbgDMQ4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 12:56:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1731735AbgDMQpN (ORCPT
+        by vger.kernel.org with ESMTP id S1732208AbgDMQ4m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 12:45:13 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 880D2C0A3BDC;
-        Mon, 13 Apr 2020 09:45:13 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id 131so7017530lfh.11;
-        Mon, 13 Apr 2020 09:45:13 -0700 (PDT)
+        Mon, 13 Apr 2020 12:56:42 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B74DC0A3BDC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 09:56:41 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id a23so3596585plm.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 09:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2YVpEsdAD3gdou5O12iibPQ3XhGh37dAHJSGf0NXN0w=;
-        b=YP83sfYkJzjjL19EAeyMmpmI97iR/GfkRrCy6ay6bm3o6v6P9RxZbQiSkOfz+GbOmY
-         DTqA1h9WVANaT5ADT/C+SLfLBfwZCEsrB9bsHsTNBIEQyZ18pOBwJmbvApGhxBhY86KK
-         67jaP7Y031u5l3u7dBNCAYL+Bhv0alpKIjvw0/1dW3bISdLgMwxZz0b07ZsiOap82ulA
-         7ulpP1iRJECuGuPeXn840GpJJ3JzhJctzeYYEsZkL+1biT4EKtLUug2DMKTnvmAsS0dP
-         ysjZWFSHzAybk9J8CT4rOHJ3w1S1qxgeMeNdtEZva3xr8iAOa5ej2s357w2AaPS0h0US
-         VEKA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=cYxFIXZ3Oep1Nvg46stgQrEWlEoqYyS7FyRUU0yEbnU=;
+        b=cpz7mxbaVIihtI5Z2YQX63QZSHlMrnt6mjLjQt4nECoY7LWSqS3j3C6FJLqaWAUTt8
+         r1EasPcYfH5L8KnX3osbiglmPu0cAXo/keN6VU3SFKFiOM+lUrae6/gVrANEfhsxhUl1
+         vEIPuDPIYQRZUynqGirnxTVSCbnm6ubZ8tSlc/GYJWQTiiEUYbDBg6PSnGOMJHgSGse+
+         88WJuipwslDyXizj/qa6+Glxm1ZTPsKc2GA5xSPtpM+GuliOYNQ0cZPVZ9OYqX2XRfTP
+         kLo6Ngr6CUfCa8Dfq7PRetr0K/16m06xVAVMcGQFdBwM3EL5dm1j3VLXF/C6lhebhOtC
+         cllA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2YVpEsdAD3gdou5O12iibPQ3XhGh37dAHJSGf0NXN0w=;
-        b=r28lMVNblZZeTmm9KI5NHmUks5fRu3985SM+vs2WIiXOv15yk/hZMIAOKBzbBwlZ54
-         IxJzvOo6yZ8DxDs9athPeMEVcVrYJ04wdfaHjxXtNs3CgJkzjJQxtIgB3RNfEhsqZ5Oe
-         ug6wwfHCRFxHwwgwrWWHeJKVdmExen1Xq0cLwTxsat/KdDAdH0Q7uxKLuVeVr11OfFNl
-         Xq90MaXgX2ZZzKgJ7coOtLPfNbYaAdcGU2/hXbnvvmZYQstwZBVLgMyAcPx6RIV1CT81
-         8grQ5iXrapT6wiVI1ieXdCLRFnhPJnqYqpT9ayCjtj5EE0e4qcD1mKCLrBiz04iponwd
-         aBYg==
-X-Gm-Message-State: AGi0PuZ9zPrv7hu11SxGrj0l8mKosuP/taVVRjn4gZwRSz8Llm1DsBA3
-        UI1wQdhEsSUuN0VdCQ7xzy/HOOhG6t8S8g==
-X-Google-Smtp-Source: APiQypJniJ22q9ejT6dHNBXLjaeOMXx81p9W4vXAMZiLxguhcg8uVdZVBz7Hmz6Om+kNT50l6LRtYA==
-X-Received: by 2002:a05:6512:1109:: with SMTP id l9mr2428352lfg.12.1586796311588;
-        Mon, 13 Apr 2020 09:45:11 -0700 (PDT)
-Received: from localhost ([213.191.183.145])
-        by smtp.gmail.com with ESMTPSA id f4sm2256280lfa.24.2020.04.13.09.45.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Apr 2020 09:45:10 -0700 (PDT)
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [PATCH 3/3] ARM: dts: qcom: msm8974-klte: Add max77826 pmic node
-Date:   Mon, 13 Apr 2020 19:44:40 +0300
-Message-Id: <20200413164440.1138178-4-iskren.chernev@gmail.com>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200413164440.1138178-1-iskren.chernev@gmail.com>
-References: <20200413164440.1138178-1-iskren.chernev@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=cYxFIXZ3Oep1Nvg46stgQrEWlEoqYyS7FyRUU0yEbnU=;
+        b=Hkd7AQPci8WJqHdRt/GjDiwW6pBBgyYZykWe+Bxq0+wXnjhiwtnT3SW2lubiy1ovAw
+         X+6J2w5SLmcdoB/P+b3HqGhwQME9S0iNc/rGew0E+QGh4ZzANkavdxpJ1LhGcrxLtYpc
+         OMfPtQCS3re7MmX1xaEyH+k1WdIad1cWuezzsXfE//at8xzk+K/TfjTQc7ZL8FZR+U42
+         Hl0DzzDd70py2Rcf3qTi44NwkyOCkp/7Hmw56gRTDldxud5+K5/Dk2RFBzuxmMQzANfD
+         vdV4u+qmPry6SfzS/2KTat7B7jkFAfFHBgufA5KbSvUrHvlM3FCDl5q9VmyBAAIOPSBC
+         t2QA==
+X-Gm-Message-State: AGi0PuZKwt8paezUsX/6aMBGyj3+l0MShJZ5uJ/O1h/WbJjc3RVANLIk
+        NAYqpEKYeJRDXV+DrWO6ku0RdQ==
+X-Google-Smtp-Source: APiQypKvDNVn1PLsRgvoEtqETwrmavvjWo5FoLCjth7E4O2lzzM+yCFNAxkNp0Dov2d38drJoFC5zQ==
+X-Received: by 2002:a17:902:cf87:: with SMTP id l7mr6464052ply.307.1586797000706;
+        Mon, 13 Apr 2020 09:56:40 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id o125sm8225592pgo.74.2020.04.13.09.56.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2020 09:56:39 -0700 (PDT)
+Date:   Mon, 13 Apr 2020 10:56:38 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     saiprakash.ranjan@codeaurora.org, mike.leach@linaro.org,
+        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] coresight: tmc: Read TMC mode only when TMC hw is enabled
+Message-ID: <20200413165638.GA28804@xps15>
+References: <20200409113538.5008-1-saiprakash.ranjan@codeaurora.org>
+ <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This introduces the MAX77826 PMIC that powers some pheripherals on the
-klte, like the touchpad, touchkeys and camera.
+On Mon, Apr 13, 2020 at 12:17:21AM +0100, Suzuki K Poulose wrote:
+> Hi Sai,
+> 
+> On 04/09/2020 12:35 PM, Sai Prakash Ranjan wrote:
+> > Reading TMC mode register in tmc_read_prepare_etb without
+> > enabling the TMC hardware leads to async exceptions like
+> > the one in the call trace below. This can happen if the
+> > user tries to read the TMC etf data via device node without
+> > setting up source and the sink first which enables the TMC
+> > hardware in the path. So make sure that the TMC is enabled
+> > before we try to read TMC data.
+> 
+> So, one can trigger the same SError by simply :
+> 
+> $ cat /sys/bus/coresight/device/tmc_etb0/mgmt/mode
 
-Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
----
- .../boot/dts/qcom-msm8974-samsung-klte.dts    | 110 ++++++++++++++++++
- arch/arm/boot/dts/qcom-msm8974.dtsi           |  11 ++
- 2 files changed, 121 insertions(+)
+A true TMC-ETB is a rarity nowadays... What boards was this tested on?  I don't
+know if it is how the IP behaves or how things are connected on Sai's specific
+board but doing echo'ing tmc_etf0/mgmt/mode on my Juno R0 doesn't give rise to
+any problems.  That certainly doesn't mean it can't happen on another platform.  
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-index eaa1001d0a46..f6d3a9dcf0de 100644
---- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-@@ -21,4 +21,114 @@ serial@f991e000 {
- 		status = "ok";
- 	};
- 
-+	pinctrl@fd510000 {
-+		i2c6_pins: i2c6 {
-+			mux {
-+				pins = "gpio29", "gpio30";
-+				function = "blsp_i2c6";
-+
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+		};
-+	};
-+
-+	i2c@f9928000 {
-+		status = "okay";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&i2c6_pins>;
-+
-+		pmic@60 {
-+			reg = <0x60>;
-+			compatible = "maxim,max77826-regulator";
-+
-+			regulators {
-+				max77826_ldo1: LDO1 {
-+					regulator-min-microvolt = <1200000>;
-+					regulator-max-microvolt = <1200000>;
-+				};
-+
-+				max77826_ldo2: LDO2 {
-+					regulator-min-microvolt = <1000000>;
-+					regulator-max-microvolt = <1000000>;
-+				};
-+
-+				max77826_ldo3: LDO3 {
-+					regulator-min-microvolt = <1200000>;
-+					regulator-max-microvolt = <1200000>;
-+				};
-+
-+				max77826_ldo4: LDO4 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+				};
-+
-+				max77826_ldo5: LDO5 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+				};
-+
-+				max77826_ldo6: LDO6 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <3300000>;
-+				};
-+
-+				max77826_ldo7: LDO7 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+				};
-+
-+				max77826_ldo8: LDO8 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <3300000>;
-+				};
-+
-+				max77826_ldo9: LDO9 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+				};
-+
-+				max77826_ldo10: LDO10 {
-+					regulator-min-microvolt = <2800000>;
-+					regulator-max-microvolt = <2950000>;
-+				};
-+
-+				max77826_ldo11: LDO11 {
-+					regulator-min-microvolt = <2700000>;
-+					regulator-max-microvolt = <2950000>;
-+				};
-+
-+				max77826_ldo12: LDO12 {
-+					regulator-min-microvolt = <2500000>;
-+					regulator-max-microvolt = <3300000>;
-+				};
-+
-+				max77826_ldo13: LDO13 {
-+					regulator-min-microvolt = <3300000>;
-+					regulator-max-microvolt = <3300000>;
-+				};
-+
-+				max77826_ldo14: LDO14 {
-+					regulator-min-microvolt = <3300000>;
-+					regulator-max-microvolt = <3300000>;
-+				};
-+
-+				max77826_ldo15: LDO15 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+				};
-+
-+				max77826_buck: BUCK {
-+					regulator-min-microvolt = <1225000>;
-+					regulator-max-microvolt = <1225000>;
-+				};
-+
-+				max77826_buckboost: BUCKBOOST {
-+					regulator-min-microvolt = <3400000>;
-+					regulator-max-microvolt = <3400000>;
-+				};
-+			};
-+		};
-+	};
- };
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 2ea2308d91b3..51f5f904f9eb 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -974,6 +974,17 @@ blsp_i2c3: i2c@f9925000 {
- 			#size-cells = <0>;
- 		};
- 
-+		blsp_i2c6: i2c@f9928000 {
-+			status = "disabled";
-+			compatible = "qcom,i2c-qup-v2.1.1";
-+			reg = <0xf9928000 0x1000>;
-+			interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_QUP6_I2C_APPS_CLK>, <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+		};
-+
- 		blsp_i2c8: i2c@f9964000 {
- 			status = "disabled";
- 			compatible = "qcom,i2c-qup-v2.1.1";
--- 
-2.26.0
+> 
+> 
+> And also :
+> 
+> > 
+> >   Kernel panic - not syncing: Asynchronous SError Interrupt
+> >   CPU: 7 PID: 2605 Comm: hexdump Tainted: G S                5.4.30 #122
+> >   Call trace:
+> >    dump_backtrace+0x0/0x188
+> >    show_stack+0x20/0x2c
+> >    dump_stack+0xdc/0x144
+> >    panic+0x168/0x36c
+> >    panic+0x0/0x36c
+> >    arm64_serror_panic+0x78/0x84
+> >    do_serror+0x130/0x138
+> >    el1_error+0x84/0xf8
+> >    tmc_read_prepare_etb+0x88/0xb8
+> >    tmc_open+0x40/0xd8
+> >    misc_open+0x120/0x158
+> >    chrdev_open+0xb8/0x1a4
+> >    do_dentry_open+0x268/0x3a0
+> >    vfs_open+0x34/0x40
+> >    path_openat+0x39c/0xdf4
+> >    do_filp_open+0x90/0x10c
+> >    do_sys_open+0x150/0x3e8
+> >    __arm64_compat_sys_openat+0x28/0x34
+> >    el0_svc_common+0xa8/0x160
+> >    el0_svc_compat_handler+0x2c/0x38
+> >    el0_svc_compat+0x8/0x10
+> > 
+> > Fixes: 4525412a5046 ("coresight: tmc: making prepare/unprepare functions generic")
+> > Reported-by: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > ---
+> >   drivers/hwtracing/coresight/coresight-tmc.c | 5 +++++
+> >   drivers/hwtracing/coresight/coresight-tmc.h | 1 +
+> >   2 files changed, 6 insertions(+)
+> > 
+> > diff --git a/drivers/hwtracing/coresight/coresight-tmc.c b/drivers/hwtracing/coresight/coresight-tmc.c
+> > index 1cf82fa58289..7bae69748ab7 100644
+> > --- a/drivers/hwtracing/coresight/coresight-tmc.c
+> > +++ b/drivers/hwtracing/coresight/coresight-tmc.c
+> > @@ -62,11 +62,13 @@ void tmc_flush_and_stop(struct tmc_drvdata *drvdata)
+> >   void tmc_enable_hw(struct tmc_drvdata *drvdata)
+> >   {
+> > +	drvdata->enable = true;
+> >   	writel_relaxed(TMC_CTL_CAPT_EN, drvdata->base + TMC_CTL);
+> >   }
+> >   void tmc_disable_hw(struct tmc_drvdata *drvdata)
+> >   {
+> > +	drvdata->enable = false;
+> >   	writel_relaxed(0x0, drvdata->base + TMC_CTL);
+> >   }
+> > @@ -102,6 +104,9 @@ static int tmc_read_prepare(struct tmc_drvdata *drvdata)
+> >   {
+> >   	int ret = 0;
+> > +	if (!drvdata->enable)
+> > +		return -EINVAL;
+> > +
 
+Proceeding this way would mean that ETB and ETF internal memory buffers can't be
+read unless the device is enabled and collecting trace.  That is not practical
+because 1) it changes the way the sysfs interface works on all boards where
+there isn't a problem and 2) it makes it very difficult to capture the correct
+data.
+
+When the device is __not__ enabled, does reading any of the registers under
+"/sys/bus/coresight/devices/tmc_etbX/mgmt/" also cause a problem or is it just
+'mode'?
+
+Thanks,
+Mathieu
+
+> 
+> Does this check always guarantee that the TMC is enabled when
+> we actually get to reading the MODE ? This needs to be done
+> under the spinlock.
+> 
+> Cheers
+> Suzuki
+> 
+> 
+> 
