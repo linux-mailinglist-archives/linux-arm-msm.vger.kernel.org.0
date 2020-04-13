@@ -2,166 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7F5A1A6425
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 10:35:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABA611A6542
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 12:36:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728144AbgDMIZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 04:25:43 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:54735 "EHLO
+        id S1728136AbgDMKgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 06:36:22 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:48487 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727971AbgDMIZl (ORCPT
+        by vger.kernel.org with ESMTP id S1727806AbgDMKgS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 04:25:41 -0400
+        Mon, 13 Apr 2020 06:36:18 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586766332; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=a6YQJ78S6nCn8YzVsbvRmz3ffyuX/j8RJJEiKzBvYyU=;
- b=erlT9JjOH7cIHp+49MEccddziaCsY0bNSNFnqhk7AcrSQNiLepqhxsbIcqbIJG7BbT9EKsAa
- L503uu4b+hA34UugkTd/u6Wf2HBzQr9dpSL1b5OrMImvowgBOXWZqkZ44oIGVaovsruEagWS
- S+zvQXWiZgXss4TMGjigIWUYaEc=
+ s=smtp; t=1586774177; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=SFH893uQOOO6/8hNRsrKM3ohXphYzx9aQKAy6M1a/H0=; b=BO65vkzwLpgDqt7fSbTO4U4NSp8XvxZqS2c0i2L0c/Ne5gxEk3xb0Ikzti3dJ3P9Y3scc6Nd
+ BFoPX2ragJ7CP8Q+wtczP2iDs94O24KgleUa/OIsEgkZOwIdS673edEcrif0rVoLvU3FHwjy
+ cjGk8V7DEjZipu7eM9jPiuM4HU4=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9421fb.7fc8e7ca5c70-smtp-out-n03;
- Mon, 13 Apr 2020 08:25:31 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e94408c.7f3e13bfcf48-smtp-out-n01;
+ Mon, 13 Apr 2020 10:35:56 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4AA34C432C2; Mon, 13 Apr 2020 08:25:31 +0000 (UTC)
+        id 4AC0AC433CB; Mon, 13 Apr 2020 10:35:56 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from [10.111.193.245] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93F84C433F2;
-        Mon, 13 Apr 2020 08:25:30 +0000 (UTC)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5101CC433F2;
+        Mon, 13 Apr 2020 10:35:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5101CC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 01/21] opp: Manage empty OPP tables with clk handle
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     sboyd@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1586353607-32222-1-git-send-email-rnayak@codeaurora.org>
+ <1586353607-32222-2-git-send-email-rnayak@codeaurora.org>
+ <20200409075724.7t3bt3oxaxoygldb@vireshk-i7>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <78dcbda6-12d1-7a88-b1f9-a03fb0ba9b87@codeaurora.org>
+Date:   Mon, 13 Apr 2020 16:04:02 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200409075724.7t3bt3oxaxoygldb@vireshk-i7>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 13 Apr 2020 13:55:30 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     mathieu.poirier@linaro.org, mike.leach@linaro.org,
-        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] coresight: tmc: Read TMC mode only when TMC hw is enabled
-In-Reply-To: <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
-References: <20200409113538.5008-1-saiprakash.ranjan@codeaurora.org>
- <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
-Message-ID: <1751aeabd22bee18d2eef0f643883265@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
 
-On 2020-04-13 04:47, Suzuki K Poulose wrote:
-> Hi Sai,
+On 4/9/2020 1:27 PM, Viresh Kumar wrote:
+> On 08-04-20, 19:16, Rajendra Nayak wrote:
+>> With OPP core now supporting DVFS for IO devices, we have instances of
+>> IO devices (same IP block) which require an OPP on some platforms/SoCs
 > 
-> On 04/09/2020 12:35 PM, Sai Prakash Ranjan wrote:
->> Reading TMC mode register in tmc_read_prepare_etb without
->> enabling the TMC hardware leads to async exceptions like
->> the one in the call trace below. This can happen if the
->> user tries to read the TMC etf data via device node without
->> setting up source and the sink first which enables the TMC
->> hardware in the path. So make sure that the TMC is enabled
->> before we try to read TMC data.
+> By OPP you mean both freq and voltage here ?
+
+yes, freq and perf state.
+
 > 
-> So, one can trigger the same SError by simply :
+>> while just needing to scale the clock on some others.
 > 
-> $ cat /sys/bus/coresight/device/tmc_etb0/mgmt/mode
+> And only freq here ?
+
+yes.
+
 > 
-
-I do not see any SError when I run the above command.
-
-localhost ~ # cat /sys/bus/coresight/devices/tmc_etf0/mgmt/mode
-0x0
-
-And this is most likely due to
-
-commit cd9e3474bb793dc ("coresight: add PM runtime calls to 
-coresight_simple_func()")
-
-> And also :
+>> In order to avoid conditional code in every driver which supports such
+>> devices (to check for availability of OPPs and then deciding to do
+>> either dev_pm_opp_set_rate() or clk_set_rate()) add support to manage
+>> empty OPP tables with a clk handle.
 > 
->> 
->>   Kernel panic - not syncing: Asynchronous SError Interrupt
->>   CPU: 7 PID: 2605 Comm: hexdump Tainted: G S                5.4.30 
->> #122
->>   Call trace:
->>    dump_backtrace+0x0/0x188
->>    show_stack+0x20/0x2c
->>    dump_stack+0xdc/0x144
->>    panic+0x168/0x36c
->>    panic+0x0/0x36c
->>    arm64_serror_panic+0x78/0x84
->>    do_serror+0x130/0x138
->>    el1_error+0x84/0xf8
->>    tmc_read_prepare_etb+0x88/0xb8
->>    tmc_open+0x40/0xd8
->>    misc_open+0x120/0x158
->>    chrdev_open+0xb8/0x1a4
->>    do_dentry_open+0x268/0x3a0
->>    vfs_open+0x34/0x40
->>    path_openat+0x39c/0xdf4
->>    do_filp_open+0x90/0x10c
->>    do_sys_open+0x150/0x3e8
->>    __arm64_compat_sys_openat+0x28/0x34
->>    el0_svc_common+0xa8/0x160
->>    el0_svc_compat_handler+0x2c/0x38
->>    el0_svc_compat+0x8/0x10
->> 
->> Fixes: 4525412a5046 ("coresight: tmc: making prepare/unprepare 
->> functions generic")
->> Reported-by: Stephen Boyd <swboyd@chromium.org>
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Why can't these devices have an opp table with just rate mentioned in each node
+> ?
+
+These are existing devices already upstream.
+
+> 
+>> This makes dev_pm_opp_set_rate() equivalent of a clk_set_rate() for
+>> devices with just a clk and no OPPs specified, and makes
+>> dev_pm_opp_set_rate(0) bail out without throwing an error.
+>>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 >> ---
->>   drivers/hwtracing/coresight/coresight-tmc.c | 5 +++++
->>   drivers/hwtracing/coresight/coresight-tmc.h | 1 +
->>   2 files changed, 6 insertions(+)
->> 
->> diff --git a/drivers/hwtracing/coresight/coresight-tmc.c 
->> b/drivers/hwtracing/coresight/coresight-tmc.c
->> index 1cf82fa58289..7bae69748ab7 100644
->> --- a/drivers/hwtracing/coresight/coresight-tmc.c
->> +++ b/drivers/hwtracing/coresight/coresight-tmc.c
->> @@ -62,11 +62,13 @@ void tmc_flush_and_stop(struct tmc_drvdata 
->> *drvdata)
->>     void tmc_enable_hw(struct tmc_drvdata *drvdata)
->>   {
->> +	drvdata->enable = true;
->>   	writel_relaxed(TMC_CTL_CAPT_EN, drvdata->base + TMC_CTL);
->>   }
->>     void tmc_disable_hw(struct tmc_drvdata *drvdata)
->>   {
->> +	drvdata->enable = false;
->>   	writel_relaxed(0x0, drvdata->base + TMC_CTL);
->>   }
->>   @@ -102,6 +104,9 @@ static int tmc_read_prepare(struct tmc_drvdata 
->> *drvdata)
->>   {
->>   	int ret = 0;
->>   +	if (!drvdata->enable)
->> +		return -EINVAL;
+>>   drivers/opp/core.c | 14 ++++++++++++++
+>>   1 file changed, 14 insertions(+)
+>>
+>> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+>> index ba43e6a..e4f01e7 100644
+>> --- a/drivers/opp/core.c
+>> +++ b/drivers/opp/core.c
+>> @@ -819,6 +819,8 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+>>   	if (unlikely(!target_freq)) {
+>>   		if (opp_table->required_opp_tables) {
+>>   			ret = _set_required_opps(dev, opp_table, NULL);
+>> +		} else if (!_get_opp_count(opp_table)) {
+>> +			return 0;
+> 
+> Why should anyone call this with target_freq = 0 ? I know it was required to
+> drop votes in the above case, but why here ?
+
+Well, it is to drop votes. But in cases where we don't have perf votes being put
+(and only clock is scaled), the driver would still call this with freq = 0, i am
+just making sure that in such cases its treated as a nop.
+
+> 
+>>   		} else {
+>>   			dev_err(dev, "target frequency can't be 0\n");
+>>   			ret = -EINVAL;
+>> @@ -849,6 +851,18 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+>>   		goto put_opp_table;
+>>   	}
+>>   
+>> +	/*
+>> +	 * For IO devices which require an OPP on some platforms/SoCs
+>> +	 * while just needing to scale the clock on some others
+>> +	 * we look for empty OPP tables with just a clock handle and
+>> +	 * scale only the clk. This makes dev_pm_opp_set_rate()
+>> +	 * equivalent to a clk_set_rate()
+>> +	 */
+>> +	if (!_get_opp_count(opp_table)) {
+>> +		ret = _generic_set_opp_clk_only(dev, clk, freq);
+>> +		goto put_opp_table;
+>> +	}
 >> +
 > 
-> Does this check always guarantee that the TMC is enabled when
-> we actually get to reading the MODE ? This needs to be done
-> under the spinlock.
+> Is this enough? _of_add_opp_table_v2() returns with error if there is no OPP
+> node within the table. Please give an example of how DT looks for the case you
+> want to support.
+
+FWIK, no one should call a _of_add_opp_table_v2 in cases where there is no OPP in DT?
+The 'empty' OPP table from what I understand will be created by dev_pm_opp_set_clkname.
+A good case to look at is the PATCH 13/21 in this series. The driver I am modifying
+is used on sdm845/sc7180 and a host of other older qualcomm SoCs. Since i am adding
+support for perf state voting using OPP only on sdm845/sc7180 I want the existing
+platforms to just do what they were doing. Now thats not possible unless I start
+adding a bunch of if/else around every opp call in the driver to distinguish between
+the two.
+
+I am a little surprised since I though the idea of doing something like this came from
+you :) (or perhaps Stephen, I somehow can't recollect) to avoid all the if/else conditions
+I had when I initially posted some of these changes.
+Btw, you had this patch reviewed when this was posted a long while back too [1]
+
+[1] https://patchwork.kernel.org/patch/11027217/
+
+  
+> 
+>>   	temp_freq = old_freq;
+>>   	old_opp = _find_freq_ceil(opp_table, &temp_freq);
+>>   	if (IS_ERR(old_opp)) {
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
 > 
 
-Ok I will make this change.
-
-Thanks,
-Sai
-
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
