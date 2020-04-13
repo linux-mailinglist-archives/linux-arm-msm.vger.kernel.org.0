@@ -2,95 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1EB01A6C03
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 20:21:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 448641A6C25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 20:42:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728022AbgDMSV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 14:21:57 -0400
-Received: from smtprelay0213.hostedemail.com ([216.40.44.213]:49966 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732988AbgDMSV5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 14:21:57 -0400
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay07.hostedemail.com (Postfix) with ESMTP id D64AD181D330D;
-        Mon, 13 Apr 2020 18:21:55 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1541:1593:1594:1711:1730:1747:1777:1792:2198:2199:2393:2559:2562:2731:2828:3138:3139:3140:3141:3142:3353:3622:3865:3866:3867:3868:3870:3871:3872:3873:4250:4321:5007:6120:7901:7903:10004:10226:10400:10848:11026:11232:11473:11658:11914:12043:12048:12296:12297:12679:12740:12760:12895:13069:13255:13311:13357:13439:13972:14096:14097:14659:14721:21080:21324:21451:21627:21990:30012:30054:30070:30080:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
-X-HE-Tag: doll17_109959b0eed47
-X-Filterd-Recvd-Size: 2761
-Received: from XPS-9350.home (unknown [47.151.136.130])
-        (Authenticated sender: joe@perches.com)
-        by omf07.hostedemail.com (Postfix) with ESMTPA;
-        Mon, 13 Apr 2020 18:21:53 +0000 (UTC)
-Message-ID: <6566837cdb0e8db522c53daba8baf49c2ca79376.camel@perches.com>
-Subject: Re: [PATCH v4 01/10] drivers: qcom: rpmh-rsc: Clean code
- reading/writing TCS regs/cmds
-From:   Joe Perches <joe@perches.com>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Cc:     swboyd@chromium.org, mka@chromium.org,
-        Rajendra Nayak <rnayak@codeaurora.org>, evgreen@chromium.org,
-        Lina Iyer <ilina@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Mon, 13 Apr 2020 11:19:46 -0700
-In-Reply-To: <20200413100321.v4.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
-References: <20200413170415.32463-1-dianders@chromium.org>
-         <20200413100321.v4.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.34.1-2 
+        id S1733053AbgDMSmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 14:42:31 -0400
+Received: from vps0.lunn.ch ([185.16.172.187]:34690 "EHLO vps0.lunn.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728092AbgDMSma (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Apr 2020 14:42:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=8e8HuFV0TGA3SZAvtjW3okIjD6ZadtQhQFCOyp+9cMM=; b=tDZBmoIpTl7imtNp7ZyIoz4CfS
+        Wl/q3Vm0T+vfA94P9I+K9gpJ2G2DapV2etrMetKrRA+PuoKoSYhlgLqOPlX9jrFWGGWx/ANlZ2IVQ
+        s/BSgP+sB5/TAukc20TyEfexZHf9fbiy3zx4kQZ7DCxvRI5AVMrYGM1kDXay8Q4CU74I=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.93)
+        (envelope-from <andrew@lunn.ch>)
+        id 1jO42G-002Uln-2m; Mon, 13 Apr 2020 20:42:20 +0200
+Date:   Mon, 13 Apr 2020 20:42:19 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     f.fainelli@gmail.com, hkallweit1@gmail.com, linux@armlinux.org.uk,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Christian Lamparter <chunkeey@gmail.com>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: Re: [PATCH 1/3] net: phy: mdio: add IPQ40xx MDIO driver
+Message-ID: <20200413184219.GH557892@lunn.ch>
+References: <20200413170107.246509-1-robert.marko@sartura.hr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200413170107.246509-1-robert.marko@sartura.hr>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2020-04-13 at 10:04 -0700, Douglas Anderson wrote:
-> This patch makes two changes, both of which should be no-ops:
-> 
-> 1. Make read_tcs_reg() / read_tcs_cmd() symmetric to write_tcs_reg() /
->    write_tcs_cmd().
-> 
-> 2. Change the order of operations in the above functions to make it
->    more obvious to me what the math is doing.  Specifically first you
->    want to find the right TCS, then the right register, and then
->    multiply by the command ID if necessary.
+> --- a/drivers/net/phy/Makefile
+> +++ b/drivers/net/phy/Makefile
+> @@ -36,6 +36,7 @@ obj-$(CONFIG_MDIO_CAVIUM)	+= mdio-cavium.o
+>  obj-$(CONFIG_MDIO_GPIO)		+= mdio-gpio.o
+>  obj-$(CONFIG_MDIO_HISI_FEMAC)	+= mdio-hisi-femac.o
+>  obj-$(CONFIG_MDIO_I2C)		+= mdio-i2c.o
+> +obj-$(CONFIG_MDIO_IPQ40XX)	+= mdio-ipq40xx.o
+>  obj-$(CONFIG_MDIO_MOXART)	+= mdio-moxart.o
+>  obj-$(CONFIG_MDIO_MSCC_MIIM)	+= mdio-mscc-miim.o
 
-Though these operations are only used a couple times, perhaps
-it'd be useful to have static inlines for the calcs.
+Hi Robert
 
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-[]
-> @@ -67,28 +67,33 @@
->  #define CMD_STATUS_ISSUED		BIT(8)
->  #define CMD_STATUS_COMPL		BIT(16)
+That looks odd. What happened to the
 
-Maybe something like:
+obj-$(CONFIG_MDIO_IPQ8064)      += mdio-ipq8064.o
 
-static inline void __iomem *
-tcs_reg_addr(struct rsc_drv drv, int reg, int tcs_id)
-{
-	return drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg;
-}
+>  obj-$(CONFIG_MDIO_OCTEON)	+= mdio-octeon.o
+> diff --git a/drivers/net/phy/mdio-ipq40xx.c b/drivers/net/phy/mdio-ipq40xx.c
+> new file mode 100644
+> index 000000000000..8068f1e6a077
+> --- /dev/null
+> +++ b/drivers/net/phy/mdio-ipq40xx.c
+> @@ -0,0 +1,180 @@
+> +// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+> +/* Copyright (c) 2015, The Linux Foundation. All rights reserved. */
+> +
+> +#include <linux/delay.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/io.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_mdio.h>
+> +#include <linux/phy.h>
+> +#include <linux/platform_device.h>
+> +
+> +#define MDIO_CTRL_0_REG		0x40
+> +#define MDIO_CTRL_1_REG		0x44
+> +#define MDIO_CTRL_2_REG		0x48
+> +#define MDIO_CTRL_3_REG		0x4c
+> +#define MDIO_CTRL_4_REG		0x50
 
-static inline void __iomem *
-tcs_cmd_addr(struct rsc_drv drv, int reg, int tcs_id, int cmd_id)
-{
-	return tcs_reg_addr(drv, reg, tcs_id) + RSC_DRV_CMD_OFFSET * cmd_id;
-}
+Can we have better names than as. It seems like 3 is read data, 2 is
+write data, etc.
 
-> -static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
-> +static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
->  {
-> -	return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
-> +	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
->  			     RSC_DRV_CMD_OFFSET * cmd_id);
+> +#define MDIO_CTRL_4_ACCESS_BUSY		BIT(16)
+> +#define MDIO_CTRL_4_ACCESS_START		BIT(8)
+> +#define MDIO_CTRL_4_ACCESS_CODE_READ		0
+> +#define MDIO_CTRL_4_ACCESS_CODE_WRITE	1
+> +#define CTRL_0_REG_DEFAULT_VALUE	0x150FF
 
-	return readl_relaxed(tcs_cmd_addr(drv, reg, tcs_id, cmd_id));
+No magic numbers please. Try to explain what each of these bits
+do. I'm guessing they are clock speed, preamble enable, maybe C22/C45?
 
-etc...
+> +
+> +#define IPQ40XX_MDIO_RETRY	1000
+> +#define IPQ40XX_MDIO_DELAY	10
+> +
+> +struct ipq40xx_mdio_data {
+> +	struct mii_bus	*mii_bus;
+> +	void __iomem	*membase;
+> +	struct device	*dev;
+> +};
+> +
+> +static int ipq40xx_mdio_wait_busy(struct ipq40xx_mdio_data *am)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < IPQ40XX_MDIO_RETRY; i++) {
+> +		unsigned int busy;
+> +
+> +		busy = readl(am->membase + MDIO_CTRL_4_REG) &
+> +			MDIO_CTRL_4_ACCESS_BUSY;
+> +		if (!busy)
+> +			return 0;
+> +
+> +		/* BUSY might take to be cleard by 15~20 times of loop */
+> +		udelay(IPQ40XX_MDIO_DELAY);
+> +	}
+> +
+> +	dev_err(am->dev, "%s: MDIO operation timed out\n", am->mii_bus->name);
+
+dev_err() should give you enough to identify the device. No need to
+print am->mii_bus->name as well.
+
+> +
+> +	return -ETIMEDOUT;
+> +}
+> +
+> +static int ipq40xx_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
+> +{
+> +	struct ipq40xx_mdio_data *am = bus->priv;
+> +	int value = 0;
+> +	unsigned int cmd = 0;
+> +
+> +	lockdep_assert_held(&bus->mdio_lock);
+
+Do you think the core is broken?
+
+Please check if the request is for a C45 read, and return -EOPNOTSUPP
+if so.
 
 
+> +
+> +	if (ipq40xx_mdio_wait_busy(am))
+> +		return -ETIMEDOUT;
+> +
+> +	/* issue the phy address and reg */
+> +	writel((mii_id << 8) | regnum, am->membase + MDIO_CTRL_1_REG);
+> +
+> +	cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_READ;
+> +
+> +	/* issue read command */
+> +	writel(cmd, am->membase + MDIO_CTRL_4_REG);
+> +
+> +	/* Wait read complete */
+> +	if (ipq40xx_mdio_wait_busy(am))
+> +		return -ETIMEDOUT;
+> +
+> +	/* Read data */
+> +	value = readl(am->membase + MDIO_CTRL_3_REG);
+> +
+> +	return value;
+> +}
+> +
+> +static int ipq40xx_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
+> +							 u16 value)
+> +{
+> +	struct ipq40xx_mdio_data *am = bus->priv;
+> +	unsigned int cmd = 0;
+> +
+> +	lockdep_assert_held(&bus->mdio_lock);
+> +
+> +	if (ipq40xx_mdio_wait_busy(am))
+> +		return -ETIMEDOUT;
+> +
+> +	/* issue the phy address and reg */
+> +	writel((mii_id << 8) | regnum, am->membase + MDIO_CTRL_1_REG);
+> +
+> +	/* issue write data */
+> +	writel(value, am->membase + MDIO_CTRL_2_REG);
+> +
+> +	cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_WRITE;
+> +	/* issue write command */
+> +	writel(cmd, am->membase + MDIO_CTRL_4_REG);
+> +
+> +	/* Wait write complete */
+> +	if (ipq40xx_mdio_wait_busy(am))
+> +		return -ETIMEDOUT;
+> +
+> +	return 0;
+> +}
+> +
+> +static int ipq40xx_mdio_probe(struct platform_device *pdev)
+> +{
+> +	struct ipq40xx_mdio_data *am;
+
+Why the name am? Generally priv is used. I could also understand bus,
+or even data, but am?
+
+   Andrew
