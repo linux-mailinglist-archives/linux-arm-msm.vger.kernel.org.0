@@ -2,124 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3563C1A6FC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 01:13:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E6051A6FD0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 01:27:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389956AbgDMXN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 19:13:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35978 "EHLO
+        id S2389984AbgDMX1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 19:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2389929AbgDMXNZ (ORCPT
+        by vger.kernel.org with ESMTP id S1728469AbgDMX1r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 19:13:25 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C363C0A3BDC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 16:13:24 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id m8so10529943lji.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 16:13:24 -0700 (PDT)
+        Mon, 13 Apr 2020 19:27:47 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BFD0C0A3BE2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 16:27:47 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id t4so3957881plq.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 16:27:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zXGNQQP4X3VX81J+kdAMQQHyCz96RnLdOdy+FSwZIMU=;
-        b=c4eu2TsEdrQ5/05Gmd4JKvLX1E9PqFEvEqAm++vbEwjW5ViflcKiCykyDvWlCsMKip
-         Ln9fa5zS5CzsUazSEwGQuS6uLeUtQXeuUsRs8rHx/ZSgb7malGhvFYaTAW3dqdWegXYF
-         NDNnFSbGrDUe+wgoG3LKqKNwlWDWgWIuod6Ds=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rvH3n61ScP/pqhYRoi/YBAQRraGiMFMdWWKH2owSxzw=;
+        b=eB+Q8LTJp7xRStQmoEjZEn5NHSzCtNkSjB0y/rjJ39JeORNT6nV4CCyXZhL2Lr4rbZ
+         iTX4Xcvv4k3av8C5bSK5TgLjMaV2MzZOAtzDKrdMLL9KMqIjsVabCg0VQ2H5A7sKTJFt
+         hOApg5PocN/VQQCibGALR55t/rcKJa4igxS8w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zXGNQQP4X3VX81J+kdAMQQHyCz96RnLdOdy+FSwZIMU=;
-        b=HG9pd07CveEcc2IucKDxw/gLE88YPI4iOujAOFEFPzRMsSa0tTcjXIu745SyDx8kPu
-         RcvssPcJhMRdPAdX28s4ZbsLDKiyTSMrOaE13H54Zlo3GGK96F3UiqnlDjxgijjOyStg
-         KqZdt7eraEZIGslHCls4JV5HKuMOyNk92a+KoOHgrYPvMSP/qTkR71TUMXt7qsXSFrgO
-         c0o2yxDIn2xW019Puzb04KzwJAf43TQUUGwa2g2oOabO7I/l2gGvDZlGX/2qGAXwOQA/
-         4KKvphJMBzQGmJWZSpSQMu1VrNxIMbd5UX/bNwAQNRRysbf9Ix2wiua/WKQVFauMNByj
-         Ggtw==
-X-Gm-Message-State: AGi0PubUDWEF3ZrLbvixe8W1CNyREer43d2DliqNqKaZsWEhYMYu1ccb
-        laxg4F4XmdDmiHyWSAkYUzLtkqqsn+Q=
-X-Google-Smtp-Source: APiQypJ1Kb0LCTpuw+opTmUpQYrnZAXhj6ckaHyauCUuX+HAXgiMX84TJT+tXVnEmnx4YsvNer0tKQ==
-X-Received: by 2002:a2e:b446:: with SMTP id o6mr11917702ljm.80.1586819602641;
-        Mon, 13 Apr 2020 16:13:22 -0700 (PDT)
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com. [209.85.167.41])
-        by smtp.gmail.com with ESMTPSA id k16sm7960696ljk.64.2020.04.13.16.13.22
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Apr 2020 16:13:22 -0700 (PDT)
-Received: by mail-lf1-f41.google.com with SMTP id j14so2520981lfg.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 16:13:22 -0700 (PDT)
-X-Received: by 2002:a19:4a03:: with SMTP id x3mr11835226lfa.159.1586819601453;
- Mon, 13 Apr 2020 16:13:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rvH3n61ScP/pqhYRoi/YBAQRraGiMFMdWWKH2owSxzw=;
+        b=uV/NYn+4D3VNYluuJa7RyfAOWCjy9auOEVUaokw22D5QKOfQ9vr3r41AifbGa2Vddg
+         WdiNyc+LgHtgpAdDgNWrsDOVl184lXfWr9oi1ezMAPzS2h7mukx3UlVJgm/odYrAU+v4
+         D6A+e+qXKglKX4s86/9RpVGjFw3AFR8cuLtrVFZ+gyWYBm22Wgi8h+V5UnAaAEFP+j5N
+         BMjsqHgvwEnAwrp9Nf7L5d6KinPgkp6N6MeqCNoZNQ9U7OxieSqDUoZ+XRzh6oxXUIun
+         LKYJLY8GLP4+DAkAUvJEe1AXpj0v9zYOga03Hns7NTFGyXQzkGToXHTgsnxiB3fmH98g
+         x8Mw==
+X-Gm-Message-State: AGi0PuYd31pDZdGv5gqsYRd4pvbDy9jUGfiivatQ3/8izdDvHFjjcvyH
+        EdIaXBOrKVYPigS4AVRTzATiCA==
+X-Google-Smtp-Source: APiQypLpGFp5RDCZcrbVkh5O3C4n9buM5wfuZbVvrS2BWlJfAPc2KBoNrTNgUBpsT9nNYe3sAgt8+w==
+X-Received: by 2002:a17:90b:3691:: with SMTP id mj17mr12848306pjb.114.1586820466863;
+        Mon, 13 Apr 2020 16:27:46 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id i128sm403974pfc.149.2020.04.13.16.27.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2020 16:27:46 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Adrian Hunter <adrian.hunter@intel.com>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Venkat Gopalakrishnan <venkatg@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Konstantin Dorfman <kdorfman@codeaurora.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Subhash Jadavani <subhashj@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org
+Subject: [PATCH] mmc: cqhci: Avoid false "cqhci: CQE stuck on" by not open-coding timeout loop
+Date:   Mon, 13 Apr 2020 16:27:27 -0700
+Message-Id: <20200413162717.1.Idece266f5c8793193b57a1ddb1066d030c6af8e0@changeid>
+X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
 MIME-Version: 1.0
-References: <cover.1579692800.git.saiprakash.ranjan@codeaurora.org> <813cc5b2da10c27db982254b274bf26008a9e6da.1579692800.git.saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <813cc5b2da10c27db982254b274bf26008a9e6da.1579692800.git.saiprakash.ranjan@codeaurora.org>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Mon, 13 Apr 2020 16:12:44 -0700
-X-Gmail-Original-Message-ID: <CAE=gft7HFBc7XtgiV1hkG-m3ONMUiE2vu8Vg_7Mu1dfe2BjYpA@mail.gmail.com>
-Message-ID: <CAE=gft7HFBc7XtgiV1hkG-m3ONMUiE2vu8Vg_7Mu1dfe2BjYpA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] iommu/arm-smmu: Allow client devices to select direct mapping
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        iommu@lists.linux-foundation.org,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Tomasz Figa <tfiga@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 3:48 AM Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> From: Jordan Crouse <jcrouse@codeaurora.org>
->
-> Some client devices want to directly map the IOMMU themselves instead
-> of using the DMA domain. Allow those devices to opt in to direct
-> mapping by way of a list of compatible strings.
->
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  drivers/iommu/arm-smmu-qcom.c | 39 +++++++++++++++++++++++++++++++++++
->  drivers/iommu/arm-smmu.c      |  3 +++
->  drivers/iommu/arm-smmu.h      |  5 +++++
->  3 files changed, 47 insertions(+)
->
-> diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-> index 64a4ab270ab7..ff746acd1c81 100644
-> --- a/drivers/iommu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm-smmu-qcom.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->   */
->
-> +#include <linux/of_device.h>
->  #include <linux/qcom_scm.h>
->
->  #include "arm-smmu.h"
-> @@ -11,6 +12,43 @@ struct qcom_smmu {
->         struct arm_smmu_device smmu;
->  };
->
-> +static const struct arm_smmu_client_match_data qcom_adreno = {
-> +       .direct_mapping = true,
-> +};
-> +
-> +static const struct arm_smmu_client_match_data qcom_mdss = {
-> +       .direct_mapping = true,
+Open-coding a timeout loop invariably leads to errors with handling
+the timeout properly in one corner case or another.  In the case of
+cqhci we might report "CQE stuck on" even if it wasn't stuck on.
+You'd just need this sequence of events to happen in cqhci_off():
 
-I don't actually see direct_mapping being used. Shouldn't this member
-be checked somewhere?
+1. Call ktime_get().
+2. Something happens to interrupt the CPU for > 100 us (context switch
+   or interrupt).
+3. Check time and; set "timed_out" to true since > 100 us.
+4. Read CQHCI_CTL.
+5. Both "reg & CQHCI_HALT" and "timed_out" are true, so break.
+6. Since "timed_out" is true, falsely print the error message.
 
--Evan
+Rather than fixing the polling loop, use readx_poll_timeout() like
+many people do.  This has been time tested to handle the corner cases.
+
+Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ drivers/mmc/host/cqhci.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
+index c2239ee2c0ef..75934f3c117e 100644
+--- a/drivers/mmc/host/cqhci.c
++++ b/drivers/mmc/host/cqhci.c
+@@ -5,6 +5,7 @@
+ #include <linux/delay.h>
+ #include <linux/highmem.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/module.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/slab.h>
+@@ -349,12 +350,16 @@ static int cqhci_enable(struct mmc_host *mmc, struct mmc_card *card)
+ /* CQHCI is idle and should halt immediately, so set a small timeout */
+ #define CQHCI_OFF_TIMEOUT 100
+ 
++static u32 cqhci_read_ctl(struct cqhci_host *cq_host)
++{
++	return cqhci_readl(cq_host, CQHCI_CTL);
++}
++
+ static void cqhci_off(struct mmc_host *mmc)
+ {
+ 	struct cqhci_host *cq_host = mmc->cqe_private;
+-	ktime_t timeout;
+-	bool timed_out;
+ 	u32 reg;
++	int err;
+ 
+ 	if (!cq_host->enabled || !mmc->cqe_on || cq_host->recovery_halt)
+ 		return;
+@@ -364,15 +369,9 @@ static void cqhci_off(struct mmc_host *mmc)
+ 
+ 	cqhci_writel(cq_host, CQHCI_HALT, CQHCI_CTL);
+ 
+-	timeout = ktime_add_us(ktime_get(), CQHCI_OFF_TIMEOUT);
+-	while (1) {
+-		timed_out = ktime_compare(ktime_get(), timeout) > 0;
+-		reg = cqhci_readl(cq_host, CQHCI_CTL);
+-		if ((reg & CQHCI_HALT) || timed_out)
+-			break;
+-	}
+-
+-	if (timed_out)
++	err = readx_poll_timeout(cqhci_read_ctl, cq_host, reg,
++				 reg & CQHCI_HALT, 0, CQHCI_OFF_TIMEOUT);
++	if (err < 0)
+ 		pr_err("%s: cqhci: CQE stuck on\n", mmc_hostname(mmc));
+ 	else
+ 		pr_debug("%s: cqhci: CQE off\n", mmc_hostname(mmc));
+-- 
+2.26.0.110.g2183baf09c-goog
+
