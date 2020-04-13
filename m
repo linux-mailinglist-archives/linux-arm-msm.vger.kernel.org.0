@@ -2,159 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F2471A6D08
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 22:14:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C612E1A6E05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 23:17:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733245AbgDMUOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 16:14:43 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:42116 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1733240AbgDMUOl (ORCPT
+        id S2388906AbgDMVRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 17:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46290 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388891AbgDMVRH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 16:14:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586808880; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=CVKwdv1dL/6/p21AAAZ4seiEJbEjLRqpVCT2OHJoL4k=; b=hwhH5mB6q9QU2tqXkoyjdVfCpiRIcBPGDysghI63r4dDv0PNIun7FMsxs8/zzwZRF14QP0ho
- rYwLkb20nxGX50NIXEGuj5n4ad8Swy/RpKUSTJvd9Zm9N95C0Iiht4iEi1Ryec0VGvjX8Odl
- cA3PKEwpcnvbYExb/nua7URDCCI=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e94c830.7f7cd8672e68-smtp-out-n02;
- Mon, 13 Apr 2020 20:14:40 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8629FC4478C; Mon, 13 Apr 2020 20:14:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.0
-Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3CF98C433CB;
-        Mon, 13 Apr 2020 20:14:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3CF98C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-From:   Wesley Cheng <wcheng@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
-        mgautam@codeaurora.org, vkoul@kernel.org, sboyd@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v7 5/5] phy: qcom-qmp: Rename UFS PCS QMP v4 registers
-Date:   Mon, 13 Apr 2020 13:14:26 -0700
-Message-Id: <1586808866-21350-6-git-send-email-wcheng@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1586808866-21350-1-git-send-email-wcheng@codeaurora.org>
-References: <1586808866-21350-1-git-send-email-wcheng@codeaurora.org>
+        Mon, 13 Apr 2020 17:17:07 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF72CC0A3BDC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 14:17:07 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id k18so3858310pll.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 14:17:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=eC2MEHdLAsuZgsM6/ln+QWOcxR9o897nfctxg2dELsk=;
+        b=FOe16klEN59gHf8DsemBbvY3xk8S/CsK6R046piFKeROmNPkOeYqJdgM7fstOlZhb9
+         iDyn/hdH7byLxSVS85oAQkXRAjRV/u2jQdeCnKK4EYoxrHaYvVoG8RUKfXAu8oLYlDZu
+         fBVxJnUvBEZMIZK6n+4Vt2X72Td1wX1VH+SP0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=eC2MEHdLAsuZgsM6/ln+QWOcxR9o897nfctxg2dELsk=;
+        b=VQ4WI6pFljf9g+QYpbXa/vC4032JM38Rnu6qG6aD64zG9n1oFDIXNhHIMY2ZZcQ7UI
+         Ti8aXkh0RwyBc7MrmK5glStQOH3o/XFELp36NJxGjVJld2IBvCmsKWUD/p7y8IC533Qu
+         jiAetaXakHWbMrputglsABWLf3+cYYp56514ovvFx0DThpVt56+8sEVEzQ2k/GHhKjNG
+         O4sQahh/f7t4rCeHMXSP3mZDmG6llj++HVL2r8aqaX4HNFQVTmYv48pbR33L0MqZcn4k
+         6jd7p243m9Fb1rqJ0u6RDBBDcF6WCELd6lIgjXjxG1NzERnqBFtc3JHm+/BhdNDWsK0F
+         H0eA==
+X-Gm-Message-State: AGi0PuY8Ut+7EDa6J1x3YZSGPqq90+Z7h+t/f/J8hg3OpJ0Jq7FFuRAl
+        s8B/u7rpgcWFBrOz0XBDVg1LtQ==
+X-Google-Smtp-Source: APiQypK5YeG3+cIFNKOKytz3S6ftOZYnIEwkaXMhVzUezQHx6huazKccZyOWUp0WHXouALSMQUH6Ig==
+X-Received: by 2002:a17:90a:d78b:: with SMTP id z11mr23780945pju.34.1586812627228;
+        Mon, 13 Apr 2020 14:17:07 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id q200sm8752985pgq.68.2020.04.13.14.17.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2020 14:17:06 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1586703004-13674-3-git-send-email-mkshah@codeaurora.org>
+References: <1586703004-13674-1-git-send-email-mkshah@codeaurora.org> <1586703004-13674-3-git-send-email-mkshah@codeaurora.org>
+Subject: Re: [PATCH v17 2/6] soc: qcom: rpmh: Update dirty flag only when data changes
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, mka@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        dianders@chromium.org, evgreen@chromium.org
+Date:   Mon, 13 Apr 2020 14:17:05 -0700
+Message-ID: <158681262575.84447.6103170873953765147@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The UFS QMP v4 PHY has a largely different register set versus USB and
-PCIe.  Rename the register offsets to denote that the value is specific for
-the UFS PCS register.
+Quoting Maulik Shah (2020-04-12 07:50:00)
+> Currently rpmh ctrlr dirty flag is set for all cases regardless of data
+> is really changed or not. Add changes to update dirty flag when data is
+> changed to newer values. Update dirty flag everytime when data in batch
+> cache is updated since rpmh_flush() may get invoked from any CPU instead
+> of only last CPU going to low power mode.
+>=20
+> Also move dirty flag updates to happen from within cache_lock and remove
+> unnecessary INIT_LIST_HEAD() call and a default case from switch.
+>=20
+> Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state request=
+s")
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
+> Reviewed-by: Evan Green <evgreen@chromium.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 20 +++++++++----------
- drivers/phy/qualcomm/phy-qcom-qmp.h | 40 ++++++++++++++++++-------------------
- 2 files changed, 30 insertions(+), 30 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 5363a99..9400748 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -174,9 +174,9 @@ enum qphy_reg_layout {
- };
- 
- static const unsigned int sm8150_ufsphy_regs_layout[] = {
--	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
--	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_READY_STATUS,
--	[QPHY_SW_RESET]			= QPHY_V4_SW_RESET,
-+	[QPHY_START_CTRL]		= QPHY_V4_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_UFS_READY_STATUS,
-+	[QPHY_SW_RESET]			= QPHY_V4_PCS_UFS_SW_RESET,
- };
- 
- static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
-@@ -971,13 +971,13 @@ enum qphy_reg_layout {
- };
- 
- static const struct qmp_phy_init_tbl sm8150_ufsphy_pcs_tbl[] = {
--	QMP_PHY_INIT_CFG(QPHY_V4_RX_SIGDET_CTRL2, 0x6d),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_LARGE_AMP_DRV_LVL, 0x0a),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_SMALL_AMP_DRV_LVL, 0x02),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_MID_TERM_CTRL1, 0x43),
--	QMP_PHY_INIT_CFG(QPHY_V4_DEBUG_BUS_CLKSEL, 0x1f),
--	QMP_PHY_INIT_CFG(QPHY_V4_RX_MIN_HIBERN8_TIME, 0xff),
--	QMP_PHY_INIT_CFG(QPHY_V4_MULTI_LANE_CTRL1, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2, 0x6d),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0a),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL, 0x1f),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xff),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
- };
- 
- static const struct qmp_phy_init_tbl sm8150_usb3_serdes_tbl[] = {
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index 22c9009..d78acbf 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -425,26 +425,26 @@
- #define QSERDES_V4_RX_VTH_CODE				0x1c4
- 
- /* Only for QMP V4 PHY - UFS PCS registers */
--#define QPHY_V4_PHY_START				0x000
--#define QPHY_V4_POWER_DOWN_CONTROL			0x004
--#define QPHY_V4_SW_RESET				0x008
--#define QPHY_V4_TIMER_20US_CORECLK_STEPS_MSB		0x00c
--#define QPHY_V4_TIMER_20US_CORECLK_STEPS_LSB		0x010
--#define QPHY_V4_PLL_CNTL				0x02c
--#define QPHY_V4_TX_LARGE_AMP_DRV_LVL			0x030
--#define QPHY_V4_TX_SMALL_AMP_DRV_LVL			0x038
--#define QPHY_V4_BIST_FIXED_PAT_CTRL			0x060
--#define QPHY_V4_TX_HSGEAR_CAPABILITY			0x074
--#define QPHY_V4_RX_HSGEAR_CAPABILITY			0x0b4
--#define QPHY_V4_DEBUG_BUS_CLKSEL			0x124
--#define QPHY_V4_LINECFG_DISABLE				0x148
--#define QPHY_V4_RX_MIN_HIBERN8_TIME			0x150
--#define QPHY_V4_RX_SIGDET_CTRL2				0x158
--#define QPHY_V4_TX_PWM_GEAR_BAND			0x160
--#define QPHY_V4_TX_HS_GEAR_BAND				0x168
--#define QPHY_V4_PCS_READY_STATUS			0x180
--#define QPHY_V4_TX_MID_TERM_CTRL1			0x1d8
--#define QPHY_V4_MULTI_LANE_CTRL1			0x1e0
-+#define QPHY_V4_PCS_UFS_PHY_START				0x000
-+#define QPHY_V4_PCS_UFS_POWER_DOWN_CONTROL			0x004
-+#define QPHY_V4_PCS_UFS_SW_RESET				0x008
-+#define QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB		0x00c
-+#define QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB		0x010
-+#define QPHY_V4_PCS_UFS_PLL_CNTL				0x02c
-+#define QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL			0x030
-+#define QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL			0x038
-+#define QPHY_V4_PCS_UFS_BIST_FIXED_PAT_CTRL			0x060
-+#define QPHY_V4_PCS_UFS_TX_HSGEAR_CAPABILITY			0x074
-+#define QPHY_V4_PCS_UFS_RX_HSGEAR_CAPABILITY			0x0b4
-+#define QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL			0x124
-+#define QPHY_V4_PCS_UFS_LINECFG_DISABLE				0x148
-+#define QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME			0x150
-+#define QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2				0x158
-+#define QPHY_V4_PCS_UFS_TX_PWM_GEAR_BAND			0x160
-+#define QPHY_V4_PCS_UFS_TX_HS_GEAR_BAND				0x168
-+#define QPHY_V4_PCS_UFS_READY_STATUS			0x180
-+#define QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1			0x1d8
-+#define QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1			0x1e0
- 
- /* Only for QMP V4 PHY - USB/PCIe PCS registers */
- #define QPHY_V4_PCS_SW_RESET				0x000
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
