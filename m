@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 049EE1A6765
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 15:58:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C9521A676F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 16:02:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730188AbgDMN6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 09:58:51 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:48381 "EHLO
+        id S1730230AbgDMOCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 10:02:40 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:24659 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729430AbgDMN6u (ORCPT
+        by vger.kernel.org with ESMTP id S1730218AbgDMOCj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 09:58:50 -0400
+        Mon, 13 Apr 2020 10:02:39 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586786328; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1586786558; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Y/gdVVe6BVm6JgYV9eCeY9S+PgE2k5W+l+hDimM0Yso=; b=GYder3mcikefBVmagln+TyPRzgqLmSsfHM2gLXqWHg7l/prUvgf2lJHnJ1apHwqqX1u2knFZ
- 7khhLCXACfS36n1kwlbbfkm/YGPvzFkTXY4UXN18e0HL6kOMnpnid+9KKQr6PCTxGqjDVl/D
- XgHjGnC2FDaT32oHQ/FPxU728Ys=
+ Subject: Sender; bh=N0n8kdCEFen4uzBPsMM4YzWOmJWKxXpHF1vXpG7UtR0=; b=N7kn2goGi8J7knyS9zzfaD3UVOhh4BGyWtwroSrXp7H+gihViKqBbbNg6O8cGRWBdpuzNSpu
+ szXtruqXZamz9XeRVvg5qespdF/hyBvunUIffyZ4Y78ruCDoEv35BG3Y6fxIJ4+RwoHy4kam
+ bP3axkbOr0Brtdr1WQf0MbSeGQA=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e947017.7f6220e1cd18-smtp-out-n01;
- Mon, 13 Apr 2020 13:58:47 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e9470c2.7fc7948a5d50-smtp-out-n04;
+ Mon, 13 Apr 2020 14:01:38 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BB972C433F2; Mon, 13 Apr 2020 13:58:47 +0000 (UTC)
+        id E20D4C432C2; Mon, 13 Apr 2020 14:01:37 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.111.193.245] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EF2DFC433CB;
-        Mon, 13 Apr 2020 13:58:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EF2DFC433CB
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 15E67C433F2;
+        Mon, 13 Apr 2020 14:01:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 15E67C433F2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 02/21] tty: serial: qcom_geni_serial: Use OPP API to set
- clk/perf state
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-serial@vger.kernel.org
-References: <1586353607-32222-1-git-send-email-rnayak@codeaurora.org>
- <1586353607-32222-3-git-send-email-rnayak@codeaurora.org>
- <20200409174511.GS199755@google.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <e3aa9e6f-14f5-de51-7087-094b5089d16b@codeaurora.org>
-Date:   Mon, 13 Apr 2020 19:28:39 +0530
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v2 1/5] bus: mhi: core: Handle syserr during power_up
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Bhaumik Vasav Bhatt <bbhatt@codeaurora.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1586278230-29565-1-git-send-email-jhugo@codeaurora.org>
+ <1586278230-29565-2-git-send-email-jhugo@codeaurora.org>
+ <1768ba6e-12c2-7b4f-0f17-44fecc6473b9@codeaurora.org>
+ <11d9f35b-b911-7985-8846-0a45904ceed1@codeaurora.org>
+ <5c4efe13-42a4-e802-4070-5d9d30b8cac2@codeaurora.org>
+ <79feeb0b-0837-c5b6-087d-856c3e238c67@codeaurora.org>
+ <20200413133447.GA19124@Mani-XPS-13-9360>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <ee51ae8f-5826-5402-9178-3f2fba1358f8@codeaurora.org>
+Date:   Mon, 13 Apr 2020 08:01:36 -0600
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <20200409174511.GS199755@google.com>
+In-Reply-To: <20200413133447.GA19124@Mani-XPS-13-9360>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -66,85 +66,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
-
-On 4/9/2020 11:15 PM, Matthias Kaehlcke wrote:
-> Hi Rajendra,
-> 
-> On Wed, Apr 08, 2020 at 07:16:28PM +0530, Rajendra Nayak wrote:
->> geni serial needs to express a perforamnce state requirement on CX
->> depending on the frequency of the clock rates. Use OPP table from
->> DT to register with OPP framework and use dev_pm_opp_set_rate() to
->> set the clk/perf state.
+On 4/13/2020 7:34 AM, Manivannan Sadhasivam wrote:
+> On Fri, Apr 10, 2020 at 03:39:57PM -0600, Jeffrey Hugo wrote:
+>> On 4/10/2020 2:37 PM, Bhaumik Vasav Bhatt wrote:
+>>> Hi Jeff,
+>>>
+>>> We will always have the mhi_intvec_handler registered and trigger your
+>>> wake_up state event when you write MHI RESET. BHI INTVEC IRQ using
+>>> mhi_cntrl->irq[0] is _not_ unregistered once you enter AMSS EE.
 >>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> Cc: Akash Asthana <akashast@codeaurora.org>
->> Cc: linux-serial@vger.kernel.org
->> ---
->>   drivers/tty/serial/qcom_geni_serial.c | 20 +++++++++++++++-----
->>   include/linux/qcom-geni-se.h          |  2 ++
->>   2 files changed, 17 insertions(+), 5 deletions(-)
+>> I understand it is not unregistered.  However mhi_cntrl->irq[0] may be
+>> reserved for BHI, and thus only exercised by PBL EE.  Where as,
+>> mhi_cntrl->irq[1..N] may be only exercised by AMSS EE. mhi_intvec_handler is
+>> not called in response to mhi_cntrl->irq[1..N].
 >>
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index 6119090..754eaf6 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -9,6 +9,7 @@
->>   #include <linux/module.h>
->>   #include <linux/of.h>
->>   #include <linux/of_device.h>
->> +#include <linux/pm_opp.h>
->>   #include <linux/platform_device.h>
->>   #include <linux/pm_runtime.h>
->>   #include <linux/pm_wakeirq.h>
->> @@ -961,7 +962,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->>   		goto out_restart_rx;
->>   
->>   	uport->uartclk = clk_rate;
->> -	clk_set_rate(port->se.clk, clk_rate);
->> +	dev_pm_opp_set_rate(uport->dev, clk_rate);
->>   	ser_clk_cfg = SER_CLK_EN;
->>   	ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
->>   
->> @@ -1198,8 +1199,10 @@ static void qcom_geni_serial_pm(struct uart_port *uport,
->>   	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
->>   		geni_se_resources_on(&port->se);
->>   	else if (new_state == UART_PM_STATE_OFF &&
->> -			old_state == UART_PM_STATE_ON)
->> +			old_state == UART_PM_STATE_ON) {
->> +		dev_pm_opp_set_rate(uport->dev, 0);
->>   		geni_se_resources_off(&port->se);
->> +	}
->>   }
->>   
->>   static const struct uart_ops qcom_geni_console_pops = {
->> @@ -1318,13 +1321,16 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->>   	if (of_property_read_bool(pdev->dev.of_node, "cts-rts-swap"))
->>   		port->cts_rts_swap = true;
->>   
->> +	port->se.opp = dev_pm_opp_set_clkname(&pdev->dev, "se");
+>> Additionally, I re-reviewed the MHI spec, and I don't see where the spec
+>> requires the device to issue an interrupt upon completion of the RESET
+>> request.
+>>
+>> Under section 3.5, step 11 states -
+>>
+>> "The host must poll for the value of the RESET bit to detect the completion
+>> of the reset procedure by the device (RESET is set to 0)."
+>>
 > 
-> dev_pm_opp_set_clkname() can fail for multiple reasons, it seems an error
-> check would be warranted.
+> If this is the scenario then we need to change all of the wait_event_timeout()
+> implementation for MHI RESET in current stack to polling.
+> 
+> Or the interrupt generation is not defined in spec (sheet) but part of the
+> existing implementation?
 
-right, looks like I should put some error check there
-
-> Is it actually necessary to save the OPP table in 'struct geni_se'? Both
-> the serial and the SPI driver save the table, but don't use it later (nor
-> does the SE driver).
-
-I think I did that initially because I wanted to use that to call into
-dev_pm_opp_put_clkname during cleanup. That however never worked since
-the way the clk_put is done in dev_pm_opp_put_clkname() and _opp_table_kref_release()
-seems buggy. I kind of forgot about fixing it up, I will figure our whats the right
-way to do it, and either not call dev_pm_opp_put_clkname() or not store the
-opp table returned by it.
-
-thanks for taking time to review.
-
-- Rajendra
-  
+It probably could be considered part of the existing implementation, but 
+I'd like to hear from Hemant/Bhaumik.  Wherever we end up, I'd like to 
+have the spec match.
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
