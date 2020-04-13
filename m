@@ -2,314 +2,571 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F3E21A6B30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 19:18:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DD551A6B90
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 19:41:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732643AbgDMRS1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 13:18:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57092 "EHLO
+        id S1732955AbgDMRk6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 13:40:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732635AbgDMRSW (ORCPT
+        by vger.kernel.org with ESMTP id S1732954AbgDMRkz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 13:18:22 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3894C0A3BDC;
-        Mon, 13 Apr 2020 10:18:21 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id r26so10761982wmh.0;
-        Mon, 13 Apr 2020 10:18:21 -0700 (PDT)
+        Mon, 13 Apr 2020 13:40:55 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A60B6C008748
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 10:40:55 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id b72so4797148pfb.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 10:40:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aN2QMQIiZ+fbzXx89kWfhruKgWBRabD+TZRiB8Om83o=;
-        b=kr4Po8TapDPqfgo9+vMRhLZGS11uCB8r6Nr/qh639YeXFbasmmmcv7HvvImopL+CCT
-         hM0fscXSDe1C64zYsDHEyQgmzsv7UeqA0e9/npW83g0zIZQL3H7IQvPem9czu8m1NLZb
-         DX0/UmflttKOY93o2nJlw7dNUZEfLZMpV7x2ls0PTN1k8RJKUKROh6A15C/iSFudCqjs
-         P8B1dFdfo2uVRwmlrWJ0P+juDq6iqqocQBnxM7tbpZUXKdft232Wr69uGZC765WYL8gy
-         q6EnfV+Va3e7XL67z6nuxQWRW2Z9UWiKLSgSwdvMHnukEzOmPHqitX7fCFpUuf6xgAE4
-         95ng==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tlPD1UHZ5TPwfsyG5bE6iGSTL6DRPjv+SQFOkoB6pdU=;
+        b=VMRwQM+QFSb2fh2mLojg/MecW7/C9oZYyfLkanBD6XCHTPkgUdp0RQfLhjLuAiWvIc
+         mI5ryqcDOO2tuiW2++8A8ANH5jh1YUd2LMi9rJEgA+OvHXK5o8ir+nb6GypRiKyDtqT2
+         YTZpDGloMvU9g4rTYshUoIOyuKRAZd2XzY4Qe5Ho43tN3fxsCE+pStLng0ZyPT4bNX1d
+         ipCoaAmHy4knzGjQTskmuZq5OMOrGvYTAHESuFgq8UJJB2iQ8GrepM9G4ktgsidsgEgz
+         38VgJSIs9d3ABzqL15zQZDSeYEufLQE5WGZkajn9KlziSkZRvbQynTHFMi3Uh48kRDDB
+         oXCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=aN2QMQIiZ+fbzXx89kWfhruKgWBRabD+TZRiB8Om83o=;
-        b=VVVZ9YOVmAFfMwbtWNMcndRw5GJzvbpzzQRYZOlPoaLqnJZ8B88uHiOgAXesVrLDL7
-         1aEaSo/m3wYOoDs6WKb8tnOsKjf0uORVllaXG93is4+O9vD4BgUWNHMk41iavsj2NyWG
-         TfY+6mQQEHJxY3Ln4Hjt+X+6JHXsQXCgzFWKxizhHRmI4veIXtRINNqMIjuHZUvSY77q
-         hg53QKl+XrOfnpdjlq+7j6BwB349PPlJGmp7OrSvoEMe5eH84Qltz+uuwkmwMfvsose1
-         SA93WLN8q93VZpK1Fy4+FRZx2brOwoUNuowsvgfjyK1Yp21lTHl16YFqxldiTxlaFCws
-         TkIw==
-X-Gm-Message-State: AGi0PuaWxddy9C+2hAEZCZ+F6MGhsimcBwOl9dcnKxuxPS1oF67eLUUN
-        qeR+pczrRKyAAcyIiteQuap/K74j
-X-Google-Smtp-Source: APiQypJP9/nTIk6E1eY6hBX6IjFs+1I7vAIgou3RoTK6/JqTTcTgQrO/3xDrVBpzBORS1iWYL2gBZA==
-X-Received: by 2002:a1c:e242:: with SMTP id z63mr18705439wmg.184.1586798298947;
-        Mon, 13 Apr 2020 10:18:18 -0700 (PDT)
-Received: from ?IPv6:2003:ea:8f29:6000:ecd0:ef61:dfee:4535? (p200300EA8F296000ECD0EF61DFEE4535.dip0.t-ipconnect.de. [2003:ea:8f29:6000:ecd0:ef61:dfee:4535])
-        by smtp.googlemail.com with ESMTPSA id x132sm10968002wmg.33.2020.04.13.10.18.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Apr 2020 10:18:18 -0700 (PDT)
-Subject: Re: [PATCH 1/3] net: phy: mdio: add IPQ40xx MDIO driver
-To:     Robert Marko <robert.marko@sartura.hr>, andrew@lunn.ch,
-        f.fainelli@gmail.com, linux@armlinux.org.uk,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     Christian Lamparter <chunkeey@gmail.com>,
-        Luka Perkov <luka.perkov@sartura.hr>
-References: <20200413170107.246509-1-robert.marko@sartura.hr>
-From:   Heiner Kallweit <hkallweit1@gmail.com>
-Message-ID: <787129c5-f711-5f85-9306-35fb93c68d7b@gmail.com>
-Date:   Mon, 13 Apr 2020 19:18:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tlPD1UHZ5TPwfsyG5bE6iGSTL6DRPjv+SQFOkoB6pdU=;
+        b=swwO/ofCxSNqAUUNrFbST7XyoMu3rj2T3m6Sx7+AHEp/W0HuIdU3WOnZYO3FNKs/x6
+         k/XL8VdrZFPtGh5Dsx8B5Hhxr4sKFzZzdeq+jzcKvWScTESkvC1OE+iuC4uuCJLDSjCY
+         q3yLMn51xDcg/uzOci+OY5ztfPHdPKZvVKcyjmBrsvea/DMuYoKtYWR7v3A8+0e3IWAX
+         PoomnkXVZzO3WJp4B9D/SWd12wFFojkjjO59LzSHsXL6XgC1lcqE5GWRYzn5y87heJcs
+         ox9dK5+EIeLJq557PRZjqYtzi0MlZTnERp6SQ85OmHFC7nYan1sPQCIAzHQyUN3PQZ8S
+         UFqg==
+X-Gm-Message-State: AGi0PuY6VFJclzlVfQowy7BH/ydyiqjlLCI9cA1jRx4cvqdJsyZX9GgB
+        yBajgWswNmmhTBYUIwIxMiznBw==
+X-Google-Smtp-Source: APiQypL+Dg226VwWY7irzBNsRXLiYb8PXUiS29VylY1vMoeg8xTRCE6Vg2afRaIo53NXpybSQ7u/Hg==
+X-Received: by 2002:a62:cd89:: with SMTP id o131mr6041515pfg.145.1586799655016;
+        Mon, 13 Apr 2020 10:40:55 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id z4sm8001952pff.132.2020.04.13.10.40.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2020 10:40:54 -0700 (PDT)
+Date:   Mon, 13 Apr 2020 11:40:51 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>, mike.leach@linaro.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCHv2 2/3] arm64: dts: qcom: sc7180: Add Coresight support
+Message-ID: <20200413174051.GC28804@xps15>
+References: <cover.1586263250.git.saiprakash.ranjan@codeaurora.org>
+ <73e4352c19afff4c9ea2041b263a85e68e6eef11.1586263250.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200413170107.246509-1-robert.marko@sartura.hr>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <73e4352c19afff4c9ea2041b263a85e68e6eef11.1586263250.git.saiprakash.ranjan@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13.04.2020 19:01, Robert Marko wrote:
-> This patch adds the driver for the MDIO interface
-> inside of Qualcomm IPQ40xx series SoC-s.
+On Thu, Apr 09, 2020 at 05:13:37PM +0530, Sai Prakash Ranjan wrote:
+> Add coresight components found on Qualcomm SC7180 SoC.
 > 
-> Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> Cc: Luka Perkov <luka.perkov@sartura.hr>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Tested-by: Stephen Boyd <swboyd@chromium.org>
+
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+
 > ---
->  drivers/net/phy/Kconfig        |   7 ++
->  drivers/net/phy/Makefile       |   1 +
->  drivers/net/phy/mdio-ipq40xx.c | 180 +++++++++++++++++++++++++++++++++
->  3 files changed, 188 insertions(+)
->  create mode 100644 drivers/net/phy/mdio-ipq40xx.c
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 471 +++++++++++++++++++++++++++
+>  1 file changed, 471 insertions(+)
 > 
-> diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
-> index 9dabe03a668c..614d08635012 100644
-> --- a/drivers/net/phy/Kconfig
-> +++ b/drivers/net/phy/Kconfig
-> @@ -157,6 +157,13 @@ config MDIO_I2C
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 998f101ad623..aa3bfda9337b 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1294,6 +1294,477 @@
+>  			};
+>  		};
 >  
->  	  This is library mode.
->  
-> +config MDIO_IPQ40XX
-> +	tristate "Qualcomm IPQ40xx MDIO interface"
-> +	depends on HAS_IOMEM && OF
-> +	help
-> +	  This driver supports the MDIO interface found in Qualcomm
-> +	  IPQ40xx series Soc-s.
+> +		stm@6002000 {
+> +			compatible = "arm,coresight-stm", "arm,primecell";
+> +			reg = <0 0x06002000 0 0x1000>,
+> +			      <0 0x16280000 0 0x180000>;
+> +			reg-names = "stm-base", "stm-stimulus-base";
 > +
->  config MDIO_MOXART
->  	tristate "MOXA ART MDIO interface support"
->  	depends on ARCH_MOXART || COMPILE_TEST
-> diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
-> index fe5badf13b65..c89fc187fd74 100644
-> --- a/drivers/net/phy/Makefile
-> +++ b/drivers/net/phy/Makefile
-> @@ -36,6 +36,7 @@ obj-$(CONFIG_MDIO_CAVIUM)	+= mdio-cavium.o
->  obj-$(CONFIG_MDIO_GPIO)		+= mdio-gpio.o
->  obj-$(CONFIG_MDIO_HISI_FEMAC)	+= mdio-hisi-femac.o
->  obj-$(CONFIG_MDIO_I2C)		+= mdio-i2c.o
-> +obj-$(CONFIG_MDIO_IPQ40XX)	+= mdio-ipq40xx.o
->  obj-$(CONFIG_MDIO_MOXART)	+= mdio-moxart.o
->  obj-$(CONFIG_MDIO_MSCC_MIIM)	+= mdio-mscc-miim.o
->  obj-$(CONFIG_MDIO_OCTEON)	+= mdio-octeon.o
-> diff --git a/drivers/net/phy/mdio-ipq40xx.c b/drivers/net/phy/mdio-ipq40xx.c
-> new file mode 100644
-> index 000000000000..8068f1e6a077
-> --- /dev/null
-> +++ b/drivers/net/phy/mdio-ipq40xx.c
-> @@ -0,0 +1,180 @@
-> +// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
-> +/* Copyright (c) 2015, The Linux Foundation. All rights reserved. */
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +#include <linux/delay.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/mutex.h>
-> +#include <linux/io.h>
-> +#include <linux/of_address.h>
-> +#include <linux/of_mdio.h>
-> +#include <linux/phy.h>
-> +#include <linux/platform_device.h>
+> +			out-ports {
+> +				port {
+> +					stm_out: endpoint {
+> +						remote-endpoint = <&funnel0_in7>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +#define MDIO_CTRL_0_REG		0x40
-> +#define MDIO_CTRL_1_REG		0x44
-> +#define MDIO_CTRL_2_REG		0x48
-> +#define MDIO_CTRL_3_REG		0x4c
-> +#define MDIO_CTRL_4_REG		0x50
-> +#define MDIO_CTRL_4_ACCESS_BUSY		BIT(16)
-> +#define MDIO_CTRL_4_ACCESS_START		BIT(8)
-> +#define MDIO_CTRL_4_ACCESS_CODE_READ		0
-> +#define MDIO_CTRL_4_ACCESS_CODE_WRITE	1
-> +#define CTRL_0_REG_DEFAULT_VALUE	0x150FF
+> +		funnel@6041000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0 0x06041000 0 0x1000>;
 > +
-> +#define IPQ40XX_MDIO_RETRY	1000
-> +#define IPQ40XX_MDIO_DELAY	10
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +struct ipq40xx_mdio_data {
-> +	struct mii_bus	*mii_bus;
-> +	void __iomem	*membase;
-> +	struct device	*dev;
-> +};
+> +			out-ports {
+> +				port {
+> +					funnel0_out: endpoint {
+> +						remote-endpoint = <&merge_funnel_in0>;
+> +					};
+> +				};
+> +			};
 > +
-> +static int ipq40xx_mdio_wait_busy(struct ipq40xx_mdio_data *am)
-> +{
-> +	int i;
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
 > +
-> +	for (i = 0; i < IPQ40XX_MDIO_RETRY; i++) {
-> +		unsigned int busy;
+> +				port@7 {
+> +					reg = <7>;
+> +					funnel0_in7: endpoint {
+> +						remote-endpoint = <&stm_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +		busy = readl(am->membase + MDIO_CTRL_4_REG) &
-> +			MDIO_CTRL_4_ACCESS_BUSY;
-> +		if (!busy)
-> +			return 0;
+> +		funnel@6042000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0 0x06042000 0 0x1000>;
 > +
-> +		/* BUSY might take to be cleard by 15~20 times of loop */
-> +		udelay(IPQ40XX_MDIO_DELAY);
-> +	}
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +	dev_err(am->dev, "%s: MDIO operation timed out\n", am->mii_bus->name);
+> +			out-ports {
+> +				port {
+> +					funnel1_out: endpoint {
+> +						remote-endpoint = <&merge_funnel_in1>;
+> +					};
+> +				};
+> +			};
 > +
-> +	return -ETIMEDOUT;
-> +}
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
 > +
-> +static int ipq40xx_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
-> +{
-> +	struct ipq40xx_mdio_data *am = bus->priv;
-> +	int value = 0;
-> +	unsigned int cmd = 0;
+> +				port@4 {
+> +					reg = <4>;
+> +					funnel1_in4: endpoint {
+> +						remote-endpoint = <&apss_merge_funnel_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +	lockdep_assert_held(&bus->mdio_lock);
+> +		funnel@6045000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0 0x06045000 0 0x1000>;
 > +
-> +	if (ipq40xx_mdio_wait_busy(am))
-> +		return -ETIMEDOUT;
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +	/* issue the phy address and reg */
-> +	writel((mii_id << 8) | regnum, am->membase + MDIO_CTRL_1_REG);
+> +			out-ports {
+> +				port {
+> +					merge_funnel_out: endpoint {
+> +						remote-endpoint = <&swao_funnel_in>;
+> +					};
+> +				};
+> +			};
 > +
-> +	cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_READ;
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
 > +
-> +	/* issue read command */
-> +	writel(cmd, am->membase + MDIO_CTRL_4_REG);
+> +				port@0 {
+> +					reg = <0>;
+> +					merge_funnel_in0: endpoint {
+> +						remote-endpoint = <&funnel0_out>;
+> +					};
+> +				};
 > +
-> +	/* Wait read complete */
-> +	if (ipq40xx_mdio_wait_busy(am))
-> +		return -ETIMEDOUT;
+> +				port@1 {
+> +					reg = <1>;
+> +					merge_funnel_in1: endpoint {
+> +						remote-endpoint = <&funnel1_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +	/* Read data */
-> +	value = readl(am->membase + MDIO_CTRL_3_REG);
+> +		replicator@6046000 {
+> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
+> +			reg = <0 0x06046000 0 0x1000>;
 > +
-> +	return value;
-> +}
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +static int ipq40xx_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
-> +							 u16 value)
-> +{
-> +	struct ipq40xx_mdio_data *am = bus->priv;
-> +	unsigned int cmd = 0;
+> +			out-ports {
+> +				port {
+> +					replicator_out: endpoint {
+> +						remote-endpoint = <&etr_in>;
+> +					};
+> +				};
+> +			};
 > +
-> +	lockdep_assert_held(&bus->mdio_lock);
+> +			in-ports {
+> +				port {
+> +					replicator_in: endpoint {
+> +						remote-endpoint = <&swao_replicator_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +	if (ipq40xx_mdio_wait_busy(am))
-> +		return -ETIMEDOUT;
+> +		etr@6048000 {
+> +			compatible = "arm,coresight-tmc", "arm,primecell";
+> +			reg = <0 0x06048000 0 0x1000>;
 > +
-> +	/* issue the phy address and reg */
-> +	writel((mii_id << 8) | regnum, am->membase + MDIO_CTRL_1_REG);
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +			arm,scatter-gather;
 > +
-> +	/* issue write data */
-> +	writel(value, am->membase + MDIO_CTRL_2_REG);
+> +			in-ports {
+> +				port {
+> +					etr_in: endpoint {
+> +						remote-endpoint = <&replicator_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +	cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_WRITE;
-> +	/* issue write command */
-> +	writel(cmd, am->membase + MDIO_CTRL_4_REG);
+> +		funnel@6b04000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0 0x06b04000 0 0x1000>;
 > +
-> +	/* Wait write complete */
-> +	if (ipq40xx_mdio_wait_busy(am))
-> +		return -ETIMEDOUT;
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +	return 0;
-> +}
+> +			out-ports {
+> +				port {
+> +					swao_funnel_out: endpoint {
+> +						remote-endpoint = <&etf_in>;
+> +					};
+> +				};
+> +			};
 > +
-> +static int ipq40xx_mdio_probe(struct platform_device *pdev)
-> +{
-> +	struct ipq40xx_mdio_data *am;
-> +	struct resource *res;
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
 > +
-> +	am = devm_kzalloc(&pdev->dev, sizeof(*am), GFP_KERNEL);
-> +	if (!am)
-> +		return -ENOMEM;
+> +				port@7 {
+> +					reg = <7>;
+> +					swao_funnel_in: endpoint {
+> +						remote-endpoint = <&merge_funnel_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	if (!res) {
-> +		dev_err(&pdev->dev, "no iomem resource found\n");
-> +		return -ENXIO;
-> +	}
+> +		etf@6b05000 {
+> +			compatible = "arm,coresight-tmc", "arm,primecell";
+> +			reg = <0 0x06b05000 0 0x1000>;
 > +
-> +	am->membase = devm_ioremap_resource(&pdev->dev, res);
-
-You can use devm_platform_ioremap_resource() here.
-
-> +	if (IS_ERR(am->membase)) {
-> +		dev_err(&pdev->dev, "unable to ioremap registers\n");
-> +		return PTR_ERR(am->membase);
-> +	}
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +	am->mii_bus = devm_mdiobus_alloc(&pdev->dev);
-> +	if (!am->mii_bus)
-> +		return  -ENOMEM;
+> +			out-ports {
+> +				port {
+> +					etf_out: endpoint {
+> +						remote-endpoint = <&swao_replicator_in>;
+> +					};
+> +				};
+> +			};
 > +
-
-You could use devm_mdiobus_alloc_size() and omit allocating am
-separately.
-
-> +	writel(CTRL_0_REG_DEFAULT_VALUE, am->membase + MDIO_CTRL_0_REG);
+> +			in-ports {
+> +				port {
+> +					etf_in: endpoint {
+> +						remote-endpoint = <&swao_funnel_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +	am->mii_bus->name = "ipq40xx_mdio";
-> +	am->mii_bus->read = ipq40xx_mdio_read;
-> +	am->mii_bus->write = ipq40xx_mdio_write;
-> +	am->mii_bus->priv = am;
-> +	am->mii_bus->parent = &pdev->dev;
-> +	snprintf(am->mii_bus->id, MII_BUS_ID_SIZE, "%s", dev_name(&pdev->dev));
+> +		replicator@6b06000 {
+> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
+> +			reg = <0 0x06b06000 0 0x1000>;
 > +
-> +	am->dev = &pdev->dev;
-> +	platform_set_drvdata(pdev, am);
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +	return of_mdiobus_register(am->mii_bus, pdev->dev.of_node);
-> +}
+> +			out-ports {
+> +				port {
+> +					swao_replicator_out: endpoint {
+> +						remote-endpoint = <&replicator_in>;
+> +					};
+> +				};
+> +			};
 > +
-> +static int ipq40xx_mdio_remove(struct platform_device *pdev)
-> +{
-> +	struct ipq40xx_mdio_data *am = platform_get_drvdata(pdev);
+> +			in-ports {
+> +				port {
+> +					swao_replicator_in: endpoint {
+> +						remote-endpoint = <&etf_out>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +	mdiobus_unregister(am->mii_bus);
+> +		etm@7040000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07040000 0 0x1000>;
 > +
-> +	return 0;
-> +}
+> +			cpu = <&CPU0>;
 > +
-> +static const struct of_device_id ipq40xx_mdio_dt_ids[] = {
-> +	{ .compatible = "qcom,ipq40xx-mdio" },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, ipq40xx_mdio_dt_ids);
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
 > +
-> +static struct platform_driver ipq40xx_mdio_driver = {
-> +	.probe = ipq40xx_mdio_probe,
-> +	.remove = ipq40xx_mdio_remove,
-> +	.driver = {
-> +		.name = "ipq40xx-mdio",
-> +		.of_match_table = ipq40xx_mdio_dt_ids,
-> +	},
-> +};
+> +			out-ports {
+> +				port {
+> +					etm0_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in0>;
+> +					};
+> +				};
+> +			};
+> +		};
 > +
-> +module_platform_driver(ipq40xx_mdio_driver);
+> +		etm@7140000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07140000 0 0x1000>;
 > +
-> +MODULE_DESCRIPTION("IPQ40XX MDIO interface driver");
-> +MODULE_AUTHOR("Qualcomm Atheros");
-> +MODULE_LICENSE("Dual BSD/GPL");
-> 
-
+> +			cpu = <&CPU1>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					etm1_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in1>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		etm@7240000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07240000 0 0x1000>;
+> +
+> +			cpu = <&CPU2>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					etm2_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in2>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		etm@7340000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07340000 0 0x1000>;
+> +
+> +			cpu = <&CPU3>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					etm3_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in3>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		etm@7440000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07440000 0 0x1000>;
+> +
+> +			cpu = <&CPU4>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					etm4_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in4>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		etm@7540000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07540000 0 0x1000>;
+> +
+> +			cpu = <&CPU5>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					etm5_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in5>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		etm@7640000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07640000 0 0x1000>;
+> +
+> +			cpu = <&CPU6>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					etm6_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in6>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		etm@7740000 {
+> +			compatible = "arm,coresight-etm4x", "arm,primecell";
+> +			reg = <0 0x07740000 0 0x1000>;
+> +
+> +			cpu = <&CPU7>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					etm7_out: endpoint {
+> +						remote-endpoint = <&apss_funnel_in7>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@7800000 { /* APSS Funnel */
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0 0x07800000 0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					apss_funnel_out: endpoint {
+> +						remote-endpoint = <&apss_merge_funnel_in>;
+> +					};
+> +				};
+> +			};
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +					apss_funnel_in0: endpoint {
+> +						remote-endpoint = <&etm0_out>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +					apss_funnel_in1: endpoint {
+> +						remote-endpoint = <&etm1_out>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +					apss_funnel_in2: endpoint {
+> +						remote-endpoint = <&etm2_out>;
+> +					};
+> +				};
+> +
+> +				port@3 {
+> +					reg = <3>;
+> +					apss_funnel_in3: endpoint {
+> +						remote-endpoint = <&etm3_out>;
+> +					};
+> +				};
+> +
+> +				port@4 {
+> +					reg = <4>;
+> +					apss_funnel_in4: endpoint {
+> +						remote-endpoint = <&etm4_out>;
+> +					};
+> +				};
+> +
+> +				port@5 {
+> +					reg = <5>;
+> +					apss_funnel_in5: endpoint {
+> +						remote-endpoint = <&etm5_out>;
+> +					};
+> +				};
+> +
+> +				port@6 {
+> +					reg = <6>;
+> +					apss_funnel_in6: endpoint {
+> +						remote-endpoint = <&etm6_out>;
+> +					};
+> +				};
+> +
+> +				port@7 {
+> +					reg = <7>;
+> +					apss_funnel_in7: endpoint {
+> +						remote-endpoint = <&etm7_out>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@7810000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0 0x07810000 0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					apss_merge_funnel_out: endpoint {
+> +						remote-endpoint = <&funnel1_in4>;
+> +					};
+> +				};
+> +			};
+> +
+> +			in-ports {
+> +				port {
+> +					apss_merge_funnel_in: endpoint {
+> +						remote-endpoint = <&apss_funnel_out>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>  		sdhc_2: sdhci@8804000 {
+>  			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+>  			reg = <0 0x08804000 0 0x1000>;
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
