@@ -2,97 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EC6D1A69AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 18:18:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78B0D1A6A20
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 18:45:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731431AbgDMQSP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 12:18:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38916 "EHLO
+        id S1731715AbgDMQpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 12:45:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1731428AbgDMQSM (ORCPT
+        by vger.kernel.org with ESMTP id S1731652AbgDMQpA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 12:18:12 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7F0AC0A3BDC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 09:18:12 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id a6so3304915uao.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 09:18:12 -0700 (PDT)
+        Mon, 13 Apr 2020 12:45:00 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5942CC0A3BDC;
+        Mon, 13 Apr 2020 09:45:00 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id l14so2405912ljj.5;
+        Mon, 13 Apr 2020 09:45:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oxavWCT24jIuFXqrtLF2I2Zgrd6r4LKh480arMC2+lQ=;
-        b=msSaILPI9zCObtNnipbVnToRXsRM3FDo1JT47d/JoGzgTaXbk68YCd2H6SUljk50+7
-         D3PSOkFLlcDUf/wGiSzQRVp1NU/KdaOYBIwd5LPCkUOBI4c8L7MgThKgwg5CnvAUq+5g
-         mhDZbMLfCJuP1MAe3AXbA25tc1ztHL0MaO1Eo=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zfG62zcpiV13tvGYAxxYuWs3RV9RU5HlKcZKPVR46ns=;
+        b=qf9+EI92bcA5XY1SuzrhlGerPxNkVxijynrkyzDdM7NcY+GL/k7rCbDPeqEjMMwi4a
+         nNkeaGj4//z1ZcrxTizExz26chnhy/ILnNYVy9ev782Hm89xggwuZH4M+OSN8JGJOetq
+         cCqBIwYSuS9lMQxo/EkCnO/LDss1lfsxOhAgzZERDD6+3ZIa102umGMyMuzLGFtSCTBP
+         JBD+gMHmyvfZu+9R6wvoxDfqntq+60D+CxUvNJ+GtVuTb8zhiqIgbZjOnniQvQnHlK3P
+         YZVcpGsBG1FW7bmg07ANIB7FuPpicq+SO8qK342WAL2VDHNQztxW8+O9SExABPxiSONL
+         kT/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oxavWCT24jIuFXqrtLF2I2Zgrd6r4LKh480arMC2+lQ=;
-        b=jM3nntIaAJSZiWml7/KeAkzQH9nzXTf5mqT9/FVeEnrM8Er+erVLIQkQwklrpIlsBm
-         2uX9AwKYPX0I01jT0J3F6Qd7/3RZJfQ5sl32hZkP29OIIj+yjNI8Nh1PqnQUT0SniRR4
-         xZ7hBey8ahEPsldZ0XqU95FG2lUuAz337NqFEzJO5zIPw3j00h7ls1mKjyLVJ0rpYzfv
-         YSqKPoU3lJH/VB5c7clNcJqsLx8OS3dIlnm0i3CcQbffsAv/wsFkgXZUFK5Ycvb7g8rD
-         o4eFRJkp/goHhfwXQKKpSVLoZmL11QLVvP+6690BLRsUJZohrUMSm0pu6JEjUrkMDpJI
-         Pd9A==
-X-Gm-Message-State: AGi0PuYRIl2uXjDfRh4+L+tX3hLW82VL1fWg7NfQ1VT2NF/Bpsni9oU3
-        siJLW1DrjysSlsWFdUm/iDliCE/hDFI=
-X-Google-Smtp-Source: APiQypJdDjjfVxGw8kt+ZxmnaD7UISBCWWembABRyNuHtoXxQNbJq6urTU2+kezn3VjBRpthGN+dtA==
-X-Received: by 2002:ab0:2858:: with SMTP id c24mr12287429uaq.74.1586794691226;
-        Mon, 13 Apr 2020 09:18:11 -0700 (PDT)
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com. [209.85.217.52])
-        by smtp.gmail.com with ESMTPSA id r188sm571622vsb.20.2020.04.13.09.18.09
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zfG62zcpiV13tvGYAxxYuWs3RV9RU5HlKcZKPVR46ns=;
+        b=aZ4bhmwcEyQkYO6N87DGTxyh6UEPowXA3OgURGO5f/0r5WAcR5qFmj3mKGkefpn9Va
+         P/dA9AlNYqPGeZ8Os3l1vNFBCiRgwu9u0O6vk3zlkq+4uP5BV5+xYH4xJMm/Fidq5u7Q
+         hcVPfqfHKeH4gxQH75RbgNbCQt+gjmbzYafl1JJHKM5GgDLf2Oxh43mg4eO92vFznTSK
+         BE/jn1CVfMzfav5U3IZgwxKoWur2T6EmTLvbhkrCYH7U7OPF8oAZL3fZ6Gfs0nETkiGv
+         4vp40Jww/k88S7QN5DCtpVnSuT8IG1oTiO8lO4PBe3tIBaJtEM0pevoPhdeWVBIeotOY
+         dY7g==
+X-Gm-Message-State: AGi0PuZqKtxqw3+T8eNvtkpNi1Va0rNYo374c3Tq5W4Q3ZjSaY8YIQSD
+        0Dd+TYak3FiMGQemBHD8PeRrWu33SAAGBw==
+X-Google-Smtp-Source: APiQypL5thoDq6pWgnkhIVne/nBCh0GH00l1i75sFnWHdvhBcjXz57fRoqqJYnxbr3mZ6avk/7aTug==
+X-Received: by 2002:a2e:8793:: with SMTP id n19mr3807878lji.46.1586796298473;
+        Mon, 13 Apr 2020 09:44:58 -0700 (PDT)
+Received: from localhost ([213.191.183.145])
+        by smtp.gmail.com with ESMTPSA id l18sm1170388lje.19.2020.04.13.09.44.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Apr 2020 09:18:10 -0700 (PDT)
-Received: by mail-vs1-f52.google.com with SMTP id h189so5696978vsc.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 09:18:09 -0700 (PDT)
-X-Received: by 2002:a67:8dc8:: with SMTP id p191mr12836211vsd.198.1586794688896;
- Mon, 13 Apr 2020 09:18:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <1586703004-13674-1-git-send-email-mkshah@codeaurora.org> <1586703004-13674-5-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1586703004-13674-5-git-send-email-mkshah@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 13 Apr 2020 09:17:56 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WknGB=MRzf3J_FtN5p7V3Y1PVpEhBVDXOH+kEvatkn1w@mail.gmail.com>
-Message-ID: <CAD=FV=WknGB=MRzf3J_FtN5p7V3Y1PVpEhBVDXOH+kEvatkn1w@mail.gmail.com>
-Subject: Re: [PATCH v17 4/6] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
+        Mon, 13 Apr 2020 09:44:57 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH 0/3] regulator: max77826: Add MAX77826 support
+Date:   Mon, 13 Apr 2020 19:44:37 +0300
+Message-Id: <20200413164440.1138178-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.26.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The MAX77826 is a PMIC found on the Samsung Galaxy S5 (klte) and possibly other
+devices. It is produced by Maxim Integrated and contains 15 LDOs a buck and
+a buck boost regulator.
 
-On Sun, Apr 12, 2020 at 7:50 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> --- a/drivers/soc/qcom/rpmh.c
-> +++ b/drivers/soc/qcom/rpmh.c
-> @@ -5,6 +5,7 @@
->
->  #include <linux/atomic.h>
->  #include <linux/bug.h>
-> +#include <linux/lockdep.h>
->  #include <linux/interrupt.h>
->  #include <linux/jiffies.h>
->  #include <linux/kernel.h>
+Iskren Chernev (3):
+  regulator: max77826: Add max77826 regulator driver
+  dt-bindings: regulator: Add document bindings for max77826
+  ARM: dts: qcom: msm8974-klte: Add max77826 pmic node
 
-A, B, L, C, D, E, F, G, H, I, J, K
+ .../bindings/regulator/maxim,max77826.yaml    |  70 ++++
+ .../boot/dts/qcom-msm8974-samsung-klte.dts    | 110 +++++++
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |  11 +
+ drivers/regulator/Kconfig                     |  10 +
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/max77826-regulator.c        | 301 ++++++++++++++++++
+ 6 files changed, 503 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/regulator/maxim,max77826.yaml
+ create mode 100644 drivers/regulator/max77826-regulator.c
 
-...which letter doesn't belong?  ;-)
 
-IMO could be fixed in a follow-up patch or by a maintainer when applying.
+base-commit: 3b2804993d1e9f2b01f4264993009d3e48722e0d
+--
+2.26.0
 
--Doug
