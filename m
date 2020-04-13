@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EC5B1A6AE9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 19:05:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E6141A6AE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 19:05:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732371AbgDMRFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1732457AbgDMRFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 13 Apr 2020 13:05:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51038 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732367AbgDMREs (ORCPT
+        by vger.kernel.org with ESMTP id S1732371AbgDMREt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 13:04:48 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6932EC008769
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 10:04:47 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id q16so3306646pje.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 10:04:47 -0700 (PDT)
+        Mon, 13 Apr 2020 13:04:49 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB3EC00860A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 10:04:49 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id nu11so4035557pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 10:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=H5jzm0jKocH6kBLkIZiIivBDeHVXIyNk3YV4qC7ABfQ=;
-        b=RPltUmCxB2JvpwDlp7cExzjz0QjR6FfUIWjdeAwnV7bMwwIgtyOD+U7eSrbmSeGgdv
-         wM22kOEgpnY2JWYjGQ+DvuT2GcntM46V/GM4e0agI2ecUA63gFh/VB14GGmLEtsFd9bl
-         ZUll9fWxmXkY8Cw9oZz84LqxTfspis9PMEdVI=
+        bh=fVUhSo4hNqQwQBbd5xElXyQ296KGFGG1bP3GUabXMSo=;
+        b=apG9JsfYtx78Uw1JwH+1vqbsgjO963arAqSar4baMQ9XeU5KzihDGOyVOCN5FaDSQY
+         7DvIWsRTHuBxmmXPR9aKVCr8HkVdPfaijYDQqoBDrr/3zqRWkhKSiqAPNhR0GFNv+9Zp
+         bLsqYk2UlylwXMMfMYIFQQSGjXGv2kQtGXkNc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=H5jzm0jKocH6kBLkIZiIivBDeHVXIyNk3YV4qC7ABfQ=;
-        b=UD4MsajqfPXTsDvf6r/eR0nkOgt8b5gugxSSFJNuY7EulMUwn+qKCbdbOUSpaQ9OT0
-         H/x+udqHysPs/DwfUM/o4qG1fJk84fZlabt9vrYl1iL2G2ZUxoof8FEe2ff5FmPXkd0l
-         VXLvq4HzhEaokK4KYo4IieUCkEVlkaOo4XGFnMCuEMFSi4BY9pdYZLVsGCMkbLED1383
-         JMshTEmFhlRVtUv6/nSJzt8DcMi6kreUbvKtCeN1F8HDDCQHCw+OlbUNC+WnMWYvAdS2
-         ZTWgtONdoT0Knp95tBTnsPSJkLStyY4kkzPzkqpVQ81D6vGZ9Pkq/tuvzrQk7itYqGD+
-         MFCA==
-X-Gm-Message-State: AGi0PuaVZKSsGjy27zKeZmIwKTISweO5BmsmohmfxggidTf8mzTNTlPS
-        YAD1RJbwFdzIM+w+ErcZeUiXFw==
-X-Google-Smtp-Source: APiQypLw7Ub9qcbTy6hWSopaNYIaGu+ANobNFlCAGog7pxke7XfEbrS+muVCox/Qo6VUHrpDppPevg==
-X-Received: by 2002:a17:90a:9b17:: with SMTP id f23mr22618281pjp.118.1586797486900;
-        Mon, 13 Apr 2020 10:04:46 -0700 (PDT)
+        bh=fVUhSo4hNqQwQBbd5xElXyQ296KGFGG1bP3GUabXMSo=;
+        b=U4hlXgL/6oebNA1MfgBsDFgExQPvJQndjwWWRmHdBgFf0vkmwV7xcGFMvNCJxT/PdR
+         Sb2HRPoC8C7tzGSlwsNDA7GbK4vi4F4StPX6vqB1YEGwfar+RqIWFFd7xVcx03LDMixo
+         L8+SGd352gqYIizu/why7q2yLehOfgrd+ozh1MjbQsmbiaYXo4uiURQxBTCoaOY37JBd
+         A599Uj94WAszmAe31s757qfvPQY8ra2fJV4LrIF5xe0D3zuF+HumwOOpQ40tySc024mV
+         laQLiG99cbgtKMNw6ulKzsxIlx/I1E/ZQl/CKy5Gif67d6YungTpdFNqDDhyryG4JZEQ
+         KSCw==
+X-Gm-Message-State: AGi0PubU6YT8oU3KNNvHPsBbemKpMGCpLhgn0GWWOvw/VyJK4nbhntvk
+        ueT4cyEXGQq5qyfo7rKsW2Sp1g==
+X-Google-Smtp-Source: APiQypLdPmRwauGHE7PP1bbRJdDBv/+7vOAY8V5tPZzlo++VR4v1n93nOi9gb9pIuyGFjShU2t5eLw==
+X-Received: by 2002:a17:90a:2149:: with SMTP id a67mr13979537pje.43.1586797488435;
+        Mon, 13 Apr 2020 10:04:48 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id p62sm1634414pfb.93.2020.04.13.10.04.45
+        by smtp.gmail.com with ESMTPSA id p62sm1634414pfb.93.2020.04.13.10.04.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2020 10:04:46 -0700 (PDT)
+        Mon, 13 Apr 2020 10:04:47 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -54,9 +54,9 @@ Cc:     swboyd@chromium.org, mka@chromium.org,
         Lina Iyer <ilina@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 05/10] drivers: qcom: rpmh-rsc: Kill cmd_cache and find_match() with fire
-Date:   Mon, 13 Apr 2020 10:04:10 -0700
-Message-Id: <20200413100321.v4.5.I6d3d0a3ec810dc72ff1df3cbf97deefdcdeb8eef@changeid>
+Subject: [PATCH v4 06/10] drivers: qcom: rpmh-rsc: A lot of comments
+Date:   Mon, 13 Apr 2020 10:04:11 -0700
+Message-Id: <20200413100321.v4.6.I52653eb85d7dc8981ee0dafcd0b6cc0f273e9425@changeid>
 X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
 In-Reply-To: <20200413170415.32463-1-dianders@chromium.org>
 References: <20200413170415.32463-1-dianders@chromium.org>
@@ -67,156 +67,504 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The "cmd_cache" in RPMH wasn't terribly sensible.  Specifically:
+I've been pouring through the rpmh-rsc code and trying to understand
+it.  Document everything to the best of my ability.  All documentation
+here is strictly from code analysis--no actual knowledge of the
+hardware was used.  If something is wrong in here I either
+misunderstood the code, had a typo, or the code has a bug in it
+leading to my incorrect understanding.
 
-- The current code doesn't realy detect "conflicts" properly any case
-  where the sequence being checked has more than one entry.  One
-  simple way to see this in the current code is that if cmd[0].addr
-  isn't found that cmd[1].addr is never checked.
-- The code attempted to use the "cmd_cache" to update an existing
-  message in a sleep/wake TCS with new data.  The goal appeared to be
-  to update part of a TCS while leaving the rest of the TCS alone.  We
-  never actually do this.  We always fully invalidate and re-write
-  everything.
-- If/when we try to optimize things to not fully invalidate / re-write
-  every time we update the TCSes we'll need to think it through very
-  carefully.  Specifically requirement of find_match() that the new
-  sequence of addrs must match exactly the old sequence of addrs seems
-  inflexible.  It's also not documented in rpmh_write() and
-  rpmh_write_batch().  In any case, if we do decide to require updates
-  to keep the exact same sequence and length then presumably the API
-  and data structures should be updated to understand groups more
-  properly.  The current algorithm doesn't really keep track of the
-  length of the old sequence and there are several boundary-condition
-  bugs because of that.  Said another way: if we decide to do
-  something like this in the future we should start from scratch and
-  thus find_match() isn't useful to keep around.
+In a few places here I have documented things that don't make tons of
+sense.  A future patch will try to address this.  While this means I'm
+adding comments / todos and then later fixing them in the series, it
+seemed more urgent to get things documented first so that people could
+understand the later patches.
 
-This patch isn't quite a no-op.  Specifically:
+Any comments I adjusted I also tried to make match kernel-doc better.
+Specifically:
+- kernel-doc says do not leave a blank line between the function
+  description and the arguments
+- kernel-doc examples always have things starting w/ a capital and
+  ending with a period.
 
-- It should be a slight performance boost of not searching through so
-  many arrays.
-- The old code would have done something useful in one case: it would
-  allow someone calling rpmh_write() to override the data that came
-  from rpmh_write_batch().  I don't believe that actually happens in
-  reality.
+This should be a no-op.  It's just comment changes.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
-Tested-by: Maulik Shah <mkshah@codeaurora.org>
 ---
 
 Changes in v4: None
 Changes in v3:
-- Kill find_match moves from patch #9 to patch #5 (Maulik).
-- Rewrote commit message to adjust for patch order.
+- Adjusted comments for rpmh_rsc_write_ctrl_data().
+- Comments for new enable_tcs_irq() function.
+- Comments for new rpmh_rsc_cpu_pm_callback() function.
+- Mention in message that I also fixed up kernel-doc stuff.
+- Moved comments patch after ("Kill cmd_cache and find_match...").
+- One space after a period now (Maulik).
+- Plural of TCS fixed to TCSes following Maulik's example.
+- Re-added comment in tcs_write() about checking for same address.
+- Rebased atop v16 ('Invoke rpmh_flush...') series.
+- __tcs_set_trigger() comments adjusted now that it can set or unset.
+- get_tcs_for_msg() documents why it's safe to borrow the wake TCS.
+- get_tcs_for_msg() no longer returns -EAGAIN.
 
 Changes in v2:
-- Got rid of useless "if (x) continue" at end of for loop.
+- Document bug of tcs_write() not handling -EAGAIN.
+- Document get_tcs_for_msg() => -EAGAIN only for ACTIVE_ONLY.
+- Document locks for updating "tcs_in_use" more.
+- Document tcs_is_free() without drv->lock OK for tcs_invalidate().
+- Document that rpmh_rsc_send_data() can be an implicit invalidate.
+- Document two get_tcs_for_msg() issues if zero-active TCS.
+- Fixed documentation of "tcs" param in find_slots().
+- More clear that active-only xfers can happen on wake TCS sometimes.
+- Reword tcs_write() doc a bit.
 
- drivers/soc/qcom/rpmh-internal.h |  2 --
- drivers/soc/qcom/rpmh-rsc.c      | 47 --------------------------------
- 2 files changed, 49 deletions(-)
+ drivers/soc/qcom/rpmh-internal.h |  62 ++++++---
+ drivers/soc/qcom/rpmh-rsc.c      | 221 ++++++++++++++++++++++++++++---
+ 2 files changed, 246 insertions(+), 37 deletions(-)
 
 diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
-index e9a90cb7773e..6a6d776ccca9 100644
+index 6a6d776ccca9..f06350cbc9a2 100644
 --- a/drivers/soc/qcom/rpmh-internal.h
 +++ b/drivers/soc/qcom/rpmh-internal.h
-@@ -30,7 +30,6 @@ struct rsc_drv;
-  * @ncpt:      number of commands in each TCS
-  * @lock:      lock for synchronizing this TCS writes
-  * @req:       requests that are sent from the TCS
-- * @cmd_cache: flattened cache of cmds in sleep/wake TCS
-  * @slots:     indicates which of @cmd_addr are occupied
+@@ -22,15 +22,24 @@ struct rsc_drv;
+  * struct tcs_group: group of Trigger Command Sets (TCS) to send state requests
+  * to the controller
+  *
+- * @drv:       the controller
+- * @type:      type of the TCS in this group - active, sleep, wake
+- * @mask:      mask of the TCSes relative to all the TCSes in the RSC
+- * @offset:    start of the TCS group relative to the TCSes in the RSC
+- * @num_tcs:   number of TCSes in this type
+- * @ncpt:      number of commands in each TCS
+- * @lock:      lock for synchronizing this TCS writes
+- * @req:       requests that are sent from the TCS
+- * @slots:     indicates which of @cmd_addr are occupied
++ * @drv:       The controller.
++ * @type:      Type of the TCS in this group - active, sleep, wake.
++ * @mask:      Mask of the TCSes relative to all the TCSes in the RSC.
++ * @offset:    Start of the TCS group relative to the TCSes in the RSC.
++ * @num_tcs:   Number of TCSes in this type.
++ * @ncpt:      Number of commands in each TCS.
++ * @lock:      Lock for synchronizing this TCS writes.
++ * @req:       Requests that are sent from the TCS; only used for ACTIVE_ONLY
++ *             transfers (could be on a wake/sleep TCS if we are borrowing for
++ *             an ACTIVE_ONLY transfer).
++ *             Start: grab drv->lock, set req, set tcs_in_use, drop drv->lock,
++ *                    trigger
++ *             End: get irq, access req,
++ *                  grab drv->lock, clear tcs_in_use, drop drv->lock
++ * @slots:     Indicates which of @cmd_addr are occupied; only used for
++ *             SLEEP / WAKE TCSs.  Things are tightly packed in the
++ *             case that (ncpt < MAX_CMDS_PER_TCS).  That is if ncpt = 2 and
++ *             MAX_CMDS_PER_TCS = 16 then bit[2] = the first bit in 2nd TCS.
   */
  struct tcs_group {
-@@ -42,7 +41,6 @@ struct tcs_group {
- 	int ncpt;
- 	spinlock_t lock;
- 	const struct tcs_request *req[MAX_TCS_PER_TYPE];
--	u32 *cmd_cache;
- 	DECLARE_BITMAP(slots, MAX_TCS_SLOTS);
- };
- 
+ 	struct rsc_drv *drv;
+@@ -82,19 +91,28 @@ struct rpmh_ctrlr {
+  * struct rsc_drv: the Direct Resource Voter (DRV) of the
+  * Resource State Coordinator controller (RSC)
+  *
+- * @name:               Controller identifier
+- * @tcs_base:           Start address of the TCS registers in this controller
+- * @id:                 Instance id in the controller (Direct Resource Voter)
+- * @num_tcs:            Number of TCSes in this DRV
+- * @rsc_pm:             CPU PM notifier for controller
+- *                      Used when solver mode is not present
+- * @cpus_entered_pm:    CPU mask for cpus in idle power collapse
+- *                      Used when solver mode is not present
+- * @tcs:                TCS groups
+- * @tcs_in_use:         S/W state of the TCS
+- * @lock:               Synchronize state of the controller
+- * @pm_lock:            Synchronize during PM notifications
+- *                      Used when solver mode is not present
++ * @name:               Controller identifier.
++ * @tcs_base:           Start address of the TCS registers in this controller.
++ * @id:                 Instance id in the controller (Direct Resource Voter).
++ * @num_tcs:            Number of TCSes in this DRV.
++ * @rsc_pm:             CPU PM notifier for controller.
++ *                      Used when solver mode is not present.
++ * @cpus_entered_pm:    CPU mask for cpus in idle power collapse.
++ *                      Used when solver mode is not present.
++ * @tcs:                TCS groups.
++ * @tcs_in_use:         S/W state of the TCS; only set for ACTIVE_ONLY
++ *                      transfers, but might show a sleep/wake TCS in use if
++ *                      it was borrowed for an active_only transfer.  You
++ *                      must hold both the lock in this struct and the
++ *                      tcs_lock for the TCS in order to mark a TCS as
++ *                      in-use, but you only need the lock in this structure
++ *                      (aka the drv->lock) to mark one freed.
++ * @lock:               Synchronize state of the controller.  If you will be
++ *                      grabbing this lock and a tcs_lock at the same time,
++ *                      grab the tcs_lock first so we always have a
++ *                      consistent lock ordering.
++ * @pm_lock:            Synchronize during PM notifications.
++ *                      Used when solver mode is not present.
+  * @client:             Handle to the DRV's client.
+  */
+ struct rsc_drv {
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index d0c187c17ce1..c9e5cddbc099 100644
+index c9e5cddbc099..f0a7ada0c16f 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -522,42 +522,12 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+@@ -171,12 +171,38 @@ static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
+ 	}
+ }
+ 
++/**
++ * tcs_is_free() - Return if a TCS is totally free.
++ * @drv:    The RSC controller.
++ * @tcs_id: The global ID of this TCS.
++ *
++ * Returns true if nobody has claimed this TCS (by setting tcs_in_use).
++ * If the TCS looks free, checks that the hardware agrees.
++ *
++ * Must be called with the drv->lock held or the tcs_lock for the TCS being
++ * tested. If only the tcs_lock is held then it is possible that this
++ * function will return that a tcs is still busy when it has been recently
++ * been freed but it will never return free when a TCS is actually in use.
++ *
++ * Return: true if the given TCS is free.
++ */
+ static bool tcs_is_free(struct rsc_drv *drv, int tcs_id)
+ {
+ 	return !test_bit(tcs_id, drv->tcs_in_use) &&
+ 	       read_tcs_reg(drv, RSC_DRV_STATUS, tcs_id);
+ }
+ 
++/**
++ * tcs_invalidate() - Invalidate all TCSes of the given type (sleep or wake).
++ * @drv:  The RSC controller.
++ * @type: SLEEP_TCS or WAKE_TCS
++ *
++ * This will clear the "slots" variable of the given tcs_group and also
++ * tell the hardware to forget about all entries.
++ *
++ * Return: 0 if no problem, or -EAGAIN if the caller should try again in a
++ *         bit. Caller should make sure to enable interrupts between tries.
++ */
+ static int tcs_invalidate(struct rsc_drv *drv, int type)
+ {
+ 	int m;
+@@ -203,9 +229,11 @@ static int tcs_invalidate(struct rsc_drv *drv, int type)
+ }
+ 
+ /**
+- * rpmh_rsc_invalidate - Invalidate sleep and wake TCSes
++ * rpmh_rsc_invalidate() - Invalidate sleep and wake TCSes.
++ * @drv: The RSC controller.
+  *
+- * @drv: the RSC controller
++ * Return: 0 if no problem, or -EAGAIN if the caller should try again in a
++ *         bit. Caller should make sure to enable interrupts between tries.
+  */
+ int rpmh_rsc_invalidate(struct rsc_drv *drv)
+ {
+@@ -218,6 +246,18 @@ int rpmh_rsc_invalidate(struct rsc_drv *drv)
  	return ret;
  }
  
--static int find_match(const struct tcs_group *tcs, const struct tcs_cmd *cmd,
--		      int len)
--{
--	int i, j;
--
--	/* Check for already cached commands */
--	for_each_set_bit(i, tcs->slots, MAX_TCS_SLOTS) {
--		if (tcs->cmd_cache[i] != cmd[0].addr)
--			continue;
--		if (i + len >= tcs->num_tcs * tcs->ncpt)
--			goto seq_err;
--		for (j = 0; j < len; j++) {
--			if (tcs->cmd_cache[i + j] != cmd[j].addr)
--				goto seq_err;
--		}
--		return i;
--	}
--
--	return -ENODATA;
--
--seq_err:
--	WARN(1, "Message does not match previous sequence.\n");
--	return -EINVAL;
--}
--
++/**
++ * get_tcs_for_msg() - Get the tcs_group used to send the given message.
++ * @drv: The RSC controller.
++ * @msg: The message we want to send.
++ *
++ * This is normally pretty straightforward except if we are trying to send
++ * an ACTIVE_ONLY message but don't have any active_only TCSes.
++ *
++ * Called without drv->lock held and with no tcs_lock locks held.
++ *
++ * Return: A pointer to a tcs_group or an ERR_PTR.
++ */
+ static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
+ 					 const struct tcs_request *msg)
+ {
+@@ -241,7 +281,9 @@ static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
+ 	/*
+ 	 * If we are making an active request on a RSC that does not have a
+ 	 * dedicated TCS for active state use, then re-purpose a wake TCS to
+-	 * send active votes.
++	 * send active votes. This is safe because we ensure any active-only
++	 * transfers have finished before we use it (maybe by running from
++	 * the last CPU in PM code).
+ 	 */
+ 	tcs = &drv->tcs[type];
+ 	if (msg->state == RPMH_ACTIVE_ONLY_STATE && !tcs->num_tcs)
+@@ -250,6 +292,22 @@ static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
+ 	return tcs;
+ }
+ 
++/**
++ * get_req_from_tcs() - Get a stashed request that was xfering on the given TCS.
++ * @drv:    The RSC controller.
++ * @tcs_id: The global ID of this TCS.
++ *
++ * For ACTIVE_ONLY transfers we want to call back into the client when the
++ * transfer finishes. To do this we need the "request" that the client
++ * originally provided us. This function grabs the request that we stashed
++ * when we started the transfer.
++ *
++ * This only makes sense for ACTIVE_ONLY transfers since those are the only
++ * ones we track sending (the only ones we enable interrupts for and the only
++ * ones we call back to the client for).
++ *
++ * Return: The stashed request.
++ */
+ static const struct tcs_request *get_req_from_tcs(struct rsc_drv *drv,
+ 						  int tcs_id)
+ {
+@@ -265,6 +323,23 @@ static const struct tcs_request *get_req_from_tcs(struct rsc_drv *drv,
+ 	return NULL;
+ }
+ 
++/**
++ * __tcs_set_trigger() - Start xfer on a TCS or unset trigger on a borrowed TCS
++ * @drv:     The controller.
++ * @tcs_id:  The global ID of this TCS.
++ * @trigger: If true then untrigger/retrigger. If false then just untrigger.
++ *
++ * In the normal case we only ever call with "trigger=true" to start a
++ * transfer. That will un-trigger/disable the TCS from the last transfer
++ * then trigger/enable for this transfer.
++ *
++ * If we borrowed a wake TCS for an active-only transfer we'll also call
++ * this function with "trigger=false" to just do the un-trigger/disable
++ * before using the TCS for wake purposes again.
++ *
++ * Note that the AP is only in charge of triggering active-only transfers.
++ * The AP never triggers sleep/wake values using this function.
++ */
+ static void __tcs_set_trigger(struct rsc_drv *drv, int tcs_id, bool trigger)
+ {
+ 	u32 enable;
+@@ -289,6 +364,15 @@ static void __tcs_set_trigger(struct rsc_drv *drv, int tcs_id, bool trigger)
+ 	}
+ }
+ 
++/**
++ * enable_tcs_irq() - Enable or disable interrupts on the given TCS.
++ * @drv:     The controller.
++ * @tcs_id:  The global ID of this TCS.
++ * @enable:  If true then enable; if false then disable
++ *
++ * We only ever call this when we borrow a wake TCS for an active-only
++ * transfer. For active-only TCSes interrupts are always left enabled.
++ */
+ static void enable_tcs_irq(struct rsc_drv *drv, int tcs_id, bool enable)
+ {
+ 	u32 data;
+@@ -302,7 +386,14 @@ static void enable_tcs_irq(struct rsc_drv *drv, int tcs_id, bool enable)
+ }
+ 
+ /**
+- * tcs_tx_done: TX Done interrupt handler
++ * tcs_tx_done() - TX Done interrupt handler.
++ * @irq: The IRQ number (ignored).
++ * @p:   Pointer to "struct rsc_drv".
++ *
++ * Called for ACTIVE_ONLY transfers (those are the only ones we enable the
++ * IRQ for) when a transfer is done.
++ *
++ * Return: IRQ_HANDLED
+  */
+ static irqreturn_t tcs_tx_done(int irq, void *p)
+ {
+@@ -367,6 +458,16 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+ 	return IRQ_HANDLED;
+ }
+ 
++/**
++ * __tcs_buffer_write() - Write to TCS hardware from a request; don't trigger.
++ * @drv:    The controller.
++ * @tcs_id: The global ID of this TCS.
++ * @cmd_id: The index within the TCS to start writing.
++ * @msg:    The message we want to send, which will contain several addr/data
++ *          pairs to program (but few enough that they all fit in one TCS).
++ *
++ * This is used for all types of transfers (active, sleep, and wake).
++ */
+ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+ 			       const struct tcs_request *msg)
+ {
+@@ -400,6 +501,26 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+ 	write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, cmd_enable);
+ }
+ 
++/**
++ * check_for_req_inflight() - Look to see if conflicting cmds are in flight.
++ * @drv: The controller.
++ * @tcs: A pointer to the tcs_group used for ACTIVE_ONLY transfers.
++ * @msg: The message we want to send, which will contain several addr/data
++ *       pairs to program (but few enough that they all fit in one TCS).
++ *
++ * This will walk through the TCSes in the group and check if any of them
++ * appear to be sending to addresses referenced in the message. If it finds
++ * one it'll return -EBUSY.
++ *
++ * Only for use for active-only transfers.
++ *
++ * Must be called with the drv->lock held since that protects tcs_in_use.
++ *
++ * Return: 0 if nothing in flight or -EBUSY if we should try again later.
++ *         The caller must re-enable interrupts between tries since that's
++ *         the only way tcs_is_free() will ever return true and the only way
++ *         RSC_DRV_CMD_ENABLE will ever be cleared.
++ */
+ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+ 				  const struct tcs_request *msg)
+ {
+@@ -426,6 +547,15 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+ 	return 0;
+ }
+ 
++/**
++ * find_free_tcs() - Find free tcs in the given tcs_group; only for active.
++ * @tcs: A pointer to the active-only tcs_group (or the wake tcs_group if
++ *       we borrowed it because there are zero active-only ones).
++ *
++ * Must be called with the drv->lock held since that protects tcs_in_use.
++ *
++ * Return: The first tcs that's free.
++ */
+ static int find_free_tcs(struct tcs_group *tcs)
+ {
+ 	int i;
+@@ -438,6 +568,20 @@ static int find_free_tcs(struct tcs_group *tcs)
+ 	return -EBUSY;
+ }
+ 
++/**
++ * tcs_write() - Store messages into a TCS right now, or return -EBUSY.
++ * @drv: The controller.
++ * @msg: The data to be sent.
++ *
++ * Grabs a TCS for ACTIVE_ONLY transfers and writes the messages to it.
++ *
++ * If there are no free TCSes for ACTIVE_ONLY transfers or if a command for
++ * the same address is already transferring returns -EBUSY which means the
++ * client should retry shortly.
++ *
++ * Return: 0 on success, -EBUSY if client should retry, or an error.
++ *         Client should have interrupts enabled for a bit before retrying.
++ */
+ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
+ {
+ 	struct tcs_group *tcs;
+@@ -491,14 +635,26 @@ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
+ }
+ 
+ /**
+- * rpmh_rsc_send_data: Validate the incoming message and write to the
+- * appropriate TCS block.
++ * rpmh_rsc_send_data() - Validate the incoming message + write to TCS block.
++ * @drv: The controller.
++ * @msg: The data to be sent.
+  *
+- * @drv: the controller
+- * @msg: the data to be sent
++ * NOTES:
++ * - This is only used for "ACTIVE_ONLY" since the limitations of this
++ *   function don't make sense for sleep/wake cases.
++ * - To do the transfer, we will grab a whole TCS for ourselves--we don't
++ *   try to share. If there are none available we'll wait indefinitely
++ *   for a free one.
++ * - This function will not wait for the commands to be finished, only for
++ *   data to be programmed into the RPMh. See rpmh_tx_done() which will
++ *   be called when the transfer is fully complete.
++ * - This function must be called with interrupts enabled. If the hardware
++ *   is busy doing someone else's transfer we need that transfer to fully
++ *   finish so that we can have the hardware, and to fully finish it needs
++ *   the interrupt handler to run. If the interrupts is set to run on the
++ *   active CPU this can never happen if interrupts are disabled.
+  *
+  * Return: 0 on success, -EINVAL on error.
+- * Note: This call blocks until a valid data is written to the TCS.
+  */
+ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ {
+@@ -522,13 +678,30 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ 	return ret;
+ }
+ 
++/**
++ * find_slots() - Find a place to write the given message.
++ * @tcs:    The tcs group to search.
++ * @msg:    The message we want to find room for.
++ * @tcs_id: If we return 0 from the function, we return the global ID of the
++ *          TCS to write to here.
++ * @cmd_id: If we return 0 from the function, we return the index of
++ *          the command array of the returned TCS where the client should
++ *          start writing the message.
++ *
++ * Only for use on sleep/wake TCSes since those are the only ones we maintain
++ * tcs->slots for.
++ *
++ * Must be called with the tcs_lock for the group held.
++ *
++ * Return: -ENOMEM if there was no room, else 0.
++ */
  static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
  		      int *tcs_id, int *cmd_id)
  {
  	int slot, offset;
  	int i = 0;
  
--	/* Find if we already have the msg in our TCS */
--	slot = find_match(tcs, msg->cmds, msg->num_cmds);
--	if (slot >= 0)
--		goto copy_data;
--
- 	/* Do over, until we can fit the full payload in a TCS */
+-	/* Do over, until we can fit the full payload in a TCS */
++	/* Do over, until we can fit the full payload in a single TCS */
  	do {
  		slot = bitmap_find_next_zero_area(tcs->slots, MAX_TCS_SLOTS,
-@@ -567,11 +537,7 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
- 		i += tcs->ncpt;
- 	} while (slot + msg->num_cmds - 1 >= i);
+ 						  i, msg->num_cmds, 0);
+@@ -547,12 +720,14 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
+ }
  
--copy_data:
- 	bitmap_set(tcs->slots, slot, msg->num_cmds);
--	/* Copy the addresses of the resources over to the slots */
--	for (i = 0; i < msg->num_cmds; i++)
--		tcs->cmd_cache[slot + i] = msg->cmds[i].addr;
+ /**
+- * rpmh_rsc_write_ctrl_data: Write request to the controller
++ * rpmh_rsc_write_ctrl_data() - Write request to controller but don't trigger.
++ * @drv: The controller.
++ * @msg: The data to be written to the controller.
+  *
+- * @drv: the controller
+- * @msg: the data to be written to the controller
++ * This should only be called for for sleep/wake state, never active-only
++ * state.
+  *
+- * There is no response returned for writing the request to the controller.
++ * Return: 0 if no error; else -error.
+  */
+ int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ {
+@@ -587,7 +762,6 @@ int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv, const struct tcs_request *msg)
  
- 	offset = slot / tcs->ncpt;
- 	*tcs_id = offset + tcs->offset;
-@@ -762,19 +728,6 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev,
- 		tcs->mask = ((1 << tcs->num_tcs) - 1) << st;
- 		tcs->offset = st;
- 		st += tcs->num_tcs;
--
--		/*
--		 * Allocate memory to cache sleep and wake requests to
--		 * avoid reading TCS register memory.
--		 */
--		if (tcs->type == ACTIVE_TCS)
--			continue;
--
--		tcs->cmd_cache = devm_kcalloc(&pdev->dev,
--					      tcs->num_tcs * ncpt, sizeof(u32),
--					      GFP_KERNEL);
--		if (!tcs->cmd_cache)
--			return -ENOMEM;
- 	}
+ /**
+  * rpmh_rsc_ctrlr_is_busy() - Check if any of the AMCs are busy.
+- *
+  * @drv: The controller
+  *
+  * Checks if any of the AMCs are busy in handling ACTIVE sets.
+@@ -624,6 +798,23 @@ static bool rpmh_rsc_ctrlr_is_busy(struct rsc_drv *drv)
+ 	return false;
+ }
  
- 	drv->num_tcs = st;
++/**
++ * rpmh_rsc_cpu_pm_callback() - Check if any of the AMCs are busy.
++ * @nfb:    Pointer to the notifier block in struct rsc_drv.
++ * @action: CPU_PM_ENTER, CPU_PM_ENTER_FAILED, or CPU_PM_EXIT.
++ * @v:      Unused
++ *
++ * This function is given to cpu_pm_register_notifier so we can be informed
++ * about when CPUs go down. When all CPUs go down we know no more active
++ * transfers will be started so we write sleep/wake sets. This function gets
++ * called from cpuidle code paths and also at system suspend time.
++ *
++ * If its last CPU going down and AMCs are not busy then writes cached sleep
++ * and wake messages to TCSes. The firmware then takes care of triggering
++ * them when entering deepest low power modes.
++ *
++ * Return: See cpu_pm_register_notifier.
++ */
+ static int rpmh_rsc_cpu_pm_callback(struct notifier_block *nfb,
+ 				    unsigned long action, void *v)
+ {
 -- 
 2.26.0.110.g2183baf09c-goog
 
