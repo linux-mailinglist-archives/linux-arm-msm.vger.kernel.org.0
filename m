@@ -2,80 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30A761A6E36
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 23:23:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB761A6E78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 23:35:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389005AbgDMVXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Apr 2020 17:23:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47238 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2389003AbgDMVXO (ORCPT
+        id S2389163AbgDMVfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 17:35:25 -0400
+Received: from smtprelay0243.hostedemail.com ([216.40.44.243]:42472 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2389146AbgDMVfY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Apr 2020 17:23:14 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C69C0A3BE2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 14:23:14 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id h69so2499675pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2020 14:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=BT+KVJxP6FIOCZDCNYgubQTFtO4CcCJ3pCdWnLLK+5w=;
-        b=g18EvphTHwCmFKrhNfK+g5Z+2e7sZxiP2JQ/wQA19SateqYP8DGCHMvOuzlK4CjgE3
-         qYUb9yWClarpwLGwZvKBk2QoCwtWjVr9vSV/oQU7FGEqE1cSWN7cdgNpsbh4J7l92PmN
-         va+z9bBBxgMcotKBVUCkiRcMz3oWWrrYEzokA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=BT+KVJxP6FIOCZDCNYgubQTFtO4CcCJ3pCdWnLLK+5w=;
-        b=uNXnyL6bOtw54WBQH7YD7zYUMdJjxyQZtf9f6FHJSPHKJ3UeNq1n1xx8mATXWD3DEI
-         Wf+Cc9grk47rwXkCzSZzdc9KCcUhrPNGCHrWvGpwDb4du2Mq6L29Ct6OHPeZ1/SdiO+e
-         OkM2zAcEMD0RGbhCzvlID/+Gd6mElsWksCpL2ApQrvaY/WnrzYT/2iidit5mMDiCdj6D
-         1hZM4CXU8uGaP2DZG0JHlFiNot38lbOaNljNGiowtV5tyQc6jhqfro2yYhNAjXQRjSmk
-         ic9nDjw1Va85C4HYRdeJzm9KlvNCz6q3YZX7TsfK0EW9rlfwE7n6apcXNYyzRM5JhIm6
-         EEgg==
-X-Gm-Message-State: AGi0PuZ3E0kyeKBaP3Ayzvpj1nhXTWeuxRd+jvEv81VQIho2Zw9U354L
-        ZTJV7y0vzHIIv6UYayFwBZP5Fg==
-X-Google-Smtp-Source: APiQypIA0b5aU2vrrAPT6uVb6j4m1YfkLnjU672PEa9KvjMV/GMQiTMTeVahT/69YCVWHFLTS60RNg==
-X-Received: by 2002:a62:7547:: with SMTP id q68mr3079214pfc.55.1586812993734;
-        Mon, 13 Apr 2020 14:23:13 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id l30sm7746561pgu.29.2020.04.13.14.23.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2020 14:23:13 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200413100321.v4.2.Iaddc29b72772e6ea381238a0ee85b82d3903e5f2@changeid>
-References: <20200413170415.32463-1-dianders@chromium.org> <20200413100321.v4.2.Iaddc29b72772e6ea381238a0ee85b82d3903e5f2@changeid>
-Subject: Re: [PATCH v4 02/10] drivers: qcom: rpmh-rsc: Document the register layout better
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        evgreen@chromium.org, Lina Iyer <ilina@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 13 Apr 2020 17:35:24 -0400
+Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
+        by smtpgrave07.hostedemail.com (Postfix) with ESMTP id 9FD37180424D6;
+        Mon, 13 Apr 2020 21:35:22 +0000 (UTC)
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay04.hostedemail.com (Postfix) with ESMTP id 0946E1802766E;
+        Mon, 13 Apr 2020 21:35:21 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:800:960:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1542:1593:1594:1711:1730:1747:1777:1792:1801:2110:2198:2199:2393:2553:2559:2562:2731:2828:3138:3139:3140:3141:3142:3355:3622:3865:3866:3867:3868:3870:3871:3872:3873:3874:4184:4250:4321:4605:5007:6120:7901:7903:9121:10004:10226:10400:10450:10455:10848:11026:11232:11233:11473:11658:11876:11914:12043:12050:12296:12297:12740:12760:12895:13255:13439:13972:14096:14097:14180:14181:14659:14721:19904:19999:21060:21080:21324:21451:21627:21939:21972:21990:30012:30054:30070:30080:30083:30090:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
+X-HE-Tag: help61_68a97634c390c
+X-Filterd-Recvd-Size: 3907
+Received: from XPS-9350.home (unknown [47.151.136.130])
+        (Authenticated sender: joe@perches.com)
+        by omf11.hostedemail.com (Postfix) with ESMTPA;
+        Mon, 13 Apr 2020 21:35:18 +0000 (UTC)
+Message-ID: <12eb64714f3a7ae33912c468191a471d09ade504.camel@perches.com>
+Subject: Re: [PATCH v4 01/10] drivers: qcom: rpmh-rsc: Clean code
+ reading/writing TCS regs/cmds
+From:   Joe Perches <joe@perches.com>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Date:   Mon, 13 Apr 2020 14:23:12 -0700
-Message-ID: <158681299218.84447.10308919981423964992@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Date:   Mon, 13 Apr 2020 14:33:11 -0700
+In-Reply-To: <CAD=FV=UOzVmwpoxd4QTSPiG9nt=YjUYZdgmK=SKU6vTFWcf=bw@mail.gmail.com>
+References: <20200413170415.32463-1-dianders@chromium.org>
+         <20200413100321.v4.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
+         <6566837cdb0e8db522c53daba8baf49c2ca79376.camel@perches.com>
+         <CAD=FV=UOzVmwpoxd4QTSPiG9nt=YjUYZdgmK=SKU6vTFWcf=bw@mail.gmail.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.34.1-2 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-04-13 10:04:07)
-> Perhaps it's just me, it took a really long time to understand what
-> the register layout of rpmh-rsc was just from the #defines.  Let's add
-> a bunch of comments describing which blocks are part of other blocks.
->=20
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
-> ---
+On Mon, 2020-04-13 at 14:18 -0700, Doug Anderson wrote:
+> Hi,
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Rehi.
+
+> On Mon, Apr 13, 2020 at 11:21 AM Joe Perches <joe@perches.com> wrote:
+> > On Mon, 2020-04-13 at 10:04 -0700, Douglas Anderson wrote:
+> > > This patch makes two changes, both of which should be no-ops:
+> > > 
+> > > 1. Make read_tcs_reg() / read_tcs_cmd() symmetric to write_tcs_reg() /
+> > >    write_tcs_cmd().
+> > > 
+> > > 2. Change the order of operations in the above functions to make it
+> > >    more obvious to me what the math is doing.  Specifically first you
+> > >    want to find the right TCS, then the right register, and then
+> > >    multiply by the command ID if necessary.
+> > 
+> > Though these operations are only used a couple times, perhaps
+> > it'd be useful to have static inlines for the calcs.
+> > 
+> > > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> > []
+> > > @@ -67,28 +67,33 @@
+> > >  #define CMD_STATUS_ISSUED            BIT(8)
+> > >  #define CMD_STATUS_COMPL             BIT(16)
+> > 
+> > Maybe something like:
+> > 
+> > static inline void __iomem *
+> > tcs_reg_addr(struct rsc_drv drv, int reg, int tcs_id)
+> > {
+> >         return drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg;
+> > }
+> > 
+> > static inline void __iomem *
+> > tcs_cmd_addr(struct rsc_drv drv, int reg, int tcs_id, int cmd_id)
+> > {
+> >         return tcs_reg_addr(drv, reg, tcs_id) + RSC_DRV_CMD_OFFSET * cmd_id;
+> > }
+> > 
+> > > -static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+> > > +static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+> > >  {
+> > > -     return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
+> > > +     return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
+> > >                            RSC_DRV_CMD_OFFSET * cmd_id);
+> > 
+> >         return readl_relaxed(tcs_cmd_addr(drv, reg, tcs_id, cmd_id));
+> > 
+> > etc...
+> 
+> I won't object if you really feel passionately about making that
+> change but at this point it doesn't add tons of extra readability for
+> me personally.
+
+Just a suggestion.
+
+> I was kinda hoping that Maulik and my series could
+> land in the next few days since having 16 patches outstanding gets a
+> bit unwieldy.  I'd rather not send out another spin of my series at
+> this point since it's just a bunch more churn in everyone's inboxes.
+> Maybe after they land you can post that as a follow-up cleanup?
+
+If I remember...
+
+cheers, Joe
+
