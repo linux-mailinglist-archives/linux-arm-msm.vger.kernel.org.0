@@ -1,167 +1,167 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from vger.kernel.org (unknown [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B4CE31A61D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 05:58:22 +0200 (CEST)
+Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
+	by mail.lfdr.de (Postfix) with ESMTP id B7F5A1A6425
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2020 10:35:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728650AbgDMD6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Apr 2020 23:58:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.18]:55140 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728631AbgDMD6S (ORCPT
+        id S1728144AbgDMIZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Apr 2020 04:25:43 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:54735 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727971AbgDMIZl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Apr 2020 23:58:18 -0400
-Received: from m177134.mail.qiye.163.com (m177134.mail.qiye.163.com [123.58.177.134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B75C0A3BE0;
-        Sun, 12 Apr 2020 20:58:18 -0700 (PDT)
-Received: from ubuntu.localdomain (unknown [58.251.74.226])
-        by m17618.mail.qiye.163.com (Hmail) with ESMTPA id 4788A4E16BA;
-        Mon, 13 Apr 2020 11:58:14 +0800 (CST)
-From:   Wang Wenhu <wenhu.wang@vivo.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Wang Wenhu <wenhu.wang@vivo.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     kernel@vivo.com
-Subject: [PATCH] soc: qmi: move tlv-micros to header file
-Date:   Sun, 12 Apr 2020 20:57:56 -0700
-Message-Id: <20200413035758.60238-1-wenhu.wang@vivo.com>
-X-Mailer: git-send-email 2.17.1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUlXWQgYFAkeWUFZTVVMT05LS0tITUlIQk1JT1lXWShZQU
-        hPN1dZLVlBSVdZCQ4XHghZQVk1NCk2OjckKS43PlkG
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OCI6GAw*Mjg5EgtRKSoDKA04
-        PD0aCjJVSlVKTkNNTE5LSUJNTUJCVTMWGhIXVQweFRMOVQwaFRw7DRINFFUYFBZFWVdZEgtZQVlO
-        Q1VJTkpVTE9VSUlNWVdZCAFZQU5NSUs3Bg++
-X-HM-Tid: 0a7171b009fe9376kuws4788a4e16ba
+        Mon, 13 Apr 2020 04:25:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586766332; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=a6YQJ78S6nCn8YzVsbvRmz3ffyuX/j8RJJEiKzBvYyU=;
+ b=erlT9JjOH7cIHp+49MEccddziaCsY0bNSNFnqhk7AcrSQNiLepqhxsbIcqbIJG7BbT9EKsAa
+ L503uu4b+hA34UugkTd/u6Wf2HBzQr9dpSL1b5OrMImvowgBOXWZqkZ44oIGVaovsruEagWS
+ S+zvQXWiZgXss4TMGjigIWUYaEc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e9421fb.7fc8e7ca5c70-smtp-out-n03;
+ Mon, 13 Apr 2020 08:25:31 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4AA34C432C2; Mon, 13 Apr 2020 08:25:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93F84C433F2;
+        Mon, 13 Apr 2020 08:25:30 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 13 Apr 2020 13:55:30 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     mathieu.poirier@linaro.org, mike.leach@linaro.org,
+        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] coresight: tmc: Read TMC mode only when TMC hw is enabled
+In-Reply-To: <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
+References: <20200409113538.5008-1-saiprakash.ranjan@codeaurora.org>
+ <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
+Message-ID: <1751aeabd22bee18d2eef0f643883265@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's highly helpful to move the definitions of TLV related micros
-into header file for user reference. The OPTIONAL_TLV_TYPE_START
-should be known to any user that might define messages containing
-optional fields. SIZE fields are the same, for users to calculate
-message buffer length.
+Hi Suzuki,
 
-While encoding messages, Type always occurs together with Length.
-So the better way is to use TL_SIZE, rather than (T_SIZE + L_SIZE).
+On 2020-04-13 04:47, Suzuki K Poulose wrote:
+> Hi Sai,
+> 
+> On 04/09/2020 12:35 PM, Sai Prakash Ranjan wrote:
+>> Reading TMC mode register in tmc_read_prepare_etb without
+>> enabling the TMC hardware leads to async exceptions like
+>> the one in the call trace below. This can happen if the
+>> user tries to read the TMC etf data via device node without
+>> setting up source and the sink first which enables the TMC
+>> hardware in the path. So make sure that the TMC is enabled
+>> before we try to read TMC data.
+> 
+> So, one can trigger the same SError by simply :
+> 
+> $ cat /sys/bus/coresight/device/tmc_etb0/mgmt/mode
+> 
 
-Signed-off-by: Wang Wenhu <wenhu.wang@vivo.com>
----
- drivers/soc/qcom/qmi_encdec.c | 28 ++++++++++++----------------
- include/linux/soc/qcom/qmi.h  |  5 +++++
- 2 files changed, 17 insertions(+), 16 deletions(-)
+I do not see any SError when I run the above command.
 
-diff --git a/drivers/soc/qcom/qmi_encdec.c b/drivers/soc/qcom/qmi_encdec.c
-index 3aaab71d1b2c..a674c68efab2 100644
---- a/drivers/soc/qcom/qmi_encdec.c
-+++ b/drivers/soc/qcom/qmi_encdec.c
-@@ -53,10 +53,6 @@ do { \
- 	decoded_bytes += rc; \
- } while (0)
- 
--#define TLV_LEN_SIZE sizeof(u16)
--#define TLV_TYPE_SIZE sizeof(u8)
--#define OPTIONAL_TLV_TYPE_START 0x10
--
- static int qmi_encode(struct qmi_elem_info *ei_array, void *out_buf,
- 		      const void *in_c_struct, u32 out_buf_len,
- 		      int enc_level);
-@@ -142,7 +138,7 @@ static int qmi_calc_min_msg_len(struct qmi_elem_info *ei_array,
- 		 * nested structure.
- 		 */
- 		if (level == 1)
--			min_msg_len += (TLV_TYPE_SIZE + TLV_LEN_SIZE);
-+			min_msg_len += QMI_TLV_TL_SIZE;
- 	}
- 
- 	return min_msg_len;
-@@ -253,8 +249,7 @@ static int qmi_encode_string_elem(struct qmi_elem_info *ei_array,
- 	}
- 
- 	if (enc_level == 1) {
--		if (string_len + TLV_LEN_SIZE + TLV_TYPE_SIZE >
--		    out_buf_len) {
-+		if (string_len + QMI_TLV_TL_SIZE > out_buf_len) {
- 			pr_err("%s: Output len %d > Out Buf len %d\n",
- 			       __func__, string_len, out_buf_len);
- 			return -ETOOSMALL;
-@@ -311,7 +306,7 @@ static int qmi_encode(struct qmi_elem_info *ei_array, void *out_buf,
- 	tlv_pointer = buf_dst;
- 	tlv_len = 0;
- 	if (enc_level == 1)
--		buf_dst = buf_dst + (TLV_LEN_SIZE + TLV_TYPE_SIZE);
-+		buf_dst = buf_dst + QMI_TLV_TL_SIZE;
- 
- 	while (temp_ei->data_type != QMI_EOTI) {
- 		buf_src = in_c_struct + temp_ei->offset;
-@@ -342,8 +337,8 @@ static int qmi_encode(struct qmi_elem_info *ei_array, void *out_buf,
- 			data_len_sz = temp_ei->elem_size == sizeof(u8) ?
- 					sizeof(u8) : sizeof(u16);
- 			/* Check to avoid out of range buffer access */
--			if ((data_len_sz + encoded_bytes + TLV_LEN_SIZE +
--			    TLV_TYPE_SIZE) > out_buf_len) {
-+			if ((data_len_sz + encoded_bytes + QMI_TLV_TL_SIZE) >
-+			    out_buf_len) {
- 				pr_err("%s: Too Small Buffer @DATA_LEN\n",
- 				       __func__);
- 				return -ETOOSMALL;
-@@ -367,7 +362,7 @@ static int qmi_encode(struct qmi_elem_info *ei_array, void *out_buf,
- 		case QMI_SIGNED_4_BYTE_ENUM:
- 			/* Check to avoid out of range buffer access */
- 			if (((data_len_value * temp_ei->elem_size) +
--			    encoded_bytes + TLV_LEN_SIZE + TLV_TYPE_SIZE) >
-+			    encoded_bytes + QMI_TLV_TL_SIZE) >
- 			    out_buf_len) {
- 				pr_err("%s: Too Small Buffer @data_type:%d\n",
- 				       __func__, temp_ei->data_type);
-@@ -410,10 +405,10 @@ static int qmi_encode(struct qmi_elem_info *ei_array, void *out_buf,
- 
- 		if (encode_tlv && enc_level == 1) {
- 			QMI_ENCDEC_ENCODE_TLV(tlv_type, tlv_len, tlv_pointer);
--			encoded_bytes += (TLV_TYPE_SIZE + TLV_LEN_SIZE);
-+			encoded_bytes += QMI_TLV_TL_SIZE;
- 			tlv_pointer = buf_dst;
- 			tlv_len = 0;
--			buf_dst = buf_dst + TLV_LEN_SIZE + TLV_TYPE_SIZE;
-+			buf_dst = buf_dst + QMI_TLV_TL_SIZE;
- 			encode_tlv = 0;
- 		}
- 	}
-@@ -613,10 +608,11 @@ static int qmi_decode(struct qmi_elem_info *ei_array, void *out_c_struct,
- 			tlv_pointer = buf_src;
- 			QMI_ENCDEC_DECODE_TLV(&tlv_type,
- 					      &tlv_len, tlv_pointer);
--			buf_src += (TLV_TYPE_SIZE + TLV_LEN_SIZE);
--			decoded_bytes += (TLV_TYPE_SIZE + TLV_LEN_SIZE);
-+			buf_src += QMI_TLV_TL_SIZE;
-+			decoded_bytes += QMI_TLV_TL_SIZE;
- 			temp_ei = find_ei(ei_array, tlv_type);
--			if (!temp_ei && tlv_type < OPTIONAL_TLV_TYPE_START) {
-+			if (!temp_ei && tlv_type <
-+			    QMI_OPTIONAL_TLV_TYPE_START) {
- 				pr_err("%s: Inval element info\n", __func__);
- 				return -EINVAL;
- 			} else if (!temp_ei) {
-diff --git a/include/linux/soc/qcom/qmi.h b/include/linux/soc/qcom/qmi.h
-index e712f94b89fc..eb53aebdf45e 100644
---- a/include/linux/soc/qcom/qmi.h
-+++ b/include/linux/soc/qcom/qmi.h
-@@ -34,6 +34,11 @@ struct qmi_header {
- #define QMI_INDICATION	4
- 
- #define QMI_COMMON_TLV_TYPE 0
-+#define QMI_OPTIONAL_TLV_TYPE_START 0x10
-+
-+#define QMI_TLV_LEN_SIZE sizeof(u16)
-+#define QMI_TLV_TYPE_SIZE sizeof(u8)
-+#define QMI_TLV_TL_SIZE (QMI_TLV_LEN_SIZE + QMI_TLV_TYPE_SIZE)
- 
- enum qmi_elem_type {
- 	QMI_EOTI,
+localhost ~ # cat /sys/bus/coresight/devices/tmc_etf0/mgmt/mode
+0x0
+
+And this is most likely due to
+
+commit cd9e3474bb793dc ("coresight: add PM runtime calls to 
+coresight_simple_func()")
+
+> And also :
+> 
+>> 
+>>   Kernel panic - not syncing: Asynchronous SError Interrupt
+>>   CPU: 7 PID: 2605 Comm: hexdump Tainted: G S                5.4.30 
+>> #122
+>>   Call trace:
+>>    dump_backtrace+0x0/0x188
+>>    show_stack+0x20/0x2c
+>>    dump_stack+0xdc/0x144
+>>    panic+0x168/0x36c
+>>    panic+0x0/0x36c
+>>    arm64_serror_panic+0x78/0x84
+>>    do_serror+0x130/0x138
+>>    el1_error+0x84/0xf8
+>>    tmc_read_prepare_etb+0x88/0xb8
+>>    tmc_open+0x40/0xd8
+>>    misc_open+0x120/0x158
+>>    chrdev_open+0xb8/0x1a4
+>>    do_dentry_open+0x268/0x3a0
+>>    vfs_open+0x34/0x40
+>>    path_openat+0x39c/0xdf4
+>>    do_filp_open+0x90/0x10c
+>>    do_sys_open+0x150/0x3e8
+>>    __arm64_compat_sys_openat+0x28/0x34
+>>    el0_svc_common+0xa8/0x160
+>>    el0_svc_compat_handler+0x2c/0x38
+>>    el0_svc_compat+0x8/0x10
+>> 
+>> Fixes: 4525412a5046 ("coresight: tmc: making prepare/unprepare 
+>> functions generic")
+>> Reported-by: Stephen Boyd <swboyd@chromium.org>
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-tmc.c | 5 +++++
+>>   drivers/hwtracing/coresight/coresight-tmc.h | 1 +
+>>   2 files changed, 6 insertions(+)
+>> 
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc.c 
+>> b/drivers/hwtracing/coresight/coresight-tmc.c
+>> index 1cf82fa58289..7bae69748ab7 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc.c
+>> @@ -62,11 +62,13 @@ void tmc_flush_and_stop(struct tmc_drvdata 
+>> *drvdata)
+>>     void tmc_enable_hw(struct tmc_drvdata *drvdata)
+>>   {
+>> +	drvdata->enable = true;
+>>   	writel_relaxed(TMC_CTL_CAPT_EN, drvdata->base + TMC_CTL);
+>>   }
+>>     void tmc_disable_hw(struct tmc_drvdata *drvdata)
+>>   {
+>> +	drvdata->enable = false;
+>>   	writel_relaxed(0x0, drvdata->base + TMC_CTL);
+>>   }
+>>   @@ -102,6 +104,9 @@ static int tmc_read_prepare(struct tmc_drvdata 
+>> *drvdata)
+>>   {
+>>   	int ret = 0;
+>>   +	if (!drvdata->enable)
+>> +		return -EINVAL;
+>> +
+> 
+> Does this check always guarantee that the TMC is enabled when
+> we actually get to reading the MODE ? This needs to be done
+> under the spinlock.
+> 
+
+Ok I will make this change.
+
+Thanks,
+Sai
+
 -- 
-2.17.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
