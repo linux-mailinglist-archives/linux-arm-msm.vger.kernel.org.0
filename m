@@ -2,150 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C604A1A87B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 19:38:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E0491A87C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 19:41:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730321AbgDNRio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 13:38:44 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:43058 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730099AbgDNRil (ORCPT
+        id S1730423AbgDNRl5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 13:41:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728884AbgDNRly (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 13:38:41 -0400
-Received: by mail-ot1-f68.google.com with SMTP id g14so451589otg.10;
-        Tue, 14 Apr 2020 10:38:40 -0700 (PDT)
+        Tue, 14 Apr 2020 13:41:54 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75574C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 10:41:54 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id m16so214596pls.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 10:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=b73GV4Vy2UdnTiTlwt7UyB1U6O78KTyM8pwwpV6UwBE=;
+        b=J308RnrtSxmBZyD2q+SfqV2Auks0oi6JBzBiS+P2tcpUJ+WDmIasD3yN6rMcvngydH
+         +zVvfYwrvLUlpW06jcUs6O/G/lJbGxYE8Oy8ZpBIw2A19HWpfwR/B/8LtNobi4UZNvrf
+         +D/SdIiKchH0MKEvqcImwOxFAfLCj7tQL9r/g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8Nz3sKqk6tf6wfMqMfDxAKL6dU6xyEXZ2XEc3RZw1kA=;
-        b=HAea2NfyN4EFRHBhVGk45x5b1ywH72yfmLIX+OIf4N7IU41ZZgJQlIsdkf9JzvKfWd
-         aDGUkIWXXNgf6OruWAIYGOXvogoqXyXN5Pqx7BSf0nOa+fPplI7anS1zgRRs1Tvat5U7
-         ksCGk9BG9xvyZh8qd3c3UFRCQlGYgcYgFq35smDJcIUQIbGasG9NbttBq6eUTYjUTqc5
-         e/KEkTZ6je/8bY0GnCNzVU3mYAuHk9LCsKmo7UqFzV75fHgO7aS8WKLIPPG2zNf4GOhQ
-         B/Bw9LiGsKzUSSMBxPGhQSQr/oqgjypOpK294XQ/a7sCMIVaJl3KpQH+bwIjlMziPHD+
-         rySA==
-X-Gm-Message-State: AGi0PuamumCRgqT3zCvTLvm2P0jC+yyFY0t0A5n8DwUsWmeYuw5XsrXa
-        cQMLy6QPcUPg8Fv19mnMWQ==
-X-Google-Smtp-Source: APiQypLLc0miyc2capf1MVVpp0fAaq2ltXN508BsmSUu5FT95kopV2NU4H4Jg7eQPEjl2rrJC7bPYg==
-X-Received: by 2002:a9d:2c1:: with SMTP id 59mr699714otl.321.1586885920167;
-        Tue, 14 Apr 2020 10:38:40 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id d61sm5640680otb.53.2020.04.14.10.38.39
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=b73GV4Vy2UdnTiTlwt7UyB1U6O78KTyM8pwwpV6UwBE=;
+        b=lzOKVFCQfd6TvERN8EnSARDDS0XVPaJ15ymMk/8jawrmZVvZkwWiD+24SjweX72Z3p
+         AAYy94BH36L2TthaplDRh2ev0ztfIKPTB9Xmu3rYCj1Y84VwbV0BgIH7iqlY5SK0jYuJ
+         jxsVNXT4mXuMTXm4u+PcyBsr6gA3kv8gcQvwswbsUktsbGHUEiA87PVB6aTWZf47+Jje
+         NUD8mgxJz0FpaMh6hzqhSNi/rX3SKq3XnIpQ/m+weUCdMRB2ztYtveN+J0+ncvZd7YlI
+         sKYJs2Iwt5TWsKs111sTtvJXCNAr4cnJXW/+j8VpXNW9MSfISGh0UuX0aWf18++GJ6CH
+         r4HQ==
+X-Gm-Message-State: AGi0PuaGmPu8tnUPHoo7/0Axuw8jd4frVvsTsmn+rUMh9NcfRLlBNwlh
+        mnFky4PwALRwRiIXNF7AABrG7g==
+X-Google-Smtp-Source: APiQypK4uvD/+aVArtBTd3SKMVNcV+YPbATjoo20kaBFE0JmY5BbeYCqWNEwnhAF+rN19ABDiuoDFQ==
+X-Received: by 2002:a17:90b:3615:: with SMTP id ml21mr1413294pjb.145.1586886113870;
+        Tue, 14 Apr 2020 10:41:53 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id e26sm11652207pfj.61.2020.04.14.10.41.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 10:38:39 -0700 (PDT)
-Received: (nullmailer pid 2638 invoked by uid 1000);
-        Tue, 14 Apr 2020 17:38:38 -0000
-Date:   Tue, 14 Apr 2020 12:38:38 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/2] devicetree: bindings: phy: Document dwc3 qcom phy
-Message-ID: <20200414173838.GA29176@bogus>
-References: <20200403002608.946-1-ansuelsmth@gmail.com>
- <20200403002608.946-2-ansuelsmth@gmail.com>
+        Tue, 14 Apr 2020 10:41:53 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mkshah@codeaurora.org, mka@chromium.org, swboyd@chromium.org,
+        joe@perches.com, evgreen@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: rpmh-rsc: Factor "tcs_reg_addr" and "tcs_cmd_addr" calculation
+Date:   Tue, 14 Apr 2020 10:41:34 -0700
+Message-Id: <20200414104120.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
+X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200403002608.946-2-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 03, 2020 at 02:26:05AM +0200, Ansuel Smith wrote:
-> Document dwc3 qcom phy hs and ss phy bindings needed to correctly
-> inizialize and use usb on ipq806x SoC
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  .../bindings/phy/qcom,dwc3-hs-usb-phy.yaml    | 65 +++++++++++++++++++
->  .../bindings/phy/qcom,dwc3-ss-usb-phy.yaml    | 65 +++++++++++++++++++
->  2 files changed, 130 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,dwc3-hs-usb-phy.yaml
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,dwc3-ss-usb-phy.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,dwc3-hs-usb-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,dwc3-hs-usb-phy.yaml
-> new file mode 100644
-> index 000000000000..0bb59e3c2ab8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,dwc3-hs-usb-phy.yaml
-> @@ -0,0 +1,65 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/qcom,dwc3-hs-usb-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm DWC3 HS PHY CONTROLLER
-> +
-> +maintainers:
-> +  - Ansuel Smith <ansuelsmth@gmail.com>
-> +
-> +description:
-> +  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
-> +  controllers. Each DWC3 PHY controller should have its own node.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,dwc3-hs-usb-phy
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +  regmap:
-> +    maxItems: 1
-> +    description: phandle to usb3 dts definition
-> +
-> +  clocks:
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    minItems: 1
-> +    maxItems: 2
-> +    description: |
-> +      - "ref" Is required
-> +      - "xo"	Optional external reference clock
-> +    items:
-> +      - const: ref
-> +      - const: xo
-> +
-> +required:
-> +  - compatible
-> +  - "#phy-cells"
-> +  - regmap
-> +  - clocks
-> +  - clock-names
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-> +
-> +    hs_phy_0: hs_phy_0 {
-> +      compatible = "qcom,dwc3-hs-usb-phy";
-> +      regmap = <&usb3_0>;
+We can make some of the register access functions more readable by
+factoring out the calculations a little bit.
 
-If the registers for the phy are part of 'qcom,dwc3' then make this node 
-a child of it.
+Suggested-by: Joe Perches <joe@perches.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-> +      clocks = <&gcc USB30_0_UTMI_CLK>;
-> +      clock-names = "ref";
-> +      #phy-cells = <0>;
-> +    };
-> +
-> +    usb3_0: usb3@110f8800 {
-> +      compatible = "qcom,dwc3", "syscon";
-> +      reg = <0x110f8800 0x8000>;
-> +
-> +      /* ... */
+ drivers/soc/qcom/rpmh-rsc.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-Incomplete examples should or will fail validation.
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index 732316bb67dc..de1f9c7732e1 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -136,36 +136,45 @@
+  *  +---------------------------------------------------+
+  */
+ 
++static inline void __iomem *
++tcs_reg_addr(struct rsc_drv *drv, int reg, int tcs_id)
++{
++	return drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg;
++}
++
++static inline void __iomem *
++tcs_cmd_addr(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
++{
++	return tcs_reg_addr(drv, reg, tcs_id) + RSC_DRV_CMD_OFFSET * cmd_id;
++}
++
+ static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+ {
+-	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
+-			     RSC_DRV_CMD_OFFSET * cmd_id);
++	return readl_relaxed(tcs_cmd_addr(drv, reg, tcs_id, cmd_id));
+ }
+ 
+ static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id)
+ {
+-	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
++	return readl_relaxed(tcs_reg_addr(drv, reg, tcs_id));
+ }
+ 
+ static void write_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id,
+ 			  u32 data)
+ {
+-	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
+-		       RSC_DRV_CMD_OFFSET * cmd_id);
++	writel_relaxed(data, tcs_cmd_addr(drv, reg, tcs_id, cmd_id));
+ }
+ 
+ static void write_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, u32 data)
+ {
+-	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
++	writel_relaxed(data, tcs_reg_addr(drv, reg, tcs_id));
+ }
+ 
+ static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
+ 			       u32 data)
+ {
+-	writel(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
++	writel(data, tcs_reg_addr(drv, reg, tcs_id));
+ 	for (;;) {
+-		if (data == readl(drv->tcs_base + reg +
+-				  RSC_DRV_TCS_OFFSET * tcs_id))
++		if (data == readl(tcs_reg_addr(drv, reg, tcs_id)))
+ 			break;
+ 		udelay(1);
+ 	}
+-- 
+2.26.0.110.g2183baf09c-goog
 
-> +    };
