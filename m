@@ -2,134 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACBA71A81D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 17:16:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8E0C1A828D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 17:24:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406989AbgDNPQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 11:16:23 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:25205 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2406988AbgDNPF4 (ORCPT
+        id S2439215AbgDNPWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 11:22:35 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:37691 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2438826AbgDNPWb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 11:05:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586876755; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=2sHXwJ8AdtS+pVXjlc3JcGuGpLLjSecwst28kNFXaDE=; b=rUyVQqrgk8Ms5DInHRGa59N4XnzEwiTKkrsU+zwJN6aRTddQWF71Ndfh3gLXB5oFMv7dH6X7
- FgK78pwxODIrEo7cDHCzvhGpihUrjOWKRdJwlKA3fbebnfYDxLmGB44YRVrPVrrNh0Yg/6tx
- zKWHwTP5WHwGkuqzNP14NuXGP3Q=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e95d13b.7fadc8ad0810-smtp-out-n05;
- Tue, 14 Apr 2020 15:05:31 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6422BC44788; Tue, 14 Apr 2020 15:05:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.111.193.245] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EC3EAC494AA;
-        Tue, 14 Apr 2020 15:05:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EC3EAC494AA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [RFC] opp: Fixup release of clock when using set/put clkname
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1586848508-1320-1-git-send-email-rnayak@codeaurora.org>
- <20200414071823.jdhkprtkizyeua23@vireshk-i7>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <83c523d0-e18e-0401-5456-2dbba524ee98@codeaurora.org>
-Date:   Tue, 14 Apr 2020 20:35:26 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Tue, 14 Apr 2020 11:22:31 -0400
+Received: by mail-ot1-f65.google.com with SMTP id z17so5616910oto.4;
+        Tue, 14 Apr 2020 08:22:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AnHn2Q/nKp8vHi8xRLPGA04W9zPV6QThgvNNDvW6Lz4=;
+        b=oYeCqf78I8FW6TzZbU5/EHAung+vdubjK44BPSrBmo2lzpN/8YI7S5ZBygDDDUu0Hi
+         dv8Ji9bMj92KjHFFTuBw5maxg/CXgl/AnbAX97ExjD5RnnjxaU44yyFAED09CRZOgbuq
+         s9tXq80KvOtLX/5NiETKUlEavcRYU8VMOBg/Bh4lPdQJ5FmhHggtwKIJYcWJ6B6wwuMe
+         tszTzmKvR/gP0+gJwOCK8sgdYiSudAAdFPfXWXTsNe49vSyxewdsRi+pooy7ufxPdE0T
+         tpjYxLveLyN2AFhYqKua2z48YnBPAzb0pjam8mnN41fLWe5SgHFJpP1sFdNGKvqkJCyo
+         YF+Q==
+X-Gm-Message-State: AGi0PubWoS37eAqQDbiKgCWvAgA9JslnaiJ2NxiI9XS9aACTwAobFqxp
+        0A7Wv2ImeGYdJTPdvWMHeg==
+X-Google-Smtp-Source: APiQypJR5WeRaPhYCrALFhL48Dtxyk9ODcHd1LOjeRCjBr6tTDoukXibtiqbCGRPmuc2x2B7Gx5QGA==
+X-Received: by 2002:a9d:6354:: with SMTP id y20mr9159168otk.171.1586877750682;
+        Tue, 14 Apr 2020 08:22:30 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id q18sm5508097otl.65.2020.04.14.08.22.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 08:22:29 -0700 (PDT)
+Received: (nullmailer pid 27980 invoked by uid 1000);
+        Tue, 14 Apr 2020 15:22:28 -0000
+Date:   Tue, 14 Apr 2020 10:22:28 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: Re: [PATCH v7 1/4] dt-bindings: usb: qcom,dwc3: Introduce
+ interconnect properties for Qualcomm DWC3 driver
+Message-ID: <20200414152228.GA27923@bogus>
+References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
+ <1585718145-29537-2-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200414071823.jdhkprtkizyeua23@vireshk-i7>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1585718145-29537-2-git-send-email-sanm@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 4/14/2020 12:48 PM, Viresh Kumar wrote:
-> On 14-04-20, 12:45, Rajendra Nayak wrote:
->> Fixup dev_pm_opp_put_clkname() to check for a valid clock pointer
->> before it does a clk_put, since its likely that
->> _opp_table_kref_release() has already done a clk_put. Also fixup
+On Wed,  1 Apr 2020 10:45:42 +0530, Sandeep Maheswaram wrote:
+> Add documentation for the interconnects and interconnect-names
+> properties for USB.
 > 
-> kref release is the last thing that happens on the table, it can't get
-> called after dev_pm_opp_put_clkname().
-
-so in cases where I do have an OPP table for a device in DT and I do
-dev_pm_opp_set_clkname()
-dev_pm_opp_of_add_table()
-
-and clean it up with a
-dev_pm_opp_of_remove_table()
-dev_pm_opp_put_clkname()
-
-things seem to work fine as expected.
-
-However, given I call these unconditionally in common drivers and on
-some (old) platforms we really don't have an OPP table (only scale clocks)
-things get a little tricky. So looks like the ref counting in such cases
-gets messed up, and we end up with dev_pm_opp_of_remove_table() calling
-_opp_table_kref_release() and releasing the clock, and then the subsequent
-call to dev_pm_opp_put_clkname() crashes.
-
->> _opp_table_kref_release() to set the clock pointer to ERR_PTR(-EINVAL)
->> after its done doing a clk_put so dev_pm_opp_put_clkname() can then
->> catch it.
->>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> ---
->>   drivers/opp/core.c | 10 +++++++---
->>   1 file changed, 7 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
->> index e4f01e7..6d064a8 100644
->> --- a/drivers/opp/core.c
->> +++ b/drivers/opp/core.c
->> @@ -1061,8 +1061,10 @@ static void _opp_table_kref_release(struct kref *kref)
->>   	_of_clear_opp_table(opp_table);
->>   
->>   	/* Release clk */
->> -	if (!IS_ERR(opp_table->clk))
->> +	if (!IS_ERR(opp_table->clk)) {
->>   		clk_put(opp_table->clk);
->> +		opp_table->clk = ERR_PTR(-EINVAL);
->> +	}
->>   
->>   	WARN_ON(!list_empty(&opp_table->opp_list));
->>   
->> @@ -1744,8 +1746,10 @@ void dev_pm_opp_put_clkname(struct opp_table *opp_table)
->>   	/* Make sure there are no concurrent readers while updating opp_table */
->>   	WARN_ON(!list_empty(&opp_table->opp_list));
->>   
->> -	clk_put(opp_table->clk);
->> -	opp_table->clk = ERR_PTR(-EINVAL);
->> +	if (!IS_ERR(opp_table->clk)) {
->> +		clk_put(opp_table->clk);
->> +		opp_table->clk = ERR_PTR(-EINVAL);
->> +	}
->>   
->>   	dev_pm_opp_put_opp_table(opp_table);
->>   }
->> -- 
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Reviewed-by: Rob Herring <robh@kernel.org>
