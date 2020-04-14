@@ -2,64 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 371BB1A8AA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 21:26:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D4531A8ABB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 21:30:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504677AbgDNT0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 15:26:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56696 "EHLO
+        id S2504758AbgDNT26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 15:28:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2504653AbgDNTY4 (ORCPT
+        by vger.kernel.org with ESMTP id S2504752AbgDNT25 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 15:24:56 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 567CFC03C1A7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 12:06:59 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id j65so671125vsd.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 12:06:59 -0700 (PDT)
+        Tue, 14 Apr 2020 15:28:57 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 577C4C061A10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 12:28:57 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id g14so859688otg.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 12:28:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=f7KrnRzyyOUemPRVsSUSW7supihjD0aQaPjITXcbeLk=;
-        b=kepiQP1oWmWQkilPnEBSKatdjUR3EE60+QwIJjoai4XqsbJg4+7PZQWRyq2meKTDqq
-         U1NTYx+3Wr89EDUCIm9olKYp1EoY+W4BHV9q7VO8idCaiTP6Lm4E5VmXUoJ2AGRFhriY
-         Da+cFwBBH7Nv7E5bfANSfnNH0J8nmp6cQAwVw=
+        bh=yXl5LngxcEox6tFkMcsHWj7/e31HOzYbZGvPkAeshzo=;
+        b=ejCS7DL3ag6duTxMi2Ewpv00tGgVeaaEYl909NqixmQ15Qfq51ylCT9rHeFXSPUOk2
+         vtyBZ6NZuEAQdkWQHdUA1JMWEZ5a6JIJb0+mJx2uExrZl2LAL3R0IkdFluJ5FE4QU0H3
+         XAZImBwtrpZeU6j+JV+hS3nuxF3J2vNG6uk42/IVOlWQo4YYxfDSRoioISx/gckZPhmt
+         CQ2i4dwZhU7B1CYMJik4ck7ILQHs9mpEkR5EF377I+1sComWBiqgdjX+IdeAa6W8E8KK
+         a2DSXOfoToBilcypqD49C2OvoP8jMRnBBfFpAJyp0pwsff8FnqzSXoiUU7D68iQ4qpqO
+         rdug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=f7KrnRzyyOUemPRVsSUSW7supihjD0aQaPjITXcbeLk=;
-        b=gm8/LnBZM3g47WejFsfGFQBAfDJKen2llCvfDMfpw17WFsQJVuvd8ogGXpsc2XGDGc
-         4i0SsHRWzToGTMA5rJqeTedM6hPYN68n8ySwNVOP0kXFnVNIZxCTBnlIO/C6sN9q5i6x
-         hFo025rHGWGIQIOP68N9MbXzCzjwWlhzbMzkDivFmDOpbgFd3cKEZN5MqLzPyUWmweVF
-         Dd/d9nJHZb8Zrlli9gb18BNQQqAkaQcCmK6iQILhT3X/+zhDd3C7Sd05sDc5TaGNkh0p
-         Equt1wCv92oOeRkcbe//qZKYodXrGbo2ST1eE+GCecT9CAiyTlp2i4Akn7yPzD2xE7I7
-         +tnw==
-X-Gm-Message-State: AGi0PubiLguvw6p6/OyUF8hFCIfJGqpF7/HxriB8evMAcEFcpugr+YEY
-        57T6JrSePNJeMwZSrJX+c6G9BkNsVKg=
-X-Google-Smtp-Source: APiQypKEo7PHX8xLHIAjMr5V/RDa/k2AYSHyfqNkkRQRL+hc4HW9ZKlfFv7JwzU2qPjLuf4Kk6uqBQ==
-X-Received: by 2002:a67:2f07:: with SMTP id v7mr1558474vsv.7.1586891218152;
-        Tue, 14 Apr 2020 12:06:58 -0700 (PDT)
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
-        by smtp.gmail.com with ESMTPSA id 201sm4582378vkz.9.2020.04.14.12.06.57
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Apr 2020 12:06:57 -0700 (PDT)
-Received: by mail-vs1-f47.google.com with SMTP id a2so724474vsd.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 12:06:57 -0700 (PDT)
-X-Received: by 2002:a67:8dc8:: with SMTP id p191mr1616800vsd.198.1586891216585;
- Tue, 14 Apr 2020 12:06:56 -0700 (PDT)
+        bh=yXl5LngxcEox6tFkMcsHWj7/e31HOzYbZGvPkAeshzo=;
+        b=HmEKBh+xXtrrov3eoRdkbvPU49NkNDpMe3XcB3hsCO7LySVaMJ/1g100WNpqBa+aQl
+         ThtjqGDvzrWuCaYDJAoEYPdQkArZVfzkg+zbGV7ALEwmA+JOhY3Vq4Ol1c26q1gBwKph
+         mGgchNp3KZu67zU/Na1zhaCAbeUZdOs5g5q+NHcFVdkVnv445OzXwCh2XUBveTo2vd31
+         ImvAvlNIeiSV8YvAohjIsYiTvH5XnThUCRPUJHspw3yyd7WgHw8/dPsExpg0eDs1VK/p
+         3f8bffIthi4zqC/2TBr6U+OmN8mAcXSVXjld0ROG/GJWMjlaCM/edkIrCdzCdmalfheV
+         4bXg==
+X-Gm-Message-State: AGi0PuaxqmYnLFTV5aoP8YSdUuJeofFETwOgfP56N+H4sbQBlCPUSLSx
+        NpnUn6QNEbTyATj8WiwpJwkmlA6AgFx9oKvQVOX89w==
+X-Google-Smtp-Source: APiQypLNgzWQIOmbMjbOIDPabi7ahVlW8rXca4fleUQzDSYq/+Zo4l7gzAwDGKt/X8yYn92PkHHYUl5oOnJLWGe/36A=
+X-Received: by 2002:a4a:3006:: with SMTP id q6mr10846802oof.70.1586892536562;
+ Tue, 14 Apr 2020 12:28:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200414185744.84581-1-john.stultz@linaro.org>
-In-Reply-To: <20200414185744.84581-1-john.stultz@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 14 Apr 2020 12:06:45 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XT_icz04g4M+iZHZRzjM1jnuHgkPBsaVmzc1wyoUe=7A@mail.gmail.com>
-Message-ID: <CAD=FV=XT_icz04g4M+iZHZRzjM1jnuHgkPBsaVmzc1wyoUe=7A@mail.gmail.com>
+References: <20200414185744.84581-1-john.stultz@linaro.org> <CAD=FV=XT_icz04g4M+iZHZRzjM1jnuHgkPBsaVmzc1wyoUe=7A@mail.gmail.com>
+In-Reply-To: <CAD=FV=XT_icz04g4M+iZHZRzjM1jnuHgkPBsaVmzc1wyoUe=7A@mail.gmail.com>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Tue, 14 Apr 2020 12:28:45 -0700
+Message-ID: <CALAqxLWS7+wqARFVoDStVcf-B77sPc6GaHBKebfMh1gXyUP4HQ@mail.gmail.com>
 Subject: Re: [RESEND][PATCH v2] phy: qcom-qusb2: Re add "qcom,sdm845-qusb2-phy"
  compat string
-To:     John Stultz <john.stultz@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>
 Cc:     lkml <linux-kernel@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -79,53 +72,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, Apr 14, 2020 at 11:57 AM John Stultz <john.stultz@linaro.org> wrote:
+On Tue, Apr 14, 2020 at 12:14 PM Doug Anderson <dianders@chromium.org> wrote:
+> On Tue, Apr 14, 2020 at 11:57 AM John Stultz <john.stultz@linaro.org> wrote:
+> >
+> > This patch fixes a regression in 5.7-rc1.
+> >
+> > In commit 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2
+> > PHY support"), the change was made to add "qcom,qusb2-v2-phy"
+> > as a generic compat string. However the change also removed
+> > the "qcom,sdm845-qusb2-phy" compat string, which is documented
+> > in the binding and already in use.
+> >
+> > This patch re-adds the "qcom,sdm845-qusb2-phy" compat string
+> > which allows the driver to continue to work with existing dts
+> > entries such as found on the db845c.
+> >
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Cc: Mark Rutland <mark.rutland@arm.com>
+> > Cc: Doug Anderson <dianders@chromium.org>
+> > Cc: Manu Gautam <mgautam@codeaurora.org>
+> > Cc: Sandeep Maheswaram <sanm@codeaurora.org>
+> > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > Cc: Stephen Boyd <swboyd@chromium.org>
+> > Cc: Kishon Vijay Abraham I <kishon@ti.com>
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Cc: devicetree@vger.kernel.org
+> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Fixes: 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2 PHY support")
+> > Reported-by: YongQin Liu <yongqin.liu@linaro.org>
+> > Signed-off-by: John Stultz <john.stultz@linaro.org>
 >
-> This patch fixes a regression in 5.7-rc1.
+> Re-adding reviews from:
+> https://lore.kernel.org/r/158631458374.216820.17829557619378130779@swboyd.mtv.corp.google.com
+> https://lore.kernel.org/r/CAD=FV=Wh9_4a-cDGPdpMrXUi_HmJvS-a2Ubeyo5WG3sgwVWKKQ@mail.gmail.com
 >
-> In commit 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2
-> PHY support"), the change was made to add "qcom,qusb2-v2-phy"
-> as a generic compat string. However the change also removed
-> the "qcom,sdm845-qusb2-phy" compat string, which is documented
-> in the binding and already in use.
->
-> This patch re-adds the "qcom,sdm845-qusb2-phy" compat string
-> which allows the driver to continue to work with existing dts
-> entries such as found on the db845c.
->
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: Doug Anderson <dianders@chromium.org>
-> Cc: Manu Gautam <mgautam@codeaurora.org>
-> Cc: Sandeep Maheswaram <sanm@codeaurora.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> Cc: Kishon Vijay Abraham I <kishon@ti.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Fixes: 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2 PHY support")
-> Reported-by: YongQin Liu <yongqin.liu@linaro.org>
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-Re-adding reviews from:
-https://lore.kernel.org/r/158631458374.216820.17829557619378130779@swboyd.mtv.corp.google.com
-https://lore.kernel.org/r/CAD=FV=Wh9_4a-cDGPdpMrXUi_HmJvS-a2Ubeyo5WG3sgwVWKKQ@mail.gmail.com
+Ah! Sorry, I thought I had added those to my git commit, but
+apparently I didn't!
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-...as of an hour ago Bjorn also picked up:
-
-https://lore.kernel.org/r/1583747589-17267-8-git-send-email-sanm@codeaurora.org
-
-...and it's now in the Qualcomm for-next and ci-next.  It's still a
-bit of a pain that -rc1 will have the regression since many other
-maintainers will base their next branches on that, but not much to be
-done about it now.
-
--Doug
+Many thanks!
+-john
