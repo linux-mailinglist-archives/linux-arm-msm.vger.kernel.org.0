@@ -2,83 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95FF51A8CF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 22:56:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D570E1A8D45
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 23:06:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2633467AbgDNU4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 16:56:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44848 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2633469AbgDNU43 (ORCPT
+        id S2633679AbgDNVF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 17:05:56 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:46542 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2633551AbgDNVBc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 16:56:29 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B2FEC061A0F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 13:56:28 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id x3so499283pfp.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 13:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=NtGBbRMFHuGLYVWwP2S8WNTOMnjyQJo86GhiRsq/RLI=;
-        b=UXtZj/Hxj2RogzSqhPdsIrV+Tb1Mi6cLH48af5r9FlBJkIsru50FCL5CzAaQQeqJ7n
-         rsIoZhTl1LDgqnD5qEIf3p202tMUHA7FkZPQ5/P1FGdHN3SH3xTUhgGA5Dk5VXQ7LnQs
-         3UcGLqg1dTAzptGp9XrHAIY2rkU1JMmoyOJsw=
+        Tue, 14 Apr 2020 17:01:32 -0400
+Received: by mail-oi1-f194.google.com with SMTP id q204so11682878oia.13;
+        Tue, 14 Apr 2020 14:01:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=NtGBbRMFHuGLYVWwP2S8WNTOMnjyQJo86GhiRsq/RLI=;
-        b=KQ0OaWY40WexiiGfi6BBZ1/bgrmTjCvfxM2/rSbcluY2THASIx31aVhNKMOsXw22cc
-         TxmM8DW5wryyPRYJYv1tpHPU7r4Vb0nzsdX4Vq+Z7SPXbhoTv1m1U4lyXlsZfOpOTXpX
-         WlcHF0V5Za5GjgW8lJcRerenWkoRj57mL7WMGxSw+NRracPRX/k2n9g9zE/iB/3TqI0F
-         SaqRt2S9kGptIvecrztP89QkDMUzgtQgd09hJiu/AFoPl0ViZZ+5dMiX1sC8rfmaIVjR
-         ehh6i8y/dLyU3ubja2MYN5B+gSgeVV/u4e408J6aX7g+Vzo9+8BzdnfEXjDfwX6Zd19T
-         261Q==
-X-Gm-Message-State: AGi0PuYTbtb7PKbc4xdCeMq0F6EDfxw53isbYJq1b6lvj9/Hll44Pt5s
-        SqC7j7EFEe9sOnSFT77QCxhhuVWrxm0=
-X-Google-Smtp-Source: APiQypK6gPQlntq3g5CB8LbqghejJJbCs9iCRhnLW7s+orakW8jOYEegO8lYlVr+WaR9N/K8T1o/Xw==
-X-Received: by 2002:aa7:8505:: with SMTP id v5mr1947475pfn.224.1586897787330;
-        Tue, 14 Apr 2020 13:56:27 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id b21sm6889644pfb.130.2020.04.14.13.56.26
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/4q9z9CtbQoeUL4sjp69CWFYfpcu9GjxICIs0C/YRTE=;
+        b=hzxH4wZVRTjkuuoll0KwHDeNBQ2dAcHr4nIvt4rCg1eaWwsfiPuJ8Ikqs6TJ7Ratub
+         /5afsp9RucGpvQ3+WIGB6rU0t8GJNF2Ybivew3vFuCDDaNTWdXgWC14yqwhyA3O/wrdk
+         ZFTPRuZBhGQd8P3kJytli1BRYN02XIiUNKk4u1CPdWZmRBLEyxfSlTCF7H4WlLostI96
+         DLtXH17Fu9nM2htCKl8aptLHyeOQS+YqG/CP12AUFwBD/PTRzGA4bIWFyB9XFQoSg0Cu
+         C/39o5zWyjEew+TcmH+/bzloj2/laAQfCwvfdwgVJ3v/i5B7lV75tA+j7qUIeno4FWTz
+         FMKQ==
+X-Gm-Message-State: AGi0PuaQGZTEW43Hb0GzSN8cbYlHzax2wK1+e/5ymHO/e53kDnmJnv+2
+        KJi7q+lAyImkdIvro4YkRg==
+X-Google-Smtp-Source: APiQypI6YZD7oeKx39WNYQypRqxQiWc8g9J/Skpj6aGznKhkptIeKHcBjqvf0DXjF7vScaZA6pawWw==
+X-Received: by 2002:aca:4286:: with SMTP id p128mr16319888oia.29.1586898084666;
+        Tue, 14 Apr 2020 14:01:24 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id g12sm1166031otk.71.2020.04.14.14.01.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 13:56:26 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1585809534-11244-4-git-send-email-sanm@codeaurora.org>
-References: <1585809534-11244-1-git-send-email-sanm@codeaurora.org> <1585809534-11244-4-git-send-email-sanm@codeaurora.org>
-Subject: Re: [PATCH v5 3/3] phy: qcom-qmp: Add QMP V3 USB3 PHY support for SC7180
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 14 Apr 2020 14:01:23 -0700 (PDT)
+Received: (nullmailer pid 3300 invoked by uid 1000);
+        Tue, 14 Apr 2020 21:01:22 -0000
+Date:   Tue, 14 Apr 2020 16:01:22 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
-        Mark Rutland <mark.rutland@arm.com>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
         Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Date:   Tue, 14 Apr 2020 13:56:25 -0700
-Message-ID: <158689778567.105027.9816194008999279570@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 23/33] docs: dt: qcom,dwc3.txt: fix cross-reference
+ for a converted file
+Message-ID: <20200414210122.GA3250@bogus>
+References: <cover.1586881715.git.mchehab+huawei@kernel.org>
+ <a055c564f2a79aa748064329d938db8b3c8edd58.1586881715.git.mchehab+huawei@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a055c564f2a79aa748064329d938db8b3c8edd58.1586881715.git.mchehab+huawei@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sandeep Maheswaram (2020-04-01 23:38:54)
-> Adding QMP v3 USB3 PHY support for SC7180.
-> Adding only usb phy reset in the list to avoid
-> reset of DP block.
->=20
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+On Tue, 14 Apr 2020 18:48:49 +0200, Mauro Carvalho Chehab wrote:
+> The qcom-qusb2-phy.txt file was converted and renamed to yaml.
+> Update cross-reference accordingly.
+> 
+> Fixes: 8ce65d8d38df ("dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy bindings to yaml")
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Applied, thanks.
+
+Rob
