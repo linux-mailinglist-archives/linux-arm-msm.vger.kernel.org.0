@@ -2,137 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D5D41A7703
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 11:09:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C2871A7737
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 11:20:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437414AbgDNJJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 05:09:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45196 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437408AbgDNJJa (ORCPT
+        id S2437561AbgDNJUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 05:20:22 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:60583 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2437569AbgDNJUT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 05:09:30 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6F4C008748
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 02:09:29 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id r24so11660734ljd.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 02:09:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=P/jjcpDWJJCm/4UD6RSTptZqrE2MCrtUN9gDsEJ2RDk=;
-        b=mbqoFFVi/5Zv4uaWbNQuLuwUPh5Ix5igCOrh0j7iAHy/uLKhlxhSQPI+5JqGqgsyt8
-         z5RY4fB+g06qLRwyfLuanEa0deqAbfCpO0+YUOHH4a1bmtjivm4GXpXye+rCsl7pcjT3
-         Kyj5jZIKoA6JK42//jI1NxxtyisZe5GR4hirE8TPDp1XyPw3UhpQKXXqz8ipnpDrwm6b
-         tjNAHT6X4t1YjkHsH7ltu8nB25Vyvqj7AqV34pJjeOM61ARCNMhx7GoqNmz/wxW6CiKd
-         psmA42mmRiCX5+cEazZzf68zjL93WhKKPfk1FWu41gvFoMFsKidGNVJ0FT0FtITqKGD8
-         Q3jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=P/jjcpDWJJCm/4UD6RSTptZqrE2MCrtUN9gDsEJ2RDk=;
-        b=Nww3EN8tqq+bJbh48wBd5ZOwz68Q5RYkzX+T+8auWWqIjCbg7cKe8jhpZhFry3tCP8
-         Ii3zbet1wDr+bwD4czOHg57m2GHs2Gu/jzBhTqw6AAPEYW+FV1lFuZUKYg6fFojkboKt
-         T9JY0Ae12LCRIM1oeDG593ZvB/AvO4MUOsnl/tL6ThoyZEYGpEIRmWae/OdQTDrY0VOG
-         vxFMvZo+WncoZN8h2R0T4cp1FXG13IhOoYLVI8lEy/vRK1YC54U5inPPugCbso/dBiy7
-         qce42GS5gKmY5LqQR6yzopZtXKo3UGQPcGxTjgsqwylZE8kDsGbElKxuIgyuEsnctH/u
-         qnRQ==
-X-Gm-Message-State: AGi0PuY1ImX5dcNCjRGiMD33wfvQZhMu7+QFEccCI0xKIElzEGded0Hb
-        vtM8W/0oktXnBFAJUFM8rQQYr3G48XjzivnoYXihVQ==
-X-Google-Smtp-Source: APiQypK6pT2Izf1yio7JAUcBy8yfd3egCkIvdRCIFWIsppoWZu+KBD9EBUX6zlGOnGH8kyF+DeD81LKz0ivkG3QgTjY=
-X-Received: by 2002:a2e:9256:: with SMTP id v22mr12722064ljg.286.1586855368004;
- Tue, 14 Apr 2020 02:09:28 -0700 (PDT)
+        Tue, 14 Apr 2020 05:20:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586856018; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=+XRnNV94uKt5nAFMee794EpLZKQMMlWET+oJDf9hq18=; b=A1/V73Z0//cvlP4im2fM+r8o+gCpxswZPaK+rbtupDoi9v+3wFCFoBtpSFmUOyRLqnOLy4ML
+ NwJI5G0AzlLjauOoSS2dW8HvCWeMQa6/kFS9mIVdLH5pmTtyYy/TbFdZgbTDIbhd+wSjMaQv
+ xxqJMZ1dzmvrKuth3U0EiaNfSWg=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e958045.7fd359261b58-smtp-out-n02;
+ Tue, 14 Apr 2020 09:20:05 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0BC71C432C2; Tue, 14 Apr 2020 09:20:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.129] (unknown [106.222.14.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 02DDCC433CB;
+        Tue, 14 Apr 2020 09:19:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 02DDCC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v17 0/6] Invoke rpmh_flush for non OSI targets
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, mka@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org
+References: <1586703004-13674-1-git-send-email-mkshah@codeaurora.org>
+ <20200414053412.GJ20625@builder.lan>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <b4d25241-00e2-d730-31f1-3a32418a017e@codeaurora.org>
+Date:   Tue, 14 Apr 2020 14:49:55 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <1585064650-16235-1-git-send-email-jprakash@codeaurora.org>
- <1585064650-16235-2-git-send-email-jprakash@codeaurora.org>
- <CAHLCerML7vR9X_YxAg=S71n2NiY88toZyGDhxZaUZAvnNX2P+g@mail.gmail.com> <69b882b0-56ad-1b93-0a9d-2c7f96dd9d32@codeaurora.org>
-In-Reply-To: <69b882b0-56ad-1b93-0a9d-2c7f96dd9d32@codeaurora.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Tue, 14 Apr 2020 14:39:13 +0530
-Message-ID: <CAP245DXqDFGkd0Q3WactiwZjx5HpV3UrLmb7hd_9uvoy2_=d5Q@mail.gmail.com>
-Subject: Re: [PATCH 1/3] iio: adc: Convert the QCOM SPMI ADC bindings to .yaml format
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        Jonathan.Cameron@huawei.com,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        "open list:IIO SUBSYSTEM AND DRIVERS" <linux-iio@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200414053412.GJ20625@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 6, 2020 at 5:15 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
->
-> Hi Amit,
->
-> On 4/3/2020 5:34 PM, Amit Kucheria wrote:
-> >
-> >> +required:
-> >> +  - compatible
-> >> +  - reg
-> >> +  - '#address-cells'
-> >> +  - '#size-cells'
-> >> +  - '#io-channel-cells'
-> >> +
-> >> +patternProperties:
-> >> +  "^[a-z0-9-_@]$":
-> >> +    type: object
-> >> +    description: |
-> >> +      Represents the external channels which are connected to the ADC.
-> >> +      For compatible property "qcom,spmi-vadc" following channels, also known as
-> >> +      reference point channels, are used for result calibration and their channel
-> >> +      configuration nodes should be defined:
-> >> +      VADC_REF_625MV and/or VADC_SPARE1(based on PMIC version) VADC_REF_1250MV,
-> >> +      VADC_GND_REF and VADC_VDD_VADC.
-> > Instead of this note for "qcom,spmi-vadc", you can enforce this
-> > through checks in YAML grammar.
-> >
-> > A simple example can be found in
-> > Documentation/devicetree/bindings/thermal/qcom-tsens.yaml. Look for
-> > the if, then, else clause which determines how many interrupts need to
-> > be defined.
->
-> I have gone through tsens and other examples, but I'm not able to get a
-> way to apply this kind of constraint, on what child nodes should be present.
->
-> In this case, the constraint would have to be that for compatible
-> property "qcom,spmi-vadc", there should be at least four child nodes and
-> those four should have their "reg" property fixed to the channel values
-> mentioned above. I can see how to apply constraints on a single property
-> like interrupts in tsens, but I'm not sure if there is a way to specify
-> a lower limit to the number of child nodes or something like "there
-> should be at least one child node with value 0x9 for its "reg"
-> property". I could not find any examples with constraints placed on
-> number of occurrences of a child node.
->
-> Can you please share an example of such a constraint if you are aware of
-> any or suggest some way by which this kind of constraint can be specified?
+Thanks Bjorn.
 
-Hi Jishnu,
+Thanks,
+Maulik
 
-I misread that particular property. I don't think it is possible to
-specify child nodes w/o splitting this binding into two, I think.
-Please go ahead with the rest of changes. I'll keep digging to see if
-this is possible.
+On 4/14/2020 11:04 AM, Bjorn Andersson wrote:
+> On Sun 12 Apr 07:49 PDT 2020, Maulik Shah wrote:
+>
+> I sorted them includes and applied the series.
+>
+> Thanks,
+> Bjorn
+>
+>> Changes in v17:
+>> - Address Stephen's comments on change 3 and change 4.
+>> - Add Stephen's Reviewed-by on change 5.
+>>
+>> Changes in v16:
+>> - Use base address in probe only, drop change to save it in drv->base
+>> - Address Doug's comments on change 5,6 and 7.
+>> - Add Doug's Reviewed-by.
+>>
+>> Changes in v15:
+>> - Address Doug's comments on change 3 of v14 and add Reviewed-by
+>> - Split change 4 of v14 to save drv->base in a new change
+>> - Address Doug's comments on change 4, 5, 6 of v14
+>> - Add missing NOTIFY_OK for rpmh_flush() success case
+>> - First 5 changes in this series can be merged without change 6 and 7
+>>
+>> Changes in v14:
+>> - Address Doug's comments on change 3 from v13
+>> - Drop new APIs for start and end transaction from change 4 in v13
+>> - Update change 4 to use cpu pm notifications instead
+>> - Add [5] as change 5 to enable use of WAKE TCS when ACTIVE TCS count is 0
+>> - Add change 6 to Allow multiple WAKE TCS to be used as ACTIVE TCSes
+>> - First 4 changes can be merged even without change 5 and 6.
+>>
+>> Changes in v13:
+>> - Address Stephen's comment to maintain COMPILE_TEST
+>> - Address Doug's comments and add new APIs for start and end transaction
+>>
+>> Changes in v12:
+>> - Kconfig change to remove COMPILE_TEST was dropped in v11, reinclude it.
+>>
+>> Changes in v11:
+>> - Address Doug's comments on change 2 and 3
+>> - Include change to invalidate TCSes before flush from [4]
+>>
+>> Changes in v10:
+>> - Address Evan's comments to update commit message on change 2
+>> - Add Evan's Reviewed by on change 2
+>> - Remove comment from rpmh_flush() related to last CPU invoking it
+>> - Rebase all changes on top of next-20200302
+>>
+>> Changes in v9:
+>> - Keep rpmh_flush() to invoke from within cache_lock
+>> - Remove comments related to only last cpu invoking rpmh_flush()
+>>
+>> Changes in v8:
+>> - Address Stephen's comments on changes 2 and 3
+>> - Add Reviewed by from Stephen on change 1
+>>
+>> Changes in v7:
+>> - Address Srinivas's comments to update commit text
+>> - Add Reviewed by from Srinivas
+>>
+>> Changes in v6:
+>> - Drop 1 & 2 changes from v5 as they already landed in maintainer tree
+>> - Drop 3 & 4 changes from v5 as no user at present for power domain in rsc
+>> - Rename subject to appropriate since power domain changes are dropped
+>> - Rebase other changes on top of next-20200221
+>>
+>> Changes in v5:
+>> - Add Rob's Acked by on dt-bindings change
+>> - Drop firmware psci change
+>> - Update cpuidle stats in dtsi to follow PC mode
+>> - Include change to update dirty flag when data is updated from [4]
+>> - Add change to invoke rpmh_flush when caches are dirty
+>>
+>> Changes in v4:
+>> - Add change to allow hierarchical topology in PC mode
+>> - Drop hierarchical domain idle states converter from v3
+>> - Address Merge sc7180 dtsi change to add low power modes
+>>
+>> Changes in v3:
+>> - Address Rob's comment on dt property value
+>> - Address Stephen's comments on rpmh-rsc driver change
+>> - Include sc7180 cpuidle low power mode changes from [1]
+>> - Include hierarchical domain idle states converter change from [2]
+>>
+>> Changes in v2:
+>> - Add Stephen's Reviewed-By to the first three patches
+>> - Addressed Stephen's comments on fourth patch
+>> - Include changes to connect rpmh domain to cpuidle and genpds
+>>
+>> Resource State Coordinator (RSC) is responsible for powering off/lowering
+>> the requirements from CPU subsystem for the associated hardware like buses,
+>> clocks, and regulators when all CPUs and cluster is powered down.
+>>
+>> RSC power domain uses last-man activities provided by genpd framework based
+>> on Ulf Hansoon's patch series[3], when the cluster of CPUs enter deepest
+>> idle states. As a part of domain poweroff, RSC can lower resource state
+>> requirements by flushing the cached sleep and wake state votes for various
+>> resources.
+>>
+>> [1] https://patchwork.kernel.org/patch/11218965
+>> [2] https://patchwork.kernel.org/patch/10941671
+>> [3] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=222355
+>> [4] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=236503
+>> [5] https://patchwork.kernel.org/patch/10818129
+>>
+>> Maulik Shah (5):
+>>    arm64: dts: qcom: sc7180: Add cpuidle low power states
+>>    soc: qcom: rpmh: Update dirty flag only when data changes
+>>    soc: qcom: rpmh: Invalidate SLEEP and WAKE TCSes before flushing new
+>>      data
+>>    soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
+>>    soc: qcom: rpmh-rsc: Allow using free WAKE TCS for active request
+>>
+>> Raju P.L.S.S.S.N (1):
+>>    soc: qcom: rpmh-rsc: Clear active mode configuration for wake TCS
+>>
+>>   arch/arm64/boot/dts/qcom/sc7180.dtsi |  78 +++++++++++++
+>>   drivers/soc/qcom/rpmh-internal.h     |  25 ++--
+>>   drivers/soc/qcom/rpmh-rsc.c          | 220 +++++++++++++++++++++++++++--------
+>>   drivers/soc/qcom/rpmh.c              |  79 ++++++-------
+>>   4 files changed, 305 insertions(+), 97 deletions(-)
+>>
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
 
-Regards,
-Amit
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
