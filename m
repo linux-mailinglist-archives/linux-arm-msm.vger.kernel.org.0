@@ -2,255 +2,306 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D27611A886D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:04:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5FF01A88DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:16:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407754AbgDNSEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 14:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43862 "EHLO
+        id S2503612AbgDNSOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 14:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2407749AbgDNSEM (ORCPT
+        by vger.kernel.org with ESMTP id S2503607AbgDNSN7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 14:04:12 -0400
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFF95C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:04:11 -0700 (PDT)
-Received: by mail-oi1-x244.google.com with SMTP id j16so11220469oih.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:04:11 -0700 (PDT)
+        Tue, 14 Apr 2020 14:13:59 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420B8C061A10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:13:58 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id d27so6386128wra.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:13:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6WqmSXSi9EdVJyFZFkXzA4X6BZbIOZ3xG02QGAejBsY=;
-        b=uBZIsx99MMBmy+lddwV3dkMiuJoKO4iwRC/K0drY2Ru57sHJqoFjZS5V6u9Z2jM/sW
-         xhw+PCne2XC6a52HUOMAlDTAuWrHU68HOilG+DNG0dRXYUZJ6snc96yc1nB5iYPziS10
-         SRITIA5cEmV2c7Q+ra2dCgSrEaKf5WAuKvhBpV7XhRTlHKGM18nXJL+EE+fpI1wv0OO6
-         nZJGWyN7Hhy+2zShom+GvVcgzJgTEbHH0BcioMZSI1s9l9coCfN6TTt19Rv7LyNsFNby
-         l/85fXhyinOzoi7He2YOgM0rBhZC0qRLLhuHrajMIH+UjY/u97SmHmZd5B4RXH/pq0vH
-         n96g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FePb4TXsoKh/PIB9k7N8o/xhP/C75qZkUNccU++YPbg=;
+        b=qFpi1PI9DkoXaOJihAA4XzdRNxDO4fhL10MkWqPNEgUoQgWFM8UiMaufAsYNRf9bCk
+         YLViRHdF5gZM8R3iwJWOwxxiDQd5nm55ndZ+62eeADCJ3zivQkkTA81XfQYsfcNFtIcj
+         2ka14gJv83Mul2RRk8r1LUJUKSJ2EZ8fwNwl5HUnqU76Z0f8u7YHDwMMMXU6b1lGF161
+         SunyY5ZDSnJtjCGAi3XaOpu1ic2DVNeghiLJAtTeC5HggvLX/vR1J7uiOuyQUC7Gp9Jg
+         HsHv+mLgVuOokgvEF2FJ2kyD+dPs7BKwr1kDjsywdA6rasMeYLNsDdHoGa+fg3v4h5XB
+         BMfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6WqmSXSi9EdVJyFZFkXzA4X6BZbIOZ3xG02QGAejBsY=;
-        b=iWgNg/DoAjCa4rb/IGz+L5nDTRMoSY8ci1jpEIoBRsRFGo+nToB0Yz4Z8xcqjTa1l+
-         EXPtwSmYiEHCmZvGb5r54yaPpE+OOKRa7fCxwKVEAWJybIdGlUP0rBhJZ3JKAEt4kzNU
-         l01GONtu6YX3xWeZa+8SPiBzIzYYesiAo2+Gpx6mxQ025wn3aDRCDgX7mvM61/DU9Cs7
-         JlNXwVL0Zrn7yhvUblQN9VNSQHps1C5JUgpvDlsrl+xQQ1WiqBl0b+rjcITnhPj1l3oA
-         RDLq7b9mGvFy5NZI74tfxziOQY0vzPrz590B9gV19cWasZW4k8uUA4EVSASVH2N0odbG
-         JyuQ==
-X-Gm-Message-State: AGi0PuaR7AM6kTeQwLUmMNIjKSiMFk1f/4VAORG8V9adDEb2ry/zRb+X
-        GGpUFO79rUJxhwkQ23QW3krAYfPte19hZHklloeSXg==
-X-Google-Smtp-Source: APiQypJ8H9xEtyyrsY14CYAiWoUS1tzgTzFMTb8Q5PVdJHfi1xbdy2wkHnYJh5zwto9tnYh1yS8GFrHPELRdRXKDixk=
-X-Received: by 2002:aca:d684:: with SMTP id n126mr10926536oig.173.1586887450723;
- Tue, 14 Apr 2020 11:04:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200413170107.246509-1-robert.marko@sartura.hr> <20200413184219.GH557892@lunn.ch>
-In-Reply-To: <20200413184219.GH557892@lunn.ch>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FePb4TXsoKh/PIB9k7N8o/xhP/C75qZkUNccU++YPbg=;
+        b=ahK8B+q94t8F2gbCT1w929c6cjO061pzSImtcAqeDGjPF3XITD52DCQLuUjsJOhfeg
+         H69amKw0/0Be5yUaGW9Kpl6FNWD6qadWZoqB3417EYUKa4wnOTPW1wMvKC1BS3VXhmjQ
+         +R4iMwJ24EuxyhMRlW0Nrtgo7Ti2ug5bw16MxVzu64tqhdG6l64ltJYO8cq3zqZI4Mvh
+         doLo/FZGInbAog+YCrYX5cmbpTWMGeeKnUQMQFY6MkmujIjKGlEr4ckpsnhJfACYkChm
+         FxqgORP4lCqPkjGGVgoImJIOacT1a+nj3o3U3QxtA2noaLIfm+srOvKwteIW6fm4hP1X
+         /Wog==
+X-Gm-Message-State: AGi0PuZMZI6FdcWyoM3hJmWju/XLWtpNM3tD6VcYz9Ol9ysHzjghMOt+
+        bvpQJHZRaawmR6Ik1tscqJdKPA==
+X-Google-Smtp-Source: APiQypKSol0GqR/vM24wZJGNbv0ZPm4oa4MmLj13h8k2ijdNDY8ftK+2s+mE+VB9LZtC/ixJ2Ujh3g==
+X-Received: by 2002:a5d:6452:: with SMTP id d18mr24604736wrw.405.1586888036650;
+        Tue, 14 Apr 2020 11:13:56 -0700 (PDT)
+Received: from localhost.localdomain (dh207-97-22.xnet.hr. [88.207.97.22])
+        by smtp.googlemail.com with ESMTPSA id w12sm5387763wrk.56.2020.04.14.11.13.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 11:13:55 -0700 (PDT)
 From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Tue, 14 Apr 2020 20:03:59 +0200
-Message-ID: <CA+HBbNE_-Pjr6dZ3qjgk1MiaT3PL9eUgs=XfK-ohkWDCR9yfZA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] net: phy: mdio: add IPQ40xx MDIO driver
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     f.fainelli@gmail.com, hkallweit1@gmail.com, linux@armlinux.org.uk,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robh+dt@kernel.org, Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
+To:     andrew@lunn.ch, f.fainelli@gmail.com, hkallweit1@gmail.com,
+        linux@armlinux.org.uk, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Robert Marko <robert.marko@sartura.hr>,
         Christian Lamparter <chunkeey@gmail.com>,
         Luka Perkov <luka.perkov@sartura.hr>
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH v2 1/3] net: phy: mdio: add IPQ40xx MDIO driver
+Date:   Tue, 14 Apr 2020 20:10:11 +0200
+Message-Id: <20200414181012.114905-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.26.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 13, 2020 at 8:42 PM Andrew Lunn <andrew@lunn.ch> wrote:
->
-> > --- a/drivers/net/phy/Makefile
-> > +++ b/drivers/net/phy/Makefile
-> > @@ -36,6 +36,7 @@ obj-$(CONFIG_MDIO_CAVIUM)   += mdio-cavium.o
-> >  obj-$(CONFIG_MDIO_GPIO)              += mdio-gpio.o
-> >  obj-$(CONFIG_MDIO_HISI_FEMAC)        += mdio-hisi-femac.o
-> >  obj-$(CONFIG_MDIO_I2C)               += mdio-i2c.o
-> > +obj-$(CONFIG_MDIO_IPQ40XX)   += mdio-ipq40xx.o
-> >  obj-$(CONFIG_MDIO_MOXART)    += mdio-moxart.o
-> >  obj-$(CONFIG_MDIO_MSCC_MIIM) += mdio-mscc-miim.o
->
-> Hi Robert
->
-> That looks odd. What happened to the
->
-> obj-$(CONFIG_MDIO_IPQ8064)      += mdio-ipq8064.o
->
-Sorry, this was based off kernel 5.6 instead of net-next.
-> >  obj-$(CONFIG_MDIO_OCTEON)    += mdio-octeon.o
-> > diff --git a/drivers/net/phy/mdio-ipq40xx.c b/drivers/net/phy/mdio-ipq40xx.c
-> > new file mode 100644
-> > index 000000000000..8068f1e6a077
-> > --- /dev/null
-> > +++ b/drivers/net/phy/mdio-ipq40xx.c
-> > @@ -0,0 +1,180 @@
-> > +// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
-> > +/* Copyright (c) 2015, The Linux Foundation. All rights reserved. */
-> > +
-> > +#include <linux/delay.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/module.h>
-> > +#include <linux/io.h>
-> > +#include <linux/of_address.h>
-> > +#include <linux/of_mdio.h>
-> > +#include <linux/phy.h>
-> > +#include <linux/platform_device.h>
-> > +
-> > +#define MDIO_CTRL_0_REG              0x40
-> > +#define MDIO_CTRL_1_REG              0x44
-> > +#define MDIO_CTRL_2_REG              0x48
-> > +#define MDIO_CTRL_3_REG              0x4c
-> > +#define MDIO_CTRL_4_REG              0x50
->
-> Can we have better names than as. It seems like 3 is read data, 2 is
-> write data, etc.
-I agree these ones don't really tell whats the function.
-Unfortunately, I don't have access to documentation and this is all based on
-GPL code from Qualcomm's SDK.
-So I don't really know whats their purpose.
-It has been floating around for years, so I thought that it would be good to
-clean it up and upstream.
->
-> > +#define MDIO_CTRL_4_ACCESS_BUSY              BIT(16)
-> > +#define MDIO_CTRL_4_ACCESS_START             BIT(8)
-> > +#define MDIO_CTRL_4_ACCESS_CODE_READ         0
-> > +#define MDIO_CTRL_4_ACCESS_CODE_WRITE        1
-> > +#define CTRL_0_REG_DEFAULT_VALUE     0x150FF
->
-> No magic numbers please. Try to explain what each of these bits
-> do. I'm guessing they are clock speed, preamble enable, maybe C22/C45?
-Fortunately, it seems that this is a leftover from early preproduction HW as
-my test boards work without it.
-Something similar was the case in other Qualcomm SDK drivers.
-So, this will be dropped in v2.
->
-> > +
-> > +#define IPQ40XX_MDIO_RETRY   1000
-> > +#define IPQ40XX_MDIO_DELAY   10
-> > +
-> > +struct ipq40xx_mdio_data {
-> > +     struct mii_bus  *mii_bus;
-> > +     void __iomem    *membase;
-> > +     struct device   *dev;
-> > +};
-> > +
-> > +static int ipq40xx_mdio_wait_busy(struct ipq40xx_mdio_data *am)
-> > +{
-> > +     int i;
-> > +
-> > +     for (i = 0; i < IPQ40XX_MDIO_RETRY; i++) {
-> > +             unsigned int busy;
-> > +
-> > +             busy = readl(am->membase + MDIO_CTRL_4_REG) &
-> > +                     MDIO_CTRL_4_ACCESS_BUSY;
-> > +             if (!busy)
-> > +                     return 0;
-> > +
-> > +             /* BUSY might take to be cleard by 15~20 times of loop */
-> > +             udelay(IPQ40XX_MDIO_DELAY);
-> > +     }
-> > +
-> > +     dev_err(am->dev, "%s: MDIO operation timed out\n", am->mii_bus->name);
->
-> dev_err() should give you enough to identify the device. No need to
-> print am->mii_bus->name as well.
-It will be fixed in v2, thanks.
->
-> > +
-> > +     return -ETIMEDOUT;
-> > +}
-> > +
-> > +static int ipq40xx_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
-> > +{
-> > +     struct ipq40xx_mdio_data *am = bus->priv;
-> > +     int value = 0;
-> > +     unsigned int cmd = 0;
-> > +
-> > +     lockdep_assert_held(&bus->mdio_lock);
->
-> Do you think the core is broken?
-No, this is also an old relic from the SDK driver.
-It works without this perfectly fine, so I will drop it from v2.
->
-> Please check if the request is for a C45 read, and return -EOPNOTSUPP
-> if so.
-It will be added to v2, thanks.
->
->
-> > +
-> > +     if (ipq40xx_mdio_wait_busy(am))
-> > +             return -ETIMEDOUT;
-> > +
-> > +     /* issue the phy address and reg */
-> > +     writel((mii_id << 8) | regnum, am->membase + MDIO_CTRL_1_REG);
-> > +
-> > +     cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_READ;
-> > +
-> > +     /* issue read command */
-> > +     writel(cmd, am->membase + MDIO_CTRL_4_REG);
-> > +
-> > +     /* Wait read complete */
-> > +     if (ipq40xx_mdio_wait_busy(am))
-> > +             return -ETIMEDOUT;
-> > +
-> > +     /* Read data */
-> > +     value = readl(am->membase + MDIO_CTRL_3_REG);
-> > +
-> > +     return value;
-> > +}
-> > +
-> > +static int ipq40xx_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
-> > +                                                      u16 value)
-> > +{
-> > +     struct ipq40xx_mdio_data *am = bus->priv;
-> > +     unsigned int cmd = 0;
-> > +
-> > +     lockdep_assert_held(&bus->mdio_lock);
-> > +
-> > +     if (ipq40xx_mdio_wait_busy(am))
-> > +             return -ETIMEDOUT;
-> > +
-> > +     /* issue the phy address and reg */
-> > +     writel((mii_id << 8) | regnum, am->membase + MDIO_CTRL_1_REG);
-> > +
-> > +     /* issue write data */
-> > +     writel(value, am->membase + MDIO_CTRL_2_REG);
-> > +
-> > +     cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_WRITE;
-> > +     /* issue write command */
-> > +     writel(cmd, am->membase + MDIO_CTRL_4_REG);
-> > +
-> > +     /* Wait write complete */
-> > +     if (ipq40xx_mdio_wait_busy(am))
-> > +             return -ETIMEDOUT;
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int ipq40xx_mdio_probe(struct platform_device *pdev)
-> > +{
-> > +     struct ipq40xx_mdio_data *am;
->
-> Why the name am? Generally priv is used. I could also understand bus,
-> or even data, but am?
-Like most stuff in this driver, its a leftover from the SDK driver.
-I have changed it to priv in v2, also I switched the driver to
-devm_mdiobus_alloc_size() to
-try and simplify/modernize the driver also.
+This patch adds the driver for the MDIO interface
+inside of Qualcomm IPQ40xx series SoC-s.
 
-Thanks for the suggestions.
-I will send a v2 soon.
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: Luka Perkov <luka.perkov@sartura.hr>
+---
+Changes from v1 to v2:
+* Remove magic default value
+* Remove lockdep_assert_held
+* Add C45 check
+* Simplify the driver
+* Drop device and mii_bus structs from private struct
+* Use devm_mdiobus_alloc_size()
 
-Best regards,
-Andrew
->
->    Andrew
+ drivers/net/phy/Kconfig        |   7 ++
+ drivers/net/phy/Makefile       |   1 +
+ drivers/net/phy/mdio-ipq40xx.c | 176 +++++++++++++++++++++++++++++++++
+ 3 files changed, 184 insertions(+)
+ create mode 100644 drivers/net/phy/mdio-ipq40xx.c
+
+diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
+index 3fa33d27eeba..815d52fa6080 100644
+--- a/drivers/net/phy/Kconfig
++++ b/drivers/net/phy/Kconfig
+@@ -157,6 +157,13 @@ config MDIO_I2C
+ 
+ 	  This is library mode.
+ 
++config MDIO_IPQ40XX
++	tristate "Qualcomm IPQ40xx MDIO interface"
++	depends on HAS_IOMEM && OF
++	help
++	  This driver supports the MDIO interface found in Qualcomm
++	  IPQ40xx series Soc-s.
++
+ config MDIO_IPQ8064
+ 	tristate "Qualcomm IPQ8064 MDIO interface support"
+ 	depends on HAS_IOMEM && OF_MDIO
+diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+index 2f5c7093a65b..36aafc6128c4 100644
+--- a/drivers/net/phy/Makefile
++++ b/drivers/net/phy/Makefile
+@@ -37,6 +37,7 @@ obj-$(CONFIG_MDIO_CAVIUM)	+= mdio-cavium.o
+ obj-$(CONFIG_MDIO_GPIO)		+= mdio-gpio.o
+ obj-$(CONFIG_MDIO_HISI_FEMAC)	+= mdio-hisi-femac.o
+ obj-$(CONFIG_MDIO_I2C)		+= mdio-i2c.o
++obj-$(CONFIG_MDIO_IPQ40XX)	+= mdio-ipq40xx.o
+ obj-$(CONFIG_MDIO_IPQ8064)	+= mdio-ipq8064.o
+ obj-$(CONFIG_MDIO_MOXART)	+= mdio-moxart.o
+ obj-$(CONFIG_MDIO_MSCC_MIIM)	+= mdio-mscc-miim.o
+diff --git a/drivers/net/phy/mdio-ipq40xx.c b/drivers/net/phy/mdio-ipq40xx.c
+new file mode 100644
+index 000000000000..d8c11c621f20
+--- /dev/null
++++ b/drivers/net/phy/mdio-ipq40xx.c
+@@ -0,0 +1,176 @@
++// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
++/* Copyright (c) 2015, The Linux Foundation. All rights reserved. */
++/* Copyright (c) 2020 Sartura Ltd. */
++
++#include <linux/delay.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/io.h>
++#include <linux/of_address.h>
++#include <linux/of_mdio.h>
++#include <linux/phy.h>
++#include <linux/platform_device.h>
++
++#define MDIO_CTRL_0_REG		0x40
++#define MDIO_CTRL_1_REG		0x44
++#define MDIO_CTRL_2_REG		0x48
++#define MDIO_CTRL_3_REG		0x4c
++#define MDIO_CTRL_4_REG		0x50
++#define MDIO_CTRL_4_ACCESS_BUSY		BIT(16)
++#define MDIO_CTRL_4_ACCESS_START		BIT(8)
++#define MDIO_CTRL_4_ACCESS_CODE_READ		0
++#define MDIO_CTRL_4_ACCESS_CODE_WRITE	1
++
++#define IPQ40XX_MDIO_RETRY	1000
++#define IPQ40XX_MDIO_DELAY	10
++
++struct ipq40xx_mdio_data {
++	void __iomem	*membase;
++};
++
++static int ipq40xx_mdio_wait_busy(struct mii_bus *bus)
++{
++	struct ipq40xx_mdio_data *priv = bus->priv;
++	int i;
++
++	for (i = 0; i < IPQ40XX_MDIO_RETRY; i++) {
++		unsigned int busy;
++
++		busy = readl(priv->membase + MDIO_CTRL_4_REG) &
++			MDIO_CTRL_4_ACCESS_BUSY;
++		if (!busy)
++			return 0;
++
++		/* BUSY might take to be cleard by 15~20 times of loop */
++		udelay(IPQ40XX_MDIO_DELAY);
++	}
++
++	dev_err(bus->parent, "MDIO operation timed out\n");
++
++	return -ETIMEDOUT;
++}
++
++static int ipq40xx_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
++{
++	struct ipq40xx_mdio_data *priv = bus->priv;
++	int value = 0;
++	unsigned int cmd = 0;
++
++	/* Reject clause 45 */
++	if (regnum & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	/* issue the phy address and reg */
++	writel((mii_id << 8) | regnum, priv->membase + MDIO_CTRL_1_REG);
++
++	cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_READ;
++
++	/* issue read command */
++	writel(cmd, priv->membase + MDIO_CTRL_4_REG);
++
++	/* Wait read complete */
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	/* Read data */
++	value = readl(priv->membase + MDIO_CTRL_3_REG);
++
++	return value;
++}
++
++static int ipq40xx_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
++							 u16 value)
++{
++	struct ipq40xx_mdio_data *priv = bus->priv;
++	unsigned int cmd = 0;
++
++	/* Reject clause 45 */
++	if (regnum & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	/* issue the phy address and reg */
++	writel((mii_id << 8) | regnum, priv->membase + MDIO_CTRL_1_REG);
++
++	/* issue write data */
++	writel(value, priv->membase + MDIO_CTRL_2_REG);
++
++	cmd = MDIO_CTRL_4_ACCESS_START | MDIO_CTRL_4_ACCESS_CODE_WRITE;
++	/* issue write command */
++	writel(cmd, priv->membase + MDIO_CTRL_4_REG);
++
++	/* Wait write complete */
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	return 0;
++}
++
++static int ipq40xx_mdio_probe(struct platform_device *pdev)
++{
++	struct ipq40xx_mdio_data *priv;
++	struct mii_bus *bus;
++	int ret;
++
++	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
++	if (!bus)
++		return -ENOMEM;
++
++	priv = bus->priv;
++
++	priv->membase = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(priv->membase))
++		return PTR_ERR(priv->membase);
++
++	bus->name = "ipq40xx_mdio";
++	bus->read = ipq40xx_mdio_read;
++	bus->write = ipq40xx_mdio_write;
++	bus->parent = &pdev->dev;
++	snprintf(bus->id, MII_BUS_ID_SIZE, "%s%d", pdev->name, pdev->id);
++
++	ret = of_mdiobus_register(bus, pdev->dev.of_node);
++	if (ret) {
++		dev_err(&pdev->dev, "Cannot register MDIO bus!\n");
++		return ret;
++	}
++
++	platform_set_drvdata(pdev, bus);
++
++	return 0;
++}
++
++static int ipq40xx_mdio_remove(struct platform_device *pdev)
++{
++	struct mii_bus *bus = platform_get_drvdata(pdev);
++
++	mdiobus_unregister(bus);
++
++	return 0;
++}
++
++static const struct of_device_id ipq40xx_mdio_dt_ids[] = {
++	{ .compatible = "qcom,ipq40xx-mdio" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, ipq40xx_mdio_dt_ids);
++
++static struct platform_driver ipq40xx_mdio_driver = {
++	.probe = ipq40xx_mdio_probe,
++	.remove = ipq40xx_mdio_remove,
++	.driver = {
++		.name = "ipq40xx-mdio",
++		.of_match_table = ipq40xx_mdio_dt_ids,
++	},
++};
++
++module_platform_driver(ipq40xx_mdio_driver);
++
++MODULE_DESCRIPTION("IPQ40XX MDIO interface driver");
++MODULE_AUTHOR("Qualcomm Atheros");
++MODULE_LICENSE("Dual BSD/GPL");
+-- 
+2.26.0
+
