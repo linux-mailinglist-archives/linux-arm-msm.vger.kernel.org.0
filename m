@@ -2,113 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CE4D1A8A0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:47:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B040E1A8A56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504324AbgDNSqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 14:46:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50568 "EHLO
+        id S2504524AbgDNS6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 14:58:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2504322AbgDNSqd (ORCPT
+        by vger.kernel.org with ESMTP id S2504519AbgDNS5u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 14:46:33 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A877C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:46:33 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id o3so661290vsd.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:46:33 -0700 (PDT)
+        Tue, 14 Apr 2020 14:57:50 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39684C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:57:50 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id k18so285573pll.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Hm1Qks6SZ0yWu4P75XfFoZTXE4Nra+rfLYilmC4vdmU=;
-        b=AskEzpYssKBaC+I8r9xjA/upQU03fey7fH06JRnjoVatycGcNwUujD+hfTF271zYY3
-         LjnobQTSiBTpktVOcl+h3EILwuI8sCGjEqPFBGZ1b5w4ZJnfJ+SaoQpR5w56BJfu7UPp
-         iHdwkGKCYF2HEvA47R3NTYI22vz2qYDlqXVdk=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=eLhNg8kDFNpBIRgI1oareY/yJAWpxKnYxH3HqcN0OKc=;
+        b=ez1U5xHOxFaBocYyvpYcUW3fff2IH0WXHGkc5ZTFQ9vHmRlorLGiAGbqRVF3ylGzl6
+         aQuz4yVKzjIFAREzZf8GrBsBXWjVIBOjMo5r3VdcGcdKizW34CI91N8KY/0Fp0Ij+jLe
+         3i6A1zhISgRJ1FvCLFcHCSxzTQE3IhloAOm6a10IcaU/DwxQp10GpZxVQES2LrO8RaWs
+         Yk7lMqRiNiXoPWrx6+7aZoRGI77G1c6nX7wOfiF4iKknvXx70ba7kqkM6lMPqmLOEmCi
+         8Anbggy4C2herkaUy8MlH3ygKEbO4ekWk1bdySIiPLiy1wadSFSJfb1EViD49iJxegxs
+         gEZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Hm1Qks6SZ0yWu4P75XfFoZTXE4Nra+rfLYilmC4vdmU=;
-        b=YaDr0SzkKPLlIMcLCaosZzynN0ODSrFm4i6LSWfOEFloIbEYrh2/GyN231ZYtpq+EV
-         jmPPQRw6asZjfxI1X2jfsj37GCLs4OJDWFN+6LP+7VZpTGu8RkIpNlzAWrfzF6dOAEbo
-         3pHZjI5kxe0k27UTZ5PKd8UtaDNxaDLXEcgtBqNiCo9XmxMU6fjTEopEzDNpKA7EW0sD
-         hiYxzhvYeFDqBhH079tRDC48bRWZ0zHB+L5eoY/ECHl1tSDfzEnNuJXBYDtGBqNh9qgF
-         wkNIrG14OuHCZV3OzcwMeR3FguMzL0bLrNPwAzQa+m9nDy+W2sOwpjwgTzmpM9H7ztFU
-         xYEQ==
-X-Gm-Message-State: AGi0PuanbPMlL6TaAPqIfubARaDAdvJ4jc2WtT/5iJzB9veHCpoexqDw
-        WQ778n/v11ETChvEX5qxKyzA/cnt6yM=
-X-Google-Smtp-Source: APiQypIYD8HluHvpKsdGygvkIcDdk8XlWxFkqMwSu6DyJiZbg9rHxpWKTydbLFrhLP161RJgS1z4NA==
-X-Received: by 2002:a05:6102:9c8:: with SMTP id g8mr1433897vsi.157.1586889991837;
-        Tue, 14 Apr 2020 11:46:31 -0700 (PDT)
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
-        by smtp.gmail.com with ESMTPSA id 129sm3715932vso.31.2020.04.14.11.46.31
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Apr 2020 11:46:31 -0700 (PDT)
-Received: by mail-vs1-f45.google.com with SMTP id u11so635470vsu.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:46:31 -0700 (PDT)
-X-Received: by 2002:a67:2b07:: with SMTP id r7mr1505045vsr.169.1586889990771;
- Tue, 14 Apr 2020 11:46:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200414104120.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
- <9c633ea161df91265a338aaa93a78443894c268f.camel@perches.com>
-In-Reply-To: <9c633ea161df91265a338aaa93a78443894c268f.camel@perches.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 14 Apr 2020 11:46:19 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X8Wci5cKPcfHQq-PjsexwLCjErnB63gF4_XgTBK9aWFQ@mail.gmail.com>
-Message-ID: <CAD=FV=X8Wci5cKPcfHQq-PjsexwLCjErnB63gF4_XgTBK9aWFQ@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Factor "tcs_reg_addr" and
- "tcs_cmd_addr" calculation
-To:     Joe Perches <joe@perches.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=eLhNg8kDFNpBIRgI1oareY/yJAWpxKnYxH3HqcN0OKc=;
+        b=a5HlTGcKd0N01p9YHJQ0MqNC3bqxVsAYnxgP8Cn/h/ax2TxHZpFSBw6HdSq49vBZll
+         PPJjV6n39l5wnjYtNGo3OMyKzy65td/VMLyjRJZhOiyegI0wF9o7/6twyvEsE6T7WfRL
+         DgGZQgRL3AdNXhO42B8pu0BQa9IEjEIAeNkg+He3EyKhgJf1G7d8BTbqcOOjPRu0z1jJ
+         aN3x/BUXjU/Yv+ydjNp/9ljieQ1/bk+rIwk4GhRkGAjqXWgMNKH+yeNIFJ+k6mrNud78
+         K6v9GLeYbNpXaoZbPqK1r1GMB4NPxuqGUZAUdW2r/BFa0u+Y6RVW5P/CGQBhugSCanGA
+         N9PQ==
+X-Gm-Message-State: AGi0PuZJxv8kZUybFJljdru275EgyIyvtREMIQ13LqjNC94OatvSXIQG
+        9+c+L3DW5qW+7XEJgjPpwAPuiA==
+X-Google-Smtp-Source: APiQypIQqv3aTGpX5KMbNC05HSpYyKy/zSB3plcdQbijP6ouAUwBS3T+FFgq7tSGMMQkTN4B1//L6Q==
+X-Received: by 2002:a17:902:8a89:: with SMTP id p9mr1280398plo.286.1586890669483;
+        Tue, 14 Apr 2020 11:57:49 -0700 (PDT)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id a13sm1865870pfo.85.2020.04.14.11.57.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 11:57:48 -0700 (PDT)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Doug Anderson <dianders@chromium.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [RESEND][PATCH v2] phy: qcom-qusb2: Re add "qcom,sdm845-qusb2-phy" compat string
+Date:   Tue, 14 Apr 2020 18:57:44 +0000
+Message-Id: <20200414185744.84581-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch fixes a regression in 5.7-rc1.
 
-On Tue, Apr 14, 2020 at 10:58 AM Joe Perches <joe@perches.com> wrote:
->
-> On Tue, 2020-04-14 at 10:41 -0700, Douglas Anderson wrote:
-> > We can make some of the register access functions more readable by
-> > factoring out the calculations a little bit.
->
-> unrelated trivia:
->
-> > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> []
-> >  static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
-> >                              u32 data)
-> >  {
-> > -     writel(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
-> > +     writel(data, tcs_reg_addr(drv, reg, tcs_id));
-> >       for (;;) {
-> > -             if (data == readl(drv->tcs_base + reg +
-> > -                               RSC_DRV_TCS_OFFSET * tcs_id))
-> > +             if (data == readl(tcs_reg_addr(drv, reg, tcs_id)))
-> >                       break;
-> >               udelay(1);
-> >       }
->
-> There a lockup potential here.
->
-> It might be better to use some max loop counter with
-> an error/warning emitted instead of a continuous retry.
+In commit 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2
+PHY support"), the change was made to add "qcom,qusb2-v2-phy"
+as a generic compat string. However the change also removed
+the "qcom,sdm845-qusb2-phy" compat string, which is documented
+in the binding and already in use.
 
-Yeah, I noticed that too but I assumed that it was probably OK.  I
-think in this case it's really just confirming that the write made it
-across the bus since it's checking the same bit that it's writing.
-...but I wouldn't be opposed to this changing to use
-readl_poll_timeout().
+This patch re-adds the "qcom,sdm845-qusb2-phy" compat string
+which allows the driver to continue to work with existing dts
+entries such as found on the db845c.
 
--Doug
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: Manu Gautam <mgautam@codeaurora.org>
+Cc: Sandeep Maheswaram <sanm@codeaurora.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Kishon Vijay Abraham I <kishon@ti.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Fixes: 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2 PHY support")
+Reported-by: YongQin Liu <yongqin.liu@linaro.org>
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+---
+v2: Add deprecation note on "qcom,sdm845-qusb2-phy" string
+    as suggested by Doug.
+---
+ drivers/phy/qualcomm/phy-qcom-qusb2.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+index 3708d43b7508..393011a05b48 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
++++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+@@ -815,6 +815,13 @@ static const struct of_device_id qusb2_phy_of_match_table[] = {
+ 	}, {
+ 		.compatible	= "qcom,msm8998-qusb2-phy",
+ 		.data		= &msm8998_phy_cfg,
++	}, {
++		/*
++		 * Deprecated. Only here to support legacy device
++		 * trees that didn't include "qcom,qusb2-v2-phy"
++		 */
++		.compatible	= "qcom,sdm845-qusb2-phy",
++		.data		= &qusb2_v2_phy_cfg,
+ 	}, {
+ 		.compatible	= "qcom,qusb2-v2-phy",
+ 		.data		= &qusb2_v2_phy_cfg,
+-- 
+2.17.1
+
