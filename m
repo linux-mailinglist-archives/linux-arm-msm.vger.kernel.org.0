@@ -2,77 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8E0C1A828D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 17:24:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D37F51A82B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 17:28:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439215AbgDNPWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 11:22:35 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:37691 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438826AbgDNPWb (ORCPT
+        id S2440396AbgDNP2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 11:28:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729746AbgDNP14 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 11:22:31 -0400
-Received: by mail-ot1-f65.google.com with SMTP id z17so5616910oto.4;
-        Tue, 14 Apr 2020 08:22:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AnHn2Q/nKp8vHi8xRLPGA04W9zPV6QThgvNNDvW6Lz4=;
-        b=oYeCqf78I8FW6TzZbU5/EHAung+vdubjK44BPSrBmo2lzpN/8YI7S5ZBygDDDUu0Hi
-         dv8Ji9bMj92KjHFFTuBw5maxg/CXgl/AnbAX97ExjD5RnnjxaU44yyFAED09CRZOgbuq
-         s9tXq80KvOtLX/5NiETKUlEavcRYU8VMOBg/Bh4lPdQJ5FmhHggtwKIJYcWJ6B6wwuMe
-         tszTzmKvR/gP0+gJwOCK8sgdYiSudAAdFPfXWXTsNe49vSyxewdsRi+pooy7ufxPdE0T
-         tpjYxLveLyN2AFhYqKua2z48YnBPAzb0pjam8mnN41fLWe5SgHFJpP1sFdNGKvqkJCyo
-         YF+Q==
-X-Gm-Message-State: AGi0PubWoS37eAqQDbiKgCWvAgA9JslnaiJ2NxiI9XS9aACTwAobFqxp
-        0A7Wv2ImeGYdJTPdvWMHeg==
-X-Google-Smtp-Source: APiQypJR5WeRaPhYCrALFhL48Dtxyk9ODcHd1LOjeRCjBr6tTDoukXibtiqbCGRPmuc2x2B7Gx5QGA==
-X-Received: by 2002:a9d:6354:: with SMTP id y20mr9159168otk.171.1586877750682;
-        Tue, 14 Apr 2020 08:22:30 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id q18sm5508097otl.65.2020.04.14.08.22.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 08:22:29 -0700 (PDT)
-Received: (nullmailer pid 27980 invoked by uid 1000);
-        Tue, 14 Apr 2020 15:22:28 -0000
-Date:   Tue, 14 Apr 2020 10:22:28 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: Re: [PATCH v7 1/4] dt-bindings: usb: qcom,dwc3: Introduce
- interconnect properties for Qualcomm DWC3 driver
-Message-ID: <20200414152228.GA27923@bogus>
-References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
- <1585718145-29537-2-git-send-email-sanm@codeaurora.org>
+        Tue, 14 Apr 2020 11:27:56 -0400
+Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3409CC061A0C;
+        Tue, 14 Apr 2020 08:27:56 -0700 (PDT)
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id 3493E2A4; Tue, 14 Apr 2020 17:27:54 +0200 (CEST)
+Date:   Tue, 14 Apr 2020 17:27:52 +0200
+From:   "joro@8bytes.org" <joro@8bytes.org>
+To:     "Derrick, Jonathan" <jonathan.derrick@intel.com>
+Cc:     "heiko@sntech.de" <heiko@sntech.de>,
+        "kgene@kernel.org" <kgene@kernel.org>,
+        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+        "robin.murphy@arm.com" <robin.murphy@arm.com>,
+        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "dwmw2@infradead.org" <dwmw2@infradead.org>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "will@kernel.org" <will@kernel.org>,
+        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+        "krzk@kernel.org" <krzk@kernel.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "gerald.schaefer@de.ibm.com" <gerald.schaefer@de.ibm.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "linux-rockchip@lists.infradead.org" 
+        <linux-rockchip@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "jroedel@suse.de" <jroedel@suse.de>
+Subject: Re: [RFC PATCH 11/34] iommu: Split off default domain allocation
+ from group assignment
+Message-ID: <20200414152752.GC14731@8bytes.org>
+References: <20200407183742.4344-1-joro@8bytes.org>
+ <20200407183742.4344-12-joro@8bytes.org>
+ <6a801ff9e6471bda7c6f510dfa2ba7e7c35cb559.camel@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1585718145-29537-2-git-send-email-sanm@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <6a801ff9e6471bda7c6f510dfa2ba7e7c35cb559.camel@intel.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed,  1 Apr 2020 10:45:42 +0530, Sandeep Maheswaram wrote:
-> Add documentation for the interconnects and interconnect-names
-> properties for USB.
-> 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
+Hi Jonathan,
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+On Mon, Apr 13, 2020 at 10:10:50PM +0000, Derrick, Jonathan wrote:
+> I had to add the following for initial VMD support. The new PCIe domain
+> added on VMD endpoint probe didn't have the dev_iommu member set on the
+> VMD subdevices, which I'm guessing is due to probe_iommu_group already
+> having been run on the VMD endpoint's group prior to those subdevices
+> being added.
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 8a5e1ac328dd..ac1e4fb9bf48 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -1577,6 +1577,9 @@ static int iommu_bus_notifier(struct notifier_block *nb,
+>         if (action == BUS_NOTIFY_ADD_DEVICE) {
+>                 int ret;
+>  
+> +               if (!dev_iommu_get(dev))
+> +                       return -ENOMEM;
+> +
+>                 ret = iommu_probe_device(dev);
+>                 return (ret) ? NOTIFY_DONE : NOTIFY_OK;
+>         } else if (action == BUS_NOTIFY_REMOVED_DEVICE) {
+
+Right, thanks for catching this. The hotplug path does not allocate the
+dev->iommu structure yet. I'll have to figure out if the above patch
+adds it at the right place, but I'll fix it in the next version.
+
+Thanks again,
+
+	Joerg
