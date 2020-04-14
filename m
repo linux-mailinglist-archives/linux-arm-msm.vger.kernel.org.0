@@ -2,135 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34C671A7B7A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 14:56:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CADA91A7C0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 15:14:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502383AbgDNMzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 08:55:42 -0400
-Received: from mga09.intel.com ([134.134.136.24]:61364 "EHLO mga09.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2502340AbgDNMzk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 08:55:40 -0400
-IronPort-SDR: hMoVI6hEo1ARLEjvoUHwDPYkzzWIEIr5qcuzpgoEkT0MMSZPbzNNbM8tiyeInL8cxdCqAI13eA
- lgUFKkMQGwbg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2020 05:55:39 -0700
-IronPort-SDR: diMMi4QqTqFKA5bJPJZ/exdxzAePKcr19ME8m96/fIUeRLLyglld6JKCFMfuF7xh/Nlpq/A1yt
- 4TaulNDIFepg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,382,1580803200"; 
-   d="scan'208";a="453526355"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.87]) ([10.237.72.87])
-  by fmsmga005.fm.intel.com with ESMTP; 14 Apr 2020 05:55:35 -0700
-Subject: Re: [PATCH] mmc: cqhci: Avoid false "cqhci: CQE stuck on" by not
- open-coding timeout loop
-To:     Douglas Anderson <dianders@chromium.org>,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Venkat Gopalakrishnan <venkatg@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Konstantin Dorfman <kdorfman@codeaurora.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org
-References: <20200413162717.1.Idece266f5c8793193b57a1ddb1066d030c6af8e0@changeid>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <e3806686-8a86-59b6-0497-04d02ced40f3@intel.com>
-Date:   Tue, 14 Apr 2020 15:54:46 +0300
+        id S2502652AbgDNNOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 09:14:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54790 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2502653AbgDNNOG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Apr 2020 09:14:06 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F844C061A0C;
+        Tue, 14 Apr 2020 06:14:06 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id u10so8180074lfo.8;
+        Tue, 14 Apr 2020 06:14:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=TwanPYDMNjwsdCZf99BwEwFxyfAbUGx0ihTeXWNRhe8=;
+        b=lNzKcqtQbCw7svBeyfiCxylKZs/JH3ObkWG10wkqPNqlJxNoGQwHf7fcXBO0snOALd
+         X77ccfHRCEiHrXncn/sIsPliBESv8IFf2V0++EFPVLEK2JOqnNyRcGDtRqKzMjSf8y4w
+         3vMjsaryxNLGzs7zskjkiKetPDJ4tT4Fh5rPfF7eoZvgIPy/2LJrbY3kVlZz2/vLtPPD
+         zPMl5jM14tvVfN9GDu0IPy2QKfrUmH6diCa99yIhTTFTCh1xyTjurfXB8kgesJJgauoM
+         D4i6LwFVvpnyGzSZQ2NNUCMdi4YRhHhnNw/pCnEoUHUO5e2Z5dENIZtXPbct0O+FjJmm
+         yjGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=TwanPYDMNjwsdCZf99BwEwFxyfAbUGx0ihTeXWNRhe8=;
+        b=sL1qKFrfhvsqlXdWBxPwAduCcjU5kkqz9ANdS0GKgo9ofCHvJa4EDdOSH0pO6VTgeE
+         6sykLxP46brIO6NIEaXXrKoJHRYTKPv/NcY/RlJQsoZfRZrXK0WZyWflOX7C9c+i4+k9
+         3estFRTsng2qvBdjuq61SFh2x78srdgdxhz0pTTP1LYI6yZXajMy9HPsiif+Eoo/cYl3
+         HcrNwTDY8U9gnoT+0pAXqhkbgKc1qgJ4OFRcKy8Trc7mTw4y9ZXU5CgjQrcQ3n0T1MJ5
+         Y1LtCBA2fgvgqGq8PUG+8BnE9Q6Txrk/3NHz8tHYwRiuk1C413Nwc0PRzTT7ffnKXjoK
+         LIEQ==
+X-Gm-Message-State: AGi0PuZS+LfQ4CC92ljfqTFtXfnoXG107sCwNWtNyat81BpkOmyvnxva
+        vY71IdgKZQv25+DXVCqMneQ=
+X-Google-Smtp-Source: APiQypLa/KxVEJAuwOK/hWdTm1YU8JrHLqXCaAxUYLJM1nn3mtGtpnTVOFU77TpHqHnoVQGPtH1qFA==
+X-Received: by 2002:ac2:4853:: with SMTP id 19mr13296940lfy.171.1586870044950;
+        Tue, 14 Apr 2020 06:14:04 -0700 (PDT)
+Received: from [192.168.86.24] ([213.191.183.145])
+        by smtp.gmail.com with ESMTPSA id h14sm10658884lfm.60.2020.04.14.06.14.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Apr 2020 06:14:03 -0700 (PDT)
+Subject: Re: [PATCH 0/3] regulator: max77826: Add MAX77826 support
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20200413164440.1138178-1-iskren.chernev@gmail.com>
+ <20200414105725.GB5412@sirena.org.uk>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+Message-ID: <f167d50f-c0d7-f359-a167-2782040ae7c3@gmail.com>
+Date:   Tue, 14 Apr 2020 16:14:01 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <20200413162717.1.Idece266f5c8793193b57a1ddb1066d030c6af8e0@changeid>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200414105725.GB5412@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/20 2:27 am, Douglas Anderson wrote:
-> Open-coding a timeout loop invariably leads to errors with handling
-> the timeout properly in one corner case or another.  In the case of
-> cqhci we might report "CQE stuck on" even if it wasn't stuck on.
-> You'd just need this sequence of events to happen in cqhci_off():
-> 
-> 1. Call ktime_get().
-> 2. Something happens to interrupt the CPU for > 100 us (context switch
->    or interrupt).
-> 3. Check time and; set "timed_out" to true since > 100 us.
-> 4. Read CQHCI_CTL.
-> 5. Both "reg & CQHCI_HALT" and "timed_out" are true, so break.
-> 6. Since "timed_out" is true, falsely print the error message.
-> 
-> Rather than fixing the polling loop, use readx_poll_timeout() like
-> many people do.  This has been time tested to handle the corner cases.
-> 
-> Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+On 4/14/20 1:57 PM, Mark Brown wrote:
+> On Mon, Apr 13, 2020 at 07:44:37PM +0300, Iskren Chernev wrote:
+>> The MAX77826 is a PMIC found on the Samsung Galaxy S5 (klte) and possibly other
+>> devices. It is produced by Maxim Integrated and contains 15 LDOs a buck and
+>> a buck boost regulator.
+>>
+>> Iskren Chernev (3):
+>>   regulator: max77826: Add max77826 regulator driver
+>>   dt-bindings: regulator: Add document bindings for max77826
+>
+> Aside from the compatible string and the subject prefix on the DT
+> binding patch this looks good to me.
 
+About the subject -- I guess you mean the suffix is wrong, it should be:
 
-> ---
-> 
->  drivers/mmc/host/cqhci.c | 21 ++++++++++-----------
->  1 file changed, 10 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
-> index c2239ee2c0ef..75934f3c117e 100644
-> --- a/drivers/mmc/host/cqhci.c
-> +++ b/drivers/mmc/host/cqhci.c
-> @@ -5,6 +5,7 @@
->  #include <linux/delay.h>
->  #include <linux/highmem.h>
->  #include <linux/io.h>
-> +#include <linux/iopoll.h>
->  #include <linux/module.h>
->  #include <linux/dma-mapping.h>
->  #include <linux/slab.h>
-> @@ -349,12 +350,16 @@ static int cqhci_enable(struct mmc_host *mmc, struct mmc_card *card)
->  /* CQHCI is idle and should halt immediately, so set a small timeout */
->  #define CQHCI_OFF_TIMEOUT 100
->  
-> +static u32 cqhci_read_ctl(struct cqhci_host *cq_host)
-> +{
-> +	return cqhci_readl(cq_host, CQHCI_CTL);
-> +}
-> +
->  static void cqhci_off(struct mmc_host *mmc)
->  {
->  	struct cqhci_host *cq_host = mmc->cqe_private;
-> -	ktime_t timeout;
-> -	bool timed_out;
->  	u32 reg;
-> +	int err;
->  
->  	if (!cq_host->enabled || !mmc->cqe_on || cq_host->recovery_halt)
->  		return;
-> @@ -364,15 +369,9 @@ static void cqhci_off(struct mmc_host *mmc)
->  
->  	cqhci_writel(cq_host, CQHCI_HALT, CQHCI_CTL);
->  
-> -	timeout = ktime_add_us(ktime_get(), CQHCI_OFF_TIMEOUT);
-> -	while (1) {
-> -		timed_out = ktime_compare(ktime_get(), timeout) > 0;
-> -		reg = cqhci_readl(cq_host, CQHCI_CTL);
-> -		if ((reg & CQHCI_HALT) || timed_out)
-> -			break;
-> -	}
-> -
-> -	if (timed_out)
-> +	err = readx_poll_timeout(cqhci_read_ctl, cq_host, reg,
-> +				 reg & CQHCI_HALT, 0, CQHCI_OFF_TIMEOUT);
-> +	if (err < 0)
->  		pr_err("%s: cqhci: CQE stuck on\n", mmc_hostname(mmc));
->  	else
->  		pr_debug("%s: cqhci: CQE off\n", mmc_hostname(mmc));
-> 
+  dt-bindings: regulator: Document bindings for max77826
+
+I'll also change the compatible string.
 
