@@ -2,135 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B82F21A8565
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 18:43:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B4351A8573
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 18:44:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407483AbgDNQmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 12:42:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51724 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2407453AbgDNQmb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 12:42:31 -0400
-Received: from localhost.localdomain (unknown [122.167.127.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 64B11206E9;
-        Tue, 14 Apr 2020 16:42:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586882551;
-        bh=TTNv/zBcssUd74g7e5HBVWNfIQE66LmUlzcnYLSncuw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=b3vj97U4V8++qv3mMbyRL8A3QwAY0eeMLtIgZT1zqX7n2V8520HaJu37Pi1GDaNJY
-         GQ0W1mrT77Cqci1FxQdlPTis7FEtS6GKMw9XavUWMm0Iay1wxK1PoNIVO1N28e2Fww
-         7gV//4hpDkf6P8eEAo/pfg+fR0xip4BAUfzaelPc=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+        id S2437170AbgDNQoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 12:44:03 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:38898 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437160AbgDNQoB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Apr 2020 12:44:01 -0400
+Received: by mail-ot1-f68.google.com with SMTP id k21so278401otl.5;
+        Tue, 14 Apr 2020 09:44:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mdJGN+n2VYiCEYSu8u8xlSZpkqPfV2n6FeIMEPtdiVw=;
+        b=jRawnFkhpMXRAk9E226hLegLZOwJm+sg5V2l2IliKC7kTYlv3AjUbLNF2Q/3Db2pG8
+         /kBLzUav3peM7gUMIYvigwE7gudFjwgnz5cgfkvZaBIEmTKPPMwy21G9B/mNL19P0q+u
+         RnRmLqPM6octnPqaWHTIeyAzVkUP1eqT5CxQ+EQLFFSo5E3Mut6TtUNXCoiT+xikwlw8
+         o4EOKK1f3egKel9MXtX8QR4O0SnZQ7KJJxhMuX5CycDZ1j950fQCO+wXDhRdANxD+A/N
+         sCw5YYCzQa4ob6TORHTfkpqBzF6UeZV4grvYJZmGRw3Ll8N3V0Kt80ikIwcC8Gae8mtE
+         LH9w==
+X-Gm-Message-State: AGi0PuYsill/UOYWVcuAPTo1VL4eUTb985sb7O5B8uo3WEl08upTdoj1
+        qt2ARle7JPS4CPTrL/Hnyw==
+X-Google-Smtp-Source: APiQypINczSaAx3RvBdTvMgP/hZFPK9N4KYJKAMcgw+8KVN2riIwZXpaqEpmPb+hOROqaiW2MJnmaw==
+X-Received: by 2002:a4a:a98b:: with SMTP id w11mr19105677oom.80.1586882640106;
+        Tue, 14 Apr 2020 09:44:00 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id w15sm6274633ooq.24.2020.04.14.09.43.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 09:43:59 -0700 (PDT)
+Received: (nullmailer pid 11212 invoked by uid 1000);
+        Tue, 14 Apr 2020 16:43:57 -0000
+Date:   Tue, 14 Apr 2020 11:43:57 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        lukasz.luba@arm.com, daniel.lezcano@linaro.org,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Talel Shenhar <talel@amazon.com>,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        =?UTF-8?q?Andreas=20B=C3=B6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v9 5/5] usb: xhci: provide a debugfs hook for erasing rom
-Date:   Tue, 14 Apr 2020 22:11:52 +0530
-Message-Id: <20200414164152.2786474-6-vkoul@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200414164152.2786474-1-vkoul@kernel.org>
-References: <20200414164152.2786474-1-vkoul@kernel.org>
+        Heiko Stuebner <heiko@sntech.de>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Mans Rullgard <mans@mansr.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-hwmon@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH] dt-bindings: thermal: Get rid of thermal.txt and replace
+ references
+Message-ID: <20200414164357.GA11178@bogus>
+References: <cbd70c2f0f5ddae0d8e418fcb1e03101e408f6c2.1585753313.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cbd70c2f0f5ddae0d8e418fcb1e03101e408f6c2.1585753313.git.amit.kucheria@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-run "echo 1 > /sys/kernel/debug/renesas-usb/rom_erase" to erase firmware
-when driver is loaded.
+On Wed,  1 Apr 2020 20:35:50 +0530, Amit Kucheria wrote:
+> Now that we have yaml bindings for the thermal subsystem, get rid of the
+> old bindings (thermal.txt).
+> 
+> Replace all references to thermal.txt in the Documentation with a link
+> to the appropriate YAML bindings using the following search and replace
+> pattern:
+>  - If the reference is specific to the thermal-sensor-cells property,
+>  replace with a pointer to thermal-sensor.yaml
+>  - If the reference is to the cooling-cells property, replace with a
+>  pointer to thermal-cooling-devices.yaml
+>  - If the reference is generic thermal bindings, replace with a
+>  reference to thermal*.yaml.
+> 
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
+>  .../devicetree/bindings/arm/arm,scmi.txt      |   2 +-
+>  .../devicetree/bindings/arm/arm,scpi.txt      |   2 +-
+>  .../arm/marvell/ap80x-system-controller.txt   |   2 +-
+>  .../arm/marvell/cp110-system-controller.txt   |   2 +-
+>  .../bindings/cpufreq/cpufreq-dt.txt           |   3 +-
+>  .../bindings/cpufreq/cpufreq-mediatek.txt     |   4 +-
+>  .../devicetree/bindings/hwmon/gpio-fan.txt    |   3 +-
+>  .../devicetree/bindings/hwmon/lm90.txt        |   4 +-
+>  .../thermal/allwinner,sun8i-a83t-ths.yaml     |   2 +-
+>  .../bindings/thermal/amazon,al-thermal.txt    |   2 +-
+>  .../bindings/thermal/brcm,avs-ro-thermal.yaml |   2 +-
+>  .../bindings/thermal/brcm,bcm2835-thermal.txt |   2 +-
+>  .../bindings/thermal/hisilicon-thermal.txt    |   2 +-
+>  .../bindings/thermal/max77620_thermal.txt     |   6 +-
+>  .../bindings/thermal/mediatek-thermal.txt     |   2 +-
+>  .../thermal/nvidia,tegra124-soctherm.txt      |  10 +-
+>  .../thermal/nvidia,tegra186-bpmp-thermal.txt  |   2 +-
+>  .../bindings/thermal/qcom-spmi-temp-alarm.txt |   2 +-
+>  .../bindings/thermal/rockchip-thermal.txt     |   2 +-
+>  .../bindings/thermal/tango-thermal.txt        |   2 +-
+>  .../bindings/thermal/thermal-generic-adc.txt  |   2 +-
+>  .../devicetree/bindings/thermal/thermal.txt   | 586 ------------------
+>  .../bindings/thermal/uniphier-thermal.txt     |   2 +-
+>  23 files changed, 33 insertions(+), 615 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/thermal/thermal.txt
+> 
 
-Subsequent init of driver shall reload the firmware
-
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/usb/host/xhci-pci-renesas.c | 34 +++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
-
-diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
-index b321d55f1e24..c7e18e70f0f8 100644
---- a/drivers/usb/host/xhci-pci-renesas.c
-+++ b/drivers/usb/host/xhci-pci-renesas.c
-@@ -2,6 +2,7 @@
- /* Copyright (C) 2019-2020 Linaro Limited */
- 
- #include <linux/acpi.h>
-+#include <linux/debugfs.h>
- #include <linux/firmware.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-@@ -160,6 +161,8 @@ static int renesas_fw_verify(const void *fw_data,
- 	return 0;
- }
- 
-+static void debugfs_init(struct pci_dev *pdev);
-+
- static bool renesas_check_rom(struct pci_dev *pdev)
- {
- 	u16 rom_status;
-@@ -173,6 +176,7 @@ static bool renesas_check_rom(struct pci_dev *pdev)
- 	rom_status &= RENESAS_ROM_STATUS_ROM_EXISTS;
- 	if (rom_status) {
- 		dev_dbg(&pdev->dev, "External ROM exists\n");
-+		debugfs_init(pdev);
- 		return true; /* External ROM exists */
- 	}
- 
-@@ -439,6 +443,34 @@ static void renesas_rom_erase(struct pci_dev *pdev)
- 	dev_dbg(&pdev->dev, "ROM Erase... Done success\n");
- }
- 
-+static int debugfs_rom_erase(void *data, u64 value)
-+{
-+	struct pci_dev *pdev = data;
-+
-+	if (value == 1) {
-+		dev_dbg(&pdev->dev, "Userspace requested ROM erase\n");
-+		renesas_rom_erase(pdev);
-+		return 0;
-+	}
-+	return -EINVAL;
-+}
-+DEFINE_DEBUGFS_ATTRIBUTE(rom_erase_ops, NULL, debugfs_rom_erase, "%llu\n");
-+
-+static struct dentry *debugfs_root;
-+
-+static void debugfs_init(struct pci_dev *pdev)
-+{
-+	debugfs_root = debugfs_create_dir("renesas_usb", NULL);
-+
-+	debugfs_create_file("rom_erase", 0200, debugfs_root,
-+			    pdev, &rom_erase_ops);
-+}
-+
-+static void debugfs_exit(void)
-+{
-+	debugfs_remove_recursive(debugfs_root);
-+}
-+
- static bool renesas_download_rom(struct pci_dev *pdev,
- 				 const u32 *fw, size_t step)
- {
-@@ -696,6 +728,8 @@ int renesas_xhci_pci_probe(struct pci_dev *dev,
- 
- int renesas_xhci_pci_remove(struct pci_dev *dev)
- {
-+	debugfs_exit();
-+
- 	if (renesas_fw_check_running(dev)) {
- 		/*
- 		 * bail out early, if this was a renesas device w/o FW.
--- 
-2.25.1
-
+Reviewed-by: Rob Herring <robh@kernel.org>
