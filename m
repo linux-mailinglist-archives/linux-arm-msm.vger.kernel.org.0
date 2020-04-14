@@ -2,73 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10F7C1A89BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:37:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7696F1A89F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:44:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504073AbgDNShC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 14:37:02 -0400
-Received: from vps0.lunn.ch ([185.16.172.187]:37346 "EHLO vps0.lunn.ch"
+        id S2504252AbgDNSoA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 14:44:00 -0400
+Received: from vps0.lunn.ch ([185.16.172.187]:37374 "EHLO vps0.lunn.ch"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730984AbgDNShB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 14:37:01 -0400
+        id S1729658AbgDNSn4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Apr 2020 14:43:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
         s=20171124; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
         Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
         Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
         :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
         List-Post:List-Owner:List-Archive;
-        bh=ViDMoOKYM5eKMxDsxHH7qVo/oFOUllzmSiKC3yZPO6c=; b=a4bjsZvzVTQKEboODtQWY+VzaR
-        Uka9txjlohDs9CE42qN9gGt3beuSmKNSmtSo7sK+GvEmNmBdul/j9c1ITfwevq3/jPyfVKOK/ju0h
-        cXqUEA7fx3zAhjjBHSzaQmtEoOu3GpTuVsEJOgDDdlfssYACYEu7t10Syh0LjvN7FKLA=;
+        bh=/TPZArQkhShtB5ieni8kCIGplQcFUqW8Ye4PfsxgJyI=; b=p1MBv7OCUWAJRl3FJ41+ai4tSW
+        9g4Uc4/uF7LPeOej+g4Ln6soOyb8O48n1gjCWLI0ASKqxJNlKzxmOO2P//xrzEespKM+2DKIuEJrM
+        2nR996wV6B60AciyaOBi6jrUezcqahMKCI62Kh8YMOWBb1UvK1tTJzftmDZ6+57s/5Ck=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.93)
         (envelope-from <andrew@lunn.ch>)
-        id 1jOQQW-002hvo-0W; Tue, 14 Apr 2020 20:36:52 +0200
-Date:   Tue, 14 Apr 2020 20:36:52 +0200
+        id 1jOQXC-002i09-IY; Tue, 14 Apr 2020 20:43:46 +0200
+Date:   Tue, 14 Apr 2020 20:43:46 +0200
 From:   Andrew Lunn <andrew@lunn.ch>
 To:     Robert Marko <robert.marko@sartura.hr>
 Cc:     f.fainelli@gmail.com, hkallweit1@gmail.com, linux@armlinux.org.uk,
         linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robh+dt@kernel.org, Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org,
         Christian Lamparter <chunkeey@gmail.com>,
         Luka Perkov <luka.perkov@sartura.hr>
-Subject: Re: [PATCH 1/3] net: phy: mdio: add IPQ40xx MDIO driver
-Message-ID: <20200414183652.GB637127@lunn.ch>
-References: <20200413170107.246509-1-robert.marko@sartura.hr>
- <20200413184219.GH557892@lunn.ch>
- <CA+HBbNE_-Pjr6dZ3qjgk1MiaT3PL9eUgs=XfK-ohkWDCR9yfZA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] net: phy: mdio: add IPQ40xx MDIO driver
+Message-ID: <20200414184346.GC637127@lunn.ch>
+References: <20200414181012.114905-1-robert.marko@sartura.hr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+HBbNE_-Pjr6dZ3qjgk1MiaT3PL9eUgs=XfK-ohkWDCR9yfZA@mail.gmail.com>
+In-Reply-To: <20200414181012.114905-1-robert.marko@sartura.hr>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Unfortunately, I don't have access to documentation and this is all based on
-> GPL code from Qualcomm's SDK.
-> So I don't really know whats their purpose.
+Hi Robert
 
-Then please try to reverse engineer it. Just looking at the code, it
-seems like one register is read, and the other is write. So use that
-in the name.
+This is looking better
 
-> No, this is also an old relic from the SDK driver.
-> It works without this perfectly fine, so I will drop it from v2.
+> +#include <linux/delay.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/mutex.h>
 
-Part of cleaning up 'Vendor Crap' is throwing out all the stuff like
-this. What you end up with should be something you would of been happy
-to write yourself.
+I don't think you need this header. There are no mutexes here.
 
-> > Why the name am? Generally priv is used. I could also understand bus,
-> > or even data, but am?
-> Like most stuff in this driver, its a leftover from the SDK driver.
+> +#include <linux/io.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_mdio.h>
+> +#include <linux/phy.h>
+> +#include <linux/platform_device.h>
+> +
+> +#define MDIO_CTRL_0_REG		0x40
+> +#define MDIO_CTRL_1_REG		0x44
+> +#define MDIO_CTRL_2_REG		0x48
+> +#define MDIO_CTRL_3_REG		0x4c
+> +#define MDIO_CTRL_4_REG		0x50
 
-I guessed as much. But this is the sort of thing you need to fix when
-cleaning up 'vendor crap'.
+So your next version will hopefully have better names.
 
-	 Andrew
+> +static int ipq40xx_mdio_wait_busy(struct mii_bus *bus)
+> +{
+> +	struct ipq40xx_mdio_data *priv = bus->priv;
+> +	int i;
+> +
+> +	for (i = 0; i < IPQ40XX_MDIO_RETRY; i++) {
+> +		unsigned int busy;
+> +
+> +		busy = readl(priv->membase + MDIO_CTRL_4_REG) &
+> +			MDIO_CTRL_4_ACCESS_BUSY;
+> +		if (!busy)
+> +			return 0;
+> +
+> +		/* BUSY might take to be cleard by 15~20 times of loop */
+> +		udelay(IPQ40XX_MDIO_DELAY);
+> +	}
+> +
+> +	dev_err(bus->parent, "MDIO operation timed out\n");
+> +
+> +	return -ETIMEDOUT;
+> +}
+
+You can probably make use of include/linux/iopoll.h 
+
+    Andrew
