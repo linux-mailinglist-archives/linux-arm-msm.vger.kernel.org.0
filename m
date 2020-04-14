@@ -2,112 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 705A01A8BF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 22:10:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB5AD1A8C6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 22:27:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2505506AbgDNUKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 16:10:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35768 "EHLO
+        id S2633101AbgDNU1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 16:27:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1731040AbgDNUKs (ORCPT
+        by vger.kernel.org with ESMTP id S2633097AbgDNU1o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 16:10:48 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB6DC03C1AA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 13:10:48 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id c138so453798pfc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 13:10:48 -0700 (PDT)
+        Tue, 14 Apr 2020 16:27:44 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EF61C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 13:27:43 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id i3so434206pgk.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 13:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ppH/+YgCTeOL3Dr2C7WADabmRRYp+dAF5+qWcrgchF0=;
-        b=BwmNsRYexbR7lKrCQrRx5vsflrNkwJmuQvHInrHOfAT5Dk3KjbgEjVMmw76lAtjYT1
-         NMhgs04kdmPjqzqupZHaAZB8KgSRn/q/t6O2dWDYs7nPuwzziHX3Qc6PFNZ5kankIYN3
-         ynMKtW6TWXTgjetozVX2nrvQnHjWoNtgmnvT0=
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=5RliaQQNnLJGpwVof7AGBkAovyUlF93NpEx2vg6GNe4=;
+        b=iOcrYMBcdiFRcFr0faRBE/ds07jwz/BEpLwqistfEEFf6yRAe8whtW2CQkBWGZfBsG
+         Ywb26Ql5Z/gsMuE8AlDFDpqSPdgIY16FIZDFs5sZascRUrD6fWCXip3cEB65CrTbj3St
+         WntNTNQJuzqZQqOkyWQdlR20ejSDlr3lM5/mc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ppH/+YgCTeOL3Dr2C7WADabmRRYp+dAF5+qWcrgchF0=;
-        b=sBBCw5POP255L/n6qvlZSO/PycF7kvyn5ROtn+6cWTNUq/0XtJWMyJYzT80iyw5gSY
-         1bsCkI4157G6bsk9QUP77qt5J9Fl9lUQAY7Ai1OVfbQPFsH8BeQ+Nz3xZ018QOfG1o75
-         18QxrqyLJC/yKjFkS/TTOtwmpScQ4yU1lMKcioeBIJkkd286sEH9u1cKWT5LGsgsfaPn
-         kU/4fIoAIx3mnk1RCspb+cCmy8pNjxXbjwCOtOJkuI3gvlT/w3dfUIfL6fcBKAAjeixR
-         xjMD5jtXo6hgjehfyCs8K67zclxAfBVmICi8+gFDpFV6wx+l32v4F6MOtUm3bVFYLffD
-         JOug==
-X-Gm-Message-State: AGi0PubkPUXCkHM3GcFKaWtTLFoMSGSkRtm0aArpE0KwLFZ9Klvssqo6
-        SG/pplmTiUI+0sn92IRRL2gHPA==
-X-Google-Smtp-Source: APiQypJPg1zVr0kK4Hik17t3Nla01ANehPz3YuKx5NpHqPaF9GKVC9k17lYP+tIq+gKMj4lum9Z3kA==
-X-Received: by 2002:a62:4e0c:: with SMTP id c12mr23544904pfb.87.1586895047930;
-        Tue, 14 Apr 2020 13:10:47 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id 135sm12189805pfu.207.2020.04.14.13.10.47
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=5RliaQQNnLJGpwVof7AGBkAovyUlF93NpEx2vg6GNe4=;
+        b=AtO5viOYHmUft9zeYwXsim9wAhj94UHRIB59WXrcjsTx5SC9bJHe2cou8S7fEDAa5X
+         YVNDr1ZeN8Sob6H446QxWl/PQlTXkWuZKVH3Y+WIvtlbgmnv1PfQIqsvAQt5HE23Uw88
+         0JM63CvsUw95IiYWBf67/KAoC34u0uI0LBJY5titSYAC8Jji9HVh/uKqbnXGpuN9khU7
+         hZ1+OJreGt0/TZ4a7sm3io5a3+JQsCi0YpJ0H8F3k0in+AcEiSk689Ylha5QCXlaQD1h
+         7lNit7EMgo8I9GJAMX7DB9R2DNQ+deGoA0ksHWFs4cr96GRFmjOoZUD9be9ZYNiQ7z0S
+         481A==
+X-Gm-Message-State: AGi0PuYWq8evQf/5O8iwNhPfrqaeIP2CZcQidMf/bk+vnU336zw6Sd94
+        f6+h4hPdyEuBmxuSW4PfX/IykQ==
+X-Google-Smtp-Source: APiQypI31Wb4q3OPBM1+ulbl2yfyn2IeuOw9HklrX+6xp4oesOVGYL42/oWbtNCZaqIQk93D9uOWJQ==
+X-Received: by 2002:a62:6204:: with SMTP id w4mr2667614pfb.273.1586896062457;
+        Tue, 14 Apr 2020 13:27:42 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id j6sm11873666pfe.134.2020.04.14.13.27.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 13:10:47 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     mkshah@codeaurora.org, joe@perches.com, swboyd@chromium.org,
-        mka@chromium.org, evgreen@chromium.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()
-Date:   Tue, 14 Apr 2020 13:10:16 -0700
-Message-Id: <20200414131010.v2.2.I8550512081c89ec7a545018a7d2d9418a27c1a7a@changeid>
-X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
+        Tue, 14 Apr 2020 13:27:41 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 In-Reply-To: <20200414131010.v2.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
 References: <20200414131010.v2.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 1/2] soc: qcom: rpmh-rsc: Factor "tcs_reg_addr" and "tcs_cmd_addr" calculation
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     mkshah@codeaurora.org, joe@perches.com, mka@chromium.org,
+        evgreen@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Date:   Tue, 14 Apr 2020 13:27:41 -0700
+Message-ID: <158689606109.105027.1689640688969579125@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If our data still isn't there after 1 second, shout and give up.
+Quoting Douglas Anderson (2020-04-14 13:10:15)
+> We can make some of the register access functions more readable by
+> factoring out the calculations a little bit.
+>=20
+> Suggested-by: Joe Perches <joe@perches.com>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-Reported-by: Joe Perches <joe@perches.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
-Changes in v2:
-- Patch ("Timeout after 1 second") new for v2.
-
- drivers/soc/qcom/rpmh-rsc.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index f988e9cc2c30..02fc114ffb4f 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -10,6 +10,7 @@
- #include <linux/delay.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
- #include <linux/of.h>
-@@ -174,12 +175,13 @@ static void write_tcs_reg(const struct rsc_drv *drv, int reg, int tcs_id,
- static void write_tcs_reg_sync(const struct rsc_drv *drv, int reg, int tcs_id,
- 			       u32 data)
- {
-+	u32 new_data;
-+
- 	writel(data, tcs_reg_addr(drv, reg, tcs_id));
--	for (;;) {
--		if (data == readl(tcs_reg_addr(drv, reg, tcs_id)))
--			break;
--		udelay(1);
--	}
-+	if (readl_poll_timeout_atomic(tcs_reg_addr(drv, reg, tcs_id), new_data,
-+				      new_data == data, 1, USEC_PER_SEC))
-+		pr_err("%s: error writing %#x to %d:%d\n", drv->name,
-+		       data, tcs_id, reg);
- }
- 
- /**
--- 
-2.26.0.110.g2183baf09c-goog
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
