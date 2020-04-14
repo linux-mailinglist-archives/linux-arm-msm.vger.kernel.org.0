@@ -2,96 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7696F1A89F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:44:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CE4D1A8A0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 20:47:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504252AbgDNSoA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 14:44:00 -0400
-Received: from vps0.lunn.ch ([185.16.172.187]:37374 "EHLO vps0.lunn.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729658AbgDNSn4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 14:43:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=/TPZArQkhShtB5ieni8kCIGplQcFUqW8Ye4PfsxgJyI=; b=p1MBv7OCUWAJRl3FJ41+ai4tSW
-        9g4Uc4/uF7LPeOej+g4Ln6soOyb8O48n1gjCWLI0ASKqxJNlKzxmOO2P//xrzEespKM+2DKIuEJrM
-        2nR996wV6B60AciyaOBi6jrUezcqahMKCI62Kh8YMOWBb1UvK1tTJzftmDZ6+57s/5Ck=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.93)
-        (envelope-from <andrew@lunn.ch>)
-        id 1jOQXC-002i09-IY; Tue, 14 Apr 2020 20:43:46 +0200
-Date:   Tue, 14 Apr 2020 20:43:46 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     f.fainelli@gmail.com, hkallweit1@gmail.com, linux@armlinux.org.uk,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Christian Lamparter <chunkeey@gmail.com>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: Re: [PATCH v2 1/3] net: phy: mdio: add IPQ40xx MDIO driver
-Message-ID: <20200414184346.GC637127@lunn.ch>
-References: <20200414181012.114905-1-robert.marko@sartura.hr>
+        id S2504324AbgDNSqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 14:46:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2504322AbgDNSqd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Apr 2020 14:46:33 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A877C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:46:33 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id o3so661290vsd.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:46:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hm1Qks6SZ0yWu4P75XfFoZTXE4Nra+rfLYilmC4vdmU=;
+        b=AskEzpYssKBaC+I8r9xjA/upQU03fey7fH06JRnjoVatycGcNwUujD+hfTF271zYY3
+         LjnobQTSiBTpktVOcl+h3EILwuI8sCGjEqPFBGZ1b5w4ZJnfJ+SaoQpR5w56BJfu7UPp
+         iHdwkGKCYF2HEvA47R3NTYI22vz2qYDlqXVdk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hm1Qks6SZ0yWu4P75XfFoZTXE4Nra+rfLYilmC4vdmU=;
+        b=YaDr0SzkKPLlIMcLCaosZzynN0ODSrFm4i6LSWfOEFloIbEYrh2/GyN231ZYtpq+EV
+         jmPPQRw6asZjfxI1X2jfsj37GCLs4OJDWFN+6LP+7VZpTGu8RkIpNlzAWrfzF6dOAEbo
+         3pHZjI5kxe0k27UTZ5PKd8UtaDNxaDLXEcgtBqNiCo9XmxMU6fjTEopEzDNpKA7EW0sD
+         hiYxzhvYeFDqBhH079tRDC48bRWZ0zHB+L5eoY/ECHl1tSDfzEnNuJXBYDtGBqNh9qgF
+         wkNIrG14OuHCZV3OzcwMeR3FguMzL0bLrNPwAzQa+m9nDy+W2sOwpjwgTzmpM9H7ztFU
+         xYEQ==
+X-Gm-Message-State: AGi0PuanbPMlL6TaAPqIfubARaDAdvJ4jc2WtT/5iJzB9veHCpoexqDw
+        WQ778n/v11ETChvEX5qxKyzA/cnt6yM=
+X-Google-Smtp-Source: APiQypIYD8HluHvpKsdGygvkIcDdk8XlWxFkqMwSu6DyJiZbg9rHxpWKTydbLFrhLP161RJgS1z4NA==
+X-Received: by 2002:a05:6102:9c8:: with SMTP id g8mr1433897vsi.157.1586889991837;
+        Tue, 14 Apr 2020 11:46:31 -0700 (PDT)
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
+        by smtp.gmail.com with ESMTPSA id 129sm3715932vso.31.2020.04.14.11.46.31
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Apr 2020 11:46:31 -0700 (PDT)
+Received: by mail-vs1-f45.google.com with SMTP id u11so635470vsu.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 11:46:31 -0700 (PDT)
+X-Received: by 2002:a67:2b07:: with SMTP id r7mr1505045vsr.169.1586889990771;
+ Tue, 14 Apr 2020 11:46:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200414181012.114905-1-robert.marko@sartura.hr>
+References: <20200414104120.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
+ <9c633ea161df91265a338aaa93a78443894c268f.camel@perches.com>
+In-Reply-To: <9c633ea161df91265a338aaa93a78443894c268f.camel@perches.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 14 Apr 2020 11:46:19 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X8Wci5cKPcfHQq-PjsexwLCjErnB63gF4_XgTBK9aWFQ@mail.gmail.com>
+Message-ID: <CAD=FV=X8Wci5cKPcfHQq-PjsexwLCjErnB63gF4_XgTBK9aWFQ@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Factor "tcs_reg_addr" and
+ "tcs_cmd_addr" calculation
+To:     Joe Perches <joe@perches.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robert
+Hi,
 
-This is looking better
+On Tue, Apr 14, 2020 at 10:58 AM Joe Perches <joe@perches.com> wrote:
+>
+> On Tue, 2020-04-14 at 10:41 -0700, Douglas Anderson wrote:
+> > We can make some of the register access functions more readable by
+> > factoring out the calculations a little bit.
+>
+> unrelated trivia:
+>
+> > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> []
+> >  static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
+> >                              u32 data)
+> >  {
+> > -     writel(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
+> > +     writel(data, tcs_reg_addr(drv, reg, tcs_id));
+> >       for (;;) {
+> > -             if (data == readl(drv->tcs_base + reg +
+> > -                               RSC_DRV_TCS_OFFSET * tcs_id))
+> > +             if (data == readl(tcs_reg_addr(drv, reg, tcs_id)))
+> >                       break;
+> >               udelay(1);
+> >       }
+>
+> There a lockup potential here.
+>
+> It might be better to use some max loop counter with
+> an error/warning emitted instead of a continuous retry.
 
-> +#include <linux/delay.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/mutex.h>
+Yeah, I noticed that too but I assumed that it was probably OK.  I
+think in this case it's really just confirming that the write made it
+across the bus since it's checking the same bit that it's writing.
+...but I wouldn't be opposed to this changing to use
+readl_poll_timeout().
 
-I don't think you need this header. There are no mutexes here.
-
-> +#include <linux/io.h>
-> +#include <linux/of_address.h>
-> +#include <linux/of_mdio.h>
-> +#include <linux/phy.h>
-> +#include <linux/platform_device.h>
-> +
-> +#define MDIO_CTRL_0_REG		0x40
-> +#define MDIO_CTRL_1_REG		0x44
-> +#define MDIO_CTRL_2_REG		0x48
-> +#define MDIO_CTRL_3_REG		0x4c
-> +#define MDIO_CTRL_4_REG		0x50
-
-So your next version will hopefully have better names.
-
-> +static int ipq40xx_mdio_wait_busy(struct mii_bus *bus)
-> +{
-> +	struct ipq40xx_mdio_data *priv = bus->priv;
-> +	int i;
-> +
-> +	for (i = 0; i < IPQ40XX_MDIO_RETRY; i++) {
-> +		unsigned int busy;
-> +
-> +		busy = readl(priv->membase + MDIO_CTRL_4_REG) &
-> +			MDIO_CTRL_4_ACCESS_BUSY;
-> +		if (!busy)
-> +			return 0;
-> +
-> +		/* BUSY might take to be cleard by 15~20 times of loop */
-> +		udelay(IPQ40XX_MDIO_DELAY);
-> +	}
-> +
-> +	dev_err(bus->parent, "MDIO operation timed out\n");
-> +
-> +	return -ETIMEDOUT;
-> +}
-
-You can probably make use of include/linux/iopoll.h 
-
-    Andrew
+-Doug
