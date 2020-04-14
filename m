@@ -2,17 +2,17 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 425681A7DA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 15:25:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78CBF1A7DAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 15:25:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731813AbgDNNYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 09:24:33 -0400
-Received: from 8bytes.org ([81.169.241.247]:34908 "EHLO theia.8bytes.org"
+        id S1731864AbgDNNY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 09:24:59 -0400
+Received: from 8bytes.org ([81.169.241.247]:34942 "EHLO theia.8bytes.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2502874AbgDNNQB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S2502877AbgDNNQB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 14 Apr 2020 09:16:01 -0400
 Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 362B2485; Tue, 14 Apr 2020 15:15:52 +0200 (CEST)
+        id 480DB475; Tue, 14 Apr 2020 15:15:52 +0200 (CEST)
 From:   Joerg Roedel <joro@8bytes.org>
 To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         Robin Murphy <robin.murphy@arm.com>,
@@ -37,9 +37,9 @@ Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org,
         Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH v2 04/33] iommu/vt-d: Wire up iommu_ops->def_domain_type
-Date:   Tue, 14 Apr 2020 15:15:13 +0200
-Message-Id: <20200414131542.25608-5-joro@8bytes.org>
+Subject: [PATCH v2 05/33] iommu/amd: Remove dma_mask check from check_device()
+Date:   Tue, 14 Apr 2020 15:15:14 +0200
+Message-Id: <20200414131542.25608-6-joro@8bytes.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200414131542.25608-1-joro@8bytes.org>
 References: <20200414131542.25608-1-joro@8bytes.org>
@@ -50,26 +50,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Joerg Roedel <jroedel@suse.de>
 
-The Intel VT-d driver already has a matching function to determine the
-default domain type for a device. Wire it up in intel_iommu_ops.
+The check was only needed for the DMA-API implementation in the AMD
+IOMMU driver, which no longer exists.
 
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 ---
- drivers/iommu/intel-iommu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
-index ef0a5246700e..b9f905a55dda 100644
---- a/drivers/iommu/intel-iommu.c
-+++ b/drivers/iommu/intel-iommu.c
-@@ -6209,6 +6209,7 @@ const struct iommu_ops intel_iommu_ops = {
- 	.dev_enable_feat	= intel_iommu_dev_enable_feat,
- 	.dev_disable_feat	= intel_iommu_dev_disable_feat,
- 	.is_attach_deferred	= intel_iommu_is_attach_deferred,
-+	.def_domain_type	= device_def_domain_type,
- 	.pgsize_bitmap		= INTEL_IOMMU_PGSIZES,
- };
+diff --git a/drivers/iommu/amd_iommu.c b/drivers/iommu/amd_iommu.c
+index 73b4f84cf449..504f2db75eda 100644
+--- a/drivers/iommu/amd_iommu.c
++++ b/drivers/iommu/amd_iommu.c
+@@ -326,7 +326,7 @@ static bool check_device(struct device *dev)
+ {
+ 	int devid;
  
+-	if (!dev || !dev->dma_mask)
++	if (!dev)
+ 		return false;
+ 
+ 	devid = get_device_id(dev);
 -- 
 2.17.1
 
