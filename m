@@ -2,18 +2,23 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B90A1A7CE8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 15:17:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37D5E1A7D34
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 15:22:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503005AbgDNNRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 09:17:32 -0400
-Received: from 8bytes.org ([81.169.241.247]:35566 "EHLO theia.8bytes.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2502999AbgDNNRa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 09:17:30 -0400
+        id S1731403AbgDNNUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 09:20:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55888 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731120AbgDNNUd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Apr 2020 09:20:33 -0400
+X-Greylist: delayed 277 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 14 Apr 2020 06:20:32 PDT
+Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED76DC061A0C;
+        Tue, 14 Apr 2020 06:20:32 -0700 (PDT)
 Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 7CE0145B; Tue, 14 Apr 2020 15:17:26 +0200 (CEST)
-Date:   Tue, 14 Apr 2020 15:17:24 +0200
+        id 340BE45B; Tue, 14 Apr 2020 15:20:31 +0200 (CEST)
+Date:   Tue, 14 Apr 2020 15:20:29 +0200
 From:   Joerg Roedel <joro@8bytes.org>
 To:     Marek Szyprowski <m.szyprowski@samsung.com>
 Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
@@ -37,32 +42,38 @@ Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org,
         Joerg Roedel <jroedel@suse.de>
-Subject: Re: [RFC PATCH 33/34] iommu: Remove add_device()/remove_device()
- code-paths
-Message-ID: <20200414131724.GA14731@8bytes.org>
+Subject: Re: [PATCH] iommu/exynos: Get rid of 'struct exynos_iommu_owner'
+ exynos_iommu_owner
+Message-ID: <20200414132029.GB14731@8bytes.org>
 References: <20200407183742.4344-1-joro@8bytes.org>
- <CGME20200407183806eucas1p2cf45fbce5a43a6b4fe3a623b28da0606@eucas1p2.samsung.com>
- <20200407183742.4344-34-joro@8bytes.org>
- <1a88547f-ac90-825e-e529-a56c2c4e0391@samsung.com>
+ <CGME20200407184501eucas1p25407bc96e4345df406cf6ba061ae6a82@eucas1p2.samsung.com>
+ <20200407183742.4344-32-joro@8bytes.org>
+ <449e7f16-e719-9617-ec92-63b82c0bc33f@samsung.com>
+ <f59b0bb3-8c08-9cc9-bb1a-e69b7b226f60@samsung.com>
+ <20200409114620.GA16298@8bytes.org>
+ <40af831b-d00c-0cf9-0a06-e60c048a9ab8@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1a88547f-ac90-825e-e529-a56c2c4e0391@samsung.com>
+In-Reply-To: <40af831b-d00c-0cf9-0a06-e60c048a9ab8@samsung.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marek,
+On Thu, Apr 09, 2020 at 03:58:00PM +0200, Marek Szyprowski wrote:
+> I've checked and it works fine on top of 
+> ff68eb23308e6538ec7864c83d39540f423bbe90. However I'm not a fan of 
+> removing this 'owner' structure. It gave a nice abstraction for the all 
+> SYSMMU controllers for the given device (although most devices in the 
+> system have only one SYSMMU). Why this structure is a problem for your 
+> rework?
 
-On Fri, Apr 10, 2020 at 12:39:38PM +0200, Marek Szyprowski wrote:
-> > +		if (!group->default_domain)
-> > +			continue;
-> 
-> It doesn't look straight from the above diff, but this continue leaks 
-> group->lock taken.
-
-You are right, thanks for the review! I fixed it in v2.
+Okay, the structure itself is not a problem, I just thought it is not
+really necessary. But to keep things simple I've taken another approach
+for v2 of this series: Just use the first SYSMMU of the controllers list
+to link the device and the IOMMU. When the owner structure exists there
+is always one entry in this list, so that should work fine.
 
 Regards,
 
