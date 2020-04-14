@@ -2,154 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3949C1A87C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 19:43:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62EB81A8819
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2020 19:58:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440506AbgDNRnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 13:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40572 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730752AbgDNRnP (ORCPT
+        id S2503141AbgDNR6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 13:58:37 -0400
+Received: from smtprelay0237.hostedemail.com ([216.40.44.237]:57432 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729303AbgDNR6e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 13:43:15 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAFAEC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 10:43:14 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id u10so291273ual.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 10:43:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3ZBKEzRYAyg5odmunBQOsTiFt9lto96h1rTRyPjawxE=;
-        b=KXdEFUHQ/cPw/On0HpywTjxWBv2Kl9+8JOpMZ0YwgNBjShSMLESi6v38xldXdXcoDo
-         swBFJzn6XXeE9pPFIUcxTkCBiwWd+3MdvT9FqCjU7JaqzG9P7NRgJ+azAwMdVIiMt7Ua
-         konJGMRxSG75SDL1r/1P/UCcxmZChLHmqJvE4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3ZBKEzRYAyg5odmunBQOsTiFt9lto96h1rTRyPjawxE=;
-        b=VLdwIvLH0sEkPE7O2WYpk8SdTZiwPP5OfYpBoQikQs5zsSOnxyXm2S8VxR+xREpDB9
-         H2jkR1y1vBj634IVlbFGEk9uvimspkyeFS9xVh/kpsylCzh+xGftqQ8eSEpR1gdUxMCF
-         xseY7XRPd4ablnZjaxkwV1fHSnx1yFxUf/QvmMAkCc9mIG+44icpBoMUdUlKfVf3Xpes
-         h3e/R6nFveGpW2a/JEQyfLkSZaPtzF0QbIodMDl8eyUwIOT2UdM+jMYTSHJnfyNuL3xB
-         T4NGJeL2C6G45CvYVpDaaGw1D2Z2zBQyts43iUoOB0RnY5MWxuFSVu0xAkAYzfb71r9k
-         mXjA==
-X-Gm-Message-State: AGi0PuYzn6a/7xqekqDD5Gg+nWImyCpZLsMlNXd6SN9N221QKqlqGTiF
-        OKuP9Yivl4D23EDcsoPovTppttzXO2w=
-X-Google-Smtp-Source: APiQypIR0eytKMnLiFnPMsu2Bt8Xqz0emPp9f+tJeeHx5nBYWXsIyncoS/lKuINf/sviHvQljY503w==
-X-Received: by 2002:ab0:4162:: with SMTP id j89mr1293017uad.23.1586886193490;
-        Tue, 14 Apr 2020 10:43:13 -0700 (PDT)
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
-        by smtp.gmail.com with ESMTPSA id o6sm4357589vko.24.2020.04.14.10.43.12
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Apr 2020 10:43:12 -0700 (PDT)
-Received: by mail-vs1-f49.google.com with SMTP id y15so519087vsm.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 10:43:12 -0700 (PDT)
-X-Received: by 2002:a05:6102:3204:: with SMTP id r4mr1113097vsf.109.1586886192238;
- Tue, 14 Apr 2020 10:43:12 -0700 (PDT)
+        Tue, 14 Apr 2020 13:58:34 -0400
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay03.hostedemail.com (Postfix) with ESMTP id 53DB2837F27B;
+        Tue, 14 Apr 2020 17:58:31 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1540:1593:1594:1711:1730:1747:1777:1792:2393:2559:2562:2828:2901:3138:3139:3140:3141:3142:3352:3622:3865:3866:3867:3872:4321:4605:5007:8531:10004:10400:10481:10848:11026:11232:11473:11658:11914:12296:12297:12740:12760:12895:13069:13153:13161:13228:13229:13255:13311:13357:13439:13972:14659:14721:19900:21080:21627:30054:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
+X-HE-Tag: thing26_ffa4eda79c27
+X-Filterd-Recvd-Size: 1879
+Received: from XPS-9350.home (unknown [47.151.136.130])
+        (Authenticated sender: joe@perches.com)
+        by omf08.hostedemail.com (Postfix) with ESMTPA;
+        Tue, 14 Apr 2020 17:58:29 +0000 (UTC)
+Message-ID: <9c633ea161df91265a338aaa93a78443894c268f.camel@perches.com>
+Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Factor "tcs_reg_addr" and
+ "tcs_cmd_addr" calculation
+From:   Joe Perches <joe@perches.com>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mkshah@codeaurora.org, mka@chromium.org, swboyd@chromium.org,
+        evgreen@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Tue, 14 Apr 2020 10:56:20 -0700
+In-Reply-To: <20200414104120.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
+References: <20200414104120.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.34.1-2 
 MIME-Version: 1.0
-References: <20200413170415.32463-1-dianders@chromium.org> <20200413100321.v4.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
- <6566837cdb0e8db522c53daba8baf49c2ca79376.camel@perches.com>
- <CAD=FV=UOzVmwpoxd4QTSPiG9nt=YjUYZdgmK=SKU6vTFWcf=bw@mail.gmail.com> <12eb64714f3a7ae33912c468191a471d09ade504.camel@perches.com>
-In-Reply-To: <12eb64714f3a7ae33912c468191a471d09ade504.camel@perches.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 14 Apr 2020 10:43:00 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XbJz0TYERDygtPDbM-TjOpDnua2qJJPSYKmSj1Ja3hoA@mail.gmail.com>
-Message-ID: <CAD=FV=XbJz0TYERDygtPDbM-TjOpDnua2qJJPSYKmSj1Ja3hoA@mail.gmail.com>
-Subject: Re: [PATCH v4 01/10] drivers: qcom: rpmh-rsc: Clean code
- reading/writing TCS regs/cmds
-To:     Joe Perches <joe@perches.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Evan Green <evgreen@chromium.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, 2020-04-14 at 10:41 -0700, Douglas Anderson wrote:
+> We can make some of the register access functions more readable by
+> factoring out the calculations a little bit.
 
-On Mon, Apr 13, 2020 at 2:35 PM Joe Perches <joe@perches.com> wrote:
->
-> On Mon, 2020-04-13 at 14:18 -0700, Doug Anderson wrote:
-> > Hi,
->
-> Rehi.
->
-> > On Mon, Apr 13, 2020 at 11:21 AM Joe Perches <joe@perches.com> wrote:
-> > > On Mon, 2020-04-13 at 10:04 -0700, Douglas Anderson wrote:
-> > > > This patch makes two changes, both of which should be no-ops:
-> > > >
-> > > > 1. Make read_tcs_reg() / read_tcs_cmd() symmetric to write_tcs_reg() /
-> > > >    write_tcs_cmd().
-> > > >
-> > > > 2. Change the order of operations in the above functions to make it
-> > > >    more obvious to me what the math is doing.  Specifically first you
-> > > >    want to find the right TCS, then the right register, and then
-> > > >    multiply by the command ID if necessary.
-> > >
-> > > Though these operations are only used a couple times, perhaps
-> > > it'd be useful to have static inlines for the calcs.
-> > >
-> > > > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> > > []
-> > > > @@ -67,28 +67,33 @@
-> > > >  #define CMD_STATUS_ISSUED            BIT(8)
-> > > >  #define CMD_STATUS_COMPL             BIT(16)
-> > >
-> > > Maybe something like:
-> > >
-> > > static inline void __iomem *
-> > > tcs_reg_addr(struct rsc_drv drv, int reg, int tcs_id)
-> > > {
-> > >         return drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg;
-> > > }
-> > >
-> > > static inline void __iomem *
-> > > tcs_cmd_addr(struct rsc_drv drv, int reg, int tcs_id, int cmd_id)
-> > > {
-> > >         return tcs_reg_addr(drv, reg, tcs_id) + RSC_DRV_CMD_OFFSET * cmd_id;
-> > > }
-> > >
-> > > > -static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
-> > > > +static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
-> > > >  {
-> > > > -     return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
-> > > > +     return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
-> > > >                            RSC_DRV_CMD_OFFSET * cmd_id);
-> > >
-> > >         return readl_relaxed(tcs_cmd_addr(drv, reg, tcs_id, cmd_id));
-> > >
-> > > etc...
-> >
-> > I won't object if you really feel passionately about making that
-> > change but at this point it doesn't add tons of extra readability for
-> > me personally.
->
-> Just a suggestion.
+unrelated trivia:
 
-I tried it and after looking at it again, it definitely does make it cleaner.
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+[]
+>  static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
+>  			       u32 data)
+>  {
+> -	writel(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
+> +	writel(data, tcs_reg_addr(drv, reg, tcs_id));
+>  	for (;;) {
+> -		if (data == readl(drv->tcs_base + reg +
+> -				  RSC_DRV_TCS_OFFSET * tcs_id))
+> +		if (data == readl(tcs_reg_addr(drv, reg, tcs_id)))
+>  			break;
+>  		udelay(1);
+>  	}
+
+There a lockup potential here.
+
+It might be better to use some max loop counter with
+an error/warning emitted instead of a continuous retry.
 
 
-> > I was kinda hoping that Maulik and my series could
-> > land in the next few days since having 16 patches outstanding gets a
-> > bit unwieldy.  I'd rather not send out another spin of my series at
-> > this point since it's just a bunch more churn in everyone's inboxes.
-> > Maybe after they land you can post that as a follow-up cleanup?
->
-> If I remember...
-
-http://lore.kernel.org/r/20200414104120.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid
-
--Doug
