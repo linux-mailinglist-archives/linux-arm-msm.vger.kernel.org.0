@@ -2,166 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B3DF1AB05F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 20:11:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16F3D1AB0AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 20:27:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2411710AbgDOSLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 14:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45294 "EHLO
+        id S1416765AbgDOSZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 14:25:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2411706AbgDOSLn (ORCPT
+        by vger.kernel.org with ESMTP id S1416693AbgDOSZj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 14:11:43 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ADFEC061A0F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:11:43 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id u65so353252pfb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:11:42 -0700 (PDT)
+        Wed, 15 Apr 2020 14:25:39 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A843C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:25:39 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id i3so337196pgk.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Hv4Gb+XU8mOj8xMFdipxFcMjlc532U8U6KOUpsFhxqY=;
-        b=Gs45V7acM1Gg+IDEQIa8efTGGg+FVai47wUYfRNm7sgC8M3235Wdfd627OlVlKHree
-         G/JPIqjAQoOF8XLyehNauDN4H23NKVUyIa4c6e++RGuOQusJlK5JVxRWbw3QRuUGoJqO
-         TaD/89qJ+j7tYxgDCu/WtVuv5G/ZLBCfX9gl+AgCJXpWsj6YuJ4VaeuSXBhTKmAO2OF8
-         i/i5RsHx4X/GnRoq77MHKt2Ec/hYDX2QbLJFxEcAkm3pUQ/j8effzI8hR3pvnsPIcAWX
-         Azhy1QdjR5nkInSATS1UlDa1H4dG83YYu8+8hdn/wBWZeCVW5myrBWGYSUoyIhqYnw3g
-         qmGQ==
+        bh=apBr6U14gYAAXnZtkH5iEMZA/sjqdQJ3G2FfRV4H7YQ=;
+        b=Po4qxnD3VdhSZtdSzQscRSZsNseMPMZihIabc7K9yyi8mc1G8NKK8ikzG6/Ypuu/ks
+         Ol3VVFgueALm9UtzNcZn9TQ3V9f4FiSAPKX7Pu3gljKEXTMuXZELrctTSBE8FvyBAP4+
+         iBwJH7Jq+3Yfd+RZ/m3PkOnAszwWpPxH8fLHE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Hv4Gb+XU8mOj8xMFdipxFcMjlc532U8U6KOUpsFhxqY=;
-        b=V4k9Fq7MfJGPkGXxb2LRuts11CO++qXVE7rEZ2c9xQ/p+/z6QywyPJbjdzSsVhTNNI
-         spfeAKdbJmlD9Hm/zQexKFXqfy4Ulwc2mrQoaxfyS17dCIgudAStz/ULhAfSVLBhOA+J
-         n4DHhNUtI/GXhbqaKD6iJt9xLLn6LIICAIc2QhEITe1AO1fcRtvAlArUTPN0qYR6Owp2
-         V/FFqgoaNjCALTC1GZRwE5tNc8tqLejz6UBWgBYGAOBzs1YZ2YNXBwkam0ZjtPA30ih7
-         bVt3nLBsCJQ4eE+rp6OH5QXe2GwyAZ1CQQbKRoATxLqwKvbMPSAqKSoYSOzIfuYJQRQf
-         ZD+Q==
-X-Gm-Message-State: AGi0PuYkyRcsIjGRus1TSNgPYlSTgn/uMurf/HARAjogKUE0UTLNcJ1e
-        0/E626eAKqkyIj+FmIbBWd9HBw==
-X-Google-Smtp-Source: APiQypIjo5joNUHWhj8LYjKyMfT+ubnd1PrqS6lJmTvfS1amP7RXRU6Uzmg8PU7h9tURc3cv4RxdgQ==
-X-Received: by 2002:aa7:9625:: with SMTP id r5mr7532605pfg.256.1586974302516;
-        Wed, 15 Apr 2020 11:11:42 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id 65sm9606185pfz.211.2020.04.15.11.11.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 11:11:42 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 12:11:40 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bh=apBr6U14gYAAXnZtkH5iEMZA/sjqdQJ3G2FfRV4H7YQ=;
+        b=bOZ4kie6m8PeU3JSeyfIg0ZJ8bY95ADsUSPmFsUwlVgTKu96aN+PADfPfd0n2cqycl
+         oODO5542LTIyPMD8K24Kp9QlRN83ALx15f5o9DqK2zxnVQRQ3hPIi/w5/gHS3bDt3RjC
+         BR7Ljq4JZ8TMzQjGXS6AWDZjq44rIObNR/ObrMXfGz0QGDVGVeKWHMVTp8TwJI2WGggi
+         W8ZIqzKWjcOk1PxnyaSPR21YM1abqfJRs3PSs/MsJwH6AJqOCLky4taVdlx6//Ggr460
+         Vr2I2YqYK7MTr/7rTkwHWMiwFfcWx2yZCjamAMWa1cUJeyRwcH60arcWIDZ3HTlVe5hd
+         o2UA==
+X-Gm-Message-State: AGi0Pubz5k7xf0FVbNIbeoTWHXKjL06DUbcCZTjBVYTUZGAlEin9R5vP
+        39b0Losb5pcxanIm2EOGiBz41Q==
+X-Google-Smtp-Source: APiQypJAnIDjHsDbTZhHp1Ut7lqwB7mc5nU6RFZeHtVBd7LVASQYggF/EztLTh6wgsDBA5J1iYwGXA==
+X-Received: by 2002:a62:cdcc:: with SMTP id o195mr29335324pfg.323.1586975138818;
+        Wed, 15 Apr 2020 11:25:38 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id i15sm2661368pfo.195.2020.04.15.11.25.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Apr 2020 11:25:37 -0700 (PDT)
+Date:   Wed, 15 Apr 2020 11:25:36 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>, Todd Kjos <tkjos@google.com>,
+        Saravana Kannan <saravanak@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
-        psodagud@codeaurora.org
-Subject: Re: [PATCH v2 4/6] remoteproc: qcom: Add name field for every
- subdevice
-Message-ID: <20200415181140.GF16583@xps15>
-References: <1586389003-26675-1-git-send-email-sidgup@codeaurora.org>
- <1586389003-26675-5-git-send-email-sidgup@codeaurora.org>
+        Steven Rostedt <rostedt@goodmis.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: Re: [PATCH v3 2/3] soc: qcom: rpmh: Allow RPMH driver to be loaded
+ as a module
+Message-ID: <20200415182536.GX199755@google.com>
+References: <20200326224459.105170-1-john.stultz@linaro.org>
+ <20200326224459.105170-3-john.stultz@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1586389003-26675-5-git-send-email-sidgup@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200326224459.105170-3-john.stultz@linaro.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 08, 2020 at 04:36:41PM -0700, Siddharth Gupta wrote:
-> From: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-> 
-> When a client driver wishes to utilize functionality from a particular
-> subdevice of a remoteproc, it cannot differentiate between the subdevices
-> that have been added. This patch allows the client driver to distinguish
-> between subdevices and thus utilize their functionality.
-> 
-> Signed-off-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
+Hi John,
 
-Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+with commit efde2659b0fe ("drivers: qcom: rpmh-rsc: Use rcuidle
+tracepoints for rpmh") the rpmh-rsc driver fails to build as a
+module:
 
+drivers/soc/qcom/rpmh-rsc.c:281:3: error: implicit declaration of function 'trace_rpmh_send_msg_rcuidle' [-Werror,-Wimplicit-function-decr]
+                trace_rpmh_send_msg_rcuidle(drv, tcs_id, j, msgid, cmd);
+
+
+The problem is that the _rcuidle() functions are not generated for modules:
+
+#ifndef MODULE
+#define __DECLARE_TRACE_RCU(name, proto, args, cond, data_proto, data_args) \
+	static inline void trace_##name##_rcuidle(proto)		\
+	{								\
+		if (static_key_false(&__tracepoint_##name.key))		\
+			__DO_TRACE(&__tracepoint_##name,		\
+				TP_PROTO(data_proto),			\
+				TP_ARGS(data_args),			\
+				TP_CONDITION(cond), 1);			\
+	}
+#else
+#define __DECLARE_TRACE_RCU(name, proto, args, cond, data_proto, data_args)
+#endif
+
+Not sure what the best solution would be in this case. Having the macro
+define a dummy function for modules would fix the build error, however it
+would be confusing that the event is traced when the driver is built-in,
+but not when it is built as a module.
+
+I imagine the goal behind making this driver a module is to have a single
+kernel image for multiple SoC platforms, without too much platform
+specific code in the kernel image itself.
+
+I guess the question is whether there any options for keeping the driver
+modular and having consistent tracing behavior, short of removing the
+tracepoint.
+
+On Thu, Mar 26, 2020 at 10:44:58PM +0000, John Stultz wrote:
+> This patch allow the rpmh driver to be loaded as a permenent
+> module. Meaning it can be loaded from a module, but then cannot
+> be unloaded.
+> 
+> Ideally, it would include a remove hook and related logic, but
+> the rpmh driver is fairly core to the system, so once its loaded
+> with almost anythign else to get the system to go, the dependencies
+> are not likely to ever also be removed.
+> 
+> So making it a permenent module at least improves things slightly
+> over requiring it to be a built in driver.
+> 
+> Feedback would be appreciated!
+> 
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
 > ---
->  drivers/remoteproc/qcom_common.c | 6 ++++++
->  include/linux/remoteproc.h       | 2 ++
->  2 files changed, 8 insertions(+)
+>  drivers/soc/qcom/Kconfig    | 2 +-
+>  drivers/soc/qcom/rpmh-rsc.c | 6 ++++++
+>  2 files changed, 7 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 60650bc..1d2351b 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -56,6 +56,7 @@ void qcom_add_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glink)
->  		return;
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index af774555b9d2..ac91eaf810f7 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -104,7 +104,7 @@ config QCOM_RMTFS_MEM
+>  	  Say y here if you intend to boot the modem remoteproc.
 >  
->  	glink->dev = dev;
-> +	glink->subdev.name = kstrdup("glink", GFP_KERNEL);
->  	glink->subdev.start = glink_subdev_start;
->  	glink->subdev.stop = glink_subdev_stop;
+>  config QCOM_RPMH
+> -	bool "Qualcomm RPM-Hardened (RPMH) Communication"
+> +	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
+>  	depends on ARCH_QCOM && ARM64 || COMPILE_TEST
+>  	help
+>  	  Support for communication with the hardened-RPM blocks in
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index e278fc11fe5c..30585d98fdf1 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -11,6 +11,7 @@
+>  #include <linux/io.h>
+>  #include <linux/kernel.h>
+>  #include <linux/list.h>
+> +#include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/of_irq.h>
+>  #include <linux/of_platform.h>
+> @@ -679,6 +680,8 @@ static const struct of_device_id rpmh_drv_match[] = {
+>  	{ .compatible = "qcom,rpmh-rsc", },
+>  	{ }
+>  };
+> +MODULE_DEVICE_TABLE(of, rpmh_drv_match);
+> +
 >  
-> @@ -73,6 +74,7 @@ void qcom_remove_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glin
->  	if (!glink->node)
->  		return;
->  
-> +	kfree(glink->subdev.name);
->  	rproc_remove_subdev(rproc, &glink->subdev);
->  	of_node_put(glink->node);
+>  static struct platform_driver rpmh_driver = {
+>  	.probe = rpmh_rsc_probe,
+> @@ -693,3 +696,6 @@ static int __init rpmh_driver_init(void)
+>  	return platform_driver_register(&rpmh_driver);
 >  }
-> @@ -152,6 +154,7 @@ void qcom_add_smd_subdev(struct rproc *rproc, struct qcom_rproc_subdev *smd)
->  		return;
->  
->  	smd->dev = dev;
-> +	smd->subdev.name = kstrdup("smd", GFP_KERNEL);
->  	smd->subdev.start = smd_subdev_start;
->  	smd->subdev.stop = smd_subdev_stop;
->  
-> @@ -169,6 +172,7 @@ void qcom_remove_smd_subdev(struct rproc *rproc, struct qcom_rproc_subdev *smd)
->  	if (!smd->node)
->  		return;
->  
-> +	kfree(smd->subdev.name);
->  	rproc_remove_subdev(rproc, &smd->subdev);
->  	of_node_put(smd->node);
->  }
-> @@ -220,6 +224,7 @@ void qcom_add_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr,
->  			 const char *ssr_name)
->  {
->  	ssr->name = ssr_name;
-> +	ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
->  	ssr->subdev.unprepare = ssr_notify_unprepare;
->  
->  	rproc_add_subdev(rproc, &ssr->subdev);
-> @@ -233,6 +238,7 @@ EXPORT_SYMBOL_GPL(qcom_add_ssr_subdev);
->   */
->  void qcom_remove_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr)
->  {
-> +	kfree(ssr->subdev.name);
->  	rproc_remove_subdev(rproc, &ssr->subdev);
->  }
->  EXPORT_SYMBOL_GPL(qcom_remove_ssr_subdev);
-> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> index c5d36e6..687e1eb 100644
-> --- a/include/linux/remoteproc.h
-> +++ b/include/linux/remoteproc.h
-> @@ -523,6 +523,7 @@ struct rproc {
->  /**
->   * struct rproc_subdev - subdevice tied to a remoteproc
->   * @node: list node related to the rproc subdevs list
-> + * @name: name of the subdevice
->   * @prepare: prepare function, called before the rproc is started
->   * @start: start function, called after the rproc has been started
->   * @stop: stop function, called before the rproc is stopped; the @crashed
-> @@ -531,6 +532,7 @@ struct rproc {
->   */
->  struct rproc_subdev {
->  	struct list_head node;
-> +	char *name;
->  
->  	int (*prepare)(struct rproc_subdev *subdev);
->  	int (*start)(struct rproc_subdev *subdev);
+>  arch_initcall(rpmh_driver_init);
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPMh Driver");
+> +MODULE_LICENSE("GPL v2");
 > -- 
-> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.17.1
+> 
