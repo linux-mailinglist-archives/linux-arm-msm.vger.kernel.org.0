@@ -2,37 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E686B1AA3C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 15:22:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A742A1A9C81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 13:36:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506128AbgDONMV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 09:12:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55068 "EHLO mail.kernel.org"
+        id S2897110AbgDOLgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 07:36:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54800 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2897061AbgDOLfd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 07:35:33 -0400
+        id S2897100AbgDOLgA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Apr 2020 07:36:00 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7C9B9215A4;
-        Wed, 15 Apr 2020 11:35:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7D57C214AF;
+        Wed, 15 Apr 2020 11:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1586950533;
-        bh=G7KxnwoLgLdPJXOkgOpWzhaL/rwPD/wpMyKVXu5Bt9U=;
+        s=default; t=1586950559;
+        bh=009fT8XnlNWgSGFjkqzi9WHS52wJSOjnMq5vvLMSftE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=zsJcW0yr7/+NyNrHHcFVXKmT/sAlnh64En2NCyF5dYXpCF/7LDkPfdCkDl1KNgET5
-         ao6dztHhUsGLIbmo2UOCrDYZglDOMAVVKP1XN9MrQTYbJwQpaUafVskLC7HoyVkI4Z
-         Ufv86g8VHGbOJQ7pbSrrGZjnzTUvj0Xn/zFy1EI0=
+        b=dWMCTIG+EBPiQVPRSf1ARyILE7crI0o0Y1tT4EbX9ipNl26SPdYyebUIPrLsaA50a
+         oqsOwHXBKDi0B+Brb457ER6zU2CFiscxKEJKDwabeXaMoLM8v1kKM86tqye6D7xem0
+         qdx9cet8jOb+HlciuFDTpxqyh1lcBBDZhR7AI8bo=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 041/129] drivers: thermal: tsens: Release device in success path
-Date:   Wed, 15 Apr 2020 07:33:16 -0400
-Message-Id: <20200415113445.11881-41-sashal@kernel.org>
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.6 064/129] dt-bindings: thermal: tsens: Fix nvmem-cell-names schema
+Date:   Wed, 15 Apr 2020 07:33:39 -0400
+Message-Id: <20200415113445.11881-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200415113445.11881-1-sashal@kernel.org>
 References: <20200415113445.11881-1-sashal@kernel.org>
@@ -45,60 +47,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Amit Kucheria <amit.kucheria@linaro.org>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit f22a3bf0d2225fba438c46a25d3ab8823585a5e0 ]
+[ Upstream commit b9589def9f9af93d9d4c5969c9a6c166f070e36e ]
 
-We don't currently call put_device in case of successfully initialising
-the device. So we hold the reference and keep the device pinned forever.
+There's a typo 'nvmem-cells-names' in the schema which means the correct
+'nvmem-cell-names' in the examples are not checked. The possible values
+are wrong too both in that the 2nd entry is not specified correctly and the
+values are just wrong based on the dts files in the kernel.
 
-Allow control to fall through so we can use same code for success and
-error paths to put_device.
-
-As a part of this fixup, change devm_ioremap_resource to act on the same
-device pointer as that used to allocate regmap memory. That ensures that
-we are free to release op->dev after examining its resources.
-
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/d3996667e9f976bb30e97e301585cb1023be422e.1584015867.git.amit.kucheria@linaro.org
+Fixes: a877e768f655 ("dt-bindings: thermal: tsens: Convert over to a yaml schema")
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Amit Kucheria <amit.kucheria@linaro.org>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-pm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens-common.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/thermal/qcom-tsens.yaml          | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-index c8d57ee0a5bb2..2cc276cdfcdb1 100644
---- a/drivers/thermal/qcom/tsens-common.c
-+++ b/drivers/thermal/qcom/tsens-common.c
-@@ -602,7 +602,7 @@ int __init init_common(struct tsens_priv *priv)
- 		/* DT with separate SROT and TM address space */
- 		priv->tm_offset = 0;
- 		res = platform_get_resource(op, IORESOURCE_MEM, 1);
--		srot_base = devm_ioremap_resource(&op->dev, res);
-+		srot_base = devm_ioremap_resource(dev, res);
- 		if (IS_ERR(srot_base)) {
- 			ret = PTR_ERR(srot_base);
- 			goto err_put_device;
-@@ -620,7 +620,7 @@ int __init init_common(struct tsens_priv *priv)
- 	}
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index eef13b9446a87..a4df53228122a 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -53,13 +53,12 @@ properties:
+     description:
+       Reference to an nvmem node for the calibration data
  
- 	res = platform_get_resource(op, IORESOURCE_MEM, 0);
--	tm_base = devm_ioremap_resource(&op->dev, res);
-+	tm_base = devm_ioremap_resource(dev, res);
- 	if (IS_ERR(tm_base)) {
- 		ret = PTR_ERR(tm_base);
- 		goto err_put_device;
-@@ -687,8 +687,6 @@ int __init init_common(struct tsens_priv *priv)
- 	tsens_enable_irq(priv);
- 	tsens_debug_init(op);
+-  nvmem-cells-names:
++  nvmem-cell-names:
+     minItems: 1
+     maxItems: 2
+     items:
+-      - enum:
+-        - caldata
+-        - calsel
++      - const: calib
++      - const: calib_sel
  
--	return 0;
--
- err_put_device:
- 	put_device(&op->dev);
- 	return ret;
+   "#qcom,sensors":
+     allOf:
+@@ -125,7 +124,7 @@ examples:
+                  <0x4a8000 0x1000>; /* SROT */
+ 
+            nvmem-cells = <&tsens_caldata>, <&tsens_calsel>;
+-           nvmem-cell-names = "caldata", "calsel";
++           nvmem-cell-names = "calib", "calib_sel";
+ 
+            interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+            interrupt-names = "uplow";
 -- 
 2.20.1
 
