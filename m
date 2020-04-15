@@ -2,20 +2,20 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB21D1AA0AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 14:32:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1010E1AA0D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 14:33:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S369447AbgDOM35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 08:29:57 -0400
-Received: from mx2.suse.de ([195.135.220.15]:52318 "EHLO mx2.suse.de"
+        id S369600AbgDOMbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 08:31:48 -0400
+Received: from mx2.suse.de ([195.135.220.15]:53368 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S369427AbgDOM3p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 08:29:45 -0400
+        id S369595AbgDOMbp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Apr 2020 08:31:45 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 7F854AC11;
-        Wed, 15 Apr 2020 12:29:42 +0000 (UTC)
-Date:   Wed, 15 Apr 2020 14:29:40 +0200
+        by mx2.suse.de (Postfix) with ESMTP id C7A69AC11;
+        Wed, 15 Apr 2020 12:31:41 +0000 (UTC)
+Date:   Wed, 15 Apr 2020 14:31:40 +0200
 From:   Joerg Roedel <jroedel@suse.de>
 To:     Lu Baolu <baolu.lu@linux.intel.com>
 Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
@@ -39,39 +39,43 @@ Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org
-Subject: Re: [PATCH v2 13/33] iommu: Export bus_iommu_probe() and make is
- safe for re-probing
-Message-ID: <20200415122940.GB21899@suse.de>
+Subject: Re: [PATCH v2 07/33] iommu: Add probe_device() and remove_device()
+ call-backs
+Message-ID: <20200415123140.GC21899@suse.de>
 References: <20200414131542.25608-1-joro@8bytes.org>
- <20200414131542.25608-14-joro@8bytes.org>
- <1853992c-47a6-3724-812c-a52558c13732@linux.intel.com>
+ <20200414131542.25608-8-joro@8bytes.org>
+ <0ad37581-b464-30ac-c503-4c0daaf43867@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1853992c-47a6-3724-812c-a52558c13732@linux.intel.com>
+In-Reply-To: <0ad37581-b464-30ac-c503-4c0daaf43867@linux.intel.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Baolu,
-
-On Wed, Apr 15, 2020 at 02:10:03PM +0800, Lu Baolu wrote:
+On Wed, Apr 15, 2020 at 02:36:20PM +0800, Lu Baolu wrote:
 > On 2020/4/14 21:15, Joerg Roedel wrote:
-> > > +	/* Device is probed already if in a group */
-> > +	if (iommu_group_get(dev) != NULL)
+> > From: Joerg Roedel<jroedel@suse.de>
+> > 
+> > Add call-backs to 'struct iommu_ops' as an alternative to the
+> > add_device() and remove_device() call-backs, which will be removed when
+> > all drivers are converted.
+> > 
+> > The new call-backs will not setupt IOMMU groups and domains anymore,
+> > so also add a probe_finalize() call-back where the IOMMU driver can do
+> > per-device setup work which require the device to be set up with a
+> > group and a domain.
 > 
-> Same as
-> 	if (iommu_group_get(dev))
-> ?
-> 
-> By the way, do we need to put the group if device has already been
-> probed?
+> The subject is inaccurate. probe_device() and release_device() are
+> added to replace the add and remove pair.
 
-Right, fixed both, thank you.
-
+This patch does not replace them yet, it just adds the new call-backs.
+The removal of add_device()/remove_device() happens later in the
+patch-set when all drivers are converted.
 
 Regards,
 
 	Joerg
+
