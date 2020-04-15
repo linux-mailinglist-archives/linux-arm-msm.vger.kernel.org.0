@@ -2,110 +2,373 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 420871AABCF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:26:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E1571AAC46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:50:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506429AbgDOPYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 11:24:43 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:43319 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2505511AbgDOPYm (ORCPT
+        id S2409979AbgDOPuT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 11:50:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51326 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2394208AbgDOPtt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 11:24:42 -0400
-Received: by mail-oi1-f195.google.com with SMTP id j16so13776881oih.10;
-        Wed, 15 Apr 2020 08:24:41 -0700 (PDT)
+        Wed, 15 Apr 2020 11:49:49 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072D4C061A10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 08:49:49 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id nu11so25502pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 08:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NipZ0gHcLA0OIIWqIKZlc3VMj5MYxGX/fpRV8K+RKfE=;
+        b=gmIc3L29Nm/J1LTHQ5Ew8IiD+7cuzBNHr4sZJnZXva/kpFcagn8+xZgcEC1I7OpZ+p
+         c2Kio/4sny0PAE3dh8HV5+U0My5BSVRl+UG3I0IqdmlIAUPgnQRHorrVcmAVx9lJGiXw
+         +KVaNbkSkidOjvQewho+ZIkfI+w/NyXIJD5jw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jhBF/0NDo7VWagdd1bbsqqHnNKZNs8SZkRbVtCJaHvo=;
-        b=qE6cFqBzL9Y0TlEtOgt9XHYqzKx8UNpBYvk53CeOGCjBqm41rm1SskfTQT5gN3QIvM
-         zkpTHTMjjm4sTEMWV30edO2yqaBa1O5dDpF6D7vDT0bGuyApAn/cMWP3VtxwwDVSCoQD
-         /dS74/FNTJXvJqUZN9scaHKnzhWT45RZyVbJ5OF/Z5diuxQgLjg2JYBz6blCmOQAohWx
-         7d4zy3Oelxe3/HO/BtHzeSfBOpAHhH1c5lyKa225yz27XLnPeB6mhkSjzZBUc79p1Iim
-         s8KSFz69r7DsOwfsl928YAtKnCIVOukBrrBJI4uAapVSOgcKATU/W0a3AuEv5eOu69FO
-         Vgnw==
-X-Gm-Message-State: AGi0PuYR0ZJ0UDAQQdMZ8N526kohM1Mq37z1eg8NN9BD63ArFKLR8g+4
-        olsLxxlVFk50TeW7+ReDiQ==
-X-Google-Smtp-Source: APiQypK60RgLEmAsFyOZF/N+fWwAL92n4oq7mY6wF7D/JLdoeMdx6S6XMdXiReUTulsqlMeSpxJPaw==
-X-Received: by 2002:aca:dd55:: with SMTP id u82mr19163342oig.27.1586964280896;
-        Wed, 15 Apr 2020 08:24:40 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id w6sm402075ooa.6.2020.04.15.08.24.39
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NipZ0gHcLA0OIIWqIKZlc3VMj5MYxGX/fpRV8K+RKfE=;
+        b=syqF78F4UzHwc1WbzuYDYx3FPv0tAICmbtXLQeDPzx9Em59UWLBcFp9rlilHSGfk4P
+         4BrsB77gYRC6G7264GFl0W9ytKKmA2wTdHRn1SXY8pxoetATBfjy4Qfvc4XIz9pfEt0D
+         mdhJ6cJWhQAP1CT92SlWGj8+xcB9vEzS873//vNLr97ciprfFAidBzrRIIfVL1PWwBQQ
+         cZz8kcS1ZtKl/Ul0/lPovBzpW35kwQJ8AhGjDJ+9LwWOo94CT1GXlzRbZGB9UdNO5dXL
+         Qwltqj5VXljpr5uK2LhvO90TLSsZM8ZVfSBvY/4E0XFbwBj+jJsBo0o+XjKtEfh5GO5O
+         /+eQ==
+X-Gm-Message-State: AGi0PubQXd010Ay8nqoN0bjdfBOkXJz3BFqKgsVI12LTa5axv3WrIluv
+        XXDImJoFwN/J/I2QssuY1s9sLQ==
+X-Google-Smtp-Source: APiQypKpWOoytMwFddtGig+tyQ1cQ/+/BzyjeqjuD+Yn676+RLoOm8Ss5kMQWXOS5y+mMg71oTdPxA==
+X-Received: by 2002:a17:90a:a591:: with SMTP id b17mr7102737pjq.90.1586965788260;
+        Wed, 15 Apr 2020 08:49:48 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id x27sm14382473pfj.74.2020.04.15.08.49.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 08:24:40 -0700 (PDT)
-Received: (nullmailer pid 14651 invoked by uid 1000);
-        Wed, 15 Apr 2020 15:24:39 -0000
-Date:   Wed, 15 Apr 2020 10:24:39 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Tanmay Shah <tanmay@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com,
-        aravindh@codeaurora.org, varar@codeaurora.org
-Subject: Re: [PATCH 1/2] dt-bindings: msm: disp: Add Display Port HPD GPIO
- bindings
-Message-ID: <20200415152439.GA9882@bogus>
-References: <1586299709-14222-1-git-send-email-tanmay@codeaurora.org>
+        Wed, 15 Apr 2020 08:49:47 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
+        narmstrong@baylibre.com, a.hajda@samsung.com,
+        Laurent.pinchart@ideasonboard.com, spanda@codeaurora.org
+Cc:     jonas@kwiboo.se, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, jeffrey.l.hugo@gmail.com,
+        swboyd@chromium.org, jernej.skrabec@siol.net,
+        linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
+        dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dt-bindings: drm/bridge: ti-sn65dsi86: Convert to yaml
+Date:   Wed, 15 Apr 2020 08:48:39 -0700
+Message-Id: <20200415084758.1.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid>
+X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1586299709-14222-1-git-send-email-tanmay@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 03:48:28PM -0700, Tanmay Shah wrote:
-> Add Display Port HPD GPIO description in bindings
-> 
-> This Patch depends on:
-> 	https://patchwork.kernel.org/patch/11468505/
+This moves the bindings over, based a lot on toshiba,tc358768.yaml.
+Unless there's someone known to be better, I've set the maintainer in
+the yaml as the first person to submit bindings.
 
-This belongs below the '---' and probably means you should send all this 
-as one series.
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-> 
-> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
-> index 761a01d..003f5f7 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
-> @@ -155,6 +155,11 @@ properties:
->       data-lanes:
->         description: Maximum number of lanes that can be used for Display port.
->  
-> +     dp-hpd-gpio:
+ .../bindings/display/bridge/ti,sn65dsi86.txt  |  87 --------
+ .../bindings/display/bridge/ti,sn65dsi86.yaml | 188 ++++++++++++++++++
+ 2 files changed, 188 insertions(+), 87 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
+ create mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
 
-We already have a standard property for this. Use it. 
+diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
+deleted file mode 100644
+index 8ec4a7f2623a..000000000000
+--- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
++++ /dev/null
+@@ -1,87 +0,0 @@
+-SN65DSI86 DSI to eDP bridge chip
+---------------------------------
+-
+-This is the binding for Texas Instruments SN65DSI86 bridge.
+-http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=sn65dsi86&fileType=pdf
+-
+-Required properties:
+-- compatible: Must be "ti,sn65dsi86"
+-- reg: i2c address of the chip, 0x2d as per datasheet
+-- enable-gpios: gpio specification for bridge_en pin (active high)
+-
+-- vccio-supply: A 1.8V supply that powers up the digital IOs.
+-- vpll-supply: A 1.8V supply that powers up the displayport PLL.
+-- vcca-supply: A 1.2V supply that powers up the analog circuits.
+-- vcc-supply: A 1.2V supply that powers up the digital core.
+-
+-Optional properties:
+-- interrupts-extended: Specifier for the SN65DSI86 interrupt line.
+-
+-- gpio-controller: Marks the device has a GPIO controller.
+-- #gpio-cells    : Should be two. The first cell is the pin number and
+-                   the second cell is used to specify flags.
+-                   See ../../gpio/gpio.txt for more information.
+-- #pwm-cells : Should be one. See ../../pwm/pwm.yaml for description of
+-               the cell formats.
+-
+-- clock-names: should be "refclk"
+-- clocks: Specification for input reference clock. The reference
+-	  clock rate must be 12 MHz, 19.2 MHz, 26 MHz, 27 MHz or 38.4 MHz.
+-
+-- data-lanes: See ../../media/video-interface.txt
+-- lane-polarities: See ../../media/video-interface.txt
+-
+-- suspend-gpios: specification for GPIO1 pin on bridge (active low)
+-
+-Required nodes:
+-This device has two video ports. Their connections are modelled using the
+-OF graph bindings specified in Documentation/devicetree/bindings/graph.txt.
+-
+-- Video port 0 for DSI input
+-- Video port 1 for eDP output
+-
+-Example
+--------
+-
+-edp-bridge@2d {
+-	compatible = "ti,sn65dsi86";
+-	#address-cells = <1>;
+-	#size-cells = <0>;
+-	reg = <0x2d>;
+-
+-	enable-gpios = <&msmgpio 33 GPIO_ACTIVE_HIGH>;
+-	suspend-gpios = <&msmgpio 34 GPIO_ACTIVE_LOW>;
+-
+-	interrupts-extended = <&gpio3 4 IRQ_TYPE_EDGE_FALLING>;
+-
+-	vccio-supply = <&pm8916_l17>;
+-	vcca-supply = <&pm8916_l6>;
+-	vpll-supply = <&pm8916_l17>;
+-	vcc-supply = <&pm8916_l6>;
+-
+-	clock-names = "refclk";
+-	clocks = <&input_refclk>;
+-
+-	ports {
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		port@0 {
+-			reg = <0>;
+-
+-			edp_bridge_in: endpoint {
+-				remote-endpoint = <&dsi_out>;
+-			};
+-		};
+-
+-		port@1 {
+-			reg = <1>;
+-
+-			edp_bridge_out: endpoint {
+-				data-lanes = <2 1 3 0>;
+-				lane-polarities = <0 1 0 1>;
+-				remote-endpoint = <&edp_panel_in>;
+-			};
+-		};
+-	};
+-}
+diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+new file mode 100644
+index 000000000000..8cacc6db33a9
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+@@ -0,0 +1,188 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/bridge/ti,sn65dsi86.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SN65DSI86 DSI to eDP bridge chip
++
++maintainers:
++  - Sandeep Panda <spanda@codeaurora.org>
++
++description: |
++  The Texas Instruments SN65DSI86 bridge takes MIPI DSI in and outputs eDP.
++  http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=sn65dsi86&fileType=pdf
++
++properties:
++  compatible:
++    const: ti,sn65dsi86
++
++  reg:
++    const: 0x2d
++
++  enable-gpios:
++    maxItems: 1
++    description: GPIO specification for bridge_en pin (active high).
++
++  vccio-supply:
++    description: A 1.8V supply that powers up the digital IOs.
++
++  vpll-supply:
++    description: A 1.8V supply that powers up the DisplayPort PLL.
++
++  vcca-supply:
++    description: A 1.2V supply that powers up the analog circuits.
++
++  vcc-supply:
++    description: A 1.2V supply that powers up the digital core.
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++    description:
++      Specification for input reference clock. The reference clock rate must
++      be 12 MHz, 19.2 MHz, 26 MHz, 27 MHz or 38.4 MHz.
++
++  clock-names:
++    const: refclk
++
++  gpio-controller: true
++  '#gpio-cells':
++    const: 2
++    description:
++      First cell is pin number, second cell is flags.  GPIO pin numbers are
++      1-based to match the datasheet.  See ../../gpio/gpio.txt for more
++      information.
++
++  '#pwm-cells':
++    const: 1
++    description: See ../../pwm/pwm.yaml for description of the cell formats.
++
++  data-lanes:
++    description: See ../../media/video-interface.txt
++
++  lane-polarities:
++    description: See ../../media/video-interface.txt
++
++  ports:
++    type: object
++
++    properties:
++      "#address-cells":
++        const: 1
++
++      "#size-cells":
++        const: 0
++
++      port@0:
++        type: object
++        additionalProperties: false
++
++        description:
++          Video port for MIPI DSI input
++
++        properties:
++          reg:
++            const: 0
++
++        patternProperties:
++          endpoint:
++            type: object
++            additionalProperties: false
++
++            properties:
++              remote-endpoint: true
++
++        required:
++          - reg
++
++      port@1:
++        type: object
++        additionalProperties: false
++
++        description:
++          Video port for eDP output (panel or connector).
++
++        properties:
++          reg:
++            const: 1
++
++        patternProperties:
++          endpoint:
++            type: object
++            additionalProperties: false
++
++            properties:
++              remote-endpoint: true
++
++        required:
++          - reg
++
++    required:
++      - "#address-cells"
++      - "#size-cells"
++      - port@0
++      - port@1
++
++required:
++  - compatible
++  - reg
++  - enable-gpios
++  - vccio-supply
++  - vpll-supply
++  - vcca-supply
++  - vcc-supply
++  - ports
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    i2c1 {
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      bridge@2d {
++        compatible = "ti,sn65dsi86";
++        reg = <0x2d>;
++
++        interrupt-parent = <&tlmm>;
++        interrupts = <10 IRQ_TYPE_LEVEL_HIGH>;
++
++        enable-gpios = <&tlmm 102 GPIO_ACTIVE_HIGH>;
++
++        vpll-supply = <&src_pp1800_s4a>;
++        vccio-supply = <&src_pp1800_s4a>;
++        vcca-supply = <&src_pp1200_l2a>;
++        vcc-supply = <&src_pp1200_l2a>;
++
++        clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
++        clock-names = "refclk";
++
++        ports {
++          #address-cells = <1>;
++          #size-cells = <0>;
++
++          port@0 {
++            reg = <0>;
++            endpoint {
++              remote-endpoint = <&dsi0_out>;
++            };
++          };
++
++          port@1 {
++            reg = <1>;
++            endpoint {
++              remote-endpoint = <&panel_in_edp>;
++            };
++          };
++        };
++      };
++    };
++
+-- 
+2.26.0.110.g2183baf09c-goog
 
-It belongs in the connector node as HPD is part of the connector.
-
-> +       maxItems: 1
-> +       description: Specifies HPD gpio for DP connector without
-> +                    USB PHY or AUX switch.
-> +
->       usbplug-cc-gpio:
-
-Note that this too should be in a connector node.
-
->         maxItems: 1
->         description: Specifies the usbplug orientation gpio.
-> @@ -282,6 +287,8 @@ examples:
->          aux-sel-gpio = <&msmgpio 110 1>;
->          usbplug-cc-gpio = <&msmgpio 90 1>;
->  
-> +        dp-hpd-gpio = <&msmgpio 117 0>;
-> +
->          ports {
->              #address-cells = <1>;
->              #size-cells = <0>;
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
