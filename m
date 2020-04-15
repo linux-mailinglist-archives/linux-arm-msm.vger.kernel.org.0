@@ -2,169 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F5CC1A93D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 09:06:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0D5D1A93EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 09:16:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393651AbgDOHGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 03:06:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54578 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390574AbgDOHGh (ORCPT
+        id S2393657AbgDOHQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 03:16:46 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:63389 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390559AbgDOHQo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 03:06:37 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 058C1C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 00:06:35 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id y25so1121629pfn.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 00:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=gB44+UKmPj76z1NnBeNC/neb/wrLk3JtJ7qsM1U7HOo=;
-        b=bv2uDX/wYmyaJRdNHZFQQZu1/xQ1jmFZPrcbg6gnQwnqZSvbs6nnsOyArJhjM/Y7gH
-         jw08VROk9uuYZnSN9yC8WHydWZYCGMl1xzZoAlCN3gYiGpmiP5U4G/uVJt50OH/mWkbY
-         SzCeq49IxgkOhR1rq2RX3CRF+M+B4HcdFzyTQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=gB44+UKmPj76z1NnBeNC/neb/wrLk3JtJ7qsM1U7HOo=;
-        b=jan0fp5Zk7CXqZw3pJjewbNCTqksQpyKSA6BbhMQ3Ku4lk4BS2VHNTcu3b/HcT+DM5
-         zU981Pg77omDwD3oRniU6BMZEEL4aO4PcQWtLOhzEAngI4TeXwLs7PMYlkxvqUM0/BuG
-         RLF3nLWqRv7cbPxN39LBFOMAAp5rs4vwHsSoac7iyGb0LGLYIf0jf3cZPvSj6+Uy8dya
-         +Mk0ndybzxHdEzK9j4apioMiKibQbLq9rYodQMFPCuD6Ofur8VLMx9dTX1BM/7nDts1s
-         h4sDs+6s7bAbzd4zALi0aLNMjrIelGmP3Qi5ohzas26qyp+GvvRacN/Cyql5HpzcW55V
-         D4IA==
-X-Gm-Message-State: AGi0PuYIWzZPHvNlsgU+2Ds1L3lRZu+je/VoyDSSp49agl02XMjPpZJx
-        pq4NkNHqMU36ccLClaQaOjT24w==
-X-Google-Smtp-Source: APiQypLD1gz2pRrZgJsDuTIFnJu127jJZKw1RN/gdgSCN2IicZ2Bw01LaGz7MXEESFuqe5wOWrAXDw==
-X-Received: by 2002:a63:2c07:: with SMTP id s7mr24739126pgs.230.1586934395227;
-        Wed, 15 Apr 2020 00:06:35 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id i9sm13150593pfd.148.2020.04.15.00.06.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 00:06:34 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 15 Apr 2020 03:16:44 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586935003; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=r0ASbx76zEYcIvIxWCRR1An50JcQx/PpRvNppB/eEmM=; b=DyXo2Fl+joBFcMeDnlfqTgyfhgd6Z9Za/LynKkDaum79FrjzkjZUI1BI0wk9kMpqu/VEZVdm
+ 9x9y0g1l+7WcAmsVi1cWm1l0mh/1nLpY+RfB3cu+i+Qr6bUlzMkzwwEotKak2TRDi0pLKL9x
+ eo0AtHUGB8hzG+LRdkb+IGB07Fw=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e96b4db.7fabf31fd730-smtp-out-n04;
+ Wed, 15 Apr 2020 07:16:43 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5B5E0C43636; Wed, 15 Apr 2020 07:16:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2B3C5C433CB;
+        Wed, 15 Apr 2020 07:16:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2B3C5C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        ohad@wizery.com, evgreen@chromium.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v2 1/2] remoteproc: qcom_q6v5_mss: map/unmap mpss segments before/after use
+Date:   Wed, 15 Apr 2020 12:46:18 +0530
+Message-Id: <20200415071619.6052-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200414102312.1.I295cb72bc5334a2af80313cbe97cb5c9dcb1442c@changeid>
-References: <20200414102312.1.I295cb72bc5334a2af80313cbe97cb5c9dcb1442c@changeid>
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Remove the pm_lock
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     mkshah@codeaurora.org, mka@chromium.org, evgreen@chromium.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Date:   Wed, 15 Apr 2020 00:06:32 -0700
-Message-ID: <158693439287.105027.14163532309100663169@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-04-14 10:23:26)
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index 732316bb67dc..4e45a8ac6cde 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -791,36 +790,36 @@ static int rpmh_rsc_cpu_pm_callback(struct notifier=
-_block *nfb,
->  {
->         struct rsc_drv *drv =3D container_of(nfb, struct rsc_drv, rsc_pm);
->         int ret =3D NOTIFY_OK;
-> -
-> -       spin_lock(&drv->pm_lock);
-> +       int cpus_in_pm;
-> =20
->         switch (action) {
->         case CPU_PM_ENTER:
-> -               cpumask_set_cpu(smp_processor_id(), &drv->cpus_entered_pm=
-);
-> -
-> -               if (!cpumask_equal(&drv->cpus_entered_pm, cpu_online_mask=
-))
-> -                       goto exit;
-> +               cpus_in_pm =3D atomic_inc_return(&drv->cpus_in_pm);
-> +               if (cpus_in_pm < num_online_cpus())
+The application processor accessing the mpss region when the Q6 modem is
+running will lead to an XPU violation. Fix this by un-mapping the mpss
+segments post copy during mpss authentication and coredumps.
 
-Might be worth adding a comment here explaining that num_online_cpus()
-is stable because this is called from the cpu PM notifier path and a CPU
-can't go offline or come online without stopping the world.
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+---
 
-> +                       return NOTIFY_OK;
->                 break;
->         case CPU_PM_ENTER_FAILED:
->         case CPU_PM_EXIT:
-> -               cpumask_clear_cpu(smp_processor_id(), &drv->cpus_entered_=
-pm);
-> -               goto exit;
-> -       }
-> -
-> -       ret =3D rpmh_rsc_ctrlr_is_busy(drv);
-> -       if (ret) {
-> -               ret =3D NOTIFY_BAD;
-> -               goto exit;
-> +               atomic_dec(&drv->cpus_in_pm);
+V2:
+ * use ioremap_wc/iounmap instead of the devm_ variants
+ * with mpss_region no longer relevant leave rproc_da_to_va unused
 
-We should also handle the cluster PM enums. I'm actually confused the
-compiler didn't complain about that already. Presumably we want to just
-ignore the cluster PM notifications because the counter handles it
-already. Looks like other code uses NOTIFY_DONE for the default case.
+ drivers/remoteproc/qcom_q6v5_mss.c | 31 +++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-> +               return NOTIFY_OK;
->         }
-> =20
-> -       ret =3D rpmh_flush(&drv->client);
-> -       if (ret)
-> +       /*
-> +        * It's likely we're on the last CPU. Grab the drv->lock and write
-> +        * out the sleep/wake commands to RPMH hardware. Grabbing the lock
-> +        * means that if we race with another CPU coming up we are still
-> +        * guaranteed to be safe. If another CPU came up just after we ch=
-ecked
-> +        * and has already started an active transfer then we'll notice w=
-e're
-> +        * busy and abort. If another CPU comes up after we start flushin=
-g it
-> +        * will be blocked from starting an active transfer until we're d=
-one
-> +        * flushing. If another CPU starts an active transfer after we re=
-lease
-> +        * the lock we're still OK because we're no longer the last CPU.
-> +        */
-> +       spin_lock(&drv->lock);
-
-This should probably be a raw spinlock given that this is called from
-the idle path and sleeping there is not very nice for RT. That can come
-later of course.
-
-> +       if (rpmh_rsc_ctrlr_is_busy(drv) || !rpmh_flush(&drv->client))
-
-It almost feels like rpmh_rsc_ctrlr_is_busy() shold be rolled straight
-into rpmh_flush() so that rpmh_flush() fails if there are active
-requests in flight.
-
->                 ret =3D NOTIFY_BAD;
-> -       else
-> -               ret =3D NOTIFY_OK;
-> +       spin_unlock(&drv->lock);
-
-I'm looking at the latest linux-next code that I think has all the
-patches on the list for rpmh (latest commit is 1d3c6f86fd3f ("soc: qcom:
-rpmh: Allow RPMH driver to be loaded as a module")). I see that
-tcs->lock is taken first, and then drv->lock is taken next in
-tcs_write(). But then this takes drv->lock first and then calls
-rpmh_flush() (which goes to a different file.. yay!) and that calls
-flush_batch() which calls rpmh_rsc_write_ctrl_data() (back to this
-file... yay again!) which then locks tcs->lock. Isn't that an ABBA
-deadlock?
-
-> =20
-> -exit:
-> -       spin_unlock(&drv->pm_lock);
->         return ret;
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index ce49c3236ff7c..b781fc8de3597 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -1156,7 +1156,13 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			goto release_firmware;
+ 		}
+ 
+-		ptr = qproc->mpss_region + offset;
++		ptr = ioremap_wc(qproc->mpss_phys + offset, phdr->p_memsz);
++		if (!ptr) {
++			dev_err(qproc->dev,
++				"unable to map memory region: %pa+%zx-%x\n",
++				&qproc->mpss_phys, offset, phdr->p_memsz);
++			goto release_firmware;
++		}
+ 
+ 		if (phdr->p_filesz && phdr->p_offset < fw->size) {
+ 			/* Firmware is large enough to be non-split */
+@@ -1165,6 +1171,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 					"failed to load segment %d from truncated file %s\n",
+ 					i, fw_name);
+ 				ret = -EINVAL;
++				iounmap(ptr);
+ 				goto release_firmware;
+ 			}
+ 
+@@ -1175,6 +1182,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			ret = request_firmware(&seg_fw, fw_name, qproc->dev);
+ 			if (ret) {
+ 				dev_err(qproc->dev, "failed to load %s\n", fw_name);
++				iounmap(ptr);
+ 				goto release_firmware;
+ 			}
+ 
+@@ -1187,6 +1195,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			memset(ptr + phdr->p_filesz, 0,
+ 			       phdr->p_memsz - phdr->p_filesz);
+ 		}
++		iounmap(ptr);
+ 		size += phdr->p_memsz;
+ 
+ 		code_length = readl(qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
+@@ -1236,7 +1245,8 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+ 	int ret = 0;
+ 	struct q6v5 *qproc = rproc->priv;
+ 	unsigned long mask = BIT((unsigned long)segment->priv);
+-	void *ptr = rproc_da_to_va(rproc, segment->da, segment->size);
++	int offset = segment->da - qproc->mpss_reloc;
++	void *ptr = NULL;
+ 
+ 	/* Unlock mba before copying segments */
+ 	if (!qproc->dump_mba_loaded) {
+@@ -1250,10 +1260,15 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+ 		}
+ 	}
+ 
+-	if (!ptr || ret)
+-		memset(dest, 0xff, segment->size);
+-	else
++	if (!ret)
++		ptr = ioremap_wc(qproc->mpss_phys + offset, segment->size);
++
++	if (ptr) {
+ 		memcpy(dest, ptr, segment->size);
++		iounmap(ptr);
++	} else {
++		memset(dest, 0xff, segment->size);
++	}
+ 
+ 	qproc->dump_segment_mask |= mask;
+ 
+@@ -1595,12 +1610,6 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ 
+ 	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+ 	qproc->mpss_size = resource_size(&r);
+-	qproc->mpss_region = devm_ioremap_wc(qproc->dev, qproc->mpss_phys, qproc->mpss_size);
+-	if (!qproc->mpss_region) {
+-		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, qproc->mpss_size);
+-		return -EBUSY;
+-	}
+ 
+ 	return 0;
+ }
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
