@@ -2,399 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CD971AB2A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 22:44:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 403371AB2B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 22:44:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437621AbgDOUbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 16:31:23 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:38040 "EHLO
+        id S371269AbgDOUdN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 16:33:13 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:38086 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438404AbgDOUbU (ORCPT
+        with ESMTP id S371264AbgDOUdM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 16:31:20 -0400
+        Wed, 15 Apr 2020 16:33:12 -0400
 Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 35CF02D1;
-        Wed, 15 Apr 2020 22:31:15 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 4BCC8DD3;
+        Wed, 15 Apr 2020 22:33:09 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1586982675;
-        bh=BELz4vXphr08t8lphrY0ghkwE4w2DtBnvU/u2zI6FTE=;
+        s=mail; t=1586982789;
+        bh=ZWrQLQiITcnJHS7w+LOALjXfWMs5iz+rT8aFRxucxtw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZDU7S0Fc9ZTnGvAYzJSrLQbA80VrDpR8YD9sWgc1KOn9yxgaCE8nEEWWJbb3ZJS/i
-         PvqZAbgHusAyUmag5BixvbzMDExAyLrj/bn4FHQqZpAd9Z2A3GzDp6cX50UK0wcCUG
-         SbLVEkk3I+mVCI1HmNdiWF5OP/pSj4k5lSUOLjWs=
-Date:   Wed, 15 Apr 2020 23:31:03 +0300
+        b=GQiAUrd7WJjvq8jNIeeljZaHhBNFa/QhJS4yGJW5WND2eu3EUuqC3ud3FcqdxopQf
+         XSO0UCi7+yJP0gda51b3GJ5gC4HhTREnnvjaC0aBVqfHLALAzWwxAUjKVIJuL19Bua
+         VngkH6/jze8rIhCrN/ha0VSue9EADOCMji40G+to=
+Date:   Wed, 15 Apr 2020 23:32:56 +0300
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
-        narmstrong@baylibre.com, a.hajda@samsung.com,
-        spanda@codeaurora.org, jonas@kwiboo.se, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, jeffrey.l.hugo@gmail.com,
-        swboyd@chromium.org, jernej.skrabec@siol.net,
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Douglas Anderson <dianders@chromium.org>, a.hajda@samsung.com,
+        airlied@linux.ie, daniel@ffwll.ch, narmstrong@baylibre.com,
+        robh+dt@kernel.org, spanda@codeaurora.org, jonas@kwiboo.se,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        jeffrey.l.hugo@gmail.com, jernej.skrabec@siol.net,
         linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
-        dri-devel@lists.freedesktop.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: drm/bridge: ti-sn65dsi86: Convert to
- yaml
-Message-ID: <20200415203103.GO4758@pendragon.ideasonboard.com>
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: drm/bridge: ti-sn65dsi86: Add hpd-gpios
+ to the bindings
+Message-ID: <20200415203256.GP4758@pendragon.ideasonboard.com>
 References: <20200415084758.1.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid>
+ <20200415084758.2.Ic98f6622c60a1aa547ed85781f2c3b9d3e56b734@changeid>
+ <158698038289.105027.2860892334897893887@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200415084758.1.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid>
+In-Reply-To: <158698038289.105027.2860892334897893887@swboyd.mtv.corp.google.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Douglas,
-
-Thank you for the patch.
-
-On Wed, Apr 15, 2020 at 08:48:39AM -0700, Douglas Anderson wrote:
-> This moves the bindings over, based a lot on toshiba,tc358768.yaml.
-> Unless there's someone known to be better, I've set the maintainer in
-> the yaml as the first person to submit bindings.
-
-You can also add your name ;-)
-
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+On Wed, Apr 15, 2020 at 12:53:02PM -0700, Stephen Boyd wrote:
+> Quoting Douglas Anderson (2020-04-15 08:48:40)
+> > Allow people to specify to use a GPIO for hot-plug-detect.  Add an
+> > example.
+> > 
+> > NOTE: The current patch adding support for hpd-gpios to the Linux
+> > driver for hpd-gpios only adds enough support to the driver so that
+> > the bridge can use one of its own GPIOs.  The bindings, however, are
+> > written generically.
+> > 
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> > 
+> >  .../bindings/display/bridge/ti,sn65dsi86.yaml          | 10 +++++++++-
+> >  1 file changed, 9 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > index 8cacc6db33a9..554bfd003000 100644
+> > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > @@ -60,6 +60,10 @@ properties:
+> >      const: 1
+> >      description: See ../../pwm/pwm.yaml for description of the cell formats.
+> >  
+> > +  hpd-gpios:
+> > +    maxItems: 1
+> > +    description: If present use the given GPIO for hot-plug-detect.
 > 
->  .../bindings/display/bridge/ti,sn65dsi86.txt  |  87 --------
->  .../bindings/display/bridge/ti,sn65dsi86.yaml | 188 ++++++++++++++++++
->  2 files changed, 188 insertions(+), 87 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
->  create mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
-> deleted file mode 100644
-> index 8ec4a7f2623a..000000000000
-> --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
-> +++ /dev/null
-> @@ -1,87 +0,0 @@
-> -SN65DSI86 DSI to eDP bridge chip
-> ---------------------------------
-> -
-> -This is the binding for Texas Instruments SN65DSI86 bridge.
-> -http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=sn65dsi86&fileType=pdf
-> -
-> -Required properties:
-> -- compatible: Must be "ti,sn65dsi86"
-> -- reg: i2c address of the chip, 0x2d as per datasheet
-> -- enable-gpios: gpio specification for bridge_en pin (active high)
-> -
-> -- vccio-supply: A 1.8V supply that powers up the digital IOs.
-> -- vpll-supply: A 1.8V supply that powers up the displayport PLL.
-> -- vcca-supply: A 1.2V supply that powers up the analog circuits.
-> -- vcc-supply: A 1.2V supply that powers up the digital core.
-> -
-> -Optional properties:
-> -- interrupts-extended: Specifier for the SN65DSI86 interrupt line.
-> -
-> -- gpio-controller: Marks the device has a GPIO controller.
-> -- #gpio-cells    : Should be two. The first cell is the pin number and
-> -                   the second cell is used to specify flags.
-> -                   See ../../gpio/gpio.txt for more information.
-> -- #pwm-cells : Should be one. See ../../pwm/pwm.yaml for description of
-> -               the cell formats.
-> -
-> -- clock-names: should be "refclk"
-> -- clocks: Specification for input reference clock. The reference
-> -	  clock rate must be 12 MHz, 19.2 MHz, 26 MHz, 27 MHz or 38.4 MHz.
-> -
-> -- data-lanes: See ../../media/video-interface.txt
-> -- lane-polarities: See ../../media/video-interface.txt
-> -
-> -- suspend-gpios: specification for GPIO1 pin on bridge (active low)
+> Shouldn't this go in the panel node? And the panel driver should get the
+> gpio and poll it after powering up the panel? Presumably that's why we
+> have the no-hpd property in the simple panel binding vs. putting it here
+> in the bridge.
 
-Where has suspend-gpios gone ? :-)
-
-> -
-> -Required nodes:
-> -This device has two video ports. Their connections are modelled using the
-> -OF graph bindings specified in Documentation/devicetree/bindings/graph.txt.
-> -
-> -- Video port 0 for DSI input
-> -- Video port 1 for eDP output
-> -
-> -Example
-> --------
-> -
-> -edp-bridge@2d {
-> -	compatible = "ti,sn65dsi86";
-> -	#address-cells = <1>;
-> -	#size-cells = <0>;
-> -	reg = <0x2d>;
-> -
-> -	enable-gpios = <&msmgpio 33 GPIO_ACTIVE_HIGH>;
-> -	suspend-gpios = <&msmgpio 34 GPIO_ACTIVE_LOW>;
-> -
-> -	interrupts-extended = <&gpio3 4 IRQ_TYPE_EDGE_FALLING>;
-> -
-> -	vccio-supply = <&pm8916_l17>;
-> -	vcca-supply = <&pm8916_l6>;
-> -	vpll-supply = <&pm8916_l17>;
-> -	vcc-supply = <&pm8916_l6>;
-> -
-> -	clock-names = "refclk";
-> -	clocks = <&input_refclk>;
-> -
-> -	ports {
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		port@0 {
-> -			reg = <0>;
-> -
-> -			edp_bridge_in: endpoint {
-> -				remote-endpoint = <&dsi_out>;
-> -			};
-> -		};
-> -
-> -		port@1 {
-> -			reg = <1>;
-> -
-> -			edp_bridge_out: endpoint {
-> -				data-lanes = <2 1 3 0>;
-> -				lane-polarities = <0 1 0 1>;
-> -				remote-endpoint = <&edp_panel_in>;
-> -			};
-> -		};
-> -	};
-> -}
-> diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> new file mode 100644
-> index 000000000000..8cacc6db33a9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> @@ -0,0 +1,188 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/bridge/ti,sn65dsi86.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SN65DSI86 DSI to eDP bridge chip
-> +
-> +maintainers:
-> +  - Sandeep Panda <spanda@codeaurora.org>
-> +
-> +description: |
-> +  The Texas Instruments SN65DSI86 bridge takes MIPI DSI in and outputs eDP.
-> +  http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=sn65dsi86&fileType=pdf
-> +
-> +properties:
-> +  compatible:
-> +    const: ti,sn65dsi86
-> +
-> +  reg:
-> +    const: 0x2d
-> +
-> +  enable-gpios:
-> +    maxItems: 1
-> +    description: GPIO specification for bridge_en pin (active high).
-> +
-> +  vccio-supply:
-> +    description: A 1.8V supply that powers up the digital IOs.
-> +
-> +  vpll-supply:
-> +    description: A 1.8V supply that powers up the DisplayPort PLL.
-> +
-> +  vcca-supply:
-> +    description: A 1.2V supply that powers up the analog circuits.
-> +
-> +  vcc-supply:
-> +    description: A 1.2V supply that powers up the digital core.
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +    description:
-> +      Specification for input reference clock. The reference clock rate must
-> +      be 12 MHz, 19.2 MHz, 26 MHz, 27 MHz or 38.4 MHz.
-> +
-> +  clock-names:
-> +    const: refclk
-> +
-> +  gpio-controller: true
-> +  '#gpio-cells':
-> +    const: 2
-> +    description:
-> +      First cell is pin number, second cell is flags.  GPIO pin numbers are
-> +      1-based to match the datasheet.  See ../../gpio/gpio.txt for more
-> +      information.
-> +
-> +  '#pwm-cells':
-> +    const: 1
-> +    description: See ../../pwm/pwm.yaml for description of the cell formats.
-> +
-> +  data-lanes:
-
-Should this have
-
-	minItems: 1
-	maxItems: 4
-	items:
-	  enum:
-	    - 0
-	    - 1
-	    - 2
-	    - 3
-
-> +    description: See ../../media/video-interface.txt
-> +
-> +  lane-polarities:
-> +    description: See ../../media/video-interface.txt
-
-And something similar here,
-
-	minItems: 1
-	maxItems: 4
-	items:
-	  enum:
-	    - 0
-	    - 1
-	uniqueItems: false
-
-I'm not entirely sure where uniqueItems should be placed. I'm also not
-sure how to specify that both data-lanes and lane-polarities need to
-have the same number of items, maybe
-
-dependencies:
-  data-lanes: [lane-polarities]
-
-> +
-> +  ports:
-> +    type: object
-> +
-> +    properties:
-> +      "#address-cells":
-> +        const: 1
-> +
-> +      "#size-cells":
-> +        const: 0
-> +
-> +      port@0:
-> +        type: object
-> +        additionalProperties: false
-> +
-> +        description:
-> +          Video port for MIPI DSI input
-> +
-> +        properties:
-> +          reg:
-> +            const: 0
-> +
-> +        patternProperties:
-> +          endpoint:
-
-If there's a single endpoint, you don't need patternProperties, it can
-be specified in properties.
-
-> +            type: object
-> +            additionalProperties: false
-> +
-> +            properties:
-> +              remote-endpoint: true
-> +
-> +        required:
-> +          - reg
-> +
-> +      port@1:
-> +        type: object
-> +        additionalProperties: false
-> +
-> +        description:
-> +          Video port for eDP output (panel or connector).
-> +
-> +        properties:
-> +          reg:
-> +            const: 1
-> +
-> +        patternProperties:
-> +          endpoint:
-
-Same here.
-
-> +            type: object
-> +            additionalProperties: false
-> +
-> +            properties:
-> +              remote-endpoint: true
-> +
-> +        required:
-> +          - reg
-> +
-> +    required:
-> +      - "#address-cells"
-> +      - "#size-cells"
-> +      - port@0
-> +      - port@1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - enable-gpios
-> +  - vccio-supply
-> +  - vpll-supply
-> +  - vcca-supply
-> +  - vcc-supply
-> +  - ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +    i2c1 {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      bridge@2d {
-> +        compatible = "ti,sn65dsi86";
-> +        reg = <0x2d>;
-> +
-> +        interrupt-parent = <&tlmm>;
-> +        interrupts = <10 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +        enable-gpios = <&tlmm 102 GPIO_ACTIVE_HIGH>;
-> +
-> +        vpll-supply = <&src_pp1800_s4a>;
-> +        vccio-supply = <&src_pp1800_s4a>;
-> +        vcca-supply = <&src_pp1200_l2a>;
-> +        vcc-supply = <&src_pp1200_l2a>;
-> +
-> +        clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
-> +        clock-names = "refclk";
-> +
-> +        ports {
-> +          #address-cells = <1>;
-> +          #size-cells = <0>;
-> +
-> +          port@0 {
-> +            reg = <0>;
-> +            endpoint {
-> +              remote-endpoint = <&dsi0_out>;
-> +            };
-> +          };
-> +
-> +          port@1 {
-> +            reg = <1>;
-> +            endpoint {
-> +              remote-endpoint = <&panel_in_edp>;
-> +            };
-> +          };
-> +        };
-> +      };
-> +    };
-> +
+Same question really, I think this belongs to the panel (or connector)
+node indeed.
 
 -- 
 Regards,
