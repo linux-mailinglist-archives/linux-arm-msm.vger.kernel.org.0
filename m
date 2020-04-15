@@ -2,55 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 910041AAAE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 16:52:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CB201AAB4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:05:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S371013AbgDOOvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 10:51:40 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:39605 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S371020AbgDOOvi (ORCPT
+        id S1726390AbgDOPFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 11:05:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2388596AbgDOPFZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 10:51:38 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586962297; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Kb6I3a5c6ooAs/g7ThP2VEk7gvbB34RVJxobl7NaKzw=; b=q6MD5pb8t2HOwjkPW1FmM7Zjc8793nRTn0Zfe0vyo6edLidTDwtQG3SwRdnZ3p2IioU907Wp
- wsRAgDMrHbwAHxWOOfiBFGA3OZL+MNv6S7GQOavGhcw1OdZl3ZWcenUosVRNYL0pYHeonRSJ
- t+qCsF996sSIfLU3U2h84SgvSaM=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e971f78.7fc372a55d18-smtp-out-n03;
- Wed, 15 Apr 2020 14:51:36 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 36711C433F2; Wed, 15 Apr 2020 14:51:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DD5A8C43636;
-        Wed, 15 Apr 2020 14:51:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DD5A8C43636
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, ohad@wizery.com,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 2/2] remoteproc: qcom_q6v5_mss: Drop accesses to MPSS PERPH register space
-Date:   Wed, 15 Apr 2020 20:21:10 +0530
-Message-Id: <20200415145110.20624-3-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200415145110.20624-1-sibis@codeaurora.org>
-References: <20200415145110.20624-1-sibis@codeaurora.org>
+        Wed, 15 Apr 2020 11:05:25 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6F8C061A10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 08:05:24 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id z6so19603487wml.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 08:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6bV2HeTGcv3f8Xferv4EwXy1zjagyBPQhQsUXxVtj/g=;
+        b=OL/jBsrXRy5ytGaQCDi4+6IM9BUvDGHy2ELXICEX4Yy+dY7vAUZHp7dQJ0AduSZuPz
+         gycamtyj34k72fmdHXZnhDG6Zt5JxVlkOHPrNRhhJNSmngDH9F/jmU5MXCWHigk745Jr
+         VSDyigkelhifFNoQkO4giJxkeSSmr3bGyAWz16RsaHPig1idAbTSIP/+CvlsGzTpdBdk
+         7jRcLfwyc6sLOXQzuvi3L/sMDzMwVwvvYHPFPad1CA1DXsuLlcMXxAQVgYibzGIUYKUA
+         2nX9xKP++2GM8vOY6uNif8EpoMo0ccUZdkDmy2GJlGHvzj1TrEqyRZnggy9EpjeFRbwJ
+         dzfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6bV2HeTGcv3f8Xferv4EwXy1zjagyBPQhQsUXxVtj/g=;
+        b=EqXKe9AbpDQq0v4fz8DqZtAH4K0fppP05dREisLvpm/16UO7EMmn3Yoek5OmfJEF9R
+         vg2eEBXspb+YFTERnWknARvkL9H34qL5mvxbmUGpo+GbB3t4VvBJaDp3s1gOpKA88PJH
+         txcqvpVIaJoFGUZWGMaDLZBe/Sglmp0k3u/u0S5xxnTRgUwPtNOwaNhw8Hvw1AHZkxyb
+         IL3c6ocgilb4iUf0jcxmcVdSnTXTimlvMfYlTruafYATWHD4bVjtgCzjK3s0Q7YotWdQ
+         2MDe/BLVPONz3NLYI8l9k1brkfNRIIufGB2TuUryP6vg9y1LVp4mTgbd7peHi21KhstV
+         3ESg==
+X-Gm-Message-State: AGi0PuZNEd5aC7sCTZTerL621BrkT91NW711mW9a7lfGcaw/kOXg7LqL
+        HcpDOwq3MkuvdJCW4nAGOviffIkAq+8=
+X-Google-Smtp-Source: APiQypJnQ5otk3NwxV5qIlY7yA0/9eShYdbAJA9XUjJKvutu8USsGNScoT38es1QIC9NaMsIDSDmGw==
+X-Received: by 2002:a1c:6787:: with SMTP id b129mr5955168wmc.165.1586963122898;
+        Wed, 15 Apr 2020 08:05:22 -0700 (PDT)
+Received: from localhost.localdomain (dh207-96-108.xnet.hr. [88.207.96.108])
+        by smtp.googlemail.com with ESMTPSA id s6sm22729988wmh.17.2020.04.15.08.05.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2020 08:05:20 -0700 (PDT)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     andrew@lunn.ch, f.fainelli@gmail.com, hkallweit1@gmail.com,
+        linux@armlinux.org.uk, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Robert Marko <robert.marko@sartura.hr>,
+        Christian Lamparter <chunkeey@gmail.com>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: [PATCH v3 1/3] net: phy: mdio: add IPQ40xx MDIO driver
+Date:   Wed, 15 Apr 2020 17:02:43 +0200
+Message-Id: <20200415150244.2737206-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -58,278 +69,229 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-7C retail devices using MSA based boot will result in a fuse combination
-which will prevent accesses to MSS PERPH register space where the mpss
-clocks and halt-nav reside. So drop all accesses to the MPSS PERPH
-register space. Issuing HALT NAV request and turning on the mss clocks
-as part of SSR will no longer be required since the modem firmware will
-have the necessary fixes to ensure that there are no pending NAV DMA
-transactions.
+This patch adds the driver for the MDIO interface
+inside of Qualcomm IPQ40xx series SoC-s.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: Luka Perkov <luka.perkov@sartura.hr>
 ---
- drivers/remoteproc/qcom_q6v5_mss.c | 102 +++++------------------------
- 1 file changed, 18 insertions(+), 84 deletions(-)
+Changes from v2 to v3:
+* Rename registers
+* Remove unnecessary variable initialisations
+* Switch to readl_poll_timeout() instead of custom solution
+* Drop unused header
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 6a19e0e77236e..3a7352776a319 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -69,13 +69,9 @@
- #define AXI_HALTREQ_REG			0x0
- #define AXI_HALTACK_REG			0x4
- #define AXI_IDLE_REG			0x8
--#define NAV_AXI_HALTREQ_BIT		BIT(0)
--#define NAV_AXI_HALTACK_BIT		BIT(1)
--#define NAV_AXI_IDLE_BIT		BIT(2)
- #define AXI_GATING_VALID_OVERRIDE	BIT(0)
+Changes from v1 to v2:
+* Remove magic default value
+* Remove lockdep_assert_held
+* Add C45 check
+* Simplify the driver
+* Drop device and mii_bus structs from private struct
+* Use devm_mdiobus_alloc_size()
+
+ drivers/net/phy/Kconfig        |   7 ++
+ drivers/net/phy/Makefile       |   1 +
+ drivers/net/phy/mdio-ipq40xx.c | 160 +++++++++++++++++++++++++++++++++
+ 3 files changed, 168 insertions(+)
+ create mode 100644 drivers/net/phy/mdio-ipq40xx.c
+
+diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
+index 3fa33d27eeba..23bb5db033e3 100644
+--- a/drivers/net/phy/Kconfig
++++ b/drivers/net/phy/Kconfig
+@@ -157,6 +157,13 @@ config MDIO_I2C
  
- #define HALT_ACK_TIMEOUT_US		100000
--#define NAV_HALT_ACK_TIMEOUT_US		200
+ 	  This is library mode.
  
- /* QDSP6SS_RESET */
- #define Q6SS_STOP_CORE			BIT(0)
-@@ -143,7 +139,7 @@ struct rproc_hexagon_res {
- 	int version;
- 	bool need_mem_protection;
- 	bool has_alt_reset;
--	bool has_halt_nav;
-+	bool has_spare_reg;
- };
- 
- struct q6v5 {
-@@ -154,13 +150,11 @@ struct q6v5 {
- 	void __iomem *rmb_base;
- 
- 	struct regmap *halt_map;
--	struct regmap *halt_nav_map;
- 	struct regmap *conn_map;
- 
- 	u32 halt_q6;
- 	u32 halt_modem;
- 	u32 halt_nc;
--	u32 halt_nav;
- 	u32 conn_box;
- 
- 	struct reset_control *mss_restart;
-@@ -205,7 +199,7 @@ struct q6v5 {
- 	struct qcom_sysmon *sysmon;
- 	bool need_mem_protection;
- 	bool has_alt_reset;
--	bool has_halt_nav;
-+	bool has_spare_reg;
- 	int mpss_perm;
- 	int mba_perm;
- 	const char *hexagon_mdt_image;
-@@ -426,21 +420,19 @@ static int q6v5_reset_assert(struct q6v5 *qproc)
- 		reset_control_assert(qproc->pdc_reset);
- 		ret = reset_control_reset(qproc->mss_restart);
- 		reset_control_deassert(qproc->pdc_reset);
--	} else if (qproc->has_halt_nav) {
-+	} else if (qproc->has_spare_reg) {
- 		/*
- 		 * When the AXI pipeline is being reset with the Q6 modem partly
- 		 * operational there is possibility of AXI valid signal to
- 		 * glitch, leading to spurious transactions and Q6 hangs. A work
- 		 * around is employed by asserting the AXI_GATING_VALID_OVERRIDE
--		 * BIT before triggering Q6 MSS reset. Both the HALTREQ and
--		 * AXI_GATING_VALID_OVERRIDE are withdrawn post MSS assert
--		 * followed by a MSS deassert, while holding the PDC reset.
-+		 * BIT before triggering Q6 MSS reset. AXI_GATING_VALID_OVERRIDE
-+		 * is withdrawn post MSS assert followed by a MSS deassert,
-+		 * while holding the PDC reset.
- 		 */
- 		reset_control_assert(qproc->pdc_reset);
- 		regmap_update_bits(qproc->conn_map, qproc->conn_box,
- 				   AXI_GATING_VALID_OVERRIDE, 1);
--		regmap_update_bits(qproc->halt_nav_map, qproc->halt_nav,
--				   NAV_AXI_HALTREQ_BIT, 0);
- 		reset_control_assert(qproc->mss_restart);
- 		reset_control_deassert(qproc->pdc_reset);
- 		regmap_update_bits(qproc->conn_map, qproc->conn_box,
-@@ -463,7 +455,7 @@ static int q6v5_reset_deassert(struct q6v5 *qproc)
- 		ret = reset_control_reset(qproc->mss_restart);
- 		writel(0, qproc->rmb_base + RMB_MBA_ALT_RESET);
- 		reset_control_deassert(qproc->pdc_reset);
--	} else if (qproc->has_halt_nav) {
-+	} else if (qproc->has_spare_reg) {
- 		ret = reset_control_reset(qproc->mss_restart);
- 	} else {
- 		ret = reset_control_deassert(qproc->mss_restart);
-@@ -760,32 +752,6 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
- 	regmap_write(halt_map, offset + AXI_HALTREQ_REG, 0);
- }
- 
--static void q6v5proc_halt_nav_axi_port(struct q6v5 *qproc,
--				       struct regmap *halt_map,
--				       u32 offset)
--{
--	unsigned int val;
--	int ret;
--
--	/* Check if we're already idle */
--	ret = regmap_read(halt_map, offset, &val);
--	if (!ret && (val & NAV_AXI_IDLE_BIT))
--		return;
--
--	/* Assert halt request */
--	regmap_update_bits(halt_map, offset, NAV_AXI_HALTREQ_BIT,
--			   NAV_AXI_HALTREQ_BIT);
--
--	/* Wait for halt ack*/
--	regmap_read_poll_timeout(halt_map, offset, val,
--				 (val & NAV_AXI_HALTACK_BIT),
--				 5, NAV_HALT_ACK_TIMEOUT_US);
--
--	ret = regmap_read(halt_map, offset, &val);
--	if (ret || !(val & NAV_AXI_IDLE_BIT))
--		dev_err(qproc->dev, "port failed halt\n");
--}
--
- static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw)
- {
- 	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
-@@ -950,9 +916,6 @@ static int q6v5_mba_load(struct q6v5 *qproc)
- halt_axi_ports:
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_q6);
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_modem);
--	if (qproc->has_halt_nav)
--		q6v5proc_halt_nav_axi_port(qproc, qproc->halt_nav_map,
--					   qproc->halt_nav);
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_nc);
- 
- reclaim_mba:
-@@ -1000,9 +963,6 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
- 
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_q6);
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_modem);
--	if (qproc->has_halt_nav)
--		q6v5proc_halt_nav_axi_port(qproc, qproc->halt_nav_map,
--					   qproc->halt_nav);
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_nc);
- 	if (qproc->version == MSS_MSM8996) {
- 		/*
-@@ -1433,36 +1393,12 @@ static int q6v5_init_mem(struct q6v5 *qproc, struct platform_device *pdev)
- 	qproc->halt_modem = args.args[1];
- 	qproc->halt_nc = args.args[2];
- 
--	if (qproc->has_halt_nav) {
--		struct platform_device *nav_pdev;
--
-+	if (qproc->has_spare_reg) {
- 		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
--						       "qcom,halt-nav-regs",
-+						       "qcom,spare-regs",
- 						       1, 0, &args);
- 		if (ret < 0) {
--			dev_err(&pdev->dev, "failed to parse halt-nav-regs\n");
--			return -EINVAL;
--		}
--
--		nav_pdev = of_find_device_by_node(args.np);
--		of_node_put(args.np);
--		if (!nav_pdev) {
--			dev_err(&pdev->dev, "failed to get mss clock device\n");
--			return -EPROBE_DEFER;
--		}
--
--		qproc->halt_nav_map = dev_get_regmap(&nav_pdev->dev, NULL);
--		if (!qproc->halt_nav_map) {
--			dev_err(&pdev->dev, "failed to get map from device\n");
--			return -EINVAL;
--		}
--		qproc->halt_nav = args.args[0];
--
--		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
--						       "qcom,halt-nav-regs",
--						       1, 1, &args);
--		if (ret < 0) {
--			dev_err(&pdev->dev, "failed to parse halt-nav-regs\n");
-+			dev_err(&pdev->dev, "failed to parse spare-regs\n");
- 			return -EINVAL;
- 		}
- 
-@@ -1548,7 +1484,7 @@ static int q6v5_init_reset(struct q6v5 *qproc)
- 		return PTR_ERR(qproc->mss_restart);
- 	}
- 
--	if (qproc->has_alt_reset || qproc->has_halt_nav) {
-+	if (qproc->has_alt_reset || qproc->has_spare_reg) {
- 		qproc->pdc_reset = devm_reset_control_get_exclusive(qproc->dev,
- 								    "pdc_reset");
- 		if (IS_ERR(qproc->pdc_reset)) {
-@@ -1674,7 +1610,7 @@ static int q6v5_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, qproc);
- 
--	qproc->has_halt_nav = desc->has_halt_nav;
-+	qproc->has_spare_reg = desc->has_spare_reg;
- 	ret = q6v5_init_mem(qproc, pdev);
- 	if (ret)
- 		goto free_rproc;
-@@ -1816,8 +1752,6 @@ static const struct rproc_hexagon_res sc7180_mss = {
- 	.active_clk_names = (char*[]){
- 		"mnoc_axi",
- 		"nav",
--		"mss_nav",
--		"mss_crypto",
- 		NULL
- 	},
- 	.active_pd_names = (char*[]){
-@@ -1832,7 +1766,7 @@ static const struct rproc_hexagon_res sc7180_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = false,
--	.has_halt_nav = true,
-+	.has_spare_reg = true,
- 	.version = MSS_SC7180,
- };
- 
-@@ -1867,7 +1801,7 @@ static const struct rproc_hexagon_res sdm845_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = true,
--	.has_halt_nav = false,
-+	.has_spare_reg = false,
- 	.version = MSS_SDM845,
- };
- 
-@@ -1894,7 +1828,7 @@ static const struct rproc_hexagon_res msm8998_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = false,
--	.has_halt_nav = false,
-+	.has_spare_reg = false,
- 	.version = MSS_MSM8998,
- };
- 
-@@ -1924,7 +1858,7 @@ static const struct rproc_hexagon_res msm8996_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = false,
--	.has_halt_nav = false,
-+	.has_spare_reg = false,
- 	.version = MSS_MSM8996,
- };
- 
-@@ -1957,7 +1891,7 @@ static const struct rproc_hexagon_res msm8916_mss = {
- 	},
- 	.need_mem_protection = false,
- 	.has_alt_reset = false,
--	.has_halt_nav = false,
-+	.has_spare_reg = false,
- 	.version = MSS_MSM8916,
- };
- 
-@@ -1998,7 +1932,7 @@ static const struct rproc_hexagon_res msm8974_mss = {
- 	},
- 	.need_mem_protection = false,
- 	.has_alt_reset = false,
--	.has_halt_nav = false,
-+	.has_spare_reg = false,
- 	.version = MSS_MSM8974,
- };
- 
++config MDIO_IPQ40XX
++	tristate "Qualcomm IPQ40xx MDIO interface"
++	depends on HAS_IOMEM && OF_MDIO
++	help
++	  This driver supports the MDIO interface found in Qualcomm
++	  IPQ40xx series Soc-s.
++
+ config MDIO_IPQ8064
+ 	tristate "Qualcomm IPQ8064 MDIO interface support"
+ 	depends on HAS_IOMEM && OF_MDIO
+diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+index 2f5c7093a65b..36aafc6128c4 100644
+--- a/drivers/net/phy/Makefile
++++ b/drivers/net/phy/Makefile
+@@ -37,6 +37,7 @@ obj-$(CONFIG_MDIO_CAVIUM)	+= mdio-cavium.o
+ obj-$(CONFIG_MDIO_GPIO)		+= mdio-gpio.o
+ obj-$(CONFIG_MDIO_HISI_FEMAC)	+= mdio-hisi-femac.o
+ obj-$(CONFIG_MDIO_I2C)		+= mdio-i2c.o
++obj-$(CONFIG_MDIO_IPQ40XX)	+= mdio-ipq40xx.o
+ obj-$(CONFIG_MDIO_IPQ8064)	+= mdio-ipq8064.o
+ obj-$(CONFIG_MDIO_MOXART)	+= mdio-moxart.o
+ obj-$(CONFIG_MDIO_MSCC_MIIM)	+= mdio-mscc-miim.o
+diff --git a/drivers/net/phy/mdio-ipq40xx.c b/drivers/net/phy/mdio-ipq40xx.c
+new file mode 100644
+index 000000000000..acf1230341bd
+--- /dev/null
++++ b/drivers/net/phy/mdio-ipq40xx.c
+@@ -0,0 +1,160 @@
++// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
++/* Copyright (c) 2015, The Linux Foundation. All rights reserved. */
++/* Copyright (c) 2020 Sartura Ltd. */
++
++#include <linux/delay.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/io.h>
++#include <linux/iopoll.h>
++#include <linux/of_address.h>
++#include <linux/of_mdio.h>
++#include <linux/phy.h>
++#include <linux/platform_device.h>
++
++#define MDIO_ADDR_REG				0x44
++#define MDIO_DATA_WRITE_REG			0x48
++#define MDIO_DATA_READ_REG			0x4c
++#define MDIO_CMD_REG				0x50
++#define MDIO_CMD_ACCESS_BUSY		BIT(16)
++#define MDIO_CMD_ACCESS_START		BIT(8)
++#define MDIO_CMD_ACCESS_CODE_READ	0
++#define MDIO_CMD_ACCESS_CODE_WRITE	1
++
++#define IPQ40XX_MDIO_TIMEOUT	10000
++#define IPQ40XX_MDIO_SLEEP		10
++
++struct ipq40xx_mdio_data {
++	void __iomem	*membase;
++};
++
++static int ipq40xx_mdio_wait_busy(struct mii_bus *bus)
++{
++	struct ipq40xx_mdio_data *priv = bus->priv;
++	unsigned int busy;
++
++	return readl_poll_timeout(priv->membase + MDIO_CMD_REG, busy,
++				  (busy & MDIO_CMD_ACCESS_BUSY) == 0, 
++				  IPQ40XX_MDIO_SLEEP, IPQ40XX_MDIO_TIMEOUT);
++}
++
++static int ipq40xx_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
++{
++	struct ipq40xx_mdio_data *priv = bus->priv;
++	unsigned int cmd;
++
++	/* Reject clause 45 */
++	if (regnum & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	/* issue the phy address and reg */
++	writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
++
++	cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_READ;
++
++	/* issue read command */
++	writel(cmd, priv->membase + MDIO_CMD_REG);
++
++	/* Wait read complete */
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	/* Read and return data */
++	return readl(priv->membase + MDIO_DATA_READ_REG);
++}
++
++static int ipq40xx_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
++							 u16 value)
++{
++	struct ipq40xx_mdio_data *priv = bus->priv;
++	unsigned int cmd;
++
++	/* Reject clause 45 */
++	if (regnum & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	/* issue the phy address and reg */
++	writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
++
++	/* issue write data */
++	writel(value, priv->membase + MDIO_DATA_WRITE_REG);
++
++	cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_WRITE;
++	/* issue write command */
++	writel(cmd, priv->membase + MDIO_CMD_REG);
++
++	/* Wait write complete */
++	if (ipq40xx_mdio_wait_busy(bus))
++		return -ETIMEDOUT;
++
++	return 0;
++}
++
++static int ipq40xx_mdio_probe(struct platform_device *pdev)
++{
++	struct ipq40xx_mdio_data *priv;
++	struct mii_bus *bus;
++	int ret;
++
++	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
++	if (!bus)
++		return -ENOMEM;
++
++	priv = bus->priv;
++
++	priv->membase = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(priv->membase))
++		return PTR_ERR(priv->membase);
++
++	bus->name = "ipq40xx_mdio";
++	bus->read = ipq40xx_mdio_read;
++	bus->write = ipq40xx_mdio_write;
++	bus->parent = &pdev->dev;
++	snprintf(bus->id, MII_BUS_ID_SIZE, "%s%d", pdev->name, pdev->id);
++
++	ret = of_mdiobus_register(bus, pdev->dev.of_node);
++	if (ret) {
++		dev_err(&pdev->dev, "Cannot register MDIO bus!\n");
++		return ret;
++	}
++
++	platform_set_drvdata(pdev, bus);
++
++	return 0;
++}
++
++static int ipq40xx_mdio_remove(struct platform_device *pdev)
++{
++	struct mii_bus *bus = platform_get_drvdata(pdev);
++
++	mdiobus_unregister(bus);
++
++	return 0;
++}
++
++static const struct of_device_id ipq40xx_mdio_dt_ids[] = {
++	{ .compatible = "qcom,ipq40xx-mdio" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, ipq40xx_mdio_dt_ids);
++
++static struct platform_driver ipq40xx_mdio_driver = {
++	.probe = ipq40xx_mdio_probe,
++	.remove = ipq40xx_mdio_remove,
++	.driver = {
++		.name = "ipq40xx-mdio",
++		.of_match_table = ipq40xx_mdio_dt_ids,
++	},
++};
++
++module_platform_driver(ipq40xx_mdio_driver);
++
++MODULE_DESCRIPTION("IPQ40XX MDIO interface driver");
++MODULE_AUTHOR("Qualcomm Atheros");
++MODULE_LICENSE("Dual BSD/GPL");
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.26.0
+
