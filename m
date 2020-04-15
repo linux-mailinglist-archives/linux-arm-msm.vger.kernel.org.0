@@ -2,89 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DCEB1AABA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 420871AABCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:26:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394091AbgDOPRC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 11:17:02 -0400
-Received: from m17618.mail.qiye.163.com ([59.111.176.18]:55441 "EHLO
-        m17618.mail.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393356AbgDOPRB (ORCPT
+        id S2506429AbgDOPYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 11:24:43 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:43319 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2505511AbgDOPYm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 11:17:01 -0400
-Received: from ubuntu.localdomain (unknown [58.251.74.226])
-        by m17618.mail.qiye.163.com (Hmail) with ESMTPA id 021814E16BB;
-        Wed, 15 Apr 2020 23:16:55 +0800 (CST)
-From:   Wang Wenhu <wenhu.wang@vivo.com>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, gregkh@linuxfoundation.org, kernel@vivo.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, ohad@wizery.com,
-        rdunlap@infradead.org, wenhu.wang@vivo.com
-Subject: Re: [PATCH v3,0/3] drivers: rpmon: new driver Remote Processor Monitor
-Date:   Wed, 15 Apr 2020 08:16:49 -0700
-Message-Id: <20200415151649.122787-1-wenhu.wang@vivo.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200414225823.GH892431@yoga>
-References: <20200414225823.GH892431@yoga>
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZSlVNTkNCQkJCSkJDQkpITVlXWShZQU
-        hPN1dZLVlBSVdZCQ4XHghZQVk1NCk2OjckKS43PlkG
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PDY6MAw*PzgxKAgvETVNAy5L
-        Dg5PFBpVSlVKTkNNQk1IQ0pDT0xNVTMWGhIXVQweFRMOVQwaFRw7DRINFFUYFBZFWVdZEgtZQVlO
-        Q1VJTkpVTE9VSUlNWVdZCAFZQUhKSUI3Bg++
-X-HM-Tid: 0a717e6a1fab9376kuws021814e16bb
+        Wed, 15 Apr 2020 11:24:42 -0400
+Received: by mail-oi1-f195.google.com with SMTP id j16so13776881oih.10;
+        Wed, 15 Apr 2020 08:24:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jhBF/0NDo7VWagdd1bbsqqHnNKZNs8SZkRbVtCJaHvo=;
+        b=qE6cFqBzL9Y0TlEtOgt9XHYqzKx8UNpBYvk53CeOGCjBqm41rm1SskfTQT5gN3QIvM
+         zkpTHTMjjm4sTEMWV30edO2yqaBa1O5dDpF6D7vDT0bGuyApAn/cMWP3VtxwwDVSCoQD
+         /dS74/FNTJXvJqUZN9scaHKnzhWT45RZyVbJ5OF/Z5diuxQgLjg2JYBz6blCmOQAohWx
+         7d4zy3Oelxe3/HO/BtHzeSfBOpAHhH1c5lyKa225yz27XLnPeB6mhkSjzZBUc79p1Iim
+         s8KSFz69r7DsOwfsl928YAtKnCIVOukBrrBJI4uAapVSOgcKATU/W0a3AuEv5eOu69FO
+         Vgnw==
+X-Gm-Message-State: AGi0PuYR0ZJ0UDAQQdMZ8N526kohM1Mq37z1eg8NN9BD63ArFKLR8g+4
+        olsLxxlVFk50TeW7+ReDiQ==
+X-Google-Smtp-Source: APiQypK60RgLEmAsFyOZF/N+fWwAL92n4oq7mY6wF7D/JLdoeMdx6S6XMdXiReUTulsqlMeSpxJPaw==
+X-Received: by 2002:aca:dd55:: with SMTP id u82mr19163342oig.27.1586964280896;
+        Wed, 15 Apr 2020 08:24:40 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id w6sm402075ooa.6.2020.04.15.08.24.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2020 08:24:40 -0700 (PDT)
+Received: (nullmailer pid 14651 invoked by uid 1000);
+        Wed, 15 Apr 2020 15:24:39 -0000
+Date:   Wed, 15 Apr 2020 10:24:39 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Tanmay Shah <tanmay@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com,
+        aravindh@codeaurora.org, varar@codeaurora.org
+Subject: Re: [PATCH 1/2] dt-bindings: msm: disp: Add Display Port HPD GPIO
+ bindings
+Message-ID: <20200415152439.GA9882@bogus>
+References: <1586299709-14222-1-git-send-email-tanmay@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1586299709-14222-1-git-send-email-tanmay@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-Mainly two aspects:
- - Different message drivers modularly added to support different platforms.
-   Currently, RPMON_QMI is available, and further maybe mailbox or so.
- - Different events to be notified and different actions to be taken out.
-   Currently, connection check action is available, and remote endpoint's
-   registeration event would be notified.
+On Tue, Apr 07, 2020 at 03:48:28PM -0700, Tanmay Shah wrote:
+> Add Display Port HPD GPIO description in bindings
+> 
+> This Patch depends on:
+> 	https://patchwork.kernel.org/patch/11468505/
 
-I hope the Remote Porcessor Monitor would eventually do something more
-and be used by more users and platforms, and more actions and events
-would be added as enhancement. At the same time, it is better to support
-different SoC platforms. So I wrote the codes in kernel.
+This belongs below the '---' and probably means you should send all this 
+as one series.
 
-Thanks,
-Wenhu
+> 
+> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+> index 761a01d..003f5f7 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+> @@ -155,6 +155,11 @@ properties:
+>       data-lanes:
+>         description: Maximum number of lanes that can be used for Display port.
+>  
+> +     dp-hpd-gpio:
 
->> Changes since v1:
->>  - Addressed review comments from Randy
->> Changes since v2:
->>  - Added Cc list
->>  - Commit log typo fixing
->>  - Use the ARRAY_SIZE instead of calculations of multiple sizeof()
->>  - Use micros for qmi message tly_type fields
->> 
->> Wang Wenhu (3):
->>   driver: rpmon: new driver Remote Processor Monitor
->>   driver: rpmon: qmi message version 01
->>   driver: rpmon: add rpmon_qmi driver
->> 
->>  drivers/Kconfig                  |   2 +
->>  drivers/Makefile                 |   1 +
->>  drivers/rpmon/Kconfig            |  54 ++++
->>  drivers/rpmon/Makefile           |   3 +
->>  drivers/rpmon/rpmon.c            | 506 +++++++++++++++++++++++++++++++
->>  drivers/rpmon/rpmon_qmi.c        | 431 ++++++++++++++++++++++++++
->>  drivers/rpmon/rpmon_qmi.h        |  76 +++++
->>  drivers/rpmon/rpmon_qmi_msg_v1.c | 258 ++++++++++++++++
->>  include/linux/rpmon.h            |  68 +++++
->>  9 files changed, 1399 insertions(+)
->>  create mode 100644 drivers/rpmon/Kconfig
->>  create mode 100644 drivers/rpmon/Makefile
->>  create mode 100644 drivers/rpmon/rpmon.c
->>  create mode 100644 drivers/rpmon/rpmon_qmi.c
->>  create mode 100644 drivers/rpmon/rpmon_qmi.h
->>  create mode 100644 drivers/rpmon/rpmon_qmi_msg_v1.c
->>  create mode 100644 include/linux/rpmon.h
->> 
->> -- 
->> 2.17.1
->> 
+We already have a standard property for this. Use it. 
+
+It belongs in the connector node as HPD is part of the connector.
+
+> +       maxItems: 1
+> +       description: Specifies HPD gpio for DP connector without
+> +                    USB PHY or AUX switch.
+> +
+>       usbplug-cc-gpio:
+
+Note that this too should be in a connector node.
+
+>         maxItems: 1
+>         description: Specifies the usbplug orientation gpio.
+> @@ -282,6 +287,8 @@ examples:
+>          aux-sel-gpio = <&msmgpio 110 1>;
+>          usbplug-cc-gpio = <&msmgpio 90 1>;
+>  
+> +        dp-hpd-gpio = <&msmgpio 117 0>;
+> +
+>          ports {
+>              #address-cells = <1>;
+>              #size-cells = <0>;
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
