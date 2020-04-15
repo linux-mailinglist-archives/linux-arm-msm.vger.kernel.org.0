@@ -2,183 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD3351AAB8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:13:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DCEB1AABA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:20:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393221AbgDOPMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 11:12:42 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:34670 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393194AbgDOPMl (ORCPT
+        id S2394091AbgDOPRC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 11:17:02 -0400
+Received: from m17618.mail.qiye.163.com ([59.111.176.18]:55441 "EHLO
+        m17618.mail.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393356AbgDOPRB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 11:12:41 -0400
-Received: by mail-ot1-f66.google.com with SMTP id m2so255639otr.1;
-        Wed, 15 Apr 2020 08:12:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZFCMh2H9Eh+ryRXkXK/V7+2w4B+PUgVzUEm1sj08lm0=;
-        b=Fm98cqyhkL7XLrDgNy/rlEpq9O/WJzzMDc30kjJPiRADv6woHOk6VQzx8mDS08ElmK
-         /22vou22tx5SGdhNo359jmILyph0DaoL+fSP5wO7+Vzwpqrjqo1aEQDAxPXKpBg7KupY
-         YtWiNumrL/doriIm1x8M1iI0/Nk7LGdOzCBNXN6vmxxlhxtO962usoGidE0D2lgo74T4
-         6cuTxRS/RMhr5hEfWhupz0p3IXjzuBAIhl7zQIxnHdrWEqJJGYQW2FugGDCq8BWaJy7D
-         f2e4qiTwBrZ9UlIMCT5UacEoPe58XLLkNsinAvje0mWjdCCqKsMocgaMytqnYN4gwRB9
-         8VjA==
-X-Gm-Message-State: AGi0PuaFshGLSjumyzPbpAIBwdC7FmhsxN5RvH2MVyIODqsGKhyzxrrK
-        esiZQHoj6FMV6W/EpbO0Dw==
-X-Google-Smtp-Source: APiQypIKxwXtUrjwfyuCqVzzKfMogJVdKDlcIeltnelwgqKhG6bH+DblCsEbrigze1USzStBxtor4A==
-X-Received: by 2002:a9d:4102:: with SMTP id o2mr22206640ote.98.1586963559689;
-        Wed, 15 Apr 2020 08:12:39 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id r205sm6395829oih.47.2020.04.15.08.12.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 08:12:35 -0700 (PDT)
-Received: (nullmailer pid 30324 invoked by uid 1000);
-        Wed, 15 Apr 2020 15:12:34 -0000
-Date:   Wed, 15 Apr 2020 10:12:34 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
-        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
-        linux-arm-msm@vger.kernel.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH V5 3/4] backlight: qcom-wled: Add WLED5 bindings
-Message-ID: <20200415151234.GA25862@bogus>
-References: <1586274430-28402-1-git-send-email-kgunda@codeaurora.org>
- <1586274430-28402-4-git-send-email-kgunda@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1586274430-28402-4-git-send-email-kgunda@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Wed, 15 Apr 2020 11:17:01 -0400
+Received: from ubuntu.localdomain (unknown [58.251.74.226])
+        by m17618.mail.qiye.163.com (Hmail) with ESMTPA id 021814E16BB;
+        Wed, 15 Apr 2020 23:16:55 +0800 (CST)
+From:   Wang Wenhu <wenhu.wang@vivo.com>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, gregkh@linuxfoundation.org, kernel@vivo.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, ohad@wizery.com,
+        rdunlap@infradead.org, wenhu.wang@vivo.com
+Subject: Re: [PATCH v3,0/3] drivers: rpmon: new driver Remote Processor Monitor
+Date:   Wed, 15 Apr 2020 08:16:49 -0700
+Message-Id: <20200415151649.122787-1-wenhu.wang@vivo.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200414225823.GH892431@yoga>
+References: <20200414225823.GH892431@yoga>
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZSlVNTkNCQkJCSkJDQkpITVlXWShZQU
+        hPN1dZLVlBSVdZCQ4XHghZQVk1NCk2OjckKS43PlkG
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PDY6MAw*PzgxKAgvETVNAy5L
+        Dg5PFBpVSlVKTkNNQk1IQ0pDT0xNVTMWGhIXVQweFRMOVQwaFRw7DRINFFUYFBZFWVdZEgtZQVlO
+        Q1VJTkpVTE9VSUlNWVdZCAFZQUhKSUI3Bg++
+X-HM-Tid: 0a717e6a1fab9376kuws021814e16bb
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 09:17:09PM +0530, Kiran Gunda wrote:
-> Add WLED5 specific bindings.
-> 
+Hi Bjorn,
+Mainly two aspects:
+ - Different message drivers modularly added to support different platforms.
+   Currently, RPMON_QMI is available, and further maybe mailbox or so.
+ - Different events to be notified and different actions to be taken out.
+   Currently, connection check action is available, and remote endpoint's
+   registeration event would be notified.
 
-checkpatch.pl complains about some trailing whitespace. The previous 
-patch too.
+I hope the Remote Porcessor Monitor would eventually do something more
+and be used by more users and platforms, and more actions and events
+would be added as enhancement. At the same time, it is better to support
+different SoC platforms. So I wrote the codes in kernel.
 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-> ---
->  .../bindings/leds/backlight/qcom-wled.yaml         | 60 ++++++++++++++++++++--
->  1 file changed, 57 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> index 770e780..5714631 100644
-> --- a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> @@ -21,6 +21,7 @@ properties:
->        - qcom,pm8941-wled
->        - qcom,pmi8998-wled
->        - qcom,pm660l-wled
-> +      - qcom,pm8150l-wled
->  
->    reg:
->      maxItems: 1
-> @@ -28,12 +29,13 @@ properties:
->    default-brightness:
->      description:
->        brightness value on boot.
-> -    minimum: 0
-> -    maximum: 4095
-> -    default: 2048
->  
->    label: true
->  
-> +  max-brightness:
-> +    description:
-> +      Maximum brightness level.
-> +
->    qcom,cs-out:
->      description:
->        enable current sink output.
-> @@ -130,6 +132,31 @@ properties:
->        This feature is not supported for WLED3.
->      type: boolean
->  
-> +  qcom,modulator-sel:
-> +    description:
+Thanks,
+Wenhu
 
-Need a '|' at the end to preserve formatting.
-
-> +      Selects the modulator used for brightness modulation.
-> +      Allowed values are,
-> +           0 - Modulator A
-> +           1 - Modulator B
-> +      This property is applicable only to WLED5 peripheral.
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> +      - enum: [ 0, 1 ]
-> +      - default: 0
-> +
-> +  qcom,cabc-sel:
-> +    description:
-
-Need a '|'.
-
-> +      Selects the CABC pin signal used for brightness modulation.
-> +      Allowed values are,
-> +           0 - CABC disabled
-> +           1 - CABC 1
-> +           2 - CABC 2
-> +           3 - External signal (e.g. LPG) is used for dimming
-> +      This property is applicable only to WLED5 peripheral.
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> +      - enum: [ 0, 1, 2, 3 ]
-> +
->  allOf:
->    - if:
->        properties:
-> @@ -179,6 +206,33 @@ allOf:
->              - const: ovp
->              - const: short
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pm8150l-wled
-> +
-> +    then:
-> +      properties:
-> +        default-brightness:
-> +          minimum: 0
-> +          maximum: 32767
-> +        
-> +        max-brightness:
-> +          minimum: 0
-> +          maximum: 32767
-> +
-> +    else:
-> +      properties:
-> +        default-brightness:
-> +            minimum: 0
-> +            maximum: 4095
-
-Wrong indentation.
-
-> +        
-> +        max-brightness:
-> +          minimum: 0
-> +          maximum: 4095
-> +
->  required:
->    - compatible
->    - reg
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->  a Linux Foundation Collaborative Project
-> 
+>> Changes since v1:
+>>  - Addressed review comments from Randy
+>> Changes since v2:
+>>  - Added Cc list
+>>  - Commit log typo fixing
+>>  - Use the ARRAY_SIZE instead of calculations of multiple sizeof()
+>>  - Use micros for qmi message tly_type fields
+>> 
+>> Wang Wenhu (3):
+>>   driver: rpmon: new driver Remote Processor Monitor
+>>   driver: rpmon: qmi message version 01
+>>   driver: rpmon: add rpmon_qmi driver
+>> 
+>>  drivers/Kconfig                  |   2 +
+>>  drivers/Makefile                 |   1 +
+>>  drivers/rpmon/Kconfig            |  54 ++++
+>>  drivers/rpmon/Makefile           |   3 +
+>>  drivers/rpmon/rpmon.c            | 506 +++++++++++++++++++++++++++++++
+>>  drivers/rpmon/rpmon_qmi.c        | 431 ++++++++++++++++++++++++++
+>>  drivers/rpmon/rpmon_qmi.h        |  76 +++++
+>>  drivers/rpmon/rpmon_qmi_msg_v1.c | 258 ++++++++++++++++
+>>  include/linux/rpmon.h            |  68 +++++
+>>  9 files changed, 1399 insertions(+)
+>>  create mode 100644 drivers/rpmon/Kconfig
+>>  create mode 100644 drivers/rpmon/Makefile
+>>  create mode 100644 drivers/rpmon/rpmon.c
+>>  create mode 100644 drivers/rpmon/rpmon_qmi.c
+>>  create mode 100644 drivers/rpmon/rpmon_qmi.h
+>>  create mode 100644 drivers/rpmon/rpmon_qmi_msg_v1.c
+>>  create mode 100644 include/linux/rpmon.h
+>> 
+>> -- 
+>> 2.17.1
+>> 
