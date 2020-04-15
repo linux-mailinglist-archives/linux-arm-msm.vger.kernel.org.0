@@ -2,105 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 916EA1AB211
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 21:53:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C1741AB252
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 22:12:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406367AbgDOTxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 15:53:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32792 "EHLO
+        id S2441987AbgDOUMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 16:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2441892AbgDOTxF (ORCPT
+        by vger.kernel.org with ESMTP id S2406385AbgDOUMe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 15:53:05 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF272C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 12:53:04 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id v2so413954plp.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 12:53:04 -0700 (PDT)
+        Wed, 15 Apr 2020 16:12:34 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63163C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 13:12:34 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id d77so1238064wmd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 13:12:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=wqYFqvgnJLp6jfCb/pT1ltjRniXVG7wFzSm2iZUIg6w=;
-        b=GoFcaSGnLowNKUY4YRjMhjiMRBGA/jdKAlUVUZTQPxoBsFvIFSTTlnUehLhjTt6XW/
-         pkYTbEE6cy80TR2qnidJEqejtnyMCFJlEJd5Ry68Rf8bPBDYeQI2nD1yeqTmG3b971Pj
-         BWwmiYOx0iPDY1vbwU8QfuFYq/OFuzuNQYDwU=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=fvXqzMHbMJp2j4B2lInx24GEHI2N8OZM9NDxrCv9Xyc=;
+        b=dtLslw7ceM0JZWnrKJqjNzgGGOmyxBG57q1zTSmgKHUPakZcr7anEilneJpoolo8Ee
+         HPcAwuQprNBpXMxD7AqP7XI8FUt/t1hTwtZTdX3eDjGNAtP1S9qErvW4JT29nb8UAW0n
+         jCzY6UNlkiNwXy0UA9r5m0sRsIUuRMhgOP0EZAqSRbMAgL20frPQ07HQg8RCJCZ0tot7
+         ret0qwvT7lUPs9IudJuwBQgm4ijT2LRJ7N8ebitd+YVo+fXsCrHFOWgt11Cphdf8rXh+
+         +H9Y4401vkKcNs8nFRXmLLg1+ZMQECKpcGOljsVh58aBYnpvKsATv3t5r8B2ukJL11EQ
+         WdbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=wqYFqvgnJLp6jfCb/pT1ltjRniXVG7wFzSm2iZUIg6w=;
-        b=AkvxjuEIbGyrqW9oUAArvhVJiVzL0gQntrVtbdV1Ufp2B8A3d518hNHyyQkBIOcZhS
-         ODYFXtqVJMUS/1INTzrp3BCOfJgUzWnfzPdhL1XEjR8XRLFjNokMsxOj5+t57XmT9tC+
-         3pugKc025/S/q52H+K1nsfdzP0c58PCZ77NfMBO0ISuoIWj0cTCwSI6QObW/Qp36CaMq
-         ZMLtlMQyhCl9ULFCQzKbVMs3eKCwPg35eWS2n5dcSS/HNPxWiZqLtUrDxjQjsKQeQutn
-         M6m0mGKrFYkGoYsgSOHBJ6rudbj01ZRa82Zo0hPPqkUiMykW6q3F5l8w6tsv5osX0Abx
-         5cRg==
-X-Gm-Message-State: AGi0Puan+zlsrZ/HtjUtBEhixtV8kZ8lNTvLk7dCzXnEALan4Ds+bwZx
-        8e/qNukXK3jqNUujEqD4QQruPA==
-X-Google-Smtp-Source: APiQypKW2QCwYlYY+1tV4ZUdnxB7+EL5+2eKfXLs2OXbzTVeg9HjP9FGOirAs7OCA3jRywMzN3Tt7g==
-X-Received: by 2002:a17:90a:17ce:: with SMTP id q72mr892159pja.139.1586980384222;
-        Wed, 15 Apr 2020 12:53:04 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id x76sm14312883pfc.190.2020.04.15.12.53.03
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=fvXqzMHbMJp2j4B2lInx24GEHI2N8OZM9NDxrCv9Xyc=;
+        b=cbLkkEoNh5kt13VWVb8vK2P+DPYG3xOMCteXEwFdokmmDHJWrsJDSg+mJGooyME64I
+         UbCgiQaq7770aBKxRyg76VXcsDOl//nU6WN/7JS4W7CIdVXZUWkVJN9qXdPvnxHjQePN
+         R1ljTvt1n3/SS3jSHtn+ocSjE+euuQ7toOX32iXc4htrznZcgHC73+1YSn0X/xTjhqD0
+         17AEyQsOuVLQ5J4qP64DEfoPvx9e+Yv7gMMhPoqFK527mOswbcF6XkFFFmJXlZLtwpvl
+         nYzC9iF6TrwM/tQEUpeyCrNZThESYh+tt/fBX7xL67Y+0cBX1b3xG5SS7mYmC5tcEh72
+         9aAw==
+X-Gm-Message-State: AGi0PubMAS975g3dcpIITpNGBKwdibSHZQInvpcdcBLxQIei4p1MJ1C0
+        yXF7bkeL3hZsYuqZmwtvO5yfCQ==
+X-Google-Smtp-Source: APiQypLHrQERecjU6IWFmwl7YFKyLqM/PAxye+ao6jO+WXzd66KK8k3W0wD4IXNpZMAW9QIjAiDwoA==
+X-Received: by 2002:a05:600c:2c47:: with SMTP id r7mr976048wmg.50.1586981553123;
+        Wed, 15 Apr 2020 13:12:33 -0700 (PDT)
+Received: from linaro.org ([2a00:23c5:6801:1801:8bee:312:6092:58f2])
+        by smtp.gmail.com with ESMTPSA id f18sm789372wrq.29.2020.04.15.13.12.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 12:53:03 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200415084758.2.Ic98f6622c60a1aa547ed85781f2c3b9d3e56b734@changeid>
-References: <20200415084758.1.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid> <20200415084758.2.Ic98f6622c60a1aa547ed85781f2c3b9d3e56b734@changeid>
-Subject: Re: [PATCH 2/3] dt-bindings: drm/bridge: ti-sn65dsi86: Add hpd-gpios to the bindings
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     jonas@kwiboo.se, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, jeffrey.l.hugo@gmail.com,
-        jernej.skrabec@siol.net, linux-arm-msm@vger.kernel.org,
-        robdclark@chromium.org, dri-devel@lists.freedesktop.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Laurent.pinchart@ideasonboard.com, a.hajda@samsung.com,
-        airlied@linux.ie, daniel@ffwll.ch, narmstrong@baylibre.com,
-        robh+dt@kernel.org, spanda@codeaurora.org
-Date:   Wed, 15 Apr 2020 12:53:02 -0700
-Message-ID: <158698038289.105027.2860892334897893887@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Wed, 15 Apr 2020 13:12:32 -0700 (PDT)
+From:   Mike Leach <mike.leach@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, coresight@lists.linaro.org
+Cc:     mathieu.poirier@linaro.org, suzuki.poulose@arm.com,
+        Mike Leach <mike.leach@linaro.org>
+Subject: [PATCH] dt-bindings: qcom: Add CTI options for qcom msm8916
+Date:   Wed, 15 Apr 2020 21:12:30 +0100
+Message-Id: <20200415201230.15766-1-mike.leach@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-04-15 08:48:40)
-> Allow people to specify to use a GPIO for hot-plug-detect.  Add an
-> example.
->=20
-> NOTE: The current patch adding support for hpd-gpios to the Linux
-> driver for hpd-gpios only adds enough support to the driver so that
-> the bridge can use one of its own GPIOs.  The bindings, however, are
-> written generically.
->=20
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->=20
->  .../bindings/display/bridge/ti,sn65dsi86.yaml          | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi8=
-6.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> index 8cacc6db33a9..554bfd003000 100644
-> --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> @@ -60,6 +60,10 @@ properties:
->      const: 1
->      description: See ../../pwm/pwm.yaml for description of the cell form=
-ats.
-> =20
-> +  hpd-gpios:
-> +    maxItems: 1
-> +    description: If present use the given GPIO for hot-plug-detect.
+Adds system and CPU bound CTI definitions for Qualcom msm8916 platform
+(Dragonboard DB410C).
+System CTIs 2-11 are omitted as no information available at present.
 
-Shouldn't this go in the panel node? And the panel driver should get the
-gpio and poll it after powering up the panel? Presumably that's why we
-have the no-hpd property in the simple panel binding vs. putting it here
-in the bridge.
+Tested on Linux 5.7-rc1.
+
+Signed-off-by: Mike Leach <mike.leach@linaro.org>
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+---
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 85 +++++++++++++++++++++++++--
+ 1 file changed, 81 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index a88a15f2352b..194d5e45f4e5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/reset/qcom,gcc-msm8916.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
+ #include <dt-bindings/thermal/thermal.h>
++#include <dt-bindings/arm/coresight-cti-dt.h>
+ 
+ / {
+ 	interrupt-parent = <&intc>;
+@@ -1424,7 +1425,7 @@
+ 			cpu = <&CPU3>;
+ 		};
+ 
+-		etm@85c000 {
++		etm0: etm@85c000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85c000 0x1000>;
+ 
+@@ -1443,7 +1444,7 @@
+ 			};
+ 		};
+ 
+-		etm@85d000 {
++		etm1: etm@85d000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85d000 0x1000>;
+ 
+@@ -1462,7 +1463,7 @@
+ 			};
+ 		};
+ 
+-		etm@85e000 {
++		etm2: etm@85e000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85e000 0x1000>;
+ 
+@@ -1481,7 +1482,7 @@
+ 			};
+ 		};
+ 
+-		etm@85f000 {
++		etm3: etm@85f000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85f000 0x1000>;
+ 
+@@ -1500,6 +1501,82 @@
+ 			};
+ 		};
+ 
++		/* System CTIs */
++		/* CTI 0 - TMC connections */
++		cti@810000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x810000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++		};
++
++		/* CTI 1 - TPIU connections */
++		cti@811000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x811000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++		};
++
++		/* CTIs 2-11 - no information - not instantiated */
++
++		/* Core CTIs; CTIs 12-15 */
++		/* CTI - CPU-0 */
++		cti@858000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x858000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU0>;
++			arm,cs-dev-assoc = <&etm0>;
++
++		};
++
++		/* CTI - CPU-1 */
++		cti@859000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x859000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU1>;
++			arm,cs-dev-assoc = <&etm1>;
++		};
++
++		/* CTI - CPU-2 */
++		cti@85a000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x85a000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU2>;
++			arm,cs-dev-assoc = <&etm2>;
++		};
++
++		/* CTI - CPU-3 */
++		cti@85b000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x85b000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU3>;
++			arm,cs-dev-assoc = <&etm3>;
++		};
++
++
+ 		venus: video-codec@1d00000 {
+ 			compatible = "qcom,msm8916-venus";
+ 			reg = <0x01d00000 0xff000>;
+-- 
+2.17.1
+
