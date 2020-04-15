@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D20D31AAEFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 19:02:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B2911AAEFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 19:02:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410594AbgDORA4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 13:00:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34272 "EHLO
+        id S2410591AbgDORA5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 13:00:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2410591AbgDORAy (ORCPT
+        with ESMTP id S2404593AbgDORAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 13:00:54 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5144AC061A0F
+        Wed, 15 Apr 2020 13:00:53 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 393DCC061A0E
         for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 10:00:53 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id a22so97527pjk.5
+Received: by mail-pj1-x1044.google.com with SMTP id o1so100199pjs.4
         for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 10:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0zz7rP3DWvUJ/VdB/uYLN17A7qtq95b2KZVxc0CNxN8=;
-        b=nMScmT1YfkHnp5d9ktcd27MszVIt1dzN6BZYoV9+sCpGotbOhmNHMTymZ/mgfEzo2/
-         XQFEjXL/GcQz3TOQgZwOJMDQoP0vJrYGaQg6Dy9WRYnzJXT529pfOdBeFcnv5eO59T8j
-         Uo1C6C+kEOvLzXqU9/EmZjhlh3ApbvGerYBKI=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Wjox1MgPvdJXUGATfEXxAcxxbZg3uJFLLwCAqSjIesE=;
+        b=cQu4bNLsv8clRV7vbm6yX8Vcr0WT6P2ddMJwlbMXwObS0A0xmm0ittvqdSO5Yf1bOr
+         sFasgytkTHpQGqOStpC1iFZ4uUdX+5l5cXqSrhw5KghlbYt4eKDVLyAWc/PmCwYfaDlN
+         td4R3YoyzOKkRacu2dOnBGm5KU+bqlK4dPVDM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0zz7rP3DWvUJ/VdB/uYLN17A7qtq95b2KZVxc0CNxN8=;
-        b=FzR6oAk26lnkXgmZPYY99sWsksOVK615iHegu9YSo9Rjle//jU1Rn9zsKKGN8mKHpq
-         XDQKgN16iN0xPfO+H3C2t3VqjceI1TPvEa8S2ZonRkjKGj2/aa/mQfG8gYuESXad3Ncw
-         tUgAbRrhO4hMulm46TyDEvbEg9qtY1SzcBBGrHPFLsJgeqPLIFShH7D0A/Ctru9D8Qwi
-         CkxnbIWPpSjDETu6fKwgflrlTAY/3pB6dTwBfI1fNa+VyVHRWJPcCxeL7BMePohDnsIk
-         jXcpTxUMLd6Ytf+22YRQXSnBj1IpOROBbitiXN13hqHtNSLVh2fchgeEYbPVhv/ktJcA
-         CjNw==
-X-Gm-Message-State: AGi0PuYp0UdnFpwo2KjYBiREe++NPGaj26c02ko9V3HFaMFXK1RkGa8N
-        VnrOqFIds4Vm6bBeTCVp7ZrQeQ==
-X-Google-Smtp-Source: APiQypK1ORgUTaF7VYeYwPYtOrt7RLRDn4vD2dSwdFXifV0CT+TvS60cSUMWkcYK9mJmXcjE8bGlKg==
-X-Received: by 2002:a17:902:322:: with SMTP id 31mr5876290pld.103.1586970049865;
-        Wed, 15 Apr 2020 10:00:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Wjox1MgPvdJXUGATfEXxAcxxbZg3uJFLLwCAqSjIesE=;
+        b=iy9OFlp86PIALEONKDGI0jWvMkhylaP2/GNTcs2rL6lWQ8ScAWjkChs8FOHqnOBoYN
+         Zom/j75Fu7soN7mDjeee3i13j55qK03iBItSCN8w4e+A9p1PvDPAnKlxEgLVzH/MOYv4
+         KOxpOLnTu4zVsAqJGciR70cumpYhLaXYf8/9znw4NQtlb97IIge8S9Awra11tsdyk/m3
+         1FZfKlJP20m/DEZY6chTwbnAtGhHdmovhoaHnbhMC2wyeJXAeBGbzsy35KtFQtU/iUYQ
+         C/UlXCeeTO1cgXsuI3vf+8QdsqcI2s18WOo/8KNbCgdCm09Mx5BUXUZmO6rnETd4WsOt
+         yBGQ==
+X-Gm-Message-State: AGi0PuYJJF4KugwMb2PsWFpfqVNJQEkxkxRxdGo7a+Aqt+9Cww3s2VB2
+        HhV99vYRv0qM8ywFTWJq+46Tvg==
+X-Google-Smtp-Source: APiQypIDdUZs+k3p3rTEJpAVtzMK9wPZX2UvdbCzePjqh/cIER11MPgatnADAqs9QL2vDdNfzuL1Pw==
+X-Received: by 2002:a17:902:6945:: with SMTP id k5mr5717586plt.8.1586970051536;
+        Wed, 15 Apr 2020 10:00:51 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id i187sm14203509pfg.33.2020.04.15.10.00.48
+        by smtp.gmail.com with ESMTPSA id i187sm14203509pfg.33.2020.04.15.10.00.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 10:00:49 -0700 (PDT)
+        Wed, 15 Apr 2020 10:00:51 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -52,10 +52,12 @@ Cc:     mkshah@codeaurora.org, mka@chromium.org, joe@perches.com,
         swboyd@chromium.org, evgreen@chromium.org,
         Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 1/2] soc: qcom: rpmh-rsc: Factor "tcs_reg_addr" and "tcs_cmd_addr" calculation
-Date:   Wed, 15 Apr 2020 10:00:27 -0700
-Message-Id: <20200415095953.v3.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
+Subject: [PATCH v3 2/2] soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()
+Date:   Wed, 15 Apr 2020 10:00:28 -0700
+Message-Id: <20200415095953.v3.2.I8550512081c89ec7a545018a7d2d9418a27c1a7a@changeid>
 X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
+In-Reply-To: <20200415095953.v3.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
+References: <20200415095953.v3.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -63,88 +65,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We can make some of the register access functions more readable by
-factoring out the calculations a little bit.
+If our data still isn't there after 1 second, shout and give up.
 
-Suggested-by: Joe Perches <joe@perches.com>
+Reported-by: Joe Perches <joe@perches.com>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
 
-Changes in v3: None
-Changes in v2:
-- Make drv parameter const.
+Changes in v3:
+- The register should be hex.
 
- drivers/soc/qcom/rpmh-rsc.c | 41 +++++++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 15 deletions(-)
+Changes in v2:
+- Patch ("Timeout after 1 second") new for v2.
+
+ drivers/soc/qcom/rpmh-rsc.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index a9e15699f55f..ce39d8399312 100644
+index ce39d8399312..e09d1ada0cd2 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -137,36 +137,47 @@
-  *  +---------------------------------------------------+
-  */
- 
--static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
-+static inline void __iomem *
-+tcs_reg_addr(const struct rsc_drv *drv, int reg, int tcs_id)
- {
--	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
--			     RSC_DRV_CMD_OFFSET * cmd_id);
-+	return drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg;
- }
- 
--static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id)
-+static inline void __iomem *
-+tcs_cmd_addr(const struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
- {
--	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
-+	return tcs_reg_addr(drv, reg, tcs_id) + RSC_DRV_CMD_OFFSET * cmd_id;
- }
- 
--static void write_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id,
--			  u32 data)
-+static u32 read_tcs_cmd(const struct rsc_drv *drv, int reg, int tcs_id,
-+			int cmd_id)
-+{
-+	return readl_relaxed(tcs_cmd_addr(drv, reg, tcs_id, cmd_id));
-+}
-+
-+static u32 read_tcs_reg(const struct rsc_drv *drv, int reg, int tcs_id)
- {
--	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
--		       RSC_DRV_CMD_OFFSET * cmd_id);
-+	return readl_relaxed(tcs_reg_addr(drv, reg, tcs_id));
- }
- 
--static void write_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, u32 data)
-+static void write_tcs_cmd(const struct rsc_drv *drv, int reg, int tcs_id,
-+			  int cmd_id, u32 data)
-+{
-+	writel_relaxed(data, tcs_cmd_addr(drv, reg, tcs_id, cmd_id));
-+}
-+
-+static void write_tcs_reg(const struct rsc_drv *drv, int reg, int tcs_id,
-+			  u32 data)
- {
--	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
-+	writel_relaxed(data, tcs_reg_addr(drv, reg, tcs_id));
- }
- 
--static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
-+static void write_tcs_reg_sync(const struct rsc_drv *drv, int reg, int tcs_id,
+@@ -10,6 +10,7 @@
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
+@@ -175,12 +176,13 @@ static void write_tcs_reg(const struct rsc_drv *drv, int reg, int tcs_id,
+ static void write_tcs_reg_sync(const struct rsc_drv *drv, int reg, int tcs_id,
  			       u32 data)
  {
--	writel(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
-+	writel(data, tcs_reg_addr(drv, reg, tcs_id));
- 	for (;;) {
--		if (data == readl(drv->tcs_base + reg +
--				  RSC_DRV_TCS_OFFSET * tcs_id))
-+		if (data == readl(tcs_reg_addr(drv, reg, tcs_id)))
- 			break;
- 		udelay(1);
- 	}
++	u32 new_data;
++
+ 	writel(data, tcs_reg_addr(drv, reg, tcs_id));
+-	for (;;) {
+-		if (data == readl(tcs_reg_addr(drv, reg, tcs_id)))
+-			break;
+-		udelay(1);
+-	}
++	if (readl_poll_timeout_atomic(tcs_reg_addr(drv, reg, tcs_id), new_data,
++				      new_data == data, 1, USEC_PER_SEC))
++		pr_err("%s: error writing %#x to %d:%#x\n", drv->name,
++		       data, tcs_id, reg);
+ }
+ 
+ /**
 -- 
 2.26.0.110.g2183baf09c-goog
 
