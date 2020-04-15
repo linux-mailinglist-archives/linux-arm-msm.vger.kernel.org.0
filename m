@@ -2,145 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CB8F1A9328
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 08:22:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D2D91A933E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 08:28:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2634812AbgDOGWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 02:22:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47742 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2393546AbgDOGWU (ORCPT
+        id S2634861AbgDOG2w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 02:28:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2634828AbgDOG2t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 02:22:20 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FFDDC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 23:22:20 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id np9so6343574pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 23:22:20 -0700 (PDT)
+        Wed, 15 Apr 2020 02:28:49 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 215CAC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 23:28:49 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id nu11so6265406pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 23:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7avCLbe9HAwosQBa6LlVF/qUTGXim4biWBuIF11jNCU=;
-        b=lbADryP1UsnJT4+HlIV8WcjjuaMWFzGRcULDWPvuyis2HA6h2gAf8PIDWQ2M7Lc5qL
-         E2FsT5EO06c9Rsgfb6b3Ul4bCJOotCGIOnetst2/FbuDcRWm0PeulgY3nJnxNmlETAan
-         oGA6BRApANilKEsMzDnOF65f/BhoVhKkzh3IEpoWco2RPUtkKEEZqM5vXtHa1pUnDfIG
-         jy0dpd2zKihNeVvwXFEBASQ47bAolWY9CsRhlTWIk7E4EgCrLXIdGwz98dAEOcbvUQzG
-         Nxo8EH40SEmDLYb0OjtnC3Kpfzklx7ObUKiUVDEx0I/hqmdhsQiRYb7Tv/k5ZUa1/aXt
-         a+/A==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=4JGChkyT9yg17CJiQ62RUBn5YFLQPkb0ZVIdTMs6zXU=;
+        b=OZUVO0Waz81uatwwqnokh2zu3vv3udNTjUfSm+D6GCGKAx8ZeHozJfiiOKDL5ljbBU
+         E4gsLAYvh87XTk4ra4uuN5F+3/vw2zWIuU2sLmvjZf18G7GYSMPY0r/QTE7F3PHuVdnx
+         2VUjGRF227jsX3adUIswGkCddS7bfys7y1VzA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7avCLbe9HAwosQBa6LlVF/qUTGXim4biWBuIF11jNCU=;
-        b=inRBpXTf5qFjgG9e41MdOW0374l8y2qnKWDUF7TtquW+JNL2Cg7xsmntt4SuKfNbBF
-         IMg5xU39e87D7bVHIFphZJI2duhOdr7Yk36FeiNnhYx31uYdQ8e8xfHhq2yhUlhfWv9B
-         Nistw+I49WiiMmDyJHACp/kSxbIDBDYfgYv0jw0C4Sfd76iFwiYdxZvX5JYqasr6a81W
-         1uHdJKQEaDJ9za0YtAO4ja6sLRX2TMq0Fy3em5L/ZMhiTdUCsOsf1D3JYyoAByA4o0o6
-         VHuW93cGIBT0cMoyr0h2sarXdoLI45n5fvDtPlHlb8U9MmMc2dwRgrMp063iUSW9z37z
-         VYbg==
-X-Gm-Message-State: AGi0PuYIiE3SNtDEyelxoobSuiJWiyMV9qarh/s6pL1Cmd2Qd+kR1oLG
-        wHV7+qXl4xE3Wi696cBCdTJEkYCwrPg=
-X-Google-Smtp-Source: APiQypIdwUPC4FfOrzwT02GzsEBa0duhvaBxGkyGhlCmkXhoVszx2qook34zcRpOUVAOB9HMAAGUBA==
-X-Received: by 2002:a17:90a:c78b:: with SMTP id gn11mr4330672pjb.147.1586931740009;
-        Tue, 14 Apr 2020 23:22:20 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id nu13sm14032899pjb.22.2020.04.14.23.22.18
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=4JGChkyT9yg17CJiQ62RUBn5YFLQPkb0ZVIdTMs6zXU=;
+        b=SnWe8sRkSl7dB7+1uzCjSaMWp/agIDxf5uCGBaxGWoK5Kuwi9AfIVQMZ7NGLPe/w8j
+         kSV90Q5YMYe9ZfToVr+GwfTqwRxPBYT67ken/96L6n5dUJL68wipDlt6mhK8LzeSejNN
+         LM4CYUSIpJJVkgO/m9iYrFBleHQKcDB3c/52zT67f+Ig9NmO6MJj6htOGTDUETUVd/Hb
+         bPpm2VX54rGotb7B2u2sGT9ogCCXxk9ugJGLxk2/W1P/qdLEEIFoBNru4VO8E+u7trhY
+         XEb/Bdv176OZukBeV97V2Ws2IIjAZyU1WObd65d2UkU+NJHcrj1oztowehp/LYSRr6aE
+         vKew==
+X-Gm-Message-State: AGi0PuZcMFVAwlQbcx9uk1iHGvuH4BNlkOf4BnbgRgMT1pB13XFHnitL
+        /TyLWuDnMtVH/LgfozlvRQRQhmsPVes=
+X-Google-Smtp-Source: APiQypJ4zlwwvxPdiqsig/VgQf98Druqy5TnfF7i0/mOTf35b0M0YrHfm8EnQlOk6cFGlEd78c5QjQ==
+X-Received: by 2002:a17:90a:c786:: with SMTP id gn6mr4348097pjb.147.1586932128456;
+        Tue, 14 Apr 2020 23:28:48 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id ie14sm1174952pjb.34.2020.04.14.23.28.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 23:22:19 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8250: Add rpmhpd node
-Date:   Tue, 14 Apr 2020 23:21:54 -0700
-Message-Id: <20200415062154.741179-3-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200415062154.741179-1-bjorn.andersson@linaro.org>
-References: <20200415062154.741179-1-bjorn.andersson@linaro.org>
+        Tue, 14 Apr 2020 23:28:48 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200415062033.66406-1-swboyd@chromium.org>
+References: <20200415062033.66406-1-swboyd@chromium.org>
+Subject: Re: [PATCH] soc: qcom: cmd-db: Cast sizeof() to int to silence field width warning
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Tue, 14 Apr 2020 23:28:47 -0700
+Message-ID: <158693212714.105027.8469414247721164540@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 51 ++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+Quoting Stephen Boyd (2020-04-14 23:20:33)
+> We pass the result of sizeof() here to tell the printk format specifier
+> how many bytes to print. That expects an int though and sizeof() isn't
+> that type. Cast to int to silence this warning:
+>=20
+> drivers/soc/qcom/cmd-db.c: In function 'cmd_db_debugfs_dump':
+> drivers/soc/qcom/cmd-db.c:281:30: warning: field width specifier '*' expe=
+cts argument of type 'int', but argument 4 has type 'long unsigned int' [-W=
+format=3D]
+>=20
+> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index a560f2cb40fe..f6ae5f55ca5e 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -6,6 +6,7 @@
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-sm8250.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- 
- / {
-@@ -441,6 +442,56 @@ rpmhcc: clock-controller {
- 				clock-names = "xo";
- 				clocks = <&xo_board>;
- 			};
-+
-+			rpmhpd: power-controller {
-+				compatible = "qcom,sm8250-rpmhpd";
-+				#power-domain-cells = <1>;
-+				operating-points-v2 = <&rpmhpd_opp_table>;
-+
-+				rpmhpd_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					rpmhpd_opp_ret: opp1 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_RETENTION>;
-+					};
-+
-+					rpmhpd_opp_min_svs: opp2 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+					};
-+
-+					rpmhpd_opp_low_svs: opp3 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					};
-+
-+					rpmhpd_opp_svs: opp4 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					};
-+
-+					rpmhpd_opp_svs_l1: opp5 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					};
-+
-+					rpmhpd_opp_nom: opp6 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					};
-+
-+					rpmhpd_opp_nom_l1: opp7 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					};
-+
-+					rpmhpd_opp_nom_l2: opp8 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
-+					};
-+
-+					rpmhpd_opp_turbo: opp9 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-+					};
-+
-+					rpmhpd_opp_turbo_l1: opp10 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-+					};
-+				};
-+			};
- 		};
- 
- 		tcsr_mutex_regs: syscon@1f40000 {
--- 
-2.24.0
+Also
 
+Fixes: d6815c5c43d4 ("soc: qcom: cmd-db: Add debugfs dumping file")
+
+> ---
+>  drivers/soc/qcom/cmd-db.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+> index 6c308f92a13c..6b5c440c9dc3 100644
+> --- a/drivers/soc/qcom/cmd-db.c
+> +++ b/drivers/soc/qcom/cmd-db.c
+> @@ -280,7 +280,7 @@ static int cmd_db_debugfs_dump(struct seq_file *seq, =
+void *p)
+>                 ent =3D rsc_to_entry_header(rsc);
+>                 for (j =3D 0; j < le16_to_cpu(rsc->cnt); j++, ent++) {
+>                         seq_printf(seq, "0x%08x: %*pEp", le32_to_cpu(ent-=
+>addr),
+> -                                  sizeof(ent->id), ent->id);
+> +                                  (int)sizeof(ent->id), ent->id);
+> =20
+>                         len =3D le16_to_cpu(ent->len);
+>                         if (len) {
