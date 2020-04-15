@@ -2,99 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EDCC1A92F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 08:10:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8959E1A9300
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 08:14:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389858AbgDOGKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 02:10:23 -0400
-Received: from mga06.intel.com ([134.134.136.31]:20146 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731298AbgDOGKV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 02:10:21 -0400
-IronPort-SDR: dSuo3T3idle2qp5g+E3kGD33taojMR5EGDQKBaIbqVU7adnzVZJrO+9LVCrq+NBX8DHqhmJUnm
- iP7yDhogvvhQ==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2020 23:10:10 -0700
-IronPort-SDR: Xrzeker15iDL0GxYgNylnyNCcgOHg/5LrDmSleRIXI69KwIrj67IOyQN42jm1/hyg4yAT+vZ4w
- my6GtVMJbzjQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,385,1580803200"; 
-   d="scan'208";a="363586963"
-Received: from blu2-mobl3.ccr.corp.intel.com (HELO [10.254.210.208]) ([10.254.210.208])
-  by fmsmga001.fm.intel.com with ESMTP; 14 Apr 2020 23:10:04 -0700
-Cc:     baolu.lu@linux.intel.com, iommu@lists.linux-foundation.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Joerg Roedel <jroedel@suse.de>
-Subject: Re: [PATCH v2 13/33] iommu: Export bus_iommu_probe() and make is safe
- for re-probing
-To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <agross@kernel.org>,
+        id S2393499AbgDOGOy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 02:14:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46584 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2393496AbgDOGOx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Apr 2020 02:14:53 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D8EDC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 23:14:53 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id u65so1072870pfb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 23:14:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HqQvOKqfrHmlAX92Y682AdF2gTPigwd+5eBqOa7fcfE=;
+        b=Df5prwBn+5ezXeOmd8ekPAfWpFczjY16mDdI8p+4Df4zHEeJNSIey/YUZdmd2ArmYO
+         GJ1oVoj4lzgWnaT0TTHmdXzfvcNCHi8JCId35FXkwqW4c6dzhb5pzDKRlFYn/Feta8eA
+         LH1ozPrQgPOZLh9V4iKOJYgXaPwQICXPJlvqRzRLOXatsSbHw3GX/6Uh7w8oV1ClQdLF
+         TT5pLTY9AgC3hYk849f/1m9Dv1+RVIVPjnwPQN1Do+ftkAiT7Y7WaUIbowJcjq9UWnM1
+         ytAgJ62QB8rA5bcgAaO2o8uYlbuvq1NjDprxzbFbzfktDHiTAlmzt9TpjJSNKJ1EMvz0
+         bufg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HqQvOKqfrHmlAX92Y682AdF2gTPigwd+5eBqOa7fcfE=;
+        b=MDIOQix0ZmG5830J66GZpGgQqPjyQLyWkpaKcUTWt+WcVIy+Vt4Zm2hTo5ik2ZR7/X
+         TUDesnQr4ghRQcQ2BHwyPFqTqwcfcrAFX76aaKiG42J1xE9YlZQNlhajyVW4y6t4Hyca
+         19gdYA9lZVoPzhM0ZrJU0BcV455k9RintkcTqnXNkN9H6wIszLMhQi/G2JkIaOIgbLVm
+         LGhScV8dec1QomZ1m/DmavbwDnzWN2W0BCMQsygrm7iZGEqklik3obZBOpgXE1JTqfJ0
+         zloWQ4QSwu/juPTNEULJr+VXAahHwWrN4poMj5m6XwCniixIo2rbPF9ksPZ+RU1aPCzZ
+         si5w==
+X-Gm-Message-State: AGi0Pua/LsJKQaT6mJ6yGV2qPP1dA7b5G9LOOK2BcmBqk8ufnp04WPqR
+        nSg7j0B8+VQ5SL1KhUClte0FQw==
+X-Google-Smtp-Source: APiQypK4jsIQQbeIVh7i0t4TdFr1EvsteW6AJaD6lxkNT7mK5sIRI0rfopbstmRfzG2YOPYTpTb5HQ==
+X-Received: by 2002:a63:e210:: with SMTP id q16mr24711275pgh.26.1586931292670;
+        Tue, 14 Apr 2020 23:14:52 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id e196sm2939332pfh.43.2020.04.14.23.14.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2020 23:14:52 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>
-References: <20200414131542.25608-1-joro@8bytes.org>
- <20200414131542.25608-14-joro@8bytes.org>
-From:   Lu Baolu <baolu.lu@linux.intel.com>
-Message-ID: <1853992c-47a6-3724-812c-a52558c13732@linux.intel.com>
-Date:   Wed, 15 Apr 2020 14:10:03 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] Qualcomm SM8250 regulators and UFS
+Date:   Tue, 14 Apr 2020 23:14:28 -0700
+Message-Id: <20200415061430.740854-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-In-Reply-To: <20200414131542.25608-14-joro@8bytes.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020/4/14 21:15, Joerg Roedel wrote:
-> From: Joerg Roedel <jroedel@suse.de>
-> 
-> Add a check to the bus_iommu_probe() call-path to make sure it ignores
-> devices which have already been successfully probed. Then export the
-> bus_iommu_probe() function so it can be used by IOMMU drivers.
-> 
-> Signed-off-by: Joerg Roedel <jroedel@suse.de>
-> ---
->   drivers/iommu/iommu.c | 6 +++++-
->   include/linux/iommu.h | 1 +
->   2 files changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 834a45da0ed0..a2ff95424044 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -1615,6 +1615,10 @@ static int probe_iommu_group(struct device *dev, void *data)
->   	if (!dev_iommu_get(dev))
->   		return -ENOMEM;
->   
-> +	/* Device is probed already if in a group */
-> +	if (iommu_group_get(dev) != NULL)
+Define regulators for SM8250 MTP and add UFS nodes.
 
-Same as
-	if (iommu_group_get(dev))
-?
+Bryan O'Donoghue (2):
+  arm64: dts: qcom: sm8250-mtp: Add pm8150, pm8150l and pm8009
+  arm64: dts: qcom: sm8250: Add UFS controller and PHY
 
-By the way, do we need to put the group if device has already been
-probed?
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 351 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi    |  71 +++++
+ 2 files changed, 422 insertions(+)
 
-Best regards,
-baolu
+-- 
+2.24.0
+
