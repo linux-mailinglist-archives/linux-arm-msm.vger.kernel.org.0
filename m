@@ -2,156 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E44A1AAE43
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 18:33:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B8871AAE8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 18:50:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1416000AbgDOQ2e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 12:28:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57452 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1415990AbgDOQ23 (ORCPT
+        id S2404634AbgDOQoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 12:44:01 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:38566 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2404569AbgDOQoB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 12:28:29 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAD52C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 09:28:28 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id k11so614665wrp.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 09:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=76FV3ox/3TPbATAAAJw9w7kb0H0TlBYb5fVvS13JcLY=;
-        b=G/nt7PIUIjDbbyNK0gIoeOLcY8ZJ6ogrh7xIpJK5ptEMrpyqCvnEq1Gpc5ntN7Nohb
-         FbLVbkv/SqyxTIKPSI8ArbB3aQC2cnsW7CNY285Nq6a2PjxHNIr/8pFYAG+7EVv0mbSo
-         E9pam/kjTQC+Xto1u4FPAB7uQLe+D9C1L1s3I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=76FV3ox/3TPbATAAAJw9w7kb0H0TlBYb5fVvS13JcLY=;
-        b=Hhk3y4aU+FmihTj3BeI07nTXAUjXNHnqFR6bEhcw2Gwj87HKOCYk9XB0SXxTTKaqkB
-         mB3gVkdxIuxUJhKKhUErY6cdTL39Qr8ebIR10h6NwXKKNYOe6W+B3UBMbrRCZ+GaMLP4
-         dQYXnfjWUEUUiVYNHJcbJxXUqCWSZSGGwpfA7oEsAYGV5C0SQu27i6KIn70rmEXvZUqC
-         XfKjJpPOtJtJ/k8dodJwAmWmbYuAicN/oHjERnRmijJijtB8WL2Y+4d2d/CZuujq7Ewi
-         pPE3gAs9MLtb4ZpCZaKsQTP+hXUbGK1SLpeN1Bm3PH/ZAPJf3oOfFoVZiHQouX4u/dcm
-         HKzA==
-X-Gm-Message-State: AGi0PuZIBeodOD0+HmHny4yIEdAMmBCHQ6T7pwSwUJgp3bQsNuYCi6jW
-        RDpwwQN6VPDicS98nWrUTcKBkQ==
-X-Google-Smtp-Source: APiQypKNypW8de1wzfd0hzKcNgFo6MjAP9f8TaX90Pu8qjLQ0NPRPLlzR/MtI88oH6r++vBFgaj4EQ==
-X-Received: by 2002:a5d:5742:: with SMTP id q2mr29365255wrw.414.1586968107226;
-        Wed, 15 Apr 2020 09:28:27 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id h2sm5682392wro.9.2020.04.15.09.28.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Apr 2020 09:28:26 -0700 (PDT)
-Subject: Re: [PATCH] test_firmware: remove unnecessary test_fw_mutex in
- test_dev_config_show_xxx
-To:     Kees Cook <keescook@chromium.org>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-References: <20200415002517.4328-1-scott.branden@broadcom.com>
- <202004142010.C0847F5@keescook>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <e2b95fde-0ab7-c0d1-2c64-cceffc458673@broadcom.com>
-Date:   Wed, 15 Apr 2020 09:28:18 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Wed, 15 Apr 2020 12:44:01 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1586969039; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=S5OWgppMszTi73VbpoM9eu/98YhTDWaVCVkdl2z9VJM=; b=TZOCBcXpWTA1sC/p16X8btaz8KeaovIweBMKakEXi0tZ5grqzqTyPOpxYv9U0tD7km9sGT/H
+ wP8GcZ8xJOgE49KvyjY4wqrndhldgZIjdGfCv+BSQfsvifjzZrULiNFJCqIsgyW5QTUwYcrJ
+ pr7yW2IWGdZhm4zyIUmJVGksIwk=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e9739b0.7ff5c5d787a0-smtp-out-n05;
+ Wed, 15 Apr 2020 16:43:28 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 93C68C433BA; Wed, 15 Apr 2020 16:43:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.111.193.245] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BCE36C433F2;
+        Wed, 15 Apr 2020 16:43:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BCE36C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 13/21] mmc: sdhci-msm: Use OPP API to set clk/perf state
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Pradeep P V K <ppvk@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Subhash Jadavani <subhashj@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
+References: <1586353607-32222-1-git-send-email-rnayak@codeaurora.org>
+ <1586353607-32222-14-git-send-email-rnayak@codeaurora.org>
+ <CAPDyKFrOFOLCWHu8nE4i5t=d+Ei-kcJ15_42Ft3ROSUDe5jkpw@mail.gmail.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <3e5f8e78-7cd1-30fb-e005-78c1e7111794@codeaurora.org>
+Date:   Wed, 15 Apr 2020 22:13:19 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <202004142010.C0847F5@keescook>
+In-Reply-To: <CAPDyKFrOFOLCWHu8nE4i5t=d+Ei-kcJ15_42Ft3ROSUDe5jkpw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kees,
 
-On 2020-04-14 8:10 p.m., Kees Cook wrote:
-> On Tue, Apr 14, 2020 at 05:25:17PM -0700, Scott Branden wrote:
->> Remove unnecessary use of test_fw_mutex in test_dev_config_show_xxx
->> functions that show simple bool, int, and u8.
-> I would expect at least a READ_ONCE(), yes?
-I don't understand why you need a READ_ONCE when removing a mutex around 
-an assignment
-of a parameter passed into a function being assigned to a local variable.
 
-Could you please explain your expectations.
->
->> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+On 4/15/2020 7:22 PM, Ulf Hansson wrote:
+> On Wed, 8 Apr 2020 at 15:48, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>>
+>> On some qualcomm SoCs we need to vote on a performance state of a power
+>> domain depending on the clock rates. Hence move to using OPP api to set
+>> the clock rate and performance state specified in the OPP table.
+>> On platforms without an OPP table, dev_pm_opp_set_rate() is eqvivalent to
+>> clk_set_rate()
+>>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+>> Cc: Pradeep P V K <ppvk@codeaurora.org>
+>> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+>> Cc: Subhash Jadavani <subhashj@codeaurora.org>
+>> Cc: linux-mmc@vger.kernel.org
+> 
+> This looks good to me!
+> 
+> However, are there any of the other patches in the series that
+> $subject patch depends on - or can I apply this as a standalone mmc
+> patch?
+
+Hey Ulf, thanks for the review. I'll just need to respin these to make
+sure I do not do a dev_pm_opp_of_remove_table() if dev_pm_opp_of_add_table()
+isn;t successful as discussed with Viresh on another thread [1]
+
+As for the dependencies, its only PATCH 01/21 in this series and that's
+already been queued by Viresh [2]
+
+[1] https://lkml.org/lkml/2020/4/15/18
+[2] https://lkml.org/lkml/2020/4/14/98
+
+> 
+> Kind regards
+> Uffe
+> 
 >> ---
->>   lib/test_firmware.c | 26 +++-----------------------
->>   1 file changed, 3 insertions(+), 23 deletions(-)
+>>   drivers/mmc/host/sdhci-msm.c | 20 ++++++++++++++++----
+>>   1 file changed, 16 insertions(+), 4 deletions(-)
 >>
->> diff --git a/lib/test_firmware.c b/lib/test_firmware.c
->> index 0c7fbcf07ac5..9fee2b93a8d1 100644
->> --- a/lib/test_firmware.c
->> +++ b/lib/test_firmware.c
->> @@ -310,27 +310,13 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
->>   	return ret;
->>   }
->>   
->> -static ssize_t
->> -test_dev_config_show_bool(char *buf,
->> -			  bool config)
->> +static ssize_t test_dev_config_show_bool(char *buf, bool val)
->>   {
->> -	bool val;
->> -
->> -	mutex_lock(&test_fw_mutex);
->> -	val = config;
->> -	mutex_unlock(&test_fw_mutex);
->> -
->>   	return snprintf(buf, PAGE_SIZE, "%d\n", val);
->>   }
->>   
->> -static ssize_t test_dev_config_show_int(char *buf, int cfg)
->> +static ssize_t test_dev_config_show_int(char *buf, int val)
->>   {
->> -	int val;
->> -
->> -	mutex_lock(&test_fw_mutex);
->> -	val = cfg;
->> -	mutex_unlock(&test_fw_mutex);
->> -
->>   	return snprintf(buf, PAGE_SIZE, "%d\n", val);
->>   }
->>   
->> @@ -354,14 +340,8 @@ static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
->>   	return size;
->>   }
->>   
->> -static ssize_t test_dev_config_show_u8(char *buf, u8 cfg)
->> +static ssize_t test_dev_config_show_u8(char *buf, u8 val)
->>   {
->> -	u8 val;
->> -
->> -	mutex_lock(&test_fw_mutex);
->> -	val = cfg;
->> -	mutex_unlock(&test_fw_mutex);
->> -
->>   	return snprintf(buf, PAGE_SIZE, "%u\n", val);
->>   }
->>   
->> -- 
->> 2.17.1
+>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>> index 09ff731..d82075a 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -10,6 +10,7 @@
+>>   #include <linux/delay.h>
+>>   #include <linux/mmc/mmc.h>
+>>   #include <linux/pm_runtime.h>
+>> +#include <linux/pm_opp.h>
+>>   #include <linux/slab.h>
+>>   #include <linux/iopoll.h>
+>>   #include <linux/regulator/consumer.h>
+>> @@ -242,6 +243,7 @@ struct sdhci_msm_host {
+>>          struct clk *xo_clk;     /* TCXO clk needed for FLL feature of cm_dll*/
+>>          struct clk_bulk_data bulk_clks[4]; /* core, iface, cal, sleep clocks */
+>>          unsigned long clk_rate;
+>> +       struct opp_table *opp;
+>>          struct mmc_host *mmc;
+>>          bool use_14lpp_dll_reset;
+>>          bool tuning_done;
+>> @@ -332,7 +334,7 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
+>>          int rc;
 >>
+>>          clock = msm_get_clock_rate_for_bus_mode(host, clock);
+>> -       rc = clk_set_rate(core_clk, clock);
+>> +       rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), clock);
+>>          if (rc) {
+>>                  pr_err("%s: Failed to set clock at rate %u at timing %d\n",
+>>                         mmc_hostname(host->mmc), clock,
+>> @@ -1963,7 +1965,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>>          msm_host->bulk_clks[0].clk = clk;
+>>
+>>          /* Vote for maximum clock rate for maximum performance */
+>> -       ret = clk_set_rate(clk, INT_MAX);
+>> +       ret = dev_pm_opp_set_rate(&pdev->dev, INT_MAX);
+>>          if (ret)
+>>                  dev_warn(&pdev->dev, "core clock boost failed\n");
+>>
+>> @@ -2087,6 +2089,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>>                  goto clk_disable;
+>>          }
+>>
+>> +       msm_host->opp = dev_pm_opp_set_clkname(&pdev->dev, "core");
+>> +       dev_pm_opp_of_add_table(&pdev->dev);
+>> +
+>>          pm_runtime_get_noresume(&pdev->dev);
+>>          pm_runtime_set_active(&pdev->dev);
+>>          pm_runtime_enable(&pdev->dev);
+>> @@ -2109,10 +2114,12 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>>          return 0;
+>>
+>>   pm_runtime_disable:
+>> +       dev_pm_opp_of_remove_table(&pdev->dev);
+>>          pm_runtime_disable(&pdev->dev);
+>>          pm_runtime_set_suspended(&pdev->dev);
+>>          pm_runtime_put_noidle(&pdev->dev);
+>>   clk_disable:
+>> +       dev_pm_opp_set_rate(&pdev->dev, 0);
+>>          clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
+>>                                     msm_host->bulk_clks);
+>>   bus_clk_disable:
+>> @@ -2133,10 +2140,12 @@ static int sdhci_msm_remove(struct platform_device *pdev)
+>>
+>>          sdhci_remove_host(host, dead);
+>>
+>> +       dev_pm_opp_of_remove_table(&pdev->dev);
+>>          pm_runtime_get_sync(&pdev->dev);
+>>          pm_runtime_disable(&pdev->dev);
+>>          pm_runtime_put_noidle(&pdev->dev);
+>>
+>> +       dev_pm_opp_set_rate(&pdev->dev, 0);
+>>          clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
+>>                                     msm_host->bulk_clks);
+>>          if (!IS_ERR(msm_host->bus_clk))
+>> @@ -2151,6 +2160,7 @@ static __maybe_unused int sdhci_msm_runtime_suspend(struct device *dev)
+>>          struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>>          struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>>
+>> +       dev_pm_opp_set_rate(dev, 0);
+>>          clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
+>>                                     msm_host->bulk_clks);
+>>
+>> @@ -2173,9 +2183,11 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
+>>           * restore the SDR DLL settings when the clock is ungated.
+>>           */
+>>          if (msm_host->restore_dll_config && msm_host->clk_rate)
+>> -               return sdhci_msm_restore_sdr_dll_config(host);
+>> +               ret = sdhci_msm_restore_sdr_dll_config(host);
+>>
+>> -       return 0;
+>> +       dev_pm_opp_set_rate(dev, msm_host->clk_rate);
+>> +
+>> +       return ret;
+>>   }
+>>
+>>   static const struct dev_pm_ops sdhci_msm_pm_ops = {
+>> --
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
