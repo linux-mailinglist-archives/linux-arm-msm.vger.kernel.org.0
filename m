@@ -2,136 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF0D61A8F54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 01:53:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 501521A8FAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 02:26:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2634450AbgDNXwz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 19:52:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44124 "EHLO
+        id S2634581AbgDOAZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Apr 2020 20:25:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2634449AbgDNXwn (ORCPT
+        with ESMTP id S2634578AbgDOAZf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 19:52:43 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F816C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 16:52:43 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id g32so663077pgb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 16:52:43 -0700 (PDT)
+        Tue, 14 Apr 2020 20:25:35 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90755C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 17:25:35 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id ay6so3185970pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 17:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nsE/zPXLukbuT4tup7W97Wf9aeYqGS/dqAMllkUu/1M=;
-        b=uXq1gtTUfkD0AFtaHQlj7XCYPYGPnOr2CgQvVRpjgEsqAySk6Bpqim74UBRthkvnGy
-         kgHbDE6DCPM9mVLAH2viG7iS46J2yUYEd4mwoDiSnqR+rvcL741YKWoGcLJLLT75XA8Q
-         f23PdawgWpb/bviXrYM8lWscOc55S8nCby/sRYKQnQv4Ylfkvl+kNacj06euID9IURhk
-         U9JCyfik93Rz1UWqRbp538F2CpzNrMu/Wn0YJVsPIg9lXhd0crtf2ScJkcH9DdWEEcQc
-         19c4yEXh0HQnkXlX6rny7Qv2+OUf8RJBb1tr7IhezNL/Lu0lNa9x2SrbUtl7ZkuF5g5z
-         1KIg==
+        d=broadcom.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=Y4P8rWiotzQvb4JxyUfpgXR3sblXTGBUlf8HwRLY7Kc=;
+        b=AsYJABa9hWEbNsCLZkMt/OCoNzfNwn/PFH5DvXWcOFmj0zSxjoT9Xj7gjW0EwgQqeg
+         2YtAplcWXxOBgTdg1AhsL1QHgA7fYSSgofdbx395pC9kP74ENeJrHlA2WZsiqsvt3lQt
+         KQSry7u4otle1WPyN5l08+Ebf6aMQ1NA1mC/8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nsE/zPXLukbuT4tup7W97Wf9aeYqGS/dqAMllkUu/1M=;
-        b=q2hSFMEttvI+rg23cjmfqjl+AAPeERoeAg9ZF0Sm0R6os+YOeX85KbpZ99UuTzZ1JD
-         zYe/e5hG77g1jUhhEvd8QCmmqrG+XDVl4fv01r0bPLHJB0rrBK8flz/Uj0so/qPhkycS
-         iVanrBX7lySfeMbibos7irQzQ1+oUPu6/6SCK71jPEKYHCuVolbR0abXHmUFlMBivABr
-         QeAXTjl5LrGMQG4QyGyPCblVWDq+SdhityNiy68ALbAT7E4nVTQHrp3Pi6ZAKvs5f7c4
-         VPRd9DkILAQXr4bYHtoqzS4mRJVDzcUB6ILdBUrjkDRggFlqmOknvyWkP6SQxTqv5F2T
-         0xLw==
-X-Gm-Message-State: AGi0PuaL3gzJTaZu9doyYMzUFuZguCgCbgRdWwz1iC9luS+k8yLqrd+S
-        JL3hm31Ta3i4kkZ2LM6foPQaTQ==
-X-Google-Smtp-Source: APiQypI4FTZH+v2mWi0AaGiBlFnDQl7dE0xr+3sTy7dgwpo0dC93JROHj3vczfWR9tFYefOxybVgjQ==
-X-Received: by 2002:a62:5289:: with SMTP id g131mr24254719pfb.210.1586908362831;
-        Tue, 14 Apr 2020 16:52:42 -0700 (PDT)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id d18sm2476595pfq.177.2020.04.14.16.52.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Y4P8rWiotzQvb4JxyUfpgXR3sblXTGBUlf8HwRLY7Kc=;
+        b=niNm0m4kE/l5v4Y/RrSeDuMCjLfAsjUVD2fgkIwOdV3vvwmXf00P4Vuir910EO7Efb
+         7HWm9zJyrWdLPokBNuAa8jVm7ajT2ElMY+uaqiz8lda1BsO27iH2M949cupxRqfHu6Op
+         M0XnI+Fruf5nHVufMUBeCNlqAQgO0GuucYHCm5b4lDTIHu1hG2KnjvwSC2iCn38BqX3r
+         DLaQiYMkv5TDFm/NgO2hP4RL7vsxslLnxp6slVnWp3ZyBGnndFrQ6pdsykEOiA1IR8Zx
+         2p659KS1Z7OhHZY7+Iy+F/aA8vrWTOgg2j4u2snhy6JEHK2qKrju4m5p2aKbIgEQLKPh
+         gY5g==
+X-Gm-Message-State: AGi0PuaaAuvj4oNjVXrjcFQEeVpreDk8l9TN92zbvCQsEdV4RV+PUgvQ
+        VfG7bRN6Swx097u8bPq0QJyfEA==
+X-Google-Smtp-Source: APiQypKGHCKpDkSFeTfwGA6QewjHHXSq+/zD/8rw7FSMGD7U7vonI+gEQq9MYBJNXyMNe4BdWpsLtg==
+X-Received: by 2002:a17:90a:c304:: with SMTP id g4mr3029358pjt.157.1586910334896;
+        Tue, 14 Apr 2020 17:25:34 -0700 (PDT)
+Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id z7sm2878341pff.47.2020.04.14.17.25.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 16:52:41 -0700 (PDT)
-Date:   Tue, 14 Apr 2020 16:52:39 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
+        Tue, 14 Apr 2020 17:25:34 -0700 (PDT)
+From:   Scott Branden <scott.branden@broadcom.com>
+To:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [RESEND][PATCH v2] phy: qcom-qusb2: Re add
- "qcom,sdm845-qusb2-phy" compat string
-Message-ID: <20200414235239.GJ892431@yoga>
-References: <20200414185744.84581-1-john.stultz@linaro.org>
- <CAD=FV=XT_icz04g4M+iZHZRzjM1jnuHgkPBsaVmzc1wyoUe=7A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=XT_icz04g4M+iZHZRzjM1jnuHgkPBsaVmzc1wyoUe=7A@mail.gmail.com>
+        Scott Branden <scott.branden@broadcom.com>
+Subject: [PATCH] test_firmware: remove unnecessary test_fw_mutex in test_dev_config_show_xxx
+Date:   Tue, 14 Apr 2020 17:25:17 -0700
+Message-Id: <20200415002517.4328-1-scott.branden@broadcom.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 14 Apr 12:06 PDT 2020, Doug Anderson wrote:
+Remove unnecessary use of test_fw_mutex in test_dev_config_show_xxx
+functions that show simple bool, int, and u8.
 
-> Hi,
-> 
-> On Tue, Apr 14, 2020 at 11:57 AM John Stultz <john.stultz@linaro.org> wrote:
-> >
-> > This patch fixes a regression in 5.7-rc1.
-> >
-> > In commit 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2
-> > PHY support"), the change was made to add "qcom,qusb2-v2-phy"
-> > as a generic compat string. However the change also removed
-> > the "qcom,sdm845-qusb2-phy" compat string, which is documented
-> > in the binding and already in use.
-> >
-> > This patch re-adds the "qcom,sdm845-qusb2-phy" compat string
-> > which allows the driver to continue to work with existing dts
-> > entries such as found on the db845c.
-> >
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Cc: Mark Rutland <mark.rutland@arm.com>
-> > Cc: Doug Anderson <dianders@chromium.org>
-> > Cc: Manu Gautam <mgautam@codeaurora.org>
-> > Cc: Sandeep Maheswaram <sanm@codeaurora.org>
-> > Cc: Matthias Kaehlcke <mka@chromium.org>
-> > Cc: Stephen Boyd <swboyd@chromium.org>
-> > Cc: Kishon Vijay Abraham I <kishon@ti.com>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: devicetree@vger.kernel.org
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Fixes: 8fe75cd4cddf ("phy: qcom-qusb2: Add generic QUSB2 V2 PHY support")
-> > Reported-by: YongQin Liu <yongqin.liu@linaro.org>
-> > Signed-off-by: John Stultz <john.stultz@linaro.org>
-> 
-> Re-adding reviews from:
-> https://lore.kernel.org/r/158631458374.216820.17829557619378130779@swboyd.mtv.corp.google.com
-> https://lore.kernel.org/r/CAD=FV=Wh9_4a-cDGPdpMrXUi_HmJvS-a2Ubeyo5WG3sgwVWKKQ@mail.gmail.com
-> 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> 
-> ...as of an hour ago Bjorn also picked up:
-> 
-> https://lore.kernel.org/r/1583747589-17267-8-git-send-email-sanm@codeaurora.org
-> 
-> ...and it's now in the Qualcomm for-next and ci-next.  It's still a
-> bit of a pain that -rc1 will have the regression since many other
-> maintainers will base their next branches on that, but not much to be
-> done about it now.
-> 
+Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+---
+ lib/test_firmware.c | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
-The regression is in the driver, so we want this patch landed in v5.7.
-The dts change is heading for 5.8.
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 0c7fbcf07ac5..9fee2b93a8d1 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -310,27 +310,13 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
+ 	return ret;
+ }
+ 
+-static ssize_t
+-test_dev_config_show_bool(char *buf,
+-			  bool config)
++static ssize_t test_dev_config_show_bool(char *buf, bool val)
+ {
+-	bool val;
+-
+-	mutex_lock(&test_fw_mutex);
+-	val = config;
+-	mutex_unlock(&test_fw_mutex);
+-
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+-static ssize_t test_dev_config_show_int(char *buf, int cfg)
++static ssize_t test_dev_config_show_int(char *buf, int val)
+ {
+-	int val;
+-
+-	mutex_lock(&test_fw_mutex);
+-	val = cfg;
+-	mutex_unlock(&test_fw_mutex);
+-
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+@@ -354,14 +340,8 @@ static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+ 	return size;
+ }
+ 
+-static ssize_t test_dev_config_show_u8(char *buf, u8 cfg)
++static ssize_t test_dev_config_show_u8(char *buf, u8 val)
+ {
+-	u8 val;
+-
+-	mutex_lock(&test_fw_mutex);
+-	val = cfg;
+-	mutex_unlock(&test_fw_mutex);
+-
+ 	return snprintf(buf, PAGE_SIZE, "%u\n", val);
+ }
+ 
+-- 
+2.17.1
 
-Regards,
-Bjorn
