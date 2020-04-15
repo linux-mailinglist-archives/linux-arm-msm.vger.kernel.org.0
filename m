@@ -2,163 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DBF31AAC6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 17:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CAF71AACB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 18:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1415005AbgDOP4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 11:56:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52448 "EHLO
+        id S1415131AbgDOQBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 12:01:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1415006AbgDOP4n (ORCPT
+        by vger.kernel.org with ESMTP id S1415130AbgDOQBR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 11:56:43 -0400
-Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2030C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 08:56:43 -0700 (PDT)
-Received: by mail-il1-x144.google.com with SMTP id f2so3780242ilq.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 08:56:43 -0700 (PDT)
+        Wed, 15 Apr 2020 12:01:17 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35AB1C061A0C;
+        Wed, 15 Apr 2020 09:01:16 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id r26so191026wmh.0;
+        Wed, 15 Apr 2020 09:01:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=B9MXhYCYetRAbTwmXzTq/cHtzrXsP07P1r9YbCMxRJ0=;
-        b=RHXjl4nb/Oy28ie0zxV0vpLR6hc/Jq5ukBL/OcMix0dK3AqfaHCMr7TrVeSh2Ax14w
-         bwM9eSAn98iU6hfOOjgyjHxAGs5atXlzY3xr9INwhtogNgLo0DPaPaeKFIZ9zrPBABpH
-         au8zhHmONlmXyZf0MP6OblRKfls0mlkIY8oASo9BToM/Fja5/mLKmlY4YJ0b8dbeS6W2
-         4FEb+/IZhvRRYARXtF1R0/MTMHdrlPKsL5UslgnKVPzhaHiDq0R1ZbfLOsOg7U38h15a
-         aZza/MZHr329GSPMMY1HLeDxOdn66J8qUtE0DAmmkWATGa/TS7WfwfR/IRU0ZwAKz/Vh
-         o7zw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:content-language
+         :thread-index;
+        bh=zQEYCWsK2VTVhTYcIOH6YHb5daB8HSEQISlOJ5S/ctM=;
+        b=hh+ZM3VfQ/V83XzD//GKCPRGEdlxc5BXb/YYgewaAUGBo+/t38V8qZbVfjJkKR0uNP
+         Z36V/wdCdUozeucUKKPQ4ajpkXwd9b39/h2FkM47FhNTu9A1SByQCDEVMtmrVrGUaqt/
+         Mp8xrXCgqOfdRFZ4+M5Q82lcyynzolMqfDJ1FoC9/DiDJCGzZncayMykj1+LH1xLucZu
+         mRqPxn7EohqFPxtLEHLbeijK+7boHuIgbH3laQX5nsrM4CMtpcQzO0Zu5nOMPg0rJhxu
+         PssFdBgGpHV6wffIe8goL/8QwilACF0z8TnC/rDth/KOXQDoZSi7AU450C/Qy4C0GH3L
+         Kjwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=B9MXhYCYetRAbTwmXzTq/cHtzrXsP07P1r9YbCMxRJ0=;
-        b=gs0HjERFytWYY0mLy9jhjvrBhxmGvWPvhH32FmLRpKxdO14eHsEXxg4xOWA66xFddY
-         IyEC3tWgkYtgo1eX2TlFpWJKCrekolpfI5VMcaFf+/LotnCETp/tFy2iirHtl7LWmQBD
-         F7fr2nJqfFGPWKMDVeXekzzftatwJrBej18sPT1QhmKLQXY3DScbLUYHiyepsyUz13/D
-         Pmk12OXfRUIL3PgpvKwq652kOTtJ+ozrzFTQfwIkgAFGRKt2mUeBj3m2pOjjBipqwoM4
-         ddhZc9MRAETBkTVcwRGddjdztieoO3neNjPafSd84P2Xxzj6LZ5vGU+kWVObehuJGDns
-         jjow==
-X-Gm-Message-State: AGi0PuY4tuMTWii2asWb7J3WhoY8pfdowODSJdtiRBTIGqKcDA4AS9zu
-        ayx09OPR6qsBJSZHo70kGk7JRU7+D2ag15f2y9q4VnuIMOE=
-X-Google-Smtp-Source: APiQypKVzyuJcbicWAEIxRgg1A+gem0GWiCs2bZOAaL/EVmkJ0g+4v6HC8k/rcGL2d2Zuq9Nzb/jrRrpvcn69U+xglY=
-X-Received: by 2002:a92:158c:: with SMTP id 12mr5984810ilv.58.1586966202755;
- Wed, 15 Apr 2020 08:56:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:content-language
+         :thread-index;
+        bh=zQEYCWsK2VTVhTYcIOH6YHb5daB8HSEQISlOJ5S/ctM=;
+        b=U+HRowcrTVo72BKEg6dV40cdC5kdFfbKYQrvsPyMx9n45+8e96fhLSXHjS3ClV0V6A
+         WH7PyQkbEMeag1F5qSUhJLGZOdkGLsnR9n8ZUW09CbniNdlm+yrrB9Mt8BzFmFXlcBJ7
+         k3BPWRRNiZBeNe3si/C7Mg6XCHmOCPbRrp09q2EiNut57Ks8z1TXS4bSnpWwTnnh8cwI
+         ZhtVzs0a0l6tBgAS3vpEL/A20jYnOiJqCVR7IsVM5XZ2Qk6NwRAd5shWCi/xN0UsmNMh
+         MG+6wTkgbqf7Y2029J1qoBPaHQ97/OlCpVz2WilzkRR9JRPif05psPCbeBg50VESwy0Y
+         /r0g==
+X-Gm-Message-State: AGi0PuZFnFsFYGQuX2RDbnDUIH9d30eXjas9mTapwDg4bB2Cq/rvVSzZ
+        KIDdKrW4vX+ADoHB4IyAOaM=
+X-Google-Smtp-Source: APiQypKM6YMefRd6/LPjmQwg9BlaBWlr+762eFtEBIDXPoEVX6g3PQYHa4o9YcPz8OC1jtbOk1NIcQ==
+X-Received: by 2002:a1c:4b0a:: with SMTP id y10mr5749163wma.24.1586966473620;
+        Wed, 15 Apr 2020 09:01:13 -0700 (PDT)
+Received: from AnsuelXPS (host93-255-dynamic.47-79-r.retail.telecomitalia.it. [79.47.255.93])
+        by smtp.gmail.com with ESMTPSA id v10sm11768209wrq.45.2020.04.15.09.01.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Apr 2020 09:01:12 -0700 (PDT)
+From:   <ansuelsmth@gmail.com>
+To:     "'Rob Herring'" <robh@kernel.org>
+Cc:     "'Andy Gross'" <agross@kernel.org>,
+        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
+        "'Kishon Vijay Abraham I'" <kishon@ti.com>,
+        "'Mark Rutland'" <mark.rutland@arm.com>,
+        "'linux-arm-msm'" <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20200403002608.946-1-ansuelsmth@gmail.com> <20200403002608.946-2-ansuelsmth@gmail.com> <20200414173838.GA29176@bogus> <00bb01d61321$05bf9b20$113ed160$@gmail.com> <CAL_JsqLyEy_++q5+JsUmg=gpgh=xkSP7XiQrDvje7tiUHzB8KQ@mail.gmail.com>
+In-Reply-To: <CAL_JsqLyEy_++q5+JsUmg=gpgh=xkSP7XiQrDvje7tiUHzB8KQ@mail.gmail.com>
+Subject: R: [PATCH 2/2] devicetree: bindings: phy: Document dwc3 qcom phy
+Date:   Wed, 15 Apr 2020 18:01:10 +0200
+Message-ID: <00e301d6133f$15efc1f0$41cf45d0$@gmail.com>
 MIME-Version: 1.0
-References: <20200409113538.5008-1-saiprakash.ranjan@codeaurora.org>
- <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com> <1751aeabd22bee18d2eef0f643883265@codeaurora.org>
- <20200413171418.GB28804@xps15> <75ef334a7e2cc6d87deecadd12c74f59@codeaurora.org>
-In-Reply-To: <75ef334a7e2cc6d87deecadd12c74f59@codeaurora.org>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Wed, 15 Apr 2020 09:56:31 -0600
-Message-ID: <CANLsYkxVFMrAOtZhNgQ+uPE5mgt1z8RNa_yAxX2ju7DYrbvBZw@mail.gmail.com>
-Subject: Re: [PATCH] coresight: tmc: Read TMC mode only when TMC hw is enabled
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm-owner@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Mike Leach <mike.leach@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: it
+Thread-Index: AQHTPQd2IBqR3z6CHNBmVjX+r+AcmAGqTdeSAYw2ek8CRq9kSAFT2oxuqEl6H+A=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 14 Apr 2020 at 09:47, Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> Hi Mathieu,
->
-> On 2020-04-13 22:44, Mathieu Poirier wrote:
-> > On Mon, Apr 13, 2020 at 01:55:30PM +0530, Sai Prakash Ranjan wrote:
-> >> Hi Suzuki,
-> >>
-> >> On 2020-04-13 04:47, Suzuki K Poulose wrote:
-> >> > Hi Sai,
-> >> >
-> >> > On 04/09/2020 12:35 PM, Sai Prakash Ranjan wrote:
-> >> > > Reading TMC mode register in tmc_read_prepare_etb without
-> >> > > enabling the TMC hardware leads to async exceptions like
-> >> > > the one in the call trace below. This can happen if the
-> >> > > user tries to read the TMC etf data via device node without
-> >> > > setting up source and the sink first which enables the TMC
-> >> > > hardware in the path. So make sure that the TMC is enabled
-> >> > > before we try to read TMC data.
-> >> >
-> >> > So, one can trigger the same SError by simply :
-> >> >
-> >> > $ cat /sys/bus/coresight/device/tmc_etb0/mgmt/mode
-> >> >
-> >>
-> >> I do not see any SError when I run the above command.
-> >>
-> >> localhost ~ # cat /sys/bus/coresight/devices/tmc_etf0/mgmt/mode
-> >> 0x0
-> >>
-> >> And this is most likely due to
-> >>
-> >> commit cd9e3474bb793dc ("coresight: add PM runtime calls to
-> >> coresight_simple_func()")
+> On Wed, Apr 15, 2020 at 7:26 AM <ansuelsmth@gmail.com> wrote:
 > >
-> > Ok, so this is related to power management (you can ignore my question
-> > in the
-> > previous email).
+> > > On Fri, Apr 03, 2020 at 02:26:05AM +0200, Ansuel Smith wrote:
+> > > > Document dwc3 qcom phy hs and ss phy bindings needed to =
+correctly
+> > > > inizialize and use usb on ipq806x SoC
+> > > >
+> > > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > > ---
+> > > >  .../bindings/phy/qcom,dwc3-hs-usb-phy.yaml    | 65
+> > > +++++++++++++++++++
+> > > >  .../bindings/phy/qcom,dwc3-ss-usb-phy.yaml    | 65
+> > > +++++++++++++++++++
+> > > >  2 files changed, 130 insertions(+)
+> > > >  create mode 100644
+> > > Documentation/devicetree/bindings/phy/qcom,dwc3-hs-usb-phy.yaml
+> > > >  create mode 100644
+> > > Documentation/devicetree/bindings/phy/qcom,dwc3-ss-usb-phy.yaml
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/phy/qcom,dwc3-hs-
+> usb-
+> > > phy.yaml b/Documentation/devicetree/bindings/phy/qcom,dwc3-hs-
+> usb-
+> > > phy.yaml
+> > > > new file mode 100644
+> > > > index 000000000000..0bb59e3c2ab8
+> > > > --- /dev/null
+> > > > +++ b/Documentation/devicetree/bindings/phy/qcom,dwc3-hs-usb-
+> > > phy.yaml
+> > > > @@ -0,0 +1,65 @@
+> > > > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > > > +%YAML 1.2
+> > > > +---
+> > > > +$id: http://devicetree.org/schemas/phy/qcom,dwc3-hs-usb-
+> phy.yaml#
+> > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > > +
+> > > > +title: Qualcomm DWC3 HS PHY CONTROLLER
+> > > > +
+> > > > +maintainers:
+> > > > +  - Ansuel Smith <ansuelsmth@gmail.com>
+> > > > +
+> > > > +description:
+> > > > +  DWC3 PHY nodes are defined to describe on-chip Synopsis =
+Physical
+> > > layer
+> > > > +  controllers. Each DWC3 PHY controller should have its own =
+node.
+> > > > +
+> > > > +properties:
+> > > > +  compatible:
+> > > > +    const: qcom,dwc3-hs-usb-phy
+> > > > +
+> > > > +  "#phy-cells":
+> > > > +    const: 0
+> > > > +
+> > > > +  regmap:
+> > > > +    maxItems: 1
+> > > > +    description: phandle to usb3 dts definition
+> > > > +
+> > > > +  clocks:
+> > > > +    minItems: 1
+> > > > +    maxItems: 2
+> > > > +
+> > > > +  clock-names:
+> > > > +    minItems: 1
+> > > > +    maxItems: 2
+> > > > +    description: |
+> > > > +      - "ref" Is required
+> > > > +      - "xo"       Optional external reference clock
+> > > > +    items:
+> > > > +      - const: ref
+> > > > +      - const: xo
+> > > > +
+> > > > +required:
+> > > > +  - compatible
+> > > > +  - "#phy-cells"
+> > > > +  - regmap
+> > > > +  - clocks
+> > > > +  - clock-names
+> > > > +
+> > > > +examples:
+> > > > +  - |
+> > > > +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
+> > > > +
+> > > > +    hs_phy_0: hs_phy_0 {
+> > > > +      compatible =3D "qcom,dwc3-hs-usb-phy";
+> > > > +      regmap =3D <&usb3_0>;
+> > >
+> > > If the registers for the phy are part of 'qcom,dwc3' then make =
+this node
+> > > a child of it.
+> > >
 > >
-> > Regarding function tmc_read_prepare_etb(), the best way to deal with
-> > this is
-> > probably make sure drvdata->mode != CS_MODE_DISABLED before reading
-> > TMC_MODE.
-> > If there is a buffer to read it will have been copied when the ETB was
-> > disabled
-> > and there won't be a need to access the HW.
-> >
->
-> This works as well, thanks.
->
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c
-> b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-> index d0cc3985b72a..7ffe05930984 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
-> +++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-> @@ -596,6 +596,11 @@ int tmc_read_prepare_etb(struct tmc_drvdata
-> *drvdata)
->                  goto out;
->          }
->
-> +       if (drvdata->mode == CS_MODE_DISABLED) {
-> +               ret = -EINVAL;
-> +               goto out;
-> +       }
-> +
+> > Making this node a child of qcom,dwc3 cause malfunction of the =
+driver.
+>=20
+> Fix the driver then.
+>=20
+> Rob
 
-We are back to your original solution where the ETB buffer can't be
-read if the ETB itself is not enabled.  It _is_ possible to read the
-buffer of an ETB that has been disabled.
+Sorry if i bother you but I checked every other usb driver that also =
+needs
+phy node. I use regmap phandle here just for the fact that it's the
+same reg of dwc3. Others use directly the same reg and are outside their
+dwc3 usb node. I think I will follow this path and respin this.
+I really hope you are good with this.
 
-To fix this consider the following [1].  Take the block at line 607
-and move it to line 598.  As part of the if() condition at line 619,
-read the value of the TMC_MODE register and exit if not in circular
-mode.  If it is in circular mode continue with disabling the hardware.
 
-[1]. https://elixir.bootlin.com/linux/v5.7-rc1/source/drivers/hwtracing/coresight/coresight-tmc-etf.c
-
->          /* There is no point in reading a TMC in HW FIFO mode */
->          mode = readl_relaxed(drvdata->base + TMC_MODE);
->          if (mode != TMC_MODE_CIRCULAR_BUFFER) {
->
->
-> Thanks,
-> Sai
->
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-> member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
