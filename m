@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 861411AB056
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 20:10:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C97411AB05E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 20:11:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405376AbgDOSHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 14:07:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44604 "EHLO
+        id S2406177AbgDOSKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 14:10:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2404681AbgDOSHU (ORCPT
+        by vger.kernel.org with ESMTP id S2405877AbgDOSKl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 14:07:20 -0400
+        Wed, 15 Apr 2020 14:10:41 -0400
 Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69FAFC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:07:20 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id b8so333621pfp.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:07:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAF5C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:10:41 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id b72so331883pfb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 11:10:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=6C3pEnvEDdvrQw/90ofLNOaYh5du+dDIyVaw8R2X6PU=;
-        b=zSZNk/VRC6kmAJM0qdteDAjzXknHzYnSOkJ6KBd/9SPeqwdvN3h4FJQehSFmLlfs32
-         uiJSin29PElx/wPVweYwIDqVUg5BcbxtClEWqetc5L/QVjy9C8//JzkZfWsKWr96TXEm
-         TyBhoMS9A4Gr/iW7LYWSN4JUzqwgKxw7iH6rEopZIXhUuhzQlsSrZutXHAQ0Kq8f606D
-         DrtqPpH1svUSXit0OZMtZ96IJOnVaLxrXJrCUrR3s2lLs5kernlvQpNC/TRPs8lSHSCG
-         e/CNAf+PkCaKDkp2c8eIF+Gdav8DQHnemCT8iXW25zE4MdKeRD1Si52EkbnUiGOSWCEZ
-         B3QA==
+        bh=yOYBo8OjxgFUtMIRY6LWGA61eRM9SefgAlvGVD6yLNE=;
+        b=uyR3zgToYS8mKENYz2nWMYAMB/GuEttq4rdHLh72Oogd0C9iaqdiY+zZ+YwXHTxJww
+         R5kmMnjaktd+YRbiCzCC4BbARWPsJOeRydzeCsJWJgTsd3c+ZtrK8ZrpeHSZoBNSYQ5G
+         jCbxh5+SPvtgYxzE2yLKx7r3YO+deFbwHqEuUlNKhFyymhIRiP0kasFWvNLGddCTtDh1
+         ODAQGq35qmLcM+g3/MNFmMGqG2IfVqgZXw5GgLPA6kfU8hYkneMF4ujTiSPkgg8kn2xF
+         9tQO0dZXU1vFQvqllbJNdEc6gbmXJW57lkYwwkdoG2MeCAKzd21VviQxqYLR38PykAeR
+         r/Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6C3pEnvEDdvrQw/90ofLNOaYh5du+dDIyVaw8R2X6PU=;
-        b=moWaIH9HaOYA7FaN1lI7OdsQJG+q0u3XEwTgzKf7/Vl0d0uxYN+t8UYsZfsveeG4tl
-         W5GwPlHZMST9K7cyjr6gmYx+6n5qMH8vEWUp9X2yx1ClQM7H82Y1JVhEtxwYMYca7oVS
-         yx3w06WV3VRV5XwVmY/bI4ke7REACjhkAvXnwMUdqBU8MyPsfi4CX8iuU1QqcGlL4KXj
-         Ve8W/N+qXB03Y256ihf11/fKdtR/3MWNIxbK6qedPlh05B0bQ2PP1pT0cwq/JVuJ0Ypz
-         mbbrNgnLWpt2vhwiKCOMShQsq8ypifR002BcCKWfIBTwOX+bKvQeeptlGxaFBg4maOEg
-         xaeg==
-X-Gm-Message-State: AGi0PubwO/57LkeYzcioqaOh5tlREY09O77aPTFH+IQZxL5PwoSGjIEm
-        IAKUBLGh64KR+wX3sF4ZaKKu9A==
-X-Google-Smtp-Source: APiQypISS49EqCaurxZV/8fJ42FuizoYsp23pn2htdGj8ZS/9G1SQJQi++ic18c9Cw+laQPwuFth4A==
-X-Received: by 2002:a63:f403:: with SMTP id g3mr28685967pgi.47.1586974039694;
-        Wed, 15 Apr 2020 11:07:19 -0700 (PDT)
+        bh=yOYBo8OjxgFUtMIRY6LWGA61eRM9SefgAlvGVD6yLNE=;
+        b=ZNJGpxal4CFqyPBSuzKbGcaa9M2Nmfe5oTpsIoqgNqSfJb1WEznw7GfyRnQE4Bbytm
+         UoDVli/VU32lVVyeSUA1/6FORGqkxJoIAbto0cez7S8DdsBBJ66XDteodopQlF0nZ/R8
+         NjuHlyUy/2d+9tKBd/63Uv2ti03TDzAOvfVHSderga9+XWqcRUeXWwDXmMbOues5saWY
+         Ee90PzKyJCJ69uoGNU5TEJgP9tDC193+OC9VwjKACCOHBZMF7iCOvC/M/JlD46E0wqbV
+         WaIrQnGTPwY7Nj+u9fZQ7AMj99wmUHxJ0uWGN0LMmE50bN3RVIyHON/6WeFdn4z/aeBm
+         DbpQ==
+X-Gm-Message-State: AGi0Pubra4/cTijY9OBuO9+pMZ4Om6p7EqR1FdHb0kCmSzs3waNI7Mdd
+        Njlovspfq2FjGTu/8uGVjBASJg==
+X-Google-Smtp-Source: APiQypJ6qJ39VM0kUmNEVlXtvEwbTTfiXrQq1kKfK78aoE4KVf394jbk0vwvHXBhxKyQYNlGu08xgQ==
+X-Received: by 2002:a62:dd48:: with SMTP id w69mr18468228pff.86.1586974241107;
+        Wed, 15 Apr 2020 11:10:41 -0700 (PDT)
 Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id 22sm4945820pfb.132.2020.04.15.11.07.18
+        by smtp.gmail.com with ESMTPSA id 198sm14741291pfa.87.2020.04.15.11.10.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 11:07:18 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 12:07:16 -0600
+        Wed, 15 Apr 2020 11:10:40 -0700 (PDT)
+Date:   Wed, 15 Apr 2020 12:10:38 -0600
 From:   Mathieu Poirier <mathieu.poirier@linaro.org>
 To:     Siddharth Gupta <sidgup@codeaurora.org>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
@@ -56,258 +56,133 @@ Cc:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
         linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
         psodagud@codeaurora.org, rishabhb@codeaurora.org
-Subject: Re: [PATCH v2 5/6] remoteproc: qcom: Add per subsystem SSR
- notification
-Message-ID: <20200415180716.GD16583@xps15>
+Subject: Re: [PATCH v2 6/6] remoteproc: qcom: Add notification types to SSR
+Message-ID: <20200415181038.GE16583@xps15>
 References: <1586389003-26675-1-git-send-email-sidgup@codeaurora.org>
- <1586389003-26675-6-git-send-email-sidgup@codeaurora.org>
+ <1586389003-26675-7-git-send-email-sidgup@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1586389003-26675-6-git-send-email-sidgup@codeaurora.org>
+In-Reply-To: <1586389003-26675-7-git-send-email-sidgup@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 08, 2020 at 04:36:42PM -0700, Siddharth Gupta wrote:
-> Currently there is a global notification chain which is called whenever any
-> remoteproc shuts down. This leads to all the listeners being notified, and
-> is not an optimal design as kernel drivers might only be interested in
-> listening to notifications from a particular remoteproc. Create an
-> individual notifier chain for every SSR subdevice, and modify the
-> notification registration API to include the remoteproc struct as an
-> argument. Update the existing user of the registration API to get the
-> phandle of the remoteproc dt node to register for SSR notifications.
+On Wed, Apr 08, 2020 at 04:36:43PM -0700, Siddharth Gupta wrote:
+> The SSR subdevice only adds callback for the unprepare event. Add callbacks
+> for unprepare, start and prepare events. The client driver for a particular
+> remoteproc might be interested in knowing the status of the remoteproc
+> while undergoing SSR, not just when the remoteproc has finished shutting
+> down.
 > 
-> Signed-off-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
 > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
 > ---
->  drivers/remoteproc/qcom_common.c      | 49 +++++++++++++++++++++++++++--------
->  drivers/remoteproc/qcom_common.h      |  1 +
->  drivers/soc/qcom/glink_ssr.c          | 20 ++++++++++++--
->  include/linux/remoteproc/qcom_rproc.h | 17 ++++++++----
->  4 files changed, 69 insertions(+), 18 deletions(-)
+>  drivers/remoteproc/qcom_common.c | 39 +++++++++++++++++++++++++++++++++++----
+>  include/linux/remoteproc.h       | 15 +++++++++++++++
+>  2 files changed, 50 insertions(+), 4 deletions(-)
 > 
 > diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 1d2351b..56b0c3e 100644
+> index 56b0c3e..06611f2 100644
 > --- a/drivers/remoteproc/qcom_common.c
 > +++ b/drivers/remoteproc/qcom_common.c
-> @@ -23,8 +23,6 @@
->  #define to_smd_subdev(d) container_of(d, struct qcom_rproc_subdev, subdev)
->  #define to_ssr_subdev(d) container_of(d, struct qcom_rproc_ssr, subdev)
->  
-> -static BLOCKING_NOTIFIER_HEAD(ssr_notifiers);
-> -
->  static int glink_subdev_start(struct rproc_subdev *subdev)
->  {
->  	struct qcom_rproc_glink *glink = to_glink_subdev(subdev);
-> @@ -180,27 +178,52 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
->  
->  /**
->   * qcom_register_ssr_notifier() - register SSR notification handler
-> + * @rproc:	pointer to the remoteproc structure
->   * @nb:		notifier_block to notify for restart notifications
+> @@ -183,9 +183,9 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
 >   *
-> - * Returns 0 on success, negative errno on failure.
-> + * Returns pointer to srcu notifier head on success, ERR_PTR on failure.
+>   * Returns pointer to srcu notifier head on success, ERR_PTR on failure.
 >   *
-> - * This register the @notify function as handler for restart notifications. As
-> - * remote processors are stopped this function will be called, with the SSR
-> - * name passed as a parameter.
-> + * This registers the @notify function as handler for restart notifications. As
-> + * remote processors are stopped this function will be called, with the rproc
-> + * pointer passed as a parameter.
+> - * This registers the @notify function as handler for restart notifications. As
+> - * remote processors are stopped this function will be called, with the rproc
+> - * pointer passed as a parameter.
+> + * This registers the @notify function as handler for powerup/shutdown
+> + * notifications. This function will be invoked inside the callbacks registered
+> + * for the ssr subdevice, with the rproc pointer passed as a parameter.
 >   */
-> -int qcom_register_ssr_notifier(struct notifier_block *nb)
-> +void *qcom_register_ssr_notifier(struct rproc *rproc, struct notifier_block *nb)
+>  void *qcom_register_ssr_notifier(struct rproc *rproc, struct notifier_block *nb)
 >  {
-> -	return blocking_notifier_chain_register(&ssr_notifiers, nb);
-> +	struct rproc_subdev *subdev;
-> +	struct qcom_rproc_ssr *ssr;
-> +	int ret;
-
-Variable 'ret' needs to be initalised to -ENOENT.
-
-> +
-> +	if (!rproc)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	mutex_lock(&rproc->lock);
-> +	list_for_each_entry(subdev, &rproc->subdevs, node) {
-> +		ret = strcmp(subdev->name, "ssr_notifs");
-> +		if (!ret)
-> +			break;
-> +	}
-> +	mutex_unlock(&rproc->lock);
-> +	if (ret)
-> +		return ERR_PTR(-ENOENT);
-
-If the rproc->subdevs list is empty to_ssr_subdev() will generate a coredump.
-
-With the above:
-
-Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-
-> +
-> +	ssr = to_ssr_subdev(subdev);
-> +	srcu_notifier_chain_register(ssr->rproc_notif_list, nb);
-> +
-> +	return ssr->rproc_notif_list;
->  }
->  EXPORT_SYMBOL_GPL(qcom_register_ssr_notifier);
->  
->  /**
->   * qcom_unregister_ssr_notifier() - unregister SSR notification handler
-> + * @notify:	pointer to srcu notifier head
->   * @nb:		notifier_block to unregister
->   */
-> -void qcom_unregister_ssr_notifier(struct notifier_block *nb)
-> +int qcom_unregister_ssr_notifier(void *notify, struct notifier_block *nb)
->  {
-> -	blocking_notifier_chain_unregister(&ssr_notifiers, nb);
-> +	if (!notify)
-> +		return -EINVAL;
-> +
-> +	return srcu_notifier_chain_unregister(notify, nb);
+> @@ -227,11 +227,39 @@ int qcom_unregister_ssr_notifier(void *notify, struct notifier_block *nb)
 >  }
 >  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
 >  
-> @@ -208,7 +231,7 @@ static void ssr_notify_unprepare(struct rproc_subdev *subdev)
+> +static int ssr_notify_prepare(struct rproc_subdev *subdev)
+> +{
+> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+> +
+> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
+> +				 RPROC_BEFORE_POWERUP, (void *)ssr->name);
+> +	return 0;
+> +}
+> +
+> +static int ssr_notify_start(struct rproc_subdev *subdev)
+> +{
+> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+> +
+> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
+> +				 RPROC_AFTER_POWERUP, (void *)ssr->name);
+> +	return 0;
+> +}
+> +
+> +static void ssr_notify_stop(struct rproc_subdev *subdev, bool crashed)
+> +{
+> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+> +
+> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
+> +				 RPROC_BEFORE_SHUTDOWN, (void *)ssr->name);
+> +}
+> +
+> +
+>  static void ssr_notify_unprepare(struct rproc_subdev *subdev)
 >  {
 >  	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
 >  
-> -	blocking_notifier_call_chain(&ssr_notifiers, 0, (void *)ssr->name);
-> +	srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void *)ssr->name);
+> -	srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void *)ssr->name);
+> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
+> +				 RPROC_AFTER_SHUTDOWN, (void *)ssr->name);
 >  }
 >  
 >  /**
-> @@ -226,6 +249,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr,
+> @@ -248,6 +276,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr,
+>  {
 >  	ssr->name = ssr_name;
 >  	ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
+> +	ssr->subdev.prepare = ssr_notify_prepare;
+> +	ssr->subdev.start = ssr_notify_start;
+> +	ssr->subdev.stop = ssr_notify_stop;
 >  	ssr->subdev.unprepare = ssr_notify_unprepare;
-> +	ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
-> +								GFP_KERNEL);
-> +	srcu_init_notifier_head(ssr->rproc_notif_list);
->  
->  	rproc_add_subdev(rproc, &ssr->subdev);
->  }
-> @@ -239,6 +265,7 @@ EXPORT_SYMBOL_GPL(qcom_add_ssr_subdev);
->  void qcom_remove_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr)
->  {
->  	kfree(ssr->subdev.name);
-> +	kfree(ssr->rproc_notif_list);
->  	rproc_remove_subdev(rproc, &ssr->subdev);
->  }
->  EXPORT_SYMBOL_GPL(qcom_remove_ssr_subdev);
-> diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
-> index 58de71e..7792691 100644
-> --- a/drivers/remoteproc/qcom_common.h
-> +++ b/drivers/remoteproc/qcom_common.h
-> @@ -27,6 +27,7 @@ struct qcom_rproc_subdev {
->  struct qcom_rproc_ssr {
->  	struct rproc_subdev subdev;
->  
-> +	struct srcu_notifier_head *rproc_notif_list;
->  	const char *name;
+>  	ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
+>  								GFP_KERNEL);
+> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+> index 687e1eb..facadb07 100644
+> --- a/include/linux/remoteproc.h
+> +++ b/include/linux/remoteproc.h
+> @@ -452,6 +452,21 @@ struct rproc_dump_segment {
 >  };
 >  
-> diff --git a/drivers/soc/qcom/glink_ssr.c b/drivers/soc/qcom/glink_ssr.c
-> index d7babe3..2b39683 100644
-> --- a/drivers/soc/qcom/glink_ssr.c
-> +++ b/drivers/soc/qcom/glink_ssr.c
-> @@ -7,6 +7,7 @@
->  #include <linux/completion.h>
->  #include <linux/module.h>
->  #include <linux/notifier.h>
-> +#include <linux/remoteproc.h>
->  #include <linux/rpmsg.h>
->  #include <linux/remoteproc/qcom_rproc.h>
->  
-> @@ -49,6 +50,7 @@ struct glink_ssr {
->  	struct rpmsg_endpoint *ept;
->  
->  	struct notifier_block nb;
-> +	void *notifier_head;
->  
->  	u32 seq_num;
->  	struct completion completion;
-> @@ -112,6 +114,7 @@ static int qcom_glink_ssr_notify(struct notifier_block *nb, unsigned long event,
->  static int qcom_glink_ssr_probe(struct rpmsg_device *rpdev)
->  {
->  	struct glink_ssr *ssr;
-> +	struct rproc *rproc;
->  
->  	ssr = devm_kzalloc(&rpdev->dev, sizeof(*ssr), GFP_KERNEL);
->  	if (!ssr)
-> @@ -125,14 +128,27 @@ static int qcom_glink_ssr_probe(struct rpmsg_device *rpdev)
->  
->  	dev_set_drvdata(&rpdev->dev, ssr);
->  
-> -	return qcom_register_ssr_notifier(&ssr->nb);
-> +	rproc = rproc_get_by_child(&rpdev->dev);
-> +	if (!rproc) {
-> +		dev_err(&rpdev->dev, "glink device not child of rproc\n");
-> +		return -EINVAL;
-> +	}
+>  /**
+> + * enum rproc_notif_type - Different stages of remoteproc notifications
+> + * @RPROC_BEFORE_SHUTDOWN:	unprepare stage of  remoteproc
+> + * @RPROC_AFTER_SHUTDOWN:	stop stage of  remoteproc
+> + * @RPROC_BEFORE_POWERUP:	prepare stage of  remoteproc
+> + * @RPROC_AFTER_POWERUP:	start stage of  remoteproc
+> + */
+> +enum rproc_notif_type {
+> +	RPROC_BEFORE_SHUTDOWN,
+> +	RPROC_AFTER_SHUTDOWN,
+> +	RPROC_BEFORE_POWERUP,
+> +	RPROC_AFTER_POWERUP,
+> +	RPROC_MAX
+
+Not sure why you have a RPROC_MAX here...  It is not needed in this set but it
+might be in some downstream or upcoming code. 
+
+Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+
+> +};
 > +
-> +	ssr->notifier_head = qcom_register_ssr_notifier(rproc, &ssr->nb);
-> +	if (IS_ERR(ssr->notifier_head)) {
-> +		dev_err(&rpdev->dev,
-> +			"failed to register for ssr notifications\n");
-> +		return PTR_ERR(ssr->notifier_head);
-> +	}
-> +
-> +	return 0;
->  }
->  
->  static void qcom_glink_ssr_remove(struct rpmsg_device *rpdev)
->  {
->  	struct glink_ssr *ssr = dev_get_drvdata(&rpdev->dev);
->  
-> -	qcom_unregister_ssr_notifier(&ssr->nb);
-> +	qcom_unregister_ssr_notifier(ssr->notifier_head, &ssr->nb);
->  }
->  
->  static const struct rpmsg_device_id qcom_glink_ssr_match[] = {
-> diff --git a/include/linux/remoteproc/qcom_rproc.h b/include/linux/remoteproc/qcom_rproc.h
-> index fa8e386..89e830a 100644
-> --- a/include/linux/remoteproc/qcom_rproc.h
-> +++ b/include/linux/remoteproc/qcom_rproc.h
-> @@ -2,20 +2,27 @@
->  #define __QCOM_RPROC_H__
->  
->  struct notifier_block;
-> +struct rproc;
->  
->  #if IS_ENABLED(CONFIG_QCOM_RPROC_COMMON)
->  
-> -int qcom_register_ssr_notifier(struct notifier_block *nb);
-> -void qcom_unregister_ssr_notifier(struct notifier_block *nb);
-> +void *qcom_register_ssr_notifier(struct rproc *rproc,
-> +				 struct notifier_block *nb);
-> +int qcom_unregister_ssr_notifier(void *notify, struct notifier_block *nb);
->  
->  #else
->  
-> -static inline int qcom_register_ssr_notifier(struct notifier_block *nb)
-> +static inline void *qcom_register_ssr_notifier(struct rproc *rproc,
-> +					       struct notifier_block *nb)
->  {
-> -	return 0;
-> +	return NULL;
->  }
->  
-> -static inline void qcom_unregister_ssr_notifier(struct notifier_block *nb) {}
-> +static inline int qcom_unregister_ssr_notifier(void *notify,
-> +					       struct notifier_block *nb)
-> +{
-> +	return 0;
-> +}
->  
->  #endif
->  
+> +/**
+>   * struct rproc - represents a physical remote processor device
+>   * @node: list node of this rproc object
+>   * @domain: iommu domain
 > -- 
 > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
