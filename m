@@ -2,147 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C99B1A9174
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 05:11:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 945321A921B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 06:58:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731084AbgDODKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Apr 2020 23:10:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1731058AbgDODKq (ORCPT
+        id S2393176AbgDOE6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 00:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393172AbgDOE6N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Apr 2020 23:10:46 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DF26C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 20:10:45 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id x3so900770pfp.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 20:10:45 -0700 (PDT)
+        Wed, 15 Apr 2020 00:58:13 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1135C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 21:58:11 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id c23so968132pgj.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2020 21:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rl9PWj3uTfyqXygouG7eBzkOuRR3ht3SlSVZEdS5vi4=;
-        b=WReb3FooecG/mGVKk7KoTDNmzBB8JA07kS8Wlt7cGOj1b+24cYEuDDpfQIYT19Pgq3
-         D6Lmumf0FVKLo2Mq50BPVQcRiaZfDl6vC92/MGZX/r0LfWfPWUejG4s92xqamybetQPm
-         UmeEt0q1UUwCZuMGpM5Q2JjGxrKiO51WcBNsI=
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=R5xbiSaj5Oy8Nnf2GgKJ4RfScFxtsge56lV6SHB/Y3M=;
+        b=Q2sqLZJiLyjBBVROU/jscisw1EzVvQg8WBDR4qLWL72E0zJ3iX9fS/ITToP8f9KkYB
+         mmFa9RKmzjdEr/SKNlOzoQkifzdpF1LcY8IeSja1ZY9giLjwloc6vR+tnAogzlc3zOi/
+         PkkeVN7PzU6KiqZwmWEOwSFXm1gnqPhPpB7SQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rl9PWj3uTfyqXygouG7eBzkOuRR3ht3SlSVZEdS5vi4=;
-        b=R8TzzgOb04aCw5sOGDw5JhJlKxeNEICvxlpNURqyhLefgG/i1vEhX6fDhxi+B2iNOx
-         U/MFidZqEYB/9rC78Z/oDtVOSdnbCn2BZfPIDbYVZKLsXCx4B53Hadjtrj9g3C1vh2SR
-         8S+j9dEJ6Ilhz79zuePzMMf1kt3JSFFamSt9KQqrgxkb2gN0+j6PrIkv4biOMz11GqpS
-         qh60XT+Nt/ptFmJDJORevS7ujc1ymOCCo4YQRi6iKsPPNvlb8QmhWw9SNZsWOUPCtAVe
-         nLJiw6nNC1wNrn6VILyWxG6jl090ofr2o0MIDoxrTFuvMhvVL4GzaeoTvwn+az4/6YLy
-         mk1w==
-X-Gm-Message-State: AGi0PuYvO4sKDuhGQ1zULmL8k1fVJZakfcb/Pb7woUchhUEKECt9IKss
-        GtxMau1y2BWDO1pacGbBz5iVQA==
-X-Google-Smtp-Source: APiQypLN7j/9XXU0t6HBqN7MgkhuUOzn37VdNDeJBnJniYxDkolOenYFHYWHDRbtpX384Nu0Yk81cA==
-X-Received: by 2002:a62:e213:: with SMTP id a19mr11074202pfi.180.1586920245009;
-        Tue, 14 Apr 2020 20:10:45 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id 189sm12161684pfg.170.2020.04.14.20.10.43
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=R5xbiSaj5Oy8Nnf2GgKJ4RfScFxtsge56lV6SHB/Y3M=;
+        b=gwRIr6LId2OJzFMvEXYa0N6N1aI/AcT01lBoqygeyIcglf8ZG+6azpNNYq7T25gQku
+         x1rovqdrX57s8kqDtJbiMTnYy03DwiMbi6mHV/O2fd6u56qzFvidIJR1XT8Ru5ne/MYU
+         WvjsgQHWWcuxLXNgULqdZUCVVm/3aw5OTfpnXvrJHfpLI3bhuX8nSM4Q0TTrpXfqQLTZ
+         buBkZfa1Yff2BHEi3zaCZKPzNkAkU/sSCwyLHety1utIBzgsCwDcHdth7B9EtMb4I8FQ
+         ZV6mW/fj7LBYE2fi77uSwFkJAtnM0f93G3bcaqiABpwyRJtgpoBbT6SDPfMxyXN+o6SI
+         zV8w==
+X-Gm-Message-State: AGi0PubACxV2J+K7L0yfTMCyon3jeBt2M2dVQtrtdl8j7UHwZDPBNj5x
+        Ab5ap9heyPeyl3+VnJh4HufJgg==
+X-Google-Smtp-Source: APiQypKQOOZTdpdrxorZia/8YjPs8v7toOXT6LnIG2Xi/GGtNGiEILQJhuxpvhsDjjAu08AHdVi+ng==
+X-Received: by 2002:aa7:8101:: with SMTP id b1mr26659253pfi.322.1586926691162;
+        Tue, 14 Apr 2020 21:58:11 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id w66sm9174048pfw.50.2020.04.14.21.58.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2020 20:10:44 -0700 (PDT)
-Date:   Tue, 14 Apr 2020 20:10:43 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH] test_firmware: remove unnecessary test_fw_mutex in
- test_dev_config_show_xxx
-Message-ID: <202004142010.C0847F5@keescook>
-References: <20200415002517.4328-1-scott.branden@broadcom.com>
+        Tue, 14 Apr 2020 21:58:10 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200415002517.4328-1-scott.branden@broadcom.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAD=FV=W9swvzfCX5H=qhqdsnCAFTCWwzibcu72JJ9VKi9cR+1Q@mail.gmail.com>
+References: <20200414131010.v2.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid> <20200414131010.v2.2.I8550512081c89ec7a545018a7d2d9418a27c1a7a@changeid> <158689621032.105027.15399009553185990099@swboyd.mtv.corp.google.com> <CAD=FV=W9swvzfCX5H=qhqdsnCAFTCWwzibcu72JJ9VKi9cR+1Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Joe Perches <joe@perches.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Date:   Tue, 14 Apr 2020 21:58:09 -0700
+Message-ID: <158692668955.105027.2532988655671853557@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 14, 2020 at 05:25:17PM -0700, Scott Branden wrote:
-> Remove unnecessary use of test_fw_mutex in test_dev_config_show_xxx
-> functions that show simple bool, int, and u8.
+Quoting Doug Anderson (2020-04-14 13:39:15)
+> Hi,
+>=20
+> On Tue, Apr 14, 2020 at 1:30 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Douglas Anderson (2020-04-14 13:10:16)
+> > > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> > > index f988e9cc2c30..02fc114ffb4f 100644
+> > > --- a/drivers/soc/qcom/rpmh-rsc.c
+> > > +++ b/drivers/soc/qcom/rpmh-rsc.c
+> > > @@ -174,12 +175,13 @@ static void write_tcs_reg(const struct rsc_drv =
+*drv, int reg, int tcs_id,
+> > >  static void write_tcs_reg_sync(const struct rsc_drv *drv, int reg, i=
+nt tcs_id,
+> > >                                u32 data)
+> > >  {
+> > > +       u32 new_data;
+> > > +
+> > >         writel(data, tcs_reg_addr(drv, reg, tcs_id));
+> > > -       for (;;) {
+> > > -               if (data =3D=3D readl(tcs_reg_addr(drv, reg, tcs_id)))
+> > > -                       break;
+> > > -               udelay(1);
+> > > -       }
+> > > +       if (readl_poll_timeout_atomic(tcs_reg_addr(drv, reg, tcs_id),=
+ new_data,
+> > > +                                     new_data =3D=3D data, 1, USEC_P=
+ER_SEC))
+> > > +               pr_err("%s: error writing %#x to %d:%d\n", drv->name,
+> >
+> > Shouldn't the register be hex? That seems to be how the registers are
+> > represented. But I guess tcs_id is decimal and can't be translated to be
+> > meaningful enough to indicate which TCS it is like the sleep or wake
+> > one.
+>=20
+> Good point.  Should I quickly spin a v3 just so this is all ready to
+> go, or wait to see if there is any additional feedback?
+>=20
 
-I would expect at least a READ_ONCE(), yes?
+That's my only complaint, so if maintainers fix it then you can have my
+RB tag.
 
-> 
-> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
-> ---
->  lib/test_firmware.c | 26 +++-----------------------
->  1 file changed, 3 insertions(+), 23 deletions(-)
-> 
-> diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-> index 0c7fbcf07ac5..9fee2b93a8d1 100644
-> --- a/lib/test_firmware.c
-> +++ b/lib/test_firmware.c
-> @@ -310,27 +310,13 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
->  	return ret;
->  }
->  
-> -static ssize_t
-> -test_dev_config_show_bool(char *buf,
-> -			  bool config)
-> +static ssize_t test_dev_config_show_bool(char *buf, bool val)
->  {
-> -	bool val;
-> -
-> -	mutex_lock(&test_fw_mutex);
-> -	val = config;
-> -	mutex_unlock(&test_fw_mutex);
-> -
->  	return snprintf(buf, PAGE_SIZE, "%d\n", val);
->  }
->  
-> -static ssize_t test_dev_config_show_int(char *buf, int cfg)
-> +static ssize_t test_dev_config_show_int(char *buf, int val)
->  {
-> -	int val;
-> -
-> -	mutex_lock(&test_fw_mutex);
-> -	val = cfg;
-> -	mutex_unlock(&test_fw_mutex);
-> -
->  	return snprintf(buf, PAGE_SIZE, "%d\n", val);
->  }
->  
-> @@ -354,14 +340,8 @@ static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
->  	return size;
->  }
->  
-> -static ssize_t test_dev_config_show_u8(char *buf, u8 cfg)
-> +static ssize_t test_dev_config_show_u8(char *buf, u8 val)
->  {
-> -	u8 val;
-> -
-> -	mutex_lock(&test_fw_mutex);
-> -	val = cfg;
-> -	mutex_unlock(&test_fw_mutex);
-> -
->  	return snprintf(buf, PAGE_SIZE, "%u\n", val);
->  }
->  
-> -- 
-> 2.17.1
-> 
-
--- 
-Kees Cook
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
