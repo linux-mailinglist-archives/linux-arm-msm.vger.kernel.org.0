@@ -2,92 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7883E1AB1B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 21:33:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 213671AB1BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 21:33:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437644AbgDOT3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 15:29:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57414 "EHLO
+        id S2441799AbgDOTaV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 15:30:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2411824AbgDOT3q (ORCPT
+        by vger.kernel.org with ESMTP id S2436603AbgDOT3T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 15:29:46 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B7FC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 12:22:49 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id n24so376670plp.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 12:22:49 -0700 (PDT)
+        Wed, 15 Apr 2020 15:29:19 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD633C061A10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 12:29:18 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id g6so403162pgs.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 12:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=2G6Ppm6S3yDtcLs073bFFvyTtzzj8G77IKge+inQALY=;
-        b=Ac2G13fDGKHLvowWSXOVwAwAw5x1iFQyzhRdx7GF5kVg4aB5Phh8tEMuxboIKJqxHm
-         B5cvqQA4u5O+sddhg4tyP6Eofl69zfR+4bNTUr6t0qV2CfbazBQeEYMJA2t+u0S5Bso0
-         IEUFbEa+B8Cbv8q/pgnFhY5N8s2OfrG8ktMH4=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Bm4kU2ZKp3QMbAy5SoYEcpKZV6RD0npZxWuwzSCGnUs=;
+        b=KqdhYQ0zbtL9yXg2Bxk2e3AR19MJWNUGM564TCk0GdOiHPJqNwDW5BEC1kr3BJWybs
+         gUogR76cvvkgK3pwZp/3ANsg9SJxFBFtpZbE9NvrthZf+5TWO38Nht+VaBh+ZuaGBp2I
+         aXk6UIz0PzTSyTO6hk9isRYNGiW1X2Mh2ih6g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=2G6Ppm6S3yDtcLs073bFFvyTtzzj8G77IKge+inQALY=;
-        b=etVMo6ZtC+DqgHyxa4A8afL41wTt9BpP3t3hISuLC8ZJVPJ942a7jnX0EskdrNfQ0H
-         4AebF/MGZSDjMMNWIKcgEcNnflk+HrFfr6QtDrxViR66/KqXezrb2oOIjnfWpBrmo6vL
-         13lTZTmD1EyeXtGrNvRsGNUiwRsr9dZ/9/zLs9VEkEev8LOhvunHaQ2145BnosdrO3j4
-         Fm0xIUWcLya4aF7PzM3mDbhfBLYd0RFoEWiycn3e4g8j/4HXno2Ci4gjkBZgyhRdmOZi
-         BOdAL39ySRIanXTrpyUbuGzgnEM362naoXV4IYE2meXdT7t0sonunXIkhQvH7VWzmJVD
-         cHEA==
-X-Gm-Message-State: AGi0PuaX65fgWkDzIjxQkeSSEwR88BExmAu5tZnkRBXaP75mTydhgPpl
-        Gygvfs5NRcTnjHnrLGfFlyHQyg==
-X-Google-Smtp-Source: APiQypLELTVr4j+fjkSgAB7n6Lhqk9TCQuapKh/6qd7zA4qgNHTPFw7PmI+jfp5rV5dcZFXg8gHcig==
-X-Received: by 2002:a17:90a:df83:: with SMTP id p3mr891984pjv.66.1586978568434;
-        Wed, 15 Apr 2020 12:22:48 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id x70sm14127677pfc.21.2020.04.15.12.22.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Bm4kU2ZKp3QMbAy5SoYEcpKZV6RD0npZxWuwzSCGnUs=;
+        b=fdMjgWZlaLL9JdbSFF6xfZjxUgPwKXD0kLGP86m5VIi6mIpQpIK/snyqyoOaLdWs9k
+         WOm4ckXXT43WawFDGHHTOzpWWmYenGPq5NV8ldVDynkuWnUMtOqRivaAkLt4no2A6XS3
+         +QAOU2tmhhn3u5jP0Xs5YbJmrMysJxY9ripSeccgaRvH092O52QFFYmXCC2M4zJ+mcuH
+         1tHhkVfn+ESFMb4WbxRhVsDayzYNnXWq8DLDGxGajXUBGGvmGds11IfHPphMSogV8EzR
+         sqUmLe957j+Lnz6x7FBjN8BNu155RwLd/gXTn5ZmTzapjRiLbayl/8R9a1ZpG7QN9SOr
+         VLkg==
+X-Gm-Message-State: AGi0PuYcyMAMjP2UEP+AGZFRVEeAqbqeWYvA0yE+6jVfqxAS5whsmIZH
+        VFxjrmZ7ZV10s+zNrLfwJSrgZw==
+X-Google-Smtp-Source: APiQypJGqAGAcvgr0pgn18GcTFOquOdj4pDUmUBSR2qUPyjJwzMmoxHbt7rZBewVPibsTGM+ZmMj4w==
+X-Received: by 2002:a63:1118:: with SMTP id g24mr28220456pgl.259.1586978958145;
+        Wed, 15 Apr 2020 12:29:18 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id x4sm14566641pfa.191.2020.04.15.12.29.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2020 12:22:47 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200415141754.GB3820@codeaurora.org>
-References: <20200309185704.2491-1-swboyd@chromium.org> <20200414215015.GA3820@codeaurora.org> <158693222998.105027.13298557609451842017@swboyd.mtv.corp.google.com> <20200415141754.GB3820@codeaurora.org>
-Subject: Re: [PATCH] soc: qcom: cmd-db: Add debugfs dumping file
+        Wed, 15 Apr 2020 12:29:17 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Lina Iyer <ilina@codeaurora.org>
-Date:   Wed, 15 Apr 2020 12:22:46 -0700
-Message-ID: <158697856675.105027.14667274133002675067@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: [PATCH] soc: qcom: cmd-db: Use 5 digits for printing address
+Date:   Wed, 15 Apr 2020 12:29:16 -0700
+Message-Id: <20200415192916.78339-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Lina Iyer (2020-04-15 07:17:54)
-> On Tue, Apr 14 2020 at 00:30 -0600, Stephen Boyd wrote:
-> >Quoting Lina Iyer (2020-04-14 14:50:15)
-> >> On Mon, Mar 09 2020 at 12:57 -0600, Stephen Boyd wrote:
-> >> >+              seq_puts(seq, "-------------------------\n");
-> >> >+
-> >> >+              ent =3D rsc_to_entry_header(rsc);
-> >> >+              for (j =3D 0; j < le16_to_cpu(rsc->cnt); j++, ent++) {
-> >> >+                      seq_printf(seq, "0x%08x: %*pEp", le32_to_cpu(e=
-nt->addr),
-> >> 0x%05x is what we would have for a resource address.
-> >
-> >Sorry I totally missed this because the mail wasn't trimmed at all and
-> >it was really hard to find the one line that wasn't quoted!
-> >
-> Sorry, my bad. Somehow didn't notice the quoting has changed.
->=20
-> >5 vs. 8 sounds OK to me. Send a patch? Or I can do it if you prefer.
-> Apart from the nit, I think the patch looks good. Feel free to add -
->=20
-> Reviewed-by: Lina Iyer <ilina@codeaurora.org>
-> Tested-by: Lina Iyer <ilina@codeaurora.org>
+The top few bits aren't relevant to pad out because they're always zero.
+Let's just print 5 digits instead of 8 so that it's a little shorter and
+more readable.
 
-Cool thanks. I'll send a patch given that Bjorn has already picked it
-into the qcom tree.
+Suggested-by: Lina Iyer <ilina@codeaurora.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/soc/qcom/cmd-db.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index 57382b64f1da..4f8b739c6485 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -278,7 +278,7 @@ static int cmd_db_debugfs_dump(struct seq_file *seq, void *p)
+ 
+ 		ent = rsc_to_entry_header(rsc);
+ 		for (j = 0; j < le16_to_cpu(rsc->cnt); j++, ent++) {
+-			seq_printf(seq, "0x%08x: %*pEp", le32_to_cpu(ent->addr),
++			seq_printf(seq, "0x%05x: %*pEp", le32_to_cpu(ent->addr),
+ 				   (int)sizeof(ent->id), ent->id);
+ 
+ 			len = le16_to_cpu(ent->len);
+
+base-commit: d6815c5c43d4f9d18e557d27fd27ae8d9cfd450c
+prerequisite-patch-id: fc235b174200bb1b24876628a89a841d1c2e4aad
+-- 
+Sent by a computer, using git, on the internet
+
