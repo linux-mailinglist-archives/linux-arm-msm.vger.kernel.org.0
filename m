@@ -2,120 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E73961A9A18
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 12:11:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 312EC1A9A59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2020 12:25:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2896291AbgDOKLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 06:11:30 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:20519 "EHLO
+        id S2408539AbgDOKYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 06:24:14 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:58332 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2896282AbgDOKL1 (ORCPT
+        by vger.kernel.org with ESMTP id S2896486AbgDOKXw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 06:11:27 -0400
+        Wed, 15 Apr 2020 06:23:52 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1586945486; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=6Fmu2bYxuswkx5JslalXSUya4FFPt0PklF5SeocK9A0=; b=VCSFrfAs5RQWEyf2nCRCSGCT5eHWs8HAIaLvTbQZ7vukZTRYqTVuPyqlNXjbR5ziCGeY68f0
- F9b4aupU4ZQ3RFxT7yqBrr7NJmmKDSo/gCQakckgRxjcKTYnjBva3UhPbzPwXSWUsnCJKBTX
- jiqF5Oh26rG5hyge/cg7dLAHp1U=
+ s=smtp; t=1586946227; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=GGjz8tY0e6WxXggFY13xcuAUvyD7bnrpD+rtVLsk8QA=; b=HlydVbA3DLnaAi7XYnLTqpBnvwZOJNmAj5AGSxXTmaleE7KvjDv2pbPzoeXKl1tWUOIT2la6
+ 8XZ6a3lukdxj92Jh6iG6j8Qzne2xu2Gk3RfPn0Qh+FzQouq4ogI7WiybmvjfW4i2C7teHxaW
+ uTd7/PbBKOsYfuQYZ0nZUrixxf4=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e96ddc9.7f76bbeaa960-smtp-out-n05;
- Wed, 15 Apr 2020 10:11:21 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e96e0ad.7ff68bc01dc0-smtp-out-n02;
+ Wed, 15 Apr 2020 10:23:41 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 99783C432C2; Wed, 15 Apr 2020 10:11:20 +0000 (UTC)
+        id DF2A6C44792; Wed, 15 Apr 2020 10:23:39 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DBE8FC433F2;
-        Wed, 15 Apr 2020 10:11:19 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 15 Apr 2020 15:41:19 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Clark <robdclark@gmail.com>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Tomasz Figa <tfiga@chromium.org>
-Subject: Re: [PATCH 0/2] iommu/arm-smmu: Allow client devices to select direct
- mapping
-Message-ID: <44be117e4661f9ccb64480912644420f@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AFA8EC433F2;
+        Wed, 15 Apr 2020 10:23:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AFA8EC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+From:   Akash Asthana <akashast@codeaurora.org>
+To:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org
+Cc:     linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: [PATCH V4 0/9] Add interconnect support to QSPI and QUP drivers
+Date:   Wed, 15 Apr 2020 15:53:09 +0530
+Message-Id: <1586946198-13912-1-git-send-email-akashast@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Joerg,
+dt-binding patch for QUP drivers.
+ - https://patchwork.kernel.org/patch/11436621/ [Convert QUP bindings
+        to YAML and add ICC, pin swap doc]
 
-On 2020-04-13 20:42, Jordan Crouse wrote:
-> On Thu, Apr 09, 2020 at 04:31:24PM -0700, Matthias Kaehlcke wrote:
->> On Tue, Feb 04, 2020 at 11:12:17PM +0530, Sai Prakash Ranjan wrote:
->> > Hello Robin, Will
->> >
->> > On 2020-01-22 17:18, Sai Prakash Ranjan wrote:
->> > > This series allows drm devices to set a default identity
->> > > mapping using iommu_request_dm_for_dev(). First patch is
->> > > a cleanup to support other SoCs to call into QCOM specific
->> > > implementation and preparation for second patch.
->> > > Second patch sets the default identity domain for drm devices.
->> > >
->> > > Jordan Crouse (1):
->> > >   iommu/arm-smmu: Allow client devices to select direct mapping
->> > >
->> > > Sai Prakash Ranjan (1):
->> > >   iommu: arm-smmu-impl: Convert to a generic reset implementation
->> > >
->> > >  drivers/iommu/arm-smmu-impl.c |  8 +++--
->> > >  drivers/iommu/arm-smmu-qcom.c | 55 +++++++++++++++++++++++++++++++++--
->> > >  drivers/iommu/arm-smmu.c      |  3 ++
->> > >  drivers/iommu/arm-smmu.h      |  5 ++++
->> > >  4 files changed, 65 insertions(+), 6 deletions(-)
->> >
->> > Any review comments?
->> 
->> Ping
->> 
->> What is the status of this series, is it ready to land or are any 
->> changes
->> needed?
->> 
->> Thanks
->> 
->> Matthias
-> 
-> I think this is up in the air following the changes that Joerg 
-> suggested:
-> https://lists.linuxfoundation.org/pipermail/iommu/2020-April/043017.html
-> 
+High level design:
+ - QUP wrapper/common driver.
+   Vote for QUP core on behalf of earlycon from probe.
+   Remove BW vote during earlycon exit call
 
-1st patch for generic reset in this series is independent and can be 
-merged.
-But seems like requesting direct mapping fails with the joerg's patch 
-series.
+ - SERIAL driver.
+   Vote only for CPU/CORE path because driver is in FIFO mode only
+   Vote/unvote from qcom_geni_serial_pm func.
+   Bump up the CPU vote from set_termios call based on real time need
 
-Thanks,
-Sai
+ - I2C driver.
+   Vote for CORE/CPU/DDR path
+   Vote/unvote from runtime resume/suspend callback
+   As bus speed for I2C is fixed from probe itself no need for bump up.
+
+ - SPI QUP driver.
+   Vote only for CPU/CORE path because driver is in FIFO mode only
+   Vote/unvote from runtime resume/suspend callback
+   Bump up CPU vote based on real time need per transfer.
+
+ - QSPI driver.
+   Vote only for CPU path
+   Vote/unvote from runtime resume/suspend callback
+   Bump up CPU vote based on real time need per transfer.
+
+Changes in V2:
+ - Add devm_of_icc_get() API interconnect core.
+ - Add ICC support to common driver to fix earlyconsole crash.
+
+Changes in V3:
+ - Define common ICC APIs in geni-se driver and use it across geni based
+   I2C,SPI and UART driver.
+
+Changes in V4:
+ - Add a patch to ICC core to scale peak requirement
+   as twice of average if it is not mentioned explicilty.
+
+Akash Asthana (9):
+  interconnect: Add devm_of_icc_get() as exported API for users
+  interconnect: Set peak requirement as twice of average
+  soc: qcom: geni: Support for ICC voting
+  soc: qcom-geni-se: Add interconnect support to fix earlycon crash
+  i2c: i2c-qcom-geni: Add interconnect support
+  spi: spi-geni-qcom: Add interconnect support
+  tty: serial: qcom_geni_serial: Add interconnect support
+  spi: spi-qcom-qspi: Add interconnect support
+  arm64: dts: sc7180: Add interconnect for QUP and QSPI
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi  | 127 ++++++++++++++++++++++++++++++++++
+ drivers/i2c/busses/i2c-qcom-geni.c    |  26 ++++++-
+ drivers/interconnect/core.c           |  35 ++++++++++
+ drivers/soc/qcom/qcom-geni-se.c       | 111 +++++++++++++++++++++++++++++
+ drivers/spi/spi-geni-qcom.c           |  25 ++++++-
+ drivers/spi/spi-qcom-qspi.c           |  43 +++++++++++-
+ drivers/tty/serial/qcom_geni_serial.c |  32 ++++++++-
+ include/linux/interconnect.h          |   7 ++
+ include/linux/qcom-geni-se.h          |  33 +++++++++
+ 9 files changed, 433 insertions(+), 6 deletions(-)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
