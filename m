@@ -2,114 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 17F751ABB6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 10:39:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C95C51ABC3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 11:11:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502371AbgDPIhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 04:37:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38180 "EHLO
+        id S2502576AbgDPIoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 04:44:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2502496AbgDPIfd (ORCPT
+        with ESMTP id S2502646AbgDPIoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 04:35:33 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB78C03C1A6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:24:26 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id t189so224757vst.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:24:26 -0700 (PDT)
+        Thu, 16 Apr 2020 04:44:09 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E334C0610D5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:43:12 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id r66so1825385oie.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/TaBcNBr0LmHmhCu1jIrvYkIUcv+feENwdQ/ZDbQJes=;
-        b=YUjM35XZNkCke18ASEVQzu3oQOeQ67Z70V6beRoVND6LL9BBZ+3//1papRDqvwu0ET
-         tQ4NufGIlbdwNCmPwdQqkrrAGiSSOTwPtFR2mLdFrRsMdTb/QsflO8TZ31VhqZvny3hN
-         2PY6Cv1TAFkYPf9Nq55TNDQPdM4CZR5yFLfriuIVACuwdRMuBTL30ZcSh7fdpzH/kx9O
-         RhlOJjOCIABO8hrrWqJxxEjlfDg6y8EUdm2J6ym3mBDh+tfwsoQsvgh9yO0sq1KeYq+5
-         uyrbZ/Ek1LmsVDH01d/yEhBpQbbbwwR/FtG9PpLOjjaRQWuShfKBQmS3yqjb/oBDsOgf
-         Vjkg==
+        bh=lRp9vdVZ7MTdl+9qiFqPxefNPFFCKsJZnMf3voId8jY=;
+        b=j593R5BIiDTn5k58uLYv1wZ87WTppiXeaAFaR4tDuSqVUViZ9pG0B8UWph3jwGwbtU
+         7CeTZRqoZMQgiCJr0ghOpBiMfSzltgnv5SdOm6UKhB6PtnKgJQA+hzQoCwbYuW5F8vrC
+         zqKPHKRFQwrx/yeCHpsh/SNlicbazVTcG2IZK2MSLzm9JltGCWGsErofmHwKu7CJYJ2e
+         V56nr0P2QN56tBUEpoy4/S/Txmx6GG9ftyUfRFADgyRXb2aDCmMCTPBa6KVkq8bHJN4c
+         29NUjrcVDLcIo+3af6sT0h15nUximuihEJdBwmeXJmpZQlBXojjtHFldSPfYzkJCRiYj
+         dJdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/TaBcNBr0LmHmhCu1jIrvYkIUcv+feENwdQ/ZDbQJes=;
-        b=cEXyW3OHYNd34Ch1iwZtl2FBu6bkRo9tnTjIYom8fnV1ZYBv7lpiSINOn4Z17PU4dO
-         KfH+ncd9ij6HJLHP0PtIGRX3vwIc0YjsZbB+XdBid10caoPt749YstjTo1YJEUHIYlat
-         MbaVU60ie0lkixftzDXsVujbbozPTbG+lu4o8ZI0lwKOtD/AMSEcM07SGQ++868Rij/C
-         jMom4iXWX+SkK02SuPz5f09+qf9sFu5ATuuCNSOoQHUI1GJC8cVKdGND011Ov+9BuIBB
-         SlkyO4EglAAIDPg6joYle9pzyJKWTHgLGJ5qUGF1zt1gvV+Ozz6WpNylp4PUaPyjBsGP
-         XjTg==
-X-Gm-Message-State: AGi0Pubo98SraYUURJrlPs0ci9PWogv5rBV44oCV1rxAyA/0A2dfv2rp
-        6MwRoBY8aCXEsM16syKAx9T/zRGEr4dzQ4maLZclXsOU
-X-Google-Smtp-Source: APiQypLB3ByHxPcUtZOdM+rFhnnuQHeltCT3o4Wld28Z33lBkBrgQXNCizCw/78zmL5SElkXmD9y+IsRZr/CeHWIJLY=
-X-Received: by 2002:a67:11c4:: with SMTP id 187mr8059654vsr.34.1587025465228;
- Thu, 16 Apr 2020 01:24:25 -0700 (PDT)
+        bh=lRp9vdVZ7MTdl+9qiFqPxefNPFFCKsJZnMf3voId8jY=;
+        b=Uxl/Eg5lI2NcCQaSu3rU4i91PC2D1sxCpPs8/TUULDPGDYO3p8iqcCyah17z7dhC4y
+         pXYF6S+g6vDNkJ9+cuCJyG/Fxn0+XlsnS6oYHULbwGDFrG8Pi/IDDExQl0/Ykg8inLB4
+         QFBHWwNy8RvmMZaFG8DmK0ym2m4kaYpF9KIuC3/u8jzIRREoSwe0/fvm2GKydOkQ+ibW
+         nQmq5bTjAsofBcR/aq3f5djPz9PYnzQE3uEdQuErAZ+o8jTj+4JWeGq+ohxzWd1nvP4f
+         UB4I1ewuOm323DjeCiw7OGfTDVFaEe0LUdUIRP9FLK3conbTY4nQpc9zKUIhIdZJdFEh
+         aCoA==
+X-Gm-Message-State: AGi0PuZui5DY4vWrVFoB+xchYTVb2zjpGV+Ks4cvzjL2+p6we/OoY6Cx
+        9EObeGxUzPFMxLWtguGUVL8Sk4Sg78/84OZz25rdSw==
+X-Google-Smtp-Source: APiQypK1jr4Gmk8/Yi4BeN+e309KBzjOnZ9by8FP5Ku+SdFAqKJPKy3NtKTXpyk4T4W3P7PKwaapefIvgYij5I4rLfw=
+X-Received: by 2002:a54:448f:: with SMTP id v15mr2231604oiv.154.1587026591583;
+ Thu, 16 Apr 2020 01:43:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <1586353607-32222-1-git-send-email-rnayak@codeaurora.org>
- <1586353607-32222-14-git-send-email-rnayak@codeaurora.org>
- <CAPDyKFrOFOLCWHu8nE4i5t=d+Ei-kcJ15_42Ft3ROSUDe5jkpw@mail.gmail.com> <3e5f8e78-7cd1-30fb-e005-78c1e7111794@codeaurora.org>
-In-Reply-To: <3e5f8e78-7cd1-30fb-e005-78c1e7111794@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 16 Apr 2020 10:23:49 +0200
-Message-ID: <CAPDyKFrD7sh4gnbX8B2j22h18T=7ZRGCc_RYXd0ePm2fZwDcVA@mail.gmail.com>
-Subject: Re: [PATCH 13/21] mmc: sdhci-msm: Use OPP API to set clk/perf state
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20200415150244.2737206-1-robert.marko@sartura.hr> <20200415234844.GH611399@lunn.ch>
+In-Reply-To: <20200415234844.GH611399@lunn.ch>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Thu, 16 Apr 2020 10:43:00 +0200
+Message-ID: <CA+HBbNEf7x0ef=Q5U55DrX_xMS_QjXiAEP5rYAof2wyOifWfcA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] net: phy: mdio: add IPQ40xx MDIO driver
+To:     Andrew Lunn <andrew@lunn.ch>
+Cc:     Florian Fainelli <f.fainelli@gmail.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        robh+dt@kernel.org, Mark Rutland <mark.rutland@arm.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Pradeep P V K <ppvk@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
+        devicetree@vger.kernel.org,
+        Christian Lamparter <chunkeey@gmail.com>,
+        Luka Perkov <luka.perkov@sartura.hr>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 15 Apr 2020 at 18:43, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+On Thu, Apr 16, 2020 at 1:48 AM Andrew Lunn <andrew@lunn.ch> wrote:
 >
+> Hi Robert
 >
+> I should of said this earlier. With a patch set, you should include a
+> cover note, patch 0 of X, explaining the big picture of what the
+> patches do.
+
+Sorry, I thought that was a relatively small patch set and cover
+letter was not needed.
 >
-> On 4/15/2020 7:22 PM, Ulf Hansson wrote:
-> > On Wed, 8 Apr 2020 at 15:48, Rajendra Nayak <rnayak@codeaurora.org> wrote:
-> >>
-> >> On some qualcomm SoCs we need to vote on a performance state of a power
-> >> domain depending on the clock rates. Hence move to using OPP api to set
-> >> the clock rate and performance state specified in the OPP table.
-> >> On platforms without an OPP table, dev_pm_opp_set_rate() is eqvivalent to
-> >> clk_set_rate()
-> >>
-> >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> >> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> >> Cc: Pradeep P V K <ppvk@codeaurora.org>
-> >> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> >> Cc: Subhash Jadavani <subhashj@codeaurora.org>
-> >> Cc: linux-mmc@vger.kernel.org
+> Also, for network patches, the subject line should indicate which tree
+> these patches are for. So
+>
+> [PATCH net-next v3 0/3]
+OK, this is my first contribution to networking and I did not check first.
+I am used to sending patches without it.
+Now I know for the future,
+Thanks
+>
+> On Wed, Apr 15, 2020 at 05:02:43PM +0200, Robert Marko wrote:
+> > This patch adds the driver for the MDIO interface
+> > inside of Qualcomm IPQ40xx series SoC-s.
 > >
-> > This looks good to me!
+> > Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+> > Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> > Cc: Luka Perkov <luka.perkov@sartura.hr>
+> > ---
+> > Changes from v2 to v3:
+> > * Rename registers
+> > * Remove unnecessary variable initialisations
+> > * Switch to readl_poll_timeout() instead of custom solution
+> > * Drop unused header
 > >
-> > However, are there any of the other patches in the series that
-> > $subject patch depends on - or can I apply this as a standalone mmc
-> > patch?
+> > Changes from v1 to v2:
+> > * Remove magic default value
+> > * Remove lockdep_assert_held
+> > * Add C45 check
+> > * Simplify the driver
+> > * Drop device and mii_bus structs from private struct
+> > * Use devm_mdiobus_alloc_size()
+> >
+> >  drivers/net/phy/Kconfig        |   7 ++
+> >  drivers/net/phy/Makefile       |   1 +
+> >  drivers/net/phy/mdio-ipq40xx.c | 160 +++++++++++++++++++++++++++++++++
+> >  3 files changed, 168 insertions(+)
+> >  create mode 100644 drivers/net/phy/mdio-ipq40xx.c
+> >
+> > diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
+> > index 3fa33d27eeba..23bb5db033e3 100644
+> > --- a/drivers/net/phy/Kconfig
+> > +++ b/drivers/net/phy/Kconfig
+> > @@ -157,6 +157,13 @@ config MDIO_I2C
+> >
+> >         This is library mode.
+> >
+> > +config MDIO_IPQ40XX
+> > +     tristate "Qualcomm IPQ40xx MDIO interface"
+> > +     depends on HAS_IOMEM && OF_MDIO
+> > +     help
+> > +       This driver supports the MDIO interface found in Qualcomm
+> > +       IPQ40xx series Soc-s.
+> > +
+> >  config MDIO_IPQ8064
+> >       tristate "Qualcomm IPQ8064 MDIO interface support"
+> >       depends on HAS_IOMEM && OF_MDIO
+> > diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+> > index 2f5c7093a65b..36aafc6128c4 100644
+> > --- a/drivers/net/phy/Makefile
+> > +++ b/drivers/net/phy/Makefile
+> > @@ -37,6 +37,7 @@ obj-$(CONFIG_MDIO_CAVIUM)   += mdio-cavium.o
+> >  obj-$(CONFIG_MDIO_GPIO)              += mdio-gpio.o
+> >  obj-$(CONFIG_MDIO_HISI_FEMAC)        += mdio-hisi-femac.o
+> >  obj-$(CONFIG_MDIO_I2C)               += mdio-i2c.o
+> > +obj-$(CONFIG_MDIO_IPQ40XX)   += mdio-ipq40xx.o
+> >  obj-$(CONFIG_MDIO_IPQ8064)   += mdio-ipq8064.o
+> >  obj-$(CONFIG_MDIO_MOXART)    += mdio-moxart.o
+> >  obj-$(CONFIG_MDIO_MSCC_MIIM) += mdio-mscc-miim.o
+> > diff --git a/drivers/net/phy/mdio-ipq40xx.c b/drivers/net/phy/mdio-ipq40xx.c
+> > new file mode 100644
+> > index 000000000000..acf1230341bd
+> > --- /dev/null
+> > +++ b/drivers/net/phy/mdio-ipq40xx.c
+> > @@ -0,0 +1,160 @@
+> > +// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+> > +/* Copyright (c) 2015, The Linux Foundation. All rights reserved. */
+> > +/* Copyright (c) 2020 Sartura Ltd. */
+> > +
+> > +#include <linux/delay.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/module.h>
+> > +#include <linux/io.h>
+> > +#include <linux/iopoll.h>
+> > +#include <linux/of_address.h>
+> > +#include <linux/of_mdio.h>
+> > +#include <linux/phy.h>
+> > +#include <linux/platform_device.h>
+> > +
+> > +#define MDIO_ADDR_REG                                0x44
+> > +#define MDIO_DATA_WRITE_REG                  0x48
+> > +#define MDIO_DATA_READ_REG                   0x4c
+> > +#define MDIO_CMD_REG                         0x50
+> > +#define MDIO_CMD_ACCESS_BUSY         BIT(16)
+> > +#define MDIO_CMD_ACCESS_START                BIT(8)
+> > +#define MDIO_CMD_ACCESS_CODE_READ    0
+> > +#define MDIO_CMD_ACCESS_CODE_WRITE   1
+> > +
+> > +#define IPQ40XX_MDIO_TIMEOUT 10000
+> > +#define IPQ40XX_MDIO_SLEEP           10
+> > +
+> > +struct ipq40xx_mdio_data {
+> > +     void __iomem    *membase;
+> > +};
+> > +
+> > +static int ipq40xx_mdio_wait_busy(struct mii_bus *bus)
+> > +{
+> > +     struct ipq40xx_mdio_data *priv = bus->priv;
+> > +     unsigned int busy;
+> > +
+> > +     return readl_poll_timeout(priv->membase + MDIO_CMD_REG, busy,
+> > +                               (busy & MDIO_CMD_ACCESS_BUSY) == 0,
+> > +                               IPQ40XX_MDIO_SLEEP, IPQ40XX_MDIO_TIMEOUT);
 >
-> Hey Ulf, thanks for the review. I'll just need to respin these to make
-> sure I do not do a dev_pm_opp_of_remove_table() if dev_pm_opp_of_add_table()
-> isn;t successful as discussed with Viresh on another thread [1]
+> Do you have any documentation about _START and _BUSY? You are making
+> the assumption that the next read after writing the START bit will
+> have the BUSY bit set. That the hardware reacts that fast. It is not
+> an unreasonable assumption, but i've seen more designed where the
+> START bit is also the BUSY bit, so the write implicitly sets the busy
+> bit, and the hardware needs to clear it when it is done.
+No, I don't have any docs at all for the SoC.
+It's all based on GPL drivers from SDK and QCA comments in
+the drivers as well as U-boot drivers.
 >
-> As for the dependencies, its only PATCH 01/21 in this series and that's
-> already been queued by Viresh [2]
-
-I see, thanks!
-
-Looks like Viresh is sending it to be included for v5.7-rc2, so I can
-pick your new version of $subject patch next week.
-
-[...]
-
-Kind regards
-Uffe
+> As i said, this is not unreasonable, so:
+>
+> Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+>
+>     Andrew
+>
