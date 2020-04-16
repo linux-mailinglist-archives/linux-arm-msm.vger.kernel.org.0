@@ -2,141 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A620C1ACD5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 18:16:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D06091ACD6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 18:18:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1414578AbgDPQPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 12:15:44 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:23296 "EHLO
+        id S1729144AbgDPQRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 12:17:53 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:33764 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728958AbgDPQPl (ORCPT
+        by vger.kernel.org with ESMTP id S1729188AbgDPQRw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 12:15:41 -0400
+        Thu, 16 Apr 2020 12:17:52 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587053740; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=uiTtZTUVcrXfRLw4Pyx+w5Ah1e9TiEjRyiJheqElgkA=; b=s/0N/M1oHaZnmeyTwDF0emf7i0B1lsbHD/IwldvPIpigBOQPsy8f00l7WTvQdbWYstsfFDEK
- oupXOo3Ov4wJcA+vo66nimafiUTdEYD1bmD0UnhcRkNrFYIF/9NFHsoBTKGKne4O3SUUnLVc
- sdxbjV/rR6SUF/lY0jHCcXz8B5M=
+ s=smtp; t=1587053871; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Y2xEDbxocGucjO0qTn7DS340t5u6GBbJbGfyXI59M4M=;
+ b=HseX7gfjba3rpV076lZskndzRQ9gg2dnp6cHA91tt/6QJD+9kiPr0gy+f+wiRm7YOOZUMy9N
+ l3gLNfuND/2qfNWrahZfqE6VSEcEZlgMcC7bnEQWrHaNMie++vDuLTokbXsmwWolz8Twiees
+ xMNkksQfnM9mDGaCD410ivAhPMk=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e988498.7fe87ecc82d0-smtp-out-n01;
- Thu, 16 Apr 2020 16:15:20 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e98851f.7f476c392260-smtp-out-n01;
+ Thu, 16 Apr 2020 16:17:35 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 860AEC44792; Thu, 16 Apr 2020 16:15:19 +0000 (UTC)
+        id AF45FC433CB; Thu, 16 Apr 2020 16:17:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62E86C433CB;
-        Thu, 16 Apr 2020 16:15:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62E86C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        mike.leach@linaro.org, Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv2] coresight: tmc: Fix TMC mode read in tmc_read_prepare_etb()
-Date:   Thu, 16 Apr 2020 21:44:59 +0530
-Message-Id: <20200416161459.29855-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4130BC433F2;
+        Thu, 16 Apr 2020 16:17:34 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 16 Apr 2020 21:47:34 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm-owner@vger.kernel.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Mike Leach <mike.leach@linaro.org>
+Subject: Re: [PATCH] coresight: tmc: Read TMC mode only when TMC hw is enabled
+In-Reply-To: <CANLsYkxVFMrAOtZhNgQ+uPE5mgt1z8RNa_yAxX2ju7DYrbvBZw@mail.gmail.com>
+References: <20200409113538.5008-1-saiprakash.ranjan@codeaurora.org>
+ <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
+ <1751aeabd22bee18d2eef0f643883265@codeaurora.org>
+ <20200413171418.GB28804@xps15>
+ <75ef334a7e2cc6d87deecadd12c74f59@codeaurora.org>
+ <CANLsYkxVFMrAOtZhNgQ+uPE5mgt1z8RNa_yAxX2ju7DYrbvBZw@mail.gmail.com>
+Message-ID: <00cd8a8e124ada16f36937c4a1b173b9@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some QCOM platforms like SC7180, SDM845 and SM8150,
-reading TMC mode register without proper coresight power
-management can lead to async exceptions like the one in
-the call trace below in tmc_read_prepare_etb(). This can
-happen if the user tries to read the TMC etf data via
-device node without setting up source and the sink first.
-Fix this by having a check for coresight sysfs mode
-before reading TMC mode management register.
+Hi Mathieu,
 
- Kernel panic - not syncing: Asynchronous SError Interrupt
- CPU: 7 PID: 2605 Comm: hexdump Tainted: G S                5.4.30 #122
- Call trace:
-  dump_backtrace+0x0/0x188
-  show_stack+0x20/0x2c
-  dump_stack+0xdc/0x144
-  panic+0x168/0x36c
-  panic+0x0/0x36c
-  arm64_serror_panic+0x78/0x84
-  do_serror+0x130/0x138
-  el1_error+0x84/0xf8
-  tmc_read_prepare_etb+0x88/0xb8
-  tmc_open+0x40/0xd8
-  misc_open+0x120/0x158
-  chrdev_open+0xb8/0x1a4
-  do_dentry_open+0x268/0x3a0
-  vfs_open+0x34/0x40
-  path_openat+0x39c/0xdf4
-  do_filp_open+0x90/0x10c
-  do_sys_open+0x150/0x3e8
-  __arm64_compat_sys_openat+0x28/0x34
-  el0_svc_common+0xa8/0x160
-  el0_svc_compat_handler+0x2c/0x38
-  el0_svc_compat+0x8/0x10
+On 2020-04-15 21:26, Mathieu Poirier wrote:
+> On Tue, 14 Apr 2020 at 09:47, Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> Hi Mathieu,
+>> 
+>> On 2020-04-13 22:44, Mathieu Poirier wrote:
+>> > On Mon, Apr 13, 2020 at 01:55:30PM +0530, Sai Prakash Ranjan wrote:
+>> >> Hi Suzuki,
+>> >>
+>> >> On 2020-04-13 04:47, Suzuki K Poulose wrote:
+>> >> > Hi Sai,
+>> >> >
+>> >> > On 04/09/2020 12:35 PM, Sai Prakash Ranjan wrote:
+>> >> > > Reading TMC mode register in tmc_read_prepare_etb without
+>> >> > > enabling the TMC hardware leads to async exceptions like
+>> >> > > the one in the call trace below. This can happen if the
+>> >> > > user tries to read the TMC etf data via device node without
+>> >> > > setting up source and the sink first which enables the TMC
+>> >> > > hardware in the path. So make sure that the TMC is enabled
+>> >> > > before we try to read TMC data.
+>> >> >
+>> >> > So, one can trigger the same SError by simply :
+>> >> >
+>> >> > $ cat /sys/bus/coresight/device/tmc_etb0/mgmt/mode
+>> >> >
+>> >>
+>> >> I do not see any SError when I run the above command.
+>> >>
+>> >> localhost ~ # cat /sys/bus/coresight/devices/tmc_etf0/mgmt/mode
+>> >> 0x0
+>> >>
+>> >> And this is most likely due to
+>> >>
+>> >> commit cd9e3474bb793dc ("coresight: add PM runtime calls to
+>> >> coresight_simple_func()")
+>> >
+>> > Ok, so this is related to power management (you can ignore my question
+>> > in the
+>> > previous email).
+>> >
+>> > Regarding function tmc_read_prepare_etb(), the best way to deal with
+>> > this is
+>> > probably make sure drvdata->mode != CS_MODE_DISABLED before reading
+>> > TMC_MODE.
+>> > If there is a buffer to read it will have been copied when the ETB was
+>> > disabled
+>> > and there won't be a need to access the HW.
+>> >
+>> 
+>> This works as well, thanks.
+>> 
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> index d0cc3985b72a..7ffe05930984 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> @@ -596,6 +596,11 @@ int tmc_read_prepare_etb(struct tmc_drvdata
+>> *drvdata)
+>>                  goto out;
+>>          }
+>> 
+>> +       if (drvdata->mode == CS_MODE_DISABLED) {
+>> +               ret = -EINVAL;
+>> +               goto out;
+>> +       }
+>> +
+> 
+> We are back to your original solution where the ETB buffer can't be
+> read if the ETB itself is not enabled.  It _is_ possible to read the
+> buffer of an ETB that has been disabled.
+> 
+> To fix this consider the following [1].  Take the block at line 607
+> and move it to line 598.  As part of the if() condition at line 619,
+> read the value of the TMC_MODE register and exit if not in circular
+> mode.  If it is in circular mode continue with disabling the hardware.
+> 
+> [1].
+> https://elixir.bootlin.com/linux/v5.7-rc1/source/drivers/hwtracing/coresight/coresight-tmc-etf.c
+> 
 
-Fixes: 4525412a5046 ("coresight: tmc: making prepare/unprepare functions generic")
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
-v2:
- * Move the TMC mode read under CS_MODE_SYSFS as per Mathieu
----
- drivers/hwtracing/coresight/coresight-tmc-etf.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Thanks, got it now. Posted v2 - 
+https://lore.kernel.org/patchwork/patch/1226022/
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-index d0cc3985b72a..36cce2bfb744 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-@@ -596,13 +596,6 @@ int tmc_read_prepare_etb(struct tmc_drvdata *drvdata)
- 		goto out;
- 	}
- 
--	/* There is no point in reading a TMC in HW FIFO mode */
--	mode = readl_relaxed(drvdata->base + TMC_MODE);
--	if (mode != TMC_MODE_CIRCULAR_BUFFER) {
--		ret = -EINVAL;
--		goto out;
--	}
--
- 	/* Don't interfere if operated from Perf */
- 	if (drvdata->mode == CS_MODE_PERF) {
- 		ret = -EINVAL;
-@@ -616,8 +609,15 @@ int tmc_read_prepare_etb(struct tmc_drvdata *drvdata)
- 	}
- 
- 	/* Disable the TMC if need be */
--	if (drvdata->mode == CS_MODE_SYSFS)
-+	if (drvdata->mode == CS_MODE_SYSFS) {
-+		/* There is no point in reading a TMC in HW FIFO mode */
-+		mode = readl_relaxed(drvdata->base + TMC_MODE);
-+		if (mode != TMC_MODE_CIRCULAR_BUFFER) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 		__tmc_etb_disable_hw(drvdata);
-+	}
- 
- 	drvdata->reading = true;
- out:
+-Sai
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
