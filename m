@@ -2,219 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A1781AB4D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 02:31:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E66B1AB4EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 02:54:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404175AbgDPAbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Apr 2020 20:31:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47718 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2404155AbgDPAbP (ORCPT
+        id S2405315AbgDPAyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Apr 2020 20:54:31 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:44858 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405272AbgDPAy3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Apr 2020 20:31:15 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1904DC061A10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 17:31:15 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id h69so781654pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2020 17:31:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OnTP4oD4Bcsx3BkotZcrnHZmBw2+eZRhG9uvLnsU78s=;
-        b=nW/gyhjRXg8/9KsX1p83p5SaUYhOsPE36WDt6I4MjKArvFh4GKr9OOEZOsfFzSzCru
-         F9wOIRTPBo0mWDxfr7naClgKm3A6JntVoclABPDwZdwTO+V9itkM1hxdMp2I79skVt0u
-         QDIWFIbXePobRSCuNtHmLoUYUQrmn+Z1Vt8LE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OnTP4oD4Bcsx3BkotZcrnHZmBw2+eZRhG9uvLnsU78s=;
-        b=iDUnYlkRtK0oFrNUKwElKkzFBbCSexmn3kX77NP6WL4ECV4BtQOWrONRa7SZGs/bGn
-         AVXAqBtqqAn3qrK4Q+euMz+JejP6YCG2nTn83pDzxeEhizAbdwbppe7Ia8x468lz60W7
-         +TMoLoCc7QON5F55E8eJ8jk8jFyLGu7r4IUJn7Mi9/HTRRuNJ763+qjzONqJP5PuOtz3
-         xy0pyD5+id48y3fveByMWkmsT9DwdS1305ogv9kQTyiQbOE9PMbDsHyiGgJUZe129ilH
-         bGoK5T4dkbAkh0fiy3EsG4rzWyEggwhVTqUzpvj+b7E+A2fbhdBKbmh16jlQnUrXJBP1
-         W/iw==
-X-Gm-Message-State: AGi0PuYoVl1X8wl/Y6DS90QxBxbv2C6EPO1Y4X86Pxgg4bvnUarLVIlH
-        6r0sPDqjmsRz6sPHZ2lWBgDDWA==
-X-Google-Smtp-Source: APiQypJuJPbBT1Ne+dMcDqvrakxLTwgs4y4LFX8rDGEPjDP/udbBZw41qlo8PnFyd1zgnqvlYFWcmQ==
-X-Received: by 2002:a63:310:: with SMTP id 16mr28006470pgd.287.1586997074313;
-        Wed, 15 Apr 2020 17:31:14 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id a13sm5198298pfo.85.2020.04.15.17.31.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Apr 2020 17:31:13 -0700 (PDT)
-Date:   Wed, 15 Apr 2020 17:31:12 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org
-Subject: Re: [PATCH V4 4/9] soc: qcom-geni-se: Add interconnect support to
- fix earlycon crash
-Message-ID: <20200416003112.GA199755@google.com>
-References: <1586946198-13912-1-git-send-email-akashast@codeaurora.org>
- <1586946198-13912-5-git-send-email-akashast@codeaurora.org>
+        Wed, 15 Apr 2020 20:54:29 -0400
+Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 1FE639CE;
+        Thu, 16 Apr 2020 02:54:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1586998462;
+        bh=dZMu091chEyqroFKiISuS3a3zyFSmf1eCaPuRd8WZVY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=locygWHL2WF1Ca6qoSa6yVUf3P0xH4QJioRzvG/rX2BlbeKwenhKLMB6syGrJAIYh
+         561P+rcQu4eJrG8FDeUW3A5XHYuOw3K+vfGhLgI0/MoeWeABHwQFwPTIZu4+Fg694D
+         hlbQ9RnS3NKvnX8hMsjovvOtfdJ34+YTwwOogorU=
+Date:   Thu, 16 Apr 2020 03:54:09 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/3] dt-bindings: drm/bridge: ti-sn65dsi86: Add hpd-gpios
+ to the bindings
+Message-ID: <20200416005409.GR4758@pendragon.ideasonboard.com>
+References: <20200415084758.1.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid>
+ <20200415084758.2.Ic98f6622c60a1aa547ed85781f2c3b9d3e56b734@changeid>
+ <158698038289.105027.2860892334897893887@swboyd.mtv.corp.google.com>
+ <20200415203256.GP4758@pendragon.ideasonboard.com>
+ <CAD=FV=U1U7y_U4+zySzA9e_uYE0ECdM1Bd-ew0OxG3ciqjRVSA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1586946198-13912-5-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <CAD=FV=U1U7y_U4+zySzA9e_uYE0ECdM1Bd-ew0OxG3ciqjRVSA@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
+Hi Doug,
 
-On Wed, Apr 15, 2020 at 03:53:13PM +0530, Akash Asthana wrote:
-> QUP core clock is shared among all the SE drivers present on particular
-> QUP wrapper, the system will reset(unclocked access) if earlycon used after
-> QUP core clock is put to 0 from other SE drivers before real console comes
-> up.
+On Wed, Apr 15, 2020 at 04:49:00PM -0700, Doug Anderson wrote:
+> On Wed, Apr 15, 2020 at 1:33 PM Laurent Pinchart wrote:
+> > On Wed, Apr 15, 2020 at 12:53:02PM -0700, Stephen Boyd wrote:
+> > > Quoting Douglas Anderson (2020-04-15 08:48:40)
+> > > > Allow people to specify to use a GPIO for hot-plug-detect.  Add an
+> > > > example.
+> > > >
+> > > > NOTE: The current patch adding support for hpd-gpios to the Linux
+> > > > driver for hpd-gpios only adds enough support to the driver so that
+> > > > the bridge can use one of its own GPIOs.  The bindings, however, are
+> > > > written generically.
+> > > >
+> > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > > ---
+> > > >
+> > > >  .../bindings/display/bridge/ti,sn65dsi86.yaml          | 10 +++++++++-
+> > > >  1 file changed, 9 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > > index 8cacc6db33a9..554bfd003000 100644
+> > > > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > > @@ -60,6 +60,10 @@ properties:
+> > > >      const: 1
+> > > >      description: See ../../pwm/pwm.yaml for description of the cell formats.
+> > > >
+> > > > +  hpd-gpios:
+> > > > +    maxItems: 1
+> > > > +    description: If present use the given GPIO for hot-plug-detect.
+> > >
+> > > Shouldn't this go in the panel node? And the panel driver should get the
+> > > gpio and poll it after powering up the panel? Presumably that's why we
+> > > have the no-hpd property in the simple panel binding vs. putting it here
+> > > in the bridge.
+> >
+> > Same question really, I think this belongs to the panel (or connector)
+> > node indeed.
 > 
-> As earlycon can't vote for it's QUP core need, to fix this add ICC
-> support to common/QUP wrapper driver and put vote for QUP core from
-> probe on behalf of earlycon and remove vote during earlycon exit call.
+> Hrm.
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> Reported-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-> Change in V3:
->  - Add geni_remove_earlycon_icc_vote API that will be used by earlycon
->    exit function to remove ICC vote for earlyconsole.
->  - Remove suspend/resume hook for geni-se driver as we are no longer
->    removing earlyconsole ICC vote from system suspend, we are removing
->    from earlycon exit.
+> To me "no-hpd" feels OK in the panel because the lack of a connection
+> is somewhat symmetric.  Thus it's OK to say either "HPD isn't hooked
+> up to the panel in this system" or "HPD isn't hooked up to the bridge
+> in this system" and both express the same thing (AKA that there is no
+> HPD connection between the bridge and the panel).  In the case of
+> "no-hpd" it's more convenient to express it on the panel side because
+> the panel driver is the one whose behavior has to change if HPD isn't
+> hooked up.  The panel datasheet is the one that says how long of a
+> delay we need if HPD isn't hooked up.
 > 
-> Change in V4:
->  - As per Matthias comment make 'earlycon_wrapper' as static structure.
-> 
->  drivers/soc/qcom/qcom-geni-se.c       | 50 +++++++++++++++++++++++++++++++++++
->  drivers/tty/serial/qcom_geni_serial.c |  7 +++++
->  include/linux/qcom-geni-se.h          |  2 ++
->  3 files changed, 59 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 1527bc4..727ad2e 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -90,8 +90,11 @@ struct geni_wrapper {
->  	struct device *dev;
->  	void __iomem *base;
->  	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
-> +	struct geni_icc_path to_core;
->  };
->  
-> +static struct geni_wrapper *earlycon_wrapper;
-> +
->  #define QUP_HW_VER_REG			0x4
->  
->  /* Common SE registers */
-> @@ -781,6 +784,26 @@ int geni_icc_vote_off(struct geni_se *se)
->  }
->  EXPORT_SYMBOL(geni_icc_vote_off);
->  
-> +void geni_remove_earlycon_icc_vote(void)
-> +{
-> +	struct geni_wrapper *wrapper = earlycon_wrapper;
-> +	struct device_node *parent = of_get_next_parent(wrapper->dev->of_node);
-> +	struct device_node *child;
-> +
-> +	for_each_child_of_node(parent, child) {
-> +		if (of_device_is_compatible(child, "qcom,geni-se-qup")) {
-> +			wrapper = platform_get_drvdata(of_find_device_by_node(
-> +					child));
-> +			icc_put(wrapper->to_core.path);
-> +			wrapper->to_core.path = NULL;
-> +		}
-> +	}
-> +	of_node_put(parent);
-> +
-> +	earlycon_wrapper = NULL;
-> +}
-> +EXPORT_SYMBOL(geni_remove_earlycon_icc_vote);
-> +
->  static int geni_se_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
-> @@ -808,6 +831,33 @@ static int geni_se_probe(struct platform_device *pdev)
->  		}
->  	}
->  
-> +#ifdef CONFIG_SERIAL_EARLYCON
-> +	wrapper->to_core.path = devm_of_icc_get(dev, "qup-core");
-> +	if (IS_ERR(wrapper->to_core.path))
-> +		return PTR_ERR(wrapper->to_core.path);
-> +	/*
-> +	 * Put minmal BW request on core clocks on behalf of early console.
-> +	 * The vote will be removed earlycon exit function.
-> +	 *
-> +	 * Note: We are putting vote on each QUP wrapper instead only to which
-> +	 * earlycon is connected because QUP core clock of different wrapper
-> +	 * share same voltage domain. If core1 is put to 0, then core2 will
-> +	 * also run at 0, if not voted. Default ICC vote will be removed ASA
-> +	 * we touch any of the core clock.
-> +	 * core1 = core2 = max(core1, core2)
-> +	 */
-> +	ret = icc_set_bw(wrapper->to_core.path, GENI_DEFAULT_BW, 0);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "%s: ICC BW voting failed for core\n",
-> +			__func__);
-> +		return ret;
-> +	}
-> +
-> +	if (of_get_compatible_child(pdev->dev.of_node, "qcom,geni-debug-uart"))
-> +		earlycon_wrapper = wrapper;
-> +	of_node_put(pdev->dev.of_node);
-> +#endif
-> +
->  	dev_set_drvdata(dev, wrapper);
->  	dev_dbg(dev, "GENI SE Driver probed\n");
->  	return devm_of_platform_populate(dev);
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 6119090..8c5d97c 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1090,6 +1090,12 @@ static void qcom_geni_serial_earlycon_write(struct console *con,
->  	__qcom_geni_serial_console_write(&dev->port, s, n);
->  }
->  
-> +static int qcom_geni_serial_earlycon_exit(struct console *con)
-> +{
-> +	geni_remove_earlycon_icc_vote();
-> +	return 0;
-> +}
-> +
->  static int __init qcom_geni_serial_earlycon_setup(struct earlycon_device *dev,
->  								const char *opt)
->  {
-> @@ -1135,6 +1141,7 @@ static int __init qcom_geni_serial_earlycon_setup(struct earlycon_device *dev,
->  	writel(stop_bit_len, uport->membase + SE_UART_TX_STOP_BIT_LEN);
->  
->  	dev->con->write = qcom_geni_serial_earlycon_write;
-> +	dev->con->exit = qcom_geni_serial_earlycon_exit;
+> ...but when you're talking about where the bridge driver should look
+> to find the HPD signal that it needs, that really feels like it should
+> be described as part of the bridge.  Specifically imagine we were
+> using our bridge for DP, not for eDP.  In that case simple-panel
+> wouldn't be involved because we could get any type of display plugged
+> in.  Thus it couldn't go in the panel node.  Here it feels clearer
+> that hpd-gpio needs to be a property of the bridge driver.
 
-The idea of using the exit handler of the early console to remove the
-votes seemed appealing at first, however it has a drawback: the bandwidth
-requests in geni_se_probe() are always made when CONFIG_SERIAL_EARLYCON=y,
-also when the system doesn't actually use an early console. On such a
-system the votes would never be removed.
+If you were using it for DP, you would need a DT node for the DP
+connector (with bindings to be added to
+Documentation/devicetree/bindings/display/connector/, similar to the
+ones we already have for other connectors). That DT node should
+reference the HPD pin GPIO. The bridge driver for the connector
+(drivers/gpu/drm/bridge/display-connector.c) would then handle HPD. The
+good news is that it already does :-)
 
-A possible alternative could seem to remove the vote at the end of
-qcom_geni_serial_probe() of the 'normal' console, but it has a similar
-problem: the system could not even have a normal console. One could
-possibly argue that CONFIG_SERIAL_QCOM_GENI_CONSOLE shouldn't be set
-on such a system, however it could be enabled to have a console for
-development, and in production the same kernel config is used, but
-with the console disabled through the device tree.
+> Looking at other usages of "hpd-gpio" in the kernel, it seems like the
+> usage I'm proposing is also common.  Grepping for "hpd-gpios" shows
+> numerous examples of "hpd-gpios" being defined at the display
+> controller level and (effectively) I believe the bridge is at the
+> equivalent level.
 
-I don't really have a good idea at this point, maybe we just need
-something as ugly as a delayed work to remove the votes. Other
-suggestions are welcome :)
+Bridge drivers should only implement support for features available from
+the corresponding hardware. If an HPD signal is connected to a dedicated
+pin of the bridge, and the bridge can generate an interrupt and expose
+the HPD status through I2C, then it should implement HPD-related
+operations. If the HPD pin from the connector is hooked up to a GPIO of
+the SoC, it should be handled by the connector bridge driver.
+
+-- 
+Regards,
+
+Laurent Pinchart
