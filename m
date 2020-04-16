@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23BC41AD049
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 21:24:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 436A11AD083
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 21:42:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728632AbgDPTXz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 15:23:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54898 "EHLO
+        id S1728246AbgDPTls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 15:41:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728112AbgDPTXx (ORCPT
+        by vger.kernel.org with ESMTP id S1726161AbgDPTlr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 15:23:53 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7918BC061A10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 12:23:53 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id f8so564029plt.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 12:23:53 -0700 (PDT)
+        Thu, 16 Apr 2020 15:41:47 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0AADC061A10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 12:41:47 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id w11so2108712pga.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 12:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=aKFYVYQ9OYxfkj6UtWE/c0zee6GGkl7hN2RiXbrSsVQ=;
-        b=wOOCNhaQsoosxHRpdTHfDHxWt+3yGUwtdVHwF/2+AdpJ85PsC8MarhgRu+8jev/fUw
-         guZPcEBfiQibYkIVoTbLyaM6Sn0VMko49d/uKZC4KFoRxdN0drDm372VeGsWO4MMzNbH
-         IBIx/jZz+pr/4Cwst1GDcrnoY+ozXV3t+DzKHxanKWTIp51IsQSu4wvgiLJJlokx4nQH
-         0Acdma8hyGFfKiB55qOrNPYc42ho6XiVtd+wmAkwGZp0UA9JevcXfDYt2Qi4c1jRtYnG
-         MONrmuHqYbLHEaHlcRMW9p065LGFFAkDU/brduXXVkgSUPt9l1yml2c5mpbucPCRPhtU
-         CuGQ==
+        bh=4+5yvpF/CzkFV4Q2jkIdrwA/yhScLV1YzzJf+T0+lT0=;
+        b=vCizqDZqzySQAlaQKNZSPfzWTNKVRci9vMWz/TPic+3XrkQ03Ffgkm9kWe0f4jZjUf
+         8G/6u6CSBI/Ollj0zVbg8YRdI9x7IulHItSD/ttIFKdkO77DNk9A2QM5GoXfHCf58OOY
+         ENtU9vEBypBTtQvaaLBL8IVFxOKZCqadrz/x6ScCnlG0oxmakq9nru4cWYT20gdDgyY4
+         UI+drYXOPUwSRIZRBwmi9GvTGrryUnz5pMW4HOHttXbnoQotENvKHXfDGo8RgUaV0vxP
+         3QlZeNHsCFrYH93qGFHQbLR2Z2zNWAVNhknBrBzhUwknHU7g1S3YMLN4mvZEVckyopmG
+         kNug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aKFYVYQ9OYxfkj6UtWE/c0zee6GGkl7hN2RiXbrSsVQ=;
-        b=SpiHI+8nqtP4Ls1yg5n5RVRs774Q5Ot/r530MlLbuLzsnLgRe3bRmUltdzwrfuRwgm
-         41OuNAeWEDcGoX9ayxai/slEx6d6++nYG/v65WQo4PMt8Qo27tWhdeAjWnvNzxBaI5t5
-         WZgdPHoXBx3H0k2+YaUzczlnrDmy392cWPPsERYOnDhbGXmuIfug89a4wVtdN9pee2Fd
-         jnxddBI0rIHVygYHKxQGSwyNRclxkmIG4GQ7DLJIbNCLxSR93wscKkuvvMj/60pb3iDC
-         mL5ul3bys86mEOpPlvVqyzIKqAgMBKf5UDk6+yWACSvv4VRo0uPhYJFip5yJyRTVJxsG
-         0W9Q==
-X-Gm-Message-State: AGi0PuZiMPY2lF15l3WTKEIZre7oLA/UxfrtkxxtfMsmpBlJOaL/CxAP
-        nAfOBchYXWXkaKqGvQpvvOhl3Q==
-X-Google-Smtp-Source: APiQypK0eaYot0thKROCDeMzMTdcPgMIkES3AeLNRv813IJwsbnRKl5Rw9PycXGl/pCuoTqlxZH3aw==
-X-Received: by 2002:a17:90b:3691:: with SMTP id mj17mr6924777pjb.114.1587065032831;
-        Thu, 16 Apr 2020 12:23:52 -0700 (PDT)
+        bh=4+5yvpF/CzkFV4Q2jkIdrwA/yhScLV1YzzJf+T0+lT0=;
+        b=aKGJNhfUq3t0zGtQQdRlbSIYIPD7hPfZpgN8Xnddthjqw0n5xZybrg4SfMRcILwCRD
+         e87ao2yt86VVnPNv4k8d3HjYEJJxtLXbix85rzU3Dh1WgISof+EWfkCAL8fYHb8azYbj
+         ssLEn3Vg11z2+SlQxs+vtZmNug4RNYh7T4ChHRtiscfkVY16AUmh2Bz7itry6PGLAl8Q
+         JKnEw/MCME8k5H9KmX4ThYZYwzCLHnR3l433EdpiutnkIrzlff3kuQ77jeBFEFkzgPzz
+         0hPsI3fO3DT1bft2A/rWr0AR8JBM5g/T6jRlmw7umw+nCwQFIQ9Go4i0WVYTmsPsDYt7
+         Fh5g==
+X-Gm-Message-State: AGi0PuYuclrRdRjLP/PzVXbM8sark23goWdDHFMTshwIXHHXS+2CjQMp
+        2Un4lLFVyGuzNDuC2tn5ku6X0g==
+X-Google-Smtp-Source: APiQypL9j8meLyGkikWSZboSQOmU2u65qLLK1r6+xhTUyBIVdpn5qScfiojY7EddmHUFHZFnYDfj6w==
+X-Received: by 2002:a05:6a00:c8:: with SMTP id e8mr32914135pfj.131.1587066106898;
+        Thu, 16 Apr 2020 12:41:46 -0700 (PDT)
 Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id p8sm3465938pjd.10.2020.04.16.12.23.51
+        by smtp.gmail.com with ESMTPSA id y123sm17140605pfb.13.2020.04.16.12.41.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2020 12:23:52 -0700 (PDT)
-Date:   Thu, 16 Apr 2020 13:23:50 -0600
+        Thu, 16 Apr 2020 12:41:46 -0700 (PDT)
+Date:   Thu, 16 Apr 2020 13:41:44 -0600
 From:   Mathieu Poirier <mathieu.poirier@linaro.org>
 To:     Siddharth Gupta <sidgup@codeaurora.org>
 Cc:     bjorn.andersson@linaro.org, ohad@wizery.com,
@@ -56,109 +56,71 @@ Cc:     bjorn.andersson@linaro.org, ohad@wizery.com,
         linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
         psodagud@codeaurora.org, rishabhb@codeaurora.org
-Subject: Re: [PATCH v2 1/2] remoteproc: core: Add an API for changing
- firmware name
-Message-ID: <20200416192350.GA29577@xps15>
+Subject: Re: [PATCH v2 2/2] remoteproc: core: Prevent sleep when rproc crashes
+Message-ID: <20200416194144.GA30314@xps15>
 References: <1586384305-7825-1-git-send-email-sidgup@codeaurora.org>
- <1586384305-7825-2-git-send-email-sidgup@codeaurora.org>
+ <1586384305-7825-3-git-send-email-sidgup@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1586384305-7825-2-git-send-email-sidgup@codeaurora.org>
+In-Reply-To: <1586384305-7825-3-git-send-email-sidgup@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Siddharth,
-
-On Wed, Apr 08, 2020 at 03:18:24PM -0700, Siddharth Gupta wrote:
-> Add an API which allows to change the name of the firmware to be booted on
-> the specified rproc. This change gives us the flixibility to change the
-> firmware at run-time depending on the usecase. Some remoteprocs might use
-> a different firmware for testing, production and development purposes,
-> which may be selected based on the fuse settings during bootup.
+On Wed, Apr 08, 2020 at 03:18:25PM -0700, Siddharth Gupta wrote:
+> Remoteproc recovery should be fast and any delay will have an impact on the
+> user-experience. Add a wakeup source to remoteproc which ensures that the
+> system does not go into idle state while a remoteproc is recovering, thus
+> prevent any delays that might occur during system resume.
 > 
 > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
 > ---
->  drivers/remoteproc/remoteproc_core.c | 43 ++++++++++++++++++++++++++++++++++++
->  include/linux/remoteproc.h           |  1 +
->  2 files changed, 44 insertions(+)
+>  drivers/remoteproc/qcom_q6v5_pas.c   | 1 +
+>  drivers/remoteproc/remoteproc_core.c | 4 ++++
+>  2 files changed, 5 insertions(+)
 > 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 7a63efb..6bb2c7d 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -401,6 +401,7 @@ static int adsp_probe(struct platform_device *pdev)
+>  
+>  	adsp = (struct qcom_adsp *)rproc->priv;
+>  	adsp->dev = &pdev->dev;
+> +	device_wakeup_enable(adsp->dev);
+>  	adsp->rproc = rproc;
+>  	adsp->pas_id = desc->pas_id;
+>  	adsp->has_aggre2_clk = desc->has_aggre2_clk;
 > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index fb9c813..9f99fe2 100644
+> index 9f99fe2..19a360d 100644
 > --- a/drivers/remoteproc/remoteproc_core.c
 > +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -1796,6 +1796,49 @@ int rproc_boot(struct rproc *rproc)
->  EXPORT_SYMBOL(rproc_boot);
+> @@ -1729,6 +1729,8 @@ static void rproc_crash_handler_work(struct work_struct *work)
+>  
+>  	if (!rproc->recovery_disabled)
+>  		rproc_trigger_recovery(rproc);
+> +
+> +	pm_relax(rproc->dev.parent);
+>  }
 >  
 >  /**
-> + * rproc_set_firmware_name() - change the firmware name for specified remoteproc
-> + * @rproc: handle of a remote processor
-> + * @firmware: name of the firmware to boot with
-> + *
-> + * Change the name of the firmware to be loaded to @firmware in the rproc
-> + * structure. We should ensure that the remoteproc is not running.
-> + *
-> + * Returns 0 on success, and an appropriate error value otherwise.
-> + */
-> +int rproc_set_firmware_name(struct rproc *rproc, const char *firmware)
-> +{
-> +	int len, ret = 0;
-> +	char *p;
-> +
-> +	if (!rproc || !firmware)
-> +		return -EINVAL;
-> +
-> +	len = strcspn(firmware, "\n");
-> +	if (!len)
-> +		return -EINVAL;
-> +
-> +	mutex_lock(&rproc->lock);
-> +
-> +	if (rproc->state != RPROC_OFFLINE) {
-> +		ret = -EBUSY;
-> +		goto out;
-> +	}
-> +
-> +	p = kstrndup(firmware, len, GFP_KERNEL);
-> +	if (!p) {
-> +		ret = -ENOMEM;
-> +		goto out;
-> +	}
-> +
-> +	kfree(rproc->firmware);
-> +	rproc->firmware = p;
-> +out:
-> +	mutex_unlock(&rproc->lock);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL(rproc_set_firmware_name);
-> +
-
-This is much better, thanks for cleaning things up. Keep in mind that when you
-do resend this rproc->firmware will likely have become a "const char *",
-requiring the use of kstrndup_const()...  But that is for a later time.  
-
-Mathieu
-
-> +/**
->   * rproc_shutdown() - power off the remote processor
->   * @rproc: the remote processor
->   *
-> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> index 9c07d79..c5d36e6 100644
-> --- a/include/linux/remoteproc.h
-> +++ b/include/linux/remoteproc.h
-> @@ -613,6 +613,7 @@ rproc_of_resm_mem_entry_init(struct device *dev, u32 of_resm_idx, size_t len,
->  			     u32 da, const char *name, ...);
+> @@ -2273,6 +2275,8 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
+>  		return;
+>  	}
 >  
->  int rproc_boot(struct rproc *rproc);
-> +int rproc_set_firmware_name(struct rproc *rproc, const char *firmware);
->  void rproc_shutdown(struct rproc *rproc);
->  void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type);
->  int rproc_coredump_add_segment(struct rproc *rproc, dma_addr_t da, size_t size);
+> +	pm_stay_awake(rproc->dev.parent);
+> +
+
+Much better:
+
+Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+
+>  	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
+>  		rproc->name, rproc_crash_to_string(type));
+>  
 > -- 
 > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
