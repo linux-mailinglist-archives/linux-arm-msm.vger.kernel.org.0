@@ -2,102 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 570171ACC36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 17:57:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A620C1ACD5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 18:16:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2442854AbgDPP5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 11:57:08 -0400
-Received: from foss.arm.com ([217.140.110.172]:36780 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2442848AbgDPP5F (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 11:57:05 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2620A30E;
-        Thu, 16 Apr 2020 08:57:05 -0700 (PDT)
-Received: from lakrids.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 94EA73F237;
-        Thu, 16 Apr 2020 08:57:03 -0700 (PDT)
-Date:   Thu, 16 Apr 2020 16:56:56 +0100
-From:   Mark Rutland <mark.rutland@arm.com>
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Robert Richter <rrichter@marvell.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 2/2] [RFC] arm64: Add dependencies to vendor-specific
- errata
-Message-ID: <20200416155655.GA7155@lakrids.cambridge.arm.com>
-References: <20200416115658.20406-1-geert+renesas@glider.be>
- <20200416115658.20406-3-geert+renesas@glider.be>
- <20200416125630.GF4987@lakrids.cambridge.arm.com>
- <CAMuHMdWRW4+YLR8fz0hUTAPupRkM4Y5c82XHuOWSvNYOh-BZ0A@mail.gmail.com>
+        id S1414578AbgDPQPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 12:15:44 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:23296 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728958AbgDPQPl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Apr 2020 12:15:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587053740; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=uiTtZTUVcrXfRLw4Pyx+w5Ah1e9TiEjRyiJheqElgkA=; b=s/0N/M1oHaZnmeyTwDF0emf7i0B1lsbHD/IwldvPIpigBOQPsy8f00l7WTvQdbWYstsfFDEK
+ oupXOo3Ov4wJcA+vo66nimafiUTdEYD1bmD0UnhcRkNrFYIF/9NFHsoBTKGKne4O3SUUnLVc
+ sdxbjV/rR6SUF/lY0jHCcXz8B5M=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e988498.7fe87ecc82d0-smtp-out-n01;
+ Thu, 16 Apr 2020 16:15:20 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 860AEC44792; Thu, 16 Apr 2020 16:15:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62E86C433CB;
+        Thu, 16 Apr 2020 16:15:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62E86C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        mike.leach@linaro.org, Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2] coresight: tmc: Fix TMC mode read in tmc_read_prepare_etb()
+Date:   Thu, 16 Apr 2020 21:44:59 +0530
+Message-Id: <20200416161459.29855-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMuHMdWRW4+YLR8fz0hUTAPupRkM4Y5c82XHuOWSvNYOh-BZ0A@mail.gmail.com>
-User-Agent: Mutt/1.11.1+11 (2f07cb52) (2018-12-01)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 16, 2020 at 05:38:07PM +0200, Geert Uytterhoeven wrote:
-> On Thu, Apr 16, 2020 at 2:56 PM Mark Rutland <mark.rutland@arm.com> wrote:
-> > On Thu, Apr 16, 2020 at 01:56:58PM +0200, Geert Uytterhoeven wrote:
-> > > Currently the user is asked about enabling support for each and every
-> > > vendor-specific erratum, even when support for the specific platform is
-> > > not enabled.
-> > >
-> > > Fix this by adding platform dependencies to the config options
-> > > controlling support for vendor-specific errata.
+On some QCOM platforms like SC7180, SDM845 and SM8150,
+reading TMC mode register without proper coresight power
+management can lead to async exceptions like the one in
+the call trace below in tmc_read_prepare_etb(). This can
+happen if the user tries to read the TMC etf data via
+device node without setting up source and the sink first.
+Fix this by having a check for coresight sysfs mode
+before reading TMC mode management register.
 
-> > I'm not su1re that it makes sense to do this in general, becaose the
-> > ARCH_* platform symbols are about plactform/SoC support (e.g. pinctrl
-> > drivers), and these are (mostly) CPU-local and/or VM-visible.
-> >
-> > I think that it makes sense for those to be independent because:
+ Kernel panic - not syncing: Asynchronous SError Interrupt
+ CPU: 7 PID: 2605 Comm: hexdump Tainted: G S                5.4.30 #122
+ Call trace:
+  dump_backtrace+0x0/0x188
+  show_stack+0x20/0x2c
+  dump_stack+0xdc/0x144
+  panic+0x168/0x36c
+  panic+0x0/0x36c
+  arm64_serror_panic+0x78/0x84
+  do_serror+0x130/0x138
+  el1_error+0x84/0xf8
+  tmc_read_prepare_etb+0x88/0xb8
+  tmc_open+0x40/0xd8
+  misc_open+0x120/0x158
+  chrdev_open+0xb8/0x1a4
+  do_dentry_open+0x268/0x3a0
+  vfs_open+0x34/0x40
+  path_openat+0x39c/0xdf4
+  do_filp_open+0x90/0x10c
+  do_sys_open+0x150/0x3e8
+  __arm64_compat_sys_openat+0x28/0x34
+  el0_svc_common+0xa8/0x160
+  el0_svc_compat_handler+0x2c/0x38
+  el0_svc_compat+0x8/0x10
+
+Fixes: 4525412a5046 ("coresight: tmc: making prepare/unprepare functions generic")
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+v2:
+ * Move the TMC mode read under CS_MODE_SYSFS as per Mathieu
+---
+ drivers/hwtracing/coresight/coresight-tmc-etf.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+index d0cc3985b72a..36cce2bfb744 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+@@ -596,13 +596,6 @@ int tmc_read_prepare_etb(struct tmc_drvdata *drvdata)
+ 		goto out;
+ 	}
  
-> > * It prevents building a minimal VM image with all (non-virtualized)
-> >   platform support disabled, but all possible (VM-visible) errata
-> >   options enabled. I do that occassionally for testing/analysis, and I
-> >   can imagine this is useful for those building images that are only
-> >   intended to be used in VMs.
-> 
-> Oh, you also want to build a "generic" guest kernel, with all ARCH_*
-> symbols disabled. 
-
-Yup! As above I do this today for building test kernels I run on a
-number of different hosts, and I'm aware of other use-cases (e.g. WSL2
-or docker for mac) where you may want to do this to minimize the core
-kernel either for size or security reasons.
-
-> Let's hope a maleficent user cannot disable errata mitigations in the
-> guest kernel and break the host ;-)
-
-Indeed ;)
-
-For cases where a malicious guest could cause harm we've added
-workarounds in KVM, so unless we've missed something that shouldn't be
-the case.
-
-Otherwise, a guest missing these is just shooting itself in the foot.
-
-> And perhaps you do want to enable some platform-specific drivers for
-> VFIO pass-through?  Hence having ARCH_* dependencies on those drivers
-> means they cannot be enabled :-( Hmm...
-
-IIRC platform device passthrough requires an corresponding VFIO platform
-driver in the host to handle reset and so on, but it does seem a shame
-to not allow the user to select a driver if they really want it.
-
-I guess there might be platform-specific PCIe drivers too, which might
-work with VFIO regardless.
-
-Thanks,
-Mark.
+-	/* There is no point in reading a TMC in HW FIFO mode */
+-	mode = readl_relaxed(drvdata->base + TMC_MODE);
+-	if (mode != TMC_MODE_CIRCULAR_BUFFER) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
+-
+ 	/* Don't interfere if operated from Perf */
+ 	if (drvdata->mode == CS_MODE_PERF) {
+ 		ret = -EINVAL;
+@@ -616,8 +609,15 @@ int tmc_read_prepare_etb(struct tmc_drvdata *drvdata)
+ 	}
+ 
+ 	/* Disable the TMC if need be */
+-	if (drvdata->mode == CS_MODE_SYSFS)
++	if (drvdata->mode == CS_MODE_SYSFS) {
++		/* There is no point in reading a TMC in HW FIFO mode */
++		mode = readl_relaxed(drvdata->base + TMC_MODE);
++		if (mode != TMC_MODE_CIRCULAR_BUFFER) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 		__tmc_etb_disable_hw(drvdata);
++	}
+ 
+ 	drvdata->reading = true;
+ out:
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
