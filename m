@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 961AB1ABB14
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 10:24:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17F751ABB6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 10:39:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441370AbgDPIXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 04:23:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36032 "EHLO
+        id S2502371AbgDPIhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 04:37:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2441363AbgDPIV6 (ORCPT
+        with ESMTP id S2502496AbgDPIfd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 04:21:58 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39AFEC061A41
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:21:42 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id h200so1671094vke.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:21:42 -0700 (PDT)
+        Thu, 16 Apr 2020 04:35:33 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB78C03C1A6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:24:26 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id t189so224757vst.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 01:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=T/reHgPggcZhG4lK1Xu2pV+incftSYy8GHcr4ZbUooE=;
-        b=rMq9OYF0LtRi5tqsKnHYSCyeulkSoKDcfn8p0e1GyLCQO7aQDmvujhuiuxSCotUJpO
-         MgcpejIgcrWsQjIAGIT8xIndxMOBXakoo5hUr4I8RJdsvQhbSd02BeZBdOGXXZeOgv0/
-         qbDUT6auHYmr5ilvgisBG0DiOK+tiMTN13fZpSiigctxIEAx4IRzpe/wHNiaiG6Ayv3K
-         PDlwjZllsp/D1bsQudWLnPYb+6erNIRkvwNjdCAstp5CN71wUMAYTd6oLck9geVlwtti
-         uMvymZ+MPmIxyHnnmQMMYo0nmwpt/R2lKoIMmyMBI5/M/m/Tx0fGeWscZNEUNDXY5pBN
-         bjKQ==
+        bh=/TaBcNBr0LmHmhCu1jIrvYkIUcv+feENwdQ/ZDbQJes=;
+        b=YUjM35XZNkCke18ASEVQzu3oQOeQ67Z70V6beRoVND6LL9BBZ+3//1papRDqvwu0ET
+         tQ4NufGIlbdwNCmPwdQqkrrAGiSSOTwPtFR2mLdFrRsMdTb/QsflO8TZ31VhqZvny3hN
+         2PY6Cv1TAFkYPf9Nq55TNDQPdM4CZR5yFLfriuIVACuwdRMuBTL30ZcSh7fdpzH/kx9O
+         RhlOJjOCIABO8hrrWqJxxEjlfDg6y8EUdm2J6ym3mBDh+tfwsoQsvgh9yO0sq1KeYq+5
+         uyrbZ/Ek1LmsVDH01d/yEhBpQbbbwwR/FtG9PpLOjjaRQWuShfKBQmS3yqjb/oBDsOgf
+         Vjkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=T/reHgPggcZhG4lK1Xu2pV+incftSYy8GHcr4ZbUooE=;
-        b=h/Sdp+MCk0j0dl0QxFFN8jayuWiQQiecC2YEoSQGyiv7Pb7InHy92EK9z3bh+4YpUL
-         mCMPcOImpPAn0uN9SSTnOnnqsbj7UGXNfWDlU/7KDnSL8GK9Atge7naK6J1Pg7d6DQQZ
-         Cs7hbJmIeDGOOu0oobNDm5KbEGo7TIGepqpaR5sqj+t0F14aP1DQ7F4mQ9ztMv7uRyZe
-         jNSHE33N70W8sU9MzrYLvG/hLIit/zEk6mfpnOdKJykZACDROdUVnUEja9Glxxr2LOLZ
-         f8iuZ6wt3pT/9qiLoHeEHWz3gq5DxiFimbgq+B3kMCgtPFUoI6HfnERQsM5LHP9XTurF
-         0NCQ==
-X-Gm-Message-State: AGi0PuY66vrr5VC/SOHmSOypFNeS5odWxdk1S8SeQuVdY1Ivtm9fpvTQ
-        2JL+DW8UI7oFeSPX+stVzsaLFsvt2eFlX3UOS822nw==
-X-Google-Smtp-Source: APiQypJGh7LR9CvqbpYIu/kxAYhVc8j+KRUnh92CtaIwyLqGZX2FRTHmGeHZiBIo3KhwWW7YiQZDha0chu+g8V/k4fo=
-X-Received: by 2002:a1f:aa48:: with SMTP id t69mr4609579vke.43.1587025301152;
- Thu, 16 Apr 2020 01:21:41 -0700 (PDT)
+        bh=/TaBcNBr0LmHmhCu1jIrvYkIUcv+feENwdQ/ZDbQJes=;
+        b=cEXyW3OHYNd34Ch1iwZtl2FBu6bkRo9tnTjIYom8fnV1ZYBv7lpiSINOn4Z17PU4dO
+         KfH+ncd9ij6HJLHP0PtIGRX3vwIc0YjsZbB+XdBid10caoPt749YstjTo1YJEUHIYlat
+         MbaVU60ie0lkixftzDXsVujbbozPTbG+lu4o8ZI0lwKOtD/AMSEcM07SGQ++868Rij/C
+         jMom4iXWX+SkK02SuPz5f09+qf9sFu5ATuuCNSOoQHUI1GJC8cVKdGND011Ov+9BuIBB
+         SlkyO4EglAAIDPg6joYle9pzyJKWTHgLGJ5qUGF1zt1gvV+Ozz6WpNylp4PUaPyjBsGP
+         XjTg==
+X-Gm-Message-State: AGi0Pubo98SraYUURJrlPs0ci9PWogv5rBV44oCV1rxAyA/0A2dfv2rp
+        6MwRoBY8aCXEsM16syKAx9T/zRGEr4dzQ4maLZclXsOU
+X-Google-Smtp-Source: APiQypLB3ByHxPcUtZOdM+rFhnnuQHeltCT3o4Wld28Z33lBkBrgQXNCizCw/78zmL5SElkXmD9y+IsRZr/CeHWIJLY=
+X-Received: by 2002:a67:11c4:: with SMTP id 187mr8059654vsr.34.1587025465228;
+ Thu, 16 Apr 2020 01:24:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <1586353607-32222-1-git-send-email-rnayak@codeaurora.org>
  <1586353607-32222-14-git-send-email-rnayak@codeaurora.org>
- <CAPDyKFrOFOLCWHu8nE4i5t=d+Ei-kcJ15_42Ft3ROSUDe5jkpw@mail.gmail.com>
- <3e5f8e78-7cd1-30fb-e005-78c1e7111794@codeaurora.org> <20200416033906.cl2v6wgbz3ch3clg@vireshk-i7>
-In-Reply-To: <20200416033906.cl2v6wgbz3ch3clg@vireshk-i7>
+ <CAPDyKFrOFOLCWHu8nE4i5t=d+Ei-kcJ15_42Ft3ROSUDe5jkpw@mail.gmail.com> <3e5f8e78-7cd1-30fb-e005-78c1e7111794@codeaurora.org>
+In-Reply-To: <3e5f8e78-7cd1-30fb-e005-78c1e7111794@codeaurora.org>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 16 Apr 2020 10:21:05 +0200
-Message-ID: <CAPDyKFptzgZqzFJYM4_mtu4BsmfNmF=OoSfAwy7vv0j6=gmGeA@mail.gmail.com>
+Date:   Thu, 16 Apr 2020 10:23:49 +0200
+Message-ID: <CAPDyKFrD7sh4gnbX8B2j22h18T=7ZRGCc_RYXd0ePm2fZwDcVA@mail.gmail.com>
 Subject: Re: [PATCH 13/21] mmc: sdhci-msm: Use OPP API to set clk/perf state
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -72,15 +71,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Apr 2020 at 05:39, Viresh Kumar <viresh.kumar@linaro.org> wrote:
+On Wed, 15 Apr 2020 at 18:43, Rajendra Nayak <rnayak@codeaurora.org> wrote:
 >
-> On 15-04-20, 22:13, Rajendra Nayak wrote:
-> > As for the dependencies, its only PATCH 01/21 in this series and that's
-> > already been queued by Viresh [2]
 >
-> It must be part of v5.7-rc2
+>
+> On 4/15/2020 7:22 PM, Ulf Hansson wrote:
+> > On Wed, 8 Apr 2020 at 15:48, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+> >>
+> >> On some qualcomm SoCs we need to vote on a performance state of a power
+> >> domain depending on the clock rates. Hence move to using OPP api to set
+> >> the clock rate and performance state specified in the OPP table.
+> >> On platforms without an OPP table, dev_pm_opp_set_rate() is eqvivalent to
+> >> clk_set_rate()
+> >>
+> >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> >> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> >> Cc: Pradeep P V K <ppvk@codeaurora.org>
+> >> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> >> Cc: Subhash Jadavani <subhashj@codeaurora.org>
+> >> Cc: linux-mmc@vger.kernel.org
+> >
+> > This looks good to me!
+> >
+> > However, are there any of the other patches in the series that
+> > $subject patch depends on - or can I apply this as a standalone mmc
+> > patch?
+>
+> Hey Ulf, thanks for the review. I'll just need to respin these to make
+> sure I do not do a dev_pm_opp_of_remove_table() if dev_pm_opp_of_add_table()
+> isn;t successful as discussed with Viresh on another thread [1]
+>
+> As for the dependencies, its only PATCH 01/21 in this series and that's
+> already been queued by Viresh [2]
 
-Great, thanks!
+I see, thanks!
 
-KInd regards
+Looks like Viresh is sending it to be included for v5.7-rc2, so I can
+pick your new version of $subject patch next week.
+
+[...]
+
+Kind regards
 Uffe
