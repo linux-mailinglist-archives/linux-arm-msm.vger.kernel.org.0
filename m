@@ -2,160 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D06091ACD6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 18:18:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFA521ACD71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 18:18:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729144AbgDPQRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 12:17:53 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:33764 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729188AbgDPQRw (ORCPT
+        id S2410778AbgDPQS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 12:18:56 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:39046 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729188AbgDPQSz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 12:17:52 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587053871; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Y2xEDbxocGucjO0qTn7DS340t5u6GBbJbGfyXI59M4M=;
- b=HseX7gfjba3rpV076lZskndzRQ9gg2dnp6cHA91tt/6QJD+9kiPr0gy+f+wiRm7YOOZUMy9N
- l3gLNfuND/2qfNWrahZfqE6VSEcEZlgMcC7bnEQWrHaNMie++vDuLTokbXsmwWolz8Twiees
- xMNkksQfnM9mDGaCD410ivAhPMk=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e98851f.7f476c392260-smtp-out-n01;
- Thu, 16 Apr 2020 16:17:35 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AF45FC433CB; Thu, 16 Apr 2020 16:17:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
-        autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4130BC433F2;
-        Thu, 16 Apr 2020 16:17:34 +0000 (UTC)
+        Thu, 16 Apr 2020 12:18:55 -0400
+Received: by mail-oi1-f195.google.com with SMTP id 8so6798586oiy.6;
+        Thu, 16 Apr 2020 09:18:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Y4HfSPhfYRgg7hXjXhAC7Y1EeYCA1tKGpq/7RYwzqLQ=;
+        b=XptBWNaXGtr2lf4zmDuotfET//WHlNnI9aEfVp8OZ+3Wjg/9rtR8Fim+MQV0gGhnoe
+         EqW6pfsUzNMFQgBC5wPSnOrfdacyEeoPOT1JbZX1QKxhxHZFQLeGTaFY2+Rgfy+1GF84
+         N9SyiGaZILPvjyDjIMErGMlJi7HkPUztjFBFsdZ3fNISs6Qh4p9g46f50PkzbzgVpDto
+         ag6wynhM5DMFzuC5sGqdRCcLaNbzoYmNmVddYIhKLk/3h4+pw0SOkXFjRQZShnEvsYO8
+         RmOfKSmGncNie/Gw1tfE3ICa3NExeDX6FjxyuvWvzhDMkpyAGfDxET1qKTxCLl/1UoU0
+         mStA==
+X-Gm-Message-State: AGi0PubCTHvujUBVZtpBxulfeXcV82BBNA2BkzAV0GLiL/AcLvp7oyUi
+        aLqVgyxRJoluOwW7ZZWko4cjul/0js3kRKDI148=
+X-Google-Smtp-Source: APiQypJ9S7cnz9hITqdHHVyamXCWYRrJVGPFnD+VZ/1EEx7X1+UtJPbyFBYx3JtLlZlLYcDWxZ5vL+tvZA1NAMOzy+c=
+X-Received: by 2002:aca:f541:: with SMTP id t62mr3288764oih.148.1587053934205;
+ Thu, 16 Apr 2020 09:18:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 16 Apr 2020 21:47:34 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+References: <20200416115658.20406-1-geert+renesas@glider.be>
+ <20200416115658.20406-3-geert+renesas@glider.be> <20200416125630.GF4987@lakrids.cambridge.arm.com>
+ <CAMuHMdWRW4+YLR8fz0hUTAPupRkM4Y5c82XHuOWSvNYOh-BZ0A@mail.gmail.com> <20200416155655.GA7155@lakrids.cambridge.arm.com>
+In-Reply-To: <20200416155655.GA7155@lakrids.cambridge.arm.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Thu, 16 Apr 2020 18:18:42 +0200
+Message-ID: <CAMuHMdXO5Qv1XezGW+yELOaTkoFUA4B8SvBpBH=r4mLtbnkBhg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] [RFC] arm64: Add dependencies to vendor-specific errata
+To:     Mark Rutland <mark.rutland@arm.com>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm-owner@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Mike Leach <mike.leach@linaro.org>
-Subject: Re: [PATCH] coresight: tmc: Read TMC mode only when TMC hw is enabled
-In-Reply-To: <CANLsYkxVFMrAOtZhNgQ+uPE5mgt1z8RNa_yAxX2ju7DYrbvBZw@mail.gmail.com>
-References: <20200409113538.5008-1-saiprakash.ranjan@codeaurora.org>
- <9a792e3e-5a17-156d-4b59-4a3ec8f9993e@arm.com>
- <1751aeabd22bee18d2eef0f643883265@codeaurora.org>
- <20200413171418.GB28804@xps15>
- <75ef334a7e2cc6d87deecadd12c74f59@codeaurora.org>
- <CANLsYkxVFMrAOtZhNgQ+uPE5mgt1z8RNa_yAxX2ju7DYrbvBZw@mail.gmail.com>
-Message-ID: <00cd8a8e124ada16f36937c4a1b173b9@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Arnd Bergmann <arnd@arndb.de>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Robert Richter <rrichter@marvell.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathieu,
+Hi Mark,
 
-On 2020-04-15 21:26, Mathieu Poirier wrote:
-> On Tue, 14 Apr 2020 at 09:47, Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> Hi Mathieu,
->> 
->> On 2020-04-13 22:44, Mathieu Poirier wrote:
->> > On Mon, Apr 13, 2020 at 01:55:30PM +0530, Sai Prakash Ranjan wrote:
->> >> Hi Suzuki,
->> >>
->> >> On 2020-04-13 04:47, Suzuki K Poulose wrote:
->> >> > Hi Sai,
->> >> >
->> >> > On 04/09/2020 12:35 PM, Sai Prakash Ranjan wrote:
->> >> > > Reading TMC mode register in tmc_read_prepare_etb without
->> >> > > enabling the TMC hardware leads to async exceptions like
->> >> > > the one in the call trace below. This can happen if the
->> >> > > user tries to read the TMC etf data via device node without
->> >> > > setting up source and the sink first which enables the TMC
->> >> > > hardware in the path. So make sure that the TMC is enabled
->> >> > > before we try to read TMC data.
->> >> >
->> >> > So, one can trigger the same SError by simply :
->> >> >
->> >> > $ cat /sys/bus/coresight/device/tmc_etb0/mgmt/mode
->> >> >
->> >>
->> >> I do not see any SError when I run the above command.
->> >>
->> >> localhost ~ # cat /sys/bus/coresight/devices/tmc_etf0/mgmt/mode
->> >> 0x0
->> >>
->> >> And this is most likely due to
->> >>
->> >> commit cd9e3474bb793dc ("coresight: add PM runtime calls to
->> >> coresight_simple_func()")
->> >
->> > Ok, so this is related to power management (you can ignore my question
->> > in the
->> > previous email).
->> >
->> > Regarding function tmc_read_prepare_etb(), the best way to deal with
->> > this is
->> > probably make sure drvdata->mode != CS_MODE_DISABLED before reading
->> > TMC_MODE.
->> > If there is a buffer to read it will have been copied when the ETB was
->> > disabled
->> > and there won't be a need to access the HW.
->> >
->> 
->> This works as well, thanks.
->> 
->> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c
->> b/drivers/hwtracing/coresight/coresight-tmc-etf.c
->> index d0cc3985b72a..7ffe05930984 100644
->> --- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
->> +++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
->> @@ -596,6 +596,11 @@ int tmc_read_prepare_etb(struct tmc_drvdata
->> *drvdata)
->>                  goto out;
->>          }
->> 
->> +       if (drvdata->mode == CS_MODE_DISABLED) {
->> +               ret = -EINVAL;
->> +               goto out;
->> +       }
->> +
-> 
-> We are back to your original solution where the ETB buffer can't be
-> read if the ETB itself is not enabled.  It _is_ possible to read the
-> buffer of an ETB that has been disabled.
-> 
-> To fix this consider the following [1].  Take the block at line 607
-> and move it to line 598.  As part of the if() condition at line 619,
-> read the value of the TMC_MODE register and exit if not in circular
-> mode.  If it is in circular mode continue with disabling the hardware.
-> 
-> [1].
-> https://elixir.bootlin.com/linux/v5.7-rc1/source/drivers/hwtracing/coresight/coresight-tmc-etf.c
-> 
+On Thu, Apr 16, 2020 at 5:57 PM Mark Rutland <mark.rutland@arm.com> wrote:
+> On Thu, Apr 16, 2020 at 05:38:07PM +0200, Geert Uytterhoeven wrote:
+> > And perhaps you do want to enable some platform-specific drivers for
+> > VFIO pass-through?  Hence having ARCH_* dependencies on those drivers
+> > means they cannot be enabled :-( Hmm...
+>
+> IIRC platform device passthrough requires an corresponding VFIO platform
+> driver in the host to handle reset and so on, but it does seem a shame
 
-Thanks, got it now. Posted v2 - 
-https://lore.kernel.org/patchwork/patch/1226022/
+If your SoC has a reset controller, that problem has been solved in a generic
+way, cfr. "[PATCH v5] vfio: platform: Add generic reset controller support"
+(https://lore.kernel.org/lkml/20181113131508.18246-1-geert+renesas@glider.be/).
+Unfortunately not yet upstream.
 
--Sai
+Combine with "hw/arm/sysbus-fdt: Add support for instantiating generic devices"
+(https://github.com/geertu/qemu/commit/180318003c08594e8e852b2285a98184f905bfa9)
+and you're set ;-)
+
+> to not allow the user to select a driver if they really want it.
+
+I forgot you can add "|| VIRTIO_MMIO" to the dependencies of drivers for
+devices that can be used with VFIO pass-through.
+
+> I guess there might be platform-specific PCIe drivers too, which might
+> work with VFIO regardless.
+
+Indeed. PCI is business as usual.
+
+Gr{oetje,eeting}s,
+
+                        Geert
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
