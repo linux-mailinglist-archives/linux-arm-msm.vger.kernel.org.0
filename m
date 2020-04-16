@@ -2,125 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 436A11AD083
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 21:42:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F7EC1AD160
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 22:43:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728246AbgDPTls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 15:41:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57692 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726161AbgDPTlr (ORCPT
+        id S1727887AbgDPUmo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 16:42:44 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:41516 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727798AbgDPUmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 15:41:47 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0AADC061A10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 12:41:47 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id w11so2108712pga.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2020 12:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4+5yvpF/CzkFV4Q2jkIdrwA/yhScLV1YzzJf+T0+lT0=;
-        b=vCizqDZqzySQAlaQKNZSPfzWTNKVRci9vMWz/TPic+3XrkQ03Ffgkm9kWe0f4jZjUf
-         8G/6u6CSBI/Ollj0zVbg8YRdI9x7IulHItSD/ttIFKdkO77DNk9A2QM5GoXfHCf58OOY
-         ENtU9vEBypBTtQvaaLBL8IVFxOKZCqadrz/x6ScCnlG0oxmakq9nru4cWYT20gdDgyY4
-         UI+drYXOPUwSRIZRBwmi9GvTGrryUnz5pMW4HOHttXbnoQotENvKHXfDGo8RgUaV0vxP
-         3QlZeNHsCFrYH93qGFHQbLR2Z2zNWAVNhknBrBzhUwknHU7g1S3YMLN4mvZEVckyopmG
-         kNug==
+        Thu, 16 Apr 2020 16:42:44 -0400
+Received: by mail-ot1-f65.google.com with SMTP id c3so155207otp.8;
+        Thu, 16 Apr 2020 13:42:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4+5yvpF/CzkFV4Q2jkIdrwA/yhScLV1YzzJf+T0+lT0=;
-        b=aKGJNhfUq3t0zGtQQdRlbSIYIPD7hPfZpgN8Xnddthjqw0n5xZybrg4SfMRcILwCRD
-         e87ao2yt86VVnPNv4k8d3HjYEJJxtLXbix85rzU3Dh1WgISof+EWfkCAL8fYHb8azYbj
-         ssLEn3Vg11z2+SlQxs+vtZmNug4RNYh7T4ChHRtiscfkVY16AUmh2Bz7itry6PGLAl8Q
-         JKnEw/MCME8k5H9KmX4ThYZYwzCLHnR3l433EdpiutnkIrzlff3kuQ77jeBFEFkzgPzz
-         0hPsI3fO3DT1bft2A/rWr0AR8JBM5g/T6jRlmw7umw+nCwQFIQ9Go4i0WVYTmsPsDYt7
-         Fh5g==
-X-Gm-Message-State: AGi0PuYuclrRdRjLP/PzVXbM8sark23goWdDHFMTshwIXHHXS+2CjQMp
-        2Un4lLFVyGuzNDuC2tn5ku6X0g==
-X-Google-Smtp-Source: APiQypL9j8meLyGkikWSZboSQOmU2u65qLLK1r6+xhTUyBIVdpn5qScfiojY7EddmHUFHZFnYDfj6w==
-X-Received: by 2002:a05:6a00:c8:: with SMTP id e8mr32914135pfj.131.1587066106898;
-        Thu, 16 Apr 2020 12:41:46 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id y123sm17140605pfb.13.2020.04.16.12.41.45
+        bh=jZ0RlsGr2+5/XacCO4EL2cmFSLDykRvrVImbCZUcZLg=;
+        b=DvAOXBQonaCJPEGwmplK2XFnZME3s8BkyLLNEDBkWC1BZhAS7XFunAZxwBXS3hhPt/
+         OS+pMokkLMirRFe2ohlfmBnnlzPPHCyTK1BKXBWZSC6t+PFEsQGKeVNSOlGKoXMXcFyV
+         X4XFLPndA4s88qq7vPHxljsLi+eKlpvckfE7Yf1SNN8LyLlpTDf7AabClIDmIAfivqMv
+         URFEmY6O+zcygEO3frWCubRCJ8M6qIB5EahaX7FH/IASMvwi7g8lj57dINFVKsE6CVYC
+         loP/cl/k7fLGUxqcdPEWFMHpKQviANNTG+WpPJ3E+yl6rsT6Dtl7c/aKnzNSwpE/llBM
+         jRoA==
+X-Gm-Message-State: AGi0PuavByK+0JR1Z6cqxl0QoOz0QPGsr7CgIX4BVPuBsVBBiJxiC1I0
+        k8l5EPW2bU4T/n4OQqKz6A==
+X-Google-Smtp-Source: APiQypJo+wfUfZ+Jua5JzMhkPsJfsCwdLjpvmnCen6w86M/uhXfd6Uaka/f2N84W9kSeMbR05r4Myg==
+X-Received: by 2002:a05:6830:15a:: with SMTP id j26mr28677476otp.248.1587069762956;
+        Thu, 16 Apr 2020 13:42:42 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id s25sm2712659ooh.22.2020.04.16.13.42.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2020 12:41:46 -0700 (PDT)
-Date:   Thu, 16 Apr 2020 13:41:44 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, ohad@wizery.com,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
-        psodagud@codeaurora.org, rishabhb@codeaurora.org
-Subject: Re: [PATCH v2 2/2] remoteproc: core: Prevent sleep when rproc crashes
-Message-ID: <20200416194144.GA30314@xps15>
-References: <1586384305-7825-1-git-send-email-sidgup@codeaurora.org>
- <1586384305-7825-3-git-send-email-sidgup@codeaurora.org>
+        Thu, 16 Apr 2020 13:42:42 -0700 (PDT)
+Received: (nullmailer pid 14696 invoked by uid 1000);
+        Thu, 16 Apr 2020 20:42:41 -0000
+Date:   Thu, 16 Apr 2020 15:42:41 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, linus.walleij@linaro.org,
+        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
+        kgunda@codeaurora.org, aghayal@codeaurora.org,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Jishnu Prakash <jprakash@codeaurora.org>,
+        linux-iio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V2 1/3] iio: adc: Convert the QCOM SPMI ADC bindings to
+ .yaml format
+Message-ID: <20200416204241.GA14143@bogus>
+References: <1586942266-21480-1-git-send-email-jprakash@codeaurora.org>
+ <1586942266-21480-2-git-send-email-jprakash@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1586384305-7825-3-git-send-email-sidgup@codeaurora.org>
+In-Reply-To: <1586942266-21480-2-git-send-email-jprakash@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 08, 2020 at 03:18:25PM -0700, Siddharth Gupta wrote:
-> Remoteproc recovery should be fast and any delay will have an impact on the
-> user-experience. Add a wakeup source to remoteproc which ensures that the
-> system does not go into idle state while a remoteproc is recovering, thus
-> prevent any delays that might occur during system resume.
+On Wed, 15 Apr 2020 14:47:44 +0530, Jishnu Prakash wrote:
+> Convert the adc bindings from .txt to .yaml format.
 > 
-> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
+> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
 > ---
->  drivers/remoteproc/qcom_q6v5_pas.c   | 1 +
->  drivers/remoteproc/remoteproc_core.c | 4 ++++
->  2 files changed, 5 insertions(+)
+>  .../devicetree/bindings/iio/adc/qcom,spmi-vadc.txt | 173 -------------
+>  .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 288 +++++++++++++++++++++
+>  2 files changed, 288 insertions(+), 173 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.txt
+>  create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 7a63efb..6bb2c7d 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -401,6 +401,7 @@ static int adsp_probe(struct platform_device *pdev)
->  
->  	adsp = (struct qcom_adsp *)rproc->priv;
->  	adsp->dev = &pdev->dev;
-> +	device_wakeup_enable(adsp->dev);
->  	adsp->rproc = rproc;
->  	adsp->pas_id = desc->pas_id;
->  	adsp->has_aggre2_clk = desc->has_aggre2_clk;
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index 9f99fe2..19a360d 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -1729,6 +1729,8 @@ static void rproc_crash_handler_work(struct work_struct *work)
->  
->  	if (!rproc->recovery_disabled)
->  		rproc_trigger_recovery(rproc);
-> +
-> +	pm_relax(rproc->dev.parent);
->  }
->  
->  /**
-> @@ -2273,6 +2275,8 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
->  		return;
->  	}
->  
-> +	pm_stay_awake(rproc->dev.parent);
-> +
 
-Much better:
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dt.yaml: adc@3100: 'adc-chan@0x39', 'adc-chan@0x9', 'adc-chan@0xa', 'adc-chan@0xe', 'adc-chan@0xf' do not match any of the regexes: '.*-names$', '.*-supply$', '^#.*-cells$', '^#[a-zA-Z0-9,+\\-._]{0,63}$', '^[a-zA-Z][a-zA-Z0-9,+\\-._]{0,63}$', '^[a-zA-Z][a-zA-Z0-9,+\\-._]{0,63}@[0-9a-fA-F]+(,[0-9a-fA-F]+)*$', '^__.*__$', 'pinctrl-[0-9]+'
 
->  	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
->  		rproc->name, rproc_crash_to_string(type));
->  
-> -- 
-> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+See https://patchwork.ozlabs.org/patch/1271025
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
