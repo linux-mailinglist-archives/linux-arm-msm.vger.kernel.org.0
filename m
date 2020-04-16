@@ -2,115 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 596571ACAE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 17:41:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB27F1AC45E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2020 15:59:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2897410AbgDPNhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 09:37:03 -0400
-Received: from mout.kundenserver.de ([212.227.126.187]:38091 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2897390AbgDPNhA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 09:37:00 -0400
-Received: from mail-qk1-f179.google.com ([209.85.222.179]) by
- mrelayeu.kundenserver.de (mreue009 [212.227.15.129]) with ESMTPSA (Nemesis)
- id 1N79q8-1jAqgf0EW4-017YmP; Thu, 16 Apr 2020 15:36:57 +0200
-Received: by mail-qk1-f179.google.com with SMTP id j4so21187396qkc.11;
-        Thu, 16 Apr 2020 06:36:56 -0700 (PDT)
-X-Gm-Message-State: AGi0PuZjfQOakkBeJhSdzg1EQ4Yni8buejfx9qHBBF5n5sgs2SjRWb8c
-        slfbla8MWhx1viB09XWLFEWqV1uSewhZje81w0Y=
-X-Google-Smtp-Source: APiQypLVyFmoRVlk38JL3t/KgQwGOgf5vTbZbwYZ8CAepAFC6fF8Q7UEBWUdcp5NmdoSyWhbML+tvWJCMo127crkfFc=
-X-Received: by 2002:a37:851:: with SMTP id 78mr31807202qki.352.1587044215844;
- Thu, 16 Apr 2020 06:36:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200416115658.20406-1-geert+renesas@glider.be>
- <20200416115658.20406-3-geert+renesas@glider.be> <20200416125630.GF4987@lakrids.cambridge.arm.com>
-In-Reply-To: <20200416125630.GF4987@lakrids.cambridge.arm.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Thu, 16 Apr 2020 15:36:39 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a3HkXotBFVfbL3iaqUAM2ENpBKh7gy+hXH8TXsZHPfwTQ@mail.gmail.com>
-Message-ID: <CAK8P3a3HkXotBFVfbL3iaqUAM2ENpBKh7gy+hXH8TXsZHPfwTQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] [RFC] arm64: Add dependencies to vendor-specific errata
-To:     Mark Rutland <mark.rutland@arm.com>
-Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
+        id S2409379AbgDPN6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 09:58:36 -0400
+Received: from foss.arm.com ([217.140.110.172]:33168 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2409360AbgDPN6b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Apr 2020 09:58:31 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 95ABD1FB;
+        Thu, 16 Apr 2020 06:58:30 -0700 (PDT)
+Received: from [10.57.59.184] (unknown [10.57.59.184])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4786A3F237;
+        Thu, 16 Apr 2020 06:58:27 -0700 (PDT)
+Subject: Re: [PATCH 2/2] iommu/arm-smmu: Allow client devices to select direct
+ mapping
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Robert Richter <rrichter@marvell.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:zICuUsxQPPQJD0mFrfj74gKDbR2oFM2uttNnB1Q9C3oNdi5LUtv
- 5D6vxZFGM/iFgzEoQ5IUx5wa/5KVR2w0jlyVvP4fg+H74Ianhbu1TbcYM3puwlF/LOmYA1g
- ipQbQGngZ9ulwoqwP43Iy+D+FiperRfFB1lS5OwY7cFdRnKwHSy9XcKbs6ze/eAmuhzbQc6
- ba3Xk7hYzVpNGelRS4umw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lWGfSsnYJZU=:cg0dI2jhukpt3KneC3m51U
- 4dp48keK9naDXcPzv+ZxDaUthdtZZp4jiK2p0jlHlQ/hlS9LIoR70Lzo7xxWdY1TVM1NcUOFz
- 4DEk7JN2+Oiv8O83Xc3f9BtleBV6Le8MWI8+ESBu1OIqv4Yw4N49W0jUfZDbQaPmJbFhyUtgH
- E8Ik75fnVMl74xDRoHroFqVKTcisthkw5epvHqyMdGS5ct1i15TCz00X3NOZMdzUWG7xmM2Th
- jv3JObSm9NpoD+sA+zxmZaHgtX0tKtdQQfr+Tfsje34OaftldJnj3kmJIe3JtssyAprc8Ru8o
- LKw876ziLaoncBv6AM5asEyOcJMFgiG/0jmSKSsUmZK/SoVZXYgoBp5e1QUPVEJ7Xqalkgz1x
- 36pneyTABXBkzAjuPivkDEslewaUIMj0k2LEtXlWSGW6WqDKpvGlXm/IGHJlfi0DF0uJ8usgk
- 8Q+AV3nSGobnvvsEMBIdEwjl28qLflaLCzVkV/BPXvZnO2cHNt+kDJcQYMWvynGCktgZuXpTf
- +mplQBjiPq5Narv2crbmgINc/PSxY3AfmYWBjEHjzuO6EsooFIjNUJbFNgAzSvTw+72KRmuAo
- F+LIXifeAZ6NZLqH+Hc3KOTy2DlKihNwmjvFt0YGQiR8Mbxgi4qVdlKQXlvn4K7kcDjh7k0Gt
- RDxQjsN5zeUYPOYeJ32hFtZu/+hfKsMsb+BvMnzH6JmPuwVkqpAfN0FPCXVgr7naD0edb2p2Q
- k+0n1j1v6GHyuZkYxrCBTTlDxJYYLsukDlDEIoGb7XqlIBY6FzG3+UeR9ntO/xMNLfmVcRgsQ
- itFMpk7bMYhDtLr+NI7ueNyh/Ficmo9MbEXhlxqRfH5QyoCMmo=
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Tomasz Figa <tfiga@chromium.org>
+References: <cover.1579692800.git.saiprakash.ranjan@codeaurora.org>
+ <813cc5b2da10c27db982254b274bf26008a9e6da.1579692800.git.saiprakash.ranjan@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <3f12cefb-3887-859c-ddf5-c7a0fc755152@arm.com>
+Date:   Thu, 16 Apr 2020 14:58:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <813cc5b2da10c27db982254b274bf26008a9e6da.1579692800.git.saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 16, 2020 at 2:56 PM Mark Rutland <mark.rutland@arm.com> wrote:
-> On Thu, Apr 16, 2020 at 01:56:58PM +0200, Geert Uytterhoeven wrote:
-> > Currently the user is asked about enabling support for each and every
-> > vendor-specific erratum, even when support for the specific platform is
-> > not enabled.
-> >
-> > Fix this by adding platform dependencies to the config options
-> > controlling support for vendor-specific errata.
-> >
-> > Note that FUJITSU_ERRATUM_010001 is left untouched, as no config symbol
-> > exists for the Fujitsu A64FX platform.
-> >
-> > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
->
-> I'm not su1re that it makes sense to do this in general, becaose the
-> ARCH_* platform symbols are about plactform/SoC support (e.g. pinctrl
-> drivers), and these are (mostly) CPU-local and/or VM-visible.
->
-> I think that it makes sense for those to be independent because:
->
-> * future SoCs in the same family might not need the same CPU errata
->   workarounds, and it's arguably just as confusing to have the option
->   there.
->
-> * It prevents building a minimal VM image with all (non-virtualized)
->   platform support disabled, but all possible (VM-visible) errata
->   options enabled. I do that occassionally for testing/analysis, and I
->   can imagine this is useful for those building images that are only
->   intended to be used in VMs.
+On 2020-01-22 11:48 am, Sai Prakash Ranjan wrote:
+> From: Jordan Crouse <jcrouse@codeaurora.org>
+> 
+> Some client devices want to directly map the IOMMU themselves instead
+> of using the DMA domain. Allow those devices to opt in to direct
+> mapping by way of a list of compatible strings.
+> 
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>   drivers/iommu/arm-smmu-qcom.c | 39 +++++++++++++++++++++++++++++++++++
+>   drivers/iommu/arm-smmu.c      |  3 +++
+>   drivers/iommu/arm-smmu.h      |  5 +++++
+>   3 files changed, 47 insertions(+)
+> 
+> diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
+> index 64a4ab270ab7..ff746acd1c81 100644
+> --- a/drivers/iommu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm-smmu-qcom.c
+> @@ -3,6 +3,7 @@
+>    * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>    */
+>   
+> +#include <linux/of_device.h>
+>   #include <linux/qcom_scm.h>
+>   
+>   #include "arm-smmu.h"
+> @@ -11,6 +12,43 @@ struct qcom_smmu {
+>   	struct arm_smmu_device smmu;
+>   };
+>   
+> +static const struct arm_smmu_client_match_data qcom_adreno = {
+> +	.direct_mapping = true,
+> +};
+> +
+> +static const struct arm_smmu_client_match_data qcom_mdss = {
+> +	.direct_mapping = true,
+> +};
 
-Most architectures over time grow a CPU selection option that is
-at least somewhat orthogonal to the platform selection. I think so far
-arm64 has intentionally resisted this based on the idea that the CPUs
-are mostly equal and differences are better handled at runtime.
+Might it make sense to group these by the desired SMMU behaviour rather 
+than (apparently) what kind of device the client happens to be, which 
+seems like a completely arbitrary distinction from the SMMU driver's PoV?
 
-If we decide to revisit this in the future that might help both the
-errata selection and give a way to e.g. build for an ARMv8.2
-baseline.
-This does seem pretty far out at the moment of course, given
-that most SoCs we work on are still based on Cortex-A53 or A72 ;-)
+> +
+> +static const struct of_device_id qcom_smmu_client_of_match[] = {
+> +	{ .compatible = "qcom,adreno", .data = &qcom_adreno },
+> +	{ .compatible = "qcom,mdp4", .data = &qcom_mdss },
+> +	{ .compatible = "qcom,mdss", .data = &qcom_mdss },
+> +	{ .compatible = "qcom,sc7180-mdss", .data = &qcom_mdss },
+> +	{ .compatible = "qcom,sdm845-mdss", .data = &qcom_mdss },
+> +	{},
+> +};
+> +
+> +static const struct arm_smmu_client_match_data *
+> +qcom_smmu_client_data(struct device *dev)
+> +{
+> +	const struct of_device_id *match =
+> +		of_match_device(qcom_smmu_client_of_match, dev);
+> +
+> +	return match ? match->data : NULL;
 
-> I think the change to SOCIONEXT_SYNQUACER_PREITS makes sense given
-> that's a platform-level detail. Arguably that should be moved into
-> drivers/irqchip/Kconfig.
+of_device_get_match_data() is your friend.
 
-Agreed
+> +}
+> +
+> +static int qcom_smmu_request_domain(struct device *dev)
+> +{
+> +	const struct arm_smmu_client_match_data *client;
+> +
+> +	client = qcom_smmu_client_data(dev);
+> +	if (client)
+> +		iommu_request_dm_for_dev(dev);
+> +
+> +	return 0;
+> +}
+> +
+>   static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
+>   {
+>   	int ret;
+> @@ -41,6 +79,7 @@ static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
+>   }
+>   
+>   static const struct arm_smmu_impl qcom_smmu_impl = {
+> +	.req_domain = qcom_smmu_request_domain,
+>   	.reset = qcom_smmu500_reset,
+>   };
+>   
+> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> index 16c4b87af42b..67dd9326247a 100644
+> --- a/drivers/iommu/arm-smmu.c
+> +++ b/drivers/iommu/arm-smmu.c
+> @@ -1448,6 +1448,9 @@ static int arm_smmu_add_device(struct device *dev)
+>   	device_link_add(dev, smmu->dev,
+>   			DL_FLAG_PM_RUNTIME | DL_FLAG_AUTOREMOVE_SUPPLIER);
+>   
+> +	if (smmu->impl && smmu->impl->req_domain)
+> +		return smmu->impl->req_domain(dev);
+> +
 
-       Arnd
+There are about 5 different patchsets flying around at the moment that 
+all touch default domain allocation, so this is a fast-moving target, 
+but I think where the dust should settle is with arm_smmu_ops forwarding 
+.def_domain_type (or whatever it ends up as) calls to arm_smmu_impl as 
+appropriate.
+
+>   	return 0;
+>   
+>   out_cfg_free:
+> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+> index 8d1cd54d82a6..059dc9c39f64 100644
+> --- a/drivers/iommu/arm-smmu.h
+> +++ b/drivers/iommu/arm-smmu.h
+> @@ -244,6 +244,10 @@ enum arm_smmu_arch_version {
+>   	ARM_SMMU_V2,
+>   };
+>   
+> +struct arm_smmu_client_match_data {
+> +	bool direct_mapping;
+> +};
+
+Does this need to be public? I don't see the other users...
+
+Robin.
+
+> +
+>   enum arm_smmu_implementation {
+>   	GENERIC_SMMU,
+>   	ARM_MMU500,
+> @@ -386,6 +390,7 @@ struct arm_smmu_impl {
+>   	int (*init_context)(struct arm_smmu_domain *smmu_domain);
+>   	void (*tlb_sync)(struct arm_smmu_device *smmu, int page, int sync,
+>   			 int status);
+> +	int (*req_domain)(struct device *dev);
+>   };
+>   
+>   static inline void __iomem *arm_smmu_page(struct arm_smmu_device *smmu, int n)
+> 
