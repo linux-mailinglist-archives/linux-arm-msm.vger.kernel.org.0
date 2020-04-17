@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85E941AD41B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 03:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEB1D1AD41C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 03:28:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726503AbgDQB2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Apr 2020 21:28:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55284 "EHLO
+        id S1727857AbgDQB2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Apr 2020 21:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725858AbgDQB2V (ORCPT
+        by vger.kernel.org with ESMTP id S1725858AbgDQB2i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Apr 2020 21:28:21 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 491E9C061A0C;
-        Thu, 16 Apr 2020 18:28:19 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id 131so470747lfh.11;
-        Thu, 16 Apr 2020 18:28:19 -0700 (PDT)
+        Thu, 16 Apr 2020 21:28:38 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB6AC061A0C;
+        Thu, 16 Apr 2020 18:28:37 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id h25so317474lja.10;
+        Thu, 16 Apr 2020 18:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6bIv4Ey7KTgpP+jJjbFa11g/XmInVR35K0OUuu60uAY=;
-        b=X9abtq98/SmIYoikPs/RTpICF5o67Gqe/o81Hr+QM44F/2COwakpQT6bOJBQib0BMn
-         MNc8Ztaj9j7wFUj63Y5yr2beYzs4gX+N6UOY86S8vkqzA+0LsC7OiOq0uMvUZsavvU0I
-         B68uZae62Ch97IxN4H8pJdZ34Z2OdF96PRuM7CXyiO7e+qSYqJGWBkvyIXVuWf5K1r5D
-         wWFNEeeV13SjT0VrCHSLeoijcBEoMtYp8wD48NZeiuaplpQDhUg2YwjgyOaXbWkRlIeI
-         8OAAX1dvlzBANqWzdmQmz3U8u38v/pnkauqSc+5ZftdY4WAtFLeXkDJU2RGzBQfj3A74
-         bPyg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Tas9+PJOq1SU5PaTRpFIGQLRtXsUd9SyfvUfOPfxID4=;
+        b=GoCmbeVymW5kZTztq1FiOXPWi00IQUPCf4CzXN4kT60xQ3zXH62Q8O/MMqErEOKkcK
+         l5aehNafYAptkqEA+Cs+vT2zsG0oOtn0ImM3hze7T4i7TPovxWU10ku1M/nDy1bhUp+K
+         H6NuuVE+x469Qv9JV8rJ7SC8FI3nGMNtszZleKdX/YNImHqzWfTMGQrIi9PcoAmtricV
+         w/ByhYAkAfzslAmLvpdoT6J5cOovuPwtK/+HCUgA/Rw9Ub/d2oTtlhRKX2XMrEytaT1I
+         Ldwib76dMmj/2ka2dbpcfy4DkpcJP6AXTv+tM5Pd5Y9gfDzz8IVwZT1bCoGiFZPAiFy5
+         W8jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6bIv4Ey7KTgpP+jJjbFa11g/XmInVR35K0OUuu60uAY=;
-        b=f/hJJE7W5pMFSsksvvI98TJUSdOyg6wxP8NPWbnufP0q0sZWimiKA77TqpU+7l3Vlg
-         5m4cD8iAVPadO0jT2eRxFybNOvPljh7GfaP35Dx1RcjsPwX9IgrldY9YcoaUFrUty/EL
-         iiyIRODHrcP3WaWnKSHhibvUXY34523Qcx3IrmrUXkRiZ+7NIW/UfradjcBkvDrWxdgY
-         OaGfiRVxKWkhivFRZos/XrCvTbNoauoc4O6QyH337aJqLri6DCZVBnE5weGfS/IJIibf
-         gtLBgtJTrb+Sl2T7t206k9f2p8PgGH23VgrVPfIZW+mLmaoTbecUeH2sZofWpbwD486q
-         XB5w==
-X-Gm-Message-State: AGi0PuacfC8sAwXmvRCgfX+heNxUf5a91IjJUwHtoA+kEDss6EPzApNP
-        bBHD2p4NU8JqqnbeK3rO8ls=
-X-Google-Smtp-Source: APiQypJG6kGvdN67TsZu7OB2kpKPIUggZ4g1a64790zidW4ZHcyfGVG4sz6jWEkUeemtkEc+V3pEfQ==
-X-Received: by 2002:a19:88a:: with SMTP id 132mr405691lfi.130.1587086897818;
-        Thu, 16 Apr 2020 18:28:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Tas9+PJOq1SU5PaTRpFIGQLRtXsUd9SyfvUfOPfxID4=;
+        b=GEfn9QvzpDdjlqebpjcR3RZLBV2rRY6OGO4UJsc/YwTfmIVeSWrsQEYN8RgsZk8bw+
+         NpmzxOObxitwo8bBHj/fQPzgZ+MQgi4m8BUwW8ozyowTzLg+okX4CfwAei4Tfgwmgut4
+         y9bEhmOAgjDUngpobUF+JT0ir31uiy9V1WwrO1u4pcjZiUK19aMpK0s412PM6v2/H0Uj
+         D9/oEsOUjWZeACvzE2M9DNYqMGJhbvZIIVAIbpItsQIK5B5Lc36agQ43ebl6YAfDeJND
+         1NJLz2vap5BMaShloZviLaGqbwEBkdsWorCxumjd3EWYqt5hiWq7F6f//JAVcxn/Onmg
+         tr2Q==
+X-Gm-Message-State: AGi0PuYePWkJvV2Ew73MILMjgMG+ARkXsVShaz6IAKRtxZDprv/auidD
+        Qrl8LSLmsyeAd7NAi9xgq8g=
+X-Google-Smtp-Source: APiQypJummCqAa3wVXH5AUSo4f8GMvUWYhhI06v/eHFOJqaiC6yDuyIjGLgCIqIvx2eE1PpsnPhj0Q==
+X-Received: by 2002:a05:651c:208:: with SMTP id y8mr508515ljn.280.1587086916322;
+        Thu, 16 Apr 2020 18:28:36 -0700 (PDT)
 Received: from localhost.localdomain ([94.229.111.13])
-        by smtp.gmail.com with ESMTPSA id w25sm14644650ljo.78.2020.04.16.18.28.16
+        by smtp.gmail.com with ESMTPSA id w25sm14644650ljo.78.2020.04.16.18.28.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2020 18:28:16 -0700 (PDT)
+        Thu, 16 Apr 2020 18:28:35 -0700 (PDT)
 From:   Alexey Minnekhanov <alexey.min@gmail.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -57,10 +57,12 @@ To:     Andy Gross <agross@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht
 Cc:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
         Alexey Minnekhanov <alexey.min@gmail.com>
-Subject: [PATCH v2 0/3] Add initial support for SDM660/630 SoCs
-Date:   Fri, 17 Apr 2020 04:26:27 +0300
-Message-Id: <20200417012630.222352-1-alexey.min@gmail.com>
+Subject: [PATCH v2 1/3] dt-bindings: arm: qcom: Add sdm630 and sdm660 SoCs
+Date:   Fri, 17 Apr 2020 04:26:28 +0300
+Message-Id: <20200417012630.222352-2-alexey.min@gmail.com>
 X-Mailer: git-send-email 2.25.3
+In-Reply-To: <20200417012630.222352-1-alexey.min@gmail.com>
+References: <20200417012630.222352-1-alexey.min@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -68,29 +70,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patchset adds some minimal device tree
-support for Qualcomm Snapdragon 660/630 SoCs
-and one board that uses SDM660 SoC.
+Add a SoC strings for the Qualcomm SDM630 and SDM660 SoCs.
+Also document the new xiaomi,lavender compatible used in
+a device tree binding.
 
-v2:
- - Sorted compatible sdm660 after sc7180 in bindings
- - Moved gpio-reserved-ranges to board DTS
+Signed-off-by: Alexey Minnekhanov <alexey.min@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Alexey Minnekhanov (2):
-  dt-bindings: arm: qcom: Add sdm630 and sdm660 SoCs
-  arm64: dts: qcom: Add Xiaomi Redmi Note 7 (lavender)
-
-Craig Tatlor (1):
-  arm64: dts: qcom: Add SDM660 SoC support
-
- .../devicetree/bindings/arm/qcom.yaml         |   7 +
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  |  46 +++
- arch/arm64/boot/dts/qcom/sdm660.dtsi          | 372 ++++++++++++++++++
- 4 files changed, 426 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sdm660.dtsi
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 64ddae3bd39f..6031aee0f5a8 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -37,6 +37,8 @@ description: |
+         msm8994
+         msm8996
+         sc7180
++        sdm630
++        sdm660
+         sdm845
+ 
+   The 'board' element must be one of the following strings:
+@@ -153,6 +155,11 @@ properties:
+               - qcom,sc7180-idp
+           - const: qcom,sc7180
+ 
++      - items:
++          - enum:
++              - xiaomi,lavender
++          - const: qcom,sdm660
++
+       - items:
+           - enum:
+               - qcom,ipq6018-cp01-c1
 -- 
 2.25.3
 
