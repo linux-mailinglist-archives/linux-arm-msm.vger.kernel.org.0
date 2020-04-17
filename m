@@ -2,209 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA461ADACE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 12:14:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C99EE1ADAD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 12:19:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728986AbgDQKOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 06:14:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
+        id S1728156AbgDQKT2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 06:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728440AbgDQKOf (ORCPT
+        by vger.kernel.org with ESMTP id S1728102AbgDQKT0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 06:14:35 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDF27C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 03:14:35 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id 7so2049065pjo.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 03:14:35 -0700 (PDT)
+        Fri, 17 Apr 2020 06:19:26 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8313C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 03:19:25 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id x26so889580pgc.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 03:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WrBQQciI2GN9qUSLUZEoGce/BUsxLeXSZswsBjv4T1g=;
-        b=Rm7icIFHoqGjB4IXzM1pxwGbDFFjJDSqhBG8eH9/ssfDvokGojLRoDGcLTE3BMIvBP
-         dtDYiLkzXMmR+TX9uIQMHDpso0SjLN/eUjFaiYt7ux2pKq7qCsbtsU1uyLTYFAgeoZii
-         nt8L19tHKp6XYZLlJIK7HTbmcTBvrSuQiE3HdtZTWbJ2NUa6oW9pXczwcmjGlleMdwn5
-         4GpnddbuTMwriD+a0d/A+II/1RTcRTm6t/W71+T18CMUjD8O4QbhcW2VX8QLvhPu+NSY
-         5pOh2kXTK6dK9JLiPaW8h2rJwfCwU9Ti9FglzXtSJzq7FP1lSxkR3kbnP3zUMP0wao0R
-         ZD3g==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Ty9TQTjWvzY6Grz85/BgM3W5FIy2Fq6407pZyTtwzbI=;
+        b=q6vYtPsi279r4gZwjmK0lADCWk83Aw27TpjFuR486x9Fg/jSQQlsq/M2M5DT8I1i6A
+         GP2CaI4PxrPfnJh9JKKc/O/0F74VEavRqOkopFpywlIc4bYY2CeWisrFDsZaugLcONKb
+         cTM0F5iqpKJA+DvX58EfjOfUimrYmh6HTTOxVMc9ETn9ERuDhiAU3XvVrxnKJnQjxOj+
+         khU8tqSMb6T+kXPhUVClXoCdJmWKtkq4sjlivMoymuKYDBi3B0AKFGYDYGaqRLqCyATS
+         /4juFM6A1gSeluMNtix0QqAjV8xLmJh8aQT4ujp6BOcwFHNJRor/q0MIGWZx+C1FqY6D
+         IyQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WrBQQciI2GN9qUSLUZEoGce/BUsxLeXSZswsBjv4T1g=;
-        b=CrSY+fUljxNCByVBmAOOEiFVoBVb/UGbGmIsBVVSJDHRyQTCdHNDSe1oTaiUsqnIre
-         1Az0ZRIFyYzS0zMl8R02LPEeFDMIFa2H130naCTYWxfT8GnBuqqC73DBDxjmzFRVmS1f
-         iGcUmpS79VwlrppvITWTNYEsJjPHHqJXfispXhdkvEaCJ81bGeOaRIR5Apb8VEFo100F
-         EZtHr/GAlEamFfto2IcdZU09TYblJI4Bka/VnrMnO5sJHKijlkwg+tofSY1wjQ8JDC+m
-         Xog86OI3k+smAwloxhj6oXXx76IKL/Z2Bla0DwWJZ0NqXdmOQO5++WMVjUe29xf16CeL
-         xLhg==
-X-Gm-Message-State: AGi0PuaF+4c/rAAvDcrYA1Pa/K1LLr/TkUwKAUAffg8hBLr1iFv+SCVX
-        XbMiIrI5xNmy0/PrgC7/moWttHKX9A==
-X-Google-Smtp-Source: APiQypIXsxMBqT2YvpBF1SnrSY9KhyVbOFf85vY5Io0iSiLghKlrHbByDEni7GDya5pYSS8WhE1fnQ==
-X-Received: by 2002:a17:90a:1503:: with SMTP id l3mr3394505pja.87.1587118475126;
-        Fri, 17 Apr 2020 03:14:35 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Ty9TQTjWvzY6Grz85/BgM3W5FIy2Fq6407pZyTtwzbI=;
+        b=NMA86I7UEeRgod6Wi2+HQUBki+WJ1kIiRW0LdWDO35E1S2jPY8Nj3k9/hWDkRllvT6
+         YB+aSYiUawVA4/4VVCsjdZgqEg0kzQ11etD/Px9Z6n/LzSXSubJf23p5b5QA+4xvIWxx
+         LANTXTh9oYmKFHKM/Ka/ZlZGYChRec2eJUxPu79PoV5Cjwx1q0uIZ2G2oFm5qcWJN4NC
+         /ZoQ8h3euizLcIzvp6KMBQSopRVfXl/5Qf/xApUhzYBIuOTPoVXtU7JcvJC0onqmWDYK
+         /8kx5MIzw/PUf6bQdUagFy8MU+gktMZ0R/0Z5UxrEqqN6WYD+g/3RSHMmcAGsXCk4/LL
+         CrRw==
+X-Gm-Message-State: AGi0PuZTIRt9oEiBR1syzr1Z+bxqeIsYaVBA/DvOUKZyDOR0Gnbtoe5e
+        re3pdYlJU2M15HxteSLdesms4oAnBg==
+X-Google-Smtp-Source: APiQypLivRS+jr84KCVU43CbZvx9g2aVlPNj8F7+dQWJd7s2CaFzd1iu/pT3ZiHkUrXBKLVSSTbH4Q==
+X-Received: by 2002:a63:d742:: with SMTP id w2mr2129826pgi.401.1587118765122;
+        Fri, 17 Apr 2020 03:19:25 -0700 (PDT)
 Received: from Mani-XPS-13-9360 ([2409:4072:630d:b86f:218c:c3f8:1490:7b19])
-        by smtp.gmail.com with ESMTPSA id d22sm17701543pgh.11.2020.04.17.03.14.31
+        by smtp.gmail.com with ESMTPSA id x25sm17011580pfm.203.2020.04.17.03.19.21
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Apr 2020 03:14:34 -0700 (PDT)
-Date:   Fri, 17 Apr 2020 15:44:28 +0530
+        Fri, 17 Apr 2020 03:19:24 -0700 (PDT)
+Date:   Fri, 17 Apr 2020 15:49:18 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
-        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [bug report] bus: mhi: core: Add support for data transfer
-Message-ID: <20200417101428.GA10295@Mani-XPS-13-9360>
-References: <20200407135559.GA109574@mwanda>
- <20200407143304.GH2442@Mani-XPS-13-9360>
- <d30c7648-b657-d8b2-ba64-71f1178b4a68@codeaurora.org>
+Cc:     jhugo@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, smohanad@codeaurora.org,
+        dan.carpenter@oracle.com
+Subject: Re: [PATCH 1/2] bus: mhi: core: Fix parsing of mhi_flags
+Message-ID: <20200417101918.GB10295@Mani-XPS-13-9360>
+References: <20200413120741.2832-1-manivannan.sadhasivam@linaro.org>
+ <73d4815e-af00-e4cd-95c5-5043d334224c@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <d30c7648-b657-d8b2-ba64-71f1178b4a68@codeaurora.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <73d4815e-af00-e4cd-95c5-5043d334224c@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hemant,
-
-On Thu, Apr 16, 2020 at 08:37:16PM -0700, Hemant Kumar wrote:
+On Thu, Apr 16, 2020 at 12:01:30PM -0700, Hemant Kumar wrote:
+> Hi Mani,
 > 
-> On 4/7/20 7:33 AM, Manivannan Sadhasivam wrote:
-> > Hi Dan,
+> On 4/13/20 5:07 AM, Manivannan Sadhasivam wrote:
+> > With the current parsing of mhi_flags, the following statement always
+> > return false:
 > > 
-> > On Tue, Apr 07, 2020 at 04:55:59PM +0300, Dan Carpenter wrote:
-> > > Hello Manivannan Sadhasivam,
-> > > 
-> > > The patch 189ff97cca53: "bus: mhi: core: Add support for data
-> > > transfer" from Feb 20, 2020, leads to the following static checker
-> > > warning:
-> > > 
-> > > 	drivers/bus/mhi/core/main.c:1153 mhi_queue_buf()
-> > > 	error: double locked 'mhi_chan->lock' (orig line 1110)
-> > > 
-> > > drivers/bus/mhi/core/main.c
-> > >    1142          }
-> > >    1143
-> > >    1144          /* Toggle wake to exit out of M2 */
-> > >    1145          mhi_cntrl->wake_toggle(mhi_cntrl);
-> > >    1146
-> > >    1147          if (mhi_chan->dir == DMA_TO_DEVICE)
-> > >    1148                  atomic_inc(&mhi_cntrl->pending_pkts);
-> > >    1149
-> > >    1150          if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
-> > >    1151                  unsigned long flags;
-> > >    1152
-> > >    1153                  read_lock_irqsave(&mhi_chan->lock, flags);
+> > eob = !!(flags & MHI_EOB);
+> > 
+> > This is due to the fact that 'enum mhi_flags' starts with index 0 and we
+> > are using direct AND operation to extract each bit. Fix this by using
+> > BIT() macro to extract each bit and make the mhi_flags index start from 1.
+> > 
+> > Fixes: 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
+> > Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/bus/mhi/core/main.c | 6 +++---
+> >   include/linux/mhi.h         | 2 +-
+> >   2 files changed, 4 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> > index eb4256b81406..4165a853c189 100644
+> > --- a/drivers/bus/mhi/core/main.c
+> > +++ b/drivers/bus/mhi/core/main.c
+> > @@ -1090,9 +1090,9 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+> >   	if (ret)
+> >   		return ret;
+> > -	eob = !!(flags & MHI_EOB);
+> > -	eot = !!(flags & MHI_EOT);
+> > -	chain = !!(flags & MHI_CHAIN);
+> > +	eob = !!(flags & BIT(0));
+> > +	eot = !!(flags & BIT(1));
+> > +	chain = !!(flags & BIT(2));
 > 
-> parse_xfer_event is taking read lock : read_lock_bh(&mhi_chan->lock); first
-> and later
-> 
-> mhi_queue_buf takes read lock: read_lock_irqsave(&mhi_chan->lock, flags);
-> 
-> Both are read locks which are recursive, is this problematic ?
+> How about setting enums  with BIT macro and still use same enums above. If
+> flags is having MHI _CHAIN (enum value 3) but comparing with BIT(2) (value
+> 4) will not work.
 > 
 
-read_locks are recursive but I wanted to make the static checker happy. But
-looking into it further (and after having a chat with Arnd), we might need to
-refactor the locking here.
-
-Since 'chan->lock' only prevents 'mhi_chan->ch_state', how about doing something
-like below?
-
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 3e9aa3b2da77..904f9be7a142 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -474,19 +474,12 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
-        result.transaction_status = (ev_code == MHI_EV_CC_OVERFLOW) ?
-                -EOVERFLOW : 0;
- 
--       /*
--        * If it's a DB Event then we need to grab the lock
--        * with preemption disabled and as a write because we
--        * have to update db register and there are chances that
--        * another thread could be doing the same.
--        */
--       if (ev_code >= MHI_EV_CC_OOB)
--               write_lock_irqsave(&mhi_chan->lock, flags);
--       else
--               read_lock_bh(&mhi_chan->lock);
--
--       if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED)
--               goto end_process_tx_event;
-+       read_lock_bh(&mhi_chan->lock);
-+       if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-+               read_unlock_bh(&mhi_chan->lock);
-+               return 0;
-+       }
-+       read_unlock_bh(&mhi_chan->lock);
- 
-        switch (ev_code) {
-        case MHI_EV_CC_OVERFLOW:
-@@ -559,10 +552,12 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
- 
-                mhi_chan->db_cfg.db_mode = 1;
-                read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
-+               write_lock_irqsave(&mhi_chan->lock, flags);
-                if (tre_ring->wp != tre_ring->rp &&
-                    MHI_DB_ACCESS_VALID(mhi_cntrl)) {
-                        mhi_ring_chan_db(mhi_cntrl, mhi_chan);
-                }
-+               write_unlock_irqrestore(&mhi_chan->lock, flags);
-                read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
-                break;
-        }
-@@ -572,12 +567,6 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
-                break;
-        } /* switch(MHI_EV_READ_CODE(EV_TRB_CODE,event)) */
- 
--end_process_tx_event:
--       if (ev_code >= MHI_EV_CC_OOB)
--               write_unlock_irqrestore(&mhi_chan->lock, flags);
--       else
--               read_unlock_bh(&mhi_chan->lock);
--
-        return 0;
- }
-
-Moreover, I do have couple of concerns:
-
-1. 'mhi_chan->db_cfg.db_mode = 1' needs to be added to the critical section
-above.
-
-2. Why we have {write/read}_lock_irq variants for chan->lock? I don't see where
-the db or ch_state got shared with hardirq handler. Maybe we should only have
-*_bh (softirq) variants all over the place?
+Doh, you are right. Will fix it!
 
 Thanks,
-Mani 
+Mani
 
-> > >                                            ^^^^^^^^^^^^^^^
-> > > The caller is already holding this lock.
-> > > 
-> > Hmm. We have one internal user of this function and that's where the locking
-> > has gone wrong. Will fix it.
-> > 
-> > Thanks for reporting!
-> > 
-> > Regards,
-> > Mani
-> > 
-> > >    1154                  mhi_ring_chan_db(mhi_cntrl, mhi_chan);
-> > >    1155                  read_unlock_irqrestore(&mhi_chan->lock, flags);
-> > >    1156          }
-> > >    1157
-> > >    1158          read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
-> > >    1159
-> > >    1160          return 0;
-> > >    1161  }
-> > >    1162  EXPORT_SYMBOL_GPL(mhi_queue_buf);
-> > > 
-> > > regards,
-> > > dan carpenter
+> >   	bei = !!(mhi_chan->intmod);
+> >   	mhi_tre = tre_ring->wp;
+> > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> > index ad1996001965..22185fecbbf2 100644
+> > --- a/include/linux/mhi.h
+> > +++ b/include/linux/mhi.h
+> > @@ -53,7 +53,7 @@ enum mhi_callback {
+> >    * @MHI_CHAIN: Linked transfer
+> >    */
+> >   enum mhi_flags {
+> > -	MHI_EOB,
+> > +	MHI_EOB = 1,
+> >   	MHI_EOT,
+> >   	MHI_CHAIN,
+> >   };
+> 
+> enum mhi_flags {
+> 
+>     MHI_EOB = BIT(0),
+> 
+>     MHI_EOT = BIT(1),
+> 
+>     MHI_CHAIN = BIT(2),
+> 
+> }
 > 
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
