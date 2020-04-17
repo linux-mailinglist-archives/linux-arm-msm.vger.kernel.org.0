@@ -2,97 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3195A1AE768
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 23:16:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C83601AE76E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 23:17:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726750AbgDQVQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 17:16:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
+        id S1726420AbgDQVRJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 17:17:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbgDQVQM (ORCPT
+        with ESMTP id S1728038AbgDQVRI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 17:16:12 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3AAFC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:16:12 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id z6so1398343plk.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:16:12 -0700 (PDT)
+        Fri, 17 Apr 2020 17:17:08 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC5CC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:17:07 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id p28so2066757vsg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:17:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CUWz5jl2NcFu804QLjVaZT2+TkRuNEMWlXQJjNhqhNA=;
-        b=c3/NOVC10A815WixHHHUkc1FXRRX3qF7MyRUpowbpKYoKiWFbmFAhuR3Y6wAi52z0h
-         NqIQzCas8SOrrDBb83sfqbxrMnMDXxpYZ6g1l9hIWcOhtCdct3PG5EWNXr91JKQIDRNC
-         XdXZbiv3ZZyTFgH15L3ZGe+jEPzZ9yH0XNhCc=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iJ2fYj8faRnQWYU+YUvw2BuJTdJ8p/wj9zFiQhRecXY=;
+        b=jg0aAF/VBOEowYu593EttCPIZkn+y5RfCCJA7A9me76IkPZAsRrbd0/T/gxbhJ/Nea
+         tWQR2GXYK9vwBRwjMNG23L4vJh1oGHmRc2CjVNncy5RDzfuzEGb8ed+0x7qWLo5t/5OA
+         YnhUhWAj1kNKyBGVtXGLHtwZuHxHlvy5ESOgA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CUWz5jl2NcFu804QLjVaZT2+TkRuNEMWlXQJjNhqhNA=;
-        b=OONXoUgEghNdGyoL+LTzqk/pDXkps9xAYZ/F5nS4nOsZC8dL3ZSlAmGprWZTO3aSlW
-         h+o1OFthb31jrA7joG6KeI0hMrTRN/NEqYJrJYmgIB197327fwt9cIAuOsuy5EjKvehA
-         EOYb/ZFuZ5vof1L3Jrqz59hSvciQCnQ614mxRSF5rw8/qzVNl5u/M+EBKPqYTXLH/p+G
-         XakIfSwVhEEWy163FHNT90IVjDVZDrW9LIW+nOvMv/gdaZeKvDKLI7TzyPQ8J2Uj7MPv
-         DhO73WgqviMkb4JvySdl+PJJ8kVCOA9lkHlqMvM7O7vkk9rdALnuODVGLQjhQ2EfKfEJ
-         va5A==
-X-Gm-Message-State: AGi0PuY/cB2//eOlfMbj+drqP+QhynntOarNPRu4C+1dlW6lxMzFr7JN
-        jd+T8VJ1+XAuw8SXNH7choMuaQ==
-X-Google-Smtp-Source: APiQypJkVy+nPYJWRl5GKjbYknb2uyZkEUhRrZjepNSDbbsG/l7ZLi1Egiy2xmvH8wqS8GQjRD8SZQ==
-X-Received: by 2002:a17:902:44d:: with SMTP id 71mr5628244ple.123.1587158172061;
-        Fri, 17 Apr 2020 14:16:12 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id 3sm9582439pgh.75.2020.04.17.14.16.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 14:16:11 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     swboyd@chromium.org, mkshah@codeaurora.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: rpmh: Dirt can only make you dirtier, not cleaner
-Date:   Fri, 17 Apr 2020 14:15:47 -0700
-Message-Id: <20200417141531.1.Ia4b74158497213eabad7c3d474c50bfccb3f342e@changeid>
-X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb9-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iJ2fYj8faRnQWYU+YUvw2BuJTdJ8p/wj9zFiQhRecXY=;
+        b=H97DqwR4dpQGQGLtE75Pm5ohPcVPktK9RZJgibS44jemVWz25MEe3FRuvK2N4iHbM5
+         2finK4RLHTunoVHtngidf0lJ3RFACsbg1Ncw6NLvTipW1GfenWh5MfkX774VR4kWqYRG
+         S6r/B4pnyO/qON30KrzbN6C79p1omz1pgdRpzqhdBkt+U44cnRqBkrWqGF03ln2NHtK7
+         HeXHkjOPy21MGHQC+5OUccv68fBiN7sJt+4cndtdCF3vf9SpdRbwuA0hkVh4DFHorO30
+         sW+WGvjtFW33MDIutnfiSkFnz918oEFdvC1q/un18ytzTuodQNxJNnC8n+kxwHYfedK+
+         eFsg==
+X-Gm-Message-State: AGi0PuYcq9YVdhNUDsw0SCWwBw9flxUfnxqv/p9e6rkehJYbztKhBi5I
+        x+YZrpzkU0scmXoA7TyhNh9pUIkYfOc=
+X-Google-Smtp-Source: APiQypKr3TMN0hRTmxpX3Pk1r0fTKHrlY8OkMWyU1y62oappGeP/2ySiip8YQddk8D6dugZHeCDh2A==
+X-Received: by 2002:a67:a06:: with SMTP id 6mr4259873vsk.22.1587158226484;
+        Fri, 17 Apr 2020 14:17:06 -0700 (PDT)
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com. [209.85.221.181])
+        by smtp.gmail.com with ESMTPSA id x25sm1975285vso.5.2020.04.17.14.17.05
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Apr 2020 14:17:05 -0700 (PDT)
+Received: by mail-vk1-f181.google.com with SMTP id j188so950455vkc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:17:05 -0700 (PDT)
+X-Received: by 2002:a1f:5fc3:: with SMTP id t186mr4344481vkb.92.1587158224782;
+ Fri, 17 Apr 2020 14:17:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1586703004-13674-1-git-send-email-mkshah@codeaurora.org>
+ <1586703004-13674-3-git-send-email-mkshah@codeaurora.org> <158708153779.132238.7823999141480422982@swboyd.mtv.corp.google.com>
+In-Reply-To: <158708153779.132238.7823999141480422982@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 17 Apr 2020 14:16:53 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WOwMrTNS7FK0jybJyEOvT-rHarA0m5U6B+pKoeA7RCHQ@mail.gmail.com>
+Message-ID: <CAD=FV=WOwMrTNS7FK0jybJyEOvT-rHarA0m5U6B+pKoeA7RCHQ@mail.gmail.com>
+Subject: Re: [PATCH v17 2/6] soc: qcom: rpmh: Update dirty flag only when data changes
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding an item into the cache should never be able to make the cache
-cleaner.  Use "|=" rather than "=" to update the dirty flag.
+On Thu, Apr 16, 2020 at 4:59 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Maulik Shah (2020-04-12 07:50:00)
+> > diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> > index eb0ded0..03630ae 100644
+> > --- a/drivers/soc/qcom/rpmh.c
+> > +++ b/drivers/soc/qcom/rpmh.c
+> > @@ -133,26 +134,27 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
+> >
+> >         req->addr = cmd->addr;
+> >         req->sleep_val = req->wake_val = UINT_MAX;
+> > -       INIT_LIST_HEAD(&req->list);
+> >         list_add_tail(&req->list, &ctrlr->cache);
+> >
+> >  existing:
+> > +       old_sleep_val = req->sleep_val;
+> > +       old_wake_val = req->wake_val;
+> > +
+> >         switch (state) {
+> >         case RPMH_ACTIVE_ONLY_STATE:
+> > -               if (req->sleep_val != UINT_MAX)
+> > -                       req->wake_val = cmd->data;
+> > -               break;
+> >         case RPMH_WAKE_ONLY_STATE:
+> >                 req->wake_val = cmd->data;
+> >                 break;
+> >         case RPMH_SLEEP_STATE:
+> >                 req->sleep_val = cmd->data;
+> >                 break;
+> > -       default:
+> > -               break;
+> >         }
+> >
+> > -       ctrlr->dirty = true;
+> > +       ctrlr->dirty = (req->sleep_val != old_sleep_val ||
+> > +                       req->wake_val != old_wake_val) &&
+> > +                       req->sleep_val != UINT_MAX &&
+> > +                       req->wake_val != UINT_MAX;
+>
+> Can this change ctrl->dirty from true to false? I'm worried that we need
+> to make this a saturating assignment instead of an assignment.
+>
+>         ctrl->dirty = ctrl->dirty || (req->sleep_val != .. );
 
-Fixes: bb7000677a1b ("soc: qcom: rpmh: Update dirty flag only when data changes")
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+This seems like a serious problem with the current code and feels like
+we need a fix sooner rather than later.  I'm sorry I missed it in
+review (and in fact, I probably suggested the exact code that's here
+so it's even more my fault).  :(
 
- drivers/soc/qcom/rpmh.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+I posted:
 
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 3abbb08cd6e1..d1626a1328d7 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -151,10 +151,10 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
- 		break;
- 	}
- 
--	ctrlr->dirty = (req->sleep_val != old_sleep_val ||
--			req->wake_val != old_wake_val) &&
--			req->sleep_val != UINT_MAX &&
--			req->wake_val != UINT_MAX;
-+	ctrlr->dirty |= (req->sleep_val != old_sleep_val ||
-+			 req->wake_val != old_wake_val) &&
-+			 req->sleep_val != UINT_MAX &&
-+			 req->wake_val != UINT_MAX;
- 
- unlock:
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
--- 
-2.26.1.301.g55bc3eb7cb9-goog
+https://lore.kernel.org/r/20200417141531.1.Ia4b74158497213eabad7c3d474c50bfccb3f342e@changeid
 
+-Doug
