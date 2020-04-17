@@ -2,141 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47E9F1AD9DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 11:28:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8525F1AD9F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 11:32:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730139AbgDQJ1u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 05:27:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44810 "EHLO
+        id S1730285AbgDQJb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 05:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729987AbgDQJ1t (ORCPT
+        with ESMTP id S1730175AbgDQJb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 05:27:49 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C341C061A0C;
-        Fri, 17 Apr 2020 02:27:49 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id g10so811008lfj.13;
-        Fri, 17 Apr 2020 02:27:49 -0700 (PDT)
+        Fri, 17 Apr 2020 05:31:28 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21D62C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 02:31:28 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id s2so749581vsm.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 02:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=z9TmZCPSYHLbADZtDk6utvoUiFo68AqRFtzXP1rnqCE=;
-        b=MvBk/l4Fv4PIGHuS/p6vhpQW5a7nV5pWTle6H/XQgHKCK90C3c+nRLMthbaPZt55Dc
-         XFUldyExOul3jWHUdr4fiIgp3W4dqedm7eZf7zTh99SRSq9yBniFulzQbr5Q9ebRr2oR
-         SYLu8z+JLw5oqXg0nEoPUsmuvU6tiA4JwswOE9TaNhF+Ezt1kmzh2cGmLjvr1iYdK+Jo
-         Dzvw2ry5wZ6lj9yv7iD7f1tO1t+fNlR2DIynnb1x6jryvZd7AHvQCcSARqT1kChLA1ox
-         5iJJoCPblDOz5+EJkn0P/fN+rqxH6sy7xmuFmUhYXBstY1I4mQOAC9QFR5L90adRXeUN
-         ixWQ==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0DhfyrheLxlm64HysXnEP/oVk+ltHF14up7W9jwtxhE=;
+        b=lRAgf2/Bnpu2lykOzQs3F063/lNbfp+Cv6oHIsGRQ+rHDzwagnMciX5ErpIVeWyZlR
+         xaDIoPsB6CDvbCvYko+CiA/QO06lGnL1kuEQZAitTjAK6tKrZ4L7pwWHiDKL0TtRWhET
+         +tLK4WLk9qaJ5znN/CNYFnuISQqDVdyberPQsDOQOOelA7+YDPzsTkUBhlzFdaKMgQRj
+         bh95PvcMW1cZE5xDBeU5iZ6IbGXdippth6/neIS8M0zKfWJ0EPLPlTsnSUCrMOD7sRFA
+         mCIXZSX+l22OYHO1jRKgutQ7f9u+NLeWnBcvI5cDjg5h3hoJtlfmljq7QEh8aTiKpE07
+         YZyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :date:message-id:mime-version;
-        bh=z9TmZCPSYHLbADZtDk6utvoUiFo68AqRFtzXP1rnqCE=;
-        b=XFwlsWD8HsC1xBERGX4ksDxhk/399xBAfSUIO9m8jgeivoD67dJEIilLvKQVh1FME/
-         KxusJti2HeOP23+fs8FJyxoMm93HZNpnljSa/YVZBzgYyqvd+pK4r6r6n8SAMp5pobEh
-         Ac5Ydq1COTaPAyg2Yt0lV//DGugENibgwVXMnSikwndPKcNuzavwLPm0E2n/+e/74l1a
-         MnDShbm4H4IjFmfRYX9Htk2hXwYi5IYDTWDFTpNCva2gSUFfwcVHGXgkQ4cCjEmwVwoo
-         zgV/mcs3sy6GW7kywepboDHnxxehCz5bpAvIkITGbtKgTaK5JguUoPXzw0KkZz0ir3hc
-         uGbw==
-X-Gm-Message-State: AGi0Puawm9LHmaVgUv5vzNOnPvt/yZEI2ZbdvGLIHR8rgaN2vcvPjNOC
-        O2COUdIbLpItkz97uf4mRVkUiE4fcSuKzQ==
-X-Google-Smtp-Source: APiQypLrIi1dWDIOyFkDvv+ij+G6A3tYJRL5zY1ih24KqVVQuButGDmZGkxwR0p5LkrNgt3WHSRrug==
-X-Received: by 2002:ac2:46f9:: with SMTP id q25mr1493930lfo.149.1587115667392;
-        Fri, 17 Apr 2020 02:27:47 -0700 (PDT)
-Received: from saruman (91-155-214-58.elisa-laajakaista.fi. [91.155.214.58])
-        by smtp.gmail.com with ESMTPSA id 25sm17492628lft.68.2020.04.17.02.27.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Apr 2020 02:27:46 -0700 (PDT)
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Linux Doc Mailing List <linux-doc@vger.kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 28/35] docs: dt: qcom,dwc3.txt: fix cross-reference for a converted file
-In-Reply-To: <24b30222392569e7aa5d61d46642a4c38a964512.1586359676.git.mchehab+huawei@kernel.org>
-References: <cover.1586359676.git.mchehab+huawei@kernel.org> <24b30222392569e7aa5d61d46642a4c38a964512.1586359676.git.mchehab+huawei@kernel.org>
-Date:   Fri, 17 Apr 2020 12:27:42 +0300
-Message-ID: <87h7xicvht.fsf@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0DhfyrheLxlm64HysXnEP/oVk+ltHF14up7W9jwtxhE=;
+        b=G1HOBFZFz4fkhb+dWNh/Jw0hXMqLvHjP17v+YZazbEu1LF8fhIMrt4JzoI9aatQPkb
+         rQiUp+kSYkyXZbfXMKG+6RL5negxN5wEGo4C2g4bynFCexRhLwv7cV7AO/vcrQ7ITlrk
+         vmJmfbYS+MFirsAWEswVl/tDgXoc+cX0oB9Oc7G7MQd+oS0I0obcTQPPYMC3XlGQ7VCM
+         0r6SIx7Kofp5ambDb4RWixJedyQdGhumOxAwSJcxMFmGyxS0FIS8ViygbKpPkch6mnoc
+         F9A0DgBBFreHSRuFJQx1Du3aY65GTMT4vlwnhj+QtcOiHu3lJ63OtAY2HxULqVXuMJnV
+         pvNQ==
+X-Gm-Message-State: AGi0PuYMcY3qh0n06hd3pHMdgR68ZtM+X9FXQq2m6ROgYEYXLwYnt2xZ
+        ucP/MEsL78lRGRdBA1HRVYlOSLQoPLDVE14kSmd3KQ==
+X-Google-Smtp-Source: APiQypJFpluAtonYOz7KEkFYaq6sAXwzGMK54pnlbluzocgJFaP8Z2VGGgHHo1RAOcCOlj2KGfMDe9mEhtqqe5bCTd8=
+X-Received: by 2002:a67:ead1:: with SMTP id s17mr1470684vso.200.1587115887252;
+ Fri, 17 Apr 2020 02:31:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+References: <20200413162717.1.Idece266f5c8793193b57a1ddb1066d030c6af8e0@changeid>
+In-Reply-To: <20200413162717.1.Idece266f5c8793193b57a1ddb1066d030c6af8e0@changeid>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 17 Apr 2020 11:30:51 +0200
+Message-ID: <CAPDyKFog4f1GuZC3BpY-P4yX_FNogGi3x5M3KQmhoO7OQsdQVw@mail.gmail.com>
+Subject: Re: [PATCH] mmc: cqhci: Avoid false "cqhci: CQE stuck on" by not
+ open-coding timeout loop
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Venkat Gopalakrishnan <venkatg@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Konstantin Dorfman <kdorfman@codeaurora.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Subhash Jadavani <subhashj@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
-
-> The qcom-qusb2-phy.txt file was converted and renamed to yaml.
-> Update cross-reference accordingly.
+On Tue, 14 Apr 2020 at 01:27, Douglas Anderson <dianders@chromium.org> wrote:
 >
-> Fixes: 8ce65d8d38df ("dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy bin=
-dings to yaml")
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Open-coding a timeout loop invariably leads to errors with handling
+> the timeout properly in one corner case or another.  In the case of
+> cqhci we might report "CQE stuck on" even if it wasn't stuck on.
+> You'd just need this sequence of events to happen in cqhci_off():
+>
+> 1. Call ktime_get().
+> 2. Something happens to interrupt the CPU for > 100 us (context switch
+>    or interrupt).
+> 3. Check time and; set "timed_out" to true since > 100 us.
+> 4. Read CQHCI_CTL.
+> 5. Both "reg & CQHCI_HALT" and "timed_out" are true, so break.
+> 6. Since "timed_out" is true, falsely print the error message.
+>
+> Rather than fixing the polling loop, use readx_poll_timeout() like
+> many people do.  This has been time tested to handle the corner cases.
+>
+> Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Applied for fixes, and by adding a stable tag, thanks!
+
+Kind regards
+Uffe
+
+
 > ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt b/Docume=
-ntation/devicetree/bindings/usb/qcom,dwc3.txt
-> index cb695aa3fba4..fbdd01756752 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
-> @@ -52,8 +52,8 @@ A child node must exist to represent the core DWC3 IP b=
-lock. The name of
->  the node is not important. The content of the node is defined in dwc3.tx=
-t.
->=20=20
->  Phy documentation is provided in the following places:
-> -Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt   - USB3 QMP PHY
-> -Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt - USB2 QUSB2 PHY
-> +Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt    - USB3 QMP PHY
-> +Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml - USB2 QUSB2 P=
-HY
->=20=20
->  Example device nodes:
-
-Should I take this or will it go via e.g. trivial?
-
-In any case:
-
-Acked-by: Felipe Balbi <balbi@kernel.org>
-
-=2D-=20
-balbi
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl6Zdo4ACgkQzL64meEa
-mQYUGw/+LzBLQ94ktYWYWxyCitvz+XIYayQ1/iMLn3p3cDv3jEzTF6PO9XWWyxsr
-9X6rmbmlmy0C9cohEthIzKVc1borij4pvn+dERuCAHNXSRkIQdIuiXBWgwSHJjdm
-iiSHotQboyX21IJbd1rbE8DHuGeQ7FX/57srSji8fs3WBxzdwG94uOnP8HmXnppg
-ZHVCj8V5EQPwjV3iyN5VjvTEb/54e5Levmn5RVkMJJxJT7AIkClVoOuqLvfUns+r
-fEEL3OGOVuoqj3DR/0uqaAdxkUJExGp+tmeRbomH6s9ygt9rby4LdC1b8J5ZlDF2
-PqxV+zromTmWBjZ4RjYQLR2iUvMamhwidrsqravshl2A/WYcpcF4hxkQHFs+oiZ+
-3YeGftUNO5yzxZQ+RznmgY9Sw7MLarA+F92Fxa1SaxW9eohUBr6BZo1gb//2izNR
-GO6elpHcMWuaBX/F/R9eliyY96jwjbmQZIe6XkctF8wJGahUlTpWAA1FDYwmSpBQ
-9TOybuw65rpSO14+CzmXUsovXn1bIzsvE8dYXJPQ77lgaAvivV65wZdCaBZJvpLT
-oc9uXg18N090wrdCCcxHodk/iKIW0Aamy6zBs9eXVX2zVf/830J6IcAjmkAyoDwa
-IRBcHPBI/8UXwVKqkuKL/+fSUXCCtv9b1c9h6E5WO6OhKgdVv20=
-=aXc/
------END PGP SIGNATURE-----
---=-=-=--
+>  drivers/mmc/host/cqhci.c | 21 ++++++++++-----------
+>  1 file changed, 10 insertions(+), 11 deletions(-)
+>
+> diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
+> index c2239ee2c0ef..75934f3c117e 100644
+> --- a/drivers/mmc/host/cqhci.c
+> +++ b/drivers/mmc/host/cqhci.c
+> @@ -5,6 +5,7 @@
+>  #include <linux/delay.h>
+>  #include <linux/highmem.h>
+>  #include <linux/io.h>
+> +#include <linux/iopoll.h>
+>  #include <linux/module.h>
+>  #include <linux/dma-mapping.h>
+>  #include <linux/slab.h>
+> @@ -349,12 +350,16 @@ static int cqhci_enable(struct mmc_host *mmc, struct mmc_card *card)
+>  /* CQHCI is idle and should halt immediately, so set a small timeout */
+>  #define CQHCI_OFF_TIMEOUT 100
+>
+> +static u32 cqhci_read_ctl(struct cqhci_host *cq_host)
+> +{
+> +       return cqhci_readl(cq_host, CQHCI_CTL);
+> +}
+> +
+>  static void cqhci_off(struct mmc_host *mmc)
+>  {
+>         struct cqhci_host *cq_host = mmc->cqe_private;
+> -       ktime_t timeout;
+> -       bool timed_out;
+>         u32 reg;
+> +       int err;
+>
+>         if (!cq_host->enabled || !mmc->cqe_on || cq_host->recovery_halt)
+>                 return;
+> @@ -364,15 +369,9 @@ static void cqhci_off(struct mmc_host *mmc)
+>
+>         cqhci_writel(cq_host, CQHCI_HALT, CQHCI_CTL);
+>
+> -       timeout = ktime_add_us(ktime_get(), CQHCI_OFF_TIMEOUT);
+> -       while (1) {
+> -               timed_out = ktime_compare(ktime_get(), timeout) > 0;
+> -               reg = cqhci_readl(cq_host, CQHCI_CTL);
+> -               if ((reg & CQHCI_HALT) || timed_out)
+> -                       break;
+> -       }
+> -
+> -       if (timed_out)
+> +       err = readx_poll_timeout(cqhci_read_ctl, cq_host, reg,
+> +                                reg & CQHCI_HALT, 0, CQHCI_OFF_TIMEOUT);
+> +       if (err < 0)
+>                 pr_err("%s: cqhci: CQE stuck on\n", mmc_hostname(mmc));
+>         else
+>                 pr_debug("%s: cqhci: CQE off\n", mmc_hostname(mmc));
+> --
+> 2.26.0.110.g2183baf09c-goog
+>
