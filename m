@@ -2,121 +2,320 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 081AA1ADAF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 12:24:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB32F1ADC8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 13:54:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729256AbgDQKYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 06:24:35 -0400
-Received: from userp2120.oracle.com ([156.151.31.85]:33730 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbgDQKYf (ORCPT
+        id S1730435AbgDQLxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 07:53:50 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:10080 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730410AbgDQLxu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 06:24:35 -0400
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03HAOIUK144895;
-        Fri, 17 Apr 2020 10:24:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=MLO25+uu0p1lJymH6NFPaGxDp70jIn+676ep69GijtY=;
- b=ML+VRCiAPW6O4RJ9+mw3z4cV+yo+IkuCjjm2nmF7rW3uBvSDQFmzzAWhfCt0yrcgNHiR
- xp/40Qa78iZECt3yOT/UYOxFzwOnfjXFv3lAjANPhZKGgyuEpeJ1hU18J4c5S7PSwq+Q
- VggjoB1hfzqV8/8PnmzB85psTYVeshzsiFAqpDPlEnAzfRWfhDbOYCzzIWAJpyOzA+NO
- JHzIiRvmaNXIbjISABgikDIcU9GgXc5p1QyOsuUaACf0FmaDX5tEuJVOGx2wpuwstjlP
- ogvciNFi8xR78R+6uFecobRrAKI8S6e9xzeBxYu4AgHDCNpsUFmBQlIJ/90P86oPo2Ps kQ== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by userp2120.oracle.com with ESMTP id 30emejp5ex-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 17 Apr 2020 10:24:31 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03HAMBEi131502;
-        Fri, 17 Apr 2020 10:24:31 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by aserp3020.oracle.com with ESMTP id 30dn9jjn8p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 17 Apr 2020 10:24:30 +0000
-Received: from abhmp0011.oracle.com (abhmp0011.oracle.com [141.146.116.17])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 03HAOT7W011924;
-        Fri, 17 Apr 2020 10:24:29 GMT
-Received: from kadam (/41.57.98.10)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Fri, 17 Apr 2020 03:24:28 -0700
-Date:   Fri, 17 Apr 2020 13:24:20 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [bug report] bus: mhi: core: Add support for data transfer
-Message-ID: <20200417102420.GR1163@kadam>
-References: <20200407135559.GA109574@mwanda>
- <20200407143304.GH2442@Mani-XPS-13-9360>
- <d30c7648-b657-d8b2-ba64-71f1178b4a68@codeaurora.org>
- <20200417101428.GA10295@Mani-XPS-13-9360>
+        Fri, 17 Apr 2020 07:53:50 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587124429; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=c23aGFTRbhoiRak4PE8kbsHH6SCohQNSkBPKZkx8Zac=;
+ b=Hdxl2qHY9rLL2nYXH3J05HxeJAF/1n61Tun9SbhwZfBoy1QJOHck+V9FhrHhCHOFwetTovQt
+ I/5GqSq1dHTdda6PWdyq3E6zGuNq4Cw7tQC8g6oNsJXdwLny4OukmyUcLQH80BvaLime0WvG
+ 6N9CbDHc+L3uZaO5iaqUN6UhkC4=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e9998cc.7fed12fc7dc0-smtp-out-n01;
+ Fri, 17 Apr 2020 11:53:48 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 249EDC4478F; Fri, 17 Apr 2020 11:53:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B1AE2C433F2;
+        Fri, 17 Apr 2020 11:53:46 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200417101428.GA10295@Mani-XPS-13-9360>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9593 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 mlxscore=0 adultscore=0
- spamscore=0 phishscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004170082
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9593 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 impostorscore=0
- mlxscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=999
- bulkscore=0 adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004170082
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 17 Apr 2020 17:23:46 +0530
+From:   kgunda@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH V5 1/4] backlight: qcom-wled: convert the wled bindings to
+ .yaml format
+In-Reply-To: <20200415150904.GA11174@bogus>
+References: <1586274430-28402-1-git-send-email-kgunda@codeaurora.org>
+ <1586274430-28402-2-git-send-email-kgunda@codeaurora.org>
+ <20200415150904.GA11174@bogus>
+Message-ID: <557e8bd874256271174402b5faba9c90@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 17, 2020 at 03:44:28PM +0530, Manivannan Sadhasivam wrote:
-> Hi Hemant,
+On 2020-04-15 20:39, Rob Herring wrote:
+> On Tue, Apr 07, 2020 at 09:17:07PM +0530, Kiran Gunda wrote:
+>> Convert the qcom-wled bindings from .txt to .yaml format.
+>> Also replace PM8941 to WLED3 and PMI8998 to WLED4.
+>> 
+>> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+>> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+>> ---
+>>  .../bindings/leds/backlight/qcom-wled.txt          | 154 
+>> ----------------
+>>  .../bindings/leds/backlight/qcom-wled.yaml         | 201 
+>> +++++++++++++++++++++
+>>  2 files changed, 201 insertions(+), 154 deletions(-)
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
 > 
-> On Thu, Apr 16, 2020 at 08:37:16PM -0700, Hemant Kumar wrote:
-> > 
-> > On 4/7/20 7:33 AM, Manivannan Sadhasivam wrote:
-> > > Hi Dan,
-> > > 
-> > > On Tue, Apr 07, 2020 at 04:55:59PM +0300, Dan Carpenter wrote:
-> > > > Hello Manivannan Sadhasivam,
-> > > > 
-> > > > The patch 189ff97cca53: "bus: mhi: core: Add support for data
-> > > > transfer" from Feb 20, 2020, leads to the following static checker
-> > > > warning:
-> > > > 
-> > > > 	drivers/bus/mhi/core/main.c:1153 mhi_queue_buf()
-> > > > 	error: double locked 'mhi_chan->lock' (orig line 1110)
-> > > > 
-> > > > drivers/bus/mhi/core/main.c
-> > > >    1142          }
-> > > >    1143
-> > > >    1144          /* Toggle wake to exit out of M2 */
-> > > >    1145          mhi_cntrl->wake_toggle(mhi_cntrl);
-> > > >    1146
-> > > >    1147          if (mhi_chan->dir == DMA_TO_DEVICE)
-> > > >    1148                  atomic_inc(&mhi_cntrl->pending_pkts);
-> > > >    1149
-> > > >    1150          if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
-> > > >    1151                  unsigned long flags;
-> > > >    1152
-> > > >    1153                  read_lock_irqsave(&mhi_chan->lock, flags);
-> > 
-> > parse_xfer_event is taking read lock : read_lock_bh(&mhi_chan->lock); first
-> > and later
-> > 
-> > mhi_queue_buf takes read lock: read_lock_irqsave(&mhi_chan->lock, flags);
-> > 
-> > Both are read locks which are recursive, is this problematic ?
-> > 
 > 
-> read_locks are recursive but I wanted to make the static checker happy.
-
-Don't do things just to make the static checker happy.
-
-regards,
-dan carpenter
-
+>> diff --git 
+>> a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml 
+>> b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+>> new file mode 100644
+>> index 0000000..770e780
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+>> @@ -0,0 +1,201 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/leds/backlight/qcom-wled.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Binding for Qualcomm Technologies, Inc. WLED driver
+>> +
+>> +maintainers:
+>> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+>> +  - Kiran Gunda <kgunda@codeaurora.org>
+>> +
+>> +description: |
+>> +  WLED (White Light Emitting Diode) driver is used for controlling 
+>> display
+>> +  backlight that is part of PMIC on Qualcomm Technologies, Inc. 
+>> reference
+>> +  platforms. The PMIC is connected to the host processor via SPMI 
+>> bus.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,pm8941-wled
+>> +      - qcom,pmi8998-wled
+>> +      - qcom,pm660l-wled
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  default-brightness:
+>> +    description:
+>> +      brightness value on boot.
+>> +    minimum: 0
+>> +    maximum: 4095
+>> +    default: 2048
+>> +
+>> +  label: true
+>> +
+>> +  qcom,cs-out:
+>> +    description:
+>> +      enable current sink output.
+>> +      This property is supported only for WLED3.
+>> +    type: boolean
+>> +
+>> +  qcom,cabc:
+>> +    description:
+>> +      enable content adaptive backlight control.
+>> +    type: boolean
+>> +
+>> +  qcom,ext-gen:
+>> +    description:
+>> +      use externally generated modulator signal to dim.
+>> +      This property is supported only for WLED3.
+>> +    type: boolean
+>> +
+>> +  qcom,current-limit:
+>> +    description:
+>> +      mA; per-string current limit.
+>> +      This property is supported only for WLED3.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +    default: 20
+>> +    minimum: 0
+>> +    maximum: 25
+>> +    multipleOf: 1
+> 
+> No point in defining a multiple of 1.
+> 
+>> +
+>> +  qcom,current-limit-microamp:
+>> +    description:
+>> +      uA; per-string current limit.
+>> +    default: 25
+>> +    minimum: 0
+>> +    maximum: 30000
+>> +    multipleOf: 25
+>> +
+>> +  qcom,current-boost-limit:
+>> +    description:
+>> +      mA; boost current limit.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +
+>> +  qcom,switching-freq:
+>> +    description:
+>> +      kHz; switching frequency.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +      - enum: [ 600, 640, 685, 738, 800, 872, 960, 1066, 1200, 1371, 
+>> 1600, 1920, 2400, 3200, 4800, 9600 ]
+>> +
+>> +  qcom,ovp:
+>> +    description:
+>> +      V; Over-voltage protection limit.
+>> +      This property is supported only for WLED3.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +      - enum: [ 27, 29, 32, 35 ]
+>> +      - default: 29
+>> +
+>> +  qcom,ovp-millivolt:
+>> +    description:
+>> +      Over-voltage protection limit. This property is for WLED4 only.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +      - enum: [ 18100, 19600, 29600, 31100 ]
+>> +      - default: 29600
+>> +
+>> +  qcom,num-strings:
+>> +    description:
+>> +      number of led strings attached.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32
+>> +
+>> +  qcom,enabled-strings:
+>> +    description:
+>> +      Array of the WLED strings numbered from 0 to 3. Each
+>> +      string of leds are operated individually. Specify the
+>> +      list of strings used by the device. Any combination of
+>> +      led strings can be used.
+>> +    allOf:
+>> +      - $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 1
+>> +    maxItems: 4
+>> +
+>> +  qcom,external-pfet:
+>> +    description:
+>> +      Specify if external PFET control for short circuit
+>> +      protection is used. This property is supported only
+>> +      for WLED4.
+>> +    type: boolean
+>> +
+>> +  qcom,auto-string-detection:
+>> +    description:
+>> +      Enables auto-detection of the WLED string configuration.
+>> +      This feature is not supported for WLED3.
+>> +    type: boolean
+>> +
+>> +allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            const: qcom,pm8941-wled
+>> +
+>> +    then:
+>> +      properties:
+>> +        qcom,current-boost-limit:
+>> +           enum: [ 105, 385, 525, 805, 980, 1260, 1400, 1680 ]
+>> +           default: 805
+>> +
+>> +        qcom,switching-freq:
+>> +           default: 1600
+>> +
+>> +        qcom,num-strings:
+>> +           enum: [ 1, 2, 3 ]
+>> +
+>> +        interrupts:
+>> +          items:
+>> +            - description: over voltage protection interrupt.
+>> +
+>> +        interrupt-names:
+>> +          items:
+>> +            - const: ovp
+>> +
+>> +    else:
+>> +      properties:
+>> +        qcom,current-boost-limit:
+>> +           enum: [ 105, 280, 450, 620, 970, 1150, 1300, 1500 ]
+>> +           default: 970
+>> +
+>> +        qcom,switching-freq:
+>> +           default: 800
+>> +
+>> +        qcom,num-strings:
+>> +           enum: [ 1, 2, 3, 4 ]
+>> +
+>> +        interrupts:
+>> +          items:
+>> +            - description: over voltage protection interrupt.
+>> +            - description: short circuit interrupt.
+>> +
+>> +        interrupt-names:
+>> +          items:
+>> +            - const: ovp
+>> +            - const: short
+> 
+> Move these 2 props to the main section adding a 'minItems: 1'. Then 
+> just
+> define 'minItems: 2' here and 'maxItems: 1' in the 'then' clause.
+> 
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - label
+> 
+> Add:
+> 
+> additionalProperties: false
+> 
+>> +
+>> +examples:
+>> +  - |
+>> +    backlight@d800 {
+>> +        compatible = "qcom,pm8941-wled";
+>> +        reg = <0xd800 0x100>;
+>> +        label = "backlight";
+>> +
+>> +        qcom,cs-out;
+>> +        qcom,current-limit = <20>;
+>> +        qcom,current-boost-limit = <805>;
+>> +        qcom,switching-freq = <1600>;
+>> +        qcom,ovp = <29>;
+>> +        qcom,num-strings = <2>;
+>> +        qcom,enabled-strings = <0 1>;
+>> +     };
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>>  a Linux Foundation Collaborative Project
+>> 
+Thanks for reviewing. I will submit the next revision with all the 
+fixes.
