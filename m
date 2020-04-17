@@ -2,146 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C44511ADFE3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 16:27:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A57941ADFF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 16:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728008AbgDQO1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 10:27:00 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:28361 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727909AbgDQO0z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 10:26:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587133615; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=fSWZYAx+xUo9BW8l9Vg7d7Qrc7pAbwtD1+dmCZo15aU=; b=qAI7c0CNTsu91jzZWSIR4/3wecGHZLkaGuW4KfTq5M02Q+XiGVHWWCZj5sIpvCz15KABrxB9
- Fxf2163oGK+NiIHkgtqN1hQV46gIo05Vq41fxnnVI/Og1xgWsoXtzE6usOmbAXuZen3rl/AY
- GfNzUzt9ti6fb/Nzs0H2Qwy5E40=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e99bca5.7fe88aa9f960-smtp-out-n03;
- Fri, 17 Apr 2020 14:26:45 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CAFB7C433BA; Fri, 17 Apr 2020 14:26:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1726868AbgDQObd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 10:31:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53196 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726065AbgDQObc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Apr 2020 10:31:32 -0400
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 002ABC4478F;
-        Fri, 17 Apr 2020 14:26:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 002ABC4478F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, evgreen@chromium.org,
-        ohad@wizery.com, mka@chromium.org, dianders@chromium.org,
-        devicetree@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 5/5] arm64: dts: qcom: sc7180: Update Q6V5 MSS node
-Date:   Fri, 17 Apr 2020 19:56:05 +0530
-Message-Id: <20200417142605.28885-6-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200417142605.28885-1-sibis@codeaurora.org>
-References: <20200417142605.28885-1-sibis@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id E0ABF2223C;
+        Fri, 17 Apr 2020 14:31:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1587133892;
+        bh=pT6+doLxhDBboeLR9o8Dpw1tvc89tREvWl1biQA46lM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=gkh6DENAZFbDzJIf3gFlleyZJHAgpIxRXuIbcQaYJRwCKVr5jxuSl5wprhsHK8NQv
+         d70cg4H/hlDv7pzVdq0X9RSmWonyibSgmMLQVrRgpQCNjkdh7j9FH4xNyqYZgK+ya1
+         BlDA5SWyRdDvV/b1wK2lwC9TpR2q0Mgy4dAk/xCs=
+Received: by mail-qt1-f177.google.com with SMTP id x8so870257qtp.13;
+        Fri, 17 Apr 2020 07:31:31 -0700 (PDT)
+X-Gm-Message-State: AGi0PuZrs86WVckx3vkSdLOF8oUK8m+P+M8JjcMNG1xcO1yqCXswpky/
+        b6jyV/LRHGHCwqXMMjwts1BjjR/UzYNwFpbxfw==
+X-Google-Smtp-Source: APiQypIyrumUQTKQyuwVJdKoY42ZUrD4HU0jijHUYuJE36Rvv09bfA43tUGFPkwi5wV/2LSEiXno09uVRo0AKF6NNfE=
+X-Received: by 2002:ac8:6695:: with SMTP id d21mr3248533qtp.110.1587133890922;
+ Fri, 17 Apr 2020 07:31:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1586359676.git.mchehab+huawei@kernel.org>
+ <24b30222392569e7aa5d61d46642a4c38a964512.1586359676.git.mchehab+huawei@kernel.org>
+ <87h7xicvht.fsf@kernel.org>
+In-Reply-To: <87h7xicvht.fsf@kernel.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 17 Apr 2020 09:31:17 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLrKYTJTiPrzJAR7M-uCVa-S8sLMWUL4Xcy9x=XsY8mcg@mail.gmail.com>
+Message-ID: <CAL_JsqLrKYTJTiPrzJAR7M-uCVa-S8sLMWUL4Xcy9x=XsY8mcg@mail.gmail.com>
+Subject: Re: [PATCH 28/35] docs: dt: qcom,dwc3.txt: fix cross-reference for a
+ converted file
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add TCSR node and update MSS node to support MSA based Modem boot on
-SC7180 SoCs.
+On Fri, Apr 17, 2020 at 4:27 AM Felipe Balbi <balbi@kernel.org> wrote:
+>
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+>
+> > The qcom-qusb2-phy.txt file was converted and renamed to yaml.
+> > Update cross-reference accordingly.
+> >
+> > Fixes: 8ce65d8d38df ("dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy bindings to yaml")
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  Documentation/devicetree/bindings/usb/qcom,dwc3.txt | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+> > index cb695aa3fba4..fbdd01756752 100644
+> > --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+> > +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+> > @@ -52,8 +52,8 @@ A child node must exist to represent the core DWC3 IP block. The name of
+> >  the node is not important. The content of the node is defined in dwc3.txt.
+> >
+> >  Phy documentation is provided in the following places:
+> > -Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt   - USB3 QMP PHY
+> > -Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt - USB2 QUSB2 PHY
+> > +Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt    - USB3 QMP PHY
+> > +Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml - USB2 QUSB2 PHY
+> >
+> >  Example device nodes:
+>
+> Should I take this or will it go via e.g. trivial?
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
+I already queued up v2 of this.
 
-Depends on the following bindings:
-iommus: https://patchwork.kernel.org/patch/11443101/
-spare-regs: https://patchwork.kernel.org/patch/11491425/
-
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 42 +++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    |  5 +++
- 2 files changed, 47 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index e613d70cc0198..6f472872be1a3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -319,6 +319,48 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&remoteproc_mpss {
-+	compatible = "qcom,sc7180-mss-pil";
-+	reg = <0 0x04080000 0 0x410>, <0 0x04180000 0 0x48>;
-+	reg-names = "qdsp6", "rmb";
-+
-+	clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-+		 <&gcc GCC_MSS_Q6_MEMNOC_AXI_CLK>,
-+		 <&gcc GCC_MSS_NAV_AXI_CLK>,
-+		 <&gcc GCC_MSS_SNOC_AXI_CLK>,
-+		 <&gcc GCC_MSS_MFAB_AXIS_CLK>,
-+		 <&rpmhcc RPMH_CXO_CLK>;
-+	clock-names = "iface", "bus", "nav", "snoc_axi",
-+		      "mnoc_axi", "xo";
-+
-+	iommus = <&apps_smmu 0x460 0x1>, <&apps_smmu 0x444 0x2>;
-+
-+	resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
-+		 <&pdc_reset PDC_MODEM_SYNC_RESET>;
-+	reset-names = "mss_restart", "pdc_reset";
-+
-+	qcom,halt-regs = <&tcsr_mutex_regs 0x23000 0x25000 0x24000>;
-+	qcom,spare-regs = <&tcsr_regs 0xb3e4>;
-+
-+	power-domains = <&aoss_qmp AOSS_QMP_LS_MODEM>,
-+			<&rpmhpd SC7180_CX>,
-+			<&rpmhpd SC7180_MX>,
-+			<&rpmhpd SC7180_MSS>;
-+	power-domain-names = "load_state", "cx", "mx", "mss";
-+
-+	/delete-property/memory-region;
-+
-+	status = "okay";
-+
-+	mba {
-+		memory-region = <&mba_mem>;
-+	};
-+
-+	mpss {
-+		memory-region = <&mpss_mem>;
-+	};
-+};
-+
- &uart3 {
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index e319762a0bffc..c49801ddb9d70 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -981,6 +981,11 @@ tcsr_mutex_regs: syscon@1f40000 {
- 			reg = <0 0x01f40000 0 0x40000>;
- 		};
- 
-+		tcsr_regs: syscon@1fc0000 {
-+			compatible = "syscon";
-+			reg = <0 0x01fc0000 0 0x40000>;
-+		};
-+
- 		tlmm: pinctrl@3500000 {
- 			compatible = "qcom,sc7180-pinctrl";
- 			reg = <0 0x03500000 0 0x300000>,
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>
+> In any case:
+>
+> Acked-by: Felipe Balbi <balbi@kernel.org>
+>
+> --
+> balbi
