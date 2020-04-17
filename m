@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 923261ADF54
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 16:11:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 247891ADF5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 16:11:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731100AbgDQOGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 10:06:18 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:58241 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731098AbgDQOGR (ORCPT
+        id S1731135AbgDQOGf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 10:06:35 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:54824 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731131AbgDQOGf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 10:06:17 -0400
+        Fri, 17 Apr 2020 10:06:35 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587132376; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1587132394; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=JgpwToNdmNH5TckqDtwht+dLh2sp+hER98TGqoDOOno=; b=fQLq1Zd8LmrdqOPovUSRks2To8sRh0Wqa6m57DafIMklglcSAfLxPUyIAZQTgiIMkQDTJ+FC
- 44AFm2TgEWUIHB/9S9DIHzv7lU3kbJpFYVdNatFrZVALuYjFsfxfwDCzvs1AWZCARZxX0AfE
- XaJjoG3l61f717tAbq54XnHWUBs=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=llUPXRExLvxCFVVAYxO7alUC0qq9GxbKaujBs9DQ9Zc=; b=TVm3Q9RkHbJ6Dd/akwwYj8ZN/lqYSRjIpoaBB0hcMuWzQGBOYvJx5sGK0449OhgZ2VsHFgmy
+ bPSZnJRLI3VbaxRLVDju9MH/SXuqd8JBZMzNbHvJEckLGRTDq8NzVJL5IPoUNi3fKoSlO9GM
+ pY6cseDZ24tEN+QjmnA/wM/7CQo=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e99b7d6.7f9f3acf4e68-smtp-out-n04;
- Fri, 17 Apr 2020 14:06:14 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e99b7d8.7ff5d0422ea0-smtp-out-n02;
+ Fri, 17 Apr 2020 14:06:16 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 14063C44792; Fri, 17 Apr 2020 14:06:12 +0000 (UTC)
+        id BF69EC690A5; Fri, 17 Apr 2020 14:06:15 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54CA0C44798;
-        Fri, 17 Apr 2020 14:06:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54CA0C44798
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DA109C43636;
+        Fri, 17 Apr 2020 14:06:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DA109C43636
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
@@ -44,12 +44,10 @@ To:     viresh.kumar@linaro.org, sboyd@kernel.org,
         bjorn.andersson@linaro.org, agross@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, mka@chromium.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org
-Subject: [PATCH v2 12/17] media: venus: core: Add support for opp tables/perf voting
-Date:   Fri, 17 Apr 2020 19:34:34 +0530
-Message-Id: <1587132279-27659-13-git-send-email-rnayak@codeaurora.org>
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v2 13/17] arm64: dts: sdm845: Add OPP tables and power-domains for venus
+Date:   Fri, 17 Apr 2020 19:34:35 +0530
+Message-Id: <1587132279-27659-14-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1587132279-27659-1-git-send-email-rnayak@codeaurora.org>
 References: <1587132279-27659-1-git-send-email-rnayak@codeaurora.org>
@@ -58,209 +56,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to add OPP tables and perf voting on the OPP powerdomain.
-This is needed so venus votes on the corresponding performance state
-for the OPP powerdomain along with setting the core clock rate.
+Add the OPP tables in order to be able to vote on the performance state of
+a power-domain.
 
 Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc: linux-media@vger.kernel.org
 ---
- drivers/media/platform/qcom/venus/core.c       | 21 +++++++++++++++
- drivers/media/platform/qcom/venus/core.h       |  5 ++++
- drivers/media/platform/qcom/venus/pm_helpers.c | 37 +++++++++++++++++++++++---
- 3 files changed, 59 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 40 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 194b10b9..0d1ef88 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -12,6 +12,7 @@
- #include <linux/platform_device.h>
- #include <linux/slab.h>
- #include <linux/types.h>
-+#include <linux/pm_opp.h>
- #include <linux/pm_runtime.h>
- #include <media/videobuf2-v4l2.h>
- #include <media/v4l2-mem2mem.h>
-@@ -250,6 +251,13 @@ static int venus_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index e6f1af1..67e3b90 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3294,14 +3294,50 @@
+ 			};
+ 		};
  
-+	core->opp = dev_pm_opp_set_clkname(dev, "core");
-+	if (IS_ERR(core->opp))
-+		return PTR_ERR(core->opp);
++		venus_opp_table: venus-opp-table {
++			compatible = "operating-points-v2";
 +
-+	if (core->opp_pmdomain && !dev_pm_opp_of_add_table(dev))
-+		core->opp_table = true;
++			opp-100000000 {
++				opp-hz = /bits/ 64 <100000000>;
++				required-opps = <&rpmhpd_opp_min_svs>;
++			};
 +
- 	pm_runtime_enable(dev);
- 
- 	ret = pm_runtime_get_sync(dev);
-@@ -301,6 +309,9 @@ static int venus_probe(struct platform_device *pdev)
- err_venus_shutdown:
- 	venus_shutdown(core);
- err_runtime_disable:
-+	if (core->opp_pmdomain && core->opp_table)
-+		dev_pm_opp_of_remove_table(dev);
-+	dev_pm_opp_put_clkname(core->opp);
- 	pm_runtime_set_suspended(dev);
- 	pm_runtime_disable(dev);
- 	hfi_destroy(core);
-@@ -326,6 +337,10 @@ static int venus_remove(struct platform_device *pdev)
- 
- 	venus_firmware_deinit(core);
- 
-+	if (core->opp_pmdomain && core->opp_table)
-+		dev_pm_opp_of_remove_table(dev);
-+	dev_pm_opp_put_clkname(core->opp);
++			opp-200000000 {
++				opp-hz = /bits/ 64 <200000000>;
++				required-opps = <&rpmhpd_opp_low_svs>;
++			};
 +
- 	pm_runtime_put_sync(dev);
- 	pm_runtime_disable(dev);
- 
-@@ -350,6 +365,10 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	/* Drop the performance state vote */
-+	if (core->opp_pmdomain)
-+		dev_pm_opp_set_rate(dev, 0);
++			opp-320000000 {
++				opp-hz = /bits/ 64 <320000000>;
++				required-opps = <&rpmhpd_opp_svs>;
++			};
 +
- 	if (pm_ops->core_power)
- 		ret = pm_ops->core_power(dev, POWER_OFF);
- 
-@@ -511,6 +530,7 @@ static const struct venus_resources sdm845_res_v2 = {
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = { "venus", "vcodec0", "vcodec1" },
- 	.vcodec_pmdomains_num = 3,
-+	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
- 	.vcodec_num = 2,
- 	.max_load = 3110400,	/* 4096x2160@90 */
- 	.hfi_version = HFI_VERSION_4XX,
-@@ -556,6 +576,7 @@ static const struct venus_resources sc7180_res = {
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = { "venus", "vcodec0" },
- 	.vcodec_pmdomains_num = 2,
-+	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
- 	.vcodec_num = 1,
- 	.hfi_version = HFI_VERSION_4XX,
- 	.vmem_id = VIDC_RESOURCE_NONE,
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index bd3ac6a..e583ee3 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -62,6 +62,7 @@ struct venus_resources {
- 	unsigned int vcodec_clks_num;
- 	const char * const vcodec_pmdomains[VIDC_PMDOMAINS_NUM_MAX];
- 	unsigned int vcodec_pmdomains_num;
-+	const char **opp_pmdomain;
- 	unsigned int vcodec_num;
- 	enum hfi_version hfi_version;
- 	u32 max_load;
-@@ -144,8 +145,12 @@ struct venus_core {
- 	struct clk *vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
- 	struct icc_path *video_path;
- 	struct icc_path *cpucfg_path;
-+	struct opp_table *opp;
-+	bool opp_table;
- 	struct device_link *pd_dl_venus;
- 	struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
-+	struct device_link *opp_dl_venus;
-+	struct device *opp_pmdomain;
- 	struct video_device *vdev_dec;
- 	struct video_device *vdev_enc;
- 	struct v4l2_device v4l2_dev;
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index abf9315..b81592f 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -9,6 +9,7 @@
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/pm_domain.h>
-+#include <linux/pm_opp.h>
- #include <linux/pm_runtime.h>
- #include <linux/types.h>
- #include <media/v4l2-mem2mem.h>
-@@ -66,10 +67,9 @@ static void core_clks_disable(struct venus_core *core)
- 
- static int core_clks_set_rate(struct venus_core *core, unsigned long freq)
- {
--	struct clk *clk = core->clks[0];
- 	int ret;
- 
--	ret = clk_set_rate(clk, freq);
-+	ret = dev_pm_opp_set_rate(core->dev, freq);
- 	if (ret)
- 		return ret;
- 
-@@ -740,13 +740,15 @@ static int venc_power_v4(struct device *dev, int on)
- 
- static int vcodec_domains_get(struct device *dev)
- {
-+	struct opp_table *opp;
-+	struct device **opp_virt_dev;
- 	struct venus_core *core = dev_get_drvdata(dev);
- 	const struct venus_resources *res = core->res;
- 	struct device *pd;
- 	unsigned int i;
- 
- 	if (!res->vcodec_pmdomains_num)
--		return -ENODEV;
-+		goto skip_pmdomains;
- 
- 	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
- 		pd = dev_pm_domain_attach_by_name(dev,
-@@ -763,6 +765,24 @@ static int vcodec_domains_get(struct device *dev)
- 	if (!core->pd_dl_venus)
- 		return -ENODEV;
- 
-+skip_pmdomains:
-+	if (!res->opp_pmdomain)
-+		return 0;
++			opp-380000000 {
++				opp-hz = /bits/ 64 <380000000>;
++				required-opps = <&rpmhpd_opp_svs_l1>;
++			};
 +
-+	/* Attach the power domain for setting performance state */
-+	opp = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
-+	if (IS_ERR(opp)) {
-+		return PTR_ERR(opp);
-+	} else if (opp_virt_dev) {
-+		core->opp_pmdomain = *opp_virt_dev;
-+		core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
-+						     DL_FLAG_RPM_ACTIVE |
-+						     DL_FLAG_PM_RUNTIME |
-+						     DL_FLAG_STATELESS);
-+		if (!core->opp_dl_venus)
-+			return -ENODEV;
-+	}
++			opp-444000000 {
++				opp-hz = /bits/ 64 <444000000>;
++				required-opps = <&rpmhpd_opp_nom>;
++			};
 +
- 	return 0;
- }
- 
-@@ -773,7 +793,7 @@ static void vcodec_domains_put(struct device *dev)
- 	unsigned int i;
- 
- 	if (!res->vcodec_pmdomains_num)
--		return;
-+		goto skip_pmdomains;
- 
- 	if (core->pd_dl_venus)
- 		device_link_del(core->pd_dl_venus);
-@@ -783,6 +803,15 @@ static void vcodec_domains_put(struct device *dev)
- 			continue;
- 		dev_pm_domain_detach(core->pmdomains[i], true);
- 	}
++			opp-533000000 {
++				opp-hz = /bits/ 64 <533000000>;
++				required-opps = <&rpmhpd_opp_turbo>;
++			};
++		};
 +
-+skip_pmdomains:
-+	if (!res->opp_pmdomain)
-+		return;
-+
-+	if (core->opp_dl_venus)
-+		device_link_del(core->opp_dl_venus);
-+
-+	dev_pm_domain_detach(core->opp_pmdomain, true);
- }
- 
- static int core_get_v4(struct device *dev)
+ 		venus: video-codec@aa00000 {
+ 			compatible = "qcom,sdm845-venus-v2";
+ 			reg = <0 0x0aa00000 0 0xff000>;
+ 			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+ 			power-domains = <&videocc VENUS_GDSC>,
+ 					<&videocc VCODEC0_GDSC>,
+-					<&videocc VCODEC1_GDSC>;
+-			power-domain-names = "venus", "vcodec0", "vcodec1";
++					<&videocc VCODEC1_GDSC>,
++					<&rpmhpd SDM845_CX>;
++			power-domain-names = "venus", "vcodec0", "vcodec1", "opp-pd";
++			operating-points-v2 = <&venus_opp_table>;
+ 			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+ 				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+ 				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
