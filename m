@@ -2,117 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC25D1AD6F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 09:07:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1E441AD720
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 09:13:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728284AbgDQHHh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 03:07:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51238 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728171AbgDQHHh (ORCPT
+        id S1728367AbgDQHNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 03:13:00 -0400
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:51073 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728171AbgDQHNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 03:07:37 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8EFC061A0F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 00:07:37 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id 188so658694pgj.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 00:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qhJfbUeC4EGPGMNCAc6hIWc34vSeMK8YZ5XesZD7QMw=;
-        b=IBpsataWih4UMa/MPpIuCFZ3NwCO/Q2WO3CEezpUx97vUFHwJ054IMLqL2b9OZ/LIq
-         EdsvVy7PwTglM+wESZZrycP2i1pSajs9i1p+F+bkHHj2CntpuATfQ/nZHlI7naLVO2UZ
-         DjYFUfk2OMH6xC41SzORrJzmp2BHjh+jWrLEP9IKhkpDLOQ5zWIKiE4FdAuhipwv5ewC
-         cdevZNUGT6teQjxXdPeU6wdBRODD+2mgm+LIllVQY9us2iymVXrnqyxyanOtbnz66QYU
-         qynFqOAmhQ3Z2SPXckHLP6e/z3eocGRzcXS255R8HUQ9MB/6fwDRpWJ9IHLS5YWWbRF7
-         hBVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qhJfbUeC4EGPGMNCAc6hIWc34vSeMK8YZ5XesZD7QMw=;
-        b=VOOM6oEI5AARgC01dN6zkau5kgFUe5c4Ijxg8IZbjaEnOzEOrVIGOgYkvdknNL0dkI
-         gcuPSeK9ipBr113TtyVBFfkuxBpnMP/sQO8lz4s77VVkp4/6ew7zVZCSCDuiuPud0fuk
-         vRvh32CQUbuHDMfMkDUiKkyUeZGuA7TDjgF56o7Yu6UCvqaWmSaaLOz+BA+MALLDuuru
-         OKVXKMoGJfncLjURmowo++fVOBJJnL8xiRxRKlY9FZGHWDtB3mkqJnP0KuKvXiXSUOzA
-         /LhDody57aWi8ysvH73HYowsMqgHkx/oJT48c5CNNdthJo5PsvuQq6m947Ku/mC7vxbC
-         py6Q==
-X-Gm-Message-State: AGi0PuZQjvxijG6YvkKKBiQK1IoLnE7mUTF6mPy2zUz3JaigsUgGXRPh
-        X0vTED3sNNV5fHi9ElG5sW8UgiBBu1o=
-X-Google-Smtp-Source: APiQypIwSAgtT5e9WT2GkKvkvSvFvRObHW2xLgNFhJuVFfaeaEpAdmKJY5FzP4LkWWJp01oSfRLm9g==
-X-Received: by 2002:a62:7a82:: with SMTP id v124mr1737521pfc.10.1587107256540;
-        Fri, 17 Apr 2020 00:07:36 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f15sm18614987pfd.215.2020.04.17.00.07.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2020 00:07:35 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: db820c: Fix invalid pm8994 supplies
-Date:   Fri, 17 Apr 2020 00:07:12 -0700
-Message-Id: <20200417070712.1376355-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Fri, 17 Apr 2020 03:13:00 -0400
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Apr 2020 12:42:57 +0530
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 17 Apr 2020 12:42:34 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 48D9C4832; Fri, 17 Apr 2020 12:42:33 +0530 (IST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        dianders@chromium.org, jsanka@codeaurora.org,
+        mkrishn@codeaurora.org, travitej@codeaurora.org,
+        nganji@codeaurora.org
+Subject: [PATCH] drm/msm/dpu: ensure device suspend happens during PM sleep
+Date:   Fri, 17 Apr 2020 12:42:26 +0530
+Message-Id: <1587107546-7379-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's uncertain where the "vreg_s8a_l3a_input" comes from, but the supply
-for VDD_L3_L11 on PM8994 should be VREG_S3A_1P3, so correct this - and
-drop the vreg_s8a_l3a_input.
+"The PM core always increments the runtime usage counter
+before calling the ->suspend() callback and decrements it
+after calling the ->resume() callback"
 
-Fixes: 83d9ed4342a3 ("arm64: dts: qcom: db820c: Use regulator names from schematics")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+DPU and DSI are managed as runtime devices. When
+suspend is triggered, PM core adds a refcount on all the
+devices and calls device suspend, since usage count is
+already incremented, runtime suspend was not getting called
+and it kept the clocks on which resulted in target not
+entering into XO shutdown.
+
+Add changes to force suspend on runtime devices during pm sleep.
+
+Changes in v1:
+ - Remove unnecessary checks in the function
+    _dpu_kms_disable_dpu (Rob Clark).
+
+Changes in v2:
+ - Avoid using suspend_late to reset the usagecount
+   as suspend_late might not be called during suspend
+   call failures (Doug).
+
+Changes in v3:
+ - Use force suspend instead of managing device usage_count
+   via runtime put and get API's to trigger callbacks (Doug).
+
+Changes in v4:
+ - Check the return values of pm_runtime_force_suspend and
+   pm_runtime_force_resume API's and pass appropriately (Doug).
+
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  2 ++
+ drivers/gpu/drm/msm/dsi/dsi.c           |  2 ++
+ drivers/gpu/drm/msm/msm_drv.c           | 14 +++++++++++++-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index 1baf41fbdf6e..46595fb95cce 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -117,16 +117,6 @@ vph_pwr: vph-pwr-regulator {
- 		regulator-max-microvolt = <3700000>;
- 	};
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index ce19f1d..b886d9d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1123,6 +1123,8 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
  
--	vreg_s8a_l3a_input: vreg-s8a-l3a-input {
--		compatible = "regulator-fixed";
--		regulator-name = "vreg_s8a_l3a_input";
--		regulator-always-on;
--		regulator-boot-on;
--
--		regulator-min-microvolt = <0>;
--		regulator-max-microvolt = <0>;
--	};
--
- 	wlan_en: wlan-en-1-8v {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&wlan_en_gpios>;
-@@ -720,7 +710,7 @@ pm8994-regulators {
- 		vdd_s12-supply = <&vph_pwr>;
- 		vdd_l1-supply = <&vreg_s1b_1p025>;
- 		vdd_l2_l26_l28-supply = <&vreg_s3a_1p3>;
--		vdd_l3_l11-supply = <&vreg_s8a_l3a_input>;
-+		vdd_l3_l11-supply = <&vreg_s3a_1p3>;
- 		vdd_l4_l27_l31-supply = <&vreg_s3a_1p3>;
- 		vdd_l5_l7-supply = <&vreg_s5a_2p15>;
- 		vdd_l6_l12_l32-supply = <&vreg_s5a_2p15>;
-@@ -731,7 +721,7 @@ pm8994-regulators {
- 		vdd_l17_l29-supply = <&vph_pwr_bbyp>;
- 		vdd_l20_l21-supply = <&vph_pwr_bbyp>;
- 		vdd_l25-supply = <&vreg_s3a_1p3>;
--		vdd_lvs1_2-supply = <&vreg_s4a_1p8>;
-+		vdd_lvs1_lvs2-supply = <&vreg_s4a_1p8>;
+ static const struct dev_pm_ops dpu_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(dpu_runtime_suspend, dpu_runtime_resume, NULL)
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ };
  
- 		vreg_s3a_1p3: s3 {
- 			regulator-name = "vreg_s3a_1p3";
+ static const struct of_device_id dpu_dt_match[] = {
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+index 55ea4bc2..62704885 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -161,6 +161,8 @@ static int dsi_dev_remove(struct platform_device *pdev)
+ 
+ static const struct dev_pm_ops dsi_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(msm_dsi_runtime_suspend, msm_dsi_runtime_resume, NULL)
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ };
+ 
+ static struct platform_driver dsi_driver = {
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 7d985f8..4b93fc1 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1040,6 +1040,7 @@ static int msm_pm_suspend(struct device *dev)
+ {
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct msm_drm_private *priv = ddev->dev_private;
++	int ret, rc;
+ 
+ 	if (WARN_ON(priv->pm_state))
+ 		drm_atomic_state_put(priv->pm_state);
+@@ -1051,7 +1052,14 @@ static int msm_pm_suspend(struct device *dev)
+ 		return ret;
+ 	}
+ 
+-	return 0;
++	ret = pm_runtime_force_suspend(dev);
++	if (ret) {
++		rc = drm_atomic_helper_resume(ddev, priv->pm_state);
++		if (!rc)
++			priv->pm_state = NULL;
++	}
++
++	return ret;
+ }
+ 
+ static int msm_pm_resume(struct device *dev)
+@@ -1063,6 +1071,10 @@ static int msm_pm_resume(struct device *dev)
+ 	if (WARN_ON(!priv->pm_state))
+ 		return -ENOENT;
+ 
++	ret = pm_runtime_force_resume(dev);
++	if (ret)
++		return ret;
++
+ 	ret = drm_atomic_helper_resume(ddev, priv->pm_state);
+ 	if (!ret)
+ 		priv->pm_state = NULL;
 -- 
-2.24.0
+1.9.1
 
