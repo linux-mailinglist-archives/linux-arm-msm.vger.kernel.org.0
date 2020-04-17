@@ -2,130 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C83601AE76E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 23:17:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0588D1AE7AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 23:37:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726420AbgDQVRJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 17:17:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42122 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728038AbgDQVRI (ORCPT
+        id S1725873AbgDQVh0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 17:37:26 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:15008 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728158AbgDQVhZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 17:17:08 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC5CC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:17:07 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id p28so2066757vsg.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:17:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iJ2fYj8faRnQWYU+YUvw2BuJTdJ8p/wj9zFiQhRecXY=;
-        b=jg0aAF/VBOEowYu593EttCPIZkn+y5RfCCJA7A9me76IkPZAsRrbd0/T/gxbhJ/Nea
-         tWQR2GXYK9vwBRwjMNG23L4vJh1oGHmRc2CjVNncy5RDzfuzEGb8ed+0x7qWLo5t/5OA
-         YnhUhWAj1kNKyBGVtXGLHtwZuHxHlvy5ESOgA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iJ2fYj8faRnQWYU+YUvw2BuJTdJ8p/wj9zFiQhRecXY=;
-        b=H97DqwR4dpQGQGLtE75Pm5ohPcVPktK9RZJgibS44jemVWz25MEe3FRuvK2N4iHbM5
-         2finK4RLHTunoVHtngidf0lJ3RFACsbg1Ncw6NLvTipW1GfenWh5MfkX774VR4kWqYRG
-         S6r/B4pnyO/qON30KrzbN6C79p1omz1pgdRpzqhdBkt+U44cnRqBkrWqGF03ln2NHtK7
-         HeXHkjOPy21MGHQC+5OUccv68fBiN7sJt+4cndtdCF3vf9SpdRbwuA0hkVh4DFHorO30
-         sW+WGvjtFW33MDIutnfiSkFnz918oEFdvC1q/un18ytzTuodQNxJNnC8n+kxwHYfedK+
-         eFsg==
-X-Gm-Message-State: AGi0PuYcq9YVdhNUDsw0SCWwBw9flxUfnxqv/p9e6rkehJYbztKhBi5I
-        x+YZrpzkU0scmXoA7TyhNh9pUIkYfOc=
-X-Google-Smtp-Source: APiQypKr3TMN0hRTmxpX3Pk1r0fTKHrlY8OkMWyU1y62oappGeP/2ySiip8YQddk8D6dugZHeCDh2A==
-X-Received: by 2002:a67:a06:: with SMTP id 6mr4259873vsk.22.1587158226484;
-        Fri, 17 Apr 2020 14:17:06 -0700 (PDT)
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com. [209.85.221.181])
-        by smtp.gmail.com with ESMTPSA id x25sm1975285vso.5.2020.04.17.14.17.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Apr 2020 14:17:05 -0700 (PDT)
-Received: by mail-vk1-f181.google.com with SMTP id j188so950455vkc.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2020 14:17:05 -0700 (PDT)
-X-Received: by 2002:a1f:5fc3:: with SMTP id t186mr4344481vkb.92.1587158224782;
- Fri, 17 Apr 2020 14:17:04 -0700 (PDT)
+        Fri, 17 Apr 2020 17:37:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587159445; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=HB+L37KyQrb8GTinL5TYTs4GRGjiEhXcQwxci8aNDKU=; b=qwOe245bobsuKlBtJkS/Jk7U4/FM8pw+kb4WlcW4mSIkpjiLMav8s8NNQUkoSuzKIVxrq6PA
+ RYRTJrAyfpX/aKNX8BNmG7ySZsCOMJ8b39EdMgs5n7mB7Cz7ZdtYiY6Fr0OumFvzdHH0Swhc
+ RCPMtEf48ona7w4Kst8um9sWf8w=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e9a218d.7f500b800ab0-smtp-out-n02;
+ Fri, 17 Apr 2020 21:37:17 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BF359C43636; Fri, 17 Apr 2020 21:37:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF6EBC433F2;
+        Fri, 17 Apr 2020 21:37:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CF6EBC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, pdhaval@codeaurora.org,
+        jsanka@codeaurora.org
+Subject: [PATCH] drm: increase DRM_OBJECT_MAX_PROPERTY to 64
+Date:   Fri, 17 Apr 2020 14:37:09 -0700
+Message-Id: <20200417213709.24757-1-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-References: <1586703004-13674-1-git-send-email-mkshah@codeaurora.org>
- <1586703004-13674-3-git-send-email-mkshah@codeaurora.org> <158708153779.132238.7823999141480422982@swboyd.mtv.corp.google.com>
-In-Reply-To: <158708153779.132238.7823999141480422982@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 17 Apr 2020 14:16:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WOwMrTNS7FK0jybJyEOvT-rHarA0m5U6B+pKoeA7RCHQ@mail.gmail.com>
-Message-ID: <CAD=FV=WOwMrTNS7FK0jybJyEOvT-rHarA0m5U6B+pKoeA7RCHQ@mail.gmail.com>
-Subject: Re: [PATCH v17 2/6] soc: qcom: rpmh: Update dirty flag only when data changes
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 16, 2020 at 4:59 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Maulik Shah (2020-04-12 07:50:00)
-> > diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-> > index eb0ded0..03630ae 100644
-> > --- a/drivers/soc/qcom/rpmh.c
-> > +++ b/drivers/soc/qcom/rpmh.c
-> > @@ -133,26 +134,27 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
-> >
-> >         req->addr = cmd->addr;
-> >         req->sleep_val = req->wake_val = UINT_MAX;
-> > -       INIT_LIST_HEAD(&req->list);
-> >         list_add_tail(&req->list, &ctrlr->cache);
-> >
-> >  existing:
-> > +       old_sleep_val = req->sleep_val;
-> > +       old_wake_val = req->wake_val;
-> > +
-> >         switch (state) {
-> >         case RPMH_ACTIVE_ONLY_STATE:
-> > -               if (req->sleep_val != UINT_MAX)
-> > -                       req->wake_val = cmd->data;
-> > -               break;
-> >         case RPMH_WAKE_ONLY_STATE:
-> >                 req->wake_val = cmd->data;
-> >                 break;
-> >         case RPMH_SLEEP_STATE:
-> >                 req->sleep_val = cmd->data;
-> >                 break;
-> > -       default:
-> > -               break;
-> >         }
-> >
-> > -       ctrlr->dirty = true;
-> > +       ctrlr->dirty = (req->sleep_val != old_sleep_val ||
-> > +                       req->wake_val != old_wake_val) &&
-> > +                       req->sleep_val != UINT_MAX &&
-> > +                       req->wake_val != UINT_MAX;
->
-> Can this change ctrl->dirty from true to false? I'm worried that we need
-> to make this a saturating assignment instead of an assignment.
->
->         ctrl->dirty = ctrl->dirty || (req->sleep_val != .. );
+Increase DRM_OBJECT_MAX_PROPERTY to accommodate for additional
+DRM properties on MSM chipsets.
 
-This seems like a serious problem with the current code and feels like
-we need a fix sooner rather than later.  I'm sorry I missed it in
-review (and in fact, I probably suggested the exact code that's here
-so it's even more my fault).  :(
+Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+---
+ include/drm/drm_mode_object.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I posted:
-
-https://lore.kernel.org/r/20200417141531.1.Ia4b74158497213eabad7c3d474c50bfccb3f342e@changeid
-
--Doug
+diff --git a/include/drm/drm_mode_object.h b/include/drm/drm_mode_object.h
+index c34a3e8030e1..6292fa663844 100644
+--- a/include/drm/drm_mode_object.h
++++ b/include/drm/drm_mode_object.h
+@@ -60,7 +60,7 @@ struct drm_mode_object {
+ 	void (*free_cb)(struct kref *kref);
+ };
+ 
+-#define DRM_OBJECT_MAX_PROPERTY 24
++#define DRM_OBJECT_MAX_PROPERTY 64
+ /**
+  * struct drm_object_properties - property tracking for &drm_mode_object
+  */
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
