@@ -2,267 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE7981ADAE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 12:22:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 081AA1ADAF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 12:24:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729119AbgDQKWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 06:22:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53268 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729065AbgDQKWA (ORCPT
+        id S1729256AbgDQKYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 06:24:35 -0400
+Received: from userp2120.oracle.com ([156.151.31.85]:33730 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbgDQKYf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 06:22:00 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D4ADC061A0C;
-        Fri, 17 Apr 2020 03:22:00 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id n24so800838plp.13;
-        Fri, 17 Apr 2020 03:22:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=v9o7ZoIgzXJqKYoLABOnJkIlZshn18vcvbRXK1Q6RLo=;
-        b=JL072y7f6N9gKxWfexCxBPb+cAOHoBIFmRoncRhfQWGflGo8u+SrlKcD/00whMNBK3
-         HRRXDTBWkggY00aIrwHlrDUg4tak69rOsN/DtV3BskRH8nsNrmfs6pw5zywnVVstozuN
-         7cMs8DzRIFSgD8ECi4Z6zVLcPxTpVBipu/xIxz/XARsbK7oIQgP/2jd4t/wBTOC0NXhI
-         BHIkceqMH6YQOkNN7aPttyieDX/Tt3hE8tF5kurxIfnNQFy9lYWKPEDI3eMMG/4BtyY6
-         By/PqToU4yHid/bsBWz4hxdayFKg9ZYe0bicI2PzwoJInJcUohxa7i67eX4FRzJr1XTd
-         m0gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=v9o7ZoIgzXJqKYoLABOnJkIlZshn18vcvbRXK1Q6RLo=;
-        b=f7ZvSffOI7l6oyco0w0R2IlQDu6ea93wN3MldsBdcIFgS3U6BryJRQj8kgCngnpEsj
-         hAMnmwq9ylvOwAeN1Dvg/REYQeenPuqG0vCcdjoD/KWynEH+nPa20RPYfrz3tCfLLqw4
-         XaXNopZr33schCUCCppH2E9Bq1QJ7TxODJWgOeIUleoHfRTelaclLwWV8JJmlenZXOTe
-         feRN5+gVXB3l2V0PCWmzSrXamlfnzZ7cl9aBdPqiv10bJnjFJej1SNelB4hTrsqCfxEc
-         vZdAZ+wie87euGPyxCb/zbBvPHDamt+GW+2dlQ/wrrhqUjvRqpei3s7naR3hM+7kQBmo
-         g9UQ==
-X-Gm-Message-State: AGi0PuaXM6otvMOkrvyXvORoSs2tlsbwGEfgNOo6xfB7W3N8yKU3oSiV
-        sWzwmuaxIBCNRoOm9OYhrsaa8Qsq2lcL2/qUVIo=
-X-Google-Smtp-Source: APiQypIEGsAfRI8/UwJHsSIucgqgff/1ssU16K4g8ZZGqIBHsDCN0aHDCIFkpKuw3+ht8/snHWbikJvaNPY6iTORyQk=
-X-Received: by 2002:a17:90a:364c:: with SMTP id s70mr3464434pjb.143.1587118919577;
- Fri, 17 Apr 2020 03:21:59 -0700 (PDT)
+        Fri, 17 Apr 2020 06:24:35 -0400
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03HAOIUK144895;
+        Fri, 17 Apr 2020 10:24:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=corp-2020-01-29;
+ bh=MLO25+uu0p1lJymH6NFPaGxDp70jIn+676ep69GijtY=;
+ b=ML+VRCiAPW6O4RJ9+mw3z4cV+yo+IkuCjjm2nmF7rW3uBvSDQFmzzAWhfCt0yrcgNHiR
+ xp/40Qa78iZECt3yOT/UYOxFzwOnfjXFv3lAjANPhZKGgyuEpeJ1hU18J4c5S7PSwq+Q
+ VggjoB1hfzqV8/8PnmzB85psTYVeshzsiFAqpDPlEnAzfRWfhDbOYCzzIWAJpyOzA+NO
+ JHzIiRvmaNXIbjISABgikDIcU9GgXc5p1QyOsuUaACf0FmaDX5tEuJVOGx2wpuwstjlP
+ ogvciNFi8xR78R+6uFecobRrAKI8S6e9xzeBxYu4AgHDCNpsUFmBQlIJ/90P86oPo2Ps kQ== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by userp2120.oracle.com with ESMTP id 30emejp5ex-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 17 Apr 2020 10:24:31 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03HAMBEi131502;
+        Fri, 17 Apr 2020 10:24:31 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by aserp3020.oracle.com with ESMTP id 30dn9jjn8p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 17 Apr 2020 10:24:30 +0000
+Received: from abhmp0011.oracle.com (abhmp0011.oracle.com [141.146.116.17])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 03HAOT7W011924;
+        Fri, 17 Apr 2020 10:24:29 GMT
+Received: from kadam (/41.57.98.10)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Fri, 17 Apr 2020 03:24:28 -0700
+Date:   Fri, 17 Apr 2020 13:24:20 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: Re: [bug report] bus: mhi: core: Add support for data transfer
+Message-ID: <20200417102420.GR1163@kadam>
+References: <20200407135559.GA109574@mwanda>
+ <20200407143304.GH2442@Mani-XPS-13-9360>
+ <d30c7648-b657-d8b2-ba64-71f1178b4a68@codeaurora.org>
+ <20200417101428.GA10295@Mani-XPS-13-9360>
 MIME-Version: 1.0
-References: <1586942266-21480-1-git-send-email-jprakash@codeaurora.org> <1586942266-21480-4-git-send-email-jprakash@codeaurora.org>
-In-Reply-To: <1586942266-21480-4-git-send-email-jprakash@codeaurora.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 17 Apr 2020 13:21:47 +0300
-Message-ID: <CAHp75VegoXJmi1rDg_-ePKqoo69Jdt7NBchCTE=bPAdJqrgYQQ@mail.gmail.com>
-Subject: Re: [PATCH V2 3/3] iio: adc: Add support for PMIC7 ADC
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        smohanad@codeaurora.org, kgunda@codeaurora.org,
-        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org,
-        linux-iio <linux-iio@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200417101428.GA10295@Mani-XPS-13-9360>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9593 signatures=668686
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 mlxscore=0 adultscore=0
+ spamscore=0 phishscore=0 bulkscore=0 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004170082
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9593 signatures=668686
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 impostorscore=0
+ mlxscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=999
+ bulkscore=0 adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004170082
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 16, 2020 at 1:48 AM Jishnu Prakash <jprakash@codeaurora.org> wrote:
->
-> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
-> major change from PMIC5 is that all SW communication to ADC goes through
-> PMK8350, which communicates with other PMICs through PBS when the ADC
-> on PMK8350 works in master mode. The SID register is used to identify the
-> PMICs with which the PBS needs to communicate. Add support for the same.
+On Fri, Apr 17, 2020 at 03:44:28PM +0530, Manivannan Sadhasivam wrote:
+> Hi Hemant,
+> 
+> On Thu, Apr 16, 2020 at 08:37:16PM -0700, Hemant Kumar wrote:
+> > 
+> > On 4/7/20 7:33 AM, Manivannan Sadhasivam wrote:
+> > > Hi Dan,
+> > > 
+> > > On Tue, Apr 07, 2020 at 04:55:59PM +0300, Dan Carpenter wrote:
+> > > > Hello Manivannan Sadhasivam,
+> > > > 
+> > > > The patch 189ff97cca53: "bus: mhi: core: Add support for data
+> > > > transfer" from Feb 20, 2020, leads to the following static checker
+> > > > warning:
+> > > > 
+> > > > 	drivers/bus/mhi/core/main.c:1153 mhi_queue_buf()
+> > > > 	error: double locked 'mhi_chan->lock' (orig line 1110)
+> > > > 
+> > > > drivers/bus/mhi/core/main.c
+> > > >    1142          }
+> > > >    1143
+> > > >    1144          /* Toggle wake to exit out of M2 */
+> > > >    1145          mhi_cntrl->wake_toggle(mhi_cntrl);
+> > > >    1146
+> > > >    1147          if (mhi_chan->dir == DMA_TO_DEVICE)
+> > > >    1148                  atomic_inc(&mhi_cntrl->pending_pkts);
+> > > >    1149
+> > > >    1150          if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> > > >    1151                  unsigned long flags;
+> > > >    1152
+> > > >    1153                  read_lock_irqsave(&mhi_chan->lock, flags);
+> > 
+> > parse_xfer_event is taking read lock : read_lock_bh(&mhi_chan->lock); first
+> > and later
+> > 
+> > mhi_queue_buf takes read lock: read_lock_irqsave(&mhi_chan->lock, flags);
+> > 
+> > Both are read locks which are recursive, is this problematic ?
+> > 
+> 
+> read_locks are recursive but I wanted to make the static checker happy.
 
-Please, split pr_*() -> dev_*() to separate patch. Also think about
-other logical pieces you may split out.
+Don't do things just to make the static checker happy.
 
-...
+regards,
+dan carpenter
 
-> +static const struct adc5_data adc7_data_pmic;
-
-Global variable? Hmm...
-
-...
-
-> +       int ret;
-> +       u8 conv_req = 0, buf[4];
-> +
-> +       ret = adc5_masked_write(adc, ADC_APP_SID, ADC_APP_SID_MASK, prop->sid);
-> +       if (ret)
-> +               return ret;
-> +
-> +       ret = adc5_read(adc, ADC5_USR_DIG_PARAM, buf, sizeof(buf));
-
-> +       if (ret < 0)
-
-Does  > 0 have a meaning?
-
-> +               return ret;
-> +
-> +       /* Digital param selection */
-> +       adc5_update_dig_param(adc, prop, &buf[0]);
-> +
-> +       /* Update fast average sample value */
-
-> +       buf[1] &= 0xff & ~ADC5_USR_FAST_AVG_CTL_SAMPLES_MASK;
-
-What the point of 0xff & part?
-
-> +       buf[1] |= prop->avg_samples;
-> +
-> +       /* Select ADC channel */
-> +       buf[2] = prop->channel;
-> +
-> +       /* Select HW settle delay for channel */
-> +       buf[3] &= 0xff & ~ADC5_USR_HW_SETTLE_DELAY_MASK;
-
-Ditto.
-
-> +       buf[3] |= prop->hw_settle_time;
-
-...
-
-> +static int adc7_do_conversion(struct adc5_chip *adc,
-> +                       struct adc5_channel_prop *prop,
-> +                       struct iio_chan_spec const *chan,
-> +                       u16 *data_volt, u16 *data_cur)
-> +{
-> +       int ret;
-
-> +       u8 status = 0;
-
-Redundant assignment.
-
-> +       mutex_lock(&adc->lock);
-> +
-> +       ret = adc7_configure(adc, prop);
-> +       if (ret) {
-> +               dev_err(adc->dev, "ADC configure failed with %d\n", ret);
-> +               goto unlock;
-> +       }
-> +
-> +       /* No support for polling mode at present*/
-
-Missed space
-
-> +       wait_for_completion_timeout(&adc->complete, ADC7_CONV_TIMEOUT);
-> +
-> +       ret = adc5_read(adc, ADC5_USR_STATUS1, &status, 1);
-
-> +       if (ret < 0)
-
-Remove all ' < 0' where it is not needed.
-
-> +               goto unlock;
-> +
-> +       if (status & ADC5_USR_STATUS1_CONV_FAULT) {
-> +               dev_err(adc->dev, "Unexpected conversion fault\n");
-> +               ret = -EIO;
-> +               goto unlock;
-> +       }
-> +
-> +       ret = adc5_read_voltage_data(adc, data_volt);
-> +
-> +unlock:
-> +       mutex_unlock(&adc->lock);
-
-...
-
-> +       for (i = 0; i < adc->nchannels; i++) {
-
-> +               v_channel = (adc->chan_props[i].sid << ADC_CHANNEL_OFFSET |
-> +                       adc->chan_props[i].channel);
-
-Too many parentheses or they are in a wrong position. I don't remember
-operator precedence by heart.
-
-> +               if (v_channel == iiospec->args[0])
-> +                       return i;
-> +       }
-
-...
-
-> +       /*
-> +        * Value read from "reg" is virtual channel number
-> +        * virtual channel number = (sid << 8 | channel number).
-
-Too many parentheses. And perhaps formulas better to have on a separate line.
-
-> +        */
-
-...
-
-> +static const struct vadc_map_pt adcmap7_100k[] = {
-> +       { 4250657, -40960 },
-> +       { 3962085, -39936 },
-
-> +       { 419448, -3072 },
-> +       { 396851, -2048 },
-> +       { 375597, -1024 },
-> +       { 355598, 0 },
-> +       { 336775, 1024 },
-> +       { 319052, 2048 },
-> +       { 302359, 3072 },
-
-> +       { 2560, 128000 },
-> +       { 2489, 129024 },
-> +       { 2420, 130048 }
-> +};
-
-I'm wondering why you have second column here? Can't you derive it
-from index? Seems to me pretty easy calculus.
-
-...
-
-> +       int ret, result = 0;
-
-Redundant assignment.
-
-> +       if (adc_code >= RATIO_MAX_ADC7)
-> +               return -EINVAL;
-> +
-> +       /* (ADC code * R_PULLUP (100Kohm)) / (full_scale_code - ADC code)*/
-> +       resistance *= R_PU_100K;
-> +       resistance = div64_s64(resistance, RATIO_MAX_ADC7 - adc_code);
-> +
-> +       ret = qcom_vadc_map_voltage_temp(adcmap7_100k,
-> +                                ARRAY_SIZE(adcmap7_100k),
-> +                                resistance, &result);
-> +       if (ret)
-> +               return ret;
-> +
-> +       *result_mdec = result;
-
-...
-
-> +       for (i = 0; i < ARRAY_SIZE(adcmap7_die_temp); i++)
-> +               if (adcmap7_die_temp[i].x > voltage)
-> +                       break;
-> +
-
-> +       if (i == 0) {
-> +               *result_mdec = DIE_TEMP_ADC7_SCALE_1;
-> +       } else if (i == ARRAY_SIZE(adcmap7_die_temp)) {
-> +               *result_mdec = DIE_TEMP_ADC7_MAX;
-
-I think you can done these checks before loop, and return immediately.
-
-> +       } else {
-> +               vtemp0 = adcmap7_die_temp[i - 1].x;
-> +               voltage = voltage - vtemp0;
-> +               temp = div64_s64(voltage * DIE_TEMP_ADC7_SCALE_FACTOR,
-> +                       adcmap7_die_temp[i - 1].y);
-> +               temp += DIE_TEMP_ADC7_SCALE_1 + (DIE_TEMP_ADC7_SCALE_2 * (i - 1));
-> +               *result_mdec = temp;
-> +       }
-
--- 
-With Best Regards,
-Andy Shevchenko
