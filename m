@@ -2,100 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D88E1ADECF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 15:57:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4968F1ADF24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 16:10:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730731AbgDQN43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 09:56:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730662AbgDQN42 (ORCPT
+        id S1730935AbgDQOFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Apr 2020 10:05:18 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:57714 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730914AbgDQOFM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 09:56:28 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C438C061A0C;
-        Fri, 17 Apr 2020 06:56:27 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id t4so983169plq.12;
-        Fri, 17 Apr 2020 06:56:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=g4jx0JyIvsZpRaLj6xflTQ1x/9w2AY54wdVX17gtEWg=;
-        b=jTlDTIi10dLJ/iLQpaRPwBxHl3JsPC9OTDxFGIIVcV+MNukTgz6qW2ad3SdjYBXL5F
-         vj7UQKNuUbwG57v5d21FRcA8BOvR46AvD0fTc1YYN7Je15e+823sm/u9UQsDs4lLMfN0
-         szQMnDfkW7wbv2NISFjz61oP31f2Wcl3aDNHiDWEjOBCKS5MwBVYWTV9M61YIs/w5vVw
-         M0dwQndKp00iW7GU0Pbd+BN+5FgW04quLOF3+JGvDFWQZRMP/BJpsfaJ5XsNqKYbd9oA
-         wKcT60pPDw9u2u/UFADqhGgT3h0kYohpzec949qqWWJSIBzhZUDaR9fd8GiUxfMH4/Bn
-         t1IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=g4jx0JyIvsZpRaLj6xflTQ1x/9w2AY54wdVX17gtEWg=;
-        b=hn2cO6kwhMrAebrM4Bc6IRD0zxllmIYUNGACm273K0TVdgO/M5c5SsQIT/imODVbHj
-         ylIcKtxkiiQ339lFLYHFqk/KEb6mo61r3fjsEOuUglW/C7+m1Lct7Xfo9V9Ook7gHnvF
-         K0aVTlFdApF+5vGXH76iuvxqYuS+r3HxnsZ7qmLTt/iPc4p3jvgZ7qx3wVkmAuh76WXA
-         NiMUySkH0taVt139Mq/Mp9VsWIlep/D0+CCleg3uBunfCt3YGI6WBFPr6IqQ1J9tizjS
-         HpTqicqtcMKMOwhX9WD8+XwaxTM+O6D4MMpf3UoPGEZMUnZ1AiuHou6u7T7epKIsQrPW
-         vLUA==
-X-Gm-Message-State: AGi0PuY0iPxjmhYh0GrVHQ2L9ijxiFmymXEb3lZwEwHYZ/6ecuAFTWk0
-        fhPBlqDrldP2Y+dlW/PIk0M=
-X-Google-Smtp-Source: APiQypKPCu2CGOdGGMayqQ3j0fvsq+IBwZZ826QO7EC/ponw071fYH3jn64BSHMHgc6sfPnO1Mzmig==
-X-Received: by 2002:a17:902:8d91:: with SMTP id v17mr3408069plo.53.1587131786805;
-        Fri, 17 Apr 2020 06:56:26 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d21sm5670475pjs.3.2020.04.17.06.56.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Apr 2020 06:56:26 -0700 (PDT)
-Date:   Fri, 17 Apr 2020 06:56:24 -0700
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: [PATCH] soc: qcom: cmd-db: Cast sizeof() to int to silence field
- width warning
-Message-ID: <20200417135624.GA88652@roeck-us.net>
-References: <20200415062033.66406-1-swboyd@chromium.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200415062033.66406-1-swboyd@chromium.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        Fri, 17 Apr 2020 10:05:12 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587132312; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=jOasTJk8TBKsg8tFnzipV3s1efilzTH1QAd2yaXELsc=; b=EQdrGWtMC14QoZJ6xoALMErjccaHDNUCfN3blKRRrM3HFToyfcyVsLuHNQRc7qAe9UjYpGtI
+ A/UzjeGshsdTmjChTOzaAAyNEgDcILoCA4prbiVhlD57/8YMWN+J/se5m15MBJDaM0mCckxQ
+ sCnwu19jX/J5GyZI6n/Ot2OAgLc=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e99b795.7f3ea85c0c38-smtp-out-n04;
+ Fri, 17 Apr 2020 14:05:09 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B2AEAC44799; Fri, 17 Apr 2020 14:05:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE401C4478C;
+        Fri, 17 Apr 2020 14:05:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EE401C4478C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v2 00/17] DVFS for IO devices on sdm845 and sc7180
+Date:   Fri, 17 Apr 2020 19:34:22 +0530
+Message-Id: <1587132279-27659-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 14, 2020 at 11:20:33PM -0700, Stephen Boyd wrote:
-> We pass the result of sizeof() here to tell the printk format specifier
-> how many bytes to print. That expects an int though and sizeof() isn't
-> that type. Cast to int to silence this warning:
-> 
-> drivers/soc/qcom/cmd-db.c: In function 'cmd_db_debugfs_dump':
-> drivers/soc/qcom/cmd-db.c:281:30: warning: field width specifier '*' expects argument of type 'int', but argument 4 has type 'long unsigned int' [-Wformat=]
-> 
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Changes in v2:
+1. Added error handling for dev_pm_opp_set_clkname()
+and dev_pm_opp_of_add_table()
+2. Used dev_pm_opp_put_clkname() in the cleanup path
+3. Dropped the OPP patch pulled in by Viresh [1]
+4. Dropped the UFS patches since they had some major rework
+needed because of changes that were merged in the merge window
+and I don't have a UFS device currently to validate the changes.
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+We have had support added in the OPP core for a while now to support
+DVFS for IO devices, and this series uses that infrastructure to
+add DVFS support for various IO devices in sdm845 and sc7180 SoCs.
 
-> ---
->  drivers/soc/qcom/cmd-db.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-> index 6c308f92a13c..6b5c440c9dc3 100644
-> --- a/drivers/soc/qcom/cmd-db.c
-> +++ b/drivers/soc/qcom/cmd-db.c
-> @@ -280,7 +280,7 @@ static int cmd_db_debugfs_dump(struct seq_file *seq, void *p)
->  		ent = rsc_to_entry_header(rsc);
->  		for (j = 0; j < le16_to_cpu(rsc->cnt); j++, ent++) {
->  			seq_printf(seq, "0x%08x: %*pEp", le32_to_cpu(ent->addr),
-> -				   sizeof(ent->id), ent->id);
-> +				   (int)sizeof(ent->id), ent->id);
->  
->  			len = le16_to_cpu(ent->len);
->  			if (len) {
+[1] https://lkml.org/lkml/2020/4/14/98 
+
+Rajendra Nayak (17):
+  tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state
+  spi: spi-geni-qcom: Use OPP API to set clk/perf state
+  arm64: dts: sdm845: Add OPP table for all qup devices
+  arm64: dts: sc7180: Add OPP table for all qup devices
+  drm/msm/dpu: Use OPP API to set clk/perf state
+  drm/msm: dsi: Use OPP API to set clk/perf state
+  arm64: dts: sdm845: Add DSI and MDP OPP tables and power-domains
+  arm64: dts: sc7180: Add DSI and MDP OPP tables and power-domains
+  mmc: sdhci-msm: Use OPP API to set clk/perf state
+  arm64: dts: sdm845: Add sdhc opps and power-domains
+  arm64: dts: sc7180: Add sdhc opps and power-domains
+  media: venus: core: Add support for opp tables/perf voting
+  arm64: dts: sdm845: Add OPP tables and power-domains for venus
+  arm64: dts: sc7180: Add OPP tables and power-domains for venus
+  spi: spi-qcom-qspi: Use OPP API to set clk/perf state
+  arm64: dts: sdm845: Add qspi opps and power-domains
+  arm64: dts: sc7180: Add qspi opps and power-domains
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi           | 199 +++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi           | 266 ++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |  20 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |   4 +
+ drivers/gpu/drm/msm/dsi/dsi.h                  |   2 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c              |   4 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c             |  53 +++++
+ drivers/media/platform/qcom/venus/core.c       |  21 ++
+ drivers/media/platform/qcom/venus/core.h       |   5 +
+ drivers/media/platform/qcom/venus/pm_helpers.c |  37 +++-
+ drivers/mmc/host/sdhci-msm.c                   |  34 +++-
+ drivers/spi/spi-geni-qcom.c                    |  22 +-
+ drivers/spi/spi-qcom-qspi.c                    |  24 ++-
+ drivers/tty/serial/qcom_geni_serial.c          |  30 ++-
+ include/linux/qcom-geni-se.h                   |   2 +
+ 16 files changed, 700 insertions(+), 26 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
