@@ -2,82 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0588D1AE7AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2020 23:37:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6DA41AEA3C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2020 08:40:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725873AbgDQVh0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Apr 2020 17:37:26 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:15008 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728158AbgDQVhZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Apr 2020 17:37:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587159445; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=HB+L37KyQrb8GTinL5TYTs4GRGjiEhXcQwxci8aNDKU=; b=qwOe245bobsuKlBtJkS/Jk7U4/FM8pw+kb4WlcW4mSIkpjiLMav8s8NNQUkoSuzKIVxrq6PA
- RYRTJrAyfpX/aKNX8BNmG7ySZsCOMJ8b39EdMgs5n7mB7Cz7ZdtYiY6Fr0OumFvzdHH0Swhc
- RCPMtEf48ona7w4Kst8um9sWf8w=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9a218d.7f500b800ab0-smtp-out-n02;
- Fri, 17 Apr 2020 21:37:17 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BF359C43636; Fri, 17 Apr 2020 21:37:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF6EBC433F2;
-        Fri, 17 Apr 2020 21:37:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CF6EBC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
-From:   Abhinav Kumar <abhinavk@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, swboyd@chromium.org, nganji@codeaurora.org,
-        aravindh@codeaurora.org, pdhaval@codeaurora.org,
-        jsanka@codeaurora.org
-Subject: [PATCH] drm: increase DRM_OBJECT_MAX_PROPERTY to 64
-Date:   Fri, 17 Apr 2020 14:37:09 -0700
-Message-Id: <20200417213709.24757-1-abhinavk@codeaurora.org>
-X-Mailer: git-send-email 2.23.0
+        id S1725856AbgDRGkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Apr 2020 02:40:12 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:2406 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725843AbgDRGkM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 18 Apr 2020 02:40:12 -0400
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id D6F06816B32B16D00841;
+        Sat, 18 Apr 2020 14:40:08 +0800 (CST)
+Received: from huawei.com (10.175.124.28) by DGGEMS414-HUB.china.huawei.com
+ (10.3.19.214) with Microsoft SMTP Server id 14.3.487.0; Sat, 18 Apr 2020
+ 14:39:59 +0800
+From:   Jason Yan <yanaijie@huawei.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>,
+        <jejb@linux.ibm.com>, <martin.petersen@oracle.com>,
+        <p.zabel@pengutronix.de>, <cang@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Jason Yan <yanaijie@huawei.com>, Hulk Robot <hulkci@huawei.com>
+Subject: [PATCH] scsi: ufs-qcom: remove unneeded variable 'ret'
+Date:   Sat, 18 Apr 2020 15:06:25 +0800
+Message-ID: <20200418070625.11756-1-yanaijie@huawei.com>
+X-Mailer: git-send-email 2.21.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.124.28]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Increase DRM_OBJECT_MAX_PROPERTY to accommodate for additional
-DRM properties on MSM chipsets.
+Fix the following coccicheck warning:
 
-Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+drivers/scsi/ufs/ufs-qcom.c:575:5-8: Unneeded variable: "ret". Return
+"0" on line 590
+
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Jason Yan <yanaijie@huawei.com>
 ---
- include/drm/drm_mode_object.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/ufs/ufs-qcom.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/drm/drm_mode_object.h b/include/drm/drm_mode_object.h
-index c34a3e8030e1..6292fa663844 100644
---- a/include/drm/drm_mode_object.h
-+++ b/include/drm/drm_mode_object.h
-@@ -60,7 +60,7 @@ struct drm_mode_object {
- 	void (*free_cb)(struct kref *kref);
- };
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 19aa5c44e0da..701e9184adff 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -572,7 +572,6 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	struct phy *phy = host->generic_phy;
+-	int ret = 0;
  
--#define DRM_OBJECT_MAX_PROPERTY 24
-+#define DRM_OBJECT_MAX_PROPERTY 64
- /**
-  * struct drm_object_properties - property tracking for &drm_mode_object
-  */
+ 	if (ufs_qcom_is_link_off(hba)) {
+ 		/*
+@@ -587,7 +586,7 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		ufs_qcom_disable_lane_clks(host);
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.21.1
+
