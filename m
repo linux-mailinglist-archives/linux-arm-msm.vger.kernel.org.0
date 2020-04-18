@@ -2,177 +2,284 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35DF61AF2D7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2020 19:26:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B82531AF434
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2020 21:19:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727771AbgDRR0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Apr 2020 13:26:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbgDRR0D (ORCPT
+        id S1727907AbgDRTT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Apr 2020 15:19:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47068 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726086AbgDRTT0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Apr 2020 13:26:03 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 897C9C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2020 10:26:03 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id r20so2735394pfh.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2020 10:26:03 -0700 (PDT)
+        Sat, 18 Apr 2020 15:19:26 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E807C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2020 12:19:26 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a22so2610110pjk.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2020 12:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=OMU4gc4xJrsz9oC2mAccr/thZgznAgM1yG5wcPECHkg=;
-        b=hGVK77kM162LwI61a0prF7TRDY3sTb+b5wvtpmeTOvBZSjhXTZ4KtYe+4KIMRdV7i7
-         sATr30xlpwsSy5LoneFDQ5Lm4qNwy1XZPOpsYs7AdIdCkSILl9o/eKhblnMatJ/DQ099
-         6O0bWbR+0j5NV+t/XiLqUMrAO+Rybib+2O03c=
+        d=linaro.org; s=google;
+        h=date:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=KlTC99ujFnUCeHtZdLYIaOl870NmL3q0aZeUEGh2NIg=;
+        b=L682/u5pn3gI5sugW9op2VHQx9zIE/DrD5NGT9A9Ews6UucCyOHsRNShS72H1D+1zB
+         fwm3lsKLsUaqNaeqH4R+lAhJGC1yhDE7ciSYKIApKxc2twyms4S64QDxQpd1MsIETtTU
+         2VYtzxAY/BW+39fEzsZYSFyavb/pMLcWU5Qu6fnSj0f/C7X38CAJnoUpBhD435D1YWNA
+         qW0HDId3ae6ABuiHsHHyLOzIMWHVu6BgDK/LbOhJ2DuOGbgebo9jfNgVLQYBztTyaAgi
+         jYFwwCOxHfGcAhAoMZ3mFt3sGBO1QkwU4m8S+l+PhONOMZzNjHouqPhO1c+0i3zkbTqk
+         z9uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=OMU4gc4xJrsz9oC2mAccr/thZgznAgM1yG5wcPECHkg=;
-        b=FtsDdbt7iJ/7Sk8d2eMgnKdaLmwch0HBwxpDYtZUBKs4l7RtcW9ffSwQw9PnsKh+cz
-         pfhqTjV+UsW62A0crmlalw7jO2O6vy9oQKC6l0PCLr5hHkqVW5VTYyQMjYgGIewQxTGl
-         HY3u1BOaPSh/e5vOmhI2gn81/Rwv1OkpmiTIy9A/AdTtZdGg0tuguYyVniSgYdB6MnOY
-         j3GaPMKM1JRaFCIkVLpkK8eH/5Cq/q/f1BAHyls9y1itzW99XrnOgjNY1ZTogxXompHc
-         oEE80Bxzh0OPLHEJwW//WuSdDC0qZ8BEpRvC0bb2H/Zm6Y/0AD8+oDZThVpFZh5RPPGk
-         o3rw==
-X-Gm-Message-State: AGi0PuYILlvJckk1Bzpa2kcKpPhDYAP4f6H/1tgAJekkJ6o0LSAXa61H
-        gRMW3wy+eFrX4xGBzeBSLMXNvA==
-X-Google-Smtp-Source: APiQypI6VuVoh62mvFQq+xqE0yByeQ09p8pjSnT53bNRHnXhxn5ZoHPk2hUCiKeRmM+zA4cvz4Ls8Q==
-X-Received: by 2002:a62:d086:: with SMTP id p128mr9463319pfg.241.1587230762967;
-        Sat, 18 Apr 2020 10:26:02 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id u13sm9211650pjb.45.2020.04.18.10.25.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Apr 2020 10:26:02 -0700 (PDT)
-From:   Scott Branden <scott.branden@broadcom.com>
-Subject: Re: [PATCH v2 6/7] misc: bcm-vk: add Broadcom VK driver
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Desmond Yan <desmond.yan@broadcom.com>,
-        James Hu <james.hu@broadcom.com>
-References: <20200220004825.23372-1-scott.branden@broadcom.com>
- <20200220004825.23372-7-scott.branden@broadcom.com>
- <20200220104321.GX7838@kadam>
- <63c9dcda-7a31-78a7-1d11-9d9af38add46@broadcom.com>
- <20200418114516.GE12862@kadam> <20200418114725.GF12862@kadam>
-Message-ID: <c781505e-5bbd-a259-4c2d-4481db3fabde@broadcom.com>
-Date:   Sat, 18 Apr 2020 10:25:58 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        h=x-gm-message-state:date:user-agent:in-reply-to:references
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=KlTC99ujFnUCeHtZdLYIaOl870NmL3q0aZeUEGh2NIg=;
+        b=REAsT6CGggpe6011XhbaWohhowm0zmn6rsaecmQf3pCfOPCKuhjL6+WELszCheb6lv
+         hqciKtoIVo1nwnptrIXO6nhfTzzT+cVlakYi8z1Zl44+qrXZ8fo2r1JYnsFgzfSIYZDn
+         SVF5hjVc6AQeygFnlttish5qo4RQxxDvGOL+RQ/crPKxH6yMszlofO0ZduwoJjQdaZ6Y
+         DCresL1lACKr0y85sYj61Roa6/ZahlOkIYN9hkmumZOIEEPeKxIQeG7eOWKv4ipu0D6W
+         +8CDooLGgKo8MTn12NvVaWYVtksOYM9/g6N4/QXcaU3nLq2oHzw70oN7Dp/eoIhattUs
+         A+NQ==
+X-Gm-Message-State: AGi0PuYutePCH1bpxjHgjiX/8n+K18w14qcvudLQoe0xcX/IiMP8LxWT
+        kt/ovdAkUKKueF9g2DVNuNA/
+X-Google-Smtp-Source: APiQypKY3ztwLjB/VNZlPL/vbynxve151/FbWAjQ9uvsM/UutflnXQVSn6boJZYGgny7bJwzvlH25w==
+X-Received: by 2002:a17:902:968a:: with SMTP id n10mr8894110plp.96.1587237565377;
+        Sat, 18 Apr 2020 12:19:25 -0700 (PDT)
+Received: from ?IPv6:2409:4072:712:803a:cdd7:29cc:291b:9aa4? ([2409:4072:712:803a:cdd7:29cc:291b:9aa4])
+        by smtp.gmail.com with ESMTPSA id bo19sm4516473pjb.26.2020.04.18.12.19.21
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 18 Apr 2020 12:19:22 -0700 (PDT)
+Date:   Sun, 19 Apr 2020 00:49:12 +0530
+User-Agent: K-9 Mail for Android
+In-Reply-To: <184d0d8e-1d5f-c317-a40b-1b44e79ad293@codeaurora.org>
+References: <20200407135559.GA109574@mwanda> <20200407143304.GH2442@Mani-XPS-13-9360> <d30c7648-b657-d8b2-ba64-71f1178b4a68@codeaurora.org> <20200417101428.GA10295@Mani-XPS-13-9360> <184d0d8e-1d5f-c317-a40b-1b44e79ad293@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200418114725.GF12862@kadam>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [bug report] bus: mhi: core: Add support for data transfer
+To:     Hemant Kumar <hemantk@codeaurora.org>
+CC:     Dan Carpenter <dan.carpenter@oracle.com>,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-ID: <19504ACB-4E2A-4883-92E2-7AAC056CE3B4@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Dan, I'll send out new version as soon as my other patch (you had 
-requested for test_fx mutex cleanups)
-https://lore.kernel.org/linux-arm-msm/20200415002517.4328-1-scott.branden@broadcom.com/
+Hi Hemant,
 
-hits the linux-next tree so this patch series will apply cleanly to 
-linux-next.
+Please try to use an email client supporting plain text mode like mutt=2E =
+Your reply looks mangled=2E=20
 
-
-
-
-On 2020-04-18 4:47 a.m., Dan Carpenter wrote:
-> On Sat, Apr 18, 2020 at 02:45:16PM +0300, Dan Carpenter wrote:
->> On Fri, Apr 17, 2020 at 02:49:11PM -0700, Scott Branden wrote:
->>>>> +static int bcm_vk_dma_alloc(struct device *dev,
->>>>> +			    struct bcm_vk_dma *dma,
->>>>> +			    int direction,
->>>>> +			    struct _vk_data *vkdata)
->>>>> +{
->>>>> +	dma_addr_t addr, sg_addr;
->>>>> +	int err;
->>>>> +	int i;
->>>>> +	int offset;
->>>>> +	uint32_t size;
->>>>> +	uint32_t remaining_size;
->>>>> +	uint32_t transfer_size;
->>>>> +	uint64_t data;
->>>>> +	unsigned long first, last;
->>>>> +	struct _vk_data *sgdata;
->>>>> +
->>>>> +	/* Get 64-bit user address */
->>>>> +	data = get_unaligned(&(vkdata->address));
->>>> Extra parens.
->>> removed
->>>>> +
->>>>> +	/* offset into first page */
->>>>> +	offset = offset_in_page(data);
->>>>> +
->>>>> +	/* Calculate number of pages */
->>>>> +	first = (data & PAGE_MASK) >> PAGE_SHIFT;
->>>>> +	last  = ((data + vkdata->size - 1) & PAGE_MASK) >> PAGE_SHIFT;
->>>>> +	dma->nr_pages = last - first + 1;
->>>>> +
->>>>> +	/* Allocate DMA pages */
->>>>> +	dma->pages = kmalloc_array(dma->nr_pages,
->>>>> +				   sizeof(struct page *),
->>>>> +				   GFP_KERNEL);
->>>>> +	if (dma->pages == NULL)
->>>>> +		return -ENOMEM;
->>>>> +
->>>>> +	dev_dbg(dev, "Alloc DMA Pages [0x%llx+0x%x => %d pages]\n",
->>>>> +		data, vkdata->size, dma->nr_pages);
->>>>> +
->>>>> +	dma->direction = direction;
->>>>> +
->>>>> +	/* Get user pages into memory */
->>>>> +	err = get_user_pages_fast(data & PAGE_MASK,
->>>>> +				  dma->nr_pages,
->>>>> +				  direction == DMA_FROM_DEVICE,
->>>>> +				  dma->pages);
->>>>> +	if (err != dma->nr_pages) {
->>>>> +		dma->nr_pages = (err >= 0) ? err : 0;
->>>>> +		dev_err(dev, "get_user_pages_fast, err=%d [%d]\n",
->>>>> +			err, dma->nr_pages);
->>>>> +		return err < 0 ? err : -EINVAL;
->>>>> +	}
->>>>> +
->>>>> +	/* Max size of sg list is 1 per mapped page + fields at start */
->>>>> +	dma->sglen = (dma->nr_pages * sizeof(*sgdata)) +
->>>>> +		     (sizeof(uint32_t) * SGLIST_VKDATA_START);
->>>>> +
->>>>> +	/* Allocate sglist */
->>>>> +	dma->sglist = dma_alloc_coherent(dev,
->>>>> +					 dma->sglen,
->>>>> +					 &dma->handle,
->>>>> +					 GFP_KERNEL);
->>>> 	dma->sglist = dma_alloc_coherent(dev, dma->sglen, &dma->handle,
->>>> 					 GFP_KERNEL);
->>> done
->>>>
->>>>> +	if (!dma->sglist)
->>>>> +		return -ENOMEM;
->>>> No cleanup?
->>> what needs to be cleaned up?
->> dma->pages should be freed probably?  And a put_user_pages_fast()?
-> Sorry put_user_pages_fast() isn't a function.  My bad.
+On 18 April 2020 12:40:10 PM IST, Hemant Kumar <hemantk@codeaurora=2Eorg> =
+wrote:
+>Hi Mani,
 >
-> regards,
-> dan carpenter
+>On 4/17/20 3:14 AM, Manivannan Sadhasivam wrote:
+>> Hi Hemant,
+>>
+>> On Thu, Apr 16, 2020 at 08:37:16PM -0700, Hemant Kumar wrote:
+>>> On 4/7/20 7:33 AM, Manivannan Sadhasivam wrote:
+>>>> Hi Dan,
+>>>>
+>>>> On Tue, Apr 07, 2020 at 04:55:59PM +0300, Dan Carpenter wrote:
+>>>>> Hello Manivannan Sadhasivam,
+>>>>>
+>>>>> The patch 189ff97cca53: "bus: mhi: core: Add support for data
+>>>>> transfer" from Feb 20, 2020, leads to the following static checker
+>>>>> warning:
+>>>>>
+>>>>> 	drivers/bus/mhi/core/main=2Ec:1153 mhi_queue_buf()
+>>>>> 	error: double locked 'mhi_chan->lock' (orig line 1110)
+>>>>>
+>>>>> drivers/bus/mhi/core/main=2Ec
+>>>>>     1142          }
+>>>>>     1143
+>>>>>     1144          /* Toggle wake to exit out of M2 */
+>>>>>     1145          mhi_cntrl->wake_toggle(mhi_cntrl);
+>>>>>     1146
+>>>>>     1147          if (mhi_chan->dir =3D=3D DMA_TO_DEVICE)
+>>>>>     1148                  atomic_inc(&mhi_cntrl->pending_pkts);
+>>>>>     1149
+>>>>>     1150          if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+>>>>>     1151                  unsigned long flags;
+>>>>>     1152
+>>>>>     1153                  read_lock_irqsave(&mhi_chan->lock,
+>flags);
+>>> parse_xfer_event is taking read lock :
+>read_lock_bh(&mhi_chan->lock); first
+>>> and later
+>>>
+>>> mhi_queue_buf takes read lock: read_lock_irqsave(&mhi_chan->lock,
+>flags);
+>>>
+>>> Both are read locks which are recursive, is this problematic ?
+>>>
+>> read_locks are recursive but I wanted to make the static checker
+>happy=2E But
+>> looking into it further (and after having a chat with Arnd), we might
+>need to
+>> refactor the locking here=2E
+>>
+>> Since 'chan->lock' only prevents 'mhi_chan->ch_state', how about
+>doing something
+>> like below?
+>
+>As comment mentioned for OOB (to enter=C2=A0 DB mode) write lock is acqui=
+red
+>
+>with preemption disabled (irqsave ver)=2E In case of OOB event control=20
+>does not go to mhi_queue_buf
+>
+>path=2E=20
 
+Again, why do we need irq version of write lock=2E It should only be used =
+if the data is shared with hardirq handlers which I don't see=2E Otherwise,=
+ write_lock_bh() looks sufficient to me as this itself is an exclusive lock=
+=2E=20
+
+>For transfer completion events >read_lock_bh is acquired and=20
+>channel state is checked=2E
+>
+>This lock is held for entire handling of the transfer completion so
+>that=20
+>in case
+>
+>__mhi_unprepare_channel() is called from power down context write lock=20
+>is acquired
+>
+>for channel lock to change channel state, which would wait until=20
+>parse_xfer_event for
+>
+>data transfer is done (reader is in critical section)=2E=C2=A0 In case if=
+=20
+>__mhi_unprepare_channel() wins then
+>
+>parse_xfer_event is skipped otherwise parse_xfer_event is done and then
+>
+>channel state is changed=2E
+>
+
+So if we get unprepare_channel() after checking the channel state in parse=
+_xfer_event(), what could go wrong?
+Also, grabbing the lock for the entire function doesn't look good to me=2E=
+ The purpose of the chan->lock is just to protect 'chan_state'/DB and not t=
+he whole function=2E
+
+Thanks,=20
+Mani
+
+>>
+>> diff --git a/drivers/bus/mhi/core/main=2Ec
+>b/drivers/bus/mhi/core/main=2Ec
+>> index 3e9aa3b2da77=2E=2E904f9be7a142 100644
+>> --- a/drivers/bus/mhi/core/main=2Ec
+>> +++ b/drivers/bus/mhi/core/main=2Ec
+>> @@ -474,19 +474,12 @@ static int parse_xfer_event(struct
+>mhi_controller *mhi_cntrl,
+>>          result=2Etransaction_status =3D (ev_code =3D=3D MHI_EV_CC_OVER=
+FLOW)
+>?
+>>                  -EOVERFLOW : 0;
+>>  =20
+>> -       /*
+>> -        * If it's a DB Event then we need to grab the lock
+>> -        * with preemption disabled and as a write because we
+>> -        * have to update db register and there are chances that
+>> -        * another thread could be doing the same=2E
+>> -        */
+>> -       if (ev_code >=3D MHI_EV_CC_OOB)
+>> -               write_lock_irqsave(&mhi_chan->lock, flags);
+>> -       else
+>> -               read_lock_bh(&mhi_chan->lock);
+>> -
+>> -       if (mhi_chan->ch_state !=3D MHI_CH_STATE_ENABLED)
+>> -               goto end_process_tx_event;
+>> +       read_lock_bh(&mhi_chan->lock);
+>> +       if (mhi_chan->ch_state !=3D MHI_CH_STATE_ENABLED) {
+>> +               read_unlock_bh(&mhi_chan->lock);
+>> +               return 0;
+>> +       }
+>> +       read_unlock_bh(&mhi_chan->lock);
+>>  =20
+>>          switch (ev_code) {
+>>          case MHI_EV_CC_OVERFLOW:
+>> @@ -559,10 +552,12 @@ static int parse_xfer_event(struct
+>mhi_controller *mhi_cntrl,
+>>  =20
+>>                  mhi_chan->db_cfg=2Edb_mode =3D 1;
+>>                  read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+>> +               write_lock_irqsave(&mhi_chan->lock, flags);
+>>                  if (tre_ring->wp !=3D tre_ring->rp &&
+>>                      MHI_DB_ACCESS_VALID(mhi_cntrl)) {
+>>                          mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>>                  }
+>> +               write_unlock_irqrestore(&mhi_chan->lock, flags);
+>>                  read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+>>                  break;
+>>          }
+>> @@ -572,12 +567,6 @@ static int parse_xfer_event(struct
+>mhi_controller *mhi_cntrl,
+>>                  break;
+>>          } /* switch(MHI_EV_READ_CODE(EV_TRB_CODE,event)) */
+>>  =20
+>> -end_process_tx_event:
+>> -       if (ev_code >=3D MHI_EV_CC_OOB)
+>> -               write_unlock_irqrestore(&mhi_chan->lock, flags);
+>> -       else
+>> -               read_unlock_bh(&mhi_chan->lock);
+>> -
+>>          return 0;
+>>   }
+>>
+>> Moreover, I do have couple of concerns:
+>>
+>> 1=2E 'mhi_chan->db_cfg=2Edb_mode =3D 1' needs to be added to the critic=
+al
+>section
+>> above=2E
+>>
+>> 2=2E Why we have {write/read}_lock_irq variants for chan->lock? I don't
+>see where
+>> the db or ch_state got shared with hardirq handler=2E Maybe we should
+>only have
+>> *_bh (softirq) variants all over the place?
+>>
+>> Thanks,
+>> Mani
+>>
+>>>>>                                             ^^^^^^^^^^^^^^^
+>>>>> The caller is already holding this lock=2E
+>>>>>
+>>>> Hmm=2E We have one internal user of this function and that's where
+>the locking
+>>>> has gone wrong=2E Will fix it=2E
+>>>>
+>>>> Thanks for reporting!
+>>>>
+>>>> Regards,
+>>>> Mani
+>>>>
+>>>>>     1154                  mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>>>>>     1155                  read_unlock_irqrestore(&mhi_chan->lock,
+>flags);
+>>>>>     1156          }
+>>>>>     1157
+>>>>>     1158          read_unlock_irqrestore(&mhi_cntrl->pm_lock,
+>flags);
+>>>>>     1159
+>>>>>     1160          return 0;
+>>>>>     1161  }
+>>>>>     1162  EXPORT_SYMBOL_GPL(mhi_queue_buf);
+>>>>>
+>>>>> regards,
+>>>>> dan carpenter
+>>> --=20
+>>> The Qualcomm Innovation Center, Inc=2E is a member of the Code Aurora
+>Forum,
+>>> a Linux Foundation Collaborative Project
+
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
