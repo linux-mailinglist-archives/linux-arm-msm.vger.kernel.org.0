@@ -2,140 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0E161AFA64
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Apr 2020 15:10:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E13F1AFD5B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Apr 2020 21:21:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725988AbgDSNKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Apr 2020 09:10:48 -0400
-Received: from mout.web.de ([212.227.17.12]:60373 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725949AbgDSNKs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Apr 2020 09:10:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1587301835;
-        bh=4oYS+cYKZQPqayi2RhTLLU5txfFXZV6+2Fd5/sGAsQU=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=Uu0sq4DtAPDVTCgJ9WqHiPgBHd2Oi/cHMeCerwQ/eeaE975R4sz5wZhTpnI8Uqy0Z
-         CAFAGJp1UTswDU6oDEzcfnruPCz5zCe9rrmbk8S6S1Plq7c6Qf/IuGCAr65PU/tZl3
-         WQmi0d75aBYmjpCJ7GBxqplFcGIE4t6enyS/Yzvg=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.2] ([2.243.85.208]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MWAwH-1jkCcF42dV-00XH53; Sun, 19
- Apr 2020 15:10:35 +0200
-Subject: Re: [PATCH v2] iommu/qcom: Fix local_base status check
-From:   Markus Elfring <Markus.Elfring@web.de>
-To:     Tang Bin <tangbin@cmss.chinamobile.com>,
-        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Dejin Zheng <zhengdejin5@gmail.com>
-References: <73736017-cae3-1c2a-dcf4-d771d0f3bbbf@web.de>
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- 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 FEE=
-Message-ID: <b07d3b02-bf96-fd73-8333-a1104da9ae47@web.de>
-Date:   Sun, 19 Apr 2020 15:10:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726387AbgDSTVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Apr 2020 15:21:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42056 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726011AbgDSTVl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 19 Apr 2020 15:21:41 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76DB2C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Apr 2020 12:21:41 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id o15so3385969pgi.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Apr 2020 12:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RGMN6tbtT6za2or0wESO5PWSuHGgRvOO5vUg0g7tI/c=;
+        b=YzeFIPgR3xDhN7Clw6ZM8Aqizc6EXlVaPyg6cUMeTK5zjZ9wpu+8TOXbJvs8m17x2e
+         HD/72UoaLoPAw8JSrBJMCMqJWleXN08yQ7TBCyf6QwGJr+rmThs197DRTJhEWaiuxW+0
+         4RvhvXDLDrYR7kpKhWAqdZVjlXG1dSGidNRk1MVdMc+21ttu5wepnN5gj/aF9hA6isBE
+         nJeaeiows3eRK8RhpBI2zG12nTY8xpvPiQi9cm79+/Nme/dr/hmIGUExR4AePnyyd36F
+         5Y/cWYBWBrk0Oi27dBWPR3nvHijhFJO+W/UyF8d3awBO8UPmYG854Z/jxfnO1zKxlnRD
+         S1+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RGMN6tbtT6za2or0wESO5PWSuHGgRvOO5vUg0g7tI/c=;
+        b=c16tnbcZZWzX2cgAZCeeckHLEWypWb7QTR1IhApxXVMVxbbSG9R3gaKaZDlMYCUoFQ
+         s+VjdlLEX+x4DTicuf/AtjlvFHbhF141KTIvZ/ZyWhmUHH0kOtHl5FlKR9VI1u18E3u0
+         PgMfyxI8M1FviHj4PHWa0X/2YmQpvwfUps3l2n0m3HlwkKZuoCuRKwvjaPV++Vfc9Lf4
+         xAGCKMcbcXx67bhYwQ5yxBT0mOWh6zfFwSN6HgDcdLvOcx2iWFOtRfCo/yfEGQtgYIr1
+         8d/DsMt1NHoq8jjyWvF1Ihna2StNuw1KgE80GlF36rgYskXVUo6AF5fS7Z62GJKhtuV6
+         /Bxw==
+X-Gm-Message-State: AGi0Pua6Zw6VPFy+AKko/BY+lY6qErElv+nkNcOxzQXh1hRQRz2bVSvt
+        2r2KR3usNbfYlYXzVjUOT67iPQ==
+X-Google-Smtp-Source: APiQypLIKEQgXhQvct1QrZGarkIuUOJr9obBhQy5yuCohrGWlylbu2HUorcgT0wcj/Y/BW9elhJ9NQ==
+X-Received: by 2002:a63:5d60:: with SMTP id o32mr12883753pgm.172.1587324100903;
+        Sun, 19 Apr 2020 12:21:40 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o99sm11880162pjo.8.2020.04.19.12.21.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Apr 2020 12:21:40 -0700 (PDT)
+Date:   Sun, 19 Apr 2020 12:21:37 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, evgreen@chromium.org,
+        ohad@wizery.com, mka@chromium.org, dianders@chromium.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: sc7180: Update reserved memory map
+Message-ID: <20200419192137.GF987656@yoga>
+References: <20200417142605.28885-1-sibis@codeaurora.org>
+ <20200417142605.28885-4-sibis@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <73736017-cae3-1c2a-dcf4-d771d0f3bbbf@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:csvZDhaz4z/yZURfSdj4uatoN5JobxslgnDWP5IBxiUdVCF5P5L
- ErUP3aEhDKRvkvI0W5p/UlEAj0rYAkeYiydJVgRWD0r9G+hGdRnodq86bkiKFTGxzhD6gSj
- pHrmlB5ryh9ibKQN+RHlS++X/pcKSdWPZEhw7ilC6gFlwKXzdfiOJIc49wbhuJK2zspdIuZ
- qzQYBsqiGNlKkLgtxQRPQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YP5tX25VIBU=:MbOSbvZbuDSo89A1cbzHeO
- JWHwRkc3GSnQ8758M2xMrm2LEep79GLVIHpXGaHXPXMNw86ZQFNw7wMcCzJxhYffml32FcbhP
- CpqfPD0On3BApJ0Jf7SfHqJ+AVdbmGyEPZWZ0WJapSgpknXoh5o7k5zmSy3m2mO58Ic9u9y6D
- rmZQRsfP37ysXWjwBBBG0Dr4RB1NqZMoXCGVW0gIGgCYoUCZoSuy1/uaFfSluANXeGBl1Z3PG
- NvoeRrFcegkhCEOCKnU5l0N3B9QLfA4HoM/xA5qwykWqciRkd6RdAxiUYpnQU7/Ox1kl2jXcz
- Ur1WXBhvWPOBKXDdRKzMD2F0iCajnhPceE+P3OaVV1rJD7ujvwUqw4eJgtW/+BZPYAwycBVNJ
- OFDCo0G+NmIOqmgA1Rf7qo+PJCqdToud3tmqvemrjEE2hwZ/rIYG9n87/YxxvIDYH1JzViuaX
- DqJEt1oaDtAD0b8UUUM6AwVuERNGxOCBeQrR6uU8SfSph+3RKdvuLPnKxbgq3qz++WpfkCJI4
- qF9meDyaUIkNjTs7eZpjGJWoQNFNvMJ1pI/q5gduZKztXrXP+MGU4QCK4y/PgCsGiLcwSYkI4
- IP1hEg1RcrePU8eBmx6DF3RRwhW9Mlmw5qFCgpUbWKvEKjYjXAIgkvAzwf8jfS/wRsyvK6FQt
- TdnGD9sF3Dl6f4chUzf9i2d4CJswCXw2ISZWsVGKhHzt/zWGNqIhMTrVTn4eQSVlQqm2AErHK
- TWx7nV9o2Lprpc6vWDevZSrUjwYt5gHZJhd4jT0qnPFJuzaC5IEdFJJcXFE5QhBpuwzy1Z9mm
- KZtBcTlPDm2gpwuJLsTIRMKzpyv0QrZb1+3ZCYV4C215CBYI7X7dUN/JU9NhqdGi5YSDO50lA
- ZNAi7GXbxa5p2fIxGF69g50ISNK4718orUHdPl6a5yvTXjZGlRGZGDHHOGSr6L7kDS1ar1i8p
- iGlCcTMQOhYhS1L1rMG1Rx2yhnf7I/xGu3D60ONfNue+Pi47ETKscGZMSlvJjFaCisU9bFe4M
- SKPg5xJQSEGSEUpQv3cBeH7xv07y5AhiOxVyjBW7ZoGLII7n/cSoPiC2HHsY2SwE8sNBevymO
- dE5BtMe9vZU4w3QIti7qhbRxMinenU2sTbgPYpGPSithcHfKxwXtu68FINbxEdBHxrVWy/eO+
- HwKXDhOjAa8s+/QYHh0Mn9+rhcz0gp5p9hMNDdToKLkIm/jeiUZmDs8jwsAFyf3s3ON/0RW0y
- MyLPcV62MtucsrWHT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200417142605.28885-4-sibis@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> =E2=80=A6
->> +++ b/drivers/iommu/qcom_iommu.c
->> @@ -813,8 +813,11 @@ static int qcom_iommu_device_probe(struct platform=
-_device *pdev)
->>  	qcom_iommu->dev =3D dev;
->>
->>  	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
-=E2=80=A6
->>  		qcom_iommu->local_base =3D devm_ioremap_resource(dev, res);
-=E2=80=A6
-> Please take another look at a corresponding usage example.
+On Fri 17 Apr 07:26 PDT 2020, Sibi Sankar wrote:
 
-I would like to point another possibility out for desirable software evolu=
-tion.
-How do you think about to call a =E2=80=9Cknown=E2=80=9D wrapper function =
-instead?
+> Add missing regions and remove unused regions from the reserved memory
+> map, as described in version 5.
+> 
 
-devm_platform_get_and_ioremap_resource
-https://elixir.bootlin.com/linux/v5.7-rc1/source/drivers/base/platform.c#L=
-66
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/dri=
-vers/base/platform.c
+Your patch looks good, but I'm quite unhappy with the way these turns
+out and we have been ignoring the fact that different devices on the
+same platform (with TZ) might come with different firmware versions and
+hence different layout of the peripheral memory region.
+
+So how about pushing out at least the peripheral regions to the device's
+dts (the others are pretty much static, except when using coreboot)?
+That should reduce your patch to 4(?) delete-nodes?
 
 Regards,
-Markus
+Bjorn
+
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 63 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 83 ++++++++++++++++++++++++-
+>  2 files changed, 144 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 17eadd80f15de..e613d70cc0198 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -28,6 +28,69 @@ chosen {
+>  	};
+>  };
+>  
+> +/*
+> + * Reserved memory changes
+> + *
+> + * Keep all modifications to the memory map (from sc7180.dtsi) in one place.
+> + * Delete all unused memory nodes and re-create atf_mem/venus_mem/camera_mem
+> + * and wlan_mem memory nodes.
+> + *
+> + */
+> +
+> +/delete-node/ &hyp_mem;
+> +/delete-node/ &xbl_mem;
+> +/delete-node/ &aop_mem;
+> +/delete-node/ &sec_apps_mem;
+> +/delete-node/ &tz_mem;
+> +/delete-node/ &camera_mem;
+> +/delete-node/ &npu_mem;
+> +/delete-node/ &venus_mem;
+> +/delete-node/ &cdsp_mem;
+> +/delete-node/ &adsp_mem;
+> +/delete-node/ &wlan_mem;
+> +/delete-node/ &ipa_fw_mem;
+> +/delete-node/ &ipa_gsi_mem;
+> +/delete-node/ &gpu_mem;
+> +
+> +/* Increase the size from 132 MB to 140 MB */
+> +&mpss_mem {
+> +	reg = <0x0 0x86000000 0x0 0x8c00000>;
+> +};
+> +
+> +/* Increase the size from 2MB to 8MB */
+> +&rmtfs_mem {
+> +	reg = <0x0 0x84400000 0x0 0x800000>;
+> +};
+> +
+> +/ {
+> +	reserved-memory {
+> +		atf_mem: memory@80b00000 {
+> +			reg = <0x0 0x80b00000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		camera_mem: memory@8ec00000 {
+> +			reg = <0x0 0x8ec00000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		venus_mem: memory@8f600000 {
+> +			reg = <0 0x8f600000 0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		wlan_mem: memory@94100000 {
+> +			reg = <0x0 0x94100000 0x0 0x200000>;
+> +			no-map;
+> +		};
+> +
+> +		mba_mem: memory@94400000 {
+> +			reg = <0x0 0x94400000 0x0 0x200000>;
+> +			no-map;
+> +		};
+> +	};
+> +};
+> +
+>  &apps_rsc {
+>  	pm6150-rpmh-regulators {
+>  		compatible = "qcom,pm6150-rpmh-regulators";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 853ba6e8a53ca..f73ffd74d4fcd 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -69,18 +69,97 @@ reserved_memory: reserved-memory {
+>  		#size-cells = <2>;
+>  		ranges;
+>  
+> +		hyp_mem: memory@80000000 {
+> +			reg = <0x0 0x80000000 0x0 0x600000>;
+> +			no-map;
+> +		};
+> +
+> +		xbl_mem: memory@80600000 {
+> +			reg = <0x0 0x80600000 0x0 0x200000>;
+> +			no-map;
+> +		};
+> +
+> +		aop_mem: memory@80800000 {
+> +			reg = <0x0 0x80800000 0x0 0x20000>;
+> +			no-map;
+> +		};
+> +
+>  		aop_cmd_db_mem: memory@80820000 {
+>  			reg = <0x0 0x80820000 0x0 0x20000>;
+>  			compatible = "qcom,cmd-db";
+>  		};
+>  
+> +		sec_apps_mem: memory@808ff000 {
+> +			reg = <0x0 0x808ff000 0x0 0x1000>;
+> +			no-map;
+> +		};
+> +
+>  		smem_mem: memory@80900000 {
+>  			reg = <0x0 0x80900000 0x0 0x200000>;
+>  			no-map;
+>  		};
+>  
+> -		venus_mem: memory@8f600000 {
+> -			reg = <0 0x8f600000 0 0x500000>;
+> +		tz_mem: memory@80b00000 {
+> +			reg = <0x0 0x80b00000 0x0 0x3900000>;
+> +			no-map;
+> +		};
+> +
+> +		rmtfs_mem: memory@84400000 {
+> +			compatible = "qcom,rmtfs-mem";
+> +			reg = <0x0 0x84400000 0x0 0x200000>;
+> +			no-map;
+> +
+> +			qcom,client-id = <1>;
+> +			qcom,vmid = <15>;
+> +		};
+> +
+> +		mpss_mem: memory@86000000 {
+> +			reg = <0x0 0x86000000 0x0 0x8400000>;
+> +			no-map;
+> +		};
+> +
+> +		camera_mem: memory@8e400000 {
+> +			reg = <0x0 0x8e400000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		npu_mem: memory@8e900000 {
+> +			reg = <0x0 0x8e900000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		venus_mem: memory@8ee00000 {
+> +			reg = <0x0 0x8ee00000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		cdsp_mem: memory@8f300000 {
+> +			reg = <0x0 0x8f300000 0x0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		adsp_mem: memory@91100000 {
+> +			reg = <0x0 0x91100000 0x0 0x2800000>;
+> +			no-map;
+> +		};
+> +
+> +		wlan_mem: memory@93900000 {
+> +			reg = <0x0 0x93900000 0x0 0x200000>;
+> +			no-map;
+> +		};
+> +
+> +		ipa_fw_mem: memory@93b00000 {
+> +			reg = <0x0 0x93b00000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		ipa_gsi_mem: memory@93b10000 {
+> +			reg = <0x0 0x93b10000 0x0 0x5000>;
+> +			no-map;
+> +		};
+> +
+> +		gpu_mem: memory@93b15000 {
+> +			reg = <0x0 0x93b15000 0x0 0x2000>;
+>  			no-map;
+>  		};
+>  	};
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
