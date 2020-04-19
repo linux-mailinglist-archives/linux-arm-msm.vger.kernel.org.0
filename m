@@ -2,35 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2463F1AF9FB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Apr 2020 14:32:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0E161AFA64
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Apr 2020 15:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725927AbgDSMci (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Apr 2020 08:32:38 -0400
-Received: from mout.web.de ([212.227.17.12]:58229 "EHLO mout.web.de"
+        id S1725988AbgDSNKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Apr 2020 09:10:48 -0400
+Received: from mout.web.de ([212.227.17.12]:60373 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725793AbgDSMch (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Apr 2020 08:32:37 -0400
+        id S1725949AbgDSNKs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 19 Apr 2020 09:10:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1587299542;
-        bh=Ony+WtCvlJwCqxG8+ifcy1TdD6Z04JNAUahBHfvqML0=;
-        h=X-UI-Sender-Class:To:Cc:Subject:From:Date;
-        b=hwUT37ZyJ1NZa2m+oW4WilqNetQKZGbV3Lpon+oHOpiD0cHy8nFjrsWvi9c19zQ6l
-         EaFrBCgqQvsEYPNweB8cxUDLdOgMwQ86YFhlE0mJsLyntvJKTtB8wJRIC8f8g3e0ea
-         85DnTNWN4s0RdTAKRNhHlgNG9RGYRo3g9/klrxCg=
+        s=dbaedf251592; t=1587301835;
+        bh=4oYS+cYKZQPqayi2RhTLLU5txfFXZV6+2Fd5/sGAsQU=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=Uu0sq4DtAPDVTCgJ9WqHiPgBHd2Oi/cHMeCerwQ/eeaE975R4sz5wZhTpnI8Uqy0Z
+         CAFAGJp1UTswDU6oDEzcfnruPCz5zCe9rrmbk8S6S1Plq7c6Qf/IuGCAr65PU/tZl3
+         WQmi0d75aBYmjpCJ7GBxqplFcGIE4t6enyS/Yzvg=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.2] ([2.243.85.208]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lrryk-1jEhom2LNO-013aGB; Sun, 19
- Apr 2020 14:32:22 +0200
+Received: from [192.168.1.2] ([2.243.85.208]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MWAwH-1jkCcF42dV-00XH53; Sun, 19
+ Apr 2020 15:10:35 +0200
+Subject: Re: [PATCH v2] iommu/qcom: Fix local_base status check
+From:   Markus Elfring <Markus.Elfring@web.de>
 To:     Tang Bin <tangbin@cmss.chinamobile.com>,
         iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
         Rob Clark <robdclark@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH v2] iommu/qcom: Fix local_base status check
-From:   Markus Elfring <Markus.Elfring@web.de>
+Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Dejin Zheng <zhengdejin5@gmail.com>
+References: <73736017-cae3-1c2a-dcf4-d771d0f3bbbf@web.de>
 Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
  +v43YoGpDNyhgA0w9CEhuwfZrE91GocMtjLO67TAc2i2nxMc/FJRDI0OemO4VJ9RwID6ltwt
@@ -74,77 +76,66 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <73736017-cae3-1c2a-dcf4-d771d0f3bbbf@web.de>
-Date:   Sun, 19 Apr 2020 14:32:20 +0200
+Message-ID: <b07d3b02-bf96-fd73-8333-a1104da9ae47@web.de>
+Date:   Sun, 19 Apr 2020 15:10:33 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <73736017-cae3-1c2a-dcf4-d771d0f3bbbf@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:aM9D41FDFG533iB8w4muwOHig3soCihnk6pAK/NdvHKorniyPir
- iyQlK51/Kfk4yD8O+bwuZeovMtlA7rs/2WH5M9OlWqRCCbgeKVEQESYq+3M+0690hF18C9c
- qqkiLrbft/PoMxtRn19FtmatjUFPexga8qEjY5CKq5LZ8kAUPGaIK2AimKjj2+SPDwUaUYx
- coVSg/uQkvT05B1rJSviw==
+X-Provags-ID: V03:K1:csvZDhaz4z/yZURfSdj4uatoN5JobxslgnDWP5IBxiUdVCF5P5L
+ ErUP3aEhDKRvkvI0W5p/UlEAj0rYAkeYiydJVgRWD0r9G+hGdRnodq86bkiKFTGxzhD6gSj
+ pHrmlB5ryh9ibKQN+RHlS++X/pcKSdWPZEhw7ilC6gFlwKXzdfiOJIc49wbhuJK2zspdIuZ
+ qzQYBsqiGNlKkLgtxQRPQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YfONjDXL5x0=:3wx3LPQ+RgsxVKYkWsZgwg
- 3QgRYFxbV80SPNOpnRpsERd9bDi5bH8kHBZCZkpbGbIC/BoxJnxEOraXfCbUOj0R3LwhlYzCX
- Do2unHX8eqH2+utRbDs/WJKxbMeaDr7vodPvcV1vE0CRInXUQpJ3vVIsN8eQfXYtQdZoEGmjI
- nLSRsA1RYbAiFLLhIdngkurSmm9wMynXWZtfBwka03y1m7LuKAA/9NZHvpjJUtKeg0LYQbt5P
- q48+tvmOxxHPYPt/XpgsbYI0GfC543CZU8vHxA1RGbsw6C5iswVCGo8TzHs/mlHca3rkpJuv8
- fDNIAIRuzONIdxTXgESaYpXySEB/Fwm7WOhmsxz6QpAb5Ilr4arWLIhJjLmfHHVIjdOntECwZ
- Z6bxDkZAkt0WMoCcCO1n0gS5T76xJg1zED1G7VvgrhwMaTyOQocFTuXnsrGQ4jc+EQjdwu2Ab
- NW6ZCfu46ZFScj0Y9OPll8D5M+frIcC9HQBUUIP0SvNJFL7me/2sAKqvUa70MuNv6UqmODtJ2
- 9fykdEdMNBvbM5ARFWsVerWcmdAWBzttswdw/Ejf72qNCiGEs4JP5jKRmq4a5zgUcDD9NHFPN
- N/Sl4E5plJ3cQXqoIyPhPZYuCtK3M769oYby+9vSQVIUhV5P+NdKZFXfYLaQ1SqrjUmQPKEmf
- +FSaukDfxfphjYxlSph3uJvAPTLYKbGsGIiCVHAaZ7LL3v/owPeTEN2to7wcFwd2etQsx1Qv6
- GJ+Ll3HnvqaWd+9twFGS9KcvKBr5Mr+y28HPIQsxot5lQdpGGMJ4Q9/OQC1LgNrN0EnmeIilU
- MQPhjXP96P4LnWLX0fGDkm5om31eApBqjHUcB0QOBl7ZKSDrk4VbM6jhUjv1tlfzJqJwB/sSD
- v0M9BqgZtIMGnC7fbyPn+VCu7vdfoBjcZqR3ExO0IhXmXZQSGat2etii1b0uC9vC1NimX7KK2
- //PazBLnUjlfHQBHihX2hGJwZ36CVzYty2NJGtdplii/sIg/gghw56RW8SWjDuQYhLErW5njH
- N7OIGMQKf8y7xDLDImFe+EIPBaGT8BtpzUawYujG5dO1Ff9YjGP2JbTqPgONIYMBT/xMe/mxj
- ZYHAqrPlxau0VRLD285o5eYf9vLm1ei4Kf/e024S5cNebqS7RYpC/GTFgdc1x498hLbGJTFjF
- sDZZpCAfsD/R75venw8Ue0HMZWOey3VZwrL2ZGdJjJGo8QB/wfh0Q6FAON8+OWNsMV2mIdRc1
- 8pqehv5/i1X/1uGGK
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YP5tX25VIBU=:MbOSbvZbuDSo89A1cbzHeO
+ JWHwRkc3GSnQ8758M2xMrm2LEep79GLVIHpXGaHXPXMNw86ZQFNw7wMcCzJxhYffml32FcbhP
+ CpqfPD0On3BApJ0Jf7SfHqJ+AVdbmGyEPZWZ0WJapSgpknXoh5o7k5zmSy3m2mO58Ic9u9y6D
+ rmZQRsfP37ysXWjwBBBG0Dr4RB1NqZMoXCGVW0gIGgCYoUCZoSuy1/uaFfSluANXeGBl1Z3PG
+ NvoeRrFcegkhCEOCKnU5l0N3B9QLfA4HoM/xA5qwykWqciRkd6RdAxiUYpnQU7/Ox1kl2jXcz
+ Ur1WXBhvWPOBKXDdRKzMD2F0iCajnhPceE+P3OaVV1rJD7ujvwUqw4eJgtW/+BZPYAwycBVNJ
+ OFDCo0G+NmIOqmgA1Rf7qo+PJCqdToud3tmqvemrjEE2hwZ/rIYG9n87/YxxvIDYH1JzViuaX
+ DqJEt1oaDtAD0b8UUUM6AwVuERNGxOCBeQrR6uU8SfSph+3RKdvuLPnKxbgq3qz++WpfkCJI4
+ qF9meDyaUIkNjTs7eZpjGJWoQNFNvMJ1pI/q5gduZKztXrXP+MGU4QCK4y/PgCsGiLcwSYkI4
+ IP1hEg1RcrePU8eBmx6DF3RRwhW9Mlmw5qFCgpUbWKvEKjYjXAIgkvAzwf8jfS/wRsyvK6FQt
+ TdnGD9sF3Dl6f4chUzf9i2d4CJswCXw2ISZWsVGKhHzt/zWGNqIhMTrVTn4eQSVlQqm2AErHK
+ TWx7nV9o2Lprpc6vWDevZSrUjwYt5gHZJhd4jT0qnPFJuzaC5IEdFJJcXFE5QhBpuwzy1Z9mm
+ KZtBcTlPDm2gpwuJLsTIRMKzpyv0QrZb1+3ZCYV4C215CBYI7X7dUN/JU9NhqdGi5YSDO50lA
+ ZNAi7GXbxa5p2fIxGF69g50ISNK4718orUHdPl6a5yvTXjZGlRGZGDHHOGSr6L7kDS1ar1i8p
+ iGlCcTMQOhYhS1L1rMG1Rx2yhnf7I/xGu3D60ONfNue+Pi47ETKscGZMSlvJjFaCisU9bFe4M
+ SKPg5xJQSEGSEUpQv3cBeH7xv07y5AhiOxVyjBW7ZoGLII7n/cSoPiC2HHsY2SwE8sNBevymO
+ dE5BtMe9vZU4w3QIti7qhbRxMinenU2sTbgPYpGPSithcHfKxwXtu68FINbxEdBHxrVWy/eO+
+ HwKXDhOjAa8s+/QYHh0Mn9+rhcz0gp5p9hMNDdToKLkIm/jeiUZmDs8jwsAFyf3s3ON/0RW0y
+ MyLPcV62MtucsrWHT
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> The function qcom_iommu_device_probe() does not perform sufficient
-> error checking after executing devm_ioremap_resource(), which can
-> result in crashes if a critical error path is encountered.
-
-Your update suggestion will be rechecked once more.
-
-* Can it be that the patch would need a higher version number
-  according to previous review comments?
-
-* Would you like to adjust the patch subject?
-
-
+> =E2=80=A6
+>> +++ b/drivers/iommu/qcom_iommu.c
+>> @@ -813,8 +813,11 @@ static int qcom_iommu_device_probe(struct platform=
+_device *pdev)
+>>  	qcom_iommu->dev =3D dev;
+>>
+>>  	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
 =E2=80=A6
-> +++ b/drivers/iommu/qcom_iommu.c
-> @@ -813,8 +813,11 @@ static int qcom_iommu_device_probe(struct platform_=
-device *pdev)
->  	qcom_iommu->dev =3D dev;
->
->  	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	if (res)
+>>  		qcom_iommu->local_base =3D devm_ioremap_resource(dev, res);
+=E2=80=A6
+> Please take another look at a corresponding usage example.
 
-I find the deletion of this check appropriate.
+I would like to point another possibility out for desirable software evolu=
+tion.
+How do you think about to call a =E2=80=9Cknown=E2=80=9D wrapper function =
+instead?
 
-
-> +	if (res) {
->  		qcom_iommu->local_base =3D devm_ioremap_resource(dev, res);
-
-But I do not see a need to preserve such a check because this function
-performs input parameter validation.
-https://elixir.bootlin.com/linux/v5.7-rc1/source/lib/devres.c#L116
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/li=
-b/devres.c?id=3D50cc09c18985eacbbd666acfd7be2391394733f5#n116
-
-Please take another look at a corresponding usage example.
+devm_platform_get_and_ioremap_resource
+https://elixir.bootlin.com/linux/v5.7-rc1/source/drivers/base/platform.c#L=
+66
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/dri=
+vers/base/platform.c
 
 Regards,
 Markus
