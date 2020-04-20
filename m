@@ -2,117 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A613B1B00CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 06:44:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC96C1B00D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 06:52:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725815AbgDTEoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 00:44:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
+        id S1725825AbgDTEwm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 00:52:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725710AbgDTEoY (ORCPT
+        with ESMTP id S1725815AbgDTEwm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 00:44:24 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DD1CC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Apr 2020 21:44:24 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id f8so3505914plt.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Apr 2020 21:44:24 -0700 (PDT)
+        Mon, 20 Apr 2020 00:52:42 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 147C5C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Apr 2020 21:52:41 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id y25so4378603pfn.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Apr 2020 21:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=MJIP8pHcT300D54AAT1yN4S1w4viB7U9JXrFMLuLerE=;
-        b=KQ6B7QT1vtZae/f6saQDPC1F+hKTVP9SjEi4M5AnDFpngSbILwyCEn89QG7jMCu5x2
-         Wi5ynabHoI3D1XslyJUOkWDkMvs7GfzKLnialIPNjZw6bfo8WdcJ4VR/8gHbS/SUNSOq
-         mPTULBkLJyw8ELtdNz7i1AelUej5/0q7yCJHgvEkvCgEbJRnCegzJuzFlY3xBauIThjp
-         5kJBmdc9lL2Z88zDjhx2FREp9lFxBFvIhOFqNqhYywVpXi0tCqOuvLfIeC0HsfgZEUfA
-         eawYMjg0CijPj+YtKHyQSFdtLAHWkftnZqZ60jUsx4ahla6kFttA0a89OZP07cu8Xuyx
-         8Mqg==
+        bh=oNKRiUuDH3HcT8/Qwk9sSK+q6T3XdbwZxPtum7dk+0k=;
+        b=llneVi56W55NiLr4/oEdHvQsx+uYbkRQzHPT7RXrZNrdWl4RLJewuv+rVJiKFrxkY4
+         nmoFjBHPPeFNYEhI0kfaqgQBF6znWdA/EnlSHtnOx4AclT+kIaTuWS5tm4iSecLCnJ2R
+         dooRwMKfMVWt3HMIgWpLAcKKHUSvFmDPybPwq4jo9AkyuK8Dnd4CBBSVaOkqsH7FwfLR
+         s0D/bjS8qTOYDnSracP58KpC0hBcOwJYF3kbiuPScSMwMAdeyIIRIryN1guKVbLzk3eE
+         1Rl9U9+MmfT//SMqV+TPzyfgxNh7I+SU//n/RgeKQLzsejwKAlcB3D8JTWza3p0o0Svh
+         WsJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=MJIP8pHcT300D54AAT1yN4S1w4viB7U9JXrFMLuLerE=;
-        b=N9sPBjAkD+kCMDfMCZ9KC8diP/z/kPe0e9htkvmw1Iaaaf8oiArfopEtGHOlKrEdn0
-         r7/VeyiGh+Jwez4ko5X/THmMnwkOdiO5L1+7+oLEqWVm6pMX/IFE2ZoTYpmRSgOZIWeS
-         70ZdJgNH2IieXdG1qB7rQHgjdOjn+tONPsdH1JfoSVdLRxdRD5Yl0V4+SOgLXyGVTZgp
-         d9UlOq0Q5HJzdLhL1aYaqldd37qPFbfLmfg4+rD6CwP25rfTbY2cyRFZAsH2GD4IJUEg
-         bhjPjj0ZPhYjcOz8Zag0DkY3wdEFTPp6PO+c7O4yj0uXC4pBE8s3CUlStar6TbSW+4kf
-         yu2w==
-X-Gm-Message-State: AGi0PuaBrNuJ14gl2UFTuSezqHOHovdeEmRUtxSnBG6AaD2BySclgVFJ
-        Yfzg+gYFzYwdbArB69X4XsnJYA==
-X-Google-Smtp-Source: APiQypLT4AnAfvIs1wxlQlpm/x0eJ78jMSVhHjboYPPzhpNJj5WX081j71YKvOptmveabL1vNLmO/Q==
-X-Received: by 2002:a17:90a:1f8f:: with SMTP id x15mr7116967pja.76.1587357863366;
-        Sun, 19 Apr 2020 21:44:23 -0700 (PDT)
+        bh=oNKRiUuDH3HcT8/Qwk9sSK+q6T3XdbwZxPtum7dk+0k=;
+        b=X/VYirRIT7Pdb8M/rq+k6nhP6Csmrg7U4m3Fjok+YucgmwfzQwCM16GLBbhgXsHNZW
+         kMKCYVamCPZtcs8vJwYBABOsoTKHhTvgeR4rSrHC89PAgd+PqwksEWAD6hGkgXEul+Ch
+         lm/F/ihMpX2AyPXxtG5l4TmsZ0mSk/H9+QIRg2HsoeFIf8RH6JizeQshHU1605ivTzg6
+         kdz5MSsLsNFntNk/ps8bQOUhqGTSL3J9emxnYoPEd1EyanAemnzyaBiS0gxIcsK6A8aQ
+         5WKRFA9U6hXdw+Mt3ubdFBmWu0WotI9/rcIgOxAk77EKQvrQYLTbqqaFqTu5voWxwB6D
+         SYXA==
+X-Gm-Message-State: AGi0PuYMOM2zUvO5o2tIT/kzaI23YX/3rpPJZb5Lf4lfn9oCWrlHf/1J
+        X21C55A+h1Y3bRMLxShQ1Vok6A==
+X-Google-Smtp-Source: APiQypL47lTKmGwxOxVtKUAf13H57l0+QHnxWnUbjOkYcpSlzaMu1RjcsaR+CpdIXKiQMYpYBNys4A==
+X-Received: by 2002:a63:514a:: with SMTP id r10mr12687721pgl.246.1587358360091;
+        Sun, 19 Apr 2020 21:52:40 -0700 (PDT)
 Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e26sm25887897pfi.84.2020.04.19.21.44.22
+        by smtp.gmail.com with ESMTPSA id e26sm25908782pfi.84.2020.04.19.21.52.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Apr 2020 21:44:22 -0700 (PDT)
-Date:   Sun, 19 Apr 2020 21:44:20 -0700
+        Sun, 19 Apr 2020 21:52:39 -0700 (PDT)
+Date:   Sun, 19 Apr 2020 21:52:37 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jason Yan <yanaijie@huawei.com>
-Cc:     agross@kernel.org, wsa@the-dreams.de,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+To:     Tang Bin <tangbin@cmss.chinamobile.com>
+Cc:     joro@8bytes.org, agross@kernel.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] i2c: busses: remove unneeded conversion to bool
-Message-ID: <20200420044420.GG987656@yoga>
-References: <20200420042816.18989-1-yanaijie@huawei.com>
+Subject: Re: [PATCH v2]iommu/qcom:fix local_base status check
+Message-ID: <20200420045237.GH987656@yoga>
+References: <20200418134703.1760-1-tangbin@cmss.chinamobile.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200420042816.18989-1-yanaijie@huawei.com>
+In-Reply-To: <20200418134703.1760-1-tangbin@cmss.chinamobile.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 19 Apr 21:28 PDT 2020, Jason Yan wrote:
+On Sat 18 Apr 06:47 PDT 2020, Tang Bin wrote:
 
-> The '>' expression itself is bool, no need to convert it to bool again.
-> This fixes the following coccicheck warning:
+> The function qcom_iommu_device_probe() does not perform sufficient
+> error checking after executing devm_ioremap_resource(), which can
+> result in crashes if a critical error path is encountered.
 > 
-> drivers/i2c/busses/i2c-qup.c:960:48-53: WARNING: conversion to bool not needed here
-> drivers/i2c/busses/i2c-qup.c:962:47-52: WARNING: conversion to bool not needed here
-> drivers/i2c/busses/i2c-qup.c:1531:29-34: WARNING: conversion to bool not needed here
-> drivers/i2c/busses/i2c-qup.c:1533:29-34: WARNING: conversion to bool not needed here
-> 
-> Signed-off-by: Jason Yan <yanaijie@huawei.com>
+
+Thanks, that's much better.
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> ---
->  drivers/i2c/busses/i2c-qup.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
+Regards,
+Bjorn
+
+> Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
 > 
-> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-> index 155dcde70fc9..25d5fe2f8316 100644
-> --- a/drivers/i2c/busses/i2c-qup.c
-> +++ b/drivers/i2c/busses/i2c-qup.c
-> @@ -956,10 +956,8 @@ static void qup_i2c_conf_v1(struct qup_i2c_dev *qup)
->  	u32 qup_config = I2C_MINI_CORE | I2C_N_VAL;
->  	u32 io_mode = QUP_REPACK_EN;
+> Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
+> ---
+> v2:
+>  - fix commit message and add fixed tag
+> ---
+>  drivers/iommu/qcom_iommu.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
+> index 4328da0b0..b160cf140 100644
+> --- a/drivers/iommu/qcom_iommu.c
+> +++ b/drivers/iommu/qcom_iommu.c
+> @@ -813,8 +813,11 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+>  	qcom_iommu->dev = dev;
 >  
-> -	blk->is_tx_blk_mode =
-> -		blk->total_tx_len > qup->out_fifo_sz ? true : false;
-> -	blk->is_rx_blk_mode =
-> -		blk->total_rx_len > qup->in_fifo_sz ? true : false;
-> +	blk->is_tx_blk_mode = blk->total_tx_len > qup->out_fifo_sz;
-> +	blk->is_rx_blk_mode = blk->total_rx_len > qup->in_fifo_sz;
+>  	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -	if (res)
+> +	if (res) {
+>  		qcom_iommu->local_base = devm_ioremap_resource(dev, res);
+> +		if (IS_ERR(qcom_iommu->local_base))
+> +			return PTR_ERR(qcom_iommu->local_base);
+> +	}
 >  
->  	if (blk->is_tx_blk_mode) {
->  		io_mode |= QUP_OUTPUT_BLK_MODE;
-> @@ -1528,9 +1526,9 @@ qup_i2c_determine_mode_v2(struct qup_i2c_dev *qup,
->  		qup->use_dma = true;
->  	} else {
->  		qup->blk.is_tx_blk_mode = max_tx_len > qup->out_fifo_sz -
-> -			QUP_MAX_TAGS_LEN ? true : false;
-> +			QUP_MAX_TAGS_LEN;
->  		qup->blk.is_rx_blk_mode = max_rx_len > qup->in_fifo_sz -
-> -			READ_RX_TAGS_LEN ? true : false;
-> +			READ_RX_TAGS_LEN;
->  	}
->  
->  	return 0;
+>  	qcom_iommu->iface_clk = devm_clk_get(dev, "iface");
+>  	if (IS_ERR(qcom_iommu->iface_clk)) {
 > -- 
-> 2.21.1
+> 2.20.1.windows.1
+> 
+> 
 > 
