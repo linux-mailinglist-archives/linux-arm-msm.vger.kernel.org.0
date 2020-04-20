@@ -2,71 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CD301B1507
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 20:46:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6320B1B152B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 20:54:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725989AbgDTSqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 14:46:12 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:34405 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728012AbgDTSqL (ORCPT
+        id S1726469AbgDTSyR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 14:54:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34786 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726013AbgDTSyQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 14:46:11 -0400
-Received: by mail-oi1-f196.google.com with SMTP id x10so9784772oie.1;
-        Mon, 20 Apr 2020 11:46:11 -0700 (PDT)
+        Mon, 20 Apr 2020 14:54:16 -0400
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88B4DC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 11:54:16 -0700 (PDT)
+Received: by mail-lf1-x141.google.com with SMTP id w145so8923039lff.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 11:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tFwuNr0TgSQRNNXpMtC3V2slHHf02xlAMZDjaN+7RAc=;
+        b=Qf/ecC7Lp+kohe1FrviknG4/IQqC/abCMx7cMJ8Qh/SH7PU6FDeUEAPzC0J/Du8RJZ
+         L080nkD48kiih0pnK6PLPLWsJGLm6S1RVXu/dcSHWNi9AViGgBDdLNWUx/C05aivFcZa
+         FUUpFkc0Q4n7UHOZTdTU+Tuts0aAXCfIAirO8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=i1mtIpawmUDhZPAqhy0kb7QS/Wj9qW3K436AJI7YPHg=;
-        b=tbU6dKQjsZZdvQpRW5EGoJdU85FjzNKXLeMDSLjtw49pGEmNw8pJ72xDHvLT10i4OP
-         IJUTOcPb5/T/UX23//WZGtqU1/VqOMtdIYVMZ9COF2YrzbraNx9K0Q8QP1j0h3umKkvS
-         ge+t8+B8jx4a/m7WuhSB0JsZZ2cNER3UOubLutRIyX4KAqTyzB+Fi6eTcX85Vxt6tcOE
-         ebGu1Xwl5KMAvkGdfATq8gbi38ZPuAykaqBXLDgplgygDWmdHyoLP0xB41jVERfAURbE
-         gk++KpWCqqWM+K54DenYHuf8lT7LkGKrVPteTzf4XwwruJGTbY/u1gyffp+iOJItC64/
-         3ZPg==
-X-Gm-Message-State: AGi0PuZZyDO7gD8Jm3Fvu4hQPlG0ZDHSPrT6amKc5JRUzeWdW+MoFD2V
-        dLYRPujMB7MtChaU/ziU4g==
-X-Google-Smtp-Source: APiQypJ+bzru4tS7dzweDo9wBO++FAsJtUDNNEFMi6WyZXxqmOC1SZ4F/P9lyBgGX0lB6tiMzTnivw==
-X-Received: by 2002:aca:3a8a:: with SMTP id h132mr572619oia.146.1587408370858;
-        Mon, 20 Apr 2020 11:46:10 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 69sm120113otv.8.2020.04.20.11.46.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 11:46:09 -0700 (PDT)
-Received: (nullmailer pid 26611 invoked by uid 1000);
-        Mon, 20 Apr 2020 18:46:08 -0000
-Date:   Mon, 20 Apr 2020 13:46:08 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Subject: Re: [PATCH V2 2/5] dt-bindings: phy: qcom,qusb2: Add ipq8074 device
- compatible
-Message-ID: <20200420184608.GA26579@bogus>
-References: <1586581352-27017-1-git-send-email-sivaprak@codeaurora.org>
- <1586581352-27017-3-git-send-email-sivaprak@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tFwuNr0TgSQRNNXpMtC3V2slHHf02xlAMZDjaN+7RAc=;
+        b=Lh1PMIgaCWw1wSewZG3i1/D1NE3VR2APMD3+c6XAyvbsSJn50m1G53UUH8oI143cQm
+         G6OpRV6g83qixbPAMCe+SQWSWBrHOXjpfmD/84l7xZ10OzH8F0yUIhg0C80NB4k8tpSH
+         69wFQsuaCstKyD3OKr3T0/RB43YY7+J/qZn8TNdXTdKPLJXM6JgJKc8P7OwmsFzPzsrR
+         hsqVDcf3vCpxqxa3Yd8np1I/SiCDVYyWzz9cvm91VFdfQopaIS6LTvkFRl2vHEtiOwm1
+         UdEbV9iTukYhzLymw/Mg/iXPCU+YvHqt5wJOXB0zXH02eNpHLTJ4qnsv21aNg/1AXPn5
+         aM5Q==
+X-Gm-Message-State: AGi0PuY9yqy0hz/KaHwZPi9cP53Qmkv6VKAbfWv61WZErs7ti9yaOcUf
+        r5xpOKtdB45G+oMD+8ETX5knFmPQ4gg=
+X-Google-Smtp-Source: APiQypIbK0Sq70i4Cpg4oz3LmmIVGr/roVrzP1bi4SvrZXdKvety6H2CtsOX17jtmtk0SeOxRUQTPw==
+X-Received: by 2002:a19:c602:: with SMTP id w2mr7694232lff.74.1587408854739;
+        Mon, 20 Apr 2020 11:54:14 -0700 (PDT)
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com. [209.85.208.179])
+        by smtp.gmail.com with ESMTPSA id z23sm207361ljm.46.2020.04.20.11.54.13
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Apr 2020 11:54:13 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id f18so5215082lja.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 11:54:13 -0700 (PDT)
+X-Received: by 2002:a2e:b0f5:: with SMTP id h21mr6912419ljl.3.1587408852757;
+ Mon, 20 Apr 2020 11:54:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1586581352-27017-3-git-send-email-sivaprak@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200415071619.6052-1-sibis@codeaurora.org> <20200415071619.6052-2-sibis@codeaurora.org>
+In-Reply-To: <20200415071619.6052-2-sibis@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Mon, 20 Apr 2020 11:53:36 -0700
+X-Gmail-Original-Message-ID: <CAE=gft4NK8vXGwJFEtXwKroKfoSO8wPxq=fv35AVC6vSQk02ig@mail.gmail.com>
+Message-ID: <CAE=gft4NK8vXGwJFEtXwKroKfoSO8wPxq=fv35AVC6vSQk02ig@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] remoteproc: qcom_q6v5_mss: Remove unused
+ q6v5_da_to_va function
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org, Ohad Ben Cohen <ohad@wizery.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 11 Apr 2020 10:32:29 +0530, Sivaprakash Murugesan wrote:
-> Add ipq8074 compatible in QUSB2 PHY for high speed USB support.
-> 
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+On Wed, Apr 15, 2020 at 12:16 AM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Remove unsed q6v5_da_to_va function as the mss driver uses a per segment
+> dump function.
+>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
-> [V2]
->  * Added new compatible for IPQ8074
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+>  drivers/remoteproc/qcom_q6v5_mss.c | 14 --------------
+>  1 file changed, 14 deletions(-)
+>
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index b781fc8de3597..6a19e0e77236e 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -196,7 +196,6 @@ struct q6v5 {
+>
+>         phys_addr_t mpss_phys;
+>         phys_addr_t mpss_reloc;
+> -       void *mpss_region;
 
-Acked-by: Rob Herring <robh@kernel.org>
+Hm, this doesn't build for me on our Chrome tree:
+
+  CC [M]  drivers/remoteproc/qcom_q6v5_mss.o
+/mnt/host/source/src/third_party/kernel/v5.4/drivers/remoteproc/qcom_q6v5_mss.c:1118:16:
+error: no member named 'mpss_region' in 'struct q6v5'
+                ptr = qproc->mpss_region + offset;
+                      ~~~~~  ^
+/mnt/host/source/src/third_party/kernel/v5.4/drivers/remoteproc/qcom_q6v5_mss.c:1520:9:
+error: no member named 'mpss_region' in 'struct q6v5'
+        qproc->mpss_region = devm_ioremap_wc(qproc->dev,
+qproc->mpss_phys, qproc->mpss_size);
+        ~~~~~  ^
+/mnt/host/source/src/third_party/kernel/v5.4/drivers/remoteproc/qcom_q6v5_mss.c:1521:14:
+error: no member named 'mpss_region' in 'struct q6v5'
+        if (!qproc->mpss_region) {
+             ~~~~~  ^
