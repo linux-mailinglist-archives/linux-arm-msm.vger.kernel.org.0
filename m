@@ -2,99 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 130931B017B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 08:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B63C41B0229
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 09:04:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726147AbgDTGVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 02:21:37 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:17452 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726136AbgDTGVh (ORCPT
+        id S1726144AbgDTHEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 03:04:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37002 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725773AbgDTHEp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 02:21:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587363697; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=0IfGx6I1BxJkKZpwZMggyHAXr6vzsj1VCOzwfv6wkJA=; b=ljlU5t5CGqITXA+OAQTGXJcTuY1Qd7sMMXSBSwzhMlVb43T6l52/yRewhtNblVsv2HbnZtjY
- hP5MupZRptCi29dp4+IalPREvDc4tsfte8hsHGIhdDJ0RIYO1C9+B+q1D7Q1s6AWHul/UxFY
- mugnx8mwe3/1Ll4O3/o2igWkhyU=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9d3f67.7f78048fd2d0-smtp-out-n01;
- Mon, 20 Apr 2020 06:21:27 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EC2AEC433D2; Mon, 20 Apr 2020 06:21:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0CA9EC433F2;
-        Mon, 20 Apr 2020 06:21:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0CA9EC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: [PATCH V2 3/3] mmc: sdhci-msm: Enable ADMA length mismatch error interrupt
-Date:   Mon, 20 Apr 2020 11:50:25 +0530
-Message-Id: <1587363626-20413-4-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1587363626-20413-1-git-send-email-vbadigan@codeaurora.org>
-References: <1587363626-20413-1-git-send-email-vbadigan@codeaurora.org>
+        Mon, 20 Apr 2020 03:04:45 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99D0C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 00:04:45 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id q18so1062625pgm.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 00:04:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=s11JGkMo64bkJfoSlJ3gamPmjiZWAtO5TwTvV1WpWbE=;
+        b=qPMKe74Axz3iuvAgEm5PUFr0JEzorHbSLpp+t8fsBt4zWIqblwuGPlrPdfbH6ynq+v
+         k6BnEAr7JShE83PlTATp+w5cvsu+xYZ/tiNArEksPm3hswP5df/tqzSxdiOv84S4QsHb
+         f9ytGiOWi2JvmqB9UnEjQJpi122Ewhr+DANygi5JPA2tmijZEM6/c8sIFmxgU4zO4inX
+         1rnYKlj3GulChVuLX1GF9DOpMB2e3GJ+/LNoGikipve+CdFGffqdFwVlnlR+t2QnaY7B
+         pT01gl9peG3qmgQkMCHHq0Lpa9csFASI87dKS8dfaYkXbX/+RJzg45FBbCGqpYIEm5TU
+         3gaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=s11JGkMo64bkJfoSlJ3gamPmjiZWAtO5TwTvV1WpWbE=;
+        b=cXVoi/xFgXKNUhbUtIsq1NGaAEo9sPR3ugHeWPAbQgyZ+dSh4KZfF26KskINlWEyX8
+         1tbzcgaVlNYR2k4QAaWOh/rMSpYrr+EoGQRB3SQjfushzsOxpmJ3MkCq02Mu9rc/j4wq
+         RG1KL+2EWL0xfLEMw5mnOHSsne7dBhs+9kXBGoMSHJSWpdIRL1HoWAYXLcBTI1fjFoze
+         Z45Z+sAiBfBFt2FDj4buERYC4+I6RVUOQ4W32QCkkOc6AhVPiF19f+ypPY0tmfX7cb0f
+         FVZh+yuyLvZwSV4qkvLS3N7nKIi44gFeBJSHXmNdIzzFx/TOOTuywipv0gTPeejbWHjG
+         K10Q==
+X-Gm-Message-State: AGi0PuZLF/14ctspCDDqXb1ZpRrij1Awj8jjx3l30vHHtpYqIm8UcLtO
+        HpKz1fijCm5tyhKAJmvv+08SHQ==
+X-Google-Smtp-Source: APiQypKMKQQMJ6nKIy3wz/SKsVsP3OHHyydE/bozdcBab+k1rAjW8UgKZf3BSB7G8kadD+FVNopaMQ==
+X-Received: by 2002:a05:6a00:2cb:: with SMTP id b11mr15087011pft.42.1587366285066;
+        Mon, 20 Apr 2020 00:04:45 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a22sm159630pfg.169.2020.04.20.00.04.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Apr 2020 00:04:44 -0700 (PDT)
+Date:   Mon, 20 Apr 2020 00:05:07 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Siddharth Gupta <sidgup@codeaurora.org>
+Cc:     agross@kernel.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org
+Subject: Re: [PATCH v2 1/6] remoteproc: sysmon: Add ability to send type of
+ notification
+Message-ID: <20200420070507.GD1868936@builder.lan>
+References: <1586389003-26675-1-git-send-email-sidgup@codeaurora.org>
+ <1586389003-26675-2-git-send-email-sidgup@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1586389003-26675-2-git-send-email-sidgup@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ADMA_ERR_SIZE_EN bit of VENDOR_SPECIFIC_FUNC register controls
-ADMA length mismatch error interrupt. Enable it by default.
+On Wed 08 Apr 16:36 PDT 2020, Siddharth Gupta wrote:
 
-And update all bit shift defines with BIT macro.
+> Current implementation of the sysmon driver does not support adding
+> notifications for other remoteproc events - prepare, start, unprepare.
+> Clients on the remoteproc side might be interested in knowing when a
+> remoteproc boots up. This change adds the ability to send the notification
+> type along with the name. For example, audio DSP is interested in knowing
+> when modem has crashed so that it can perform cleanup and wait for modem to
+> boot up before it starts processing data again.
+> 
+> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
 
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
----
- drivers/mmc/host/sdhci-msm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 482045b..7d744f9 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -56,19 +56,19 @@
- #define CORE_FLL_CYCLE_CNT	BIT(18)
- #define CORE_DLL_CLOCK_DISABLE	BIT(21)
- 
--#define CORE_VENDOR_SPEC_POR_VAL 0xa1c
-+#define CORE_VENDOR_SPEC_POR_VAL 0xa9c
- #define CORE_CLK_PWRSAVE	BIT(1)
- #define CORE_HC_MCLK_SEL_DFLT	(2 << 8)
- #define CORE_HC_MCLK_SEL_HS400	(3 << 8)
- #define CORE_HC_MCLK_SEL_MASK	(3 << 8)
--#define CORE_IO_PAD_PWR_SWITCH_EN	(1 << 15)
--#define CORE_IO_PAD_PWR_SWITCH  (1 << 16)
-+#define CORE_IO_PAD_PWR_SWITCH_EN	BIT(15)
-+#define CORE_IO_PAD_PWR_SWITCH	BIT(16)
- #define CORE_HC_SELECT_IN_EN	BIT(18)
- #define CORE_HC_SELECT_IN_HS400	(6 << 19)
- #define CORE_HC_SELECT_IN_MASK	(7 << 19)
- 
--#define CORE_3_0V_SUPPORT	(1 << 25)
--#define CORE_1_8V_SUPPORT	(1 << 26)
-+#define CORE_3_0V_SUPPORT	BIT(25)
-+#define CORE_1_8V_SUPPORT	BIT(26)
- #define CORE_VOLT_SUPPORT	(CORE_3_0V_SUPPORT | CORE_1_8V_SUPPORT)
- 
- #define CORE_CSR_CDC_CTLR_CFG0		0x130
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+Regards,
+Bjorn
+
+> ---
+>  drivers/remoteproc/qcom_sysmon.c | 54 +++++++++++++++++++++++++++-------------
+>  1 file changed, 37 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+> index faf3822..1366050 100644
+> --- a/drivers/remoteproc/qcom_sysmon.c
+> +++ b/drivers/remoteproc/qcom_sysmon.c
+> @@ -46,6 +46,25 @@ struct qcom_sysmon {
+>  	struct sockaddr_qrtr ssctl;
+>  };
+>  
+> +enum {
+> +	SSCTL_SSR_EVENT_BEFORE_POWERUP,
+> +	SSCTL_SSR_EVENT_AFTER_POWERUP,
+> +	SSCTL_SSR_EVENT_BEFORE_SHUTDOWN,
+> +	SSCTL_SSR_EVENT_AFTER_SHUTDOWN,
+> +};
+> +
+> +static const char * const sysmon_state_string[] = {
+> +	[SSCTL_SSR_EVENT_BEFORE_POWERUP]	= "before_powerup",
+> +	[SSCTL_SSR_EVENT_AFTER_POWERUP]		= "after_powerup",
+> +	[SSCTL_SSR_EVENT_BEFORE_SHUTDOWN]	= "before_shutdown",
+> +	[SSCTL_SSR_EVENT_AFTER_SHUTDOWN]	= "after_shutdown",
+> +};
+> +
+> +struct sysmon_event {
+> +	const char *subsys_name;
+> +	u32 ssr_event;
+> +};
+> +
+>  static DEFINE_MUTEX(sysmon_lock);
+>  static LIST_HEAD(sysmon_list);
+>  
+> @@ -54,13 +73,15 @@ static LIST_HEAD(sysmon_list);
+>   * @sysmon:	sysmon context
+>   * @name:	other remote's name
+>   */
+> -static void sysmon_send_event(struct qcom_sysmon *sysmon, const char *name)
+> +static void sysmon_send_event(struct qcom_sysmon *sysmon,
+> +			      const struct sysmon_event *event)
+>  {
+>  	char req[50];
+>  	int len;
+>  	int ret;
+>  
+> -	len = snprintf(req, sizeof(req), "ssr:%s:before_shutdown", name);
+> +	len = snprintf(req, sizeof(req), "ssr:%s:%s", event->subsys_name,
+> +		       sysmon_state_string[event->ssr_event]);
+>  	if (len >= sizeof(req))
+>  		return;
+>  
+> @@ -149,13 +170,6 @@ static int sysmon_callback(struct rpmsg_device *rpdev, void *data, int count,
+>  #define SSCTL_SUBSYS_NAME_LENGTH	15
+>  
+>  enum {
+> -	SSCTL_SSR_EVENT_BEFORE_POWERUP,
+> -	SSCTL_SSR_EVENT_AFTER_POWERUP,
+> -	SSCTL_SSR_EVENT_BEFORE_SHUTDOWN,
+> -	SSCTL_SSR_EVENT_AFTER_SHUTDOWN,
+> -};
+> -
+> -enum {
+>  	SSCTL_SSR_EVENT_FORCED,
+>  	SSCTL_SSR_EVENT_GRACEFUL,
+>  };
+> @@ -331,7 +345,8 @@ static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
+>   * @sysmon:	sysmon context
+>   * @name:	other remote's name
+>   */
+> -static void ssctl_send_event(struct qcom_sysmon *sysmon, const char *name)
+> +static void ssctl_send_event(struct qcom_sysmon *sysmon,
+> +			     const struct sysmon_event *event)
+>  {
+>  	struct ssctl_subsys_event_resp resp;
+>  	struct ssctl_subsys_event_req req;
+> @@ -346,9 +361,9 @@ static void ssctl_send_event(struct qcom_sysmon *sysmon, const char *name)
+>  	}
+>  
+>  	memset(&req, 0, sizeof(req));
+> -	strlcpy(req.subsys_name, name, sizeof(req.subsys_name));
+> +	strlcpy(req.subsys_name, event->subsys_name, sizeof(req.subsys_name));
+>  	req.subsys_name_len = strlen(req.subsys_name);
+> -	req.event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN;
+> +	req.event = event->ssr_event;
+>  	req.evt_driven_valid = true;
+>  	req.evt_driven = SSCTL_SSR_EVENT_FORCED;
+>  
+> @@ -432,8 +447,12 @@ static int sysmon_start(struct rproc_subdev *subdev)
+>  static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
+>  {
+>  	struct qcom_sysmon *sysmon = container_of(subdev, struct qcom_sysmon, subdev);
+> +	struct sysmon_event event = {
+> +		.subsys_name = sysmon->name,
+> +		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
+> +	};
+>  
+> -	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)sysmon->name);
+> +	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+>  
+>  	/* Don't request graceful shutdown if we've crashed */
+>  	if (crashed)
+> @@ -456,19 +475,20 @@ static int sysmon_notify(struct notifier_block *nb, unsigned long event,
+>  {
+>  	struct qcom_sysmon *sysmon = container_of(nb, struct qcom_sysmon, nb);
+>  	struct rproc *rproc = sysmon->rproc;
+> -	const char *ssr_name = data;
+> +	struct sysmon_event *sysmon_event = data;
+>  
+>  	/* Skip non-running rprocs and the originating instance */
+> -	if (rproc->state != RPROC_RUNNING || !strcmp(data, sysmon->name)) {
+> +	if (rproc->state != RPROC_RUNNING ||
+> +	    !strcmp(sysmon_event->subsys_name, sysmon->name)) {
+>  		dev_dbg(sysmon->dev, "not notifying %s\n", sysmon->name);
+>  		return NOTIFY_DONE;
+>  	}
+>  
+>  	/* Only SSCTL version 2 supports SSR events */
+>  	if (sysmon->ssctl_version == 2)
+> -		ssctl_send_event(sysmon, ssr_name);
+> +		ssctl_send_event(sysmon, sysmon_event);
+>  	else if (sysmon->ept)
+> -		sysmon_send_event(sysmon, ssr_name);
+> +		sysmon_send_event(sysmon, sysmon_event);
+>  
+>  	return NOTIFY_DONE;
+>  }
+> -- 
+> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
