@@ -2,117 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2726E1B0FDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 17:21:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F1321B0FFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 17:26:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbgDTPVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 11:21:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57502 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbgDTPVT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 11:21:19 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 609DEC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 08:21:19 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id u16so3256025wmc.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 08:21:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=G/xNrmOfxlip1kYuKwMzJ0K+Zw7TpTWKwNC8FLYeOVE=;
-        b=scR/lsr/ImzL3Xwqj5p4gcDJy46jbSvEA+k6tsVX8NbGfGf7kL1pwUz5qgUfnMOmK4
-         sVlmO/s7PPlbf045xBeI1d/TB9SeihN6OvnYW0eiNx3MGrmW9uumiPeDiX6+6UUpteu1
-         XEO/hQIdGxWtJj0d6atjm/Hkys8CjOMLEh0PCdoz2UjdPdUJUdwngqqFLLw1KC68Frxo
-         LlY8SA26MGHXf/KuAj7nnNMtCBoaeEKmOSswZoSHWS4TJzKnGh2E1h4tHo5lwsLl9Smg
-         ojJk8H0rzWjHcg61LBoGR5ubxZUn+3WUhLcU+JUSZAUK37ej3wOTunBF0T/dEsPJZ+AI
-         evkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=G/xNrmOfxlip1kYuKwMzJ0K+Zw7TpTWKwNC8FLYeOVE=;
-        b=qWBp3n8ofONa5OPGDVaEKyCa2y1vfYT4dHCDGna8NhnpLI+GPtT0BYtr5QT2Bleash
-         2ZszNB8S7mJSLCvhrKIZkOCgeNvV5db8NmUFtfVM9UnasuO4FMNQuQZWRPC01FHuLQeY
-         F9UNhwQHikSgSLTN+KeybApiIR8dBumiT/90MZu6NpPG61bC/i6rmQGswIYAQ2QFx+dL
-         +RhkdvgBPpKR6/X90xcw0ldW0kV7qhYaJOm9k3ZuYokoisxuDnm2TuyDHrDJCStn7nzY
-         dHFn3Bj8ep8qnM8ZlGY7CaCnQg76Awrx1WCHdzzQzGyMBFjBGlim60o+NnD129xVqooo
-         RGxQ==
-X-Gm-Message-State: AGi0PuYR9wMXTlWjItq5SYYWPzRANbSnJUxHa+DZKr7Qis6TcWGAfuBx
-        SkD0Ik8Y+gz+SGEacKQWShXWPw==
-X-Google-Smtp-Source: APiQypK1bWqXkN8H3kmS+x+OEHJtMNHLIBzrzFR184iWS16f3+5krcSMVxzHcjyGzFeVUFyZmgYmzA==
-X-Received: by 2002:a1c:96c6:: with SMTP id y189mr19216914wmd.106.1587396076953;
-        Mon, 20 Apr 2020 08:21:16 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id e21sm1684652wrc.1.2020.04.20.08.21.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 08:21:16 -0700 (PDT)
-Date:   Mon, 20 Apr 2020 16:21:14 +0100
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Jason Yan <yanaijie@huawei.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        lee.jones@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, kgunda@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Hulk Robot <hulkci@huawei.com>
-Subject: Re: [PATCH] backlight: qcom-wled: remove 'wled4_string_cfg' and
- 'wled3_string_cfg'
-Message-ID: <20200420152114.b7licril3r6itd45@holly.lan>
-References: <20200417092335.14163-1-yanaijie@huawei.com>
+        id S1726123AbgDTP02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 11:26:28 -0400
+Received: from foss.arm.com ([217.140.110.172]:51002 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726050AbgDTP02 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Apr 2020 11:26:28 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 99BAD31B;
+        Mon, 20 Apr 2020 08:26:27 -0700 (PDT)
+Received: from [10.57.33.63] (unknown [10.57.33.63])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3F9483F73D;
+        Mon, 20 Apr 2020 08:26:25 -0700 (PDT)
+Subject: Re: [PATCHv2 3/6] iommu/arm-smmu: Implement
+ iommu_ops->def_domain_type call-back
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Evan Green <evgreen@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        iommu@lists.linux-foundation.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-kernel@lists.infradead.org
+References: <cover.1587392905.git.saiprakash.ranjan@codeaurora.org>
+ <558b1aee4c699a0a5b14b325178d22a79958488f.1587392905.git.saiprakash.ranjan@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <6dd26176-448a-985c-90fc-7c47088015ff@arm.com>
+Date:   Mon, 20 Apr 2020 16:26:22 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200417092335.14163-1-yanaijie@huawei.com>
+In-Reply-To: <558b1aee4c699a0a5b14b325178d22a79958488f.1587392905.git.saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 17, 2020 at 05:23:35PM +0800, Jason Yan wrote:
-> Fix the following gcc warning:
+On 2020-04-20 3:37 pm, Sai Prakash Ranjan wrote:
+> Implement the new def_domain_type call-back for the ARM
+> SMMU driver. We need this to support requesting the domain
+> type by the client devices.
 > 
-> drivers/video/backlight/qcom-wled.c:939:34: warning: ‘wled4_string_cfg’
-> defined but not used [-Wunused-const-variable=]
->  static const struct wled_var_cfg wled4_string_cfg = {
->                                   ^~~~~~~~~~~~~~~~
-> drivers/video/backlight/qcom-wled.c:935:34: warning: ‘wled3_string_cfg’
-> defined but not used [-Wunused-const-variable=]
->  static const struct wled_var_cfg wled3_string_cfg = {
->                                   ^~~~~~~~~~~~~~~~
-> 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Jason Yan <yanaijie@huawei.com>
-
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-
-
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  drivers/video/backlight/qcom-wled.c | 8 --------
->  1 file changed, 8 deletions(-)
+>   drivers/iommu/arm-smmu.c | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
 > 
-> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-> index 3d276b30a78c..df53fbd5cd03 100644
-> --- a/drivers/video/backlight/qcom-wled.c
-> +++ b/drivers/video/backlight/qcom-wled.c
-> @@ -932,14 +932,6 @@ static const struct wled_var_cfg wled4_string_i_limit_cfg = {
->  	.size = ARRAY_SIZE(wled4_string_i_limit_values),
->  };
->  
-> -static const struct wled_var_cfg wled3_string_cfg = {
-> -	.size = 8,
-> -};
-> -
-> -static const struct wled_var_cfg wled4_string_cfg = {
-> -	.size = 16,
-> -};
-> -
->  static u32 wled_values(const struct wled_var_cfg *cfg, u32 idx)
->  {
->  	if (idx >= cfg->size)
-> -- 
-> 2.21.1
+> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> index e622f4e33379..b5d1d52dfbb8 100644
+> --- a/drivers/iommu/arm-smmu.c
+> +++ b/drivers/iommu/arm-smmu.c
+> @@ -1609,6 +1609,25 @@ static void arm_smmu_get_resv_regions(struct device *dev,
+>   	iommu_dma_get_resv_regions(dev, head);
+>   }
+>   
+> +static int arm_smmu_def_domain_type(struct device *dev)
+> +{
+> +	struct iommu_fwspec *fwspec;
+> +	struct arm_smmu_device *smmu;
+> +
+> +	fwspec = dev_iommu_fwspec_get(dev);
+> +	if (!fwspec || fwspec->ops != &arm_smmu_ops)
+> +		return -ENODEV;
+> +
+> +	smmu = arm_smmu_get_by_fwnode(fwspec->iommu_fwnode);
+> +	if (!smmu)
+> +		return -ENODEV;
+> +
+
+AFAICS this should only ever be called for a device in a group, which 
+means an initial ->probe_device has succeeded and rather than 
+defensively going the long way round, we can safely assume this:
+
+	struct arm_smmu_master_cfg = dev_iommu_priv_get(dev);
+	struct arm_smmu_impl *impl = cfg->smmu->impl;
+
+	if (impl && impl->req_domain)
+		return impl->req_domain(dev);
+
+Or have I misunderstood the flow?
+
+Robin.
+
+> +	if (smmu->impl && smmu->impl->req_domain)
+> +		return smmu->impl->req_domain(dev);
+> +
+> +	return 0;
+> +}
+> +
+>   static struct iommu_ops arm_smmu_ops = {
+>   	.capable		= arm_smmu_capable,
+>   	.domain_alloc		= arm_smmu_domain_alloc,
+> @@ -1627,6 +1646,7 @@ static struct iommu_ops arm_smmu_ops = {
+>   	.of_xlate		= arm_smmu_of_xlate,
+>   	.get_resv_regions	= arm_smmu_get_resv_regions,
+>   	.put_resv_regions	= generic_iommu_put_resv_regions,
+> +	.def_domain_type	= arm_smmu_def_domain_type,
+>   	.pgsize_bitmap		= -1UL, /* Restricted during device attach */
+>   };
+>   
 > 
