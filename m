@@ -2,168 +2,300 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A37ED1B1616
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 21:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF0E21B1638
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 21:51:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725550AbgDTTnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 15:43:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43172 "EHLO
+        id S1726906AbgDTTvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 15:51:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725988AbgDTTnh (ORCPT
+        by vger.kernel.org with ESMTP id S1725897AbgDTTvJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 15:43:37 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E223C061A10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 12:43:37 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id f8so4341523plt.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 12:43:37 -0700 (PDT)
+        Mon, 20 Apr 2020 15:51:09 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0327BC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 12:51:08 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id t40so315537pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 12:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=kSI5jaWP14AnIVoCm5Yym8gL3leYasCeNvQ4GTDuwpc=;
-        b=fdfckbbL3Y3uWvzDUUyOxIri3i9PeJkVn5ApWa+tEt4PQtc2OS9H8fyfU/z7Z4Jqd1
-         wFQF+xUEANETRWIfTPV5zbCQeg3BJ0xB34S0wUT/avm16gdpgQ2v83cPMQWMrugKWTyH
-         A8mVI3Z2Gl2Y2OPG3aXMKBmgMceybHBf1p9KoOfrBvShPT8C23qO2gxcq6kow2eb7/Nb
-         DHCTChK+LUUjMzVoTSAg12KZqFVvjN/auUJYlKVEiZwj/sEChD3RSDKt1XlqNB6/Wn4a
-         POGectpZr2SSXelqOZ1HvmpvaAzG4tOOzwE831Sgz5q0pGIhBSJJzOSQ3nNgKw6m6nz+
-         CSpw==
+        bh=cXndO/9atMRBj3ki1OBgBAxeMbivxmBoqy5um/+TbH8=;
+        b=aKHshmB81P4jVzDuwe3k2sHJgUvtTm1Mcpd9HHn/+ZTXeDzs7LPgFHPinxZV33OTkh
+         pLup8x0WaJi7Rrvq6bARbjU8MnPvOUz5zJ3g9oxEkLBsKDGJqaVZWwXxnYq1LL6H1qil
+         tr81s68QkcTewzitq+PCd8ExjXkLEROJBeVCzKrIcaoq2OdEGEhcFOUG7KR85Pc97QDH
+         84FqeclwwQj8vxNGHVZBKGCtRCMAcAaDadYuUhNJrNdDxQ1EZqIJU2RtbsCz9PD6tmd1
+         qJWWGZ7TrLLUAGVfObzkBCWMqvO4NuJBKPEQiRHjO0zwiEkLg5DxUBkdmMsLmlKs479o
+         C9hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=kSI5jaWP14AnIVoCm5Yym8gL3leYasCeNvQ4GTDuwpc=;
-        b=rhedq5TekVvIZvu9aqyVFeQ/xJjlMs+CJXfLTEw0UQ7iOQnsHu9C4VYh5aN2uP13bM
-         BYeLssVgX9wgBzaHDY2qvMBgu62kJOiKYNXhMZETSO1ZNgWEMfECEkCvlx+J56seYvsE
-         6B/NHnFXqHAYPXSRuBHPxs1FZbH3l2D+0inRCMyYd8SHox5peb4/Dy2wX3+xEaQLm2ao
-         FRGe7MF1rUigBzHpZBMfoj6EeqpCCVai0GTPhyjjDu6CRl6MarkQuxhngV76H8/qZsZ/
-         kTLs39dYUoFwg2I1QYh/ZVEhw45cnmhSnNltSm4p8TswwogKbgenOBahLAnxk439mmHQ
-         22Ag==
-X-Gm-Message-State: AGi0Pub1FlmiwwnfWOJmTIrJIVU/0pXlmbYYeCdxi7i+MPCZM1oVZRrz
-        yVBbX5+93HJUCQpvfCrr+Mgy8Q==
-X-Google-Smtp-Source: APiQypKrQXVRMSn0gc3hbu3DCD9d+ihrNQzBeB13kvI3v5YoT7hBI1RfU8/Jxkt5h4VR7OZ5cNVEGA==
-X-Received: by 2002:a17:90a:fb89:: with SMTP id cp9mr1169242pjb.40.1587411816359;
-        Mon, 20 Apr 2020 12:43:36 -0700 (PDT)
+        bh=cXndO/9atMRBj3ki1OBgBAxeMbivxmBoqy5um/+TbH8=;
+        b=U8BX+O34nzAqVf5eix4NY1KFNqJV2OD3nySFKmGars+JYVsDK5a5s7aorFWt5deUW0
+         uertOQadXXxC6McInXk3VX/anixWW/W2/i35c2Q7tor0FQxt0meyOzTe3GPoUstmkmtj
+         317QLRkrSwBKQ8BvadcmSq5qwyusbMQul+kckfMvCEB7DhNva6nBGp4KJGj7dvU7GUWF
+         Y55iArrJWQvmAs/vdywq0ltmmunxJMM8YQRKuvI3ghmGCt5x4AmQuiXb9FeW/YK4xGF/
+         BviN3pEG3eLatnXEDFCwrQsY7r3+PJBFkEwxw77x72kfQEko+a2wjFPH30e9Cfgn11sH
+         OvXA==
+X-Gm-Message-State: AGi0Pua8fkJiSgPuX1MeDgSI3dkB6JmaW2zG2LTve/Ks21gVL2NdXuZi
+        EJTH/2Z4qaQg4pR7lnP62V9L7A==
+X-Google-Smtp-Source: APiQypKiYnTS3YZu4PQkYRxyoy2DcBPSp/lxOL17ZNtEaP8IVuejdUpKA+GupS/4BaQVy3zMZNf0Xg==
+X-Received: by 2002:a17:902:7618:: with SMTP id k24mr8746327pll.71.1587412267357;
+        Mon, 20 Apr 2020 12:51:07 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 185sm300063pfv.9.2020.04.20.12.43.35
+        by smtp.gmail.com with ESMTPSA id d8sm289923pfd.159.2020.04.20.12.51.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 12:43:35 -0700 (PDT)
-Date:   Mon, 20 Apr 2020 12:43:59 -0700
+        Mon, 20 Apr 2020 12:51:06 -0700 (PDT)
+Date:   Mon, 20 Apr 2020 12:51:30 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
         open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: fix pm8150 gpio interrupts
-Message-ID: <20200420194359.GP576963@builder.lan>
-References: <20200420153543.14512-1-jonathan@marek.ca>
+Subject: Re: [PATCH 2/9] Revert "drm/msm/a6xx: Use the DMA API for GMU memory
+ objects"
+Message-ID: <20200420195130.GQ576963@builder.lan>
+References: <20200420140313.7263-1-jonathan@marek.ca>
+ <20200420140313.7263-3-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200420153543.14512-1-jonathan@marek.ca>
+In-Reply-To: <20200420140313.7263-3-jonathan@marek.ca>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 20 Apr 08:35 PDT 2020, Jonathan Marek wrote:
+On Mon 20 Apr 07:03 PDT 2020, Jonathan Marek wrote:
 
-> This was mistakenly copied from the downstream dts, however the upstream
-> driver works differently.
-> 
-> I only tested this with the pm8150_gpios node (used with volume button),
-> but the 2 others should be the same.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> This reverts commit a5fb8b918920c6f7706a8b5b8ea535a7f077a7f6.
 
-Applied, thanks Jonathan
-
-Regards,
-Bjorn
+Why?
 
 > ---
->  arch/arm64/boot/dts/qcom/pm8150.dtsi  | 14 ++------------
->  arch/arm64/boot/dts/qcom/pm8150b.dtsi | 14 ++------------
->  arch/arm64/boot/dts/qcom/pm8150l.dtsi | 14 ++------------
->  3 files changed, 6 insertions(+), 36 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 115 +++++++++++++++++++++++---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |   6 +-
+>  2 files changed, 107 insertions(+), 14 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> index b6e304748a57..c0b197458665 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> @@ -73,18 +73,8 @@ pm8150_gpios: gpio@c000 {
->  			reg = <0xc000>;
->  			gpio-controller;
->  			#gpio-cells = <2>;
-> -			interrupts = <0x0 0xc0 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc1 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc2 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc3 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc4 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc5 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc6 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc7 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc8 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xc9 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xca 0x0 IRQ_TYPE_NONE>,
-> -				     <0x0 0xcb 0x0 IRQ_TYPE_NONE>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
->  		};
->  	};
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index c4e71abbdd53..748cd379065f 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -2,7 +2,6 @@
+>  /* Copyright (c) 2017-2019 The Linux Foundation. All rights reserved. */
 >  
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> index 322379d5c31f..40b5d75a4a1d 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> @@ -62,18 +62,8 @@ pm8150b_gpios: gpio@c000 {
->  			reg = <0xc000>;
->  			gpio-controller;
->  			#gpio-cells = <2>;
-> -			interrupts = <0x2 0xc0 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc1 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc2 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc3 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc4 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc5 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc6 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc7 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc8 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xc9 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xca 0x0 IRQ_TYPE_NONE>,
-> -				     <0x2 0xcb 0x0 IRQ_TYPE_NONE>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
->  		};
->  	};
+>  #include <linux/clk.h>
+> -#include <linux/dma-mapping.h>
+>  #include <linux/interconnect.h>
+>  #include <linux/pm_domain.h>
+>  #include <linux/pm_opp.h>
+> @@ -921,10 +920,21 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
 >  
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150l.dtsi b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-> index eb0e9a090e42..cf05e0685d10 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-> @@ -56,18 +56,8 @@ pm8150l_gpios: gpio@c000 {
->  			reg = <0xc000>;
->  			gpio-controller;
->  			#gpio-cells = <2>;
-> -			interrupts = <0x4 0xc0 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc1 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc2 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc3 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc4 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc5 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc6 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc7 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc8 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xc9 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xca 0x0 IRQ_TYPE_NONE>,
-> -				     <0x4 0xcb 0x0 IRQ_TYPE_NONE>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
->  		};
->  	};
+>  static void a6xx_gmu_memory_free(struct a6xx_gmu *gmu, struct a6xx_gmu_bo *bo)
+>  {
+> +	int count, i;
+> +	u64 iova;
+> +
+>  	if (IS_ERR_OR_NULL(bo))
+>  		return;
 >  
+> -	dma_free_wc(gmu->dev, bo->size, bo->virt, bo->iova);
+> +	count = bo->size >> PAGE_SHIFT;
+> +	iova = bo->iova;
+> +
+> +	for (i = 0; i < count; i++, iova += PAGE_SIZE) {
+> +		iommu_unmap(gmu->domain, iova, PAGE_SIZE);
+> +		__free_pages(bo->pages[i], 0);
+> +	}
+> +
+> +	kfree(bo->pages);
+>  	kfree(bo);
+>  }
+>  
+> @@ -932,6 +942,7 @@ static struct a6xx_gmu_bo *a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu,
+>  		size_t size)
+>  {
+>  	struct a6xx_gmu_bo *bo;
+> +	int ret, count, i;
+>  
+>  	bo = kzalloc(sizeof(*bo), GFP_KERNEL);
+>  	if (!bo)
+> @@ -939,14 +950,86 @@ static struct a6xx_gmu_bo *a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu,
+>  
+>  	bo->size = PAGE_ALIGN(size);
+>  
+> -	bo->virt = dma_alloc_wc(gmu->dev, bo->size, &bo->iova, GFP_KERNEL);
+> +	count = bo->size >> PAGE_SHIFT;
+>  
+> -	if (!bo->virt) {
+> +	bo->pages = kcalloc(count, sizeof(struct page *), GFP_KERNEL);
+> +	if (!bo->pages) {
+>  		kfree(bo);
+>  		return ERR_PTR(-ENOMEM);
+>  	}
+>  
+> +	for (i = 0; i < count; i++) {
+> +		bo->pages[i] = alloc_page(GFP_KERNEL);
+> +		if (!bo->pages[i])
+> +			goto err;
+> +	}
+> +
+> +	bo->iova = gmu->uncached_iova_base;
+> +
+> +	for (i = 0; i < count; i++) {
+> +		ret = iommu_map(gmu->domain,
+> +			bo->iova + (PAGE_SIZE * i),
+> +			page_to_phys(bo->pages[i]), PAGE_SIZE,
+> +			IOMMU_READ | IOMMU_WRITE);
+> +
+> +		if (ret) {
+> +			DRM_DEV_ERROR(gmu->dev, "Unable to map GMU buffer object\n");
+> +
+> +			for (i = i - 1 ; i >= 0; i--)
+> +				iommu_unmap(gmu->domain,
+> +					bo->iova + (PAGE_SIZE * i),
+> +					PAGE_SIZE);
+> +
+> +			goto err;
+> +		}
+> +	}
+> +
+> +	bo->virt = vmap(bo->pages, count, VM_IOREMAP,
+> +		pgprot_writecombine(PAGE_KERNEL));
+> +	if (!bo->virt)
+> +		goto err;
+> +
+> +	/* Align future IOVA addresses on 1MB boundaries */
+> +	gmu->uncached_iova_base += ALIGN(size, SZ_1M);
+> +
+>  	return bo;
+> +
+> +err:
+> +	for (i = 0; i < count; i++) {
+> +		if (bo->pages[i])
+> +			__free_pages(bo->pages[i], 0);
+> +	}
+> +
+> +	kfree(bo->pages);
+> +	kfree(bo);
+> +
+> +	return ERR_PTR(-ENOMEM);
+> +}
+> +
+> +static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
+> +{
+> +	int ret;
+> +
+> +	/*
+> +	 * The GMU address space is hardcoded to treat the range
+> +	 * 0x60000000 - 0x80000000 as un-cached memory. All buffers shared
+> +	 * between the GMU and the CPU will live in this space
+> +	 */
+> +	gmu->uncached_iova_base = 0x60000000;
+> +
+> +
+> +	gmu->domain = iommu_domain_alloc(&platform_bus_type);
+> +	if (!gmu->domain)
+> +		return -ENODEV;
+> +
+> +	ret = iommu_attach_device(gmu->domain, gmu->dev);
+> +
+> +	if (ret) {
+> +		iommu_domain_free(gmu->domain);
+> +		gmu->domain = NULL;
+> +	}
+> +
+> +	return ret;
+>  }
+>  
+>  /* Return the 'arc-level' for the given frequency */
+> @@ -1206,6 +1289,10 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+>  
+>  	a6xx_gmu_memory_free(gmu, gmu->hfi);
+>  
+> +	iommu_detach_device(gmu->domain, gmu->dev);
+> +
+> +	iommu_domain_free(gmu->domain);
+> +
+>  	free_irq(gmu->gmu_irq, gmu);
+>  	free_irq(gmu->hfi_irq, gmu);
+>  
+> @@ -1226,15 +1313,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>  
+>  	gmu->dev = &pdev->dev;
+>  
+> -	/* Pass force_dma false to require the DT to set the dma region */
+> -	ret = of_dma_configure(gmu->dev, node, false);
+> -	if (ret)
+> -		return ret;
+> -
+> -	/* Set the mask after the of_dma_configure() */
+> -	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(31));
+> -	if (ret)
+> -		return ret;
+> +	of_dma_configure(gmu->dev, node, true);
+>  
+>  	/* Fow now, don't do anything fancy until we get our feet under us */
+>  	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
+> @@ -1246,6 +1325,11 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>  	if (ret)
+>  		goto err_put_device;
+>  
+> +	/* Set up the IOMMU context bank */
+> +	ret = a6xx_gmu_memory_probe(gmu);
+> +	if (ret)
+> +		goto err_put_device;
+> +
+>  	/* Allocate memory for for the HFI queues */
+>  	gmu->hfi = a6xx_gmu_memory_alloc(gmu, SZ_16K);
+>  	if (IS_ERR(gmu->hfi))
+> @@ -1291,6 +1375,11 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>  err_memory:
+>  	a6xx_gmu_memory_free(gmu, gmu->hfi);
+>  
+> +	if (gmu->domain) {
+> +		iommu_detach_device(gmu->domain, gmu->dev);
+> +
+> +		iommu_domain_free(gmu->domain);
+> +	}
+>  	ret = -ENODEV;
+>  
+>  err_put_device:
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index 4af65a36d5ca..2af91ed7ed0c 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -12,7 +12,8 @@
+>  struct a6xx_gmu_bo {
+>  	void *virt;
+>  	size_t size;
+> -	dma_addr_t iova;
+> +	u64 iova;
+> +	struct page **pages;
+>  };
+>  
+>  /*
+> @@ -48,6 +49,9 @@ struct a6xx_gmu {
+>  	int hfi_irq;
+>  	int gmu_irq;
+>  
+> +	struct iommu_domain *domain;
+> +	u64 uncached_iova_base;
+> +
+>  	struct device *gxpd;
+>  
+>  	int idle_level;
 > -- 
 > 2.26.1
 > 
