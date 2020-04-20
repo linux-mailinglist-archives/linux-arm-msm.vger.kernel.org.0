@@ -2,147 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED2FC1B02E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 09:27:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C68C1B03AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 10:02:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726136AbgDTH1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 03:27:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726116AbgDTH1c (ORCPT
+        id S1726050AbgDTICQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 04:02:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725971AbgDTICP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 03:27:32 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B35E2C061A41
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 00:27:31 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id k11so10790201wrp.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 00:27:31 -0700 (PDT)
+        Mon, 20 Apr 2020 04:02:15 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10379C061A10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 01:02:15 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id s5so3269586uad.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 01:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=fLd3utKBUqircZ8XSU/jqQ1o3HOdiOgb+Til4epkr7E=;
-        b=Zjs6lkCZP51RU1eaQIhcoO3FB2Z6jXmILC0s2D752dm7NvsQ+tleMbs3JgJ0uCOger
-         E/tjxVQyBlWGd8C8KH6qKSy877jK0dOi4ouglmI3EUeSGLveLxJsg2RtwSK7UMdZjCHW
-         wFmMR6P5iaO2QXH4ksbOgvB+J3KLMVx+AA8FAPieKGTfyyESTZnp60vvRq2mOL1n6k89
-         exxFo80LcTgKlrntlkSIIORBACYyTzHdDPArnuLiOwJFPLXem/gn0Igo6JBXWNAODiUe
-         tLRv8q8+adw+2X8p6HhK3S5Eako2xzmyRKxo0WGwjta/t8GubKM8ali0sa3m5En/fezW
-         12VQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XGNbQJnwncFtmSfnnq7BG7mTK5kM8GPjPL8s7er/Oug=;
+        b=FPbM6YGm0+2v+a7dfLD2r1xsPIdoZzsB3WLcQQpt+iiMZ0ZPr6E+Xmah4VeCnoBVwM
+         1XI9tGVqd+amR+wTuvVcSje66GPeBZyjeGx2riOIZ5WnA0cCWkSXlmOFJdYy3+7LumtF
+         LXINRU0UpApdf0FihchJuJxe9kxYFW70+mWB6Od3Fk7CyKmTnue8LmsJWXLJ87jKt7pH
+         zhpqlZ7rQaVen8QMRXBN5XO7XD2vZOggFT3VHz80jzrnbGum40+ZXcX+aR8JsRCbvWl/
+         NTVTFHylhWw+j9qoGVrOVHACsQIgRAs2mxa48rsE1VTGzlzxfi5LNYP/TNrD0oFSu+Mr
+         Qqng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=fLd3utKBUqircZ8XSU/jqQ1o3HOdiOgb+Til4epkr7E=;
-        b=ah8/rfzifZHlmd3woU2YQ2iPnQzd+/9cImvmVjD+d1Mo416iv1pGnoGdTvyUldomsS
-         SZmySoklb54PgwOP9IRB0h3k24IM6fF7eBxkornya1nRsR4KEneNbZnhO0crqK2k/+4Q
-         GCJZ6DZXjYV+G+SThDpYLvjDPxlSf4MiMq1o04Ongq3ouvbQQOkvoTXcCtzXojF2HBcn
-         rWJFjTKaebAF8hSjxP8nUZFmaiuuCLef16Dh20kgg3ONhnIZxoDq5Q/k0moN0neUR/SZ
-         MUl5J6fOoymCuFaKFH3wI9p7GjcEVv0gbLswQrEtIp+aGSzYJtlcqGT/8j8hs5zKih1b
-         zZig==
-X-Gm-Message-State: AGi0PuZosNiOT8mUghBeK3PVsAdOpkd1nGOpg1sF9aHEL8DNF7nmFZ2x
-        akMgsXteFZ2NIA5be4l+aotXNA==
-X-Google-Smtp-Source: APiQypLZ95duN0TVR/SeVUQItXdNoeinc7W1AvPfKzE2PNLYi2bchw8ulFVhIRvX/oUlL+29V+w4Lg==
-X-Received: by 2002:a5d:5224:: with SMTP id i4mr17175368wra.1.1587367650264;
-        Mon, 20 Apr 2020 00:27:30 -0700 (PDT)
-Received: from dell ([95.149.164.107])
-        by smtp.gmail.com with ESMTPSA id v16sm188543wml.30.2020.04.20.00.27.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2020 00:27:29 -0700 (PDT)
-Date:   Mon, 20 Apr 2020 08:27:27 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     kgunda@codeaurora.org
-Cc:     Rob Herring <robh@kernel.org>, bjorn.andersson@linaro.org,
-        jingoohan1@gmail.com, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
-        jacek.anaszewski@gmail.com, pavel@ucw.cz, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
-        linux-arm-msm@vger.kernel.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH V5 1/4] backlight: qcom-wled: convert the wled bindings
- to .yaml format
-Message-ID: <20200420072727.GI3737@dell>
-References: <1586274430-28402-1-git-send-email-kgunda@codeaurora.org>
- <1586274430-28402-2-git-send-email-kgunda@codeaurora.org>
- <20200415150904.GA11174@bogus>
- <557e8bd874256271174402b5faba9c90@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XGNbQJnwncFtmSfnnq7BG7mTK5kM8GPjPL8s7er/Oug=;
+        b=ZMBPOTFZVLUiaKcb83lnq5JMJlO11K0pOqN4zqZgrPfiBKo25L7w7RJ7x+DM4Lp6vB
+         61vi1shpF5j2SBAEFSKujhZxc1ZenyQr+JVaxZbjSIwEtQIrOK8dFfozbwEYxsYr6Fgi
+         BG67jDGhmvQSfsOq4MDqII64Lm9G64crSIHh30eRCPckKR8aFoVNsyqEnQnpOZLyUb7m
+         R/5LlpzpSVnSnvDYbsVCFuCNXAQEVDZ/MRVKBt1oHKaOXuDSi2pXVbQP820GsHp0meha
+         +Jk7JsMBqfb2j87ZUGfuHNpVOtjUtmXMy/FeiEoJgd4QsXdfxapHCIN6TQzFuvLfQpbm
+         9bhw==
+X-Gm-Message-State: AGi0PuaDWmCBljQnrw+Ydw6Ie/PT1mDtBIPel0F5qgF2fACmUSJm45ot
+        L4eEUy+WvdJQmftvhkQ15iQXI0yg8xTSUrwD3DJ+PA==
+X-Google-Smtp-Source: APiQypLaYCzytAomXpGw0KpBtvlb+IMYlHUaXnefkBr/mv0cHGOaEE/8DDORc8fTsMLcsoUj78yspHZlXLsrfKD9OfU=
+X-Received: by 2002:ab0:6588:: with SMTP id v8mr6202526uam.100.1587369734116;
+ Mon, 20 Apr 2020 01:02:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <557e8bd874256271174402b5faba9c90@codeaurora.org>
+References: <1587363626-20413-1-git-send-email-vbadigan@codeaurora.org>
+In-Reply-To: <1587363626-20413-1-git-send-email-vbadigan@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 20 Apr 2020 10:01:38 +0200
+Message-ID: <CAPDyKFoOq3djNJzEppPwSUUfKYh2vrkcr3LmDEbfwPRa=Asphg@mail.gmail.com>
+Subject: Re: [PATCH V2 0/3] Minor fixes to sdhci-msm
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 Apr 2020, kgunda@codeaurora.org wrote:
+On Mon, 20 Apr 2020 at 08:20, Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
+>
+> Enable a couple of CAPS that qcom sd host controller supports.
+> Set a quirk for enabling support for auto cmd12.
+> And enable adma length mismatch error interrupt.
+>
+> --
+> V1: https://lore.kernel.org/linux-arm-msm/1586706808-27337-1-git-send-email-vbadigan@codeaurora.org
+> Changes since V1:
+>         Squashed two caps related patches and appiled stable tag.
+>
+> Veerabhadrarao Badiganti (3):
+>   mmc: sdhci-msm: Enable host capabilities pertains to R1b response
+>   mmc: sdhci-msm: Set SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12 quirk
+>   mmc: sdhci-msm: Enable ADMA length mismatch error interrupt
+>
+>  drivers/mmc/host/sdhci-msm.c | 17 +++++++++++------
+>  1 file changed, 11 insertions(+), 6 deletions(-)
+>
 
-> On 2020-04-15 20:39, Rob Herring wrote:
-> > On Tue, Apr 07, 2020 at 09:17:07PM +0530, Kiran Gunda wrote:
-> > > Convert the qcom-wled bindings from .txt to .yaml format.
-> > > Also replace PM8941 to WLED3 and PMI8998 to WLED4.
-> > > 
-> > > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> > > Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-> > > Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
-> > > ---
-> > >  .../bindings/leds/backlight/qcom-wled.txt          | 154
-> > > ----------------
-> > >  .../bindings/leds/backlight/qcom-wled.yaml         | 201
-> > > +++++++++++++++++++++
-> > >  2 files changed, 201 insertions(+), 154 deletions(-)
-> > >  delete mode 100644
-> > > Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
-> > >  create mode 100644
-> > > Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-[...]
-
-> > > +        interrupt-names:
-> > > +          items:
-> > > +            - const: ovp
-> > > +            - const: short
-> > 
-> > Move these 2 props to the main section adding a 'minItems: 1'. Then just
-> > define 'minItems: 2' here and 'maxItems: 1' in the 'then' clause.
-> > 
-> > > +
-> > > +required:
-> > > +  - compatible
-> > > +  - reg
-> > > +  - label
-> > 
-> > Add:
-> > 
-> > additionalProperties: false
-> > 
-> > > +
-> > > +examples:
-> > > +  - |
-> > > +    backlight@d800 {
-> > > +        compatible = "qcom,pm8941-wled";
-> > > +        reg = <0xd800 0x100>;
-> > > +        label = "backlight";
-> > > +
-> > > +        qcom,cs-out;
-> > > +        qcom,current-limit = <20>;
-> > > +        qcom,current-boost-limit = <805>;
-> > > +        qcom,switching-freq = <1600>;
-> > > +        qcom,ovp = <29>;
-> > > +        qcom,num-strings = <2>;
-> > > +        qcom,enabled-strings = <0 1>;
-> > > +     };
-> Thanks for reviewing. I will submit the next revision with all the fixes.
-
-Please trim your replies.
-
-Also, if you agree with all of the review comments, there really is no
-need to reply and/or thank the reviewer.  Simply submit a subsequent
-set with a bumped version indicator.
-
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+First patch applied for fixes, the other two for next, thanks!
+Kind regards
+Uffe
