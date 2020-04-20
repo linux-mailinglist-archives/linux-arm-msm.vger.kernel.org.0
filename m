@@ -2,150 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 003311B1198
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 18:29:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D85831B11BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 18:37:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725896AbgDTQ3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 12:29:19 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:14986 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725271AbgDTQ23 (ORCPT
+        id S1726759AbgDTQhu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 12:37:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41422 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726745AbgDTQhs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 12:28:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587400108; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=QA9CZuPAM8s1GI09MkFEN/LL8wgIB+Q0f+qXwJ/VpWg=;
- b=CHOzMuizuOZ8szlYs1XgI2AqoUZ10WffvJEum/q4inG48PFB1dUk7H7wJHUxTWDUFpsp1Qro
- 7WZrxKdH1toZl7ZytLRUILW+Kztfcgy2WP1OiU1vpc6TxVZQYfSLSaeLqCGR4ZBrQ+Oxguzt
- V3MTjtbwg73aKcoP5PtnENu8RVE=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9dcdac.7f23024071f0-smtp-out-n04;
- Mon, 20 Apr 2020 16:28:28 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 06E2BC43637; Mon, 20 Apr 2020 16:28:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3245DC433D2;
-        Mon, 20 Apr 2020 16:28:26 +0000 (UTC)
+        Mon, 20 Apr 2020 12:37:48 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1927DC025493
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 09:37:48 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id k11so13018027wrp.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 09:37:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Rj3jrSbU2b68oTmKDFbN7ThfXz7DCPKlENH6dIentbg=;
+        b=qOT0X9riAMzmEP5Ha7488hZVekV30Pk1csqcVzplu+ZIg38c2b8tJvtqrQxgpOYkB9
+         gX3MxO54dkj2kFQFhE5lK6hQo7mTnazAsr/J9Mos46z019jWW0wXkiX4mXVo7Slw+LmM
+         v5tq74Of3prsSVSua+OY6XUstDoUqWTCf0/NpP7ovNedfz5TSTxz9xs1B4lJkC9hP74b
+         YBH+u7CaAba8aqdOIlMvsOdBz5fvPCDxaisMIDG148fRwFWGWsEtfhVUIWBUGapQLE7h
+         bOZo0wZ/o5qKajlkAxKhsO8NZxFKfxwBbEQ6JKkH71oNt5TtD6msKqc81wIjQ6P9pA/e
+         A2cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Rj3jrSbU2b68oTmKDFbN7ThfXz7DCPKlENH6dIentbg=;
+        b=kv0mRm5VluVdL0cIP2qoSSMTQ6ySZwv4lownOVIe+YH9EwKZKepaEWjTdhHrFDE021
+         aWK/fRER9vZmBPG/2BADxod/xTauxcC+Py+APO3bobGejucR00xlvXogdZA9oTDJNZWe
+         zsYv4pP6Sq0pVhEvm8xXkba/4NvsxlbkDpMGtm8pavinkz0GU4/zEtkYWGJD9/o2h8rn
+         MTnL8YDhDMIUDhhocot2P36cUyQLwagzq5LCCTgQiAv/vdzwoinj/2tBw7bDllBJe8ty
+         nMx6SLpRY/I4qiJh7rPAwuj1CzU+r7QAj3uLGpSiEIwd2h8HUync3dyUqp6euwoHnPjt
+         UUqQ==
+X-Gm-Message-State: AGi0PuZOPl88Cfs3cYvUsfI6EHwzKy1DWkY/h9KZ1NuZ1T+Xp7LV5Kiu
+        bOiERkBs6ui+x8mVyiDzGH1uVA==
+X-Google-Smtp-Source: APiQypKAH6kAxnN7z1zkH/+viWwXnCewnUDNHJ9TNYyq8qYdBhojhij+2K2UR3NYJ6w9XnjttNtugg==
+X-Received: by 2002:adf:e5c8:: with SMTP id a8mr21467911wrn.56.1587400666708;
+        Mon, 20 Apr 2020 09:37:46 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id s8sm42510wru.38.2020.04.20.09.37.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Apr 2020 09:37:46 -0700 (PDT)
+Date:   Mon, 20 Apr 2020 17:37:44 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH V5 4/4] backlight: qcom-wled: Add support for WLED5
+ peripheral that is present on PM8150L PMICs
+Message-ID: <20200420163744.3qbeqwv7myzmam3d@holly.lan>
+References: <1586274430-28402-1-git-send-email-kgunda@codeaurora.org>
+ <1586274430-28402-5-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 20 Apr 2020 21:58:26 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Evan Green <evgreen@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        iommu@lists.linux-foundation.org,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2 2/6] iommu/arm-smmu: Allow client devices to select
- direct mapping
-In-Reply-To: <e35b10dc-8e58-f201-8485-9543dafbadfe@arm.com>
-References: <cover.1587392905.git.saiprakash.ranjan@codeaurora.org>
- <14539e787e6d8b7bd0a6d8f8a001baae6f691988.1587392905.git.saiprakash.ranjan@codeaurora.org>
- <e35b10dc-8e58-f201-8485-9543dafbadfe@arm.com>
-Message-ID: <65f21f15b90f73e16c0bb5bb75e835e6@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1586274430-28402-5-git-send-email-kgunda@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-04-20 21:27, Robin Murphy wrote:
-> On 2020-04-20 3:37 pm, Sai Prakash Ranjan wrote:
->> From: Jordan Crouse <jcrouse@codeaurora.org>
->> 
->> Some client devices want to directly map the IOMMU themselves instead
->> of using the DMA domain. Allow those devices to opt in to direct
->> mapping by way of a list of compatible strings.
->> 
->> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
->> Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> ---
->>   drivers/iommu/arm-smmu-qcom.c | 19 +++++++++++++++++++
->>   drivers/iommu/arm-smmu.h      |  1 +
->>   2 files changed, 20 insertions(+)
->> 
->> diff --git a/drivers/iommu/arm-smmu-qcom.c 
->> b/drivers/iommu/arm-smmu-qcom.c
->> index 64a4ab270ab7..0b3f159065aa 100644
->> --- a/drivers/iommu/arm-smmu-qcom.c
->> +++ b/drivers/iommu/arm-smmu-qcom.c
->> @@ -3,6 +3,7 @@
->>    * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->>    */
->>   +#include <linux/of_device.h>
->>   #include <linux/qcom_scm.h>
->>     #include "arm-smmu.h"
->> @@ -11,6 +12,23 @@ struct qcom_smmu {
->>   	struct arm_smmu_device smmu;
->>   };
->>   +static const struct of_device_id qcom_smmu_client_of_match[] = {
->> +	{ .compatible = "qcom,adreno" },
->> +	{ .compatible = "qcom,mdp4" },
->> +	{ .compatible = "qcom,mdss" },
->> +	{ .compatible = "qcom,sc7180-mdss" },
->> +	{ .compatible = "qcom,sdm845-mdss" },
->> +	{ }
->> +};
->> +
->> +static int qcom_smmu_request_domain(struct device *dev)
->> +{
->> +	const struct of_device_id *match =
->> +		of_match_device(qcom_smmu_client_of_match, dev);
->> +
->> +	return match ? IOMMU_DOMAIN_IDENTITY : 0;
->> +}
->> +
->>   static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
->>   {
->>   	int ret;
->> @@ -41,6 +59,7 @@ static int qcom_smmu500_reset(struct arm_smmu_device 
->> *smmu)
->>   }
->>     static const struct arm_smmu_impl qcom_smmu_impl = {
->> +	.req_domain = qcom_smmu_request_domain,
->>   	.reset = qcom_smmu500_reset,
->>   };
->>   diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
->> index 8d1cd54d82a6..662fdb4dccd2 100644
->> --- a/drivers/iommu/arm-smmu.h
->> +++ b/drivers/iommu/arm-smmu.h
->> @@ -386,6 +386,7 @@ struct arm_smmu_impl {
->>   	int (*init_context)(struct arm_smmu_domain *smmu_domain);
->>   	void (*tlb_sync)(struct arm_smmu_device *smmu, int page, int sync,
->>   			 int status);
->> +	int (*req_domain)(struct device *dev);
+On Tue, Apr 07, 2020 at 09:17:10PM +0530, Kiran Gunda wrote:
+> From: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
 > 
-> Nit: since the point is to implement the full
-> iommu_ops::def_domain_type interface, can we call it def_domain_type
-> please?
+> PM8150L WLED supports the following:
+>     - Two modulators and each sink can use any of the modulator
+>     - Multiple CABC selection options from which one can be selected/enabled
+>     - Multiple brightness width selection (12 bits to 15 bits)
 > 
+> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+> ---
+>  drivers/video/backlight/qcom-wled.c | 443 +++++++++++++++++++++++++++++++++++-
+>  1 file changed, 442 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> index a6ddaa9..3a57011 100644
+> --- a/drivers/video/backlight/qcom-wled.c
+> +++ b/drivers/video/backlight/qcom-wled.c
+> ...
+> +static const u8 wled5_brightness_reg[MOD_MAX] = {
+> +	[MOD_A] = WLED5_SINK_REG_MOD_A_BRIGHTNESS_LSB,
+> +	[MOD_B] = WLED5_SINK_REG_MOD_B_BRIGHTNESS_LSB,
+> +};
+> +
+> +static const u8 wled5_src_sel_reg[MOD_MAX] = {
+> +	[MOD_A] = WLED5_SINK_REG_MOD_A_SRC_SEL,
+> +	[MOD_B] = WLED5_SINK_REG_MOD_B_SRC_SEL,
+> +};
+> +
+> +static const u8 wled5_brt_wid_sel_reg[MOD_MAX] = {
+> +	[MOD_A] = WLED5_SINK_REG_MOD_A_BRIGHTNESS_WIDTH_SEL,
+> +	[MOD_B] = WLED5_SINK_REG_MOD_B_BRIGHTNESS_WIDTH_SEL,
+> +};
+> +
 
-Sure, will send the next version shortly.
+Each of these lookup tables are used exactly once... and half the time
+when this code chooses between MOD_A and MOD_B a ternary is used and
+half the time these lookup tables.
 
-Thanks,
-Sai
+I suggest these be removed.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+
+>  static int wled3_set_brightness(struct wled *wled, u16 brightness)
+>  {
+>  	int rc, i;
+> @@ -225,6 +291,25 @@ static int wled4_set_brightness(struct wled *wled, u16 brightness)
+>  	return 0;
+>  }
+>  
+> +static int wled5_set_brightness(struct wled *wled, u16 brightness)
+> +{
+> +	int rc, offset;
+> +	u16 low_limit = wled->max_brightness * 1 / 1000;
+
+Multiplying by 1 is redundant.
+
+
+> +	u8 v[2];
+> +
+> +	/* WLED5's lower limit is 0.1% */
+> +	if (brightness < low_limit)
+> +		brightness = low_limit;
+> +
+> +	v[0] = brightness & 0xff;
+> +	v[1] = (brightness >> 8) & 0x7f;
+> +
+> +	offset = wled5_brightness_reg[wled->cfg.mod_sel];
+> +	rc = regmap_bulk_write(wled->regmap, wled->sink_addr + offset,
+> +			       v, 2);
+> +	return rc;
+> +}
+> +
+>  static void wled_ovp_work(struct work_struct *work)
+>  {
+>  	struct wled *wled = container_of(work,
+> @@ -317,11 +420,67 @@ static int wled4_ovp_fault_status(struct wled *wled, bool *fault_set)
+>  	return rc;
+>  }
+>  
+> +static int wled5_ovp_fault_status(struct wled *wled, bool *fault_set)
+> +{
+> +	int rc;
+> +	u32 int_rt_sts, fault_sts;
+> +
+> +	*fault_set = false;
+> +	rc = regmap_read(wled->regmap,
+> +			wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS,
+> +			&int_rt_sts);
+> +	if (rc < 0) {
+> +		dev_err(wled->dev, "Failed to read INT_RT_STS rc=%d\n", rc);
+> +		return rc;
+> +	}
+> +
+> +	rc = regmap_read(wled->regmap,
+> +			wled->ctrl_addr + WLED3_CTRL_REG_FAULT_STATUS,
+> +			&fault_sts);
+> +	if (rc < 0) {
+> +		dev_err(wled->dev, "Failed to read FAULT_STATUS rc=%d\n", rc);
+> +		return rc;
+> +	}
+> +
+> +	if (int_rt_sts & WLED3_CTRL_REG_OVP_FAULT_STATUS)
+> +		*fault_set = true;
+> +
+> +	if (fault_sts & (WLED3_CTRL_REG_OVP_FAULT_BIT |
+> +			       WLED5_CTRL_REG_OVP_PRE_ALARM_BIT))
+
+Correct me if I'm wrong but isn't the only difference between the WLED4
+and WLED5 code that the wled5 code also checks the
+WLED5_CTRL_REG_OVP_PRE_ALARM_BIT ?
+
+If so why do we need to pull out (and duplicate) this code code using
+the function pointers?
+
+> +		*fault_set = true;
+> +
+> +	if (*fault_set)
+> +		dev_dbg(wled->dev, "WLED OVP fault detected, int_rt_sts=0x%x fault_sts=0x%x\n",
+> +			int_rt_sts, fault_sts);
+> +
+> +	return rc;
+> +}
+> +
+> @@ -615,6 +797,7 @@ static void wled_auto_string_detection(struct wled *wled)
+>  
+>  #define WLED_AUTO_DETECT_OVP_COUNT		5
+>  #define WLED_AUTO_DETECT_CNT_DLY_US		USEC_PER_SEC
+> +
+
+Nit picking but this additional line is in the wrong patch ;-)
+
+
+>  static bool wled4_auto_detection_required(struct wled *wled)
+>  {
+>  	s64 elapsed_time_us;
+> @@ -648,6 +831,46 @@ static bool wled4_auto_detection_required(struct wled *wled)
+>  	return false;
+>  }
+>  
+> +static bool wled5_auto_detection_required(struct wled *wled)
+> +{
+> +	s64 elapsed_time_us;
+> +
+> +	if (!wled->cfg.auto_detection_enabled)
+> +		return false;
+> +
+> +	/*
+> +	 * Check if the OVP fault was an occasional one
+> +	 * or if it's firing continuously, the latter qualifies
+> +	 * for an auto-detection check.
+> +	 */
+> +	if (!wled->auto_detection_ovp_count) {
+> +		wled->start_ovp_fault_time = ktime_get();
+> +		wled->auto_detection_ovp_count++;
+> +	} else {
+> +		/*
+> +		 * WLED5 has OVP fault density interrupt configuration i.e. to
+> +		 * count the number of OVP alarms for a certain duration before
+> +		 * triggering OVP fault interrupt. By default, number of OVP
+> +		 * fault events counted before an interrupt is fired is 32 and
+> +		 * the time interval is 12 ms. If we see more than one OVP fault
+> +		 * interrupt, then that should qualify for a real OVP fault
+> +		 * condition to run auto calibration algorithm.
+> +		 */
+
+Given the above why do we have a software mechanism to wait until the
+second time the interrupt fires? I'm a bit rusty on this driver but
+wasn't there already some mechanism to slightly delay turning on the
+fault detection?
+
+
+Daniel.
