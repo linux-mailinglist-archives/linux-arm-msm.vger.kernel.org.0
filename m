@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 485A61B148D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 20:34:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1129E1B1495
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2020 20:34:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727980AbgDTSeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Apr 2020 14:34:16 -0400
+        id S1728049AbgDTSeh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Apr 2020 14:34:37 -0400
 Received: from mail26.static.mailgun.info ([104.130.122.26]:39629 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726392AbgDTSeQ (ORCPT
+        by vger.kernel.org with ESMTP id S1725613AbgDTSeh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Apr 2020 14:34:16 -0400
+        Mon, 20 Apr 2020 14:34:37 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587407655; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1587407677; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Ix/MdnxLfjPN0cVkJkI+uYStoKyur9aJ+Sj4mNFkPFE=; b=e7e2f+baiZPZOxuDa5/iaMdizRiPX0fcDPjMViOiGAvoswZkFO+/KS3f7bwhkJ9l/D1O6SQJ
- UOVKVWgIwz/gJBjic+4nDLKlu5f/49Jmfw1i0OkYic6KoDdSJsG1a58oeU2FHJH5B0746xvA
- 3fv0AMgPH/b7U0OlF4hhfe0si4M=
+ Sender; bh=61buIY5X82HRMdX+d4mfLXJjssvVYLg7dZMcSf4n6g8=; b=lj3N3sigLsNyUebrV8SY/UIlJ52qa3rcItpOEq6jIby29Tdaz5CHj7R6IjGlJXd/l6L2/DT8
+ 4Ww5ZocoYoJK9tCbRDfMl/eHk2StyV4q6L6I7H22psEG4hi4wWbZ518ii/RRLDWO3boIvt6d
+ qfZQLSBE1mf5C4l9fGk5AVdMvng=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9deb26.7f79e0df0d88-smtp-out-n03;
- Mon, 20 Apr 2020 18:34:14 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e9deb2b.7f8fbaffa618-smtp-out-n05;
+ Mon, 20 Apr 2020 18:34:19 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8878EC44799; Mon, 20 Apr 2020 18:34:12 +0000 (UTC)
+        id 049ACC44795; Mon, 20 Apr 2020 18:34:17 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EDAD6C433CB;
-        Mon, 20 Apr 2020 18:34:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EDAD6C433CB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76F11C4478C;
+        Mon, 20 Apr 2020 18:34:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 76F11C4478C
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -53,9 +53,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Evan Green <evgreen@chromium.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv4 1/6] iommu: arm-smmu-impl: Convert to a generic reset implementation
-Date:   Tue, 21 Apr 2020 00:03:49 +0530
-Message-Id: <d24a0278021bc0b2732636c5728efe55e7318a8b.1587407458.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv4 2/6] iommu/arm-smmu: Implement iommu_ops->def_domain_type call-back
+Date:   Tue, 21 Apr 2020 00:03:50 +0530
+Message-Id: <28c5d101cc4ac29aff3553ecec7cf256d0907ed7.1587407458.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <cover.1587407458.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1587407458.git.saiprakash.ranjan@codeaurora.org>
@@ -66,84 +66,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently the QCOM specific smmu reset implementation is very
-specific to SDM845 SoC and has a wait-for-safe logic which
-may not be required for other SoCs. So move the SDM845 specific
-logic to its specific reset function. Also add SC7180 SMMU
-compatible for calling into QCOM specific implementation.
+Implement the new def_domain_type call-back for the ARM
+SMMU driver. We need this to support requesting the domain
+type by the client devices.
 
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Reviewed-by: Robin Murphy <robin.murphy@arm.com>
 ---
- drivers/iommu/arm-smmu-impl.c |  8 +++++---
- drivers/iommu/arm-smmu-qcom.c | 16 +++++++++++++---
- 2 files changed, 18 insertions(+), 6 deletions(-)
+ drivers/iommu/arm-smmu.c | 12 ++++++++++++
+ drivers/iommu/arm-smmu.h |  1 +
+ 2 files changed, 13 insertions(+)
 
-diff --git a/drivers/iommu/arm-smmu-impl.c b/drivers/iommu/arm-smmu-impl.c
-index 74d97a886e93..c75b9d957b70 100644
---- a/drivers/iommu/arm-smmu-impl.c
-+++ b/drivers/iommu/arm-smmu-impl.c
-@@ -150,6 +150,8 @@ static const struct arm_smmu_impl arm_mmu500_impl = {
- 
- struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
- {
-+	const struct device_node *np = smmu->dev->of_node;
-+
- 	/*
- 	 * We will inevitably have to combine model-specific implementation
- 	 * quirks with platform-specific integration quirks, but everything
-@@ -166,11 +168,11 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
- 		break;
- 	}
- 
--	if (of_property_read_bool(smmu->dev->of_node,
--				  "calxeda,smmu-secure-config-access"))
-+	if (of_property_read_bool(np, "calxeda,smmu-secure-config-access"))
- 		smmu->impl = &calxeda_impl;
- 
--	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-500"))
-+	if (of_device_is_compatible(np, "qcom,sdm845-smmu-500") ||
-+	    of_device_is_compatible(np, "qcom,sc7180-smmu-500"))
- 		return qcom_smmu_impl_init(smmu);
- 
- 	return smmu;
-diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-index 24c071c1d8b0..64a4ab270ab7 100644
---- a/drivers/iommu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm-smmu-qcom.c
-@@ -15,8 +15,6 @@ static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
- {
- 	int ret;
- 
--	arm_mmu500_reset(smmu);
--
- 	/*
- 	 * To address performance degradation in non-real time clients,
- 	 * such as USB and UFS, turn off wait-for-safe on sdm845 based boards,
-@@ -30,8 +28,20 @@ static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
- 	return ret;
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index e622f4e33379..b345a86085ce 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -1609,6 +1609,17 @@ static void arm_smmu_get_resv_regions(struct device *dev,
+ 	iommu_dma_get_resv_regions(dev, head);
  }
  
-+static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
++static int arm_smmu_def_domain_type(struct device *dev)
 +{
-+	const struct device_node *np = smmu->dev->of_node;
++	struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
++	const struct arm_smmu_impl *impl = cfg->smmu->impl;
 +
-+	arm_mmu500_reset(smmu);
-+
-+	if (of_device_is_compatible(np, "qcom,sdm845-smmu-500"))
-+		return qcom_sdm845_smmu500_reset(smmu);
++	if (impl && impl->def_domain_type)
++		return impl->def_domain_type(dev);
 +
 +	return 0;
 +}
 +
- static const struct arm_smmu_impl qcom_smmu_impl = {
--	.reset = qcom_sdm845_smmu500_reset,
-+	.reset = qcom_smmu500_reset,
+ static struct iommu_ops arm_smmu_ops = {
+ 	.capable		= arm_smmu_capable,
+ 	.domain_alloc		= arm_smmu_domain_alloc,
+@@ -1627,6 +1638,7 @@ static struct iommu_ops arm_smmu_ops = {
+ 	.of_xlate		= arm_smmu_of_xlate,
+ 	.get_resv_regions	= arm_smmu_get_resv_regions,
+ 	.put_resv_regions	= generic_iommu_put_resv_regions,
++	.def_domain_type	= arm_smmu_def_domain_type,
+ 	.pgsize_bitmap		= -1UL, /* Restricted during device attach */
  };
  
- struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+index 8d1cd54d82a6..d172c024be61 100644
+--- a/drivers/iommu/arm-smmu.h
++++ b/drivers/iommu/arm-smmu.h
+@@ -386,6 +386,7 @@ struct arm_smmu_impl {
+ 	int (*init_context)(struct arm_smmu_domain *smmu_domain);
+ 	void (*tlb_sync)(struct arm_smmu_device *smmu, int page, int sync,
+ 			 int status);
++	int (*def_domain_type)(struct device *dev);
+ };
+ 
+ static inline void __iomem *arm_smmu_page(struct arm_smmu_device *smmu, int n)
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
