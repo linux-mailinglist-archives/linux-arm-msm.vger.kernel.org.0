@@ -2,60 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D8DD1B24EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 13:21:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 053E11B2560
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 13:56:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728696AbgDULVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Apr 2020 07:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47754 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728654AbgDULVg (ORCPT
+        id S1727120AbgDUL4I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Apr 2020 07:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53072 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726018AbgDUL4H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Apr 2020 07:21:36 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 727ACC061A0F;
-        Tue, 21 Apr 2020 04:21:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=O7EX3G4leSXAdSVi0QkilAVF09SQ9P0JWv1IzyQNsJU=; b=h5gDfCj49aoEbBu9ZJ4lHd65T6
-        FDv1uS15ExHUVIk3Jay9BrCDj2SEnyddluEqxNi5OwblnYm30D4L0Yj5uePgy8aU7Gx8YZaOMt1qW
-        g2N8zv4mQ/pCQNl6PiWZstcmHKj1MQkMx/wz+oX+LAKPqwQtSyqrMkhfcLRhGkN6obUFrypEyWJnU
-        Fkbyy4VlDJG4ZvKdK5s4Pn/fgHatNqe9HCElT3XVQ95jZI/vwXMGejInOyypkojFW1k7L+lZZFoER
-        s0F9VBqoFzQK1W+CGLsCW456z0hrfpcWkioBT0ef+RfTF+dKSKtIP7rQwXQ/MY+q2Zqetin/KcDbQ
-        4xjaWiuw==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jQqy2-0006DO-NW; Tue, 21 Apr 2020 11:21:30 +0000
-Date:   Tue, 21 Apr 2020 04:21:30 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/9] Revert "drm/msm/a6xx: Use the DMA API for GMU memory
- objects"
-Message-ID: <20200421112130.GA29925@infradead.org>
-References: <20200420140313.7263-1-jonathan@marek.ca>
- <20200420140313.7263-3-jonathan@marek.ca>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200420140313.7263-3-jonathan@marek.ca>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+        Tue, 21 Apr 2020 07:56:07 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2C3C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 04:56:07 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id t63so3230184wmt.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 04:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=SK0twZznEqzJD5MKEltpD1yU85935Kk/UwNoJNpy5Ig=;
+        b=DhgFBXzN7Z6dZ+cdyKU9s6K4b8aUyxnBkh/O+4AjSI5b/O2RLlbs124RLsldFMAT+3
+         uDI1xdP40Trb4+U48TT7Um9kksYCJnOIC2pcu3IF8USZlR62iOqdleZDODwU51JsMT0Z
+         r31lEMISkXDi80+OmnOKQgH0tXZjwkW84KOJqD7qhOC/A4H42jzWRG/InMeqqQA11nBr
+         KD9oF3GBCwhccpuCVPH4jXVOzk/xKEbA5tWBDsdn1eUFNvOucmJNfyllHjcyZ78S7trs
+         ThuGDUP5iVt0JrnyvIaC/aLoKJuzYBDLAjKXopCcOXvHh5Xbv3Rr7pKWpuk2cegpruYL
+         tHZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SK0twZznEqzJD5MKEltpD1yU85935Kk/UwNoJNpy5Ig=;
+        b=f4Rk+42m0tFl84vt28BnOcdN2B2a1esF7oITM6vyKir58L4lIuxe9yIwwuCFSG8sK0
+         xh91fHwH5/yJEVeDhlxiSOlTu5d+cUb7Tlxmt9r9YT61Y3vHiM3H7bFhB0yrsojoRpAn
+         i+EpGwwPJMrsJlyjIA93pdwlN4Z6Lt/uRJawZkREbVGLRTKnHBUWBw0vK7wowv6CjkY5
+         8YNNsR9NQXGh2lvHojaQMCiytoWQA6/dZM+j+cvVrfbHOKJsvAV4XA6h+A1d1X9gn7O2
+         Xi21sQ3usRIDGOOAi3wqoJlsznDjkxZa1XjOjPDlyuFZQkzdfhDOKla6M4bKEq7+PaSK
+         P3eg==
+X-Gm-Message-State: AGi0PuY/9avO73W+t0G6bmheOepE3VQr/619VrFcbToDzsCB5ZtEzMjM
+        E0SiudkEGmtRveMhzNSrdqvDYg==
+X-Google-Smtp-Source: APiQypLEJIuLTeiFzueX9EjioDIcOXTCHk2h/G4FDPDcyih31IRM4CZwfAJxE+LU+gdPmuwB9abWTQ==
+X-Received: by 2002:a1c:3884:: with SMTP id f126mr4805111wma.91.1587470166134;
+        Tue, 21 Apr 2020 04:56:06 -0700 (PDT)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id u17sm4116430wra.63.2020.04.21.04.56.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Apr 2020 04:56:05 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH 1/2] arch: arm64: dts: msm8996: Fix CSI IRQ types
+Date:   Tue, 21 Apr 2020 14:00:24 +0200
+Message-Id: <1587470425-13726-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Using VM_IOREMAP outside of ioremap implementations is completely
-bogus.  Don't go there, especialy with such a horribly bad commit log.
+Each IRQ_TYPE_NONE interrupt causes a warning at boot.
+Fix that by defining an appropriate type.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 951c53a..24a4625 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1001,16 +1001,16 @@
+ 				"csi_clk_mux",
+ 				"vfe0",
+ 				"vfe1";
+-			interrupts = <GIC_SPI 78 0>,
+-				<GIC_SPI 79 0>,
+-				<GIC_SPI 80 0>,
+-				<GIC_SPI 296 0>,
+-				<GIC_SPI 297 0>,
+-				<GIC_SPI 298 0>,
+-				<GIC_SPI 299 0>,
+-				<GIC_SPI 309 0>,
+-				<GIC_SPI 314 0>,
+-				<GIC_SPI 315 0>;
++			interrupts = <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 80 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 296 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 297 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 298 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 299 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 309 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 314 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 315 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "csiphy0",
+ 				"csiphy1",
+ 				"csiphy2",
+-- 
+2.7.4
+
