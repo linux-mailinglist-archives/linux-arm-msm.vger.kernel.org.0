@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D562D1B2CC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 18:35:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C6811B2CD3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 18:39:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725990AbgDUQes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Apr 2020 12:34:48 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:59616 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726833AbgDUQer (ORCPT
+        id S1725870AbgDUQiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Apr 2020 12:38:52 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:64977 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725930AbgDUQiw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Apr 2020 12:34:47 -0400
+        Tue, 21 Apr 2020 12:38:52 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587486886; h=In-Reply-To: Content-Type: MIME-Version:
+ s=smtp; t=1587487130; h=In-Reply-To: Content-Type: MIME-Version:
  References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=z4m4GVLgDXCcfjWyV/ReLcM4EsDo1v6yZUlQduMxtdM=; b=ZFsJybrCDQW7+3djfiNrZ9QfLHHZmSyBdn+zljzHGQM9v/lJDI2IcUtQWebsmkrisNjDKjc3
- gYHSHnecCIDxdovS9J3QVDAhrMeDfGTXg/R4WkRtY+cKN7a22wpTxVYO80VteXQ/J4s5y+Ol
- Y2RgEStwEl8Kf+jCDQc2NQYV+eo=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ bh=ARqzDa0emM0SSGQygfh5tqB9cmkRZBpX2W+DDiBbY0s=; b=oLffDKGHrZOpg8oQ+H0IfCCLlmbEgfezbiU3/LKBbfKltFir4AYnd/OORcHFJplu0Ix3Xvbe
+ ExJeggYKbBHOwgs10mPmxsJFzsCb4+s0kugj+WTRQum84A1+tAOPsPN1nd73nWPQEIR7P4cU
+ Ev0eKHivE+ZjI/h7Lyo/Da4IslI=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9f209a.7f39881cdf48-smtp-out-n01;
- Tue, 21 Apr 2020 16:34:34 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e9f2197.7ffb0bd1ace0-smtp-out-n05;
+ Tue, 21 Apr 2020 16:38:47 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 90CDBC433D2; Tue, 21 Apr 2020 16:34:32 +0000 (UTC)
+        id 792B2C4478C; Tue, 21 Apr 2020 16:38:45 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,115 +34,151 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DFE0EC433CB;
-        Tue, 21 Apr 2020 16:34:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DFE0EC433CB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 61FAFC433CB;
+        Tue, 21 Apr 2020 16:38:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 61FAFC433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 21 Apr 2020 10:34:29 -0600
+Date:   Tue, 21 Apr 2020 10:38:41 -0600
 From:   Jordan Crouse <jcrouse@codeaurora.org>
 To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sharat Masetty <smasetty@codeaurora.org>,
+Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
         <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
         <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
         open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 7/9] drm/msm/a6xx: gmu_pdc register values for A640 and
- A650
-Message-ID: <20200421163428.GB13825@jcrouse1-lnx.qualcomm.com>
+Subject: Re: [Freedreno] [PATCH 8/9] drm/msm/a6xx: enable GMU log
+Message-ID: <20200421163841.GC13825@jcrouse1-lnx.qualcomm.com>
 Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sharat Masetty <smasetty@codeaurora.org>,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Sean Paul <sean@poorly.run>,
         open list <linux-kernel@vger.kernel.org>
 References: <20200420140313.7263-1-jonathan@marek.ca>
- <20200420140313.7263-8-jonathan@marek.ca>
+ <20200420140313.7263-9-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200420140313.7263-8-jonathan@marek.ca>
+In-Reply-To: <20200420140313.7263-9-jonathan@marek.ca>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 20, 2020 at 10:03:11AM -0400, Jonathan Marek wrote:
+On Mon, Apr 20, 2020 at 10:03:12AM -0400, Jonathan Marek wrote:
+> This is required for a650 to work.
+> 
 > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-
-I was wondering where this was.  I don't think there is any reason to not squash
-this into the previous patch since the GMU won't be operational without it.
-
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c     | 16 ++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h     |  1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h |  4 ++++
+>  3 files changed, 21 insertions(+)
 > 
 > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 3e51939eb867..b583bf6e293b 100644
+> index b583bf6e293b..1cdb7c832b87 100644
 > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
 > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -469,10 +469,18 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->  	struct platform_device *pdev = to_platform_device(gmu->dev);
->  	void __iomem *pdcptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc");
->  	void __iomem *seqptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
-> +	uint32_t pdc_address_offset;
+> @@ -198,6 +198,12 @@ static int a6xx_gmu_start(struct a6xx_gmu *gmu)
+>  	u32 val;
 >  
->  	if (!pdcptr || !seqptr)
->  		goto err;
->  
-> +	if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu))
-> +		pdc_address_offset = 0x30090;
-> +	else if (adreno_is_a650(adreno_gpu))
-> +		pdc_address_offset = 0x300a0;
-> +	else
-> +		pdc_address_offset = 0x30080;
+>  	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
 > +
+> +	/* Set the log wptr index
+> +	 * note: downstream saves the value in poweroff and restores it here
+> +	 */
+> +	gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_PWR_COL_CP_RESP, 0);
+> +
+>  	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 0);
+>  
+>  	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_CM3_FW_INIT_RESULT, val,
+> @@ -739,6 +745,9 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+>  
+>  	gmu_write(gmu, REG_A6XX_GMU_HFI_SFR_ADDR, chipid);
+>  
+> +	gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_PWR_COL_CP_MSG,
+> +		  gmu->log->iova | (gmu->log->size / SZ_4K - 1));
+> +
+>  	/* Set up the lowest idle level on the GMU */
+>  	a6xx_gmu_power_config(gmu);
+>  
+> @@ -1416,6 +1425,7 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+>  	a6xx_gmu_memory_free(gmu, gmu->dcache);
+>  	a6xx_gmu_memory_free(gmu, gmu->dummy);
+>  	a6xx_gmu_memory_free(gmu, gmu->debug);
+> +	a6xx_gmu_memory_free(gmu, gmu->log);
+>  	a6xx_gmu_memory_free(gmu, gmu->hfi);
+>  
+>  	iommu_detach_device(gmu->domain, gmu->dev);
+> @@ -1495,6 +1505,11 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>  	if (IS_ERR(gmu->hfi))
+>  		goto err_memory;
+>  
+> +	/* Allocate memory for the GMU log region */
+> +	gmu->log = a6xx_gmu_memory_alloc(gmu, SZ_4K, 0);
+> +	if (IS_ERR(gmu->log))
+> +		goto err_memory;
+> +
+>  	/* Map the GMU registers */
+>  	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu");
+>  	if (IS_ERR(gmu->mmio))
+> @@ -1542,6 +1557,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>  	a6xx_gmu_memory_free(gmu, gmu->dcache);
+>  	a6xx_gmu_memory_free(gmu, gmu->dummy);
+>  	a6xx_gmu_memory_free(gmu, gmu->debug);
+> +	a6xx_gmu_memory_free(gmu, gmu->log);
+>  	a6xx_gmu_memory_free(gmu, gmu->hfi);
 
->  	/* Disable SDE clock gating */
->  	gmu_write_rscc(gmu, REG_A6XX_GPU_RSCC_RSC_STATUS0_DRV0, BIT(24));
+This is starting to feel like we could use some devres style garbage collection.
+
 >  
-> @@ -523,10 +531,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS1_CMD0_DATA + 4, 0x0);
+>  	if (gmu->domain) {
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index abd425ca6682..589b9b0c348e 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -59,6 +59,7 @@ struct a6xx_gmu {
 >  
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS1_CMD0_MSGID + 8, 0x10108);
-> -	if (adreno_is_a618(adreno_gpu))
-> -		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS1_CMD0_ADDR + 8, 0x30090);
-> -	else
-> -		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS1_CMD0_ADDR + 8, 0x30080);
-> +	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS1_CMD0_ADDR + 8, pdc_address_offset);
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS1_CMD0_DATA + 8, 0x0);
+>  	struct a6xx_gmu_bo *hfi;
+>  	struct a6xx_gmu_bo *debug;
+> +	struct a6xx_gmu_bo *log;
+>  	struct a6xx_gmu_bo *icache;
+>  	struct a6xx_gmu_bo *dcache;
+>  	struct a6xx_gmu_bo *dummy;
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
+> index b4357ea550ec..176ae94d9fe6 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
+> @@ -205,6 +205,10 @@ static inline uint32_t A6XX_GMU_GPU_NAP_CTRL_SID(uint32_t val)
 >  
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD_ENABLE_BANK, 7);
-> @@ -538,17 +543,12 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>  #define REG_A6XX_GPU_GMU_CX_GMU_CX_FAL_INTF			0x000050f0
 >  
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_MSGID + 4, 0x10108);
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_ADDR + 4, 0x30000);
-> -	if (adreno_is_a618(adreno_gpu))
-> +	if (adreno_is_a618(adreno_gpu) || adreno_is_a650(adreno_gpu))
->  		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 4, 0x2);
->  	else
->  		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 4, 0x3);
-> -
-> -
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_MSGID + 8, 0x10108);
-> -	if (adreno_is_a618(adreno_gpu))
-> -		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_ADDR + 8, 0x30090);
-> -	else
-> -		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_ADDR + 8, 0x30080);
-> +	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_ADDR + 8, pdc_address_offset);
->  	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 8, 0x3);
+> +#define REG_A6XX_GPU_GMU_CX_GMU_PWR_COL_CP_MSG			0x00005100
+> +
+> +#define REG_A6XX_GPU_GMU_CX_GMU_PWR_COL_CP_RESP			0x00005101
+> +
+>  #define REG_A6XX_GMU_BOOT_KMD_LM_HANDSHAKE			0x000051f0
 >  
->  	/* Setup GPU PDC */
+>  #define REG_A6XX_GMU_LLM_GLM_SLEEP_CTRL				0x00005157
 > -- 
 > 2.26.1
 > 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
