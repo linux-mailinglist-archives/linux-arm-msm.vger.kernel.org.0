@@ -2,77 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 719DE1B1F6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 09:02:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B49B51B2013
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 09:41:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727070AbgDUHCc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Apr 2020 03:02:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58498 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725926AbgDUHCc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Apr 2020 03:02:32 -0400
-Received: from localhost (unknown [106.51.105.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B1CA92087E;
-        Tue, 21 Apr 2020 07:02:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1587452551;
-        bh=SefUlbt3qGHfn6YQKmn5agcjbImsOYkE3084h7LU2Gw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wnzOppAjScernL62L6WM7PpcossVcK1U8Jq2hn03K+m47fAeBghXcIi/3VdhC1TAR
-         RVphA9wtZEzojdxBic9znqJ9gbAcTskD/sCAqwhnO4SR5B7DzDpBhEmbI643eiOr2J
-         ThEol07eyCQmyjl6qyEJB9RZ4ECpQ1fdQPLofByk=
-Date:   Tue, 21 Apr 2020 12:32:27 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Fix PDC compatible and reg
-Message-ID: <20200421070227.GD72691@vkoul-mobl>
-References: <20200415054703.739507-1-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200415054703.739507-1-bjorn.andersson@linaro.org>
+        id S1726422AbgDUHlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Apr 2020 03:41:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41908 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727931AbgDUHlM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Apr 2020 03:41:12 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 436F6C061A41
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 00:41:12 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id j7so2817335pgj.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 00:41:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=EsNcm2QyXE0JffGh+pkvc6bbJEwtWjuB0Wr2Sf2lXbY=;
+        b=FpgGVn8b4GSV6n81bPJiJsBMDGJ9ltWjFEH7eGZkueRrdU/uIYWjlAa5QmDN9UcJAc
+         x6hXCcj7vHjmEC4Fhh/oBMIv5Uo7SQ9l8ssUV6SVOGCYO/x6+IZqrs3eL18syMLVFuXX
+         Vl48vUEOusANomqKpVSls6ToJXVO3h7cqH7soGrqEZXMkXNKLRCbuNKPvP1mF7iCcEjt
+         TPM/+XVHtAoqEY+9bUX580gZoVXx+P0A2yoylCJ2r7heBeXvr7OJDzRZ+cRNlIXUyJU/
+         NG5BpFSmYQLub0Y1koIYC3Cnzj/C97D8c/cSAj3V5uVOBVqziSEx+jjB0h/8UOC4IHIJ
+         ci2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=EsNcm2QyXE0JffGh+pkvc6bbJEwtWjuB0Wr2Sf2lXbY=;
+        b=gf9/hwFwWSPhoqaEmjNBCLqdIL5FyryiST0yim4K58SZhwIM4OBjDm0X2V/InYtsH2
+         BWbz9lp+DQA65tDlUsgLIRTZiqdRv6WsX7Qx0E6BYItb9uLFn54vqyUhGOM0weyaJPBO
+         1Us4Y34QSlzCDy6Z9oSaa2c4JsiKC0Mk38czd0Vaa8jOfwUwmcHITk6+1ECYNrTC3BrR
+         lLLt/+5OC0m0OCeXukUfLWPbjpOEuB+KkvGroxClhn82O3H4d21DxY3FtItV+9ZyZDpB
+         TTStRL5QiuDbz+Tf5tm4509YfEJy9Q32FAf480o5zie/GuH/6whvJvd5i00PrbAyXU8A
+         fhpg==
+X-Gm-Message-State: AGi0PuYYKhcTT/9SUATLAE/kblmcllbUt9988MI+4hSEg0hEqK5TWd3h
+        P7vM4ttwM8tDNc+gIBkT0F2h
+X-Google-Smtp-Source: APiQypKK7ZAxY6aQjP4/84tAUiZ60907CjmPq272+8pgw2xIDqFByoZSgiGyEnqElyLcf/TcF762lA==
+X-Received: by 2002:aa7:919a:: with SMTP id x26mr20333990pfa.39.1587454871426;
+        Tue, 21 Apr 2020 00:41:11 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4072:6289:7463:c15b:2de1:b77e:d971])
+        by smtp.gmail.com with ESMTPSA id i15sm1574564pfo.195.2020.04.21.00.41.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Apr 2020 00:41:10 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     davem@davemloft.net, kuba@kernel.org
+Cc:     bjorn.andersson@linaro.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] net: qrtr: Add tracepoint support
+Date:   Tue, 21 Apr 2020 13:10:54 +0530
+Message-Id: <20200421074054.23613-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-04-20, 22:47, Bjorn Andersson wrote:
-> The pdc node suffers from both too narrow compatible and insufficient
-> cells in the reg, fix these.
+Add tracepoint support for QRTR with NS as the first candidate. Later on
+this can be extended to core QRTR and transport drivers.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Tested-by: Vinod Koul <vkoul@kernel.org>
+The trace_printk() used in NS has been replaced by tracepoints.
 
-> Fixes: 60378f1a171e ("arm64: dts: qcom: sm8250: Add sm8250 dts file")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 891d83b2afea..2a7eaefd221d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -314,8 +314,8 @@ intc: interrupt-controller@17a00000 {
->  		};
->  
->  		pdc: interrupt-controller@b220000 {
-> -			compatible = "qcom,sm8250-pdc";
-> -			reg = <0x0b220000 0x30000>, <0x17c000f0 0x60>;
-> +			compatible = "qcom,sm8250-pdc", "qcom,pdc";
-> +			reg = <0 0x0b220000 0 0x30000>, <0 0x17c000f0 0 0x60>;
->  			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
->  					  <125 63 1>, <126 716 12>;
->  			#interrupt-cells = <2>;
-> -- 
-> 2.24.0
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ include/trace/events/qrtr.h | 115 ++++++++++++++++++++++++++++++++++++
+ net/qrtr/ns.c               |  20 ++++---
+ 2 files changed, 126 insertions(+), 9 deletions(-)
+ create mode 100644 include/trace/events/qrtr.h
 
+diff --git a/include/trace/events/qrtr.h b/include/trace/events/qrtr.h
+new file mode 100644
+index 000000000000..b1de14c3bb93
+--- /dev/null
++++ b/include/trace/events/qrtr.h
+@@ -0,0 +1,115 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM qrtr
++
++#if !defined(_TRACE_QRTR_H) || defined(TRACE_HEADER_MULTI_READ)
++#define _TRACE_QRTR_H
++
++#include <linux/qrtr.h>
++#include <linux/tracepoint.h>
++
++TRACE_EVENT(qrtr_ns_service_announce_new,
++
++	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
++
++	TP_ARGS(service, instance, node, port),
++
++	TP_STRUCT__entry(
++		__field(__le32, service)
++		__field(__le32, instance)
++		__field(__le32, node)
++		__field(__le32, port)
++	),
++
++	TP_fast_assign(
++		__entry->service = service;
++		__entry->instance = instance;
++		__entry->node = node;
++		__entry->port = port;
++	),
++
++	TP_printk("advertising new server [%d:%x]@[%d:%d]",
++		  __entry->service, __entry->instance, __entry->node,
++		  __entry->port
++	)
++);
++
++TRACE_EVENT(qrtr_ns_service_announce_del,
++
++	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
++
++	TP_ARGS(service, instance, node, port),
++
++	TP_STRUCT__entry(
++		__field(__le32, service)
++		__field(__le32, instance)
++		__field(__le32, node)
++		__field(__le32, port)
++	),
++
++	TP_fast_assign(
++		__entry->service = service;
++		__entry->instance = instance;
++		__entry->node = node;
++		__entry->port = port;
++	),
++
++	TP_printk("advertising removal of server [%d:%x]@[%d:%d]",
++		  __entry->service, __entry->instance, __entry->node,
++		  __entry->port
++	)
++);
++
++TRACE_EVENT(qrtr_ns_server_add,
++
++	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
++
++	TP_ARGS(service, instance, node, port),
++
++	TP_STRUCT__entry(
++		__field(__le32, service)
++		__field(__le32, instance)
++		__field(__le32, node)
++		__field(__le32, port)
++	),
++
++	TP_fast_assign(
++		__entry->service = service;
++		__entry->instance = instance;
++		__entry->node = node;
++		__entry->port = port;
++	),
++
++	TP_printk("add server [%d:%x]@[%d:%d]",
++		  __entry->service, __entry->instance, __entry->node,
++		  __entry->port
++	)
++);
++
++TRACE_EVENT(qrtr_ns_message,
++
++	TP_PROTO(const char * const ctrl_pkt_str, __u32 sq_node, __u32 sq_port),
++
++	TP_ARGS(ctrl_pkt_str, sq_node, sq_port),
++
++	TP_STRUCT__entry(
++		__string(ctrl_pkt_str, ctrl_pkt_str)
++		__field(__u32, sq_node)
++		__field(__u32, sq_port)
++	),
++
++	TP_fast_assign(
++		__assign_str(ctrl_pkt_str, ctrl_pkt_str);
++		__entry->sq_node = sq_node;
++		__entry->sq_port = sq_port;
++	),
++
++	TP_printk("%s from %d:%d",
++		  __get_str(ctrl_pkt_str), __entry->sq_node, __entry->sq_port
++	)
++);
++
++#endif /* _TRACE_QRTR_H */
++
++/* This part must be outside protection */
++#include <trace/define_trace.h>
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index a703d4fbdedf..4b0cffdcfed1 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -12,6 +12,9 @@
+ 
+ #include "qrtr.h"
+ 
++#define CREATE_TRACE_POINTS
++#include <trace/events/qrtr.h>
++
+ static RADIX_TREE(nodes, GFP_KERNEL);
+ 
+ static struct {
+@@ -105,8 +108,8 @@ static int service_announce_new(struct sockaddr_qrtr *dest,
+ 	struct msghdr msg = { };
+ 	struct kvec iv;
+ 
+-	trace_printk("advertising new server [%d:%x]@[%d:%d]\n",
+-		     srv->service, srv->instance, srv->node, srv->port);
++	trace_qrtr_ns_service_announce_new(srv->service, srv->instance,
++					   srv->node, srv->port);
+ 
+ 	iv.iov_base = &pkt;
+ 	iv.iov_len = sizeof(pkt);
+@@ -132,8 +135,8 @@ static int service_announce_del(struct sockaddr_qrtr *dest,
+ 	struct kvec iv;
+ 	int ret;
+ 
+-	trace_printk("advertising removal of server [%d:%x]@[%d:%d]\n",
+-		     srv->service, srv->instance, srv->node, srv->port);
++	trace_qrtr_ns_service_announce_del(srv->service, srv->instance,
++					   srv->node, srv->port);
+ 
+ 	iv.iov_base = &pkt;
+ 	iv.iov_len = sizeof(pkt);
+@@ -244,8 +247,8 @@ static struct qrtr_server *server_add(unsigned int service,
+ 
+ 	radix_tree_insert(&node->servers, port, srv);
+ 
+-	trace_printk("add server [%d:%x]@[%d:%d]\n", srv->service,
+-		     srv->instance, srv->node, srv->port);
++	trace_qrtr_ns_server_add(srv->service, srv->instance,
++				 srv->node, srv->port);
+ 
+ 	return srv;
+ 
+@@ -633,9 +636,8 @@ static void qrtr_ns_worker(struct work_struct *work)
+ 		cmd = le32_to_cpu(pkt->cmd);
+ 		if (cmd < ARRAY_SIZE(qrtr_ctrl_pkt_strings) &&
+ 		    qrtr_ctrl_pkt_strings[cmd])
+-			trace_printk("%s from %d:%d\n",
+-				     qrtr_ctrl_pkt_strings[cmd], sq.sq_node,
+-				     sq.sq_port);
++			trace_qrtr_ns_message(qrtr_ctrl_pkt_strings[cmd],
++					      sq.sq_node, sq.sq_port);
+ 
+ 		ret = 0;
+ 		switch (cmd) {
 -- 
-~Vinod
+2.17.1
+
