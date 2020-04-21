@@ -2,137 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 854101B31AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 23:15:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0004C1B32D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 00:54:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726378AbgDUVPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Apr 2020 17:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55188 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726398AbgDUVP3 (ORCPT
+        id S1726079AbgDUWyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Apr 2020 18:54:33 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:2588 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725850AbgDUWyc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Apr 2020 17:15:29 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B701BC03C1A7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 14:15:29 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id g30so7207244pfr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 14:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BjXLxKYx2J4SfneKVn6eyAIDqxc8kteAmWSGrEv3s1Q=;
-        b=CcJCluHY3oWgCqfj8YhfZKPo0NR/BUu6kAlYc9e5Oewk1f5pCuZN7xV0s8bJRPKSaa
-         jN+bzjxqRaMU7hrDRd5nNyB2ufRcJdE8b+aIVwOlnZcSoBmTm7+6Ka+Hyjdbn8I/xBdB
-         1FpGO292NE9dv3pw6YfLq20gXxSIurqzigZRk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BjXLxKYx2J4SfneKVn6eyAIDqxc8kteAmWSGrEv3s1Q=;
-        b=ZGjD2lsvwA0tFDqcn7mZhP1v1OFRD/mGx5UHMyBXOwFd9lKgio+FTJoB7uOev/waUs
-         25J46Shc95P1sUXvqcZIxx0wHz8PunKnZxGE02fmXyLMmyeJYTwE7KDf1mV5JO40dDrA
-         D+1wZynOZPCjYpjPdBWEN8AGT1McB28VXt5y0xuA6R42lJQlYSsGIYJGieYvJpFOwbKC
-         4Om1L0WW4rxO0bLYE27UQTlNv96HQrFG4xFlLwb65yrsdKPF62/x/aFYfAjmmfb89rac
-         X6UrzIYIV70ecpF9xSpH4/9oaz2C2AYI4kuVm0e7tIc2rgRekPIU6ScdgcKi3CdSnqh/
-         Z0pw==
-X-Gm-Message-State: AGi0PuYS5dmT3GyXrWqmaz8ruJHW0fFoKl2gQVbz/lH3p4hdx+x/0Jo+
-        CrxeH75rXQxj2oq6jLEDNYjRcA==
-X-Google-Smtp-Source: APiQypKbzNZ3tNv1+91oSCmg1IIaM8GOSYYn0L8dUZkcD300x8Du/f0RDrz/WsZ9Oyq+POo+vU2dNg==
-X-Received: by 2002:a63:f14b:: with SMTP id o11mr24165243pgk.429.1587503729162;
-        Tue, 21 Apr 2020 14:15:29 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id c1sm3287880pfo.152.2020.04.21.14.15.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2020 14:15:28 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     jason.wessel@windriver.com, daniel.thompson@linaro.org,
-        gregkh@linuxfoundation.org
-Cc:     kgdb-bugreport@lists.sourceforge.net, mingo@redhat.com,
-        hpa@zytor.com, bp@alien8.de, linux-serial@vger.kernel.org,
-        agross@kernel.org, tglx@linutronix.de, frowand.list@gmail.com,
-        bjorn.andersson@linaro.org, jslaby@suse.com,
-        catalin.marinas@arm.com, corbet@lwn.net, will@kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 8/9] serial: qcom_geni_serial: Support earlycon_kgdboc
-Date:   Tue, 21 Apr 2020 14:14:46 -0700
-Message-Id: <20200421141234.v2.8.If2deff9679a62c1ce1b8f2558a8635dc837adf8c@changeid>
-X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb9-goog
-In-Reply-To: <20200421211447.193860-1-dianders@chromium.org>
-References: <20200421211447.193860-1-dianders@chromium.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 21 Apr 2020 18:54:32 -0400
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Apr 2020 15:54:32 -0700
+Received: from asutoshd-linux1.qualcomm.com ([10.46.160.39])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 21 Apr 2020 15:54:32 -0700
+Received: by asutoshd-linux1.qualcomm.com (Postfix, from userid 92687)
+        id D3A0C20A3C; Tue, 21 Apr 2020 15:54:31 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        Avri.Altman@wdc.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v1 0/3] WriteBooster Feature Support 
+Date:   Tue, 21 Apr 2020 15:54:15 -0700
+Message-Id: <cover.1586374414.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement the read() function in the early console driver.  With
-recent kgdb patches this allows you to use kgdb to debug fairly early
-into the system boot.
+v1 -> v2:
+- Refactor WriteBooster initialization, introduce ufshcd_wb_probe()
+- Refactor ufshcd_wb_keep_vcc_on() and introduce a new function
+  ufshcd_wb_presrv_usrspc_keep_vcc_on()
+- Get the WriteBooster configuration by reading
+  bWriteBoosterBufferPreserveUserSpaceEn
 
-We only bother implementing this if polling is enabled since kgdb
-can't be enabled without that.
+RFC -> v1:
+- Added platform capability for WriteBooster 
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+RFC-:
+v1 -> v2:
+- Addressed comments on v1
 
-Changes in v2: None
+- Supports shared buffer mode only
 
- drivers/tty/serial/qcom_geni_serial.c | 32 +++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+- Didn't use exception event as suggested.
+  The reason being while testing I saw that the WriteBooster
+  available buffer remains at 0x1 for a longer time if flush is
+  enabled all the time as compared to an event-based enablement.
+  This essentially means that writes go to the WriteBooster buffer
+  more. Spec says that the if flush is enabled, the device would
+  flush when it sees the command queue empty. So I guess that'd trigger
+  flush more than an event based approach.
+  Anyway the Vcc would be turned-off during system suspend, so flush
+  would stop anyway.
+  In this patchset, I never turn-off flush.
+  Hence the RFC.
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 6119090ce045..4563d152b39e 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1090,6 +1090,36 @@ static void qcom_geni_serial_earlycon_write(struct console *con,
- 	__qcom_geni_serial_console_write(&dev->port, s, n);
- }
- 
-+#ifdef CONFIG_CONSOLE_POLL
-+static int qcom_geni_serial_earlycon_read(struct console *con,
-+					  char *s, unsigned int n)
-+{
-+	struct earlycon_device *dev = con->data;
-+	struct uart_port *uport = &dev->port;
-+	int num_read = 0;
-+	int ch;
-+
-+	while (num_read < n) {
-+		ch = qcom_geni_serial_get_char(uport);
-+		if (ch == NO_POLL_CHAR)
-+			break;
-+		s[num_read++] = ch;
-+	}
-+
-+	return num_read;
-+}
-+
-+static void __init qcom_geni_serial_enable_early_read(struct geni_se *se,
-+						      struct console *con)
-+{
-+	geni_se_setup_s_cmd(se, UART_START_READ, 0);
-+	con->read = qcom_geni_serial_earlycon_read;
-+}
-+#else
-+static inline void qcom_geni_serial_enable_early_read(struct geni_se *se,
-+						      struct console *con) { ; }
-+#endif
-+
- static int __init qcom_geni_serial_earlycon_setup(struct earlycon_device *dev,
- 								const char *opt)
- {
-@@ -1136,6 +1166,8 @@ static int __init qcom_geni_serial_earlycon_setup(struct earlycon_device *dev,
- 
- 	dev->con->write = qcom_geni_serial_earlycon_write;
- 	dev->con->setup = NULL;
-+	qcom_geni_serial_enable_early_read(&se, dev->con);
-+
- 	return 0;
- }
- OF_EARLYCON_DECLARE(qcom_geni, "qcom,geni-debug-uart",
+Asutosh Das (3):
+  scsi: ufs: add write booster feature support
+  ufs-qcom: scsi: configure write booster type
+  ufs: sysfs: add sysfs entries for write booster
+
+ drivers/scsi/ufs/ufs-qcom.c  |   8 ++
+ drivers/scsi/ufs/ufs-sysfs.c |  39 ++++++-
+ drivers/scsi/ufs/ufs.h       |  37 ++++++-
+ drivers/scsi/ufs/ufshcd.c    | 241 ++++++++++++++++++++++++++++++++++++++++++-
+ drivers/scsi/ufs/ufshcd.h    |  43 ++++++++
+ 5 files changed, 362 insertions(+), 6 deletions(-)
+
 -- 
-2.26.1.301.g55bc3eb7cb9-goog
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
