@@ -2,237 +2,320 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C4921B1E02
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 07:11:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AECBA1B1E5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 07:52:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbgDUFKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Apr 2020 01:10:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47002 "EHLO
+        id S1725902AbgDUFw0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Apr 2020 01:52:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725902AbgDUFKd (ORCPT
+        by vger.kernel.org with ESMTP id S1725881AbgDUFwZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Apr 2020 01:10:33 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D0CC061A0F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 22:10:32 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id l25so4961219vso.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 22:10:32 -0700 (PDT)
+        Tue, 21 Apr 2020 01:52:25 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4727C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 22:52:25 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id e6so905618pjt.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 22:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=paY1iS0XEZ77enyUCSAjc82NPQz1vfWi3ogs5RoLTF8=;
-        b=cTY27kyZpzya/ce62x2DSXdivxksVD4ic99dmmaHrZAhFeLPacuvPUA7XTHalvr8xs
-         f++kpfBsi0pzd7nkKr6rmRE0tbOihYyHCpqRejn3tKBVDvBqPyinzwDi5+TFD5KCGAlX
-         LTKqc/x4oYbutmj1ygpL8EF+z+YXVnQTkiuRM=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=mJgvtzAo6PiW+teMlYV8oXA7KbzTUyqEYabZe2Afi1U=;
+        b=jtCOcXA1pDRNgt+oeZMeN8OptbUKeipNHN9yrrqgQ1UL+ee5zqFAN2MntBwE4ihYkn
+         zWYksnZLufzYrKWHcDmHm/DARQNay06V4yMpw2PJ86CRSCSYfxa3Jr32UwobVKNAfFO7
+         Hg85ykHH4wPUNEQjG02Uowq5rG0EXYSLg0QadN2ODzvwpjrLpwirgpkYJ8HMc2QtZvFf
+         f7KwPKNtL9tuYUJDiHV8GpG6e9sTGpwcFjfy3JMO0h/Hgx4ovqgdEco9qKPx5PTZcbi8
+         WKNJvzZCI4AWdv/wuAuN5wxSDpEABsm38UCDjD6YtktJHwji9fCyS4f9kW6B3D5ip4WH
+         0ktw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=paY1iS0XEZ77enyUCSAjc82NPQz1vfWi3ogs5RoLTF8=;
-        b=P4SVxTzZV4QiemPeiT7K71DdA/KR5CSmaCbEDZTxqhQ1cJEt6IJH8wuUrKxe07kioA
-         oJHIcj8sYPSkXHR1AfFjY58//vUJKLYY+fkn+llmRJzZteuPqRnbnR5oINLtjy07nOV3
-         XVCwssAOhYHwjOKOBwMrvWM50h+ka5iQspblrYDVGscsZyQtykKoHjLOGSezW/cC5IOe
-         Pxql/1K/efiQndj0wryyt3lFOS9IjQEzyIiXM+MDInTyrN03KUsKbj4wQyuHpuLqLow+
-         6madZvoDV9EDS8OzGqxwC3ox3AJg6PHaxMTnVGsdFgqNIm6teZZSm5qPsWGDqRKrf6Fe
-         V7OA==
-X-Gm-Message-State: AGi0PuZZ+WNKqeszpFBD2MTQGhe3EdBlbOYFb4uBolYWXZ9mUFfio0py
-        mArjr4Y3LTdvXEzxiGAk/O4EYgIyX4Y=
-X-Google-Smtp-Source: APiQypIY5SWVkernb0EkDn8EzClaYnV4XXp6WyJmzhjgzwuN7UT5r5dlgwtFrHMX58D35cR1oXznTQ==
-X-Received: by 2002:a67:63c3:: with SMTP id x186mr13588045vsb.63.1587445830843;
-        Mon, 20 Apr 2020 22:10:30 -0700 (PDT)
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
-        by smtp.gmail.com with ESMTPSA id g130sm473825vke.15.2020.04.20.22.10.29
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Apr 2020 22:10:29 -0700 (PDT)
-Received: by mail-vs1-f54.google.com with SMTP id 1so7629915vsl.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2020 22:10:29 -0700 (PDT)
-X-Received: by 2002:a67:bd07:: with SMTP id y7mr9130800vsq.109.1587445828879;
- Mon, 20 Apr 2020 22:10:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=mJgvtzAo6PiW+teMlYV8oXA7KbzTUyqEYabZe2Afi1U=;
+        b=MHwLuWBx0vsi69/WjQ19ZTtKrvAqeRRJCCyDXQqcCSmCU6TYX53FAsa0lMHaShnd2C
+         07wuYNDQpbMCEIhrlUdehWWzZaLttJ3P68MZHAtriaZ/YLqmQcaUF4JFdZOdo/vj53Fa
+         49Lw6m7qWgx7d5caWugn0hLasnJD+lcWBZbuKGzrux5ozWTuU7st8j3WceDrxCf2oFDL
+         qINlgRKyfheVYg1hiDG1urHAlzvYr2WfJ+2XQDNbRaJfKcQ5d5XJdgXpzQfkXAvj6GgU
+         V6UlMQuPPrXNQy2l4FlS2hJxSrv3ZF8Tc3Hk1FeolFuuc2dpbku4jagMyLXEHsMp0Z2W
+         nH+w==
+X-Gm-Message-State: AGi0PuYv2QQH9UBDnQdw52G58UCgB5Q7vJ5NECAz0CGnu3Z52Bf8v4Mz
+        UhxGKfgC299V7U3F1TbipHnt
+X-Google-Smtp-Source: APiQypLz5WIUL21BrJFE2X1cS9KhMxg7CGPrcjoobEXkFmcrR0iFtbhrYaDce7BSFRhVmvSP/4TTxQ==
+X-Received: by 2002:a17:902:ba89:: with SMTP id k9mr19854616pls.199.1587448343924;
+        Mon, 20 Apr 2020 22:52:23 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6289:7463:c15b:2de1:b77e:d971])
+        by smtp.gmail.com with ESMTPSA id s44sm1252851pjc.28.2020.04.20.22.52.20
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 Apr 2020 22:52:23 -0700 (PDT)
+Date:   Tue, 21 Apr 2020 11:22:18 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: Re: [bug report] bus: mhi: core: Add support for data transfer
+Message-ID: <20200421055218.GA4327@Mani-XPS-13-9360>
+References: <20200407135559.GA109574@mwanda>
+ <20200407143304.GH2442@Mani-XPS-13-9360>
+ <d30c7648-b657-d8b2-ba64-71f1178b4a68@codeaurora.org>
+ <20200417101428.GA10295@Mani-XPS-13-9360>
+ <184d0d8e-1d5f-c317-a40b-1b44e79ad293@codeaurora.org>
+ <19504ACB-4E2A-4883-92E2-7AAC056CE3B4@linaro.org>
+ <7d1bda90-dec3-3cfe-9bfc-dbcf97f9a72d@codeaurora.org>
 MIME-Version: 1.0
-References: <20200415084758.1.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid>
- <20200415084758.2.Ic98f6622c60a1aa547ed85781f2c3b9d3e56b734@changeid>
- <158698038289.105027.2860892334897893887@swboyd.mtv.corp.google.com>
- <20200415203256.GP4758@pendragon.ideasonboard.com> <CAD=FV=U1U7y_U4+zySzA9e_uYE0ECdM1Bd-ew0OxG3ciqjRVSA@mail.gmail.com>
- <20200416005409.GR4758@pendragon.ideasonboard.com> <CAD=FV=WWZ1txHYOQZuCASbspLUP-Ds6OtrzetbJLHySpUyW6YQ@mail.gmail.com>
- <20200417180819.GE5861@pendragon.ideasonboard.com>
-In-Reply-To: <20200417180819.GE5861@pendragon.ideasonboard.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 20 Apr 2020 22:10:17 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UpYALN6xrN5bpZTqqPLVUDB-MJ7BaQE28vrSRR3b+8MA@mail.gmail.com>
-Message-ID: <CAD=FV=UpYALN6xrN5bpZTqqPLVUDB-MJ7BaQE28vrSRR3b+8MA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: drm/bridge: ti-sn65dsi86: Add hpd-gpios
- to the bindings
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7d1bda90-dec3-3cfe-9bfc-dbcf97f9a72d@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon, Apr 20, 2020 at 03:57:58PM -0700, Hemant Kumar wrote:
+> Hi Mani,
+> 
+> On 4/18/20 12:19 PM, Manivannan Sadhasivam wrote:
+> > Hi Hemant,
+> > 
+> > Please try to use an email client supporting plain text mode like mutt. Your reply looks mangled.
+> > 
+> > On 18 April 2020 12:40:10 PM IST, Hemant Kumar <hemantk@codeaurora.org> wrote:
+> > > Hi Mani,
+> > > 
+> > > On 4/17/20 3:14 AM, Manivannan Sadhasivam wrote:
+> > > > Hi Hemant,
+> > > > 
+> > > > On Thu, Apr 16, 2020 at 08:37:16PM -0700, Hemant Kumar wrote:
+> > > > > On 4/7/20 7:33 AM, Manivannan Sadhasivam wrote:
+> > > > > > Hi Dan,
+> > > > > > 
+> > > > > > On Tue, Apr 07, 2020 at 04:55:59PM +0300, Dan Carpenter wrote:
+> > > > > > > Hello Manivannan Sadhasivam,
+> > > > > > > 
+> > > > > > > The patch 189ff97cca53: "bus: mhi: core: Add support for data
+> > > > > > > transfer" from Feb 20, 2020, leads to the following static checker
+> > > > > > > warning:
+> > > > > > > 
+> > > > > > > 	drivers/bus/mhi/core/main.c:1153 mhi_queue_buf()
+> > > > > > > 	error: double locked 'mhi_chan->lock' (orig line 1110)
+> > > > > > > 
+> > > > > > > drivers/bus/mhi/core/main.c
+> > > > > > >      1142          }
+> > > > > > >      1143
+> > > > > > >      1144          /* Toggle wake to exit out of M2 */
+> > > > > > >      1145          mhi_cntrl->wake_toggle(mhi_cntrl);
+> > > > > > >      1146
+> > > > > > >      1147          if (mhi_chan->dir == DMA_TO_DEVICE)
+> > > > > > >      1148                  atomic_inc(&mhi_cntrl->pending_pkts);
+> > > > > > >      1149
+> > > > > > >      1150          if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+> > > > > > >      1151                  unsigned long flags;
+> > > > > > >      1152
+> > > > > > >      1153                  read_lock_irqsave(&mhi_chan->lock,
+> > > flags);
+> > > > > parse_xfer_event is taking read lock :
+> > > read_lock_bh(&mhi_chan->lock); first
+> > > > > and later
+> > > > > 
+> > > > > mhi_queue_buf takes read lock: read_lock_irqsave(&mhi_chan->lock,
+> > > flags);
+> > > > > 
+> > > > > Both are read locks which are recursive, is this problematic ?
+> > > > > 
+> > > > read_locks are recursive but I wanted to make the static checker
+> > > happy. But
+> > > > looking into it further (and after having a chat with Arnd), we might
+> > > need to
+> > > > refactor the locking here.
+> > > > 
+> > > > Since 'chan->lock' only prevents 'mhi_chan->ch_state', how about
+> > > doing something
+> > > > like below?
+> > > 
+> > > As comment mentioned for OOB (to enter  DB mode) write lock is acquired
+> > > 
+> > > with preemption disabled (irqsave ver). In case of OOB event control
+> > > does not go to mhi_queue_buf
+> > > 
+> > > path.
+> > 
+> > Again, why do we need irq version of write lock. It should only be used if the data is shared with hardirq handlers which I don't see. Otherwise, write_lock_bh() looks sufficient to me as this itself is an exclusive lock.
+> irq ver disables preemption where as bh ver does not. In case of OOB event,
+> idea is not get preempted and this is for short duration of ringing the
+> channel doorbell.
 
-On Fri, Apr 17, 2020 at 11:08 AM Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
->
-> As for the hpd-gpios, it should be specified in the DT node of the
-> component that provides the HPD signal, and contain a GPIO specifier
-> describing what the signal is connected to. When dealing with a physical
-> DP connector and external monitor, the HPD signal is provided by the DP
-> connector, the hpd-gpios property shall then be specified in the DP
-> connector DT node. The display-connector driver already handles that
-> property. When dealing with an eDP panel, the HPD signal is provided by
-> the panel, the hpd-gpios property shall be specified in the panel DT
-> node.
+This is a clear abuse of write_lock_irq() API. write_lock_irq() should _only_
+be used when the data is shared with a hardirq handler. The original comment
+says,
 
-OK, patch posted to add "hpd-gpios" to "panel-common.yaml" which is I
-think the summary of what you're saying above.
+"If it's a DB Event then we need to grab the lock with preemption disabled and
+as a write because we have to update db register and there are chances that
+another thread could be doing the same."
 
-I _think_ this also means that I need to add support to panel-simple.c
-for it so I've posted got a patch for that.  If I followed your whole
-description of the future plans it might eventually move somewhere
-else but we're not there yet.  If I screwed this up hopefully it's OK
-to continue the conversation in v2.  It seemed nice to have code to
-talk about.
+If the 'another' thread has the lock for this piece of code then we don't need
+to disable the irq, isn't it? The irq needs to be disabled only if the 'another'
+thread is a hardirq handler. I think the problem here is you are caution of not
+getting preempted while mhi_ring_chan_db() which I don't see why. Is this
+function non reentrant? I don't think so.
 
+Furthermore, there are _lot_ of places the *_irq and *_bh versions of locks are
+mixed. One such instance is mhi_queue_buf() where the read_lock_irq() is used
+for mhi_ring_chan_db() while mhi_queue_skb() uses read_lock_bh().
 
-> As the SN65DSI86 has native HPD detect capability with a dedicated HPD
-> input (note that this doesn't make the SN65DSI86 a providder of the HPD
-> signal in the sense described above), the bridge driver, in the new
-> model, shall implement the HPD-related operations and the .detect()
-> operation. The drm_bridge_connector_init() helper will then delegate HPD
-> and detection to the ti-sn65dsi86 driver.
+> > 
+> > > For transfer completion events >read_lock_bh is acquired and
+> > > channel state is checked.
+> > > 
+> > > This lock is held for entire handling of the transfer completion so
+> > > that
+> > > in case
+> > > 
+> > > __mhi_unprepare_channel() is called from power down context write lock
+> > > is acquired
+> > > 
+> > > for channel lock to change channel state, which would wait until
+> > > parse_xfer_event for
+> > > 
+> > > data transfer is done (reader is in critical section).  In case if
+> > > __mhi_unprepare_channel() wins then
+> > > 
+> > > parse_xfer_event is skipped otherwise parse_xfer_event is done and then
+> > > 
+> > > channel state is changed.
+> > > 
+> > 
+> > So if we get unprepare_channel() after checking the channel state in parse_xfer_event(), what could go wrong?
+> > Also, grabbing the lock for the entire function doesn't look good to me. The purpose of the chan->lock is just to protect 'chan_state'/DB and not the whole function.
+> > 
+> main problem unprepare_channel and parse_xfer_event have lot in common due
+> to that we can not let them run in parallel. For example -parse_xfer_event
+> is working on transfer ring (rp and wp updates)
+> -parse_xfer_event calling dma_unmap_single on buffer
+> -__mhi_unprepare_channel() calling mhi_reset_chan() and
+> mhi_deinit_chan_ctxt().
 
-I guess this assumes that anyone ever uses it.  Right now the driver
-hardcodes HPD to be off and it seems hard for me to imagine anyone
-would have a real use for the hardware line given the terrible
-debouncing.  Maybe a panel whose hardcoded delay is super bad?
+Hmm. So the issue will be when __mhi_unprepare_channel() gets called after
+parse_xfer_event() checked the 'mhi_chan->ch_state'. So if we have the read_lock
+for the whole case then it is guarenteed to run before __mhi_unprepare_channel()
+does its part.
 
+Let's keep it as it is. But please look into the irq vs bh part above.
 
-> The new drm_bridge model has support for this use case. It makes a
-> difference between the intrinsic capability of a device to provide a
-> feature (for instance the SN65DSI86 has the intrinsic capability to
-> provide the HPD feature), and the fact that the feature is actually
-> provided by that device on a particular system (in the case you describe
-> here, the SN65DSI86 intrinsic HPD capability isn't used, as the HPD
-> signal isn't connect to the SN65DSI86 HPD input). The former is reported
-> by implementing the corresponding drm_bridge_funcs operations, the
-> latter is reported by setting DRM_BRIGE_OP_* flags in drm_bridge.ops.
-> This mechanism allows bridge drivers to unconditionally set function
-> pointers in their drm_bridge_funcs structure (allowing the structure to
-> make stored in read-only memory), while exposing, for each device
-> instance, whether the feature is actually provided or not.
->
-> The drm_bridge_connector_init() helper, to delegate drm_connector
-> operations to bridges, will look for the first bridge in the chain,
-> starting at the output of the pipeline (connector or panel), that
-> supports the corresponding feature. If your DP connector DT node, or
-> your eDP connector DT node, specifies that the HPD signal is routed to a
-> GPIO (through the hpd-gpios property), then the corresponding bridge
-> driver shall reprot the DRM_BRIDGE_OP_DETECT and DRM_BRIDGE_OP_HPD
-> capabilities. The display-connector driver already supports this, the
-> panel bridge driver doesn't and needs to be extended. The
-> drm_bridge_connector_init() helper will then detect that the drm_bridge
-> for the DP connector or eDP panel supports HPD, and will delegate the
-> related drm_connector operations to that bridge. If the HPD signal is
-> routed to the HPD pin of the SN65DSI86, the DP connector or eDP panel DT
-> node should not contain an hpd-gpios property, the corresponding
-> drm_bridge will not set DRM_BRIDGE_OP_DETECT and DRM_BRIDGE_OP_HPD, and
-> the drm_bridge_connector_init() will look at the next component in the
-> next bridge in the chain, which will be the ti-sn65dsi86. That bridge
-> will report support for the HPD-related operations, and will be used.
->
-> To be fully correct the ti-sn65dsi86 shouldn't set the
-> DRM_BRIDGE_OP_DETECT and DRM_BRIDGE_OP_HPD flags when the HPD signal
-> isn't routed to its HPD input pin. As it should not peek into the DT
-> node of the DP connector or eDP panel for its output, it should have an
-> additional no-hpd DT property in this case. In practice that's may not
-> always be required, as if an hpd-gpios property is specified in the DP
-> connector or eDP panel DT node, the drm_bridge_connector_init() will not
-> look further, but for the case where the HPD signal isn't routed
-> anywhere, we need to make sure that the ti-sn65dsi86 driver will not
-> incorrectly advertise HPD support.
+Thanks,
+Mani
 
-Sounds like you've thought out a lot of the corner cases!
-
-Right now the 'ti-sn65dsi86' driver is hardcoded not to look at HPD
-but its bindings doesn't have the 'no-hpd' property.  Sounds like that
-should be OK-ish as long as the panel either has "hpd-gpios" or
-"no-hpd" because then nobody will actually query the bridge.  ...but
-it would be cleaner to add it.
-
-
-> > 5. The GPIOs on 'ti,sn65dsi86' cannot generate IRQs and can only be
-> > polled.  ...but this is OK.  I'm specifically trying to support the
-> > case of a panel that is always connected and I just want HPD to be the
-> > signal that the panel is ready for me to talk to it.  Polling is fine.
-> > Specifically the bridge driver doesn't try to poll HPD to decide if we
-> > have something connected--it always returns
-> > 'connector_status_connected'.  ...and this is the correct behavior for
-> > eDP because you know the hardware is always there and HPD won't even
-> > be asserted until you start to power up the panel.
->
-> If you look at bridge/display-connector.c, you will see that it reports
-> DRM_BRIDGE_OP_DETECT if there's an hpd-gpios property, and additionally
-> reports DRM_BRIDGE_OP_HPD if that GPIO has interrupt capability. If a
-> bridge in the pipeline reports DRM_BRIDGE_OP_DETECT but no bridge
-> reports DRM_BRIDGE_OP_HPD, drm_bridge_connector_init() creates a
-> connector that uses polling. This is another reason why a no-hpd
-> property is needed for the ti,sn65dsi86, as otherwise the helper would
-> incorrectly consider that the SN65DSI86 will report HPD through an
-> interrupt.
-
-Hrm.  I guess technically it breaks bindings compatibility that
-"no-hpd" wasn't there before but there's something that will break if
-we don't specify it.  ...but it won't break anything until someone
-actually tries to add DRM_BRIDGE_OP_HPD to ti-sn65dsi86.  Maybe we're
-OK as long as we fix it before then?
-
-I've put this in v2 so we can discuss.
-
-
-> > 6. My current implementation in patch #3 actually doesn't fully
-> > implement a Linux GPIO provider in the bridge driver.  See that patch
-> > for justification.  While I could do the work to do this and I'll do
-> > it if folks insist, I think the current simpler code is nice.  If
-> > there was a separate "edp-connector" driver then presumably I'd have
-> > to add the complexity of implementing the GPIO provider API.
->
-> This is the only reason why I don't like asking you to change your
-> implementation, due to the additional complexity required to expose a
-> GPIO provider. However, I think that the new bridge usage model is much
-> cleaner than the current one, and this justifies in my opinion
-> additional complexity in a small number of places, even if it's
-> unfortunate. That being said, if we can put the DT properties where they
-> belong for the new model with isolated bridge drivers to only handle the
-> features of the hardware they correspond to, I wouldn't be opposed to a
-> localized hack (without any derogatory meaning implied) on the driver
-> side to ease the implementation. I'm willing to look at you at how this
-> could be done, once we complete this discussion about the new model,
-> with the hard rule that DT bindings should be designed based on the new
-> model.
-
-OK, I managed to implement the GPIO controller.  Let's see how it
-looks.  I threw GPIO folks on the series too so hopefully they can
-tell me if I'm doing something stupid.
-
-
--Doug
+> > Thanks,
+> > Mani
+> > 
+> > > > 
+> > > > diff --git a/drivers/bus/mhi/core/main.c
+> > > b/drivers/bus/mhi/core/main.c
+> > > > index 3e9aa3b2da77..904f9be7a142 100644
+> > > > --- a/drivers/bus/mhi/core/main.c
+> > > > +++ b/drivers/bus/mhi/core/main.c
+> > > > @@ -474,19 +474,12 @@ static int parse_xfer_event(struct
+> > > mhi_controller *mhi_cntrl,
+> > > >           result.transaction_status = (ev_code == MHI_EV_CC_OVERFLOW)
+> > > ?
+> > > >                   -EOVERFLOW : 0;
+> > > > -       /*
+> > > > -        * If it's a DB Event then we need to grab the lock
+> > > > -        * with preemption disabled and as a write because we
+> > > > -        * have to update db register and there are chances that
+> > > > -        * another thread could be doing the same.
+> > > > -        */
+> > > > -       if (ev_code >= MHI_EV_CC_OOB)
+> > > > -               write_lock_irqsave(&mhi_chan->lock, flags);
+> > > > -       else
+> > > > -               read_lock_bh(&mhi_chan->lock);
+> > > > -
+> > > > -       if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED)
+> > > > -               goto end_process_tx_event;
+> > > > +       read_lock_bh(&mhi_chan->lock);
+> > > > +       if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
+> > > > +               read_unlock_bh(&mhi_chan->lock);
+> > > > +               return 0;
+> > > > +       }
+> > > > +       read_unlock_bh(&mhi_chan->lock);
+> > > >           switch (ev_code) {
+> > > >           case MHI_EV_CC_OVERFLOW:
+> > > > @@ -559,10 +552,12 @@ static int parse_xfer_event(struct
+> > > mhi_controller *mhi_cntrl,
+> > > >                   mhi_chan->db_cfg.db_mode = 1;
+> > > >                   read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+> > > > +               write_lock_irqsave(&mhi_chan->lock, flags);
+> > > >                   if (tre_ring->wp != tre_ring->rp &&
+> > > >                       MHI_DB_ACCESS_VALID(mhi_cntrl)) {
+> > > >                           mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+> > > >                   }
+> > > > +               write_unlock_irqrestore(&mhi_chan->lock, flags);
+> > > >                   read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+> > > >                   break;
+> > > >           }
+> > > > @@ -572,12 +567,6 @@ static int parse_xfer_event(struct
+> > > mhi_controller *mhi_cntrl,
+> > > >                   break;
+> > > >           } /* switch(MHI_EV_READ_CODE(EV_TRB_CODE,event)) */
+> > > > -end_process_tx_event:
+> > > > -       if (ev_code >= MHI_EV_CC_OOB)
+> > > > -               write_unlock_irqrestore(&mhi_chan->lock, flags);
+> > > > -       else
+> > > > -               read_unlock_bh(&mhi_chan->lock);
+> > > > -
+> > > >           return 0;
+> > > >    }
+> > > > 
+> > > > Moreover, I do have couple of concerns:
+> > > > 
+> > > > 1. 'mhi_chan->db_cfg.db_mode = 1' needs to be added to the critical
+> > > section
+> > > > above.
+> > > > 
+> > > > 2. Why we have {write/read}_lock_irq variants for chan->lock? I don't
+> > > see where
+> > > > the db or ch_state got shared with hardirq handler. Maybe we should
+> > > only have
+> > > > *_bh (softirq) variants all over the place?
+> > > > 
+> > > > Thanks,
+> > > > Mani
+> > > > 
+> > > > > > >                                              ^^^^^^^^^^^^^^^
+> > > > > > > The caller is already holding this lock.
+> > > > > > > 
+> > > > > > Hmm. We have one internal user of this function and that's where
+> > > the locking
+> > > > > > has gone wrong. Will fix it.
+> > > > > > 
+> > > > > > Thanks for reporting!
+> > > > > > 
+> > > > > > Regards,
+> > > > > > Mani
+> > > > > > 
+> > > > > > >      1154                  mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+> > > > > > >      1155                  read_unlock_irqrestore(&mhi_chan->lock,
+> > > flags);
+> > > > > > >      1156          }
+> > > > > > >      1157
+> > > > > > >      1158          read_unlock_irqrestore(&mhi_cntrl->pm_lock,
+> > > flags);
+> > > > > > >      1159
+> > > > > > >      1160          return 0;
+> > > > > > >      1161  }
+> > > > > > >      1162  EXPORT_SYMBOL_GPL(mhi_queue_buf);
+> > > > > > > 
+> > > > > > > regards,
+> > > > > > > dan carpenter
+> > > > > -- 
+> > > > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+> > > Forum,
+> > > > > a Linux Foundation Collaborative Project
+> > 
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
