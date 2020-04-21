@@ -2,195 +2,286 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C26C1B2DB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 19:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60EFA1B2E4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2020 19:30:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726063AbgDUREh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Apr 2020 13:04:37 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:31894 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725994AbgDURE3 (ORCPT
+        id S1726709AbgDUR3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Apr 2020 13:29:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48386 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725930AbgDUR3t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Apr 2020 13:04:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587488668; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=bb23re+70wL0pEeBHYk9nDh+mZGDDFOcSabU2dgzaNk=;
- b=QRJW2mj5G9zwSGW81W2l3leGBDl9Q794HKTcfW5UrDn2dXNz9bpZY2BqZPHh1mjSft/hWG6Y
- RoEsgyl8pLX692ucD0RwASLWfC3MXGmHwDiLTGz+vHm2pyT8+1GkB+QqyZDtUGaZXdZpI0LU
- UxeQlnj2NQy06oBTmYb/Md7/E4s=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e9f2763.7f500d6ed730-smtp-out-n02;
- Tue, 21 Apr 2020 17:03:31 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1210AC433BA; Tue, 21 Apr 2020 17:03:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4E281C433D2;
-        Tue, 21 Apr 2020 17:03:30 +0000 (UTC)
+        Tue, 21 Apr 2020 13:29:49 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E0E1C0610D5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 10:29:49 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id v63so475472pfb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2020 10:29:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SazG4WFAeC3QfLHqe6GAARwPa7vGsUvjsWRd+613Rn8=;
+        b=HMGCiqdHU+FAvRLiD3j5pJLKHXONEYE5n4mL/1oFN3tN/m2w/DYMg/TomWxSJbZ747
+         j/1qO7W8L5wIRLl8HhmQRi9IlYM6PmGNGq5775cJ3WJrCrEJiXZr2YcFNXao6hSbLTYR
+         Oehw+POVvkCIeQI4E6Hx/57ejYEq4X2DAxlSc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SazG4WFAeC3QfLHqe6GAARwPa7vGsUvjsWRd+613Rn8=;
+        b=VHc6ySbpciH+Gdeh70EyX1KVRbX39KOjGajN22UVEW1GSSklU6EGkAkBihoMEkMdaW
+         mA4Gv+SpbVRUJ0Ee0oCjUyXg4Qp106Ph9oFPL4ha//W/ydvF6tZOF/s1G8OZ3Xyn33o2
+         tQnd/OHT586GV30N90WRFEFiPLq/Nl7fd/wLq0iEpLQTLzoqemw9Jn0KFisrxBCHusgX
+         Gv1S6zWzo9Z1zIg3VWAzh+sT/OeRJ4hZ79h7R7HBzz9JiRgYbgIFVVbQ/0LAIWU5P3q4
+         /MiRB/Onu0Rr/LBY//TW3zP6NSrdXfwAUwFiBsC9QcO4ZSC3RUgdS8dgEXG8DnlsIeZP
+         SFfQ==
+X-Gm-Message-State: AGi0Pua5hJNYp6V9XtZ/y22u1Z/inDHSYRZhGs0jAYODBwRFOLZ+uvhx
+        Uivvf/VFk5XKcoDsRw9eyBNzFA==
+X-Google-Smtp-Source: APiQypKBXHnf7R5vi1eJXkk3Gbjk67wYrsre0XjrI8aqqokyYltfhiJRffuFU2FEShsKlGJYz3XGYg==
+X-Received: by 2002:a63:1a16:: with SMTP id a22mr23192709pga.264.1587490189029;
+        Tue, 21 Apr 2020 10:29:49 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id v127sm2874816pfv.77.2020.04.21.10.29.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Apr 2020 10:29:48 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        rafael.j.wysocki@intel.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mkshah@codeaurora.org, swboyd@chromium.org, mka@chromium.org,
+        evgreen@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 2/3] soc: qcom: rpmh-rsc: Simplify locking by eliminating the per-TCS lock
+Date:   Tue, 21 Apr 2020 10:29:07 -0700
+Message-Id: <20200421102745.v3.2.Ib8dccfdb10bf6b1fb1d600ca1c21d9c0db1ef746@changeid>
+X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb9-goog
+In-Reply-To: <20200421102745.v3.1.I2d44fc0053d019f239527a4e5829416714b7e299@changeid>
+References: <20200421102745.v3.1.I2d44fc0053d019f239527a4e5829416714b7e299@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 21 Apr 2020 22:33:30 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, evgreen@chromium.org,
-        ohad@wizery.com, mka@chromium.org, dianders@chromium.org,
-        devicetree@vger.kernel.org, linux-remoteproc-owner@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sc7180: Update Q6V5 MSS node
-In-Reply-To: <20200420055005.GI1516868@builder.lan>
-References: <20200417142605.28885-1-sibis@codeaurora.org>
- <20200417142605.28885-6-sibis@codeaurora.org>
- <20200420055005.GI1516868@builder.lan>
-Message-ID: <e47383f6e4467610fc4623dc1f77dcd6@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Bjorn,
+The rpmh-rsc code had both a driver-level lock (sometimes referred to
+in comments as drv->lock) and a lock per-TCS.  The idea was supposed
+to be that there would be times where you could get by with just
+locking a TCS lock and therefor other RPMH users wouldn't be blocked.
 
-Thanks for reviewing the series!
-Addressed all the review comments
-in v3.
+The above didn't work out so well.
 
-On 2020-04-20 11:20, Bjorn Andersson wrote:
-> On Fri 17 Apr 07:26 PDT 2020, Sibi Sankar wrote:
-> 
->> Add TCSR node and update MSS node to support MSA based Modem boot on
->> SC7180 SoCs.
->> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->> 
->> Depends on the following bindings:
->> iommus: https://patchwork.kernel.org/patch/11443101/
->> spare-regs: https://patchwork.kernel.org/patch/11491425/
->> 
->>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 42 
->> +++++++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/sc7180.dtsi    |  5 +++
->>  2 files changed, 47 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts 
->> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> index e613d70cc0198..6f472872be1a3 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> @@ -319,6 +319,48 @@ &qupv3_id_1 {
->>  	status = "okay";
->>  };
->> 
->> +&remoteproc_mpss {
->> +	compatible = "qcom,sc7180-mss-pil";
->> +	reg = <0 0x04080000 0 0x410>, <0 0x04180000 0 0x48>;
-> 
-> I think we should overspecify the properties in the platform dtsi,
-> whenever possible - it shouldn't be a problem that the pas driver
-> doesn't use all the properties provided by the binding.
-> 
-> As such I think you should move the reg, clocks, resets, halt regs and
-> power-domains to the platform.
-> 
->> +	reg-names = "qdsp6", "rmb";
->> +
->> +	clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
->> +		 <&gcc GCC_MSS_Q6_MEMNOC_AXI_CLK>,
->> +		 <&gcc GCC_MSS_NAV_AXI_CLK>,
->> +		 <&gcc GCC_MSS_SNOC_AXI_CLK>,
->> +		 <&gcc GCC_MSS_MFAB_AXIS_CLK>,
->> +		 <&rpmhcc RPMH_CXO_CLK>;
->> +	clock-names = "iface", "bus", "nav", "snoc_axi",
->> +		      "mnoc_axi", "xo";
->> +
->> +	iommus = <&apps_smmu 0x460 0x1>, <&apps_smmu 0x444 0x2>;
->> +
->> +	resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
->> +		 <&pdc_reset PDC_MODEM_SYNC_RESET>;
->> +	reset-names = "mss_restart", "pdc_reset";
->> +
->> +	qcom,halt-regs = <&tcsr_mutex_regs 0x23000 0x25000 0x24000>;
->> +	qcom,spare-regs = <&tcsr_regs 0xb3e4>;
->> +
->> +	power-domains = <&aoss_qmp AOSS_QMP_LS_MODEM>,
->> +			<&rpmhpd SC7180_CX>,
->> +			<&rpmhpd SC7180_MX>,
->> +			<&rpmhpd SC7180_MSS>;
->> +	power-domain-names = "load_state", "cx", "mx", "mss";
->> +
->> +	/delete-property/memory-region;
->> +
->> +	status = "okay";
->> +
->> +	mba {
->> +		memory-region = <&mba_mem>;
-> 
-> When I wrote this I was under the impression that memory-region wasn't
-> allowed to take an array of regions, perhaps we can make the mss 
-> binding
-> and driver support a multi-cell memory-region in the of_node directly
-> and drop these sub children.
-> 
-> Then it would be a cleaner update of the pas' memory-region.
-> 
-> But I'm fine with us putting this part on the todo list for the time
-> being...
+Looking at tcs_write() the bigger drv->lock was held for most of the
+function anyway.  Only the __tcs_buffer_write() and
+__tcs_set_trigger() calls were called without it the drv->lock.  It
+actually turns out that in tcs_write() we don't need to hold the
+drv->lock for those function calls anyway even if the per-TCS lock
+isn't there anymore.  Thus, from a tcs_write() point of view, the
+per-TCS lock was useless.
 
-I've switched to using memory-region
-in v3. I'll plan to convert the doc
-to yaml after the remaining bindings
-changes land.
+Looking at rpmh_rsc_write_ctrl_data(), only the per-TCS lock was held.
+It turns out, though, that this function already needs to be called
+with the equivalent of the drv->lock held anyway (we either need to
+hold drv->lock as we will in a future patch or we need to know no
+other CPUs could be running as happens today).  Specifically
+rpmh_rsc_write_ctrl_data() might be writing to a TCS that has been
+borrowed for writing an active transation but it never checks this.
 
-> 
-> Regards,
-> Bjorn
-> 
->> +	};
->> +
->> +	mpss {
->> +		memory-region = <&mpss_mem>;
->> +	};
->> +};
->> +
->>  &uart3 {
->>  	status = "okay";
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index e319762a0bffc..c49801ddb9d70 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -981,6 +981,11 @@ tcsr_mutex_regs: syscon@1f40000 {
->>  			reg = <0 0x01f40000 0 0x40000>;
->>  		};
->> 
->> +		tcsr_regs: syscon@1fc0000 {
->> +			compatible = "syscon";
->> +			reg = <0 0x01fc0000 0 0x40000>;
->> +		};
->> +
->>  		tlmm: pinctrl@3500000 {
->>  			compatible = "qcom,sc7180-pinctrl";
->>  			reg = <0 0x03500000 0 0x300000>,
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
+Let's eliminate this extra overhead and avoid possible AB BA locking
+headaches.
 
+Suggested-by: Maulik Shah <mkshah@codeaurora.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+Changes in v3:
+- ("soc: qcom: rpmh-rsc: Simplify locking...") new for v3.
+
+Changes in v2: None
+
+ drivers/soc/qcom/rpmh-internal.h | 13 ++------
+ drivers/soc/qcom/rpmh-rsc.c      | 54 ++++++++++++++------------------
+ 2 files changed, 27 insertions(+), 40 deletions(-)
+
+diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
+index dba8510c0669..1f2857b3f38e 100644
+--- a/drivers/soc/qcom/rpmh-internal.h
++++ b/drivers/soc/qcom/rpmh-internal.h
+@@ -28,7 +28,6 @@ struct rsc_drv;
+  * @offset:    Start of the TCS group relative to the TCSes in the RSC.
+  * @num_tcs:   Number of TCSes in this type.
+  * @ncpt:      Number of commands in each TCS.
+- * @lock:      Lock for synchronizing this TCS writes.
+  * @req:       Requests that are sent from the TCS; only used for ACTIVE_ONLY
+  *             transfers (could be on a wake/sleep TCS if we are borrowing for
+  *             an ACTIVE_ONLY transfer).
+@@ -48,7 +47,6 @@ struct tcs_group {
+ 	u32 offset;
+ 	int num_tcs;
+ 	int ncpt;
+-	spinlock_t lock;
+ 	const struct tcs_request *req[MAX_TCS_PER_TYPE];
+ 	DECLARE_BITMAP(slots, MAX_TCS_SLOTS);
+ };
+@@ -103,14 +101,9 @@ struct rpmh_ctrlr {
+  * @tcs_in_use:         S/W state of the TCS; only set for ACTIVE_ONLY
+  *                      transfers, but might show a sleep/wake TCS in use if
+  *                      it was borrowed for an active_only transfer.  You
+- *                      must hold both the lock in this struct and the
+- *                      tcs_lock for the TCS in order to mark a TCS as
+- *                      in-use, but you only need the lock in this structure
+- *                      (aka the drv->lock) to mark one freed.
+- * @lock:               Synchronize state of the controller.  If you will be
+- *                      grabbing this lock and a tcs_lock at the same time,
+- *                      grab the tcs_lock first so we always have a
+- *                      consistent lock ordering.
++ *                      must hold the lock in this struct (AKA drv->lock) in
++ *                      order to update this.
++ * @lock:               Synchronize state of the controller.
+  * @pm_lock:            Synchronize during PM notifications.
+  *                      Used when solver mode is not present.
+  * @client:             Handle to the DRV's client.
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index a9e15699f55f..992c79920e69 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -179,11 +179,7 @@ static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
+  *
+  * Returns true if nobody has claimed this TCS (by setting tcs_in_use).
+  *
+- * Context: Must be called with the drv->lock held or the tcs_lock for the TCS
+- *          being tested. If only the tcs_lock is held then it is possible that
+- *          this function will return that a tcs is still busy when it has been
+- *          recently been freed but it will never return free when a TCS is
+- *          actually in use.
++ * Context: Must be called with the drv->lock held.
+  *
+  * Return: true if the given TCS is free.
+  */
+@@ -242,8 +238,6 @@ void rpmh_rsc_invalidate(struct rsc_drv *drv)
+  * This is normally pretty straightforward except if we are trying to send
+  * an ACTIVE_ONLY message but don't have any active_only TCSes.
+  *
+- * Called without drv->lock held and with no tcs_lock locks held.
+- *
+  * Return: A pointer to a tcs_group or an ERR_PTR.
+  */
+ static struct tcs_group *get_tcs_for_msg(struct rsc_drv *drv,
+@@ -581,24 +575,19 @@ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
+ 	if (IS_ERR(tcs))
+ 		return PTR_ERR(tcs);
+ 
+-	spin_lock_irqsave(&tcs->lock, flags);
+-	spin_lock(&drv->lock);
++	spin_lock_irqsave(&drv->lock, flags);
+ 	/*
+ 	 * The h/w does not like if we send a request to the same address,
+ 	 * when one is already in-flight or being processed.
+ 	 */
+ 	ret = check_for_req_inflight(drv, tcs, msg);
+-	if (ret) {
+-		spin_unlock(&drv->lock);
+-		goto done_write;
+-	}
++	if (ret)
++		goto err;
+ 
+-	tcs_id = find_free_tcs(tcs);
+-	if (tcs_id < 0) {
+-		ret = tcs_id;
+-		spin_unlock(&drv->lock);
+-		goto done_write;
+-	}
++	ret = find_free_tcs(tcs);
++	if (ret < 0)
++		goto err;
++	tcs_id = ret;
+ 
+ 	tcs->req[tcs_id - tcs->offset] = msg;
+ 	set_bit(tcs_id, drv->tcs_in_use);
+@@ -612,13 +601,21 @@ static int tcs_write(struct rsc_drv *drv, const struct tcs_request *msg)
+ 		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, 0);
+ 		enable_tcs_irq(drv, tcs_id, true);
+ 	}
+-	spin_unlock(&drv->lock);
++	spin_unlock_irqrestore(&drv->lock, flags);
+ 
++	/*
++	 * These two can be done after the lock is released because:
++	 * - We marked "tcs_in_use" under lock.
++	 * - Once "tcs_in_use" has been marked nobody else could be writing
++	 *   to these registers until the interrupt goes off.
++	 * - The interrupt can't go off until we trigger.
++	 */
+ 	__tcs_buffer_write(drv, tcs_id, 0, msg);
+ 	__tcs_set_trigger(drv, tcs_id, true);
+ 
+-done_write:
+-	spin_unlock_irqrestore(&tcs->lock, flags);
++	return 0;
++err:
++	spin_unlock_irqrestore(&drv->lock, flags);
+ 	return ret;
+ }
+ 
+@@ -673,8 +670,6 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+  * Only for use on sleep/wake TCSes since those are the only ones we maintain
+  * tcs->slots for.
+  *
+- * Must be called with the tcs_lock for the group held.
+- *
+  * Return: -ENOMEM if there was no room, else 0.
+  */
+ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
+@@ -709,25 +704,25 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
+  * This should only be called for for sleep/wake state, never active-only
+  * state.
+  *
++ * The caller must ensure that no other RPMH actions are happening and the
++ * controller is idle when this function is called since it runs lockless.
++ *
+  * Return: 0 if no error; else -error.
+  */
+ int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ {
+ 	struct tcs_group *tcs;
+ 	int tcs_id = 0, cmd_id = 0;
+-	unsigned long flags;
+ 	int ret;
+ 
+ 	tcs = get_tcs_for_msg(drv, msg);
+ 	if (IS_ERR(tcs))
+ 		return PTR_ERR(tcs);
+ 
+-	spin_lock_irqsave(&tcs->lock, flags);
+ 	/* find the TCS id and the command in the TCS to write to */
+ 	ret = find_slots(tcs, msg, &tcs_id, &cmd_id);
+ 	if (!ret)
+ 		__tcs_buffer_write(drv, tcs_id, cmd_id, msg);
+-	spin_unlock_irqrestore(&tcs->lock, flags);
+ 
+ 	return ret;
+ }
+@@ -756,8 +751,8 @@ static bool rpmh_rsc_ctrlr_is_busy(struct rsc_drv *drv)
+ 	 * should be checked for not busy, because we used wake TCSes for
+ 	 * active requests in this case.
+ 	 *
+-	 * Since this is called from the last cpu, need not take drv or tcs
+-	 * lock before checking tcs_is_free().
++	 * Since this is called from the last cpu, need not take drv->lock
++	 * before checking tcs_is_free().
+ 	 */
+ 	if (!tcs->num_tcs)
+ 		tcs = &drv->tcs[WAKE_TCS];
+@@ -879,7 +874,6 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev,
+ 		tcs->type = tcs_cfg[i].type;
+ 		tcs->num_tcs = tcs_cfg[i].n;
+ 		tcs->ncpt = ncpt;
+-		spin_lock_init(&tcs->lock);
+ 
+ 		if (!tcs->num_tcs || tcs->type == CONTROL_TCS)
+ 			continue;
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+2.26.1.301.g55bc3eb7cb9-goog
+
