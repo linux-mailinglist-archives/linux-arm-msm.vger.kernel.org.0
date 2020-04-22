@@ -2,88 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E18C1B35EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 06:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FECC1B3621
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 06:20:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725835AbgDVEHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 00:07:16 -0400
-Received: from userp2120.oracle.com ([156.151.31.85]:37810 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725810AbgDVEHQ (ORCPT
+        id S1726495AbgDVEUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 00:20:15 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:18549 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726436AbgDVEUF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 00:07:16 -0400
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03M3wh9U052561;
-        Wed, 22 Apr 2020 04:06:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2020-01-29;
- bh=CXy27XimszPCc1m0DvfiEsLS9gQM1NpiNecuLxJv8MM=;
- b=RuKqT1Ior2xKgL7CYOgixRA9Nsnj5U+CcoyajoS5ZcWDepXzHISWLnUiLkXnI/TubXkf
- 9pHkIUrefDgZUg3OxBQIg5qVqPxcAxqg2EccFj5WgV4/c7gnePRLuH5bh4bwqBw93jhD
- 0Uvov3Mz/RXDxJbtlcvKp9amnVsEFVIsDyrnK5vE9S3z12yVW7gPnca1QqFOBo9VMSTQ
- 7Q0xQJ7SVWF+coxZDVkuyOFb0QbG9DKQ/hkzIJuaTrNXS5/V577wvKUphrNDg95V4AmA
- lwNgal0myKLHEoXVhZwkSKHsZhX62ta022SAN90fCtk/DMmr2dm0axvfnBOQzsVjjQzs 3w== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by userp2120.oracle.com with ESMTP id 30ft6n89w0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 22 Apr 2020 04:06:52 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03M46VkP148654;
-        Wed, 22 Apr 2020 04:06:51 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by aserp3020.oracle.com with ESMTP id 30gbbfqkys-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 22 Apr 2020 04:06:51 +0000
-Received: from abhmp0001.oracle.com (abhmp0001.oracle.com [141.146.116.7])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 03M46m8Y031250;
-        Wed, 22 Apr 2020 04:06:49 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 21 Apr 2020 21:06:48 -0700
-To:     Jason Yan <yanaijie@huawei.com>
-Cc:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>,
-        <jejb@linux.ibm.com>, <martin.petersen@oracle.com>,
-        <p.zabel@pengutronix.de>, <cang@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>
-Subject: Re: [PATCH] scsi: ufs-qcom: remove unneeded variable 'ret'
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
-References: <20200418070625.11756-1-yanaijie@huawei.com>
-Date:   Wed, 22 Apr 2020 00:06:45 -0400
-In-Reply-To: <20200418070625.11756-1-yanaijie@huawei.com> (Jason Yan's message
-        of "Sat, 18 Apr 2020 15:06:25 +0800")
-Message-ID: <yq14ktci2p6.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9598 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 malwarescore=0
- suspectscore=0 mlxlogscore=999 adultscore=0 mlxscore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004220031
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9598 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1011 mlxlogscore=999 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004220030
+        Wed, 22 Apr 2020 00:20:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587529204; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=0Ok93GJWyrMcrmPIyqLBZtZS7FS1V8QUfQQLkNG7V8I=; b=jBtUuSSBj0kGHWAU/KD8cAHcddHbm/IupTpWhGMgHLtCA0tNmu4/hYB32b4cqZBN+RGzzsBB
+ iGcJdBtuXswBxJgFHU4cZqB0hfNB6czwkE3wahO0LtKjA2FkRd52k6NAoyXjrLtdXFVPC/AH
+ 9/Q03lF9owQgwwgQzQyLh+Xam2g=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e9fc5e6.7f621f9a6110-smtp-out-n01;
+ Wed, 22 Apr 2020 04:19:50 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F3148C433F2; Wed, 22 Apr 2020 04:19:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from bbhatt-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 688A9C433BA;
+        Wed, 22 Apr 2020 04:19:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 688A9C433BA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v1 0/8] Bug fixes and improved logging in MHI
+Date:   Tue, 21 Apr 2020 21:19:27 -0700
+Message-Id: <1587529175-27778-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+A set of patches for bug fixes and improved logging in mhi/core/boot.c.
+Verified on x86 and arm64 platforms.
 
-Jason,
+Bhaumik Bhatt (5):
+  bus: mhi: core: Handle firmware load using state worker
+  bus: mhi: core: WARN_ON for malformed vector table
+  bus: mhi: core: Return appropriate error codes for AMSS load failure
+  bus: mhi: core: Improve debug logs for loading firmware
+  bus: mhi: core: Ensure non-zero session or sequence ID values
 
-> Fix the following coccicheck warning:
->
-> drivers/scsi/ufs/ufs-qcom.c:575:5-8: Unneeded variable: "ret". Return
-> "0" on line 590
+Hemant Kumar (3):
+  bus: mhi: core: Cache intmod from mhi event to mhi channel
+  bus: mhi: core: Add range check for channel id received in event ring
+  bus: mhi: core: Read transfer length from an event properly
 
-Applied to 5.8/scsi-queue, thanks!
+ drivers/bus/mhi/core/boot.c     | 74 +++++++++++++++++++++++++----------------
+ drivers/bus/mhi/core/init.c     |  5 ++-
+ drivers/bus/mhi/core/internal.h |  1 +
+ drivers/bus/mhi/core/main.c     | 15 ++++++---
+ drivers/bus/mhi/core/pm.c       |  6 +---
+ include/linux/mhi.h             |  2 --
+ 6 files changed, 62 insertions(+), 41 deletions(-)
 
 -- 
-Martin K. Petersen	Oracle Linux Engineering
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
