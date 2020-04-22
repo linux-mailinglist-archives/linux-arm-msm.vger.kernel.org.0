@@ -2,95 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A60541B4D7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 21:40:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CD811B4DA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 21:50:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726077AbgDVTkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 15:40:07 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:39176 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726002AbgDVTkG (ORCPT
+        id S1726442AbgDVTuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 15:50:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39082 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725779AbgDVTuN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 15:40:06 -0400
-Received: by mail-oi1-f194.google.com with SMTP id m10so2951522oie.6;
-        Wed, 22 Apr 2020 12:40:06 -0700 (PDT)
+        Wed, 22 Apr 2020 15:50:13 -0400
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02238C03C1AA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 12:50:13 -0700 (PDT)
+Received: by mail-ua1-x942.google.com with SMTP id c17so3118127uae.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 12:50:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3SOZ/kuYPJyFAJV3DkFh+WewThK39UItCMPkriQP28k=;
+        b=N4XJyGIORMnB7t4xAh0V4FafNe7aQpOGecPfMWtYdZA1QWheksB21HqlyRprFqBNlx
+         1WFMRq7wGfLDwgMeBX/p5CovR+swvRXlk7Z/YeQtBbrhcReV/vZ47nhBDqDGNPC3GPPh
+         VWul0+ZhqslDhGi2ur2rAQ33vUyHb0HULuIHw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z8YCrPzH7bEfhD/XkAeainySJPOSuJ7nJpltH8wRYvo=;
-        b=dyiOIQA1NcIu0PJ2ySV3ULUlS386hJHiXHYHDA+JeISdUrD2nHZMDZre45KvjBrr+z
-         gPd4VWW26pvauONtr9U1SBosIXeWLMDUK/p0zsBzXZthgE72asW3yGx46sXQAtG0ZGHW
-         UCPgDMbScODRhn0h1ctkT5rWTUdr2+Pjdq9O7qmIiOcRoGgLu4LPWbnhfI4z+pQ4qo6T
-         /9D76Y4a9G1+AZqG9jyaXAiAsigxeWGSLnK8/is0KUemC1KXYIpNn4/BvH4J+0heoWUN
-         zIs4UMbWTo4WNXLS+WNRzZ9fSMPhX3halH8Rf6GkpKKcdWF2VXmlqra/wQALxU8t3qCs
-         Cv+g==
-X-Gm-Message-State: AGi0PuYOpJS1YEvHUnccRGyoH9RVka53TRXqgy/Z7XsT72VnJVH11tVh
-        U220WgpQie5IbgzKFOi8SENpDx0=
-X-Google-Smtp-Source: APiQypL5TS8AlWHNE3HLmqbpzzM0B1ncKTbOmg75+Dduyj7CjMKgq9i2LgrvXa8y3GvDgtAYhrVM5A==
-X-Received: by 2002:aca:c3c1:: with SMTP id t184mr404747oif.171.1587584405664;
-        Wed, 22 Apr 2020 12:40:05 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id x17sm45506oif.28.2020.04.22.12.40.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 12:40:05 -0700 (PDT)
-Received: (nullmailer pid 4724 invoked by uid 1000);
-        Wed, 22 Apr 2020 19:40:04 -0000
-Date:   Wed, 22 Apr 2020 14:40:04 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        Harigovindan P <harigovi@codeaurora.org>, robdclark@gmail.com,
-        seanpaul@chromium.org, sean@poorly.run
-Subject: Re: [PATCH v11 2/2] dt-bindings: documenting compatible string
- vendor "visionox"
-Message-ID: <20200422194004.GA2197@bogus>
-References: <20200421045508.21137-1-harigovi@codeaurora.org>
- <20200421045508.21137-3-harigovi@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3SOZ/kuYPJyFAJV3DkFh+WewThK39UItCMPkriQP28k=;
+        b=O9sdWfiLDC49sq0oW8nDWAFZtILzjHeW4fPNpbvvmePsKbYB5Dfhpep0Sq/f0zh7xF
+         kcupkukSVYeXGFF1ogn04IahcFBs1K9Xw0qzR00nZHHZPJzp45NwitECWyNseREMO8dx
+         zK6xBHOLnhFVZ7Hf0spoAWyYK5eB3hN7pstJgGaRaoA8SQU4CWIhjy7eqmmWj5bYZe2+
+         6AEHeP9+M5GBtYEqaBXAycNjUMwvsR8Pj5/05YeeA0PjML1RunKjyD6n1PDxD6giZNCe
+         iqKPyx78H4wurRo+Cqy6FHfAlkM5QGxST9B35Qpgf16yCUQ2Oav1zEA/wflNDeEsn96X
+         4jfg==
+X-Gm-Message-State: AGi0PuZ7vA8iDwaDWsECTyiFzHzSyIU79Oez2zjjfezBfZKIK5HhFg4z
+        PzVS/hwiV7mDp0A6ab70AW+WvEhTScY=
+X-Google-Smtp-Source: APiQypLmC4h4WNsRcFd/PI1sZRmcORDkh5d6D5vyABuQeGpXp/+obeiG9/NvZw/hWk71SAzHGr+0/w==
+X-Received: by 2002:ab0:705:: with SMTP id h5mr223271uah.74.1587585010558;
+        Wed, 22 Apr 2020 12:50:10 -0700 (PDT)
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com. [209.85.222.54])
+        by smtp.gmail.com with ESMTPSA id d83sm117384vka.34.2020.04.22.12.50.09
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Apr 2020 12:50:09 -0700 (PDT)
+Received: by mail-ua1-f54.google.com with SMTP id y10so3132124uao.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 12:50:09 -0700 (PDT)
+X-Received: by 2002:a67:fc46:: with SMTP id p6mr410935vsq.169.1587585008976;
+ Wed, 22 Apr 2020 12:50:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200421045508.21137-3-harigovi@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
+ <0023bc68-45fb-4e80-00c8-01fd0369243f@arm.com> <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
+ <5858bdac-b7f9-ac26-0c0d-c9653cef841d@arm.com> <d60196b548e1241b8334fadd0e8c2fb5@codeaurora.org>
+ <CAD=FV=WXTN6xxqtL6d6MHxG8Epuo6FSQERRPfnoSCskhjh1KeQ@mail.gmail.com>
+ <890456524e2df548ba5d44752513a62c@codeaurora.org> <20200331074400.GB25612@willie-the-truck>
+ <1bf04938249bcd5b2111c1921facfd25@codeaurora.org>
+In-Reply-To: <1bf04938249bcd5b2111c1921facfd25@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 22 Apr 2020 12:49:57 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VBM6cS1UmWTUJ2vrt0a2zn7xV3C53tpthBx58M2=1JPg@mail.gmail.com>
+Message-ID: <CAD=FV=VBM6cS1UmWTUJ2vrt0a2zn7xV3C53tpthBx58M2=1JPg@mail.gmail.com>
+Subject: Re: [PATCH] iommu/arm-smmu: Demote error messages to debug in
+ shutdown callback
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
+        <iommu@lists.linux-foundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 21 Apr 2020 10:25:08 +0530, Harigovindan P wrote:
-> Documenting compatible string vendor "visionox" in vendor-prefix yaml file.
-> 
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
-> ---
-> Changes in v11:
-> 	- Added visionox compatible string in vendor-prefixes.yaml
-> 	- Added as a part of checkpatch script error for panel driver.
-> 
->  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+Hi,
 
-My bot found errors running 'make dt_binding_check' on your patch:
+On Tue, Mar 31, 2020 at 12:53 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Hi Will,
+>
+> On 2020-03-31 13:14, Will Deacon wrote:
+> > On Tue, Mar 31, 2020 at 01:06:11PM +0530, Sai Prakash Ranjan wrote:
+> >> On 2020-03-30 23:54, Doug Anderson wrote:
+> >> > On Sat, Mar 28, 2020 at 12:35 AM Sai Prakash Ranjan
+> >> > <saiprakash.ranjan@codeaurora.org> wrote:
+> >> > >
+> >> > > > Of course the fact that in practice we'll *always* see the warning
+> >> > > > because there's no way to tear down the default DMA domains, and even
+> >> > > > if all devices *have* been nicely quiesced there's no way to tell, is
+> >> > > > certainly less than ideal. Like I say, it's not entirely clear-cut
+> >> > > > either way...
+> >> > > >
+> >> > >
+> >> > > Thanks for these examples, good to know these scenarios in case we
+> >> > > come
+> >> > > across these.
+> >> > > However, if we see these error/warning messages appear everytime then
+> >> > > what will be
+> >> > > the credibility of these messages? We will just ignore these messages
+> >> > > when
+> >> > > these issues you mention actually appears because we see them
+> >> > > everytime
+> >> > > on
+> >> > > reboot or shutdown.
+> >> >
+> >> > I would agree that if these messages are expected to be seen every
+> >> > time, there's no way to fix them, and they're not indicative of any
+> >> > problem then something should be done.  Seeing something printed at
+> >> > "dev_error" level with an exclamation point (!) at the end makes me
+> >> > feel like this is something that needs immediate action on my part.
+> >> >
+> >> > If we really can't do better but feel that the messages need to be
+> >> > there, at least make them dev_info and less scary like:
+> >> >
+> >> >   arm-smmu 15000000.iommu: turning off; DMA should be quiesced before
+> >> > now
+> >> >
+> >> > ...that would still give you a hint in the logs that if you saw a DMA
+> >> > transaction after the message that it was a bug but also wouldn't
+> >> > sound scary to someone who wasn't seeing any other problems.
+> >> >
+> >>
+> >> We can do this if Robin is OK?
+> >
+> > It would be nice if you could figure out which domains are still live
+> > when
+> > the SMMU is being shut down in your case and verify that it *is* infact
+> > benign before we start making the message more friendly. As Robin said
+> > earlier, rogue DMA is a real nightmare to debug.
+> >
+>
+> I could see this error message for all the clients of apps_smmu.
+> I checked manually enabling bypass and removing iommus dt property
+> for each client of apps_smmu.
 
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/vendor-prefixes.yaml: patternProperties:visionox,.*: {'description': 'Visionox'} is not valid under any of the given schemas (Possible causes of the failure):
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/vendor-prefixes.yaml: patternProperties:visionox,.*: 'not' is a required property
+Any update on the status here?  If I'm reading the conversation above,
+Robin said: "we'll *always* see the warning because there's no way to
+tear down the default DMA domains, and even if all devices *have* been
+nicely quiesced there's no way to tell".  Did I understand that
+properly?  If so, it seems like it's fully expected to see this
+message on every reboot and it doesn't necessarily signify anything
+bad.
 
-Documentation/devicetree/bindings/Makefile:11: recipe for target 'Documentation/devicetree/bindings/vendor-prefixes.example.dts' failed
-make[1]: *** [Documentation/devicetree/bindings/vendor-prefixes.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-warning: no schema found in file: Documentation/devicetree/bindings/vendor-prefixes.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/vendor-prefixes.yaml: ignoring, error in schema: patternProperties: visionox,.*
-warning: no schema found in file: Documentation/devicetree/bindings/vendor-prefixes.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/vendor-prefixes.yaml: ignoring, error in schema: patternProperties: visionox,.*
-Makefile:1300: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
-
-See https://patchwork.ozlabs.org/patch/1273941
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
+-Doug
