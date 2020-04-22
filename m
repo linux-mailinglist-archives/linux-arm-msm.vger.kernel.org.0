@@ -2,151 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D84E1B3A9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 10:52:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA2CC1B3AA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 11:00:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725836AbgDVIv7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 04:51:59 -0400
-Received: from esa4.hgst.iphmx.com ([216.71.154.42]:46703 "EHLO
-        esa4.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725786AbgDVIv6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 04:51:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1587545518; x=1619081518;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=DVDukrs2kf6ItNIQMjd00Z/cOVOcw6iD5rzv6En0g/0=;
-  b=dbza2RIfYC7UctK0LCGSmX96/zqSCbz2j9oTJQ0yI17zFJSKpLzN1PCX
-   po9RnZxlMBOLOlqYfARsukZLXUn/5FEJaMuX6ddvjpQK8a4DIo7lp0XTT
-   ttImU5MwXgXjxi5oxli5lJNcTVo2sQYAN+MA7ijfgfd9god6F6yEbl30m
-   9SCHKxwVuXuMAAAZxCkO7DBbToklH+H1zfw2VtUto+VA1hRRzZb2nnqbC
-   JzWuq5XYCStUEKXEhuguMmwLf1lNt4I+1pD8xVElzido2qqrHXGCiJYA3
-   CVweHV7pZoGYz1MU9VsSlXlREQHqXTQmpM9D0PFXmE7OxHlaP9xoq8eDy
-   A==;
-IronPort-SDR: odtx96rlXjZtqyOJ++hiKr5JZ8uUR9Jk0GUW1gdd7+c2dE3HEXnY//D+Cv15FSPVt9JdOmEr8Z
- xEPCDZJG2184jVd5De3hS6M071p1mjR+eow63fzHpul4ZxDzXPiRRn92Qs9DDx3+qUODcvb57e
- oLsm/YMpHwHz0X8qS8fGCCz3nSNKe4ZUXBvRnnP682puo6jhQM9LAQhAy+FjzawaVJMqVDbe6l
- R3f0Q77aFWVDTgxnZ8C0FDhhGi4HX7LnH/jhhLMtShyg4b1me2gmzrBc3XOK9N0t7r+LWfZgkt
- DhM=
-X-IronPort-AV: E=Sophos;i="5.72,413,1580745600"; 
-   d="scan'208";a="135865812"
-Received: from mail-bn7nam10lp2105.outbound.protection.outlook.com (HELO NAM10-BN7-obe.outbound.protection.outlook.com) ([104.47.70.105])
-  by ob1.hgst.iphmx.com with ESMTP; 22 Apr 2020 16:51:56 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IkdFvhSlgvDWhMifGIfMi72hjXVoblNeWiLXK50Uw05yjdPo2Okdc3Qry9tR46yt+8N02El707uaCsi9+cT50EBcq3cA8hbjACB/3g1xoTFZhjogGxhJ4Z20JYPzSC8C1Q096IcClGjGkiMEXe5rdfRqY3dgp4U2xnKcQysHITIdLaZ2/yeObHglM+Q5vXUByE7AFCzXa3SH1ZyXX5Awq51Sv9GDDasY12pGlxDFFHv/yRrdqYZ/KSoRrSjPrxXqDpyzSZHEV92jpAyiMBss7syjC5Ickal4sC1TBYiCs9TsvhwkYv1WmDJRwTFLVR2pZRhX4z8FlV/R53pyPE/gqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EqJ8zWtcOM5z3bZKpelxrgsY6XBpQ40xW0Nkanwf89g=;
- b=L3/VHQxInIcNKbdFDt1SNv658xjgPQp22z0RK8+JzwrszhIULFiu2nvM51OJE8Xi9+e3zId/8tEAij1+xcUTKJHoBtj8EXFQN8cV3dAXuU4i8Qzh4Cs0IfLkrXNBisqRjn6aSk6+l5W7z6Ic9LuAEpC2bMIiX/0JSt6LIZHN89PtA6L3YiIPm1d0/sGV4ASpkPR3qSUezoRlCIwWc0eZSzWyovAOs8TyP4w/5OdmVQFTJe0oW9gDH/G7VzARS/db8rRy35Kaf7c5cDo/EBTLM1FNKwldQ9/eBA4Kd0skZT/6MDVB36FYLiJqwxEwXr6IEFeaaeqKZRywtAu4+AlMqw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EqJ8zWtcOM5z3bZKpelxrgsY6XBpQ40xW0Nkanwf89g=;
- b=MwJ260r3msb2w62ExGo7RMXofIfhJ2rtFJs8HDbyMAM/XypDPbVumQVj79NhdRSm5BIPbdKMnwW/n+VV6Sa3Z6GhPBIAnW80DLjXrnE/o/AxLJhvl2Xqg6pq3XSc8VmRI0PGbjP8aVyoa2XkkBXYHuJVo08rfuF/29Vx5erKnBU=
-Received: from SN6PR04MB4640.namprd04.prod.outlook.com (2603:10b6:805:a4::19)
- by SN6PR04MB3950.namprd04.prod.outlook.com (2603:10b6:805:48::27) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.29; Wed, 22 Apr
- 2020 08:51:56 +0000
-Received: from SN6PR04MB4640.namprd04.prod.outlook.com
- ([fe80::3877:5e49:6cdd:c8b]) by SN6PR04MB4640.namprd04.prod.outlook.com
- ([fe80::3877:5e49:6cdd:c8b%5]) with mapi id 15.20.2937.012; Wed, 22 Apr 2020
- 08:51:56 +0000
-From:   Avri Altman <Avri.Altman@wdc.com>
-To:     Asutosh Das <asutoshd@codeaurora.org>,
-        "cang@codeaurora.org" <cang@codeaurora.org>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH v2 3/3] ufs-qcom: scsi: configure write booster type
-Thread-Topic: [PATCH v2 3/3] ufs-qcom: scsi: configure write booster type
-Thread-Index: AQHWGC/bc78fgk3F5UizGNPlurPhxaiE1aAA
-Date:   Wed, 22 Apr 2020 08:51:55 +0000
-Message-ID: <SN6PR04MB46405270EB2E9FEF579F1115FCD20@SN6PR04MB4640.namprd04.prod.outlook.com>
-References: <6519cd576299d5881129b0e48870a53a0afc7835.1587509578.git.asutoshd@codeaurora.org>
- <90ee50d5123e7ef4f04fba2ba281bb2e2e9ce1e5.1587509578.git.asutoshd@codeaurora.org>
-In-Reply-To: <90ee50d5123e7ef4f04fba2ba281bb2e2e9ce1e5.1587509578.git.asutoshd@codeaurora.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Avri.Altman@wdc.com; 
-x-originating-ip: [212.25.79.133]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: d6131f73-331d-4a48-8352-08d7e69a693e
-x-ms-traffictypediagnostic: SN6PR04MB3950:
-x-microsoft-antispam-prvs: <SN6PR04MB39509D6E01E2F7B081023759FCD20@SN6PR04MB3950.namprd04.prod.outlook.com>
-wdcipoutbound: EOP-TRUE
-x-ms-oob-tlc-oobclassifiers: OLM:6430;
-x-forefront-prvs: 03818C953D
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR04MB4640.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(10019020)(4636009)(136003)(376002)(366004)(396003)(39860400002)(346002)(66476007)(26005)(5660300002)(110136005)(66446008)(66556008)(316002)(76116006)(54906003)(478600001)(7416002)(186003)(86362001)(52536014)(2906002)(7696005)(4326008)(64756008)(33656002)(9686003)(71200400001)(8676002)(81156014)(8936002)(55016002)(66946007)(6506007);DIR:OUT;SFP:1102;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: mrEJtFr7mqwcFbuEnlVXLlGUAxWUn4ZaZli2F1a0/Y5XjIol2t/zgX4umD38JRL30dygeqiRCLRjqucihYVrhsh5PIO9pZw8uGFS5bfsLTelnnqiYxgayR4NRWRqg/QoQFgS1PyCM93geyuu3BE68ePQFXmLg1u+GQ+jkrCWJU0dmbJQh3GEJFQ7hwSXZvlGbiGcrcJmAeQ9Z5OvxVpAgm3z1sGKsp/o6AfZz40uqKdQ2IMF8I+Dk4Uxvjb61nkyeZFekIUCVBYDvS/f6p8+fuoYhAmXXDtiKivvHNFReClMKD1m79RJWe51DukWSjnM/0nt1qKEeIfyJTrEhkp5OrOKML/+Y/i5bUXDWEyjZ0clArUTAE5TL5CTR42gR1VuWujCzkNAiD36Mfk3aXUKK/c0wb3VpSkQfFzK9MOfT9245+ZZa3EE7yifm5SYcu2g
-x-ms-exchange-antispam-messagedata: LU0UNxvBPY2NHE/CN8eMHLiEc20K9fHVA0jmJ9GVmJnVuGLa9fDRKkxvQ/I7lJWPHV9JgR0azWnhxEjFNCXZp1sOgF2Y3WpL7oHmWtS+tA3CVT6ahBOrxzRVFVgYz6Lc+XTY1fn3fSRmO8+sm0/d2A==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1726359AbgDVJA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 05:00:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56722 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726071AbgDVJA3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Apr 2020 05:00:29 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 43919206D6;
+        Wed, 22 Apr 2020 09:00:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1587546028;
+        bh=Szlf9ZzsWRDVLiUoIgGCUpAgcbXQVj4EqngSZMV2pGY=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=APQfd9bUJPPAgYgjsa4XM35xNOOByU2WNDdm4k95dTACr3ILzmncCxszFhiy1Ku5u
+         PbqOgLt554/UNk5yAn9xBNFqr3b8J8iP72lUEpcsbvGMY7T4SNFRSz/97qKqIIJy6H
+         YsYBqOkWd6uxz6JZnfqEEUyTg6KjsgcSdsqKhKnI=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6131f73-331d-4a48-8352-08d7e69a693e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Apr 2020 08:51:55.9742
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: nHoy4qCeG4dqnKRPuVXMSIePB75jwskoh2oeS6NwthEEQnTjY40KGGEni9ptKaiQumpxGhlGQ2IhIQK57fh9Lw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB3950
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1586832922-29191-4-git-send-email-sivaprak@codeaurora.org>
+References: <1586832922-29191-1-git-send-email-sivaprak@codeaurora.org> <1586832922-29191-4-git-send-email-sivaprak@codeaurora.org>
+Subject: Re: [PATCH V3 3/8] clk: qcom: Add A53 PLL support for ipq6018 devices
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mturquette@baylibre.com, robh+dt@kernel.org
+Date:   Wed, 22 Apr 2020 02:00:27 -0700
+Message-ID: <158754602745.132238.14379194464345140559@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-=20
+Quoting Sivaprakash Murugesan (2020-04-13 19:55:17)
+> The CPUs on Qualcomm IPQ6018 platform is primarily clocked by A53 PLL.
+> This patch adds support for the A53 PLL on IPQ6018 devices which can
+> support CPU frequencies above 1Ghz.
 >=20
-> Configure the WriteBooster type to preserve user-space mode.
-> This would ensure that no user-space capacity is reduced
-> when write booster is enabled.
-The above does no longer apply - leftover from previous patch?
-
-Thanks,
-Avri
-
-> Enable WB for Qualcomm platform.
->=20
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
 > ---
->  drivers/scsi/ufs/ufs-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/clk/qcom/a53-pll.c | 136 ++++++++++++++++++++++++++++++++++++---=
+------
+>  1 file changed, 111 insertions(+), 25 deletions(-)
 >=20
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 19aa5c4..6e4000d 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1071,6 +1071,7 @@ static void ufs_qcom_set_caps(struct ufs_hba
-> *hba)
->         hba->caps |=3D UFSHCD_CAP_CLK_GATING |
-> UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
->         hba->caps |=3D UFSHCD_CAP_CLK_SCALING;
->         hba->caps |=3D UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
-> +       hba->caps |=3D UFSHCD_CAP_WB_EN;
->=20
->         if (host->hw_ver.major >=3D 0x2) {
->                 host->caps =3D UFS_QCOM_CAP_QUNIPRO |
-> --
-> Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a
-> Linux Foundation Collaborative Project.
+> diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
+> index 45cfc57..a95351c 100644
+> --- a/drivers/clk/qcom/a53-pll.c
+> +++ b/drivers/clk/qcom/a53-pll.c
+> @@ -11,11 +11,40 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/regmap.h>
+>  #include <linux/module.h>
+> +#include <linux/of_device.h>
 
+Why does this driver need to change to use of_device APIs?
+
+> =20
+>  #include "clk-pll.h"
+>  #include "clk-regmap.h"
+> +#include "clk-alpha-pll.h"
+> =20
+> -static const struct pll_freq_tbl a53pll_freq[] =3D {
+> +struct a53_alpha_pll {
+> +       struct alpha_pll_config *pll_config;
+> +       struct clk_alpha_pll *pll;
+> +};
+> +
+> +union a53pll {
+> +       struct clk_pll *pll;
+> +       struct a53_alpha_pll alpha_pll;
+> +};
+> +
+> +struct a53pll_data {
+> +#define PLL_IS_ALPHA BIT(0)
+> +       u8 flags;
+> +       union a53pll a53pll;
+
+Why is there a union? Can't we have different clk ops for the two types
+of PLLs and then use container_of to get it from the clk ops?
+
+> +};
+> +
+> +static const u8 ipq_pll_offsets[] =3D {
+> +       [PLL_OFF_L_VAL] =3D 0x08,
+> +       [PLL_OFF_ALPHA_VAL] =3D 0x10,
+> +       [PLL_OFF_USER_CTL] =3D 0x18,
+> +       [PLL_OFF_CONFIG_CTL] =3D 0x20,
+> +       [PLL_OFF_CONFIG_CTL_U] =3D 0x24,
+> +       [PLL_OFF_STATUS] =3D 0x28,
+> +       [PLL_OFF_TEST_CTL] =3D 0x30,
+> +       [PLL_OFF_TEST_CTL_U] =3D 0x34,
+> +};
+> +
+> +static const struct pll_freq_tbl msm8996_a53pll_freq[] =3D {
+>         {  998400000, 52, 0x0, 0x1, 0 },
+>         { 1094400000, 57, 0x0, 0x1, 0 },
+>         { 1152000000, 62, 0x0, 0x1, 0 },
+> @@ -26,6 +55,64 @@ static const struct pll_freq_tbl a53pll_freq[] =3D {
+>         { }
+>  };
+> =20
+> +static struct clk_pll msm8996_pll =3D {
+> +       .mode_reg =3D 0x0,
+> +       .l_reg =3D 0x04,
+> +       .m_reg =3D 0x08,
+> +       .n_reg =3D 0x0c,
+> +       .config_reg =3D 0x14,
+> +       .status_reg =3D 0x1c,
+> +       .status_bit =3D 16,
+> +       .freq_tbl =3D msm8996_a53pll_freq,
+> +       .clkr.hw.init =3D &(struct clk_init_data){
+> +               .name =3D "a53pll",
+> +               .flags =3D CLK_IS_CRITICAL,
+> +               .parent_data =3D &(const struct clk_parent_data){
+> +                       .fw_name =3D "xo",
+> +                       .name =3D "xo",
+> +               },
+> +               .num_parents =3D 1,
+> +               .ops =3D &clk_pll_sr2_ops,
+> +       },
+> +};
+> +
+> +static struct clk_alpha_pll ipq6018_pll =3D {
+> +       .offset =3D 0x0,
+> +       .regs =3D ipq_pll_offsets,
+> +       .flags =3D SUPPORTS_DYNAMIC_UPDATE,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x0,
+> +               .enable_mask =3D BIT(0),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "a53pll",
+> +                       .flags =3D CLK_IS_CRITICAL,
+> +                       .parent_data =3D &(const struct clk_parent_data){
+> +                               .fw_name =3D "xo",
+> +                       },
+> +                       .num_parents =3D 1,
+> +                       .ops =3D &clk_alpha_pll_huayra_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct alpha_pll_config ipq6018_pll_config =3D {
+
+Can this be const?
+
+> +       .l =3D 0x37,
+> +       .config_ctl_val =3D 0x04141200,
+> +       .config_ctl_hi_val =3D 0x0,
+> +       .early_output_mask =3D BIT(3),
+> +       .main_output_mask =3D BIT(0),
+> +};
+> +
+> +static struct a53pll_data msm8996pll_data =3D {
+> +       .a53pll.pll =3D &msm8996_pll,
+> +};
+> +
+> +static struct a53pll_data ipq6018pll_data =3D {
+> +       .flags =3D PLL_IS_ALPHA,
+> +       .a53pll.alpha_pll.pll =3D &ipq6018_pll,
+> +       .a53pll.alpha_pll.pll_config =3D &ipq6018_pll_config,
+> +};
+> +
+>  static const struct regmap_config a53pll_regmap_config =3D {
+>         .reg_bits               =3D 32,
+>         .reg_stride             =3D 4,
+> @@ -39,14 +126,16 @@ static int qcom_a53pll_probe(struct platform_device =
+*pdev)
+>         struct device *dev =3D &pdev->dev;
+>         struct regmap *regmap;
+>         struct resource *res;
+> -       struct clk_pll *pll;
+> +       const struct a53pll_data *pll_data;
+> +       struct clk_regmap *clkr;
+>         void __iomem *base;
+> -       struct clk_init_data init =3D { };
+>         int ret;
+> =20
+> -       pll =3D devm_kzalloc(dev, sizeof(*pll), GFP_KERNEL);
+> -       if (!pll)
+> -               return -ENOMEM;
+> +       pll_data =3D of_device_get_match_data(dev);
+
+Use device_get_match_data() please.
+
+> +       if (!pll_data) {
+> +               dev_err(dev, "failed to get platform data\n");
+
+No error message please.
+
+> +               return -ENODEV;
+> +       }
+> =20
+>         res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>         base =3D devm_ioremap_resource(dev, res);
+> @@ -57,30 +146,26 @@ static int qcom_a53pll_probe(struct platform_device =
+*pdev)
+>         if (IS_ERR(regmap))
+>                 return PTR_ERR(regmap);
+> =20
+> -       pll->l_reg =3D 0x04;
+> -       pll->m_reg =3D 0x08;
+> -       pll->n_reg =3D 0x0c;
+> -       pll->config_reg =3D 0x14;
+> -       pll->mode_reg =3D 0x00;
+> -       pll->status_reg =3D 0x1c;
+> -       pll->status_bit =3D 16;
+> -       pll->freq_tbl =3D a53pll_freq;
+> -
+> -       init.name =3D "a53pll";
+> -       init.parent_names =3D (const char *[]){ "xo" };
+> -       init.num_parents =3D 1;
+> -       init.ops =3D &clk_pll_sr2_ops;
+> -       init.flags =3D CLK_IS_CRITICAL;
+
+Please document why a clk is critical.
+
+> -       pll->clkr.hw.init =3D &init;
+> -
+> -       ret =3D devm_clk_register_regmap(dev, &pll->clkr);
+> +       if (pll_data->flags & PLL_IS_ALPHA) {
+> +               struct clk_alpha_pll *alpha_pll =3D
+> +                       pll_data->a53pll.alpha_pll.pll;
+> +               struct alpha_pll_config *alpha_pll_config =3D
+> +                       pll_data->a53pll.alpha_pll.pll_config;
+> +
+> +               clk_alpha_pll_configure(alpha_pll, regmap, alpha_pll_conf=
+ig);
+> +               clkr =3D &pll_data->a53pll.alpha_pll.pll->clkr;
+> +       } else {
+> +               clkr =3D &pll_data->a53pll.pll->clkr;
+> +       }
+
+Sorry, the design is confusing.
