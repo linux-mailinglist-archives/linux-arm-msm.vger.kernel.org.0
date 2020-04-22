@@ -2,98 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DBBF1B46DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 16:08:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B731B47F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 16:59:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727051AbgDVOIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 10:08:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42486 "EHLO
+        id S1726772AbgDVO7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 10:59:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727026AbgDVOIi (ORCPT
+        with ESMTP id S1726401AbgDVO7n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 10:08:38 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0759AC03C1AA;
-        Wed, 22 Apr 2020 07:08:38 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id t63so2487135wmt.3;
-        Wed, 22 Apr 2020 07:08:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Wn/XLaNsEUc+JrRQ7mg4yGN/42PXRkrYATqvOjyi41s=;
-        b=snwH3gA2y8hxo2yX0BZogJrmkiRtOPUxjXX+dPm4cR0dVk9LX0VxJ7oPquVLBJbHqz
-         AWnwU3Mhtf0HovRIhUHzwtrkmb9A4hbMEuyPbYmr869gTWKpZ9nPKxwopbxNddiNT0iO
-         k95XZEP72PHNiVNwG/Wmr+htitVZPOUMLegX7fQFxuH6K/643K5oMFXCotPVRHG5OblZ
-         xcAnlzlRxlAYONV4tjcdkDdRPdzcr33n9n0qSv65oa+5hlCLxfiY1UdBC7PSos/Sc3Id
-         DNTZU26mI5J9GuQBD88ysDyCov7KTkmiRHTeQDVWryCdAkWal+U18AwAOPnPOd1vAUGi
-         to9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Wn/XLaNsEUc+JrRQ7mg4yGN/42PXRkrYATqvOjyi41s=;
-        b=c3wFRSH7RIAg41n76ETY1Dss0GA1v/2B0t+TAIquTICvHQlajeqUJD5E9dgc337lea
-         y+78nVBVDEvimV8TYL0p5izb2oK+923TfYzRCMAiC7fnXk6XvcmAhzPNVWhLAEbpDt5a
-         Y6gMdibTu9gyuNw0RTrO2XjWeqLLcLZ6psYHlI4FFoEXNC8aIKWqbXTkFKYPFhrYlVSa
-         P91lao3qUy4ytsStIEeSZit1C62V+aKxQF48edLHBKT6ZtfMnI6GEKpzp4+9EcrRTEGF
-         5jZYntaHVkTY5rVBcbgeOnuxR4GFnEXekMrmrl+K0WDN9ENSLO5yG29hsBlIz6HGGUdX
-         3HrA==
-X-Gm-Message-State: AGi0PuZE/C13bIEiBCorxJYuUoxiLICMpgkMpHbMQgty7xnFLkjnJYXU
-        JRVKsc5tjzJ+MHBG1VhQ2/8=
-X-Google-Smtp-Source: APiQypLcBdgKcojkVDWJDUlHMTtYzEZSNEqVPBloleybYbcysXDKZ/PSC6WiURn0kRHtcRsdukQqQA==
-X-Received: by 2002:a7b:c850:: with SMTP id c16mr10268138wml.108.1587564516651;
-        Wed, 22 Apr 2020 07:08:36 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host36-18-dynamic.45-213-r.retail.telecomitalia.it. [213.45.18.36])
-        by smtp.googlemail.com with ESMTPSA id a9sm7526790wmm.38.2020.04.22.07.08.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 07:08:35 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Ilia Lin <ilia.lin@kernel.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] dt-bindings: opp: Fix wrong binding in qcom-nvmem-cpufreq
-Date:   Wed, 22 Apr 2020 16:08:27 +0200
-Message-Id: <20200422140827.1726-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200422140827.1726-1-ansuelsmth@gmail.com>
-References: <20200422140827.1726-1-ansuelsmth@gmail.com>
+        Wed, 22 Apr 2020 10:59:43 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E7FC03C1A9;
+        Wed, 22 Apr 2020 07:59:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=3wiOlfuET1e01r1zvjRWWoC2fuMUHigHjGVaVH8nUb8=; b=I1fdJitkAE8vmrzgpzZ7MnV2/S
+        K3URUqqRY1BjUGUiINf2H78+s4hQ+NoIkjZhJoADkDKOMyhPb2AckGBLueqmWoJ3fD+iFBB2KdizQ
+        ilQw0iP2AOAe6TK+lXK0HDgySWKgzdaH6GeYajWajHOsh9S83C5dS0wCGTzhjpK5TCeQm4xGXapVf
+        G7ujKmAxhWjU24+2i8eM6LpOAuZMfRW0GeROlr8sBqvizHGxVTCRNVsF+daVAvzCHLucBQ0/0mxZf
+        l1ohhRY819ZmiYcu/Ak1fnjh1BlsIGaQ0kiFpxSxr3oFtJL5EgNDWrhx/LTFQShJ9ltUjWnGLMm5y
+        d3XvFMOw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1jRGqY-0007IK-Gd; Wed, 22 Apr 2020 14:59:30 +0000
+Date:   Wed, 22 Apr 2020 07:59:30 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     kbuild test robot <lkp@intel.com>,
+        Scott Branden <scott.branden@broadcom.com>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        bjorn.andersson@linaro.org, Arnd Bergmann <arnd@arndb.de>,
+        kbuild-all@lists.01.org, "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Linux Memory Management List <linux-mm@kvack.org>,
+        Dan Carpenter <error27@gmail.com>
+Subject: Re: [PATCH v3 6/7] misc: bcm-vk: add Broadcom VK driver
+Message-ID: <20200422145930.GA12731@infradead.org>
+References: <20200420162809.17529-7-scott.branden@broadcom.com>
+ <202004221945.LY6x0DQD%lkp@intel.com>
+ <20200422113558.GJ2659@kadam>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200422113558.GJ2659@kadam>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update binding to new generic name "operating-points-v2-qcom-cpu"
+On Wed, Apr 22, 2020 at 02:35:58PM +0300, Dan Carpenter wrote:
+> Sorry, you asked me about this earlier.  You will need to add
+> -D__CHECK_ENDIAN__ to enable these Sparse warnings.
 
-Fixes: a8811ec764f9 cpufreq: qcom: Add support for krait based socs
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt b/Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
-index 64f07417ecfb..537e1774f589 100644
---- a/Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
-+++ b/Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
-@@ -19,7 +19,7 @@ In 'cpu' nodes:
- 
- In 'operating-points-v2' table:
- - compatible: Should be
--	- 'operating-points-v2-kryo-cpu' for apq8096, msm8996, msm8974,
-+	- 'operating-points-v2-qcom-cpu' for apq8096, msm8996, msm8974,
- 					     apq8064, ipq8064, msm8960 and ipq8074.
- 
- Optional properties:
--- 
-2.25.1
-
+Endian checking has been enabled by default for quite a while.
