@@ -2,53 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD6F41B4DC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 21:56:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9C0F1B4E09
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 22:12:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbgDVT4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 15:56:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40014 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726079AbgDVT4O (ORCPT
+        id S1726081AbgDVUMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 16:12:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42534 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725779AbgDVUMY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 15:56:14 -0400
-Received: from shards.monkeyblade.net (shards.monkeyblade.net [IPv6:2620:137:e000::1:9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43357C03C1A9;
-        Wed, 22 Apr 2020 12:56:14 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2601:601:9f00:477::3d5])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: davem-davemloft)
-        by shards.monkeyblade.net (Postfix) with ESMTPSA id CBB70120ED563;
-        Wed, 22 Apr 2020 12:56:13 -0700 (PDT)
-Date:   Wed, 22 Apr 2020 12:56:13 -0700 (PDT)
-Message-Id: <20200422.125613.448651196314653733.davem@davemloft.net>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     kuba@kernel.org, bjorn.andersson@linaro.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] net: qrtr: Add tracepoint support
-From:   David Miller <davem@davemloft.net>
-In-Reply-To: <20200421074054.23613-1-manivannan.sadhasivam@linaro.org>
-References: <20200421074054.23613-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: Mew version 6.8 on Emacs 26.1
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Wed, 22 Apr 2020 12:56:14 -0700 (PDT)
+        Wed, 22 Apr 2020 16:12:24 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34BBCC03C1A9;
+        Wed, 22 Apr 2020 13:12:23 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id a2so2885384ejx.5;
+        Wed, 22 Apr 2020 13:12:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KXxHIljFmLh8soPuXzemAjRAO1AtwvjZf5J7ToWtf8U=;
+        b=u1hPBAcyimOPDcc2gD5ogfk1Ot74MUK5tYKviAVgA6IkyMxKKCCEMDVGkxkdEgfdc4
+         XM6G1lMg52sPDHfSR7z23W74gApPXHMukxAYl5kis+8QHlS0x/fEsX/8t1om9BQwD0SF
+         zBONh7CDl7pC0lDbGxX0+r6Mx5BRBSCcpN5t3El8CZzFJVP5/BkQwG78YlGOE1IMqwoB
+         2QzLn6MIaY2guVhELsH5xU78iVVK6knNYDVrbw8Hxsa6ahrEYz4fBv+AaGtT8tCEkK/D
+         oNth3+4/Wgo5jZ5hl0TYgD8WWpcfRle8/2Qo8di9i1wol8eczleLtryqxxNH68uWAmTq
+         UbJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KXxHIljFmLh8soPuXzemAjRAO1AtwvjZf5J7ToWtf8U=;
+        b=laf8d6tNL8bur27vnOipydfDLZ80L7POLYaBBM//EaxjmxAQ0Fop/zwy7i6haMF1fI
+         MdorALb1SQIMTioVRav1fDOQ1wowmZcR7N7XOUjCBcp5R+UKJ0Lr8lWeBgL1JESFT2PG
+         WW5l95TTaPWQ0OwW8GYZZ3ZWhpUu/AfFmN7fSCTMNTWSt5Z2Tb7bfzfaWRXQ3vKCO5cZ
+         pG2aVCXjXjrdV3gtFWZCeeFjRMSPs6j5cfl4ilQtyUfHj0OW5wodLHXQ9EErILZ6W3JP
+         KApIPxrAox04zqlLW8L8R3zJxDjYoJGovV2gAIc1SB5s+FaJoOMycPGYZzTuRlbBaU2h
+         HK6A==
+X-Gm-Message-State: AGi0PuYpPP9gnN0bI28LgbQcCsYK5ZFLAxVZ6dLbE1pLu00yZA4shlaq
+        lpbM8zE+PtVQNghHDNRHB8c=
+X-Google-Smtp-Source: APiQypLbfBgCcNY33E1Ne4qeN757gm6FckRRpoa0bnDaomgSbHDVMvWzDe6WgrndkPNb/HjvmjqE/w==
+X-Received: by 2002:a17:907:b11:: with SMTP id h17mr55555ejl.371.1587586341762;
+        Wed, 22 Apr 2020 13:12:21 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host36-18-dynamic.45-213-r.retail.telecomitalia.it. [213.45.18.36])
+        by smtp.googlemail.com with ESMTPSA id q1sm8789ejf.42.2020.04.22.13.12.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Apr 2020 13:12:20 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Viresh Kumar <vireshk@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] cpufreq: qcom: fix  compatibility issue with old binding
+Date:   Wed, 22 Apr 2020 22:12:15 +0200
+Message-Id: <20200422201216.10593-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Tue, 21 Apr 2020 13:10:54 +0530
+Binding has changed from operating-points-v2-kryo-cpu to
+operating-points-v2-qcom-cpu. Also check for old binding in driver
+probe.
 
-> Add tracepoint support for QRTR with NS as the first candidate. Later on
-> this can be extended to core QRTR and transport drivers.
-> 
-> The trace_printk() used in NS has been replaced by tracepoints.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Applied to net-next.
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index a1b8238872a2..9e9279162b5b 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -278,6 +278,10 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 		return -ENOENT;
+ 
+ 	ret = of_device_is_compatible(np, "operating-points-v2-qcom-cpu");
++	if (!ret)
++		ret = of_device_is_compatible(np,
++					      "operating-points-v2-kryo-cpu");
++
+ 	if (!ret) {
+ 		of_node_put(np);
+ 		return -ENOENT;
+-- 
+2.25.1
+
