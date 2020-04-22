@@ -2,158 +2,267 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2759B1B4890
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 17:26:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B8401B49C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 18:10:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbgDVP0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 11:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54560 "EHLO
+        id S1727032AbgDVQJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 12:09:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726161AbgDVP0L (ORCPT
+        with ESMTP id S1727017AbgDVQJc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 11:26:11 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7108C03C1AA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 08:26:09 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id d17so2872137wrg.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 08:26:09 -0700 (PDT)
+        Wed, 22 Apr 2020 12:09:32 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64D18C03C1AA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 09:09:32 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id c24so2203906uap.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 09:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7KLnGzWeW3EFDToZpaMnHwlCm6fWuF31T365B+kB9j0=;
-        b=Dkam1NYVfL0KGg4nTOt1SMdt8ZCsv5xtALhqlp3QcYy7gbFCrQaMQnHEcD6KU72EH5
-         od1w3+h7RrZolrnKO3bsfx88utwVEay5diFTXRzNfC+d4gg70M3g1lrCZMdscy7yFCpH
-         hKt1TFu7/Lc+cfn6ENr/huqYcJZTApCCl9WFjZjoIzeOJYrma4EADvxko+7cE45IMPzJ
-         BqYG5OMDsuQNSClsVzpBwbTG/M7dDWUcygSuSnhfwmjy00NaHuuuSDRZs5VjPJ3201CA
-         Vu5kSTTi4gzMCQzcYWuqAijiqZktJPxPiT2Sd703pu00pSStLORMOvuRZpzIl8BoZ1S9
-         oqJA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=T7WB2HoF0WdrIBv4ktK6B9A0gQgQTPn58z8FyVNp2Jo=;
+        b=YUweHA8CPztpA/loYxHMeUD6/w6PlfE/ulWxFTAqTelrd/PSlWYfc59LLKgL0oup6K
+         Wzp8tzuL9Y46ob+y6q3r39I+vyASikO8AKSyHcHHm+6yF1JC7x79QyduJb7BeQXAdP36
+         +G9cFYFIEVSpCrwxqE2aTcNw0iAIiuBDIQHVU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7KLnGzWeW3EFDToZpaMnHwlCm6fWuF31T365B+kB9j0=;
-        b=tDV99D9ubvng/9agyESqJMmdEz7UJUHLyLR5qSuzGfYbRq84OT7II9HN5BIYO2xG9J
-         Vn5q7ZA1HZsprkzHkDLof0HVDZHCl3+XP6LG6A+NqHVdIiZ7NzTHAbL1wU1xEIbUXPEO
-         F6KTxAAaQq4Ik4AuugjE0cMcftP6FqE2WEKnkzJzWzGWJkITemOOrXGBId3G5ub0q+2E
-         h/yYEgb+2U6TCvk5DZVTLGJPCGmm6FD65YggBEbecgJa7nraE0CAbzQ5xmF+ST+dgy4I
-         q0vo9UHaXBJYTK1oKrSwHPk2roM7b35DEHFkUvSNLVnZyrjiNO5JHVrZkOQ7Q+HotEiW
-         Xueg==
-X-Gm-Message-State: AGi0PuYe1qGNMVPTQJD2DgdYHUv97dmL/5Lj52eAopa5+gNahzrpCnAD
-        DT12HK2DbgdMVB6VsAevPuWC1g==
-X-Google-Smtp-Source: APiQypKZHwSxEMetnHv5xnsIPzz+j+2ryMstuxfGDdzb7byBwgFZKTXYa2wqcO0eL/APkxBixlpAeA==
-X-Received: by 2002:a5d:6589:: with SMTP id q9mr28801882wru.136.1587569168587;
-        Wed, 22 Apr 2020 08:26:08 -0700 (PDT)
-Received: from [192.168.0.136] ([87.120.218.65])
-        by smtp.googlemail.com with ESMTPSA id s24sm8378638wmj.28.2020.04.22.08.26.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Apr 2020 08:26:07 -0700 (PDT)
-Subject: Re: [PATCH 1/2] cpufreq: qcom: fix compatibility issue with old
- binding
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200422140827.1726-1-ansuelsmth@gmail.com>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <b2dad165-39f8-afb7-2bf8-74fa0239798a@linaro.org>
-Date:   Wed, 22 Apr 2020 18:26:06 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=T7WB2HoF0WdrIBv4ktK6B9A0gQgQTPn58z8FyVNp2Jo=;
+        b=VPoROMd5MSadmERTZ8LHTafDQWVq+JaKZJt8wORV4nDiSI5G9C6LlAIfKdEmT3uTiv
+         aEe6DBw+vE5AyAqHpM6AFjhE41Sk9RybZcrgeOm59cHAosxS09ffOAMwKBj7i4rgmPqT
+         CEZSef8qogHCRGVNCkVbGZrW+bV3cdc0miyPqM7Sb5Lrg6lA4+pPwYfPuXrtVpEe25ok
+         AvF4yABNxF8E+RnwJr+lPhZaNUPehXtfbf1ZAG2+Nb7D7L0QGKD0yzOPeaGVmepd41h9
+         7ZQ1GyYEvHDWLyS4/Q3p38I8JoMomqw+OWUw5ejxIkY9H0NC4tCgEUhLKLi8WRdHErFC
+         f0FA==
+X-Gm-Message-State: AGi0PubN0qlCdmcWtgw3FZQLE8fzKR/vK7f+2W+PYe16fcwwK1TNSBzZ
+        S4TYzXlh+3d3lMiLRdriDACyPan8ovU=
+X-Google-Smtp-Source: APiQypIZCslvIUORMofAdlou4EmWYuOgioDtUYvR49NK2XUdPyfue37C0AMTgjhcqK5uEmigEYux1Q==
+X-Received: by 2002:a67:8751:: with SMTP id j78mr21525266vsd.128.1587571770827;
+        Wed, 22 Apr 2020 09:09:30 -0700 (PDT)
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com. [209.85.222.54])
+        by smtp.gmail.com with ESMTPSA id l14sm1725367vkl.47.2020.04.22.09.09.29
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Apr 2020 09:09:30 -0700 (PDT)
+Received: by mail-ua1-f54.google.com with SMTP id c24so2203711uap.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 09:09:29 -0700 (PDT)
+X-Received: by 2002:ab0:375a:: with SMTP id i26mr16701248uat.120.1587571768922;
+ Wed, 22 Apr 2020 09:09:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200422140827.1726-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200421050622.8113-1-dianders@chromium.org> <20200420220458.v2.1.Ia50267a5549392af8b37e67092ca653a59c95886@changeid>
+ <158755100643.159702.17904334834962681759@swboyd.mtv.corp.google.com>
+In-Reply-To: <158755100643.159702.17904334834962681759@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 22 Apr 2020 09:09:17 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WJONhm4ukwZa2vGtozrz_SmLuTCLxVimnGba7wRPPzgQ@mail.gmail.com>
+Message-ID: <CAD=FV=WJONhm4ukwZa2vGtozrz_SmLuTCLxVimnGba7wRPPzgQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] drm/bridge: ti-sn65dsi86: Export bridge GPIOs to Linux
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        David Airlie <airlied@linux.ie>, bgolaszewski@baylibre.com,
+        Daniel Vetter <daniel@ffwll.ch>,
+        LinusW <linus.walleij@linaro.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ansuel,
+Hi,
 
-On 4/22/20 17:08, Ansuel Smith wrote:
-> Binding has changed from operating-points-v2-kryo-cpu to
-> operating-points-v2-qcom-cpu. Also check for old binding in driver
-> probe.
-> 
-> Fixes: a8811ec764f9 cpufreq: qcom: Add support for krait based socs
+On Wed, Apr 22, 2020 at 3:23 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Douglas Anderson (2020-04-20 22:06:17)
+> > The ti-sn65dsi86 MIPI DSI to eDP bridge chip has 4 pins on it that can
+> > be used as GPIOs in a system.  Each pin can be configured as input,
+> > output, or a special function for the bridge chip.  These are:
+> > - GPIO1: SUSPEND Input
+> > - GPIO2: DSIA VSYNC
+> > - GPIO3: DSIA HSYNC or VSYNC
+> > - GPIO4: PWM
+> >
+> > Let's expose these pins as GPIOs.  A few notes:
+> > - Access to ti-sn65dsi86 is via i2c so we set "can_sleep".
+> > - These pins can't be configured for IRQ.
+> > - There are no programmable pulls or other fancy features.
+> > - Keeping the bridge chip powered might be expensive.  The driver is
+> >   setup such that if all used GPIOs are only inputs we'll power the
+> >   bridge chip on just long enough to read the GPIO and then power it
+> >   off again.  Setting a GPIO as output will keep the bridge powered.
+> > - If someone releases a GPIO we'll implicitly switch it to an input so
+> >   we no longer need to keep the bridge powered for it.
+> >
+> > Becaue of all of the above limitations we just need to implement a
+>
+> Because
+>
+> > bare-bones GPIO driver.  The device tree bindings already account for
+> > this device being a GPIO controller so we only need the driver changes
+> > for it.
+> >
+> > NOTE: Despite the fact that these pins are nominally muxable I don't
+> > believe it makes sense to expose them through the pinctrl interface as
+> > well as the GPIO interface.  The special functions are things that the
+> > bridge chip driver itself would care about and it can just configure
+> > the pins as needed.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > Cc: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+> > ---
+> >
+>
+> Cool patch.
+>
+> > Changes in v2:
+> > - ("Export...GPIOs") is 1/2 of replacement for ("Allow...bridge GPIOs")
+> >
+> >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 165 ++++++++++++++++++++++++++
+> >  1 file changed, 165 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > index 6ad688b320ae..d04c2b83d699 100644
+> > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > @@ -874,6 +886,153 @@ static int ti_sn_bridge_parse_dsi_host(struct ti_sn_bridge *pdata)
+> >         return 0;
+> >  }
+> >
+> > +static struct ti_sn_bridge *gchip_to_pdata(struct gpio_chip *chip)
+> > +{
+> > +       return container_of(chip, struct ti_sn_bridge, gchip);
+> > +}
+> > +
+> > +static int ti_sn_bridge_gpio_get_direction(struct gpio_chip *chip,
+> > +                                          unsigned int offset)
+> > +{
+> > +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
+> > +
+> > +       return (atomic_read(&pdata->gchip_output) & BIT(offset)) ?
+>
+> Any reason this isn't a bitmap?
 
-The correct format is: Fixes: %h (\"%s\")
+Don't bitmaps need an external lock to protect against concurrent
+access?  When I looked I wasn't convinced that the GPIO subsystem
+prevented two callers from changing two GPIOs at the same time.  See
+below for a bigger discussion.
 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index a1b8238872a2..8a0411efc79a 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -278,6 +278,10 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->  		return -ENOENT;
->  
->  	ret = of_device_is_compatible(np, "operating-points-v2-qcom-cpu");
-> +	if (!ret)
-> +		ret = of_device_is_compatible(np,
-> +					      "operating-points-v2-kyro-cpu");
 
-There is a typo in the compatible string.
+> > +               GPIOF_DIR_OUT : GPIOF_DIR_IN;
+>
+> And why can't we read the hardware to figure out if it's in output or
+> input mode?
 
-Thanks,
-Georgi
+A few reasons:
 
-> +
->  	if (!ret) {
->  		of_node_put(np);
->  		return -ENOENT;
-> 
+1. If nobody else had the bridge powered on this would be a slow
+operation involving powering the bridge on, querying via i2c, and then
+powering the bridge off.  Not only would it be slow but you'd be
+powering the chip up for no really good reason.  You didn't need to
+know anything that only the chip could tell you.
+
+2. If nobody else had the bridge powered on then the bridge loses
+state and resets to defaults (everything resets to "input").  Yes, we
+could still power the bridge up and confirm this, but...
+
+3. This bitmap does double-duty of not only knowing whether a pin is
+input or output but also whether we've incremented the "pm_runtime"
+refcount in order to keep the output driven.  Knowing whether we've
+already incremented the "pm_runtime" refcount can simplify a bit of
+the code because we know whether it's powered without having to power
+it on and query.  If we didn't have a cache, then when we changed a
+pin to input we'd do:
+
+pm_runtime_get() // Make sure we can access
+if dir_was_output:
+  pm_runtime_put() // Not driving anymore
+set_to_input();
+pm_runtime_put()  // Done with access
+
+...basically in some cases we'd do pm_runtime_put() twice in the same
+function.  It'd work, but feels like a worse solution than the one in
+my patch.
+
+4. When I bootup I see that this call gets made once per GPIO in
+gpiochip_add_data_with_key().  There's no reason to go through all the
+slowness when we know these pins are inputs.
+
+
+In the next version of the patch I'll plan to add a kerneldoc comment
+to "struct ti_sn_bridge" and add a summary of the above for
+"gchip_output".
+
+
+> > +}
+> > +
+> [...]
+> > +static int ti_sn_bridge_gpio_direction_output(struct gpio_chip *chip,
+> > +                                             unsigned int offset, int val)
+> > +{
+> > +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
+> > +       int shift = offset * 2;
+> > +       int old_gchip_output;
+> > +       int ret;
+> > +
+> > +       old_gchip_output = atomic_fetch_or(BIT(offset), &pdata->gchip_output);
+>
+> I presume gpiolib is already preventing a gpio from being modified twice
+> at the same time. So is this atomic stuff really necessary?
+
+Right.  I've assumed that we're not running two of these functions at
+the same time for the same GPIO.  I'm not convinced that the GPIO core
+enforces this but it seems like it'd be undefined behavior for a
+client to be, for instance, setting and changing direction for the
+same GPIO in two threads at the same time.  Where simple I've tried to
+make it so it wouldn't horribly break if someone did some amount of
+concurrent access of the same pin but not every corner case is
+handled.  Mostly I focused on making sure that I could never mess up
+keeping track of whether I incremented the "pm_runtime" refcount for a
+pin.  One thing specifically I didn't handle: if we were midway
+through ti_sn_bridge_gpio_set(), we context switched out and someone
+changed us to an input, then we'd possibly do an unpowered
+regmap_update_bits() and timeout.
+
+What I do think is a sensible case to handle, though, is someone
+working with two different GPIOs exported by this controller at the
+same time.  IIUC atomic_t allows me to only spend 1 bit per pin, have
+no lock, and still make sure these different consumers don't stomp on
+each other.
+
+NOTE: I did a quick trace for the call chain when using the "gpioget"
+command-line tool.  I saw:
+
+- ti_sn_bridge_gpio_get()
+- gpio_chip_get_multiple()
+- gpiod_get_array_value_complex()
+- linehandle_ioctl()
+
+None of these appear to do any locking.  There's sorta an implicit
+lock in that only one client can "request" a given GPIO at the same
+time so the assumption that we're somewhat protected against two
+concurrent accesses of the exact same GPIO is a bit justified.  ...but
+nothing appears to protect us from concurrent accesses of different
+GPIOs.
+
+I also notice that other GPIO drivers seem to grab their own locks.
+If it makes the patch more palatable, I can get rid of all the atomic
+stuff and put in a big mutex?
+
+-Doug
