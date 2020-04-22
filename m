@@ -2,143 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94D481B42D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 13:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D7A11B42F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 13:18:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726147AbgDVLKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 07:10:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726285AbgDVLKW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 07:10:22 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E71C03C1AA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 04:10:21 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id g13so1879083wrb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 04:10:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7f32msqOiQc0JpLw4MsEw0QrRZ2lpHCE6FKLkalbvhU=;
-        b=oDW7AMfFyPLs3g/zpMq2viBMk8aiY9eT4ASTGtRNfZ/GNURtr5HFv+DKOuGmhURwNx
-         GR6EDrdL3h4lx7VJpQZEeHiweD8WchR/17GnC0HM9nrLRMwVFA6HY4kuQq53cqoiAL53
-         mDkjEPJkQq9P+x04dN36TjDnEUEy9xVaKEnL/SXcddRNRpjwunVNbITSolUIRvdtSCRI
-         judJfd45dgbj2MidVMBv4ktQjbWqPLZ7screXp/fetAlVT9bISvXZobEegwbEuoPPBc3
-         gX+XheeZyB8YLvL3CragfDHRWXmTMDxQPjw3nxikD76TH1Z+emCQ/wUtg2g6n9lplUXD
-         BcQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7f32msqOiQc0JpLw4MsEw0QrRZ2lpHCE6FKLkalbvhU=;
-        b=Rjzt5SJweWfPmffFajvJNbjhak2YjpWf3z3qMVcp4+QSC2We5uWMcLvKSgeRcGxqwt
-         PtLDDO2qKxXdcUqYx9kqgwyjseORd5XySC+i8XdaM52pHoDMT80foUofkRGCwsIWws/C
-         hntK1tws3kAXynFPNYYn32LjCuXOCbWEY3D1JJX8yluhzJjcyTnr8RyZGDYrG2x/kpXr
-         RJc4O85xMDUHGJEQNFYIBEope+/jX1BLirhmpXDaMl8xlGkHPE213AmU/CbKS1/rhFd5
-         6NyJAif5S7L8c1f/MrlsqNi370pVbZdHKQOuFdzJdUd8i1LLytuM4Kj9h4MCxl0YE9WO
-         4rEA==
-X-Gm-Message-State: AGi0Pub2kRwZkpiepWQwo0Q8rQmN9VGSagB9Jm/2ARLZQOJb+B5FriEa
-        TAXddZBw1o5dcFpi7RNl9Mh/Hg==
-X-Google-Smtp-Source: APiQypINbD+SwSQX239iVL4ARcQzUpE85tcDSAX0g1f/DkT80BUmiUIIWTpHdSuEhZG7PDqB5JWNiA==
-X-Received: by 2002:a5d:470a:: with SMTP id y10mr28586916wrq.63.1587553820230;
-        Wed, 22 Apr 2020 04:10:20 -0700 (PDT)
-Received: from localhost.localdomain ([37.120.50.78])
-        by smtp.gmail.com with ESMTPSA id h188sm7993906wme.8.2020.04.22.04.10.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2020 04:10:19 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v1] arm64: dts: qcom: apq8016-sbc-d3: Add Qualcomm APQ8016 SBC + D3 mezzanine
-Date:   Wed, 22 Apr 2020 13:10:14 +0200
-Message-Id: <20200422111014.616233-1-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        id S1726383AbgDVLSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 07:18:21 -0400
+Received: from mga18.intel.com ([134.134.136.126]:52488 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726104AbgDVLSV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Apr 2020 07:18:21 -0400
+IronPort-SDR: FgWiHvAOJHLpkGbni7gqeEFkbkE1Ui8NlDlyFMNMbz925qYByMqIvG5OgQUYheD+xn/IZLyvrR
+ woo3hef3GJMg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2020 04:18:18 -0700
+IronPort-SDR: yjDUmLnrAp3nPM++rWGbhbiP+fk2ZZXzCpYbitG0voHooB4HcwejvvPP1Xn+E70WMzCRqlrpwA
+ VCXcjkYUFh6Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,414,1580803200"; 
+   d="scan'208";a="290800598"
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by fmsmga002.fm.intel.com with ESMTP; 22 Apr 2020 04:18:14 -0700
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+        (envelope-from <lkp@intel.com>)
+        id 1jRDOP-0004yW-Jf; Wed, 22 Apr 2020 19:18:13 +0800
+Date:   Wed, 22 Apr 2020 19:17:34 +0800
+From:   kbuild test robot <lkp@intel.com>
+To:     Scott Branden <scott.branden@broadcom.com>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        bjorn.andersson@linaro.org, Arnd Bergmann <arnd@arndb.de>
+Cc:     kbuild-all@lists.01.org, "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Linux Memory Management List <linux-mm@kvack.org>,
+        Dan Carpenter <error27@gmail.com>
+Subject: Re: [PATCH v3 6/7] misc: bcm-vk: add Broadcom VK driver
+Message-ID: <202004221945.LY6x0DQD%lkp@intel.com>
+References: <20200420162809.17529-7-scott.branden@broadcom.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200420162809.17529-7-scott.branden@broadcom.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device treee support for the Qualcomm APQ8016 SBC, otherwise known as
-the Dragonboard 410c with the D3 mezzanine expansion board.
+Hi Scott,
 
-The D3 mezzanine ships in a kit with a OmniVision 5640 sensor module,
-which is what this DT targets.
+I love your patch! Perhaps something to improve:
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
+[auto build test WARNING on driver-core/driver-core-testing]
+[also build test WARNING on next-20200421]
+[cannot apply to char-misc/char-misc-testing kselftest/next linus/master v5.7-rc2]
+[if your patch is applied to the wrong git tree, please drop us a note to help
+improve the system. BTW, we also suggest to use '--base' option to specify the
+base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
+
+url:    https://github.com/0day-ci/linux/commits/Scott-Branden/firmware-add-partial-read-support-in-request_firmware_into_buf/20200422-114528
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git 55623260bb33e2ab849af76edf2253bc04cb241f
+reproduce:
+        # apt-get install sparse
+        # sparse version: v0.6.1-191-gc51a0382-dirty
+        make ARCH=x86_64 allmodconfig
+        make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kbuild test robot <lkp@intel.com>
+
+
+sparse warnings: (new ones prefixed by >>)
+
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse: sparse: incorrect type in assignment (different address spaces) @@    expected struct bcm_vk_peer_log *p_ctl @@    got struct bcm_vk_peer_log *p_ctl @@
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse:    expected struct bcm_vk_peer_log *p_ctl
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse:    got void [noderef] <asn:2> *
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected void const [noderef] <asn:1> *from @@    got oderef] <asn:1> *from @@
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse:    expected void const [noderef] <asn:1> *from
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse:    got struct vk_image *arg
+   drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected void const [noderef] <asn:1> *from @@    got oderef] <asn:1> *from @@
+   drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse:    expected void const [noderef] <asn:1> *from
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse:    got struct vk_reset *arg
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected struct vk_image *arg @@    got void [nstruct vk_image *arg @@
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse:    expected struct vk_image *arg
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse:    got void [noderef] <asn:1> *argp
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected struct vk_reset *arg @@    got void [nstruct vk_reset *arg @@
+>> drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse:    expected struct vk_reset *arg
+   drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse:    got void [noderef] <asn:1> *argp
+--
+>> drivers/misc/bcm-vk/bcm_vk_msg.c:507:17: sparse: sparse: cast removes address space '<asn:2>' of expression
+   drivers/misc/bcm-vk/bcm_vk_msg.c:707:15: sparse: sparse: cast removes address space '<asn:2>' of expression
+   drivers/misc/bcm-vk/bcm_vk_msg.c:715:23: sparse: sparse: cast removes address space '<asn:2>' of expression
+   drivers/misc/bcm-vk/bcm_vk_msg.c:871:31: sparse: sparse: cast removes address space '<asn:2>' of expression
+   drivers/misc/bcm-vk/bcm_vk_msg.c:899:47: sparse: sparse: cast removes address space '<asn:2>' of expression
+
+vim +189 drivers/misc/bcm-vk/bcm_vk_dev.c
+
+   180	
+   181	static void bcm_vk_dump_peer_log(struct bcm_vk *vk)
+   182	{
+   183		struct bcm_vk_peer_log log, *p_ctl;
+   184		char loc_buf[BCM_VK_PEER_LOG_LINE_MAX];
+   185		int cnt;
+   186		struct device *dev = &vk->pdev->dev;
+   187		uint data_offset;
+   188	
+ > 189		p_ctl = vk->bar[BAR_2] + vk->peerlog_off;
+   190		log = *p_ctl;
+   191		/* do a rmb() to make sure log is updated */
+   192		rmb();
+   193	
+   194		dev_dbg(dev, "Peer PANIC: Size 0x%x(0x%x), [Rd Wr] = [%d %d]\n",
+   195			log.buf_size, log.mask, log.rd_idx, log.wr_idx);
+   196	
+   197		cnt = 0;
+   198		data_offset = vk->peerlog_off + sizeof(struct bcm_vk_peer_log);
+   199		while (log.rd_idx != log.wr_idx) {
+   200			loc_buf[cnt] = vkread8(vk, BAR_2, data_offset + log.rd_idx);
+   201	
+   202			if ((loc_buf[cnt] == '\0') ||
+   203			    (cnt == (BCM_VK_PEER_LOG_LINE_MAX - 1))) {
+   204				dev_err(dev, "%s", loc_buf);
+   205				cnt = 0;
+   206			} else {
+   207				cnt++;
+   208			}
+   209			log.rd_idx = (log.rd_idx + 1) & log.mask;
+   210		}
+   211		/* update rd idx at the end */
+   212		vkwrite32(vk, log.rd_idx, BAR_2, vk->peerlog_off);
+   213	}
+   214	
+
 ---
- arch/arm64/boot/dts/qcom/Makefile           |  1 +
- arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts | 45 +++++++++++++++++++++
- 2 files changed, 46 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index cc103f7020fd..025362471929 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -1,5 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
- dtb-$(CONFIG_ARCH_QCOM) += apq8096-ifc6640.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts
-new file mode 100644
-index 000000000000..1b85adeeada1
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts
-@@ -0,0 +1,45 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "apq8016-sbc.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. APQ 8016 SBC w/ D3 Mezzanine";
-+	compatible = "qcom,apq8016-sbc", "qcom,apq8016", "qcom,sbc";
-+};
-+
-+&cci_i2c0 {
-+	/delete-node/ camera_rear@3b;
-+
-+	camera_rear@76 {
-+		compatible = "ovti,ov5640";
-+		reg = <0x76>;
-+
-+		enable-gpios = <&msmgpio 34 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&msmgpio 35 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&camera_rear_default>;
-+
-+		clocks = <&gcc GCC_CAMSS_MCLK0_CLK>;
-+		clock-names = "xclk";
-+		clock-frequency = <23880000>;
-+
-+		vdddo-supply = <&camera_vdddo_1v8>;
-+		vdda-supply = <&camera_vdda_2v8>;
-+		vddd-supply = <&camera_vddd_1v5>;
-+
-+		status = "ok";
-+
-+		port {
-+			ov5640_ep: endpoint {
-+				clock-lanes = <1>;
-+				data-lanes = <0 2>;
-+				remote-endpoint = <&csiphy0_ep>;
-+			};
-+		};
-+	};
-+};
--- 
-2.25.1
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
