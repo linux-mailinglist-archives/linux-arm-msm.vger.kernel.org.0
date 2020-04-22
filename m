@@ -2,132 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AFAE1B49F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 18:14:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F40101B49F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 18:12:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726796AbgDVQNv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 12:13:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33744 "EHLO
+        id S1726164AbgDVQM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 12:12:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726688AbgDVQNs (ORCPT
+        with ESMTP id S1726503AbgDVQM4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 12:13:48 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71825C03C1AC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 09:13:48 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id n24so1105752plp.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 09:13:48 -0700 (PDT)
+        Wed, 22 Apr 2020 12:12:56 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9135C03C1A9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 09:12:53 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id s10so1922286edy.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 09:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=haXh/tX3SOSYaN3kdWmh7tZgIKTN2Ame+pI+xos3JF4=;
-        b=AEltxgy4q2TsGFOClMObm9b8h2g/JMbN+vHeWIqltddb75/cdCpCAGFLLAgbAI/w9P
-         oepX1X1aTof6tPXJ9N0NnlGGmxxI2vEQs+VMHUAQ2ycqjZqEaKU8B81YjNaUzA7FFmmk
-         H6uaYVnXPt9Dw11ajIUXpCw78p1shIy/X/9e8=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cOIdG6ANuqdCAw6HTlOJwmfM932Ci5JIRvtMJVQhAu8=;
+        b=FhN9qRLx4i+wanbPH+AvD3FKCX9cxO/ct2YRESvQMA6H5QD5TErIsLxRMXKsFa/S3q
+         gjMIGn8pgFo1ce1STLeEs+9TXt8ahd4XLiBCFg5Mqakj/rzDCKQak01DJQaZFI4seZN8
+         QNufbdgbepqcy3XXqqxX1i/zpLUsLUrB8QuRaNgL+FIvb2baG7eVQHsF8jb7iVxSluXq
+         NgFZhVRerrkpx6td8evt+KLxPW5B64+qiFc0Dj7rMNCaaQ7O1NFyloSpHDh0qTYdJ5W5
+         09SsqqlsMlh20i8azgFUAz7FHfCcvSdhhk1onh1k4T3ssONuzgobKAysSv9uFtR9Osde
+         sGEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=haXh/tX3SOSYaN3kdWmh7tZgIKTN2Ame+pI+xos3JF4=;
-        b=BliqaFgKGyvj2yBfAlkufVJ8KiCVZtFbzK1TzL9NTZHzP3gWzXK7lbtCu5ZPNBSE02
-         kVeIC9fcRJCgNglCZjspe3DscGnvZlgL+gv3xJ/wONRMCXjRYbYkyXVXJbm3TviX1QlX
-         KRbmW3GYCRpYDSGbtYlMJoP3j/3nd+crwo+Y9WHEBCW8F0Bj1e4MM0fRCVwXnOqU3IWU
-         +Z4SYeb7PnQMgR1hz+IwhKZLxaprBZ5laRNSgbrM7SVSqDC8UDFyW7ZDACSdPyXVZmeH
-         j+cleJEyctxoJu3sVmKKn0t8cTitWqRfe+lfhjUQK56k1s/7Ydz+Rk5Vt8NzdN6odvpe
-         PgXg==
-X-Gm-Message-State: AGi0PuZIdM2eOyAqEWs1MGIo9+esTIIjWJ3DqOopYH0/rc2c5aoRs3Ye
-        vRm4U7TNrD8nJXkZwNEbBUlA8w==
-X-Google-Smtp-Source: APiQypLKRMv51EGdO91pErzP8PP5oDLeOGr+Ipbp7l6ZVumCxGF1jiLK98xv6P2Zls315J2pP9ZwoA==
-X-Received: by 2002:a17:902:9a03:: with SMTP id v3mr26324580plp.272.1587572027787;
-        Wed, 22 Apr 2020 09:13:47 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id p190sm4192374pfp.207.2020.04.22.09.13.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Apr 2020 09:13:46 -0700 (PDT)
-Subject: Re: [PATCH v3 6/7] misc: bcm-vk: add Broadcom VK driver
-To:     Dan Carpenter <dan.carpenter@oracle.com>,
-        kbuild test robot <lkp@intel.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        bjorn.andersson@linaro.org, Arnd Bergmann <arnd@arndb.de>,
-        kbuild-all@lists.01.org, "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Linux Memory Management List <linux-mm@kvack.org>,
-        Dan Carpenter <error27@gmail.com>
-References: <20200420162809.17529-7-scott.branden@broadcom.com>
- <202004221945.LY6x0DQD%lkp@intel.com> <20200422113558.GJ2659@kadam>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <b626e7fe-ae3f-827f-6f5b-2e6639f55775@broadcom.com>
-Date:   Wed, 22 Apr 2020 09:13:36 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cOIdG6ANuqdCAw6HTlOJwmfM932Ci5JIRvtMJVQhAu8=;
+        b=DeQyClHG0541umRMp+xfOS6q2G0BILYL0ldkTyTqbaeia+6sNzMNyER8Jdf32g33q3
+         asaQbYd8Z7Uk0r0lq+ce/KXGTSf1x0Htyqqn58s0q1gXuMyOzAVArRnV454dtSKV/5bm
+         X/Q5Omp26XFVtqr2Dym6mEz9MrVGOBlle/vNKfYtQmRxCclaCifKAp29WTk2wCyQe5/l
+         +LrFMpO2sqlp5MkwtLZH1mgBpfFu8IlRV77HZxVCWuIBJcQVM3ABSU39Ztyhz3zfeC5P
+         RmhzP1wnTTASAJ+TU3mo5UsoUCB4+TdGNEGrY3+LA0HRDNOXHK1oQuqL5CccoNoLC4Gr
+         4Vfw==
+X-Gm-Message-State: AGi0PuYr4eC0FxFunCC80DS0JZIRC+ttIZDatfL+DUTBl6pGnCI4eqvH
+        gM4zta3vnRjLhYoAUpWdm9QOx3YF8lGKFNpzmsVK5w==
+X-Google-Smtp-Source: APiQypK2YAAvF6wFI6CAGsRdSkkUVwNPo3dT6tXcGq+bweW10zNHW57KThBCkvfa7QcU0JI8E4FzHXQrFyXsVl4hshc=
+X-Received: by 2002:a05:6402:22ed:: with SMTP id dn13mr23348389edb.212.1587571972357;
+ Wed, 22 Apr 2020 09:12:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200422113558.GJ2659@kadam>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <1585224008-15730-1-git-send-email-loic.poulain@linaro.org>
+ <1585224008-15730-4-git-send-email-loic.poulain@linaro.org> <158754648689.132238.18246673092201406766@swboyd.mtv.corp.google.com>
+In-Reply-To: <158754648689.132238.18246673092201406766@swboyd.mtv.corp.google.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Wed, 22 Apr 2020 18:16:40 +0200
+Message-ID: <CAMZdPi9Jg1ak41-39e2i5dM4Yrw8gGBx=MEvqBy8UCuZNMvCrA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] dt-bindings: clk: qcom: Add bindings for CPU clock
+ for msm8996
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk@vger.kernel.org, Ilia Lin <ilialin@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2020-04-22 4:35 a.m., Dan Carpenter wrote:
-> On Wed, Apr 22, 2020 at 07:17:34PM +0800, kbuild test robot wrote:
->> Hi Scott,
->>
->> I love your patch! Perhaps something to improve:
->>
->> [auto build test WARNING on driver-core/driver-core-testing]
->> [also build test WARNING on next-20200421]
->> [cannot apply to char-misc/char-misc-testing kselftest/next linus/master v5.7-rc2]
->> [if your patch is applied to the wrong git tree, please drop us a note to help
->> improve the system. BTW, we also suggest to use '--base' option to specify the
->> base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
->>
->> url:    https://github.com/0day-ci/linux/commits/Scott-Branden/firmware-add-partial-read-support-in-request_firmware_into_buf/20200422-114528
->> base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git 55623260bb33e2ab849af76edf2253bc04cb241f
->> reproduce:
->>          # apt-get install sparse
->>          # sparse version: v0.6.1-191-gc51a0382-dirty
->>          make ARCH=x86_64 allmodconfig
->>          make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
->                                             ^^^^^^^^^^^^^^^^^^^
+On Wed, 22 Apr 2020 at 11:08, Stephen Boyd <sboyd@kernel.org> wrote:
 >
-> Sorry, you asked me about this earlier.  You will need to add
-> -D__CHECK_ENDIAN__ to enable these Sparse warnings.
-This is strange.  I ran the sparse build and thought I had fixed all the 
-issues.
-I'll have to try again.
-
-One other question with the sparse build.  I get many of the messages 
-printed but the build seems to go to the end (even without my patches 
-applied):
-./arch/x86/include/asm/paravirt.h:333:9: error: got __inline
-./arch/x86/include/asm/paravirt.h:338:9: error: Expected ( after asm
-./arch/x86/include/asm/paravirt.h:338:9: error: got __inline
-./arch/x86/include/asm/paravirt.h:343:9: error: Expected ( after asm
-./arch/x86/include/asm/paravirt.h:343:9: error: got __inline
-./arch/x86/include/asm/paravirt.h:348:9: error: Expected ( after asm
-./arch/x86/include/asm/paravirt.h:348:9: error: too many errors
-
-Any way to suppress or I am doing something wrong?  I just run the 2 
-make commands:
-
-         make ARCH=x86_64 allmodconfig
-         make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
-
-> regards,
-> dan carpenter
+> Quoting Loic Poulain (2020-03-26 05:00:07)
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,kryocc.txt b/Documentation/devicetree/bindings/clock/qcom,kryocc.txt
+> > new file mode 100644
+> > index 0000000..8458783
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,kryocc.txt
+> > @@ -0,0 +1,17 @@
+> > +Qualcomm CPUSS clock controller for Kryo CPUs
+> > +----------------------------------------------------
+> > +
+> > +Required properties :
+> > +- compatible : shall contain only one of the following:
+> > +
+> > +                       "qcom,msm8996-apcc"
+> > +
+> > +- reg : shall contain base register location and length
+> > +- #clock-cells : shall contain 1
 >
+> Any chance this can become YAML, take parent clocks via the 'clocks' and
+> 'clock-names' properties in DT, and have the file name reflect the
+> compatible string instead of qcom,kryocc?
 
+Sure, will do that in v2.
+Regards,
+Loic
