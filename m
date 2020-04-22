@@ -2,64 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26BBC1B4F8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 23:42:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AA3F1B4FA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2020 23:55:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726738AbgDVVmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 17:42:09 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:1942 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726715AbgDVVmG (ORCPT
+        id S1726168AbgDVVz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 17:55:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58552 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726006AbgDVVz0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 17:42:06 -0400
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Apr 2020 14:42:05 -0700
-Received: from asutoshd-linux1.qualcomm.com ([10.46.160.39])
-  by ironmsg02-sd.qualcomm.com with ESMTP; 22 Apr 2020 14:42:04 -0700
-Received: by asutoshd-linux1.qualcomm.com (Postfix, from userid 92687)
-        id 593C720AA6; Wed, 22 Apr 2020 14:42:04 -0700 (PDT)
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     cang@codeaurora.org, martin.petersen@oracle.com,
-        Avri.Altman@wdc.com, linux-scsi@vger.kernel.org
-Cc:     Asutosh Das <asutoshd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 3/3] ufs-qcom: scsi: configure write booster type
-Date:   Wed, 22 Apr 2020 14:41:44 -0700
-Message-Id: <cd4cf745ea0b3a59c2075036e17316b97494fe65.1587591527.git.asutoshd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1586374414.git.asutoshd@codeaurora.org>
-References: <cover.1586374414.git.asutoshd@codeaurora.org>
-In-Reply-To: <2871444d9083b0e9323ef6d8ff1b544b7784adc9.1587591527.git.asutoshd@codeaurora.org>
-References: <2871444d9083b0e9323ef6d8ff1b544b7784adc9.1587591527.git.asutoshd@codeaurora.org>
+        Wed, 22 Apr 2020 17:55:26 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67BCCC03C1AA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 14:55:25 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id j7so1770745pgj.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 14:55:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VcN3ZrHWXlIPIuh298G1lUnACYhPjzKzp7jscayIaS4=;
+        b=JG4Xp5iAXo+CrWZdn/y4r+OZsOjzrMLbL1ltQWdthqarbD2q+yMDBjC/j/8ONTKO67
+         izd7bl01J9AylLWiyA8vjPLcbySNq6/vcVFp/ymDArLe3+jWLxvoIZvbXLOiQsHhbcg5
+         pGgNdAykwkPFFmQVqht88gJI6UEnach0gbPYs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VcN3ZrHWXlIPIuh298G1lUnACYhPjzKzp7jscayIaS4=;
+        b=EZKo/0NcHy1QPMR0zMI7I/Cy8BXwKZ+71OiTrc4yotdCEbSmBJwcfWx+a4xMcXeOKj
+         5u1jUoSxJSCgACajJO3RSu5ksmNw/4wy9WIKVAn1YN/oppcirTu3yTs8w/oSPdiW2nq2
+         63M9/doPC1SbwvKwK8GgySg+ZWsuf7KW+aUFlmcN/0fY+jSjwB97bn5d2xZj8wD4q36U
+         I+1C92SYmWs3HoPEURmOlxuysGv2571tlB6hIPfOWx0UYfgSqpUPQEl/zNGDhBK8/Zdp
+         42gloIUsJf3xwymf6wNZ4j9yztKjfpsIuNPfIMgjEYfN0OOWNE5qjsxJltfc/oRXoGnm
+         YLdQ==
+X-Gm-Message-State: AGi0PuYuzuREfs3wQQxzknZVap6HYNE5z9aEZMIp8S5ATuhHa3nCCWQZ
+        +zR8nGxjqVTTmHIDHpiDYTlhcw==
+X-Google-Smtp-Source: APiQypIPMIRi0bHMPdu9jfpd4s1/+Acupprv6NYFFFx0FXOFJvQM+mh4MegAtGry2e5FVLcca2uxgw==
+X-Received: by 2002:a62:8202:: with SMTP id w2mr594501pfd.117.1587592524740;
+        Wed, 22 Apr 2020 14:55:24 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id r4sm211072pgi.6.2020.04.22.14.55.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Apr 2020 14:55:24 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        rafael.j.wysocki@intel.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mka@chromium.org, swboyd@chromium.org, mkshah@codeaurora.org,
+        evgreen@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v4 1/5] soc: qcom: rpmh-rsc: Corrently ignore CPU_CLUSTER_PM notifications
+Date:   Wed, 22 Apr 2020 14:54:59 -0700
+Message-Id: <20200422145408.v4.1.Ic7096b3b9b7828cdd41cd5469a6dee5eb6abf549@changeid>
+X-Mailer: git-send-email 2.26.1.301.g55bc3eb7cb9-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable WriteBooster for Qualcomm platform.
+Our switch statement doesn't have entries for CPU_CLUSTER_PM_ENTER,
+CPU_CLUSTER_PM_ENTER_FAILED, and CPU_CLUSTER_PM_EXIT and doesn't have
+a default.  This means that we'll try to do a flush in those cases but
+we won't necessarily be the last CPU down.  That's not so ideal since
+our (lack of) locking assumes we're on the last CPU.
 
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+Luckily this isn't as big a problem as you'd think since (at least on
+the SoC I tested) we don't get these notifications except on full
+system suspend.  ...and on full system suspend we get them on the last
+CPU down.  That means that the worst problem we hit is flushing twice.
+Still, it's good to make it correct.
+
+Fixes: 985427f997b6 ("soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches")
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/scsi/ufs/ufs-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 19aa5c4..6e4000d 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1071,6 +1071,7 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
- 	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
- 	hba->caps |= UFSHCD_CAP_CLK_SCALING;
- 	hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
-+	hba->caps |= UFSHCD_CAP_WB_EN;
+Changes in v4:
+- ("...Corrently ignore CPU_CLUSTER_PM notifications") split out for v4.
+
+Changes in v3: None
+Changes in v2: None
+
+ drivers/soc/qcom/rpmh-rsc.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index a9e15699f55f..3571a99fc839 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -806,6 +806,8 @@ static int rpmh_rsc_cpu_pm_callback(struct notifier_block *nfb,
+ 	case CPU_PM_EXIT:
+ 		cpumask_clear_cpu(smp_processor_id(), &drv->cpus_entered_pm);
+ 		goto exit;
++	default:
++		return NOTIFY_DONE;
+ 	}
  
- 	if (host->hw_ver.major >= 0x2) {
- 		host->caps = UFS_QCOM_CAP_QUNIPRO |
+ 	ret = rpmh_rsc_ctrlr_is_busy(drv);
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.26.1.301.g55bc3eb7cb9-goog
 
