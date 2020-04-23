@@ -2,92 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 864C91B63AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 20:27:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DECC1B6496
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 21:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730288AbgDWS0w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 14:26:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52796 "EHLO
+        id S1728150AbgDWTj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 15:39:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730272AbgDWS0v (ORCPT
+        with ESMTP id S1727804AbgDWTj1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 14:26:51 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC999C09B043
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 11:26:50 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id u11so7546037iow.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 11:26:50 -0700 (PDT)
+        Thu, 23 Apr 2020 15:39:27 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F6AC09B045
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 12:39:26 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id g6so3382777pgs.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 12:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=DHzQtr3OkXyFWXbvXEU307GvVJtF7cl8Gt7nfdQPyE8=;
-        b=g40sBMuaO0eKdotmx6qgQBl63DKBmrekz5bvyEQHA4wVZtcqrxc+aFVgh/QD84O9VQ
-         7GeGJGwCstc5CQBYUut5JFB/SR9hiHRBoNucBdQ5+M/xcZE7LYnQNVriX94nlJDQQ53M
-         WWNnGuPMmJMtuCxOc6M3BOG48McWyi9pwkfv1qCbwmDhh95byI3UmcGK9ZJ59xQm/kqA
-         giNgZwxUHu+XTIAoqn/uu1orK63Ur+6hMBQW2TB101zb0oJ5HpVThkCq6id/TjpQtg27
-         HPMb1DcYsj7bM6wQaeV1UkPK6mgUhECRFNV10F5zDhvx1RXP4ikb8uuEIGMKOSNWVb51
-         vLew==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=7VPU62AS0hE3DKQRkOunlFCKQKhdwD9eupm/jSgSc0o=;
+        b=fqm9ZIjYeSPBDfE/QRu99KVQdVsUeerRL5pAVUVajv+e2SuYpHLE1FyB095+rRNLhg
+         /J3qFsRFP7AfK6wYscG9PXM49C3MZEyA5tvD/Zv8lnY8QYwqZoSxa+Y04fsNkGs3+dpZ
+         9g6GfHdmQjY9gvJea954/kRhpTEdxkybP1Axg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=DHzQtr3OkXyFWXbvXEU307GvVJtF7cl8Gt7nfdQPyE8=;
-        b=UWFl1zDQ4m70gB2AddzxKROpATmQcTpBfNGrC271ql74XpJn1qFWqg5q+0ZIWPHMUy
-         0SHjxWIlWBPZBajxeQPdIIqDAqkZc51p6+7dAbXzPNXDYRTd9aIWR1T22bH5CAg469Y4
-         XcsD2ME/iVDycU6hFFlHh4eWevFLkbgUijncUd+8MJ4louiyWZygC5k4iGBPm3HMMqDs
-         lI38SSK+Fsmz3Y4pFHQDa02c8EMj1EZmfuHopGWbO0B/Fi7CJcatZ5KebvBjKXoyi+PZ
-         WTO1AdEVw+39G/Ppb5NWozgeRNN2ePOrgg1JCYP6W9g/SKQuPVjtgNvlqn5C5Cwlt1lF
-         gSBA==
-X-Gm-Message-State: AGi0Pua60sQI121t459TnGODI9uoy6xOPCFeBgnSVz1ExDNR6bTgFd0/
-        mz2oowP3h6GhfMCZDM6vfEr7IIoeCeuYcAAodw==
-X-Google-Smtp-Source: APiQypKZ88CB7WlyCjo0k9+cU4PX0VcggKkKtzSKgRJHkcPGizF0yZXAjzEMBgo6XH4xzBXv0KAOMjPM9p1sgpp6/70=
-X-Received: by 2002:a5e:9416:: with SMTP id q22mr2547966ioj.93.1587666410194;
- Thu, 23 Apr 2020 11:26:50 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7VPU62AS0hE3DKQRkOunlFCKQKhdwD9eupm/jSgSc0o=;
+        b=EA9UESxx4d0AdPVnDHzqpG5tgOI/Z1EWpzS4wagBcYlSzyj4hEMiophHUQSyaylREs
+         J8PdFQGyFQ2+mD4sx43ocXRa0Ew4HnhJdhNe99ZHOGVTFG+iDFFRcgpimw8ElVn8IdIK
+         CJpe/YbOGo57NU7ILx99pbhUc4Evq21RcvPuBhJKvOVJBweqzhXuYTyNmPRLxjj7tRAL
+         Y3o6/tCegQxvszCxRDomvJFve7liDNDsEYROWgAhVc3MgLD17x02b/86Y8EWkf5JTzpc
+         Dbjjehy3+CtK06vemXkrW8y9UJ7tOUI0YejKGoGmPrk1L8gt/dJMoKyhJsIszwi2MBdu
+         +bIw==
+X-Gm-Message-State: AGi0Puamlms7zy6BHHJnV+wYyqX/abwMm/Bg0bxqbi164qqfcRfdD5rH
+        wCWWnYAxq2P8rhthELLdkE0ptw==
+X-Google-Smtp-Source: APiQypJd4T0HLRLEhYMctigRHwArQ5Lyj7Ah48K5q+Fq0x5nv4fDYp6iTUKOzhPoARFHEfZwN9MqWQ==
+X-Received: by 2002:a62:8202:: with SMTP id w2mr5342725pfd.117.1587670766035;
+        Thu, 23 Apr 2020 12:39:26 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id l185sm3281987pfl.104.2020.04.23.12.39.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2020 12:39:24 -0700 (PDT)
+Date:   Thu, 23 Apr 2020 12:39:23 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v5 1/2] dt-bindings: usb: qcom,dwc3: Convert USB DWC3
+ bindings
+Message-ID: <20200423193923.GK199755@google.com>
+References: <1585206368-685-1-git-send-email-sanm@codeaurora.org>
+ <1585206368-685-2-git-send-email-sanm@codeaurora.org>
+ <20200404171700.GA10096@bogus>
+ <5e2eb0a4-ed70-4212-fc70-6ee850507a7e@codeaurora.org>
+ <5793ea62-7a73-789e-33d6-6b2fb37b376c@codeaurora.org>
 MIME-Version: 1.0
-Received: by 2002:a02:c845:0:0:0:0:0 with HTTP; Thu, 23 Apr 2020 11:26:49
- -0700 (PDT)
-Reply-To: boa.benin107@yahoo.com
-From:   "Mrs. Angella Michelle" <info.zennitbankplcnigerian@gmail.com>
-Date:   Thu, 23 Apr 2020 20:26:49 +0200
-Message-ID: <CABHzvr=N78snvtMHePMOa+RLFdcZEjXLPkuhkojt4VoZGNzBsQ@mail.gmail.com>
-Subject: Contact Bank of Africa-Benin to receive your payment funds transfer
- amount of $12.800.000,00 Million USD,approved this morning by IMF.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5793ea62-7a73-789e-33d6-6b2fb37b376c@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Attn Dear.
-Contact Bank of Africa-Benin to receive your payment funds transfer amount =
-of
-$12.800.000,00 Million USD,approved this morning by IMF.
-Happy to inform you, we have finally deposited your payment funds
-$12.8 million us dollars with the Paying Bank of Africa-Benin
-to transfer the payment amount of $12.800,000,00 Million Us Dollars to you
-Contact the bank immediately you receive this email now.
-Director Bank of Africa-Benin: Dr. Festus Obiara
-Email id:  boa.benin107@yahoo.com
-Tel/mobile, (229) 62819378
-BOA-BENIN | GROUPE BANK OF AFRICA, boa-benin
-Avenue Jean-Paul II - 08 BP 0879 - Cotonou - B=C3=A9nin
-Phone:(229) 62819378.
-2020 GROUPE BANK OF AFRICA
-Be advised to re-confirm your bank details to this bank as listed.
-Your account Holder's name----------------
-Bank Name----------------------------------------------------------
-Bank address----------------------------------------------
-Account Numbers---------------------------------------
-Rounting-----------------------------------------------------------------
-Your direct Phone Numbers----------------------------------------------
-Note,I have paid the deposit and insurance fees for you
-But the only money you are to send to this bank is $150.00 us dollars
-Been for the wire transfer fees of your funds
-Contact Him now to receive your transfer deposited this morning
-I wait for your reply upon confirmation
-Mrs. Angella Michelle
-Editor, Zenith Bank- Companies Benin
-mrsa9389@gmail.com
+On Wed, Apr 15, 2020 at 02:23:29PM +0530, Sandeep Maheswaram (Temp) wrote:
+> Hi Rob,
+> 
+> Any suggestions to solve this error in assigned-clock-rates
+
+> On 4/6/2020 10:09 PM, Sandeep Maheswaram (Temp) wrote:
+> > Hi Rob,
+> > 
+> > On 4/4/2020 10:47 PM, Rob Herring wrote:
+> > > On Thu, Mar 26, 2020 at 12:36:07PM +0530, Sandeep Maheswaram wrote:
+> > > > Convert USB DWC3 bindings to DT schema format using json-schema.
+> > > > 
+> > > > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> > > > ---
+> > > >   .../devicetree/bindings/usb/qcom,dwc3.txt          | 104
+> > > > --------------
+> > > >   .../devicetree/bindings/usb/qcom,dwc3.yaml         | 158
+> > > > +++++++++++++++++++++
+> > > >   2 files changed, 158 insertions(+), 104 deletions(-)
+> > > >   delete mode 100644
+> > > > Documentation/devicetree/bindings/usb/qcom,dwc3.txt
+> > > >   create mode 100644
+> > > > Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> > > 
+> > > > diff --git
+> > > > a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> > > > b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> > > > new file mode 100644
+> > > > index 0000000..0f69475
+> > > > --- /dev/null
+> > > > +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+
+...
+
+> > > > +    items:
+> > > > +      - description: Must be 19.2MHz (19200000).
+> > > Sounds like a constraint:
+> > > 
+> > > - const: 19200000
+> > > 
+> > > > +      - description: Must be >= 60 MHz in HS mode, >= 125 MHz
+> > > > in SS mode.
+> > > - minimum: 60000000
+> > >    maximum: ?
+> > 
+> > Tried  as below but facing errors
+> > 
+> > assigned-clock-rates:
+> >     items:
+> >       - const: 19200000
+> >       - minimum: 60000000
+> >         maximum: 150000000
+> > 
+> > Errors
+> > 
+> > linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dt.yaml:
+> > usb@a6f8800: assigned-clock-rates: Additional items are not allowed
+> > ([150000000] was unexpected)
+> > linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dt.yaml:
+> > usb@a6f8800: assigned-clock-rates:0: [19200000] is too short
+> > linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dt.yaml:
+> > usb@a6f8800: assigned-clock-rates: [[19200000], [150000000]] is too long
+
+judging from the error messages my uneducated guess is that the above rules for
+assigned-clock-rates expect a single tuple of two elements, not two tuples with
+a single element, i.e.
+
+assigned-clock-rates = <19200000, 150000000>;
+
+  instead of
+
+assigned-clock-rates = <19200000>, <150000000>;
+
+I experimented a bit but couldn't find the magic incantation to appease the
+schema deities.
+
+Rob, could you please help to distentangle this?
+
+Thanks
+
+Matthias
