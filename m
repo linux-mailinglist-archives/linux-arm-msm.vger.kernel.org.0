@@ -2,92 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A40011B5ED6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 17:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A14991B5F1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 17:26:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729111AbgDWPOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 11:14:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50744 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729013AbgDWPOI (ORCPT
+        id S1728990AbgDWP0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 11:26:11 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:58180 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729008AbgDWP0K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 11:14:08 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E252C09B040
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 08:14:08 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id x25so6817192wmc.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 08:14:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=v46Ikk3Jz0r+b0XX/bOEpsMp0yxP+bghxd3vH+HYhPc=;
-        b=MIWxKE/qjLCX/xGHYA9pPPU0BNfKH43CNGFsg6DeK/Mru9tvWVDKwiaZOn1XHjMoVE
-         i4PYlH8O7bplYaTQeMICT+fzY8fnWvVzPWCE5yQuez2xPFjAeqSQYiNf0Uh7R/Wo38Lg
-         Z6hX1p59FRmd8cXRcaKNBTpSFrbXarSJk9IonBz+osP259UyeH0oOSynqm+2NZi2Ahkn
-         mHD1tRQfsYU56pVs27oV5Y7kgyFt8LHsXNWTr7pGFlFyAJIxKMc0HJpPsylF6zrtlQY4
-         5pwVLUZ8W5eDfGynjFnJROYgC6aT3odwPB41c02RsLfkH8QAoKuW6rYRcLWEg9G1cGkc
-         OQaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=v46Ikk3Jz0r+b0XX/bOEpsMp0yxP+bghxd3vH+HYhPc=;
-        b=K45fItJWHHPH7FFCSpObEsTV9vn19Zmk0kK/g17YrhLsY3umVHgs1OKLkUKgjig/zV
-         DR25V1DqqsJbfURiGuFGIJvDW6v7JCZPB8V9V4oAHWe8t39h8ib2VwijSrxZ9dlqJrb4
-         0Rf71n0lm0kDZSy4RsmQ/izfFQXOXByG+ZjLKKUswrj3sLs0h0jOhuDSnTP7D0AtV32G
-         4JxKkJ8hroIdDSltHqh10aUFvPbm7RB65AZqyGrZ9j3VbhhhPieEnlrQ3oAyXblkoydL
-         fszyFwOkq2GHywUOn3PrG30bt9nDO/3UEE0tSpQLF1KKjaw6ixNc/1r3fBzdmTprPA8D
-         cafg==
-X-Gm-Message-State: AGi0PuZBR4RVZP+UKYmRDDeKHK4JxyFOa5FCKlouvGjUpfXPaRaOOga+
-        APh9/17ggFT8iQPmWQMMo4oyTg==
-X-Google-Smtp-Source: APiQypKEu5s0OhD4gtUwKlNwoPw/ork7gNul9QoWfqC2s5n+wpnmvRh1OKW8lXO0WhhFY70e5NcqhA==
-X-Received: by 2002:a1c:64c5:: with SMTP id y188mr4587343wmb.130.1587654846044;
-        Thu, 23 Apr 2020 08:14:06 -0700 (PDT)
-Received: from linaro.org ([37.167.216.250])
-        by smtp.gmail.com with ESMTPSA id x18sm4083518wrs.11.2020.04.23.08.14.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 08:14:05 -0700 (PDT)
-Date:   Thu, 23 Apr 2020 17:14:00 +0200
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-Subject: Re: [PATCH v6 05/10] PM / EM: remove em_register_perf_domain
-Message-ID: <20200423151400.GC65632@linaro.org>
-References: <20200410084210.24932-1-lukasz.luba@arm.com>
- <20200410084210.24932-6-lukasz.luba@arm.com>
+        Thu, 23 Apr 2020 11:26:10 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587655570; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=9wQ2DyfHn0zQSPKWH0MRTyykuPGkgNXnO6TKfK9XPEc=; b=S2vAGNHMbQUF3sMOEG1k461pFmIVJesMHM8v1LLP57t9An1W3ko+VJpPLDPvEkJIxfDnDqmp
+ fRQZUxLEG66WnQya6hmyxr5QX3nBJWhbOHl3bsAy+57VkazeUecinwSSDim3nOtgoZTC7ugF
+ Ugwtq38utNJWOuE/HaTciYAUvTc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea1b388.7f79f553e810-smtp-out-n01;
+ Thu, 23 Apr 2020 15:26:00 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5C528C432C2; Thu, 23 Apr 2020 15:25:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04D96C433F2;
+        Thu, 23 Apr 2020 15:25:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 04D96C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Thu, 23 Apr 2020 09:25:55 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] [PATCH v2 2/9] drm/msm: add internal MSM_BO_MAP_PRIV
+ flag
+Message-ID: <20200423152555.GA32401@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Sean Paul <sean@poorly.run>
+References: <20200421234127.27965-1-jonathan@marek.ca>
+ <20200421234127.27965-3-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200410084210.24932-6-lukasz.luba@arm.com>
+In-Reply-To: <20200421234127.27965-3-jonathan@marek.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 10, 2020 at 09:42:05AM +0100, Lukasz Luba wrote:
-> Remove old function em_register_perf_domain which is no longer needed.
-> There is em_dev_register_perf_domain that covers old use cases and new as
-> well.
-> 
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+On Tue, Apr 21, 2020 at 07:41:20PM -0400, Jonathan Marek wrote:
+> This flag sets IOMMU_PRIV, which is required for some a6xx GMU objects.
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+The GMU doesn't _need_  privileged surfaces, but it sure is a good idea.
+As a bonus with the APRIV bit on some a6xx targets we can set all of the
+global buffers as privileged so people can't go out and overwrite the memstore
+any more.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeauorora.org>
+
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  drivers/gpu/drm/msm/msm_gem.c | 3 +++
+>  drivers/gpu/drm/msm/msm_gem.h | 1 +
+>  2 files changed, 4 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index d8f56a34c117..6277fde13df9 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -428,6 +428,9 @@ static int msm_gem_pin_iova(struct drm_gem_object *obj,
+>  	if (!(msm_obj->flags & MSM_BO_GPU_READONLY))
+>  		prot |= IOMMU_WRITE;
+>  
+> +	if (msm_obj->flags & MSM_BO_MAP_PRIV)
+> +		prot |= IOMMU_PRIV;
+> +
+>  	WARN_ON(!mutex_is_locked(&msm_obj->lock));
+>  
+>  	if (WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED))
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index 30584eaf8cc8..972490b14ba5 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -13,6 +13,7 @@
+>  
+>  /* Additional internal-use only BO flags: */
+>  #define MSM_BO_STOLEN        0x10000000    /* try to use stolen/splash memory */
+> +#define MSM_BO_MAP_PRIV      0x20000000    /* use IOMMU_PRIV when mapping */
+>  
+>  struct msm_gem_address_space {
+>  	const char *name;
+> -- 
+> 2.26.1
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
