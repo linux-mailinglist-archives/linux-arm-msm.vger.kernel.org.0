@@ -2,107 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABDB21B5C07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 14:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44ED21B5C2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 15:10:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728286AbgDWM7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 08:59:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57988 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726685AbgDWM7l (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 08:59:41 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9869FC08E934;
-        Thu, 23 Apr 2020 05:59:39 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id w20so6125854ljj.0;
-        Thu, 23 Apr 2020 05:59:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=TN99Pfmiq67M57+79MTqUBODg0E96SLf0DqAJRctnww=;
-        b=Y7szCwfP00+3Qlg7PqYuLdN9pvRAG5rPi36oGFARP6hAxfks6vJ0kpRHrizJgIrHF6
-         +UOlyB/xifKw9H7Mjcps0orGTWKYpMe+b2jXNBXalqRLyO+qFvL0kNCGGKNEIlLQfsM1
-         oxn6EQdGdDVBxeI9tubCehhS8YIpVcsdHyMNNsl7VNii6OWYy2gs4q8qujKja7ACMQH3
-         +j9/D7IpTgAJjwqSf/ppkZdnLthHFH1bdNwPS0d+FQJ9yeceJiubSx+RXkt4dD48AIE5
-         e+HAEFNT5/Ij1cmwM3z4eePkajZhzY43MbZNCpqFobUCWnSIoaYlfJtP+82uIDyVhNVY
-         EljQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=TN99Pfmiq67M57+79MTqUBODg0E96SLf0DqAJRctnww=;
-        b=t25YQdXVk2EHIHVj7IOKMUirqmtSBBfBE8bnKVUIyabg8B+Tqb42RahQAxLJHHlUFU
-         nL9f4dra+bKME7YeqKquJy/sIhOKDqWxDw8r4I1udgw/833ZDG0UwzBuizroY+YX6s2c
-         hkrUS7vwlVD9buMcgCeu2xzFlhyz+EOkBeN8rKmhhbdn8Bwwi8YK1vVVjP+Dsprh/dbE
-         4df4nxKvnCiZi7KwSifk01QkfP4QGeSu8ix2X0dWySMlMmYSXBX0EqpPkpAmZZBKjPXB
-         RtFggnj0bTmeo1kJM9peeNmmidgnCxRdCALupkRIfxmc3hBdOeKaK0ZHaBsWyqTviRn4
-         eDwA==
-X-Gm-Message-State: AGi0PubYuxxy7FcthNNqgvVz4A8Wu7A6SIcd0fP60Cg7gmuD+yV2i/3D
-        ufP67GfFByF8UPGUeOFvHok=
-X-Google-Smtp-Source: APiQypJvxNBM10jzGJWdYX4cOhGpXVsnIxYhehXKPyLCRAfn/4qjISIb1q3Uqffmq65KRop51bILWQ==
-X-Received: by 2002:a2e:a58d:: with SMTP id m13mr2348976ljp.164.1587646778073;
-        Thu, 23 Apr 2020 05:59:38 -0700 (PDT)
-Received: from [192.168.86.24] ([213.191.183.145])
-        by smtp.gmail.com with ESMTPSA id q19sm1709346ljj.84.2020.04.23.05.59.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Apr 2020 05:59:36 -0700 (PDT)
-Subject: Re: [PATCH 2/3] dt-bindings: regulator: Add document bindings for
- max77826
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        id S1727780AbgDWNKI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 09:10:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46596 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726926AbgDWNKI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Apr 2020 09:10:08 -0400
+Received: from localhost (unknown [117.99.83.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5D33B2076C;
+        Thu, 23 Apr 2020 13:10:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1587647407;
+        bh=MrQ+RugElkiTg9LS3wQOxTE4aNNFTFJUQOB/dDU+5CQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AfAUNrxEz39CiNj1NAA5PSI+xEO/tfJFTFAkkF6Pf5hL5qVQkrkykiobJ+iHeU1Sj
+         QpSZgBb/jJID6xz1gRuflsOrbhpJhUi6Bt5lE49yrFbJn1B0qjiULC4J/oesIJxmHq
+         BgkPy1gIo3Y4TIOfXIqwEfMSIkVSDLPJre3RTcsU=
+Date:   Thu, 23 Apr 2020 18:40:00 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20200413164440.1138178-1-iskren.chernev@gmail.com>
- <20200413164440.1138178-3-iskren.chernev@gmail.com>
- <20200420205501.GA6828@bogus>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-Message-ID: <f9b5d68d-536b-5806-573b-9dafb848f46f@gmail.com>
-Date:   Thu, 23 Apr 2020 15:59:34 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v9 0/5] usb: xhci: Add support for Renesas USB controllers
+Message-ID: <20200423131000.GJ72691@vkoul-mobl>
+References: <20200414164152.2786474-1-vkoul@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20200420205501.GA6828@bogus>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200414164152.2786474-1-vkoul@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 14-04-20, 22:11, Vinod Koul wrote:
+> This series add support for Renesas USB controllers uPD720201 and uPD720202.
+> These require firmware to be loaded and in case devices have ROM those can
+> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
+> 
+> This includes patches from Christian which supported these controllers w/o
+> ROM and later my patches for ROM support and debugfs hook for rom erase and
+> export of xhci-pci functions.
 
-On 4/20/20 11:55 PM, Rob Herring wrote:
-> On Mon, Apr 13, 2020 at 07:44:39PM +0300, Iskren Chernev wrote:
->> +    patternProperties:
->> +      "^LDO([1-9]|1[0-5])$":
->> +        type: object
->> +        allOf:
->> +          - $ref: regulator.yaml#
->> +
->> +      "^BUCK|BUCKBOOST$":
->> +        type: object
->> +        allOf:
->> +          - $ref: regulator.yaml#
->> +
->> +      additionalProperties: false
->
-> You are defining a property called 'additionalProperties'. This one
-> should be dropped because additionalProperties doesn't work with a $ref.
->
+Any feedback Mathias ?
 
-I got the idea from mps,mpq7920.yaml. It has additionalProperties in the
-exact same places that I do. Also bd718(28|37|47).yaml seem to use
-additionalProperties inside patternProperties. Shall I modify it as well?
+> 
+> Changes in v9:
+>  Make fw load a sync call and have single instance of probe execute,
+>    elimating probe/remove races
+>  Add quirk for renesas and use that for loading
+> 
+> Changes in v8:
+>  Fix compile error reported by Kbuild-bot by making usb_hcd_pci_probe() take
+>  const struct hc_driver * as argument
+> 
+> Changes in v7:
+>  Make a single module which removes issues with module loading
+>  Keep the renesas code in renesas file
+>  Add hc_driver as argument for usb_hcd_pci_probe and modify hdc drivers to
+>    pass this and not use driver_data
+>  Use driver data for fw name
+>  Remove code to check if we need to load firmware or not
+>  remove multiple fw version support, we can do that with symlink in
+>    userspace
+> 
+> Changes in v6:
+>  Move the renesas code into a separate driver which invokes xhci-pci functions.
+> 
+> Changes in v5:
+>  Added a debugfs rom erase patch, helps in debugging
+>  Squashed patch 1 & 2 as requested by Mathias
+> 
+> Changes in v4:
+>  Rollback the delay values as we got device failures
+> 
+> Changes in v3:
+>   Dropped patch 2 as discussed with Christian
+>   Removed aligned 8 bytes check
+>   Change order for firmware search from highest version to lowest
+>   Added entry for new firmware for device 0x14 as well
+>   Add tested by Christian
+> 
+> Changes in v2:
+>   used macros for timeout count and delay
+>   removed renesas_fw_alive_check
+>   cleaned renesas_fw_callback
+>   removed recurion for renesas_fw_download
+>   added MODULE_FIRMWARE
+>   added comment for multiple fw order
+> 
+> Christian Lamparter (1):
+>   usb: renesas-xhci: Add the renesas xhci driver
+> 
+> Vinod Koul (4):
+>   usb: hci: add hc_driver as argument for usb_hcd_pci_probe
+>   usb: xhci: Add support for Renesas controller with memory
+>   usb: renesas-xhci: Add ROM loader for uPD720201
+>   usb: xhci: provide a debugfs hook for erasing rom
+> 
+>  drivers/usb/core/hcd-pci.c          |   7 +-
+>  drivers/usb/host/Makefile           |   3 +-
+>  drivers/usb/host/ehci-pci.c         |   6 +-
+>  drivers/usb/host/ohci-pci.c         |   9 +-
+>  drivers/usb/host/uhci-pci.c         |   8 +-
+>  drivers/usb/host/xhci-pci-renesas.c | 740 ++++++++++++++++++++++++++++
+>  drivers/usb/host/xhci-pci.c         |  47 +-
+>  drivers/usb/host/xhci-pci.h         |  16 +
+>  drivers/usb/host/xhci.h             |   1 +
+>  include/linux/usb/hcd.h             |   3 +-
+>  10 files changed, 817 insertions(+), 23 deletions(-)
+>  create mode 100644 drivers/usb/host/xhci-pci-renesas.c
+>  create mode 100644 drivers/usb/host/xhci-pci.h
+> 
+> -- 
+> 2.25.1
 
-I couldn't find the core schema for this yaml:
-http://devicetree.org/meta-schemas/core.yaml (gives 404).  Is there a way
-to verify the validity of the yaml?
-
-Also, this patch is already merged in linux-next. I guess I shall submit
-a new patch with the fixes standalone?
-
+-- 
+~Vinod
