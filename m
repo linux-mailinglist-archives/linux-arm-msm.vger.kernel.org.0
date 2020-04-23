@@ -2,120 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A17181B6172
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 18:58:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E43031B6199
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 19:09:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729673AbgDWQ6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 12:58:23 -0400
-Received: from foss.arm.com ([217.140.110.172]:44234 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729674AbgDWQ6X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 12:58:23 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 85EE330E;
-        Thu, 23 Apr 2020 09:58:22 -0700 (PDT)
-Received: from [10.37.12.89] (unknown [10.37.12.89])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8B9B73F68F;
-        Thu, 23 Apr 2020 09:57:48 -0700 (PDT)
-Subject: Re: [PATCH v6 04/10] PM / EM: add support for other devices than CPUs
- in Energy Model
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200410084210.24932-1-lukasz.luba@arm.com>
- <20200410084210.24932-5-lukasz.luba@arm.com>
- <20200423151250.GB65632@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <ff1c8cc5-f64d-6156-7d30-97b8426c6f99@arm.com>
-Date:   Thu, 23 Apr 2020 17:57:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1729687AbgDWRJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 13:09:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40590 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729768AbgDWRJB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Apr 2020 13:09:01 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 046FFC09B046
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 10:09:00 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id u127so7369559wmg.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 10:09:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HyYauB8Zb4kPY2jhycDpuK1O3YKpPPWs1jRZhg3W+PY=;
+        b=YIzqtZTQ86QFuC3Fm4NBWsdOm0pT4cBdJ7LP5GP2m1Iy0O7jxZ4FN6lCTA4pC3+xEi
+         h8VeJgo2IBWMDWo+UMx5OdJyoS3Dq7CwWyqIzw+mpQOoXpKhW6CaDct1MaBX0WFNswe8
+         S0Fd49PA/VO1sC7i2qPSiJU2syTaaBJbrhV0dWWNbPVG3KxVQZW1Y6bEZIH9/6cxLJmM
+         L/T1dn/jbwKPs4moZuwT8rK7gg6iiHRx4h358kfomBb7V37Y/DqboBHiSGV8uTjXTW1C
+         2uJGiuc9P3sMJZlpspCAZFLGblsS6gZqFdijjC7UOcFH8G58rHKZgdYuqVqPEKasyViT
+         pdeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HyYauB8Zb4kPY2jhycDpuK1O3YKpPPWs1jRZhg3W+PY=;
+        b=esK7aagoock12jzV1Clll9o9KStUqBL65+XPTTK4y/DhLO7CIAIEKVdK4YaZQLd80C
+         ujfS4uP1Cmpu6XREcEeVKuaAxjt6aGWK/UN4/yWQwYL1UJSPWZ6DmIK2PoPV3BxES30f
+         SJZPfh/ot4n0CN4nFV4LNV8fTxkiIUNAFD5wSshgRfR8V523KMLN6zpOoV8Yz3Re85JP
+         2+ScLf49tSFQc499qUQMZ2qqmHcYOPZhUEmCuO7XusZW09ouk5nPSoN6y6f8P785SHBM
+         W53osGbM1YcpJdWOVz3OTMWZUuPG0AJ+CQshqHReiTaFYM03DxTjwi3MyVwwLoVkPGkd
+         K0Tg==
+X-Gm-Message-State: AGi0Pua8LfR9E2RI1/7DvND/eucpWBCtnTZFd4RRdbcdHiUpBQ7Da0Ka
+        4UV0f2MjRDTeY//kHkkC2zyZsA==
+X-Google-Smtp-Source: APiQypLTFoqOzEEgVSqQsK2DVwkZLCzK4Qr3KYvzNDTrgnBoJM5h/atmfsvo1wLAjiYN7AmpJR6jMg==
+X-Received: by 2002:a1c:40c4:: with SMTP id n187mr5040344wma.28.1587661739472;
+        Thu, 23 Apr 2020 10:08:59 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id s30sm4475128wrb.67.2020.04.23.10.08.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Apr 2020 10:08:58 -0700 (PDT)
+Date:   Thu, 23 Apr 2020 18:08:56 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Kiran Gunda <kgunda@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        robh@kernel.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-fbdev@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH V6 4/4] backlight: qcom-wled: Add support for WLED5
+ peripheral that is present on PM8150L PMICs
+Message-ID: <20200423170856.f4r62iwcg7qtppva@holly.lan>
+References: <1587656017-27911-1-git-send-email-kgunda@codeaurora.org>
+ <1587656017-27911-5-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200423151250.GB65632@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1587656017-27911-5-git-send-email-kgunda@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/23/20 4:12 PM, Daniel Lezcano wrote:
-> On Fri, Apr 10, 2020 at 09:42:04AM +0100, Lukasz Luba wrote:
->> Add support for other devices that CPUs. The registration function
->> does not require a valid cpumask pointer and is ready to handle new
->> devices. Some of the internal structures has been reorganized in order to
->> keep consistent view (like removing per_cpu pd pointers). To track usage
->> of the Energy Model structures, they are protected with kref.
+On Thu, Apr 23, 2020 at 09:03:37PM +0530, Kiran Gunda wrote:
+> From: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
 > 
-> Why not add the energy model structure in the struct device directly?
-
-Do you mean this structure?
-https://elixir.bootlin.com/linux/latest/source/include/linux/device.h#L537
-
-and to put something like:
-struct device {
-...
-	struct dev_pm_domain	*pm_domain;
-#ifdef CONFIG_ENERGY_MODEL
-	struct em_perf_domain	*em_pd;
-#endif
-...
-};
-
+> PM8150L WLED supports the following:
+>     - Two modulators and each sink can use any of the modulator
+>     - Multiple CABC selection options from which one can be selected/enabled
+>     - Multiple brightness width selection (12 bits to 15 bits)
 > 
-> For instance for the em_cpu_get() function, the cpu id allows to retrieve the
-> cpu device and then from there, the energy model instead of browsing another
-> list. The em_device life cycle will be tied to the struct device.
+> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 
-That would be perfect.
-
-> 
-> Then when the struct device and the em_device are connected, add the debugfs
-> with a struct device list for those which are energy aware, so you end up with
-> a structure:
-> 
-> struct em_device {
-> 	struct device *dev;
-> 	struct list_head em_dev_list;
-> };
-> 
-> (a global single dentry for debugfs to do a recursive delete is enough).
-> 
-> Locks when inspecting and add/removal called from the struct device release
-> function. So no need of an extra refcounting.
-> 
-> Does it make sense?
-> 
-
-Indeed it looks much cleaner/simpler.
-
-I will try to address this idea and get rid of refcounting.
-
-This should be doable in this patch (4/10). In the v7 I will keep your
-ACKs for other patches that you have already commented.
-
-Thank you for your suggestions and review.
-
-Regards,
-Lukasz
-
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
