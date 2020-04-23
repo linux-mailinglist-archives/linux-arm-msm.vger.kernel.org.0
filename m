@@ -2,108 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94D4D1B5985
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 12:46:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F145E1B5A43
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 13:17:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727783AbgDWKqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 06:46:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37334 "EHLO
+        id S1727948AbgDWLRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 07:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727071AbgDWKqx (ORCPT
+        by vger.kernel.org with ESMTP id S1726805AbgDWLRZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 06:46:53 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75557C035495
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 03:46:53 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id g13so6264174wrb.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 03:46:53 -0700 (PDT)
+        Thu, 23 Apr 2020 07:17:25 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D96C035494
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 04:17:24 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id j3so5763620ljg.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 04:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=B1TBwFKRribKH6U+f2YHZKct8m6eaNTnkPh6s+3we4I=;
-        b=LZH+oOofFZ6HTrIFYsXaoNlGuvZDH5TfmDKrwIVEwXATLJ/gyO7J7sHyrTD+/agh8O
-         wWiBCM0FAZhVUMCrQXO7MVYC4rLCk7VA2qyt9dIa3ZKfWghqzp+RuJgis10Fj5K0M5sO
-         pglrlJg6UBZe/QVph5+sbzAlxLr83iDJkP8jfFart0ffS4ED2ONJgo/X5zGpe2mTItrI
-         D2/MiHPJ0/UjxCcnfxINq0p8TeK/xKrdedYUGtckd19yz7WTCbDj+abPTK1xTbstCekz
-         /PV4W/s0wv/F/z6wBMYDWjuOGUjW1Zj5Ma6SnFE3rWo5uuxGnWI5vpdvebrxZVskGRg4
-         Iiag==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=oAZ3axSS566ERI69yTRudA5pk37T198UyezMCJFyqg0=;
+        b=KSgfMoObN3NHkidu9iYPdBnmPp3engyij0Ehfav1N/WhjTgeC0WAEqV4PiK/2se+vh
+         02HoWakOzVncGdusZNQ8ZY+F4fGiQeQp11DgqhFA6LRJS/KpLsNb/rZLlt7C9BbjD2TH
+         yoXItbqJBSgTggjo6BLsrgNnlCAbD96MbZpV9SlalV5NLuUMbH7QF8llxpE4PTExVmbw
+         d5LdA6pZenEYzRWH599sjZKGNxJ9Yx61SR1VALDpJCDfcBh55QcXhxJE1GvV7OKHQjyy
+         aghumRr0w+KpFu9by9ZQSRdUYR2Hxj4B30onoIvzgWmUdZgQn0CuWqW0NiJ9Mre70Wyh
+         JqXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=B1TBwFKRribKH6U+f2YHZKct8m6eaNTnkPh6s+3we4I=;
-        b=YLqJhXwfxLJBmzimxzhze+RPHERlOndzTGbLHlYb8ktSr9A1ZgKMoXxN1LmmnDOU1m
-         GcbU4UldiqdH+q4surS0iNj6NyQdAQrMvYDzSE60NhUkE6+4yB4qKpMma9EmdG4Axxz2
-         K1UWjy4nC8GmsXpFG/Ak3LhpZqZdoLPN0UcUExkhiCcov8GlL2cVkdNwF/VaC5gSiE8n
-         Ht8uOYXqGx9iPx+0Jj7cJXyM8iJyEmvmxdfxtgW3Ea6SDwAiprY83CeveYWBykapD9t6
-         n71wu8Mw2Xm9wIdS+bj3YrX7nG/+ac41dXwwswkfikiQfm4dVYlOzAvPcpe1qLwt/Z68
-         2zaQ==
-X-Gm-Message-State: AGi0PubqS4seZhUK4ZFe6UcRiWzUYImaUmtH823IdP1FDS0O/p1SFebV
-        9xZC7ZSnyaBblxc1vZ2GzeE3jA==
-X-Google-Smtp-Source: APiQypKk6XUIzuutA3wLhgUEchycCeMPsBVS0IXvX9Ni7yK3fu/lKAGauoLlCdpwWe5IfJMCbOUR+w==
-X-Received: by 2002:a5d:5652:: with SMTP id j18mr4521872wrw.40.1587638812041;
-        Thu, 23 Apr 2020 03:46:52 -0700 (PDT)
-Received: from [192.168.43.23] ([37.167.216.250])
-        by smtp.googlemail.com with ESMTPSA id 17sm3087293wmo.2.2020.04.23.03.46.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Apr 2020 03:46:51 -0700 (PDT)
-Subject: Re: [PATCH v6 02/10] PM / EM: introduce em_dev_register_perf_domain
- function
-To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200410084210.24932-1-lukasz.luba@arm.com>
- <20200410084210.24932-3-lukasz.luba@arm.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <4a1d8d5b-84f2-46b7-00ce-03178d7df72f@linaro.org>
-Date:   Thu, 23 Apr 2020 12:46:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=oAZ3axSS566ERI69yTRudA5pk37T198UyezMCJFyqg0=;
+        b=HG82CQ4xowPkma6JUFHYLrSNEa2ECXo+uzFnESQVN5uifnVe023eJJOY0702wfliqi
+         2XqETRsFsgJnsGhQ9jkNBnTNd0NIqktDdCYK19imGdnE5pVJ4qcv7sh9ElXJnjNV6yRj
+         nOuJ5zSshH6v3qKW3/NsHcrltAGXIKQ3727ZSAb7oLxXq7dM0vu1o26wuKoAnFzcNAdJ
+         3J0GsYsHDD87uxjrQnFyMny7ai/OIlmH8AQ6iSjVvY1XFUT4HeUkeyd3u0WrYkyXl3MN
+         SqkblKYaPt0NG79GRBMbQRRiVmd6K0a202YObyDVl3JAtH0T++wi9nIgzawzrd00JdnR
+         IqlQ==
+X-Gm-Message-State: AGi0PuYRR81iP6WZxkx3LoVXWWBtMGs5QG7C01rRv+lPmWuiE24bjwe9
+        Jdb9fwCac1hYfQdeeO6e3gefur+/uGVUXtA3+SPhtA==
+X-Google-Smtp-Source: APiQypK0Re1sUKs5qj9tLUP4qPP1QkFHT2aHcKdugHwEJw1KaZvbC8SiMNOvF4Qprdlmol4eRp7pXa/xXuHF+2LAOi8=
+X-Received: by 2002:a2e:9496:: with SMTP id c22mr1938373ljh.165.1587640642860;
+ Thu, 23 Apr 2020 04:17:22 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200410084210.24932-3-lukasz.luba@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Thu, 23 Apr 2020 16:47:11 +0530
+Message-ID: <CA+G9fYtoYzRbrUVhboUgOOqEC2xt_i4ZmYb9yq33fRmf653_pQ@mail.gmail.com>
+Subject: stable-rc 4.14: Internal error: Oops: 96000004 - pc : __pi_strcmp+0x18/0x154
+To:     linux- stable <stable@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sasha Levin <sashal@kernel.org>
+Cc:     lkft-triage@lists.linaro.org, colin.king@canonical.com,
+        open list <linux-kernel@vger.kernel.org>,
+        "rafael.j.wysocki" <rafael.j.wysocki@intel.com>,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        John Stultz <john.stultz@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Brian Masney <masneyb@onstation.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        robdclark@gmail.com, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/04/2020 10:42, Lukasz Luba wrote:
-> Add now function in the Energy Model framework which is going to support
-> new devices. This function will help in transition and make it smoother.
-> For now it still checks if the cpumask is a valid pointer, which will be
-> removed later when the new structures and infrastructure will be ready.
-> 
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-> ---
+We still notice kernel warnings while booting stable rc 4.14.177-rc1 kernel
+on qualcomm dragonboard 410c development board.
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+[    7.760140] msm_dsi_host_set_src_pll: can't set parent to
+byte_clk_src. ret=-22
+[    7.763963] msm_dsi_manager_register: failed to register mipi dsi
+host for DSI 0
+[    7.772434]   EA = 0, S1PTW = 0
+[    7.774344] msm 1a00000.mdss: failed to bind 1a98000.dsi (ops
+dsi_ops [msm]): -22
+[    7.779241] Data abort info:
+[    7.789056] msm 1a00000.mdss: master bind failed: -22
+[    7.792091] msm_dsi: probe of 1a98000.dsi failed with error -22
+[    7.794132]   ISV = 0, ISS = 0x00000004
+[    7.802783]   CM = 0, WnR = 0
+[    7.809436] user pgtable: 4k pages, 48-bit VAs, pgd = ffff80003b1d7000
+[    7.809660] [0000000000000000] *pgd=0000000000000000
+[    7.825466] Internal error: Oops: 96000004 [#1] PREEMPT SMP
+[    7.825498] Modules linked in: rfkill crc32_ce adv7511 msm(+)
+msm_rng mdt_loader drm_kms_helper rng_core drm fuse
+[    7.829847] Process systemd-udevd (pid: 2635, stack limit =
+0xffff00000f3c0000)
+[    7.840261] CPU: 1 PID: 2635 Comm: systemd-udevd Not tainted 4.14.177-rc1 #1
+[    7.847391] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+[    7.847397] task: ffff80003b279780 task.stack: ffff00000f3c0000
+[    7.847410] pc : __pi_strcmp+0x18/0x154
+[    7.866993] lr : platform_match+0xc8/0xe8
+[    7.870809] sp : ffff00000f3c3b10 pstate : 40000145
+[    7.874975] x29: ffff00000f3c3b10 x28: ffff80003a56a000
+[    7.879663] x27: ffff0000081a0578 x26: ffff000000ef98d0
+[    7.885219] x25: ffff00000f3c3e50 x24: ffff00000f515000
+[    7.890514] x23: ffff0000095c8000 x22: 0000000000000000
+[    7.895809] x21: 0000000000000000 x20: ffff000000ef8648
+[    7.901104] x19: ffff80003d1998d0 x18: 0000ffff9a0bf0b0
+[    7.906398] x17: 0000ffff9a06b6d0 x16: ffff000008160330
+[    7.911694] x15: 000000002810bf43 x14: 0000000000000043
+[    7.916990] x13: 3a6c6c7030697364 x12: 00000000bcc77e12
+[    7.922283] x11: ffff80003b279fb8 x10: 0101010101010101
+[    7.927581] x9 : 8efefeff06fefeff x8 : 0000000000000000
+[    7.932874] x7 : 0000000000000000 x6 : 0000000000000000
+[    7.938172] x5 : 0000000000000100 x4 : 0000000000000000
+[    7.943466] x3 : 0000000000000000 x2 : ffff0000087be348
+[    7.948761] x1 : ffff000000eed688 x0 : 0000000000000000
+[    7.954056] Call trace:
+[    7.959354]  __pi_strcmp+0x18/0x154
+[    7.970033]  bus_for_each_dev+0x5c/0xa8
+[    7.970056]  driver_attach+0x30/0x
+[    7.972665]  bus_add_driver+0x1d0/0x240
+[    7.976484]  driver_register+0x6c/0x118
+[    7.980044]  __platform_driver_register+0x54/0x60
+[    7.984103]  msm_drm_register+0x48/0x80 [msm]
+[    7.988728]  do_one_initcall+0x44/0x138
+[    7.993065]  do_init_module+0x64/0x1d0
+[    7.996710]  load_module+0x1d48/0x2518
+[    8.000530]  SyS_finit_module+0xb0/0xc8
+[    8.004263]  __sys_trace_return+0x0/0x4
+[    8.007998] Code: f24008ff 540002e1 f2400807 54000141 (f8408402)
+[    8.011820] ---[ end trace 7d6fc616cc3d45e7 ]---
 
+full test log,
+https://qa-reports.linaro.org/lkft/linux-stable-rc-4.14-oe/build/v4.14.176-200-gcebd79de8787/testrun/1389032/log
+https://qa-reports.linaro.org/lkft/linux-stable-rc-4.14-oe/build/v4.14.176-200-gcebd79de8787/testrun/1389032/
+https://lkft.validation.linaro.org/scheduler/job/1389032#L3519
 
+Kernel config:
+http://snapshots.linaro.org/openembedded/lkft/lkft/sumo/dragonboard-410c/lkft/linux-stable-rc-4.14/817/config
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Linaro LKFT
+https://lkft.linaro.org
