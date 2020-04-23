@@ -2,139 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F145E1B5A43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 13:17:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 137FB1B5B47
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 14:22:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727948AbgDWLRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 07:17:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42062 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726805AbgDWLRZ (ORCPT
+        id S1726392AbgDWMWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 08:22:04 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:57727 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726164AbgDWMWE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 07:17:25 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D96C035494
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 04:17:24 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id j3so5763620ljg.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 04:17:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=oAZ3axSS566ERI69yTRudA5pk37T198UyezMCJFyqg0=;
-        b=KSgfMoObN3NHkidu9iYPdBnmPp3engyij0Ehfav1N/WhjTgeC0WAEqV4PiK/2se+vh
-         02HoWakOzVncGdusZNQ8ZY+F4fGiQeQp11DgqhFA6LRJS/KpLsNb/rZLlt7C9BbjD2TH
-         yoXItbqJBSgTggjo6BLsrgNnlCAbD96MbZpV9SlalV5NLuUMbH7QF8llxpE4PTExVmbw
-         d5LdA6pZenEYzRWH599sjZKGNxJ9Yx61SR1VALDpJCDfcBh55QcXhxJE1GvV7OKHQjyy
-         aghumRr0w+KpFu9by9ZQSRdUYR2Hxj4B30onoIvzgWmUdZgQn0CuWqW0NiJ9Mre70Wyh
-         JqXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=oAZ3axSS566ERI69yTRudA5pk37T198UyezMCJFyqg0=;
-        b=HG82CQ4xowPkma6JUFHYLrSNEa2ECXo+uzFnESQVN5uifnVe023eJJOY0702wfliqi
-         2XqETRsFsgJnsGhQ9jkNBnTNd0NIqktDdCYK19imGdnE5pVJ4qcv7sh9ElXJnjNV6yRj
-         nOuJ5zSshH6v3qKW3/NsHcrltAGXIKQ3727ZSAb7oLxXq7dM0vu1o26wuKoAnFzcNAdJ
-         3J0GsYsHDD87uxjrQnFyMny7ai/OIlmH8AQ6iSjVvY1XFUT4HeUkeyd3u0WrYkyXl3MN
-         SqkblKYaPt0NG79GRBMbQRRiVmd6K0a202YObyDVl3JAtH0T++wi9nIgzawzrd00JdnR
-         IqlQ==
-X-Gm-Message-State: AGi0PuYRR81iP6WZxkx3LoVXWWBtMGs5QG7C01rRv+lPmWuiE24bjwe9
-        Jdb9fwCac1hYfQdeeO6e3gefur+/uGVUXtA3+SPhtA==
-X-Google-Smtp-Source: APiQypK0Re1sUKs5qj9tLUP4qPP1QkFHT2aHcKdugHwEJw1KaZvbC8SiMNOvF4Qprdlmol4eRp7pXa/xXuHF+2LAOi8=
-X-Received: by 2002:a2e:9496:: with SMTP id c22mr1938373ljh.165.1587640642860;
- Thu, 23 Apr 2020 04:17:22 -0700 (PDT)
+        Thu, 23 Apr 2020 08:22:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587644523; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=xmKbPe6qYAz7syjI+7B563Vnwnt8egJotMv+Ym61YWs=;
+ b=P62W6e1ev+m8s8zQQDfgOAVPrDF9D24TYHyzqQUVZRGjv6bBZQd/TN8vSXYizTIKTVD3VkzZ
+ 3NoC1JUuD+vCdgaUhj5cAM4pYyVuf/fk8RSpPGxEhl2a+Xj7vBmunFiGtWSMYVR9QmFxyCZj
+ MwU17aASpriR/ub0Mwy17QA46b8=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea18856.7f73800a3618-smtp-out-n01;
+ Thu, 23 Apr 2020 12:21:42 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A1194C43636; Thu, 23 Apr 2020 12:21:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04DC7C433CB;
+        Thu, 23 Apr 2020 12:21:40 +0000 (UTC)
 MIME-Version: 1.0
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Thu, 23 Apr 2020 16:47:11 +0530
-Message-ID: <CA+G9fYtoYzRbrUVhboUgOOqEC2xt_i4ZmYb9yq33fRmf653_pQ@mail.gmail.com>
-Subject: stable-rc 4.14: Internal error: Oops: 96000004 - pc : __pi_strcmp+0x18/0x154
-To:     linux- stable <stable@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sasha Levin <sashal@kernel.org>
-Cc:     lkft-triage@lists.linaro.org, colin.king@canonical.com,
-        open list <linux-kernel@vger.kernel.org>,
-        "rafael.j.wysocki" <rafael.j.wysocki@intel.com>,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        John Stultz <john.stultz@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Brian Masney <masneyb@onstation.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robdclark@gmail.com, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Thu, 23 Apr 2020 17:51:40 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     mike.leach@linaro.org, mathieu.poirier@linaro.org,
+        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
+        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [RFC PATCH] coresight: dynamic-replicator: Fix handling of
+ multiple connections
+In-Reply-To: <e9c299c4-caeb-9eb8-f019-b311bfce756a@arm.com>
+References: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
+ <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
+ <906d374d-a4d6-f2f2-6845-88b97a5ff7d9@arm.com>
+ <39a2b3fff165a108fa59d72b630b5f14@codeaurora.org>
+ <bb209f80-ac02-6321-dac4-ebf9ee6fa9a0@arm.com>
+ <bd05b31c2391edfff5044f22f2f83edf@codeaurora.org>
+ <e9c299c4-caeb-9eb8-f019-b311bfce756a@arm.com>
+Message-ID: <526ee10ba1df05b41f9471613550a0fd@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We still notice kernel warnings while booting stable rc 4.14.177-rc1 kernel
-on qualcomm dragonboard 410c development board.
+Hi Suzuki,
 
-[    7.760140] msm_dsi_host_set_src_pll: can't set parent to
-byte_clk_src. ret=-22
-[    7.763963] msm_dsi_manager_register: failed to register mipi dsi
-host for DSI 0
-[    7.772434]   EA = 0, S1PTW = 0
-[    7.774344] msm 1a00000.mdss: failed to bind 1a98000.dsi (ops
-dsi_ops [msm]): -22
-[    7.779241] Data abort info:
-[    7.789056] msm 1a00000.mdss: master bind failed: -22
-[    7.792091] msm_dsi: probe of 1a98000.dsi failed with error -22
-[    7.794132]   ISV = 0, ISS = 0x00000004
-[    7.802783]   CM = 0, WnR = 0
-[    7.809436] user pgtable: 4k pages, 48-bit VAs, pgd = ffff80003b1d7000
-[    7.809660] [0000000000000000] *pgd=0000000000000000
-[    7.825466] Internal error: Oops: 96000004 [#1] PREEMPT SMP
-[    7.825498] Modules linked in: rfkill crc32_ce adv7511 msm(+)
-msm_rng mdt_loader drm_kms_helper rng_core drm fuse
-[    7.829847] Process systemd-udevd (pid: 2635, stack limit =
-0xffff00000f3c0000)
-[    7.840261] CPU: 1 PID: 2635 Comm: systemd-udevd Not tainted 4.14.177-rc1 #1
-[    7.847391] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-[    7.847397] task: ffff80003b279780 task.stack: ffff00000f3c0000
-[    7.847410] pc : __pi_strcmp+0x18/0x154
-[    7.866993] lr : platform_match+0xc8/0xe8
-[    7.870809] sp : ffff00000f3c3b10 pstate : 40000145
-[    7.874975] x29: ffff00000f3c3b10 x28: ffff80003a56a000
-[    7.879663] x27: ffff0000081a0578 x26: ffff000000ef98d0
-[    7.885219] x25: ffff00000f3c3e50 x24: ffff00000f515000
-[    7.890514] x23: ffff0000095c8000 x22: 0000000000000000
-[    7.895809] x21: 0000000000000000 x20: ffff000000ef8648
-[    7.901104] x19: ffff80003d1998d0 x18: 0000ffff9a0bf0b0
-[    7.906398] x17: 0000ffff9a06b6d0 x16: ffff000008160330
-[    7.911694] x15: 000000002810bf43 x14: 0000000000000043
-[    7.916990] x13: 3a6c6c7030697364 x12: 00000000bcc77e12
-[    7.922283] x11: ffff80003b279fb8 x10: 0101010101010101
-[    7.927581] x9 : 8efefeff06fefeff x8 : 0000000000000000
-[    7.932874] x7 : 0000000000000000 x6 : 0000000000000000
-[    7.938172] x5 : 0000000000000100 x4 : 0000000000000000
-[    7.943466] x3 : 0000000000000000 x2 : ffff0000087be348
-[    7.948761] x1 : ffff000000eed688 x0 : 0000000000000000
-[    7.954056] Call trace:
-[    7.959354]  __pi_strcmp+0x18/0x154
-[    7.970033]  bus_for_each_dev+0x5c/0xa8
-[    7.970056]  driver_attach+0x30/0x
-[    7.972665]  bus_add_driver+0x1d0/0x240
-[    7.976484]  driver_register+0x6c/0x118
-[    7.980044]  __platform_driver_register+0x54/0x60
-[    7.984103]  msm_drm_register+0x48/0x80 [msm]
-[    7.988728]  do_one_initcall+0x44/0x138
-[    7.993065]  do_init_module+0x64/0x1d0
-[    7.996710]  load_module+0x1d48/0x2518
-[    8.000530]  SyS_finit_module+0xb0/0xc8
-[    8.004263]  __sys_trace_return+0x0/0x4
-[    8.007998] Code: f24008ff 540002e1 f2400807 54000141 (f8408402)
-[    8.011820] ---[ end trace 7d6fc616cc3d45e7 ]---
+On 2020-04-07 20:23, Suzuki K Poulose wrote:
+> On 04/07/2020 02:56 PM, Sai Prakash Ranjan wrote:
+>> Hi Suzuki,
+>> 
+>> On 2020-04-07 18:38, Suzuki K Poulose wrote:
+>>> On 04/07/2020 12:29 PM, Sai Prakash Ranjan wrote:
+>>>> Hi Suzuki,
+>>>> 
+>>>> Thanks for looking into this issue.
+>>>> 
+>>>> On 2020-04-07 15:54, Suzuki K Poulose wrote:
+>>>>> On 04/07/2020 10:46 AM, Sai Prakash Ranjan wrote:
+>>>>> 
+>>>>> There seems to be two replicators back to back here. What is 
+>>>>> connected
+>>>>> to the other output of both of them ? Are there any TPIUs ? What 
+>>>>> happens
+>>>>> if you choose a sink on the other end of "swao_replicator" (ETB ?)
+>>>>> 
+>>>> 
+>>>> The other outport of swao replicator is connected to EUD which is a
+>>>> QCOM specific HW which can be used as a sink like USB.
+>>>> And the other outport of other replicator(replicator_out) is 
+>>>> connected to
+>>>> TPIU.
+>>>> 
+>>>>> After boot, what do the idfilter registers read for both the 
+>>>>> replicators ?
+>>>>> 
+>>>> 
+>>>> Added some prints in replicator_probe.
+>>>> 
+>>>>   replicator probe ret=-517 devname=6046000.replicator idfilter0=0x0 
+>>>> idfilter1=0x0
+>>>>   replicator probe ret=0 devname=6b06000.replicator idfilter0=0xff 
+>>>> idfilter1=0xff
+>>>>   replicator probe ret=0 devname=6046000.replicator idfilter0=0xff 
+>>>> idfilter1=0xff
+>>> 
+>>> Curious to see how the idfilterX is set to 0:
+>>>      if that is never used.
+>>>         Or
+>>>      if the user doesn't reset it back to 0xff.
+>>> 
+>> 
+>> For both replicators, the default value seems to be 0x0.
+>> 
+>>   replicator probe in res ret=0 devname=6046000.replicator 
+>> idfilter0=0x0 idfilter1=0x0
+>>   replicator probe ret=-517 devname=6046000.replicator idfilter0=0x0 
+>> idfilter1=0x0
+>>   replicator probe in res ret=0 devname=6b06000.replicator 
+>> idfilter0=0x0 idfilter1=0x0
+>>   replicator probe ret=0 devname=6b06000.replicator idfilter0=0xff 
+>> idfilter1=0xff
+>>   replicator probe in res ret=0 devname=6046000.replicator 
+>> idfilter0=0x0 idfilter1=0x0
+>>   replicator probe ret=0 devname=6046000.replicator idfilter0=0xff 
+>> idfilter1=0xff
+> 
+> I am not sure how you have added the debugs, but it looks like the
+> drivers set 0xff for both the port filters on a successful probe.
+> 
 
-full test log,
-https://qa-reports.linaro.org/lkft/linux-stable-rc-4.14-oe/build/v4.14.176-200-gcebd79de8787/testrun/1389032/log
-https://qa-reports.linaro.org/lkft/linux-stable-rc-4.14-oe/build/v4.14.176-200-gcebd79de8787/testrun/1389032/
-https://lkft.validation.linaro.org/scheduler/job/1389032#L3519
+About the earlier mentioned points on:
 
-Kernel config:
-http://snapshots.linaro.org/openembedded/lkft/lkft/sumo/dragonboard-410c/lkft/linux-stable-rc-4.14/817/config
+1) Disallow turning the replicator ON, when it is already turned ON
+2) Do what your patch does. i.e, disable the other end while one end
+    is turned on.
+
+Do we need 1) and should we go ahead with this?
+
+Thanks,
+Sai
 
 -- 
-Linaro LKFT
-https://lkft.linaro.org
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
