@@ -2,74 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C6061B582C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 11:29:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 832201B5834
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 11:31:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726477AbgDWJ3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 05:29:00 -0400
-Received: from foss.arm.com ([217.140.110.172]:35766 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726346AbgDWJ3A (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 05:29:00 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 011BA31B;
-        Thu, 23 Apr 2020 02:29:00 -0700 (PDT)
-Received: from [10.57.33.170] (unknown [10.57.33.170])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B9E633F73D;
-        Thu, 23 Apr 2020 02:28:58 -0700 (PDT)
-Subject: Re: [PATCH] iommu/arm-smmu: Demote error messages to debug in
- shutdown callback
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org,
-        Joerg Roedel <joro@8bytes.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org
-References: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
- <0023bc68-45fb-4e80-00c8-01fd0369243f@arm.com>
- <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
- <5858bdac-b7f9-ac26-0c0d-c9653cef841d@arm.com>
- <d60196b548e1241b8334fadd0e8c2fb5@codeaurora.org>
- <CAD=FV=WXTN6xxqtL6d6MHxG8Epuo6FSQERRPfnoSCskhjh1KeQ@mail.gmail.com>
- <890456524e2df548ba5d44752513a62c@codeaurora.org>
- <20200331074400.GB25612@willie-the-truck>
- <1bf04938249bcd5b2111c1921facfd25@codeaurora.org>
- <CAD=FV=VBM6cS1UmWTUJ2vrt0a2zn7xV3C53tpthBx58M2=1JPg@mail.gmail.com>
- <6c82e688f335b9c07b0f52987244664b@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <006edb3b-8834-41fe-d9d1-fe873edfca99@arm.com>
-Date:   Thu, 23 Apr 2020 10:28:58 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726659AbgDWJbQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 05:31:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53824 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725884AbgDWJbP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Apr 2020 05:31:15 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A025EC03C1AF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 02:31:15 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id e26so5658414wmk.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 02:31:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=O26z6wOk23INqulcDtAkwlfLrc079plGrt7LpzYNlIM=;
+        b=r2VXwUE9Svk3QiEBGBKAWJ8Cm5d65tBjhNru6zO9YbS+FD8b1nlIRR1fG26t5GxpFk
+         FJ8QWdlgJVHqPw5m4NSaWw29OStIwP298O3wnZ+Y7YfDnmo7Wu0jwAHlrNsENex6RpKa
+         OG2iKzQnglKldPkctBNoK1foc0IdklQ/7f6Pe3AvoTCUEKQeR8HCJR+D/LVVB4eC//bC
+         HAwjmbpaoEBsuIi8mUfNEWYu/GQrNrb2TiUJWi/kaY+7OP0RL2GqQdnQKIYmjk3R6MzR
+         MMLRo4yNCT38fmrGxw5FQcMNbmBJN3e+y5sdszlEu/59Mpsu0cP0MRBFb2CkVSq1S1o2
+         0Ljg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=O26z6wOk23INqulcDtAkwlfLrc079plGrt7LpzYNlIM=;
+        b=EG2Fko/TaM1h+Nvl4oW5UIZa22BZFdfkb1834DYUQKUGv9WHqf31zRGHSTWnrzXSXx
+         YoWyMAPk74w91ZfUWhdk0f1VJ2uNRsnV3mz78R985dCqbwCyLeMyl325I2wZt6I3KoCZ
+         Sgj1bQXDe+ARx4Tlxk9O8rSGVxs0oHbiG24uC6RrLu5U6372/qnItYHRauxhNmZHjma3
+         BRQ0I4sgqNvpIjX7j6jw9kINJ3EQyKNNtTENtrUnnftHHUw7U0MgJEbTC3Xzo9f1nwjP
+         ss6hmmXDKW7Rk3SF/l7yR6MJIJrpIQoV4vSUwb4n3Yh9ewMPmGHH89HHk+1fnZFzSXid
+         yibA==
+X-Gm-Message-State: AGi0PubBErExg+3lgFblw7LuEKy5Nor208EDuhwKhgBdHUoJ69iuYNf5
+        RX/IlDh7k3KIMh9+fevT+xgiXA==
+X-Google-Smtp-Source: APiQypKq50R8cweRl+GxccEmBu6i9qOFRnn+sD3w+viq7DNxgjg+A6RewEEgPj/G9AjZ5NSRpoz1Sg==
+X-Received: by 2002:a1c:ac44:: with SMTP id v65mr3192173wme.33.1587634273995;
+        Thu, 23 Apr 2020 02:31:13 -0700 (PDT)
+Received: from [192.168.0.136] ([87.120.218.65])
+        by smtp.googlemail.com with ESMTPSA id o7sm2703512wmh.46.2020.04.23.02.31.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 Apr 2020 02:31:13 -0700 (PDT)
+Subject: Re: [PATCH V4 2/9] interconnect: Set peak requirement as twice of
+ average
+To:     Akash Asthana <akashast@codeaurora.org>, broonie@kernel.org
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        Mike Tipton <mdtipton@codeaurora.org>,
+        Sean Sweeney <seansw@qti.qualcomm.com>
+References: <1586946198-13912-1-git-send-email-akashast@codeaurora.org>
+ <1586946198-13912-3-git-send-email-akashast@codeaurora.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <58b91dc1-6ce3-49b8-88c8-259be9af1dbd@linaro.org>
+Date:   Thu, 23 Apr 2020 12:31:11 +0300
 MIME-Version: 1.0
-In-Reply-To: <6c82e688f335b9c07b0f52987244664b@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1586946198-13912-3-git-send-email-akashast@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-04-23 9:17 am, Sai Prakash Ranjan wrote:
-[...]
->> Any update on the status here?  If I'm reading the conversation above,
->> Robin said: "we'll *always* see the warning because there's no way to
->> tear down the default DMA domains, and even if all devices *have* been
->> nicely quiesced there's no way to tell".  Did I understand that
->> properly?  If so, it seems like it's fully expected to see this
->> message on every reboot and it doesn't necessarily signify anything
->> bad.
->>
+Hi Akash,
+
+On 4/15/20 13:23, Akash Asthana wrote:
+> Lot of ICC clients are not aware of their actual peak requirement,
+> most commonly they tend to guess their peak requirement as
+> (some factor) * avg_bw.
 > 
-> Understanding is the same, waiting for Will and Robin to check if its OK
-> to make the message more friendly.
+> Centralize random peak guess as twice of average, out into the core
+> to maintain consistency across the clients. Client can always
+> override this setting if they got a better idea.
 
-The way I see it, we essentially just want *something* visible that will 
-correlate with any misbehaviour that *might* result from turning off a 
-possibly-live context. How about simply "disabling translation", at 
-dev_warn or dev_info level?
+I am still not convinced that this is a good idea. If the factor is a random
+value, then i think that the default factor should be 1.
 
-Robin.
+According to your previous reply, it seems that from geni we are requesting
+double peak bandwidth to compensate for other clients which are not requesting
+bandwidth for themselves. IMO, this is a bit hacky.
+
+Instead of requesting double peak bandwidth, IIUC the correct thing to do here
+is to request peak_bw = avg_bw for geni. And instead of trying to compensate for
+other clients "stealing" bandwidth, can't we make these clients vote for their
+own bandwidth? Or if they really can't, this should be handled elsewhere - maybe
+in the interconnect platform driver we can reserve some amount of minimum
+bandwidth for such cases?
+
+Thanks,
+Georgi
