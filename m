@@ -2,132 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44ED21B5C2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 15:10:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 407111B5C42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 15:19:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727780AbgDWNKI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 09:10:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46596 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726926AbgDWNKI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 09:10:08 -0400
-Received: from localhost (unknown [117.99.83.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5D33B2076C;
-        Thu, 23 Apr 2020 13:10:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1587647407;
-        bh=MrQ+RugElkiTg9LS3wQOxTE4aNNFTFJUQOB/dDU+5CQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AfAUNrxEz39CiNj1NAA5PSI+xEO/tfJFTFAkkF6Pf5hL5qVQkrkykiobJ+iHeU1Sj
-         QpSZgBb/jJID6xz1gRuflsOrbhpJhUi6Bt5lE49yrFbJn1B0qjiULC4J/oesIJxmHq
-         BgkPy1gIo3Y4TIOfXIqwEfMSIkVSDLPJre3RTcsU=
-Date:   Thu, 23 Apr 2020 18:40:00 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v9 0/5] usb: xhci: Add support for Renesas USB controllers
-Message-ID: <20200423131000.GJ72691@vkoul-mobl>
-References: <20200414164152.2786474-1-vkoul@kernel.org>
+        id S1726532AbgDWNTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 09:19:01 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:2880 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726361AbgDWNTB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Apr 2020 09:19:01 -0400
+Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id 16661D4447B4AF8529E4;
+        Thu, 23 Apr 2020 21:18:50 +0800 (CST)
+Received: from huawei.com (10.67.174.156) by DGGEMS408-HUB.china.huawei.com
+ (10.3.19.208) with Microsoft SMTP Server id 14.3.487.0; Thu, 23 Apr 2020
+ 21:18:41 +0800
+From:   ChenTao <chentao107@huawei.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <georgi.djakov@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <chentao107@huawei.com>
+Subject: [PATCH-next v2] interconnect: qcom: Move the static keyword to the front of declaration
+Date:   Thu, 23 Apr 2020 21:18:07 +0800
+Message-ID: <20200423131807.44311-1-chentao107@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200414164152.2786474-1-vkoul@kernel.org>
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.156]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-04-20, 22:11, Vinod Koul wrote:
-> This series add support for Renesas USB controllers uPD720201 and uPD720202.
-> These require firmware to be loaded and in case devices have ROM those can
-> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
-> 
-> This includes patches from Christian which supported these controllers w/o
-> ROM and later my patches for ROM support and debugfs hook for rom erase and
-> export of xhci-pci functions.
+Fix the following warning:
 
-Any feedback Mathias ?
+Move the static keyword to the front of declaration of sdm845_icc_osm_l3
+sdm845_aggre1_noc sc7180_icc_osm_l3 sdm845_aggre2_noc sdm845_config_noc
+sdm845_dc_noc sdm845_gladiator_noc sdm845_mem_noc sdm845_mmss_noc and
+sdm845_system_noc, resolve the following compiler warning that can be
+when building with warnings enabled (W=1):
 
-> 
-> Changes in v9:
->  Make fw load a sync call and have single instance of probe execute,
->    elimating probe/remove races
->  Add quirk for renesas and use that for loading
-> 
-> Changes in v8:
->  Fix compile error reported by Kbuild-bot by making usb_hcd_pci_probe() take
->  const struct hc_driver * as argument
-> 
-> Changes in v7:
->  Make a single module which removes issues with module loading
->  Keep the renesas code in renesas file
->  Add hc_driver as argument for usb_hcd_pci_probe and modify hdc drivers to
->    pass this and not use driver_data
->  Use driver data for fw name
->  Remove code to check if we need to load firmware or not
->  remove multiple fw version support, we can do that with symlink in
->    userspace
-> 
-> Changes in v6:
->  Move the renesas code into a separate driver which invokes xhci-pci functions.
-> 
-> Changes in v5:
->  Added a debugfs rom erase patch, helps in debugging
->  Squashed patch 1 & 2 as requested by Mathias
-> 
-> Changes in v4:
->  Rollback the delay values as we got device failures
-> 
-> Changes in v3:
->   Dropped patch 2 as discussed with Christian
->   Removed aligned 8 bytes check
->   Change order for firmware search from highest version to lowest
->   Added entry for new firmware for device 0x14 as well
->   Add tested by Christian
-> 
-> Changes in v2:
->   used macros for timeout count and delay
->   removed renesas_fw_alive_check
->   cleaned renesas_fw_callback
->   removed recurion for renesas_fw_download
->   added MODULE_FIRMWARE
->   added comment for multiple fw order
-> 
-> Christian Lamparter (1):
->   usb: renesas-xhci: Add the renesas xhci driver
-> 
-> Vinod Koul (4):
->   usb: hci: add hc_driver as argument for usb_hcd_pci_probe
->   usb: xhci: Add support for Renesas controller with memory
->   usb: renesas-xhci: Add ROM loader for uPD720201
->   usb: xhci: provide a debugfs hook for erasing rom
-> 
->  drivers/usb/core/hcd-pci.c          |   7 +-
->  drivers/usb/host/Makefile           |   3 +-
->  drivers/usb/host/ehci-pci.c         |   6 +-
->  drivers/usb/host/ohci-pci.c         |   9 +-
->  drivers/usb/host/uhci-pci.c         |   8 +-
->  drivers/usb/host/xhci-pci-renesas.c | 740 ++++++++++++++++++++++++++++
->  drivers/usb/host/xhci-pci.c         |  47 +-
->  drivers/usb/host/xhci-pci.h         |  16 +
->  drivers/usb/host/xhci.h             |   1 +
->  include/linux/usb/hcd.h             |   3 +-
->  10 files changed, 817 insertions(+), 23 deletions(-)
->  create mode 100644 drivers/usb/host/xhci-pci-renesas.c
->  create mode 100644 drivers/usb/host/xhci-pci.h
-> 
-> -- 
-> 2.25.1
+drivers/interconnect/qcom/osm-l3.c:81:1: warning:
+ const static struct qcom_icc_desc sdm845_icc_osm_l3 = {
+drivers/interconnect/qcom/osm-l3.c:94:1: warning:
+ const static struct qcom_icc_desc sc7180_icc_osm_l3 = {
+drivers/interconnect/qcom/sdm845.c:195:1: warning:
+ const static struct qcom_icc_desc sdm845_aggre1_noc = {
+drivers/interconnect/qcom/sdm845.c:223:1: warning:
+ const static struct qcom_icc_desc sdm845_aggre2_noc = {
+drivers/interconnect/qcom/sdm845.c:284:1: warning:
+ const static struct qcom_icc_desc sdm845_config_noc = {
+drivers/interconnect/qcom/sdm845.c:300:1: warning:
+ const static struct qcom_icc_desc sdm845_dc_noc = {
+drivers/interconnect/qcom/sdm845.c:318:1: warning:
+ const static struct qcom_icc_desc sdm845_gladiator_noc = {
+drivers/interconnect/qcom/sdm845.c:353:1: warning:
+ const static struct qcom_icc_desc sdm845_mem_noc = {
+drivers/interconnect/qcom/sdm845.c:387:1: warning:
+ const static struct qcom_icc_desc sdm845_mmss_noc = {
+drivers/interconnect/qcom/sdm845.c:433:1: warning:
+ const static struct qcom_icc_desc sdm845_system_noc = {
 
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: ChenTao <chentao107@huawei.com>
+---
+v1->v2:
+- add the same warning from osm-l3.c
+
+ drivers/interconnect/qcom/osm-l3.c |  4 ++--
+ drivers/interconnect/qcom/sdm845.c | 16 ++++++++--------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
+index a03c6d6833df..96fb9ff5ff2e 100644
+--- a/drivers/interconnect/qcom/osm-l3.c
++++ b/drivers/interconnect/qcom/osm-l3.c
+@@ -78,7 +78,7 @@ static struct qcom_icc_node *sdm845_osm_l3_nodes[] = {
+ 	[SLAVE_OSM_L3] = &sdm845_osm_l3,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_icc_osm_l3 = {
++static const struct qcom_icc_desc sdm845_icc_osm_l3 = {
+ 	.nodes = sdm845_osm_l3_nodes,
+ 	.num_nodes = ARRAY_SIZE(sdm845_osm_l3_nodes),
+ };
+@@ -91,7 +91,7 @@ static struct qcom_icc_node *sc7180_osm_l3_nodes[] = {
+ 	[SLAVE_OSM_L3] = &sc7180_osm_l3,
+ };
+ 
+-const static struct qcom_icc_desc sc7180_icc_osm_l3 = {
++static const struct qcom_icc_desc sc7180_icc_osm_l3 = {
+ 	.nodes = sc7180_osm_l3_nodes,
+ 	.num_nodes = ARRAY_SIZE(sc7180_osm_l3_nodes),
+ };
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index b013b80caa45..f6c7b969520d 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -192,7 +192,7 @@ static struct qcom_icc_node *aggre1_noc_nodes[] = {
+ 	[SLAVE_ANOC_PCIE_A1NOC_SNOC] = &qns_pcie_a1noc_snoc,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_aggre1_noc = {
++static const struct qcom_icc_desc sdm845_aggre1_noc = {
+ 	.nodes = aggre1_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(aggre1_noc_nodes),
+ 	.bcms = aggre1_noc_bcms,
+@@ -220,7 +220,7 @@ static struct qcom_icc_node *aggre2_noc_nodes[] = {
+ 	[SLAVE_SERVICE_A2NOC] = &srvc_aggre2_noc,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_aggre2_noc = {
++static const struct qcom_icc_desc sdm845_aggre2_noc = {
+ 	.nodes = aggre2_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(aggre2_noc_nodes),
+ 	.bcms = aggre2_noc_bcms,
+@@ -281,7 +281,7 @@ static struct qcom_icc_node *config_noc_nodes[] = {
+ 	[SLAVE_SERVICE_CNOC] = &srvc_cnoc,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_config_noc = {
++static const struct qcom_icc_desc sdm845_config_noc = {
+ 	.nodes = config_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(config_noc_nodes),
+ 	.bcms = config_noc_bcms,
+@@ -297,7 +297,7 @@ static struct qcom_icc_node *dc_noc_nodes[] = {
+ 	[SLAVE_MEM_NOC_CFG] = &qhs_memnoc,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_dc_noc = {
++static const struct qcom_icc_desc sdm845_dc_noc = {
+ 	.nodes = dc_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(dc_noc_nodes),
+ 	.bcms = dc_noc_bcms,
+@@ -315,7 +315,7 @@ static struct qcom_icc_node *gladiator_noc_nodes[] = {
+ 	[SLAVE_SERVICE_GNOC] = &srvc_gnoc,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_gladiator_noc = {
++static const struct qcom_icc_desc sdm845_gladiator_noc = {
+ 	.nodes = gladiator_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(gladiator_noc_nodes),
+ 	.bcms = gladiator_noc_bcms,
+@@ -350,7 +350,7 @@ static struct qcom_icc_node *mem_noc_nodes[] = {
+ 	[SLAVE_EBI1] = &ebi,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_mem_noc = {
++static const struct qcom_icc_desc sdm845_mem_noc = {
+ 	.nodes = mem_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(mem_noc_nodes),
+ 	.bcms = mem_noc_bcms,
+@@ -384,7 +384,7 @@ static struct qcom_icc_node *mmss_noc_nodes[] = {
+ 	[SLAVE_CAMNOC_UNCOMP] = &qns_camnoc_uncomp,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_mmss_noc = {
++static const struct qcom_icc_desc sdm845_mmss_noc = {
+ 	.nodes = mmss_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(mmss_noc_nodes),
+ 	.bcms = mmss_noc_bcms,
+@@ -430,7 +430,7 @@ static struct qcom_icc_node *system_noc_nodes[] = {
+ 	[SLAVE_TCU] = &xs_sys_tcu_cfg,
+ };
+ 
+-const static struct qcom_icc_desc sdm845_system_noc = {
++static const struct qcom_icc_desc sdm845_system_noc = {
+ 	.nodes = system_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(system_noc_nodes),
+ 	.bcms = system_noc_bcms,
 -- 
-~Vinod
+2.17.1
+
