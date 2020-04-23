@@ -2,146 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BA991B4FBE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 00:02:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 538AC1B5157
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 02:38:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726057AbgDVWBy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Apr 2020 18:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59574 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbgDVWBx (ORCPT
+        id S1726021AbgDWAiI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Apr 2020 20:38:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55576 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725895AbgDWAiH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Apr 2020 18:01:53 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E29C03C1A9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 15:01:53 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id x17so3711474wrt.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 15:01:53 -0700 (PDT)
+        Wed, 22 Apr 2020 20:38:07 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709A0C03C1AD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 17:38:07 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id 7so3013578pjo.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2020 17:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=em+wcShpdUXMOwEuiMKWPovG1hGJ7vnjNO1+x5kgI0M=;
-        b=GKxKz1ZpRtm0Zath9tELAqG/QrfcwqyTN791UFjljwVoF/QYBEfF5W5V877GGat3MF
-         4a+wKQQkqA6adYYwVLZzyz1N8RXUac6p5fJZq08vBjqmQFrTjYVDL79IV6jj1Qo+LZLQ
-         3120q21JUFdmW+FqSTo2C7aY1tviiDz+7tJT0=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=75TUGWxKMG+i7tFa2VqXTsbczTpvn8gAWE0prn7/ZWo=;
+        b=Bt1mUO+l/1mVfkOUUYZ/vPLooOPPe2yy40kGK8VcjvtAzsSqTHrRzK2SrxdZfESL25
+         xIhyrTUVQOpkLdo2Cy3uiDoEjf3Jbz7eT1wgoK9POxngD3LR5FziEYCRZYgW6NJY6GGw
+         5Ud1iXBI0aLIgsvXnrO9Y8T07eEsOCqRd2cY1a3kpqOc34nnZoNmeVqri1MpehT38tTX
+         mKNE+EGdlZ3oySSoIghIScraOGmz/RuK4j20yUW7xf3Ip2aDehUuteE3XSC4Z0HMKw/L
+         IAasCCd0aLdN18dqDWj0SyEPxg+qjZvTRVmlS3aDZvHSjsTdPpuJqqGZxuROsUD9Fcjx
+         wvmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=em+wcShpdUXMOwEuiMKWPovG1hGJ7vnjNO1+x5kgI0M=;
-        b=EQTLpuqI/P2Uja0C01eHtQIzdk84cA8cEfCiq7z+yCGkXT+XjBSF1g5Sw8kkbtXG7Z
-         /9L2meQMm6u/JKfmTThzBdLTnB3GzfPLgLf+7Qfc5xBmFzwByqE5JUi5+g9/kIhrpLO0
-         RdjBQwFInYkdCA1W5p35yln0Mp8K2cazYe3BMFsrekRDHSlerrYWtJQhFu3KsRA6PvQK
-         aZ2EKDGreYBrEjLhsUW0z2lxQB3ybZ/j3lkfYfhVo4TYlDs0dnC2C12yLJU+Q0naJ5Vz
-         M5CgFxXyz4C5g7v3TfrMz7vOkDbaRTGH0dQkRXPaz8KrHbx+05EkjWKcx28vmAJJM7eP
-         mW/A==
-X-Gm-Message-State: AGi0PubYB/9bRU31b+BsAZVyg4nbM2hoRgl8qhsyWDXUMx0yX5ZIsxof
-        tqs0QkYmDoaX7169KH8TNi/8HQ==
-X-Google-Smtp-Source: APiQypKI8k4TySX2HxG45ANUOlTXZ016fEV88ihQ/i/kGs1Reh4zJF1QAgKUNB6iUGMJJTHVq4CGAw==
-X-Received: by 2002:adf:a309:: with SMTP id c9mr1154684wrb.97.1587592911938;
-        Wed, 22 Apr 2020 15:01:51 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id z10sm702728wrg.69.2020.04.22.15.01.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Apr 2020 15:01:50 -0700 (PDT)
-Subject: Re: [PATCH v3 6/7] misc: bcm-vk: add Broadcom VK driver
-From:   Scott Branden <scott.branden@broadcom.com>
-To:     Dan Carpenter <dan.carpenter@oracle.com>,
-        kbuild test robot <lkp@intel.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        bjorn.andersson@linaro.org, Arnd Bergmann <arnd@arndb.de>,
-        kbuild-all@lists.01.org, "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Linux Memory Management List <linux-mm@kvack.org>,
-        Dan Carpenter <error27@gmail.com>
-References: <20200420162809.17529-7-scott.branden@broadcom.com>
- <202004221945.LY6x0DQD%lkp@intel.com> <20200422113558.GJ2659@kadam>
- <b626e7fe-ae3f-827f-6f5b-2e6639f55775@broadcom.com>
-Message-ID: <d9e6d8a0-9e99-e822-8907-e1478c3a7f47@broadcom.com>
-Date:   Wed, 22 Apr 2020 15:01:45 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=75TUGWxKMG+i7tFa2VqXTsbczTpvn8gAWE0prn7/ZWo=;
+        b=rc8GUtgYcsky1C8Aky8pISRt8c/+I44UF0fEEzoaWY3xUBzHKkgZK6Jo+vmoX3NX/5
+         x5F5fUgPcYPR2W9PYdpcHiTWrlw0SgaQWbiGYt8bWSgFz7jJgPE+JKJmVWJvgt9lWv3d
+         +qJyTQcj+AO1S2HqYX5mZJcnCST0UjPuFLnD+KI0NNyK17MnbCEBTBXQp5Rmhy0CQYh6
+         N/272RxdIEE17Yv5Z2bvTGK6biuxRVsg19VC72+BeCAKLiOS9P//x/70k88cnat2Mw9a
+         +wgCmDsrk4EmwWj0KUrlgucem2zZI7yDbp6J4JLrAT/rNdWA6L0iK/DeNufqpq0QGasP
+         u67w==
+X-Gm-Message-State: AGi0PubuTcSUPjllDlsid3djzq4yAy4qmuRb0SrKmCapyMybqDrkW8Cd
+        Ku00JdO6YWT1/IpP91BZDp/oNw==
+X-Google-Smtp-Source: APiQypKajNV82QXE5K2iKfsEJ0r4+uN55Qcwur5XRKTlxsgeo77a7Pr94QQHDYOrM+bNQLwFdLPljQ==
+X-Received: by 2002:a17:902:b187:: with SMTP id s7mr1435976plr.0.1587602286693;
+        Wed, 22 Apr 2020 17:38:06 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 6sm432225pgz.0.2020.04.22.17.38.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Apr 2020 17:38:05 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Chris Lew <clew@codeaurora.org>, Sibi <sibis@codeaurora.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>
+Subject: [PATCH 0/4] rpmsg: Refactor Qualcomm glink_ssr
+Date:   Wed, 22 Apr 2020 17:37:32 -0700
+Message-Id: <20200423003736.2027371-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-In-Reply-To: <b626e7fe-ae3f-827f-6f5b-2e6639f55775@broadcom.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+In order to allow for wider use of the SSR notifier in remoteproc's qcom_common
+this series internalizes the notifier chain used by glink_ssr. To simplify the
+Kconfig dependencies it also moves the glink_ssr implementation to rpmsg and
+merges it with qcom_glink_native, as these do go hand in hand.
 
+Bjorn Andersson (4):
+  remoteproc: qcom: Pass ssr_name to glink subdevice
+  soc: qcom: glink_ssr: Internalize ssr_notifiers
+  rpmsg: glink: Integrate glink_ssr in qcom_glink
+  arm64: defconfig: Remove QCOM_GLINK_SSR
 
-On 2020-04-22 9:13 a.m., Scott Branden wrote:
->
->
-> On 2020-04-22 4:35 a.m., Dan Carpenter wrote:
->> On Wed, Apr 22, 2020 at 07:17:34PM +0800, kbuild test robot wrote:
->>> Hi Scott,
->>>
->>> I love your patch! Perhaps something to improve:
->>>
->>> [auto build test WARNING on driver-core/driver-core-testing]
->>> [also build test WARNING on next-20200421]
->>> [cannot apply to char-misc/char-misc-testing kselftest/next 
->>> linus/master v5.7-rc2]
->>> [if your patch is applied to the wrong git tree, please drop us a 
->>> note to help
->>> improve the system. BTW, we also suggest to use '--base' option to 
->>> specify the
->>> base tree in git format-patch, please see 
->>> https://stackoverflow.com/a/37406982]
->>>
->>> url: 
->>> https://github.com/0day-ci/linux/commits/Scott-Branden/firmware-add-partial-read-support-in-request_firmware_into_buf/20200422-114528
->>> base: 
->>> https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git 
->>> 55623260bb33e2ab849af76edf2253bc04cb241f
->>> reproduce:
->>>          # apt-get install sparse
->>>          # sparse version: v0.6.1-191-gc51a0382-dirty
->>>          make ARCH=x86_64 allmodconfig
->>>          make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
->>                                             ^^^^^^^^^^^^^^^^^^^
->>
->> Sorry, you asked me about this earlier.  You will need to add
->> -D__CHECK_ENDIAN__ to enable these Sparse warnings.
-> This is strange.  I ran the sparse build and thought I had fixed all 
-> the issues.
-> I'll have to try again.
->
-> One other question with the sparse build.  I get many of the messages 
-> printed but the build seems to go to the end (even without my patches 
-> applied):
-> ./arch/x86/include/asm/paravirt.h:333:9: error: got __inline
-> ./arch/x86/include/asm/paravirt.h:338:9: error: Expected ( after asm
-> ./arch/x86/include/asm/paravirt.h:338:9: error: got __inline
-> ./arch/x86/include/asm/paravirt.h:343:9: error: Expected ( after asm
-> ./arch/x86/include/asm/paravirt.h:343:9: error: got __inline
-> ./arch/x86/include/asm/paravirt.h:348:9: error: Expected ( after asm
-> ./arch/x86/include/asm/paravirt.h:348:9: error: too many errors
->
-> Any way to suppress or I am doing something wrong?  I just run the 2 
-> make commands:
->
->         make ARCH=x86_64 allmodconfig
->         make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
-I figured out the sparse utility on ubuntu 18.04 is out of date causing 
-the issue.
->
->> regards,
->> dan carpenter
->>
->
+ arch/arm64/configs/defconfig                  |  1 -
+ drivers/remoteproc/qcom_common.c              | 17 ++++++++++-
+ drivers/remoteproc/qcom_common.h              |  5 +++-
+ drivers/remoteproc/qcom_q6v5_adsp.c           |  2 +-
+ drivers/remoteproc/qcom_q6v5_mss.c            |  2 +-
+ drivers/remoteproc/qcom_q6v5_pas.c            |  2 +-
+ drivers/rpmsg/Kconfig                         |  6 ++--
+ drivers/rpmsg/Makefile                        |  3 +-
+ .../glink_ssr.c => rpmsg/qcom_glink_ssr.c}    | 28 +++++++++++++------
+ drivers/soc/qcom/Kconfig                      |  9 ------
+ drivers/soc/qcom/Makefile                     |  1 -
+ include/linux/rpmsg/qcom_glink.h              |  3 +-
+ 12 files changed, 49 insertions(+), 30 deletions(-)
+ rename drivers/{soc/qcom/glink_ssr.c => rpmsg/qcom_glink_ssr.c} (83%)
+
+-- 
+2.24.0
 
