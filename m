@@ -2,150 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 137FB1B5B47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 14:22:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABDB21B5C07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 14:59:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726392AbgDWMWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 08:22:04 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:57727 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726164AbgDWMWE (ORCPT
+        id S1728286AbgDWM7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 08:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57988 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726685AbgDWM7l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 08:22:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587644523; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=xmKbPe6qYAz7syjI+7B563Vnwnt8egJotMv+Ym61YWs=;
- b=P62W6e1ev+m8s8zQQDfgOAVPrDF9D24TYHyzqQUVZRGjv6bBZQd/TN8vSXYizTIKTVD3VkzZ
- 3NoC1JUuD+vCdgaUhj5cAM4pYyVuf/fk8RSpPGxEhl2a+Xj7vBmunFiGtWSMYVR9QmFxyCZj
- MwU17aASpriR/ub0Mwy17QA46b8=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea18856.7f73800a3618-smtp-out-n01;
- Thu, 23 Apr 2020 12:21:42 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A1194C43636; Thu, 23 Apr 2020 12:21:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04DC7C433CB;
-        Thu, 23 Apr 2020 12:21:40 +0000 (UTC)
+        Thu, 23 Apr 2020 08:59:41 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9869FC08E934;
+        Thu, 23 Apr 2020 05:59:39 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id w20so6125854ljj.0;
+        Thu, 23 Apr 2020 05:59:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=TN99Pfmiq67M57+79MTqUBODg0E96SLf0DqAJRctnww=;
+        b=Y7szCwfP00+3Qlg7PqYuLdN9pvRAG5rPi36oGFARP6hAxfks6vJ0kpRHrizJgIrHF6
+         +UOlyB/xifKw9H7Mjcps0orGTWKYpMe+b2jXNBXalqRLyO+qFvL0kNCGGKNEIlLQfsM1
+         oxn6EQdGdDVBxeI9tubCehhS8YIpVcsdHyMNNsl7VNii6OWYy2gs4q8qujKja7ACMQH3
+         +j9/D7IpTgAJjwqSf/ppkZdnLthHFH1bdNwPS0d+FQJ9yeceJiubSx+RXkt4dD48AIE5
+         e+HAEFNT5/Ij1cmwM3z4eePkajZhzY43MbZNCpqFobUCWnSIoaYlfJtP+82uIDyVhNVY
+         EljQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=TN99Pfmiq67M57+79MTqUBODg0E96SLf0DqAJRctnww=;
+        b=t25YQdXVk2EHIHVj7IOKMUirqmtSBBfBE8bnKVUIyabg8B+Tqb42RahQAxLJHHlUFU
+         nL9f4dra+bKME7YeqKquJy/sIhOKDqWxDw8r4I1udgw/833ZDG0UwzBuizroY+YX6s2c
+         hkrUS7vwlVD9buMcgCeu2xzFlhyz+EOkBeN8rKmhhbdn8Bwwi8YK1vVVjP+Dsprh/dbE
+         4df4nxKvnCiZi7KwSifk01QkfP4QGeSu8ix2X0dWySMlMmYSXBX0EqpPkpAmZZBKjPXB
+         RtFggnj0bTmeo1kJM9peeNmmidgnCxRdCALupkRIfxmc3hBdOeKaK0ZHaBsWyqTviRn4
+         eDwA==
+X-Gm-Message-State: AGi0PubYuxxy7FcthNNqgvVz4A8Wu7A6SIcd0fP60Cg7gmuD+yV2i/3D
+        ufP67GfFByF8UPGUeOFvHok=
+X-Google-Smtp-Source: APiQypJvxNBM10jzGJWdYX4cOhGpXVsnIxYhehXKPyLCRAfn/4qjISIb1q3Uqffmq65KRop51bILWQ==
+X-Received: by 2002:a2e:a58d:: with SMTP id m13mr2348976ljp.164.1587646778073;
+        Thu, 23 Apr 2020 05:59:38 -0700 (PDT)
+Received: from [192.168.86.24] ([213.191.183.145])
+        by smtp.gmail.com with ESMTPSA id q19sm1709346ljj.84.2020.04.23.05.59.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2020 05:59:36 -0700 (PDT)
+Subject: Re: [PATCH 2/3] dt-bindings: regulator: Add document bindings for
+ max77826
+To:     Rob Herring <robh@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20200413164440.1138178-1-iskren.chernev@gmail.com>
+ <20200413164440.1138178-3-iskren.chernev@gmail.com>
+ <20200420205501.GA6828@bogus>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+Message-ID: <f9b5d68d-536b-5806-573b-9dafb848f46f@gmail.com>
+Date:   Thu, 23 Apr 2020 15:59:34 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+In-Reply-To: <20200420205501.GA6828@bogus>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Date:   Thu, 23 Apr 2020 17:51:40 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     mike.leach@linaro.org, mathieu.poirier@linaro.org,
-        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
-        swboyd@chromium.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [RFC PATCH] coresight: dynamic-replicator: Fix handling of
- multiple connections
-In-Reply-To: <e9c299c4-caeb-9eb8-f019-b311bfce756a@arm.com>
-References: <20200405102819.28460-1-saiprakash.ranjan@codeaurora.org>
- <CAJ9a7VgQzK1XSCvLwuqODwkWfvo=6Wwps7Db+pL5xYDeCuktrg@mail.gmail.com>
- <6c0f45488f8a44bf860759e00fcabd09@codeaurora.org>
- <906d374d-a4d6-f2f2-6845-88b97a5ff7d9@arm.com>
- <39a2b3fff165a108fa59d72b630b5f14@codeaurora.org>
- <bb209f80-ac02-6321-dac4-ebf9ee6fa9a0@arm.com>
- <bd05b31c2391edfff5044f22f2f83edf@codeaurora.org>
- <e9c299c4-caeb-9eb8-f019-b311bfce756a@arm.com>
-Message-ID: <526ee10ba1df05b41f9471613550a0fd@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
 
-On 2020-04-07 20:23, Suzuki K Poulose wrote:
-> On 04/07/2020 02:56 PM, Sai Prakash Ranjan wrote:
->> Hi Suzuki,
->> 
->> On 2020-04-07 18:38, Suzuki K Poulose wrote:
->>> On 04/07/2020 12:29 PM, Sai Prakash Ranjan wrote:
->>>> Hi Suzuki,
->>>> 
->>>> Thanks for looking into this issue.
->>>> 
->>>> On 2020-04-07 15:54, Suzuki K Poulose wrote:
->>>>> On 04/07/2020 10:46 AM, Sai Prakash Ranjan wrote:
->>>>> 
->>>>> There seems to be two replicators back to back here. What is 
->>>>> connected
->>>>> to the other output of both of them ? Are there any TPIUs ? What 
->>>>> happens
->>>>> if you choose a sink on the other end of "swao_replicator" (ETB ?)
->>>>> 
->>>> 
->>>> The other outport of swao replicator is connected to EUD which is a
->>>> QCOM specific HW which can be used as a sink like USB.
->>>> And the other outport of other replicator(replicator_out) is 
->>>> connected to
->>>> TPIU.
->>>> 
->>>>> After boot, what do the idfilter registers read for both the 
->>>>> replicators ?
->>>>> 
->>>> 
->>>> Added some prints in replicator_probe.
->>>> 
->>>>   replicator probe ret=-517 devname=6046000.replicator idfilter0=0x0 
->>>> idfilter1=0x0
->>>>   replicator probe ret=0 devname=6b06000.replicator idfilter0=0xff 
->>>> idfilter1=0xff
->>>>   replicator probe ret=0 devname=6046000.replicator idfilter0=0xff 
->>>> idfilter1=0xff
->>> 
->>> Curious to see how the idfilterX is set to 0:
->>>      if that is never used.
->>>         Or
->>>      if the user doesn't reset it back to 0xff.
->>> 
->> 
->> For both replicators, the default value seems to be 0x0.
->> 
->>   replicator probe in res ret=0 devname=6046000.replicator 
->> idfilter0=0x0 idfilter1=0x0
->>   replicator probe ret=-517 devname=6046000.replicator idfilter0=0x0 
->> idfilter1=0x0
->>   replicator probe in res ret=0 devname=6b06000.replicator 
->> idfilter0=0x0 idfilter1=0x0
->>   replicator probe ret=0 devname=6b06000.replicator idfilter0=0xff 
->> idfilter1=0xff
->>   replicator probe in res ret=0 devname=6046000.replicator 
->> idfilter0=0x0 idfilter1=0x0
->>   replicator probe ret=0 devname=6046000.replicator idfilter0=0xff 
->> idfilter1=0xff
-> 
-> I am not sure how you have added the debugs, but it looks like the
-> drivers set 0xff for both the port filters on a successful probe.
-> 
+On 4/20/20 11:55 PM, Rob Herring wrote:
+> On Mon, Apr 13, 2020 at 07:44:39PM +0300, Iskren Chernev wrote:
+>> +    patternProperties:
+>> +      "^LDO([1-9]|1[0-5])$":
+>> +        type: object
+>> +        allOf:
+>> +          - $ref: regulator.yaml#
+>> +
+>> +      "^BUCK|BUCKBOOST$":
+>> +        type: object
+>> +        allOf:
+>> +          - $ref: regulator.yaml#
+>> +
+>> +      additionalProperties: false
+>
+> You are defining a property called 'additionalProperties'. This one
+> should be dropped because additionalProperties doesn't work with a $ref.
+>
 
-About the earlier mentioned points on:
+I got the idea from mps,mpq7920.yaml. It has additionalProperties in the
+exact same places that I do. Also bd718(28|37|47).yaml seem to use
+additionalProperties inside patternProperties. Shall I modify it as well?
 
-1) Disallow turning the replicator ON, when it is already turned ON
-2) Do what your patch does. i.e, disable the other end while one end
-    is turned on.
+I couldn't find the core schema for this yaml:
+http://devicetree.org/meta-schemas/core.yaml (gives 404).  Is there a way
+to verify the validity of the yaml?
 
-Do we need 1) and should we go ahead with this?
+Also, this patch is already merged in linux-next. I guess I shall submit
+a new patch with the fixes standalone?
 
-Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
