@@ -2,93 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6370D1B605A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 18:07:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2AD31B6091
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 18:19:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729585AbgDWQHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 12:07:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59194 "EHLO
+        id S1729423AbgDWQTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 12:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729478AbgDWQHa (ORCPT
+        by vger.kernel.org with ESMTP id S1729419AbgDWQTf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 12:07:30 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E07C09B043
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 09:07:30 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x18so7500372wrq.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 09:07:29 -0700 (PDT)
+        Thu, 23 Apr 2020 12:19:35 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C89C09B042
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 09:19:35 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id j1so1600025vkc.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 09:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=JilRdq2BDhA1AKoin3Th54s1noQnrS50Fz/y17AV1jA=;
-        b=mu5AJ++cQsxccfAWV5JOLI/SgRQB86tng7pTsdRiA0kz/jrOGnc32OzFYt/7FPwzzB
-         +RKxvAWyG3Fhb/LTxr6iLFG7Fqd7cKZchlM4nPOFnCKoCRxMGn7M5oQDMCMFbxxLhDGe
-         5X2igq6lLyFRp4YnVVxEseuIDVoFkyq+mdHi+Zisfd8Pp3LapzbK+KzPaARkQ4AAAyz7
-         bNs+1FaBot8KfjfQNqxRFuFjrp9Rx7gmbOUG0SjUisIrkJPmKAomEWKkRNJRPC7bZciu
-         H7JBYPscd6A7+6TIJnHQSIdrfBlMdUZgWFGabEUO3JDAeXaryLKlgvKAiL43TvO8v1SR
-         jQPQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iKUcBuJDdde4mOEyRTnllxM+tu62ZA2QD/StkqYkuis=;
+        b=NEZkOU/0uCz//ZqaAJkcGOCvpnUulQ02B0Ex143Mw3WV5xFZywAgbpsn9AzJ7InUxY
+         Zf5lR349Qjg1BLHrT8/Ml2Dy6f5cx8S3x8blRTf1jq+qfs8o5P1fVeSb4vV4AEp4XTt0
+         YG/2ldfM9aDW2SfHMjInfGXWq3VeIf5D866rY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JilRdq2BDhA1AKoin3Th54s1noQnrS50Fz/y17AV1jA=;
-        b=h9YIiaruiYXJUaE6nqIxop40FkUkwJNqC6h8H3V+PjBj8YMeBgZPcR4S7LQbeX/7j2
-         ItzEB422qqEE0JxKMajU6+2ViC+qC42DLYUYqJPQLK+a7MpIo2tFuSeaukSRTsNkWEJg
-         Rkb1lX2cU82e6PEvTauGO2A6ttNjgEhSblaRSZqe34wg7pbaQ4HLcGFqvhoDDJ4fxYAP
-         kFUtBNtiz10IMEPtUqZB7xAJOfs9epJMJpmHjniDdd+Ww7p6myKEFKIbdwhhlR4xcUnU
-         XSEePpdMe2K2Fb3d7Xk2Td7ekbmpdv6/cyZu0iLnfRFoLkh9DTbL71Ia5xt6xLnVdikH
-         kImg==
-X-Gm-Message-State: AGi0PuaGzwqFp0bVoQgEhaH0g8ugRoCn+wnzo29dd4FlbL/SEM1HhEPY
-        jx2ZRO6v7BoSs2hc6HdN9zTd6Q==
-X-Google-Smtp-Source: APiQypLW+PKkIM2+wwd4rW8a0Cu+5yfXB9aOs7exzbNq/9IiN/eo7uFJ35wUPd5bS6ATZyaoXdBIzg==
-X-Received: by 2002:a5d:49c7:: with SMTP id t7mr5482028wrs.22.1587658048446;
-        Thu, 23 Apr 2020 09:07:28 -0700 (PDT)
-Received: from linaro.org ([37.167.216.250])
-        by smtp.gmail.com with ESMTPSA id g74sm4308279wme.44.2020.04.23.09.07.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 09:07:27 -0700 (PDT)
-Date:   Thu, 23 Apr 2020 18:07:23 +0200
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-Subject: Re: [PATCH v6 07/10] Documentation: power: update Energy Model
- description
-Message-ID: <20200423160723.GE65632@linaro.org>
-References: <20200410084210.24932-1-lukasz.luba@arm.com>
- <20200410084210.24932-8-lukasz.luba@arm.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iKUcBuJDdde4mOEyRTnllxM+tu62ZA2QD/StkqYkuis=;
+        b=uVZi4Hb6JZY7O/kffPcrBtujOZVNzVG54LG1WJlFWJjVNt5gjvj+Xx6GlaUYeRymrN
+         BzTkvMQUw7+58PMMK2sL18RKb1YJehDKO6CErh071tw//mct0NLmTpJfIzJnI8AFcNgy
+         POY/LVdtL13H7MY3o2Hos3/2547Frs1L6HiLr3dJBc59KMjC76fh0ZOreSrPULvwtArX
+         DxHr3p5Ol02SW/0h0hTsU/J3Q0rHdJcUyKguexfLUWPjxoO2RRz4tJr/Gyq7elDLkWGy
+         N+VUy4wDkXXauIbliJi8aaOl1OI4EGzs10w700TT1jpSjFR/tIx+TZ1HGq3ktKuls+dc
+         IUXg==
+X-Gm-Message-State: AGi0Pub15WxmNHlpCpX7l1Jig5g456guXashHTLmBnfyjudxGNx8aBu8
+        Q3mGO/yvg3hpWUMYvxjMiEtGfZZ1668=
+X-Google-Smtp-Source: APiQypJjTztVJOH0dF36YZSaa6PI6Xn36GnEhmftA8lV/NYcDZELbLFcGwXvG7/mlLo3P/1EfNgwKg==
+X-Received: by 2002:a1f:cd83:: with SMTP id d125mr4290667vkg.35.1587658773479;
+        Thu, 23 Apr 2020 09:19:33 -0700 (PDT)
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
+        by smtp.gmail.com with ESMTPSA id j22sm899267vke.27.2020.04.23.09.19.31
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2020 09:19:32 -0700 (PDT)
+Received: by mail-ua1-f49.google.com with SMTP id y10so6271487uao.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 09:19:31 -0700 (PDT)
+X-Received: by 2002:a05:6102:4d:: with SMTP id k13mr3971569vsp.198.1587658771501;
+ Thu, 23 Apr 2020 09:19:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200410084210.24932-8-lukasz.luba@arm.com>
+References: <20200422145408.v4.1.Ic7096b3b9b7828cdd41cd5469a6dee5eb6abf549@changeid>
+ <7e060977-611e-abf5-af76-1cc91660a8ba@codeaurora.org>
+In-Reply-To: <7e060977-611e-abf5-af76-1cc91660a8ba@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 23 Apr 2020 09:19:20 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WC78xxDUCynbfX0rnAAUxJfUedNhoCrw=5UHhcrRFu8w@mail.gmail.com>
+Message-ID: <CAD=FV=WC78xxDUCynbfX0rnAAUxJfUedNhoCrw=5UHhcrRFu8w@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] soc: qcom: rpmh-rsc: Corrently ignore
+ CPU_CLUSTER_PM notifications
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 10, 2020 at 09:42:07AM +0100, Lukasz Luba wrote:
-> The Energy Model framework supports also other devices than CPUs. Update
-> related information and add description for the new usage.
-> 
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-> ---
+Hi,
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+On Wed, Apr 22, 2020 at 9:45 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+> Hi,
+>
+> there is a typo in subject, Corrently to correctly.
+> Other than this, fix seems good to me.
+>
+> Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
+
+Sigh.  My brian has never worked very well.  One of these days I'll
+see if I can get it tuned up.  Unless there is another reason to spin
+this series or I'm requested to, I'll assume that Bjron or Andy can
+fix my typo in the subject when applying.
+
+Thanks!
+
+-Doug
