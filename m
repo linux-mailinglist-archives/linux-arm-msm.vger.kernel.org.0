@@ -2,120 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B05CB1B5DCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 16:31:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D3501B5DE8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 16:35:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726323AbgDWObc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 10:31:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39034 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726060AbgDWObc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 10:31:32 -0400
-Received: from localhost (unknown [117.99.83.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 33AF020728;
-        Thu, 23 Apr 2020 14:31:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1587652292;
-        bh=lI3x3Wgxq/DlxqjieCrseB2CoKABPYFIihFQcs7uAuo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fRY+2kfDUSjwGHmBG3P90xdDtebN6Az+VfjTLoi322j7th4zLubnSAoTZtg00p35q
-         bX1IFR1EU3Kup5TwP2TnQNn+JjmeYQY6J9F2Vm41UYl5DoiS2en+iR8Bj6iZcy+8+e
-         1Nlm3C+PJAgLj1MAYEpM7AIV9qZycz6NUMIAdw9o=
-Date:   Thu, 23 Apr 2020 20:01:27 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v9 3/5] usb: xhci: Add support for Renesas controller
- with memory
-Message-ID: <20200423143127.GK72691@vkoul-mobl>
-References: <20200414164152.2786474-1-vkoul@kernel.org>
- <20200414164152.2786474-4-vkoul@kernel.org>
- <f61fbae0-28c5-c7ad-383f-2017a9e8597d@linux.intel.com>
+        id S1728213AbgDWOfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 10:35:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44690 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726591AbgDWOfr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Apr 2020 10:35:47 -0400
+Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0476DC09B040
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 07:35:47 -0700 (PDT)
+Received: by mail-ua1-x944.google.com with SMTP id t8so5877484uap.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 07:35:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=txoUP4TZL/kX6wzTvIyyPM8Tw98hlNv8TkS19LKzzNo=;
+        b=Wkr0bymDg39KvhwGQedoiURyuP/SArfM/9lbpXIi1kmydOSd5DW7q2QV6F+YHrIzDQ
+         JTwKM1kQFW1Ecz6bwK0sChfkdhZMNRukeEymx9JDsupFdDqi7m2c9kbHgwU1rbDm7JyF
+         RDOjDH5tbRA+5Rrd8iV3L/pXJmss/r1qVJCMM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=txoUP4TZL/kX6wzTvIyyPM8Tw98hlNv8TkS19LKzzNo=;
+        b=B7SKeLhFik0OJYHjdaWGjtQ21FX5b2f2YqYGNP2MVZqlOSFN9AGaPUFB6MFzhT/Tc/
+         3+CVzo00ZRFZ2oG7vcmLHU2Vwl3vf8X0aOneKpf0SYGE1I6htagFGWIEwogAifCymNHe
+         mhhKXaQMyMLkQruHa+AmbYAYFLkFE3IZiySv+btinO6nSjFNU2ppO0EGt74GgZyWuG4T
+         kaESrkffpSea18Vt6Ko1CnVtBdjHyRYOsTHuxJBoNv19GzYGLkVnPK9VgQT8JUu8TXrY
+         VFz/PTTk+CJCpJ2CAzC6fNo12BknZFVYWcA8LOEuC2CO9aMRKV32Foj9vLlRDQWoKYjO
+         pBVQ==
+X-Gm-Message-State: AGi0PubpIfatuITAdd64LwSeqlWzWu6sxjekIEnbTzRb0hAK7AkuckNi
+        nFMfrLonvpPTo4nyiWhYT9ImnZue64c=
+X-Google-Smtp-Source: APiQypLcl6daKunu5PdwPrqDBXf+BBtqp4Icfjnl65yl70ErV7whMX1QmODjxsku8km5aYTqH9Zmsg==
+X-Received: by 2002:ab0:28ce:: with SMTP id g14mr3326839uaq.65.1587652545957;
+        Thu, 23 Apr 2020 07:35:45 -0700 (PDT)
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
+        by smtp.gmail.com with ESMTPSA id h15sm672927vsq.26.2020.04.23.07.35.44
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2020 07:35:45 -0700 (PDT)
+Received: by mail-ua1-f50.google.com with SMTP id a6so5900127uao.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 07:35:44 -0700 (PDT)
+X-Received: by 2002:a67:f5d6:: with SMTP id t22mr1333288vso.73.1587652544353;
+ Thu, 23 Apr 2020 07:35:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f61fbae0-28c5-c7ad-383f-2017a9e8597d@linux.intel.com>
+References: <20200423095531.9868-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20200423095531.9868-1-saiprakash.ranjan@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 23 Apr 2020 07:35:32 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W=d=KrTwgMOO-ukFc7ZhkE92qGYumUEDrtjmhQOpdWbg@mail.gmail.com>
+Message-ID: <CAD=FV=W=d=KrTwgMOO-ukFc7ZhkE92qGYumUEDrtjmhQOpdWbg@mail.gmail.com>
+Subject: Re: [PATCHv2] iommu/arm-smmu: Make remove callback message more informative
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-04-20, 17:07, Mathias Nyman wrote:
-> On 14.4.2020 19.41, Vinod Koul wrote:
-> > Some rensas controller like uPD720201 and uPD720202 need firmware to be
-> > loaded. Add these devices in table and invoke renesas firmware loader
-> > functions to check and load the firmware into device memory when
-> > required.
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  drivers/usb/host/xhci-pci.c | 33 +++++++++++++++++++++++++++++++++
-> >  drivers/usb/host/xhci.h     |  1 +
-> >  2 files changed, 34 insertions(+)
-> > 
-> > diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-> > index b6c2f5c530e3..11521e2e1720 100644
-> > --- a/drivers/usb/host/xhci-pci.c
-> > +++ b/drivers/usb/host/xhci-pci.c
-> > @@ -15,6 +15,7 @@
-> >  
-> >  #include "xhci.h"
-> >  #include "xhci-trace.h"
-> > +#include "xhci-pci.h"
-> >  
-> >  #define SSIC_PORT_NUM		2
-> >  #define SSIC_PORT_CFG2		0x880c
-> > @@ -328,6 +329,21 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
-> >  	int retval;
-> >  	struct xhci_hcd *xhci;
-> >  	struct usb_hcd *hcd;
-> > +	struct xhci_driver_data *driver_data;
-> > +
-> > +	driver_data = (struct xhci_driver_data *)id->driver_data;
-> > +
-> > +	if (driver_data && driver_data->quirks & XHCI_RENESAS_FW_QUIRK) {
-> > +		retval = renesas_xhci_pci_probe(dev, id);
-> > +		switch (retval) {
-> > +		case 0: /* fw check success, continue */
-> > +			break;
-> > +		case 1: /* fw will be loaded by async load */
-> > +			return 0;
-> 
-> This is no longer true, right?
+Hi,
 
-Correct.
+On Thu, Apr 23, 2020 at 2:55 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Currently on reboot/shutdown, the following messages are
+> displayed on the console as error messages before the
+> system reboots/shutdown as part of remove callback.
+>
+> On SC7180:
+>
+>   arm-smmu 15000000.iommu: removing device with active domains!
+>   arm-smmu 5040000.iommu: removing device with active domains!
+>
+> Make this error message more informative and less scary.
+>
+> Reported-by: Douglas Anderson <dianders@chromium.org>
+> Suggested-by: Robin Murphy <robin.murphy@arm.com>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  drivers/iommu/arm-smmu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-> To me it looks like renesas_xhci_pci_probe() returns 0 on success, both if
-> firmware was already running or if successfully loaded, and negative on error
-
-Yes now it does that and I will update this part..
-> 
-> While changing this the function name "renesas_xhci_pci_probe()" should be
-> changed as well. This isn't anymore a separate firmware loading driver, just a
-> a lot of renesas firmware loading code.
-> 
-> You could call renesas_xhci_check_request_fw() directly instead:
-> 
-> 	if (driver_data && driver_data->quirks & XHCI_RENESAS_FW_QUIRK) {
-> 		retval = renesas_xhci_check_request_fw(dev, id);
-> 		if (retval)
-> 			return retval;
-> 	}
-
-Yes I can remove this layer and directly invoke the internal function..
-
-Thanks for the comments
-
--- 
-~Vinod
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
