@@ -2,135 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02E7A1B5C7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 15:23:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4429C1B5CEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 15:50:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727936AbgDWNW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 09:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727087AbgDWNW5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 09:22:57 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFE38C09B040
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 06:22:56 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id i10so6814502wrv.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 06:22:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=6lrCN4Y2jvBEhMEE9yoKB0QoRLluJFmgeNzXOO0519c=;
-        b=MfGul8Hpypn6B6iEzWypyjdhBn2Sm6I3sSyNkRkdieKZwsujvoViJAlUxKfCp6PvVT
-         nwSpOW9fHqYx6TfeuZBHXpiT/Q2s2RfycyW/XV2CCERaWqWBevrZxULrN89FB2oqqqIj
-         EC4+LROpYsU0aZMAoa54xpOSfpfCZFQyZRrwaCx87r3hFioBkCt8KsdEjlJAImIi4s1I
-         Us/CNyKM0JIG8zvg7SiTo3pIgmAXzgypQm3ZpltQJG1qtzhzgxWvcovuoFdh5tQZy9Cx
-         NgvYaqs9da3YhKQ+izEK3Cgf+BXf15gAENfjKuHLNG3VaHH3xMMHcEogSfbIRqjGk5gK
-         /7lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=6lrCN4Y2jvBEhMEE9yoKB0QoRLluJFmgeNzXOO0519c=;
-        b=h6q4Y4BYfSigjTc/f5BFouZuGMwI2ZY+SucI4BkeMXQcnwl04Lyz3/3UR6JMq/dYba
-         SXmx6cvkLvyq6/g3VclAxpLUkypn1DDUoRNY8kGto7uj15YYjks+QdHoVpYQdMLyGmH3
-         jH+41Eagq49eGtmyw7wcb1UFYjiVuFmdG87TdCNoLjdr+d/66EuT8ctsULw+ehy0S6zJ
-         OxnCHRKvg5bBBKot8RDo8MSWe7MIBvbCFijLJsk35jDxZlX58E/FaM23QVPflNb6coDb
-         k1Sg/8lyj824K8gWRUFHbmCf4mfFWYox3Hd6Jo1Jghi4JQp8nY+RaK6eq++eB0enPud4
-         CaJQ==
-X-Gm-Message-State: AGi0PuZ8cXbaq24HC9v4ViB6dWvsqOwk+5Qmc25D54Wgt9+WhWTLTqIT
-        bME6mepOiidvCOkgX+mLi/8jmA==
-X-Google-Smtp-Source: APiQypLIExvxbZk7AtfC6O9cBOXmdm+gz1QSH3p+99FlJwwJBGarRXDyjXQkXRxvvC0opKaSfe3/tA==
-X-Received: by 2002:adf:fdc1:: with SMTP id i1mr5430755wrs.158.1587648175280;
-        Thu, 23 Apr 2020 06:22:55 -0700 (PDT)
-Received: from linaro.org ([37.167.216.250])
-        by smtp.gmail.com with ESMTPSA id h137sm14658623wme.0.2020.04.23.06.22.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 06:22:54 -0700 (PDT)
-Date:   Thu, 23 Apr 2020 15:22:43 +0200
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        id S1728558AbgDWNuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 09:50:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39132 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726926AbgDWNue (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Apr 2020 09:50:34 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3BFEB20728;
+        Thu, 23 Apr 2020 13:50:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1587649833;
+        bh=Zl7NuDjGvPHVLfMVDJIvKZWGpQWblUX8qdNJAHq1Tr8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rtRmKMGa59ZzrLxzNTg+TXuM9mxHpLgKLQhjZLLNvtfpddzm7hI1VwnniqsV6bwDM
+         8N2/eCvUHDcmPP+1YOGNEgVBevpeEo4iTDASVgWq5AsAVxMYnUxdtxKHJBHn4Zn5Y9
+         oqFsLK6AoMDPqJDKJaVwDNwTkxQhVsA5qPT2HBuE=
+Date:   Thu, 23 Apr 2020 15:50:31 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     jason.wessel@windriver.com, daniel.thompson@linaro.org,
+        kgdb-bugreport@lists.sourceforge.net, mingo@redhat.com,
+        hpa@zytor.com, bp@alien8.de, linux-serial@vger.kernel.org,
+        agross@kernel.org, tglx@linutronix.de, frowand.list@gmail.com,
+        bjorn.andersson@linaro.org, jslaby@suse.com,
+        catalin.marinas@arm.com, corbet@lwn.net, will@kernel.org,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Arnd Bergmann <arnd@arndb.de>, Borislav Petkov <bp@suse.de>,
+        Dave Martin <Dave.Martin@arm.com>,
+        Enrico Weigelt <info@metux.net>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        James Morse <james.morse@arm.com>,
+        Juergen Gross <jgross@suse.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Matt Mullins <mmullins@fb.com>,
+        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        Nadav Amit <namit@vmware.com>,
+        Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Rick Edgecombe <rick.p.edgecombe@intel.com>,
+        jinho lim <jordan.lim@samsung.com>,
         linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-Subject: Re: [PATCH v6 03/10] PM / EM: update callback structure and add
- device pointer
-Message-ID: <20200423132243.GA65632@linaro.org>
-References: <20200410084210.24932-1-lukasz.luba@arm.com>
- <20200410084210.24932-4-lukasz.luba@arm.com>
+        linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        x86@kernel.org
+Subject: Re: [PATCH v2 0/9] kgdb: Support late serial drivers; enable early
+ debug w/ boot consoles
+Message-ID: <20200423135031.GA4091353@kroah.com>
+References: <20200421211447.193860-1-dianders@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200410084210.24932-4-lukasz.luba@arm.com>
+In-Reply-To: <20200421211447.193860-1-dianders@chromium.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 10, 2020 at 09:42:03AM +0100, Lukasz Luba wrote:
-> The Energy Model framework is going to support devices other that CPUs. In
-> order to make this happen change the callback function and add pointer to
-> a device as an argument.
+On Tue, Apr 21, 2020 at 02:14:38PM -0700, Douglas Anderson wrote:
+> This whole pile of patches was motivated by me trying to get kgdb to
+> work properly on a platform where my serial driver ended up being hit
+> by the -EPROBE_DEFER virus (it wasn't practicing social distancing
+> from other drivers).  Specifically my serial driver's parent device
+> depended on a resource that wasn't available when its probe was first
+> called.  It returned -EPROBE_DEFER which meant that when "kgdboc"
+> tried to run its setup the serial driver wasn't there.  Unfortunately
+> "kgdboc" never tried again, so that meant that kgdb was disabled until
+> I manually enalbed it via sysfs.
 > 
-> Update the related users to use new function and new callback from the
-> Energy Model.
+> While I could try to figure out how to get around the -EPROBE_DEFER
+> somehow, the above problems could happen to anyone and -EPROBE_DEFER
+> is generally considered something you just have to live with.  In any
+> case the current "kgdboc" setup is a bit of a race waiting to happen.
+> I _think_ I saw during early testing that even adding a msleep() in
+> the typical serial driver's probe() is enough to trigger similar
+> issues.
 > 
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-> ---
+> I decided that for the above race the best attitude to get kgdb to
+> register at boot was probably "if you can't beat 'em, join 'em".
+> Thus, "kgdboc" now jumps on the -EPROBE_DEFER bandwagon (now that my
+> driver uses it it's no longer a virus).  It does so a little awkwardly
+> because "kgdboc" hasn't normally had a "struct device" associated with
+> it, but it's really not _that_ ugly to make a platform device and
+> seems less ugly than alternatives.
+> 
+> Unfortunately now on my system the debugger is one of the last things
+> to register at boot.  That's OK for debugging problems that show up
+> significantly after boot, but isn't so hot for all the boot problems
+> that I end up debugging.  This motivated me to try to get something
+> working a little earlier.
+> 
+> My first attempt was to try to get the existing "ekgdboc" to work
+> earlier.  I tried that for a bit until I realized that it needed to
+> work at the tty layer and I couldn't find any serial drivers that
+> managed to register themselves to the tty layer super early at boot.
+> The only documented use of "ekgdboc" is "ekgdboc=kbd" and that's a bit
+> of a special snowflake.  Trying to get my serial driver and all its
+> dependencies to probe normally and register the tty driver super early
+> at boot seemed like a bad way to go.  In fact, all the complexity
+> needed to do something like this is why the system already has a
+> special concept of a "boot console" that lives only long enough to
+> transition to the normal console.
+> 
+> Leveraging the boot console seemed like a good way to go and that's
+> what this series does.  I found that consoles could have a read()
+> function, though I couldn't find anyone who implemented it.  I
+> implemented it for two serial drivers for the devices I had easy
+> access to, making the assumption that for boot consoles that we could
+> assume read() and write() were polling-compatible (seems sane I
+> think).
+> 
+> Now anyone who makes a small change to their serial driver can easily
+> enable early kgdb debugging!
+> 
+> The devices I had for testing were:
+> - arm32: rk3288-veyron-jerry
+> - arm64: rk3399-gru-kevin
+> - arm64: qcom-sc7180-trogdor (not mainline yet)
+> 
+> These are the devices I tested this series on.  I tried to test
+> various combinations of enabling/disabling various options and I
+> hopefully caught the corner cases, but I'd appreciate any extra
+> testing people can do.  Notably I didn't test on x86, but (I think) I
+> didn't touch much there so I shouldn't have broken anything.
+> 
+> When testing I found a few problems with actually dropping into the
+> debugger super early on arm and arm64 devices.  Patches in this series
+> should help with this.  For arm I just avoid dropping into the
+> debugger until a little later and for arm64 I actually enable
+> debugging super early.
+> 
+> I realize that bits of this series might feel a little hacky, though
+> I've tried to do things in the cleanest way I could without overly
+> interferring with the rest of the kernel.  If you hate the way I
+> solved a problem I would love it if you could provide guidance on how
+> you think I could solve the problem better.
+> 
+> This series (and my comments / documentation / commit messages) are
+> now long enough that my eyes glaze over when I try to read it all over
+> to double-check.  I've nontheless tried to double-check it, but I'm
+> pretty sure I did something stupid.  Thank you ahead of time for
+> pointing it out to me so I can fix it in v3.  If somehow I managed to
+> not do anything stupid (really?) then thank you for double-checking me
+> anyway.
+> 
+> Changes in v2:
+> - ("kgdb: Disable WARN_CONSOLE_UNLOCKED for all kgdb") new for v2.
+> - ("Revert "kgdboc: disable the console lock when in kgdb"") new for v2.
+> - Assumes we have ("kgdb: Disable WARN_CONSOLE_UNLOCKED for all kgdb")
+> - Fix kgdbts, tty/mips_ejtag_fdc, and usb/early/ehci-dbgp
+> 
+> Douglas Anderson (9):
+>   kgdb: Disable WARN_CONSOLE_UNLOCKED for all kgdb
+>   Revert "kgdboc: disable the console lock when in kgdb"
+>   kgdboc: Use a platform device to handle tty drivers showing up late
+>   kgdb: Delay "kgdbwait" to dbg_late_init() by default
+>   arm64: Add call_break_hook() to early_brk64() for early kgdb
+>   kgdboc: Add earlycon_kgdboc to support early kgdb using boot consoles
+>   Documentation: kgdboc: Document new earlycon_kgdboc parameter
+>   serial: qcom_geni_serial: Support earlycon_kgdboc
+>   serial: 8250_early: Support earlycon_kgdboc
+> 
+>  .../admin-guide/kernel-parameters.txt         |  20 ++
+>  Documentation/dev-tools/kgdb.rst              |  14 +
+>  arch/arm64/include/asm/debug-monitors.h       |   2 +
+>  arch/arm64/kernel/debug-monitors.c            |   2 +-
+>  arch/arm64/kernel/kgdb.c                      |   5 +
+>  arch/arm64/kernel/traps.c                     |   3 +
+>  arch/x86/kernel/kgdb.c                        |   5 +
+>  drivers/misc/kgdbts.c                         |   2 +-
+>  drivers/tty/mips_ejtag_fdc.c                  |   2 +-
+>  drivers/tty/serial/8250/8250_early.c          |  23 ++
+>  drivers/tty/serial/kgdboc.c                   | 262 ++++++++++++++++--
+>  drivers/tty/serial/qcom_geni_serial.c         |  32 +++
+>  drivers/usb/early/ehci-dbgp.c                 |   2 +-
+>  include/linux/kgdb.h                          |  25 +-
+>  kernel/debug/debug_core.c                     |  48 +++-
+>  15 files changed, 400 insertions(+), 47 deletions(-)
 
-[ ... ]
-
-> +static struct em_perf_domain *
-> +em_create_pd(struct device *dev, int nr_states, struct em_data_callback *cb,
-> +	     cpumask_t *span)
->  {
->  	unsigned long opp_eff, prev_opp_eff = ULONG_MAX;
->  	unsigned long power, freq, prev_freq = 0;
-> @@ -106,7 +107,7 @@ static struct em_perf_domain *em_create_pd(cpumask_t *span, int nr_states,
->  		 * lowest performance state of 'cpu' above 'freq' and updates
->  		 * 'power' and 'freq' accordingly.
->  		 */
-> -		ret = cb->active_power(&power, &freq, cpu);
-> +		ret = cb->active_power(&power, &freq, dev);
->  		if (ret) {
->  			pr_err("pd%d: invalid perf. state: %d\n", cpu, ret);
->  			goto free_ps_table;
-
-Why are the changes 'cpu' to 'dev' in the patch 4/10 instead of this one ?
-
-> @@ -237,7 +238,7 @@ int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
->  	}
->  
->  	/* Create the performance domain and add it to the Energy Model. */
-> -	pd = em_create_pd(span, nr_states, cb);
-> +	pd = em_create_pd(dev, nr_states, cb, span);
->  	if (!pd) {
->  		ret = -EINVAL;
->  		goto unlock;
-
--- 
-
- <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
