@@ -2,108 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51DDE1B5865
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 11:41:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 108CF1B5899
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 11:55:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbgDWJlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 05:41:09 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:31325 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726346AbgDWJlH (ORCPT
+        id S1726386AbgDWJzU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 05:55:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57584 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726420AbgDWJzT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 05:41:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587634867; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=X4JlYBXDzz9vV+CUfgeK/NaJLq5Ep+S6sMu6NUItr0I=;
- b=L/Gq0iu1HaiUN5Rk48hGivV0hrj8XJWZuo40J3BGaBD5xdveCgtYKDt3d/ctvK/BEc/5ruxI
- M/AGnZdCDojL5HI3LQTRoRcqvdy3LW1HdqEU6JdElxycfF3dzOOLzZTu1C+2wQ8uEmisCLAs
- nrAT3zFMAfK/oQxsiBHGEJBqwB8=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea162b0.7f2ab732c848-smtp-out-n05;
- Thu, 23 Apr 2020 09:41:04 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C6496C43637; Thu, 23 Apr 2020 09:41:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3C107C433CB;
-        Thu, 23 Apr 2020 09:41:03 +0000 (UTC)
+        Thu, 23 Apr 2020 05:55:19 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A82C03C1AF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 02:55:19 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id u127so5866512wmg.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 02:55:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CNZHIzr/sBiOQMg4o7SLifEDxLKhTFFCAk3xHKq/Wkk=;
+        b=DsyXxkNH0btzVamhIFYzv5e350yw7X/w1LKFwogh0iIwGOZ96kVPXuXkDX32LZlwAC
+         94fwg0MWeHie4nOwR95Jrn7cRtHYa60rXz9VOiMSFM/iKMyymQip57NZrPEQTg9A9yrb
+         sU1IjCQpH+9HLWLKs738y4q6R63guG/pQy4hAMFfXU/FaxMDYHU6DOWGVn+x2CbWEpkx
+         Vo5zrIPAcwf72RxKvq889DHMx7Sv/eAARH47GGoJKHa8+8uB7M208Vnt1tgwYaqBlp/v
+         5UkeF6iEQSn2bZD9AtRien1PivU6B7DVufUotKDoDbqTxnfNsCAXWKrMdChEeIIErbT7
+         0RBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CNZHIzr/sBiOQMg4o7SLifEDxLKhTFFCAk3xHKq/Wkk=;
+        b=BaRj3o6zoQI3RilPA7jDUqEsZOm+llvrY5sV0Jdp3X3RmsDyRAD2GHF2ymF8mV+/Dp
+         S+RY75c+lvsjQIXFHaY9wa0vhTtcfJupz7/jYUpzCEDmJT8wDkuZLTVVZTPHAR0oKptm
+         TQ7PKRDGuw2qYZkuQq6MM9DjVjapqebZhgzOlTR4K1URid467IlCRSUeHrQe2AwpqNE8
+         OinObcLvMI9WX5GQjnzXI4OfH547D6Qd654wdIc/3S5sqWWSxzsojbpIXPC9Fx0M2C6e
+         4Q4XLEEuNItte+r4J9nrSda5dWdwBxJJZ6bw6evz+I3J0jmvgf3xk4FoZUubbh7ImMmw
+         A50A==
+X-Gm-Message-State: AGi0PuaflnwTHdci9DmDc2S7gqajOd2rZUGvaHGM2bdfZ+hCFKF2c/DD
+        Xgt3lHt30gZ14enjoZ67K7hvwA==
+X-Google-Smtp-Source: APiQypL6ZyvDfFcOWCfVXnw6SXTOR2+Oss71maaUGGL6LrnXJ7de4PKprtb6zu5/4UALDKzAFGgGXw==
+X-Received: by 2002:a05:600c:2112:: with SMTP id u18mr3386058wml.112.1587635717910;
+        Thu, 23 Apr 2020 02:55:17 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:75d8:694c:3b71:4e43? ([2a01:e34:ed2f:f020:75d8:694c:3b71:4e43])
+        by smtp.googlemail.com with ESMTPSA id i17sm2997016wml.23.2020.04.23.02.55.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2020 02:55:17 -0700 (PDT)
+Subject: Re: [PATCH v6 01/10] PM / EM: change naming convention from
+ 'capacity' to 'performance'
+To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200410084210.24932-1-lukasz.luba@arm.com>
+ <20200410084210.24932-2-lukasz.luba@arm.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <3f764593-99fa-bce3-3630-ce16101df536@linaro.org>
+Date:   Thu, 23 Apr 2020 11:55:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+In-Reply-To: <20200410084210.24932-2-lukasz.luba@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Date:   Thu, 23 Apr 2020 15:11:03 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org,
-        Joerg Roedel <joro@8bytes.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org
-Subject: Re: [PATCH] iommu/arm-smmu: Demote error messages to debug in
- shutdown callback
-In-Reply-To: <006edb3b-8834-41fe-d9d1-fe873edfca99@arm.com>
-References: <20200327132852.10352-1-saiprakash.ranjan@codeaurora.org>
- <0023bc68-45fb-4e80-00c8-01fd0369243f@arm.com>
- <37db9a4d524aa4d7529ae47a8065c9e0@codeaurora.org>
- <5858bdac-b7f9-ac26-0c0d-c9653cef841d@arm.com>
- <d60196b548e1241b8334fadd0e8c2fb5@codeaurora.org>
- <CAD=FV=WXTN6xxqtL6d6MHxG8Epuo6FSQERRPfnoSCskhjh1KeQ@mail.gmail.com>
- <890456524e2df548ba5d44752513a62c@codeaurora.org>
- <20200331074400.GB25612@willie-the-truck>
- <1bf04938249bcd5b2111c1921facfd25@codeaurora.org>
- <CAD=FV=VBM6cS1UmWTUJ2vrt0a2zn7xV3C53tpthBx58M2=1JPg@mail.gmail.com>
- <6c82e688f335b9c07b0f52987244664b@codeaurora.org>
- <006edb3b-8834-41fe-d9d1-fe873edfca99@arm.com>
-Message-ID: <685e51afcf8f89c2d8e225716a57b67a@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-04-23 14:58, Robin Murphy wrote:
-> On 2020-04-23 9:17 am, Sai Prakash Ranjan wrote:
-> [...]
->>> Any update on the status here?  If I'm reading the conversation 
->>> above,
->>> Robin said: "we'll *always* see the warning because there's no way to
->>> tear down the default DMA domains, and even if all devices *have* 
->>> been
->>> nicely quiesced there's no way to tell".  Did I understand that
->>> properly?  If so, it seems like it's fully expected to see this
->>> message on every reboot and it doesn't necessarily signify anything
->>> bad.
->>> 
->> 
->> Understanding is the same, waiting for Will and Robin to check if its 
->> OK
->> to make the message more friendly.
+On 10/04/2020 10:42, Lukasz Luba wrote:
+> The Energy Model uses concept of performance domain and capacity states in
+> order to calculate power used by CPUs. Change naming convention from
+> capacity to performance state would enable wider usage in future, e.g.
+> upcoming support for other devices other than CPUs.
 > 
-> The way I see it, we essentially just want *something* visible that
-> will correlate with any misbehaviour that *might* result from turning
-> off a possibly-live context. How about simply "disabling translation",
-> at dev_warn or dev_info level?
-> 
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+> ---
+
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 
 
-Sounds good, I'll go with disabling translation with dev_info.
-
-Thanks,
-Sai
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
