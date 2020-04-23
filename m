@@ -2,96 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DA941B5F30
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 17:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8EBE1B5F55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2020 17:34:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729205AbgDWP3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 11:29:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729204AbgDWP3E (ORCPT
+        id S1729251AbgDWPe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 11:34:26 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:34735 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729155AbgDWPeZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 11:29:04 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0E9C09B041
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 08:29:03 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id v8so7727879wma.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 08:29:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=K0XwhvnZ5fHku+zX8bB/tqMgI8KM65JG7UKJ1LIe+hw=;
-        b=f3HaI4v7q0s0ma9brDtDfqbZ273js/4jOfpcLSe86Rdc4863/LFECt156kdpFRFuFU
-         /qAg5B9O+PLzlWP3310ATVRODsMIrhzfM6FRjI2ZfFrQh4TULq2AHJGPyPOzharxZjGs
-         7nU7Xz0r39aTzO4K1n1DPslhQOZhvyuKKyIbf0lq4Ckrwalxc66TSGtchPiX+in6/vCG
-         TN+C9llUiHzgI7809zQxurlbhQHWjyyCzDT1ymd5TPr0DGAHiwg0sY3T6f3iwZEMaYMz
-         GyZiPpsxXPYpGo5h9qA9IliuLqsreuoUyXoDk50xYzX1M3L64josfqN4NbTZNRwbZFey
-         lCWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=K0XwhvnZ5fHku+zX8bB/tqMgI8KM65JG7UKJ1LIe+hw=;
-        b=jVWiDsklpb3bwrPJba9/01lPOVIcE68E479OTGp7I+kJ8zhr0hUTNDggvWngOIpBwg
-         +d4kPqTeqGb1G4hl+E4gwpIm4JdnkF47YvmvEz0/P7fBTjYMWw6mFbzjPTPzCvlHYiHt
-         s6bqTShnnnDpiPJBLVX4qAxhSskdBGdd8hzcsO4SEc9OWsCEoDdpPEJ22e6Q4YeeP1Df
-         lUXJWtw7xSg7+KEeHWhvLbcMOucMPicqqPkFXOlmmSnVyTMPUZ3tP/vi+hNDN+5Xqdns
-         AXUl689u72OwwHWLFb8KntiKaiY3aOc6Fr4J+eSHCjJ4oMEdXDYOGWB8i29GTccm1a6l
-         uy+w==
-X-Gm-Message-State: AGi0Pub5zOOY4IictBSNYVX9kTf9rTMbyN4uFrLnATDwKm1iYlLcd8Ro
-        CtFKnxpckhUP/XIBMXMuq41ZTQ==
-X-Google-Smtp-Source: APiQypJgzi6SD42pIpK5DubH9kPf+0CuGHiKBJHzVOd+VDHdvOQf8wEqsCDznBChQjiLenoFM3eaig==
-X-Received: by 2002:a1c:a794:: with SMTP id q142mr4732427wme.4.1587655741551;
-        Thu, 23 Apr 2020 08:29:01 -0700 (PDT)
-Received: from linaro.org ([37.167.216.250])
-        by smtp.gmail.com with ESMTPSA id j13sm4361278wrq.24.2020.04.23.08.28.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2020 08:29:00 -0700 (PDT)
-Date:   Thu, 23 Apr 2020 17:28:54 +0200
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-Subject: Re: [PATCH v6 06/10] PM / EM: change name of em_pd_energy to
- em_cpu_energy
-Message-ID: <20200423152854.GD65632@linaro.org>
-References: <20200410084210.24932-1-lukasz.luba@arm.com>
- <20200410084210.24932-7-lukasz.luba@arm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200410084210.24932-7-lukasz.luba@arm.com>
+        Thu, 23 Apr 2020 11:34:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587656064; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=2Kjf6YLoA4OkpyBb4xKWnTXI0yhSWwCZFp3OhQ7ATXg=; b=QbRlZJ6O1FrTP8e+GSWQiDKPCEhB2WpyOjeGDz7xnIaD4d/ccHKV6x16VPfhnfo3dFiLPKSo
+ dzWcKtQ0FSFv1g2MLrxGK9tV0gFeqwF9R+XJys4n9gYe6Rcz9D3M2k9duR33fXN7niRBhKrG
+ KTvACFglIl8S8LsPiN2Y/wCnxvY=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea1b575.7fa7ffca55e0-smtp-out-n03;
+ Thu, 23 Apr 2020 15:34:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 18E02C44788; Thu, 23 Apr 2020 15:34:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from kgunda-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9A899C433D2;
+        Thu, 23 Apr 2020 15:34:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9A899C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kgunda@codeaurora.org
+From:   Kiran Gunda <kgunda@codeaurora.org>
+To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        lee.jones@linaro.org, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
+        mark.rutland@arm.com, robh@kernel.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
+Subject: [PATCH V6 0/4] Add support for WLED5
+Date:   Thu, 23 Apr 2020 21:03:33 +0530
+Message-Id: <1587656017-27911-1-git-send-email-kgunda@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 10, 2020 at 09:42:06AM +0100, Lukasz Luba wrote:
-> Energy Model framework supports now other devices than CPUs. Refactor some
-> of the functions in order to prevent wrong usage. The old function
-> em_pd_energy has to generic name. It must not be used without proper
-> cpumask pointer, which is possible only for CPU devices. Thus, rename it
-> and add proper description to warn of potential wrong usage for other
-> devices.
-> 
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+Currently, WLED driver supports only WLED4 peripherals that is present
+on pmi8998 and pm660L. This patch series  converts the existing WLED4
+bindings from .txt to .yaml format and adds the support for WLED5 peripheral
+that is present on PM8150L.
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+PM8150L WLED supports the following.
+    - Two modulators and each sink can use any of the modulator
+    - Multiple CABC selection options
+    - Multiple brightness width selection (12 bits to 15 bits)
+
+Changes from V1:
+	- Rebased on top of the below commit.
+	  backlight: qcom-wled: Fix unsigned comparison to zero
+
+Changes from V2:
+	- Addressed Bjorn's comments by splitting the WLED4 changes
+	  in a seperate patch.
+	- Added WLED5 auto calibration support
+
+Changes from V3:
+        - Addressed comments from Daniel Thompson and Rob Herring
+        - Seperated the WLED5 bindings from the driver changes
+         - Squashed wled5 auto string detection and wled5 basic changes
+          to avoid the NULL callback function pointer issue.
+
+Changes from V4:
+        - Addressed the yaml formatting comments from Rob Herring.
+        - Addressed the comments from Daniel Thompson on the below patch
+  	  "backlight: qcom-wled: Add callback functions"
+
+Changes from V5:
+        - This series depends on the below patch.
+          https://lore.kernel.org/patchwork/patch/1226258/
+        - Addressed yaml formatting comments from Rob Herring.
+        - Removed the "wled_ovp_fault_status" callback as per Daniel Thomson
+          suggestion from patch #2.
+        - Addressed comments from Daniel Thomson on patch #4.
+
+Kiran Gunda (3):
+  backlight: qcom-wled: convert the wled bindings to .yaml format
+  backlight: qcom-wled: Add callback functions
+  backlight: qcom-wled: Add WLED5 bindings
+
+Subbaraman Narayanamurthy (1):
+  backlight: qcom-wled: Add support for WLED5 peripheral that is present
+    on PM8150L PMICs
+
+ .../bindings/leds/backlight/qcom-wled.txt          | 154 ------
+ .../bindings/leds/backlight/qcom-wled.yaml         | 261 +++++++++
+ drivers/video/backlight/qcom-wled.c                | 589 ++++++++++++++++++---
+ 3 files changed, 777 insertions(+), 227 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.txt
+ create mode 100644 Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
