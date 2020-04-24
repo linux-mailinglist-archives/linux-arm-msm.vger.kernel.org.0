@@ -2,41 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8AD61B6CC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 06:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 663181B6CCF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 06:54:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbgDXEn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Apr 2020 00:43:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38292 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725554AbgDXEnZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Apr 2020 00:43:25 -0400
-Received: from vkoul-mobl.Dlink (unknown [106.51.110.50])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2267820767;
-        Fri, 24 Apr 2020 04:43:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1587703405;
-        bh=iNmFScr18oN2eDrbxAgPlz5bhULsk0p3yjhL8V85T8c=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=zvHAxowI7UC/F+I+kZziK75HAMEtVvqttWHYoQUEOmwuiCGM9zRQtUqpdnXExS3HS
-         dpjiF5K8hAJ0H0W++6vA8dcSq/vmLQF0AANRlgTKi5CzvRFc4TX8qjP9e472a0yBKf
-         ZfwGYR06wnl6c5iIv87TqD7Exzm0Gj58KFBSPgkU=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] clk: qcom: gcc: Add missing UFS clocks for SM8150
-Date:   Fri, 24 Apr 2020 10:13:11 +0530
-Message-Id: <20200424044311.2155917-2-vkoul@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200424044311.2155917-1-vkoul@kernel.org>
-References: <20200424044311.2155917-1-vkoul@kernel.org>
+        id S1726186AbgDXEyQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Apr 2020 00:54:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37488 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725852AbgDXEyQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Apr 2020 00:54:16 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3AAC09B046
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 21:54:16 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id y6so3458726pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 21:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DS2FPMD3YMzAKYFv1x/mNpC8vA9XuETk984Pr8jq1Qo=;
+        b=QDlbQsLaKMUfSTZ5pO8xAAr2Pasv5p5jH0ir4yKJNe9n+2ECWMPRfEFuWo//M5slaA
+         Mu8JLghQ5HeKJc5i7h3PVr0scTh0vSnqaWvkeb5K9kTgo3IZyVBXCELyvt4dQp2DAUkC
+         Y52F7BZ/pJna973IOr2SoWAtUHW3AzwtToikg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DS2FPMD3YMzAKYFv1x/mNpC8vA9XuETk984Pr8jq1Qo=;
+        b=aNSKeUoc3t/hTMgFRK5shLRgeWDFNpKROp6WegTp/RivnbxfAaT9x3+9XxBabblJtL
+         o0fGD5zIl/c4OYKcf5MyVHhmCNr7bRJJJTCq9gA9ow+KrSiQFIcJDRp1QCTCJUKIULvS
+         VnoEfggSqge1hprXX/O8i0SbDlNrH3Wp8JyDhC+ISaz4QBc2S3kgI/qqX8bwr6pfAbRf
+         8oga7aUv8db3QErlHCO0rbL1/haxCWkxn7H0FI4vyuDSZC5CHrcOZE9zGG7XnKCiKQjB
+         TvX8usLgIjKroiTCzZTUKUEJZCm6NWfDzP6yycbNlks/lGqak5NTFfKLCK+yCkv9C+mZ
+         fUEg==
+X-Gm-Message-State: AGi0Pubo6UAToA4HcTDeRsayoBWaNTQiLH6hpRPAaZvJosVgfL/smltl
+        96CqcxPuFoFJNHjwj7fDlx5Psg==
+X-Google-Smtp-Source: APiQypIFOSReBrQ4/Z/rzt3TzSNnjk20vyx/Hu/4+mktapPfyChqQV5oll6/kV9RTcEALK4FELfa0g==
+X-Received: by 2002:a17:90b:155:: with SMTP id em21mr4241129pjb.59.1587704055512;
+        Thu, 23 Apr 2020 21:54:15 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id 62sm4344680pfu.181.2020.04.23.21.54.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Apr 2020 21:54:15 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 0/3] Even moar rpmh cleanups
+Date:   Thu, 23 Apr 2020 21:54:11 -0700
+Message-Id: <20200424045414.133381-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.26.2.303.gf8c07b1a785-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -44,130 +62,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the missing ufs card and ufs phy clocks for SM8150. They were missed
-in earlier addition of clock driver.
+Patches based on Doug's latest series[1] on top of linux-next. We remove
+the tcs_is_free() API and then do super micro optimizations on the irq
+handler. I haven't tested anything here so most likely there's a bug!
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/clk/qcom/gcc-sm8150.c | 84 +++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+Stephen Boyd (3):
+  soc: qcom: rpmh-rsc: Remove tcs_is_free() API
+  soc: qcom: rpmh-rsc: Loop over less bits in irq handler
+  soc: qcom: rpmh-rsc: Fold WARN_ON() into if condition
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 5c3dc34c955e..4354620fa12d 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -2881,6 +2881,45 @@ static struct clk_branch gcc_ufs_card_phy_aux_hw_ctl_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_card_rx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x7501c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_rx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_card_rx_symbol_1_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x750ac,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_rx_symbol_1_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_card_tx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x75018,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_tx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_ufs_card_unipro_core_clk = {
- 	.halt_reg = 0x75058,
- 	.halt_check = BRANCH_HALT,
-@@ -3061,6 +3100,45 @@ static struct clk_branch gcc_ufs_phy_phy_aux_hw_ctl_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_phy_rx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x7701c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_rx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_phy_rx_symbol_1_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x770ac,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_rx_symbol_1_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_phy_tx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x77018,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_tx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_ufs_phy_unipro_core_clk = {
- 	.halt_reg = 0x77058,
- 	.halt_check = BRANCH_HALT,
-@@ -3557,6 +3635,9 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_UFS_CARD_PHY_AUX_CLK_SRC] = &gcc_ufs_card_phy_aux_clk_src.clkr,
- 	[GCC_UFS_CARD_PHY_AUX_HW_CTL_CLK] =
- 		&gcc_ufs_card_phy_aux_hw_ctl_clk.clkr,
-+	[GCC_UFS_CARD_RX_SYMBOL_0_CLK] = &gcc_ufs_card_rx_symbol_0_clk.clkr,
-+	[GCC_UFS_CARD_RX_SYMBOL_1_CLK] = &gcc_ufs_card_rx_symbol_1_clk.clkr,
-+	[GCC_UFS_CARD_TX_SYMBOL_0_CLK] = &gcc_ufs_card_tx_symbol_0_clk.clkr,
- 	[GCC_UFS_CARD_UNIPRO_CORE_CLK] = &gcc_ufs_card_unipro_core_clk.clkr,
- 	[GCC_UFS_CARD_UNIPRO_CORE_CLK_SRC] =
- 		&gcc_ufs_card_unipro_core_clk_src.clkr,
-@@ -3574,6 +3655,9 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_UFS_PHY_PHY_AUX_CLK] = &gcc_ufs_phy_phy_aux_clk.clkr,
- 	[GCC_UFS_PHY_PHY_AUX_CLK_SRC] = &gcc_ufs_phy_phy_aux_clk_src.clkr,
- 	[GCC_UFS_PHY_PHY_AUX_HW_CTL_CLK] = &gcc_ufs_phy_phy_aux_hw_ctl_clk.clkr,
-+	[GCC_UFS_PHY_RX_SYMBOL_0_CLK] = &gcc_ufs_phy_rx_symbol_0_clk.clkr,
-+	[GCC_UFS_PHY_RX_SYMBOL_1_CLK] = &gcc_ufs_phy_rx_symbol_1_clk.clkr,
-+	[GCC_UFS_PHY_TX_SYMBOL_0_CLK] = &gcc_ufs_phy_tx_symbol_0_clk.clkr,
- 	[GCC_UFS_PHY_UNIPRO_CORE_CLK] = &gcc_ufs_phy_unipro_core_clk.clkr,
- 	[GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC] =
- 		&gcc_ufs_phy_unipro_core_clk_src.clkr,
+ drivers/soc/qcom/rpmh-rsc.c | 64 ++++++++++++-------------------------
+ 1 file changed, 20 insertions(+), 44 deletions(-)
+
+Cc: Maulik Shah <mkshah@codeaurora.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+
+[1] https://lore.kernel.org/r/20200422145408.v4.1.Ic7096b3b9b7828cdd41cd5469a6dee5eb6abf549@changeid
+
+base-commit: 02d8ecc18b8f392389ac9e7b785b0230ecb80833
+prerequisite-patch-id: 0d383ea46ef52ab4044886a7d88d85c3c506f4ed
+prerequisite-patch-id: a02b0b018404d1a0c79270ab567051656f123b23
+prerequisite-patch-id: e59d990462b004a9f8335e87c2d0d747afec49ea
+prerequisite-patch-id: 00d26aeb99c48521f74b32d3a6c57919d82ac1b1
+prerequisite-patch-id: bb479b9adbe28c58b3ac8f363a306de80b6dcb74
 -- 
-2.25.1
+Sent by a computer, using git, on the internet
 
