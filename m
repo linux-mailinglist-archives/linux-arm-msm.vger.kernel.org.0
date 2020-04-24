@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4959F1B7CD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 19:31:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B25F71B7D81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 20:06:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729105AbgDXRa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Apr 2020 13:30:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43874 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726753AbgDXRa6 (ORCPT
+        id S1727059AbgDXSGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Apr 2020 14:06:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49602 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726813AbgDXSGJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Apr 2020 13:30:58 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28D65C09B047
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 10:30:58 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id d17so4952549pgo.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 10:30:58 -0700 (PDT)
+        Fri, 24 Apr 2020 14:06:09 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24800C09B048
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 11:06:09 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id h12so2845851pjz.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 11:06:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=TOBb8tCU+3Fv4RLirkHqozp62T3jFqkHmjZCX1AUHss=;
-        b=WnMKbOXATmMVX+/JnFpn46xCVeikJqcSBOdbeMX3N3DpZrhxmjsjo57fDbr3W9VWpC
-         TcE7CgbneyM/jQBr1Pi/cUJWbjwaEdtqNaHwJVizLARUcNN7T+UDDQogWoHWjrS26K6u
-         vC0pUnPBvXbBEmFfG1vvw5vF2RJtdCTiftISI=
+        bh=ZPbn+iyaDp4cEt6gq261dacrQwB2jOJPwOFzXYvpkjQ=;
+        b=H2bD3LNMVT+z8T3e/Fifq37OinFmRXBv5hrj6ZumEIAB98tTCIlVjzFeRgFLpxlZDw
+         EmbdZAmb3VC8TdJtrefmGbn5Z517ReANwkM51h05bWZ3l37S2O1NwXQJ5UxSVR51gnXE
+         3vAki1gsQzGBWbK6x5pAeDllPxZNNs7P7SrjA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=TOBb8tCU+3Fv4RLirkHqozp62T3jFqkHmjZCX1AUHss=;
-        b=fZUvUBuyhzDQkNF6f5TUd7k+biVVE5JMwjweOxBvg2c5535e8S8wIdqDhYxwD/oNXO
-         g7gpJD68A1NAWYRhtcwsziSuQ7v7h8TzlXe/xFrZnMdqHH+wXhpbxv6UhBOgIkBXmRao
-         tkBVPvSVhrig4FuIcGrXs6iSLEbfV6n+EoRIbXBdPbxc/XH6/CaSnaBo0M/U7NmZ7xDD
-         U2J0Q08Y/s4uzyGMKuZt+OKC+YqPC6x0GCMiXUvZpqQOH6yhPHkyV6GhqSImBg0mFuDr
-         avjrGfCgCM4D+iWYRU9iTTKG/ZN5ZyKZdLKl2rT9tpsydaOxOwg64aohKXxJP3rBfEpj
-         tosA==
-X-Gm-Message-State: AGi0PuaZF+nieQfPhvgTWAvEWPRTv1L4nN49UJjlal4hf7GlY++Tcm8a
-        0JP9PCmUkn+JKigISgeOVMshJNfyaI8=
-X-Google-Smtp-Source: APiQypImO36tpAKh2oeXCPUmadf8WUrHRTwkQw1gC/IsCIl7DU9RdVbXTFkOkiSZi7o4fTi6gvDQ4A==
-X-Received: by 2002:a65:460f:: with SMTP id v15mr10229432pgq.24.1587749457668;
-        Fri, 24 Apr 2020 10:30:57 -0700 (PDT)
+        bh=ZPbn+iyaDp4cEt6gq261dacrQwB2jOJPwOFzXYvpkjQ=;
+        b=GBmz3sB27HSA59nP9C4zCeKSGqdBxvfnvsxUylbScZT6jptufOPA+DLnLOq3nLCNB8
+         r2r4aNoZ9N1IwuCXh4UwEGLkL7WyIG75MWGvqpmCBF5TajQgA/RO7DT59ugVpHILXcOM
+         vdSek4HfWEVWKyB5+Qfsikq3QhTNDbIVPis/PJ52d7nxGzzNkhUOu90MadQIjEtjXD9M
+         oWkCdRzZeNajxl4fkyZ1NSVoK8RHX93ouuc21oOoIgLxb1mpF3g2y3KA4o3UVKdidmTv
+         yhX7PI2mZijbNOoLs5Bz8Hidgei2XzlusmuYaFoT+jIaXYoznKBZMd6vkNFwIg8/19u5
+         Jrwg==
+X-Gm-Message-State: AGi0PuYSN4x9C6pcykAm/1wTabRGz+0cDAnVTs5u7nF1xa5ZRbxQ9+xg
+        de8FsqYiuuumzZNbzHVt23OfmnmyrCI=
+X-Google-Smtp-Source: APiQypKHhrWUqqcTi5z8uECZoDGeIh9vywF8H7Ic5EIZ1iW9HAVnD6/S66ve0Niry9IQqLcNNI9AEA==
+X-Received: by 2002:a17:90a:d3ca:: with SMTP id d10mr7914508pjw.24.1587751568502;
+        Fri, 24 Apr 2020 11:06:08 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id 10sm6200760pfn.204.2020.04.24.10.30.57
+        by smtp.gmail.com with ESMTPSA id q201sm6519329pfq.40.2020.04.24.11.06.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2020 10:30:57 -0700 (PDT)
+        Fri, 24 Apr 2020 11:06:07 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
@@ -61,8 +61,8 @@ To:     Andy Gross <agross@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         rafael.j.wysocki@intel.com
-Date:   Fri, 24 Apr 2020 10:30:56 -0700
-Message-ID: <158774945643.135303.4651711262492851591@swboyd.mtv.corp.google.com>
+Date:   Fri, 24 Apr 2020 11:06:06 -0700
+Message-ID: <158775156694.135303.3535369004080151247@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -70,40 +70,41 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Quoting Douglas Anderson (2020-04-24 09:46:56)
-> The rpmh-rsc code had both a driver-level lock (sometimes referred to
-> in comments as drv->lock) and a lock per-TCS.  The idea was supposed
-> to be that there would be times where you could get by with just
-> locking a TCS lock and therefor other RPMH users wouldn't be blocked.
->=20
-> The above didn't work out so well.
->=20
-> Looking at tcs_write() the bigger drv->lock was held for most of the
-> function anyway.  Only the __tcs_buffer_write() and
-> __tcs_set_trigger() calls were called without holding the drv->lock.
-> It actually turns out that in tcs_write() we don't need to hold the
-> drv->lock for those function calls anyway even if the per-TCS lock
-> isn't there anymore.  From the newly added comments in the code, this
-> is because:
-> - We marked "tcs_in_use" under lock.
-> - Once "tcs_in_use" has been marked nobody else could be writing
->   to these registers until the interrupt goes off.
-> - The interrupt can't go off until we trigger w/ the last line
->   of __tcs_set_trigger().
-> Thus, from a tcs_write() point of view, the per-TCS lock was useless.
->=20
-> Looking at rpmh_rsc_write_ctrl_data(), only the per-TCS lock was held.
-> It turns out, though, that this function already needs to be called
-> with the equivalent of the drv->lock held anyway (we either need to
-> hold drv->lock as we will in a future patch or we need to know no
-> other CPUs could be running as happens today).  Specifically
-> rpmh_rsc_write_ctrl_data() might be writing to a TCS that has been
-> borrowed for writing an active transation but it never checks this.
->=20
-> Let's eliminate this extra overhead and avoid possible AB BA locking
-> headaches.
->=20
-> Suggested-by: Maulik Shah <mkshah@codeaurora.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+> @@ -581,24 +575,19 @@ static int tcs_write(struct rsc_drv *drv, const str=
+uct tcs_request *msg)
+>         if (IS_ERR(tcs))
+>                 return PTR_ERR(tcs);
+> =20
+> -       spin_lock_irqsave(&tcs->lock, flags);
+> -       spin_lock(&drv->lock);
+> +       spin_lock_irqsave(&drv->lock, flags);
+>         /*
+>          * The h/w does not like if we send a request to the same address,
+>          * when one is already in-flight or being processed.
+>          */
+>         ret =3D check_for_req_inflight(drv, tcs, msg);
+> -       if (ret) {
+> -               spin_unlock(&drv->lock);
+> -               goto done_write;
+> -       }
+> +       if (ret)
+> +               goto unlock;
+> =20
+> -       tcs_id =3D find_free_tcs(tcs);
+> -       if (tcs_id < 0) {
+> -               ret =3D tcs_id;
+> -               spin_unlock(&drv->lock);
+> -               goto done_write;
+> -       }
+> +       ret =3D find_free_tcs(tcs);
+> +       if (ret < 0)
+> +               goto unlock;
+> +       tcs_id =3D ret;
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Sorry, missed this. We should keep the tcs_id =3D find_free_tcs() thing
+and then assign ret to it on failure. Otherwise the return value of this
+function is -EBUSY or the tcs_id number instead of -EBUSY or 0.
+
+> =20
+>         tcs->req[tcs_id - tcs->offset] =3D msg;
+>         set_bit(tcs_id, drv->tcs_in_use);
