@@ -2,237 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84AE31B6FCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 10:33:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 413591B7115
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 11:40:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbgDXIdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Apr 2020 04:33:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43270 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726737AbgDXIdF (ORCPT
+        id S1726582AbgDXJkG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Apr 2020 05:40:06 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:49951 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726489AbgDXJkG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Apr 2020 04:33:05 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0388C09B049
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 01:33:04 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id u10so6994087lfo.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 01:33:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vtIuMHtDQNbUkYiyGCewCL5qq4bdMRkvjQNJoxEX90Y=;
-        b=E5TR5U/ti8UbcZkhHjHp05W4nW0Fdwmum61DYClA3pnOQk28f3S4Sm7dJms3ttbTa4
-         u5Hk8HLtQ3JTejDM+6l0RYq6mBdhrlQQvtoonaS2QVQvJ+UCJj4xM48AChxCSBRnGucl
-         /OK/rjE3XwHyVm0vbMaMuW52akQSLqQ1VbNtnEh0ma/fMRVDT0SVdfEzNCOQsWl+eHiX
-         CCiQYNTkoYQ44KgBXNFN9FjtI4LFkP8hOeAL8KrYpM4hvBSH8hy1B6msiMYQ4z40mK6n
-         e832Na1hjua3X5gLLZ+uzaO0gaMAvXyD+CVbWgtS1C/YpqrRwgyw4Hac3526NtkQ33g4
-         +Nmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vtIuMHtDQNbUkYiyGCewCL5qq4bdMRkvjQNJoxEX90Y=;
-        b=q29/PzzjMrZ1NZofV0yUoyKBSq1dMVf6433I26AGKRsnmN/1ndjmGgbnzF+T3vXsid
-         uYuq9up0Q5A1EO2EEGvGeWh+nAtzpQngcuZh3+KfHP/shmwLGTS6K8klUvnWBucpwzIg
-         /oHZ72dOqmrjlySvWhqhHbTAIUKP4gh4ibFwc/+FbK2priIDLxtBpxGImvsfHmwfjKmh
-         1gVliDEPvRgccmRVGIG9bNuLEsokNPIENNYY/Brfzauu6dfdlY8qXyWO8NhG6xjszAQx
-         Vw97uPPC+pul+ocaMtZG87fSdbDEJ6NM/CtjoRCzQKw49VpXehOAfzNAqu1FEONHx5Fc
-         wimA==
-X-Gm-Message-State: AGi0PubZvi41HWc5K1G9flXxTn3z7JCiTU1f3yRqG9C40Qa8vyLoQU/U
-        lI7lST23J7aR8TZHlqSF01sj7UBuebdf+ThgeUuYTg==
-X-Google-Smtp-Source: APiQypIkXSYq75oud+geYKztGp1zVvLyeV4eAXIhZHV9gbwzB249EXNzN7DCYI5YSTmzyhHFC4UvTl5L8v3vPzL+ux4=
-X-Received: by 2002:ac2:5544:: with SMTP id l4mr5256550lfk.122.1587717183077;
- Fri, 24 Apr 2020 01:33:03 -0700 (PDT)
+        Fri, 24 Apr 2020 05:40:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587721204; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=rekLU09/3Cv7LAWd7/5Px5rmTpuddbamtpPpCDzbFDw=; b=FrvIPRqYc0UIghHTPyopTMo610y2NanoQyNKaL1BAalZ8qsiKVUR/ZQW8proLYE0LOhzYyEv
+ DE5IH8r8xZFhMTqx16ao+IToT9Gy6nk6/hF0NBvNPrHR2mSuqKbpv83/w8/WJI/3zvcN5c8s
+ s3quluQuxqreE3r6krP3Ab1cL5c=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea2b3f3.7fc46c44c880-smtp-out-n03;
+ Fri, 24 Apr 2020 09:40:03 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EA355C433BA; Fri, 24 Apr 2020 09:40:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.137] (unknown [106.213.151.218])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7F7A7C433CB;
+        Fri, 24 Apr 2020 09:39:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7F7A7C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [RFC v3] irqchip: qcom: pdc: Introduce irq_set_wake call
+To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, linus.walleij@linaro.org, tglx@linutronix.de,
+        maz@kernel.org, jason@lakedaemon.net, dianders@chromium.org,
+        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org
+References: <1585586460-3272-1-git-send-email-mkshah@codeaurora.org>
+ <1585586460-3272-2-git-send-email-mkshah@codeaurora.org>
+ <158682455899.84447.8337952928773625866@swboyd.mtv.corp.google.com>
+ <1f1322be-c93a-f2f2-c2fe-541f26d8682c@codeaurora.org>
+ <158693796555.105027.4658047860202135403@swboyd.mtv.corp.google.com>
+ <bddc11e0-8d9a-dd55-3aab-42aeb18204f4@codeaurora.org>
+ <158755213744.163502.17257131401798918469@swboyd.mtv.corp.google.com>
+ <7cb97940-18d6-75b1-f4d2-7a80a6fe68c8@codeaurora.org>
+ <158769585826.135303.15159589318457908652@swboyd.mtv.corp.google.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <95ec19bb-0e94-4384-5cca-fb6dbd3607ea@codeaurora.org>
+Date:   Fri, 24 Apr 2020 15:09:50 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20200421211447.193860-1-dianders@chromium.org>
-In-Reply-To: <20200421211447.193860-1-dianders@chromium.org>
-From:   Sumit Garg <sumit.garg@linaro.org>
-Date:   Fri, 24 Apr 2020 14:02:51 +0530
-Message-ID: <CAFA6WYMsN1Ep0WE2ngR4jzLuOHz7aDYP7ZL1Pmome2W9A9qKig@mail.gmail.com>
-Subject: Re: [PATCH v2 0/9] kgdb: Support late serial drivers; enable early
- debug w/ boot consoles
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     jason.wessel@windriver.com,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>, catalin.marinas@arm.com,
-        bjorn.andersson@linaro.org, Nadav Amit <namit@vmware.com>,
-        hpa@zytor.com, Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        will@kernel.org, Matt Mullins <mmullins@fb.com>,
-        Jonathan Corbet <corbet@lwn.net>, frowand.list@gmail.com,
-        x86@kernel.org, jinho lim <jordan.lim@samsung.com>,
-        agross@kernel.org, Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-serial@vger.kernel.org, kgdb-bugreport@lists.sourceforge.net,
-        Borislav Petkov <bp@suse.de>,
-        Dave Martin <Dave.Martin@arm.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
-        jslaby@suse.com, Alexios Zavras <alexios.zavras@intel.com>,
-        bp@alien8.de, tglx@linutronix.de, mingo@redhat.com,
-        Allison Randal <allison@lohutok.net>,
-        Juergen Gross <jgross@suse.com>, linux-usb@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        James Morse <james.morse@arm.com>,
-        "Eric W. Biederman" <ebiederm@xmission.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Rick Edgecombe <rick.p.edgecombe@intel.com>,
-        Enrico Weigelt <info@metux.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <158769585826.135303.15159589318457908652@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
+Hi,
 
-On Wed, 22 Apr 2020 at 02:45, Douglas Anderson <dianders@chromium.org> wrote:
->
-> This whole pile of patches was motivated by me trying to get kgdb to
-> work properly on a platform where my serial driver ended up being hit
-> by the -EPROBE_DEFER virus (it wasn't practicing social distancing
-> from other drivers).  Specifically my serial driver's parent device
-> depended on a resource that wasn't available when its probe was first
-> called.  It returned -EPROBE_DEFER which meant that when "kgdboc"
-> tried to run its setup the serial driver wasn't there.  Unfortunately
-> "kgdboc" never tried again, so that meant that kgdb was disabled until
-> I manually enalbed it via sysfs.
->
-> While I could try to figure out how to get around the -EPROBE_DEFER
-> somehow, the above problems could happen to anyone and -EPROBE_DEFER
-> is generally considered something you just have to live with.  In any
-> case the current "kgdboc" setup is a bit of a race waiting to happen.
-> I _think_ I saw during early testing that even adding a msleep() in
-> the typical serial driver's probe() is enough to trigger similar
-> issues.
->
-> I decided that for the above race the best attitude to get kgdb to
-> register at boot was probably "if you can't beat 'em, join 'em".
-> Thus, "kgdboc" now jumps on the -EPROBE_DEFER bandwagon (now that my
-> driver uses it it's no longer a virus).  It does so a little awkwardly
-> because "kgdboc" hasn't normally had a "struct device" associated with
-> it, but it's really not _that_ ugly to make a platform device and
-> seems less ugly than alternatives.
->
-> Unfortunately now on my system the debugger is one of the last things
-> to register at boot.  That's OK for debugging problems that show up
-> significantly after boot, but isn't so hot for all the boot problems
-> that I end up debugging.  This motivated me to try to get something
-> working a little earlier.
->
-> My first attempt was to try to get the existing "ekgdboc" to work
-> earlier.  I tried that for a bit until I realized that it needed to
-> work at the tty layer and I couldn't find any serial drivers that
-> managed to register themselves to the tty layer super early at boot.
-> The only documented use of "ekgdboc" is "ekgdboc=kbd" and that's a bit
-> of a special snowflake.  Trying to get my serial driver and all its
-> dependencies to probe normally and register the tty driver super early
-> at boot seemed like a bad way to go.  In fact, all the complexity
-> needed to do something like this is why the system already has a
-> special concept of a "boot console" that lives only long enough to
-> transition to the normal console.
->
-> Leveraging the boot console seemed like a good way to go and that's
-> what this series does.  I found that consoles could have a read()
-> function, though I couldn't find anyone who implemented it.  I
-> implemented it for two serial drivers for the devices I had easy
-> access to, making the assumption that for boot consoles that we could
-> assume read() and write() were polling-compatible (seems sane I
-> think).
->
-> Now anyone who makes a small change to their serial driver can easily
-> enable early kgdb debugging!
->
-> The devices I had for testing were:
-> - arm32: rk3288-veyron-jerry
-> - arm64: rk3399-gru-kevin
-> - arm64: qcom-sc7180-trogdor (not mainline yet)
->
-> These are the devices I tested this series on.  I tried to test
-> various combinations of enabling/disabling various options and I
-> hopefully caught the corner cases, but I'd appreciate any extra
-> testing people can do.
+On 4/24/2020 8:07 AM, Stephen Boyd wrote:
+> Quoting Maulik Shah (2020-04-22 05:14:21)
+>> We discussed this in RFC v2, pasting your reply from same.
+>>
+>>> That looks like a bug. It appears that gpiolib is only hooking the irq
+>>> disable path here so that it can keep track of what irqs are not in use
+>>> by gpiolib and allow them to be used for GPIO purposes when the irqs are
+>>> disabled. See commit 461c1a7d4733 ("gpiolib: override
+>>> irq_enable/disable"). That code in gpiolib should probably see if lazy
+>>> mode has been disabled on the irq and do similar things to what genirq
+>>> does and then let genirq mask the gpios if they trigger during the time
+>>> when the irq is disabled. Regardless of this design though, I don't
+>>> understand why this matters.
+> Yeah. I'm saying that the gpiolib code that forces all gpio irqs to be
+> non-lazy is broken. Please send a patch to fix gpiolib so that irqs can
+> be lazy again.
 
-earlycon_kgdboc sounds like a really cool feature. So I gave it a try
-on my arm64 machine (Developerbox) and it works like a charm. So for
-patch 6/9 you can add:
+Let me reiterate.
 
-Tested-by: Sumit Garg <sumit.garg@linaro.org>
+In below genirq code, if irq_chip did not choose to implement 
+.irq_disable (and the mask argument is coming as false by default during 
+first disable) from the caller of this,
 
-Plus, in order to enable earlycon_kgdboc on Developerbox I had to
-implement the read() function in the early console driver for
-amba-pl011 (see patch [1]). It would be great if you could pick that
-patch [1] too as part of this series.
+Then yes control takes lazy path since it doesn't enter to  if 
+(desc->irq_data.chip->irq_disable)  or else if (mask) case and the 
+__irq_disable call simply returns  without executing anything.
 
-[1] https://lkml.org/lkml/2020/4/24/173
+This leaves IRQ enabled in HW during suspend even though driver done 
+disable_irq()
 
--Sumit
+static void __irq_disable(struct irq_desc *desc, bool mask)
+{
+         if (irqd_irq_disabled(&desc->irq_data)) {
+                 if (mask)
+                         mask_irq(desc);
+         } else {
+                 irq_state_set_disabled(desc);
+                 if (desc->irq_data.chip->irq_disable) {
+desc->irq_data.chip->irq_disable(&desc->irq_data);
+                         irq_state_set_masked(desc);
+                 } else if (mask) {
+                         mask_irq(desc);
+                 }
+         }
+}
 
->  Notably I didn't test on x86, but (I think) I
-> didn't touch much there so I shouldn't have broken anything.
->
-> When testing I found a few problems with actually dropping into the
-> debugger super early on arm and arm64 devices.  Patches in this series
-> should help with this.  For arm I just avoid dropping into the
-> debugger until a little later and for arm64 I actually enable
-> debugging super early.
->
-> I realize that bits of this series might feel a little hacky, though
-> I've tried to do things in the cleanest way I could without overly
-> interferring with the rest of the kernel.  If you hate the way I
-> solved a problem I would love it if you could provide guidance on how
-> you think I could solve the problem better.
->
-> This series (and my comments / documentation / commit messages) are
-> now long enough that my eyes glaze over when I try to read it all over
-> to double-check.  I've nontheless tried to double-check it, but I'm
-> pretty sure I did something stupid.  Thank you ahead of time for
-> pointing it out to me so I can fix it in v3.  If somehow I managed to
-> not do anything stupid (really?) then thank you for double-checking me
-> anyway.
->
-> Changes in v2:
-> - ("kgdb: Disable WARN_CONSOLE_UNLOCKED for all kgdb") new for v2.
-> - ("Revert "kgdboc: disable the console lock when in kgdb"") new for v2.
-> - Assumes we have ("kgdb: Disable WARN_CONSOLE_UNLOCKED for all kgdb")
-> - Fix kgdbts, tty/mips_ejtag_fdc, and usb/early/ehci-dbgp
->
-> Douglas Anderson (9):
->   kgdb: Disable WARN_CONSOLE_UNLOCKED for all kgdb
->   Revert "kgdboc: disable the console lock when in kgdb"
->   kgdboc: Use a platform device to handle tty drivers showing up late
->   kgdb: Delay "kgdbwait" to dbg_late_init() by default
->   arm64: Add call_break_hook() to early_brk64() for early kgdb
->   kgdboc: Add earlycon_kgdboc to support early kgdb using boot consoles
->   Documentation: kgdboc: Document new earlycon_kgdboc parameter
->   serial: qcom_geni_serial: Support earlycon_kgdboc
->   serial: 8250_early: Support earlycon_kgdboc
->
->  .../admin-guide/kernel-parameters.txt         |  20 ++
->  Documentation/dev-tools/kgdb.rst              |  14 +
->  arch/arm64/include/asm/debug-monitors.h       |   2 +
->  arch/arm64/kernel/debug-monitors.c            |   2 +-
->  arch/arm64/kernel/kgdb.c                      |   5 +
->  arch/arm64/kernel/traps.c                     |   3 +
->  arch/x86/kernel/kgdb.c                        |   5 +
->  drivers/misc/kgdbts.c                         |   2 +-
->  drivers/tty/mips_ejtag_fdc.c                  |   2 +-
->  drivers/tty/serial/8250/8250_early.c          |  23 ++
->  drivers/tty/serial/kgdboc.c                   | 262 ++++++++++++++++--
->  drivers/tty/serial/qcom_geni_serial.c         |  32 +++
->  drivers/usb/early/ehci-dbgp.c                 |   2 +-
->  include/linux/kgdb.h                          |  25 +-
->  kernel/debug/debug_core.c                     |  48 +++-
->  15 files changed, 400 insertions(+), 47 deletions(-)
->
-> --
-> 2.26.1.301.g55bc3eb7cb9-goog
->
->
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+With above understanding, we have two more points to consider
+
+1. The gpiolib registers for .irq_disable for every gpio chip, making it 
+unlazy for every gpio chip.
+
+2. The irq_chip that registers with gpiolib (from pinctrl-msm.c, also 
+has .irq_disable implemented, and its parent PDC also has .irq_disable 
+implemented)
+
+Even if we fix point (1), by making gpiolib replicating genirq code,
+It still will call irq_disable (from replicated code in gpiolib now) 
+since irq_chip that registers with gpiolib has chosen to implement 
+.irq_disable.
+
+For other irq_chip's which don't implement .irq_disable, it will help.
+But since from point (2) we know that PDC irq_chip implements 
+.irq_disable, and would disable in HW the moment .irq_disable call comes in.
+
+
+> I thought it didn't matter before but now that I've
+> learned more it sounds like we have to use lazy irqs here so that irqs
+> stay enabled on the path to suspend while they're disabled but marked
+> for wakeup.
+
+The description for irq_disable() says...
+
+  * If the chip does not implement the irq_disable callback, we
+  * use a lazy disable approach. That means we mark the interrupt
+  * disabled, but leave the hardware unmasked. That's an
+  * optimization...
+
+Since PDC irq_chip implements .irq_disable callback, IRQ gets disabled 
+in HW immediatly.
+
+The comment says that lazy approch will be used if .irq_disable callback 
+is not implemented.
+
+IMO, client driver's should not assume/expect that underlying irq_chip 
+will take lazy path only,
+As it depends on whether irq_chip implemented .irq_disable callback or not.
+
+If a driver is relying on lazy disable approach till date, then the 
+driver should get fixed.
+(by removing the unnecessary disable_irq() during suspend)
+
+i suspect this might be the case in EC driver, on the platforms where it 
+worked fine till today,
+irq may not have been disabled in HW (may be that working platform's 
+irq_chip may not have implemented irq_disable
+hence support lazy disable which leaves IRQ unmasked in HW even after 
+disable_irq() and able to resume from suspend)
+
+
+> Otherwise I don't know how to make this work.
+There are 3 possible options to make it work
+
+1. Fix the EC driver (to stop calling disable_irq() during suspend) / 
+support unlazy disable in EC driver
+
+2. Support lazy disable (requires fixes in gpiolib and irq_chip also 
+should not implement .irq_disable callback)
+
+With above explanation, The PDC irq_chip want to keep continue implement 
+.irq_disable callback
+(we have different functionality in .irq_mask and .irq_disable 
+implementation)
+
+so option 2 is ruled out IMO.
+
+3. We use this patch
+
+The current patch makes this work by re-enabling such IRQs in HW during 
+suspend's very end point, and restores state during resume.
+
+i can not think of any other option.
+
+Let me know if you now agree to go with option (1)
+
+Otherwise, for option (3),
+
+i can post next revision after addressing some minor fixes/suggestions.
+I have tried to make this further simpler by not operating on both 
+PDC-GPIO and PDC irq domains,
+but it seems we need to use both irq domains and take the action 
+accordingly during pdc_suspend() and pdc_resume().
+
+I have missed the default case in switch (noticed same during rpmh patch 
+doug has posted :-)), as it can get called for CLUSTER notification.
+Will fix in next revision.
+
+Thanks,
+Maulik
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
