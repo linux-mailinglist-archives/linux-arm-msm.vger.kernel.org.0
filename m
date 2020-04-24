@@ -2,215 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4CB81B6A46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 02:26:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2EC01B6A6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 02:45:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728261AbgDXA0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Apr 2020 20:26:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50744 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728151AbgDXA0e (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Apr 2020 20:26:34 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6325C2071E;
-        Fri, 24 Apr 2020 00:26:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1587687993;
-        bh=NxMTrUOdvV7ZvTYEex9pK6ErvaWkea7ib48OAgesRuA=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=x0NYW9jEt3g4C1uG3LIO3OrkmklNXAf1co2XxoHUhe2Jv4OngttmxuUsVuloNSi0M
-         wnqo3yjfuh0q62d8PdyRqKrEeYDw/5B8Z6Wvh876Yyp5M6Lm0hQt+GOSc29atTzXDY
-         PLYuedekuD9DZyQBpUjBRlpjrBzrusb6XBVvCtfA=
-Content-Type: text/plain; charset="utf-8"
+        id S1728213AbgDXApR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Apr 2020 20:45:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55350 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728052AbgDXApQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Apr 2020 20:45:16 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3FCC09B043
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 17:45:15 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id y25so3935050pfn.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2020 17:45:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hOf+x2Y/Qe7ScdzUkVaxYfAFCfFShTVPAhN8bzkGnXg=;
+        b=gpboAXekQ409ikcKnsJINuleZnjwZW1LBae+1wFSPlBf4tiLiWDNQ50LbNngeu9sf/
+         Xgw9IU+pc6c9DnwvAakrbtb4HLsIk+0g2BZkddeMsg4+2/8PQEIz10vKTmoT/NhZiFmK
+         B48ElTPt8fsDWhuiJLmZE1NkMURXV9l0CNq1A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hOf+x2Y/Qe7ScdzUkVaxYfAFCfFShTVPAhN8bzkGnXg=;
+        b=UiCVxQT411DzFkeodNxdj2UxR1+Y99gtrdtW6qYbQh2as2C2A1dJTiSorRhuwSEPiu
+         tElZxJflt2O5vCdmFFPABU0Q3ufrErXLns+oD1G8NkUUP59LCmG/i8uOcUIJ/MaExE2p
+         dL0p64nDbU9VyzDiebr1jt1XyDlLi3/MFVocQmJe7FrXzajNHyVfUsp2ZKlpcULDjlgA
+         5SAzkDGUrPsUmZfKrYrhklqLx+Bt4lxfrx7pYiu//zPpR9ZaORX2wp6JDELZLprlKhEF
+         3UGmGyuIFZly/PbOdzj5eJGfgOIHMpXoOQ2JGrmcOS1ZQtMzz26WNbt/G+c0Kn2ZT0nz
+         /KQQ==
+X-Gm-Message-State: AGi0PuakzMOfbtBzvF7qr5b2RhC/wxq7CCzyjjrSzQu5AawKredim3zH
+        gPqTJXrTiguIzTLzv2jTg29MoA==
+X-Google-Smtp-Source: APiQypIyIZtDVKhOHp8Y5kuCR8rED5XYlhlovTxBBx+WS6MOfMqJu+zBJGNouJUoijlxSK6x5TwpPw==
+X-Received: by 2002:a63:41c2:: with SMTP id o185mr6315849pga.139.1587689114561;
+        Thu, 23 Apr 2020 17:45:14 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id y186sm3166133pgb.69.2020.04.23.17.45.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2020 17:45:13 -0700 (PDT)
+Date:   Thu, 23 Apr 2020 17:45:12 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: phy: qcom-qusb2: Fix defaults
+Message-ID: <20200424004512.GL199755@google.com>
+References: <20200423111015.1.Ifa8039b6f3031e9a69c4a526a6efc2f499f07292@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1585701031-28871-5-git-send-email-tanmay@codeaurora.org>
-References: <1585701031-28871-1-git-send-email-tanmay@codeaurora.org> <1585701031-28871-5-git-send-email-tanmay@codeaurora.org>
-Subject: Re: [DPU PATCH v5 4/5] drm/msm/dp: add support for DP PLL driver
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Chandan Uddaraju <chandanu@codeaurora.org>, robdclark@gmail.com,
-        abhinavk@codeaurora.org, nganji@codeaurora.org,
-        jsanka@codeaurora.org, aravindh@codeaurora.org,
-        hoegsberg@google.com, dri-devel@lists.freedesktop.org,
-        linux-clk@vger.kernel.org, Vara Reddy <varar@codeaurora.org>,
-        swboyd@chromium.org
-To:     Tanmay Shah <tanmay@codeaurora.org>, devicetree@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        seanpaul@chromium.org
-Date:   Thu, 23 Apr 2020 17:26:32 -0700
-Message-ID: <158768799258.135303.4148133179625718198@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200423111015.1.Ifa8039b6f3031e9a69c4a526a6efc2f499f07292@changeid>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Tanmay Shah (2020-03-31 17:30:30)
-> diff --git a/drivers/gpu/drm/msm/dp/pll/dp_pll_10nm.c b/drivers/gpu/drm/m=
-sm/dp/pll/dp_pll_10nm.c
-> new file mode 100644
-> index 0000000..aa845d0
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/dp/pll/dp_pll_10nm.c
-> @@ -0,0 +1,401 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2016-2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +/*
-> + * Display Port PLL driver block diagram for branch clocks
-> + *
-> + *              +------------------------------+
-> + *              |         DP_VCO_CLK           |
-> + *              |                              |
-> + *              |    +-------------------+     |
-> + *              |    |   (DP PLL/VCO)    |     |
-> + *              |    +---------+---------+     |
-> + *              |              v               |
-> + *              |   +----------+-----------+   |
-> + *              |   | hsclk_divsel_clk_src |   |
-> + *              |   +----------+-----------+   |
-> + *              +------------------------------+
-> + *                              |
-> + *          +---------<---------v------------>----------+
-> + *          |                                           |
-> + * +--------v---------+                                 |
-> + * |    dp_phy_pll    |                                 |
-> + * |     link_clk     |                                 |
-> + * +--------+---------+                                 |
-> + *          |                                           |
-> + *          |                                           |
-> + *          v                                           v
-> + * Input to DISPCC block                                |
-> + * for link clk, crypto clk                             |
-> + * and interface clock                                  |
-> + *                                                      |
-> + *                                                      |
-> + *      +--------<------------+-----------------+---<---+
-> + *      |                     |                 |
-> + * +----v---------+  +--------v-----+  +--------v------+
-> + * | vco_divided  |  | vco_divided  |  | vco_divided   |
-> + * |    _clk_src  |  |    _clk_src  |  |    _clk_src   |
-> + * |              |  |              |  |               |
-> + * |divsel_six    |  |  divsel_two  |  |  divsel_four  |
-> + * +-------+------+  +-----+--------+  +--------+------+
-> + *         |                 |                  |
-> + *         v---->----------v-------------<------v
-> + *                         |
-> + *              +----------+---------+
-> + *              |   dp_phy_pll_vco   |
-> + *              |       div_clk      |
-> + *              +---------+----------+
-> + *                        |
-> + *                        v
-> + *              Input to DISPCC block
-> + *              for DP pixel clock
+On Thu, Apr 23, 2020 at 11:10:27AM -0700, Douglas Anderson wrote:
+> The defaults listed in the bindings don't match what the code is
+> actually doing.  Presumably existing users care more about keeping
+> existing behavior the same, so change the bindings to match the code
+> in Linux.
+> 
+> The "qcom,preemphasis-level" default has been wrong for quite a long
+> time (May 2018).  The other two were recently added.
+> 
+> As some evidence that these values are wrong, this is from the Linux
+> driver:
+> - qcom,preemphasis-level: sets "PORT_TUNE1", lower 2 bits.  Driver
+>   programs PORT_TUNE1 to 0x30 by default and (0x30 & 0x3) = 0.
+> - qcom,bias-ctrl-value: sets "PLL_BIAS_CONTROL_2", lower 6 bits.
+>   Driver programs PLL_BIAS_CONTROL_2 to 0x20 by default and (0x20 &
+>   0x3f) = 0x20 = 32.
+> - qcom,hsdisc-trim-value: sets "PORT_TUNE2", lower 2 bits.  Driver
+>   programs PORT_TUNE2 to 0x29 by default and (0x29 & 0x3) = 1.
+> 
+> Fixes: 1e6f134eb67a ("dt-bindings: phy: qcom-qusb2: Add support for overriding Phy tuning parameters")
+> Fixes: a8b70ccf10e3 ("dt-bindings: phy-qcom-usb2: Add support to override tuning values")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+>  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+> index 144ae29e7141..f8bd28ff31c1 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+> @@ -97,7 +97,7 @@ then:
+>          - $ref: /schemas/types.yaml#/definitions/uint32
+>          - minimum: 0
+>            maximum: 63
+> -          default: 0
+> +          default: 32
+>  
+>      qcom,charge-ctrl-value:
+>       description:
+> @@ -130,7 +130,7 @@ then:
+>          - $ref: /schemas/types.yaml#/definitions/uint32
+>          - minimum: 0
+>            maximum: 3
+> -          default: 2
+> +          default: 0
+>  
+>      qcom,preemphasis-width:
+>        description:
+> @@ -152,7 +152,7 @@ then:
+>          - $ref: /schemas/types.yaml#/definitions/uint32
+>          - minimum: 0
+>            maximum: 3
+> -          default: 0
+> +          default: 1
+>  
+>  required:
+>    - compatible
+> -- 
+> 2.26.1.301.g55bc3eb7cb9-goog
 
-I suspect this shouldn't be a complicated clk provider at all. Take a
-look at commit 42d068472ddf ("phy: Add DisplayPort configuration
-options") for how the phy should manage the link rate, etc. If the
-dispcc pixel clock needs to know what rate is coming in, then a single
-clk_hw can be implemented here that tells the consumer (i.e. dispcc) the
-rate that it will see at the output of this node. Otherwise, modeling
-the clk tree inside this PLL block like this is super overly complicated
-and wasteful. Don't do it.
-
-> + *
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/regmap.h>
-> +
-> +#include "dp_pll_10nm.h"
-> +
-> +#define NUM_PROVIDED_CLKS              2
-> +
-> +#define DP_LINK_CLK_SRC                        0
-> +#define DP_PIXEL_CLK_SRC               1
-> +
-[...]
-> diff --git a/drivers/gpu/drm/msm/dp/pll/dp_pll_10nm_util.c b/drivers/gpu/=
-drm/msm/dp/pll/dp_pll_10nm_util.c
-> new file mode 100644
-> index 0000000..fff2e8d
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/dp/pll/dp_pll_10nm_util.c
-> @@ -0,0 +1,524 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2016-2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#define pr_fmt(fmt)    "%s: " fmt, __func__
-> +
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/iopoll.h>
-> +#include <linux/kernel.h>
-> +
-> +#include "dp_hpd.h"
-> +#include "dp_pll.h"
-> +#include "dp_pll_10nm.h"
-> +
-[...]
-> +
-> +static int dp_config_vco_rate_10nm(struct msm_dp_pll *pll,
-> +               unsigned long rate)
-> +{
-> +       u32 res =3D 0;
-> +       struct dp_pll_10nm *dp_res =3D to_dp_pll_10nm(pll);
-> +
-> +       res =3D dp_vco_pll_init_db_10nm(pll, rate);
-> +       if (res) {
-> +               DRM_ERROR("VCO Init DB failed\n");
-> +               return res;
-> +       }
-> +
-> +       if (dp_res->lane_cnt !=3D 4) {
-> +               if (dp_res->orientation =3D=3D ORIENTATION_CC2)
-> +                       PLL_REG_W(dp_res->phy_base, REG_DP_PHY_PD_CTL, 0x=
-6d);
-> +               else
-> +                       PLL_REG_W(dp_res->phy_base, REG_DP_PHY_PD_CTL, 0x=
-75);
-> +       } else {
-> +               PLL_REG_W(dp_res->phy_base, REG_DP_PHY_PD_CTL, 0x7d);
-> +       }
-
-For example, this part here can be done through the phy configuration
-ops. A lane count check in the set rate clk op is quite odd!
-
-> +
-> +long dp_vco_round_rate_10nm(struct clk_hw *hw, unsigned long rate,
-> +                       unsigned long *parent_rate)
-> +{
-> +       unsigned long rrate =3D rate;
-> +       struct msm_dp_pll *pll =3D to_msm_dp_pll(hw);
-> +
-> +       if (rate <=3D pll->min_rate)
-> +               rrate =3D pll->min_rate;
-> +       else if (rate <=3D DP_VCO_HSCLK_RATE_2700MHZDIV1000)
-> +               rrate =3D DP_VCO_HSCLK_RATE_2700MHZDIV1000;
-> +       else if (rate <=3D DP_VCO_HSCLK_RATE_5400MHZDIV1000)
-> +               rrate =3D DP_VCO_HSCLK_RATE_5400MHZDIV1000;
-> +       else
-> +               rrate =3D pll->max_rate;
-
-This is basically link rate setting through the clk framework. Calling
-clk_set_rate() on the pixel clk is complicated and opaque. I'd expect to
-see the DP controller driver set the link rate on the phy with
-phy_configure(), and then that can change the rate that is seen
-downstream at the pixel clk. Does the pixel clk need to do anything with
-the rate? Probably not? I suspect it can just enable the pixel clk when
-it needs to and disable it when it doesn't need it.
-
-> +
-> +       DRM_DEBUG_DP("%s: rrate=3D%ld\n", __func__, rrate);
-> +
-> +       *parent_rate =3D rrate;
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
