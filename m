@@ -2,107 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A9951B7848
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 16:28:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 420961B7AA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 17:52:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726806AbgDXO23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Apr 2020 10:28:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34038 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726848AbgDXO22 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Apr 2020 10:28:28 -0400
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7A6322084D;
-        Fri, 24 Apr 2020 14:28:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1587738507;
-        bh=8SNgUrX8GwVarrY8Ebo9QfXjiJ1rvJ7gh0V24v+SvcA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=JR7m0hjwgKtKn5FIdX8lXcQcUCs3L0ZznrPTcW0oumHgoLDUqQGlEIeKDCDgpjblA
-         aKhMAPSxoEnteZvpAFRu5h2YCBbJvwg1I+9aMaDtfoSSQkjopoKkwjhqeqP4FK3reI
-         hHacNGbU3nWF28PwlPGluDYJ0+lWHFFhXGXjsI7s=
-Received: by mail-qk1-f176.google.com with SMTP id s63so10302931qke.4;
-        Fri, 24 Apr 2020 07:28:27 -0700 (PDT)
-X-Gm-Message-State: AGi0Pubc+5gJV+ga25zkRyuA/bb/QUxQJdMssIxmUo5ZTsLoPqoMr8Mr
-        fq27kByfQz4GR4hN3A4mil3cUJ63vb3Bz3Xu4Q==
-X-Google-Smtp-Source: APiQypJTEZlYNHfuUM4k/UahZKOMwF+cs9AnE0Zoa69Be6ozAPXgBe3pi4Ofgx9yKbwqA1iTRmFHU2IVDittvj/nesM=
-X-Received: by 2002:a37:4a85:: with SMTP id x127mr9364413qka.152.1587738506606;
- Fri, 24 Apr 2020 07:28:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200413164440.1138178-1-iskren.chernev@gmail.com>
- <20200413164440.1138178-3-iskren.chernev@gmail.com> <20200420205501.GA6828@bogus>
- <f9b5d68d-536b-5806-573b-9dafb848f46f@gmail.com>
-In-Reply-To: <f9b5d68d-536b-5806-573b-9dafb848f46f@gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Fri, 24 Apr 2020 09:28:12 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLZ8WrOmRDBuQ5DdAfib0KaCScYY_12qfkcoZa3_Z7_3Q@mail.gmail.com>
-Message-ID: <CAL_JsqLZ8WrOmRDBuQ5DdAfib0KaCScYY_12qfkcoZa3_Z7_3Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: regulator: Add document bindings for max77826
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        id S1727829AbgDXPvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Apr 2020 11:51:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55284 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727885AbgDXPvu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Apr 2020 11:51:50 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C54EC09B048
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 08:51:50 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id 145so4961379pfw.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 08:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G5PlYrTAxuP4jdGGCfhHHIkEJ7U7EkPwrECQq1/CaMg=;
+        b=EaiRysTHCtPodQ5fxFggQe3OinZ9fgf3lzjpO+Ink3q+dKHjSSGbaKMXLVP65Y7nyq
+         TaxOzbgnqWXRtkAaFjxJD3pHXfoxRhIcx6M97qzDbeTTiJjX7kFSf5g0kH5SlZzTIhQU
+         hY2fZ5eO5EVxTyLMtxw7Iq6vMaPZav1IOXT4E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G5PlYrTAxuP4jdGGCfhHHIkEJ7U7EkPwrECQq1/CaMg=;
+        b=VZpaOy2LNxRKHJVxCu3xRg6p+aDevNwLsx2CeRl1NPULEj/zHlLqbltAzjVLMfbW+5
+         3LTw6gjETlcVsGxyx2iIQ7e1jVkIOV+ptR1Ri5Pr55OO/K9kr/GLfsIO7VqDyH3MjBuh
+         /9tSpYrhRVCP6whHPRQcODsQ5nGQkDtqHswX1BM+IAsGawM3fh2yzDY+ywvNMfw131EK
+         11G56qMFn4o30EhrkIxJDjTqrtxXtEoo8/mPxkEdHQdWHVHotn20fbJ7Hc959Fv89pZZ
+         Rw+4cxaatKDLpNFW2i2j15lxCIfpzNVrDzWv8z3TX7sREttj/rgzsRBVBRD2yIBwnSCj
+         JlDQ==
+X-Gm-Message-State: AGi0PuauR97z3YQnRRSlUXglv3JnvAiTBBeWBepXnlRVCq0MuiGiuCdu
+        B28mWHGfzSZFl+1dfoQXJvlQAA==
+X-Google-Smtp-Source: APiQypK5wO/pT3SH10jr2z9q6Ql2ONlPngJbVETLFqKnjrW9asaC9My0tclDZaDOgw6H69igIIl2Zg==
+X-Received: by 2002:a63:5663:: with SMTP id g35mr7350444pgm.356.1587743509867;
+        Fri, 24 Apr 2020 08:51:49 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id 185sm6546149pfv.9.2020.04.24.08.51.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Apr 2020 08:51:49 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Maulik Shah <mkshah@codeaurora.org>, mka@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7180: Add "no-map" to cmd_db reserved area
+Date:   Fri, 24 Apr 2020 08:51:29 -0700
+Message-Id: <20200424085121.1.I9d1e84d30f488cdb5a957f582abaecd2c0b24d70@changeid>
+X-Mailer: git-send-email 2.26.2.303.gf8c07b1a785-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 23, 2020 at 7:59 AM Iskren Chernev <iskren.chernev@gmail.com> wrote:
->
->
-> On 4/20/20 11:55 PM, Rob Herring wrote:
-> > On Mon, Apr 13, 2020 at 07:44:39PM +0300, Iskren Chernev wrote:
-> >> +    patternProperties:
-> >> +      "^LDO([1-9]|1[0-5])$":
-> >> +        type: object
-> >> +        allOf:
-> >> +          - $ref: regulator.yaml#
-> >> +
-> >> +      "^BUCK|BUCKBOOST$":
-> >> +        type: object
-> >> +        allOf:
-> >> +          - $ref: regulator.yaml#
-> >> +
-> >> +      additionalProperties: false
-> >
-> > You are defining a property called 'additionalProperties'. This one
-> > should be dropped because additionalProperties doesn't work with a $ref.
-> >
->
-> I got the idea from mps,mpq7920.yaml. It has additionalProperties in the
-> exact same places that I do. Also bd718(28|37|47).yaml seem to use
-> additionalProperties inside patternProperties. Shall I modify it as well?
+The example in the bindings and all the current users (except sc7180)
+have "no-map".  I'm pretty sure we need it on sc7180 too.  Add it.
 
-Indeed. mps,mp5416.yaml too. I'll fix all of these and few
-non-regulator ones so I can get them into rc3.
+Fixes: e0abc5eb526e ("arm64: dts: qcom: sc7180: Add cmd_db reserved area")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-> I couldn't find the core schema for this yaml:
-> http://devicetree.org/meta-schemas/core.yaml (gives 404).  Is there a way
-> to verify the validity of the yaml?
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-Running 'make dt_binding_check'. The url is just convention and while
-files could be there they aren't. They are all contained in the
-dtschema module[1].
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 4216b574c080..94d2ee126d25 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -73,6 +73,7 @@ reserved_memory: reserved-memory {
+ 		aop_cmd_db_mem: memory@80820000 {
+ 			reg = <0x0 0x80820000 0x0 0x20000>;
+ 			compatible = "qcom,cmd-db";
++			no-map;
+ 		};
+ 
+ 		smem_mem: memory@80900000 {
+-- 
+2.26.2.303.gf8c07b1a785-goog
 
-However, in this case the meta-schema fails to check for this. It is
-technically valid as it is saying you can't have a DT property called
-'additionalProperties'. I've written a check now which should disallow
-listing any DT property names which are json-schema vocabulary. Once
-the failures get fixed I'll add it to the meta-schema.
-
-> Also, this patch is already merged in linux-next. I guess I shall submit
-> a new patch with the fixes standalone?
-
-Yes, should be on top of this one.
-
-Thanks,
-Rob
-
-[1] https://github.com/devicetree-org/dt-schema
