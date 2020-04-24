@@ -2,88 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 331CF1B7C91
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 19:22:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8D531B7CB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2020 19:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728563AbgDXRV6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Apr 2020 13:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
+        id S1726920AbgDXR1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Apr 2020 13:27:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726849AbgDXRV5 (ORCPT
+        with ESMTP id S1728598AbgDXR1J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Apr 2020 13:21:57 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF0D7C09B047
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 10:21:55 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id a5so4127324pjh.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 10:21:55 -0700 (PDT)
+        Fri, 24 Apr 2020 13:27:09 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43BF0C09B047
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 10:27:09 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id g6so4918768pgs.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2020 10:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=9/rHi+opABqnWC7ABI/VwKKz8YnCgSS+xTfGsZR3+hI=;
-        b=A5I4cJO7vbWtjiQHG/voDoJquzAhktDCzv2uPQSWugiA7YZ3veVmJWTQyyFxVvkH+h
-         FvhxCh2f6rnnVTSTWupVspEx2HKhd4KZsDSKOhxYZ6rEz/aBxOprzXZA2eY0mAmDdgCb
-         57fUF7mxZHyR8Du18R04UyVJ6pNRyYB5vrXwE=
+        bh=757eATNy6DcXBD0dJfNd9a4RLKac7QDmicHrKgoTBRA=;
+        b=bJkJTJHj/GzTZ3ywmcf915mvKDOklF2XfK+t7rWKq7rhQhj0drdqd9RnHoHT4DyW7L
+         5BAqgXJ87NBW/oEc8K4aIaEl/i4N36Kp4CF09P9sfMbK2tAp1Nz7MuzwUvcvovxF0h2R
+         B8oxkci5KmV88Y079GFKPyGw//Hhbg2UqBrIg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=9/rHi+opABqnWC7ABI/VwKKz8YnCgSS+xTfGsZR3+hI=;
-        b=bRIRlRlJcFC+RVggAgsILCkyMDc8iA10/ktmwB4gIICq/svESMRJna77biurK1ln/E
-         j5aDvyhBXtyN4YbXwancy3Urwno1z4RqTPiPKc9t+xdeJ33x9vpDuBA3emAe628jsTTx
-         cpOmmQgfRw0+qsmR9KaeZrxYgHDQfYldDwDoVMzb/Nv1Hl77OFcRpQwJyQmLmy6sCJ4V
-         rncIaEDBtf0FAReBfCBPaRSky/zAif4ut8nBVDsRDr0nHoSaa242fVqbEmuRqsm3Eiwo
-         ziKWZF+RKEJykx9qs4y2s7aEvev8z20wZ3aWdg1y6Rb2ETO/iwEPJoz097JfRFb5bPGE
-         mN+Q==
-X-Gm-Message-State: AGi0Pua0t9I/Wv2wfrrplmU/jI9j6E5hVU1s1169RbR68S9vuue/vGfG
-        LRX7ZZ+5kq4URoAuEae/Lk6jiQ==
-X-Google-Smtp-Source: APiQypK3MbrgY702ieZ2DMynzA3M5bEztwrT5ExeMwcuBzWd4TslsMOW4R0wW+GRnOwlzOqB9iaskg==
-X-Received: by 2002:a17:902:441:: with SMTP id 59mr9971066ple.339.1587748915325;
-        Fri, 24 Apr 2020 10:21:55 -0700 (PDT)
+        bh=757eATNy6DcXBD0dJfNd9a4RLKac7QDmicHrKgoTBRA=;
+        b=lP1yX2tUM5G22m3pStbs1tRN6LihPPRxRgyeMdXdtMiZ0D2YBc/smflXhGgw/38U4c
+         65iWnzyvAgyrSAOhYUZVGmoWDf+JQbJpdX4/XA8hn5X0FmXjbzN/mZmv3jTyeIIhtZTP
+         AHAeNk9WXljvUJ80mbisHPx9lh9qhBi6IHu8L1QPS+7I37Og44JACP5hTNrBJThiVa8/
+         MxA0QP8xFgVe2sqwu7p/JWZIFuKmszHC9axgJ6uodys56mWILhzbebSrkytfEyo3k3q0
+         ko9w70ap3fcFSWylGUMWIpwG/aCWNm7kxVZhIvt5VoPnP0D6Itp1buV1edo5jMjJe+Lt
+         IotQ==
+X-Gm-Message-State: AGi0PuZjlhMHkETTV6XyLHtsYD7jPAo5BnMXy9K9vSyQi69igr5Gw/Nj
+        8mU2KI8gtHJ2IEqw1HOlMmLTAg==
+X-Google-Smtp-Source: APiQypKw5WR5DnbdToP85PGHkarWb37+RaJrV6IbrFuNZsd1ng8JTeIUGSD+QIQsNJ+078GoGRpPTA==
+X-Received: by 2002:a63:3242:: with SMTP id y63mr1578172pgy.28.1587749228820;
+        Fri, 24 Apr 2020 10:27:08 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id p10sm6433767pff.210.2020.04.24.10.21.54
+        by smtp.gmail.com with ESMTPSA id d18sm6327663pfq.177.2020.04.24.10.27.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2020 10:21:54 -0700 (PDT)
+        Fri, 24 Apr 2020 10:27:08 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200424053626.GV20625@builder.lan>
-References: <20200424045414.133381-1-swboyd@chromium.org> <20200424045414.133381-2-swboyd@chromium.org> <20200424053626.GV20625@builder.lan>
-Subject: Re: [PATCH 1/3] soc: qcom: rpmh-rsc: Remove tcs_is_free() API
+In-Reply-To: <CAD=FV=V7KfjEpdQdkXdnGK86cEkpO_SxcDgFiXqAr8oj25P_zw@mail.gmail.com>
+References: <20200424045414.133381-1-swboyd@chromium.org> <20200424045414.133381-3-swboyd@chromium.org> <CAD=FV=U6YiD=ORDuuRsYVRJriv+jJie3=HoF7MokWbj5Wx0rew@mail.gmail.com> <CAD=FV=V7KfjEpdQdkXdnGK86cEkpO_SxcDgFiXqAr8oj25P_zw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] soc: qcom: rpmh-rsc: Loop over less bits in irq handler
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Date:   Fri, 24 Apr 2020 10:21:53 -0700
-Message-ID: <158774891388.135303.17625994744372966487@swboyd.mtv.corp.google.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+To:     Doug Anderson <dianders@chromium.org>
+Date:   Fri, 24 Apr 2020 10:27:07 -0700
+Message-ID: <158774922735.135303.1360850783025067093@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2020-04-23 22:36:26)
-> On Thu 23 Apr 21:54 PDT 2020, Stephen Boyd wrote:
-> > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> [..]
-> >  static int find_free_tcs(struct tcs_group *tcs)
-> >  {
-> > -     int i;
-> > +     const struct rsc_drv *drv =3D tcs->drv;
-> > +     unsigned long i;
-> > =20
-> > -     for (i =3D 0; i < tcs->num_tcs; i++) {
-> > -             if (tcs_is_free(tcs->drv, tcs->offset + i))
-> > -                     return tcs->offset + i;
-> > -     }
-> > +     i =3D find_next_zero_bit(drv->tcs_in_use, MAX_TCS_NR, tcs->offset=
-);
-> > +     if (i > tcs->offset + tcs->num_tcs)
+Quoting Doug Anderson (2020-04-24 10:13:43)
+> Hi,
 >=20
-> Afaict this should be >=3D
+> On Fri, Apr 24, 2020 at 10:11 AM Doug Anderson <dianders@chromium.org> wr=
+ote:
+> >
+> > Hi,
+> >
+> > On Thu, Apr 23, 2020 at 9:54 PM Stephen Boyd <swboyd@chromium.org> wrot=
+e:
+> > >
+> > > readl returns a u32, and BITS_PER_LONG is different on 32-bit vs. 64-=
+bit
+> > > architectures. Let's make the type we stash the readl into a u32 and
+> > > then loop over the bits set in that type instead of potentially loopi=
+ng
+> > > over more bits than we will ever need to.
+> > >
+> > > Cc: Maulik Shah <mkshah@codeaurora.org>
+> > > Cc: Douglas Anderson <dianders@chromium.org>
+> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > > ---
+> > >  drivers/soc/qcom/rpmh-rsc.c | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>=20
+> Oh, I suppose one nit is s/less/fewer/ in the subject.  "bits" are
+> discrete / countable, not continuous / uncountable.
 >=20
 
-Thanks!
+Ok that's good.
