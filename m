@@ -2,93 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11AAF1B823B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2020 00:52:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB3A41B8489
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2020 10:09:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbgDXWwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Apr 2020 18:52:16 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:33622 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbgDXWwQ (ORCPT
+        id S1726142AbgDYIJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Apr 2020 04:09:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726098AbgDYIJA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Apr 2020 18:52:16 -0400
-Received: by mail-ot1-f65.google.com with SMTP id j26so15383781ots.0;
-        Fri, 24 Apr 2020 15:52:15 -0700 (PDT)
+        Sat, 25 Apr 2020 04:09:00 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18788C09B04A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2020 01:08:59 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id o185so5820303pgo.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2020 01:08:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=x/0L4kaYgpW1Hu0stScHjMakMOesQShGMeTNHi19Rgw=;
+        b=iJ8LD2LWWz/lVjTnpI0bFX6zm7zN37+Ngfq3dtc72Ol3HI8AT83i7CKTGCbQwyI1Kl
+         eWSs4sYbGqCCrZRt/FyJ08p3dgb+clQ/Q0Q23mbwou9LXc8CHjK2yS3ADP9XOuc2TzKx
+         CvlNuWOQ2ekiu9dIP3ab7SoPK0fmuFQf4m5xbR5W/bhUXULTTKG3BGmj3s4aZWC51qUy
+         x2FOkcX+dwATUW2bSzSVGQJRT60Y8FvZMdA96cv3e9bOZoC5qY6VffbiCwKcAQPHXHKs
+         kFGqggygkBp5ChhoHGWvxUA2dfV0f3EG2Lv/hlAsvHn2Amhz/GEouYJ996BbpaZQzY2p
+         v5IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wF6fQRNcOVGmiPWGuQ33fy/Py3YU3kYZ9u186GNu9uo=;
-        b=htSWQD+d0WCZNfCalaDjkEKy4fUv0uwYmrdbZ2zw2QnRhzFFf+B1bWEtkxIGb87ZS4
-         4xdAQ5o8cV1mHVZWgD31nep0szycSh+EXz7qPRACAaKse1DdnHgWeDL5MEnhUmqs1pzS
-         1uJ/miCjJI83xPldkDyyhAGuvh67apWIkpwKa8Qjdni7qHh2JZkEjZ0v+2iqIigPmu1f
-         kc4SecTmjxKKcVCx9LuwXPX5U7sX4Rlk9GpVD+lZ/9CFFOqAadbE1F6SfT0WMHwoTD3G
-         muIjFl8rY+0iqAmVhUcAjjIlLJJcTLfVsGiRGXgEekmjn1wHTjNwbOpImYEVKgBEBRT6
-         sE/w==
-X-Gm-Message-State: AGi0PuY7RlD1W0t/s/thz1oJQOigf9zEac61t4XPSPdRzEX8ISq9Nhx/
-        ZEvUvRiWxdj3j4iKolmgKw==
-X-Google-Smtp-Source: APiQypL+B3MmVxN4219JD1LUJE3v2D7vWF8MSXRe8ojTj26JKh2LYSmBoJni5bwWB5GfRoFjUUXlwQ==
-X-Received: by 2002:aca:c646:: with SMTP id w67mr9239297oif.70.1587768735355;
-        Fri, 24 Apr 2020 15:52:15 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id s73sm2013006oih.14.2020.04.24.15.52.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2020 15:52:14 -0700 (PDT)
-Received: (nullmailer pid 18240 invoked by uid 1000);
-        Fri, 24 Apr 2020 22:52:13 -0000
-Date:   Fri, 24 Apr 2020 17:52:13 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Sandeep Maheswaram <sanm@codeaurora.org>, mka@chromium.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: phy: qcom-qusb2: Fix defaults
-Message-ID: <20200424225213.GA15428@bogus>
-References: <20200423111015.1.Ifa8039b6f3031e9a69c4a526a6efc2f499f07292@changeid>
+        bh=x/0L4kaYgpW1Hu0stScHjMakMOesQShGMeTNHi19Rgw=;
+        b=p93sefli6PcUeXqrAyu8tb0dD7s/3slolF+UiOLlpiwqVKFtvfhEghfDnLLFxpzypy
+         zp629dehDvbvmxmFrbpU4bOs60rnb9TpNoFF58SrXUBChgrqnlxnnlv9GVMu+1oAnCNV
+         kXjdrEdtdDQ2Gz1lRn1jaT3P05IYQBnNRAMpqpsZIdXx4mnNuSnFJcb3urH9XClR6DK6
+         P62wPhrV2t5LhxRSWOUBZJ6lkEK2fBJzWGjNcnUoAOdh4PLPSxytDqc2+vc0Im/9Y+ZZ
+         JfA6/Y/GdFX/VYt0gjOQNqJsedykwPwGQhoY9HJmDqngWAcXftHvVGVnXullx5SlNdtY
+         jabg==
+X-Gm-Message-State: AGi0PuYEr+VLvysBVzWBJhbv3ADYTh6QUGt1mjl+EkEuVAypGHKekTRj
+        Dfs0XJwRMoxf1q2UyhcvrAWL
+X-Google-Smtp-Source: APiQypKx4YIbSAMgdXn4vdtb9HU9+CtXijGGj8JxZPpCdKzOxmAhEi6e0ewMW0ekC3vvbgYv8WLBsw==
+X-Received: by 2002:a63:67c7:: with SMTP id b190mr13429627pgc.289.1587802138359;
+        Sat, 25 Apr 2020 01:08:58 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6108:9c45:6c48:a73c:e213:f218])
+        by smtp.gmail.com with ESMTPSA id r12sm6506504pgv.59.2020.04.25.01.08.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 25 Apr 2020 01:08:57 -0700 (PDT)
+Date:   Sat, 25 Apr 2020 13:38:50 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     davem@davemloft.net, smohanad@codeaurora.org, jhugo@codeaurora.org,
+        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, clew@codeaurora.org
+Subject: Re: [PATCH v2 0/3] MHI bus improvements - Part 2
+Message-ID: <20200425080850.GB5257@Mani-XPS-13-9360>
+References: <20200402053610.9345-1-manivannan.sadhasivam@linaro.org>
+ <20200402055526.GB2636682@kroah.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200423111015.1.Ifa8039b6f3031e9a69c4a526a6efc2f499f07292@changeid>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200402055526.GB2636682@kroah.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Apr 2020 11:10:27 -0700, Douglas Anderson wrote:
-> The defaults listed in the bindings don't match what the code is
-> actually doing.  Presumably existing users care more about keeping
-> existing behavior the same, so change the bindings to match the code
-> in Linux.
+Hi Greg,
+
+On Thu, Apr 02, 2020 at 07:55:26AM +0200, Greg KH wrote:
+> On Thu, Apr 02, 2020 at 11:06:07AM +0530, Manivannan Sadhasivam wrote:
+> > Hi Greg,
+> > 
+> > Here are the remaining patches left from the pervious series. The QRTR MHI
+> > client driver has gone a bit of refactoring after incorporating comments from
+> > Bjorn and Chris while the MHI suspend/resume patch is unmodified.
 > 
-> The "qcom,preemphasis-level" default has been wrong for quite a long
-> time (May 2018).  The other two were recently added.
-> 
-> As some evidence that these values are wrong, this is from the Linux
-> driver:
-> - qcom,preemphasis-level: sets "PORT_TUNE1", lower 2 bits.  Driver
->   programs PORT_TUNE1 to 0x30 by default and (0x30 & 0x3) = 0.
-> - qcom,bias-ctrl-value: sets "PLL_BIAS_CONTROL_2", lower 6 bits.
->   Driver programs PLL_BIAS_CONTROL_2 to 0x20 by default and (0x20 &
->   0x3f) = 0x20 = 32.
-> - qcom,hsdisc-trim-value: sets "PORT_TUNE2", lower 2 bits.  Driver
->   programs PORT_TUNE2 to 0x29 by default and (0x29 & 0x3) = 1.
-> 
-> Fixes: 1e6f134eb67a ("dt-bindings: phy: qcom-qusb2: Add support for overriding Phy tuning parameters")
-> Fixes: a8b70ccf10e3 ("dt-bindings: phy-qcom-usb2: Add support to override tuning values")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> It's the middle of the merge window, we can't do anything until after
+> -rc1 is out, so please be patient.
 > 
 
-Applied, thanks.
+Can you please look into this series now?
 
-Rob
+Thanks,
+Mani
+
+> greg k-h
