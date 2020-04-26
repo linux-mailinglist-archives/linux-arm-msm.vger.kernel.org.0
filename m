@@ -2,81 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 285531B8DD3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2020 10:16:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0621C1B8E01
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2020 10:44:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726166AbgDZIQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Apr 2020 04:16:54 -0400
-Received: from sauhun.de ([88.99.104.3]:43276 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726112AbgDZIQy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Apr 2020 04:16:54 -0400
-Received: from localhost (p54B33954.dip0.t-ipconnect.de [84.179.57.84])
-        by pokefinder.org (Postfix) with ESMTPSA id 84CD02C01E8;
-        Sun, 26 Apr 2020 10:16:52 +0200 (CEST)
-Date:   Sun, 26 Apr 2020 10:16:52 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Jason Yan <yanaijie@huawei.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        id S1726122AbgDZIoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Apr 2020 04:44:20 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35]:53230 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726108AbgDZIoU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 26 Apr 2020 04:44:20 -0400
+Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id F313ED09628CC06D999E;
+        Sun, 26 Apr 2020 16:44:17 +0800 (CST)
+Received: from [127.0.0.1] (10.166.213.7) by DGGEMS410-HUB.china.huawei.com
+ (10.3.19.210) with Microsoft SMTP Server id 14.3.487.0; Sun, 26 Apr 2020
+ 16:44:16 +0800
 Subject: Re: [PATCH] i2c: busses: remove unneeded conversion to bool
-Message-ID: <20200426081652.GH1262@kunai>
+To:     Wolfram Sang <wsa@the-dreams.de>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
 References: <20200420042816.18989-1-yanaijie@huawei.com>
+ <20200426081652.GH1262@kunai>
+From:   Jason Yan <yanaijie@huawei.com>
+Message-ID: <bb3f98c1-e97d-7ed9-8983-a8d8a729e5ac@huawei.com>
+Date:   Sun, 26 Apr 2020 16:44:16 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="LZFKeWUZP29EKQNE"
-Content-Disposition: inline
-In-Reply-To: <20200420042816.18989-1-yanaijie@huawei.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200426081652.GH1262@kunai>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.166.213.7]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---LZFKeWUZP29EKQNE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 20, 2020 at 12:28:16PM +0800, Jason Yan wrote:
-> The '>' expression itself is bool, no need to convert it to bool again.
-> This fixes the following coccicheck warning:
->=20
-> drivers/i2c/busses/i2c-qup.c:960:48-53: WARNING: conversion to bool not n=
-eeded here
-> drivers/i2c/busses/i2c-qup.c:962:47-52: WARNING: conversion to bool not n=
-eeded here
-> drivers/i2c/busses/i2c-qup.c:1531:29-34: WARNING: conversion to bool not =
-needed here
-> drivers/i2c/busses/i2c-qup.c:1533:29-34: WARNING: conversion to bool not =
-needed here
->=20
-> Signed-off-by: Jason Yan <yanaijie@huawei.com>
+在 2020/4/26 16:16, Wolfram Sang 写道:
+> On Mon, Apr 20, 2020 at 12:28:16PM +0800, Jason Yan wrote:
+>> The '>' expression itself is bool, no need to convert it to bool again.
+>> This fixes the following coccicheck warning:
+>>
+>> drivers/i2c/busses/i2c-qup.c:960:48-53: WARNING: conversion to bool not needed here
+>> drivers/i2c/busses/i2c-qup.c:962:47-52: WARNING: conversion to bool not needed here
+>> drivers/i2c/busses/i2c-qup.c:1531:29-34: WARNING: conversion to bool not needed here
+>> drivers/i2c/busses/i2c-qup.c:1533:29-34: WARNING: conversion to bool not needed here
+>>
+>> Signed-off-by: Jason Yan <yanaijie@huawei.com>
+> 
+> Applied to for-next, thanks! But please fix $subject to have the driver
+> name "qup" next time.
+> 
 
-Applied to for-next, thanks! But please fix $subject to have the driver
-name "qup" next time.
+OK, get it.
 
+Thanks,
+Jason
 
---LZFKeWUZP29EKQNE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl6lQ3AACgkQFA3kzBSg
-KbbPmQ//REatWshvQZ2+D9K9K+XGNUsZXGd1r3Vhl+QLR5zlQK1pcxW5p72VHXPj
-/f7wEZqhCawEKcY6VUbBFquHyZipMoUS7DUKsZa2r0fBLjAyY5rxGc/q/tWs4iHB
-PlBvoo0XBPLAwGr54mpiFju5PHuU6kQfhA/hPp9++anIq7WJwqxT7lJf9GM7w7Tz
-/FHZkBBFONE4yN0tD0h70JiJosrvGciJ62ymkCdqOGOO2Zt7SDmT4T0EZjPijIsk
-7IX0wevyCgqZkmxdLlFlPawh+0gbyp8larSYelNQBVw58o5hGK7JeSgIa0qyZIBq
-lZ+O5eO+0pMHONdNcjIbznJXhTMXcn28u2fegpMT3ku/YS0SenJ/QoqIK80J16/a
-3avxEVxSlOYcIXf5+OH+HtL7xfZCLwtalVu2rWwcpIikJGyD2axNz0B/c9FozQHo
-Ox80wyCkRzDVvL99fo9vBJe8/MLNezlZzlpINkmPIkjNv5ZR3cYzSs0W4ckKXTjA
-ABI4lQhQstVucG070SdxF6zJInWi+su2hLBqBT5DQ7ECt1BmoWFP7YWEBOaY9z31
-KkG6BK+DaScpka0liHt1Gy85p/lXBsKY/o5F9n8/1NsUniZ9blHqju6mNfTzLEDI
-oPHxnBR9jN/+vEq5GfgHQKnCQ0hd0jLGmpzvugbLNj0KOjf9g+U=
-=ouID
------END PGP SIGNATURE-----
-
---LZFKeWUZP29EKQNE--
