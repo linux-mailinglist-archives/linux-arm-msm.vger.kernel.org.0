@@ -2,111 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B36051B97CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 08:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24FAC1B9923
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 09:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbgD0G5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 02:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48258 "EHLO
+        id S1726717AbgD0H6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 03:58:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726221AbgD0G5q (ORCPT
+        with ESMTP id S1725785AbgD0H6r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 02:57:46 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51256C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2020 23:57:45 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id v63so8529461pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2020 23:57:45 -0700 (PDT)
+        Mon, 27 Apr 2020 03:58:47 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0879DC061A0F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 00:58:46 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id n24so6692312plp.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 00:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:to:cc:from:message-id;
-        bh=b9oxcazi1/+l/yb4NyRDEdRqX15ANK5/BAmDpBrnUi8=;
-        b=Y81pPHV6TJ9EkXH9eV7DUPae3EaO63pB3FGsztZ6e1Cs9eXuL26oRw4FSc/t7wy387
-         PeMqkJ8+MP+t/42gzbWvVaaB2Yt98ewM1robv81VUAL05jhYlGT3rJAagXrgGclpxRX1
-         1Nb0bk8G/TZA20P2pIB4lZs9Our5z5324+2XcBvdhhHA+A/CGZq5TPKZom1XN7r0lmXL
-         iWXZSA2jK85lED9cHLdbru5wH/vOdLLGQ7nOtIhUKTYF/3OWK9xa3ZqIB+T9Qyz6qttc
-         M1m0koXjvxL4yOokthBuK4FgDNXti4IgZbR5gPa4xO0hXGZJRxyQW+GoPnIwqnvHndSE
-         pECw==
+        h=from:to:cc:subject:date:message-id;
+        bh=sS5L/PS46NetQ9lyauwQFXyUrQrbbC+YDoPejAuOTaw=;
+        b=k2rCR+/s71AZvcKqgh2SLyQJDbpZPDqRuL1FzAGi90zFNizH9XYLW/Gbppg95HqSFO
+         o4HY/GguFiC1bpnemLQQIklcWiVKWCj79ssYrbwE/eq3UgLFMrd83gNSj4XqiPciN1Vh
+         /lV/FWtTgVvOu9hSODHku16Kg5fijfchPm0kVbbjKXNZVnTT6DWobDutq5SM1B2McuOG
+         5mP9PBeVmZ3Zw8JKr3cSlLyUtpqVqpZfJQOQNV5i+JC3tjpwYXQVIfZ8FnCEpicI4k9Q
+         qeL6UI58MTyWgESgYNQcKEQMjXWY06qz+32EovtMr/2/+Trh7spujZC/JhrGbUxGP+Ac
+         wqCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:user-agent:in-reply-to:references
-         :mime-version:content-transfer-encoding:subject:to:cc:from
-         :message-id;
-        bh=b9oxcazi1/+l/yb4NyRDEdRqX15ANK5/BAmDpBrnUi8=;
-        b=uUGOPBidaqdhX+rw7JcrnVKqb6O9OZ0vr5BizXfXWL14wczeVu80Pd1+giD1D8wa3v
-         qYKzkHBl0fJ3uVY1UHr/yU3a6xNICRMUhFfHFWiZxlUiXUphmJlmb333tOvLfWx9de6V
-         hbige5q3mgU5+J3fXZjOY7cyGxDcUIBTzMGLnRoM3966HDCV4B8raNAJglE95lkvOlIC
-         bVhlv/IhBMHdk0xipTX/nMGk9Cp5scf44deT5Ts8bxsXruv69U/dY+CDl/ktY1d3nYNe
-         kCGPLqxCR1ZlL0Plj0+KeZ7hsz1a0OqRxuIjfsPEnOVXz8r4sOVy77GeUzLBAhp9Dyxh
-         QAbw==
-X-Gm-Message-State: AGi0PuaAnZiMNXR+ljALoSnkvpfnd9Bc51CLX1C/Nzdo9BVn8rR3KUTg
-        swTIMo/kGBTiKe39AvPi8W/O
-X-Google-Smtp-Source: APiQypK24+KNrgHgySmdTtSUONrB9B6ttKM1cQgEsHUTa4gUhqc//sqXF0yTaJNY+mlpdHFzZQghNQ==
-X-Received: by 2002:a63:214a:: with SMTP id s10mr20340551pgm.98.1587970664594;
-        Sun, 26 Apr 2020 23:57:44 -0700 (PDT)
-Received: from ?IPv6:2409:4072:608f:8328:cdd7:29cc:291b:9aa4? ([2409:4072:608f:8328:cdd7:29cc:291b:9aa4])
-        by smtp.gmail.com with ESMTPSA id h5sm10438546pjv.4.2020.04.26.23.57.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Apr 2020 23:57:44 -0700 (PDT)
-Date:   Mon, 27 Apr 2020 12:27:37 +0530
-User-Agent: K-9 Mail for Android
-In-Reply-To: <6affe7d6-4aa1-cd72-74bf-69d8f6c3c98a@web.de>
-References: <85591553-f1f2-a7c9-9c5a-58f74ebeaf38@web.de> <20200427054023.GA3311@Mani-XPS-13-9360> <6affe7d6-4aa1-cd72-74bf-69d8f6c3c98a@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [v2 2/3] net: qrtr: Add MHI transport layer
-To:     Markus Elfring <Markus.Elfring@web.de>,
-        Chris Lew <clew@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org
-CC:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=sS5L/PS46NetQ9lyauwQFXyUrQrbbC+YDoPejAuOTaw=;
+        b=o3EWIAC5L7gPxB6QIbXkkhjFlSPKDiQBZX3GateEDXbcTl8kuhLJ1E7/hAJvfY8hOZ
+         5lBqBxXzc3Xd2u8XiRy1c2jFGx6k7HZ6QyZylCkq3XA1Wbx59DHzZGi7ewOuDbjcdXlY
+         /R5JbVOKjJlgC+HxhxhcZtUqGKQ2hp3cilJONc/uAQBacobSwOAbN966ynOieE7nUg/6
+         +OHd/otx0EOW1cShTKM13F0uL1Vo5yF67Qncie2Nf2dHKmL/Zb85dLo8mVQs5o+JNT0F
+         6GJ5ohbtl4ZkigKbM9K8H2zpRlB5wktjX6cxk1cMAzFGOG3/haF302CWti90e/1DmUgF
+         YG2w==
+X-Gm-Message-State: AGi0PuYIA3yQ5SbG6JZtJwD0VpiMSGsWQYuH+5Z3NK/k8zn/ECXCYtFN
+        5/mfYX4bwXKuhylbQPOkFAqP
+X-Google-Smtp-Source: APiQypLJCj5uKfvTcGknUFVxK/qp38wl5tkIm014Dp2o5KhANZyztVua6GnbfQ5qmO+3EpOLa9GbhA==
+X-Received: by 2002:a17:90a:9202:: with SMTP id m2mr22905890pjo.109.1587974325485;
+        Mon, 27 Apr 2020 00:58:45 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4072:996:8534:f925:aed4:6e41:e1dd])
+        by smtp.gmail.com with ESMTPSA id a12sm11621190pfr.28.2020.04.27.00.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Apr 2020 00:58:44 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Message-ID: <11CCC96F-FF72-464F-AC29-8E7D53C6F31E@linaro.org>
+To:     gregkh@linuxfoundation.org, davem@davemloft.net
+Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
+        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, clew@codeaurora.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/3] MHI bus improvements - Part 2
+Date:   Mon, 27 Apr 2020 13:28:26 +0530
+Message-Id: <20200427075829.9304-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Greg,
 
+Here are the remaining patches left from the pervious series. The QRTR MHI
+client driver has gone a bit of refactoring after incorporating comments from
+Bjorn and Chris while the MHI suspend/resume patch is unmodified.
 
-On 27 April 2020 12:20:43 PM IST, Markus Elfring <Markus=2EElfring@web=2Ed=
-e> wrote:
->>> I propose again to add a jump target so that a bit of exception
->handling code
->>> can be better reused at the end of this function implementation=2E
->>>
->https://git=2Ekernel=2Eorg/pub/scm/linux/kernel/git/torvalds/linux=2Egit/=
-tree/Documentation/process/coding-style=2Erst?id=3Db2768df24ec400dd4f7fa795=
-42f797e904812053#n450
->>>
->>
->> Matter of taste! goto's are really useful if there are multiple exit
->paths
->> available=2E But in this case there is only one and I don't think we
->may add
->> anymore in future=2E So I'll keep it as it is=2E
->
->Do you hope that an other optimiser software will avoid duplicate code
->like kfree_skb(skb) calls from if branches?
->
-
-Doh=2E I didn't notice the previous kfree in skb_linearize()=2E Will spin =
-v3 incorporating this change=2E=20
-
-Thanks,=20
+Thanks,
 Mani
 
->Regards,
->Markus
+Changes in v3:
 
---=20
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
+* Added Bjorn's reviewed-by tag
+* Used goto for common error path as in qrtr/mhi suggested by Markus Elfring
+
+Changes in v2:
+
+* Moved sock_put() before consume_skb() in QRTR MHI client driver
+
+Manivannan Sadhasivam (3):
+  bus: mhi: core: Add support for MHI suspend and resume
+  net: qrtr: Add MHI transport layer
+  net: qrtr: Do not depend on ARCH_QCOM
+
+ drivers/bus/mhi/core/main.c |   3 +-
+ drivers/bus/mhi/core/pm.c   | 143 ++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h         |  19 +++++
+ net/qrtr/Kconfig            |   8 +-
+ net/qrtr/Makefile           |   2 +
+ net/qrtr/mhi.c              | 127 ++++++++++++++++++++++++++++++++
+ 6 files changed, 300 insertions(+), 2 deletions(-)
+ create mode 100644 net/qrtr/mhi.c
+
+-- 
+2.17.1
+
