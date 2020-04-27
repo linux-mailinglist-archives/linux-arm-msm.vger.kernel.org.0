@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D9F31BAD32
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 20:50:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A55C1BAF88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 22:32:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726541AbgD0Sum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 14:50:42 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:57390 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726223AbgD0Sum (ORCPT
+        id S1726676AbgD0UcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 16:32:20 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:62031 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726678AbgD0UcU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 14:50:42 -0400
+        Mon, 27 Apr 2020 16:32:20 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588013442; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1588019539; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=7yOIc6cBQUmjb2EJJfMTPa2gtx2SJO7TFkVSbmtblNE=; b=W4fHh5cKwdzZKP0w/BIg9qnvfjmq9OyUdEFN1SuoMgPUaqRg1uzjTL8MDGRcexGp1gEhBEm2
- yL8FQkHGgTYxwUtc8vl4C2otIcJxMG5mZ5mS65bDn6neyNnWIoFYdMGRyuQz2HsDjPHFK9kF
- H/wDlIOtAB9DQEv5zAP3gedRY6w=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ Subject: Sender; bh=kNapMrLPfWyqq3saA7ayYBf3t2HHIt3ns1o+JIh4q4U=; b=mqpKFqXZwCZTxPH8rN2siXt2MNOMba6KhGI+IpoSYxG6pfbp2U4Zqd2RWnX7QjDXWJpo502g
+ MA5odlR1fBIrY+t8kOCFJI8nk3rCKROpa1GIgng9CHfivKDUaNxSRJQ2oANpxVB/IFj8zrrX
+ VVxS6Yjp2ZzWWCOqOHLsTos4BPA=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea72979.7f27702b2500-smtp-out-n04;
- Mon, 27 Apr 2020 18:50:33 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ea7413d.7f0d1ef71030-smtp-out-n03;
+ Mon, 27 Apr 2020 20:31:57 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 21503C44788; Mon, 27 Apr 2020 18:50:32 +0000 (UTC)
+        id BEBEFC4478F; Mon, 27 Apr 2020 20:31:56 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.78.22] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 204B6C433BA;
-        Mon, 27 Apr 2020 18:50:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 204B6C433BA
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C2DA4C433D2;
+        Mon, 27 Apr 2020 20:31:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C2DA4C433D2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v1 2/8] bus: mhi: core: Add range check for channel id
- received in event ring
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>, mani@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org
-References: <1588012342-4995-1-git-send-email-bbhatt@codeaurora.org>
- <1588012342-4995-3-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <0dc0310f-3fbd-088c-75cd-291e7c76e83b@codeaurora.org>
-Date:   Mon, 27 Apr 2020 12:50:30 -0600
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [PATCH] phy: qcom-snps: Add runtime suspend and resume handlers
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1587662818-4461-1-git-send-email-wcheng@codeaurora.org>
+ <20200427165919.GR56386@vkoul-mobl.Dlink>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <4ce39b01-ddf3-7a5b-9ac4-659ff4362fcd@codeaurora.org>
+Date:   Mon, 27 Apr 2020 13:31:55 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <1588012342-4995-3-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20200427165919.GR56386@vkoul-mobl.Dlink>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -61,57 +60,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/27/2020 12:32 PM, Bhaumik Bhatt wrote:
-> From: Hemant Kumar <hemantk@codeaurora.org>
-> 
-> MHI data completion handler function reads channel id from event
-> ring element. Value is under the control of MHI devices and can be
-> any value between 0 and 255. In order to prevent out of bound access
-> add a bound check against the max channel supported by controller
-> and skip processing of that event ring element.
-> 
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 
-I believe your SOB is needed here after Hemant's per section 11 of 
-Documentation/process/submitting-patches.rst
 
-> ---
->   drivers/bus/mhi/core/main.c | 3 +++
->   1 file changed, 3 insertions(+)
+On 4/27/2020 9:59 AM, Vinod Koul wrote:
+> On 23-04-20, 10:26, Wesley Cheng wrote:
 > 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 23154f1..ba8afa7 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -827,6 +827,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
->   		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
->   
->   		chan = MHI_TRE_GET_EV_CHID(local_rp);
-> +		if (WARN_ON(chan >= mhi_cntrl->max_chan))
-> +			continue;
-> +
->   		mhi_chan = &mhi_cntrl->mhi_chan[chan];
->   
->   		if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
+>> +static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+>> +{
+>> +	if (hsphy->suspended)
+>> +		return 0;
+>> +
+>> +	dev_dbg(&hsphy->phy->dev, "Suspend QCOM SNPS PHY, mode = %d \n", hsphy->mode);
+>> +
+>> +	if (hsphy->mode == PHY_MODE_USB_HOST) {
+>> +		/* Enable auto-resume to meet remote wakeup timing */
+>> +		qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL2,
+>> +										USB2_AUTO_RESUME, USB2_AUTO_RESUME);
+>> +		usleep_range(500, 1000);
+>> +		qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL2,
+>> +										0, USB2_AUTO_RESUME);
+> 
+> Kernel has a coding guideline where we try to "stick" to 80 char limit
+> and is sometimes okay like debug logs. Above is not okay. Please fix it
+> and run ./scripts/checkpatch.pl --strict on your patch and fix all
+> errors. Warning and checks at your discretion using common sense. When
+> in doubt do ask :)
 > 
 
-How does this work?
+Hi Vinod,
 
-I understand the need for the range check, however I looks like this 
-change doesn't do proper handling.
+Thanks for the input.  I do run the checkpatch script before sending
+patches, and addressing the errors.  However, seems this was tagged as a
+warning instead.  Will keep in mind to address as many warnings as I can
+as well.
 
-Since all you do is "continue", we'll remain stuck in the while loop 
-this exists in, continuously "processing" the same event, failing the 
-same check, and spamming the kernel log with the WARN_ON output until 
-the end of time.
+>> +	}
+>> +
+>> +	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+>> +	hsphy->suspended = true;
+> 
+> why do you need to track this?
+> 
 
-What am I missing?
+More for debug purposes in case the RPM state becomes out of sync with
+the expected PHY state.  We've seen some situations during PM
+suspend/resume testing where our RPM routines aren't executed, as PM
+will disable RPM briefly.  It would be nice to be able to catch these
+situations after collecting our crash dumps.
 
-What is the behavior you want?  Do you want to just drop/ignore the 
-invalid event, or issue a reset of the device because it is clearly 
-misbehaving?
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+>> +{
+>> +	int ret = 0;
+> 
+> superfluous init..
+> 
+
+Agreed.
+
+>>  static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+>>  {
+>>  	struct device *dev = &pdev->dev;
+>> @@ -251,6 +333,14 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+>>  		return ret;
+>>  	}
+>>  
+>> +	pm_runtime_set_active(dev);
+>> +	pm_runtime_enable(dev);
+> 
+> would it not make sense to enable this after pjy in initialized?
+> 
+
+Not sure we want to put this in the phy_init() callback, as we can't
+guarantee how the driver registering the PHY will use it. It'll put the
+requirement of having to call phy_exit() for every phy_init() sequence,
+in order to avoid unbalanced disable_depth warnings from the RPM driver.
 
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
