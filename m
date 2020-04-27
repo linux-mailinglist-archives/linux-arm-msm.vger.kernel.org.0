@@ -2,129 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE66E1BAA55
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 18:48:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C650B1BAA81
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 18:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726400AbgD0QsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 12:48:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55974 "EHLO
+        id S1726206AbgD0Q4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 12:56:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbgD0QsU (ORCPT
+        with ESMTP id S1726030AbgD0Q4W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 12:48:20 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0481C03C1A7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 09:48:19 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id z6so391704wml.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 09:48:19 -0700 (PDT)
+        Mon, 27 Apr 2020 12:56:22 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4555BC0610D5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 09:56:22 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id 18so8060260pfv.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 09:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=V2IKgBBGeWQaS3nKENTTI6oYzwqYmWY3/5vxajcyiRg=;
-        b=PW927SF/uC1q91VoVVYQ+1pXnGZTfNMH4wSEMOjVR2xohzu4yp9PaN8dJxdTffySOX
-         Xg90snZYIfR+VLNbsD+aeBooFQY9hW3NEw/9WC8Ikg8Ua3CdX9GPiZdqolNYOZDjbOgW
-         8nMoVwWgXPDSdBzjyuD773mLMsMK2wxXf5mig/QQUsR9SZEmYcZxvhi1gOQNi/fBDetD
-         M2sOiHVkryGE0+k9XDDGVVwPrq/CFRbfFGAFfPhRys7RrcFrr1jI8b4rEFcrFjBdPlG+
-         ClCJmIQPMDJNb+VxjUwfW0rLYaSZQtSlHUpG3wiJ9Of7PaDg2cLwtlVdadaEVGFXiIoU
-         E5bw==
+        bh=8g6+h4h4dML9W2E3qKI2k/RJ1RmRLIzzJuqzJaCIIOo=;
+        b=Jl8RwHbwGBhtN9dZl2yt3PP8T1Lw2QY9QUk5gFwEXx5JJyxoMLX03TxjbpkTc1waCI
+         9XxO6+3uoq4PooOO8mAW6va1t+fsjTHnFp1++Qoov7yOXy6Ffk/BJReo7pKIRLB47ane
+         WTPIvCvwtwPV1I607+rms1wpCrt86js0t0nuc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=V2IKgBBGeWQaS3nKENTTI6oYzwqYmWY3/5vxajcyiRg=;
-        b=b2V+o4Jflz4t84z6Iz7wx9bj7r/vhVoeWxAfd+RPZPrvZKyGaCI/vaXlJGRLjBz/98
-         0oVTfTaih23t6XsNYVK2s22X/iZoxkldOrxP+2x4cj6grWrBOgfr35xJ5jVlqh2jSkXr
-         cxN9zB7M13uGmjfSKuWPoDyo0WdBGemKIQ3jq1i4vdjSxyPzvghY4v4B2J3szmEwgVbe
-         xi9mNHbt/MdrqSO0grI3ySBedFuEPTuI/XG/x3rOBB++VHFF2QmCTPPk7dtw9imGHebk
-         QXnk/ytK4cys+wM+dI4E4hazJhg3W8QBmgfAy4AmQn4ImVWYvoD/JEh+CD78d+PqO0r2
-         WUbA==
-X-Gm-Message-State: AGi0PubDvA5PK+s/B8mkOWOkBibBqjeP2PNW6Q6kWE9fdDMsVkPrrv70
-        XhFYh2F9PO+SlN40olUM3uzIsg==
-X-Google-Smtp-Source: APiQypKZLllr/ppZ5WEDGUG/MlZ92mT/85cNLs+v4f8ofGxIckLH3GUuN5fThqZIftzZJCB3DKPn+Q==
-X-Received: by 2002:a1c:ba09:: with SMTP id k9mr387758wmf.176.1588006098658;
-        Mon, 27 Apr 2020 09:48:18 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id r20sm15553355wmh.26.2020.04.27.09.48.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2020 09:48:18 -0700 (PDT)
-Date:   Mon, 27 Apr 2020 17:48:16 +0100
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     jason.wessel@windriver.com, gregkh@linuxfoundation.org,
-        kgdb-bugreport@lists.sourceforge.net, mingo@redhat.com,
-        hpa@zytor.com, bp@alien8.de, linux-serial@vger.kernel.org,
-        agross@kernel.org, tglx@linutronix.de, frowand.list@gmail.com,
-        bjorn.andersson@linaro.org, jslaby@suse.com,
-        catalin.marinas@arm.com, corbet@lwn.net, will@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 8/9] serial: qcom_geni_serial: Support earlycon_kgdboc
-Message-ID: <20200427164816.j4xqw3vvlgoqkmx7@holly.lan>
-References: <20200421211447.193860-1-dianders@chromium.org>
- <20200421141234.v2.8.If2deff9679a62c1ce1b8f2558a8635dc837adf8c@changeid>
+        bh=8g6+h4h4dML9W2E3qKI2k/RJ1RmRLIzzJuqzJaCIIOo=;
+        b=GpPg5KAn1R1+s2bOdnBIxQXlEj6biY7DQi7QsEoBGKKDMjKTNJ0GF5uSCaIs5K4Tyk
+         1C56Jzc1W4IfPaKly2xdkPv1pG+gxRkMPU8A/8/TN7FOZn7picYct8OJ8UyDm1kj9/9x
+         fHKdw6U+uQ7MPkzeJi2l4v8G4UpjZXduWUhAfvwKtMEa12O62VfVIty+vBwwbphV4Xri
+         UTdQ/5koOkQhYfh7h6aeyYPFeVPegiPwVIeV6k8PQlAf//JFIEF0QccT8LQktgBqo9+V
+         l2zdINgPvZaviGfwCloGsxhWhruJ4p7gwKm28SEkbt0bhviA1WrEy9X0yprKtw+kcvN3
+         /s5A==
+X-Gm-Message-State: AGi0PubIgmE/HJ6CN9U4knAjz3Ut5GZuHNexTwkhWYHU41CIghOJSdn1
+        Mp3hyUTnyhRaOQ2Qcn+9glQfrQ==
+X-Google-Smtp-Source: APiQypLxYauoRAtM5UuCTKW4As/J8PDpB/r8RLziPOpnx+JgWmGubSmDS7klN8ofJ0MCuKLi8Wjy6Q==
+X-Received: by 2002:a62:174a:: with SMTP id 71mr26442771pfx.297.1588006581615;
+        Mon, 27 Apr 2020 09:56:21 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 140sm11041351pge.49.2020.04.27.09.56.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Apr 2020 09:56:20 -0700 (PDT)
+Date:   Mon, 27 Apr 2020 09:56:16 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
+        rojay@codeaurora.org, msavaliy.qti.qualcomm.com@qualcomm.com
+Subject: Re: [PATCH] arm64: dts: sc7180: Add wakeup support over UART RX
+Message-ID: <20200427165616.GF4525@google.com>
+References: <1587968844-26667-1-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200421141234.v2.8.If2deff9679a62c1ce1b8f2558a8635dc837adf8c@changeid>
+In-Reply-To: <1587968844-26667-1-git-send-email-skakit@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 21, 2020 at 02:14:46PM -0700, Douglas Anderson wrote:
-> Implement the read() function in the early console driver.  With
-> recent kgdb patches this allows you to use kgdb to debug fairly early
-> into the system boot.
+Hi,
+
+On Mon, Apr 27, 2020 at 11:57:24AM +0530, satya priya wrote:
+> Add the necessary pinctrl and interrupts to make UART
+> wakeup capable.
 > 
-> We only bother implementing this if polling is enabled since kgdb
-> can't be enabled without that.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
 > ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> Changes in v2: None
-> 
->  drivers/tty/serial/qcom_geni_serial.c | 32 +++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 6119090ce045..4563d152b39e 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1090,6 +1090,36 @@ static void qcom_geni_serial_earlycon_write(struct console *con,
->  	__qcom_geni_serial_console_write(&dev->port, s, n);
->  }
->  
-> +#ifdef CONFIG_CONSOLE_POLL
-> +static int qcom_geni_serial_earlycon_read(struct console *con,
-> +					  char *s, unsigned int n)
-> +{
-> +	struct earlycon_device *dev = con->data;
-> +	struct uart_port *uport = &dev->port;
-> +	int num_read = 0;
-> +	int ch;
-> +
-> +	while (num_read < n) {
-> +		ch = qcom_geni_serial_get_char(uport);
-> +		if (ch == NO_POLL_CHAR)
-> +			break;
-> +		s[num_read++] = ch;
-> +	}
-> +
-> +	return num_read;
-> +}
-> +
-> +static void __init qcom_geni_serial_enable_early_read(struct geni_se *se,
-> +						      struct console *con)
-> +{
-> +	geni_se_setup_s_cmd(se, UART_START_READ, 0);
-> +	con->read = qcom_geni_serial_earlycon_read;
-> +}
-> +#else
-> +static inline void qcom_geni_serial_enable_early_read(struct geni_se *se,
-> +						      struct console *con) { ; }
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 4216b57..3a49603 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -637,9 +637,12 @@
+>  				reg = <0 0x0088c000 0 0x4000>;
+>  				clock-names = "se";
+>  				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
+> -				pinctrl-names = "default";
+> +				pinctrl-names = "default", "sleep";
+>  				pinctrl-0 = <&qup_uart3_default>;
+> -				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
+> +				pinctrl-1 = <&qup_uart3_default>;
 
-This is pure nitpicking but since I was passing... why the ; ?
+Why is the 'sleep' configuration needed if it's the same as 'default'?
 
+> +				interrupts-extended =
+> +					<&intc GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>,
+> +					<&tlmm 41 0>;
+>  				status = "disabled";
+>  			};
 
-Daniel.
+This patch only adds wakeup support for uart3, which seems an arbitrary
+choice at SoC level. Either it should do it for all UARTs of the SC7180,
+or in the .dtsi of devices that use UART3 and need it to be wakeup capable.
