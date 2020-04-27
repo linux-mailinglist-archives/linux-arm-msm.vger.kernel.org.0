@@ -2,143 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A55C1BAF88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 22:32:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA7041BB0C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 23:51:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgD0UcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 16:32:20 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:62031 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726678AbgD0UcU (ORCPT
+        id S1726279AbgD0Vvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 17:51:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47438 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726257AbgD0Vvw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 16:32:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588019539; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=kNapMrLPfWyqq3saA7ayYBf3t2HHIt3ns1o+JIh4q4U=; b=mqpKFqXZwCZTxPH8rN2siXt2MNOMba6KhGI+IpoSYxG6pfbp2U4Zqd2RWnX7QjDXWJpo502g
- MA5odlR1fBIrY+t8kOCFJI8nk3rCKROpa1GIgng9CHfivKDUaNxSRJQ2oANpxVB/IFj8zrrX
- VVxS6Yjp2ZzWWCOqOHLsTos4BPA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea7413d.7f0d1ef71030-smtp-out-n03;
- Mon, 27 Apr 2020 20:31:57 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BEBEFC4478F; Mon, 27 Apr 2020 20:31:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.78.22] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C2DA4C433D2;
-        Mon, 27 Apr 2020 20:31:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C2DA4C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH] phy: qcom-snps: Add runtime suspend and resume handlers
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1587662818-4461-1-git-send-email-wcheng@codeaurora.org>
- <20200427165919.GR56386@vkoul-mobl.Dlink>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <4ce39b01-ddf3-7a5b-9ac4-659ff4362fcd@codeaurora.org>
-Date:   Mon, 27 Apr 2020 13:31:55 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Mon, 27 Apr 2020 17:51:52 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B738CC03C1A8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 14:51:52 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id h69so9296867pgc.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 14:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2US+UFErdQz+/2WUCZdQSrynGNoBUJIwL6mFZZjO4Zk=;
+        b=R/EIr+RRamTRbKEAIuBhHKtxaZewTjKE+LoWnkc6pD9eXhURKoBWUI4TmJyQusVmxP
+         jOByzuGCKpFdP9gc4/+Qkuces3cOPbZGbpK8Xb0bGwpey/X184pwhchY4wkJaj1Ja18d
+         ezEjZlzbb/RPusZpc4a8A7uzoMB90e2nYlB6QmhrB/GCOW5qjRYmeC4clKzYjjTQJz62
+         A5LU5tKEnL0jix2gPrIJMSTx2tQpcWR8K5FQRSml2SIT/K/F0hI2tj/EiZYa27s6232T
+         0q3JFgy7tEtWSEeVAMXJtCJAgPIoeElTBbGf6s68t3zak1GwAXvtYfIeSsJPxgZGokhg
+         vmeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2US+UFErdQz+/2WUCZdQSrynGNoBUJIwL6mFZZjO4Zk=;
+        b=kB61GTeQeknYStA574OR1mXxNWdHP4qUw2kaiOVeXDD2aolRtSsJ3ztZGSLryP90Ir
+         Ql4XMlQN0ol4J+V0vWf6amkjJWGHF6jufgyqtpW51nXCcrV9kd9q9akA5gb+p4BG9tqe
+         PkDv4C+ZAHN/ujzPcDK4PAAdCAE6pF/qDfN8H7Y5iPNxXUguREVSCuaMLjS73VPvOTS7
+         3Y9Wn8GaFYq46UwdWOFSue76GKvlwv0MQ2h9win9J8Tz4dHg+uvsXKORKri6fw8l9hqb
+         QtSR9PBXfsUAxwlk7Xc0NiSggkuHVrWa6rtiwmhqN+HKQIc8xZ2oJr6ybb556Z0FApL8
+         aVCQ==
+X-Gm-Message-State: AGi0PuaPs2627Iw+mInlD/VRXyYL/CcK89kq040hKqd21c3RgW3MzS+d
+        +GB5kTDC3SfCrKmyhNZxwGKxlg==
+X-Google-Smtp-Source: APiQypI9w3mN/5nhDZ6PT2DjOc9Txq+MTciQT5JDWxwj7p1+7MIALxUJUUbrsUd/RNQXKiPBr/2zFg==
+X-Received: by 2002:a63:241:: with SMTP id 62mr5334082pgc.38.1588024311660;
+        Mon, 27 Apr 2020 14:51:51 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id j5sm4153876pfh.58.2020.04.27.14.51.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Apr 2020 14:51:50 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8250-mtp: Drop PM8150 ldo11
+Date:   Mon, 27 Apr 2020 14:51:17 -0700
+Message-Id: <20200427215117.2900139-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-In-Reply-To: <20200427165919.GR56386@vkoul-mobl.Dlink>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+PM8150 ldo11 on the MTP is wired to VDD_SSC_CX and controlled in levels,
+rather than as a regulator. As such it's available from the rpmhpd as
+the SM8250_LCX power domain.
 
+Fixes: ec13d5c23a33 ("arm64: dts: qcom: sm8250-mtp: Add pm8150, pm8150l and pm8009")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 7 -------
+ 1 file changed, 7 deletions(-)
 
-On 4/27/2020 9:59 AM, Vinod Koul wrote:
-> On 23-04-20, 10:26, Wesley Cheng wrote:
-> 
->> +static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
->> +{
->> +	if (hsphy->suspended)
->> +		return 0;
->> +
->> +	dev_dbg(&hsphy->phy->dev, "Suspend QCOM SNPS PHY, mode = %d \n", hsphy->mode);
->> +
->> +	if (hsphy->mode == PHY_MODE_USB_HOST) {
->> +		/* Enable auto-resume to meet remote wakeup timing */
->> +		qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL2,
->> +										USB2_AUTO_RESUME, USB2_AUTO_RESUME);
->> +		usleep_range(500, 1000);
->> +		qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL2,
->> +										0, USB2_AUTO_RESUME);
-> 
-> Kernel has a coding guideline where we try to "stick" to 80 char limit
-> and is sometimes okay like debug logs. Above is not okay. Please fix it
-> and run ./scripts/checkpatch.pl --strict on your patch and fix all
-> errors. Warning and checks at your discretion using common sense. When
-> in doubt do ask :)
-> 
-
-Hi Vinod,
-
-Thanks for the input.  I do run the checkpatch script before sending
-patches, and addressing the errors.  However, seems this was tagged as a
-warning instead.  Will keep in mind to address as many warnings as I can
-as well.
-
->> +	}
->> +
->> +	clk_disable_unprepare(hsphy->cfg_ahb_clk);
->> +	hsphy->suspended = true;
-> 
-> why do you need to track this?
-> 
-
-More for debug purposes in case the RPM state becomes out of sync with
-the expected PHY state.  We've seen some situations during PM
-suspend/resume testing where our RPM routines aren't executed, as PM
-will disable RPM briefly.  It would be nice to be able to catch these
-situations after collecting our crash dumps.
-
->> +
->> +	return 0;
->> +}
->> +
->> +static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
->> +{
->> +	int ret = 0;
-> 
-> superfluous init..
-> 
-
-Agreed.
-
->>  static int qcom_snps_hsphy_probe(struct platform_device *pdev)
->>  {
->>  	struct device *dev = &pdev->dev;
->> @@ -251,6 +333,14 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
->>  		return ret;
->>  	}
->>  
->> +	pm_runtime_set_active(dev);
->> +	pm_runtime_enable(dev);
-> 
-> would it not make sense to enable this after pjy in initialized?
-> 
-
-Not sure we want to put this in the phy_init() callback, as we can't
-guarantee how the driver registering the PHY will use it. It'll put the
-requirement of having to call phy_exit() for every phy_init() sequence,
-in order to avoid unbalanced disable_depth warnings from the RPM driver.
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+index e9acda9f5b83..0c6b936be471 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+@@ -136,13 +136,6 @@ vreg_l10a_1p8: ldo10 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+-		vreg_l11a_0p75: ldo11 {
+-			regulator-name = "vreg_l11a_0p75";
+-			regulator-min-microvolt = <800000>;
+-			regulator-max-microvolt = <800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+ 		vreg_l12a_1p8: ldo12 {
+ 			regulator-name = "vreg_l12a_1p8";
+ 			regulator-min-microvolt = <1800000>;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.24.0
+
