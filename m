@@ -2,130 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C6C01BA4B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 15:28:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D2E71BA543
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 15:44:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726821AbgD0N2W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 09:28:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52814 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726769AbgD0N2U (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 09:28:20 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81CEDC0610D5;
-        Mon, 27 Apr 2020 06:28:20 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id e6so7437764pjt.4;
-        Mon, 27 Apr 2020 06:28:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GHn5LhhRmzy3sndf78S27qfruwCqi4o/1SdzUaUG+CY=;
-        b=P/eSHGWJI1R3+uwssq2jpcVpDs0STyTfYIjS/6fMuUcoKIU0mq5NqPzlrT8vwwPNAW
-         uWttoIiLsdjqqVFUgcTi1GYSStxqdgmYStqY38agWPApHa+cK/4u2CfH0yRl5SFqVKAv
-         Lr1F/A+HFTmbHrP9nKai236DFWbk6CzIXm1hXRwW7lDktn98mx6HZrofcjh1rRx6lsJT
-         5QegEpUU99h1j5Krd1SLd4YTii50H5tDTxxsdTW5OcElutDBV78VY0szJ6Ogjodm/e59
-         5IkNZ0WklVmQIYsgXD2jWRDMIdKvEsuK5EAhTmM8MChcBuQ0SzdZHqGBhH++PbTkQ3VE
-         jtaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GHn5LhhRmzy3sndf78S27qfruwCqi4o/1SdzUaUG+CY=;
-        b=aeK8Uyr/6fN8u276LP1T5Tu4GaSG9EQTALOBVALSRKahmR60h+1hNTZA7F+P0IgFyb
-         pemHGld97av8l/DmPcblVX/HCJadbfkk/Nbd40K4aJWoDNuCtfpQCXQAohz4EHq8vrip
-         hNkQC7h3wmCPd8/bbZfa2XUVUO6H+KpjsEgK0XE99/y62/Fr3k0KQLZKKLZGRw9gD5wo
-         hj+DK23z7ATcXmNFUWZ072uwmyW8StWMxMn8zgvSaHOdG0+X8W7/4Bh7hXZeFJtzu6Og
-         e8Q9LTD09DqhsV6HkVb/NrcNiz0G6VRCd9dfkgo79+mAeKnrKZD5aSTMKz8HiQ8hj2v4
-         EZ0g==
-X-Gm-Message-State: AGi0PuZsafI9WR+z9hj4BzqbM8g3TidQJ2iQ3W5bfT4ME6S2GQ1ca63V
-        95+xfBnCn9ZHHSurY0gMcfCQUMm5a+CY/AMpGts=
-X-Google-Smtp-Source: APiQypLM5+dnAYGRYo/miUr0skkS1pXmKokJxMTF2OxcJbjIgqi5/Xf//ExfkwcwyxPjQWzVN+J/SlG8Ed/n4uKxqo8=
-X-Received: by 2002:a17:90a:364c:: with SMTP id s70mr23246347pjb.143.1587994099840;
- Mon, 27 Apr 2020 06:28:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <1586942266-21480-1-git-send-email-jprakash@codeaurora.org>
- <1586942266-21480-4-git-send-email-jprakash@codeaurora.org>
- <CAHp75VegoXJmi1rDg_-ePKqoo69Jdt7NBchCTE=bPAdJqrgYQQ@mail.gmail.com> <68d9c770-b190-dd13-0869-fdae9fb1f16f@codeaurora.org>
-In-Reply-To: <68d9c770-b190-dd13-0869-fdae9fb1f16f@codeaurora.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Mon, 27 Apr 2020 16:28:13 +0300
-Message-ID: <CAHp75Vdu4HvaTg5ij=DFhwn=y_JCb9ae9L5-iV72Zk-k9CBHuw@mail.gmail.com>
-Subject: Re: [PATCH V2 3/3] iio: adc: Add support for PMIC7 ADC
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        smohanad@codeaurora.org, kgunda@codeaurora.org,
-        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org,
-        linux-iio <linux-iio@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1727850AbgD0NoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 09:44:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60758 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727834AbgD0NoM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Apr 2020 09:44:12 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8A25B206B6;
+        Mon, 27 Apr 2020 13:44:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1587995052;
+        bh=OhxRsSwwdvnGxdpaeF4FzeJ/8kd+1iigCwEMEzTAriA=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=b/spQsEs9VVzo3Kdr0A9ZLsBkBHmawqed3tSX6DJ3TLn/CcAHoS3m2q2UcWkVhu3T
+         SPec862zYs/vJjVWrhth2UKYCna5yxChwTIzCKwKCHx03Wfjrv/18KT3Y8HsX71lcg
+         iMOSVJwmPKRiWrBHIw9y+yQ7So4KryOoD8x4ooMg=
+Date:   Mon, 27 Apr 2020 14:44:09 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+In-Reply-To: <20200425125335.2674534-1-iskren.chernev@gmail.com>
+References: <20200425125335.2674534-1-iskren.chernev@gmail.com>
+Subject: Re: [PATCH] regulator: max77826: Remove erroneous additionalProperties
+Message-Id: <158799504950.16924.8566981464657105053.b4-ty@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 27, 2020 at 3:56 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
-> On 4/17/2020 3:51 PM, Andy Shevchenko wrote:
-> On Thu, Apr 16, 2020 at 1:48 AM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+On Sat, 25 Apr 2020 15:53:35 +0300, Iskren Chernev wrote:
+> In this particular location additionalProperties actually declares a property
+> named `additionalProperties` instead of specifying there should be no other
+> properties.
+> 
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> ---
+> Fix bindings documentation for max77826 regulator as discussed in
+> https://lore.kernel.org/lkml/20200413164440.1138178-1-iskren.chernev@gmail.com/T/#m9e9904560e68bcd98980fa0e68fe190525033af6
+> 
+> [...]
 
-Stop using HTML. It breaks badly the reply and discussion.
+Applied to
 
-...
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.8
 
-> +static const struct adc5_data adc7_data_pmic;
->
-> Global variable? Hmm...
->
-> adc7_data_pmic is referenced twice before its actual definition (which was added along with corresponding adc5_data struct for PMIC5 ADC), so I have given the initial declaration here.
+Thanks!
 
-Maybe you can realize how to avoid global variable at all?
+[1/1] regulator: max77826: Remove erroneous additionalProperties
+      commit: 48dd1a7938e37d6d6414a20266394f858b37f10a
 
-...
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-> +       buf[1] &= 0xff & ~ADC5_USR_FAST_AVG_CTL_SAMPLES_MASK;
->
-> What the point of 0xff & part?
->
-> This was something you suggested in my first post:
->
-> > +       buf[1] &= (u8) ~ADC5_USR_FAST_AVG_CTL_SAMPLES_MASK;
->
-> Use '0xFF ^ _MASK' instead of casting.
->
-> ...
->
-> > +       buf[3] &= (u8) ~ADC5_USR_HW_SETTLE_DELAY_MASK;
->
-> Ditto.
->
-> I think "0xff &" works as intended here in place of casting to (u8)...
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Does it work without casting? (Note, I suggested slightly different expression)
-I.o.w. what the problem casting solves?
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-> +       buf[1] |= prop->avg_samples;
-> +
-> +       /* Select ADC channel */
-> +       buf[2] = prop->channel;
-> +
-> +       /* Select HW settle delay for channel */
-> +       buf[3] &= 0xff & ~ADC5_USR_HW_SETTLE_DELAY_MASK;
->
-> Ditto.
->
-> +       buf[3] |= prop->hw_settle_time;
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-
--- 
-With Best Regards,
-Andy Shevchenko
+Thanks,
+Mark
