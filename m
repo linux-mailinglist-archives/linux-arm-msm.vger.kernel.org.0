@@ -2,84 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03E031BB1A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 00:49:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A17181BB1D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 01:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbgD0Wt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 18:49:56 -0400
-Received: from aserp2120.oracle.com ([141.146.126.78]:32808 "EHLO
-        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726204AbgD0Wtz (ORCPT
+        id S1726303AbgD0XJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 19:09:23 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:44224 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726204AbgD0XJW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 18:49:55 -0400
-Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
-        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03RMmne9073051;
-        Mon, 27 Apr 2020 22:49:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=corp-2020-01-29;
- bh=oVk8zwrCCyRVmyAmlLHAB42v5Wo3dr+BdvPGt8M+b5c=;
- b=hQwP0xWEjPM4LuTak6zdQr3K5KVk9tbSy6vMxMSn1cyor61nF8zUouHexJo1Bx/QiZOn
- HHPQq+Bquce/nH96nYf6JvVlfa45p0/yz2JeI+cZV6aysWnpsgPWqVjWL9Z7gxw+Ovnh
- EhqOF8ckzP3ui+D6jFqWvoTLbSFNqs8UiY5ibQ0oeLH8Gz5lDG/cAYEmjEI9NcQgo23n
- b1ZCQqFOmdaaldY7ort2cKB8Z+L4Kpbs3ZV7IjPeHcWg8MuC1Uorla8ElI1TOFeDuvYK
- NAuurCEMbSaOwdr2F6PuVpcsXVI4pCr/TyyO0TBepDJESOPxsYXt5rOU/zMWFee5OQCa Rw== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-        by aserp2120.oracle.com with ESMTP id 30nucfvfy2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 27 Apr 2020 22:49:53 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03RMc9oW100402;
-        Mon, 27 Apr 2020 22:49:52 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-        by aserp3030.oracle.com with ESMTP id 30mxrr6v27-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 27 Apr 2020 22:49:52 +0000
-Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
-        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 03RMnpOk022303;
-        Mon, 27 Apr 2020 22:49:51 GMT
-Received: from ca-mkp.ca.oracle.com (/10.156.108.201)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Mon, 27 Apr 2020 15:49:51 -0700
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     cang@codeaurora.org, linux-scsi@vger.kernel.org,
-        Avri.Altman@wdc.com, Asutosh Das <asutoshd@codeaurora.org>
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v1 0/3] WriteBooster Feature Support
-Date:   Mon, 27 Apr 2020 18:49:47 -0400
-Message-Id: <158802757520.27023.18369609870776656823.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <cover.1586374414.git.asutoshd@codeaurora.org>
-References: <cover.1586374414.git.asutoshd@codeaurora.org>
+        Mon, 27 Apr 2020 19:09:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588028962; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=oMxZb5I+GDPuJhllgcs2iwGmqgsZIZTUBZ0afvMS0fU=;
+ b=NaNtYfuXRxYXeNZ40LvF7lycdRUsTfg2uYe2MwvxHA8BK/y/ynAK7YB7aWTkbQShhUBceQH6
+ 5iCvCgsduzRy/Npjqzk0gNItd5Cuj3HPwgToKOAnA24dIBEPKEDssw8MwjT6v3buGDqcxdx6
+ pTwY9arSivknFXeTzPC1QCDoUrI=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea76613.7fdbc1aff998-smtp-out-n03;
+ Mon, 27 Apr 2020 23:09:07 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 10FD8C432C2; Mon, 27 Apr 2020 23:09:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tanmay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6377CC433CB;
+        Mon, 27 Apr 2020 23:09:06 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9604 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 phishscore=0 suspectscore=0
- mlxlogscore=825 malwarescore=0 bulkscore=0 spamscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004270185
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9604 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015 priorityscore=1501
- mlxlogscore=896 impostorscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 mlxscore=0 spamscore=0 adultscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004270185
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 27 Apr 2020 16:09:06 -0700
+From:   tanmay@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+        seanpaul@chromium.org, abhinavk@codeaurora.org,
+        varar@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org,
+        dri-devel <dri-devel-bounces@lists.freedesktop.org>
+Subject: Re: [PATCH 1/2] dt-bindings: msm: disp: Add Display Port HPD GPIO
+ bindings
+In-Reply-To: <20200415152439.GA9882@bogus>
+References: <1586299709-14222-1-git-send-email-tanmay@codeaurora.org>
+ <20200415152439.GA9882@bogus>
+Message-ID: <7fb3a6c19c244c4a37bded7cd249a1f8@codeaurora.org>
+X-Sender: tanmay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 8 Apr 2020 14:48:38 -0700, Asutosh Das wrote:
+Thanks Rob for reviews.
 
-Applied to 5.8/scsi-queue, thanks!
+We are using Display Port Controller block to detect hot plug.
+So we won't be using that pin as GPIO.
 
-[1/3] scsi: ufs: Add write booster feature support
-      https://git.kernel.org/mkp/scsi/c/3d17b9b5ab11
-[2/3] scsi: ufs: sysfs: Add sysfs entries for write booster
-      https://git.kernel.org/mkp/scsi/c/c14e7adf3a6a
-[3/3] scsi: ufs-qcom: Configure write booster type
-      https://git.kernel.org/mkp/scsi/c/04ee8a01abf8
+I found now that we don't need any bindings for that pin in such case.
+So I am abandoning this patch series and upload new patch.
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Thanks.
+
+On 2020-04-15 08:24, Rob Herring wrote:
+> On Tue, Apr 07, 2020 at 03:48:28PM -0700, Tanmay Shah wrote:
+>> Add Display Port HPD GPIO description in bindings
+>> 
+>> This Patch depends on:
+>> 	https://patchwork.kernel.org/patch/11468505/
+> 
+> This belongs below the '---' and probably means you should send all 
+> this
+> as one series.
+> 
+>> 
+>> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+>> ---
+>>  Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml | 7
+> +++++++
+>>  1 file changed, 7 insertions(+)
+>> 
+>> diff --git
+> a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+> b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+>> index 761a01d..003f5f7 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+>> @@ -155,6 +155,11 @@ properties:
+>>       data-lanes:
+>>         description: Maximum number of lanes that can be used for
+> Display port.
+>> 
+>> +     dp-hpd-gpio:
+> 
+> We already have a standard property for this. Use it.
+> 
+> It belongs in the connector node as HPD is part of the connector.
+> 
+>> +       maxItems: 1
+>> +       description: Specifies HPD gpio for DP connector without
+>> +                    USB PHY or AUX switch.
+>> +
+>>       usbplug-cc-gpio:
+> 
+> Note that this too should be in a connector node.
+> 
+>>         maxItems: 1
+>>         description: Specifies the usbplug orientation gpio.
+>> @@ -282,6 +287,8 @@ examples:
+>>          aux-sel-gpio = <&msmgpio 110 1>;
+>>          usbplug-cc-gpio = <&msmgpio 90 1>;
+>> 
+>> +        dp-hpd-gpio = <&msmgpio 117 0>;
+>> +
+>>          ports {
+>>              #address-cells = <1>;
+>>              #size-cells = <0>;
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+> Forum,
+>> a Linux Foundation Collaborative Project
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
