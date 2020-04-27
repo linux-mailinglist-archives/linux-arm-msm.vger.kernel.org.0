@@ -2,95 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29DC71BAA92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 18:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB6CB1BAB94
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 19:46:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726257AbgD0Q7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 12:59:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36842 "EHLO mail.kernel.org"
+        id S1726228AbgD0RqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 13:46:03 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54150 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726030AbgD0Q7Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 12:59:25 -0400
-Received: from localhost (unknown [171.76.79.70])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726226AbgD0RqD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Apr 2020 13:46:03 -0400
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8EDD2206B9;
-        Mon, 27 Apr 2020 16:59:24 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CCAA621775;
+        Mon, 27 Apr 2020 17:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588006765;
-        bh=/dqFyvgTMr7/GP4hysHTzeyCgcVIbSNQGjRnh7yYytk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ItM+qEI46/NGazMa3t/sxUsrW0dOpgOGRdxhfenznQYkIPv7iu2aMVvRdW77ExxDa
-         k0ItWZ8tZ/4/wqYC1lzTh7JnEH5gWCvqao4usBSJGu1w6YjogIqoq4Fv4xpucK/WG8
-         sQFfgIOn7svWAecOjefan+HfthYwCuzzh9QyAGuU=
-Date:   Mon, 27 Apr 2020 22:29:19 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom-snps: Add runtime suspend and resume handlers
-Message-ID: <20200427165919.GR56386@vkoul-mobl.Dlink>
-References: <1587662818-4461-1-git-send-email-wcheng@codeaurora.org>
+        s=default; t=1588009562;
+        bh=iF9YmvJqlTOPV6QEo1ch3u7PI0qsz6iUbUvNWthAYms=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=x5dT7bls/3QJn+I9NbWzFlG6FHclIlFs0dMqD5tSRm8dQv0gBaJ4/72TXlkHbf0kb
+         5JDD4w1fIgId0fi//oLcPdvIffq0NDHGy0/8f7NlxLYtrTIJIvLtveFzXAIaaFbQMa
+         kbfuHB2JKD+TyBrwC58U+aB0tbjo5/LEOt5HXqfM=
+Received: by mail-yb1-f172.google.com with SMTP id o139so9891403ybc.11;
+        Mon, 27 Apr 2020 10:46:02 -0700 (PDT)
+X-Gm-Message-State: AGi0PuauBr6AQeTzL2HsNKdxN76/MrNIVzrVim/JmvLEVxEn5U97W+QQ
+        sjcxAxJ9PEokUyEsAS1VKL+cUmHgkF8t/yHSUQ==
+X-Google-Smtp-Source: APiQypJCjp0sKkH8wsvV7TRTZ+Y5WfstmylSaK6ab9MlcQ1t5UeAxbE4A4p6/U7DdUD81SjmmMDCkQIJah8HRlmHtgQ=
+X-Received: by 2002:a25:281:: with SMTP id 123mr37843786ybc.358.1588009561921;
+ Mon, 27 Apr 2020 10:46:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1587662818-4461-1-git-send-email-wcheng@codeaurora.org>
+References: <20200422201216.10593-1-ansuelsmth@gmail.com> <20200422201216.10593-2-ansuelsmth@gmail.com>
+ <CAL_JsqLUbM7ed2q7so4Uibiz2URRg1juoGRExy9Ta3J-LWAFow@mail.gmail.com>
+ <087301d61a86$68b6f950$3a24ebf0$@gmail.com> <20200427034951.xrk5ja3pg4anbg4s@vireshk-i7>
+ <016c01d61c80$ba1358b0$2e3a0a10$@gmail.com>
+In-Reply-To: <016c01d61c80$ba1358b0$2e3a0a10$@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 27 Apr 2020 12:45:49 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKu15CQu4pP6uyrUvYk3xZVWwUu=86CE5yDHPx7cSKdTw@mail.gmail.com>
+Message-ID: <CAL_JsqKu15CQu4pP6uyrUvYk3xZVWwUu=86CE5yDHPx7cSKdTw@mail.gmail.com>
+Subject: Re: R: [PATCH v2 2/2] dt-bindings: opp: Fix wrong binding in qcom-nvmem-cpufreq
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:THERMAL" <linux-pm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-04-20, 10:26, Wesley Cheng wrote:
+On Mon, Apr 27, 2020 at 5:43 AM <ansuelsmth@gmail.com> wrote:
+>
+> > On 25-04-20, 00:19, ansuelsmth@gmail.com wrote:
+> > > > On Wed, Apr 22, 2020 at 3:12 PM Ansuel Smith
+> > <ansuelsmth@gmail.com>
+> > > > wrote:
+> > > > >
+> > > > > Update binding to new generic name "operating-points-v2-qcom-cpu"
+> > > > >
+> > > > > Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based
+> > socs")
+> > > > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > > > ---
+> > > > >  Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt |
+> > 2
+> > > > +-
+> > > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/Documentation/devicetree/bindings/opp/qcom-nvmem-
+> > > > cpufreq.txt b/Documentation/devicetree/bindings/opp/qcom-nvmem-
+> > > > cpufreq.txt
+> > > > > index 64f07417ecfb..537e1774f589 100644
+> > > > > --- a/Documentation/devicetree/bindings/opp/qcom-nvmem-
+> > cpufreq.txt
+> > > > > +++ b/Documentation/devicetree/bindings/opp/qcom-nvmem-
+> > > > cpufreq.txt
+> > > > > @@ -19,7 +19,7 @@ In 'cpu' nodes:
+> > > > >
+> > > > >  In 'operating-points-v2' table:
+> > > > >  - compatible: Should be
+> > > > > -       - 'operating-points-v2-kryo-cpu' for apq8096, msm8996,
+> > msm8974,
+> > > > > +       - 'operating-points-v2-qcom-cpu' for apq8096, msm8996,
+> > > > msm8974,
+> > > > >                                              apq8064, ipq8064,
+> msm8960 and ipq8074.
+> > > >
+> > > > This is not how you fix the backwards compatibility issue pointed out
+> > > > on the Fixes reference.
+> > > >
+> > > > Rob
+> > >
+> > > Sorry but can you give some directive? Should I use the old binding and
+> > change
+> > > the driver to use it instead of the new one (and drop it) ?
+> >
+> > It is not about the name of the binding, you can rename it to whatever
+> > you want. The kernel needs to keep supporting all the previous
+> > bindings, so we can keep on changing the kernel but keep the same
+> > bootloader (with earlier bindings).
+> >
+> > --
+> > viresh
+>
+> Ok but still I can't understand why this is not right.
+> In 1/2 of this patchset I added the check for the old binding in the driver
 
-> +static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
-> +{
-> +	if (hsphy->suspended)
-> +		return 0;
-> +
-> +	dev_dbg(&hsphy->phy->dev, "Suspend QCOM SNPS PHY, mode = %d \n", hsphy->mode);
-> +
-> +	if (hsphy->mode == PHY_MODE_USB_HOST) {
-> +		/* Enable auto-resume to meet remote wakeup timing */
-> +		qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL2,
-> +										USB2_AUTO_RESUME, USB2_AUTO_RESUME);
-> +		usleep_range(500, 1000);
-> +		qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL2,
-> +										0, USB2_AUTO_RESUME);
+I don't have patch 1 and this patch should stand on it's own.
 
-Kernel has a coding guideline where we try to "stick" to 80 char limit
-and is sometimes okay like debug logs. Above is not okay. Please fix it
-and run ./scripts/checkpatch.pl --strict on your patch and fix all
-errors. Warning and checks at your discretion using common sense. When
-in doubt do ask :)
+> and
+> here I updated the Documentation with the new one. This way the kernel
+> should support all the previous bindings and I can use the new better name.
 
-> +	}
-> +
-> +	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-> +	hsphy->suspended = true;
+First, a compatible string is just an identifier. Maybe it wasn't the
+best name, but who cares really. Just use it even if it's not just
+kryo cpus. Otherwise, it's more complicated.
 
-why do you need to track this?
+Are you changing every dts file? If not, then dts files now have an
+undocumented compatible string which is not okay. You'd need to keep
+the old compatible and mark it deprecated. If you are, then you are
+breaking compatibility between new dts and older kernels unless adding
+the new compatible string to the driver is backported to stable (which
+should be okay).
 
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
-> +{
-> +	int ret = 0;
-
-superfluous init..
-
->  static int qcom_snps_hsphy_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
-> @@ -251,6 +333,14 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
->  		return ret;
->  	}
->  
-> +	pm_runtime_set_active(dev);
-> +	pm_runtime_enable(dev);
-
-would it not make sense to enable this after pjy in initialized?
-
--- 
-~Vinod
+Rob
