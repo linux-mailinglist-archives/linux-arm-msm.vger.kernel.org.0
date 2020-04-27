@@ -2,120 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D48EF1BAA3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 18:45:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE66E1BAA55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 18:48:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726194AbgD0QpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 12:45:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59160 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725963AbgD0QpU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 12:45:20 -0400
-Received: from localhost (unknown [171.76.79.70])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 68DA0206D9;
-        Mon, 27 Apr 2020 16:45:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588005920;
-        bh=HQGfAja2rJ6tyBFd7iZNONvuPgYmUPhKQCqiJIZ0BlA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Xzlbn+/rAZkVD3vyFds6UKBjLoLGjModPNllFHhNZDkEgS39vG+qdWwpWnbsSDskK
-         pznWxE0Uco91kl+/FLdEV9VAI8l+ezAah0yDdb0MMNqvxYyKr2SF4IGQQHBVB/hsVz
-         /LxlGZuwpTCDIfUbUsT8st6PQA2gSg8e7V2mQPMo=
-Date:   Mon, 27 Apr 2020 22:15:14 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        devicetree@vger.kernel.org, John Crispin <john@phrozen.org>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: Re: [PATCH v6 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
-Message-ID: <20200427164514.GQ56386@vkoul-mobl.Dlink>
-References: <20200401163542.83278-1-robert.marko@sartura.hr>
+        id S1726400AbgD0QsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 12:48:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55974 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726401AbgD0QsU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Apr 2020 12:48:20 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0481C03C1A7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 09:48:19 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id z6so391704wml.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 09:48:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=V2IKgBBGeWQaS3nKENTTI6oYzwqYmWY3/5vxajcyiRg=;
+        b=PW927SF/uC1q91VoVVYQ+1pXnGZTfNMH4wSEMOjVR2xohzu4yp9PaN8dJxdTffySOX
+         Xg90snZYIfR+VLNbsD+aeBooFQY9hW3NEw/9WC8Ikg8Ua3CdX9GPiZdqolNYOZDjbOgW
+         8nMoVwWgXPDSdBzjyuD773mLMsMK2wxXf5mig/QQUsR9SZEmYcZxvhi1gOQNi/fBDetD
+         M2sOiHVkryGE0+k9XDDGVVwPrq/CFRbfFGAFfPhRys7RrcFrr1jI8b4rEFcrFjBdPlG+
+         ClCJmIQPMDJNb+VxjUwfW0rLYaSZQtSlHUpG3wiJ9Of7PaDg2cLwtlVdadaEVGFXiIoU
+         E5bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=V2IKgBBGeWQaS3nKENTTI6oYzwqYmWY3/5vxajcyiRg=;
+        b=b2V+o4Jflz4t84z6Iz7wx9bj7r/vhVoeWxAfd+RPZPrvZKyGaCI/vaXlJGRLjBz/98
+         0oVTfTaih23t6XsNYVK2s22X/iZoxkldOrxP+2x4cj6grWrBOgfr35xJ5jVlqh2jSkXr
+         cxN9zB7M13uGmjfSKuWPoDyo0WdBGemKIQ3jq1i4vdjSxyPzvghY4v4B2J3szmEwgVbe
+         xi9mNHbt/MdrqSO0grI3ySBedFuEPTuI/XG/x3rOBB++VHFF2QmCTPPk7dtw9imGHebk
+         QXnk/ytK4cys+wM+dI4E4hazJhg3W8QBmgfAy4AmQn4ImVWYvoD/JEh+CD78d+PqO0r2
+         WUbA==
+X-Gm-Message-State: AGi0PubDvA5PK+s/B8mkOWOkBibBqjeP2PNW6Q6kWE9fdDMsVkPrrv70
+        XhFYh2F9PO+SlN40olUM3uzIsg==
+X-Google-Smtp-Source: APiQypKZLllr/ppZ5WEDGUG/MlZ92mT/85cNLs+v4f8ofGxIckLH3GUuN5fThqZIftzZJCB3DKPn+Q==
+X-Received: by 2002:a1c:ba09:: with SMTP id k9mr387758wmf.176.1588006098658;
+        Mon, 27 Apr 2020 09:48:18 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id r20sm15553355wmh.26.2020.04.27.09.48.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Apr 2020 09:48:18 -0700 (PDT)
+Date:   Mon, 27 Apr 2020 17:48:16 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     jason.wessel@windriver.com, gregkh@linuxfoundation.org,
+        kgdb-bugreport@lists.sourceforge.net, mingo@redhat.com,
+        hpa@zytor.com, bp@alien8.de, linux-serial@vger.kernel.org,
+        agross@kernel.org, tglx@linutronix.de, frowand.list@gmail.com,
+        bjorn.andersson@linaro.org, jslaby@suse.com,
+        catalin.marinas@arm.com, corbet@lwn.net, will@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 8/9] serial: qcom_geni_serial: Support earlycon_kgdboc
+Message-ID: <20200427164816.j4xqw3vvlgoqkmx7@holly.lan>
+References: <20200421211447.193860-1-dianders@chromium.org>
+ <20200421141234.v2.8.If2deff9679a62c1ce1b8f2558a8635dc837adf8c@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200401163542.83278-1-robert.marko@sartura.hr>
+In-Reply-To: <20200421141234.v2.8.If2deff9679a62c1ce1b8f2558a8635dc837adf8c@changeid>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Robert,
-
-On 01-04-20, 18:35, Robert Marko wrote:
-
-> +static int ipq4019_ss_phy_power_on(struct phy *_phy)
+On Tue, Apr 21, 2020 at 02:14:46PM -0700, Douglas Anderson wrote:
+> Implement the read() function in the early console driver.  With
+> recent kgdb patches this allows you to use kgdb to debug fairly early
+> into the system boot.
+> 
+> We only bother implementing this if polling is enabled since kgdb
+> can't be enabled without that.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+> Changes in v2: None
+> 
+>  drivers/tty/serial/qcom_geni_serial.c | 32 +++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+> 
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 6119090ce045..4563d152b39e 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1090,6 +1090,36 @@ static void qcom_geni_serial_earlycon_write(struct console *con,
+>  	__qcom_geni_serial_console_write(&dev->port, s, n);
+>  }
+>  
+> +#ifdef CONFIG_CONSOLE_POLL
+> +static int qcom_geni_serial_earlycon_read(struct console *con,
+> +					  char *s, unsigned int n)
 > +{
-> +	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
+> +	struct earlycon_device *dev = con->data;
+> +	struct uart_port *uport = &dev->port;
+> +	int num_read = 0;
+> +	int ch;
 > +
-> +	ipq4019_ss_phy_power_off(_phy);
+> +	while (num_read < n) {
+> +		ch = qcom_geni_serial_get_char(uport);
+> +		if (ch == NO_POLL_CHAR)
+> +			break;
+> +		s[num_read++] = ch;
+> +	}
 > +
-> +	reset_control_deassert(phy->por_rst);
-> +
-> +	return 0;
+> +	return num_read;
 > +}
 > +
-> +static struct phy_ops ipq4019_usb_ss_phy_ops = {
-> +	.power_on	= ipq4019_ss_phy_power_on,
-> +	.power_off	= ipq4019_ss_phy_power_off,
-> +};
-> +
-> +static int ipq4019_hs_phy_power_off(struct phy *_phy)
+> +static void __init qcom_geni_serial_enable_early_read(struct geni_se *se,
+> +						      struct console *con)
 > +{
-> +	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> +
-> +	reset_control_assert(phy->por_rst);
-> +	msleep(10);
-
-why not call ipq4019_ss_phy_power_off() here as well?
-
-> +
-> +	reset_control_assert(phy->srif_rst);
-> +	msleep(10);
-> +
-> +	return 0;
+> +	geni_se_setup_s_cmd(se, UART_START_READ, 0);
+> +	con->read = qcom_geni_serial_earlycon_read;
 > +}
-> +
-> +static int ipq4019_hs_phy_power_on(struct phy *_phy)
-> +{
-> +	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> +
-> +	ipq4019_hs_phy_power_off(_phy);
-> +
-> +	reset_control_deassert(phy->srif_rst);
-> +	msleep(10);
-> +
-> +	reset_control_deassert(phy->por_rst);
-> +
-> +	return 0;
-> +}
-> +
-> +static struct phy_ops ipq4019_usb_hs_phy_ops = {
-> +	.power_on	= ipq4019_hs_phy_power_on,
-> +	.power_off	= ipq4019_hs_phy_power_off,
-> +};
+> +#else
+> +static inline void qcom_geni_serial_enable_early_read(struct geni_se *se,
+> +						      struct console *con) { ; }
 
-So this is fiddling with resets, what about phy configuration and
-calibration, who take care of that?
+This is pure nitpicking but since I was passing... why the ; ?
 
-> +static int ipq4019_usb_phy_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct resource *res;
-> +	struct phy_provider *phy_provider;
-> +	struct ipq4019_usb_phy *phy;
-> +	const struct of_device_id *match;
-> +
-> +	match = of_match_device(ipq4019_usb_phy_of_match, &pdev->dev);
-> +	if (!match)
-> +		return -ENODEV;
 
-you are using this to get match-data few lines below, why not use
-of_device_get_match_data() and get the match->data which you are
-interested in?
-
--- 
-~Vinod
+Daniel.
