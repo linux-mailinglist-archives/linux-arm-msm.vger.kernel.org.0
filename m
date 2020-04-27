@@ -2,61 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5F9B1BA201
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 13:10:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 158E01BA2A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 13:41:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbgD0LKx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 07:10:53 -0400
-Received: from smtp07.smtpout.orange.fr ([80.12.242.129]:59404 "EHLO
-        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727001AbgD0LKw (ORCPT
+        id S1727082AbgD0Llk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 07:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727087AbgD0Llg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 07:10:52 -0400
-Received: from localhost.localdomain ([92.148.159.11])
-        by mwinf5d13 with ME
-        id XnAl2200P0F2omL03nAman; Mon, 27 Apr 2020 13:10:51 +0200
-X-ME-Helo: localhost.localdomain
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Mon, 27 Apr 2020 13:10:51 +0200
-X-ME-IP: 92.148.159.11
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     okaya@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        vkoul@kernel.org, dan.j.williams@intel.com
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Subject: [PATCH] dmaengine: qcom_hidma: Simplify error handling path in hidma_probe
-Date:   Mon, 27 Apr 2020 13:10:43 +0200
-Message-Id: <20200427111043.70218-1-christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.25.1
+        Mon, 27 Apr 2020 07:41:36 -0400
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6440C09B053
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
+Received: by mail-io1-xd42.google.com with SMTP id f3so18468789ioj.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
+        b=uI1U3pP4FazEZaTfkDGgaf1Qyb1hL6AlgZB9tozzlJtw0tc2p0xAeW9BNdbY4A2XuL
+         JYn8lE6gg3HqjBgRaTT8CTSOLDZ9E79yDyBM0EGnWldSdHyzrk+BT/7frJGn/PAhMIrE
+         VCZdq7yfljhgiOOYhIeLP2AIIFXvLFMREe3IREMgf/Wimn5okrCaqK4gkS0+n2Tqfq3c
+         EFYh4cYLyK3nIET0YOm2adzDe5W5QN3hsgSvwW72euh+PRPDs3oxC82+7cfg/ZGTOz8/
+         eTagf6SblJMWIJeJ59y/zg3//EVOq9RPByBfKkQCDUJB6vE62XJLcx9qUgZNIxoYrz8S
+         JAeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
+        b=R5TAOjC7trpc50ZirHhucEMBVruxa+UD29MR6cWxy6jzKYJYia6woIR+X7muPW6L6m
+         odOzgWotW+X6bHPptn7hjJDh0MItTRpJW5bAIbKLbKXwL+pq/tvX8FHh+rTs4EDGHTGt
+         rMlZa0/qA8PY4qX8QphiLUMM13yontvbziZ6ZX9p+DpCXmnSmTsFG+LHGTZi2GvoTKfe
+         QTU0hbemjNtevajFY1qBRTdjnmobWP+lbjaLF6J8JaXMXD1/DDp9p8M37QLXP/HJItoP
+         ggx5dlaIIi4snhnyOOw3b1kQrvuedLNlAY4M+oyBlO4WW8c3q4QBSI81EYGSsUjxskLZ
+         g4Ew==
+X-Gm-Message-State: AGi0PuZhbDNfZbI3enggdbDcsREVRTs6Cd0onBOvvnLe7my8WQpC/qlB
+        uWZlGcITH1SvlZVakjEoaw6MjTuOvHMzJuR1ubA=
+X-Google-Smtp-Source: APiQypJWdjzUZMbeRoAX94bUJV0IgwyoF5kUG7iPo3CBzKxW8lStFNsM/6tz3An/TyzRuH2Qw14DtavsVumw6JVLls0=
+X-Received: by 2002:a6b:7d4a:: with SMTP id d10mr4072296ioq.70.1587987694042;
+ Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a5d:8f89:0:0:0:0:0 with HTTP; Mon, 27 Apr 2020 04:41:33
+ -0700 (PDT)
+Reply-To: convy0090@gmail.com
+From:   Ruben CONVY <andrewboccc@gmail.com>
+Date:   Mon, 27 Apr 2020 12:41:33 +0100
+Message-ID: <CAHVC0+Ag87TMCmfNNwWbxXOFxn5166q8GG5wEfPjwtixj9=EXQ@mail.gmail.com>
+Subject: Why continued silence 2
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to call 'hidma_debug_uninit()' in the error handling
-path. 'hidma_debug_init()' has not been called yet.
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
- drivers/dma/qcom/hidma.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-index 411f91fde734..87490e125bc3 100644
---- a/drivers/dma/qcom/hidma.c
-+++ b/drivers/dma/qcom/hidma.c
-@@ -897,7 +897,6 @@ static int hidma_probe(struct platform_device *pdev)
- 	if (msi)
- 		hidma_free_msis(dmadev);
- 
--	hidma_debug_uninit(dmadev);
- 	hidma_ll_uninit(dmadev->lldev);
- dmafree:
- 	if (dmadev)
--- 
-2.25.1
-
+Did you receive my previous email regarding your family inheritance?
+Reply strictly through: convy0090@gmail.com
+Best Regards,
+Ruben CONVY
