@@ -2,63 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 158E01BA2A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 13:41:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1381F1BA409
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 14:54:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727082AbgD0Llk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 07:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727087AbgD0Llg (ORCPT
+        id S1726651AbgD0Mx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 08:53:58 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:46546 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727842AbgD0Mx6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 07:41:36 -0400
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6440C09B053
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
-Received: by mail-io1-xd42.google.com with SMTP id f3so18468789ioj.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
-        b=uI1U3pP4FazEZaTfkDGgaf1Qyb1hL6AlgZB9tozzlJtw0tc2p0xAeW9BNdbY4A2XuL
-         JYn8lE6gg3HqjBgRaTT8CTSOLDZ9E79yDyBM0EGnWldSdHyzrk+BT/7frJGn/PAhMIrE
-         VCZdq7yfljhgiOOYhIeLP2AIIFXvLFMREe3IREMgf/Wimn5okrCaqK4gkS0+n2Tqfq3c
-         EFYh4cYLyK3nIET0YOm2adzDe5W5QN3hsgSvwW72euh+PRPDs3oxC82+7cfg/ZGTOz8/
-         eTagf6SblJMWIJeJ59y/zg3//EVOq9RPByBfKkQCDUJB6vE62XJLcx9qUgZNIxoYrz8S
-         JAeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
-        b=R5TAOjC7trpc50ZirHhucEMBVruxa+UD29MR6cWxy6jzKYJYia6woIR+X7muPW6L6m
-         odOzgWotW+X6bHPptn7hjJDh0MItTRpJW5bAIbKLbKXwL+pq/tvX8FHh+rTs4EDGHTGt
-         rMlZa0/qA8PY4qX8QphiLUMM13yontvbziZ6ZX9p+DpCXmnSmTsFG+LHGTZi2GvoTKfe
-         QTU0hbemjNtevajFY1qBRTdjnmobWP+lbjaLF6J8JaXMXD1/DDp9p8M37QLXP/HJItoP
-         ggx5dlaIIi4snhnyOOw3b1kQrvuedLNlAY4M+oyBlO4WW8c3q4QBSI81EYGSsUjxskLZ
-         g4Ew==
-X-Gm-Message-State: AGi0PuZhbDNfZbI3enggdbDcsREVRTs6Cd0onBOvvnLe7my8WQpC/qlB
-        uWZlGcITH1SvlZVakjEoaw6MjTuOvHMzJuR1ubA=
-X-Google-Smtp-Source: APiQypJWdjzUZMbeRoAX94bUJV0IgwyoF5kUG7iPo3CBzKxW8lStFNsM/6tz3An/TyzRuH2Qw14DtavsVumw6JVLls0=
-X-Received: by 2002:a6b:7d4a:: with SMTP id d10mr4072296ioq.70.1587987694042;
- Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
+        Mon, 27 Apr 2020 08:53:58 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1587992037; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=oHj/1Cte/kqSnw6BUUytxEkRvBSBwIKK808zQI9LFHE=; b=v9d95XPMH07vO2JNK4XScQv0yYFMZLzP2u2VJ4CCkyXqErcp6AcLxfVXMGHQYbN90S7v74Sq
+ rOXry1DUA1bMKUdjkDwgkpZbEgIRI535z1WfMFLLg7IaivZbckZRCwFd6cE0Ov2Rblngn+2i
+ NTsDR4pDH7nN+X/DctZ0/BeCOdE=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea6d5d3.7fb15c300340-smtp-out-n04;
+ Mon, 27 Apr 2020 12:53:39 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 30ECAC44793; Mon, 27 Apr 2020 12:53:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.100] (unknown [157.44.245.37])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jprakash)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7B24C433CB;
+        Mon, 27 Apr 2020 12:53:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D7B24C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
+Subject: Re: [PATCH V2 1/3] iio: adc: Convert the QCOM SPMI ADC bindings to
+ .yaml format
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, linus.walleij@linaro.org,
+        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
+        kgunda@codeaurora.org, aghayal@codeaurora.org,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Mark Rutland <mark.rutland@arm.com>, linux-iio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+References: <1586942266-21480-1-git-send-email-jprakash@codeaurora.org>
+ <1586942266-21480-2-git-send-email-jprakash@codeaurora.org>
+ <20200416204241.GA14143@bogus>
+From:   Jishnu Prakash <jprakash@codeaurora.org>
+Message-ID: <b41fc1ea-1047-6305-bf58-fd8d4d72282d@codeaurora.org>
+Date:   Mon, 27 Apr 2020 18:23:27 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Received: by 2002:a5d:8f89:0:0:0:0:0 with HTTP; Mon, 27 Apr 2020 04:41:33
- -0700 (PDT)
-Reply-To: convy0090@gmail.com
-From:   Ruben CONVY <andrewboccc@gmail.com>
-Date:   Mon, 27 Apr 2020 12:41:33 +0100
-Message-ID: <CAHVC0+Ag87TMCmfNNwWbxXOFxn5166q8GG5wEfPjwtixj9=EXQ@mail.gmail.com>
-Subject: Why continued silence 2
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200416204241.GA14143@bogus>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Did you receive my previous email regarding your family inheritance?
-Reply strictly through: convy0090@gmail.com
-Best Regards,
-Ruben CONVY
+Hi Rob
+
+I can see the first error:  "....chosen node must be at root node" from 
+'make dt_binding_check' even without my patch applied, so it does not 
+seem related. I will fix the second error in the next post.
+
+On 4/17/2020 2:12 AM, Rob Herring wrote:
+> On Wed, 15 Apr 2020 14:47:44 +0530, Jishnu Prakash wrote:
+>> Convert the adc bindings from .txt to .yaml format.
+>>
+>> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/iio/adc/qcom,spmi-vadc.txt | 173 -------------
+>>   .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 288 +++++++++++++++++++++
+>>   2 files changed, 288 insertions(+), 173 deletions(-)
+>>   delete mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.txt
+>>   create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+>>
+> My bot found errors running 'make dt_binding_check' on your patch:
+>
+> Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dt.yaml: adc@3100: 'adc-chan@0x39', 'adc-chan@0x9', 'adc-chan@0xa', 'adc-chan@0xe', 'adc-chan@0xf' do not match any of the regexes: '.*-names$', '.*-supply$', '^#.*-cells$', '^#[a-zA-Z0-9,+\\-._]{0,63}$', '^[a-zA-Z][a-zA-Z0-9,+\\-._]{0,63}$', '^[a-zA-Z][a-zA-Z0-9,+\\-._]{0,63}@[0-9a-fA-F]+(,[0-9a-fA-F]+)*$', '^__.*__$', 'pinctrl-[0-9]+'
+>
+> See https://patchwork.ozlabs.org/patch/1271025
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure dt-schema is up to date:
+>
+> pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+>
+> Please check and re-submit.
