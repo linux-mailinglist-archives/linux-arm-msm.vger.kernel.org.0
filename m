@@ -2,163 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCB391B90E3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2020 16:37:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDCF51B95A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2020 05:49:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726142AbgDZOhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Apr 2020 10:37:39 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:23934 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725876AbgDZOhj (ORCPT
+        id S1726378AbgD0Dt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Apr 2020 23:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47562 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726391AbgD0Dtz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Apr 2020 10:37:39 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1587911858; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=ui6MOHK4ycwTBeNfWOrKG5eJnPzmTryDDwOQywkBnZM=; b=A81Nss2XN/W0OWppPjxBIDbwqu275bYo1FqJYTPDtmdAHhjsp0BifSa4xGuHFpsd1GJsJMxw
- 9SISYwInOUBuH/oBaubK+33yxpIUdQWoCSzemSme1eplt7UgbzE2N4SZEUExPPbHUsceH9Vr
- YZKEC+2IuMzn8FNBe5N6iNfVNas=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea59cb2.7f47d0539f80-smtp-out-n01;
- Sun, 26 Apr 2020 14:37:38 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 06938C432C2; Sun, 26 Apr 2020 14:37:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BDF9AC433D2;
-        Sun, 26 Apr 2020 14:37:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BDF9AC433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] coresight: dynamic-replicator: Fix handling of multiple connections
-Date:   Sun, 26 Apr 2020 20:07:25 +0530
-Message-Id: <20200426143725.18116-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
+        Sun, 26 Apr 2020 23:49:55 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F84FC0610D5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2020 20:49:55 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id h11so6459787plr.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2020 20:49:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3BQtmdkZTOxoTu8cuntZt9I/+ptcn4gko9UOiotLnjE=;
+        b=we4uRc/H1yVjarr8WAv+iWDbCOBVbG8JDbGr3TEceAesV9+p6UtdP85GbQrANodFxJ
+         UiQvQou8pt7sJXJZyVlNlatZIwFCM0ggFaPxrsp1YCLHAzJD+N+lKhx4owfVILvK4vdG
+         MYuTBNi+M4YiiOYicEZc2R5s6J0184RvUUMknTefc9Rb4EiZrsr+CIyzHdLOwllnSxpM
+         RgnJgQE/o9NRtLPwS+yXMtoXLSeVIrI7dzOjQsTWay7alfb9vx7R4wA1f/BqCCIH9yRD
+         7IkJeSEFabtvNck0wvH47c5jznVZnvUxI0blskYH1L7kpeGdFGsQ8/OhoM3xlaTYV6IO
+         i+fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3BQtmdkZTOxoTu8cuntZt9I/+ptcn4gko9UOiotLnjE=;
+        b=kP9sFz7+CLtAlva68KS4G+pqqGUENJW/MEzOZQQTEqg+vbSrIDflGrMHQFebfy7g3T
+         Ld25Ztl/HkujKNN0BJikuBAuK1wLtN14XcTtdxOieQqBX3mAnM5C+k8XQPfM25KGmbKQ
+         Ae3JfxfyKPTA/wAzg1U5CnsvaV3NZXSk9MOs14Jc/k5JWtP7MF3Q1Sfl7mcWo/l6EmPD
+         cmF7xz86dZzv6ss1czqbdcD5wan+SJl5Ht8fMJuCcnd0keRSvvqYshqMMzJBfJHShl4k
+         3sbWUKTCIP9QNdxw9I8tD+Hc2PpgczC9t9QGSfFkb25ca1DNpaVevBDND/OMGD3jYUp7
+         BlHw==
+X-Gm-Message-State: AGi0PuaQ4H49hXUAMSb16iYLdeBcMaIRknZzCoLVOZfC9TccC3KYKWLR
+        GkGKzUwG4eu5+RXvzl9HpCaNeg==
+X-Google-Smtp-Source: APiQypK5szD7hM+jQL1hCAEBBB1/SOG/vc4lsjbXV3dcq+ENgZR7btz7XbIj75d4suuJOOA2ZPJugQ==
+X-Received: by 2002:a17:90a:12c3:: with SMTP id b3mr22498072pjg.57.1587959394422;
+        Sun, 26 Apr 2020 20:49:54 -0700 (PDT)
+Received: from localhost ([122.171.118.46])
+        by smtp.gmail.com with ESMTPSA id j13sm10069756pje.1.2020.04.26.20.49.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 26 Apr 2020 20:49:53 -0700 (PDT)
+Date:   Mon, 27 Apr 2020 09:19:51 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     ansuelsmth@gmail.com
+Cc:     'Rob Herring' <robh+dt@kernel.org>,
+        'Viresh Kumar' <vireshk@kernel.org>,
+        'Andy Gross' <agross@kernel.org>,
+        'Bjorn Andersson' <bjorn.andersson@linaro.org>,
+        'Ilia Lin' <ilia.lin@kernel.org>, 'Nishanth Menon' <nm@ti.com>,
+        'Stephen Boyd' <sboyd@kernel.org>,
+        "'Rafael J. Wysocki'" <rjw@rjwysocki.net>,
+        'Sricharan R' <sricharan@codeaurora.org>,
+        'linux-arm-msm' <linux-arm-msm@vger.kernel.org>,
+        "'open list:THERMAL'" <linux-pm@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: R: [PATCH v2 2/2] dt-bindings: opp: Fix wrong binding in
+ qcom-nvmem-cpufreq
+Message-ID: <20200427034951.xrk5ja3pg4anbg4s@vireshk-i7>
+References: <20200422201216.10593-1-ansuelsmth@gmail.com>
+ <20200422201216.10593-2-ansuelsmth@gmail.com>
+ <CAL_JsqLUbM7ed2q7so4Uibiz2URRg1juoGRExy9Ta3J-LWAFow@mail.gmail.com>
+ <087301d61a86$68b6f950$3a24ebf0$@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <087301d61a86$68b6f950$3a24ebf0$@gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since commit 30af4fb619e5 ("coresight: dynamic-replicator:
-Handle multiple connections"), we do not make sure that
-the other port is disabled when the dynamic replicator is
-enabled. This is seen to cause the CPU hardlockup atleast
-on SC7180 SoC with the following topology when enabling ETM
-with ETR as the sink via sysfs. Since there is no trace id
-logic in coresight yet to make use of multiple sinks in
-parallel for different trace sessions, disable the other
-port when one port is turned on.
+On 25-04-20, 00:19, ansuelsmth@gmail.com wrote:
+> > On Wed, Apr 22, 2020 at 3:12 PM Ansuel Smith <ansuelsmth@gmail.com>
+> > wrote:
+> > >
+> > > Update binding to new generic name "operating-points-v2-qcom-cpu"
+> > >
+> > > Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > ---
+> > >  Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt | 2
+> > +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/opp/qcom-nvmem-
+> > cpufreq.txt b/Documentation/devicetree/bindings/opp/qcom-nvmem-
+> > cpufreq.txt
+> > > index 64f07417ecfb..537e1774f589 100644
+> > > --- a/Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
+> > > +++ b/Documentation/devicetree/bindings/opp/qcom-nvmem-
+> > cpufreq.txt
+> > > @@ -19,7 +19,7 @@ In 'cpu' nodes:
+> > >
+> > >  In 'operating-points-v2' table:
+> > >  - compatible: Should be
+> > > -       - 'operating-points-v2-kryo-cpu' for apq8096, msm8996, msm8974,
+> > > +       - 'operating-points-v2-qcom-cpu' for apq8096, msm8996,
+> > msm8974,
+> > >                                              apq8064, ipq8064, msm8960 and ipq8074.
+> > 
+> > This is not how you fix the backwards compatibility issue pointed out
+> > on the Fixes reference.
+> > 
+> > Rob
+> 
+> Sorry but can you give some directive? Should I use the old binding and change
+> the driver to use it instead of the new one (and drop it) ?
 
-       etm0_out
-	  |
-   apss_funnel_in0
-          |
-  apss_merge_funnel_in
-          |
-      funnel1_in4
-	  |
-   merge_funnel_in1
-	  |
-    swao_funnel_in
-          |
-        etf_in
-	  |
-  swao_replicator_in
-          |
-   replicator_in
-	  |
-        etr_in
+It is not about the name of the binding, you can rename it to whatever
+you want. The kernel needs to keep supporting all the previous
+bindings, so we can keep on changing the kernel but keep the same
+bootloader (with earlier bindings).
 
-  Kernel panic - not syncing: Watchdog detected hard LOCKUP on cpu 0
-  CPU: 7 PID: 0 Comm: swapper/7 Tainted: G S  B             5.4.25 #100
-  Hardware name: Qualcomm Technologies, Inc. SC7180 IDP (DT)
-  Call trace:
-   dump_backtrace+0x0/0x188
-   show_stack+0x20/0x2c
-   dump_stack+0xdc/0x144
-   panic+0x168/0x370
-   arch_seccomp_spec_mitigate+0x0/0x14
-   watchdog_timer_fn+0x68/0x290
-   __hrtimer_run_queues+0x264/0x498
-   hrtimer_interrupt+0xf0/0x22c
-   arch_timer_handler_phys+0x40/0x50
-   handle_percpu_devid_irq+0x8c/0x158
-   __handle_domain_irq+0x84/0xc4
-   gic_handle_irq+0x100/0x1c4
-   el1_irq+0xbc/0x180
-   arch_cpu_idle+0x3c/0x5c
-   default_idle_call+0x1c/0x38
-   do_idle+0x100/0x280
-   cpu_startup_entry+0x24/0x28
-   secondary_start_kernel+0x15c/0x170
-  SMP: stopping secondary CPUs
-
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Tested-by: Stephen Boyd <swboyd@chromium.org>
----
-Changes since RFC:
- * Reworded commit text and included the topology on SC7180.
----
- .../hwtracing/coresight/coresight-replicator.c    | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/hwtracing/coresight/coresight-replicator.c b/drivers/hwtracing/coresight/coresight-replicator.c
-index e7dc1c31d20d..f4eaa38f8f43 100644
---- a/drivers/hwtracing/coresight/coresight-replicator.c
-+++ b/drivers/hwtracing/coresight/coresight-replicator.c
-@@ -66,14 +66,16 @@ static int dynamic_replicator_enable(struct replicator_drvdata *drvdata,
- 				     int inport, int outport)
- {
- 	int rc = 0;
--	u32 reg;
-+	u32 reg0, reg1;
- 
- 	switch (outport) {
- 	case 0:
--		reg = REPLICATOR_IDFILTER0;
-+		reg0 = REPLICATOR_IDFILTER0;
-+		reg1 = REPLICATOR_IDFILTER1;
- 		break;
- 	case 1:
--		reg = REPLICATOR_IDFILTER1;
-+		reg0 = REPLICATOR_IDFILTER1;
-+		reg1 = REPLICATOR_IDFILTER0;
- 		break;
- 	default:
- 		WARN_ON(1);
-@@ -87,8 +89,11 @@ static int dynamic_replicator_enable(struct replicator_drvdata *drvdata,
- 		rc = coresight_claim_device_unlocked(drvdata->base);
- 
- 	/* Ensure that the outport is enabled. */
--	if (!rc)
--		writel_relaxed(0x00, drvdata->base + reg);
-+	if (!rc) {
-+		writel_relaxed(0x00, drvdata->base + reg0);
-+		writel_relaxed(0xff, drvdata->base + reg1);
-+	}
-+
- 	CS_LOCK(drvdata->base);
- 
- 	return rc;
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+viresh
