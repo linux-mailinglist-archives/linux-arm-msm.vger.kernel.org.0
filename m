@@ -2,136 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A17181BB1D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 01:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56F481BB241
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 01:57:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726303AbgD0XJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Apr 2020 19:09:23 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:44224 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726204AbgD0XJW (ORCPT
+        id S1726476AbgD0X5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Apr 2020 19:57:18 -0400
+Received: from mailgw02.mediatek.com ([210.61.82.184]:3807 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726355AbgD0X5S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Apr 2020 19:09:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588028962; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=oMxZb5I+GDPuJhllgcs2iwGmqgsZIZTUBZ0afvMS0fU=;
- b=NaNtYfuXRxYXeNZ40LvF7lycdRUsTfg2uYe2MwvxHA8BK/y/ynAK7YB7aWTkbQShhUBceQH6
- 5iCvCgsduzRy/Npjqzk0gNItd5Cuj3HPwgToKOAnA24dIBEPKEDssw8MwjT6v3buGDqcxdx6
- pTwY9arSivknFXeTzPC1QCDoUrI=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea76613.7fdbc1aff998-smtp-out-n03;
- Mon, 27 Apr 2020 23:09:07 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 10FD8C432C2; Mon, 27 Apr 2020 23:09:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tanmay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6377CC433CB;
-        Mon, 27 Apr 2020 23:09:06 +0000 (UTC)
+        Mon, 27 Apr 2020 19:57:18 -0400
+X-UUID: d81cef179746473c9e5ea4be07c45f40-20200428
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=aI88OR5SoOs9oP8eEG6yM2tCCWEGm3PDTnuHvBFnmpg=;
+        b=KE7SstV4bwvN+YCOdoKCXfKRyg7mhOAKILQa7nJERn3w3DCd+1JUkMPcoofMTKi98F5oqmBOoIif1PsMkCfmb3IxGowaBYbB/PD0C9ZDFF4kf1q019cZI2Oexh+T7qOhvA0+dZS+40Wz95rhs9jltandraGtcAaUkoxZiQVWR2k=;
+X-UUID: d81cef179746473c9e5ea4be07c45f40-20200428
+Received: from mtkcas06.mediatek.inc [(172.21.101.30)] by mailgw02.mediatek.com
+        (envelope-from <chun-hung.wu@mediatek.com>)
+        (Cellopoint E-mail Firewall v4.1.10 Build 0809 with TLS)
+        with ESMTP id 1311210949; Tue, 28 Apr 2020 07:57:14 +0800
+Received: from mtkcas08.mediatek.inc (172.21.101.126) by
+ mtkmbs07n2.mediatek.inc (172.21.101.141) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Tue, 28 Apr 2020 07:57:08 +0800
+Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas08.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Tue, 28 Apr 2020 07:56:09 +0800
+From:   Chun-Hung Wu <chun-hung.wu@mediatek.com>
+To:     <mirq-linux@rere.qmqm.pl>, Jonathan Hunter <jonathanh@nvidia.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Pan Bian <bianpan2016@163.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mathieu Malaterre <malat@debian.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Kuohong Wang <kuohong.wang@mediatek.com>,
+        Yong Mao <yong.mao@mediatek.com>
+CC:     <kernel-team@android.com>, <linux-kernel@vger.kernel.org>,
+        <linux-mmc@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <wsd_upstream@mediatek.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        Chun-Hung Wu <chun-hung.wu@mediatek.com>
+Subject: [PATCH v5 0/5] mmc: mediatek: add mmc cqhci support
+Date:   Tue, 28 Apr 2020 07:56:03 +0800
+Message-ID: <1588031768-23677-1-git-send-email-chun-hung.wu@mediatek.com>
+X-Mailer: git-send-email 1.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 27 Apr 2020 16:09:06 -0700
-From:   tanmay@codeaurora.org
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, swboyd@chromium.org,
-        seanpaul@chromium.org, abhinavk@codeaurora.org,
-        varar@codeaurora.org, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org,
-        dri-devel <dri-devel-bounces@lists.freedesktop.org>
-Subject: Re: [PATCH 1/2] dt-bindings: msm: disp: Add Display Port HPD GPIO
- bindings
-In-Reply-To: <20200415152439.GA9882@bogus>
-References: <1586299709-14222-1-git-send-email-tanmay@codeaurora.org>
- <20200415152439.GA9882@bogus>
-Message-ID: <7fb3a6c19c244c4a37bded7cd249a1f8@codeaurora.org>
-X-Sender: tanmay@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain
+X-MTK:  N
+Content-Transfer-Encoding: base64
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Rob for reviews.
+VGhpcyBzZXJpZXMgcHJvdmlkZXMgTWVkaWFUZWsgY3FoY2kgaW1wbGVtZW50YXRpb25zIGFzIGJl
+bG93Og0KICAtIEV4dGVuZCBtbWNfb2ZfcGFyc2UoKSB0byBwYXJzZSBDUUUgYmluZGluZ3MNCiAg
+LSBSZW1vdmUgcmVkdW5kYW50IGhvc3QgQ1FFIGJpbmRpbmdzDQogIC0gUmVmaW5lIG1zZGMgdGlt
+ZW91dCBhcGkgdG8gcmVkdWNlIHJlZHVuZGFudCBjb2RlDQogIC0gTWVkaWFUZWsgY29tbWFuZCBx
+dWV1ZSBzdXBwb3J0DQogIC0gZHQtYmluZGluZ3MgZm9yIG10Njc3OQ0KDQp2MSAtPiB2MjoNCiAg
+LSBBZGQgbW9yZSBwYXRjaCBkZXRhaWxzIGluIGNvbW1pdCBtZXNzYWdlDQogIC0gU2VwYXJhdGUg
+bXNkYyB0aW1lb3V0IGFwaSByZWZpbmUgdG8gaW5kaXZpZHVhbCBwYXRjaA0KDQp2MiAtPiB2MzoN
+CiAgLSBSZW1vdmUgQ1ItSWQsIENoYW5nZS1JZCBhbmQgRmVhdHVyZSBpbiBwYXRjaGVzDQogIC0g
+QWRkIFNpZ25lZC1vZmYtYnkgaW4gcGF0Y2hlcw0KDQp2MyAtPiB2NDoNCiAgLSBSZWZpbmUgQ1FF
+IGJpbmRpbmdzIGluIG1tY19vZl9wYXJzZSAoVWxmIEhhbnNzb24pDQogIC0gUmVtb3ZlIHJlZHVu
+ZGFudCBob3N0IENRRSBiaW5kaW5ncyAoTGludXggV2FsbGVpaikNCg0KdjQgLT4gdjU6DQogIC0g
+QWRkIEFja2VkLWJ5IGFuZCBtb3JlIG1haW50YWluZXJzDQoNCkNodW4tSHVuZyBXdSAoNSk6DQog
+IFsxLzVdIG1tYzogY29yZTogRXh0ZW5kIG1tY19vZl9wYXJzZSgpIHRvIHBhcnNlIENRRSBiaW5k
+aW5ncw0KICBbMi81XSBtbWM6IGhvc3Q6IFJlbW92ZSByZWR1bmRhbnQgQ1FFIGJpbmRpbmdzDQog
+IFszLzVdIG1tYzogbWVkaWF0ZWs6IHJlZmluZSBtc2RjIHRpbWVvdXQgYXBpDQogIFs0LzVdIG1t
+YzogbWVkaWF0ZWs6IGNvbW1hbmQgcXVldWUgc3VwcG9ydA0KICBbNS81XSBkdC1iaW5kaW5nczog
+bW1jOiBtZWRpYXRlazogQWRkIGRvY3VtZW50IGZvciBtdDY3NzkNCg0KIERvY3VtZW50YXRpb24v
+ZGV2aWNldHJlZS9iaW5kaW5ncy9tbWMvbXRrLXNkLnR4dCB8ICAgMSArDQogZHJpdmVycy9tbWMv
+Y29yZS9ob3N0LmMgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICA1ICsNCiBkcml2ZXJzL21t
+Yy9ob3N0L210ay1zZC5jICAgICAgICAgICAgICAgICAgICAgICAgfCAxNTEgKysrKysrKysrKysr
+KysrKysrKysrLS0NCiBkcml2ZXJzL21tYy9ob3N0L3NkaGNpLWJyY21zdGIuYyAgICAgICAgICAg
+ICAgICAgfCAgMTEgKy0NCiBkcml2ZXJzL21tYy9ob3N0L3NkaGNpLW1zbS5jICAgICAgICAgICAg
+ICAgICAgICAgfCAgIDMgKy0NCiBkcml2ZXJzL21tYy9ob3N0L3NkaGNpLW9mLWFyYXNhbi5jICAg
+ICAgICAgICAgICAgfCAgIDMgLQ0KIGRyaXZlcnMvbW1jL2hvc3Qvc2RoY2ktdGVncmEuYyAgICAg
+ICAgICAgICAgICAgICB8ICAgMiArLQ0KIDcgZmlsZXMgY2hhbmdlZCwgMTU1IGluc2VydGlvbnMo
+KyksIDIxIGRlbGV0aW9ucygtKQ0KDQotLSANCjIuNi40DQo=
 
-We are using Display Port Controller block to detect hot plug.
-So we won't be using that pin as GPIO.
-
-I found now that we don't need any bindings for that pin in such case.
-So I am abandoning this patch series and upload new patch.
-
-Thanks.
-
-On 2020-04-15 08:24, Rob Herring wrote:
-> On Tue, Apr 07, 2020 at 03:48:28PM -0700, Tanmay Shah wrote:
->> Add Display Port HPD GPIO description in bindings
->> 
->> This Patch depends on:
->> 	https://patchwork.kernel.org/patch/11468505/
-> 
-> This belongs below the '---' and probably means you should send all 
-> this
-> as one series.
-> 
->> 
->> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
->> ---
->>  Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml | 7
-> +++++++
->>  1 file changed, 7 insertions(+)
->> 
->> diff --git
-> a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
-> b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
->> index 761a01d..003f5f7 100644
->> --- a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
->> @@ -155,6 +155,11 @@ properties:
->>       data-lanes:
->>         description: Maximum number of lanes that can be used for
-> Display port.
->> 
->> +     dp-hpd-gpio:
-> 
-> We already have a standard property for this. Use it.
-> 
-> It belongs in the connector node as HPD is part of the connector.
-> 
->> +       maxItems: 1
->> +       description: Specifies HPD gpio for DP connector without
->> +                    USB PHY or AUX switch.
->> +
->>       usbplug-cc-gpio:
-> 
-> Note that this too should be in a connector node.
-> 
->>         maxItems: 1
->>         description: Specifies the usbplug orientation gpio.
->> @@ -282,6 +287,8 @@ examples:
->>          aux-sel-gpio = <&msmgpio 110 1>;
->>          usbplug-cc-gpio = <&msmgpio 90 1>;
->> 
->> +        dp-hpd-gpio = <&msmgpio 117 0>;
->> +
->>          ports {
->>              #address-cells = <1>;
->>              #size-cells = <0>;
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
-> Forum,
->> a Linux Foundation Collaborative Project
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
