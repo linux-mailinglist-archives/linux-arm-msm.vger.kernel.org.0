@@ -2,78 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BD2B1BB9B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 11:20:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C36511BBA35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 11:46:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727062AbgD1JUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 05:20:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42120 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727055AbgD1JUt (ORCPT
+        id S1727091AbgD1Jqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 05:46:36 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:57008 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727030AbgD1Jqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 05:20:49 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7618C03C1AB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 02:20:48 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id d25so1366204lfi.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 02:20:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ICN7dCbBx+6WcoJArMnBEzGvK72rSzOZiK5dL2bPeD0=;
-        b=GSzf/+wsv5cyATIz/phw1ojwp4XlksxZM2jEHxqwTKLBsfOj2Tm8SPZhPYNBd+ZYiw
-         kkFCMlrO12KSyLfwW6Npq2lked/S06URs6P2h7WJVdy8hHZ+CBtRGQCAQDMgJyyyLRaO
-         IvBJ7XYQ5jC0tIiRtVPN2ODt0VtbClcg2ZPs2tMKCR1du0uNpaTy0bAsbdFeW8k/6lVQ
-         KjKh1X855w6wNtJ5KK+z0/TMd5dyQCBrcsoXmCGNxSxdiKBaLmy+WoA5p4sO8gqIU4K/
-         yvpoXibwcg0tLpNTItn8e408z//AZ+7vFd8F9xxOLytU2lVZhMpt9K7sasBX3FT6nu4o
-         4phw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ICN7dCbBx+6WcoJArMnBEzGvK72rSzOZiK5dL2bPeD0=;
-        b=HVa/0yoW+EGgB8zXGQPZP3oGtT9fz17WnowahYLkQkod7+lA5pQ0BhRj84vEYjEiit
-         TuIDSfEWnfzQdDw0JkBcY9UT+VcPBaSR19OnvKUyjUdKNQGFthADQZyGW/uzkOxg/r1u
-         rjmfN6I3ZYH2LJ/++3h1IPPkYeu3HUmkQpnDM8hA9b56O7RAdtEig4F8ToBUGg5npVPX
-         JSmusH6HjR38O7mlLuEwCMa/YmUOro74wjBZ5ribD4zUykPRzf/K8xJeHJDYjMNLBqN7
-         3KqKflrpJi7V0YLqLLb7iC2Xv+Mp/uOgcXIVv2anx8RhP8Jw3debNhGiBCG5NPbz/Rgn
-         rd/Q==
-X-Gm-Message-State: AGi0PuZXvfjA5U4HMZTWKPvKWBq4UZ71PSlRDSCSSfBRcaH83aJHbeD7
-        1Xv3jxEwpf65CsPxBcSq2D6JtzSY0HCpkVw7fsplpg==
-X-Google-Smtp-Source: APiQypIus6ZMe4qjasmN97t76YaFjK6cebZ/M2PBOdjLaAbJq41X1LdszKoDynGbta+EZNl04COKBV/jynSPVQp9okk=
-X-Received: by 2002:a19:42c3:: with SMTP id p186mr349742lfa.194.1588065647258;
- Tue, 28 Apr 2020 02:20:47 -0700 (PDT)
+        Tue, 28 Apr 2020 05:46:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588067195; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=SYneJt2s6AGtNS7/rM4TXAHvpd3iuzSFax4dKDwNdEQ=; b=lLKfSG9CG8abnJlM3iUT46uUPzZ++h7Dv7Q9/Win1Y9YUWw5IoMfBCKske7Y1Qh4pWQwOiMO
+ hdrIWLxZAgYFKtgyAgCtZVjgmv7CQddgUNCq7uxqa9m3TCWHuPVPLCdlYc2/q7Y8/fWdpGA7
+ 4tLAgSC4vburHaWOFjA1Xhyvynw=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea7fb7b.7fdbc1a78ce0-smtp-out-n03;
+ Tue, 28 Apr 2020 09:46:35 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F3289C43637; Tue, 28 Apr 2020 09:46:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.98] (unknown [157.48.58.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E83EBC433F2;
+        Tue, 28 Apr 2020 09:46:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E83EBC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V4 2/9] interconnect: Set peak requirement as twice of
+ average
+To:     Georgi Djakov <georgi.djakov@linaro.org>, broonie@kernel.org
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        Mike Tipton <mdtipton@codeaurora.org>,
+        Sean Sweeney <seansw@qti.qualcomm.com>
+References: <1586946198-13912-1-git-send-email-akashast@codeaurora.org>
+ <1586946198-13912-3-git-send-email-akashast@codeaurora.org>
+ <58b91dc1-6ce3-49b8-88c8-259be9af1dbd@linaro.org>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <7a79688c-3b9b-c7c1-2973-fca0c4b2c78b@codeaurora.org>
+Date:   Tue, 28 Apr 2020 15:16:16 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20200417061907.1226490-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20200417061907.1226490-1-bjorn.andersson@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 28 Apr 2020 11:20:36 +0200
-Message-ID: <CACRpkdb9ZmoD5x1g7O-BHFWJ3qNMBGrrVN_=ygDAMuXe76xuFg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Qualcomm SM8250 TLMM binding and driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <58b91dc1-6ce3-49b8-88c8-259be9af1dbd@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 17, 2020 at 8:19 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+Hi Georgi,
 
-> Binding and driver for the Qualcomm SM8250 TLMM pinctrl block
+On 4/23/2020 3:01 PM, Georgi Djakov wrote:
+> Hi Akash,
+>
+> On 4/15/20 13:23, Akash Asthana wrote:
+>> Lot of ICC clients are not aware of their actual peak requirement,
+>> most commonly they tend to guess their peak requirement as
+>> (some factor) * avg_bw.
+>>
+>> Centralize random peak guess as twice of average, out into the core
+>> to maintain consistency across the clients. Client can always
+>> override this setting if they got a better idea.
+> I am still not convinced that this is a good idea. If the factor is a random
+> value, then i think that the default factor should be 1.
+>
+> According to your previous reply, it seems that from geni we are requesting
+> double peak bandwidth to compensate for other clients which are not requesting
+> bandwidth for themselves. IMO, this is a bit hacky.
+>
+> Instead of requesting double peak bandwidth, IIUC the correct thing to do here
+> is to request peak_bw = avg_bw for geni. And instead of trying to compensate for
+> other clients "stealing" bandwidth, can't we make these clients vote for their
+> own bandwidth? Or if they really can't, this should be handled elsewhere - maybe
+> in the interconnect platform driver we can reserve some amount of minimum
+> bandwidth for such cases?
 
-Applied both patches. Thanks!
+Okay, probably we can correct clients vote for their own bandwidth or 
+reserve some minimum BW from interconnect platform driver is case of any 
+latency issue observed.
 
-As noted elsewhere Qualcomm is full circle now recycling the
-number of their first Snapdragon QSD8250 SoC from 2007
-for a new SM8250 SoC only 13 years later :D
+I will drop this change in next version.
 
-Yours,
-Linus Walleij
+Will it create any difference if  peak_bw = 0 instead of peak_bw = 
+avg_bw? In my understanding peak_bw <= avg_bw is no-ops, it won't impact 
+the NOC speed.
+
+
+Regards,
+
+Akash
+
+>
+> Thanks,
+> Georgi
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
