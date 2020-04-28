@@ -2,249 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A533C1BCCF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 22:05:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 841A51BCD66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 22:29:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726315AbgD1UFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 16:05:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726180AbgD1UFB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 16:05:01 -0400
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EE61C03C1AB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 13:05:01 -0700 (PDT)
-Received: by mail-ua1-x942.google.com with SMTP id a7so14844914uak.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 13:05:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VrdnFFgxSUrU8zTdK0khCvfnKPXqrVhg3jHujuAIUyY=;
-        b=Fjh6RwClWBvZGvUtZu9EWFIQhuYDQEjUhOG1nIKG+bgD9xYspqnVrJ02sJSPa53BZw
-         TaJzUBkUTZZyWAgo2Qa8zvowGyT9H4x2iX+1IbSHscsrb4xtWq0mV0ZMFxX5TNAlZgMW
-         WgWa6todYdm3J1OioOM+50lBjg3x5CYld6V/4xCoKcV7rNKN2HCFFf+sgPX4cKhImbC6
-         4brDUYRgCCp+3f4aWv70Z3SOlY8sTRrOHCLqSdsjV/XueZRXcrHXC5QkhfLEVzhLK4jj
-         ahS+TSBYW+e0m6RmX56wuQ97DkZ27Rpydr/nc/4Wqo61YMrGdfKOMB3Q98pOBKwMm1rk
-         ulag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VrdnFFgxSUrU8zTdK0khCvfnKPXqrVhg3jHujuAIUyY=;
-        b=pxkN9ZMnT1mj3AAScwIdCNsxxbe3daMTdypxNQMrquI5o+27VEuusorXwlAEOi4vYJ
-         y5NycI47bmtEffT83JGJRxG0CfLE07HTno4O2eTItdRLTpDU287mwXrw6tB2FmVpd4Tf
-         YIVLu/6VOtUOugH3n4AgOlrtIZ7oe2m2QEhFEnf/MtafSINkLUdeSZzCia9upGwt03Xy
-         /t3QbwkbU+14i1fS5UHH6sHYkhmWx8FkURmlxByGvihha8tVXV11zv7i5j3e39Ik+qBL
-         pboPYj6DZ0aDm5WJkuyQyPG2sTA5cF3u/EiFZh/peFH44bmrsEEVeGJ6AF3l9cVGH3g8
-         /ZMg==
-X-Gm-Message-State: AGi0PubKvPN4WRGHL437tJ5rTkNXhCTrLvOsMB6DV8qKanQWjQ8WwgLF
-        6TYrd388E2Ox2B5IiBrK+moPf6jL5pFpTIhcmnjyroKP
-X-Google-Smtp-Source: APiQypJxgITujlmwD4i8UFbLDZE9l5i8jhbHalyYnVUvC+tRk4f7WJKQWhr24OZQdYba4YZ7Xo+ToNt1HZ3jYYkcqLI=
-X-Received: by 2002:a05:6102:5c4:: with SMTP id v4mr20352486vsf.95.1588104300030;
- Tue, 28 Apr 2020 13:05:00 -0700 (PDT)
+        id S1726381AbgD1U3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 16:29:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40360 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726286AbgD1U3w (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Apr 2020 16:29:52 -0400
+Received: from [192.168.1.74] (75-58-59-55.lightspeed.rlghnc.sbcglobal.net [75.58.59.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4CC0820731;
+        Tue, 28 Apr 2020 20:29:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588105792;
+        bh=6v96lh0d+UWGlWlwjbyvUMq1a3i8X+YFxjvj3LXLg5Y=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=v05fAS62HunVkF0sqvgwBMdIBsSs8gKRaDxiwqGIYO6z5GDe89QAgD6NnrbUFsWtg
+         jT16Yh0eQ+Hgb+U0yDAVxFpc0iWrIRVaoz30wn9MRQc+lhS7yxWtCvcAQQN3zWLOx7
+         013LyVAqMLBanqkdLoTcqppnGe301I1F9TaMItbg=
+Subject: Re: [PATCH] dmaengine: qcom_hidma: Simplify error handling path in
+ hidma_probe
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org,
+        dan.j.williams@intel.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+References: <20200427111043.70218-1-christophe.jaillet@wanadoo.fr>
+ <20200428125426.GE2014@kadam>
+ <1efa0186-7fbe-9cb5-2719-2d7192f99e27@kernel.org>
+ <20200428172116.GG2014@kadam>
+From:   Sinan Kaya <okaya@kernel.org>
+Autocrypt: addr=okaya@kernel.org; keydata=
+ mQENBFrnOrUBCADGOL0kF21B6ogpOkuYvz6bUjO7NU99PKhXx1MfK/AzK+SFgxJF7dMluoF6
+ uT47bU7zb7HqACH6itTgSSiJeSoq86jYoq5s4JOyaj0/18Hf3/YBah7AOuwk6LtV3EftQIhw
+ 9vXqCnBwP/nID6PQ685zl3vH68yzF6FVNwbDagxUz/gMiQh7scHvVCjiqkJ+qu/36JgtTYYw
+ 8lGWRcto6gr0eTF8Wd8f81wspmUHGsFdN/xPsZPKMw6/on9oOj3AidcR3P9EdLY4qQyjvcNC
+ V9cL9b5I/Ud9ghPwW4QkM7uhYqQDyh3SwgEFudc+/RsDuxjVlg9CFnGhS0nPXR89SaQZABEB
+ AAG0HVNpbmFuIEtheWEgPG9rYXlhQGtlcm5lbC5vcmc+iQFOBBMBCAA4FiEEYdOlMSE+a7/c
+ ckrQvGF4I+4LAFcFAlztcAoCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQvGF4I+4L
+ AFfidAf/VKHInxep0Z96iYkIq42432HTZUrxNzG9IWk4HN7c3vTJKv2W+b9pgvBF1SmkyQSy
+ 8SJ3Zd98CO6FOHA1FigFyZahVsme+T0GsS3/OF1kjrtMktoREr8t0rK0yKpCTYVdlkHadxmR
+ Qs5xLzW1RqKlrNigKHI2yhgpMwrpzS+67F1biT41227sqFzW9urEl/jqGJXaB6GV+SRKSHN+
+ ubWXgE1NkmfAMeyJPKojNT7ReL6eh3BNB/Xh1vQJew+AE50EP7o36UXghoUktnx6cTkge0ZS
+ qgxuhN33cCOU36pWQhPqVSlLTZQJVxuCmlaHbYWvye7bBOhmiuNKhOzb3FcgT7kBDQRa5zq1
+ AQgAyRq/7JZKOyB8wRx6fHE0nb31P75kCnL3oE+smKW/sOcIQDV3C7mZKLf472MWB1xdr4Tm
+ eXeL/wT0QHapLn5M5wWghC80YvjjdolHnlq9QlYVtvl1ocAC28y43tKJfklhHiwMNDJfdZbw
+ 9lQ2h+7nccFWASNUu9cqZOABLvJcgLnfdDpnSzOye09VVlKr3NHgRyRZa7me/oFJCxrJlKAl
+ 2hllRLt0yV08o7i14+qmvxI2EKLX9zJfJ2rGWLTVe3EJBnCsQPDzAUVYSnTtqELu2AGzvDiM
+ gatRaosnzhvvEK+kCuXuCuZlRWP7pWSHqFFuYq596RRG5hNGLbmVFZrCxQARAQABiQEfBBgB
+ CAAJBQJa5zq1AhsMAAoJELxheCPuCwBX2UYH/2kkMC4mImvoClrmcMsNGijcZHdDlz8NFfCI
+ gSb3NHkarnA7uAg8KJuaHUwBMk3kBhv2BGPLcmAknzBIehbZ284W7u3DT9o1Y5g+LDyx8RIi
+ e7pnMcC+bE2IJExCVf2p3PB1tDBBdLEYJoyFz/XpdDjZ8aVls/pIyrq+mqo5LuuhWfZzPPec
+ 9EiM2eXpJw+Rz+vKjSt1YIhg46YbdZrDM2FGrt9ve3YaM5H0lzJgq/JQPKFdbd5MB0X37Qc+
+ 2m/A9u9SFnOovA42DgXUyC2cSbIJdPWOK9PnzfXqF3sX9Aol2eLUmQuLpThJtq5EHu6FzJ7Y
+ L+s0nPaNMKwv/Xhhm6Y=
+Message-ID: <430381bf-4fa5-80f7-4dcb-9e30d24e57ce@kernel.org>
+Date:   Tue, 28 Apr 2020 16:29:49 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
-In-Reply-To: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Wed, 29 Apr 2020 01:34:24 +0530
-Message-ID: <CAHLCerP89eZG3zpmveijY=UiX7LyP3VPjMUGp6NX9pRaJqJ=6A@mail.gmail.com>
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200428172116.GG2014@kadam>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
+On 4/28/2020 1:21 PM, Dan Carpenter wrote:
+> What I meant to say here was:
+> 
+> 	if (msi) {
+> 		rc = hidma_request_msi(dmadev, pdev);
+> 		if (rc)
+> 			msi = false;
+> 
+> Otherwise we end up checking freeing the msi in the error handling
+> code when we did not take it.
+> 
+> Hopefully, that clears things up?
 
-On Wed, Apr 1, 2020 at 11:17 PM Loic Poulain <loic.poulain@linaro.org> wrote:
->
-> The highest cpu frequency opps have been dropped because CPR is not
-> supported. However, we can simply specify operating voltage so that
-> they match the max corner voltages for each freq. With that, we can
-> support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
-> fine tune operating voltages and optimize power consumption.
->
-> This patch:
-> - Adds missing opps and corresponding target voltages to msm8916.dtsi.
-> - Adds cpu-supply to apq8016-sbc.dtsi (board level info).
-> - Adds pm8916 spmi regulator node to pm8916.dtsi.
->
-> Tested with a dragonboard-410c.
-
-FWIW, I took this out for a spin with stress-ng loads. The first
-output is w/o the patch.
-
---o amitrootfs o--(/sys/devices/system/cpu/cpufreq/policy0/stats) $ grep "" *
-grep: reset: Permission denied
-time_in_state:200000 14304
-time_in_state:400000 2
-time_in_state:800000 40
-time_in_state:998400 4316
-total_trans:31
-trans_table:   From  :    To
-trans_table:         :    200000    400000    800000    998400
-trans_table:   200000:         0         1        12         1
-trans_table:   400000:         2         0         0         0
-trans_table:   800000:        12         0         0         1
-trans_table:   998400:         0         1         1         0
-
-The following output is with the patch applied. The cpu ran at 1.3GHz
-for a short while until thermal kicked in and throttled the device to
-800MHz-1GHz OPPs.
-
---o amitrootfs o--(/sys/devices/system/cpu/cpufreq/policy0/stats) $ grep "" *
-grep: reset: Permission denied
-time_in_state:200000 201824
-time_in_state:400000 158
-time_in_state:533330 2501
-time_in_state:800000 37804
-time_in_state:998400 23326
-time_in_state:1094400 2325
-time_in_state:1152000 747
-time_in_state:1209600 922
-time_in_state:1363200 10788
-total_trans:1504
-trans_table:   From  :    To
-trans_table:         :    200000    400000    533330    800000
-998400   1094400   1152000   1209600   1363200
-trans_table:   200000:         0        18         5         8
-99         0         1         0         2
-trans_table:   400000:        18         0         0         0
-3         0         0         0         0
-trans_table:   533330:         7         1         0        77
-1         0         0         0         0
-trans_table:   800000:        13         1         1         0
-547         0         0         0         1
-trans_table:   998400:        92         1        80       477
-0        12         0         0         2
-trans_table:  1094400:         1         0         0         0
-14         0         0         0         2
-trans_table:  1152000:         1         0         0         0
-1         4         0         0         1
-trans_table:  1209600:         0         0         0         0
-0         0         5         0         0
-trans_table:  1363200:         1         0         0         0
-0         1         1         5         0
-
-
-
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-
-I haven't found a v2 of this patch incorporating Bjorn's suggestions
-yet. Until then,
-
-Tested-by: Amit Kucheria <amit.kucheria@linaro.org>
-
-
-
-> ---
->  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 24 ++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/msm8916.dtsi     | 24 ++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/pm8916.dtsi      |  6 ++++++
->  3 files changed, 54 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> index 037e26b..f1c1216 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> @@ -560,6 +560,30 @@
->         qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
->  };
->
-> +&spm_regulators {
-> +       vdd_cpu: s2 {
-> +               regulator-always-on;
-> +               regulator-min-microvolt = <1050000>;
-> +               regulator-max-microvolt = <1350000>;
-> +       };
-> +};
-> +
-> +&CPU0 {
-> +       cpu-supply = <&vdd_cpu>;
-> +};
-> +
-> +&CPU1 {
-> +       cpu-supply = <&vdd_cpu>;
-> +};
-> +
-> +&CPU2 {
-> +       cpu-supply = <&vdd_cpu>;
-> +};
-> +
-> +&CPU3 {
-> +       cpu-supply = <&vdd_cpu>;
-> +};
-> +
->  &smd_rpm_regulators {
->         vdd_l1_l2_l3-supply = <&pm8916_s3>;
->         vdd_l5-supply = <&pm8916_s3>;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 9f31064..9805af0 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -342,15 +342,39 @@
->
->                 opp-200000000 {
->                         opp-hz = /bits/ 64 <200000000>;
-> +                       opp-microvolt = <1050000>;
->                 };
->                 opp-400000000 {
->                         opp-hz = /bits/ 64 <400000000>;
-> +                       opp-microvolt = <1050000>;
-> +               };
-> +               opp-533330000 {
-> +                       opp-hz = /bits/ 64 <533330000>;
-> +                       opp-microvolt = <1150000>;
->                 };
->                 opp-800000000 {
->                         opp-hz = /bits/ 64 <800000000>;
-> +                       opp-microvolt = <1150000>;
->                 };
->                 opp-998400000 {
->                         opp-hz = /bits/ 64 <998400000>;
-> +                       opp-microvolt = <1350000>;
-> +               };
-> +               opp-1094400000 {
-> +                       opp-hz = /bits/ 64 <1094400000>;
-> +                       opp-microvolt = <1350000>;
-> +               };
-> +               opp-1152000000 {
-> +                       opp-hz = /bits/ 64 <1152000000>;
-> +                       opp-microvolt = <1350000>;
-> +               };
-> +               opp-1209600000 {
-> +                       opp-hz = /bits/ 64 <1209600000>;
-> +                       opp-microvolt = <1350000>;
-> +               };
-> +               opp-1363200000 {
-> +                       opp-hz = /bits/ 64 <1363200000>;
-> +                       opp-microvolt = <1350000>;
->                 };
->         };
->
-> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> index 0bcdf04..c9b9c4f 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> @@ -157,5 +157,11 @@
->                         vdd-micbias-supply = <&pm8916_l13>;
->                         #sound-dai-cells = <1>;
->                 };
-> +
-> +               spm_regulators: spm_regulators  {
-> +                       compatible = "qcom,pm8916-regulators";
-> +                       #address-cells = <1>;
-> +                       #size-cells = <1>;
-> +               };
->         };
->  };
-> --
-> 2.7.4
->
+Yes, that works. However, I'd rather use a different flag for this
+in order not to mix the meaning of msi capability vs. msi allocation
+failure.
