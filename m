@@ -2,124 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11E0B1BBD9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:29:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06E601BBDCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:44:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbgD1M3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 08:29:45 -0400
-Received: from Mailgw01.mediatek.com ([1.203.163.78]:55674 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726684AbgD1M3o (ORCPT
+        id S1726819AbgD1MoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 08:44:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45894 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726544AbgD1MoX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 08:29:44 -0400
-X-UUID: 96c3c8ec85d2473d86a4d2a61570b222-20200428
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=x82FlLAEXLzeRSBYPB5msRYu1TSUP46MR6Ng6NKD4bQ=;
-        b=fuyPALxLcsRMw4yIfqMLHTANQi4nyKdZ1STTuHSyeLWdWnVqONsKGrIVq6QpkqMqJU65PXD/EUPehAcOK9ekYY6E58eLcXKb9xWi/p1fz/ZjC8UP98uYNqcSU7xmklNeZld12sJCec2ZoIiCxQyTyyWzjtbz4ETr8R5GkH6U8vs=;
-X-UUID: 96c3c8ec85d2473d86a4d2a61570b222-20200428
-Received: from mtkcas34.mediatek.inc [(172.27.4.253)] by mailgw01.mediatek.com
-        (envelope-from <yong.mao@mediatek.com>)
-        (mailgw01.mediatek.com ESMTP with TLS)
-        with ESMTP id 215005333; Tue, 28 Apr 2020 20:29:36 +0800
-Received: from MTKCAS36.mediatek.inc (172.27.4.186) by MTKMBS31N1.mediatek.inc
- (172.27.4.69) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 28 Apr
- 2020 20:29:34 +0800
-Received: from [10.17.3.153] (10.17.3.153) by MTKCAS36.mediatek.inc
- (172.27.4.170) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Tue, 28 Apr 2020 20:29:32 +0800
-Message-ID: <1588076927.730.2.camel@mhfsdcap03>
-Subject: Re: [PATCH v5 3/5] mmc: mediatek: refine msdc timeout api
-From:   "yong.mao@mediatek.com" <yong.mao@mediatek.com>
-To:     Chun-Hung Wu <chun-hung.wu@mediatek.com>
-CC:     <mirq-linux@rere.qmqm.pl>, Jonathan Hunter <jonathanh@nvidia.com>,
-        "Al Cooper" <alcooperx@gmail.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Chaotian Jing <chaotian.jing@mediatek.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        "Kate Stewart" <kstewart@linuxfoundation.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Pan Bian <bianpan2016@163.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Allison Randal <allison@lohutok.net>,
-        Mathieu Malaterre <malat@debian.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Kuohong Wang <kuohong.wang@mediatek.com>,
-        <devicetree@vger.kernel.org>, <wsd_upstream@mediatek.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-tegra@vger.kernel.org>, <kernel-team@android.com>,
-        <linux-arm-kernel@lists.infradead.org>
-Date:   Tue, 28 Apr 2020 20:28:47 +0800
-In-Reply-To: <1588031768-23677-4-git-send-email-chun-hung.wu@mediatek.com>
-References: <1588031768-23677-1-git-send-email-chun-hung.wu@mediatek.com>
-         <1588031768-23677-4-git-send-email-chun-hung.wu@mediatek.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+        Tue, 28 Apr 2020 08:44:23 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D08EC03C1AB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:44:22 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id h4so7749280ljg.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YYJpKvgRNwf06GUmtJtBJkQp9t7R4gewPU7zZ78LA+s=;
+        b=mk2RHuyP1dBXuBJrfAOgE4aTk4QCMyQynOZyfN/yKbZbhy4BXeuLtNyFWDHODwzeiC
+         cZKJ0bVU4Ila7ewhdJekO1M+Wqxfp716yNDK2+Og+KI5m2rbWx57Aj0V6nqGLaBXph2W
+         OOWSF68o4YAQpct91VaidNWsvZj83lArAOLnjGwMYsGxnFxHmNa1YdAlCpfR0tj5XxK+
+         8MKWraI/EYHPVVtw/vaaxx5bFK2CH81c2JV2yoSEurhiT6jz1zgMS6zL/d5sszc6eENO
+         TiWgE8A9eEXIojHW3wV6d8AZ7FuUF2mtZstIdmwW+DMcv/BWbMcxHYBhFddLM/NuQGIy
+         vd+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YYJpKvgRNwf06GUmtJtBJkQp9t7R4gewPU7zZ78LA+s=;
+        b=bMojuJAw1yc/26jYfIheYm2mQXrF9Wff8C5EaeNqdamooH8bhoy5pudUbgiDHqHWFh
+         yV4u0tAEkgg7/ELfiH8j5BUZ0JpuQDNsmrZuEOF7yYUQJsVD4SRfqASTliO/nDQv+ge7
+         sJbDVv2dMcCh/IpvaWOBmt+jrcx0zenKUK/hZi5YmeWGDqWdAlZuyRLVFPB4wEicEQ1/
+         cJ7WpA4RCDzkmUtQWbfZDPrMrmgymRM97F7SfYQxwEjgWaIYgxZS/cFhHjjJrLHGCuKy
+         W9XLh74hrzlaeAGB4ffy8f9yzjnTop58RCQjhmOFCWpf5eX1Fj3SPtICuhiSvEhbJmW5
+         NbtA==
+X-Gm-Message-State: AGi0PuZ1ESXMfmMAJxICHb29GfNEvyRiG0ovw1gjCpNmtO08qflFy4gm
+        tH0q+tHOsii2Qo7jvXBMd/wRjFkiLy3mKNXGcxbrcA==
+X-Google-Smtp-Source: APiQypLwu6uj/vOvGPr2x0PmORxYHaK42JWpzfvhR7IaWOGGQ5sMKsweb+hLcKNmLiQz6ikMd8hEcH9LBAJglrU6wZE=
+X-Received: by 2002:a05:651c:32e:: with SMTP id b14mr17623187ljp.277.1588077860337;
+ Tue, 28 Apr 2020 05:44:20 -0700 (PDT)
 MIME-Version: 1.0
-X-TM-SNTS-SMTP: E01AAD61AB5BB27155A77063CBEA1604E31F717DA3D8618061EF502A15332D7C2000:8
-X-MTK:  N
-Content-Transfer-Encoding: base64
+References: <20200423162548.129661-1-dianders@chromium.org> <20200423092431.v3.1.Ia50267a5549392af8b37e67092ca653a59c95886@changeid>
+In-Reply-To: <20200423092431.v3.1.Ia50267a5549392af8b37e67092ca653a59c95886@changeid>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 28 Apr 2020 14:44:09 +0200
+Message-ID: <CACRpkdYsw1uFf_PVkRwibXUtQOwvWa7jqiw6aT9AdmkLLyqisQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] drm/bridge: ti-sn65dsi86: Export bridge GPIOs to Linux
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-T24gVHVlLCAyMDIwLTA0LTI4IGF0IDA3OjU2ICswODAwLCBDaHVuLUh1bmcgV3Ugd3JvdGU6DQo+
-IEV4dHJhY3QgbXNkYyB0aW1lb3V0IGFwaSBjb21tb24gcGFydCB0byBoYXZlDQo+IGJldHRlciBj
-b2RlIGFyY2hpdGVjdHVyZSBhbmQgYXZvaWQgcmVkdW5kZW50DQpwbGVhc2UgY29ycmVjdCB0aGUg
-d29yZCAicmVkdW5kYW50IiBpbiBuZXh0IHZlcnNpb24NCj4gY29kZS4NCj4gDQo+IFNpZ25lZC1v
-ZmYtYnk6IENodW4tSHVuZyBXdSA8Y2h1bi1odW5nLnd1QG1lZGlhdGVrLmNvbT4NCkFja2VkLWJ5
-OiBZb25nIE1hbyA8eW9uZy5tYW9AbWVkaWF0ZWsuY29tPg0KPiAtLS0NCj4gIGRyaXZlcnMvbW1j
-L2hvc3QvbXRrLXNkLmMgfCAzMiArKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLQ0KPiAg
-MSBmaWxlIGNoYW5nZWQsIDIyIGluc2VydGlvbnMoKyksIDEwIGRlbGV0aW9ucygtKQ0KPiANCj4g
-ZGlmZiAtLWdpdCBhL2RyaXZlcnMvbW1jL2hvc3QvbXRrLXNkLmMgYi9kcml2ZXJzL21tYy9ob3N0
-L210ay1zZC5jDQo+IGluZGV4IDc3MjZkY2YuLmEyMzI4ZmIgMTAwNjQ0DQo+IC0tLSBhL2RyaXZl
-cnMvbW1jL2hvc3QvbXRrLXNkLmMNCj4gKysrIGIvZHJpdmVycy9tbWMvaG9zdC9tdGstc2QuYw0K
-PiBAQCAtNjk5LDIxICs2OTksMjEgQEAgc3RhdGljIHZvaWQgbXNkY191bnByZXBhcmVfZGF0YShz
-dHJ1Y3QgbXNkY19ob3N0ICpob3N0LCBzdHJ1Y3QgbW1jX3JlcXVlc3QgKm1ycSkNCj4gIAl9DQo+
-ICB9DQo+ICANCj4gLS8qIGNsb2NrIGNvbnRyb2wgcHJpbWl0aXZlcyAqLw0KPiAtc3RhdGljIHZv
-aWQgbXNkY19zZXRfdGltZW91dChzdHJ1Y3QgbXNkY19ob3N0ICpob3N0LCB1MzIgbnMsIHUzMiBj
-bGtzKQ0KPiArc3RhdGljIHU2NCBtc2RjX3RpbWVvdXRfY2FsKHN0cnVjdCBtc2RjX2hvc3QgKmhv
-c3QsIHU2NCBucywgdTY0IGNsa3MpDQo+ICB7DQo+IC0JdTMyIHRpbWVvdXQsIGNsa19uczsNCj4g
-Kwl1NjQgdGltZW91dCwgY2xrX25zOw0KPiAgCXUzMiBtb2RlID0gMDsNCj4gIA0KPiAtCWhvc3Qt
-PnRpbWVvdXRfbnMgPSBuczsNCj4gLQlob3N0LT50aW1lb3V0X2Nsa3MgPSBjbGtzOw0KPiAgCWlm
-IChob3N0LT5tbWMtPmFjdHVhbF9jbG9jayA9PSAwKSB7DQo+ICAJCXRpbWVvdXQgPSAwOw0KPiAg
-CX0gZWxzZSB7DQo+IC0JCWNsa19ucyAgPSAxMDAwMDAwMDAwVUwgLyBob3N0LT5tbWMtPmFjdHVh
-bF9jbG9jazsNCj4gLQkJdGltZW91dCA9IChucyArIGNsa19ucyAtIDEpIC8gY2xrX25zICsgY2xr
-czsNCj4gKwkJY2xrX25zICA9IDEwMDAwMDAwMDBVTEw7DQo+ICsJCWRvX2RpdihjbGtfbnMsIGhv
-c3QtPm1tYy0+YWN0dWFsX2Nsb2NrKTsNCj4gKwkJdGltZW91dCA9IG5zICsgY2xrX25zIC0gMTsN
-Cj4gKwkJZG9fZGl2KHRpbWVvdXQsIGNsa19ucyk7DQo+ICsJCXRpbWVvdXQgKz0gY2xrczsNCj4g
-IAkJLyogaW4gMTA0ODU3NiBzY2xrIGN5Y2xlIHVuaXQgKi8NCj4gLQkJdGltZW91dCA9ICh0aW1l
-b3V0ICsgKDB4MSA8PCAyMCkgLSAxKSA+PiAyMDsNCj4gKwkJdGltZW91dCA9IERJVl9ST1VORF9V
-UCh0aW1lb3V0LCAoMHgxIDw8IDIwKSk7DQo+ICAJCWlmIChob3N0LT5kZXZfY29tcC0+Y2xrX2Rp
-dl9iaXRzID09IDgpDQo+ICAJCQlzZHJfZ2V0X2ZpZWxkKGhvc3QtPmJhc2UgKyBNU0RDX0NGRywN
-Cj4gIAkJCQkgICAgICBNU0RDX0NGR19DS01PRCwgJm1vZGUpOw0KPiBAQCAtNzIzLDkgKzcyMywy
-MSBAQCBzdGF0aWMgdm9pZCBtc2RjX3NldF90aW1lb3V0KHN0cnVjdCBtc2RjX2hvc3QgKmhvc3Qs
-IHUzMiBucywgdTMyIGNsa3MpDQo+ICAJCS8qRERSIG1vZGUgd2lsbCBkb3VibGUgdGhlIGNsayBj
-eWNsZXMgZm9yIGRhdGEgdGltZW91dCAqLw0KPiAgCQl0aW1lb3V0ID0gbW9kZSA+PSAyID8gdGlt
-ZW91dCAqIDIgOiB0aW1lb3V0Ow0KPiAgCQl0aW1lb3V0ID0gdGltZW91dCA+IDEgPyB0aW1lb3V0
-IC0gMSA6IDA7DQo+IC0JCXRpbWVvdXQgPSB0aW1lb3V0ID4gMjU1ID8gMjU1IDogdGltZW91dDsN
-Cj4gIAl9DQo+IC0Jc2RyX3NldF9maWVsZChob3N0LT5iYXNlICsgU0RDX0NGRywgU0RDX0NGR19E
-VE9DLCB0aW1lb3V0KTsNCj4gKwlyZXR1cm4gdGltZW91dDsNCj4gK30NCj4gKw0KPiArLyogY2xv
-Y2sgY29udHJvbCBwcmltaXRpdmVzICovDQo+ICtzdGF0aWMgdm9pZCBtc2RjX3NldF90aW1lb3V0
-KHN0cnVjdCBtc2RjX2hvc3QgKmhvc3QsIHU2NCBucywgdTY0IGNsa3MpDQo+ICt7DQo+ICsJdTY0
-IHRpbWVvdXQ7DQo+ICsNCj4gKwlob3N0LT50aW1lb3V0X25zID0gbnM7DQo+ICsJaG9zdC0+dGlt
-ZW91dF9jbGtzID0gY2xrczsNCj4gKw0KPiArCXRpbWVvdXQgPSBtc2RjX3RpbWVvdXRfY2FsKGhv
-c3QsIG5zLCBjbGtzKTsNCj4gKwlzZHJfc2V0X2ZpZWxkKGhvc3QtPmJhc2UgKyBTRENfQ0ZHLCBT
-RENfQ0ZHX0RUT0MsDQo+ICsJCSAgICAgICh1MzIpKHRpbWVvdXQgPiAyNTUgPyAyNTUgOiB0aW1l
-b3V0KSk7DQo+ICB9DQo+ICANCj4gIHN0YXRpYyB2b2lkIG1zZGNfZ2F0ZV9jbG9jayhzdHJ1Y3Qg
-bXNkY19ob3N0ICpob3N0KQ0KDQo=
+On Thu, Apr 23, 2020 at 6:26 PM Douglas Anderson <dianders@chromium.org> wrote:
 
+> The ti-sn65dsi86 MIPI DSI to eDP bridge chip has 4 pins on it that can
+> be used as GPIOs in a system.  Each pin can be configured as input,
+> output, or a special function for the bridge chip.  These are:
+> - GPIO1: SUSPEND Input
+> - GPIO2: DSIA VSYNC
+> - GPIO3: DSIA HSYNC or VSYNC
+> - GPIO4: PWM
+>
+> Let's expose these pins as GPIOs.  A few notes:
+> - Access to ti-sn65dsi86 is via i2c so we set "can_sleep".
+> - These pins can't be configured for IRQ.
+> - There are no programmable pulls or other fancy features.
+> - Keeping the bridge chip powered might be expensive.  The driver is
+>   setup such that if all used GPIOs are only inputs we'll power the
+>   bridge chip on just long enough to read the GPIO and then power it
+>   off again.  Setting a GPIO as output will keep the bridge powered.
+> - If someone releases a GPIO we'll implicitly switch it to an input so
+>   we no longer need to keep the bridge powered for it.
+>
+> Because of all of the above limitations we just need to implement a
+> bare-bones GPIO driver.  The device tree bindings already account for
+> this device being a GPIO controller so we only need the driver changes
+> for it.
+>
+> NOTE: Despite the fact that these pins are nominally muxable I don't
+> believe it makes sense to expose them through the pinctrl interface as
+> well as the GPIO interface.  The special functions are things that the
+> bridge chip driver itself would care about and it can just configure
+> the pins as needed.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+
+Pretty cool.
+
+I wonder if this chip could use the generic regmap GPIO helpers
+that we are working on when they come around?
+https://lore.kernel.org/linux-gpio/20200423174543.17161-11-michael@walle.cc/
+
+> +#include <linux/gpio/driver.h>
+> +#include <linux/gpio.h>
+
+Only <linux/gpio/driver.h> should be needed else you are doing
+something wrong.
+
+> + * @gchip:        If we expose our GPIOs, this is used.
+> + * @gchip_output: A cache of whether we've set GPIOs to output.  This
+> + *                serves double-duty of keeping track of the direction and
+> + *                also keeping track of whether we've incremented the
+> + *                pm_runtime reference count for this pin, which we do
+> + *                whenever a pin is configured as an output.
+
+That sounds a bit hairy but I guess it's fine.
+
+> + */
+>  struct ti_sn_bridge {
+>         struct device                   *dev;
+>         struct regmap                   *regmap;
+> @@ -102,6 +136,9 @@ struct ti_sn_bridge {
+>         struct gpio_desc                *enable_gpio;
+>         struct regulator_bulk_data      supplies[SN_REGULATOR_SUPPLY_NUM];
+>         int                             dp_lanes;
+> +
+> +       struct gpio_chip                gchip;
+> +       DECLARE_BITMAP(gchip_output, SN_NUM_GPIOS);
+
+Do you really need a bitmap for 4 bits? Can't you just have something
+like an u8 and check bit 0,1,2,3 ... well I suppose it has some elegance to
+it as well but... hm.
+
+> +static struct ti_sn_bridge *gchip_to_pdata(struct gpio_chip *chip)
+> +{
+> +       return container_of(chip, struct ti_sn_bridge, gchip);
+> +}
+> +
+> +static int ti_sn_bridge_gpio_get_direction(struct gpio_chip *chip,
+> +                                          unsigned int offset)
+> +{
+> +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
+
+Is there some specific reason why you don't just use
+gpiochip_get_data()?
+
+> +       /*
+> +        * We already have to keep track of the direction because we use
+> +        * that to figure out whether we've powered the device.  We can
+> +        * just return that rather than (maybe) powering up the device
+> +        * to ask its direction.
+> +        */
+> +       return test_bit(offset, pdata->gchip_output) ?
+> +               GPIOF_DIR_OUT : GPIOF_DIR_IN;
+> +}
+
+Don't use these legacy defines, they are for consumers.
+Use GPIO_LINE_DIRECTION_IN  and GPIO_LINE_DIRECTION_OUT.
+from <linux/gpio/driver.h>
+
+> +       ret = regmap_read(pdata->regmap, SN_GPIO_IO_REG, &val);
+> +       pm_runtime_put(pdata->dev);
+> +
+> +       if (ret)
+> +               return ret;
+> +
+> +       return (val >> (SN_GPIO_INPUT_SHIFT + offset)) & 1;
+
+My preferred way to do this is:
+
+#include <linux/bits.h>
+
+return !!(val & BIT(SN_GPIO_INPUT_SHIFT + offset));
+
+> +static void ti_sn_bridge_gpio_set(struct gpio_chip *chip, unsigned int offset,
+> +                                 int val)
+> +{
+> +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
+> +       int ret;
+> +
+> +       if (!test_bit(offset, pdata->gchip_output)) {
+> +               dev_err(pdata->dev, "Ignoring GPIO set while input\n");
+> +               return;
+> +       }
+> +
+> +       val &= 1;
+> +       ret = regmap_update_bits(pdata->regmap, SN_GPIO_IO_REG,
+> +                                BIT(SN_GPIO_OUTPUT_SHIFT + offset),
+> +                                val << (SN_GPIO_OUTPUT_SHIFT + offset));
+
+Looks like a job for the generic helper library.
+
+> +static int ti_sn_bridge_gpio_direction_input(struct gpio_chip *chip,
+> +                                            unsigned int offset)
+> +{
+> +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
+> +       int shift = offset * 2;
+> +       int ret;
+> +
+> +       if (!test_and_clear_bit(offset, pdata->gchip_output))
+> +               return 0;
+> +
+> +       ret = regmap_update_bits(pdata->regmap, SN_GPIO_CTRL_REG,
+> +                                0x3 << shift, SN_GPIO_MUX_INPUT << shift);
+
+But this 0x03 does not look very generic, it's not just 1 bit but 2.
+
+Overall it looks good, just the minor things above need fixing or
+looking into.
+
+Yours,
+Linus Walleij
