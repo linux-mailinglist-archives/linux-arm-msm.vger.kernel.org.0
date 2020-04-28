@@ -2,135 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE5571BBD7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:23:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38BBB1BBD89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:26:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726792AbgD1MXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 08:23:23 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:19379 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726762AbgD1MXX (ORCPT
+        id S1726854AbgD1MZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 08:25:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42976 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726620AbgD1MZ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 08:23:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588076603; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ur5ZOryjha/YHWLiOVj8eFSzWKndQ45R+vkiliUrPiY=;
- b=A9au67gC0G/IzgSh41k1O0nWOj899Wji2FtqMR0NszdE5Pb+m598Nd2P8Uw6ibuf5kuqBWxC
- IRnNb4gaKdehEziTUMHi1p1pgM+zqNDj5re04sqo8NhKcjQz+4RCFXAFhBQKJSjRxyxAWHPq
- p7ixWfQCkVE6se4zrsQjBYp7mUo=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea82035.7feb23e3bed8-smtp-out-n02;
- Tue, 28 Apr 2020 12:23:17 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A4BC4C433BA; Tue, 28 Apr 2020 12:23:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1F6D1C433D2;
-        Tue, 28 Apr 2020 12:23:17 +0000 (UTC)
+        Tue, 28 Apr 2020 08:25:56 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3032BC03C1AB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:25:55 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id u10so16705990lfo.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:25:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y3CrBoDpzGJjyKIi+DpjYHt2NK5y8m5CojptJRFb0pU=;
+        b=FQrwhGKLvaQDgj3OcQS2/tAhntXv2Kzc5Rg7N9I4UbMU7paoSFg+yWGK06VYXhk/1o
+         UwCdQZj3Rd67ss3sinoBLCJy2qr7lmIyRw7vsb68gstUo6s2Tfc5KoG7Dt5BC8e7kcs3
+         HECCE/eK6Ck9uQMuTnEx+SKE3hwkXSzz5QDl8PcB7GQe6LlgLtHpBeRXZEvuau2/jvln
+         E8cQEmyO6jGOLaD2MTc6nOrs/AJ5el8oWlAnxoCF1nEhqYdoQKWTszF3dV096mo1IRMa
+         jlxA1WJb4+Gkzm6GmWEs8cxFcyRseknKOUsSh6cTxq9cKWqEbEkr1vIRntp4Anapy6pO
+         Hgzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y3CrBoDpzGJjyKIi+DpjYHt2NK5y8m5CojptJRFb0pU=;
+        b=alIgksONBuFimLgzH4aj23DbCW+4wOOAgnmopC9OPNIKC69aR8SjSuRBXhjFIwLJoT
+         R/dJ8thXMX4M9Xq/FndiHU0ZwAWGp+RnYxXWiycN9QFxfh1EevHO/3dnpNTAHy3RMeZS
+         o71l1ALebfRHXb1r03Id94ElRKuriTtDhPPFi8Sn8Zi/uhPWG/kL9WNS8dexUZgKDx/I
+         bCkSfvEhWzEMe2/XwMUfmu1jUETGrMvWP7GU0p9gu6XDM+6CQKIXeHaP7Zh8M1/iJErR
+         GdcbunR3FArbCA/4nmKlTRNVg1iRbsBKFq5toiTr78d9S6KZu08iF7tC1+Q28Jua6jpx
+         VU3A==
+X-Gm-Message-State: AGi0PuZSnpi+r+bttd76ZGLT0Dtt+ct/nVy/vyOfXMilWDzy0gTQywUF
+        uQzlRn2ix5TWlKdgYkIeGDBiMBTHcMqVb0OIvIPSRw==
+X-Google-Smtp-Source: APiQypLPb2mAHpSsIdPNB3D7OVgcTv0eVuKODtDnL03qMl/e3W2QqNgeTth6RsbPQYrzCLTfa1qEof/jAdPKF+ud1Kg=
+X-Received: by 2002:ac2:5c4e:: with SMTP id s14mr19280291lfp.77.1588076753555;
+ Tue, 28 Apr 2020 05:25:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Apr 2020 17:53:17 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>, mike.leach@linaro.org
-Cc:     mathieu.poirier@linaro.org, swboyd@chromium.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] coresight: dynamic-replicator: Fix handling of multiple
- connections
-In-Reply-To: <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
-References: <20200426143725.18116-1-saiprakash.ranjan@codeaurora.org>
- <cf5852e9-c3c1-3d31-46f0-0370719947ab@arm.com>
- <CAJ9a7VgF3-Hdc7KSw9gVBeXSDHNguhqVhp60oK2XhCtr3DhDqg@mail.gmail.com>
- <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
-Message-ID: <668ea1283a6dd6b34e701972f6f71034@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20200423162548.129661-1-dianders@chromium.org> <20200423092431.v3.5.I72892d485088e57378a4748c86bc0f6c2494d807@changeid>
+In-Reply-To: <20200423092431.v3.5.I72892d485088e57378a4748c86bc0f6c2494d807@changeid>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 28 Apr 2020 14:25:42 +0200
+Message-ID: <CACRpkdZkRKgRo2-pxiyoz-3W_aoR+qb+AA-4+ZaPtt2Ykecs0w@mail.gmail.com>
+Subject: Re: [PATCH v3 5/6] dt-bindings: drm/bridge: ti-sn65dsi86: Document no-hpd
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-04-27 19:23, Suzuki K Poulose wrote:
-> On 04/27/2020 10:45 AM, Mike Leach wrote:
-[...]
->>> 
->>> This is not sufficient. You must prevent another session trying to
->>> enable the other port of the replicator as this could silently fail
->>> the "on-going" session. Not ideal. Fail the attempt to enable a port
->>> if the other port is active. You could track this in software and
->>> fail early.
->>> 
->>> Suzuki
->> 
->> While I have no issue in principle with not enabling a path to a sink
->> that is not in use - indeed in some cases attaching to unused sinks
->> can cause back-pressure that slows throughput (cf TPIU) - I am
->> concerned that this modification is masking an underlying issue with
->> the platform in question.
->> 
->> Should we decide to enable the diversion of different IDs to different
->> sinks or allow different sessions go to different sinks, then this has
->> potential to fail on the SC7180 SoC - and it will be difficult in
->> future to associate a problem with this discussion.
-> 
-> Mike,
-> 
-> I think thats a good point.
-> Sai, please could we narrow down this to the real problem and may be
-> work around it for the "device" ? Do we know which sink is causing the
-> back pressure ? We could then push the "work around" to the replicator
-> it is connected to.
-> 
-> Suzuki
+On Thu, Apr 23, 2020 at 6:26 PM Douglas Anderson <dianders@chromium.org> wrote:
 
-Hi Suzuki, Mike,
+> The ti-sn65dsi86 MIPI DSI to eDP bridge chip has a dedicated hardware
+> HPD (Hot Plug Detect) pin on it, but it's mostly useless for eDP
+> because of excessive debouncing in hardware.  Specifically there is no
+> way to disable the debouncing and for eDP debouncing hurts you because
+> HPD is just used for knowing when the panel is ready, not for
+> detecting physical plug events.
+>
+> Currently the driver in Linux just assumes that nobody has HPD hooked
+> up.  It relies on folks setting the "no-hpd" property in the panel
+> node to specify that HPD isn't hooked up and then the panel driver
+> using this to add some worst case delays when turning on the panel.
+>
+> Apparently it's also useful to specify "no-hpd" in the bridge node so
+> that the bridge driver can make sure it's doing the right thing
+> without peeking into the panel [1].  This would be used if anyone ever
+> found it useful to implement support for the HW HPD pin on the bridge.
+> Let's add this property to the bindings.
+>
+> NOTES:
+> - This is somewhat of a backward-incompatible change.  All current
+>   known users of ti-sn65dsi86 didn't have "no-hpd" specified in the
+>   bridge node yet none of them had HPD hooked up.  This worked because
+>   the current Linux driver just assumed that HPD was never hooked up.
+>   We could make it less incompatible by saying that for this bridge
+>   it's assumed HPD isn't hooked up _unless_ a property is defined, but
+>   "no-hpd" is much more standard and it's unlikely to matter unless
+>   someone quickly goes and implements HPD in the driver.
+> - It is sensible to specify "no-hpd" at the bridge chip level and
+>   specify "hpd-gpios" at the panel level.  That would mean HPD is
+>   hooked up to some other GPIO in the system, just not the hardware
+>   HPD pin on the bridge chip.
+>
+> [1] https://lore.kernel.org/r/20200417180819.GE5861@pendragon.ideasonboard.com
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-To add some more to the information provided earlier, 
-swao_replicator(6b06000) and etf are
-in AOSS (Always-On-SubSystem) group. Also TPIU(connected to 
-qdss_replicator) and EUD(connected
-to swao_replicator) sinks are unused.
+Makes sense to me so:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-Please ignore the id filter values provided earlier.
-Here are ID filter values after boot and before enabling replicator. As 
-per
-these idfilter values, we should not try to enable replicator if its 
-already
-enabled (in this case for swao_replicator) right?
+> +  no-hpd:
+> +    type: boolean
+> +    description: Set if the HPD line on the bridge isn't hooked up to anything.
 
-localhost ~ # cat 
-/sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter0
-0x0
-localhost ~ # cat 
-/sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter1
-0x0
+I would perhaps tag on:
+... or is otherwise unusable?
 
-localhost ~ # cat 
-/sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter0
-0xff
-localhost ~ # cat 
-/sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter1
-0xff
-
-I think the unused sink EUD(also in AOSS group) probably is causing the 
-backpressure here.
-
-Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Yours,
+Linus Walleij
