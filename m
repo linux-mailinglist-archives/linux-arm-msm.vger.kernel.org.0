@@ -2,112 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 729331BB5BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 07:17:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E79181BB724
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 09:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725792AbgD1FRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 01:17:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60572 "EHLO
+        id S1726282AbgD1HCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 03:02:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726276AbgD1FRE (ORCPT
+        by vger.kernel.org with ESMTP id S1725867AbgD1HCO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 01:17:04 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA84EC03C1AA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 22:17:04 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id t12so4421673oot.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2020 22:17:04 -0700 (PDT)
+        Tue, 28 Apr 2020 03:02:14 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5AEAC03C1AA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 00:02:14 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id t16so7972957plo.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 00:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kyGUYMPdvcwoGpvOuDgk/aiEpv2rX0tt8SNVhsSMdQ4=;
-        b=k59JdLGhiziCb+4hFP6QIdWUt4Ofe+zs6WedIQWT1gHSzlRwZHhfAXAIa3HCHdHynW
-         g4KIs/Qvk1GVG1z0ZSwnpZ9L+h8z7E4BBos+jDyslnxs05Yp+ftyfR0XsJSv6MY/A7pr
-         WdmqoFhAkOG8sb0wXyVFl6yZTdbKpDHqAGWWDD/9jA17dm1sr1mwYrAhevjGMi+ye95g
-         rXbo7WLXB9iJOr61f/D57brg/gBMloeXaAX1/3dwQozpv1E+LOFeRebXJehFvLvXsyLc
-         62eVjnm2nezM4FRRT3ans1kwnshlYkr3rpGmvmsNwDi3vHhY91Sgp4QuwFro/5r9ilkp
-         m0/Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4/nXkttFFpuCRApbDJrQtkcOv5tbYmzw7WwX94JHLec=;
+        b=akJy1tba1VpIzlH/CXLZlgwmODN/R788RBn+EBkFiZNxPR9HnUenKsz8T7JZ3hBiQs
+         6JxexXdGrkQivjC7Y9LpCP3JuG7fTFRrji8IJor7BprWzLpoplEjU1ufuwh+f1Z/rflv
+         cj8ycSNF6ebqJt7mCKn11SKuViZxnhv1YL6SmKkoG2wggjoB5z3g+EIDR/kjNGSiM52i
+         wmBl6bGfJ9pCt2vdzS74YeyDnawUMQokZMZEpok+2zU4ZBPPHHawFEkcVdqtHwS8SLLm
+         B+0MFC85J0M48ov68PK4QQ0OOIGNv4Zmy9W4+VSV9tgm9A953mb3aQFl+AkIP5omVDyd
+         GGjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kyGUYMPdvcwoGpvOuDgk/aiEpv2rX0tt8SNVhsSMdQ4=;
-        b=qEoE6sSm9cnVzCV5WEEiUxc8lLcJOk1NpgFXl3kz8VGhj1Yayp2xxmYdulS0DiVnIQ
-         P18+QyQ5DM9UCu/L137sHgbjBMwN4YPXgbexVHOtrzgldK3wFwxWmEJSFwWwJQHvuU9F
-         BIx/ap/8Y7BplawYnQFot1NAequczVSdtK0sOzCb+uS2q3xzmYhV+PEFbMG8AZCNvYob
-         uhhaj01OaqVbKdl40nQKUMF79rnW9qbG5NeX9+ZPdVSIHsQwU3q4pWNvpAB3Xg6+58tv
-         7jor1eyAnF2pA3qR9a4vPaZr8QQsWXIN0Abov6+P23o968Zv/5+q7itGPxzw36t9pxc0
-         yL0w==
-X-Gm-Message-State: AGi0Pua749urUO50oCRUE5Kee+SuLm75oI+UDWXZgBbnhdK6AtH/Thf4
-        Douizk0zMVDRTltulXUounS2oP5V1Bu5/0jmTkr4Vg==
-X-Google-Smtp-Source: APiQypIvpS4S8gWYymZ3shMB3u7JstrB56GpILA18vJ5FfXikOYHsplz9bL9GkUGDrMqfcNmmYcL8ImD47sB+UAk+Bg=
-X-Received: by 2002:a4a:b4c1:: with SMTP id g1mr22015000ooo.58.1588051023570;
- Mon, 27 Apr 2020 22:17:03 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4/nXkttFFpuCRApbDJrQtkcOv5tbYmzw7WwX94JHLec=;
+        b=fEx9u+rGYUvsxpENaBtzNZAuzlQUF0/gRiNwCFjajRd0EEWjKcQ4Mz+p021eZil+qQ
+         KuI0nkR/5e9+ypj8ZhOwucaxZ+qUiOMMTcufNP+BWqpCq07A9oB2ygLy5UMeqGrRyc5a
+         knvSMovv2SLFv1bz5BGFYMkSQO2f0dFL05v+52WLvja8i5hYCqm2f2hl3xI4vpX8gNPp
+         jKE89LPgSIenxxy9yLOfCk6RLL9J5R/NlQRsyLFWJuJEzlXWOyKJMr2hzmAZlTg1wu9G
+         VrUso0MDk4aN6B7MmvPUyDSWuViaTjPCYgWHc7NEG/yfOnp/bFSwg+kcaQVoabNKxddx
+         /H4g==
+X-Gm-Message-State: AGi0Pubx6qqaUvhcyha3QAcNn3anBibfxxFiE4nt2+ExjeaooRDYdguV
+        DCf+j9wJwuZZMl9mDMv0EqX5vQ==
+X-Google-Smtp-Source: APiQypKJLT+5WEewrpsIGozji9eAxX0I24yBU7u0wC3+voEg1WXhmgIc5VBQVKbIDRa6YQ/bPe8YjA==
+X-Received: by 2002:a17:90a:7105:: with SMTP id h5mr3221811pjk.3.1588057334032;
+        Tue, 28 Apr 2020 00:02:14 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id h193sm14310501pfe.30.2020.04.28.00.02.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2020 00:02:12 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     "David S. Miller" <davem@davemloft.net>,
+        Chuhong Yuan <hslester96@gmail.com>,
+        Peter Fink <pfink@christ-es.de>
+Cc:     linux-usb@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] net: usb: ax88179_178a: Implement ethtool_ops set_eeprom
+Date:   Tue, 28 Apr 2020 00:01:39 -0700
+Message-Id: <20200428070139.3465511-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-References: <1560337252-27193-1-git-send-email-nishakumari@codeaurora.org>
- <1560337252-27193-5-git-send-email-nishakumari@codeaurora.org> <20190613172738.GO5316@sirena.org.uk>
-In-Reply-To: <20190613172738.GO5316@sirena.org.uk>
-From:   Sumit Semwal <sumit.semwal@linaro.org>
-Date:   Tue, 28 Apr 2020 10:46:52 +0530
-Message-ID: <CAO_48GEYAWBgzeEKx1kjjmLJ+F0chSkRs0EUC86Y2q20kyqjkA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] regulator: adding interrupt handling in labibb regulator
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Nisha Kumari <nishakumari@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org, lgirdwood@gmail.com,
-        mark.rutland@arm.com, david.brown@linaro.org,
-        LKML <linux-kernel@vger.kernel.org>, kgunda@codeaurora.org,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Mark,
+The vendor driver does upon failing to read a valid MAC address from
+EEPROM write the netdev's address back to EEPROM and invoking a EEPROM
+reload operation. Based on this we can implement the ethtool_ops
+set_eeprom and provide the means to populate the EEPROM from within
+Linux.
 
-I am looking to address review comments and push v2 of this series (we
-need it for pixel3 and poco phones' mainline efforts): I have a query
-on your review comment below:
+It's worth noting that ax88179_get_eeprom() will return some default
+data unless the content of the EEPROM is deemed "complete", so until the
+EEPROM is fully populated (e.g. by running ethtool -e | ethtool -E)
+data written with ax88179_set_eeprom() will appear not to stick.
 
-On Thu, 13 Jun 2019 at 22:57, Mark Brown <broonie@kernel.org> wrote:
->
-> On Wed, Jun 12, 2019 at 04:30:52PM +0530, Nisha Kumari wrote:
->
-> > +static void labibb_sc_err_recovery_work(void *_labibb)
-> > +{
-> > +     int ret;
-> > +     struct qcom_labibb *labibb = (struct qcom_labibb *)_labibb;
-> > +
-> > +     labibb->ibb_vreg.vreg_enabled = 0;
-> > +     labibb->lab_vreg.vreg_enabled = 0;
-> > +
-> > +     ret = qcom_ibb_regulator_enable(labibb->lab_vreg.rdev);
->
-> The driver should *never* enable the regulator itself, it should only do
-> this if the core told it to.
->
-> > +     /*
-> > +      * The SC(short circuit) fault would trigger PBS(Portable Batch
-> > +      * System) to disable regulators for protection. This would
-> > +      * cause the SC_DETECT status being cleared so that it's not
-> > +      * able to get the SC fault status.
-> > +      * Check if LAB/IBB regulators are enabled in the driver but
-> > +      * disabled in hardware, this means a SC fault had happened
-> > +      * and SCP handling is completed by PBS.
-> > +      */
->
-> Let the core worry about this, the driver should just report the problem
-> to the core like all other devices do (and this driver doesn't...).
+The implementation is based on asix_set_eeprom(), from asix_common.c
 
-I (and Bjorn too) looked to find the api that allows us to do this
-short circuit reporting and recovery in the core, but couldn't find
-anything except REGULATOR_ERROR_OVER_CURRENT which also looks like
-it's used only once in the code.
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/net/usb/ax88179_178a.c | 77 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
 
-I am sure I'm missing something, maybe you could please help me find it?
+diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
+index 93044cf1417a..b05bb11a02cb 100644
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -31,6 +31,7 @@
+ #define AX_ACCESS_PHY				0x02
+ #define AX_ACCESS_EEPROM			0x04
+ #define AX_ACCESS_EFUS				0x05
++#define AX_RELOAD_EEPROM_EFUSE			0x06
+ #define AX_PAUSE_WATERLVL_HIGH			0x54
+ #define AX_PAUSE_WATERLVL_LOW			0x55
+ 
+@@ -611,6 +612,81 @@ ax88179_get_eeprom(struct net_device *net, struct ethtool_eeprom *eeprom,
+ 	return 0;
+ }
+ 
++static int
++ax88179_set_eeprom(struct net_device *net, struct ethtool_eeprom *eeprom,
++		   u8 *data)
++{
++	struct usbnet *dev = netdev_priv(net);
++	u16 *eeprom_buff;
++	int first_word;
++	int last_word;
++	int ret;
++	int i;
++
++	netdev_dbg(net, "write EEPROM len %d, offset %d, magic 0x%x\n",
++		   eeprom->len, eeprom->offset, eeprom->magic);
++
++	if (eeprom->len == 0)
++		return -EINVAL;
++
++	if (eeprom->magic != AX88179_EEPROM_MAGIC)
++		return -EINVAL;
++
++	first_word = eeprom->offset >> 1;
++	last_word = (eeprom->offset + eeprom->len - 1) >> 1;
++
++	eeprom_buff = kmalloc_array(last_word - first_word + 1, sizeof(u16),
++				    GFP_KERNEL);
++	if (!eeprom_buff)
++		return -ENOMEM;
++
++	/* align data to 16 bit boundaries, read the missing data from
++	   the EEPROM */
++	if (eeprom->offset & 1) {
++		ret = ax88179_read_cmd(dev, AX_ACCESS_EEPROM, first_word, 1, 2,
++				       &eeprom_buff[0]);
++		if (ret < 0) {
++			netdev_err(net, "Failed to read EEPROM at offset 0x%02x.\n", first_word);
++			goto free;
++		}
++	}
++
++	if ((eeprom->offset + eeprom->len) & 1) {
++		ret = ax88179_read_cmd(dev, AX_ACCESS_EEPROM, last_word, 1, 2,
++				       &eeprom_buff[last_word - first_word]);
++		if (ret < 0) {
++			netdev_err(net, "Failed to read EEPROM at offset 0x%02x.\n", last_word);
++			goto free;
++		}
++	}
++
++	memcpy((u8 *)eeprom_buff + (eeprom->offset & 1), data, eeprom->len);
++
++	for (i = first_word; i <= last_word; i++) {
++		netdev_dbg(net, "write to EEPROM at offset 0x%02x, data 0x%04x\n",
++			   i, eeprom_buff[i - first_word]);
++		ret = ax88179_write_cmd(dev, AX_ACCESS_EEPROM, i, 1, 2,
++					&eeprom_buff[i - first_word]);
++		if (ret < 0) {
++			netdev_err(net, "Failed to write EEPROM at offset 0x%02x.\n", i);
++			goto free;
++		}
++		msleep(20);
++	}
++
++	/* reload EEPROM data */
++	ret = ax88179_write_cmd(dev, AX_RELOAD_EEPROM_EFUSE, 0x0000, 0, 0, NULL);
++	if (ret < 0) {
++		netdev_err(net, "Failed to reload EEPROM data\n");
++		goto free;
++	}
++
++	ret = 0;
++free:
++	kfree(eeprom_buff);
++	return ret;
++}
++
+ static int ax88179_get_link_ksettings(struct net_device *net,
+ 				      struct ethtool_link_ksettings *cmd)
+ {
+@@ -822,6 +898,7 @@ static const struct ethtool_ops ax88179_ethtool_ops = {
+ 	.set_wol		= ax88179_set_wol,
+ 	.get_eeprom_len		= ax88179_get_eeprom_len,
+ 	.get_eeprom		= ax88179_get_eeprom,
++	.set_eeprom		= ax88179_set_eeprom,
+ 	.get_eee		= ax88179_get_eee,
+ 	.set_eee		= ax88179_set_eee,
+ 	.nway_reset		= usbnet_nway_reset,
+-- 
+2.24.0
 
-Best,
-Sumit.
