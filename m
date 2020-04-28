@@ -2,231 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06E601BBDCB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:44:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 528231BBE1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:48:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbgD1MoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 08:44:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45894 "EHLO
+        id S1726825AbgD1MsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 08:48:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726544AbgD1MoX (ORCPT
+        by vger.kernel.org with ESMTP id S1726793AbgD1MsK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 08:44:23 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D08EC03C1AB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:44:22 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id h4so7749280ljg.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:44:21 -0700 (PDT)
+        Tue, 28 Apr 2020 08:48:10 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 038D8C03C1AC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:48:09 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id e26so32379470otr.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=YYJpKvgRNwf06GUmtJtBJkQp9t7R4gewPU7zZ78LA+s=;
-        b=mk2RHuyP1dBXuBJrfAOgE4aTk4QCMyQynOZyfN/yKbZbhy4BXeuLtNyFWDHODwzeiC
-         cZKJ0bVU4Ila7ewhdJekO1M+Wqxfp716yNDK2+Og+KI5m2rbWx57Aj0V6nqGLaBXph2W
-         OOWSF68o4YAQpct91VaidNWsvZj83lArAOLnjGwMYsGxnFxHmNa1YdAlCpfR0tj5XxK+
-         8MKWraI/EYHPVVtw/vaaxx5bFK2CH81c2JV2yoSEurhiT6jz1zgMS6zL/d5sszc6eENO
-         TiWgE8A9eEXIojHW3wV6d8AZ7FuUF2mtZstIdmwW+DMcv/BWbMcxHYBhFddLM/NuQGIy
-         vd+A==
+        bh=gIMUGicgwmIFtnYG9N3fQPjEXkbOpiDE/URudlFOW5s=;
+        b=dUDumjdTIlGGpNmZYXHngArdwQWCCtin2qUEkmCJQtwAgVH3K5XgViZI81wZ44IjG7
+         Zq9hacLuuX3LoskBpPXvwEKqsb+nyh8KlA22O07jpgEn9K3uC6ACaKAN8PKic/lPqIH3
+         aGuwroFwfXlxdyxjbX0M5ZO8aNaVayipg4ovDBY1QrVdSeb7pZN8F9XkXds1YomIXvTY
+         YmfpZJC7mu05HAL4WFjKaNy2UHPs3FQx9op/si0XAJd964b+EV57407V2UZmA/ay/P77
+         xLf+QNzD7vJnw4QY7Rt6Ymk3pNiAJ9KUWkKYygNBJf6EbhdoOzp+JfBNNHOfuB1A5awb
+         aYQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YYJpKvgRNwf06GUmtJtBJkQp9t7R4gewPU7zZ78LA+s=;
-        b=bMojuJAw1yc/26jYfIheYm2mQXrF9Wff8C5EaeNqdamooH8bhoy5pudUbgiDHqHWFh
-         yV4u0tAEkgg7/ELfiH8j5BUZ0JpuQDNsmrZuEOF7yYUQJsVD4SRfqASTliO/nDQv+ge7
-         sJbDVv2dMcCh/IpvaWOBmt+jrcx0zenKUK/hZi5YmeWGDqWdAlZuyRLVFPB4wEicEQ1/
-         cJ7WpA4RCDzkmUtQWbfZDPrMrmgymRM97F7SfYQxwEjgWaIYgxZS/cFhHjjJrLHGCuKy
-         W9XLh74hrzlaeAGB4ffy8f9yzjnTop58RCQjhmOFCWpf5eX1Fj3SPtICuhiSvEhbJmW5
-         NbtA==
-X-Gm-Message-State: AGi0PuZ1ESXMfmMAJxICHb29GfNEvyRiG0ovw1gjCpNmtO08qflFy4gm
-        tH0q+tHOsii2Qo7jvXBMd/wRjFkiLy3mKNXGcxbrcA==
-X-Google-Smtp-Source: APiQypLwu6uj/vOvGPr2x0PmORxYHaK42JWpzfvhR7IaWOGGQ5sMKsweb+hLcKNmLiQz6ikMd8hEcH9LBAJglrU6wZE=
-X-Received: by 2002:a05:651c:32e:: with SMTP id b14mr17623187ljp.277.1588077860337;
- Tue, 28 Apr 2020 05:44:20 -0700 (PDT)
+        bh=gIMUGicgwmIFtnYG9N3fQPjEXkbOpiDE/URudlFOW5s=;
+        b=n6H7kh3BNWSthRz+uEDYEKQ0KqWyDtkriA3vt08eCnjPHN3nyB17BTpvCB2gZlk5Sg
+         LkCG4ge3VoI+CYHuov9KcoxPMWLpCb00aUJXutE0phbfjTH8ZBqJN/+H2pW32EHlOlYh
+         4QNIvY0YQSRRZ9BcnY6Nv0stxgxjjKf0vXRghyVSy5VD/UdEjUzmaqeqeYZRe7mWn3Uu
+         X5gJd3wgns2W1o+euilxanL9wGRCzJzLyHKp2XoUbFKngAiyBKPNTcbVblUmZVLr5aW5
+         rrRZQ+QPei2w8VZ4T41LgZTXqt1tXcvqglASBXUSFwi6eb49ipQmp9En9nXuz5x88qNr
+         Dr6A==
+X-Gm-Message-State: AGi0PuaO1O4g0xSfVQc13t8KsKyqDI9xy04J9YAmclhkRgiSJwhp4rMe
+        r4jeg8ncPrl0EXLt5jQzjFEsHfsMqk2MujaXRTmrWV/piSc=
+X-Google-Smtp-Source: APiQypJfEP180kCuws7+abjZcT8dPX9zxxKNlOozz0+TthkUItgt4+ccPZriFdCypuPgxcXtg9LpjV+6NqVW8gqrIFU=
+X-Received: by 2002:a05:6830:13d4:: with SMTP id e20mr22370151otq.66.1588078089294;
+ Tue, 28 Apr 2020 05:48:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200423162548.129661-1-dianders@chromium.org> <20200423092431.v3.1.Ia50267a5549392af8b37e67092ca653a59c95886@changeid>
-In-Reply-To: <20200423092431.v3.1.Ia50267a5549392af8b37e67092ca653a59c95886@changeid>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 28 Apr 2020 14:44:09 +0200
-Message-ID: <CACRpkdYsw1uFf_PVkRwibXUtQOwvWa7jqiw6aT9AdmkLLyqisQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] drm/bridge: ti-sn65dsi86: Export bridge GPIOs to Linux
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
+References: <20200401163542.83278-1-robert.marko@sartura.hr> <20200427164514.GQ56386@vkoul-mobl.Dlink>
+In-Reply-To: <20200427164514.GQ56386@vkoul-mobl.Dlink>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Tue, 28 Apr 2020 14:47:58 +0200
+Message-ID: <CA+HBbNHT7bOM68zBGAHO0Pi9WrBc244Qewwe5JV7fNhNUGPZ4Q@mail.gmail.com>
+Subject: Re: [PATCH v6 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        robh+dt@kernel.org, Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, John Crispin <john@phrozen.org>,
+        Luka Perkov <luka.perkov@sartura.hr>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 23, 2020 at 6:26 PM Douglas Anderson <dianders@chromium.org> wrote:
-
-> The ti-sn65dsi86 MIPI DSI to eDP bridge chip has 4 pins on it that can
-> be used as GPIOs in a system.  Each pin can be configured as input,
-> output, or a special function for the bridge chip.  These are:
-> - GPIO1: SUSPEND Input
-> - GPIO2: DSIA VSYNC
-> - GPIO3: DSIA HSYNC or VSYNC
-> - GPIO4: PWM
+On Mon, Apr 27, 2020 at 6:45 PM Vinod Koul <vkoul@kernel.org> wrote:
 >
-> Let's expose these pins as GPIOs.  A few notes:
-> - Access to ti-sn65dsi86 is via i2c so we set "can_sleep".
-> - These pins can't be configured for IRQ.
-> - There are no programmable pulls or other fancy features.
-> - Keeping the bridge chip powered might be expensive.  The driver is
->   setup such that if all used GPIOs are only inputs we'll power the
->   bridge chip on just long enough to read the GPIO and then power it
->   off again.  Setting a GPIO as output will keep the bridge powered.
-> - If someone releases a GPIO we'll implicitly switch it to an input so
->   we no longer need to keep the bridge powered for it.
+> Hello Robert,
 >
-> Because of all of the above limitations we just need to implement a
-> bare-bones GPIO driver.  The device tree bindings already account for
-> this device being a GPIO controller so we only need the driver changes
-> for it.
+> On 01-04-20, 18:35, Robert Marko wrote:
 >
-> NOTE: Despite the fact that these pins are nominally muxable I don't
-> believe it makes sense to expose them through the pinctrl interface as
-> well as the GPIO interface.  The special functions are things that the
-> bridge chip driver itself would care about and it can just configure
-> the pins as needed.
+> > +static int ipq4019_ss_phy_power_on(struct phy *_phy)
+> > +{
+> > +     struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
+> > +
+> > +     ipq4019_ss_phy_power_off(_phy);
+> > +
+> > +     reset_control_deassert(phy->por_rst);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static struct phy_ops ipq4019_usb_ss_phy_ops = {
+> > +     .power_on       = ipq4019_ss_phy_power_on,
+> > +     .power_off      = ipq4019_ss_phy_power_off,
+> > +};
+> > +
+> > +static int ipq4019_hs_phy_power_off(struct phy *_phy)
+> > +{
+> > +     struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
+> > +
+> > +     reset_control_assert(phy->por_rst);
+> > +     msleep(10);
 >
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Bartosz Golaszewski <bgolaszewski@baylibre.com>
-
-Pretty cool.
-
-I wonder if this chip could use the generic regmap GPIO helpers
-that we are working on when they come around?
-https://lore.kernel.org/linux-gpio/20200423174543.17161-11-michael@walle.cc/
-
-> +#include <linux/gpio/driver.h>
-> +#include <linux/gpio.h>
-
-Only <linux/gpio/driver.h> should be needed else you are doing
-something wrong.
-
-> + * @gchip:        If we expose our GPIOs, this is used.
-> + * @gchip_output: A cache of whether we've set GPIOs to output.  This
-> + *                serves double-duty of keeping track of the direction and
-> + *                also keeping track of whether we've incremented the
-> + *                pm_runtime reference count for this pin, which we do
-> + *                whenever a pin is configured as an output.
-
-That sounds a bit hairy but I guess it's fine.
-
-> + */
->  struct ti_sn_bridge {
->         struct device                   *dev;
->         struct regmap                   *regmap;
-> @@ -102,6 +136,9 @@ struct ti_sn_bridge {
->         struct gpio_desc                *enable_gpio;
->         struct regulator_bulk_data      supplies[SN_REGULATOR_SUPPLY_NUM];
->         int                             dp_lanes;
-> +
-> +       struct gpio_chip                gchip;
-> +       DECLARE_BITMAP(gchip_output, SN_NUM_GPIOS);
-
-Do you really need a bitmap for 4 bits? Can't you just have something
-like an u8 and check bit 0,1,2,3 ... well I suppose it has some elegance to
-it as well but... hm.
-
-> +static struct ti_sn_bridge *gchip_to_pdata(struct gpio_chip *chip)
-> +{
-> +       return container_of(chip, struct ti_sn_bridge, gchip);
-> +}
-> +
-> +static int ti_sn_bridge_gpio_get_direction(struct gpio_chip *chip,
-> +                                          unsigned int offset)
-> +{
-> +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
-
-Is there some specific reason why you don't just use
-gpiochip_get_data()?
-
-> +       /*
-> +        * We already have to keep track of the direction because we use
-> +        * that to figure out whether we've powered the device.  We can
-> +        * just return that rather than (maybe) powering up the device
-> +        * to ask its direction.
-> +        */
-> +       return test_bit(offset, pdata->gchip_output) ?
-> +               GPIOF_DIR_OUT : GPIOF_DIR_IN;
-> +}
-
-Don't use these legacy defines, they are for consumers.
-Use GPIO_LINE_DIRECTION_IN  and GPIO_LINE_DIRECTION_OUT.
-from <linux/gpio/driver.h>
-
-> +       ret = regmap_read(pdata->regmap, SN_GPIO_IO_REG, &val);
-> +       pm_runtime_put(pdata->dev);
-> +
-> +       if (ret)
-> +               return ret;
-> +
-> +       return (val >> (SN_GPIO_INPUT_SHIFT + offset)) & 1;
-
-My preferred way to do this is:
-
-#include <linux/bits.h>
-
-return !!(val & BIT(SN_GPIO_INPUT_SHIFT + offset));
-
-> +static void ti_sn_bridge_gpio_set(struct gpio_chip *chip, unsigned int offset,
-> +                                 int val)
-> +{
-> +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
-> +       int ret;
-> +
-> +       if (!test_bit(offset, pdata->gchip_output)) {
-> +               dev_err(pdata->dev, "Ignoring GPIO set while input\n");
-> +               return;
-> +       }
-> +
-> +       val &= 1;
-> +       ret = regmap_update_bits(pdata->regmap, SN_GPIO_IO_REG,
-> +                                BIT(SN_GPIO_OUTPUT_SHIFT + offset),
-> +                                val << (SN_GPIO_OUTPUT_SHIFT + offset));
-
-Looks like a job for the generic helper library.
-
-> +static int ti_sn_bridge_gpio_direction_input(struct gpio_chip *chip,
-> +                                            unsigned int offset)
-> +{
-> +       struct ti_sn_bridge *pdata = gchip_to_pdata(chip);
-> +       int shift = offset * 2;
-> +       int ret;
-> +
-> +       if (!test_and_clear_bit(offset, pdata->gchip_output))
-> +               return 0;
-> +
-> +       ret = regmap_update_bits(pdata->regmap, SN_GPIO_CTRL_REG,
-> +                                0x3 << shift, SN_GPIO_MUX_INPUT << shift);
-
-But this 0x03 does not look very generic, it's not just 1 bit but 2.
-
-Overall it looks good, just the minor things above need fixing or
-looking into.
-
-Yours,
-Linus Walleij
+> why not call ipq4019_ss_phy_power_off() here as well?
+Its not necessary, SS and HS PHY-s are separated but share
+the same register space.
+So when HS PHY is controlled, SS PHY can remain working.
+>
+> > +
+> > +     reset_control_assert(phy->srif_rst);
+> > +     msleep(10);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int ipq4019_hs_phy_power_on(struct phy *_phy)
+> > +{
+> > +     struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
+> > +
+> > +     ipq4019_hs_phy_power_off(_phy);
+> > +
+> > +     reset_control_deassert(phy->srif_rst);
+> > +     msleep(10);
+> > +
+> > +     reset_control_deassert(phy->por_rst);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static struct phy_ops ipq4019_usb_hs_phy_ops = {
+> > +     .power_on       = ipq4019_hs_phy_power_on,
+> > +     .power_off      = ipq4019_hs_phy_power_off,
+> > +};
+>
+> So this is fiddling with resets, what about phy configuration and
+> calibration, who take care of that?
+As as I understand, since I don't have documentation access is that no
+calibration and configuration except to properly reset them are needed.
+Development hardware required some magic register values to be
+written but in the previous revisions of this driver it was
+discovered that they were leftovers from the development HW.
+>
+> > +static int ipq4019_usb_phy_probe(struct platform_device *pdev)
+> > +{
+> > +     struct device *dev = &pdev->dev;
+> > +     struct resource *res;
+> > +     struct phy_provider *phy_provider;
+> > +     struct ipq4019_usb_phy *phy;
+> > +     const struct of_device_id *match;
+> > +
+> > +     match = of_match_device(ipq4019_usb_phy_of_match, &pdev->dev);
+> > +     if (!match)
+> > +             return -ENODEV;
+>
+> you are using this to get match-data few lines below, why not use
+> of_device_get_match_data() and get the match->data which you are
+> interested in?
+Thanks, I will look into it.
+>
+> --
+> ~Vinod
