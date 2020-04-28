@@ -2,121 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C37281BBD6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:21:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE5571BBD7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:23:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbgD1MVf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 08:21:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726645AbgD1MVf (ORCPT
+        id S1726792AbgD1MXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 08:23:23 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:19379 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726762AbgD1MXX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 08:21:35 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C94ADC03C1A9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:21:34 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id u6so21209181ljl.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=66PEvgq166rYm5NNqO/K4FUqV5SVNdU/W11wcLnh4KU=;
-        b=gESl0rihIt+DG1G40TUmI/KlPAmkk1+4Aiwp1MDMPvqaBcQyaLgL0tP2AHgbZg5nk0
-         Zpdq1rk6wT2WQ+bLxj3SVmtk9lXfualx8/Cw8wEteyO31K3kSq/vUb86877Of6KdH0io
-         f2COEG+8BhNtvaxctV6KpKzRKGo/JVpELc5SyrcjWxVrbK+uiUKLtkQXzxgTWv2WgMiG
-         Qiz0ZwMhbhudDACBVjvsTLMiMV8Sf0tjqm4cdShDq0oNkVfXuXFN6tDh9kF34y0SLf6s
-         MzV7Ht5jWfSj0hMkPlHRIvJQX83Mdi5vEpjcfQ1aZMcZ/HOCfb2pg8UsWyQjOj1fdaUH
-         4Uyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=66PEvgq166rYm5NNqO/K4FUqV5SVNdU/W11wcLnh4KU=;
-        b=Lkn9QMXoT96XF6b96H5IkkPhOHmXYC2ggRhU9kC9WOL67GqeWa1xHreNye/QX6byq4
-         E8rwUTHgVddzYNM1q9vfmA/Y31onmrHK/Lhiefk5oq/UnoT3ThtRnaTqVnlQirPOznBh
-         aZx0gTKV/8sY1AdyLpXmjKXSMxRL78mFlFZmmYrZtZptz0h8MVue0/mae8msazYBA7EX
-         owZ43OP5ldyjxwTkyW6DCEuJocdFbleB36i6Mn2MhDAg7K5d6Efl96h5fwIPGII+lvq3
-         TdzLiV2DazpAxhyKrpU+/HjDpTIp9lSt2eZfKc5nx81dAh7cxReIFa9pUF+Wi5m0hjcR
-         sFIQ==
-X-Gm-Message-State: AGi0PubgQyZHGlJEPqLVxfBRBLuDpFQKu0keERYgMqSfIyk4KySVkw7C
-        6RmlSOyFIZc7KOTSWAOmfDBTlV//ot23JeeFEiP/pg==
-X-Google-Smtp-Source: APiQypLFGrgmnKJg9/f+LHPrCacUiDgVAehn8XuE+AFvss3TzqvRIrzE2HTQI0KghqzPidyFO40ACxVTMr2WJwrJBP0=
-X-Received: by 2002:a05:651c:32e:: with SMTP id b14mr17558469ljp.277.1588076493277;
- Tue, 28 Apr 2020 05:21:33 -0700 (PDT)
+        Tue, 28 Apr 2020 08:23:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588076603; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ur5ZOryjha/YHWLiOVj8eFSzWKndQ45R+vkiliUrPiY=;
+ b=A9au67gC0G/IzgSh41k1O0nWOj899Wji2FtqMR0NszdE5Pb+m598Nd2P8Uw6ibuf5kuqBWxC
+ IRnNb4gaKdehEziTUMHi1p1pgM+zqNDj5re04sqo8NhKcjQz+4RCFXAFhBQKJSjRxyxAWHPq
+ p7ixWfQCkVE6se4zrsQjBYp7mUo=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea82035.7feb23e3bed8-smtp-out-n02;
+ Tue, 28 Apr 2020 12:23:17 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A4BC4C433BA; Tue, 28 Apr 2020 12:23:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1F6D1C433D2;
+        Tue, 28 Apr 2020 12:23:17 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200423162548.129661-1-dianders@chromium.org> <20200423092431.v3.3.I53fed5b501a31e7a7fa13268ebcdd6b77bd0cadd@changeid>
-In-Reply-To: <20200423092431.v3.3.I53fed5b501a31e7a7fa13268ebcdd6b77bd0cadd@changeid>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 28 Apr 2020 14:21:22 +0200
-Message-ID: <CACRpkdZEhqaiStFPdg3VOamKnCMjMsj+MMXimqmHW6eSGah+nQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] drm/panel-simple: Support hpd-gpios for delaying prepare()
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Apr 2020 17:53:17 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>, mike.leach@linaro.org
+Cc:     mathieu.poirier@linaro.org, swboyd@chromium.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] coresight: dynamic-replicator: Fix handling of multiple
+ connections
+In-Reply-To: <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
+References: <20200426143725.18116-1-saiprakash.ranjan@codeaurora.org>
+ <cf5852e9-c3c1-3d31-46f0-0370719947ab@arm.com>
+ <CAJ9a7VgF3-Hdc7KSw9gVBeXSDHNguhqVhp60oK2XhCtr3DhDqg@mail.gmail.com>
+ <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
+Message-ID: <668ea1283a6dd6b34e701972f6f71034@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 23, 2020 at 6:26 PM Douglas Anderson <dianders@chromium.org> wrote:
+On 2020-04-27 19:23, Suzuki K Poulose wrote:
+> On 04/27/2020 10:45 AM, Mike Leach wrote:
+[...]
+>>> 
+>>> This is not sufficient. You must prevent another session trying to
+>>> enable the other port of the replicator as this could silently fail
+>>> the "on-going" session. Not ideal. Fail the attempt to enable a port
+>>> if the other port is active. You could track this in software and
+>>> fail early.
+>>> 
+>>> Suzuki
+>> 
+>> While I have no issue in principle with not enabling a path to a sink
+>> that is not in use - indeed in some cases attaching to unused sinks
+>> can cause back-pressure that slows throughput (cf TPIU) - I am
+>> concerned that this modification is masking an underlying issue with
+>> the platform in question.
+>> 
+>> Should we decide to enable the diversion of different IDs to different
+>> sinks or allow different sessions go to different sinks, then this has
+>> potential to fail on the SC7180 SoC - and it will be difficult in
+>> future to associate a problem with this discussion.
+> 
+> Mike,
+> 
+> I think thats a good point.
+> Sai, please could we narrow down this to the real problem and may be
+> work around it for the "device" ? Do we know which sink is causing the
+> back pressure ? We could then push the "work around" to the replicator
+> it is connected to.
+> 
+> Suzuki
 
-> People use panel-simple when they have panels that are builtin to
-> their device.  In these cases the HPD (Hot Plug Detect) signal isn't
-> really used for hotplugging devices but instead is used for power
-> sequencing.  Panel timing diagrams (especially for eDP panels) usually
-> have the HPD signal in them and it acts as an indicator that the panel
-> is ready for us to talk to it.
->
-> Sometimes the HPD signal is hooked up to a normal GPIO on a system.
-> In this case we need to poll it in the correct place to know that the
-> panel is ready for us.  In some system designs the right place for
-> this is panel-simple.
->
-> When adding this support, we'll account for the case that there might
-> be a circular dependency between panel-simple and the provider of the
-> GPIO.  The case this was designed for was for the "ti-sn65dsi86"
-> bridge chip.  If HPD is hooked up to one of the GPIOs provided by the
-> bridge chip then in our probe function we'll always get back
-> -EPROBE_DEFER.  Let's handle this by allowing this GPIO to show up
-> late if we saw -EPROBE_DEFER during probe.  NOTE: since the
-> gpio_get_optional() is used, if the "hpd-gpios" isn't there our
-> variable will just be NULL and we won't do anything in prepare().
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->
-> Changes in v3:
-> - Remind how gpio_get_optional() works in the commit message.
+Hi Suzuki, Mike,
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+To add some more to the information provided earlier, 
+swao_replicator(6b06000) and etf are
+in AOSS (Always-On-SubSystem) group. Also TPIU(connected to 
+qdss_replicator) and EUD(connected
+to swao_replicator) sinks are unused.
 
-I have a small inkling to protest against calling this driver "panel-simple"
-as we tend to stockpile things like this.
+Please ignore the id filter values provided earlier.
+Here are ID filter values after boot and before enabling replicator. As 
+per
+these idfilter values, we should not try to enable replicator if its 
+already
+enabled (in this case for swao_replicator) right?
 
-I suppose panel-panacea.c is a better name at this point :/
+localhost ~ # cat 
+/sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter0
+0x0
+localhost ~ # cat 
+/sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter1
+0x0
 
-Yours,
-Linus Walleij
+localhost ~ # cat 
+/sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter0
+0xff
+localhost ~ # cat 
+/sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter1
+0xff
+
+I think the unused sink EUD(also in AOSS group) probably is causing the 
+backpressure here.
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
