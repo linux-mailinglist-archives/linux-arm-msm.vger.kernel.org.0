@@ -2,124 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8E601BC617
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 19:05:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 478DE1BC65A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 19:20:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728257AbgD1RFN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 13:05:13 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:48618 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728089AbgD1RFN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 13:05:13 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588093512; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=mqKQIoILk4/C9tu+s2NOo/+BdCq+TYpvfCmXhPRSth4=; b=IA1xymT2AcvUUt9KVZ9+NOj4Xq59qaAH5JJqgZeW5D/9Slep1PTP7GNDJxH5Ux2MVQfd7DnK
- XDVgILGXd+/gUa00rhmaMPze/iyp+q+wp11YbEhvj2KQznuN+L9VUKdhztG5W1yhCAZARAl7
- iQcSbAW6f9E19jXJBv9/625c44c=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea86246.7ff446188e68-smtp-out-n02;
- Tue, 28 Apr 2020 17:05:10 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3588EC43636; Tue, 28 Apr 2020 17:05:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.78.22] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7B85C433D2;
-        Tue, 28 Apr 2020 17:05:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D7B85C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH v6 0/5] Add SS/HS-USB changes for Qualcomm SM8150 chipset
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
-        mgautam@codeaurora.org, vkoul@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <1586472749-18599-1-git-send-email-wcheng@codeaurora.org>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <2e9ec41c-5d98-db66-9395-1651ce24cece@codeaurora.org>
-Date:   Tue, 28 Apr 2020 10:05:07 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1728253AbgD1RUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 13:20:07 -0400
+Received: from mga04.intel.com ([192.55.52.120]:37714 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726406AbgD1RUH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Apr 2020 13:20:07 -0400
+IronPort-SDR: 1ZCKXx751ZuCAm+d6oBB4G3Vegs+5IhwVpwPT9z5IgBCYmXf3PcCHno/IGqB83UlThqIwANiSW
+ ERMEzusPFKfA==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2020 10:20:05 -0700
+IronPort-SDR: Ka1XB5hXBW1DcB/aEa69JvL9ri1NN27x/pH27p4XJutnQZ9+7VJ6jPimUmYuooZ+V1v7f8n6uV
+ +zmziYzOrqPA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,328,1583222400"; 
+   d="scan'208";a="292922406"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
+  by fmsmga002.fm.intel.com with SMTP; 28 Apr 2020 10:20:01 -0700
+Received: by stinkbox (sSMTP sendmail emulation); Tue, 28 Apr 2020 20:20:00 +0300
+From:   Ville Syrjala <ville.syrjala@linux.intel.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     intel-gfx@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Emil Velikov <emil.velikov@collabora.com>
+Subject: [PATCH v3 04/16] drm/msm/dpu: Stop copying around mode->private_flags
+Date:   Tue, 28 Apr 2020 20:19:28 +0300
+Message-Id: <20200428171940.19552-5-ville.syrjala@linux.intel.com>
+X-Mailer: git-send-email 2.24.1
+In-Reply-To: <20200428171940.19552-1-ville.syrjala@linux.intel.com>
+References: <20200428171940.19552-1-ville.syrjala@linux.intel.com>
 MIME-Version: 1.0
-In-Reply-To: <1586472749-18599-1-git-send-email-wcheng@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kishon/Vinod,
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-Is this series good, and can be picked up?  Noticed that there was
-another recent change to the QMP PHY driver as well:
-https://patchwork.kernel.org/cover/11514761/
+The driver never sets mode->private_flags so copying
+it back and forth is entirely pointless. Stop doing it.
 
-Did you want me to rebase my changes on top of that, or the current
-changes are sufficient?
+Also drop private_flags from the tracepoint.
 
-Thanks
-Wesley
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 29 +--------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h   | 10 +++----
+ 2 files changed, 5 insertions(+), 34 deletions(-)
 
-On 4/9/2020 3:52 PM, Wesley Cheng wrote:
-> This series adds support for the Synopsis 7nm HSPHY USB driver being
-> used in QCOM chipsets.  The HSPHY register map differs compared to 
-> other PHY revisions.  In addition, modifications and updates are done
-> to the QMP driver to add new registers/offsets, and to update the
-> initialization sequence for enabling the SSUSB path on SM8150.
-> 
-> Changes in v6:
->  - Addressed coding style errors in phy-qcom-snps-femto-v2.c
-> 
-> Changes in v5:
->  - Reorganize IF check for when to use the proper PWRDOWN CTRL offset
->  - Rename UFS specific offset definitions in the QMP PHY driver to clearly
->    denote they are UFS specific
->  - Rename the phy-qcom-snps-7nm driver to phy-qcom-snps-femto-v2
-> 
-> Changes in v4:
->  - Fix POWERDOWN offset for QMP PHY exit routine, and check for
->    has_phy_dp_com_ctrl instead of !has_phy_com_ctrl
-> 
-> Changes in v3:
->  - Use devm_reset_control_get_exclusive instead of referencing index for
->    reset handle
-> 
-> Changes in v2:
->  - Fixed YAML errors caught by dt_binding_check
-> 
-> Jack Pham (1):
->   phy: qcom-qmp: Add SM8150 QMP USB3 PHY support
-> 
-> Wesley Cheng (4):
->   dt-bindings: phy: Add binding for qcom,usb-snps-femto-v2
->   phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs
->   phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB
->   phy: qcom-qmp: Rename UFS PCS QMP v4 registers
-> 
->  .../bindings/phy/qcom,usb-snps-femto-v2.yaml       |  77 ++++++
->  drivers/phy/qualcomm/Kconfig                       |  10 +
->  drivers/phy/qualcomm/Makefile                      |   1 +
->  drivers/phy/qualcomm/phy-qcom-qmp.c                | 193 +++++++++++++-
->  drivers/phy/qualcomm/phy-qcom-qmp.h                | 238 +++++++++++++++--
->  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c      | 296 +++++++++++++++++++++
->  6 files changed, 779 insertions(+), 36 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> 
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index a1b79ee2bd9d..d22ecabebb08 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -498,23 +498,6 @@ void dpu_encoder_helper_split_config(
+ 	}
+ }
+ 
+-static void _dpu_encoder_adjust_mode(struct drm_connector *connector,
+-		struct drm_display_mode *adj_mode)
+-{
+-	struct drm_display_mode *cur_mode;
+-
+-	if (!connector || !adj_mode)
+-		return;
+-
+-	list_for_each_entry(cur_mode, &connector->modes, head) {
+-		if (cur_mode->vdisplay == adj_mode->vdisplay &&
+-		    cur_mode->hdisplay == adj_mode->hdisplay &&
+-		    drm_mode_vrefresh(cur_mode) == drm_mode_vrefresh(adj_mode)) {
+-			adj_mode->private_flags |= cur_mode->private_flags;
+-		}
+-	}
+-}
+-
+ static struct msm_display_topology dpu_encoder_get_topology(
+ 			struct dpu_encoder_virt *dpu_enc,
+ 			struct dpu_kms *dpu_kms,
+@@ -580,15 +563,6 @@ static int dpu_encoder_virt_atomic_check(
+ 	global_state = dpu_kms_get_existing_global_state(dpu_kms);
+ 	trace_dpu_enc_atomic_check(DRMID(drm_enc));
+ 
+-	/*
+-	 * display drivers may populate private fields of the drm display mode
+-	 * structure while registering possible modes of a connector with DRM.
+-	 * These private fields are not populated back while DRM invokes
+-	 * the mode_set callbacks. This module retrieves and populates the
+-	 * private fields of the given mode.
+-	 */
+-	_dpu_encoder_adjust_mode(conn_state->connector, adj_mode);
+-
+ 	/* perform atomic check on the first physical encoder (master) */
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+ 		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+@@ -621,8 +595,7 @@ static int dpu_encoder_virt_atomic_check(
+ 		}
+ 	}
+ 
+-	trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags,
+-			adj_mode->private_flags);
++	trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
+ 
+ 	return ret;
+ }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+index eecfe9b3199e..6714b088970f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+@@ -327,20 +327,18 @@ DEFINE_EVENT(dpu_enc_keyval_template, dpu_enc_trigger_start,
+ );
+ 
+ TRACE_EVENT(dpu_enc_atomic_check_flags,
+-	TP_PROTO(uint32_t drm_id, unsigned int flags, int private_flags),
+-	TP_ARGS(drm_id, flags, private_flags),
++	TP_PROTO(uint32_t drm_id, unsigned int flags),
++	TP_ARGS(drm_id, flags),
+ 	TP_STRUCT__entry(
+ 		__field(	uint32_t,		drm_id		)
+ 		__field(	unsigned int,		flags		)
+-		__field(	int,			private_flags	)
+ 	),
+ 	TP_fast_assign(
+ 		__entry->drm_id = drm_id;
+ 		__entry->flags = flags;
+-		__entry->private_flags = private_flags;
+ 	),
+-	TP_printk("id=%u, flags=%u, private_flags=%d",
+-		  __entry->drm_id, __entry->flags, __entry->private_flags)
++	TP_printk("id=%u, flags=%u",
++		  __entry->drm_id, __entry->flags)
+ );
+ 
+ DECLARE_EVENT_CLASS(dpu_enc_id_enable_template,
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.24.1
+
