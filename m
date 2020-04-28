@@ -2,56 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E6881BBD49
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:17:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C37281BBD6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:21:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726759AbgD1MRe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 08:17:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
+        id S1726864AbgD1MVf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 08:21:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726361AbgD1MRd (ORCPT
+        by vger.kernel.org with ESMTP id S1726645AbgD1MVf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 08:17:33 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69131C03C1A9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:17:33 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id g10so16611919lfj.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:17:33 -0700 (PDT)
+        Tue, 28 Apr 2020 08:21:35 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C94ADC03C1A9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:21:34 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id u6so21209181ljl.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:21:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LMRN5qxFiZK7LH7wFWLeZOcUrBLsRhKOimHQVM7fOfk=;
-        b=cpxZ39XBlCTINntejfucjY+fxwFnKaspaM3tU4nQp/hop/2uuOah5PTPJIVYhBsP0W
-         lfbrOouP0K5/qArfU93epvXV9Y0O6xB64TrG2LalkHRUXMuhtF1VOGCuunlHRaSWlCvU
-         UHkcTxvAalSafoniWBgo7ypiQQoQkfcbaM7lr8XOmc03Hs2/vYdnvaGbEYi7RwmhyLgh
-         Ix0qkhnBs+3QBU4zUqNxIMJE9AGHOeu95Yjh4jGOIRVTbFV9eWhbfrJs5DKMZu0bEYCE
-         nPaF6CiFGEo7dZEoqMb+u78l257RyVEql24fQGrFjpdihMl/nM+w9d0ScNBUeGpLfumj
-         egvQ==
+        bh=66PEvgq166rYm5NNqO/K4FUqV5SVNdU/W11wcLnh4KU=;
+        b=gESl0rihIt+DG1G40TUmI/KlPAmkk1+4Aiwp1MDMPvqaBcQyaLgL0tP2AHgbZg5nk0
+         Zpdq1rk6wT2WQ+bLxj3SVmtk9lXfualx8/Cw8wEteyO31K3kSq/vUb86877Of6KdH0io
+         f2COEG+8BhNtvaxctV6KpKzRKGo/JVpELc5SyrcjWxVrbK+uiUKLtkQXzxgTWv2WgMiG
+         Qiz0ZwMhbhudDACBVjvsTLMiMV8Sf0tjqm4cdShDq0oNkVfXuXFN6tDh9kF34y0SLf6s
+         MzV7Ht5jWfSj0hMkPlHRIvJQX83Mdi5vEpjcfQ1aZMcZ/HOCfb2pg8UsWyQjOj1fdaUH
+         4Uyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LMRN5qxFiZK7LH7wFWLeZOcUrBLsRhKOimHQVM7fOfk=;
-        b=RFXd8XK1yeK5Zoi7p652rhnq97uW1FchJw/fhp4/vAPxHN0/bOt/G6OTNybrC1hryi
-         p4AMVaR3ptuWfOEXoDu2no82K4ZyCu9JKIu+AYzqM/yXjnC0oxiEAkQubOhcA/gyCBA3
-         UsFFbpgPfNH5oy0dA/fSYFr9cj5WuX9C6pIguOXUxm8qfDWlDRtsx2EPxBes3Dsyxx/u
-         Ga0Uw+7kkv4Zp3JnyBCSOPcJ3Eu/EKmmp8xVElyITHwXewTqU8tn8Z7KG+zCFfEk9U5T
-         +Ttt78XfHDPiCOnrDFnKrKXfczuKjRSNr2u+6EygKtMuEiT82q7XLShGlCrOW6CT03jU
-         aPIQ==
-X-Gm-Message-State: AGi0Pua1aWgfxIYXyBxDlilusURJD34CVPvxoLxjsj7VZfKwa6D79Wzr
-        xcVvjfVvsnzZsmG4fJVqw9itnjvpCFwKpTp+2mbaKg==
-X-Google-Smtp-Source: APiQypLWMYHDowDI3oIfEvtVytKcitjHf4lYdOHlnfwZ2JMiRfn25SLHbT7DdEte3F2EYP1mH2KagEeErbh4nPD3DbI=
-X-Received: by 2002:ac2:5c4e:: with SMTP id s14mr19256598lfp.77.1588076251617;
- Tue, 28 Apr 2020 05:17:31 -0700 (PDT)
+        bh=66PEvgq166rYm5NNqO/K4FUqV5SVNdU/W11wcLnh4KU=;
+        b=Lkn9QMXoT96XF6b96H5IkkPhOHmXYC2ggRhU9kC9WOL67GqeWa1xHreNye/QX6byq4
+         E8rwUTHgVddzYNM1q9vfmA/Y31onmrHK/Lhiefk5oq/UnoT3ThtRnaTqVnlQirPOznBh
+         aZx0gTKV/8sY1AdyLpXmjKXSMxRL78mFlFZmmYrZtZptz0h8MVue0/mae8msazYBA7EX
+         owZ43OP5ldyjxwTkyW6DCEuJocdFbleB36i6Mn2MhDAg7K5d6Efl96h5fwIPGII+lvq3
+         TdzLiV2DazpAxhyKrpU+/HjDpTIp9lSt2eZfKc5nx81dAh7cxReIFa9pUF+Wi5m0hjcR
+         sFIQ==
+X-Gm-Message-State: AGi0PubgQyZHGlJEPqLVxfBRBLuDpFQKu0keERYgMqSfIyk4KySVkw7C
+        6RmlSOyFIZc7KOTSWAOmfDBTlV//ot23JeeFEiP/pg==
+X-Google-Smtp-Source: APiQypLFGrgmnKJg9/f+LHPrCacUiDgVAehn8XuE+AFvss3TzqvRIrzE2HTQI0KghqzPidyFO40ACxVTMr2WJwrJBP0=
+X-Received: by 2002:a05:651c:32e:: with SMTP id b14mr17558469ljp.277.1588076493277;
+ Tue, 28 Apr 2020 05:21:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200423162548.129661-1-dianders@chromium.org> <20200423092431.v3.2.I1976736b400a3b30e46efa47782248b86b3bc627@changeid>
-In-Reply-To: <20200423092431.v3.2.I1976736b400a3b30e46efa47782248b86b3bc627@changeid>
+References: <20200423162548.129661-1-dianders@chromium.org> <20200423092431.v3.3.I53fed5b501a31e7a7fa13268ebcdd6b77bd0cadd@changeid>
+In-Reply-To: <20200423092431.v3.3.I53fed5b501a31e7a7fa13268ebcdd6b77bd0cadd@changeid>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 28 Apr 2020 14:17:20 +0200
-Message-ID: <CACRpkdZuMALENkGjOUuQqS1pTH2sXkj1Z59mPjOrBynnkAQdpA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/6] dt-bindings: display: Add hpd-gpios to
- panel-common bindings
+Date:   Tue, 28 Apr 2020 14:21:22 +0200
+Message-ID: <CACRpkdZEhqaiStFPdg3VOamKnCMjMsj+MMXimqmHW6eSGah+nQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/6] drm/panel-simple: Support hpd-gpios for delaying prepare()
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
         Dave Airlie <airlied@linux.ie>,
@@ -83,16 +82,41 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, Apr 23, 2020 at 6:26 PM Douglas Anderson <dianders@chromium.org> wrote:
 
-> In the cases where there is no connector in a system there's no great
-> place to put "hpd-gpios".  As per discussion [1] the best place to put
-> it is in the panel.  Add this to the device tree bindings.
+> People use panel-simple when they have panels that are builtin to
+> their device.  In these cases the HPD (Hot Plug Detect) signal isn't
+> really used for hotplugging devices but instead is used for power
+> sequencing.  Panel timing diagrams (especially for eDP panels) usually
+> have the HPD signal in them and it acts as an indicator that the panel
+> is ready for us to talk to it.
 >
-> [1] https://lore.kernel.org/r/20200417180819.GE5861@pendragon.ideasonboard.com
+> Sometimes the HPD signal is hooked up to a normal GPIO on a system.
+> In this case we need to poll it in the correct place to know that the
+> panel is ready for us.  In some system designs the right place for
+> this is panel-simple.
+>
+> When adding this support, we'll account for the case that there might
+> be a circular dependency between panel-simple and the provider of the
+> GPIO.  The case this was designed for was for the "ti-sn65dsi86"
+> bridge chip.  If HPD is hooked up to one of the GPIOs provided by the
+> bridge chip then in our probe function we'll always get back
+> -EPROBE_DEFER.  Let's handle this by allowing this GPIO to show up
+> late if we saw -EPROBE_DEFER during probe.  NOTE: since the
+> gpio_get_optional() is used, if the "hpd-gpios" isn't there our
+> variable will just be NULL and we won't do anything in prepare().
 >
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>
+> Changes in v3:
+> - Remind how gpio_get_optional() works in the commit message.
 
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+
+I have a small inkling to protest against calling this driver "panel-simple"
+as we tend to stockpile things like this.
+
+I suppose panel-panacea.c is a better name at this point :/
 
 Yours,
 Linus Walleij
