@@ -2,108 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6018D1BC684
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 19:23:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CDBF1BCB78
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 20:57:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728293AbgD1RXo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 13:23:44 -0400
-Received: from aserp2120.oracle.com ([141.146.126.78]:56436 "EHLO
-        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728212AbgD1RXo (ORCPT
+        id S1729475AbgD1SaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 14:30:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43654 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729468AbgD1SaP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 13:23:44 -0400
-Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
-        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03SHN2qP036115;
-        Tue, 28 Apr 2020 17:23:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=nYRe3Y8uXuglxFzIR12FaigY66zRmKUyGWDwXjiXdU8=;
- b=cN0Bqq2/+5KRYNGOWfNpmF2uU9/AZOaZnRLCqrEa8dn/0TSCuzme1svSzlLnwkW+8rYK
- jzh/40NuUaLzABl4FTCby60G7PoklecspEg0nyHSr1hxFRfjRyZwPFsZ6tGzrZBTmWee
- MvmtIlZOmgx7CjGwclIUJCMoLxqkrrj5A1oyoVl2EYeGhENkvDUFWwnT/c/bu8D04hVX
- FXm09Uq2SZSxcK+ljsRt4CiKw7kNzfsHCiowYVFK1yRlJ3r4JdBHENHhhQDcWvdxLv18
- Sm7ZZuhoihIJCxCDuZ817tUtdbF8Ml176gGjCnb6k6HPu5udZg67li7HyjLtkdB5fIzE Nw== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-        by aserp2120.oracle.com with ESMTP id 30nucg1br4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 28 Apr 2020 17:23:34 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03SHC1EK003111;
-        Tue, 28 Apr 2020 17:21:34 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by aserp3030.oracle.com with ESMTP id 30mxrt194w-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 28 Apr 2020 17:21:34 +0000
-Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 03SHLUSY017447;
-        Tue, 28 Apr 2020 17:21:30 GMT
-Received: from kadam (/41.57.98.10)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 28 Apr 2020 10:21:29 -0700
-Date:   Tue, 28 Apr 2020 20:21:16 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Sinan Kaya <okaya@kernel.org>
-Cc:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org,
-        dan.j.williams@intel.com, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: qcom_hidma: Simplify error handling path in
- hidma_probe
-Message-ID: <20200428172116.GG2014@kadam>
-References: <20200427111043.70218-1-christophe.jaillet@wanadoo.fr>
- <20200428125426.GE2014@kadam>
- <1efa0186-7fbe-9cb5-2719-2d7192f99e27@kernel.org>
+        Tue, 28 Apr 2020 14:30:15 -0400
+Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31F96C03C1AE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 11:30:15 -0700 (PDT)
+Received: by mail-ua1-x944.google.com with SMTP id b6so8713552uak.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 11:30:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pXMg95AozC5ju4vKrdTrkYzrsPUBTLw6GqQWj9wwSg8=;
+        b=BMOR3eMSjaDO+gIF05mqIQqam13R+jGBmNymq3jZoK2dxuYu0k0lfMbTri71OPUeg+
+         nOm7JCs5UGgb8RbAbZVh57RtL73K6pOtg4bfa6abk1zifMglkXSY4sHFy8Nj5nfsL3Ad
+         dq4ixCiwxQPtrHIlKhKxJv/yYOmOLo+/3SvhMtbny8ghN3Yuz+VIlDubVGUfLXzRSnkm
+         4f8qdAol1fBSCGJCWs0SrvVkjELl0tFaqPgwtaB6KB0y4p4G4e0dnfHEFfAGKDVQusYv
+         z1y6QRs6X0ce0WGJHccaWZVslvJG1pAy/ou+ybIzy1ImNfYw7qsdTrmvqtgfLJTfPwEo
+         srfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pXMg95AozC5ju4vKrdTrkYzrsPUBTLw6GqQWj9wwSg8=;
+        b=JzY3CtZThcGI0owKZhvoqOjAJ+SB8FqsvDdAbmTW2cex72wblOSNyChFEe9/WTguDK
+         sjmXOOFvb4c5KpSEPez+qFCHQVnSklEKcBY42ZkTpwmazvKUWmY+QOdNl6HaZbRcsxo+
+         CatxrCtmXKvMS8YA4ZBZyTRIKuOiF6VMAVG4Y85iNcS8lynWpSIas7MO8h8yEwqnrT0a
+         g6BL4tOVVs10wqJs+n/FpAwm4WzjJRNVEAgRa0ZEriWo9O5KGDcmoKmWlNdXFhx2YaRp
+         ErCQS6ffOQZwjej6/hSJYE1JqCdma9Ey+dSzSUFAbZrZNicy8vEKVn1jG0fYK5Z2Wipp
+         261w==
+X-Gm-Message-State: AGi0PuZUEnfQQFBYPsde3UYgdmKrO+FKkREOUrg0d+NPae7kYHuaJGUG
+        ckmE/TkTzi2SvYzgSXadxFe9xPsaJk5Pf9h14mvGAA==
+X-Google-Smtp-Source: APiQypLsMma60/04KmAJl8+He2niHeX0v3cUqZD1z9G1U33bvEUR66gRv6EtELS7Q+EmnzF1YJxBkDklwYv88PqRhtM=
+X-Received: by 2002:ab0:6588:: with SMTP id v8mr23216205uam.100.1588098614071;
+ Tue, 28 Apr 2020 11:30:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1efa0186-7fbe-9cb5-2719-2d7192f99e27@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9605 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 phishscore=0 suspectscore=2
- mlxlogscore=999 malwarescore=0 bulkscore=0 spamscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2004280136
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9605 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015 priorityscore=1501
- mlxlogscore=999 impostorscore=0 suspectscore=2 malwarescore=0
- lowpriorityscore=0 mlxscore=0 spamscore=0 adultscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004280137
+References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org> <1588080785-6812-10-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <1588080785-6812-10-git-send-email-rnayak@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 28 Apr 2020 20:29:38 +0200
+Message-ID: <CAPDyKFrGQvcCB1wfv=iqk66uja3faMRF1gGMSE2VhB8gJcO=sg@mail.gmail.com>
+Subject: Re: [PATCH v3 09/17] mmc: sdhci-msm: Fix error handling for dev_pm_opp_of_add_table()
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pradeep P V K <ppvk@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I apologize, I wrote my code hurriedly and did no explain the bug well.
-I understood what the code is doing, but my fix was missing an if
-condition.
+On Tue, 28 Apr 2020 at 15:39, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+> Even though specifying OPP's in device tree is optional, ignoring all errors
+> reported by dev_pm_opp_of_add_table() means we can't distinguish between a
+> missing OPP table and a wrong/buggy OPP table. While missing OPP table
+> (dev_pm_opp_of_add_table() returns a -ENODEV in such case) can be ignored,
+> a wrong/buggy OPP table in device tree should make the driver error out.
+>
+> while we fix that, lets also fix the variable names for opp/opp_table to
+> avoid confusion and name them opp_table/has_opp_table instead.
+>
+> Suggested-by: Matthias Kaehlcke <matthias@chromium.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Cc: Pradeep P V K <ppvk@codeaurora.org>
+> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> Cc: linux-mmc@vger.kernel.org
 
-On Tue, Apr 28, 2020 at 12:01:15PM -0400, Sinan Kaya wrote:
-> On 4/28/2020 8:54 AM, Dan Carpenter wrote:
-> >> @@ -897,7 +897,6 @@ static int hidma_probe(struct platform_device *pdev)
-> >>  	if (msi)
-> >             ^^^
-> > This test doesn't work.  It will call free hidma_free_msis() if the
-> > hidma_request_msi() call fails.  We should do:
-> > 
-> > 	if (msi) {
-> > 		rc = hidma_request_msi(dmadev, pdev);
-> > 		msi = false;
+Is this a standalone patch that I queue up via my mmc tree?
 
-What I meant to say here was:
+Kind regards
+Uffe
 
-	if (msi) {
-		rc = hidma_request_msi(dmadev, pdev);
-		if (rc)
-			msi = false;
-
-Otherwise we end up checking freeing the msi in the error handling
-code when we did not take it.
-
-Hopefully, that clears things up?
-
-regards,
-dan carpenter
-
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 27 ++++++++++++++++-----------
+>  1 file changed, 16 insertions(+), 11 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 8a055dd..97758fa 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -244,8 +244,8 @@ struct sdhci_msm_host {
+>         struct clk_bulk_data bulk_clks[4]; /* core, iface, cal, sleep clocks */
+>         unsigned long clk_rate;
+>         struct mmc_host *mmc;
+> -       struct opp_table *opp;
+> -       bool opp_table;
+> +       struct opp_table *opp_table;
+> +       bool has_opp_table;
+>         bool use_14lpp_dll_reset;
+>         bool tuning_done;
+>         bool calibration_done;
+> @@ -1967,15 +1967,20 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>         }
+>         msm_host->bulk_clks[0].clk = clk;
+>
+> -       msm_host->opp = dev_pm_opp_set_clkname(&pdev->dev, "core");
+> -       if (IS_ERR(msm_host->opp)) {
+> -               ret = PTR_ERR(msm_host->opp);
+> +       msm_host->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
+> +       if (IS_ERR(msm_host->opp_table)) {
+> +               ret = PTR_ERR(msm_host->opp_table);
+>                 goto bus_clk_disable;
+>         }
+>
+>         /* OPP table is optional */
+> -       if (!dev_pm_opp_of_add_table(&pdev->dev))
+> -               msm_host->opp_table = true;
+> +       ret = dev_pm_opp_of_add_table(&pdev->dev);
+> +       if (!ret) {
+> +               msm_host->has_opp_table = true;
+> +       } else if (ret != -ENODEV) {
+> +               dev_err(&pdev->dev, "Invalid OPP table in Device tree\n");
+> +               goto opp_cleanup;
+> +       }
+>
+>         /* Vote for maximum clock rate for maximum performance */
+>         ret = dev_pm_opp_set_rate(&pdev->dev, INT_MAX);
+> @@ -2133,9 +2138,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>         clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
+>                                    msm_host->bulk_clks);
+>  opp_cleanup:
+> -       if (msm_host->opp_table)
+> +       if (msm_host->has_opp_table)
+>                 dev_pm_opp_of_remove_table(&pdev->dev);
+> -       dev_pm_opp_put_clkname(msm_host->opp);
+> +       dev_pm_opp_put_clkname(msm_host->opp_table);
+>  bus_clk_disable:
+>         if (!IS_ERR(msm_host->bus_clk))
+>                 clk_disable_unprepare(msm_host->bus_clk);
+> @@ -2154,9 +2159,9 @@ static int sdhci_msm_remove(struct platform_device *pdev)
+>
+>         sdhci_remove_host(host, dead);
+>
+> -       if (msm_host->opp_table)
+> +       if (msm_host->has_opp_table)
+>                 dev_pm_opp_of_remove_table(&pdev->dev);
+> -       dev_pm_opp_put_clkname(msm_host->opp);
+> +       dev_pm_opp_put_clkname(msm_host->opp_table);
+>         pm_runtime_get_sync(&pdev->dev);
+>         pm_runtime_disable(&pdev->dev);
+>         pm_runtime_put_noidle(&pdev->dev);
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
