@@ -2,152 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D7751BC24F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 17:09:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABB6C1BC403
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 17:48:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727875AbgD1PJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 11:09:35 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:45056 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727803AbgD1PJe (ORCPT
+        id S1728259AbgD1PsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 11:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728241AbgD1PsM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 11:09:34 -0400
-Received: by mail-ot1-f67.google.com with SMTP id e20so33149856otk.12;
-        Tue, 28 Apr 2020 08:09:32 -0700 (PDT)
+        Tue, 28 Apr 2020 11:48:12 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 011ADC03C1AE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 08:48:11 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id ms17so1305798pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 08:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=5qg09P4fJgr+a4V0kkb6T7N6RFRG+NYeOfMhOPT4/Dc=;
+        b=JDSThlqmXtrKvxvHRB6TPWEqVdcqPId/GP5ROJiq6/aWYOFWWaWAQZaEO5O41nBgtA
+         SkL8uF+189EbZWOKop390c8l3PRBjmtLVJWX2b+NGwaNX4iX0nlUPfDsAFacz/D+VqC5
+         E9M0BgOw26tKTlf2vgBUIRRD5BeJwPGtZ7Wg8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FEtkU4hcjYXFmjYfyqu325vicHnMHo34pYaXMraZzDM=;
-        b=MSzdK9eL6RarXRAXGxpFZCxKaYoEwEkQw0jcqso6SM5bBB+YGFogDT+2oxUgEXek3S
-         /zPjHYEAN3GVlFCwPo6/3hIK4sdzavpU28MFG4EUCHcTr1SWy/lyD6arlLr2JG5keluT
-         +SHtDS8tJLMaAOkqAyifftsDu9ucmbNguhdT1iAOq6+PC7IXMifg3B24sGMmy9QB6h/7
-         ZKqHX3Es+szWNwupVdi4MnQUvpQ68X+x+bC7MsPvj9dv9uwA1zg/JUjMXsK7beP+LqTP
-         rFSzeykw1NlbBWo+JzqZy3VupXEvpFslUC/B+QsDCiD9aOMX4n9+E6jNMfBdRrZypKfS
-         pRxA==
-X-Gm-Message-State: AGi0PuauVY2Kj6f7HHZEnjT3bqK+Bio0YZ1ZJqvKV/usmMtNjqTcUnA/
-        8O1AgfgNKZ2W7LS5RDz5BA==
-X-Google-Smtp-Source: APiQypKmYM+VdqehUo6MhirkRmkVcweA2beGuUjgMoVitv5BtZ9cDwt/Cg8BC2ldu07VXvCN5xX9Iw==
-X-Received: by 2002:a05:6830:141:: with SMTP id j1mr8997476otp.294.1588086572206;
-        Tue, 28 Apr 2020 08:09:32 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id u9sm4102772ote.47.2020.04.28.08.09.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2020 08:09:31 -0700 (PDT)
-Received: (nullmailer pid 31119 invoked by uid 1000);
-        Tue, 28 Apr 2020 15:09:30 -0000
-Date:   Tue, 28 Apr 2020 10:09:30 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     andrew@lunn.ch, f.fainelli@gmail.com, hkallweit1@gmail.com,
-        linux@armlinux.org.uk, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: Re: [PATCH v3 2/3] dt-bindings: add Qualcomm IPQ4019 MDIO bindings
-Message-ID: <20200428150930.GA25643@bogus>
-References: <20200415150244.2737206-1-robert.marko@sartura.hr>
- <20200415150244.2737206-2-robert.marko@sartura.hr>
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=5qg09P4fJgr+a4V0kkb6T7N6RFRG+NYeOfMhOPT4/Dc=;
+        b=uIhY2RCYaZGJgp14a0dF1ZGTNylYH28rY/6xuFelUUGIoXBFWy46K09Gk1pOKZTswg
+         I6l7u0GXKtDkwE5ccAbc2FrTRvLJuHXPSSXxxOeARNypwUZ4mqKlLWjFU4k8J2WoGK+P
+         KmiaG6cmlpeEgxcuQOHAXdRKYFnimwSG4aAEFb5cSkvAEePUhaxuWTVW+VTBYulnwvLu
+         vAAVPMkXQWbVyu6lBk8c17Al0SL4zYwvvr2Vrgsvw2ub2/xjQ0KDNg80VrEhBFY5fvM9
+         YYP4h7lZ7JkM+OId3z5KlQKVXj148e5skRmqz9HEaVHrAoTq/hUFLOx9R7rG3i48Vfku
+         6ksw==
+X-Gm-Message-State: AGi0PuZ+fquPggkYrqepOzlLOQE4u7+U39WU1PsDaxNVtB8nlxN0Z+GZ
+        NSlmGkVFz3jVr96tbglwG7VJTw==
+X-Google-Smtp-Source: APiQypKnhe6XWsZGMGHpEQeihQ6bHdJTrY0q2pMJXMds500wkrvQkChdn9JC76eSbx48i4opUzXQoA==
+X-Received: by 2002:a17:90a:d985:: with SMTP id d5mr5793380pjv.171.1588088891211;
+        Tue, 28 Apr 2020 08:48:11 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id v1sm2392709pjs.36.2020.04.28.08.48.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Apr 2020 08:48:10 -0700 (PDT)
+Date:   Tue, 28 Apr 2020 08:48:09 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, georgi.djakov@linaro.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V4 4/9] soc: qcom-geni-se: Add interconnect support to
+ fix earlycon crash
+Message-ID: <20200428154809.GH4525@google.com>
+References: <1586946198-13912-1-git-send-email-akashast@codeaurora.org>
+ <1586946198-13912-5-git-send-email-akashast@codeaurora.org>
+ <20200416003112.GA199755@google.com>
+ <146cf8db-3c09-39a6-2886-bec0db289948@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200415150244.2737206-2-robert.marko@sartura.hr>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <146cf8db-3c09-39a6-2886-bec0db289948@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 15, 2020 at 05:02:46PM +0200, Robert Marko wrote:
-> This patch adds the binding document for the IPQ40xx MDIO driver.
+Hi Akash,
+
+On Tue, Apr 28, 2020 at 03:51:44PM +0530, Akash Asthana wrote:
+> Hi Matthias,
 > 
-> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> Cc: Luka Perkov <luka.perkov@sartura.hr>
-> ---
-> Changes from v2 to v3:
-> * Remove status from example
+> On 4/16/2020 6:01 AM, Matthias Kaehlcke wrote:
+> > Hi Akash,
+> > 
+> > On Wed, Apr 15, 2020 at 03:53:13PM +0530, Akash Asthana wrote:
+
+...
+
+> > > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> > > index 6119090..8c5d97c 100644
+> > > --- a/drivers/tty/serial/qcom_geni_serial.c
+> > > +++ b/drivers/tty/serial/qcom_geni_serial.c
+> > > @@ -1090,6 +1090,12 @@ static void qcom_geni_serial_earlycon_write(struct console *con,
+> > >   	__qcom_geni_serial_console_write(&dev->port, s, n);
+> > >   }
+> > > +static int qcom_geni_serial_earlycon_exit(struct console *con)
+> > > +{
+> > > +	geni_remove_earlycon_icc_vote();
+> > > +	return 0;
+> > > +}
+> > > +
+> > >   static int __init qcom_geni_serial_earlycon_setup(struct earlycon_device *dev,
+> > >   								const char *opt)
+> > >   {
+> > > @@ -1135,6 +1141,7 @@ static int __init qcom_geni_serial_earlycon_setup(struct earlycon_device *dev,
+> > >   	writel(stop_bit_len, uport->membase + SE_UART_TX_STOP_BIT_LEN);
+> > >   	dev->con->write = qcom_geni_serial_earlycon_write;
+> > > +	dev->con->exit = qcom_geni_serial_earlycon_exit;
+> > The idea of using the exit handler of the early console to remove the
+> > votes seemed appealing at first, however it has a drawback: the bandwidth
+> > requests in geni_se_probe() are always made when CONFIG_SERIAL_EARLYCON=y,
+> > also when the system doesn't actually use an early console. On such a
+> > system the votes would never be removed.
+> > 
+> > A possible alternative could seem to remove the vote at the end of
+> > qcom_geni_serial_probe() of the 'normal' console, but it has a similar
+> > problem: the system could not even have a normal console. One could
+> > possibly argue that CONFIG_SERIAL_QCOM_GENI_CONSOLE shouldn't be set
+> > on such a system, however it could be enabled to have a console for
+> > development, and in production the same kernel config is used, but
+> > with the console disabled through the device tree.
+> > 
+> > I don't really have a good idea at this point, maybe we just need
+> > something as ugly as a delayed work to remove the votes. Other
+> > suggestions are welcome :)
 > 
->  .../bindings/net/qcom,ipq40xx-mdio.yaml       | 61 +++++++++++++++++++
->  1 file changed, 61 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml
+> I think we can do something like below. Before voting we are checking
+> whether earlyconsole ("qcom_geni") exits or not.  The name is fixed from
+> earlycon declaration file@drivers/tty/serial/qcom_geni_serial.c
 > 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml
-> new file mode 100644
-> index 000000000000..8d4542ccd38c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml
-> @@ -0,0 +1,61 @@
-> +# SPDX-License-Identifier: GPL-2.0
-
-Dual license new bindings please:
-
-(GPL-2.0-only OR BSD-2-Clause)
-
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/qcom,ipq40xx-mdio.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm IPQ40xx MDIO Controller Device Tree Bindings
-> +
-> +maintainers:
-> +  - Robert Marko <robert.marko@sartura.hr>
-> +
-> +allOf:
-> +  - $ref: "mdio.yaml#"
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,ipq40xx-mdio
-
-Don't use wildcards in compatible names. Should be SoC specific. If 'all 
-the same', then use a fallback to the 1st implementation.
-
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +
-> +examples:
-> +  - |
-> +    mdio@90000 {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      compatible = "qcom,ipq40xx-mdio";
-> +      reg = <0x90000 0x64>;
-> +
-> +      ethphy0: ethernet-phy@0 {
-> +        reg = <0>;
-> +      };
-> +
-> +      ethphy1: ethernet-phy@1 {
-> +        reg = <1>;
-> +      };
-> +
-> +      ethphy2: ethernet-phy@2 {
-> +        reg = <2>;
-> +      };
-> +
-> +      ethphy3: ethernet-phy@3 {
-> +        reg = <3>;
-> +      };
-> +
-> +      ethphy4: ethernet-phy@4 {
-> +        reg = <4>;
-> +      };
-> +    };
-> -- 
-> 2.26.0
+> OF_EARLYCON_DECLARE(qcom_geni, "qcom,geni-debug-uart",
+>                                 qcom_geni_serial_earlycon_setup);
 > 
+> ====================================================================================
+> 
+> @@ -809,6 +809,8 @@ static int geni_se_probe(struct platform_device *pdev)
+>         struct device *dev = &pdev->dev;
+>         struct resource *res;
+>         struct geni_wrapper *wrapper;
+> +       struct console *bcon = NULL;
+
+nit: initialization is not needed
+
+> +       int earlycon_present = 0;
+>         int ret;
+> 
+>         wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
+> @@ -832,6 +834,15 @@ static int geni_se_probe(struct platform_device *pdev)
+>         }
+> 
+>  #ifdef CONFIG_SERIAL_EARLYCON
+> +       if (console_drivers)
+> +               for_each_console(bcon)
+> +                       if (!strcmp(bcon->name, "qcom_geni")) {
+> +                               earlycon_present = 1;
+> +                               break;
+> +                       }
+> +       if(!earlycon_present)
+> +               goto exit;
+> +
+>         wrapper->to_core.path = devm_of_icc_get(dev, "qup-core");
+>         if (IS_ERR(wrapper->to_core.path))
+>                 return PTR_ERR(wrapper->to_core.path);
+> @@ -858,6 +869,7 @@ static int geni_se_probe(struct platform_device *pdev)
+>         of_node_put(pdev->dev.of_node);
+>  #endif
+> 
+> +exit:
+>         dev_set_drvdata(dev, wrapper);
+>         dev_dbg(dev, "GENI SE Driver probed\n");
+>         return devm_of_platform_populate(dev);
+> 
+
+This should work as long as the early console is always set up before
+geni_se is probed, which seems a safe assumption.
