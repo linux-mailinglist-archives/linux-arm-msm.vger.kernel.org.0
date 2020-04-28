@@ -2,154 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 528231BBE1C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:48:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73F721BBE5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 14:56:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbgD1MsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 08:48:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46490 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726793AbgD1MsK (ORCPT
+        id S1726903AbgD1M4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 08:56:50 -0400
+Received: from aserp2120.oracle.com ([141.146.126.78]:42084 "EHLO
+        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726746AbgD1M4t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 08:48:10 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 038D8C03C1AC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:48:09 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id e26so32379470otr.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 05:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gIMUGicgwmIFtnYG9N3fQPjEXkbOpiDE/URudlFOW5s=;
-        b=dUDumjdTIlGGpNmZYXHngArdwQWCCtin2qUEkmCJQtwAgVH3K5XgViZI81wZ44IjG7
-         Zq9hacLuuX3LoskBpPXvwEKqsb+nyh8KlA22O07jpgEn9K3uC6ACaKAN8PKic/lPqIH3
-         aGuwroFwfXlxdyxjbX0M5ZO8aNaVayipg4ovDBY1QrVdSeb7pZN8F9XkXds1YomIXvTY
-         YmfpZJC7mu05HAL4WFjKaNy2UHPs3FQx9op/si0XAJd964b+EV57407V2UZmA/ay/P77
-         xLf+QNzD7vJnw4QY7Rt6Ymk3pNiAJ9KUWkKYygNBJf6EbhdoOzp+JfBNNHOfuB1A5awb
-         aYQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gIMUGicgwmIFtnYG9N3fQPjEXkbOpiDE/URudlFOW5s=;
-        b=n6H7kh3BNWSthRz+uEDYEKQ0KqWyDtkriA3vt08eCnjPHN3nyB17BTpvCB2gZlk5Sg
-         LkCG4ge3VoI+CYHuov9KcoxPMWLpCb00aUJXutE0phbfjTH8ZBqJN/+H2pW32EHlOlYh
-         4QNIvY0YQSRRZ9BcnY6Nv0stxgxjjKf0vXRghyVSy5VD/UdEjUzmaqeqeYZRe7mWn3Uu
-         X5gJd3wgns2W1o+euilxanL9wGRCzJzLyHKp2XoUbFKngAiyBKPNTcbVblUmZVLr5aW5
-         rrRZQ+QPei2w8VZ4T41LgZTXqt1tXcvqglASBXUSFwi6eb49ipQmp9En9nXuz5x88qNr
-         Dr6A==
-X-Gm-Message-State: AGi0PuaO1O4g0xSfVQc13t8KsKyqDI9xy04J9YAmclhkRgiSJwhp4rMe
-        r4jeg8ncPrl0EXLt5jQzjFEsHfsMqk2MujaXRTmrWV/piSc=
-X-Google-Smtp-Source: APiQypJfEP180kCuws7+abjZcT8dPX9zxxKNlOozz0+TthkUItgt4+ccPZriFdCypuPgxcXtg9LpjV+6NqVW8gqrIFU=
-X-Received: by 2002:a05:6830:13d4:: with SMTP id e20mr22370151otq.66.1588078089294;
- Tue, 28 Apr 2020 05:48:09 -0700 (PDT)
+        Tue, 28 Apr 2020 08:56:49 -0400
+Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
+        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03SCqkWU167004;
+        Tue, 28 Apr 2020 12:56:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=corp-2020-01-29;
+ bh=4qhmUDa7F437ChnjAQ6A8+Tyq1qMBj5fTsTxjwYc8pU=;
+ b=riB2txC4dB+WfIbJ8jO8RYQ9znXob3bZ56ZmZBxW7KqkDOga1rfUGMb7qU14dvAOda9d
+ m8WWAxv2bH+Q9HvM9XarrdD6ldFP55+oXWVcDUH72Lr2fuPobjhKN3IJyRM40T2j0Krv
+ Pj6mYhKXRaJIzWc5zofqPhD9/joQefp/VZwpPCiem7UYmOLD32RqQTKchLfYU0c7wE+X
+ LEl0rSBjykJEE1MKJbMCPvL+PTRJieB9jMROEQ4MsjTxHDVdD5nlWnDb2u4LKnLDIU5h
+ KkOFaJl1CbWRnGZycfbvKxi1dAjbIv1t4KvOun/B8zjeKQfx/N1E7YYO5Zbd9w4dWyZ8 0A== 
+Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
+        by aserp2120.oracle.com with ESMTP id 30nucfyqw8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 28 Apr 2020 12:56:38 +0000
+Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
+        by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 03SCpt9L182449;
+        Tue, 28 Apr 2020 12:54:37 GMT
+Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
+        by userp3020.oracle.com with ESMTP id 30mxwypfte-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 28 Apr 2020 12:54:37 +0000
+Received: from abhmp0020.oracle.com (abhmp0020.oracle.com [141.146.116.26])
+        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 03SCsYHe008311;
+        Tue, 28 Apr 2020 12:54:35 GMT
+Received: from kadam (/41.57.98.10)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Tue, 28 Apr 2020 05:54:34 -0700
+Date:   Tue, 28 Apr 2020 15:54:26 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc:     okaya@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        vkoul@kernel.org, dan.j.williams@intel.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom_hidma: Simplify error handling path in
+ hidma_probe
+Message-ID: <20200428125426.GE2014@kadam>
+References: <20200427111043.70218-1-christophe.jaillet@wanadoo.fr>
 MIME-Version: 1.0
-References: <20200401163542.83278-1-robert.marko@sartura.hr> <20200427164514.GQ56386@vkoul-mobl.Dlink>
-In-Reply-To: <20200427164514.GQ56386@vkoul-mobl.Dlink>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Tue, 28 Apr 2020 14:47:58 +0200
-Message-ID: <CA+HBbNHT7bOM68zBGAHO0Pi9WrBc244Qewwe5JV7fNhNUGPZ4Q@mail.gmail.com>
-Subject: Re: [PATCH v6 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        robh+dt@kernel.org, Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, John Crispin <john@phrozen.org>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200427111043.70218-1-christophe.jaillet@wanadoo.fr>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9604 signatures=668686
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 spamscore=0 bulkscore=0
+ suspectscore=2 mlxlogscore=999 phishscore=0 malwarescore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004280100
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9604 signatures=668686
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1011 priorityscore=1501
+ mlxlogscore=999 impostorscore=0 suspectscore=2 malwarescore=0
+ lowpriorityscore=0 mlxscore=0 spamscore=0 adultscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004280100
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 27, 2020 at 6:45 PM Vinod Koul <vkoul@kernel.org> wrote:
->
-> Hello Robert,
->
-> On 01-04-20, 18:35, Robert Marko wrote:
->
-> > +static int ipq4019_ss_phy_power_on(struct phy *_phy)
-> > +{
-> > +     struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> > +
-> > +     ipq4019_ss_phy_power_off(_phy);
-> > +
-> > +     reset_control_deassert(phy->por_rst);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static struct phy_ops ipq4019_usb_ss_phy_ops = {
-> > +     .power_on       = ipq4019_ss_phy_power_on,
-> > +     .power_off      = ipq4019_ss_phy_power_off,
-> > +};
-> > +
-> > +static int ipq4019_hs_phy_power_off(struct phy *_phy)
-> > +{
-> > +     struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> > +
-> > +     reset_control_assert(phy->por_rst);
-> > +     msleep(10);
->
-> why not call ipq4019_ss_phy_power_off() here as well?
-Its not necessary, SS and HS PHY-s are separated but share
-the same register space.
-So when HS PHY is controlled, SS PHY can remain working.
->
-> > +
-> > +     reset_control_assert(phy->srif_rst);
-> > +     msleep(10);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int ipq4019_hs_phy_power_on(struct phy *_phy)
-> > +{
-> > +     struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
-> > +
-> > +     ipq4019_hs_phy_power_off(_phy);
-> > +
-> > +     reset_control_deassert(phy->srif_rst);
-> > +     msleep(10);
-> > +
-> > +     reset_control_deassert(phy->por_rst);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static struct phy_ops ipq4019_usb_hs_phy_ops = {
-> > +     .power_on       = ipq4019_hs_phy_power_on,
-> > +     .power_off      = ipq4019_hs_phy_power_off,
-> > +};
->
-> So this is fiddling with resets, what about phy configuration and
-> calibration, who take care of that?
-As as I understand, since I don't have documentation access is that no
-calibration and configuration except to properly reset them are needed.
-Development hardware required some magic register values to be
-written but in the previous revisions of this driver it was
-discovered that they were leftovers from the development HW.
->
-> > +static int ipq4019_usb_phy_probe(struct platform_device *pdev)
-> > +{
-> > +     struct device *dev = &pdev->dev;
-> > +     struct resource *res;
-> > +     struct phy_provider *phy_provider;
-> > +     struct ipq4019_usb_phy *phy;
-> > +     const struct of_device_id *match;
-> > +
-> > +     match = of_match_device(ipq4019_usb_phy_of_match, &pdev->dev);
-> > +     if (!match)
-> > +             return -ENODEV;
->
-> you are using this to get match-data few lines below, why not use
-> of_device_get_match_data() and get the match->data which you are
-> interested in?
-Thanks, I will look into it.
->
-> --
-> ~Vinod
+On Mon, Apr 27, 2020 at 01:10:43PM +0200, Christophe JAILLET wrote:
+> There is no need to call 'hidma_debug_uninit()' in the error handling
+> path. 'hidma_debug_init()' has not been called yet.
+> 
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+> ---
+>  drivers/dma/qcom/hidma.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
+> index 411f91fde734..87490e125bc3 100644
+> --- a/drivers/dma/qcom/hidma.c
+> +++ b/drivers/dma/qcom/hidma.c
+> @@ -897,7 +897,6 @@ static int hidma_probe(struct platform_device *pdev)
+>  	if (msi)
+            ^^^
+This test doesn't work.  It will call free hidma_free_msis() if the
+hidma_request_msi() call fails.  We should do:
+
+	if (msi) {
+		rc = hidma_request_msi(dmadev, pdev);
+		msi = false;
+	}
+
+	if (!msi) {
+		hidma_ll_setup_irq(dmadev->lldev, false);
+		rc = devm_request_irq(&pdev->dev, chirq, hidma_chirq_handler,
+				      0, "qcom-hidma", dmadev->lldev);
+		if (rc)
+			goto uninit;
+	}
+
+
+>  		hidma_free_msis(dmadev);
+>  
+> -	hidma_debug_uninit(dmadev);
+>  	hidma_ll_uninit(dmadev->lldev);
+>  dmafree:
+>  	if (dmadev)
+            ^^^^^^
+This test isn't necessary and should be deleted.
+
+regards,
+dan carpenter
