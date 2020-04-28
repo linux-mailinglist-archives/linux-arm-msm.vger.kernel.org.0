@@ -2,105 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CF671BC1CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 16:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D7751BC24F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 17:09:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727975AbgD1OuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 10:50:22 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:22713 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727079AbgD1OuW (ORCPT
+        id S1727875AbgD1PJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 11:09:35 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:45056 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727803AbgD1PJe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 10:50:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588085421; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=840my3Iu6yk+BC/Y1oTomASSkMJd5a+KJg6tqb2LL6I=; b=jbXxCySZJPY/Z0r/cSSCH9fAzaPyMoY5CVlxZBmuqW7sdeVU5m0YwcRLfeH0fWAWHXKBqTIP
- WEUwCF5vMgVQsJx52qda4RLzg8Ei6uE4GiKYn1scD7VAi9l9PwRDNCGRPNB6QFwjRtlaFuJ2
- K7jejQx80qVAhUgW3TF6VPbdyeI=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea8429f.7f95c61e3148-smtp-out-n02;
- Tue, 28 Apr 2020 14:50:07 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C0BD0C4478C; Tue, 28 Apr 2020 14:50:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF802C43637;
-        Tue, 28 Apr 2020 14:50:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF802C43637
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v2 3/8] bus: mhi: core: Read transfer length from an event
- properly
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>, mani@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org
-References: <1588042766-17496-1-git-send-email-bbhatt@codeaurora.org>
- <1588042766-17496-4-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <cbd0698d-52ca-fad6-a658-e6e0009bde66@codeaurora.org>
-Date:   Tue, 28 Apr 2020 08:50:04 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Tue, 28 Apr 2020 11:09:34 -0400
+Received: by mail-ot1-f67.google.com with SMTP id e20so33149856otk.12;
+        Tue, 28 Apr 2020 08:09:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FEtkU4hcjYXFmjYfyqu325vicHnMHo34pYaXMraZzDM=;
+        b=MSzdK9eL6RarXRAXGxpFZCxKaYoEwEkQw0jcqso6SM5bBB+YGFogDT+2oxUgEXek3S
+         /zPjHYEAN3GVlFCwPo6/3hIK4sdzavpU28MFG4EUCHcTr1SWy/lyD6arlLr2JG5keluT
+         +SHtDS8tJLMaAOkqAyifftsDu9ucmbNguhdT1iAOq6+PC7IXMifg3B24sGMmy9QB6h/7
+         ZKqHX3Es+szWNwupVdi4MnQUvpQ68X+x+bC7MsPvj9dv9uwA1zg/JUjMXsK7beP+LqTP
+         rFSzeykw1NlbBWo+JzqZy3VupXEvpFslUC/B+QsDCiD9aOMX4n9+E6jNMfBdRrZypKfS
+         pRxA==
+X-Gm-Message-State: AGi0PuauVY2Kj6f7HHZEnjT3bqK+Bio0YZ1ZJqvKV/usmMtNjqTcUnA/
+        8O1AgfgNKZ2W7LS5RDz5BA==
+X-Google-Smtp-Source: APiQypKmYM+VdqehUo6MhirkRmkVcweA2beGuUjgMoVitv5BtZ9cDwt/Cg8BC2ldu07VXvCN5xX9Iw==
+X-Received: by 2002:a05:6830:141:: with SMTP id j1mr8997476otp.294.1588086572206;
+        Tue, 28 Apr 2020 08:09:32 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id u9sm4102772ote.47.2020.04.28.08.09.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2020 08:09:31 -0700 (PDT)
+Received: (nullmailer pid 31119 invoked by uid 1000);
+        Tue, 28 Apr 2020 15:09:30 -0000
+Date:   Tue, 28 Apr 2020 10:09:30 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     andrew@lunn.ch, f.fainelli@gmail.com, hkallweit1@gmail.com,
+        linux@armlinux.org.uk, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: Re: [PATCH v3 2/3] dt-bindings: add Qualcomm IPQ4019 MDIO bindings
+Message-ID: <20200428150930.GA25643@bogus>
+References: <20200415150244.2737206-1-robert.marko@sartura.hr>
+ <20200415150244.2737206-2-robert.marko@sartura.hr>
 MIME-Version: 1.0
-In-Reply-To: <1588042766-17496-4-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200415150244.2737206-2-robert.marko@sartura.hr>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/27/2020 8:59 PM, Bhaumik Bhatt wrote:
-> From: Hemant Kumar <hemantk@codeaurora.org>
+On Wed, Apr 15, 2020 at 05:02:46PM +0200, Robert Marko wrote:
+> This patch adds the binding document for the IPQ40xx MDIO driver.
 > 
-> When MHI Driver receives an EOT event, it reads xfer_len from the
-> event in the last TRE. The value is under control of the MHI device
-> and never validated by Host MHI driver. The value should never be
-> larger than the real size of the buffer but a malicious device can
-> set the value 0xFFFF as maximum. This causes device to memory
-
-The device will overflow, or the driver?
-
-> overflow (both read or write). Fix this issue by reading minimum of
-> transfer length from event and the buffer length provided.
-> 
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> Cc: Luka Perkov <luka.perkov@sartura.hr>
 > ---
->   drivers/bus/mhi/core/main.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+> Changes from v2 to v3:
+> * Remove status from example
 > 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 1ccd4cc..3d468d9 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -521,7 +521,10 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->   				mhi_cntrl->unmap_single(mhi_cntrl, buf_info);
->   
->   			result.buf_addr = buf_info->cb_buf;
-> -			result.bytes_xferd = xfer_len;
+>  .../bindings/net/qcom,ipq40xx-mdio.yaml       | 61 +++++++++++++++++++
+>  1 file changed, 61 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml
+> new file mode 100644
+> index 000000000000..8d4542ccd38c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/qcom,ipq40xx-mdio.yaml
+> @@ -0,0 +1,61 @@
+> +# SPDX-License-Identifier: GPL-2.0
+
+Dual license new bindings please:
+
+(GPL-2.0-only OR BSD-2-Clause)
+
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/qcom,ipq40xx-mdio.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +			/* truncate to buf len if xfer_len is larger */
-> +			result.bytes_xferd =
-> +				min_t(u16, xfer_len, buf_info->len);
->   			mhi_del_ring_element(mhi_cntrl, buf_ring);
->   			mhi_del_ring_element(mhi_cntrl, tre_ring);
->   			local_rp = tre_ring->rp;
+> +title: Qualcomm IPQ40xx MDIO Controller Device Tree Bindings
+> +
+> +maintainers:
+> +  - Robert Marko <robert.marko@sartura.hr>
+> +
+> +allOf:
+> +  - $ref: "mdio.yaml#"
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,ipq40xx-mdio
+
+Don't use wildcards in compatible names. Should be SoC specific. If 'all 
+the same', then use a fallback to the 1st implementation.
+
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +
+> +examples:
+> +  - |
+> +    mdio@90000 {
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +      compatible = "qcom,ipq40xx-mdio";
+> +      reg = <0x90000 0x64>;
+> +
+> +      ethphy0: ethernet-phy@0 {
+> +        reg = <0>;
+> +      };
+> +
+> +      ethphy1: ethernet-phy@1 {
+> +        reg = <1>;
+> +      };
+> +
+> +      ethphy2: ethernet-phy@2 {
+> +        reg = <2>;
+> +      };
+> +
+> +      ethphy3: ethernet-phy@3 {
+> +        reg = <3>;
+> +      };
+> +
+> +      ethphy4: ethernet-phy@4 {
+> +        reg = <4>;
+> +      };
+> +    };
+> -- 
+> 2.26.0
 > 
-
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
