@@ -2,68 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 706001BC459
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 18:01:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA6541BC479
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2020 18:05:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728080AbgD1QBS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Apr 2020 12:01:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55982 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728151AbgD1QBS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Apr 2020 12:01:18 -0400
-Received: from [192.168.1.74] (75-58-59-55.lightspeed.rlghnc.sbcglobal.net [75.58.59.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5594320575;
-        Tue, 28 Apr 2020 16:01:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588089677;
-        bh=SWWuqtYeFWZ3I38DWk43ah6fy3VoLbdmJTw+uLQwDoI=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=yaI41Jkq+YEXEWlPtQ1lcY8i1uGO7n5apErXelEicg+EfkI5N+z8am7E0XXlGBHEH
-         xmABJW4riW9ZKJDwCUQ9qLJMMxh8iveS+Auh3Zc6HraVQHnjVolcQ4myd4WFi9mrM2
-         4izd940/7PNWJkzUZAjQWqS4zhNX3uvG3/trrxKs=
-Subject: Re: [PATCH] dmaengine: qcom_hidma: Simplify error handling path in
- hidma_probe
-To:     Dan Carpenter <dan.carpenter@oracle.com>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org,
-        dan.j.williams@intel.com, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-References: <20200427111043.70218-1-christophe.jaillet@wanadoo.fr>
- <20200428125426.GE2014@kadam>
-From:   Sinan Kaya <okaya@kernel.org>
-Autocrypt: addr=okaya@kernel.org; keydata=
- mQENBFrnOrUBCADGOL0kF21B6ogpOkuYvz6bUjO7NU99PKhXx1MfK/AzK+SFgxJF7dMluoF6
- uT47bU7zb7HqACH6itTgSSiJeSoq86jYoq5s4JOyaj0/18Hf3/YBah7AOuwk6LtV3EftQIhw
- 9vXqCnBwP/nID6PQ685zl3vH68yzF6FVNwbDagxUz/gMiQh7scHvVCjiqkJ+qu/36JgtTYYw
- 8lGWRcto6gr0eTF8Wd8f81wspmUHGsFdN/xPsZPKMw6/on9oOj3AidcR3P9EdLY4qQyjvcNC
- V9cL9b5I/Ud9ghPwW4QkM7uhYqQDyh3SwgEFudc+/RsDuxjVlg9CFnGhS0nPXR89SaQZABEB
- AAG0HVNpbmFuIEtheWEgPG9rYXlhQGtlcm5lbC5vcmc+iQFOBBMBCAA4FiEEYdOlMSE+a7/c
- ckrQvGF4I+4LAFcFAlztcAoCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQvGF4I+4L
- AFfidAf/VKHInxep0Z96iYkIq42432HTZUrxNzG9IWk4HN7c3vTJKv2W+b9pgvBF1SmkyQSy
- 8SJ3Zd98CO6FOHA1FigFyZahVsme+T0GsS3/OF1kjrtMktoREr8t0rK0yKpCTYVdlkHadxmR
- Qs5xLzW1RqKlrNigKHI2yhgpMwrpzS+67F1biT41227sqFzW9urEl/jqGJXaB6GV+SRKSHN+
- ubWXgE1NkmfAMeyJPKojNT7ReL6eh3BNB/Xh1vQJew+AE50EP7o36UXghoUktnx6cTkge0ZS
- qgxuhN33cCOU36pWQhPqVSlLTZQJVxuCmlaHbYWvye7bBOhmiuNKhOzb3FcgT7kBDQRa5zq1
- AQgAyRq/7JZKOyB8wRx6fHE0nb31P75kCnL3oE+smKW/sOcIQDV3C7mZKLf472MWB1xdr4Tm
- eXeL/wT0QHapLn5M5wWghC80YvjjdolHnlq9QlYVtvl1ocAC28y43tKJfklhHiwMNDJfdZbw
- 9lQ2h+7nccFWASNUu9cqZOABLvJcgLnfdDpnSzOye09VVlKr3NHgRyRZa7me/oFJCxrJlKAl
- 2hllRLt0yV08o7i14+qmvxI2EKLX9zJfJ2rGWLTVe3EJBnCsQPDzAUVYSnTtqELu2AGzvDiM
- gatRaosnzhvvEK+kCuXuCuZlRWP7pWSHqFFuYq596RRG5hNGLbmVFZrCxQARAQABiQEfBBgB
- CAAJBQJa5zq1AhsMAAoJELxheCPuCwBX2UYH/2kkMC4mImvoClrmcMsNGijcZHdDlz8NFfCI
- gSb3NHkarnA7uAg8KJuaHUwBMk3kBhv2BGPLcmAknzBIehbZ284W7u3DT9o1Y5g+LDyx8RIi
- e7pnMcC+bE2IJExCVf2p3PB1tDBBdLEYJoyFz/XpdDjZ8aVls/pIyrq+mqo5LuuhWfZzPPec
- 9EiM2eXpJw+Rz+vKjSt1YIhg46YbdZrDM2FGrt9ve3YaM5H0lzJgq/JQPKFdbd5MB0X37Qc+
- 2m/A9u9SFnOovA42DgXUyC2cSbIJdPWOK9PnzfXqF3sX9Aol2eLUmQuLpThJtq5EHu6FzJ7Y
- L+s0nPaNMKwv/Xhhm6Y=
-Message-ID: <1efa0186-7fbe-9cb5-2719-2d7192f99e27@kernel.org>
-Date:   Tue, 28 Apr 2020 12:01:15 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1728304AbgD1QFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Apr 2020 12:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728326AbgD1QFB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Apr 2020 12:05:01 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77667C03C1AE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 09:05:00 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id i10so25288908wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2020 09:05:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Ly3qwI+0y9oxwjserDT6tM7N3L1x1899PXU3tkelq/I=;
+        b=oZh07GgoDz13qsfDQ9O+AGgTyw5NZfvmaV0z/+pBF+6wH3B1PTaac+2kX5a7WHcf5S
+         4JvFAFlb7AKdvg6KUFSoSDlKapm9q+t2lq+JLTB/WcByZo703gl7gjC7M7u72FalBMa9
+         brk2RbG57ot+aHP8nFYURh7zNa7wtHgP+a2MNiEXwZo2cVVqO7s8+m+XMjMhvHnA5wxp
+         9eVV6TNEd5JiHskY0ys8QsQ0N2ewAR8uNLSIldnAYoM2LoS8e2GNqlT9Ki8p1qtuUeFT
+         FWutmsihVPS6cICths1wNX6qlXLA4XhPMcT5gMTRINUlMm7JWbKi1z3lTEdfiwbG6EZz
+         bwGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Ly3qwI+0y9oxwjserDT6tM7N3L1x1899PXU3tkelq/I=;
+        b=RSu8z/pStjDsVD85JSQeYzH18HHhk0Q6yiZ86fFI+k4Tt8sTnTeWQSEcMlOGHI0nt2
+         S7LDdGqsd7w78DAFjSpU/yV9WZnCZbjI270UBRmloBrsVfOUbQl4EeUWGM5wB/TqIKHt
+         EQ2yKGWVpOhX/P2+0d8oB7Run27Mt28HhYfoLhay5VBhBzUW6usc6tmB0XKdSMnWtbCT
+         vtEVRyXu7Flyzdu5mXz6aMpYb+VD3ydbRBHers4h/kt6fSIeTVmbGlRaDNaJKQ6jE3W2
+         Bm9kb6iNgB25LFoH8LkJJFfslY1h/FVtU2pqDL4Alqn7NXSl2F12AzlSr7oADZBcTM6J
+         wdWA==
+X-Gm-Message-State: AGi0Pubb3bfyU99dkULOG6QZczd1ONH/g3xSxQ8MyF4YB08oWSfMuDfX
+        X582nceDR63kpUE+qxlrc6WU6Q==
+X-Google-Smtp-Source: APiQypKdYPNEuZ/XS4QnNVV03+UTEkigMqL4aSRmAYR9slx/dFNC24FTbjFcex9II3KPD3Q985FwuQ==
+X-Received: by 2002:adf:92c2:: with SMTP id 60mr32585664wrn.379.1588089899078;
+        Tue, 28 Apr 2020 09:04:59 -0700 (PDT)
+Received: from [192.168.0.136] ([87.120.218.65])
+        by smtp.googlemail.com with ESMTPSA id w6sm26860023wrm.86.2020.04.28.09.04.57
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Apr 2020 09:04:58 -0700 (PDT)
+Subject: Re: [PATCH V4 1/9] interconnect: Add devm_of_icc_get() as exported
+ API for users
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org
+References: <1586946198-13912-1-git-send-email-akashast@codeaurora.org>
+ <1586946198-13912-2-git-send-email-akashast@codeaurora.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <1f2cb1e2-31da-00ab-7bd9-7f515c307288@linaro.org>
+Date:   Tue, 28 Apr 2020 19:04:56 +0300
 MIME-Version: 1.0
-In-Reply-To: <20200428125426.GE2014@kadam>
+In-Reply-To: <1586946198-13912-2-git-send-email-akashast@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -72,39 +119,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/28/2020 8:54 AM, Dan Carpenter wrote:
->> @@ -897,7 +897,6 @@ static int hidma_probe(struct platform_device *pdev)
->>  	if (msi)
->             ^^^
-> This test doesn't work.  It will call free hidma_free_msis() if the
-> hidma_request_msi() call fails.  We should do:
+Hi Akash,
+
+On 4/15/20 13:23, Akash Asthana wrote:
+> Users can use devm version of of_icc_get() to benefit from automatic
+> resource release.
 > 
-> 	if (msi) {
-> 		rc = hidma_request_msi(dmadev, pdev);
-> 		msi = false;
-> 	}
-> 
-> 	if (!msi) {
-> 		hidma_ll_setup_irq(dmadev->lldev, false);
-> 		rc = devm_request_irq(&pdev->dev, chirq, hidma_chirq_handler,
-> 				      0, "qcom-hidma", dmadev->lldev);
-> 		if (rc)
-> 			goto uninit;
-> 	}
-> 
-> 
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Reviewed by: Matthias Kaehlcke <mka@chromium.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 
-Let me clarify how this works. MSI capability is not present on all
-platforms. Therefore, this is detected by an ACPI/DTS parameter called
-HIDMA_MSI_CAP.
+Thank you for this patch! I am applying it, so there is no need to re-send it.
 
-msi = hidma_test_capability(&pdev->dev, HIDMA_MSI_CAP);
+BR,
+Georgi
 
-Therefore,
-
-1. Code will request MSI capability if it is present.
-2. Code will fallback to plain IRQ, if MSI allocation also fails.
-
-I hope this helps.
-
-We need both #1 and #2 to be supported.
