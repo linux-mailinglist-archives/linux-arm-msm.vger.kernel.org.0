@@ -2,233 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EA4D1BE9BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 23:20:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F2821BEA01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 23:35:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726961AbgD2VTv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 17:19:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41364 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726481AbgD2VTv (ORCPT
+        id S1727068AbgD2Ve5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 17:34:57 -0400
+Received: from mail-oo1-f65.google.com ([209.85.161.65]:46150 "EHLO
+        mail-oo1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726910AbgD2Ve4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 17:19:51 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5ACC03C1AE;
-        Wed, 29 Apr 2020 14:19:50 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id r7so2755022edo.11;
-        Wed, 29 Apr 2020 14:19:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=h9tkGPetufBDIyv7Bpgp9xufFAlQJ4PqRxpqoco+qEM=;
-        b=fSmKrsYV4lX5YFbhO2FGHeMyCjA+JpDcylTDKDKfCDvKluFS4SVwl/m0vTEJyGkZaj
-         PytAthMgtSSsT6Nlcx/NJNeUAkB3L0r3tk1KiJIQ3QaMWxsJFb2vTF9TsyYgOTGKqCUM
-         YsYpOH3XEsHB64diwNGXrnCbtrquULAX0XuVsNKmXHJBZc8W15wWMvoQltjR1W8+O5q+
-         eXbME6B7paPJCtX6jcG9298sk7SK6vNVBeEzlrsFkgB2EhjB34OO9RjXgHRQ6Dnhjq1A
-         7FHZCmHj3NeXigU3ssUtzTMe/UJPdTq2lzfx1jc2fmQVwCh4T3+wUGu96KXP9vQjMYrF
-         hDlA==
+        Wed, 29 Apr 2020 17:34:56 -0400
+Received: by mail-oo1-f65.google.com with SMTP id x16so777184oop.13;
+        Wed, 29 Apr 2020 14:34:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=h9tkGPetufBDIyv7Bpgp9xufFAlQJ4PqRxpqoco+qEM=;
-        b=kL6OOzoYL3g5fpfNAOUO36o8L/1C7gs2HKarASjgLHK36hg3nn3Ax+qaXgq5MXOJc+
-         YzmFjWDul/0xBUumGCK7yjXO4Ej+M6ZS4MmXDBKolrEha106o7GQl7iqBjJECRYk4hJa
-         38L5JuKDNHZDxp5YFtl+IXVD0N3/GeSvzbEE2fz4tfOvn/DeKq/62JZcz9t/Eg/Mynqn
-         0lUz2rTuy3+yRyv4LfX3NsR2GtcCd4xnoR8sJxf705AVn/hCcCYawcurftJaPhzF1E2B
-         NcvbUoKRzRhut7Y3c/w5XyC1obalhK2T4R3NmWaL47sF9JdDLC4yfrpByoIX+uZX2kJV
-         X/iw==
-X-Gm-Message-State: AGi0Pubg/L1+u78a07eTPdSqQ4dxBSF2hR7WphLubM+9vAIT708KhJWA
-        Ghbn7S4qQAbXpaDWnG3+rEU=
-X-Google-Smtp-Source: APiQypKQXPo9aNdubq0r9onWQaI7ZalK21Al5xQaYP7WKwciXwITF5OL5PukhUDRh27xtNkrlA3k0w==
-X-Received: by 2002:aa7:c5d1:: with SMTP id h17mr4335986eds.109.1588195188893;
-        Wed, 29 Apr 2020 14:19:48 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain ([79.37.253.240])
-        by smtp.googlemail.com with ESMTPSA id b13sm898230eje.13.2020.04.29.14.19.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3wI+m3Lp4Msfhx+NZFQZQ19Jr5Ux1UxLifKvOMueVA0=;
+        b=ihOS09fb0gXUQmecNGTNcYEnD0AAax9ALpoCfJAEGV1/GpZmX9w7ofGtYSLdK2lfOZ
+         S6nJiYBOcb8VfpdpUAW8G34nnCMgwW3vYMgqvD5WrkKCX5Yemsg9lObyMJ5eA2ih3d+5
+         Nk4FR3BJi8zCf2cEr82gWFv0tKw5NGqiwIPt83k0sFAt7J+TXbkAtsLLy7s20urn65fP
+         YTBlinKFZM3Yx6mABJYwPpzh3Nhg2qndh5gnifw/4fWqCZRdr488Vm1ZwYEQs1WhlkEE
+         O6E/joJwu/yZ5dtAzFpJHUyb0mBe9BY4LZjJFmLZLvwPvyvtwywFPSQirnZAA2AIINmP
+         s9CA==
+X-Gm-Message-State: AGi0PuYv1rERRIWXtfqcZaRVhGoysDVpfaKADKOEDQgQSoMShvw6/Asw
+        WZX+L/dFPvlinf62WXKhjJUgOMU=
+X-Google-Smtp-Source: APiQypJz49rbWZlmdBvylWBwgLTfqZmjszuSuHIp91zs1eOOfCrntkS2nHsD2thdWFZSrECHIb/kgQ==
+X-Received: by 2002:a4a:b489:: with SMTP id b9mr64185ooo.71.1588196094960;
+        Wed, 29 Apr 2020 14:34:54 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id l21sm775644ooq.18.2020.04.29.14.34.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 14:19:48 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v4 2/2] devicetree: bindings: phy: Document ipq806x dwc3 qcom phy
-Date:   Wed, 29 Apr 2020 23:19:25 +0200
-Message-Id: <20200429211926.4952-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200429211926.4952-1-ansuelsmth@gmail.com>
-References: <20200429211926.4952-1-ansuelsmth@gmail.com>
+        Wed, 29 Apr 2020 14:34:54 -0700 (PDT)
+Received: (nullmailer pid 5820 invoked by uid 1000);
+        Wed, 29 Apr 2020 21:34:53 -0000
+Date:   Wed, 29 Apr 2020 16:34:53 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sm8250 pinctrl
+ bindings
+Message-ID: <20200429213453.GA32114@bogus>
+References: <20200417061907.1226490-1-bjorn.andersson@linaro.org>
+ <20200417061907.1226490-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200417061907.1226490-2-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document dwc3 qcom phy hs and ss phy bindings needed to correctly
-inizialize and use usb on ipq806x SoC.
+On Thu, Apr 16, 2020 at 11:19:06PM -0700, Bjorn Andersson wrote:
+> Add device tree binding Documentation details for Qualcomm SM8250
+> pinctrl driver.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml | 147 ++++++++++++++++++
+>  1 file changed, 147 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..6dc3b52f47cd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
+> @@ -0,0 +1,147 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm8250-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. SM8250 TLMM block
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  SM8250 platform.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8250-pinctrl
+> +
+> +  reg:
+> +    minItems: 3
+> +    maxItems: 3
+> +
+> +  reg-names:
+> +    items:
+> +      - const: "west"
+> +      - const: "south"
+> +      - const: "north"
+> +
+> +  interrupts:
+> +    description: Specifies the TLMM summary IRQ
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  '#interrupt-cells':
+> +    description:
+> +      Specifies the PIN numbers and Flags, as defined in defined in
+> +      include/dt-bindings/interrupt-controller/irq.h
+> +    const: 2
+> +
+> +  gpio-controller: true
+> +
+> +  '#gpio-cells':
+> +    description: Specifying the pin number and flags, as defined in
+> +      include/dt-bindings/gpio/gpio.h
+> +    const: 2
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +  wakeup-parent:
+> +    maxItems: 1
+> +
+> +#PIN CONFIGURATION NODES
+> +patternProperties:
+> +  '^.*$':
+> +    if:
+> +      type: object
+> +    then:
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
-v4:
-* Add qcom to specific bindings
-v3:
-* Use explicit reg instead of regmap
+Needs a $ref to the standard properties.
 
- .../bindings/phy/qcom,ipq806x-usb-phy-hs.yaml | 58 +++++++++++++++
- .../bindings/phy/qcom,ipq806x-usb-phy-ss.yaml | 73 +++++++++++++++++++
- 2 files changed, 131 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
+Would be good to show a child node in the example too. (And try having 
+an error in a standard property type to verify you get an error).
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
-new file mode 100644
-index 000000000000..c019de7478e3
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
-@@ -0,0 +1,58 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-hs.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x usb DWC3 HS PHY CONTROLLER
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description:
-+  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
-+  controllers used in ipq806x. Each DWC3 PHY controller should have its
-+  own node.
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq806x-usb-phy-hs
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 2
-+    description: |
-+      - "ref" Is required
-+      - "xo"	Optional external reference clock
-+    items:
-+      - const: ref
-+      - const: xo
-+
-+required:
-+  - compatible
-+  - "#phy-cells"
-+  - reg
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    hs_phy_0: phy@110f8800 {
-+      compatible = "qcom,ipq806x-usb-phy-hs";
-+      reg = <0x110f8800 0x30>;
-+      clocks = <&gcc USB30_0_UTMI_CLK>;
-+      clock-names = "ref";
-+      #phy-cells = <0>;
-+    };
-diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-new file mode 100644
-index 000000000000..5d71a532d991
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-@@ -0,0 +1,73 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-ss.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x usb DWC3 SS PHY CONTROLLER
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description:
-+  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
-+  controllers used in ipq806x. Each DWC3 PHY controller should have its
-+  own node.
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq806x-usb-phy-ss
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 2
-+    description: |
-+      - "ref" Required.
-+      - "xo"	Optional external reference clock.
-+    items:
-+      - const: ref
-+      - const: xo
-+
-+  qcom,rx_eq:
-+    maxItems: 1
-+    description: Override value for rx_eq.
-+    default: 4
-+
-+  qcom,tx_deamp_3_5db:
-+    maxItems: 1
-+    description: Override value for transmit preemphasis.
-+    default: 23
-+
-+  qcom,mpll:
-+    maxItems: 1
-+    description: Override value for mpll.
-+    default: 0
-+
-+required:
-+  - compatible
-+  - "#phy-cells"
-+  - reg
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    ss_phy_0: phy@110f8830 {
-+      compatible = "qcom,ipq806x-usb-phy-ss";
-+      reg = <0x110f8830 0x30>;
-+      clocks = <&gcc USB30_0_MASTER_CLK>;
-+      clock-names = "ref";
-+      #phy-cells = <0>;
-+    };
--- 
-2.25.1
-
+> +      properties:
+> +        pins:
+> +          description:
+> +            List of gpio pins affected by the properties specified in this
+> +            subnode.
+> +          items:
+> +            oneOf:
+> +              - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9])$"
+> +              - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset ]
+> +          minItems: 1
+> +          maxItems: 36
+> +
+> +        function:
+> +          description:
+> +            Specify the alternative function to be configured for the specified
+> +            pins.
+> +
+> +          enum: [ aoss_cti, atest, audio_ref, cam_mclk, cci_async, cci_i2c,
+> +            cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4, cri_trng,
+> +            cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
+> +            ddr_pxi2, ddr_pxi3, dp_hot, dp_lcd, gcc_gp1, gcc_gp2, gcc_gp3, gpio,
+> +            ibi_i3c, jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0,
+> +            mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s0_data0, mi2s0_data1,
+> +            mi2s0_sck, mi2s0_ws, mi2s1_data0, mi2s1_data1, mi2s1_sck, mi2s1_ws,
+> +            mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws, pci_e0, pci_e1,
+> +            pci_e2, phase_flag, pll_bist, pll_bypassnl, pll_clk, pll_reset,
+> +            pri_mi2s, prng_rosc, qdss_cti, qdss_gpio, qspi0, qspi1, qspi2, qspi3,
+> +            qspi_clk, qspi_cs, qup0, qup1, qup10, qup11, qup12, qup13, qup14,
+> +            qup15, qup16, qup17, qup18, qup19, qup2, qup3, qup4, qup5, qup6,
+> +            qup7, qup8, qup9, qup_l4, qup_l5, qup_l6, sd_write, sdc40, sdc41,
+> +            sdc42, sdc43, sdc4_clk, sdc4_cmd, sec_mi2s, sp_cmu, tgu_ch0, tgu_ch1,
+> +            tgu_ch2, tgu_ch3, tsense_pwm1, tsense_pwm2, tsif0_clk, tsif0_data,
+> +            tsif0_en, tsif0_error, tsif0_sync, tsif1_clk, tsif1_data, tsif1_en,
+> +            tsif1_error, tsif1_sync, usb2phy_ac, usb_phy, vsense_trigger ]
+> +
+> +        drive-strength:
+> +          enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> +          default: 2
+> +          description:
+> +            Selects the drive strength for the specified pins, in mA.
+> +
+> +        bias-pull-down: true
+> +
+> +        bias-pull-up: true
+> +
+> +        bias-disable: true
+> +
+> +        output-high: true
+> +
+> +        output-low: true
+> +
+> +      required:
+> +        - pins
+> +        - function
+> +
+> +      additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - interrupt-controller
+> +  - '#interrupt-cells'
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        pinctrl@1f00000 {
+> +                compatible = "qcom,sm8250-pinctrl";
+> +                reg = <0x0f100000 0x300000>,
+> +                      <0x0f500000 0x300000>,
+> +                      <0x0f900000 0x300000>;
+> +                reg-names = "west", "south", "north";
+> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +                gpio-controller;
+> +                #gpio-cells = <2>;
+> +                interrupt-controller;
+> +                #interrupt-cells = <2>;
+> +                gpio-ranges = <&tlmm 0 0 180>;
+> +                wakeup-parent = <&pdc>;
+> +        };
+> -- 
+> 2.24.0
+> 
