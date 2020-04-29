@@ -2,230 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F2821BEA01
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 23:35:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 084171BEA07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 23:36:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727068AbgD2Ve5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 17:34:57 -0400
-Received: from mail-oo1-f65.google.com ([209.85.161.65]:46150 "EHLO
-        mail-oo1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726910AbgD2Ve4 (ORCPT
+        id S1727828AbgD2Vf2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 17:35:28 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:37627 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726775AbgD2Vf2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 17:34:56 -0400
-Received: by mail-oo1-f65.google.com with SMTP id x16so777184oop.13;
-        Wed, 29 Apr 2020 14:34:55 -0700 (PDT)
+        Wed, 29 Apr 2020 17:35:28 -0400
+Received: by mail-oi1-f195.google.com with SMTP id r25so3249707oij.4;
+        Wed, 29 Apr 2020 14:35:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3wI+m3Lp4Msfhx+NZFQZQ19Jr5Ux1UxLifKvOMueVA0=;
-        b=ihOS09fb0gXUQmecNGTNcYEnD0AAax9ALpoCfJAEGV1/GpZmX9w7ofGtYSLdK2lfOZ
-         S6nJiYBOcb8VfpdpUAW8G34nnCMgwW3vYMgqvD5WrkKCX5Yemsg9lObyMJ5eA2ih3d+5
-         Nk4FR3BJi8zCf2cEr82gWFv0tKw5NGqiwIPt83k0sFAt7J+TXbkAtsLLy7s20urn65fP
-         YTBlinKFZM3Yx6mABJYwPpzh3Nhg2qndh5gnifw/4fWqCZRdr488Vm1ZwYEQs1WhlkEE
-         O6E/joJwu/yZ5dtAzFpJHUyb0mBe9BY4LZjJFmLZLvwPvyvtwywFPSQirnZAA2AIINmP
-         s9CA==
-X-Gm-Message-State: AGi0PuYv1rERRIWXtfqcZaRVhGoysDVpfaKADKOEDQgQSoMShvw6/Asw
-        WZX+L/dFPvlinf62WXKhjJUgOMU=
-X-Google-Smtp-Source: APiQypJz49rbWZlmdBvylWBwgLTfqZmjszuSuHIp91zs1eOOfCrntkS2nHsD2thdWFZSrECHIb/kgQ==
-X-Received: by 2002:a4a:b489:: with SMTP id b9mr64185ooo.71.1588196094960;
-        Wed, 29 Apr 2020 14:34:54 -0700 (PDT)
+        bh=P60CLGRCVH/w+wVlBp6MkL7Ds15Cvq4t9vycfLUjyFI=;
+        b=l+lmEETa2u5ynCMun8a8xy+7aQyvXM4rrpc4TDYoGfigpFkmOZJi8gAy5QNdWdXcfS
+         S/ovB2GnVzl1gA/omdyvkRXHTH2HGS6hILnGAMMjYtqSILem/RbeKvUq169xvY5MaPbR
+         ZKv2ef0eHsqsFN6NysaRSLo1k7YahYOySWKaYz7EUfP+f9kIaKETyVg3BFkrh1RWY8e1
+         cf1szzKpQvM+HmjGNXLh3t/po8Q3ScJNMtyo2PVwSwwGlPzCNfILDinWWe/Ae/rXP//a
+         7WayWGr6hii5xZxNbEzujo+vn3YpB653vpYjgrBKRSceKu66NvYoVDrcMJ0Vbh6q/jQ/
+         wNzQ==
+X-Gm-Message-State: AGi0PuYze/62DMH5KtSeCXXUIoQI7+oiThTER8Dn7WrOYrfcldYy89Cz
+        q0PalazabIg1oARIrvrgTQ==
+X-Google-Smtp-Source: APiQypKoDEYLt06UnLfe/uPG+G9+07x8ZmccseGaZQiUJmc7TvMtKNzH6fV3dRHIJ4P4gPpt97gkag==
+X-Received: by 2002:aca:7251:: with SMTP id p78mr279418oic.32.1588196127566;
+        Wed, 29 Apr 2020 14:35:27 -0700 (PDT)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id l21sm775644ooq.18.2020.04.29.14.34.53
+        by smtp.gmail.com with ESMTPSA id d18sm691623otk.63.2020.04.29.14.35.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 14:34:54 -0700 (PDT)
-Received: (nullmailer pid 5820 invoked by uid 1000);
-        Wed, 29 Apr 2020 21:34:53 -0000
-Date:   Wed, 29 Apr 2020 16:34:53 -0500
+        Wed, 29 Apr 2020 14:35:27 -0700 (PDT)
+Received: (nullmailer pid 6694 invoked by uid 1000);
+        Wed, 29 Apr 2020 21:35:26 -0000
+Date:   Wed, 29 Apr 2020 16:35:26 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sm8250 pinctrl
- bindings
-Message-ID: <20200429213453.GA32114@bogus>
-References: <20200417061907.1226490-1-bjorn.andersson@linaro.org>
- <20200417061907.1226490-2-bjorn.andersson@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] clk: qcom: mmcc-msm8996: Properly describe GPU_GX
+ gdsc
+Message-ID: <20200429213526.GA6644@bogus>
+References: <20200417070044.1376212-1-bjorn.andersson@linaro.org>
+ <20200417070044.1376212-3-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200417061907.1226490-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20200417070044.1376212-3-bjorn.andersson@linaro.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 16, 2020 at 11:19:06PM -0700, Bjorn Andersson wrote:
-> Add device tree binding Documentation details for Qualcomm SM8250
-> pinctrl driver.
+On Fri, 17 Apr 2020 00:00:42 -0700, Bjorn Andersson wrote:
+> The GPU_GX GDSC depends on both GPU GDSC being enabled and that the
+> VDD_GX rail is powered, so update the description of the node to cover
+> these requirements.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml | 147 ++++++++++++++++++
->  1 file changed, 147 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
-> new file mode 100644
-> index 000000000000..6dc3b52f47cd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
-> @@ -0,0 +1,147 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm8250-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SM8250 TLMM block
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer block found in the
-> +  SM8250 platform.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8250-pinctrl
-> +
-> +  reg:
-> +    minItems: 3
-> +    maxItems: 3
-> +
-> +  reg-names:
-> +    items:
-> +      - const: "west"
-> +      - const: "south"
-> +      - const: "north"
-> +
-> +  interrupts:
-> +    description: Specifies the TLMM summary IRQ
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  '#interrupt-cells':
-> +    description:
-> +      Specifies the PIN numbers and Flags, as defined in defined in
-> +      include/dt-bindings/interrupt-controller/irq.h
-> +    const: 2
-> +
-> +  gpio-controller: true
-> +
-> +  '#gpio-cells':
-> +    description: Specifying the pin number and flags, as defined in
-> +      include/dt-bindings/gpio/gpio.h
-> +    const: 2
-> +
-> +  gpio-ranges:
-> +    maxItems: 1
-> +
-> +  wakeup-parent:
-> +    maxItems: 1
-> +
-> +#PIN CONFIGURATION NODES
-> +patternProperties:
-> +  '^.*$':
-> +    if:
-> +      type: object
-> +    then:
-
-Needs a $ref to the standard properties.
-
-Would be good to show a child node in the example too. (And try having 
-an error in a standard property type to verify you get an error).
-
-> +      properties:
-> +        pins:
-> +          description:
-> +            List of gpio pins affected by the properties specified in this
-> +            subnode.
-> +          items:
-> +            oneOf:
-> +              - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9])$"
-> +              - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset ]
-> +          minItems: 1
-> +          maxItems: 36
-> +
-> +        function:
-> +          description:
-> +            Specify the alternative function to be configured for the specified
-> +            pins.
-> +
-> +          enum: [ aoss_cti, atest, audio_ref, cam_mclk, cci_async, cci_i2c,
-> +            cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4, cri_trng,
-> +            cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
-> +            ddr_pxi2, ddr_pxi3, dp_hot, dp_lcd, gcc_gp1, gcc_gp2, gcc_gp3, gpio,
-> +            ibi_i3c, jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0,
-> +            mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s0_data0, mi2s0_data1,
-> +            mi2s0_sck, mi2s0_ws, mi2s1_data0, mi2s1_data1, mi2s1_sck, mi2s1_ws,
-> +            mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws, pci_e0, pci_e1,
-> +            pci_e2, phase_flag, pll_bist, pll_bypassnl, pll_clk, pll_reset,
-> +            pri_mi2s, prng_rosc, qdss_cti, qdss_gpio, qspi0, qspi1, qspi2, qspi3,
-> +            qspi_clk, qspi_cs, qup0, qup1, qup10, qup11, qup12, qup13, qup14,
-> +            qup15, qup16, qup17, qup18, qup19, qup2, qup3, qup4, qup5, qup6,
-> +            qup7, qup8, qup9, qup_l4, qup_l5, qup_l6, sd_write, sdc40, sdc41,
-> +            sdc42, sdc43, sdc4_clk, sdc4_cmd, sec_mi2s, sp_cmu, tgu_ch0, tgu_ch1,
-> +            tgu_ch2, tgu_ch3, tsense_pwm1, tsense_pwm2, tsif0_clk, tsif0_data,
-> +            tsif0_en, tsif0_error, tsif0_sync, tsif1_clk, tsif1_data, tsif1_en,
-> +            tsif1_error, tsif1_sync, usb2phy_ac, usb_phy, vsense_trigger ]
-> +
-> +        drive-strength:
-> +          enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +          default: 2
-> +          description:
-> +            Selects the drive strength for the specified pins, in mA.
-> +
-> +        bias-pull-down: true
-> +
-> +        bias-pull-up: true
-> +
-> +        bias-disable: true
-> +
-> +        output-high: true
-> +
-> +        output-low: true
-> +
-> +      required:
-> +        - pins
-> +        - function
-> +
-> +      additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - interrupts
-> +  - interrupt-controller
-> +  - '#interrupt-cells'
-> +  - gpio-controller
-> +  - '#gpio-cells'
-> +  - gpio-ranges
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        pinctrl@1f00000 {
-> +                compatible = "qcom,sm8250-pinctrl";
-> +                reg = <0x0f100000 0x300000>,
-> +                      <0x0f500000 0x300000>,
-> +                      <0x0f900000 0x300000>;
-> +                reg-names = "west", "south", "north";
-> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +                gpio-controller;
-> +                #gpio-cells = <2>;
-> +                interrupt-controller;
-> +                #interrupt-cells = <2>;
-> +                gpio-ranges = <&tlmm 0 0 180>;
-> +                wakeup-parent = <&pdc>;
-> +        };
-> -- 
-> 2.24.0
+> Changes since v1:
+> - vdd_gfx -> vdd-gfx
 > 
+>  Documentation/devicetree/bindings/clock/qcom,mmcc.yaml | 4 ++++
+>  drivers/clk/qcom/mmcc-msm8996.c                        | 2 ++
+>  2 files changed, 6 insertions(+)
+> 
+
+Acked-by: Rob Herring <robh@kernel.org>
