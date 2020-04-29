@@ -2,135 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A5901BDA55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 13:08:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACA401BDAFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 13:47:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbgD2LHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 07:07:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726797AbgD2LHx (ORCPT
+        id S1726676AbgD2Lrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 07:47:48 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:60243 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726739AbgD2Lrr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 07:07:53 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3790BC03C1AE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 04:07:53 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id g13so1983225wrb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 04:07:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KJmebWLDjLh8vCDBka3zVT6nvvCa+5XmuntIjuQhiRE=;
-        b=a8bAvr4tStYxSiUIDr6CBH1RpXcjAMY6BYfytKrGJMS3014kO0oblUdosbqFinyAsn
-         /y7zsjtKhwO/CCEzsfFbCbo9oamzSyyaSqYgbX9Y8pM7M6wTXDaSR7LIPlhWDD3NBQCe
-         Yx81Yuh5JvZAMajTarm3aG00aEUr3wES/l62cTslRFXyitByx+FCrtFh3mU/orHyrIis
-         N80oRdH4FhllSfLWsF3mLu5eSEiJ4QsuwCpZpM/CF6Y70ixk7UE73F7/GKxKE1nsfwYp
-         +gS+wxjIHW08Rkpppp7y4Ht3pHTK7ParjBdVZf77zGNqIi/A1VxpVpmru3bLauvJyHzy
-         2UPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KJmebWLDjLh8vCDBka3zVT6nvvCa+5XmuntIjuQhiRE=;
-        b=cJ5JVmw4RzyaMrlB9BTHEepktVoNZDBKMNXaFyv7R/IhADV8p6NsG5TllNi9kObYz2
-         8iVwcCuoxWvt+T2GfNPyAc0UpeTAAPDWVRujemKZoyVfkVA3MZVz83fBFGTYQ+skce4Y
-         ncuQ/J5x+mLsq0SwTXoonROxbo6XBywPKH/2pVZ96tnqqXGLbxoChmHH1nxoFML8vt+L
-         KPAxdbEK+lcBJIJe88ShEhevHIsQ4NHQmiIyR+dY5x4JRmUeuGB0HCyXYr6dJEPGcrxt
-         9DM0CJeeQdfmWwhvVz/zZKF3h8u5QrxUK1adGV1gDIcax/HkSuSfz1/zYEU3VD/5T7Lx
-         zrtA==
-X-Gm-Message-State: AGi0PuYzlxSHzEnTslKodiDFPkRoOOfHqap8nwVnbtAhqvZw5RYGJ68n
-        EpIWH4KmAigTY/W7Cx2fg1qV8A==
-X-Google-Smtp-Source: APiQypIz3/hA+7TRshIH/ZVdn0UyHlwF6q8tWlAm9hqsVhDplySuS0IVFw3daGFhG17P0Yof3jG+0g==
-X-Received: by 2002:a5d:4443:: with SMTP id x3mr37857274wrr.162.1588158471948;
-        Wed, 29 Apr 2020 04:07:51 -0700 (PDT)
-Received: from localhost.localdomain ([2a0e:b107:830:0:47e5:c676:4796:5818])
-        by smtp.googlemail.com with ESMTPSA id u7sm7679963wmg.41.2020.04.29.04.07.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 04:07:51 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     andrew@lunn.ch, f.fainelli@gmail.com, hkallweit1@gmail.com,
-        linux@armlinux.org.uk, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     Robert Marko <robert.marko@sartura.hr>,
-        Christian Lamparter <chunkeey@gmail.com>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH net-next v4 3/3] ARM: dts: qcom: ipq4019: add MDIO node
-Date:   Wed, 29 Apr 2020 13:07:27 +0200
-Message-Id: <20200429110726.448625-4-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200429110726.448625-1-robert.marko@sartura.hr>
-References: <20200429110726.448625-1-robert.marko@sartura.hr>
+        Wed, 29 Apr 2020 07:47:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588160866; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=79lO4foXlw6J8ugqTXZwErfGUb0sv/L3QrDS4q0L9l4=;
+ b=uWw5rMDIDUPxcsmXHQfN4gsgSBfGvBlT5JMoYF0ef+jCB/c61aBFgP9w9hBiHFqnzxkIkIbC
+ bio0V9OQvbTNz6KSKjBU8s9irIX5S9H0WPuqOoJzSWolv/G4njHjbPZlltk2XUXPLhBUXZQg
+ gTpuLfG2WH7y3jW2Jm/FNpNbtLA=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ea9695d.7fcd15441618-smtp-out-n03;
+ Wed, 29 Apr 2020 11:47:41 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BC29DC44788; Wed, 29 Apr 2020 11:47:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 16C3BC433D2;
+        Wed, 29 Apr 2020 11:47:41 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 29 Apr 2020 17:17:41 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>, mike.leach@linaro.org
+Cc:     mathieu.poirier@linaro.org, swboyd@chromium.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] coresight: dynamic-replicator: Fix handling of multiple
+ connections
+In-Reply-To: <668ea1283a6dd6b34e701972f6f71034@codeaurora.org>
+References: <20200426143725.18116-1-saiprakash.ranjan@codeaurora.org>
+ <cf5852e9-c3c1-3d31-46f0-0370719947ab@arm.com>
+ <CAJ9a7VgF3-Hdc7KSw9gVBeXSDHNguhqVhp60oK2XhCtr3DhDqg@mail.gmail.com>
+ <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
+ <668ea1283a6dd6b34e701972f6f71034@codeaurora.org>
+Message-ID: <5b0f5d77c4eec22d8048bb0ffa078345@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds the necessary MDIO interface node
-to the Qualcomm IPQ4019 DTSI.
+On 2020-04-28 17:53, Sai Prakash Ranjan wrote:
+> On 2020-04-27 19:23, Suzuki K Poulose wrote:
+>> On 04/27/2020 10:45 AM, Mike Leach wrote:
+> [...]
+>>>> 
+>>>> This is not sufficient. You must prevent another session trying to
+>>>> enable the other port of the replicator as this could silently fail
+>>>> the "on-going" session. Not ideal. Fail the attempt to enable a port
+>>>> if the other port is active. You could track this in software and
+>>>> fail early.
+>>>> 
+>>>> Suzuki
+>>> 
+>>> While I have no issue in principle with not enabling a path to a sink
+>>> that is not in use - indeed in some cases attaching to unused sinks
+>>> can cause back-pressure that slows throughput (cf TPIU) - I am
+>>> concerned that this modification is masking an underlying issue with
+>>> the platform in question.
+>>> 
+>>> Should we decide to enable the diversion of different IDs to 
+>>> different
+>>> sinks or allow different sessions go to different sinks, then this 
+>>> has
+>>> potential to fail on the SC7180 SoC - and it will be difficult in
+>>> future to associate a problem with this discussion.
+>> 
+>> Mike,
+>> 
+>> I think thats a good point.
+>> Sai, please could we narrow down this to the real problem and may be
+>> work around it for the "device" ? Do we know which sink is causing the
+>> back pressure ? We could then push the "work around" to the replicator
+>> it is connected to.
+>> 
+>> Suzuki
+> 
+> Hi Suzuki, Mike,
+> 
+> To add some more to the information provided earlier,
+> swao_replicator(6b06000) and etf are
+> in AOSS (Always-On-SubSystem) group. Also TPIU(connected to
+> qdss_replicator) and EUD(connected
+> to swao_replicator) sinks are unused.
+> 
+> Please ignore the id filter values provided earlier.
+> Here are ID filter values after boot and before enabling replicator. As 
+> per
+> these idfilter values, we should not try to enable replicator if its 
+> already
+> enabled (in this case for swao_replicator) right?
+> 
+> localhost ~ # cat
+> /sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter0
+> 0x0
+> localhost ~ # cat
+> /sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter1
+> 0x0
+> 
+> localhost ~ # cat
+> /sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter0
+> 0xff
+> localhost ~ # cat
+> /sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter1
+> 0xff
+> 
 
-Built-in QCA8337N switch is managed using it,
-and since we have a driver for it lets add it.
+Looking more into replicator1(swao_replicator) values as 0x0 even after 
+replicator_reset()
+in replicator probe, I added dynamic_replicator_reset in 
+dynamic_replicator_enable()
+and am not seeing any hardlockup. Also I added some prints to check the 
+idfilter
+values before and after reset and found that its not set to 0xff even 
+after replicator_reset()
+in replicator probe, I don't see any other path setting it to 0x0.
 
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
----
-Changes from v3 to v4:
-* Change compatible to IPQ4019
+After probe:
 
-Changes from v2 to v3:
-* Correct commit title
+[    8.477669] func replicator_probe before reset replicator replicator1 
+REPLICATOR_IDFILTER0=0x0 REPLICATOR_IDFILTER1=0x0
+[    8.489470] func replicator_probe after reset replicator replicator1 
+REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+[    8.502738] func replicator_probe before reset replicator replicator0 
+REPLICATOR_IDFILTER0=0x0 REPLICATOR_IDFILTER1=0x0
+[    8.515214] func replicator_probe after reset replicator replicator0 
+REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+localhost ~ #
+localhost ~ #
+localhost ~ # echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+localhost ~ #
+localhost ~ # echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+[   58.490485] func dynamic_replicator_enable before reset replicator 
+replicator0 REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+[   58.503246] func dynamic_replicator_enable after reset replicator 
+replicator0 REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+[   58.520902] func dynamic_replicator_enable before reset replicator 
+replicator1 REPLICATOR_IDFILTER0=0x0 REPLICATOR_IDFILTER1=0x0
+[   58.533500] func dynamic_replicator_enable after reset replicator 
+replicator1 REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+localhost ~ #
 
- arch/arm/boot/dts/qcom-ipq4019.dtsi | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+Can we have a replicator_reset in dynamic_replicator_enable?
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index b4803a428340..8b72a149bc33 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -578,6 +578,34 @@ wifi1: wifi@a800000 {
- 			status = "disabled";
- 		};
- 
-+		mdio: mdio@90000 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			compatible = "qcom,ipq4019-mdio";
-+			reg = <0x90000 0x64>;
-+			status = "disabled";
+diff --git a/drivers/hwtracing/coresight/coresight-replicator.c 
+b/drivers/hwtracing/coresight/coresight-replicator.c
+index e7dc1c31d20d..794f8e4c049f 100644
+--- a/drivers/hwtracing/coresight/coresight-replicator.c
++++ b/drivers/hwtracing/coresight/coresight-replicator.c
+@@ -68,6 +68,8 @@ static int dynamic_replicator_enable(struct 
+replicator_drvdata *drvdata,
+         int rc = 0;
+         u32 reg;
+
++       dynamic_replicator_reset(drvdata);
 +
-+			ethphy0: ethernet-phy@0 {
-+				reg = <0>;
-+			};
-+
-+			ethphy1: ethernet-phy@1 {
-+				reg = <1>;
-+			};
-+
-+			ethphy2: ethernet-phy@2 {
-+				reg = <2>;
-+			};
-+
-+			ethphy3: ethernet-phy@3 {
-+				reg = <3>;
-+			};
-+
-+			ethphy4: ethernet-phy@4 {
-+				reg = <4>;
-+			};
-+		};
-+
- 		usb3_ss_phy: ssphy@9a000 {
- 			compatible = "qcom,usb-ss-ipq4019-phy";
- 			#phy-cells = <0>;
+         switch (outport) {
+         case 0:
+                 reg = REPLICATOR_IDFILTER0;
+
+Thanks,
+Sai
 -- 
-2.26.2
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
