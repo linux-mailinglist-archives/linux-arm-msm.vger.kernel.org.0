@@ -2,135 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EBA1B1BE64F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 20:35:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 719211BE6C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 20:59:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbgD2Sfp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 14:35:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43658 "EHLO
+        id S1726556AbgD2S7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 14:59:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726481AbgD2Sfp (ORCPT
+        by vger.kernel.org with ESMTP id S1726481AbgD2S7g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 14:35:45 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B35CC035493
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 11:35:45 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id a7so1101588pju.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 11:35:45 -0700 (PDT)
+        Wed, 29 Apr 2020 14:59:36 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 377E2C03C1AE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 11:59:36 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id a31so1129518pje.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 11:59:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=08p5fj27gfIIM4xLE6VPLWHuk1iLyqebey0af2ogLu0=;
-        b=FFYaTLS0A9F0ReP7zEIjXTXSPBAQlwGMHcaVMhSuhovYiugz+6a/Jt1nQiHzV9Qqju
-         IIgYl82tPD6UusRRDbHgqmQ129i1tXYC2lP1T+7GXnCkUaOUYf1adDB6+eJ2xJgkNnQp
-         VDMicnpzkiWiEiVs7ynjv4LAK4leb5+gcAJOI=
+        bh=5T+EXrxP7lWEQxoVx8+oLDKkl3t74DvI2pCLas6bET0=;
+        b=Pa4LWoXeMo4fJxrX/bASaPmAPGwFdkXd6wuTDoCLSvfVXScLl3XKsRFS5VFHMGj05/
+         s7doZFZuDSYnbvXXIy4maWStVP+lLZzTQPgMZrPWNELweKdCLR1S7W2Ce59O2HxX8vNl
+         gzxp/ogWtlpgt3POi9LokpFMn3dC8FsL1VFqk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=08p5fj27gfIIM4xLE6VPLWHuk1iLyqebey0af2ogLu0=;
-        b=JSxiLMdYpkbGo2wsPSIFPzvIZT8epL2M9Cm6unvbxUqI1cy3qdTZgm7t5WJaQvQrKf
-         vq/7hSkXfsFGu0hKuCbMTXBs/e3rG+5kW1YhuRUfMUcLDt83VCs9bwmEwJ2UWbr8MgIm
-         ULmqmIGP4wsYFrHXBkQuhJx5SwO8p1qmr8QjPqKIAWs4X9933KZjL6BS8l4U5D67mo97
-         QTUOitsVicfh66MwUiIuvx6ND8Pp6DSt5F0xNI9CPy+W5S9KHc7b/CvQBvm7itQsC4aq
-         iJ0gg1rkzsS5pdn1f/Hq0WtkDxJvaJrK4WFGZjFviFy9nVIjCB3Kktrkq00ZAvI6hpoe
-         EXxw==
-X-Gm-Message-State: AGi0Pub/OSUd4JIDFcV4DavHGl0cHGjoNBX0GXh870kOyVK121Cx8Zoz
-        SotT1u+95QzF8G00CvwUUh1KxA==
-X-Google-Smtp-Source: APiQypKTRutC1MlI4l1Qf7LKmUxg3tadHomjIMqKmf84o5IE8XamP56lmNdNZx1ZAkOHMQE0Jamzuw==
-X-Received: by 2002:a17:90a:3450:: with SMTP id o74mr4681969pjb.159.1588185344615;
-        Wed, 29 Apr 2020 11:35:44 -0700 (PDT)
+        bh=5T+EXrxP7lWEQxoVx8+oLDKkl3t74DvI2pCLas6bET0=;
+        b=U3Vb1GAsklwWBMea0OX4lc2NXWyKH8GWF6G7tBNMBD0HgshWynphKK81paJ7JKjbxm
+         NG6oxMDl+BwilR48Jm+OIVUB98t/6stTp7XuOQSp1xJL3SfYp7m8yB3aB8l4CfDK0wwv
+         Khtmzjhs60PXWHR/rQFy7igMKnUSJBRLC/N8F/cR5we0UXHe/U2gvgfCIkq2lbgza9DT
+         NFGo3Lia84LVGSSKQ1L+1NKFCwI5fgfVsZOsMU9um4VL1PuVjBikMoGTsom39Z0eV815
+         xsz0VglISWJXfEDEaMKKvRZ3Xeav1IXVEHN+skNE7pJbr6bwN/Ya7krU8IGos8amEpLv
+         1UuA==
+X-Gm-Message-State: AGi0PuYBHBopiC60HtknAYB+w/sZasZPh4I2D+Lw0t0TSkledkX9zAQj
+        Oy48+Q7/LOrwzq299ntwCdH8Hw==
+X-Google-Smtp-Source: APiQypLGjxmoYOQYHORM/I4sB5Dc2jR592KUVDa5lfftZ+KXwPA/jfCzTy6Cgz7QCEdZ2o9p/MKB0g==
+X-Received: by 2002:a17:90b:297:: with SMTP id az23mr4731753pjb.85.1588186775689;
+        Wed, 29 Apr 2020 11:59:35 -0700 (PDT)
 Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id o40sm16770pjb.18.2020.04.29.11.35.43
+        by smtp.gmail.com with ESMTPSA id o99sm46973pjo.8.2020.04.29.11.59.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Apr 2020 11:35:43 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 11:35:42 -0700
+        Wed, 29 Apr 2020 11:59:34 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 11:59:33 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-Subject: Re: [PATCH v7 0/4] ADD interconnect support for Qualcomm DWC3 driver
-Message-ID: <20200429183542.GS4525@google.com>
-References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v6 2/4] dt-bindings: phy: qcom,qmp-usb3-dp: Add dt
+ bindings for USB3 DP PHY
+Message-ID: <20200429185933.GT4525@google.com>
+References: <1588082775-19959-1-git-send-email-sanm@codeaurora.org>
+ <1588082775-19959-3-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <1588082775-19959-3-git-send-email-sanm@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Felipe,
+Hi Sandeep,
 
-all patches of this series have been reviewed and there are no outstanding
-comments, so I guess it should be ready to land?
+This is a bit misleading/confusing. Patch "1/4] dt-bindings: phy: qcom,qmp:
+Convert QMP PHY bindings to yaml" does the conversion to yaml AND removes
+the binding for USB3 DP PHY, then this patch adds it again. Patches should
+be self-contained and their commit messages shouldn't omit important details.
+If the first patch is applied in isolation the USB3 DP PHY binding disappears
+silently, supposedly with the approval from Rob, who reviewed an earlier
+version of the patch without the removal.
+
+I think there are two options:
+
+1) one patch with the (complete) conversion to a single yaml file, plus
+   a separate patch that moves the DP PHY binding to its own file
+
+2) a single patch which does the conversion to yaml and moves the DP PHY
+   binding to its own file
+
+IMO 1) is slightly better, but both should be ok.
 
 Thanks
 
 Matthias
 
-On Wed, Apr 01, 2020 at 10:45:41AM +0530, Sandeep Maheswaram wrote:
-> This path series aims to add interconnect support in
-> dwc3-qcom driver on SDM845 and SC7180 SoCs.
+On Tue, Apr 28, 2020 at 07:36:13PM +0530, Sandeep Maheswaram wrote:
+> Split out the dt bindings for USB3 DP PHY from qcom,qmp bindings
+> for modularity.
 > 
-> Changes from v6 -> v7
->   > [PATCH 2/4] Fixed review comments from Matthias in DWC3 driver.
->   > Other patches remain unchanged.
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml         | 135 +++++++++++++++++++++
+>  1 file changed, 135 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
 > 
-> Changes from v5 -> v6
->   > [PATCH 1/4] Addressed comments from Rob.
->   > [PATCH 2/4] Fixed review comments from Matthias in DWC3 driver.
->   > [PATCH 3/4] Ignoring 80 char limit in defining interconnect paths.
->   > Added [PATCH 4/4] in this series. Adding interconnect nodes for SC7180.
->     Depends on patch https://patchwork.kernel.org/patch/11417989/.	
-> 
-> Changes from v4 -> v5
->   > [PATCH 1/3] Added the interconnect properties in yaml. This patch depends
->     on series https://patchwork.kernel.org/cover/11372641/.
->   > [PATCH 2/3] Fixed review comments from Matthias in DWC3 driver.
->   > [PATCH 3/3] Modified as per the new interconnect nodes in sdm845. Depends
->     on series https://patchwork.kernel.org/cover/11372211/. 
-> 
-> 
-> Changes from v3 -> v4
->   > Fixed review comments from Matthias
->   > [PATCH 1/3] and [PATCH 3/3] remains unchanged
-> 
-> Changes from v2 -> v3
->   > Fixed review comments from Matthias and Manu
->   > changed the functions prefix from usb_* to dwc3_qcom_*
-> 
-> Changes since V1:
->   > Comments by Georgi Djakov on "[PATCH 2/3]" addressed
->   > [PATCH 1/3] and [PATCH 3/3] remains unchanged
-> 
-> 
-> Sandeep Maheswaram (4):
->   dt-bindings: usb: qcom,dwc3: Introduce interconnect properties for
->     Qualcomm DWC3 driver
->   usb: dwc3: qcom: Add interconnect support in dwc3 driver
->   arm64: dts: qcom: sdm845: Add interconnect properties for USB
->   arm64: dts: qcom: sc7180: Add interconnect properties for USB
-> 
->  .../devicetree/bindings/usb/qcom,dwc3.yaml         |   8 ++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi               |   4 +
->  arch/arm64/boot/dts/qcom/sdm845.dtsi               |   8 ++
->  drivers/usb/dwc3/dwc3-qcom.c                       | 128 ++++++++++++++++++++-
->  4 files changed, 146 insertions(+), 2 deletions(-)
-> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+> new file mode 100644
+> index 0000000..6055786
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+> @@ -0,0 +1,135 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,qmp-usb3-dp-phy.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm QMP USB3 DP PHY controller
+> +
+> +maintainers:
+> +  - Manu Gautam <mgautam@codeaurora.org>
+> +
+> +properties:
+> +  compatible:
+> +    const:
+> +      qcom,sdm845-qmp-usb3-phy
+> +  reg:
+> +    items:
+> +      - description: Address and length of PHY's common serdes block.
+> +      - description: Address and length of the DP_COM control block.
+> +
+> +  reg-names:
+> +    items:
+> +      - const: reg-base
+> +      - const: dp_com
+> +
+> +  "#clock-cells":
+> +     enum: [ 1, 2 ]
+> +
+> +  "#address-cells":
+> +    enum: [ 1, 2 ]
+> +
+> +  "#size-cells":
+> +    enum: [ 1, 2 ]
+> +
+> +  clocks:
+> +    items:
+> +      - description: Phy aux clock.
+> +      - description: Phy config clock.
+> +      - description: 19.2 MHz ref clk.
+> +      - description: Phy common block aux clock.
+> +
+> +  clock-names:
+> +    items:
+> +      - const: aux
+> +      - const: cfg_ahb
+> +      - const: ref
+> +      - const: com_aux
+> +
+> +  resets:
+> +    items:
+> +      - description: reset of phy block.
+> +      - description: phy common block reset.
+> +
+> +  reset-names:
+> +    items:
+> +      - const: phy
+> +      - const: common
+> +
+> +  vdda-phy-supply:
+> +    description:
+> +        Phandle to a regulator supply to PHY core block.
+> +
+> +  vdda-pll-supply:
+> +    description:
+> +        Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +
+> +  vddp-ref-clk-supply:
+> +    description:
+> +        Phandle to a regulator supply to any specific refclk
+> +        pll block.
+> +
+> +#Required nodes:
+> +patternProperties:
+> +  "^phy@[0-9a-f]+$":
+> +    type: object
+> +    description:
+> +      Each device node of QMP phy is required to have as many child nodes as
+> +      the number of lanes the PHY has.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - "#clock-cells"
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - clocks
+> +  - clock-names
+> +  - resets
+> +  - reset-names
+> +  - vdda-phy-supply
+> +  - vdda-pll-supply
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> +    usb_1_qmpphy: phy-wrapper@88e9000 {
+> +        compatible = "qcom,sdm845-qmp-usb3-phy";
+> +        reg = <0 0x088e9000 0 0x18c>,
+> +              <0 0x088e8000 0 0x10>;
+> +        reg-names = "reg-base", "dp_com";
+> +        #clock-cells = <1>;
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> +                 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
+> +                 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+> +                 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+> +        clock-names = "aux", "cfg_ahb", "ref", "com_aux";
+> +
+> +        resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
+> +                 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
+> +        reset-names = "phy", "common";
+> +
+> +        vdda-phy-supply = <&vdda_usb2_ss_1p2>;
+> +        vdda-pll-supply = <&vdda_usb2_ss_core>;
+> +
+> +        usb_1_ssphy: phy@88e9200 {
+> +                reg = <0 0x088e9200 0 0x128>,
+> +                      <0 0x088e9400 0 0x200>,
+> +                      <0 0x088e9c00 0 0x218>,
+> +                      <0 0x088e9600 0 0x128>,
+> +                      <0 0x088e9800 0 0x200>,
+> +                      <0 0x088e9a00 0 0x100>;
+> +                #clock-cells = <0>;
+> +                #phy-cells = <0>;
+> +                clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +                clock-names = "pipe0";
+> +                clock-output-names = "usb3_phy_pipe_clk_src";
+> +            };
+> +        };
 > -- 
 > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 > of Code Aurora Forum, hosted by The Linux Foundation
