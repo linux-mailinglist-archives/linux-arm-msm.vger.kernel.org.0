@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AC371BE09F
+	by mail.lfdr.de (Postfix) with ESMTP id E41691BE0A1
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 16:19:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbgD2OSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 10:18:52 -0400
+        id S1727073AbgD2OTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 10:19:39 -0400
 Received: from mail26.static.mailgun.info ([104.130.122.26]:34750 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726661AbgD2OSu (ORCPT
+        by vger.kernel.org with ESMTP id S1726669AbgD2OTi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 10:18:50 -0400
+        Wed, 29 Apr 2020 10:19:38 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588169929; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1588169978; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=h0jvRC7HGXaYimqyTJRzfmOTezRJJ7zDAntXQ60QslU=; b=u8KHbgrJa0bQkeXoJFp4SS0JgUSk17tclz5teFPT/kUPUoRGlbtpocDiwL3yI8lETfn/0YYT
- GQi5JoQjPflV9ac/8kbWncNP6kR7nKoaGZtosSOIM98cuZs0ZKeHxBjoQoji88uwYOwsOZdX
- Puvax7PbGqpnYqScqBIN9SxSZvY=
+ Subject: Sender; bh=GcOuy4s4nR7NMD9G7PRsLt/9043GOxuP9x5bNai9Bc4=; b=haCyNMayNhx3steqj6tqXSMQK6mj9BrVbsd2Uu9snj1NssRPgOJ3kF3bJ77+1bdvh6LfM4nA
+ jLtVr9U0RwhjdlYRFKqTc8JzYR/Qc0oDECnU2Bygtd6W9hM3TeM5QklSG80R36QYQSXD5vao
+ fb/Q0/C77W/hKpPWFLqGydu3oP8=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea98cb5.7f2e1fdd23e8-smtp-out-n05;
- Wed, 29 Apr 2020 14:18:29 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ea98cf9.7f82d4b96a08-smtp-out-n05;
+ Wed, 29 Apr 2020 14:19:37 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5679CC44791; Wed, 29 Apr 2020 14:18:29 +0000 (UTC)
+        id E3619C433BA; Wed, 29 Apr 2020 14:19:36 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,28 +34,30 @@ Received: from [10.131.182.194] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualco
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 932EDC44792;
-        Wed, 29 Apr 2020 14:18:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 932EDC44792
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 665E7C433CB;
+        Wed, 29 Apr 2020 14:19:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 665E7C433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 07/17] arm64: dts: sdm845: Add DSI and MDP OPP tables
- and power-domains
+Subject: Re: [PATCH v3 12/17] media: venus: core: Add support for opp
+ tables/perf voting
 To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
         bjorn.andersson@linaro.org, agross@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org
 References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
- <1588080785-6812-8-git-send-email-rnayak@codeaurora.org>
- <20200429002705.GM4525@google.com>
+ <1588080785-6812-13-git-send-email-rnayak@codeaurora.org>
+ <20200429003907.GN4525@google.com>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <39ccd066-1691-b53d-029b-f6533f18d2e9@codeaurora.org>
-Date:   Wed, 29 Apr 2020 19:48:22 +0530
+Message-ID: <6e37f0b5-a9b3-7b62-96f9-6bd8f1594fa6@codeaurora.org>
+Date:   Wed, 29 Apr 2020 19:49:30 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20200429002705.GM4525@google.com>
+In-Reply-To: <20200429003907.GN4525@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -65,90 +67,78 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 4/29/2020 5:57 AM, Matthias Kaehlcke wrote:
-> On Tue, Apr 28, 2020 at 07:02:55PM +0530, Rajendra Nayak wrote:
->> Add the OPP tables for DSI and MDP based on the perf state/clk
->> requirements, and add the power-domains property to specify the
->> scalable power domain.
+On 4/29/2020 6:09 AM, Matthias Kaehlcke wrote:
+> On Tue, Apr 28, 2020 at 07:03:00PM +0530, Rajendra Nayak wrote:
+>> Add support to add OPP tables and perf voting on the OPP powerdomain.
+>> This is needed so venus votes on the corresponding performance state
+>> for the OPP powerdomain along with setting the core clock rate.
 >>
 >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> Cc: linux-media@vger.kernel.org
 >> ---
->>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 59 ++++++++++++++++++++++++++++++++++++
->>   1 file changed, 59 insertions(+)
+>>   drivers/media/platform/qcom/venus/core.c       | 28 +++++++++++++++++++
+>>   drivers/media/platform/qcom/venus/core.h       |  5 ++++
+>>   drivers/media/platform/qcom/venus/pm_helpers.c | 37 +++++++++++++++++++++++---
+>>   3 files changed, 66 insertions(+), 4 deletions(-)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> index 36b9fb1..7a625ad 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> @@ -3309,6 +3309,59 @@
->>   			#reset-cells = <1>;
->>   		};
+>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>> index 194b10b9..e98fea92 100644
+>> --- a/drivers/media/platform/qcom/venus/core.c
+>> +++ b/drivers/media/platform/qcom/venus/core.c
+>> @@ -12,6 +12,7 @@
+>>   #include <linux/platform_device.h>
+>>   #include <linux/slab.h>
+>>   #include <linux/types.h>
+>> +#include <linux/pm_opp.h>
+>>   #include <linux/pm_runtime.h>
+>>   #include <media/videobuf2-v4l2.h>
+>>   #include <media/v4l2-mem2mem.h>
+>> @@ -214,6 +215,20 @@ static int venus_probe(struct platform_device *pdev)
+>>   	if (!core->pm_ops)
+>>   		return -ENODEV;
 >>   
->> +		mdp_opp_table: mdp-opp-table {
->> +			compatible = "operating-points-v2";
+>> +	core->opp_table = dev_pm_opp_set_clkname(dev, "core");
+>> +	if (IS_ERR(core->opp_table))
+>> +		return PTR_ERR(core->opp_table);
 >> +
->> +			opp-19200000 {
->> +				opp-hz = /bits/ 64 <19200000>;
->> +				required-opps = <&rpmhpd_opp_min_svs>;
->> +			};
+>> +	if (core->res->opp_pmdomain) {
+>> +		ret = dev_pm_opp_of_add_table(dev);
+>> +		if (!ret) {
+>> +			core->has_opp_table = true;
+>> +		} else if (ret != -ENODEV) {
+>> +			dev_err(dev, "Invalid OPP table in Device tree\n");
+>> +			return ret;
+>> +		}
+>> +	}
 >> +
->> +			opp-171428571 {
->> +				opp-hz = /bits/ 64 <171428571>;
->> +				required-opps = <&rpmhpd_opp_low_svs>;
->> +			};
->> +
->> +			opp-344000000 {
->> +				opp-hz = /bits/ 64 <344000000>;
->> +				required-opps = <&rpmhpd_opp_svs_l1>;
->> +			};
->> +
->> +			opp-430000000 {
->> +				opp-hz = /bits/ 64 <430000000>;
->> +				required-opps = <&rpmhpd_opp_nom>;
->> +			};
->> +		};
+>>   	if (core->pm_ops->core_get) {
+>>   		ret = core->pm_ops->core_get(dev);
+>>   		if (ret)
+>> @@ -301,6 +316,9 @@ static int venus_probe(struct platform_device *pdev)
+>>   err_venus_shutdown:
+>>   	venus_shutdown(core);
+>>   err_runtime_disable:
+>> +	if (core->res->opp_pmdomain && core->has_opp_table)
 > 
-> as commented on "[v3,03/17] arm64: dts: sdm845: Add OPP table for all qup
-> devices" (https://patchwork.kernel.org/patch/11514693/) this table should
-> probably be inside the 'mdp' node.
+> the check for 'core->res->opp_pmdomain' is not needed, 'core->has_opp_table'
+> can only be true when 'core->res->opp_pmdomain' is not NULL.
 
-right, I will move this and the below table inside the device nodes.
+ah, that's right, will fix. Thanks.
 
 > 
->> +
->> +		dsi_opp_table: dsi-opp-table {
->> +			compatible = "operating-points-v2";
->> +
->> +			opp-19200000 {
->> +				opp-hz = /bits/ 64 <19200000>;
->> +				required-opps = <&rpmhpd_opp_min_svs>;
->> +			};
->> +
->> +			opp-180000000 {
->> +				opp-hz = /bits/ 64 <180000000>;
->> +				required-opps = <&rpmhpd_opp_low_svs>;
->> +			};
->> +
->> +			opp-275000000 {
->> +				opp-hz = /bits/ 64 <275000000>;
->> +				required-opps = <&rpmhpd_opp_svs>;
->> +			};
->> +
->> +			opp-328580000 {
->> +				opp-hz = /bits/ 64 <328580000>;
->> +				required-opps = <&rpmhpd_opp_svs_l1>;
->> +			};
->> +
->> +			opp-358000000 {
->> +				opp-hz = /bits/ 64 <358000000>;
->> +				required-opps = <&rpmhpd_opp_nom>;
->> +			};
->> +		};
->> +
+>> +		dev_pm_opp_of_remove_table(dev);
+>> +	dev_pm_opp_put_clkname(core->opp_table);
+>>   	pm_runtime_set_suspended(dev);
+>>   	pm_runtime_disable(dev);
+>>   	hfi_destroy(core);
+>> @@ -326,6 +344,10 @@ static int venus_remove(struct platform_device *pdev)
+>>   
+>>   	venus_firmware_deinit(core);
+>>   
+>> +	if (core->res->opp_pmdomain && core->has_opp_table)
 > 
-> depending on the outcome of the discussion mentioned above this might have
-> to move into the 'dsi0' node.
+> ditto
 > 
 
 -- 
