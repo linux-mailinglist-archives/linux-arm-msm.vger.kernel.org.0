@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70C2A1BE077
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 16:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 676E81BE086
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 16:17:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbgD2OPp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 10:15:45 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:47415 "EHLO
+        id S1726558AbgD2OQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 10:16:55 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:13811 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726830AbgD2OPo (ORCPT
+        by vger.kernel.org with ESMTP id S1726847AbgD2OQy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 10:15:44 -0400
+        Wed, 29 Apr 2020 10:16:54 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588169744; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1588169814; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=bIN4xF93iRJ+VRYE4AruY+YqNKP4UWPj3P+2URriqLk=; b=HYxHSbWbCpxfbgkY5/o1aSjNb4BXUeQn2kAEH55IOkcpqq9lwYRz2Vn37P8FC5OZIIg5D1GS
- bufbXamQGMY6qwdRPFAFCwMAlK01S1IVnim+cwZZdjrz0X1suitRU7I5FmSwBpvw3s8/knRn
- gDxLBkJ4f2a/uZM/QUHYdOfXnik=
+ Subject: Sender; bh=nnaIfrV4qLeRSIGOFX1I6F/ufbM8nw9ujY7Wju+a3ug=; b=GEIFehj8qjzPUttY2fsC2M37gKv+ItHGWWhheqvvqr3kFroX+6/al06irAVrxeIfTuHqi2IA
+ W0XBhXB7zuwU0E1mYBUiE+JNeeOts3vMlg00VDVJwJracZ3v1ELz1RgbI0Buu2/1kibGVtlL
+ M+0PB9a4F5bi/HoFvKkEfEbKtro=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea98c06.7f7375cb6688-smtp-out-n03;
- Wed, 29 Apr 2020 14:15:34 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ea98c4c.7f2982237650-smtp-out-n04;
+ Wed, 29 Apr 2020 14:16:44 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 623D7C43636; Wed, 29 Apr 2020 14:15:33 +0000 (UTC)
+        id 7F64BC433D2; Wed, 29 Apr 2020 14:16:43 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from [10.131.182.194] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CB73FC432C2;
-        Wed, 29 Apr 2020 14:15:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CB73FC432C2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D3419C433CB;
+        Wed, 29 Apr 2020 14:16:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D3419C433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 03/17] arm64: dts: sdm845: Add OPP table for all qup
- devices
+Subject: Re: [PATCH v3 05/17] drm/msm/dpu: Use OPP API to set clk/perf state
 To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
         bjorn.andersson@linaro.org, agross@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>
+        linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org
 References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
- <1588080785-6812-4-git-send-email-rnayak@codeaurora.org>
- <20200429000234.GK4525@google.com>
+ <1588080785-6812-6-git-send-email-rnayak@codeaurora.org>
+ <20200429001425.GL4525@google.com>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <fe4b60f9-8aa6-0173-a67f-2f0f8451ad85@codeaurora.org>
-Date:   Wed, 29 Apr 2020 19:45:27 +0530
+Message-ID: <92892448-c10c-4440-4933-17706d46ef93@codeaurora.org>
+Date:   Wed, 29 Apr 2020 19:46:27 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20200429000234.GK4525@google.com>
+In-Reply-To: <20200429001425.GL4525@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -65,58 +65,143 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 4/29/2020 5:32 AM, Matthias Kaehlcke wrote:
-> Hi Rajendra,
-> 
-> On Tue, Apr 28, 2020 at 07:02:51PM +0530, Rajendra Nayak wrote:
->> qup has a requirement to vote on the performance state of the CX domain
->> in sdm845 devices. Add OPP tables for these and also add power-domains
->> property for all qup instances.
+On 4/29/2020 5:44 AM, Matthias Kaehlcke wrote:
+> On Tue, Apr 28, 2020 at 07:02:53PM +0530, Rajendra Nayak wrote:
+>> On some qualcomm platforms DPU needs to express a perforamnce state
+>> requirement on a power domain depennding on the clock rates.
+>> Use OPP table from DT to register with OPP framework and use
+>> dev_pm_opp_set_rate() to set the clk/perf state.
 >>
 >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>> Cc: Rob Clark <robdclark@gmail.com>
+>> Cc: Sean Paul <sean@poorly.run>
+>> Cc: dri-devel@lists.freedesktop.org
 >> ---
->>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 115 +++++++++++++++++++++++++++++++++++
->>   1 file changed, 115 insertions(+)
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  3 ++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 25 ++++++++++++++++++++++++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 ++++
+>>   3 files changed, 30 insertions(+), 2 deletions(-)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> index 8f926b5..36b9fb1 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> @@ -804,6 +804,25 @@
->>   			clock-names = "core";
->>   		};
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>> index 11f2beb..fe5717df 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>> @@ -7,6 +7,7 @@
+>>   #include <linux/debugfs.h>
+>>   #include <linux/errno.h>
+>>   #include <linux/mutex.h>
+>> +#include <linux/pm_opp.h>
+>>   #include <linux/sort.h>
+>>   #include <linux/clk.h>
+>>   #include <linux/bitmap.h>
+>> @@ -239,7 +240,7 @@ static int _dpu_core_perf_set_core_clk_rate(struct dpu_kms *kms, u64 rate)
+>>   		rate = core_clk->max_rate;
 >>   
->> +		qup_opp_table: qup-opp-table {
->> +			compatible = "operating-points-v2";
->> +
->> +			opp-19200000 {
->> +				opp-hz = /bits/ 64 <19200000>;
->> +				required-opps = <&rpmhpd_opp_min_svs>;
->> +			};
->> +
->> +			opp-75000000 {
->> +				opp-hz = /bits/ 64 <75000000>;
->> +				required-opps = <&rpmhpd_opp_low_svs>;
->> +			};
->> +
->> +			opp-100000000 {
->> +				opp-hz = /bits/ 64 <100000000>;
->> +				required-opps = <&rpmhpd_opp_svs>;
->> +			};
->> +		};
->> +
+>>   	core_clk->rate = rate;
+>> -	return msm_dss_clk_set_rate(core_clk, 1);
+>> +	return dev_pm_opp_set_rate(&kms->pdev->dev, core_clk->rate);
+>>   }
+>>   
+>>   static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index ce19f1d..2f53bbf 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -10,6 +10,7 @@
+>>   #include <linux/debugfs.h>
+>>   #include <linux/dma-buf.h>
+>>   #include <linux/of_irq.h>
+>> +#include <linux/pm_opp.h>
+>>   
+>>   #include <drm/drm_crtc.h>
+>>   #include <drm/drm_file.h>
+>> @@ -1033,11 +1034,23 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>>   	if (!dpu_kms)
+>>   		return -ENOMEM;
+>>   
+>> +	dpu_kms->opp_table = dev_pm_opp_set_clkname(dev, "core");
+>> +	if (IS_ERR(dpu_kms->opp_table))
+>> +		return PTR_ERR(dpu_kms->opp_table);
+>> +	/* OPP table is optional */
+>> +	ret = dev_pm_opp_of_add_table(dev);
+>> +	if (!ret) {
+>> +		dpu_kms->has_opp_table = true;
+>> +	} else if (ret != -ENODEV) {
+>> +		dev_err(dev, "Invalid OPP table in Device tree\n");
 > 
-> Judging from SDM845 (which has more OPP tables) the convention seems to be
-> to add OPP tables to the nodes that use them, which seems reasonable and
-> keeps them out of the device list.
+> nit: s/Device/device/ ?
 > 
-> Unfortunately this convention isn't completely suitable for cases like this
-> (and the DSI OPPs later in this series), where the same OPP table is used by
-> multiple devices. A possible compromise would be to add the table to the
-> node of the first device that uses them.
+> uber-nit: s/Invalid/invalid/
+> 
+>    most log messages in this file start with a lower case letter, except
+>    for acronyms/register names
+> 
+> please also change it in the other drivers unless you disagree.
 
-Sounds fair, I will do that and respin. Thanks.
+Sure, will do. Thanks.
+
+> 
+>> +		return ret;
+>> +	}
+>> +
+>>   	mp = &dpu_kms->mp;
+>>   	ret = msm_dss_parse_clock(pdev, mp);
+>>   	if (ret) {
+>>   		DPU_ERROR("failed to parse clocks, ret=%d\n", ret);
+>> -		return ret;
+>> +		goto err;
+>>   	}
+>>   
+>>   	platform_set_drvdata(pdev, dpu_kms);
+>> @@ -1051,6 +1064,11 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>>   
+>>   	priv->kms = &dpu_kms->base;
+>>   	return ret;
+>> +err:
+>> +	if (dpu_kms->has_opp_table)
+>> +		dev_pm_opp_of_remove_table(dev);
+>> +	dev_pm_opp_put_clkname(dpu_kms->opp_table);
+>> +	return ret;
+>>   }
+>>   
+>>   static void dpu_unbind(struct device *dev, struct device *master, void *data)
+>> @@ -1059,6 +1077,9 @@ static void dpu_unbind(struct device *dev, struct device *master, void *data)
+>>   	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+>>   	struct dss_module_power *mp = &dpu_kms->mp;
+>>   
+>> +	if (dpu_kms->has_opp_table)
+>> +		dev_pm_opp_of_remove_table(dev);
+>> +	dev_pm_opp_put_clkname(dpu_kms->opp_table);
+>>   	msm_dss_put_clk(mp->clk_config, mp->num_clk);
+>>   	devm_kfree(&pdev->dev, mp->clk_config);
+>>   	mp->num_clk = 0;
+>> @@ -1090,6 +1111,8 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+>>   	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+>>   	struct dss_module_power *mp = &dpu_kms->mp;
+>>   
+>> +	/* Drop the performance state vote */
+>> +	dev_pm_opp_set_rate(dev, 0);
+>>   	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, false);
+>>   	if (rc)
+>>   		DPU_ERROR("clock disable failed rc:%d\n", rc);
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> index 211f5de9..2a52e4e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> @@ -128,6 +128,10 @@ struct dpu_kms {
+>>   
+>>   	struct platform_device *pdev;
+>>   	bool rpm_enabled;
+>> +
+>> +	struct opp_table *opp_table;
+>> +	bool has_opp_table;
+>> +
+>>   	struct dss_module_power mp;
+>>   
+>>   	/* reference count bandwidth requests, so we know when we can
+> 
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> 
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
