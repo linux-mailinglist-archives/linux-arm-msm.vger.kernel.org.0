@@ -2,21 +2,17 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F38B1BDEF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 15:41:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C4371BDEE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 15:41:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728430AbgD2Njy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 09:39:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727971AbgD2Nhs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1728400AbgD2Njk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 09:39:40 -0400
+Received: from 8bytes.org ([81.169.241.247]:39838 "EHLO theia.8bytes.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727087AbgD2Nhs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 29 Apr 2020 09:37:48 -0400
-Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9BAC03C1AD;
-        Wed, 29 Apr 2020 06:37:47 -0700 (PDT)
 Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id DF2F0E06; Wed, 29 Apr 2020 15:37:37 +0200 (CEST)
+        id 180F1E92; Wed, 29 Apr 2020 15:37:38 +0200 (CEST)
 From:   Joerg Roedel <joro@8bytes.org>
 To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         Robin Murphy <robin.murphy@arm.com>,
@@ -42,9 +38,9 @@ Cc:     Daniel Drake <drake@endlessm.com>, jonathan.derrick@intel.com,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org,
         Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH v3 14/34] iommu/amd: Remove dev_data->passthrough
-Date:   Wed, 29 Apr 2020 15:36:52 +0200
-Message-Id: <20200429133712.31431-15-joro@8bytes.org>
+Subject: [PATCH v3 15/34] iommu/amd: Convert to probe/release_device() call-backs
+Date:   Wed, 29 Apr 2020 15:36:53 +0200
+Message-Id: <20200429133712.31431-16-joro@8bytes.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200429133712.31431-1-joro@8bytes.org>
 References: <20200429133712.31431-1-joro@8bytes.org>
@@ -55,64 +51,176 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Joerg Roedel <jroedel@suse.de>
 
-Make use of generic IOMMU infrastructure to gather the same information
-carried in dev_data->passthrough and remove the struct member.
+Convert the AMD IOMMU Driver to use the probe_device() and
+release_device() call-backs of iommu_ops, so that the iommu core code
+does the group and sysfs setup.
 
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 ---
- drivers/iommu/amd_iommu.c       | 10 +++++-----
- drivers/iommu/amd_iommu_types.h |  1 -
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/iommu/amd_iommu.c | 71 ++++++++++++---------------------------
+ 1 file changed, 22 insertions(+), 49 deletions(-)
 
 diff --git a/drivers/iommu/amd_iommu.c b/drivers/iommu/amd_iommu.c
-index 3e0d27f7622e..0b4b4faa876d 100644
+index 0b4b4faa876d..c30367413683 100644
 --- a/drivers/iommu/amd_iommu.c
 +++ b/drivers/iommu/amd_iommu.c
-@@ -2047,8 +2047,8 @@ static int pdev_iommuv2_enable(struct pci_dev *pdev)
- static int attach_device(struct device *dev,
- 			 struct protection_domain *domain)
+@@ -343,21 +343,9 @@ static bool check_device(struct device *dev)
+ 	return true;
+ }
+ 
+-static void init_iommu_group(struct device *dev)
+-{
+-	struct iommu_group *group;
+-
+-	group = iommu_group_get_for_dev(dev);
+-	if (IS_ERR(group))
+-		return;
+-
+-	iommu_group_put(group);
+-}
+-
+ static int iommu_init_device(struct device *dev)
  {
--	struct pci_dev *pdev;
  	struct iommu_dev_data *dev_data;
-+	struct pci_dev *pdev;
- 	unsigned long flags;
- 	int ret;
+-	struct amd_iommu *iommu;
+ 	int devid;
  
-@@ -2067,8 +2067,10 @@ static int attach_device(struct device *dev,
+ 	if (dev->archdata.iommu)
+@@ -367,8 +355,6 @@ static int iommu_init_device(struct device *dev)
+ 	if (devid < 0)
+ 		return devid;
  
- 	pdev = to_pci_dev(dev);
- 	if (domain->flags & PD_IOMMUV2_MASK) {
-+		struct iommu_domain *def_domain = iommu_get_dma_domain(dev);
+-	iommu = amd_iommu_rlookup_table[devid];
+-
+ 	dev_data = find_dev_data(devid);
+ 	if (!dev_data)
+ 		return -ENOMEM;
+@@ -391,8 +377,6 @@ static int iommu_init_device(struct device *dev)
+ 
+ 	dev->archdata.iommu = dev_data;
+ 
+-	iommu_device_link(&iommu->iommu, dev);
+-
+ 	return 0;
+ }
+ 
+@@ -410,7 +394,7 @@ static void iommu_ignore_device(struct device *dev)
+ 	setup_aliases(dev);
+ }
+ 
+-static void iommu_uninit_device(struct device *dev)
++static void amd_iommu_uninit_device(struct device *dev)
+ {
+ 	struct iommu_dev_data *dev_data;
+ 	struct amd_iommu *iommu;
+@@ -429,13 +413,6 @@ static void iommu_uninit_device(struct device *dev)
+ 	if (dev_data->domain)
+ 		detach_device(dev);
+ 
+-	iommu_device_unlink(&iommu->iommu, dev);
+-
+-	iommu_group_remove_device(dev);
+-
+-	/* Remove dma-ops */
+-	dev->dma_ops = NULL;
+-
+ 	/*
+ 	 * We keep dev_data around for unplugged devices and reuse it when the
+ 	 * device is re-plugged - not doing so would introduce a ton of races.
+@@ -2152,55 +2129,50 @@ static void detach_device(struct device *dev)
+ 	spin_unlock_irqrestore(&domain->lock, flags);
+ }
+ 
+-static int amd_iommu_add_device(struct device *dev)
++static struct iommu_device *amd_iommu_probe_device(struct device *dev)
+ {
+-	struct iommu_dev_data *dev_data;
+-	struct iommu_domain *domain;
++	struct iommu_device *iommu_dev;
+ 	struct amd_iommu *iommu;
+ 	int ret, devid;
+ 
+-	if (get_dev_data(dev))
+-		return 0;
+-
+ 	if (!check_device(dev))
+-		return -ENODEV;
++		return ERR_PTR(-ENODEV);
+ 
+ 	devid = get_device_id(dev);
+ 	if (devid < 0)
+-		return devid;
++		return ERR_PTR(devid);
+ 
+ 	iommu = amd_iommu_rlookup_table[devid];
+ 
++	if (get_dev_data(dev))
++		return &iommu->iommu;
 +
- 		ret = -EINVAL;
--		if (!dev_data->passthrough)
-+		if (def_domain->type != IOMMU_DOMAIN_IDENTITY)
- 			goto out;
+ 	ret = iommu_init_device(dev);
+ 	if (ret) {
+ 		if (ret != -ENOTSUPP)
+ 			dev_err(dev, "Failed to initialize - trying to proceed anyway\n");
+-
++		iommu_dev = ERR_PTR(ret);
+ 		iommu_ignore_device(dev);
+-		dev->dma_ops = NULL;
+-		goto out;
++	} else {
++		iommu_dev = &iommu->iommu;
+ 	}
+-	init_iommu_group(dev);
  
- 		if (dev_data->iommu_v2) {
-@@ -2189,9 +2191,7 @@ static int amd_iommu_add_device(struct device *dev)
+-	dev_data = get_dev_data(dev);
++	iommu_completion_wait(iommu);
+ 
+-	BUG_ON(!dev_data);
++	return iommu_dev;
++}
+ 
+-	if (dev_data->iommu_v2)
+-		iommu_request_dm_for_dev(dev);
++static void amd_iommu_probe_finalize(struct device *dev)
++{
++	struct iommu_domain *domain;
  
  	/* Domains are initialized for this device - have a look what we ended up with */
  	domain = iommu_get_domain_for_dev(dev);
--	if (domain->type == IOMMU_DOMAIN_IDENTITY)
--		dev_data->passthrough = true;
--	else if (domain->type == IOMMU_DOMAIN_DMA)
-+	if (domain->type == IOMMU_DOMAIN_DMA)
+ 	if (domain->type == IOMMU_DOMAIN_DMA)
  		iommu_setup_dma_ops(dev, IOVA_START_PFN << PAGE_SHIFT, 0);
+-
+-out:
+-	iommu_completion_wait(iommu);
+-
+-	return 0;
+ }
  
- out:
-diff --git a/drivers/iommu/amd_iommu_types.h b/drivers/iommu/amd_iommu_types.h
-index ca8c4522045b..d0d7b6a0c3d8 100644
---- a/drivers/iommu/amd_iommu_types.h
-+++ b/drivers/iommu/amd_iommu_types.h
-@@ -640,7 +640,6 @@ struct iommu_dev_data {
- 	struct pci_dev *pdev;
- 	u16 devid;			  /* PCI Device ID */
- 	bool iommu_v2;			  /* Device can make use of IOMMUv2 */
--	bool passthrough;		  /* Device is identity mapped */
- 	struct {
- 		bool enabled;
- 		int qdep;
+-static void amd_iommu_remove_device(struct device *dev)
++static void amd_iommu_release_device(struct device *dev)
+ {
+ 	struct amd_iommu *iommu;
+ 	int devid;
+@@ -2214,7 +2186,7 @@ static void amd_iommu_remove_device(struct device *dev)
+ 
+ 	iommu = amd_iommu_rlookup_table[devid];
+ 
+-	iommu_uninit_device(dev);
++	amd_iommu_uninit_device(dev);
+ 	iommu_completion_wait(iommu);
+ }
+ 
+@@ -2687,8 +2659,9 @@ const struct iommu_ops amd_iommu_ops = {
+ 	.map = amd_iommu_map,
+ 	.unmap = amd_iommu_unmap,
+ 	.iova_to_phys = amd_iommu_iova_to_phys,
+-	.add_device = amd_iommu_add_device,
+-	.remove_device = amd_iommu_remove_device,
++	.probe_device = amd_iommu_probe_device,
++	.release_device = amd_iommu_release_device,
++	.probe_finalize = amd_iommu_probe_finalize,
+ 	.device_group = amd_iommu_device_group,
+ 	.domain_get_attr = amd_iommu_domain_get_attr,
+ 	.get_resv_regions = amd_iommu_get_resv_regions,
 -- 
 2.17.1
 
