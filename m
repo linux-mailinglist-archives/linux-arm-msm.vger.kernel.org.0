@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BDA01BD689
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 09:50:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 907C71BD695
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 09:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726423AbgD2HuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 03:50:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55344 "EHLO
+        id S1726742AbgD2Hvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 03:51:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726175AbgD2HuP (ORCPT
+        by vger.kernel.org with ESMTP id S1726355AbgD2Hvy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 03:50:15 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BE93C03C1AD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 00:50:15 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id g13so1256759wrb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 00:50:15 -0700 (PDT)
+        Wed, 29 Apr 2020 03:51:54 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E11E1C03C1AD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 00:51:52 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id k13so1271888wrw.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 00:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=zK0JgSazAWJ2DYzIpBrk5SuXGsVgafJjJrHjjjF4QEI=;
-        b=q8hFA/yZXii6r1TMX0TgCgORl7m1G8odWD97j7WJHg+WZga+OmVbxDM3y4VZAQNEZA
-         wfY9AqyYrsmt3fxW531SYmzJijAbLfW5WXcX5e+UAVSWtljgwWUjVFVlfGIAXUQh02RP
-         FjKuW1LNfl0fJ/QpL7Jfe3CxGVJHJaV9pQ20mr8nDfjVCq5vrQOGye2XUwFWbWKqCqrU
-         7btV9uhmQ0h7QDmHVWXcF8qVaJRXeKZp2aLPEqRhT2JgjWya6glR404kfjD447gBpEMO
-         3OUL0jLvRDTctKhknf/TnsAc/KoEKLEG6lfQrLRfowjQcPdLxOWQOIp0G7e2FEEQUntw
-         NWVg==
+        bh=8NAhf7wha4yR/lg0VT+G0SzgLMFOPbSrGi3bE5Wim2g=;
+        b=d/Ii+ZFlUySfg0HKB+mMYqzshV8MMo6a7kwmUKLNV8hgk8fn3z3cHLth9nNldwRD9z
+         1IFZD0sFF4nqQAvBzKU3olJoII8FqAj3/SCP1Yjs1RBg0ivZeLp1bOvrvbSP+kFF1ORS
+         Ah6do+KsqJhoVSvXy6JvXLncytXc36bD/DqPWLYUc9fqz6cL23ZzU0Gej7LGZQrfHd19
+         eCm1/i5wucHTIwEh5gp6xMRTv6AS0GhO/AKKDcNew+LMlhXBFQLHWjwjK7Nm2LcdKd9C
+         cbW+dU9cS+Jx0GrJFsfsKMRBniopka1ovM5sYL9W9vYs7yiL2DssyY+cK3lFZ3jQifCU
+         6xfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=zK0JgSazAWJ2DYzIpBrk5SuXGsVgafJjJrHjjjF4QEI=;
-        b=Axick15wXQlpf4ldP1/zIxwPKvpHMKOmbnbospM5PULTK8iMoAn+RQB50teaiS79QH
-         b2txaj3DOGtss2omxSVNbFCTTcQhGaMNMGBOx5NDTKL26cy6VbMYzauxda15yba42pwp
-         BF3rYnkwNPX2G7Z/YnoYHWb90SS/zaedweTll7uNEbFbvvyxeL9KS+QwwqRYMNbIbkLA
-         uBH1ecihxhfdqp9CmNDYnR8t3SGDZ34PVm8RhI9nnYkkTzvdIURzhtRsy8iJIGnYMHhL
-         JbK3hgXKhZycnX8Gf7xtSa0ScpiQvvQDPGSb8Qer/vZ7VLrJU0zZ61AFEnQyHP0VBrBH
-         VZJA==
-X-Gm-Message-State: AGi0PuY6/IIKM2x8bj3rR5vfetK5sCZ4ojkIMIfAPiEx9BUBeQ2ty8pZ
-        ivsZdN2yby4mwOuJ94dYCHjAAQ==
-X-Google-Smtp-Source: APiQypLM3lN3rGdfSMrJGzuhpRRPiDBdyd3CgLxNoIeBVXjlM1CuGYLMJlf+uDFnYw5bbKjL1Kjhog==
-X-Received: by 2002:a5d:480b:: with SMTP id l11mr40964935wrq.25.1588146613874;
-        Wed, 29 Apr 2020 00:50:13 -0700 (PDT)
+        bh=8NAhf7wha4yR/lg0VT+G0SzgLMFOPbSrGi3bE5Wim2g=;
+        b=uXEcZ+aQodvmsUsqA8cZ+qPWqoi3ePLs22775jsTCzif5Pfc4YYcyzVX28GG2hcg0q
+         i0Y0uNz/xtJnQ51ZKoIhPslSH3IN+o3MOupOIHpfpinbjg150aZ/DJYZBuaSaSK7BZ/Z
+         KPcgGIKzC8xa+//fkcRaeupnQ9azCLj3mreFu/2wY3+XvUGT2OQmnchEo5lgQ5oAyvD4
+         5IUahd0B+MxGOhz+qgCFu/BRhQ+BUprdPQVL1vAK3YZqKB45rUGvcjUjmIZwEoJaBvkd
+         TmbSakOEibDGFMiiumcFHXhjqQ8V/6zdRhi0paeA82FgrJTIbhvO2Q+drdn3Awdo4+cB
+         LgsA==
+X-Gm-Message-State: AGi0Puav2Y5zxrgA0ZwgvDwmdNHyQPvqCHTCT3nTwDH6aTVjYv/46P4S
+        V6GGa+SZ7zURhDj3zxLq/qhCYg==
+X-Google-Smtp-Source: APiQypLvKWerLf6aM+oCmGHp/RU0pCRKiU8F1cNGbeTwLdfGm3WpiRrx6/fGPPua6nb5JnAaoY4lTg==
+X-Received: by 2002:a05:6000:14c:: with SMTP id r12mr36326058wrx.62.1588146711629;
+        Wed, 29 Apr 2020 00:51:51 -0700 (PDT)
 Received: from dell ([2.31.163.63])
-        by smtp.gmail.com with ESMTPSA id u188sm6727365wmg.37.2020.04.29.00.50.12
+        by smtp.gmail.com with ESMTPSA id q8sm6463797wmg.22.2020.04.29.00.51.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 00:50:12 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 08:50:10 +0100
+        Wed, 29 Apr 2020 00:51:51 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 08:51:49 +0100
 From:   Lee Jones <lee.jones@linaro.org>
 To:     Guru Das Srinagesh <gurus@codeaurora.org>
 Cc:     devicetree@vger.kernel.org,
@@ -58,15 +58,15 @@ Cc:     devicetree@vger.kernel.org,
         Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
         David Collins <collinsd@codeaurora.org>,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 2/2] mfd: Introduce QTI I2C PMIC controller
-Message-ID: <20200429075010.GX3559@dell>
+Subject: Re: [PATCH v1 1/2] dt-bindings: mfd: Document QTI I2C PMIC controller
+Message-ID: <20200429075149.GY3559@dell>
 References: <cover.1588115326.git.gurus@codeaurora.org>
- <5644dea146f8b49a5b827c56392ff916bfb343e9.1588115326.git.gurus@codeaurora.org>
+ <0960b5d17013124d9bbdbe7f28374b3d6c9c026e.1588115326.git.gurus@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5644dea146f8b49a5b827c56392ff916bfb343e9.1588115326.git.gurus@codeaurora.org>
+In-Reply-To: <0960b5d17013124d9bbdbe7f28374b3d6c9c026e.1588115326.git.gurus@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -86,127 +86,111 @@ On Tue, 28 Apr 2020, Guru Das Srinagesh wrote:
 > interrupts were triggered.  Finally, it calls the interrupt handlers for
 > each of the virtual interrupts that were registered.
 > 
-> Nicholas Troast is the original author of this driver.
-> 
 > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
 > ---
->  drivers/mfd/Kconfig         |  11 +
->  drivers/mfd/Makefile        |   1 +
->  drivers/mfd/qcom-i2c-pmic.c | 737 ++++++++++++++++++++++++++++++++++++++++++++
-
-The vast majority of this driver deals with IRQ handling.  Why can't
-this be split out into its own IRQ Chip driver and moved to
-drivers/irqchip?
-
->  3 files changed, 749 insertions(+)
->  create mode 100644 drivers/mfd/qcom-i2c-pmic.c
-
-> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-> index 54b6aa4..bf112eb 100644
-> --- a/drivers/mfd/Kconfig
-> +++ b/drivers/mfd/Kconfig
-> @@ -1002,6 +1002,17 @@ config MFD_PM8XXX
->  	  Say M here if you want to include support for PM8xxx chips as a
->  	  module. This will build a module called "pm8xxx-core".
->  
-> +config MFD_I2C_PMIC
-
-Too generic.  This should identify the vendor too.
-
-> +	tristate "QTI I2C PMIC support"
-
-Why aren't you using QCOM?
-
-Actually, this should be expanded here anyway.
-
-> +	depends on I2C && OF
-> +	select IRQ_DOMAIN
-> +	select REGMAP_I2C
-> +	help
-> +	  This enables support for controlling Qualcomm Technologies, Inc.
-> +	  PMICs over I2C. The driver controls interrupts, and provides register
-> +	  access for all of the device's peripherals.  Some QTI PMIC chips
-> +	  support communication over both I2C and SPMI.
-> +
->  config MFD_QCOM_RPM
->  	tristate "Qualcomm Resource Power Manager (RPM)"
->  	depends on ARCH_QCOM && OF
-> diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
-> index 7761f84..26f0b80 100644
-> --- a/drivers/mfd/Makefile
-> +++ b/drivers/mfd/Makefile
-> @@ -199,6 +199,7 @@ obj-$(CONFIG_MFD_SI476X_CORE)	+= si476x-core.o
->  obj-$(CONFIG_MFD_CS5535)	+= cs5535-mfd.o
->  obj-$(CONFIG_MFD_OMAP_USB_HOST)	+= omap-usb-host.o omap-usb-tll.o
->  obj-$(CONFIG_MFD_PM8XXX) 	+= qcom-pm8xxx.o ssbi.o
-> +obj-$(CONFIG_MFD_I2C_PMIC)     += qcom-i2c-pmic.o
->  obj-$(CONFIG_MFD_QCOM_RPM)	+= qcom_rpm.o
->  obj-$(CONFIG_MFD_SPMI_PMIC)	+= qcom-spmi-pmic.o
->  obj-$(CONFIG_TPS65911_COMPARATOR)	+= tps65911-comparator.o
-> diff --git a/drivers/mfd/qcom-i2c-pmic.c b/drivers/mfd/qcom-i2c-pmic.c
+> Changes from v0:
+> - Fixed "FATAL ERROR: Unable to parse input tree" error thrown by `make
+>   dt_binding_check`.
+> 
+>  .../devicetree/bindings/mfd/qcom,i2c-pmic.yaml     | 86 ++++++++++++++++++++++
+>  1 file changed, 86 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml
 > new file mode 100644
-> index 0000000..d0f600a
+> index 0000000..42482af
 > --- /dev/null
-> +++ b/drivers/mfd/qcom-i2c-pmic.c
-> @@ -0,0 +1,737 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
-
-This is very out of date.
-
-> + */
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml
+> @@ -0,0 +1,86 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/qcom,i2c-pmic.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +#define pr_fmt(fmt) "I2C PMIC: %s: " fmt, __func__
-
-Please don't role your own debug helpers.
-
-The ones the kernel provides are suitably proficient.
-
-> +#include <linux/bitops.h>
-> +#include <linux/i2c.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/irq.h>
-> +#include <linux/irqdomain.h>
-> +#include <linux/module.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/pinctrl/consumer.h>
-> +#include <linux/regmap.h>
-> +#include <linux/slab.h>
+> +title: Qualcomm Technologies, Inc. I2C PMIC Interrupt Controller Platform Independent Bindings
 > +
-> +#define I2C_INTR_STATUS_BASE	0x0550
-> +#define INT_RT_STS_OFFSET	0x10
-> +#define INT_SET_TYPE_OFFSET	0x11
-> +#define INT_POL_HIGH_OFFSET	0x12
-> +#define INT_POL_LOW_OFFSET	0x13
-> +#define INT_LATCHED_CLR_OFFSET	0x14
-> +#define INT_EN_SET_OFFSET	0x15
-> +#define INT_EN_CLR_OFFSET	0x16
-> +#define INT_LATCHED_STS_OFFSET	0x18
-> +#define INT_PENDING_STS_OFFSET	0x19
-> +#define INT_MID_SEL_OFFSET	0x1A
-> +#define INT_MID_SEL_MASK	GENMASK(1, 0)
-> +#define INT_PRIORITY_OFFSET	0x1B
-> +#define INT_PRIORITY_BIT	BIT(0)
+> +description: |
+> +  The I2C PMIC Controller is used by multi-function PMIC devices which
+> +  communicate over the I2C bus. An I2C PMIC controller node typically contains
+> +  one or more child nodes representing the device's peripherals. Each of the
+> +  peripherals typically has its own driver on the platform bus and will be
+> +  enumerated by this controller. The controller exposes a regmap to the
+> +  peripherals to communicate over the I2C bus.
 > +
-> +enum {
-> +	IRQ_SET_TYPE = 0,
-> +	IRQ_POL_HIGH,
-> +	IRQ_POL_LOW,
-> +	IRQ_LATCHED_CLR, /* not needed but makes life easy */
+> +  The controller also controls interrupts for all of the peripherals on the
+> +  bus. The controller takes a summary interrupt, deciphers which peripheral
+> +  triggered the interrupt, and which of the peripheral's interrupts were
+> +  triggered. Finally, it calls the handlers for each of the virtual interrupts
+> +  that were registered.
+> +
+> +  This document describes the common platform independent bindings that apply
+> +  to all I2C PMIC interrupt controllers.
+> +
+> +maintainers:
+> +  - Guru Das Srinagesh <gurus@codeaurora.org>
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,i2c-pmic
+> +
+> +  reg:
+> +    description: 7-bit I2C address of the device.
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    description: Summary interrupt specifier.
+> +
+> +  interrupt-controller:
+> +    description: Flag indicating that this device is an interrupt controller.
+> +
+> +  "#interrupt-cells":
+> +    description: Number of cells to encode an interrupt source.
+> +
+> +  qcom,periph-map:
+> +    description: |
+> +      A contiguous list of u32 arrays where each element specifies the base
+> +      address of a single peripheral within the chip. This provides a mapping
+> +      between the summary status register bits and peripheral addresses as each
+> +      bit in the summary status register represents a peripheral.
+> +
+> +      The number of arrays should match the number of summary registers with up
+> +      to 8 elements each. Within each array, One element per bit of the summary
+> +      status register in order from the least sigificant bit to the most
+> +      significant bit.
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +
+> +  pinctrl-names:
+> +    const: default
+> +
+> +  pinctrl-0:
+> +    description: phandle of the pin configuration.
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +examples:
+> +  - |
+> +    qcom,smb138x@8 {
+> +      compatible = "qcom,i2c-pmic";
+> +      reg = <0x8>;
+> +      interrupt-parent = <&tlmm_pinmux>;
+> +      interrupts = <83 0>;
+> +      interrupt-controller;
+> +      #interrupt-cells = <3>;
+> +      pinctrl-names = "default";
+> +      pinctrl-0 = <&smb_stat_active>;
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +      qcom,periph-map = <0x10 0x11 0x12 0x13 0x14 0x16 0x36>;
 
-"Not"
+Please provide examples of this device's children.
 
-It doesn't matter if the value is not used.
-
-I think you can drop the comment.
-
-> +	IRQ_EN_SET,
-> +	IRQ_MAX_REGS,
-> +};
-
-Going to stop here for a second, as the vast majority of the remainder
-of the driver appears to surround IRQ management.
+> +    };
+> +
+> +...
 
 -- 
 Lee Jones [李琼斯]
