@@ -2,199 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 569511BE21D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 17:10:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89E191BE2BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 17:30:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726519AbgD2PKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 11:10:51 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:22108 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726516AbgD2PKv (ORCPT
+        id S1726949AbgD2Pac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 11:30:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726493AbgD2Pac (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 11:10:51 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588173050; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Uj1kdH+1z3EYbeBHEefFEkAH70TKfLMeVJuy+wrtzT4=; b=eNFuYJ9bIB4pGP2I1ZJozdsOLO6RWDBXiVl92lEaA6NmDpfPRZHHm0wu+ORUODMTpH/zocPj
- pKOMlZDZS05nBhxwzS+X5ndBboB6gRF7jpjEN3Z6IWhD8UtqDWrqIFDrqEAxisYFLSMr8kZ4
- RjipNsHILHU6Im0ImCeOKjexIfo=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea998f9.7f1b79ee56c0-smtp-out-n04;
- Wed, 29 Apr 2020 15:10:49 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A277DC433BA; Wed, 29 Apr 2020 15:10:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.131.182.194] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F1CE6C433CB;
-        Wed, 29 Apr 2020 15:10:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F1CE6C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 12/17] media: venus: core: Add support for opp
- tables/perf voting
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        viresh.kumar@linaro.org, sboyd@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        linux-media@vger.kernel.org
-References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
- <1588080785-6812-13-git-send-email-rnayak@codeaurora.org>
- <b091dc29-d2e8-ed3f-fe1c-ae60e16d5d78@linaro.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <425a8828-be17-fe79-99f5-9e20eff51b13@codeaurora.org>
-Date:   Wed, 29 Apr 2020 20:40:42 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Wed, 29 Apr 2020 11:30:32 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C10CC03C1AD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 08:30:31 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id u16so2493252wmc.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 08:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N9yPL5U8quFESl4Stw3OsG4QqTTqIkWJu59ukHEiK9k=;
+        b=whxuS1tBIOGCXGKR4D9txfj0YrmvLOppPzKf133Orw2xrDFaxNC2NVAj2Yxms3Btjw
+         NHvTheC/ne7068Zqc8rsMg+2BAga/XkLIMao16bcGyxemQ9q9tPqOjHk0EluqowWkXKP
+         rm2JZAmN0vdwbkYiYGVNeiyAnsrCfqjEdvzEutsmoYC9XAyQMi2c6PjQHLansB11bjyF
+         bAUz0LQ+Eq99vqYrtX7aMn19G5+Vdwv7XDOACYvKaODSQs9rSt0XJ86Th9EXer1tOHDZ
+         ZX6Bc45zaPh7n7Ra92xD31RtoqDp7AyFTEGH76JSzCHwW70/ZSoSvsFSSJUMHHiKJ0T5
+         Qbkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N9yPL5U8quFESl4Stw3OsG4QqTTqIkWJu59ukHEiK9k=;
+        b=bGk8GJylfjIQPk5+ZBPS5ATr1EPDrUw+iUGLHGHskub88lo/OJjAk19PVoLoNP+phs
+         3KkidU0vemPoyANsCso5Jyb+Q62ux6QJCsOsZ2rzaUEl6ds4J16yMgTjINfTTrz5D7Xu
+         3Kjnu8gIQqn1T3lmkcjh5PxuIDVv7DnUBhcelQ9KqA9L/Pzg2yJTwOlvQ/87a2lSY9Zr
+         +Qe0Ano3SzVvFxC/8X693BMzf1vl/QuWcdaVA/NUaR4yt94VeEjC/PzGfx1VvHv98oej
+         fUiWLqExGeH7qfpa2xMRic81sc/s9cgQYxkIRj5HJyC8o23EoHIhhhmdYG1SOalK8ilP
+         +xWw==
+X-Gm-Message-State: AGi0PuZuqLYp43EjTiqHjQ/DWO2+I9QwayJKy91yyuo5tZ5oXuGcWLxR
+        mbelyVFC2Wo22/eeSQzkZJstiQ==
+X-Google-Smtp-Source: APiQypI9ooSvKXGzfgE7VydIt8jFs20yFTtVFE5oUkIKvGGCN0t6yST0jxtjPo1HsMTn0kxs9wv4CQ==
+X-Received: by 2002:a05:600c:2314:: with SMTP id 20mr4090739wmo.118.1588174200388;
+        Wed, 29 Apr 2020 08:30:00 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.gmail.com with ESMTPSA id l5sm7923729wmi.22.2020.04.29.08.29.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2020 08:29:59 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        arnd@arndb.de, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] misc: fastrpc: fix memory leak
+Date:   Wed, 29 Apr 2020 16:29:51 +0100
+Message-Id: <20200429152951.18504-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-In-Reply-To: <b091dc29-d2e8-ed3f-fe1c-ae60e16d5d78@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Stan,
+if misc_register() fails, previously allocated data is left without freeing,
+this could result in memory leak.
 
-On 4/29/2020 8:06 PM, Stanimir Varbanov wrote:
-> Hi Rajendra,
-> 
-> Thanks for the patch!
-> 
-[]..
+So fix it!
 
->>   #include <linux/pm_runtime.h>
->>   #include <media/videobuf2-v4l2.h>
->>   #include <media/v4l2-mem2mem.h>
->> @@ -214,6 +215,20 @@ static int venus_probe(struct platform_device *pdev)
->>   	if (!core->pm_ops)
->>   		return -ENODEV;
->>   
->> +	core->opp_table = dev_pm_opp_set_clkname(dev, "core");
-> 
-> Should we set opp clkname if opp_of_add_table fails? We have platforms
-> which don't have opp tables in Venus DT node. We have to be backward
-> compatible for them.
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+ drivers/misc/fastrpc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-so the way its designed, you are expected to call dev_pm_opp_set_clkname()
-*before* adding any OPPs from the OPP table.
-As for backward compatibility its already handled by the OPP core now [1]
-which makes sure dev_pm_opp_set_rate() is equivalent to a clk_set_rate()
-in case of a missing OPP table.
-
->> +	if (IS_ERR(core->opp_table))
->> +		return PTR_ERR(core->opp_table);
->> +
->> +	if (core->res->opp_pmdomain) {
->> +		ret = dev_pm_opp_of_add_table(dev);
->> +		if (!ret) {
->> +			core->has_opp_table = true;
->> +		} else if (ret != -ENODEV) {
-> 
-> Is it possible dev_pm_opp_of_add_table() to return EPROBE_DEFER?
-
-Nope, it does not, I had checked.
-
->> +			dev_err(dev, "Invalid OPP table in Device tree\n");
-> 
-> ... if so, please drop dev_err.
-> 
->> +			return ret;
->> +		}
->> +	}
-[]..
-
->> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->> @@ -9,6 +9,7 @@
->>   #include <linux/iopoll.h>
->>   #include <linux/kernel.h>
->>   #include <linux/pm_domain.h>
->> +#include <linux/pm_opp.h>
->>   #include <linux/pm_runtime.h>
->>   #include <linux/types.h>
->>   #include <media/v4l2-mem2mem.h>
->> @@ -66,10 +67,9 @@ static void core_clks_disable(struct venus_core *core)
->>   
->>   static int core_clks_set_rate(struct venus_core *core, unsigned long freq)
->>   {
->> -	struct clk *clk = core->clks[0];
->>   	int ret;
->>   
->> -	ret = clk_set_rate(clk, freq);
->> +	ret = dev_pm_opp_set_rate(core->dev, freq);
-> 
-> Is this will work for legacy platforms without OPP tables?
-
-yes, see [1] which is already merged in mainline.
-
-> 
-> Also what about the other clocks (vicodec0,1) in this function.
-
-We continue to use clk_set_rate() for those. The performance state
-is associated with only the core clk.
-
->>   	if (ret)
->>   		return ret;
->>   
->> @@ -740,13 +740,15 @@ static int venc_power_v4(struct device *dev, int on)
->>   
->>   static int vcodec_domains_get(struct device *dev)
->>   {
->> +	struct opp_table *opp_table;
->> +	struct device **opp_virt_dev;
->>   	struct venus_core *core = dev_get_drvdata(dev);
->>   	const struct venus_resources *res = core->res;
->>   	struct device *pd;
->>   	unsigned int i;
->>   
->>   	if (!res->vcodec_pmdomains_num)
->> -		return -ENODEV;
->> +		goto skip_pmdomains;
->>   
->>   	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
->>   		pd = dev_pm_domain_attach_by_name(dev,
->> @@ -763,6 +765,24 @@ static int vcodec_domains_get(struct device *dev)
->>   	if (!core->pd_dl_venus)
->>   		return -ENODEV;
->>   
->> +skip_pmdomains:
->> +	if (!res->opp_pmdomain || !core->has_opp_table)
->> +		return 0;
->> +
->> +	/* Attach the power domain for setting performance state */
->> +	opp_table = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
->> +	if (IS_ERR(opp_table)) {
->> +		return PTR_ERR(opp_table);
->> +	} else if (opp_virt_dev) {
->> +		core->opp_pmdomain = *opp_virt_dev;
->> +		core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
->> +						     DL_FLAG_RPM_ACTIVE |
->> +						     DL_FLAG_PM_RUNTIME |
->> +						     DL_FLAG_STATELESS);
->> +		if (!core->opp_dl_venus)
->> +			return -ENODEV;
-> 
-> I think as you return ENODEV you have to detach opp domain here because
-> vcodec_domains_put() is not called in error path.
-
-Ok, I'll fix that up.
-
-Thanks for the review.
-
-[1] https://lkml.org/lkml/2020/4/8/413
-
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index e3e085e33d46..9065d3e71ff7 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1613,8 +1613,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 					    domains[domain_id]);
+ 	data->miscdev.fops = &fastrpc_fops;
+ 	err = misc_register(&data->miscdev);
+-	if (err)
++	if (err) {
++		kfree(data);
+ 		return err;
++	}
+ 
+ 	kref_init(&data->refcount);
+ 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.21.0
+
