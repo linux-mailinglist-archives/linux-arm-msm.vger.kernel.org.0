@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E41691BE0A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 16:19:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D43F51BE0AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 16:21:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727073AbgD2OTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 10:19:39 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:34750 "EHLO
+        id S1727062AbgD2OVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 10:21:18 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:15217 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726669AbgD2OTi (ORCPT
+        by vger.kernel.org with ESMTP id S1726776AbgD2OVR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 10:19:38 -0400
+        Wed, 29 Apr 2020 10:21:17 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588169978; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1588170077; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=GcOuy4s4nR7NMD9G7PRsLt/9043GOxuP9x5bNai9Bc4=; b=haCyNMayNhx3steqj6tqXSMQK6mj9BrVbsd2Uu9snj1NssRPgOJ3kF3bJ77+1bdvh6LfM4nA
- jLtVr9U0RwhjdlYRFKqTc8JzYR/Qc0oDECnU2Bygtd6W9hM3TeM5QklSG80R36QYQSXD5vao
- fb/Q0/C77W/hKpPWFLqGydu3oP8=
+ Subject: Sender; bh=JKe1JfOxr0f9z7wtEyL/EQpt0pt2j2AM74fYD+ythHI=; b=ZrE9dzuodGObQY2OMcM6kqAeCtbdKbVQj907I860rpPR2TNwl6UaH4JtdEXgJrL0aKM8qyWq
+ REO9WjXT14m1GIHEe5kXtfPBcHBmqbOBRaVm03LIJjeTtJmYJ9mxc6JimX7XfsloP9Wrl5Ni
+ wTin9QcQpOWqqXEwI7N6H9i5glw=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ea98cf9.7f82d4b96a08-smtp-out-n05;
- Wed, 29 Apr 2020 14:19:37 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ea98d55.7fe604e8e500-smtp-out-n05;
+ Wed, 29 Apr 2020 14:21:09 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E3619C433BA; Wed, 29 Apr 2020 14:19:36 +0000 (UTC)
+        id F22CEC433D2; Wed, 29 Apr 2020 14:21:08 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,30 +34,31 @@ Received: from [10.131.182.194] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualco
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 665E7C433CB;
-        Wed, 29 Apr 2020 14:19:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 665E7C433CB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E48ABC433CB;
+        Wed, 29 Apr 2020 14:21:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E48ABC433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 12/17] media: venus: core: Add support for opp
- tables/perf voting
+Subject: Re: [PATCH v3 15/17] spi: spi-qcom-qspi: Use OPP API to set clk/perf
+ state
 To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
         bjorn.andersson@linaro.org, agross@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org
+        linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-spi@vger.kernel.org
 References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
- <1588080785-6812-13-git-send-email-rnayak@codeaurora.org>
- <20200429003907.GN4525@google.com>
+ <1588080785-6812-16-git-send-email-rnayak@codeaurora.org>
+ <20200429004945.GP4525@google.com>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <6e37f0b5-a9b3-7b62-96f9-6bd8f1594fa6@codeaurora.org>
-Date:   Wed, 29 Apr 2020 19:49:30 +0530
+Message-ID: <a0722696-bc66-3841-0ab1-0108b4f33d9f@codeaurora.org>
+Date:   Wed, 29 Apr 2020 19:51:02 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20200429003907.GN4525@google.com>
+In-Reply-To: <20200429004945.GP4525@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -67,79 +68,74 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 4/29/2020 6:09 AM, Matthias Kaehlcke wrote:
-> On Tue, Apr 28, 2020 at 07:03:00PM +0530, Rajendra Nayak wrote:
->> Add support to add OPP tables and perf voting on the OPP powerdomain.
->> This is needed so venus votes on the corresponding performance state
->> for the OPP powerdomain along with setting the core clock rate.
+On 4/29/2020 6:19 AM, Matthias Kaehlcke wrote:
+> Hi,
+> 
+> On Tue, Apr 28, 2020 at 07:03:03PM +0530, Rajendra Nayak wrote:
+>> QSPI needs to vote on a performance state of a power domain depending on
+>> the clock rate. Add support for it by specifying the perf state/clock rate
+>> as an OPP table in device tree.
 >>
 >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> Cc: linux-media@vger.kernel.org
+>> Cc: Mark Brown <broonie@kernel.org>
+>> Cc: Alok Chauhan <alokc@codeaurora.org>
+>> Cc: Akash Asthana <akashast@codeaurora.org>
+>> Cc: linux-spi@vger.kernel.org
 >> ---
->>   drivers/media/platform/qcom/venus/core.c       | 28 +++++++++++++++++++
->>   drivers/media/platform/qcom/venus/core.h       |  5 ++++
->>   drivers/media/platform/qcom/venus/pm_helpers.c | 37 +++++++++++++++++++++++---
->>   3 files changed, 66 insertions(+), 4 deletions(-)
+>>   drivers/spi/spi-qcom-qspi.c | 29 ++++++++++++++++++++++++++++-
+>>   1 file changed, 28 insertions(+), 1 deletion(-)
 >>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 194b10b9..e98fea92 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -12,6 +12,7 @@
->>   #include <linux/platform_device.h>
->>   #include <linux/slab.h>
->>   #include <linux/types.h>
->> +#include <linux/pm_opp.h>
+>> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+>> index 3c4f83b..724a658 100644
+>> --- a/drivers/spi/spi-qcom-qspi.c
+>> +++ b/drivers/spi/spi-qcom-qspi.c
+>> @@ -8,6 +8,7 @@
+>>   #include <linux/of.h>
+>>   #include <linux/of_platform.h>
 >>   #include <linux/pm_runtime.h>
->>   #include <media/videobuf2-v4l2.h>
->>   #include <media/v4l2-mem2mem.h>
->> @@ -214,6 +215,20 @@ static int venus_probe(struct platform_device *pdev)
->>   	if (!core->pm_ops)
->>   		return -ENODEV;
+>> +#include <linux/pm_opp.h>
+>>   #include <linux/spi/spi.h>
+>>   #include <linux/spi/spi-mem.h>
 >>   
->> +	core->opp_table = dev_pm_opp_set_clkname(dev, "core");
->> +	if (IS_ERR(core->opp_table))
->> +		return PTR_ERR(core->opp_table);
->> +
->> +	if (core->res->opp_pmdomain) {
->> +		ret = dev_pm_opp_of_add_table(dev);
->> +		if (!ret) {
->> +			core->has_opp_table = true;
->> +		} else if (ret != -ENODEV) {
->> +			dev_err(dev, "Invalid OPP table in Device tree\n");
->> +			return ret;
->> +		}
+>> @@ -139,6 +140,8 @@ struct qcom_qspi {
+>>   	struct device *dev;
+>>   	struct clk_bulk_data *clks;
+>>   	struct qspi_xfer xfer;
+>> +	struct opp_table *opp_table;
+>> +	bool has_opp_table;
+>>   	/* Lock to protect xfer and IRQ accessed registers */
+>>   	spinlock_t lock;
+>>   };
+>> @@ -235,7 +238,7 @@ static int qcom_qspi_transfer_one(struct spi_master *master,
+>>   		speed_hz = xfer->speed_hz;
+>>   
+>>   	/* In regular operation (SBL_EN=1) core must be 4x transfer clock */
+>> -	ret = clk_set_rate(ctrl->clks[QSPI_CLK_CORE].clk, speed_hz * 4);
+>> +	ret = dev_pm_opp_set_rate(ctrl->dev, speed_hz * 4);
+>>   	if (ret) {
+>>   		dev_err(ctrl->dev, "Failed to set core clk %d\n", ret);
+>>   		return ret;
+>> @@ -481,6 +484,20 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>>   	master->handle_err = qcom_qspi_handle_err;
+>>   	master->auto_runtime_pm = true;
+>>   
+>> +	ctrl->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
+>> +	if (IS_ERR(ctrl->opp_table)) {
+>> +		ret = PTR_ERR(ctrl->opp_table);
+>> +		goto exit_probe_master_put;
 >> +	}
->> +
->>   	if (core->pm_ops->core_get) {
->>   		ret = core->pm_ops->core_get(dev);
->>   		if (ret)
->> @@ -301,6 +316,9 @@ static int venus_probe(struct platform_device *pdev)
->>   err_venus_shutdown:
->>   	venus_shutdown(core);
->>   err_runtime_disable:
->> +	if (core->res->opp_pmdomain && core->has_opp_table)
+>> +	/* OPP table is optional */
+>> +	ret = dev_pm_opp_of_add_table(&pdev->dev);
+>> +	if (!ret) {
+>> +		ctrl->has_opp_table = true;
+>> +	} else if (ret != -ENODEV) {
+>> +		dev_err(&pdev->dev, "Invalid OPP table in Device tree\n");
+>> +		return ret;
 > 
-> the check for 'core->res->opp_pmdomain' is not needed, 'core->has_opp_table'
-> can only be true when 'core->res->opp_pmdomain' is not NULL.
+> 		goto exit_probe_master_put;
 
-ah, that's right, will fix. Thanks.
+thanks for catching this. will fix and respin.
 
-> 
->> +		dev_pm_opp_of_remove_table(dev);
->> +	dev_pm_opp_put_clkname(core->opp_table);
->>   	pm_runtime_set_suspended(dev);
->>   	pm_runtime_disable(dev);
->>   	hfi_destroy(core);
->> @@ -326,6 +344,10 @@ static int venus_remove(struct platform_device *pdev)
->>   
->>   	venus_firmware_deinit(core);
->>   
->> +	if (core->res->opp_pmdomain && core->has_opp_table)
-> 
-> ditto
-> 
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
