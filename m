@@ -2,198 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 907C71BD695
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 09:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 755B01BD7BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 10:58:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726742AbgD2Hvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 03:51:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726355AbgD2Hvy (ORCPT
+        id S1726523AbgD2I6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 04:58:02 -0400
+Received: from mout.kundenserver.de ([212.227.126.135]:39015 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726456AbgD2I6B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 03:51:54 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E11E1C03C1AD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 00:51:52 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id k13so1271888wrw.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 00:51:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=8NAhf7wha4yR/lg0VT+G0SzgLMFOPbSrGi3bE5Wim2g=;
-        b=d/Ii+ZFlUySfg0HKB+mMYqzshV8MMo6a7kwmUKLNV8hgk8fn3z3cHLth9nNldwRD9z
-         1IFZD0sFF4nqQAvBzKU3olJoII8FqAj3/SCP1Yjs1RBg0ivZeLp1bOvrvbSP+kFF1ORS
-         Ah6do+KsqJhoVSvXy6JvXLncytXc36bD/DqPWLYUc9fqz6cL23ZzU0Gej7LGZQrfHd19
-         eCm1/i5wucHTIwEh5gp6xMRTv6AS0GhO/AKKDcNew+LMlhXBFQLHWjwjK7Nm2LcdKd9C
-         cbW+dU9cS+Jx0GrJFsfsKMRBniopka1ovM5sYL9W9vYs7yiL2DssyY+cK3lFZ3jQifCU
-         6xfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=8NAhf7wha4yR/lg0VT+G0SzgLMFOPbSrGi3bE5Wim2g=;
-        b=uXEcZ+aQodvmsUsqA8cZ+qPWqoi3ePLs22775jsTCzif5Pfc4YYcyzVX28GG2hcg0q
-         i0Y0uNz/xtJnQ51ZKoIhPslSH3IN+o3MOupOIHpfpinbjg150aZ/DJYZBuaSaSK7BZ/Z
-         KPcgGIKzC8xa+//fkcRaeupnQ9azCLj3mreFu/2wY3+XvUGT2OQmnchEo5lgQ5oAyvD4
-         5IUahd0B+MxGOhz+qgCFu/BRhQ+BUprdPQVL1vAK3YZqKB45rUGvcjUjmIZwEoJaBvkd
-         TmbSakOEibDGFMiiumcFHXhjqQ8V/6zdRhi0paeA82FgrJTIbhvO2Q+drdn3Awdo4+cB
-         LgsA==
-X-Gm-Message-State: AGi0Puav2Y5zxrgA0ZwgvDwmdNHyQPvqCHTCT3nTwDH6aTVjYv/46P4S
-        V6GGa+SZ7zURhDj3zxLq/qhCYg==
-X-Google-Smtp-Source: APiQypLvKWerLf6aM+oCmGHp/RU0pCRKiU8F1cNGbeTwLdfGm3WpiRrx6/fGPPua6nb5JnAaoY4lTg==
-X-Received: by 2002:a05:6000:14c:: with SMTP id r12mr36326058wrx.62.1588146711629;
-        Wed, 29 Apr 2020 00:51:51 -0700 (PDT)
-Received: from dell ([2.31.163.63])
-        by smtp.gmail.com with ESMTPSA id q8sm6463797wmg.22.2020.04.29.00.51.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2020 00:51:51 -0700 (PDT)
-Date:   Wed, 29 Apr 2020 08:51:49 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Guru Das Srinagesh <gurus@codeaurora.org>
-Cc:     devicetree@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/2] dt-bindings: mfd: Document QTI I2C PMIC controller
-Message-ID: <20200429075149.GY3559@dell>
-References: <cover.1588115326.git.gurus@codeaurora.org>
- <0960b5d17013124d9bbdbe7f28374b3d6c9c026e.1588115326.git.gurus@codeaurora.org>
+        Wed, 29 Apr 2020 04:58:01 -0400
+Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.129]) with ESMTPA (Nemesis) id
+ 1MiaHf-1j0SBx0QsR-00feuR; Wed, 29 Apr 2020 10:57:54 +0200
+From:   Arnd Bergmann <arnd@arndb.de>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] firmware: qcom: avoid struct initialization warning on gcc-4.8
+Date:   Wed, 29 Apr 2020 10:57:33 +0200
+Message-Id: <20200429085753.3277336-1-arnd@arndb.de>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0960b5d17013124d9bbdbe7f28374b3d6c9c026e.1588115326.git.gurus@codeaurora.org>
+X-Provags-ID: V03:K1:7KaUn3buwEkNDHPN8X6Z266ISA0Wrs/iXj3zHng2xrxqK76pNcB
+ oEzcgAJc2fjFO/HseLdfFpWpwj4K0d3jxgMOzu9yaJ8QgB7visdfB1c68kc4ngwTg0GKFi6
+ cb+S5UhmOVicrFymvvLq6q864bdrUDIeDDo1Ij8mdpt9LkElYYh2me1H30cUcz7EdWcbg01
+ Qg82NUOXOI4UUvmygxaaQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ishH48B3DYY=:kehiV9oZ6JNSoXRx/i89+q
+ kIAQ/gyXGN7b8ZhY5/kudZWZEYitQBXqNapQ2e2KZX1xXKMEoVr4L4LBzXwnpkVZdopPft9jr
+ mhM+dpHhy0rjpTOyiG0X170s6/uXoKs7HZaV29A17+ZPe2yLuAcNrz0BxzADI4L3LMsanmNeT
+ LiXiQtIos0IVQ+YbRDy/PKiY42r0Srk3WFv3tM3YcDAWm1JMWBEqbPU6LzOT9zVuvV9RF3chi
+ XoQIeDqq2tK5uEECSbGDLh1vE9473QQSJO9/r+GhPS+g1VBB/oMtMWN42uE74bcg8MB40QgrL
+ ohNruHsI7EetCvNbMDt3O9d/TJ3j48GSpS9lhZoZpCwUeLF1gdcMBj6fjU+d/MY3sLZp6OXhF
+ HuzY/8LI1Fkydm3Q1u3m802V3wYOEsId2eEbGScGsIsxRkCoIfPNVc9on/fl2pEA/QTlJy1V/
+ YUaOMSXMONV54ZR9fU/dm26KxY1QiQMp/k6olqk4OwKiDD5LtF5N2nh2WBhclJBct5VVuxtKL
+ Hj272jnwmzSKhVd1MnuYuIRJ8//jKhAVg3piqWoJ4N/YkJ2umaj2wUaLVSZ3oYbdJBJyv0WPF
+ 4SjssakNmPAxMptGGgvL27jYhd5MuGx/fjjKLnQufOaLBa/5iI0MW7iASCBOIEghhhRtFmPh7
+ Wx0RuMfL1X5QnNaKxilxB/O5S8oGvgJ4SXROLvvNjr9RU8u4lKcWV+z1DXFiqObTRempvWYV+
+ gVxrB1pubHv2Hh8D0qcmQO/ZTcvdXtOvOluJOfBI1bLQ91vibp9K1cvOO4C1NS88U+Gh5jBcj
+ A39HVtW+aMXuXmq2R5oMYpi2eIvVKT7tn1P4yc4571urbQtGio=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Apr 2020, Guru Das Srinagesh wrote:
+When building with old compilers like gcc-4.8, a struct initializer
+can warn about invalid syntax:
 
-> The Qualcomm Technologies, Inc. I2C PMIC Controller is used by
-> multi-function PMIC devices which communicate over the I2C bus.  The
-> controller enumerates all child nodes as platform devices, and
-> instantiates a regmap interface for them to communicate over the I2C
-> bus.
-> 
-> The controller also controls interrupts for all of the children platform
-> devices.  The controller handles the summary interrupt by deciphering
-> which peripheral triggered the interrupt, and which of the peripheral
-> interrupts were triggered.  Finally, it calls the interrupt handlers for
-> each of the virtual interrupts that were registered.
-> 
-> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> ---
-> Changes from v0:
-> - Fixed "FATAL ERROR: Unable to parse input tree" error thrown by `make
->   dt_binding_check`.
-> 
->  .../devicetree/bindings/mfd/qcom,i2c-pmic.yaml     | 86 ++++++++++++++++++++++
->  1 file changed, 86 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml
-> new file mode 100644
-> index 0000000..42482af
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,i2c-pmic.yaml
-> @@ -0,0 +1,86 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mfd/qcom,i2c-pmic.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. I2C PMIC Interrupt Controller Platform Independent Bindings
-> +
-> +description: |
-> +  The I2C PMIC Controller is used by multi-function PMIC devices which
-> +  communicate over the I2C bus. An I2C PMIC controller node typically contains
-> +  one or more child nodes representing the device's peripherals. Each of the
-> +  peripherals typically has its own driver on the platform bus and will be
-> +  enumerated by this controller. The controller exposes a regmap to the
-> +  peripherals to communicate over the I2C bus.
-> +
-> +  The controller also controls interrupts for all of the peripherals on the
-> +  bus. The controller takes a summary interrupt, deciphers which peripheral
-> +  triggered the interrupt, and which of the peripheral's interrupts were
-> +  triggered. Finally, it calls the handlers for each of the virtual interrupts
-> +  that were registered.
-> +
-> +  This document describes the common platform independent bindings that apply
-> +  to all I2C PMIC interrupt controllers.
-> +
-> +maintainers:
-> +  - Guru Das Srinagesh <gurus@codeaurora.org>
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,i2c-pmic
-> +
-> +  reg:
-> +    description: 7-bit I2C address of the device.
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    description: Summary interrupt specifier.
-> +
-> +  interrupt-controller:
-> +    description: Flag indicating that this device is an interrupt controller.
-> +
-> +  "#interrupt-cells":
-> +    description: Number of cells to encode an interrupt source.
-> +
-> +  qcom,periph-map:
-> +    description: |
-> +      A contiguous list of u32 arrays where each element specifies the base
-> +      address of a single peripheral within the chip. This provides a mapping
-> +      between the summary status register bits and peripheral addresses as each
-> +      bit in the summary status register represents a peripheral.
-> +
-> +      The number of arrays should match the number of summary registers with up
-> +      to 8 elements each. Within each array, One element per bit of the summary
-> +      status register in order from the least sigificant bit to the most
-> +      significant bit.
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +
-> +  pinctrl-names:
-> +    const: default
-> +
-> +  pinctrl-0:
-> +    description: phandle of the pin configuration.
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +examples:
-> +  - |
-> +    qcom,smb138x@8 {
-> +      compatible = "qcom,i2c-pmic";
-> +      reg = <0x8>;
-> +      interrupt-parent = <&tlmm_pinmux>;
-> +      interrupts = <83 0>;
-> +      interrupt-controller;
-> +      #interrupt-cells = <3>;
-> +      pinctrl-names = "default";
-> +      pinctrl-0 = <&smb_stat_active>;
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      qcom,periph-map = <0x10 0x11 0x12 0x13 0x14 0x16 0x36>;
+drivers/firmware/qcom_scm-smc.c: In function 'scm_smc_call':
+drivers/firmware/qcom_scm-smc.c:94:9: error: missing braces around initializer [-Werror=missing-braces]
+  struct arm_smccc_args smc = {0};
+         ^
+drivers/firmware/qcom_scm-smc.c:94:9: error: (near initialization for 'smc.args') [-Werror=missing-braces]
+cc1: some warnings being treated as errors
+drivers/firmware/qcom_scm-legacy.c: In function 'scm_legacy_call':
+drivers/firmware/qcom_scm-legacy.c:139:9: error: missing braces around initializer [-Werror=missing-braces]
+  struct arm_smccc_args smc = {0};
+         ^
+drivers/firmware/qcom_scm-legacy.c:139:9: error: (near initialization for 'smc.args') [-Werror=missing-braces]
 
-Please provide examples of this device's children.
+Change this to use the empty initializer extension that
+works with all compilers.
 
-> +    };
-> +
-> +...
+Fixes: 590e92809a58 ("firmware: qcom_scm-32: Move SMCCC register filling to qcom_scm_call")
+Fixes: 3f951ea627da ("firmware: qcom_scm-64: Move SMC register filling to qcom_scm_call_smccc")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/firmware/qcom_scm-legacy.c | 2 +-
+ drivers/firmware/qcom_scm-smc.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/firmware/qcom_scm-legacy.c b/drivers/firmware/qcom_scm-legacy.c
+index eba6b60bfb61..5aa15fcf01d9 100644
+--- a/drivers/firmware/qcom_scm-legacy.c
++++ b/drivers/firmware/qcom_scm-legacy.c
+@@ -136,7 +136,7 @@ int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+ 	unsigned int i;
+ 	struct scm_legacy_command *cmd;
+ 	struct scm_legacy_response *rsp;
+-	struct arm_smccc_args smc = {0};
++	struct arm_smccc_args smc = { };
+ 	struct arm_smccc_res smc_res;
+ 	const size_t cmd_len = arglen * sizeof(__le32);
+ 	const size_t resp_len = MAX_QCOM_SCM_RETS * sizeof(__le32);
+diff --git a/drivers/firmware/qcom_scm-smc.c b/drivers/firmware/qcom_scm-smc.c
+index 497c13ba98d6..81818ea74824 100644
+--- a/drivers/firmware/qcom_scm-smc.c
++++ b/drivers/firmware/qcom_scm-smc.c
+@@ -91,7 +91,7 @@ int scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+ 			(qcom_scm_convention == SMC_CONVENTION_ARM_32) ?
+ 			ARM_SMCCC_SMC_32 : ARM_SMCCC_SMC_64;
+ 	struct arm_smccc_res smc_res;
+-	struct arm_smccc_args smc = {0};
++	struct arm_smccc_args smc = { };
+ 
+ 	smc.args[0] = ARM_SMCCC_CALL_VAL(
+ 		smccc_call_type,
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.26.0
+
