@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FA1B1BE529
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 19:25:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D34FB1BE531
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 19:28:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726892AbgD2RZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 13:25:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60956 "EHLO
+        id S1726493AbgD2R2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 13:28:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726891AbgD2RZ5 (ORCPT
+        by vger.kernel.org with ESMTP id S1726530AbgD2R2U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 13:25:57 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E32DBC035493
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 10:25:56 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id e25so3498502ljg.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 10:25:56 -0700 (PDT)
+        Wed, 29 Apr 2020 13:28:20 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D11C035493
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 10:28:19 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id b24so1762899lfp.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 10:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aNxv6rQtebyNNMCF9fwKOf5NaXPv9WQ951LjP87jpV4=;
-        b=f/x12QLKwjCA9Qqv2F6euWmFVtbkLRcbzdbfbb58NNpcby04ma9Im4Lz9zVf1t1Vzo
-         FMCzTZ/0VZ1wqGyJ0saZCALw7AgylQXjKDGVrEToO5XadquQd4O1kTpnFkEE/f5WPPof
-         IOukIKVPV25IHATOAAYECOOhpgj+pKHmFKSO4=
+        bh=Gsj/DMCdq2iHsv9iEgXgXTTdBXXORDwu7caTzYP7OC0=;
+        b=BrwJd7jHAjw/ndKeVTDpR19v/ATSbqBb1x/5jMBcAmWWLYzhUU0mhqocbwlSjelc+/
+         TS+pjF4F06f6y7KRfVmNvULvilWng5nsq6/LOfIBTZVCduGAQDW9ErnXCy5dlYQxyN2C
+         yKfSS8+yRr3IK2V9SY0WJCnKvhNO8YUy30oGY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aNxv6rQtebyNNMCF9fwKOf5NaXPv9WQ951LjP87jpV4=;
-        b=c+wJazwxpkVSgYQZlwkg2prmlyMk4AwYO4ITolbsw6YOndjGSIbc5dB487s58YN+uY
-         yMCOqyzl+NtSfmxnrnLiFQllU8TABQzjzN1FtD8hM6yV0Mz2F7jKxAKIFsbBQWnsVb6o
-         EFBzQ3RG6lZdr0kpt7G9v09M+bwfmwvTVNjh7CZpo/JSkwT1oOEgCIm4UNYrTLfUE+kz
-         Hi3Nh+lTsrjMpNI0KB9I58ylAOu+62fAp3mzFtUwPLWhwNfWE6394NcKVL+8iG4aMMVi
-         hStG1+rQ7dOF3WI3PAhJfVvdpa1E6Y68dNeex2YZ/EAf5DbkPg7dsoS7jO+fGZYFcSUH
-         fNlA==
-X-Gm-Message-State: AGi0PubpCgE3nwnoLXNWdfBOvlWJEWu7ZEEhIZ3UNid+vu8BXmWpjzbS
-        +WXaC8yTz1jqT39JEZoFz99iEq6f9+Y=
-X-Google-Smtp-Source: APiQypKPi7y63U5s6BBVgL/Sa+vSdNbkPuAKoMkemgxfpOaAQLZ8IU7e4v1GdnWIul2abuKj46HviA==
-X-Received: by 2002:a2e:920f:: with SMTP id k15mr20145848ljg.131.1588181154796;
-        Wed, 29 Apr 2020 10:25:54 -0700 (PDT)
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com. [209.85.167.48])
-        by smtp.gmail.com with ESMTPSA id 130sm3092708lfo.42.2020.04.29.10.25.53
+        bh=Gsj/DMCdq2iHsv9iEgXgXTTdBXXORDwu7caTzYP7OC0=;
+        b=LaxyaMdZ3hQiruPtuwvQvKkGaYYAFEDR6hvp8ZYcDOqFFAQGWLzUjcwlCzod1SoZzY
+         XSXggEJCAnq9EYuhiUrxOoHinsnqHHYSGrytekPjei60tWoRycZGrKKyoonhR18+Zexs
+         /zuB61g2BNch7eNPa2IggiL0NzrM7UxjNuhOHw6qN7g26VKfJ0+YyWxsyZyNzE4xQzS4
+         Op/I8DtNrD5UI+PhObn+VXCuSTOm96Zg/y+7DBVbxqVkBBJBM3n5xjgqQ2eALuwxMrCR
+         c9ijYQDPgre02+GlJ0iRD6l2hmUIjeJCaPsOH5eZ+rQZQkt88l7DwI75c0vlKPrvOcfd
+         zfaQ==
+X-Gm-Message-State: AGi0PubjaUjNuFTrrckR5z2JUCYPtwuDeZMo54sY/1W+WoLz1/6di6t1
+        tl5078cWXqMt1xqHmiDAu4wDIeiTv5E=
+X-Google-Smtp-Source: APiQypL3OTfqeIaFwrF4lG59JqWVzP9aYAVGiHaDS0HBR0sZAZjQDspjlYWLvOGw5vCILd1KG/PBJw==
+X-Received: by 2002:ac2:4143:: with SMTP id c3mr23637112lfi.131.1588181297666;
+        Wed, 29 Apr 2020 10:28:17 -0700 (PDT)
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com. [209.85.208.179])
+        by smtp.gmail.com with ESMTPSA id l8sm2623748ljo.5.2020.04.29.10.28.16
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Apr 2020 10:25:53 -0700 (PDT)
-Received: by mail-lf1-f48.google.com with SMTP id g10so2343184lfj.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 10:25:53 -0700 (PDT)
-X-Received: by 2002:a19:7909:: with SMTP id u9mr7487789lfc.130.1588181152446;
- Wed, 29 Apr 2020 10:25:52 -0700 (PDT)
+        Wed, 29 Apr 2020 10:28:16 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id a21so3474508ljb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 10:28:16 -0700 (PDT)
+X-Received: by 2002:a05:651c:449:: with SMTP id g9mr21840460ljg.278.1588181295980;
+ Wed, 29 Apr 2020 10:28:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200421143228.8981-1-sibis@codeaurora.org>
-In-Reply-To: <20200421143228.8981-1-sibis@codeaurora.org>
+References: <20200415145110.20624-1-sibis@codeaurora.org>
+In-Reply-To: <20200415145110.20624-1-sibis@codeaurora.org>
 From:   Evan Green <evgreen@chromium.org>
-Date:   Wed, 29 Apr 2020 10:25:15 -0700
-X-Gmail-Original-Message-ID: <CAE=gft6BmZ2UNyrgs_c_O56rjvyA7D4w+T59Ze7q0ythD66eRw@mail.gmail.com>
-Message-ID: <CAE=gft6BmZ2UNyrgs_c_O56rjvyA7D4w+T59Ze7q0ythD66eRw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] Add PAS and MSA based Modem support
+Date:   Wed, 29 Apr 2020 10:27:39 -0700
+X-Gmail-Original-Message-ID: <CAE=gft5REvz+0JLHtEN1BXmvWzMxftdecxPedLizgS47x1Sq7w@mail.gmail.com>
+Message-ID: <CAE=gft5REvz+0JLHtEN1BXmvWzMxftdecxPedLizgS47x1Sq7w@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Drop all accesses to MPSS PERPH register space
 To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -65,40 +65,30 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         linux-remoteproc@vger.kernel.org,
         LKML <linux-kernel@vger.kernel.org>,
-        Ohad Ben Cohen <ohad@wizery.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
+        Ohad Ben Cohen <ohad@wizery.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 21, 2020 at 7:32 AM Sibi Sankar <sibis@codeaurora.org> wrote:
+On Wed, Apr 15, 2020 at 7:51 AM Sibi Sankar <sibis@codeaurora.org> wrote:
 >
-> Add PAS based modem support on SC7180 SoCs and update the device node to
-> support MSA based modem boot.
+> 7C retail devices using MSA based boot will result in a fuse combination
+> which will prevent accesses to MSS PERPH register space where the mpss
+> clocks and halt-nav reside. Hence requesting a halt-nav as part of the
+> SSR sequence will result in a NoC error. Issuing HALT NAV request and
+> turning on the mss clocks as part of SSR will no longer be required
+> since the modem firmware will have the necessary fixes to ensure that
+> there are no pending NAV DMA transactions thereby ensuring a smooth
+> SSR.
 >
-> V2:
->  * use memory-region to reference mba/mpss regions [Bjorn]
->  * move peripheral memory regions to the board dts [Bjorn]
->  * overload the base remoteproc_mpss node wherever possible [Bjorn]
->  * Pick up Bjorn's R-b
->
-> Patch [1,2] - Add PAS based modem support
-> Patch [3,4] - use memory-region to reference mba/mpss regions
-> Patch [5] - Update reserved memory map
-> Patch [6,7] - Add PAS/MSA modem nodes
->
-> Sibi Sankar (7):
->   dt-bindings: remoteproc: qcom: Add SC7180 MPSS support
->   remoteproc: qcom: pas: Add SC7180 Modem support
->   dt-bindings: remoteproc: qcom: Use memory-region to reference memory
->   remoteproc: qcom_q6v5_mss: Extract mba/mpss from memory-region
->   arm64: dts: qcom: sc7180: Update reserved memory map
->   arm64: dts: qcom: sc7180: Add Q6V5 MSS node
->   arm64: dts: qcom: sc7180: Update Q6V5 MSS node
+> Sibi Sankar (2):
+>   dt-bindings: remoteproc: qcom: Replace halt-nav with spare-regs
+>   remoteproc: qcom_q6v5_mss: Drop accesses to MPSS PERPH register space
+
+I haven't tested things in the "production" fuse configuration yet,
+but in my current configuration I've got a tree that's running the
+modem well.
 
 Tested-by: Evan Green <evgreen@chromium.org>
