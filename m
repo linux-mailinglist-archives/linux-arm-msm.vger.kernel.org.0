@@ -2,107 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E011D1BDE4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 15:38:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B56A1BDF5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2020 15:44:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728178AbgD2NiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Apr 2020 09:38:21 -0400
-Received: from 8bytes.org ([81.169.241.247]:39874 "EHLO theia.8bytes.org"
+        id S1727773AbgD2No0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Apr 2020 09:44:26 -0400
+Received: from foss.arm.com ([217.140.110.172]:39488 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728073AbgD2Nhz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Apr 2020 09:37:55 -0400
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id E8433F15; Wed, 29 Apr 2020 15:37:41 +0200 (CEST)
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc:     Daniel Drake <drake@endlessm.com>, jonathan.derrick@intel.com,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH v3 34/34] iommu: Unexport iommu_group_get_for_dev()
-Date:   Wed, 29 Apr 2020 15:37:12 +0200
-Message-Id: <20200429133712.31431-35-joro@8bytes.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200429133712.31431-1-joro@8bytes.org>
-References: <20200429133712.31431-1-joro@8bytes.org>
+        id S1726599AbgD2No0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Apr 2020 09:44:26 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0E6091045;
+        Wed, 29 Apr 2020 06:44:25 -0700 (PDT)
+Received: from [10.37.12.139] (unknown [10.37.12.139])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1BBD33F68F;
+        Wed, 29 Apr 2020 06:44:21 -0700 (PDT)
+Subject: Re: [PATCH] coresight: dynamic-replicator: Fix handling of multiple
+ connections
+To:     saiprakash.ranjan@codeaurora.org, mike.leach@linaro.org
+Cc:     mathieu.poirier@linaro.org, swboyd@chromium.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20200426143725.18116-1-saiprakash.ranjan@codeaurora.org>
+ <cf5852e9-c3c1-3d31-46f0-0370719947ab@arm.com>
+ <CAJ9a7VgF3-Hdc7KSw9gVBeXSDHNguhqVhp60oK2XhCtr3DhDqg@mail.gmail.com>
+ <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
+ <668ea1283a6dd6b34e701972f6f71034@codeaurora.org>
+ <5b0f5d77c4eec22d8048bb0ffa078345@codeaurora.org>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <759d47de-2101-39cf-2f1c-cfefebebd548@arm.com>
+Date:   Wed, 29 Apr 2020 14:49:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
+MIME-Version: 1.0
+In-Reply-To: <5b0f5d77c4eec22d8048bb0ffa078345@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Joerg Roedel <jroedel@suse.de>
+On 04/29/2020 12:47 PM, Sai Prakash Ranjan wrote:
+> On 2020-04-28 17:53, Sai Prakash Ranjan wrote:
+>> On 2020-04-27 19:23, Suzuki K Poulose wrote:
+>>> On 04/27/2020 10:45 AM, Mike Leach wrote:
+>> [...]
+>>>>>
+>>>>> This is not sufficient. You must prevent another session trying to
+>>>>> enable the other port of the replicator as this could silently fail
+>>>>> the "on-going" session. Not ideal. Fail the attempt to enable a port
+>>>>> if the other port is active. You could track this in software and
+>>>>> fail early.
+>>>>>
+>>>>> Suzuki
+>>>>
+>>>> While I have no issue in principle with not enabling a path to a sink
+>>>> that is not in use - indeed in some cases attaching to unused sinks
+>>>> can cause back-pressure that slows throughput (cf TPIU) - I am
+>>>> concerned that this modification is masking an underlying issue with
+>>>> the platform in question.
+>>>>
+>>>> Should we decide to enable the diversion of different IDs to different
+>>>> sinks or allow different sessions go to different sinks, then this has
+>>>> potential to fail on the SC7180 SoC - and it will be difficult in
+>>>> future to associate a problem with this discussion.
+>>>
+>>> Mike,
+>>>
+>>> I think thats a good point.
+>>> Sai, please could we narrow down this to the real problem and may be
+>>> work around it for the "device" ? Do we know which sink is causing the
+>>> back pressure ? We could then push the "work around" to the replicator
+>>> it is connected to.
+>>>
+>>> Suzuki
+>>
+>> Hi Suzuki, Mike,
+>>
+>> To add some more to the information provided earlier,
+>> swao_replicator(6b06000) and etf are
+>> in AOSS (Always-On-SubSystem) group. Also TPIU(connected to
+>> qdss_replicator) and EUD(connected
+>> to swao_replicator) sinks are unused.
+>>
+>> Please ignore the id filter values provided earlier.
+>> Here are ID filter values after boot and before enabling replicator. 
+>> As per
+>> these idfilter values, we should not try to enable replicator if its 
+>> already
+>> enabled (in this case for swao_replicator) right?
+>>
+>> localhost ~ # cat
+>> /sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter0
+>> 0x0
+>> localhost ~ # cat
+>> /sys/bus/amba/devices/6b06000.replicator/replicator1/mgmt/idfilter1
+>> 0x0
+>>
+>> localhost ~ # cat
+>> /sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter0
+>> 0xff
+>> localhost ~ # cat
+>> /sys/bus/amba/devices/6046000.replicator/replicator0/mgmt/idfilter1
+>> 0xff
+>>
+> 
+> Looking more into replicator1(swao_replicator) values as 0x0 even after 
+> replicator_reset()
+> in replicator probe, I added dynamic_replicator_reset in 
+> dynamic_replicator_enable()
+> and am not seeing any hardlockup. Also I added some prints to check the 
+> idfilter
+> values before and after reset and found that its not set to 0xff even 
+> after replicator_reset()
+> in replicator probe, I don't see any other path setting it to 0x0.
+> 
+> After probe:
+> 
+> [    8.477669] func replicator_probe before reset replicator replicator1 
+> REPLICATOR_IDFILTER0=0x0 REPLICATOR_IDFILTER1=0x0
+> [    8.489470] func replicator_probe after reset replicator replicator1 
+> REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
 
-The function is now only used in IOMMU core code and shouldn't be used
-outside of it anyway, so remove the export for it.
+AFAICS, after the reset both of them are set to 0xff.
 
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
----
- drivers/iommu/iommu.c | 4 ++--
- include/linux/iommu.h | 1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+> [    8.502738] func replicator_probe before reset replicator replicator0 
+> REPLICATOR_IDFILTER0=0x0 REPLICATOR_IDFILTER1=0x0
+> [    8.515214] func replicator_probe after reset replicator replicator0 
+> REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 48a95f7d7999..a9e5618cde80 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -91,6 +91,7 @@ static void __iommu_detach_group(struct iommu_domain *domain,
- 				 struct iommu_group *group);
- static int iommu_create_device_direct_mappings(struct iommu_group *group,
- 					       struct device *dev);
-+static struct iommu_group *iommu_group_get_for_dev(struct device *dev);
- 
- #define IOMMU_GROUP_ATTR(_name, _mode, _show, _store)		\
- struct iommu_group_attribute iommu_group_attr_##_name =		\
-@@ -1500,7 +1501,7 @@ static int iommu_alloc_default_domain(struct device *dev)
-  * to the returned IOMMU group, which will already include the provided
-  * device.  The reference should be released with iommu_group_put().
-  */
--struct iommu_group *iommu_group_get_for_dev(struct device *dev)
-+static struct iommu_group *iommu_group_get_for_dev(struct device *dev)
- {
- 	const struct iommu_ops *ops = dev->bus->iommu_ops;
- 	struct iommu_group *group;
-@@ -1531,7 +1532,6 @@ struct iommu_group *iommu_group_get_for_dev(struct device *dev)
- 
- 	return ERR_PTR(ret);
- }
--EXPORT_SYMBOL(iommu_group_get_for_dev);
- 
- struct iommu_domain *iommu_group_default_domain(struct iommu_group *group)
- {
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index dd076366383f..7cfd2dddb49d 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -527,7 +527,6 @@ extern int iommu_page_response(struct device *dev,
- 			       struct iommu_page_response *msg);
- 
- extern int iommu_group_id(struct iommu_group *group);
--extern struct iommu_group *iommu_group_get_for_dev(struct device *dev);
- extern struct iommu_domain *iommu_group_default_domain(struct iommu_group *);
- 
- extern int iommu_domain_get_attr(struct iommu_domain *domain, enum iommu_attr,
--- 
-2.17.1
 
+
+> localhost ~ #
+> localhost ~ #
+> localhost ~ # echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+> localhost ~ #
+> localhost ~ # echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+> [   58.490485] func dynamic_replicator_enable before reset replicator 
+> replicator0 REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+> [   58.503246] func dynamic_replicator_enable after reset replicator 
+> replicator0 REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+> [   58.520902] func dynamic_replicator_enable before reset replicator 
+> replicator1 REPLICATOR_IDFILTER0=0x0 REPLICATOR_IDFILTER1=0x0
+
+You need to find what is resetting the IDFILTERs to 0 for replicator1.
+
+> [   58.533500] func dynamic_replicator_enable after reset replicator 
+> replicator1 REPLICATOR_IDFILTER0=0xff REPLICATOR_IDFILTER1=0xff
+> localhost ~ #
+> 
+> Can we have a replicator_reset in dynamic_replicator_enable?
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-replicator.c 
+> b/drivers/hwtracing/coresight/coresight-replicator.c
+> index e7dc1c31d20d..794f8e4c049f 100644
+> --- a/drivers/hwtracing/coresight/coresight-replicator.c
+> +++ b/drivers/hwtracing/coresight/coresight-replicator.c
+> @@ -68,6 +68,8 @@ static int dynamic_replicator_enable(struct 
+> replicator_drvdata *drvdata,
+>          int rc = 0;
+>          u32 reg;
+> 
+> +       dynamic_replicator_reset(drvdata);
+> +
+
+Again you are trying to mask an issue with this. Is the firmware
+using the replicator for anything ? If so, this needs to be claimed
+to prevent us from using it.
+
+Suzuki
