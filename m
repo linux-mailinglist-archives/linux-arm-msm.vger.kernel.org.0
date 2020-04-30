@@ -2,119 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E99EE1C0486
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 20:17:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E15B71C049A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 20:21:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726272AbgD3SRy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 14:17:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40508 "EHLO
+        id S1726453AbgD3SVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 14:21:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725844AbgD3SRx (ORCPT
+        by vger.kernel.org with ESMTP id S1726336AbgD3SVg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 14:17:53 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64AD5C08E859
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 11:17:53 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id d184so202446pfd.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 11:17:53 -0700 (PDT)
+        Thu, 30 Apr 2020 14:21:36 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC86C035494
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 11:21:36 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id p5so2069083vke.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 11:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4e5cFjiNfDap07a6Nfxpdl1UXdqOkxC++rr9/Mc9BPc=;
-        b=dmGY2UxEwcZyt7nI6u+U0VG13V/t96oiOFdoFGSDon+/un/GuNmXc2KuVJK2BxDNWu
-         NeZsQMDtHTLrDWONVOuXyZLiLi+5tBTDJr4eS4zxAs/ADkPYAhLYEsooIhz8My8ARUDQ
-         kwpMRGavs4TMkxiYSgnpAqyXIicxgnREO9NcYTJp4CkFwpJAjdEy9X+gMQxybJUVgCg0
-         I7uiE007yjKZ41fGk9Xw0vN7lLnB1MTDOFLH0h0TQysitJvEUWFhvUxuIbaAhgEHggen
-         YsAGCsTNyELi4I2lURjo0NNQ2WnprWWI/yi++tNaKg7ZB6BvQxBYIrtuqSBpp7uvyujV
-         a8gw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=SR5cmb+TdKfA9P9unlHlcoWqQ+iFT2b4XsANwGqxz5Y=;
+        b=Kt9s26Qov6Qn68/Pe3SRmeowZf7qJWgEO/1aiZYlcrWn/63/H0Mxf0JJVVMFh+pL7n
+         K4YQd/0YimnlqtXjKhoN+B+6gQ/2W073uz2X5RxT5/69tfGQIiW/gnVrr3EHLGpP1Q86
+         2T/hEImFFlMGoRGn2f5o5tH6Ov3xB60rvdHTo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4e5cFjiNfDap07a6Nfxpdl1UXdqOkxC++rr9/Mc9BPc=;
-        b=knSQIEW7VaNCpQT3QUOUJwDNwU0fagGuCq1THuxtWA+USezyzEMx7zQQdXRyx1t7TW
-         43aqdnAEzvnz5kwve06MSCK87x7KM+O7QQ4oOBRHLNOLVleya3B/q5JNZ8OlxV/tiZrR
-         eb8AI9ZVIp2yPe7Q8ZX2xgAcg+3InnCJNlrlqEpK7gKj1ZQ37i2L2M8YsAoL4eK03m2H
-         sWgOMFmM+Isx6he3RmLThugBbZ4yr15ge3NXQnQxKgdAEemb9PNlpu66KacUFrQsijOK
-         IR2nVpJhUsmNICW0ak3wZ1qAD1FscokMEZtG5G/TF9nXF1SB05nYE/S9KU+WP2T4XWGh
-         HcIg==
-X-Gm-Message-State: AGi0Pub15soTXIb4Gl37yG+9WmFy5sJNzP8k/803FahQC8hF2oDUdL1v
-        bhkYz7qWf/ZQabY54x0p5cmk5g==
-X-Google-Smtp-Source: APiQypLYMpMYYbyXzJla8VvbIOxLhP2i6vpkoVDgCiLbpmpBmrE/HRcq00kHnwAD9Tex0mJyb+jKvg==
-X-Received: by 2002:a63:6f07:: with SMTP id k7mr219742pgc.274.1588270672604;
-        Thu, 30 Apr 2020 11:17:52 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 14sm415735pfy.38.2020.04.30.11.17.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2020 11:17:51 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8250: Add TLMM pinctrl node
-Date:   Thu, 30 Apr 2020 11:17:16 -0700
-Message-Id: <20200430181716.3797842-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=SR5cmb+TdKfA9P9unlHlcoWqQ+iFT2b4XsANwGqxz5Y=;
+        b=gSHiJnv20eFqAaNGHyMrSbfwQqtCKamEqHH6C51nZPDxLAtStRUlc4zUm8pQfSa9TD
+         1I+Xh0UVJJr9hz2JhRIrFDPtwLTOcqQMxhEFQquzsZj2YG01uAJaYAj24n//xAqIVpCi
+         FmEwXTK5qOYjEsJdfEbyabEaYbwWsO8+euBg17xvFMcu1/PthTcFG7kPndVZ5Cv8pziY
+         whsEuXTk5P2D6f4EvG7HBbwE43Q5DZCjYcIUr9AKnj+k0mmVgvzOls9ocR4KI9jPCPNf
+         jIYfKegdg3kAvfjo5jmtwh4wRbvUTV59CaxNWc1qRG2donyg3ZqM8WFlGQSRrPn+yn/2
+         DCcg==
+X-Gm-Message-State: AGi0Pub0ArQ4dsxZMNW9A2khA/Hf+yAuOMJIVeHQQcM5/uZzgZh365oU
+        W6Ysk0cjytySGikMQwka32WaAVEMch0=
+X-Google-Smtp-Source: APiQypKCaLsUlHFDTP5jTh+YtwkXhxeigXwzzAwK4vAOOEn1Tq7BJQcOUJw4k0unC3IekqsE+tRdLA==
+X-Received: by 2002:a1f:e4c3:: with SMTP id b186mr3962163vkh.34.1588270894226;
+        Thu, 30 Apr 2020 11:21:34 -0700 (PDT)
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com. [209.85.217.43])
+        by smtp.gmail.com with ESMTPSA id d1sm159912vsc.30.2020.04.30.11.21.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Apr 2020 11:21:33 -0700 (PDT)
+Received: by mail-vs1-f43.google.com with SMTP id y185so4695637vsy.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 11:21:33 -0700 (PDT)
+X-Received: by 2002:a67:bd07:: with SMTP id y7mr112084vsq.109.1588270892989;
+ Thu, 30 Apr 2020 11:21:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1588219187-19295-1-git-send-email-smasetty@codeaurora.org> <20200430181233.GA21991@jcrouse1-lnx.qualcomm.com>
+In-Reply-To: <20200430181233.GA21991@jcrouse1-lnx.qualcomm.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 30 Apr 2020 11:21:21 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Usp5RxgXtjtgBe6jR3o=-+EXkYZuVzx_AF3=BsVu+OeA@mail.gmail.com>
+Message-ID: <CAD=FV=Usp5RxgXtjtgBe6jR3o=-+EXkYZuVzx_AF3=BsVu+OeA@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: arm-smmu: Add sc7180 compatible string
+ and mem_iface clock
+To:     Sharat Masetty <smasetty@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the TLMM pinctrl node for SM8250 and reserve pins 28-31 and 40-43 on
-the MTP as firmware does not allow Linux to touch these pins.
+Hi,
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts |  4 ++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi    | 15 +++++++++++++++
- 2 files changed, 19 insertions(+)
+On Thu, Apr 30, 2020 at 11:12 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+>
+> On Thu, Apr 30, 2020 at 09:29:47AM +0530, Sharat Masetty wrote:
+> > This patch adds a new compatible string for sc7180 and also an
+> > additional clock listing needed to power the TBUs and the TCU.
+> >
+> > Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> > ---
+> > v2: Addressed review comments from Doug
+> >
+> >  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> > index 6515dbe..ba5dba4 100644
+> > --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> > +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> > @@ -28,6 +28,7 @@ properties:
+> >            - enum:
+> >                - qcom,msm8996-smmu-v2
+> >                - qcom,msm8998-smmu-v2
+> > +              - qcom,sc7180-smmu-v2
+> >                - qcom,sdm845-smmu-v2
+> >            - const: qcom,smmu-v2
+> >
+> > @@ -113,16 +114,23 @@ properties:
+> >        present in such cases.
+> >
+> >    clock-names:
+> > +    minItems: 2
+> > +    maxItems: 3
+> >      items:
+> >        - const: bus
+> >        - const: iface
+> > +      - const: mem_iface
+>
+> Hi Sharat -
+>
+> I think there was a bit of confusion due to renaming between downstream and
+> upstream.  Currently for the sdm845 and friends we have:
+>
+>   clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+>      <&gcc GCC_GPU_CFG_AHB_CLK>;
+>   clock-names = "bus", "iface";
+>
+> Confusingly these same clocks downstream are "mem_iface_clk" and "iface_clk"
+> respectively.
+>
+> It looks like you are trying to add GCC_DDRSS_GPU_AXI_CLK as "mem_iface" which
+> was formerly "mem_clk" downstream. I'm not sure if the naming change is
+> intentional or you were trying to make upstream and downstream match and didn't
+> realize that they were renamed.
+>
+> I'm not sure if we need DDRSS_GPU_AXI_CLK or not. Empirically it works without
+> it for sdm845 (I don't have a sc7180 to test) but we should probably loop back
+> with either the clock team or the hardware designers to be sure there isn't a
+> corner case that is missing. I agree with Doug that its always best if we don't
+> need to add a clock.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index 2adb01ea276c..0c6b936be471 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -348,6 +348,10 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&tlmm {
-+	gpio-reserved-ranges = <28 4>, <40 4>;
-+};
-+
- &uart2 {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 7050adba7995..9867b0da9d8e 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -491,6 +491,21 @@ tcsr_mutex_regs: syscon@1f40000 {
- 			reg = <0x0 0x01f40000 0x0 0x40000>;
- 		};
- 
-+		tlmm: pinctrl@f100000 {
-+			compatible = "qcom,sm8250-pinctrl";
-+			reg = <0 0x0f100000 0 0x300000>,
-+			      <0 0x0f500000 0 0x300000>,
-+			      <0 0x0f900000 0 0x300000>;
-+			reg-names = "west", "south", "north";
-+			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+			gpio-ranges = <&tlmm 0 0 180>;
-+			wakeup-parent = <&pdc>;
-+		};
-+
- 		timer@17c20000 {
- 			#address-cells = <2>;
- 			#size-cells = <2>;
--- 
-2.24.0
+I can confirm that on sc7180 the GPU seems to come up just fine
+without the clock being specified in the iommu node.  Definitely would
+be good to know what's broken and if nothing is broken maybe we can
+change this patch to just add the sc7180 compatible string and drop
+the clock.  I do note that the GMU already has a reference to the same
+"GCC_DDRSS_GPU_AXI_CLK" clock.
 
+-Doug
