@@ -2,78 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1350F1BFF2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 16:50:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBB991BFF40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 16:53:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726366AbgD3Ouh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 10:50:37 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:51159 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726357AbgD3Ouh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 10:50:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588258236; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=q3qqE41UiR+ahLP2ynjWj268x23dFGPbMRxr62ClU3M=; b=jK2UrJCVG9PL3jt0MHr0DbxZE+It+sMcDoeQnrkB5uNz5z1yRKkmmwBhbkfF08ZeFvBxRaOr
- O78X69iy7O9hEz8Gb3/9PkhPY8H5RaWwmJ+8bInr3xPpb1G/1Cpyz4CcHIZ/XUHrlVg8Wdx5
- PB25Cq0H/5THvbPCSV3B7PzczTc=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eaae5a9.7fc6e0f516f8-smtp-out-n05;
- Thu, 30 Apr 2020 14:50:17 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5B47BC433D2; Thu, 30 Apr 2020 14:50:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726503AbgD3OxF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 10:53:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50506 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726357AbgD3OxF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Apr 2020 10:53:05 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84E75C433CB;
-        Thu, 30 Apr 2020 14:50:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 84E75C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v3 5/9] bus: mhi: core: Handle firmware load using state
- worker
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>, mani@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org
-References: <1588193551-31439-1-git-send-email-bbhatt@codeaurora.org>
- <1588193551-31439-6-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <57cbc636-9d20-9367-4667-b8ff5add17f0@codeaurora.org>
-Date:   Thu, 30 Apr 2020 08:50:15 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        by mail.kernel.org (Postfix) with ESMTPSA id 70A572074A;
+        Thu, 30 Apr 2020 14:53:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588258385;
+        bh=3jNY7Z1CXHUeLNkZam1xF4SaPvI1RqKiMPWejLFrHe4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uEF3pPQNsAva6ERqoXN3GPqn/YP2A19BkDE70CMdUpfUnzPq6MwtOfXpPa6ETzAzy
+         KtlsGxEAo9l+RWIHMUj1/2vo6BmV0P6TVfAGB1Y064snxw/wEADbL+MlbpZMsoqI5/
+         ag7+OSQouLJuxkZOEWDRkchLaPXmMSNryI9kAkRI=
+Date:   Thu, 30 Apr 2020 16:53:02 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Mathias Nyman <mathias.nyman@linux.intel.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v11 2/5] usb: renesas-xhci: Add the renesas xhci driver
+Message-ID: <20200430145302.GB3495619@kroah.com>
+References: <20200430101019.1130956-1-vkoul@kernel.org>
+ <20200430101019.1130956-3-vkoul@kernel.org>
+ <8ffd119b-192f-8fcc-46cc-3a405e30338c@linux.intel.com>
+ <20200430144641.GJ948789@vkoul-mobl.Dlink>
 MIME-Version: 1.0
-In-Reply-To: <1588193551-31439-6-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200430144641.GJ948789@vkoul-mobl.Dlink>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/29/2020 2:52 PM, Bhaumik Bhatt wrote:
-> Upon power up, driver queues firmware worker thread if the execution
-> environment is PBL. Firmware worker is blocked with a timeout until
-> state worker gets a chance to run and unblock firmware worker. An
-> endpoint power up failure can be seen if state worker gets a chance to
-> run after firmware worker has timed out. Remove this dependency and
-> handle firmware load directly using state worker thread.
+On Thu, Apr 30, 2020 at 08:16:41PM +0530, Vinod Koul wrote:
+> > > diff --git a/drivers/usb/host/Makefile b/drivers/usb/host/Makefile
+> > > index b191361257cc..c3a79f626393 100644
+> > > --- a/drivers/usb/host/Makefile
+> > > +++ b/drivers/usb/host/Makefile
+> > > @@ -70,7 +70,8 @@ obj-$(CONFIG_USB_OHCI_HCD_DAVINCI)	+= ohci-da8xx.o
+> > >  obj-$(CONFIG_USB_UHCI_HCD)	+= uhci-hcd.o
+> > >  obj-$(CONFIG_USB_FHCI_HCD)	+= fhci.o
+> > >  obj-$(CONFIG_USB_XHCI_HCD)	+= xhci-hcd.o
+> > > -obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o
+> > > +usb-xhci-pci-objs		:= xhci-pci.o xhci-pci-renesas.o
+> > > +obj-$(CONFIG_USB_XHCI_PCI)	+= usb-xhci-pci.o
+> > 
+> > I don't think it's a good idea to rename the xhci-pci module to usb-xhci-pci
+> > 
+> > does
+> > 
+> > xhci-pci-y			:= xhci-pci.o xhci-pci-renesas.o
+> > obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o
+> > 
+> > cause some kbuild issues?
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Yes with this version I get the warning:
+> make[4]: Circular drivers/usb/host/xhci-pci.o <- drivers/usb/host/xhci-pci.o dependency dropped.
+> 
+> I don't speak enough Kbuild, but I guess it does make sense that we have
+> xhci-pci.o as target for both xhci-pci.o xhci-pci-renesas.o! That was
+> the reason for adding usb tag to this to resolve the conflict.
+> 
+> I am okay for any other mechanism which can work well here. Btw what
+> issues do you foresee with adding usb tag to module name.
 
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+It will break all sorts of things.  Happens every time we rename
+modules, let's not do it unless we absolutely have to.
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+greg k-h
