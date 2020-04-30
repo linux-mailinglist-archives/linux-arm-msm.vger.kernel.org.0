@@ -2,134 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 257381C0360
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 19:00:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83FF61C0368
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 19:01:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727086AbgD3RAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 13:00:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48826 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726333AbgD3RAD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 13:00:03 -0400
-Received: from localhost.localdomain (unknown [122.182.217.38])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BE87920873;
-        Thu, 30 Apr 2020 16:59:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588266003;
-        bh=cBBOkr8Xv31S9xr1BvALBUdHSj8emmus8DnnBktbEAA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=N/lfoA4RnwmEtSxFTRyTSD/TOMfRo6Si/gqyy79KnNOMV/QZm7f9AseH0W9Ja1qYf
-         nxH8oPXwz7Hs/NzlWwDZ9uXcc6WkPaxdl5BSz1GZvN/sAOWOss8l2t2pis4lWS4Q8L
-         5bLxeSWVsA4NMd1EFEZiZQZeUnYFlrXKUJzFx8Zw=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        =?UTF-8?q?Andreas=20B=C3=B6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v12 5/5] usb: xhci: provide a debugfs hook for erasing rom
-Date:   Thu, 30 Apr 2020 22:29:20 +0530
-Message-Id: <20200430165920.1345409-6-vkoul@kernel.org>
-X-Mailer: git-send-email 2.25.3
-In-Reply-To: <20200430165920.1345409-1-vkoul@kernel.org>
-References: <20200430165920.1345409-1-vkoul@kernel.org>
+        id S1727102AbgD3RBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 13:01:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56514 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726401AbgD3RBi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Apr 2020 13:01:38 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03521C035494
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 10:01:37 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id mq3so946667pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 10:01:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=73/Na4zw08KsY+pRVinIDwhHiipHKgToaX0JUujsqIw=;
+        b=C5wC0ueIOCJLT+QaH9PltDE/Hbqq/US5/Y/uEyPtPRqofR4R6+Dq7dNOagxIXS56Q8
+         48sO37Gi/7JYogTul2vAd9qYer575p4UWNs60eWTXtimFd664pS6yHIVObfQapzMJFO9
+         tzzpZSBwr234chEFWO89CTTda9OpvUnB1zYJU4swB1RpWBaDaGIVTML9596F13j8I4qN
+         lce5sCoT8SgQtO9qIPdT0RH0WRmyFtMF3x6OeKyrHsKhsa2rMflV+BtSXV9xdV6Avzwy
+         iyti8w0XRzRuHOo8iiKQCg4xmWgWGaisyOZ3jcX5Z4Ke89w9Im/vYIqGzC7Mwdu4WCMa
+         gCDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=73/Na4zw08KsY+pRVinIDwhHiipHKgToaX0JUujsqIw=;
+        b=gBmexnmQkUtdxh4VtQQz0JtbY/6VvmBtfF/YCncUZ0EcFnzgIzt9Ad+P9n+7kUEOqs
+         b3Y3gYHeqZ99+NigPU9l8zE6nABNt9xkMYuh78nhPeRkI452Yf1sEsphKUucAzRxfPHq
+         KLbbsUbmixLecsHOsEEN4/5uWdt5XmKXVqpFzCbTYIg8ZMDpJvamVX0WPPRA3E73yXsc
+         c12L9MFvbX/Pzg1Wn6iMwk+dblfTLAB7MJT55nHmp47jtXu8LQJPiRNTs4OxRxwDzbY7
+         s7Ehnv39RQjBKchQCF3d+odoqrj6qqQR3/7vnGWcoQHvs/fAYTCIYzbFtrbz3eZrkS6W
+         iUQw==
+X-Gm-Message-State: AGi0PubUns1bROvmF+FK/u2QNq7sj3DMAvivl8n6F5jC34M1SM1RrDgb
+        EEnWM+kSK7BEp/A8hx+1Sqcd
+X-Google-Smtp-Source: APiQypILSdCBvoyT7pJQkXiK6lgcOwNpnQqVbFRwfQdL5nZo5SLzHEUu+UcbEaxOn8YUJPMOLRFsEw==
+X-Received: by 2002:a17:90a:2004:: with SMTP id n4mr4122916pjc.190.1588266096054;
+        Thu, 30 Apr 2020 10:01:36 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6081:946c:419e:a71:7237:1613])
+        by smtp.gmail.com with ESMTPSA id 28sm296741pjh.43.2020.04.30.10.01.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Apr 2020 10:01:35 -0700 (PDT)
+Date:   Thu, 30 Apr 2020 22:31:30 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 6/6] bus: mhi: core: Fix channel device name conflict
+Message-ID: <20200430170130.GH9449@Mani-XPS-13-9360>
+References: <1588003153-13139-1-git-send-email-jhugo@codeaurora.org>
+ <1588003153-13139-7-git-send-email-jhugo@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1588003153-13139-7-git-send-email-jhugo@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-run "echo 1 > /sys/kernel/debug/renesas-usb/rom_erase" to erase firmware
-when driver is loaded.
+On Mon, Apr 27, 2020 at 09:59:13AM -0600, Jeffrey Hugo wrote:
+> When multiple instances of the same MHI product are present in a system,
+> we can see a splat from mhi_create_devices() - "sysfs: cannot create
+> duplicate filename".
+> 
+> This is because the device names assigned to the MHI channel devices are
+> non-unique.  They consist of the channel's name, and the channel's pipe
+> id.  For identical products, each instance is going to have the same
+> set of channel (both in name and pipe id).
+> 
+> To fix this, we prepend the device name of the parent device that the
+> MHI channels belong to.  Since different instances of the same product
+> should have unique device names, this makes the MHI channel devices for
+> each product also unique.
+> 
+> Additionally, remove the pipe id from the MHI channel device name.  This
+> is an internal detail to the MHI product that provides little value, and
+> imposes too much device specific internal details to userspace.  It is
+> expected that channel with a specific name (ie "SAHARA") has a specific
+> client, and it does not matter what pipe id that channel is enumerated on.
+> The pipe id is an internal detail between the MHI bus, and the hardware.
+> The client is not expected to make decisions based on the pipe id, and to
+> do so would require the client to have intimate knowledge of the hardware,
+> which is inappropiate as it may violate the layering provided by the MHI
+> bus.  The limitation of doing this is that each product may only have one
+> instance of a channel by a unique name.  This limitation is appropriate
+> given the usecases of MHI channels.
+> 
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
 
-Subsequent init of driver shall reload the firmware
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/usb/host/xhci-pci-renesas.c | 33 +++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+Thanks,
+Mani
 
-diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
-index f7d2445d30ec..fa32ec352dc8 100644
---- a/drivers/usb/host/xhci-pci-renesas.c
-+++ b/drivers/usb/host/xhci-pci-renesas.c
-@@ -2,6 +2,7 @@
- /* Copyright (C) 2019-2020 Linaro Limited */
- 
- #include <linux/acpi.h>
-+#include <linux/debugfs.h>
- #include <linux/firmware.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-@@ -170,6 +171,8 @@ static int renesas_fw_verify(const void *fw_data,
- 	return 0;
- }
- 
-+static void debugfs_init(struct pci_dev *pdev);
-+
- static bool renesas_check_rom(struct pci_dev *pdev)
- {
- 	u16 rom_status;
-@@ -183,6 +186,7 @@ static bool renesas_check_rom(struct pci_dev *pdev)
- 	rom_status &= RENESAS_ROM_STATUS_ROM_EXISTS;
- 	if (rom_status) {
- 		dev_dbg(&pdev->dev, "External ROM exists\n");
-+		debugfs_init(pdev);
- 		return true; /* External ROM exists */
- 	}
- 
-@@ -449,6 +453,34 @@ static void renesas_rom_erase(struct pci_dev *pdev)
- 	dev_dbg(&pdev->dev, "ROM Erase... Done success\n");
- }
- 
-+static int debugfs_rom_erase(void *data, u64 value)
-+{
-+	struct pci_dev *pdev = data;
-+
-+	if (value == 1) {
-+		dev_dbg(&pdev->dev, "Userspace requested ROM erase\n");
-+		renesas_rom_erase(pdev);
-+		return 0;
-+	}
-+	return -EINVAL;
-+}
-+DEFINE_DEBUGFS_ATTRIBUTE(rom_erase_ops, NULL, debugfs_rom_erase, "%llu\n");
-+
-+static struct dentry *debugfs_root;
-+
-+static void debugfs_init(struct pci_dev *pdev)
-+{
-+	debugfs_root = debugfs_create_dir("renesas_usb", NULL);
-+
-+	debugfs_create_file("rom_erase", 0200, debugfs_root,
-+			    pdev, &rom_erase_ops);
-+}
-+
-+static void debugfs_exit(void)
-+{
-+	debugfs_remove_recursive(debugfs_root);
-+}
-+
- static bool renesas_setup_rom(struct pci_dev *pdev, const struct firmware *fw)
- {
- 	const u32 *fw_data = (const u32 *)fw->data;
-@@ -639,6 +671,7 @@ EXPORT_SYMBOL_GPL(renesas_xhci_check_request_fw);
- 
- void renesas_xhci_pci_exit(struct pci_dev *dev)
- {
-+	debugfs_exit();
- }
- EXPORT_SYMBOL_GPL(renesas_xhci_pci_exit);
- 
--- 
-2.25.3
-
+> ---
+>  drivers/bus/mhi/core/main.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 580d72b..0ac0643 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -327,7 +327,8 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
+>  
+>  		/* Channel name is same for both UL and DL */
+>  		mhi_dev->chan_name = mhi_chan->name;
+> -		dev_set_name(&mhi_dev->dev, "%04x_%s", mhi_chan->chan,
+> +		dev_set_name(&mhi_dev->dev, "%s_%s",
+> +			     dev_name(mhi_cntrl->cntrl_dev),
+>  			     mhi_dev->chan_name);
+>  
+>  		/* Init wakeup source if available */
+> -- 
+> Qualcomm Technologies, Inc. is a member of the
+> Code Aurora Forum, a Linux Foundation Collaborative Project.
