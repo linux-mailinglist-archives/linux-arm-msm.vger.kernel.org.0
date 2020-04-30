@@ -2,103 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33DFD1C0646
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 21:25:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 783001C0691
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 21:35:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726580AbgD3TZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 15:25:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
+        id S1726375AbgD3Tfd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 15:35:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbgD3TZG (ORCPT
+        with ESMTP id S1726272AbgD3Tfc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 15:25:06 -0400
+        Thu, 30 Apr 2020 15:35:32 -0400
 Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99C2C035495
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 12:25:04 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id x15so346852pfa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 12:25:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA811C035494
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 12:35:32 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id 145so337585pfw.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 12:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LWzoBfWYBplb188JYPfec8yiO1FAiglsQQs7ha7y6zc=;
-        b=zvIhEeo6o5Oci/1eDGxIxa70cqZyoYJPXylX1Jz8dm4uPN+VdUMi5dd63F1duzrKjf
-         RbDbL4orJsgYwq7Nj0UTh3yQbN4K0xHm3MIzvy5ZD3vZU2dEZ4WTK5ZSvBz/KhNhDNRi
-         iq4ZR0E2/FCU5UX9o2YRqOluF3k9408xQAXoHNf8e9LxoECnH5HXqwOJ0rv7LjXnhyyW
-         yS/J0pcItyBpgwidW4/F9usyFm2BZPVgghgNjxRdQThOIQoH0bSYmBNCHOuxLIXuzZaE
-         8kNRwr8BxYU8I87WPqhv6VIAhcrOvoocf9qPGC8gtHNJf58mlCE62qWRAmVLrpUHxnod
-         A6ww==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=lzP4zsyL3G+ZA+zKIb8zsIyDO20yNMH6PqtntomA9xg=;
+        b=fCDX2FSYSHD6JwsDTIokxh79bkmofe+tsGFm74Iobii0E29IYHlVELmsNu1y3Zd9DX
+         3SiyzTAcxxfmEgukA74XFh9neFt8TE9YXbrVuw0Qu4QeLM1/bHQ371Imwq4rwgDxrRoV
+         MSKkO2yEiEyB9D3RaBCnLjWvj8xw6mFDgXpcbnDkMCBDrtWFun0JDa0x/PwC/YjNjIty
+         tNe4gCsh9j8dFZmEu2zm1zh3E/UMsEXs8VDS6Rd+RdyWcucpsf+89ToFPjkjNYwWzbwd
+         EbCyFqS0k5GccLlxf9of9GNVM3pAAf4AeKOutadC4y4zTq8aYkM/7clDPhhxgf9Pjvrv
+         pZMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LWzoBfWYBplb188JYPfec8yiO1FAiglsQQs7ha7y6zc=;
-        b=cu+h4nMApotE5BW7Lm4EEU13sZ7dWSJiu3RimOzSyc4xgiDNtOiNAkG0ztT2d6ydjW
-         eXQr7f2xJAnf9eOr6i6X7xgIRTot+nX/zQl742g/bt7Twpr1HUudFw6mbv6vxVcZ8JEp
-         +C0qLrWiU4ii2dc814WqJzKqCPLwk1Hheflamq4X9DEPMW6woNdta8bnCFNL8XdbC6zQ
-         dNwO5fF05+D9ezOJMeSsnBcJsi6YFM+Uiqf4cCTOCJD9ZQIczwpjSS/2SwIUcWOLdb5+
-         ApDZhNwjK5js7Y7qFBhdVKswz4AnasysOqe2ScJUhv0KWFVSff5SHGHC12//lV+PYFPT
-         SObg==
-X-Gm-Message-State: AGi0PuZUt2D49hOgr+ON7BAZUVsMePT0JFbNWbLULWgWHcsR1Fyw6Syo
-        bH/M6r2n/gdZjPL1wbNlAn8jAQ==
-X-Google-Smtp-Source: APiQypLCsVX9Nh3B0wNo8iNCW3Dh7d+/91P/QFHKJM1aSTI3VdeXI7wM5INe9jYGfLmdFCvuIRM2Ow==
-X-Received: by 2002:aa7:8b12:: with SMTP id f18mr271949pfd.81.1588274704103;
-        Thu, 30 Apr 2020 12:25:04 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v26sm463594pfe.121.2020.04.30.12.25.02
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lzP4zsyL3G+ZA+zKIb8zsIyDO20yNMH6PqtntomA9xg=;
+        b=t9XKvr+WnRqh8wnRZ+D4fd4bs4Ot0tT+R4diuHZz3LkWVC1TvbgMLgVaeON1TSpe1d
+         BCfYBm1aTKkQ5OJg9uwvvZRXDhcHMHSzGWqJt77OPjLQZX8TrGDBWDyOQHHHQVEm+KNv
+         RgvXne0gONHhPMMrbLgAQF/SMiwjHd5wfdZ2k6pknQFzMO+SOHUXOwolSyckqM8D6iiU
+         k6kv+Q1jR0lyG8MRq7MIlGGVjZJccSB6QorAqeOJCwY3ZwVxhSY+ZeY09xFGCUkpgorH
+         sCXuhP2iozaMV/sQW9SIoLkQ8pBTfS0W9xqIn/anuGnzj8mQ2pQ4emUrW7nRyAioD+eq
+         h47w==
+X-Gm-Message-State: AGi0PubbN9hHGQBRwn5OpQdMLxcgmPAGbVvqnHH2jg1cSrvSguhlRx4F
+        KfawACeDHRM0eBjYmHfx/B/KJw==
+X-Google-Smtp-Source: APiQypKnzcM10vrRVAPVmDP8TVP4+76/N/zdw2lKPSevIaHjqqPQ2vVc0sUq80sl9glOTilQvDqG/w==
+X-Received: by 2002:a65:6083:: with SMTP id t3mr479523pgu.398.1588275332220;
+        Thu, 30 Apr 2020 12:35:32 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id j23sm493396pjz.13.2020.04.30.12.35.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2020 12:25:03 -0700 (PDT)
+        Thu, 30 Apr 2020 12:35:31 -0700 (PDT)
+Date:   Thu, 30 Apr 2020 12:36:09 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: [PATCH] drm/msm: Fix undefined "rd_full" link error
-Date:   Thu, 30 Apr 2020 12:24:27 -0700
-Message-Id: <20200430192427.4104899-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: Add devicetree binding for
+ Qcom IPCC
+Message-ID: <20200430193609.GA20625@builder.lan>
+References: <20200430063054.18879-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200430063054.18879-1-manivannan.sadhasivam@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-rd_full should be defined outside the CONFIG_DEBUG_FS region, in order
-to be able to link the msm driver even when CONFIG_DEBUG_FS is disabled.
+On Wed 29 Apr 23:30 PDT 2020, Manivannan Sadhasivam wrote:
 
-Fixes: e515af8d4a6f ("drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP buffers")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/gpu/drm/msm/msm_rd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Add devicetree YAML binding for Qualcomm Inter-Processor Communication
+> Controller (IPCC) block.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  .../bindings/soc/qcom/qcom,ipcc.yaml          | 85 +++++++++++++++++++
 
-diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-index 732f65df5c4f..fea30e7aa9e8 100644
---- a/drivers/gpu/drm/msm/msm_rd.c
-+++ b/drivers/gpu/drm/msm/msm_rd.c
-@@ -29,8 +29,6 @@
-  * or shader programs (if not emitted inline in cmdstream).
-  */
- 
--#ifdef CONFIG_DEBUG_FS
--
- #include <linux/circ_buf.h>
- #include <linux/debugfs.h>
- #include <linux/kfifo.h>
-@@ -47,6 +45,8 @@ bool rd_full = false;
- MODULE_PARM_DESC(rd_full, "If true, $debugfs/.../rd will snapshot all buffer contents");
- module_param_named(rd_full, rd_full, bool, 0600);
- 
-+#ifdef CONFIG_DEBUG_FS
-+
- enum rd_sect_type {
- 	RD_NONE,
- 	RD_TEST,       /* ascii text */
--- 
-2.24.0
+How about putting this in either interrupt-controller/ or mailbox/ instead?
 
+>  include/dt-bindings/soc/qcom,ipcc.h           | 38 +++++++++
+>  2 files changed, 123 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,ipcc.yaml
+>  create mode 100644 include/dt-bindings/soc/qcom,ipcc.h
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,ipcc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,ipcc.yaml
+> new file mode 100644
+> index 000000000000..48b281181401
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,ipcc.yaml
+> @@ -0,0 +1,85 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/qcom,ipcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. Inter-Processor Communication Controller
+> +
+> +maintainers:
+> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +
+> +description:
+> +  The Inter-Processor Communication Controller (IPCC) is a centralized hardware
+> +  to route the interrupts across various subsystems. It involves a three-level
+
+s/the//
+
+> +  addressing scheme called protocol, client and signal. For example, consider an
+> +  entity on the Application Processor Subsystem (APSS) that wants to listen to
+> +  Modem's interrupts via Shared Memory Point to Point (SMP2P) interface. In such
+> +  a case, the client would be Modem (client-id is 2) and the signal would be
+> +  SMP2P (signal-id is 2). The SMP2P itself falls under the Multiprocessor (MPROC)
+> +  protocol (protocol-id is 0). Refer include/dt-bindings/soc/qcom/qcom,ipcc.h
+> +  for the list of such IDs.
+> +
+> +  One of the duties of this interrupt controller driver is to forward the
+> +  interrupts to the correct entities on the APSS. The children inheriting the
+
+Clients using the...
+
+> +  interrupt-controller would be mentioning the client-id and signal-id it's
+
+s/would be mentioning/should specify/
+
+> +  interested in.
+> +
+> +  On the other hand, sending an interrupt to a subsystem is done through the
+
+"In the other direction," and add clarify subsystem by making it "remote
+subsystem".
+
+> +  mailbox interface, which again requires client-id and signal-id.
+> +
+> +properties:
+> +  compatible:
+
+It's uncertain how new vers
+
+> +    const: "qcom,ipcc"
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  "#interrupt-cells":
+> +    const: 3
+> +    description:
+> +      The first cell is the client-id, the second cell is the signal-id and the
+> +      third cell is the interrupt type.
+> +
+> +  "#mbox-cells":
+> +    const: 2
+> +    description:
+> +      The first cell is the client-id, and the second cell is the signal-id.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-controller
+> +  - "#interrupt-cells"
+> +  - "#mbox-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        #include <dt-bindings/soc/qcom,ipcc.h>
+> +
+> +        ipcc_mproc: qcom,ipcc@408000 {
+
+interrupt-controller@
+
+Regards,
+Bjorn
+
+> +                compatible = "qcom,ipcc";
+> +                reg = <0x408000 0x1000>;
+> +                interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>;
+> +                interrupt-controller;
+> +                #interrupt-cells = <3>;
+> +                #mbox-cells = <2>;
+> +        };
+> +
+> +        smp2p-modem {
+> +                compatible = "qcom,smp2p";
+> +                interrupts-extended = <&ipcc_mproc IPCC_CLIENT_MPSS
+> +                                IPCC_MPROC_SIGNAL_SMP2P IRQ_TYPE_EDGE_RISING>;
+> +                mboxes = <&ipcc_mproc IPCC_CLIENT_MPSS IPCC_MPROC_SIGNAL_SMP2P>;
+> +
+> +                /* Other SMP2P fields */
+> +        };
+> diff --git a/include/dt-bindings/soc/qcom,ipcc.h b/include/dt-bindings/soc/qcom,ipcc.h
+> new file mode 100644
+> index 000000000000..2926cdb4cb48
+> --- /dev/null
+> +++ b/include/dt-bindings/soc/qcom,ipcc.h
+> @@ -0,0 +1,38 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef __DT_BINDINGS_QCOM_IPCC_H
+> +#define __DT_BINDINGS_QCOM_IPCC_H
+> +
+> +/* Signal IDs for MPROC protocol */
+> +#define IPCC_MPROC_SIGNAL_GLINK_QMP	0
+> +#define IPCC_MPROC_SIGNAL_SMP2P		2
+> +#define IPCC_MPROC_SIGNAL_PING		3
+> +#define IPCC_MPROC_SIGNAL_MAX		4 /* Used by driver only */
+> +
+> +#define IPCC_COMPUTE_L0_SIGNAL_MAX	32 /* Used by driver only */
+> +#define IPCC_COMPUTE_L1_SIGNAL_MAX	32 /* Used by driver only */
+> +
+> +/* Client IDs */
+> +#define IPCC_CLIENT_AOP			0
+> +#define IPCC_CLIENT_TZ			1
+> +#define IPCC_CLIENT_MPSS		2
+> +#define IPCC_CLIENT_LPASS		3
+> +#define IPCC_CLIENT_SLPI		4
+> +#define IPCC_CLIENT_SDC			5
+> +#define IPCC_CLIENT_CDSP		6
+> +#define IPCC_CLIENT_NPU			7
+> +#define IPCC_CLIENT_APSS		8
+> +#define IPCC_CLIENT_GPU			9
+> +#define IPCC_CLIENT_CVP			10
+> +#define IPCC_CLIENT_CAM			11
+> +#define IPCC_CLIENT_VPU			12
+> +#define IPCC_CLIENT_PCIE0		13
+> +#define IPCC_CLIENT_PCIE1		14
+> +#define IPCC_CLIENT_PCIE2		15
+> +#define IPCC_CLIENT_SPSS		16
+> +#define IPCC_CLIENT_MAX			17 /* Used by driver only */
+> +
+> +#endif
+> -- 
+> 2.17.1
+> 
