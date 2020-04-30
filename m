@@ -2,103 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B9811BEED6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 06:00:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 160331BEF85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 07:02:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726417AbgD3EAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 00:00:10 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:50405 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725280AbgD3EAK (ORCPT
+        id S1726489AbgD3FCY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 01:02:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56814 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726337AbgD3FCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 00:00:10 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588219209; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=h4kCJNETn7m8Ad7wR1nijxpoOjZhXlKIL1/i8b1sVbg=; b=rrqXwBJvDIijschYUKJr9fL6THeehog8PxYLGpLz0EtIUKE4a6A17IAB/WKgtWVS2X7EdcUY
- lOqDpiUTduxFbWlxB5aO69E4iUU0+fEZcYLRk4Mdlaz+Wiadj0pcEX87Zn0NRow7VXC2tbL+
- Uc7BBn7i42Elv8myjMixRxMVqwE=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eaa4d44.7f3fcc4e6d18-smtp-out-n03;
- Thu, 30 Apr 2020 04:00:04 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3C370C43637; Thu, 30 Apr 2020 04:00:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from smasetty-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B895DC433D2;
-        Thu, 30 Apr 2020 03:59:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B895DC433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-From:   Sharat Masetty <smasetty@codeaurora.org>
-To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, robh@kernel.org, robin.murphy@arm.com,
-        saiprakash.ranjan@codeaurora.org, jcrouse@codeaurora.org,
-        Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH v2] dt-bindings: arm-smmu: Add sc7180 compatible string and mem_iface clock
-Date:   Thu, 30 Apr 2020 09:29:47 +0530
-Message-Id: <1588219187-19295-1-git-send-email-smasetty@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Thu, 30 Apr 2020 01:02:23 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5577C035495
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 22:02:23 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id d24so1804966pll.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2020 22:02:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/x+rzFhqL8qq/IbAbhJvN4V9t4Lz3kP/p46lFDN1LPU=;
+        b=QeUOH2T0toOL6FXdkhKq+g+r/NoRVo1i2zlq/dnOlDFJ7Qg3JgS5yBug89VdkBBuXJ
+         uIwAth6iHY+LFOy85L2+cBK/fyvKlE6++yw6wsviDaoMtG//30Iq79W3dCFahjhHej5m
+         bsyu7z3tWK77hkQZEtJyGjU+mVA97ThGY/dMIESgne0XoachFQI/glwM066JniYC5Yjv
+         jiyuJbGAgCgs0avenlhmD3u3Q0MDjNA/wPRb0I+kaLNcjDHYng4SUtXkqg1iIbklShcT
+         u/OmWS2O17Fbavnp7f8ERKiwbf5WesDEha3GK1DB5/91dT7HOZIt04oibLGSAW2F2BL3
+         VI1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/x+rzFhqL8qq/IbAbhJvN4V9t4Lz3kP/p46lFDN1LPU=;
+        b=WVUbD/oi4gU4ES4J6H3dmse0uVa2KKBZCft382pUnd6JDrWCmQGuTojGTG2EF4IsRd
+         JSN33Tdr+ksrrTmr/aMXHESeoIS7l5zRJtjTjoIqz7bcpO42RqbtwPZljCEOves1yjux
+         sK6PXRjLIvXa1IJ7hEKEYXzwY0KYonxo0U8Jj8HdWB2oBYjoXYa8ZXLDIhs8lvMMzIET
+         N0tBBR9yaHAaFK9f4o38E6fswqdfzzyN1hqtP3jhCR1zBRFXwfNHIswQ0aCaxWGLvAnX
+         0IKKu2j1vjVKYTcX7i7qKbY9/r2Ss7vL9T7J5KdCUTG8ZMnwasznGpjZswZDypRnadSE
+         Gwug==
+X-Gm-Message-State: AGi0PuZJ11t58ughvsyfuuEu6das+o+JS6xnaMqvyAfxfWkF41GmwKCx
+        t0Fg9a7NtDSFrjLKeeV8w4Ttcw==
+X-Google-Smtp-Source: APiQypJzR7a0kCiE/1VDTmkgBdSYfEHsJ0JsARDvEUXhRCY3bEJHo7Os1dih7PRmqQ2XQpmx9ywNJw==
+X-Received: by 2002:a17:90b:1104:: with SMTP id gi4mr937970pjb.115.1588222943125;
+        Wed, 29 Apr 2020 22:02:23 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o9sm671869pje.47.2020.04.29.22.02.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2020 22:02:22 -0700 (PDT)
+Date:   Wed, 29 Apr 2020 22:02:59 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, arnd@arndb.de
+Subject: Re: [PATCH] misc: fastrpc: fix memory leak
+Message-ID: <20200430050259.GB2166963@builder.lan>
+References: <20200429152951.18504-1-srinivas.kandagatla@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200429152951.18504-1-srinivas.kandagatla@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds a new compatible string for sc7180 and also an
-additional clock listing needed to power the TBUs and the TCU.
+On Wed 29 Apr 08:29 PDT 2020, Srinivas Kandagatla wrote:
 
-Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
----
-v2: Addressed review comments from Doug
+> if misc_register() fails, previously allocated data is left without freeing,
+> this could result in memory leak.
 
- Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 8 ++++++++
- 1 file changed, 8 insertions(+)
+s/could/will/
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index 6515dbe..ba5dba4 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -28,6 +28,7 @@ properties:
-           - enum:
-               - qcom,msm8996-smmu-v2
-               - qcom,msm8998-smmu-v2
-+              - qcom,sc7180-smmu-v2
-               - qcom,sdm845-smmu-v2
-           - const: qcom,smmu-v2
+> 
+> So fix it!
+> 
 
-@@ -113,16 +114,23 @@ properties:
-       present in such cases.
+As Markus pointed out, a Fixes: tag would be in order to make sure this
+is backported properly.
 
-   clock-names:
-+    minItems: 2
-+    maxItems: 3
-     items:
-       - const: bus
-       - const: iface
-+      - const: mem_iface
 
-   clocks:
-+    minItems: 2
-+    maxItems: 3
-     items:
-       - description: bus clock required for downstream bus access and for the
-           smmu ptw
-       - description: interface clock required to access smmu's registers
-           through the TCU's programming interface.
-+      - description: clock required for the inner working of SMMU TBUs and the
-+          TCU like the pagetable walks and the TLB flushes.
+PS: although unlikely, if of_platform_populate() where to fail we're
+leaking both the contet and the misc device.
 
-   power-domains:
-     maxItems: 1
---
-1.9.1
+Regards,
+Bjorn
+
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  drivers/misc/fastrpc.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index e3e085e33d46..9065d3e71ff7 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1613,8 +1613,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  					    domains[domain_id]);
+>  	data->miscdev.fops = &fastrpc_fops;
+>  	err = misc_register(&data->miscdev);
+> -	if (err)
+> +	if (err) {
+> +		kfree(data);
+>  		return err;
+> +	}
+>  
+>  	kref_init(&data->refcount);
+>  
+> -- 
+> 2.21.0
+> 
