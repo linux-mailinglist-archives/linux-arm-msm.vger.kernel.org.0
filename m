@@ -2,179 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5623D1C0447
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 20:01:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 559E11C046C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 20:12:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726309AbgD3SBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 14:01:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726384AbgD3SBa (ORCPT
+        id S1726318AbgD3SMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 14:12:48 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:53326 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726355AbgD3SMr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 14:01:30 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 085EBC09B041
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 11:01:30 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id x15so180349pfa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 11:01:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ptgh2/1279PcmgwwRPQcmLMSq0T7hBYsw3s8yDo8jLI=;
-        b=PIx1oXjrOK7BYxhAUE+LXwRfI/GBeEr4ErdwjOYMNGSaB4a9NUgrr9/zN7DYHZ4b8k
-         UsSW8WXpaZvTSF5+idEz3jzZUl5Pa1USyJU5gA+OnhVHLwMo0DrUIpQMz4eVor/55qWg
-         zOL56wRI1C7ug6sqZeAS8NXsxj22pXkzKJKKCbBhNOeF4RDd8PgMiEzrYoaffwhRuR2e
-         ffET6v166TCBaNtoGF7Drj00Faal2lwUAUIcRJUrFn8ANwsfu0JoJv1B0nhNL6vKp5/v
-         95hwCTtzAnEnntJCoPCRcdaO4iTJe3nKlRblHnW3mJ6hjs6SRWQqeUy+YrSJRayK0F39
-         OilA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ptgh2/1279PcmgwwRPQcmLMSq0T7hBYsw3s8yDo8jLI=;
-        b=UTe6xez2WFB2p/SZVXR+6d63FieuK1ZZPknZvCHMLQAaQKx1GFlDXF7fy8hKfwd+I0
-         bHVK6ItlOq3ixMTlUQprvtqR5t7y27oFHGG8JkM7GIh7uQB4n3pIGFYpNdIb6uG3aSp3
-         7UC1pO64ulwqrtwn/B0l+fR4sIGfjDsSivYGy3SXmIHcreLjX/fySrpYFe5OU69irQmn
-         qRZ4KqPFPI9hVtN9ukpdtNkWKKgL+7ysixf1IYqcOcJLc+Hv4/bZWf0bm9iBfBUYLUAJ
-         kSJGvGFYixgZOVCL1LuEQ5/782kettvtQy8o5j+tkXujyb1jQysEC3wtXvlw7mGlrtkf
-         kijA==
-X-Gm-Message-State: AGi0PuYJGN5xmqWBtHZ+LUImz7QYJCnjdztiz7s4529hx/tuPPPLxUkf
-        6EH7v9NtTBYGEuJOdayjKcVqQQ==
-X-Google-Smtp-Source: APiQypJ0DI4Z4f+sjCwlpGCk/Hib857vv5XoecESdXSZl9HnFZ8XO7QR6MZ+M/LyLNg3gwfpVswZYg==
-X-Received: by 2002:aa7:9a4c:: with SMTP id x12mr492559pfj.263.1588269689346;
-        Thu, 30 Apr 2020 11:01:29 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o68sm357741pfb.206.2020.04.30.11.01.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2020 11:01:28 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v2 2/2] remoteproc: qcom: pas: Add SM8250 PAS remoteprocs
-Date:   Thu, 30 Apr 2020 11:00:51 -0700
-Message-Id: <20200430180051.3795305-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200430180051.3795305-1-bjorn.andersson@linaro.org>
-References: <20200430180051.3795305-1-bjorn.andersson@linaro.org>
+        Thu, 30 Apr 2020 14:12:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588270366; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=pPcbnLkLayy2Rm6j200c+uFP70JSkmmB+Gfck54oXYM=; b=kv2qM9HjBVYqwn66uiyNskrOszI9GIlhIAvuKHuuEUd8i7MydbGphmVZFMNrLBam2tNUEWAC
+ 1GoZkt+lPWmpdMAd6CbhzsOU8LP0G0zgGniCtQsOEqmmccyAbFTAn017Y0e1x/Yuptbx5TwK
+ bhi7m164kCZJyz17YfYhmQ3jXMA=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eab1516.7f27703a0650-smtp-out-n04;
+ Thu, 30 Apr 2020 18:12:38 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 31282C433F2; Thu, 30 Apr 2020 18:12:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4822C433D2;
+        Thu, 30 Apr 2020 18:12:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A4822C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Thu, 30 Apr 2020 12:12:33 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Sharat Masetty <smasetty@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, robh@kernel.org, robin.murphy@arm.com,
+        saiprakash.ranjan@codeaurora.org
+Subject: Re: [PATCH v2] dt-bindings: arm-smmu: Add sc7180 compatible string
+ and mem_iface clock
+Message-ID: <20200430181233.GA21991@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Sharat Masetty <smasetty@codeaurora.org>,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, robh@kernel.org, robin.murphy@arm.com,
+        saiprakash.ranjan@codeaurora.org
+References: <1588219187-19295-1-git-send-email-smasetty@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1588219187-19295-1-git-send-email-smasetty@codeaurora.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add audio, compute and sensor DSP compatibles to the Qualcomm PAS
-binding and driver.
+On Thu, Apr 30, 2020 at 09:29:47AM +0530, Sharat Masetty wrote:
+> This patch adds a new compatible string for sc7180 and also an
+> additional clock listing needed to power the TBUs and the TCU.
+> 
+> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> ---
+> v2: Addressed review comments from Doug
+> 
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index 6515dbe..ba5dba4 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -28,6 +28,7 @@ properties:
+>            - enum:
+>                - qcom,msm8996-smmu-v2
+>                - qcom,msm8998-smmu-v2
+> +              - qcom,sc7180-smmu-v2
+>                - qcom,sdm845-smmu-v2
+>            - const: qcom,smmu-v2
+> 
+> @@ -113,16 +114,23 @@ properties:
+>        present in such cases.
+> 
+>    clock-names:
+> +    minItems: 2
+> +    maxItems: 3
+>      items:
+>        - const: bus
+>        - const: iface
+> +      - const: mem_iface
 
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+Hi Sharat -
 
-Changes since v1:
-- Renamed adsp power-domains lcd and lmx
+I think there was a bit of confusion due to renaming between downstream and
+upstream.  Currently for the sdm845 and friends we have:
 
- drivers/remoteproc/qcom_q6v5_pas.c | 62 ++++++++++++++++++++++++++++++
- 1 file changed, 62 insertions(+)
+  clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+     <&gcc GCC_GPU_CFG_AHB_CLK>;
+  clock-names = "bus", "iface";
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index fc6658b523b6..efbc1777000a 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -508,6 +508,26 @@ static const struct adsp_data sm8150_adsp_resource = {
- 		.ssctl_id = 0x14,
- };
- 
-+static const struct adsp_data sm8250_adsp_resource = {
-+	.crash_reason_smem = 423,
-+	.firmware_name = "adsp.mdt",
-+	.pas_id = 1,
-+	.has_aggre2_clk = false,
-+	.auto_boot = true,
-+	.active_pd_names = (char*[]){
-+		"load_state",
-+		NULL
-+	},
-+	.proxy_pd_names = (char*[]){
-+		"lcx",
-+		"lmx",
-+		NULL
-+	},
-+	.ssr_name = "lpass",
-+	.sysmon_name = "adsp",
-+	.ssctl_id = 0x14,
-+};
-+
- static const struct adsp_data msm8998_adsp_resource = {
- 		.crash_reason_smem = 423,
- 		.firmware_name = "adsp.mdt",
-@@ -553,6 +573,25 @@ static const struct adsp_data sm8150_cdsp_resource = {
- 	.ssctl_id = 0x17,
- };
- 
-+static const struct adsp_data sm8250_cdsp_resource = {
-+	.crash_reason_smem = 601,
-+	.firmware_name = "cdsp.mdt",
-+	.pas_id = 18,
-+	.has_aggre2_clk = false,
-+	.auto_boot = true,
-+	.active_pd_names = (char*[]){
-+		"load_state",
-+		NULL
-+	},
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		NULL
-+	},
-+	.ssr_name = "cdsp",
-+	.sysmon_name = "cdsp",
-+	.ssctl_id = 0x17,
-+};
-+
- static const struct adsp_data mpss_resource_init = {
- 	.crash_reason_smem = 421,
- 	.firmware_name = "modem.mdt",
-@@ -604,6 +643,26 @@ static const struct adsp_data sm8150_slpi_resource = {
- 		.ssctl_id = 0x16,
- };
- 
-+static const struct adsp_data sm8250_slpi_resource = {
-+	.crash_reason_smem = 424,
-+	.firmware_name = "slpi.mdt",
-+	.pas_id = 12,
-+	.has_aggre2_clk = false,
-+	.auto_boot = true,
-+	.active_pd_names = (char*[]){
-+		"load_state",
-+		NULL
-+	},
-+	.proxy_pd_names = (char*[]){
-+		"lcx",
-+		"lmx",
-+		NULL
-+	},
-+	.ssr_name = "dsps",
-+	.sysmon_name = "slpi",
-+	.ssctl_id = 0x16,
-+};
-+
- static const struct adsp_data msm8998_slpi_resource = {
- 		.crash_reason_smem = 424,
- 		.firmware_name = "slpi.mdt",
-@@ -644,6 +703,9 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm8150-cdsp-pas", .data = &sm8150_cdsp_resource},
- 	{ .compatible = "qcom,sm8150-mpss-pas", .data = &mpss_resource_init},
- 	{ .compatible = "qcom,sm8150-slpi-pas", .data = &sm8150_slpi_resource},
-+	{ .compatible = "qcom,sm8250-adsp-pas", .data = &sm8250_adsp_resource},
-+	{ .compatible = "qcom,sm8250-cdsp-pas", .data = &sm8250_cdsp_resource},
-+	{ .compatible = "qcom,sm8250-slpi-pas", .data = &sm8250_slpi_resource},
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, adsp_of_match);
+Confusingly these same clocks downstream are "mem_iface_clk" and "iface_clk"
+respectively.
+
+It looks like you are trying to add GCC_DDRSS_GPU_AXI_CLK as "mem_iface" which
+was formerly "mem_clk" downstream. I'm not sure if the naming change is
+intentional or you were trying to make upstream and downstream match and didn't
+realize that they were renamed.
+
+I'm not sure if we need DDRSS_GPU_AXI_CLK or not. Empirically it works without
+it for sdm845 (I don't have a sc7180 to test) but we should probably loop back
+with either the clock team or the hardware designers to be sure there isn't a
+corner case that is missing. I agree with Doug that its always best if we don't
+need to add a clock.
+
+Jordan
+> 
+>    clocks:
+> +    minItems: 2
+> +    maxItems: 3
+>      items:
+>        - description: bus clock required for downstream bus access and for the
+>            smmu ptw
+>        - description: interface clock required to access smmu's registers
+>            through the TCU's programming interface.
+> +      - description: clock required for the inner working of SMMU TBUs and the
+> +          TCU like the pagetable walks and the TLB flushes.
+> 
+>    power-domains:
+>      maxItems: 1
+> --
+> 1.9.1
+> 
+
 -- 
-2.24.0
-
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
