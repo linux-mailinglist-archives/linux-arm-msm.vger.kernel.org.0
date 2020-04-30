@@ -2,135 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FEE61BF263
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 10:14:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1DC31BF3A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2020 11:03:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbgD3IOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 04:14:08 -0400
-Received: from mga05.intel.com ([192.55.52.43]:53345 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726420AbgD3IOH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 04:14:07 -0400
-IronPort-SDR: CJZFqKVRzetJLaFH0UY0qs8spw7oLFLXeycogjYlFbDRUCm2sJMzKhWlYYchmbamiF5794mZEw
- 38SSH/tNdgPw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2020 01:14:07 -0700
-IronPort-SDR: uFHd1QvMqwsVjYuStyOgaaShvlCIM+157lRk2Y6+1ERlCbd6jkG3U0B0B7Sp28o6oAUImy3YNW
- sPCIMgnuHmKg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,334,1583222400"; 
-   d="scan'208";a="258222439"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.170]) ([10.237.72.170])
-  by orsmga003.jf.intel.com with ESMTP; 30 Apr 2020 01:14:03 -0700
-Subject: Re: [PATCH v10 3/5] usb: xhci: Add support for Renesas controller
- with memory
+        id S1726782AbgD3JC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 05:02:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37890 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726631AbgD3JC5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Apr 2020 05:02:57 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309F1C035495
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 02:02:57 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id f7so2580165pfa.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2020 02:02:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=o0ylbaJJxRYJkYt9dU8gOqV6HQ6SaTR5QYZMMNZsLLU=;
+        b=FLfFZ3bDtV27gmsNgunn881EGIhX6Nj10ko7iTpy6xGWSxO9Ejnx17ogDC384rGBC8
+         nQpfFiI7mBiDaIoucUb4GQUk7r73Z0dzYc4m4e1aKwEFolNSmGfeSc032QoOmRu+0VKl
+         kxnf43L/VHxFXCA7ztXp0vCU8TclFa6KlIOl4dz/cElkebmNtvfGmxbHU2pLf/zACTGr
+         SMLkIHwVr59kHfqnHYupHirFcOjPHeabb3MlOYu3+2twh+Ta+Ot2VlWMtLl7taQI4VGm
+         W1Q6pgamNHmIx0YCJw9A2Yg4yCdT1jw39P0Ac/Z3iSfP4u7h+XwrYMaLaHRao8GJJM0Q
+         LdyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=o0ylbaJJxRYJkYt9dU8gOqV6HQ6SaTR5QYZMMNZsLLU=;
+        b=tFkivITgdjTh/Z1fppEPa4sgW6tq3vHLSSH/R0Rg/8+isfcv0XrndN7/OrdpJ3D70q
+         tJ/IElN+7+Xkc3O4BCNuFXlCCp1cN8gfFmgqpo6nHv73Ncjm4FnykfRN+VGGFxotIyGT
+         kH9oRDoJy77yOE17q/vc0NhaIrKsqLuDJ70/nWfg/RwoozjX/LKZ2iNxBQo/BFkmbZlj
+         00jb4wyf7CmrB+AVdRJ/oN4wVCZvShSmhzFou47OXM3duePumNBqYlmNyL/enKB0ExH0
+         DalrNXHzDsSqDu+Y8tT3gfa/HDtMaLVGW6Q/Y4X7ir/VH+jUQQoK+CE7p1/8baX7UE/X
+         0eTw==
+X-Gm-Message-State: AGi0PuZBbaBzamYFMBzSG6j9dvP/ygW8oaDAUSsCX+rLnxEk0qLTT/ix
+        e7R0BZClaYlbD4q/6BSVW95J
+X-Google-Smtp-Source: APiQypJSoPPAe7Hpds17aNNNGnGknCCNBSB6EgMvl5rOMHNFthsP0vuECBfaRygcf3/KvFZAh/rZKg==
+X-Received: by 2002:a63:1c50:: with SMTP id c16mr2287909pgm.255.1588237376211;
+        Thu, 30 Apr 2020 02:02:56 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6081:946c:419e:a71:7237:1613])
+        by smtp.gmail.com with ESMTPSA id m7sm3070924pfb.48.2020.04.30.02.02.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Apr 2020 02:02:55 -0700 (PDT)
+Date:   Thu, 30 Apr 2020 14:32:47 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        =?UTF-8?Q?Andreas_B=c3=b6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200424101410.2364219-1-vkoul@kernel.org>
- <20200424101410.2364219-4-vkoul@kernel.org>
- <79023293-8ad8-751c-b4ca-8393cdbbf4a2@linux.intel.com>
- <20200429142850.GM56386@vkoul-mobl.Dlink>
- <20200430062055.GE948789@vkoul-mobl.Dlink>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=mathias.nyman@linux.intel.com; prefer-encrypt=mutual; keydata=
- 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 fiD/
-Message-ID: <2cf10102-7529-6543-476a-e99730772c64@linux.intel.com>
-Date:   Thu, 30 Apr 2020 11:16:49 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Raghavendra Rao Ananta <rananta@codeaurora.org>
+Subject: Re: [PATCH 2/2] soc: qcom: ipcc: Add support for IPCC controller
+Message-ID: <20200430090247.GC9449@Mani-XPS-13-9360>
+References: <20200430063054.18879-1-manivannan.sadhasivam@linaro.org>
+ <20200430063054.18879-2-manivannan.sadhasivam@linaro.org>
+ <20200430072448.GF948789@vkoul-mobl.Dlink>
 MIME-Version: 1.0
-In-Reply-To: <20200430062055.GE948789@vkoul-mobl.Dlink>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200430072448.GF948789@vkoul-mobl.Dlink>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.4.2020 9.20, Vinod Koul wrote:
-> On 29-04-20, 19:58, Vinod Koul wrote:
->> On 29-04-20, 16:53, Mathias Nyman wrote:
->>> On 24.4.2020 13.14, Vinod Koul wrote:
+Hi,
+
+On Thu, Apr 30, 2020 at 12:54:48PM +0530, Vinod Koul wrote:
+> On 30-04-20, 12:00, Manivannan Sadhasivam wrote:
 > 
->>>>  	/* Prevent runtime suspending between USB-2 and USB-3 initialization */
->>>>  	pm_runtime_get_noresume(&dev->dev);
->>>> @@ -388,6 +401,9 @@ static void xhci_pci_remove(struct pci_dev *dev)
->>>>  {
->>>>  	struct xhci_hcd *xhci;
->>>>  
->>>> +	if (renesas_device)
->>>> +		renesas_xhci_pci_exit(dev);
->>>> +
->>>
->>> Ah, I see, what we really should do is make sure the quirks in the driver data get
->>> added to xhci->quirks, and then just check for the correct quirk in xhci_pci_remove.
->>
->> Ah sure that does sound better, I will update this as well and send an
->> update with these changes
+> > +#define IPCC_SIGNAL_ID_MASK		GENMASK(15, 0)
+> > +#define IPCC_CLIENT_ID_MASK		GENMASK(31, 16)
+> > +#define IPCC_CLIENT_ID_SHIFT		16
+> > +
+> > +#define IPCC_NO_PENDING_IRQ		0xffffffff
 > 
-> This works for me.. But I have kept the code as in the xhci_pci_probe(),
-> ofcourse removed bool renesas_device.
+> Why not GENMASK(31, 0)
+> 
 
-That's fine, xhci is just hcd->hcd_priv, and it doesn't exists before
-usb_hcd_pci_probe() is called
+Hmm, I usually use GENMASK for mask defines. But yeah it can be used here.
 
-usb_hcd_pci_probe()
-  usb_create_hcd()
-    hcd = kzalloc(sizeof(*hcd) + driver->hcd_priv_size, GFP_KERNEL);
+> > +static struct qcom_ipcc_proto_data *ipcc_proto_data;
+> 
+> why do we need a global which is used only once.
+> 
 
--Mathias
+Ah, that's a left over. Will remove it.
 
+> > +static void qcom_ipcc_mask_irq(struct irq_data *irqd)
+> > +{
+> > +	struct qcom_ipcc_proto_data *proto_data;
+> > +	irq_hw_number_t hwirq = irqd_to_hwirq(irqd);
+> > +	u16 sender_client_id = qcom_ipcc_get_client_id(hwirq);
+> > +	u16 sender_signal_id = qcom_ipcc_get_signal_id(hwirq);
+> 
+> last three are used for debug log, fn can be much simpler if we get rid
+> of noise.. Do we really need this to be production :)
+> 
 
+This is for debugging the production systems, that's why dev_dbg. So I don't
+consider it as a noise :)
+
+> > +
+> > +	proto_data = irq_data_get_irq_chip_data(irqd);
+> > +
+> > +	dev_dbg(proto_data->dev,
+> > +		"Disabling interrupts for: client_id: %u; signal_id: %u\n",
+> > +		sender_client_id, sender_signal_id);
+> > +
+> > +	writel(hwirq, proto_data->base + IPCC_REG_RECV_SIGNAL_DISABLE);
+> > +}
+> > +
+> > +static void qcom_ipcc_unmask_irq(struct irq_data *irqd)
+> > +{
+> > +	struct qcom_ipcc_proto_data *proto_data;
+> > +	irq_hw_number_t hwirq = irqd_to_hwirq(irqd);
+> > +	u16 sender_client_id = qcom_ipcc_get_client_id(hwirq);
+> > +	u16 sender_signal_id = qcom_ipcc_get_signal_id(hwirq);
+> 
+> here as well
+> 
+> > +static int qcom_ipcc_domain_xlate(struct irq_domain *d,
+> > +				  struct device_node *node, const u32 *intspec,
+> > +				  unsigned int intsize,
+> > +				  unsigned long *out_hwirq,
+> > +				  unsigned int *out_type)
+> 
+> pls align these to match open parenthesis
+> 
+
+It is aligned. Perhaps diff is showing it as mangled due to ignoring
+whitespaces?
+
+> > +static int qcom_ipcc_setup_mbox(struct qcom_ipcc_proto_data *proto_data,
+> > +				struct device_node *controller_dn)
+> > +{
+> > +	struct mbox_controller *mbox;
+> > +	struct device_node *client_dn;
+> > +	struct device *dev = proto_data->dev;
+> > +	struct of_phandle_args curr_ph;
+> > +	int i, j, ret;
+> > +	int num_chans = 0;
+> > +
+> > +	/*
+> > +	 * Find out the number of clients interested in this mailbox
+> > +	 * and create channels accordingly.
+> > +	 */
+> > +	for_each_node_with_property(client_dn, "mboxes") {
+> > +		if (!of_device_is_available(client_dn))
+> > +			continue;
+> > +		i = of_count_phandle_with_args(client_dn,
+> > +					       "mboxes", "#mbox-cells");
+> > +		for (j = 0; j < i; j++) {
+> > +			ret = of_parse_phandle_with_args(client_dn, "mboxes",
+> > +							 "#mbox-cells", j,
+> > +							 &curr_ph);
+> 
+> this sounds like something DT should do, not drivers :)
+> 
+
+Right. This is design discussion I'd like to have. Currently the driver checks
+the DT and allocates the total number of mbox channels. But I think the more
+cleaner way would be to have this driver allocating fixed number of channels
+statically and let the clients use it.
+
+Maybe Raghavendra/Venkat can comment here?
+
+> > +static int qcom_ipcc_probe(struct platform_device *pdev)
+> > +{
+> > +	struct qcom_ipcc_proto_data *proto_data;
+> > +	int ret;
+> > +
+> > +	proto_data = devm_kzalloc(&pdev->dev, sizeof(*proto_data), GFP_KERNEL);
+> > +	if (!proto_data)
+> > +		return -ENOMEM;
+> > +
+> > +	ipcc_proto_data = proto_data;
+> > +	proto_data->dev = &pdev->dev;
+> > +
+> > +	proto_data->base = devm_platform_ioremap_resource(pdev, 0);
+> > +	if (IS_ERR(proto_data->base)) {
+> > +		dev_err(&pdev->dev, "Failed to ioremap the ipcc base addr\n");
+> > +		return PTR_ERR(proto_data->base);
+> > +	}
+> > +
+> > +	proto_data->irq = platform_get_irq(pdev, 0);
+> > +	if (proto_data->irq < 0) {
+> > +		dev_err(&pdev->dev, "Failed to get the IRQ\n");
+> > +		return proto_data->irq;
+> > +	}
+> > +
+> > +	/* Perform a SW reset on this client's protocol state */
+> > +	writel(0x1, proto_data->base + IPCC_REG_CLIENT_CLEAR);
+> > +
+> > +	proto_data->irq_domain = irq_domain_add_tree(pdev->dev.of_node,
+> > +						     &qcom_ipcc_irq_ops,
+> > +						     proto_data);
+> > +	if (!proto_data->irq_domain) {
+> > +		dev_err(&pdev->dev, "Failed to add irq_domain\n");
+> > +		return -ENOMEM;
+> > +	}
+> > +
+> > +	ret = qcom_ipcc_setup_mbox(proto_data, pdev->dev.of_node);
+> > +	if (ret) {
+> > +		dev_err(&pdev->dev, "Failed to create mailbox\n");
+> > +		goto err_mbox;
+> > +	}
+> > +
+> > +	ret = devm_request_irq(&pdev->dev, proto_data->irq, qcom_ipcc_irq_fn,
+> > +			       IRQF_TRIGGER_HIGH, "ipcc", proto_data);
+> > +	if (ret < 0) {
+> > +		dev_err(&pdev->dev, "Failed to register the irq: %d\n", ret);
+> 
+> Should the qcom_ipcc_setup_mbox() not be unroller here?
+> 
+
+qcom_ipcc_setup_mbox() uses devm_ API for registering mbox controller. So what
+is the issue?
+
+> > +		goto err_mbox;
+> > +	}
+> > +
+> > +	enable_irq_wake(proto_data->irq);
+> > +	platform_set_drvdata(pdev, proto_data);
+> > +
+> > +	return 0;
+> > +
+> > +err_mbox:
+> > +	irq_domain_remove(proto_data->irq_domain);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static int qcom_ipcc_remove(struct platform_device *pdev)
+> > +{
+> > +	struct qcom_ipcc_proto_data *proto_data = platform_get_drvdata(pdev);
+> > +
+> > +	disable_irq_wake(proto_data->irq);
+> > +	irq_domain_remove(proto_data->irq_domain);
+> 
+> So you are calling this when your isr is active, we have possibility of
+> race here. This function come with a warning:
+> "The caller must ensure that all mappings within the domain have been disposed"
+> 
+
+I thought it is not required since most of the interrupt controller drivers
+don't do it. But checked with Marc Zyngier and he suggested to dispose the
+mapping as that's the good practice. The usual pattern is an interrupt
+controller is not built as a module and the assumption is it lives forever.
+
+But one issue here is, currently we don't know the allocated irqs (in specific
+hw irq numbers) as we don't create the mapping. It gets created when a client
+calls platform_get_irq(). In the irq handler, we just read the current hw irq
+number from a register. So, if we want to dispose the mapping then we need to
+track the allocated irqs. Else we need to create the mapping for all possible
+clients in this driver itself. I'm not sure which one is preferred.
+
+Maybe Bjorn/qcom folks can comment what is preferred here?
+
+Thanks,
+Mani
+
+> Has that been done?
+> 
+> -- 
+> ~Vinod
