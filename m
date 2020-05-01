@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EC7B1C17F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 16:40:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19C581C190E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 17:10:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728894AbgEAOj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 10:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33494 "EHLO
+        id S1729429AbgEAPKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 11:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728929AbgEAOjZ (ORCPT
+        with ESMTP id S1729340AbgEAPKu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 10:39:25 -0400
-Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6EDDC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2020 07:39:24 -0700 (PDT)
-Received: by mail-vk1-xa43.google.com with SMTP id u203so2720564vkb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2020 07:39:24 -0700 (PDT)
+        Fri, 1 May 2020 11:10:50 -0400
+Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E11C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2020 08:10:50 -0700 (PDT)
+Received: by mail-ua1-x944.google.com with SMTP id g35so3855649uad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2020 08:10:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=URjoa0IPAuVJrJzf1GzsjjCJgtImSI4fVU++g+IJyuo=;
-        b=SMxlHq5r/xlgb1aFLRF6VaIP1+SWFfbYQhAXjYZD4COiPW8KJ+YqJlOeUxHxCY5DlG
-         Idx1WYR1HxdMRSDeEA2FIMDrtrlxs+zIzz57nuJsVPdb23kkRR6vDORPdekV6cr8T2ey
-         XFPCDrZn+jfp9p8SrvmZa/jauPbMy65QXIIZs=
+        bh=knTG2gmvtoT22+XOsX7dmFpVAGO3ao9zwsfFiTXURTg=;
+        b=i5JF31iiDLo6z171lTJxhjapmVJS9gqP3xgHzEmURWBZ9ZrO+wXla6ynAK3ki/7XPX
+         sRwv80rlH6ndWj4Gju7PPJfTN9R8SjAgNB8Ev4Z37QlaoWQGa2up1QK2IwuGgWTxfCp1
+         86gjvyWw9Ih0xsuuDS86kOVoOpHcVaXBZSNjQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=URjoa0IPAuVJrJzf1GzsjjCJgtImSI4fVU++g+IJyuo=;
-        b=pFFSIMdf8+TvExi2L42QMk3eWYnAM1oXu4u1FlvfJgsp1fxEwyUl68RCqYYOjHVQ9o
-         pVQVirblm13Qn7TqCb9arrfzrygqIKrww134zzgGdYVaYU6ma5XdAn1KI/ShAF36FJJw
-         0capCbfU0oRLPatsOkQxVh6CYFuchL/8jLhKiZsf1KQW1YF8rDQO/lDgepHVLF2JvUnS
-         TLk4Bm/0V5joPi/Q8HPdK5hNNkOl6Ep5T7VcdlQ/AmPPgq4VHvwluStHJXxuvszDNf53
-         L9r2mqhzqPrG++YycX1pfPrziHo6hzuJhHad26VNtiDFcWtWexvS5jjXB8HJ9yOunVCJ
-         dd9g==
-X-Gm-Message-State: AGi0Pubz1lqrjRgIZZZKRfvo///4CT0jLw3KeQQvNOWn4Lim5rv/NGYY
-        rrAyTS1xTogbrGBJIo960nV74lDpQms=
-X-Google-Smtp-Source: APiQypK4SQj+BSN7c2KHzulebYSPFYnjzZN9joAXLpDHfrCaeIVclA5cBTezjr84/VEDPHdF5oDUGw==
-X-Received: by 2002:a1f:a94e:: with SMTP id s75mr2880280vke.70.1588343963963;
-        Fri, 01 May 2020 07:39:23 -0700 (PDT)
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com. [209.85.217.42])
-        by smtp.gmail.com with ESMTPSA id v23sm802273vsa.6.2020.05.01.07.39.23
+        bh=knTG2gmvtoT22+XOsX7dmFpVAGO3ao9zwsfFiTXURTg=;
+        b=osdpPal+Kou8ETFNOUgzFMyWQqM0ALPovPwA6PZTe0h+Hogr2CwI62SPz/2WYGRXu8
+         v7o+HnSLKfjV/RpZ2dYtVMDhBrwEoJ63sOgYa04jHs9Lq/ErTa4NP4ZTKVZyTBJcowVo
+         lZ/1YPoYOBShKyoVVWGD9CVuApSSa4aIpGXbFjKda3a1CM9JqcImqA3ZtNh/XEq1TvDa
+         BQBHMGjkj3TbOu3crFArRPFaEKzuAEnXN3SXcLpXMm9p+h9kiFBCbaVZUSWpWlfgOpfy
+         CrvWGRNbU/3JC91CgiAdlnz8Icp3exfPN24nV8uixgeux34SFlBpiJod7pXOcq8V3tuI
+         No/Q==
+X-Gm-Message-State: AGi0Pua7wqul+1OctFoi9iDPPnUxHibBBKdF5V9T8yi1iUd2cwz69SW5
+        +ZybnGRwjD/nSDr1XUjwCAkvN/OE4fc=
+X-Google-Smtp-Source: APiQypK0WiWX10AtA2ztbblT2ZO8xhT13X166kdCUpy0PSuUqjL7fdHW5E0dQ5Spsb/Bn4xpdlUzYw==
+X-Received: by 2002:a9f:304a:: with SMTP id i10mr3225904uab.26.1588345849129;
+        Fri, 01 May 2020 08:10:49 -0700 (PDT)
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
+        by smtp.gmail.com with ESMTPSA id u13sm759998vsg.12.2020.05.01.08.10.48
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 May 2020 07:39:23 -0700 (PDT)
-Received: by mail-vs1-f42.google.com with SMTP id a5so6386649vsm.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2020 07:39:23 -0700 (PDT)
-X-Received: by 2002:a67:bd07:: with SMTP id y7mr3484487vsq.109.1588343962687;
- Fri, 01 May 2020 07:39:22 -0700 (PDT)
+        Fri, 01 May 2020 08:10:48 -0700 (PDT)
+Received: by mail-vs1-f47.google.com with SMTP id b5so6447853vsb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2020 08:10:48 -0700 (PDT)
+X-Received: by 2002:a67:bd07:: with SMTP id y7mr3622452vsq.109.1588345847717;
+ Fri, 01 May 2020 08:10:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <1588329036-18732-1-git-send-email-smasetty@codeaurora.org>
-In-Reply-To: <1588329036-18732-1-git-send-email-smasetty@codeaurora.org>
+References: <1588314617-4556-1-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1588314617-4556-1-git-send-email-mkshah@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 1 May 2020 07:39:11 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W+uaPTZHKXq6WYgx-ZDL1QTedEpNw9T747UBD_g1O8CQ@mail.gmail.com>
-Message-ID: <CAD=FV=W+uaPTZHKXq6WYgx-ZDL1QTedEpNw9T747UBD_g1O8CQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Add A618 gpu dt blob
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@freedesktop.org,
+Date:   Fri, 1 May 2020 08:10:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V8phQsc5SSUdqw-HRPYzW5QoEc8NoVJ+ZXQz72FgEPug@mail.gmail.com>
+Message-ID: <CAD=FV=V8phQsc5SSUdqw-HRPYzW5QoEc8NoVJ+ZXQz72FgEPug@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Add affinity callbacks to msmgpio IRQ chip
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Andy Gross <andy.gross@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LinusW <linus.walleij@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Srinivas Rao L <lsrao@codeaurora.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -78,24 +78,20 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, May 1, 2020 at 3:30 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
+On Thu, Apr 30, 2020 at 11:31 PM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> This patch adds the required dt nodes and properties
-> to enabled A618 GPU.
+> From: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
 >
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> Wakeup capable GPIO IRQs routed via PDC are not being migrated when a CPU
+> is hotplugged. Add affinity callbacks to msmgpio IRQ chip to update the
+> affinity of wakeup capable IRQs.
+>
+> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+> Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+> [mkshah: updated commit text and minor code fixes]
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 > ---
-> * Remove GCC_DDRSS_GPU_AXI_CLK clock reference from gpu smmu node.
->
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 102 +++++++++++++++++++++++++++++++++++
->  1 file changed, 102 insertions(+)
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
 
-This is the newer version of the patch:
-
-https://lore.kernel.org/r/1581320465-15854-2-git-send-email-smasetty@codeaurora.org
-
-The change to remove the extra IOMMU clock matches our discussions and
-there's no longer anything blocking this from landing.
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Douglas Anderson <dianders@chromium.org>
