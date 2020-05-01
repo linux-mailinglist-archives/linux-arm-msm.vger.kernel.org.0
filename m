@@ -2,69 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF7551C1EA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 22:41:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 013E41C1EAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 22:41:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728023AbgEAUd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 16:33:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60982 "EHLO
+        id S1726435AbgEAUf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 16:35:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726307AbgEAUd1 (ORCPT
+        with ESMTP id S1726272AbgEAUf3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 16:33:27 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BEABC061A0C;
-        Fri,  1 May 2020 13:33:26 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id u16so977155wmc.5;
-        Fri, 01 May 2020 13:33:26 -0700 (PDT)
+        Fri, 1 May 2020 16:35:29 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE57FC061A0C;
+        Fri,  1 May 2020 13:35:28 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id h4so941975wmb.4;
+        Fri, 01 May 2020 13:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8gi8sSSVku7Mlpq18er+Og+2c/7n3qFHLiGD+J3MmAY=;
-        b=NttStywRerq7mMzWBEZrz3MODSaNdsKg4mrxq3e0HIOBMO5/lsl5d4c5NKuGGxqSBk
-         //sHlYew56zhRyzH/zHQNhMkv/EfmQOeWHz4dw7Y6KHC1V1Gx7Co/bTeMgTeDxv1O0rT
-         OPd2YjaoinDSZkmVTOHK+3SpRqEOOQsKPGKNnTDwrx9nNEuWNepF345yIq3mVAa7SpJm
-         hK3Z9odw/UmWzlYbspfpxJ5vQK13MY//neDCWHuWK2FAvx312D1iOjvVcq2X5vLsSJgH
-         S7lirTmGYmL6iN0NEiQOCAaCOqsAh5vE71Il4jNUcQ2zg5UfHSGaiYszRdSgaWtUbXCS
-         tNEw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UJR6qkcEKg4zj/hYVeH+dQgI/I3RrXDHkrgPPab3suc=;
+        b=swS9lkWBq/1ZKZ/pPS+EuUDYX4EzjGYp5KnOwV7fSwBnRmJP1+6LuxpXDemfATNqj/
+         ZLKcGVcTEQE0VC5QTYSzw0IVfeWPqsWEsldFfbwNnaZPT3pmqnokCOAh7dqw1D38opun
+         MHLrNGJj5bTxgsLIyIrON2ZD1WAqzjYYnKLkq7Aqg30GNcfe4ZqVTRvlyG/4MJLmOvK1
+         +HYhzkn58JeqjCCYxUlsV6zunMKibLxydwuoL2H6Q7t7z0apov4S1oU5wt4eMqStAajZ
+         IwNkCoU+KQvfQu2KfnNidRHK7azRDYdPPvdWXuDp+ShsxJ3f3lH2BkKoYHqvfEZb8bqC
+         TWPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8gi8sSSVku7Mlpq18er+Og+2c/7n3qFHLiGD+J3MmAY=;
-        b=MRmHajK4qJKZMMv9wQ3TCk3s/iLTx+GFSAUhMSJZA3zwBQIBSTQuumpOecmmVZhoIy
-         86fyho/tBTH47ZvFGSGYSlgS5T7MsXeaBnjm4pdgJTQBHlxHk5Z4PFbBs25S5pa+kX51
-         I3tcxoAJxj0f7CKdvr7GTQAmrMrJMZmGQE77nhICIT7B3oz7AZ39McLsBwALUd/BIgoT
-         Zqu/fpmdfQP3SN0XCUmGkW0CSjuISs5Ma1Z6yqEkFKunf0dixW+X3ypIvpNYBsis/5jO
-         lDxHpiofD0iT2VYQ8Sc5aSnWE3/fThcKevZLpB4Kg5dN1vF1k/bE4UupC0UZlh6FCnm3
-         fyxA==
-X-Gm-Message-State: AGi0Puaijn9lXBnBU6qj7Yhkj3rN9/3I6sZ0sRCkN5a/aQvtek1TchN5
-        k1Z+xjnYVHueBNlsS5KaJ/w=
-X-Google-Smtp-Source: APiQypIsczhxCrYfanzHyEK3ClgSdH0yyElY6Ck5mmF5WXWrp1u+mNT0faa6Lp01kxHCjbMlTnbjMA==
-X-Received: by 2002:a1c:1b88:: with SMTP id b130mr1197330wmb.75.1588365204918;
-        Fri, 01 May 2020 13:33:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UJR6qkcEKg4zj/hYVeH+dQgI/I3RrXDHkrgPPab3suc=;
+        b=F3gv04BwxQgj9c5j3YiujwXTlMZPGsw1As14Lhy8B+Jp1h6N8j629sgR+NCnGpupzR
+         Mk3TTMHeSOsfGB9RM7WPG03HwdMMpC3Iweyw6ypbCKxVLFg89+jV2xNBQrs84qxGlKNB
+         UIwdhbJ5PGHOgm6tAFdtmqGMvFtRNrRWEbjlFp9ENV8kwFOUk/UUrcVqqkVLXkmVsQgd
+         nlg5JBH0uTsgOnS3o/RHWXKiRD850Ttkdzchw5jsSj51M6RnuCnXzSooNGUg2CX5g6Yt
+         x0/x2+faexNQ2ZlHgeZs7j2NMPPaI7rl0ae74y3p8o8FS4oiRW8bO29tACr5oZ+rPLr5
+         mliQ==
+X-Gm-Message-State: AGi0PuYy0BlgwM3sPekGJKbArftweVOIxVZwW3LLiMxnb1ONXg2ZH7JE
+        9Luue2zZslTYDUGiwCEatgDQP0XcbHnIEQ==
+X-Google-Smtp-Source: APiQypKUQLLMkja5nKTST+cqkC1H0dquaF9jzTsiLqbDvBgTDlFF3EJ/aVd5aHTHNbPEQ17+uCwSFw==
+X-Received: by 2002:a1c:ba09:: with SMTP id k9mr1213461wmf.176.1588365327680;
+        Fri, 01 May 2020 13:35:27 -0700 (PDT)
 Received: from localhost.localdomain (abag125.neoplus.adsl.tpnet.pl. [83.6.170.125])
-        by smtp.googlemail.com with ESMTPSA id i129sm1104341wmi.20.2020.05.01.13.33.23
+        by smtp.googlemail.com with ESMTPSA id s12sm1021981wmc.7.2020.05.01.13.35.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 13:33:24 -0700 (PDT)
+        Fri, 01 May 2020 13:35:27 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     skrzynka@konradybcio.pl
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] dt-bindings: tsens: qcom: Document MSM8939 compatible
-Date:   Fri,  1 May 2020 22:33:11 +0200
-Message-Id: <20200501203311.143934-3-konradybcio@gmail.com>
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] Add support for venus on msm8939
+Date:   Fri,  1 May 2020 22:35:01 +0200
+Message-Id: <20200501203505.144362-1-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20200501203311.143934-1-konradybcio@gmail.com>
-References: <20200501203311.143934-1-konradybcio@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -72,23 +69,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
----
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Konrad Dybcio (2):
+  media: venus: Add support for MSM8939
+  dt-bindings: media: Document MSM8939 Venus
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 2ddd39d967662..2ce489ccbf902 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -23,6 +23,7 @@ properties:
-         items:
-           - enum:
-               - qcom,msm8916-tsens
-+              - qcom,msm8939-tsens
-               - qcom,msm8974-tsens
-           - const: qcom,tsens-v0_1
- 
+ .../bindings/media/qcom,msm8939-venus.yaml    | 119 ++++++++++++++++++
+ drivers/media/platform/qcom/venus/core.c      |  33 +++++
+ 2 files changed, 152 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
+
 -- 
 2.26.1
 
