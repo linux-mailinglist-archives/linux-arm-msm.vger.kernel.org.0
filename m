@@ -2,110 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1674C1C1C97
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 20:07:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FC121C1D27
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 20:26:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729599AbgEASHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 14:07:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729138AbgEASH3 (ORCPT
+        id S1729801AbgEASZy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 14:25:54 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:57072 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729599AbgEASZy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 14:07:29 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9D5C061A0C;
-        Fri,  1 May 2020 11:07:29 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id re23so8145908ejb.4;
-        Fri, 01 May 2020 11:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u7uWdnXzReMILuWMuJCMVWJ56cZtnobswX6oBH/1+LI=;
-        b=vekpM1d56g5fDbCG1IleQHXSiKBdPaYjvbDBn8cEraD0huZTUU0MxRbSdEavQx1Cw6
-         EfJ1ajFUGwUjFXkD1gx6qod2jw0GuCJt+K/gaLGFmOmikqEmXlXKAIVA9vZcK0mFbTh8
-         yFZyTENfGNSgrpjh0/iLYg3NfLkd7DC/BlT9PotgkO9H6qyhIIgAA3O/vj7dr3oFpyP9
-         /GG4sdRG/BtNvbeZokPrWxkUFJF0xSXcU/KH2ys2+PjRGFIgS9gY2wPSXDEIewMNPHFh
-         Eg0rDnSqahbXmyU0i/FwPAdU4WNkffDNX0IugVwNMGQhQn/RXBLXvpDHafy6WGRTwWT6
-         k2hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u7uWdnXzReMILuWMuJCMVWJ56cZtnobswX6oBH/1+LI=;
-        b=tJyny85eRSHkH6wJ+5PQ2YMJojLAI5X7zqaxTn3NiwZJbkrRziCPYqaxpLcEdRzMlI
-         SX35jySeG5Y21b/WbI+bJ/op8Cb6lte937rYxyjX4n+mSlWuNrdwLvsVDgkdQO5UBsfM
-         TG3T+lg5rnIdaCLnDfrx7F42ttJqdS4yiP1D+Ejo1JbZKDp+RcnXxolNdti9mxT05z4g
-         fiMBlZ8VLKJ8OYldGXClUI2mrGym2iInmb9+hrimaKUP627ORUrnZK9hu1Tz4XnqCjzO
-         ZEBgl2t6S7rsq0afpbK/beDO+RCAF1NwP90kiVqVUdne3l/rVn7c+9WJtMXMQxqZAqmh
-         pcpw==
-X-Gm-Message-State: AGi0PuaYC9bgZ5Q2ieZNVBPoiNGY0bhLTu+MHJZsy74yHwSOtj8RnJ4B
-        kqIn0NrO2yDqTIyhhCeo4FAHssJQO+HvXj9f1bk=
-X-Google-Smtp-Source: APiQypKGvYoGXVQMOaMMGuLG6ZVr8NMMUDLLVypjF+0BH0k/Zjptcxe8gMGO+JVPHbaw6NNSXzHRZRexKuHsnVIIv94=
-X-Received: by 2002:a17:906:970e:: with SMTP id k14mr4444610ejx.202.1588356447735;
- Fri, 01 May 2020 11:07:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200430192427.4104899-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20200430192427.4104899-1-bjorn.andersson@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 1 May 2020 11:07:32 -0700
-Message-ID: <CAF6AEGsq8RPX7ttqdMh1rXFUqCmVKWNVfez12sV+5PRaz2X8Uw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Fix undefined "rd_full" link error
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Fri, 1 May 2020 14:25:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588357553; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=oAbv7Whc5wnDq0DJoREo5UCU2XgDlITRPhApd/IgUDo=; b=Z6JxMAU+N9+4bpIASSWm4CkdSI9g6ZsVA3vaOdamYYwxBjovpQpXZEyIJ/295/q4ZmCYhu26
+ 3ShexO9ur/197c7+CKibZFCRM06N4QkDL2ayjo7ZIRxxYyovPN6WtpXltALr8Ec+87TF+A6O
+ JN1ffv97hLoxcNPp6v4/RywnisA=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eac69b1.7f2769a90688-smtp-out-n04;
+ Fri, 01 May 2020 18:25:53 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D488FC44791; Fri,  1 May 2020 18:25:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 28E29C433D2;
+        Fri,  1 May 2020 18:25:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 28E29C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Eric Anholt <eric@anholt.net>, stable@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Ben Dooks <ben.dooks@codethink.co.uk>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Content-Type: text/plain; charset="UTF-8"
+        David Airlie <airlied@linux.ie>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: Check for powered down HW in the devfreq callbacks
+Date:   Fri,  1 May 2020 12:25:33 -0600
+Message-Id: <20200501182533.19753-1-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 30, 2020 at 12:25 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> rd_full should be defined outside the CONFIG_DEBUG_FS region, in order
-> to be able to link the msm driver even when CONFIG_DEBUG_FS is disabled.
->
-> Fixes: e515af8d4a6f ("drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP buffers")
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Writing to the devfreq sysfs nodes while the GPU is powered down can
+result in a system crash (on a5xx) or a nasty GMU error (on a6xx):
 
-thanks,
+ $ /sys/class/devfreq/5000000.gpu# echo 500000000 > min_freq
+  [  104.841625] platform 506a000.gmu: [drm:a6xx_gmu_set_oob]
+	*ERROR* Timeout waiting for GMU OOB set GPU_DCVS: 0x0
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Despite the fact that we carefully try to suspend the devfreq device when
+the hardware is powered down there are lots of holes in the governors that
+don't check for the suspend state and blindly call into the devfreq
+callbacks that end up triggering hardware reads in the GPU driver.
 
-> ---
->  drivers/gpu/drm/msm/msm_rd.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-> index 732f65df5c4f..fea30e7aa9e8 100644
-> --- a/drivers/gpu/drm/msm/msm_rd.c
-> +++ b/drivers/gpu/drm/msm/msm_rd.c
-> @@ -29,8 +29,6 @@
->   * or shader programs (if not emitted inline in cmdstream).
->   */
->
-> -#ifdef CONFIG_DEBUG_FS
-> -
->  #include <linux/circ_buf.h>
->  #include <linux/debugfs.h>
->  #include <linux/kfifo.h>
-> @@ -47,6 +45,8 @@ bool rd_full = false;
->  MODULE_PARM_DESC(rd_full, "If true, $debugfs/.../rd will snapshot all buffer contents");
->  module_param_named(rd_full, rd_full, bool, 0600);
->
-> +#ifdef CONFIG_DEBUG_FS
-> +
->  enum rd_sect_type {
->         RD_NONE,
->         RD_TEST,       /* ascii text */
-> --
-> 2.24.0
->
+Check the power state in the gpu_busy() and gpu_set_freq() callbacks for
+a5xx and a6xx to make sure that the hardware is active before trying to
+access it.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 4 ++++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 ++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
+ 3 files changed, 12 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 724024a2243a..9d8c7fe6377e 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1404,6 +1404,10 @@ static unsigned long a5xx_gpu_busy(struct msm_gpu *gpu)
+ {
+ 	u64 busy_cycles, busy_time;
+ 
++	/* devfreq can get here while we are idle so do a quick check first */
++	if (!pm_runtime_active(&gpu->pdev->dev))
++		return ~0LU;
++
+ 	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO,
+ 			REG_A5XX_RBBM_PERFCTR_RBBM_0_HI);
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index c4e71abbdd53..84618f2ff073 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -108,6 +108,10 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
+ 	struct msm_gpu *gpu = &adreno_gpu->base;
+ 	int ret;
+ 
++	/* This can be called via devfreq even when the power is off */
++	if (!pm_runtime_active(gmu->dev))
++		return;
++
+ 	gmu_write(gmu, REG_A6XX_GMU_DCVS_ACK_OPTION, 0);
+ 
+ 	gmu_write(gmu, REG_A6XX_GMU_DCVS_PERF_SETTING,
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 68af24150de5..443efc952f13 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -810,6 +810,10 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
+ 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+ 	u64 busy_cycles, busy_time;
+ 
++	/* devfreq can get here while we are idle so do a quick check first */
++	if (!pm_runtime_active(a6xx_gpu->gmu.dev))
++		return ~0LU;
++
+ 	busy_cycles = gmu_read64(&a6xx_gpu->gmu,
+ 			REG_A6XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_L,
+ 			REG_A6XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_H);
+-- 
+2.17.1
