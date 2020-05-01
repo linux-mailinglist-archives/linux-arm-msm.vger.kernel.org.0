@@ -2,116 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 428ED1C203E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2020 00:00:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A291D1C20B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2020 00:33:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726937AbgEAV7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 17:59:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46218 "EHLO
+        id S1726943AbgEAWdD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 18:33:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726377AbgEAV7o (ORCPT
+        with ESMTP id S1726495AbgEAWdC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 17:59:44 -0400
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CC1C08E859
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2020 14:59:44 -0700 (PDT)
-Received: by mail-il1-x143.google.com with SMTP id c18so5725913ile.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2020 14:59:44 -0700 (PDT)
+        Fri, 1 May 2020 18:33:02 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A58C061A0C;
+        Fri,  1 May 2020 15:33:02 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id x18so13419401wrq.2;
+        Fri, 01 May 2020 15:33:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pDnC17yV3YK6+UXyEP5tqCWTQ7iWQE5yaacGTLu3Bc4=;
-        b=pD3s9EAWNfIU7par29nN6lUA34erm8IVRafEDx41O3QbV/hemBxzAtdMXSb3pZm574
-         aO9aHakyiRxmGFaRx/JJuIXm2qP1QpRI6DT/uibu9HpFpcIxNVNNN0NfrhmRr6x+w9OL
-         U5jDk9RfBViHO4PuRQ1UcNg4udK1HCU6VhdKHepQjPK1zJahKE1raamn+tjJ0afzx01g
-         Tns0Qh7Wxh+TMn6G+JFpVi+RJ+OOvijYEVG9F8vYzHR3g8EudBURX8dL5GH/oK99t1Ov
-         WKlqB/4JtYBZHuL2FluC+U07eyBEYNvi0YfKz5VGrt7znXVKVIlcMh328Yova+1wR1DP
-         CExQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vseR8e8pFXD2+crzI5eV2VcW4ikr4KpriEQgDBp2Nkk=;
+        b=Jq/oBJJQjyVTpBQJaSRiwighOTctLBm/QkEyfvefS14WeNspzApxcFj6R6ZsB0KW4r
+         WrOBh9RWCkW0SiUc1qjuaQOF6Gg/bNHp8+ySsxOg6EKao3UhvNa3Ogzo+bW+142P9R/l
+         WjZKs6xG1yTNikKP63ePyoE91h/MuFm/7emy1WOf7Q5L5eRReC4Gv6NiIzb6IL1cTFAb
+         t6qmDID14xHAOQZLPafY0EcJnH1c4NeLs8c2npMq5JsOpLTW5A4636NKy4RzqCPkvmDu
+         4D+4I0riPUWU6eI1fvdkwMpVzHZN1BFlVDDDYWLH83nv1+xUEhHG3oNRxI+pH9pCNjcu
+         lBzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=pDnC17yV3YK6+UXyEP5tqCWTQ7iWQE5yaacGTLu3Bc4=;
-        b=GfqfVSddlxVgDC1d6U+gCShxuAcTIBREs+H7VSJTB7IQ8grNdZxyHcU2h/8ayB9IT+
-         8wWzNYVtOh8kuwCHRdCZT+6SP+Ku9qR8JNpFBYanDpgY2qlxfcwuUTm63dfjMgqrFlZ3
-         wHXvjvfaZIlCLe5suX+JtZM3pccTj1us9qJ0BWiRgrD5GQocgt1NHD0qFWu311XUGzD2
-         8CXrH+DnB75Annel4y7TQye86t5GGjPRU/fkLJW/wW24s57g0AtZIgrb2IRMQGZ6DoSc
-         pSdpfmR0PkTKICfWM2SahWJupa1XOQD+TA1YsSqrx7Gmfpz63BBDZdDXyuQdyVDFlCDZ
-         qkog==
-X-Gm-Message-State: AGi0PubNZGyLPk8p8YC9jyPddZfq7nUYxnxDK1Dd2A385E3aTFedNL8E
-        /DWx1Gu8kdg3hQ+TxJIBxdmv4w==
-X-Google-Smtp-Source: APiQypIex3AmKv2b0vjFHu/JjPhozuTBvTpn+IlLgEkDCXArGdu/fO286GMESqLSgsBCeQY0NXUrzw==
-X-Received: by 2002:a92:8515:: with SMTP id f21mr5748721ilh.20.1588370383756;
-        Fri, 01 May 2020 14:59:43 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id s5sm1724282ili.59.2020.05.01.14.59.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 May 2020 14:59:43 -0700 (PDT)
-Subject: Re: [PATCH net-next 1/4] arm64: dts: sdm845: add IPA iommus property
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net
-Cc:     evgreen@chromium.org.net, subashab@codeaurora.org,
-        cpratapa@codeaurora.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-References: <20200501214625.31539-1-elder@linaro.org>
- <20200501214625.31539-2-elder@linaro.org>
-Message-ID: <2648d6a5-9ef7-b60d-c9a2-d5e1c083bc0a@linaro.org>
-Date:   Fri, 1 May 2020 16:59:42 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        bh=vseR8e8pFXD2+crzI5eV2VcW4ikr4KpriEQgDBp2Nkk=;
+        b=mk7aeIcv3R2rLa2988AxNj9C7iHtyGV/fbw5nLUo5y9LZUlzB+h4il99Cf82bozrpl
+         2c7MkBAgz9xiQgr5lrb6lQcDi/gNLU/Of0Lnih6yphqq6YXWJZd655/7+dX/A9g8+Ybv
+         rSvpLysxUhI3Eg4D28sEufDN1NF2/BunA31N7EyJCpVFnMmS/M6c8+QgUkaR10XM+IK+
+         H4c/ur9nYQKuxL28iBOsGBsCwe6lF5are5C+/OZvofdecx4ieZvn+DIT/KH/s95OToex
+         EcMdHaJZo5o9Y98cUusrBqAzyavORkzTpXrmRymQM59O/dRynXoFfG2GO6ovKqGcYGsZ
+         C09Q==
+X-Gm-Message-State: AGi0PuaXMxP9fgMlS2RtqXTffa2YJKIL5aAMLkKtdzKnFeXTrj0HF4x/
+        uyYNF0BgsyLxoMIYCKkQJGQ=
+X-Google-Smtp-Source: APiQypIqMshsvJKMdUEEJbNpBmLhC7igH7VDViy70/OfNgOXhRkvkU26tBFopkIkz/SG9QwB7PV9Jw==
+X-Received: by 2002:a05:6000:1242:: with SMTP id j2mr6081582wrx.274.1588372381333;
+        Fri, 01 May 2020 15:33:01 -0700 (PDT)
+Received: from localhost.localdomain (abag125.neoplus.adsl.tpnet.pl. [83.6.170.125])
+        by smtp.googlemail.com with ESMTPSA id n9sm6237750wrx.61.2020.05.01.15.32.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 May 2020 15:33:00 -0700 (PDT)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [v2 PATCH 0/4] Add SMD RPM support for MSM8936
+Date:   Sat,  2 May 2020 00:32:28 +0200
+Message-Id: <20200501223232.275800-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-In-Reply-To: <20200501214625.31539-2-elder@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/1/20 4:46 PM, Alex Elder wrote:
-> Add an "iommus" property to the IPA node in "sdm845.dtsi".  It is
-> required because there are two regions of memory the IPA accesses
-> through an SMMU.  The next few patches define and map those regions.
-> 
-> Signed-off-by: Alex Elder <elder@linaro.org>
+changes since v1:
+- added a forgotten patch that adds the compat string to the driver
 
-I'm very sorry, I grouped these incorrectly.
+Konrad Dybcio (1):
+  drivers: soc: Add MSM8936 SMD RPM compatible
 
-I intended for this one patch to go to Bjorn and Andy to be
-taken in through the Qualcomm tree, *not* through the net-next
-tree.
+Vincent Knecht (3):
+  clk: qcom: smd: Add support for MSM8936 rpm clocks
+  dt-bindings: clock: rpmcc: Document MSM8936 compatible
+  dt-bindings: soc: qcom: Document MSM8936 SMD RPM compatible
 
-I also neglected to mention that this addition is related to
-this other series, which has the modem define some IOMMU
-streams for the modem to use (one of the definitions is
-related to the modem's use of IPA):
-   https://lore.kernel.org/patchwork/cover/1227747/
+ .../devicetree/bindings/clock/qcom,rpmcc.txt  |  1 +
+ .../bindings/soc/qcom/qcom,smd-rpm.txt        |  1 +
+ drivers/clk/qcom/clk-smd-rpm.c                | 50 +++++++++++++++++++
+ drivers/soc/qcom/smd-rpm.c                    |  1 +
+ 4 files changed, 53 insertions(+)
 
-Would you like me to post v2 of the series correcting this?
-
-					-Alex
-
-> ---
->   arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 8f926b5234d4..de6bb86c4968 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -1761,6 +1761,8 @@
->   
->   		ipa: ipa@1e40000 {
->   			compatible = "qcom,sdm845-ipa";
-> +
-> +			iommus = <&apps_smmu 0x720 0x3>;
->   			reg = <0 0x1e40000 0 0x7000>,
->   			      <0 0x1e47000 0 0x2000>,
->   			      <0 0x1e04000 0 0x2c000>;
-> 
+-- 
+2.26.1
 
