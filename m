@@ -2,94 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D5171C0A56
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 00:22:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FD921C0B87
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 03:13:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727027AbgD3WWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Apr 2020 18:22:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50750 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726898AbgD3WWk (ORCPT
+        id S1728009AbgEABNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Apr 2020 21:13:21 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:19053 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727114AbgEABNU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Apr 2020 18:22:40 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B9B1C035494;
-        Thu, 30 Apr 2020 15:22:40 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id q8so6047820eja.2;
-        Thu, 30 Apr 2020 15:22:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lvMPT6f6AC+jTWMexzBGTgQfnPn2sns2A3ZAPET4Rk8=;
-        b=gDGrzE+f56lxrYhorlloXvrhRNyhkGHdlX/F0I02YuvpvDDNDla0KCtwFzw2kvJqqu
-         0ieN5LpG9PRRyIU3+MUHISH7L/x+Y7MLJODAiDjdcfh1H2sHERqReCw0gO3oL493HeeI
-         SRqp2ersLwGciOj6u6CU+Fj3A4KV2ox/+zgzFcXUJPsBeStuLzd3NSTb2eHz9AjL+fsw
-         EPP6BYTb/pHU1TOyj4tbfcxC6KFhqIBurWOPHrelKexkgwqS/gqOsY61owwQRYNtaKWY
-         KLu9IBQCyTIiTwKwZfDXM7OamErwhQ47oWapXF1ENpY/Ngza0aM2mbJV8PfjJZjlQVcw
-         vtsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lvMPT6f6AC+jTWMexzBGTgQfnPn2sns2A3ZAPET4Rk8=;
-        b=XWMKEEFMEMlkyBp/0jOVMePjNU+XFC2KjopShuT1W9j/KVvWzSay8onrnJclfqornZ
-         sz6Kbw7sb10aaTCaDzKwXBqD15hbYD2K5Pmdni+BgVBphoB/cX/I0yt/VDozUaciXau8
-         VHdOUpRQm1C+LTs8QhI/x9bAD0G1mLbCk6LTVmhiFm4CiaNqbTQvNLAJN/GxXaWnGgB7
-         PLK/y3UjDZQep/NbNZ+bqFeIHDD1FfxJpMNfTj8PEhDU2ehV9iFzmTA9Va1cjkMjT0uE
-         HmvCiaIdzxhcTsp+J4jrfR/ns0QXBLbl1NvmbHOgqqwl7jInnLqy/vadsQgKel1F1xSI
-         unxw==
-X-Gm-Message-State: AGi0PuYT4nHZfAj04gq8kP/BusV08GNVwwFJsQLh2VybXx/R3WLAXutj
-        fXkGLZv5sXVAZKO93JgEzbc=
-X-Google-Smtp-Source: APiQypLKsen+rCTMgTgVt6GGInCrJMGT5P71Rr98AZwQs0GMtid8gwZ2c9iPcOea3Brgf3zdQzctLg==
-X-Received: by 2002:a17:906:4c46:: with SMTP id d6mr587849ejw.257.1588285358634;
-        Thu, 30 Apr 2020 15:22:38 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain ([79.37.253.240])
-        by smtp.googlemail.com with ESMTPSA id w4sm56863eds.92.2020.04.30.15.22.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2020 15:22:37 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Thu, 30 Apr 2020 21:13:20 -0400
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Apr 2020 18:13:19 -0700
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg05-sd.qualcomm.com with ESMTP; 30 Apr 2020 18:13:19 -0700
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id 593334CF9; Thu, 30 Apr 2020 18:13:19 -0700 (PDT)
+Date:   Thu, 30 Apr 2020 18:13:19 -0700
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     devicetree@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] cpufreq: qcom: fix wrong compatible binding
-Date:   Fri,  1 May 2020 00:22:25 +0200
-Message-Id: <20200430222225.3941-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
+Subject: Re: [PATCH v1 2/2] mfd: Introduce QTI I2C PMIC controller
+Message-ID: <20200501011319.GA28441@codeaurora.org>
+Mail-Followup-To: Lee Jones <lee.jones@linaro.org>,
+        devicetree@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+References: <cover.1588115326.git.gurus@codeaurora.org>
+ <5644dea146f8b49a5b827c56392ff916bfb343e9.1588115326.git.gurus@codeaurora.org>
+ <20200429075010.GX3559@dell>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200429075010.GX3559@dell>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Binding in Documentation is still "operating-points-v2-kryo-cpu".
-Restore the old binding to fix the compatibility problem.
+On Wed, Apr 29, 2020 at 08:50:10AM +0100, Lee Jones wrote:
+> On Tue, 28 Apr 2020, Guru Das Srinagesh wrote:
+> 
+> > The Qualcomm Technologies, Inc. I2C PMIC Controller is used by
+> > multi-function PMIC devices which communicate over the I2C bus.  The
+> > controller enumerates all child nodes as platform devices, and
+> > instantiates a regmap interface for them to communicate over the I2C
+> > bus.
+> > 
+> > The controller also controls interrupts for all of the children platform
+> > devices.  The controller handles the summary interrupt by deciphering
+> > which peripheral triggered the interrupt, and which of the peripheral
+> > interrupts were triggered.  Finally, it calls the interrupt handlers for
+> > each of the virtual interrupts that were registered.
+> > 
+> > Nicholas Troast is the original author of this driver.
+> > 
+> > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> > ---
+> >  drivers/mfd/Kconfig         |  11 +
+> >  drivers/mfd/Makefile        |   1 +
+> >  drivers/mfd/qcom-i2c-pmic.c | 737 ++++++++++++++++++++++++++++++++++++++++++++
+> 
+> The vast majority of this driver deals with IRQ handling.  Why can't
+> this be split out into its own IRQ Chip driver and moved to
+> drivers/irqchip?
 
-Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+There appear to be quite a few in-tree MFD drivers that register IRQ
+controllers, like this driver does:
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index a1b8238872a2..d06b37822c3d 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -277,7 +277,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
- 	if (!np)
- 		return -ENOENT;
- 
--	ret = of_device_is_compatible(np, "operating-points-v2-qcom-cpu");
-+	ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu");
- 	if (!ret) {
- 		of_node_put(np);
- 		return -ENOENT;
--- 
-2.25.1
+$ grep --exclude-dir=.git -rnE "irq_domain_(add|create).+\(" drivers/mfd | wc -l
+23
 
+As a further example, drivers/mfd/stpmic1.c closely resembles this
+driver in that it uses both devm_regmap_add_irq_chip() as well as
+devm_of_platform_populate().
+
+As such, it seems like this driver is in line with some of the
+architectural choices that have been accepted in already-merged drivers.
+Could you please elaborate on your concerns?
+
+> 
+> >  3 files changed, 749 insertions(+)
+> >  create mode 100644 drivers/mfd/qcom-i2c-pmic.c
+> 
+> > diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+> > index 54b6aa4..bf112eb 100644
+> > --- a/drivers/mfd/Kconfig
+> > +++ b/drivers/mfd/Kconfig
+> > @@ -1002,6 +1002,17 @@ config MFD_PM8XXX
+> >  	  Say M here if you want to include support for PM8xxx chips as a
+> >  	  module. This will build a module called "pm8xxx-core".
+> >  
+> > +config MFD_I2C_PMIC
+> 
+> Too generic.  This should identify the vendor too.
+
+Will change to MFD_QCOM_I2C_PMIC.
+
+> 
+> > +	tristate "QTI I2C PMIC support"
+> 
+> Why aren't you using QCOM?
+> 
+> Actually, this should be expanded here anyway.
+
+Will expand this to "Qualcomm Technologies, Inc. I2C PMIC support".
+
+> 
+> > +	depends on I2C && OF
+> > +	select IRQ_DOMAIN
+> > +	select REGMAP_I2C
+> > +	help
+> > +	  This enables support for controlling Qualcomm Technologies, Inc.
+> > +	  PMICs over I2C. The driver controls interrupts, and provides register
+> > +	  access for all of the device's peripherals.  Some QTI PMIC chips
+> > +	  support communication over both I2C and SPMI.
+> > +
+> >  config MFD_QCOM_RPM
+> >  	tristate "Qualcomm Resource Power Manager (RPM)"
+> >  	depends on ARCH_QCOM && OF
+> > diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
+> > index 7761f84..26f0b80 100644
+> > --- a/drivers/mfd/Makefile
+> > +++ b/drivers/mfd/Makefile
+> > @@ -199,6 +199,7 @@ obj-$(CONFIG_MFD_SI476X_CORE)	+= si476x-core.o
+> >  obj-$(CONFIG_MFD_CS5535)	+= cs5535-mfd.o
+> >  obj-$(CONFIG_MFD_OMAP_USB_HOST)	+= omap-usb-host.o omap-usb-tll.o
+> >  obj-$(CONFIG_MFD_PM8XXX) 	+= qcom-pm8xxx.o ssbi.o
+> > +obj-$(CONFIG_MFD_I2C_PMIC)     += qcom-i2c-pmic.o
+> >  obj-$(CONFIG_MFD_QCOM_RPM)	+= qcom_rpm.o
+> >  obj-$(CONFIG_MFD_SPMI_PMIC)	+= qcom-spmi-pmic.o
+> >  obj-$(CONFIG_TPS65911_COMPARATOR)	+= tps65911-comparator.o
+> > diff --git a/drivers/mfd/qcom-i2c-pmic.c b/drivers/mfd/qcom-i2c-pmic.c
+> > new file mode 100644
+> > index 0000000..d0f600a
+> > --- /dev/null
+> > +++ b/drivers/mfd/qcom-i2c-pmic.c
+> > @@ -0,0 +1,737 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+> 
+> This is very out of date.
+
+It is internal company policy to update the copyright year only for
+those years when a change was made to the driver. Since this driver hasn't
+been modified since 2018, the copyright year has also been static since
+then. Otherwise, the driver is very much current functionality-wise.
+
+What modification would you suggest for the copyright year?
+
+> 
+> > + */
+> > +
+> > +#define pr_fmt(fmt) "I2C PMIC: %s: " fmt, __func__
+> 
+> Please don't role your own debug helpers.
+> 
+> The ones the kernel provides are suitably proficient.
+
+Sure. Would this be acceptable instead, with the custom string replaced by a
+macro that the kernel provides?
+
+	#define pr_fmt(fmt) "%s: %s: " fmt, KBUILD_MODNAME, __func__
+
+> 
+> > +#include <linux/bitops.h>
+> > +#include <linux/i2c.h>
+> > +#include <linux/interrupt.h>
+> > +#include <linux/irq.h>
+> > +#include <linux/irqdomain.h>
+> > +#include <linux/module.h>
+> > +#include <linux/of_platform.h>
+> > +#include <linux/pinctrl/consumer.h>
+> > +#include <linux/regmap.h>
+> > +#include <linux/slab.h>
+> > +
+> > +#define I2C_INTR_STATUS_BASE	0x0550
+> > +#define INT_RT_STS_OFFSET	0x10
+> > +#define INT_SET_TYPE_OFFSET	0x11
+> > +#define INT_POL_HIGH_OFFSET	0x12
+> > +#define INT_POL_LOW_OFFSET	0x13
+> > +#define INT_LATCHED_CLR_OFFSET	0x14
+> > +#define INT_EN_SET_OFFSET	0x15
+> > +#define INT_EN_CLR_OFFSET	0x16
+> > +#define INT_LATCHED_STS_OFFSET	0x18
+> > +#define INT_PENDING_STS_OFFSET	0x19
+> > +#define INT_MID_SEL_OFFSET	0x1A
+> > +#define INT_MID_SEL_MASK	GENMASK(1, 0)
+> > +#define INT_PRIORITY_OFFSET	0x1B
+> > +#define INT_PRIORITY_BIT	BIT(0)
+> > +
+> > +enum {
+> > +	IRQ_SET_TYPE = 0,
+> > +	IRQ_POL_HIGH,
+> > +	IRQ_POL_LOW,
+> > +	IRQ_LATCHED_CLR, /* not needed but makes life easy */
+> 
+> "Not"
+> 
+> It doesn't matter if the value is not used.
+> 
+> I think you can drop the comment.
+
+Done.
+
+> 
+> > +	IRQ_EN_SET,
+> > +	IRQ_MAX_REGS,
+> > +};
+> 
+> Going to stop here for a second, as the vast majority of the remainder
+> of the driver appears to surround IRQ management.
+
+(Please see my first comment above.)
+
+Thank you.
+
+Guru Das.
