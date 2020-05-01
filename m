@@ -2,67 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE5BC1C0E02
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 08:28:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8026F1C0E33
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 08:31:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728184AbgEAG2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 02:28:12 -0400
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:46924 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728126AbgEAG2M (ORCPT
+        id S1728297AbgEAGbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 02:31:21 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:42476 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728302AbgEAGbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 02:28:12 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 May 2020 11:58:09 +0530
-Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 01 May 2020 11:58:03 +0530
-Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id 368D02196B; Fri,  1 May 2020 11:58:02 +0530 (IST)
-From:   Mansur Alisha Shaik <mansur@codeaurora.org>
-To:     stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, mansur@codeaurora.org
-Subject: [PATCH V2] venus: fix multiple encoder crash
-Date:   Fri,  1 May 2020 11:58:00 +0530
-Message-Id: <1588314480-22409-1-git-send-email-mansur@codeaurora.org>
+        Fri, 1 May 2020 02:31:20 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588314680; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=+ZeZENPKHRVIAyX18Mb1d2RgeUC/KuHefKXYMNBHvno=; b=d7vMcHMMQcvrd+mq061Ut5qGYCcmuUMR4bS5qumwHwOTF/F9+KKZy73xLx6stLE+ANHMMrvE
+ blR0vOf8rOKudXHUPuhxZs9V0XQnj0QJ60sgQw6DfN4tYmueQfM99WrNCQOficVMcaAT1wmb
+ mk/+cO70P6Buy3lx2kOKUiG7sHE=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eabc22c.7f0f9389e3e8-smtp-out-n01;
+ Fri, 01 May 2020 06:31:08 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 885D1C433CB; Fri,  1 May 2020 06:31:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2741C433D2;
+        Fri,  1 May 2020 06:31:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E2741C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     andy.gross@linaro.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, dianders@chromium.org,
+        swboyd@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH] pinctrl: qcom: Add affinity callbacks to msmgpio IRQ chip
+Date:   Fri,  1 May 2020 12:00:17 +0530
+Message-Id: <1588314617-4556-1-git-send-email-mkshah@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently we are considering the instances which are available
-in core->inst list for load calculation in min_loaded_core()
-function, but this is incorrect because by the time we call
-decide_core() for second instance, the third instance not
-filled yet codec_freq_data pointer.
+From: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
 
-Solve this by considering the instances whose session has started.
+Wakeup capable GPIO IRQs routed via PDC are not being migrated when a CPU
+is hotplugged. Add affinity callbacks to msmgpio IRQ chip to update the
+affinity of wakeup capable IRQs.
 
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+[mkshah: updated commit text and minor code fixes]
+Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 ---
-Changes in V2:
-- As per Alex and Jeffrey comments, elaborated problem
-  and addressed review comments.
+ drivers/pinctrl/qcom/pinctrl-msm.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
- drivers/media/platform/qcom/venus/pm_helpers.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index abf9315..531e7a4 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -496,6 +496,10 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
- 	list_for_each_entry(inst_pos, &core->instances, list) {
- 		if (inst_pos == inst)
- 			continue;
-+
-+		if (inst_pos->state != INST_START)
-+			continue;
-+
- 		vpp_freq = inst_pos->clk_data.codec_freq_data->vpp_freq;
- 		coreid = inst_pos->clk_data.core_id;
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 29259fe..83b7d64 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1033,6 +1033,29 @@ static void msm_gpio_irq_relres(struct irq_data *d)
+ 	module_put(gc->owner);
+ }
  
++static int msm_gpio_irq_set_affinity(struct irq_data *d,
++				const struct cpumask *dest, bool force)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++
++	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
++		return irq_chip_set_affinity_parent(d, dest, force);
++
++	return 0;
++}
++
++static int msm_gpio_irq_set_vcpu_affinity(struct irq_data *d, void *vcpu_info)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++
++	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
++		return irq_chip_set_vcpu_affinity_parent(d, vcpu_info);
++
++	return 0;
++}
++
+ static void msm_gpio_irq_handler(struct irq_desc *desc)
+ {
+ 	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
+@@ -1131,6 +1154,8 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+ 	pctrl->irq_chip.irq_set_wake = msm_gpio_irq_set_wake;
+ 	pctrl->irq_chip.irq_request_resources = msm_gpio_irq_reqres;
+ 	pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
++	pctrl->irq_chip.irq_set_affinity = msm_gpio_irq_set_affinity;
++	pctrl->irq_chip.irq_set_vcpu_affinity = msm_gpio_irq_set_vcpu_affinity;
+ 
+ 	np = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
+ 	if (np) {
 -- 
-2.7.4
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
