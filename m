@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 832C71C20BB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2020 00:33:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B31D1C20BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2020 00:33:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727809AbgEAWdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 18:33:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51462 "EHLO
+        id S1727854AbgEAWdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 18:33:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbgEAWdI (ORCPT
+        with ESMTP id S1726495AbgEAWdL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 18:33:08 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A613C061A0C;
-        Fri,  1 May 2020 15:33:07 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id x18so13419673wrq.2;
-        Fri, 01 May 2020 15:33:07 -0700 (PDT)
+        Fri, 1 May 2020 18:33:11 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACDA7C061A0C;
+        Fri,  1 May 2020 15:33:10 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id y24so1511090wma.4;
+        Fri, 01 May 2020 15:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PpsHhU0SIZ/znnjv1B1lxEbVrbiH03IPfJBbSjteEyU=;
-        b=W8YxeKowqSJ/ecn9+U19e5QY0n3C+lmV8b7B8oO7LE65F6HG+2T5irzmzl78yYXu24
-         hxInpZYqHAmvL1CH9tZelNq/jIoBuRgi7ZCapSnIzTkpYY4N4ZnhXTn9g5VW4jxUlK38
-         TTD7ePgqXSHPmWiA4jiSCMqP35ADc/S7q3ZcCkAkVyThYd5axY0cnJHKkmuzJ+brV74u
-         /PeKLs2OMVJiwW3l/kC/9VFAga0F3I5RpGRVy2yyCudDGrBkaOAq0SPXpDl3kb91qjVv
-         eYbwTxLn+8CRr7QxdKn0D52Eqojz84StFkUN5bKYBrMPeLguignOaci9fQoBdeLl+GKC
-         Uiaw==
+        bh=fBthR+wcgy5COJ5PuVoR09sM6kl0TIToFzQT9ikob/U=;
+        b=tOd6B5X13HcktO7B7Ld4JWKAtzvF+dXMuh1WobqrolReNSF+HLsuDYZrQb3SpvrB0C
+         5Y6MSs1UphSPajyxFO2yXAp05Y4CBarbpmQrwZWdkhRnQVuF7UcqRwQUseLOyf9IYlk9
+         r67gY8FpInacPNQtT1a0td3P66/b3/whG++q3NP3xnWHAGH1QmRof8ShqaSGw2lDG3t+
+         +yrUczsUu7kxOGEQYwsY2S//Z8iCLnqQQPEiiBE49z1/jTWfL4oS2RZbm9+qIbBrsIB9
+         vIhBypzlUcku7I3/LyfFRYIEMkEuFfQWcy4Ewxd5zAIKPA+7itSWIyV95tw1NLhP4ZQc
+         /+Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PpsHhU0SIZ/znnjv1B1lxEbVrbiH03IPfJBbSjteEyU=;
-        b=BqUIZEzqyQbfcEbWLGh7zq9B747Ez+UfzhvDG7PK9nMTht4Wy1LErfwukcjicwo489
-         hp5dE4a8zimMrfTpKeCBHWsu0pVMqrP14UACQwwGUL2lJOxTuqYpcEOkoSrsC3Z2W+u1
-         ncCEtUkLW8Dh++Rz6xYFMiuRypf6gBXtE6beAH2Yw3qhcmuCiIIXUCnKZBtRehsu3wKM
-         EtWiF/cXTQGN9hiCzfkX21eiOkNPpgmrGL9UDYOTIZTNmA7J8svxNDATgQLvX7OLu9Ht
-         ghQrwin7Lxv7Xleyz1a/g3Ah3q2wDJzVFXHM8tXZh3Tv+VLu+4bYjy1EXr58qGBft6ik
-         l90A==
-X-Gm-Message-State: AGi0PuaNI809Ob0kO0ewswXHk7TYSVoXcI8MIF9uhPC6OgqoTxjZGWv/
-        0NzWhp8uAj9/f0fM6kxcHqg=
-X-Google-Smtp-Source: APiQypKTiMZxHf2OaMphivwaa00Ln7MHIyM+IQfTraGLdmpsY1CAA/180QQKI/uDm3JxIUdwLPZqQg==
-X-Received: by 2002:adf:9f11:: with SMTP id l17mr6339741wrf.202.1588372386412;
-        Fri, 01 May 2020 15:33:06 -0700 (PDT)
+        bh=fBthR+wcgy5COJ5PuVoR09sM6kl0TIToFzQT9ikob/U=;
+        b=X7LeE3X/LDjqOf/SBOqb26Gs12pF6PbmZIivvE6aKUcWeVyrO9kdmW6531qlM73gfi
+         y9isE/TA9UqPfqR3kzQV1szpxZmd1Q6fBLdMzTFpYKtwx5f8EKMMfYUzkJOvQ9Rl0MxV
+         v291UGJBC9n95ovL7ovaYQ0Py//gN/WcB0Yww5q16GNqLR1b1oLO5tBS6bKEt5NL8EnT
+         sIn00EReD7NxVzrExQ0dCwwSmEh1ZyrnsiluOkFHbT5R58l/S1GS6/jbQ8lTKDkmBeHw
+         oEjoX80QWmXp0fNjJCDpqOXUusXv2pT2Wy22PZkGS5Dl9caxgBPLyk7rxLEJYPDUuGCH
+         0yTg==
+X-Gm-Message-State: AGi0PuYM2XLIAeNrjVVDoCgi2V2FmPk1LyMW1RATerhdTFsqg9gyQXrd
+        1kAwDm0mcIJwjzxJP07J478=
+X-Google-Smtp-Source: APiQypLT6iW7K5lInGD3jltH2jhsah0Dpdx0iyUzmqxecKPKybRGbX3wnZ1koKIChkYe2KJNx7oUCA==
+X-Received: by 2002:a1c:9d84:: with SMTP id g126mr1500453wme.184.1588372389414;
+        Fri, 01 May 2020 15:33:09 -0700 (PDT)
 Received: from localhost.localdomain (abag125.neoplus.adsl.tpnet.pl. [83.6.170.125])
-        by smtp.googlemail.com with ESMTPSA id n9sm6237750wrx.61.2020.05.01.15.33.05
+        by smtp.googlemail.com with ESMTPSA id n9sm6237750wrx.61.2020.05.01.15.33.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 15:33:06 -0700 (PDT)
+        Fri, 01 May 2020 15:33:08 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -56,11 +56,10 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vincent Knecht <vincent.knecht@mailoo.org>
-Subject: [PATCH 2/4] dt-bindings: clock: rpmcc: Document MSM8936 compatible
-Date:   Sat,  2 May 2020 00:32:30 +0200
-Message-Id: <20200501223232.275800-3-konradybcio@gmail.com>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 3/4] drivers: soc: Add MSM8936 SMD RPM compatible
+Date:   Sat,  2 May 2020 00:32:31 +0200
+Message-Id: <20200501223232.275800-4-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20200501223232.275800-1-konradybcio@gmail.com>
 References: <20200501223232.275800-1-konradybcio@gmail.com>
@@ -72,25 +71,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vincent Knecht <vincent.knecht@mailoo.org>
-
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- Documentation/devicetree/bindings/clock/qcom,rpmcc.txt | 1 +
+ drivers/soc/qcom/smd-rpm.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-index 90a1349bc7135..51d1ef62c7450 100644
---- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-+++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-@@ -13,6 +13,7 @@ Required properties :
- 			"qcom,rpmcc-msm8660", "qcom,rpmcc"
- 			"qcom,rpmcc-apq8060", "qcom,rpmcc"
- 			"qcom,rpmcc-msm8916", "qcom,rpmcc"
-+			"qcom,rpmcc-msm8936", "qcom,rpmcc"
- 			"qcom,rpmcc-msm8974", "qcom,rpmcc"
- 			"qcom,rpmcc-msm8976", "qcom,rpmcc"
- 			"qcom,rpmcc-apq8064", "qcom,rpmcc"
+diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
+index 005dd30c58faf..8f290c67cb473 100644
+--- a/drivers/soc/qcom/smd-rpm.c
++++ b/drivers/soc/qcom/smd-rpm.c
+@@ -231,6 +231,7 @@ static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
+ static const struct of_device_id qcom_smd_rpm_of_match[] = {
+ 	{ .compatible = "qcom,rpm-apq8084" },
+ 	{ .compatible = "qcom,rpm-msm8916" },
++	{ .compatible = "qcom,rpm-msm8936" },
+ 	{ .compatible = "qcom,rpm-msm8974" },
+ 	{ .compatible = "qcom,rpm-msm8976" },
+ 	{ .compatible = "qcom,rpm-msm8996" },
 -- 
 2.26.1
 
