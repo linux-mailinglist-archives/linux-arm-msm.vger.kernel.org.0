@@ -2,117 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8026F1C0E33
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 08:31:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38C4D1C0E7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 09:10:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728297AbgEAGbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 02:31:21 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:42476 "EHLO
+        id S1726452AbgEAHJ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 03:09:57 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:39033 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728302AbgEAGbU (ORCPT
+        by vger.kernel.org with ESMTP id S1728323AbgEAHJ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 02:31:20 -0400
+        Fri, 1 May 2020 03:09:56 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588314680; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=+ZeZENPKHRVIAyX18Mb1d2RgeUC/KuHefKXYMNBHvno=; b=d7vMcHMMQcvrd+mq061Ut5qGYCcmuUMR4bS5qumwHwOTF/F9+KKZy73xLx6stLE+ANHMMrvE
- blR0vOf8rOKudXHUPuhxZs9V0XQnj0QJ60sgQw6DfN4tYmueQfM99WrNCQOficVMcaAT1wmb
- mk/+cO70P6Buy3lx2kOKUiG7sHE=
+ s=smtp; t=1588316995; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=zcBluhNmFPkLnjCjr7nikLWqbgufm1+ph5PULjOcjyg=;
+ b=mejt5/l0bDstjMHG5HZwcSpLSHsaaeg8ru3f0Bl7O1IKEv6RnIBtVLubE5bUljX+gd16aBro
+ N2d2KAaVdF6XcEGiYB9eCgI9O7e92ZSoW0Hex3fu/nraXzpgeOJ22350VJ7nuad39//2yfVN
+ ljB1etW5XPUuXrsd4QWMQKDQyZE=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eabc22c.7f0f9389e3e8-smtp-out-n01;
- Fri, 01 May 2020 06:31:08 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5eabcb41.7f793e9157d8-smtp-out-n03;
+ Fri, 01 May 2020 07:09:53 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 885D1C433CB; Fri,  1 May 2020 06:31:07 +0000 (UTC)
+        id 064F5C433D2; Fri,  1 May 2020 07:09:53 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2741C433D2;
-        Fri,  1 May 2020 06:31:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E2741C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     andy.gross@linaro.org, bjorn.andersson@linaro.org,
-        linus.walleij@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, dianders@chromium.org,
-        swboyd@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
-        lsrao@codeaurora.org,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH] pinctrl: qcom: Add affinity callbacks to msmgpio IRQ chip
-Date:   Fri,  1 May 2020 12:00:17 +0530
-Message-Id: <1588314617-4556-1-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        (Authenticated sender: mansur)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0CC32C433F2;
+        Fri,  1 May 2020 07:09:52 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 01 May 2020 12:39:52 +0530
+From:   mansur@codeaurora.org
+To:     Alexandre Courbot <acourbot@chromium.org>
+Cc:     Jeffrey Kardatzke <jkardatzke@google.com>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>
+Subject: Re: [PATCH] venus: avoid extra locking in driver
+In-Reply-To: <CAPBb6MVyTFqrVXAXqA6u=-0WtXcdWnozzN3gGk7y8TDK12-6Gg@mail.gmail.com>
+References: <1583472756-7611-1-git-send-email-mansur@codeaurora.org>
+ <CAPBb6MW-zxK+=HHUP5=+pO4Mswkhm=hDX7V56ABDm+BCzDaGHg@mail.gmail.com>
+ <CA+ddPcNdC4r3XBd+dQmv2oHwF6MA3bTJrWZZpJthruBQR_THBA@mail.gmail.com>
+ <CAPBb6MVyTFqrVXAXqA6u=-0WtXcdWnozzN3gGk7y8TDK12-6Gg@mail.gmail.com>
+Message-ID: <291577a66d4f7b1262a7154f6274211a@codeaurora.org>
+X-Sender: mansur@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+> On 2020-03-11 08:34, Alexandre Courbot wrote:
+>> On Tue, Mar 10, 2020 at 7:07 AM Jeffrey Kardatzke 
+>> <jkardatzke@google.com> wrote:
+>>> 
+>>> On Thu, Mar 5, 2020 at 11:50 PM Alexandre Courbot 
+>>> <acourbot@chromium.org> wrote:
+>>> >
+>>> > On Fri, Mar 6, 2020 at 2:34 PM Mansur Alisha Shaik
+>>> > <mansur@codeaurora.org> wrote:
+>>> > >
+>>> > > This change will avoid extra locking in driver.
+>>> >
+>>> > Could you elaborate a bit more on the problem that this patch solves?
+>>> 
+>>> For us it fixes a kernel null deref that happens when we run the
+>>> MultipleEncoders test (I've verified this to be true).
+>>> 
+>>> >
+>>> > >
+>>> > > Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+>>> > > ---
+>>> > >  drivers/media/platform/qcom/venus/core.c       |  2 +-
+>>> > >  drivers/media/platform/qcom/venus/core.h       |  2 +-
+>>> > >  drivers/media/platform/qcom/venus/helpers.c    | 11 +++++++++--
+>>> > >  drivers/media/platform/qcom/venus/pm_helpers.c |  8 ++++----
+>>> > >  4 files changed, 15 insertions(+), 8 deletions(-)
+>>> > >
+>>> > > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>>> > > index 194b10b9..75d38b8 100644
+>>> > > --- a/drivers/media/platform/qcom/venus/core.c
+>>> > > +++ b/drivers/media/platform/qcom/venus/core.c
+>>> > > @@ -447,7 +447,7 @@ static const struct freq_tbl sdm845_freq_table[] = {
+>>> > >         {  244800, 100000000 }, /* 1920x1080@30 */
+>>> > >  };
+>>> > >
+>>> > > -static struct codec_freq_data sdm845_codec_freq_data[] =  {
+>>> > > +static const struct codec_freq_data sdm845_codec_freq_data[] =  {
+>>> > >         { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
+>>> > >         { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
+>>> > >         { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
+>>> > > diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>>> > > index ab7c360..8c8d0e9 100644
+>>> > > --- a/drivers/media/platform/qcom/venus/core.h
+>>> > > +++ b/drivers/media/platform/qcom/venus/core.h
+>>> > > @@ -245,7 +245,7 @@ struct venus_buffer {
+>>> > >  struct clock_data {
+>>> > >         u32 core_id;
+>>> > >         unsigned long freq;
+>>> > > -       const struct codec_freq_data *codec_freq_data;
+>>> > > +       struct codec_freq_data codec_freq_data;
+>>> > >  };
+>>> > >
+>>> > >  #define to_venus_buffer(ptr)   container_of(ptr, struct venus_buffer, vb)
+>>> > > diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+>>> > > index bcc6038..550c4ff 100644
+>>> > > --- a/drivers/media/platform/qcom/venus/helpers.c
+>>> > > +++ b/drivers/media/platform/qcom/venus/helpers.c
+>>> > > @@ -807,6 +807,7 @@ int venus_helper_init_codec_freq_data(struct venus_inst *inst)
+>>> > >         unsigned int i, data_size;
+>>> > >         u32 pixfmt;
+>>> > >         int ret = 0;
+>>> > > +       bool found = false;
+>>> > >
+>>> > >         if (!IS_V4(inst->core))
+>>> > >                 return 0;
+>>> > > @@ -816,16 +817,22 @@ int venus_helper_init_codec_freq_data(struct venus_inst *inst)
+>>> > >         pixfmt = inst->session_type == VIDC_SESSION_TYPE_DEC ?
+>>> > >                         inst->fmt_out->pixfmt : inst->fmt_cap->pixfmt;
+>>> > >
+>>> > > +       memset(&inst->clk_data.codec_freq_data, 0,
+>>> > > +               sizeof(inst->clk_data.codec_freq_data));
+>>> > > +
+>>> > >         for (i = 0; i < data_size; i++) {
+>>> > >                 if (data[i].pixfmt == pixfmt &&
+>>> > >                     data[i].session_type == inst->session_type) {
+>>> > > -                       inst->clk_data.codec_freq_data = &data[i];
+>>> > > +                       inst->clk_data.codec_freq_data = data[i];
+>>> >
+>>> > From the patch I'd infer that inst->clk_data.codec_freq_data needs to
+>>> > change at runtime. Is this what happens? Why? I'd expect that
+>>> > frequency tables remain constant, and thus that the global
+>>> > sdm845_codec_freq_data can remain constant while
+>>> > clock_data::codec_freq_data is a const reference to it. What prevents
+>>> > this from happening?
+>>> >
+>>> > > +                       found = true;
+>>> > >                         break;
+>>> > >                 }
+>>> > >         }
+>>> > >
+>>> > > -       if (!inst->clk_data.codec_freq_data)
+>>> > > +       if (!found) {
+>>> > > +               dev_err(inst->core->dev, "cannot find codec freq data\n");
+>>> > >                 ret = -EINVAL;
+>>> > > +       }
+>>> > >
+>>> > >         return ret;
+>>> > >  }
+>>> > > diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>> > > index abf9315..240845e 100644
+>>> > > --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>>> > > +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>> > > @@ -496,7 +496,7 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
+>>> > >         list_for_each_entry(inst_pos, &core->instances, list) {
+>>> > >                 if (inst_pos == inst)
+>>> > >                         continue;
+>>> > > -               vpp_freq = inst_pos->clk_data.codec_freq_data->vpp_freq;
+>>> > > +               vpp_freq = inst_pos->clk_data.codec_freq_data.vpp_freq;
+>>> 
+>>> This is the main thing it fixes (this is where the null deref 
+>>> occurs).
+>>> If there's multiple instances in use and the other instance hasn't
+>>> populated the codec_freq_data pointer then we'll hit a null deref
+>>> here.
+>> 
+>> Couldn't this be fixed by checking the pointer for NULL here or
+>> (probably better) populating codec_freq_data earlier so that it is
+>> always valid?
 
-Wakeup capable GPIO IRQs routed via PDC are not being migrated when a CPU
-is hotplugged. Add affinity callbacks to msmgpio IRQ chip to update the
-affinity of wakeup capable IRQs.
+This can be fix by checking for NULL pointer as well, this looks like 
+masking the actual issue.
+Currently we are considering the instances which are available
+in core->inst list for load calculation in min_loaded_core()
+function, but this is incorrect because by the time we call
+decide_core() for second instance, the third instance not
+filled yet codec_freq_data pointer.
 
-Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-[mkshah: updated commit text and minor code fixes]
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- drivers/pinctrl/qcom/pinctrl-msm.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+So we consider the instances for load calculation for those session has 
+started.
+and uploaded V2 version https://lore.kernel.org/patchwork/patch/1234136/ 
+for the same.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 29259fe..83b7d64 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1033,6 +1033,29 @@ static void msm_gpio_irq_relres(struct irq_data *d)
- 	module_put(gc->owner);
- }
- 
-+static int msm_gpio_irq_set_affinity(struct irq_data *d,
-+				const struct cpumask *dest, bool force)
-+{
-+	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-+	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-+
-+	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
-+		return irq_chip_set_affinity_parent(d, dest, force);
-+
-+	return 0;
-+}
-+
-+static int msm_gpio_irq_set_vcpu_affinity(struct irq_data *d, void *vcpu_info)
-+{
-+	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-+	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-+
-+	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
-+		return irq_chip_set_vcpu_affinity_parent(d, vcpu_info);
-+
-+	return 0;
-+}
-+
- static void msm_gpio_irq_handler(struct irq_desc *desc)
- {
- 	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
-@@ -1131,6 +1154,8 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
- 	pctrl->irq_chip.irq_set_wake = msm_gpio_irq_set_wake;
- 	pctrl->irq_chip.irq_request_resources = msm_gpio_irq_reqres;
- 	pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
-+	pctrl->irq_chip.irq_set_affinity = msm_gpio_irq_set_affinity;
-+	pctrl->irq_chip.irq_set_vcpu_affinity = msm_gpio_irq_set_vcpu_affinity;
- 
- 	np = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
- 	if (np) {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+>> This fix looks like it is replacing a NULL pointer dereference with
+>> access to data initialized to fallback values (which may or may not be
+>> meaningful), and I don't see the need to copy what is effectively
+>> constant data into each instance.
