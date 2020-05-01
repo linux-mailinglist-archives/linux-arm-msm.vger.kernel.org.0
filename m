@@ -2,205 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4C421C1BE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 19:37:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1674C1C1C97
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 20:07:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729953AbgEARhF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 13:37:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33170 "EHLO
+        id S1729599AbgEASHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 14:07:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729772AbgEARhE (ORCPT
+        by vger.kernel.org with ESMTP id S1729138AbgEASH3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 13:37:04 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F5CC08E859
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2020 10:37:04 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id t11so4845506pgg.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2020 10:37:04 -0700 (PDT)
+        Fri, 1 May 2020 14:07:29 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9D5C061A0C;
+        Fri,  1 May 2020 11:07:29 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id re23so8145908ejb.4;
+        Fri, 01 May 2020 11:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8Ssb7zR045y0hQVLJADfxNoncBIqCoA1zZayMTSJOr0=;
-        b=hQ69sOZII3yUJZKvzqgTA8LlEb2W+x+4V2m+WK6WBI3Tv9Sz2Sa28ekYrPSz5DnTS6
-         RnyhEv/ii17kbsMDUKml+C2aO6VCaV7qqB6bGAZP6M6uCSKwmdUOk3xVW5ovXqsj4fe9
-         Ws/l7w4bPmqVcV8fKGJ+NoM6axcrB7Xp9DWboQsdYMiENlN1I1BuplWgP8rxdF5+A7T7
-         QVXsgNe+JOwwnNEPtJ81qhP7LfWJ+oDH5drm/r0uk33usOgQiN+qUebKHveh2uWiKuno
-         d2+TNZf1OCd5POX7yyQR1K45AzB7fzj4vv3GDTNScJ1V+r486i5ziz3URMRLDZ3x+FSS
-         QbIQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u7uWdnXzReMILuWMuJCMVWJ56cZtnobswX6oBH/1+LI=;
+        b=vekpM1d56g5fDbCG1IleQHXSiKBdPaYjvbDBn8cEraD0huZTUU0MxRbSdEavQx1Cw6
+         EfJ1ajFUGwUjFXkD1gx6qod2jw0GuCJt+K/gaLGFmOmikqEmXlXKAIVA9vZcK0mFbTh8
+         yFZyTENfGNSgrpjh0/iLYg3NfLkd7DC/BlT9PotgkO9H6qyhIIgAA3O/vj7dr3oFpyP9
+         /GG4sdRG/BtNvbeZokPrWxkUFJF0xSXcU/KH2ys2+PjRGFIgS9gY2wPSXDEIewMNPHFh
+         Eg0rDnSqahbXmyU0i/FwPAdU4WNkffDNX0IugVwNMGQhQn/RXBLXvpDHafy6WGRTwWT6
+         k2hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8Ssb7zR045y0hQVLJADfxNoncBIqCoA1zZayMTSJOr0=;
-        b=M/ZhSbSYv/DRYUjL2zowK75KhG0YRBbjPOe9LrfObKqUdkMHmASWasHmQJiYnD7bcB
-         kCQNKGS7e2ocCXsbJ9GsXgDfAGUfBeXOqPngIZrFLHADRBiZ1OKpe5coNRFXyet2J7zz
-         yveXG9/pykX1cfT09W1EYXgpLWLRJKCUQDXvPhPYA4rQwvAWYXWSbjog4Li8fa73B+rR
-         Npe3/85JN4zDsv3KIkZAD7PpE5b7uY07QuhSQ3WNpb8T/8uEsKAsBoSERzYYxLiof/BM
-         7j4W0lG5KoXh8xJooQ87be+LkzbZoG6MYRc5b8h7ccdmcOgbYtB6k+LZxBJct3Tq5eOP
-         dODw==
-X-Gm-Message-State: AGi0PuZ3OOJn94MW/+t+K1nVytKZajoXORHSwwFYozsyZSGTQf0AD3RO
-        tmbB/zRe5kBwjL1Dcw9VzqhoWQ==
-X-Google-Smtp-Source: APiQypKsRiBbPiO5UhEvgJ1CHiMaz4G022mxednNbGE1FSP2xisXt1FHVOYEQLgrh2gez/w7Jv7UYQ==
-X-Received: by 2002:a63:b542:: with SMTP id u2mr5053271pgo.352.1588354624072;
-        Fri, 01 May 2020 10:37:04 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id a22sm2369969pga.28.2020.05.01.10.37.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 10:37:03 -0700 (PDT)
-Date:   Fri, 1 May 2020 11:37:01 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Chris Lew <clew@codeaurora.org>, Sibi <sibis@codeaurora.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-Subject: Re: [PATCH 2/4] soc: qcom: glink_ssr: Internalize ssr_notifiers
-Message-ID: <20200501173701.GB30509@xps15>
-References: <20200423003736.2027371-1-bjorn.andersson@linaro.org>
- <20200423003736.2027371-3-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u7uWdnXzReMILuWMuJCMVWJ56cZtnobswX6oBH/1+LI=;
+        b=tJyny85eRSHkH6wJ+5PQ2YMJojLAI5X7zqaxTn3NiwZJbkrRziCPYqaxpLcEdRzMlI
+         SX35jySeG5Y21b/WbI+bJ/op8Cb6lte937rYxyjX4n+mSlWuNrdwLvsVDgkdQO5UBsfM
+         TG3T+lg5rnIdaCLnDfrx7F42ttJqdS4yiP1D+Ejo1JbZKDp+RcnXxolNdti9mxT05z4g
+         fiMBlZ8VLKJ8OYldGXClUI2mrGym2iInmb9+hrimaKUP627ORUrnZK9hu1Tz4XnqCjzO
+         ZEBgl2t6S7rsq0afpbK/beDO+RCAF1NwP90kiVqVUdne3l/rVn7c+9WJtMXMQxqZAqmh
+         pcpw==
+X-Gm-Message-State: AGi0PuaYC9bgZ5Q2ieZNVBPoiNGY0bhLTu+MHJZsy74yHwSOtj8RnJ4B
+        kqIn0NrO2yDqTIyhhCeo4FAHssJQO+HvXj9f1bk=
+X-Google-Smtp-Source: APiQypKGvYoGXVQMOaMMGuLG6ZVr8NMMUDLLVypjF+0BH0k/Zjptcxe8gMGO+JVPHbaw6NNSXzHRZRexKuHsnVIIv94=
+X-Received: by 2002:a17:906:970e:: with SMTP id k14mr4444610ejx.202.1588356447735;
+ Fri, 01 May 2020 11:07:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200423003736.2027371-3-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200430192427.4104899-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20200430192427.4104899-1-bjorn.andersson@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 1 May 2020 11:07:32 -0700
+Message-ID: <CAF6AEGsq8RPX7ttqdMh1rXFUqCmVKWNVfez12sV+5PRaz2X8Uw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Fix undefined "rd_full" link error
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 22, 2020 at 05:37:34PM -0700, Bjorn Andersson wrote:
-> Rather than carrying a special purpose blocking notifier for glink_ssr
-> in remoteproc's qcom_common.c, move it into glink_ssr so allow wider
-> reuse of the common one.
-
-After reading the changelog and the cover letter a few times along with thinking
-about the content of the patch, I decude that glink_ssr devices using the
-common ssr_notifiers in qcom_common.c was causing problems (having some details
-on what those problems are would be useful). 
-
-As such this patch is introducing a new notifier, also called ssr_notifiers,
-that only deals with glink ssr notification to narrow the nature of the
-notifications that are sent and received.  Is my understanding correct?  Also,
-how does that fit into what Siddharth was doing here[1]?
-
-It would be nice if Siddharth could ack the patch before moving forward.
-
-Thanks,
-Mathieu
-
-[1]. https://patchwork.kernel.org/patch/11481081/ 
-
-> 
-> The rpmsg glink header file is used in preparation for the next patch.
-> 
+On Thu, Apr 30, 2020 at 12:25 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> rd_full should be defined outside the CONFIG_DEBUG_FS region, in order
+> to be able to link the msm driver even when CONFIG_DEBUG_FS is disabled.
+>
+> Fixes: e515af8d4a6f ("drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP buffers")
+> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+thanks,
+
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
 > ---
->  drivers/remoteproc/qcom_common.c |  8 ++++++++
->  drivers/soc/qcom/glink_ssr.c     | 24 +++++++++++++++++++-----
->  include/linux/rpmsg/qcom_glink.h |  6 ++++++
->  3 files changed, 33 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index ff26f2b68752..9028cea2d81e 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -42,6 +42,13 @@ static void glink_subdev_stop(struct rproc_subdev *subdev, bool crashed)
->  	glink->edge = NULL;
->  }
->  
-> +static void glink_subdev_unprepare(struct rproc_subdev *subdev)
-> +{
-> +	struct qcom_rproc_glink *glink = to_glink_subdev(subdev);
+>  drivers/gpu/drm/msm/msm_rd.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
+> index 732f65df5c4f..fea30e7aa9e8 100644
+> --- a/drivers/gpu/drm/msm/msm_rd.c
+> +++ b/drivers/gpu/drm/msm/msm_rd.c
+> @@ -29,8 +29,6 @@
+>   * or shader programs (if not emitted inline in cmdstream).
+>   */
+>
+> -#ifdef CONFIG_DEBUG_FS
+> -
+>  #include <linux/circ_buf.h>
+>  #include <linux/debugfs.h>
+>  #include <linux/kfifo.h>
+> @@ -47,6 +45,8 @@ bool rd_full = false;
+>  MODULE_PARM_DESC(rd_full, "If true, $debugfs/.../rd will snapshot all buffer contents");
+>  module_param_named(rd_full, rd_full, bool, 0600);
+>
+> +#ifdef CONFIG_DEBUG_FS
 > +
-> +	qcom_glink_ssr_notify(glink->ssr_name);
-> +}
-> +
->  /**
->   * qcom_add_glink_subdev() - try to add a GLINK subdevice to rproc
->   * @rproc:	rproc handle to parent the subdevice
-> @@ -64,6 +71,7 @@ void qcom_add_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glink,
->  	glink->dev = dev;
->  	glink->subdev.start = glink_subdev_start;
->  	glink->subdev.stop = glink_subdev_stop;
-> +	glink->subdev.unprepare = glink_subdev_unprepare;
->  
->  	rproc_add_subdev(rproc, &glink->subdev);
->  }
-> diff --git a/drivers/soc/qcom/glink_ssr.c b/drivers/soc/qcom/glink_ssr.c
-> index d7babe3d67bc..847d79c935f1 100644
-> --- a/drivers/soc/qcom/glink_ssr.c
-> +++ b/drivers/soc/qcom/glink_ssr.c
-> @@ -54,6 +54,19 @@ struct glink_ssr {
->  	struct completion completion;
->  };
->  
-> +/* Notifier list for all registered glink_ssr instances */
-> +static BLOCKING_NOTIFIER_HEAD(ssr_notifiers);
-> +
-> +/**
-> + * qcom_glink_ssr_notify() - notify GLINK SSR about stopped remoteproc
-> + * @ssr_name:	name of the remoteproc that has been stopped
-> + */
-> +void qcom_glink_ssr_notify(const char *ssr_name)
-> +{
-> +	blocking_notifier_call_chain(&ssr_notifiers, 0, (void *)ssr_name);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_glink_ssr_notify);
-> +
->  static int qcom_glink_ssr_callback(struct rpmsg_device *rpdev,
->  				   void *data, int len, void *priv, u32 addr)
->  {
-> @@ -81,8 +94,9 @@ static int qcom_glink_ssr_callback(struct rpmsg_device *rpdev,
->  	return 0;
->  }
->  
-> -static int qcom_glink_ssr_notify(struct notifier_block *nb, unsigned long event,
-> -				 void *data)
-> +static int qcom_glink_ssr_notifier_call(struct notifier_block *nb,
-> +					unsigned long event,
-> +					void *data)
->  {
->  	struct glink_ssr *ssr = container_of(nb, struct glink_ssr, nb);
->  	struct do_cleanup_msg msg;
-> @@ -121,18 +135,18 @@ static int qcom_glink_ssr_probe(struct rpmsg_device *rpdev)
->  
->  	ssr->dev = &rpdev->dev;
->  	ssr->ept = rpdev->ept;
-> -	ssr->nb.notifier_call = qcom_glink_ssr_notify;
-> +	ssr->nb.notifier_call = qcom_glink_ssr_notifier_call;
->  
->  	dev_set_drvdata(&rpdev->dev, ssr);
->  
-> -	return qcom_register_ssr_notifier(&ssr->nb);
-> +	return blocking_notifier_chain_register(&ssr_notifiers, &ssr->nb);
->  }
->  
->  static void qcom_glink_ssr_remove(struct rpmsg_device *rpdev)
->  {
->  	struct glink_ssr *ssr = dev_get_drvdata(&rpdev->dev);
->  
-> -	qcom_unregister_ssr_notifier(&ssr->nb);
-> +	blocking_notifier_chain_unregister(&ssr_notifiers, &ssr->nb);
->  }
->  
->  static const struct rpmsg_device_id qcom_glink_ssr_match[] = {
-> diff --git a/include/linux/rpmsg/qcom_glink.h b/include/linux/rpmsg/qcom_glink.h
-> index 96e26d94719f..09daa0acde2c 100644
-> --- a/include/linux/rpmsg/qcom_glink.h
-> +++ b/include/linux/rpmsg/qcom_glink.h
-> @@ -26,4 +26,10 @@ static inline void qcom_glink_smem_unregister(struct qcom_glink *glink) {}
->  
->  #endif
->  
-> +#if IS_ENABLED(CONFIG_RPMSG_QCOM_GLINK_SSR)
-> +void qcom_glink_ssr_notify(const char *ssr_name);
-> +#else
-> +static inline void qcom_glink_ssr_notify(const char *ssr_name) {}
-> +#endif
-> +
->  #endif
-> -- 
+>  enum rd_sect_type {
+>         RD_NONE,
+>         RD_TEST,       /* ascii text */
+> --
 > 2.24.0
-> 
+>
