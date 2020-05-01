@@ -2,109 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E58CA1C1F54
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 23:12:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEA7D1C1FE3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2020 23:46:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726405AbgEAVKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 17:10:50 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:38812 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbgEAVKt (ORCPT
+        id S1726564AbgEAVpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 17:45:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43900 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726045AbgEAVpH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 17:10:49 -0400
-Received: by mail-ot1-f67.google.com with SMTP id g19so3630392otk.5;
-        Fri, 01 May 2020 14:10:48 -0700 (PDT)
+        Fri, 1 May 2020 17:45:07 -0400
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A6B5C08E934
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2020 14:45:06 -0700 (PDT)
+Received: by mail-qv1-xf41.google.com with SMTP id p13so5397638qvt.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2020 14:45:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hmchGPRatpHGz7FXodcq0SJqPYC5mC9nnx68TlaFw4w=;
+        b=xwWgPvauD6ppamEvtNf9ufZFJSbi1n2KGMzoE1syqLec3fCNoSjft7GT/6N59WPd0O
+         M7sPxOR6NTHeuv6QCZb5HHY2UDi1TvOcGjKwZAwXjScQfnYjJ5OiXvgna3D02FM8arMH
+         qqA/bxLsQ9/sPLat9/rX78cKaqJCwivNFeSOuIGysl7LilmEsX4rCD3XyIvEaU+B1Snd
+         qEov4+C7hfmK5E5w10OSx56H87NYvnpUpC8ewjFFitGFVeIeegoXktpsyFmPMJ+SDzdd
+         nrO90BisFqJX2sH34XILdpb9qWapOLZ+0BOOKnRNzHY0Qk9f7PvedtPA6sKDfun4HRLX
+         cyVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=d8vAF+PY0nWCIBCBn4+LnDutJoHCKEjlYZUrgGSNTxI=;
-        b=T+Df/p4IQvdMVzrB+plu8FvYWEUc6atWnKJ5ui8KiIN9arT58RJpkBHRUS1RHEn3Ig
-         qmMwGHdzRUrYv5UirhNp/ydZdvvcg14kcOn17ozhbvNyH2nmacSo/cla1Jq8ZDK/EgXF
-         xlOHOAKDtcbw0Fnwcfu/ka1Db/zKTqNadaKf7RGzUdQbRwQtq30KK5upe0UcXILqvw9P
-         FLdhNu4Vd7BFvXjx5Gy+8OrDWoyyBcZagQ7BljsaGQg2uaCFenb7y0zANUsZcIWqodyt
-         eURCwKUDPWyQcxfkJQNgcxjw3SvZPA7zkJfcGNN+dTumD5lxpkqNnx7CTocB+NxWxuXW
-         SSFQ==
-X-Gm-Message-State: AGi0PubWkqGjWs8q1QkNGM3TOSp539k5kBR/q75SwHEiVfR8xD0khAZx
-        +kmgV8h331nu5699r6s1Xg==
-X-Google-Smtp-Source: APiQypJXkbYVukB/6vxjI7uHS29tGC9oXir3mVEZ2lcW+KwqwzxOJPVhkSaJkIbFy3SV5b59OjaSDg==
-X-Received: by 2002:a05:6830:1c2b:: with SMTP id f11mr5415187ote.196.1588367448305;
-        Fri, 01 May 2020 14:10:48 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id e91sm1125111otb.40.2020.05.01.14.10.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hmchGPRatpHGz7FXodcq0SJqPYC5mC9nnx68TlaFw4w=;
+        b=O9fvM6v9MTv+AY5fecD0RMwsNT97pgKbckDgP1ZOnFXLX+7aZsa2ye0rROq27rjXMt
+         PItQLbvU61Xg1CEY0d8DcEd1oRdw/IOmr7UWbOz27qvkN3dHE87NXYhGqa7Vayt4Hbac
+         l5phJ7GGOUy1C6y9oj/M/PtyuSr3bu3rbVeStn8H50AUrN/wowl63mMn4dcMPOYXsqga
+         79ZBIDjj2gIYVub0Oh/WQ3RCefIPFOxP5Mh38vDmUmZo9vlpVtA5fsMI+AANMxrF6BQL
+         5I8ioopLQPERZFD0efEjb7+NdGujIvQAbTRkie3dmxDs7jO23jXEfeQX4xBrUTJvYjTT
+         nTRA==
+X-Gm-Message-State: AGi0PuZy8PSdB8lHibvR7giR0NF4uQyntc2dfnzORGtLwIWCE60eUD1K
+        V5nCgU06qpbNEN1s+F9R5UQiUGqbSzM=
+X-Google-Smtp-Source: APiQypIuAa6x+i0csPOWBkj82VsqurAxBOnw3UAt3938Ebx2ta9aLDycZjFVpTUNGLKa+OXLdVUAgQ==
+X-Received: by 2002:a0c:e786:: with SMTP id x6mr6237094qvn.11.1588369505083;
+        Fri, 01 May 2020 14:45:05 -0700 (PDT)
+Received: from beast.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id l12sm3587374qke.89.2020.05.01.14.45.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 14:10:47 -0700 (PDT)
-Received: (nullmailer pid 32685 invoked by uid 1000);
-        Fri, 01 May 2020 21:10:46 -0000
-Date:   Fri, 1 May 2020 16:10:46 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] devicetree: bindings: phy: Document ipq806x dwc3
- qcom phy
-Message-ID: <20200501211046.GA31395@bogus>
-References: <20200429211926.4952-1-ansuelsmth@gmail.com>
- <20200429211926.4952-2-ansuelsmth@gmail.com>
+        Fri, 01 May 2020 14:45:04 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     evgreen@chromium.org.net, subashab@codeaurora.org,
+        cpratapa@codeaurora.org, davem@davemloft.net,
+        devicetree@vger.kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: net: add IPA iommus property
+Date:   Fri,  1 May 2020 16:45:00 -0500
+Message-Id: <20200501214500.31433-1-elder@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200429211926.4952-2-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 29 Apr 2020 23:19:25 +0200, Ansuel Smith wrote:
-> Document dwc3 qcom phy hs and ss phy bindings needed to correctly
-> inizialize and use usb on ipq806x SoC.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
-> v4:
-> * Add qcom to specific bindings
-> v3:
-> * Use explicit reg instead of regmap
-> 
->  .../bindings/phy/qcom,ipq806x-usb-phy-hs.yaml | 58 +++++++++++++++
->  .../bindings/phy/qcom,ipq806x-usb-phy-ss.yaml | 73 +++++++++++++++++++
->  2 files changed, 131 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-> 
+The IPA accesses "IMEM" and main system memory through an SMMU, so
+its DT node requires an iommus property to define range of stream IDs
+it uses.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ Documentation/devicetree/bindings/net/qcom,ipa.yaml | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: properties:qcom,tx_deamp_3_5db: {'maxItems': 1, 'description': 'Override value for transmit preemphasis.', 'default': 23} is not valid under any of the given schemas (Possible causes of the failure):
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: properties:qcom,tx_deamp_3_5db: 'not' is a required property
+diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+index 140f15245654..7b749fc04c32 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+@@ -20,7 +20,10 @@ description:
+   The GSI is an integral part of the IPA, but it is logically isolated
+   and has a distinct interrupt and a separately-defined address space.
+ 
+-  See also soc/qcom/qcom,smp2p.txt and interconnect/interconnect.txt.
++  See also soc/qcom/qcom,smp2p.txt and interconnect/interconnect.txt.  See
++  iommu/iommu.txt and iommu/arm,smmu.yaml for more information about SMMU
++  bindings.
++
+ 
+   - |
+     --------             ---------
+@@ -54,6 +57,9 @@ properties:
+       - const: ipa-shared
+       - const: gsi
+ 
++  iommus:
++    maxItems: 1
++
+   clocks:
+     maxItems: 1
+ 
+@@ -126,6 +132,7 @@ properties:
+ 
+ required:
+   - compatible
++  - iommus
+   - reg
+   - clocks
+   - interrupts
+@@ -164,6 +171,7 @@ examples:
+                 modem-init;
+                 modem-remoteproc = <&mss_pil>;
+ 
++                iommus = <&apps_smmu 0x720 0x3>;
+                 reg = <0 0x1e40000 0 0x7000>,
+                         <0 0x1e47000 0 0x2000>,
+                         <0 0x1e04000 0 0x2c000>;
+-- 
+2.20.1
 
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: properties:qcom,rx_eq: {'maxItems': 1, 'description': 'Override value for rx_eq.', 'default': 4} is not valid under any of the given schemas (Possible causes of the failure):
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: properties:qcom,rx_eq: 'not' is a required property
-
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: properties:qcom,mpll: {'maxItems': 1, 'description': 'Override value for mpll.', 'default': 0} is not valid under any of the given schemas (Possible causes of the failure):
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: properties:qcom,mpll: 'not' is a required property
-
-Documentation/devicetree/bindings/Makefile:11: recipe for target 'Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.example.dts' failed
-make[1]: *** [Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-warning: no schema found in file: Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: ignoring, error in schema: properties: qcom,mpll
-warning: no schema found in file: Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml: ignoring, error in schema: properties: qcom,mpll
-Makefile:1300: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
-
-See https://patchwork.ozlabs.org/patch/1279692
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
