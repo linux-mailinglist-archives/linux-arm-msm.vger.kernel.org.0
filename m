@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1D681C2255
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2020 04:33:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8478A1C2258
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2020 04:39:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726752AbgEBCdS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 May 2020 22:33:18 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:39466 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727924AbgEBCdR (ORCPT
+        id S1726437AbgEBCjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 May 2020 22:39:18 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:32714 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726463AbgEBCjR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 May 2020 22:33:17 -0400
+        Fri, 1 May 2020 22:39:17 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588386797; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1588387157; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=iYIEoJGNhbKPN9zz/zszC6WL+W7rj9KlSLhmhiyLu+0=;
- b=jGnAcX7b6AFB4AOlYsbeB6JHbvXWUVWT51WJRAS7ZwVo0PxPqbPHqCWOvpzWnP0TQ0DMcSnf
- Tkkg0XmV5KV3iePqUoos3JmMVg1CjXoXYyLr7ftdSbqG6VJhi1sVAh4skxOoIBFQ0/CW89Fh
- CozrOMAhXi/eCcuwpLJA20sfUa8=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ MIME-Version: Sender; bh=yg4vNvD6TR74+JEaI5qINyXnJgDOYi1EBUxzQjIX5ug=;
+ b=Z1H/8JuGBPhGIrlEkjWDzBCzYallmyfKAeV5dNDZJnuIq3Hf+yeVz6eLTC9BxTd6IL2HfKgp
+ 13fI76c2GT8+zQ5rvBkSa+j6++76va9BbTNVgW6gqp7h1sd+UoCunp3GYlCMlOeaOTnGfnHb
+ +OLxMDifFA4J8mfrDdoB2nzqVFc=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eacdbe0.7f7d8d8fd378-smtp-out-n02;
- Sat, 02 May 2020 02:33:04 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5eacdd3e.7f0d22a59768-smtp-out-n03;
+ Sat, 02 May 2020 02:38:54 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 88C5DC43637; Sat,  2 May 2020 02:33:03 +0000 (UTC)
+        id 66F67C433CB; Sat,  2 May 2020 02:38:53 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
-        autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2C80AC433CB;
-        Sat,  2 May 2020 02:33:03 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C9A3BC433F2;
+        Sat,  2 May 2020 02:38:52 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 01 May 2020 19:33:03 -0700
+Date:   Fri, 01 May 2020 19:38:52 -0700
 From:   bbhatt@codeaurora.org
 To:     Jeffrey Hugo <jhugo@codeaurora.org>
 Cc:     mani@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH v3 9/9] bus: mhi: core: Ensure non-zero session or
- sequence ID values
-In-Reply-To: <e609031b-33a1-2db6-21b9-8ebadafba509@codeaurora.org>
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v3 6/9] bus: mhi: core: WARN_ON for malformed vector table
+In-Reply-To: <15f88b7a-a3cb-ac19-bffe-247f2e99d894@codeaurora.org>
 References: <1588193551-31439-1-git-send-email-bbhatt@codeaurora.org>
- <1588193551-31439-10-git-send-email-bbhatt@codeaurora.org>
- <e609031b-33a1-2db6-21b9-8ebadafba509@codeaurora.org>
-Message-ID: <612b805e217eebbafeaa080655af2fba@codeaurora.org>
+ <1588193551-31439-7-git-send-email-bbhatt@codeaurora.org>
+ <15f88b7a-a3cb-ac19-bffe-247f2e99d894@codeaurora.org>
+Message-ID: <4d26ba11678e0302a0e6199b2b393cc2@codeaurora.org>
 X-Sender: bbhatt@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -61,12 +60,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-04-30 08:12, Jeffrey Hugo wrote:
+On 2020-04-30 08:02, Jeffrey Hugo wrote:
 > On 4/29/2020 2:52 PM, Bhaumik Bhatt wrote:
->> While writing any sequence or session identifiers, it is possible that
->> the host could write a zero value, whereas only non-zero values are
->> supported writes to those registers. Ensure that host does not write a
->> non-zero value for those cases.
+>> Add a bounds check in the firmware copy routine to exit if a malformed
+>> vector table is found while attempting to load the firmware in to the
+>> BHIe vector table.
 >> 
 >> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 >> ---
@@ -74,34 +72,47 @@ On 2020-04-30 08:12, Jeffrey Hugo wrote:
 >>   1 file changed, 6 insertions(+)
 >> 
 >> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
->> index 0bc9c50..c9971d4 100644
+>> index 17c636b..bc70edc 100644
 >> --- a/drivers/bus/mhi/core/boot.c
 >> +++ b/drivers/bus/mhi/core/boot.c
->> @@ -199,6 +199,9 @@ static int mhi_fw_load_amss(struct mhi_controller 
->> *mhi_cntrl,
->>   	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECSIZE_OFFS, mhi_buf->len);
->>     	sequence_id = prandom_u32() & BHIE_TXVECSTATUS_SEQNUM_BMSK;
->> +	if (unlikely(!sequence_id))
->> +		sequence_id = 1;
+>> @@ -362,8 +362,14 @@ static void mhi_firmware_copy(struct 
+>> mhi_controller *mhi_cntrl,
+>>   	int i = 0;
+>>   	struct mhi_buf *mhi_buf = img_info->mhi_buf;
+>>   	struct bhi_vec_entry *bhi_vec = img_info->bhi_vec;
+>> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>>     	while (remainder) {
+>> +		if (WARN_ON(i >= img_info->entries)) {
+>> +			dev_err(dev, "Malformed vector table\n");
 > 
-> Seems like you could use prandom_u32_max(), and add 1 to the result to
-> eliminate the conditional.  What do you think?
+> I feel like this message needs more detail.  At a minimum, I think it
+> should indicate what vector table (BHIe).  I think if you can identify
+> what file, etc the the glitch is in, that would be better.  Maybe some
+> detail about i and img_info->entries.
+> 
+> If I see this error message, I should have enough information to
+> immediately debug the issue.  If it tells enough to go directly into
+> the firmware file and have a look at entry X to see what might be
+> corrupt about it, that makes my debugging very efficient.  If I have
+> to go back to the code to figure out what "Malformed vector table"
+> means, and then maybe apply a patch to get more data about the error -
+> the error message is not as useful as it should be.
 > 
 
-Agreed. Done using an internal macro in those places.
+I plan on dropping this patch as it looks like an unnecessary check 
+since we
+will always rely on the firmware->size from the request_firmware() API 
+in order
+to calculate the img_info->entries (or we can call it the number of 
+segments, in
+our case). And we will never fail in the if loop as values will already 
+be
+bounded.
 
+>> +			return;
+>> +		}
 >> +
->>   	mhi_write_reg_field(mhi_cntrl, base, BHIE_TXVECDB_OFFS,
->>   			    BHIE_TXVECDB_SEQNUM_BMSK, BHIE_TXVECDB_SEQNUM_SHFT,
->>   			    sequence_id);
->> @@ -254,6 +257,9 @@ static int mhi_fw_load_sbl(struct mhi_controller 
->> *mhi_cntrl,
->>   		      lower_32_bits(dma_addr));
->>   	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
->>   	session_id = prandom_u32() & BHI_TXDB_SEQNUM_BMSK;
->> +	if (unlikely(!session_id))
->> +		session_id = 1;
->> +
->>   	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
->>   	read_unlock_bh(pm_lock);
+>>   		to_cpy = min(remainder, mhi_buf->len);
+>>   		memcpy(mhi_buf->buf, buf, to_cpy);
+>>   		bhi_vec->dma_addr = mhi_buf->dma_addr;
 >> 
