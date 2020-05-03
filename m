@@ -2,158 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20FF81C2C0C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2020 14:05:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 042F91C2F20
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2020 22:18:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728359AbgECMFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 May 2020 08:05:22 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:25946 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728246AbgECMFV (ORCPT
+        id S1729108AbgECUSp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 May 2020 16:18:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52528 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729026AbgECUSp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 May 2020 08:05:21 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588507521; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=tgtFxH0T/3jNOCd/ZT9IgGG1bh36Q8+QFTlbx43nojc=; b=NR3iFC0n7ahgx5By9WPJtZkpUSzKJ8i42Jb1eecU8Q+/CRvgAkV/KckjO1IULa5TuhAFmKZp
- vt9nWuMFr1TVaK+Zh2cYzGtmeFDGaQGJq0oaZUYTBTg9h7lPeGHlaeo6kZKw9o4pQdM2SBFn
- f1cySGnbn8yQUoySteMxfVSBvN4=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eaeb381.7f0f97ac9c00-smtp-out-n01;
- Sun, 03 May 2020 12:05:21 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D7278C44798; Sun,  3 May 2020 12:05:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 55500C44799;
-        Sun,  3 May 2020 12:05:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 55500C44799
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Mark Brown <broonie@kernel.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-spi@vger.kernel.org
-Subject: [PATCH v4 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf state
-Date:   Sun,  3 May 2020 17:34:29 +0530
-Message-Id: <1588507469-31889-7-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
-References: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
+        Sun, 3 May 2020 16:18:45 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F821C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 May 2020 13:18:43 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id d15so18482097wrx.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 May 2020 13:18:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pZbT+0Oo6gju/el56kGkKejtrVoHm+BJeWgEyTMdD/U=;
+        b=OmPEUSR/qkLCaf/PW5Tun+H76mbrD5211OIGssp0z4pgPntDvsAVWr6anhTZAoN0mt
+         4LaxsMrDcXnHzRLhPn1nPcqE9NvQauxbqPuVOQoYEDpes8+8OdAcWrxT48EiZ86rwBw5
+         ZYzxXrx3QaZ/L1XK/D4FbBpxRe6GtDYKOrA6zGzh1OxUWxlkH3XVvXz99r52OmYiH9Za
+         N5bUidfH9TyzlASs2jdol6ohIbRlbqO3ycwg6oj/jQvMij/eSHe7Pkg8UOnQhU48FwTj
+         agia9P7LTmw7dLnv85kdJS6HPPdxpJJ03YmROV/eq8Cag05IG+wurCFAnboDRLY1ly8w
+         rTgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pZbT+0Oo6gju/el56kGkKejtrVoHm+BJeWgEyTMdD/U=;
+        b=gIh7q/zujWaSiOUfY6HbfBj2zqlcCbYbXjw4qIayX1+y/6YnccsUWXqSBwm8P2FFj9
+         u4v8tnQdL33KbTkEc8dUByuinu27EEPQdNf9D9MK2CYvRylixa7WUyIICuFwp7kI6ye0
+         BnkTTa9xMQrUDdsAbkHU+Gi76AXZi1B9VULp26uePsL1vdgNkpPTRnV3Ne79HeFhrhjc
+         TNb5TxjRCpFVmHcckGOb9BKDS51SJ0mKljcL/ni0k9bi/7fRjdH05sKxPc7ugnNBxwo+
+         qELqi3coDPwl1XnhtXxRy4QWLtaBFZ+158A+TuzqasWM5NlGUgplUSoYZhn3Fu2DVXUa
+         sqSw==
+X-Gm-Message-State: AGi0PuYEtQwgVC5djShPNbDxuODq3jufw1RBlEqNIVxy7CU9sIEEy5hO
+        t4kCq6SPHLWCgpIggHP19UKr4Q==
+X-Google-Smtp-Source: APiQypK+XbE1NSpxwnTrxbNWg9DeBQFObrkw4sunojynARheacuhqjpF9C30xcMuD9/gd4t0L7tViA==
+X-Received: by 2002:adf:ec07:: with SMTP id x7mr9958050wrn.416.1588537122008;
+        Sun, 03 May 2020 13:18:42 -0700 (PDT)
+Received: from localhost.localdomain ([2a0e:b107:830:0:47e5:c676:4796:5818])
+        by smtp.googlemail.com with ESMTPSA id 19sm9891624wmo.3.2020.05.03.13.18.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 May 2020 13:18:41 -0700 (PDT)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org, vkoul@kernel.org
+Cc:     Robert Marko <robert.marko@sartura.hr>,
+        John Crispin <john@phrozen.org>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: [PATCH v7 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
+Date:   Sun,  3 May 2020 22:18:22 +0200
+Message-Id: <20200503201823.531757-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QSPI needs to vote on a performance state of a power domain depending on
-the clock rate. Add support for it by specifying the perf state/clock rate
-as an OPP table in device tree.
+Add a driver to setup the USB PHY-s on Qualcom m IPQ40xx series SoCs.
+The driver sets up HS and SS phys.
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Alok Chauhan <alokc@codeaurora.org>
-Cc: Akash Asthana <akashast@codeaurora.org>
-Cc: linux-spi@vger.kernel.org
+Signed-off-by: John Crispin <john@phrozen.org>
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: Luka Perkov <luka.perkov@sartura.hr>
 ---
- drivers/spi/spi-qcom-qspi.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+Changes from v6 to v7:
+* Use of_device_get_match_data() instead of of_match_device()
+and then passing that to devm_phy_create()
 
-diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
-index 3c4f83b..eb53c00 100644
---- a/drivers/spi/spi-qcom-qspi.c
-+++ b/drivers/spi/spi-qcom-qspi.c
-@@ -8,6 +8,7 @@
- #include <linux/of.h>
- #include <linux/of_platform.h>
- #include <linux/pm_runtime.h>
-+#include <linux/pm_opp.h>
- #include <linux/spi/spi.h>
- #include <linux/spi/spi-mem.h>
+Changes from v2 to v3:
+* Remove magic writes as they are not needed
+* Correct commit message
+
+ drivers/phy/qualcomm/Kconfig                |   7 +
+ drivers/phy/qualcomm/Makefile               |   1 +
+ drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 148 ++++++++++++++++++++
+ 3 files changed, 156 insertions(+)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+
+diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+index 98674ed094d9..b86f9556df85 100644
+--- a/drivers/phy/qualcomm/Kconfig
++++ b/drivers/phy/qualcomm/Kconfig
+@@ -18,6 +18,13 @@ config PHY_QCOM_APQ8064_SATA
+ 	depends on OF
+ 	select GENERIC_PHY
  
-@@ -139,6 +140,8 @@ struct qcom_qspi {
- 	struct device *dev;
- 	struct clk_bulk_data *clks;
- 	struct qspi_xfer xfer;
-+	struct opp_table *opp_table;
-+	bool has_opp_table;
- 	/* Lock to protect xfer and IRQ accessed registers */
- 	spinlock_t lock;
- };
-@@ -235,7 +238,7 @@ static int qcom_qspi_transfer_one(struct spi_master *master,
- 		speed_hz = xfer->speed_hz;
- 
- 	/* In regular operation (SBL_EN=1) core must be 4x transfer clock */
--	ret = clk_set_rate(ctrl->clks[QSPI_CLK_CORE].clk, speed_hz * 4);
-+	ret = dev_pm_opp_set_rate(ctrl->dev, speed_hz * 4);
- 	if (ret) {
- 		dev_err(ctrl->dev, "Failed to set core clk %d\n", ret);
- 		return ret;
-@@ -481,6 +484,20 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- 	master->handle_err = qcom_qspi_handle_err;
- 	master->auto_runtime_pm = true;
- 
-+	ctrl->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
-+	if (IS_ERR(ctrl->opp_table)) {
-+		ret = PTR_ERR(ctrl->opp_table);
-+		goto exit_probe_master_put;
-+	}
-+	/* OPP table is optional */
-+	ret = dev_pm_opp_of_add_table(&pdev->dev);
-+	if (!ret) {
-+		ctrl->has_opp_table = true;
-+	} else if (ret != -ENODEV) {
-+		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
-+		goto exit_probe_master_put;
++config PHY_QCOM_IPQ4019_USB
++	tristate "Qualcomm IPQ4019 USB PHY driver"
++	depends on OF && (ARCH_QCOM || COMPILE_TEST)
++	select GENERIC_PHY
++	help
++	  Support for the USB PHY-s on Qualcomm IPQ40xx SoC-s.
++
+ config PHY_QCOM_IPQ806X_SATA
+ 	tristate "Qualcomm IPQ806x SATA SerDes/PHY driver"
+ 	depends on ARCH_QCOM
+diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
+index 1f14aeacbd70..41746781de73 100644
+--- a/drivers/phy/qualcomm/Makefile
++++ b/drivers/phy/qualcomm/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_PHY_ATH79_USB)		+= phy-ath79-usb.o
+ obj-$(CONFIG_PHY_QCOM_APQ8064_SATA)	+= phy-qcom-apq8064-sata.o
++obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)	+= phy-qcom-ipq4019-usb.o
+ obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)	+= phy-qcom-ipq806x-sata.o
+ obj-$(CONFIG_PHY_QCOM_PCIE2)		+= phy-qcom-pcie2.o
+ obj-$(CONFIG_PHY_QCOM_QMP)		+= phy-qcom-qmp.o
+diff --git a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+new file mode 100644
+index 000000000000..b8ef331e1545
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+@@ -0,0 +1,148 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Copyright (C) 2018 John Crispin <john@phrozen.org>
++ *
++ * Based on code from
++ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
++ *
++ */
++
++#include <linux/delay.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/of_platform.h>
++#include <linux/of_device.h>
++#include <linux/phy/phy.h>
++#include <linux/platform_device.h>
++#include <linux/reset.h>
++
++struct ipq4019_usb_phy {
++	struct device		*dev;
++	struct phy		*phy;
++	void __iomem		*base;
++	struct reset_control	*por_rst;
++	struct reset_control	*srif_rst;
++};
++
++static int ipq4019_ss_phy_power_off(struct phy *_phy)
++{
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
++
++	reset_control_assert(phy->por_rst);
++	msleep(10);
++
++	return 0;
++}
++
++static int ipq4019_ss_phy_power_on(struct phy *_phy)
++{
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
++
++	ipq4019_ss_phy_power_off(_phy);
++
++	reset_control_deassert(phy->por_rst);
++
++	return 0;
++}
++
++static struct phy_ops ipq4019_usb_ss_phy_ops = {
++	.power_on	= ipq4019_ss_phy_power_on,
++	.power_off	= ipq4019_ss_phy_power_off,
++};
++
++static int ipq4019_hs_phy_power_off(struct phy *_phy)
++{
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
++
++	reset_control_assert(phy->por_rst);
++	msleep(10);
++
++	reset_control_assert(phy->srif_rst);
++	msleep(10);
++
++	return 0;
++}
++
++static int ipq4019_hs_phy_power_on(struct phy *_phy)
++{
++	struct ipq4019_usb_phy *phy = phy_get_drvdata(_phy);
++
++	ipq4019_hs_phy_power_off(_phy);
++
++	reset_control_deassert(phy->srif_rst);
++	msleep(10);
++
++	reset_control_deassert(phy->por_rst);
++
++	return 0;
++}
++
++static struct phy_ops ipq4019_usb_hs_phy_ops = {
++	.power_on	= ipq4019_hs_phy_power_on,
++	.power_off	= ipq4019_hs_phy_power_off,
++};
++
++static const struct of_device_id ipq4019_usb_phy_of_match[] = {
++	{ .compatible = "qcom,usb-hs-ipq4019-phy", .data = &ipq4019_usb_hs_phy_ops},
++	{ .compatible = "qcom,usb-ss-ipq4019-phy", .data = &ipq4019_usb_ss_phy_ops},
++	{ },
++};
++MODULE_DEVICE_TABLE(of, ipq4019_usb_phy_of_match);
++
++static int ipq4019_usb_phy_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct resource *res;
++	struct phy_provider *phy_provider;
++	struct ipq4019_usb_phy *phy;
++
++	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
++	if (!phy)
++		return -ENOMEM;
++
++	phy->dev = &pdev->dev;
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	phy->base = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(phy->base)) {
++		dev_err(dev, "failed to remap register memory\n");
++		return PTR_ERR(phy->base);
 +	}
 +
- 	pm_runtime_enable(dev);
- 
- 	ret = spi_register_master(master);
-@@ -488,6 +505,9 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- 		return 0;
- 
- 	pm_runtime_disable(dev);
-+	if (ctrl->has_opp_table)
-+		dev_pm_opp_of_remove_table(&pdev->dev);
-+	dev_pm_opp_put_clkname(ctrl->opp_table);
- 
- exit_probe_master_put:
- 	spi_master_put(master);
-@@ -498,6 +518,11 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- static int qcom_qspi_remove(struct platform_device *pdev)
- {
- 	struct spi_master *master = platform_get_drvdata(pdev);
-+	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
++	phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
++	if (IS_ERR(phy->por_rst)) {
++		if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
++			dev_err(dev, "POR reset is missing\n");
++		return PTR_ERR(phy->por_rst);
++	}
 +
-+	if (ctrl->has_opp_table)
-+		dev_pm_opp_of_remove_table(&pdev->dev);
-+	dev_pm_opp_put_clkname(ctrl->opp_table);
- 
- 	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
- 	spi_unregister_master(master);
-@@ -512,6 +537,8 @@ static int __maybe_unused qcom_qspi_runtime_suspend(struct device *dev)
- 	struct spi_master *master = dev_get_drvdata(dev);
- 	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
- 
-+	/* Drop the performance state vote */
-+	dev_pm_opp_set_rate(dev, 0);
- 	clk_bulk_disable_unprepare(QSPI_NUM_CLKS, ctrl->clks);
- 
- 	return 0;
++	phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
++	if (IS_ERR(phy->srif_rst))
++		return PTR_ERR(phy->srif_rst);
++
++	phy->phy = devm_phy_create(dev, NULL, of_device_get_match_data(dev));
++	if (IS_ERR(phy->phy)) {
++		dev_err(dev, "failed to create PHY\n");
++		return PTR_ERR(phy->phy);
++	}
++	phy_set_drvdata(phy->phy, phy);
++
++	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
++
++	return PTR_ERR_OR_ZERO(phy_provider);
++}
++
++static struct platform_driver ipq4019_usb_phy_driver = {
++	.probe	= ipq4019_usb_phy_probe,
++	.driver = {
++		.of_match_table	= ipq4019_usb_phy_of_match,
++		.name  = "ipq4019-usb-phy",
++	}
++};
++module_platform_driver(ipq4019_usb_phy_driver);
++
++MODULE_DESCRIPTION("QCOM/IPQ4019 USB phy driver");
++MODULE_AUTHOR("John Crispin <john@phrozen.org>");
++MODULE_LICENSE("GPL v2");
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.2
+
