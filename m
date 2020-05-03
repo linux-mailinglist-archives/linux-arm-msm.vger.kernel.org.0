@@ -2,188 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 492201C2AD0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2020 11:04:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B04D1C2BFC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2020 14:04:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727116AbgECJEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 May 2020 05:04:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43140 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726751AbgECJEU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 May 2020 05:04:20 -0400
-Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727819AbgECME4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 May 2020 08:04:56 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:29720 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727792AbgECMEz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 3 May 2020 08:04:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588507495; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=e7EM43IT6tvYkadNNFAaUsP0t6Yjce0tptPQePwt9II=; b=Y7zMR6vEu9UH0EBCMK0Co4STmzU3/NZGeha0jHyZ0GJf8uZYnXGwSUMncVTFLjGhUO3DeRPR
+ RTPg5feszPNOOK8qm5vqh5/Yjde0lC407pRgvS80gzSaZhpJpIGhhoMx/BzwzgrFzKvyjpp2
+ AUWiUPL4rzPwvM0Qm3tiZCB6lYI=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eaeb367.7fb782f61810-smtp-out-n05;
+ Sun, 03 May 2020 12:04:55 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 575E8C43637; Sun,  3 May 2020 12:04:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6CD8620721;
-        Sun,  3 May 2020 09:04:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588496660;
-        bh=joQmbCHiX4MsrLvWUn3TCqGJil+H1POp5Wj9MvFemrw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=qNCfQ6rpgX7z2rhV1f1A6x13Wl/egMCdnTFcR5zByONc+eV8e+5YcceGJ69ZpiCaT
-         OfmANZm7294flumn7dMwyjkse8CImPMxg9LXhCYhLhoOIfQzXMeCjVqIIoQAoAbb/d
-         rezLoZtq7GUddnoF2teEWIGHf6x7K7ALrdy4RGis=
-Date:   Sun, 3 May 2020 10:04:14 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, linus.walleij@linaro.org,
-        Jonathan.Cameron@huawei.com, smohanad@codeaurora.org,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH V3 4/4] iio: adc: Update error checks and debug prints
-Message-ID: <20200503100414.6e5602e7@archlinux>
-In-Reply-To: <1587993846-30773-5-git-send-email-jprakash@codeaurora.org>
-References: <1587993846-30773-1-git-send-email-jprakash@codeaurora.org>
-        <1587993846-30773-5-git-send-email-jprakash@codeaurora.org>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14F39C433CB;
+        Sun,  3 May 2020 12:04:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 14F39C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v4 0/6] DVFS for IO devices on sdm845 and sc7180
+Date:   Sun,  3 May 2020 17:34:23 +0530
+Message-Id: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Apr 2020 18:54:05 +0530
-Jishnu Prakash <jprakash@codeaurora.org> wrote:
+Changes in v4:
+1. Fixed all review feedback on v3
+2. Dropped the dts patches, will post as a seperate series once
+driver changes are reviewed and merged.
+The driver changes without DT updates to include OPP tables will
+have zero functional change.
+3. Dropped the mmc/sdhc patch, which is a standalone patch. will
+repost if needed seperately.
 
-> Change pr_err/pr_debug statements to dev_err/dev_dbg for
-> increased clarity. Also clean up some return value checks.
-> 
-> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
-I'm happy with the whole series.  Just need a devicetree review before
-applying. 
+Changes in v3:
+1. Added better error handling for dev_pm_opp_of_add_table()
+2. Some minor changes and fixes in 'PATCH 12/17' as compared to v2
+3. Dropped the mmc patch picked up by Ulf [2]
 
-Thanks,
+Changes in v2:
+1. Added error handling for dev_pm_opp_set_clkname()
+and dev_pm_opp_of_add_table()
+2. Used dev_pm_opp_put_clkname() in the cleanup path
+3. Dropped the OPP patch pulled in by Viresh [1]
+4. Dropped the UFS patches since they had some major rework
+needed because of changes that were merged in the merge window
+and I don't have a UFS device currently to validate the changes.
 
-Jonathan
+We have had support added in the OPP core for a while now to support
+DVFS for IO devices, and this series uses that infrastructure to
+add DVFS support for various IO devices in sdm845 and sc7180 SoCs.
 
-> ---
->  drivers/iio/adc/qcom-spmi-adc5.c | 30 +++++++++++++++---------------
->  1 file changed, 15 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-> index a66eeb7..7e951a0 100644
-> --- a/drivers/iio/adc/qcom-spmi-adc5.c
-> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
-> @@ -249,11 +249,11 @@ static int adc5_read_voltage_data(struct adc5_chip *adc, u16 *data)
->  	*data = (rslt_msb << 8) | rslt_lsb;
->  
->  	if (*data == ADC5_USR_DATA_CHECK) {
-> -		pr_err("Invalid data:0x%x\n", *data);
-> +		dev_err(adc->dev, "Invalid data:0x%x\n", *data);
->  		return -EINVAL;
->  	}
->  
-> -	pr_debug("voltage raw code:0x%x\n", *data);
-> +	dev_dbg(adc->dev, "voltage raw code:0x%x\n", *data);
->  
->  	return 0;
->  }
-> @@ -304,7 +304,7 @@ static int adc5_configure(struct adc5_chip *adc,
->  
->  	/* Read registers 0x42 through 0x46 */
->  	ret = adc5_read(adc, ADC5_USR_DIG_PARAM, buf, sizeof(buf));
-> -	if (ret < 0)
-> +	if (ret)
->  		return ret;
->  
->  	/* Digital param selection */
-> @@ -344,7 +344,7 @@ static int adc7_configure(struct adc5_chip *adc,
->  		return ret;
->  
->  	ret = adc5_read(adc, ADC5_USR_DIG_PARAM, buf, sizeof(buf));
-> -	if (ret < 0)
-> +	if (ret)
->  		return ret;
->  
->  	/* Digital param selection */
-> @@ -385,24 +385,24 @@ static int adc5_do_conversion(struct adc5_chip *adc,
->  
->  	ret = adc5_configure(adc, prop);
->  	if (ret) {
-> -		pr_err("ADC configure failed with %d\n", ret);
-> +		dev_err(adc->dev, "ADC configure failed with %d\n", ret);
->  		goto unlock;
->  	}
->  
->  	if (adc->poll_eoc) {
->  		ret = adc5_poll_wait_eoc(adc);
->  		if (ret < 0) {
-> -			pr_err("EOC bit not set\n");
-> +			dev_err(adc->dev, "EOC bit not set\n");
->  			goto unlock;
->  		}
->  	} else {
->  		ret = wait_for_completion_timeout(&adc->complete,
->  							ADC5_CONV_TIMEOUT);
->  		if (!ret) {
-> -			pr_debug("Did not get completion timeout.\n");
-> +			dev_dbg(adc->dev, "Did not get completion timeout.\n");
->  			ret = adc5_poll_wait_eoc(adc);
->  			if (ret < 0) {
-> -				pr_err("EOC bit not set\n");
-> +				dev_err(adc->dev, "EOC bit not set\n");
->  				goto unlock;
->  			}
->  		}
-> @@ -435,7 +435,7 @@ static int adc7_do_conversion(struct adc5_chip *adc,
->  	wait_for_completion_timeout(&adc->complete, ADC7_CONV_TIMEOUT);
->  
->  	ret = adc5_read(adc, ADC5_USR_STATUS1, &status, 1);
-> -	if (ret < 0)
-> +	if (ret)
->  		goto unlock;
->  
->  	if (status & ADC5_USR_STATUS1_CONV_FAULT) {
-> @@ -481,8 +481,8 @@ static int adc7_of_xlate(struct iio_dev *indio_dev,
->  	int i, v_channel;
->  
->  	for (i = 0; i < adc->nchannels; i++) {
-> -		v_channel = (adc->chan_props[i].sid << ADC_CHANNEL_OFFSET |
-> -			adc->chan_props[i].channel);
-> +		v_channel = (adc->chan_props[i].sid << ADC_CHANNEL_OFFSET) |
-> +			adc->chan_props[i].channel;
->  		if (v_channel == iiospec->args[0])
->  			return i;
->  	}
-> @@ -728,7 +728,7 @@ static int adc5_get_dt_channel_data(struct adc5_chip *adc,
->  	channel_name = of_get_property(node,
->  				"label", NULL) ? : node->name;
->  	if (!channel_name) {
-> -		pr_err("Invalid channel name\n");
-> +		dev_err(dev, "Invalid channel name\n");
->  		return -EINVAL;
->  	}
->  	prop->datasheet_name = channel_name;
-> @@ -766,12 +766,12 @@ static int adc5_get_dt_channel_data(struct adc5_chip *adc,
->  
->  		ret = adc5_read(adc, ADC5_USR_REVISION1, dig_version,
->  							sizeof(dig_version));
-> -		if (ret < 0) {
-> +		if (ret) {
->  			dev_err(dev, "Invalid dig version read %d\n", ret);
->  			return ret;
->  		}
->  
-> -		pr_debug("dig_ver:minor:%d, major:%d\n", dig_version[0],
-> +		dev_dbg(dev, "dig_ver:minor:%d, major:%d\n", dig_version[0],
->  						dig_version[1]);
->  		/* Digital controller >= 5.3 have hw_settle_2 option */
->  		if ((dig_version[0] >= ADC5_HW_SETTLE_DIFF_MINOR &&
-> @@ -975,7 +975,7 @@ static int adc5_probe(struct platform_device *pdev)
->  
->  	ret = adc5_get_dt_data(adc, node);
->  	if (ret) {
-> -		pr_err("adc get dt data failed\n");
-> +		dev_err(dev, "adc get dt data failed\n");
->  		return ret;
->  	}
->  
+[1] https://lkml.org/lkml/2020/4/14/98
+[2] https://lore.kernel.org/patchwork/patch/1226381/
 
+Rajendra Nayak (6):
+  tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state
+  spi: spi-geni-qcom: Use OPP API to set clk/perf state
+  drm/msm/dpu: Use OPP API to set clk/perf state
+  drm/msm: dsi: Use OPP API to set clk/perf state
+  media: venus: core: Add support for opp tables/perf voting
+  spi: spi-qcom-qspi: Use OPP API to set clk/perf state
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c    | 33 ---------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h    |  1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        | 25 ++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |  4 ++
+ drivers/gpu/drm/msm/dsi/dsi.h                  |  2 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c              |  4 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c             | 58 ++++++++++++++++++++++++++
+ drivers/media/platform/qcom/venus/core.c       | 28 +++++++++++++
+ drivers/media/platform/qcom/venus/core.h       |  5 +++
+ drivers/media/platform/qcom/venus/pm_helpers.c | 54 ++++++++++++++++++++++--
+ drivers/spi/spi-geni-qcom.c                    | 26 ++++++++++--
+ drivers/spi/spi-qcom-qspi.c                    | 29 ++++++++++++-
+ drivers/tty/serial/qcom_geni_serial.c          | 34 ++++++++++++---
+ include/linux/qcom-geni-se.h                   |  4 ++
+ 15 files changed, 259 insertions(+), 51 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
