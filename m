@@ -2,63 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 143251C4582
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 20:17:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C44491C4595
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 20:17:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730697AbgEDR7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 13:59:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56778 "EHLO
+        id S1730851AbgEDSP5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 14:15:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730691AbgEDR7H (ORCPT
+        by vger.kernel.org with ESMTP id S1730708AbgEDR7J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 13:59:07 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9673BC061A0F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 10:59:07 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id b6so401945qkh.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 10:59:07 -0700 (PDT)
+        Mon, 4 May 2020 13:59:09 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56924C061A41
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 10:59:09 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id k81so463180qke.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 10:59:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vqdw6T961NjpBgRT/XhyOu+dO0BOx3bSC8VPzWsBaf8=;
-        b=XPPT51l7YVLzCOVDR8nXFLo0ll/gEhC+LGvA/j0yhs3ZktWvl0sAm3ZbfhvqTH3C/D
-         ob0L3coYcB9BRxc3fZvibyxEE6yc6am6tRF7VR6G/N80RmcfUkKm+Dd3eVNcBoKTMkYj
-         /Hq0E1m9fqBgPbBFdnr9j8qfc7mSf2egge2V/mVAOykoiw9QwObUn4IH9jPEYLFjSs+F
-         TupT1A+dCMnVbX7hmJwpGXfzxkIaHlq8cT/EMPi48gSWtAUo8RDuh1Gq1v1dNMDgmiMv
-         gUKFA1YpWXOqPL9yC3HmH5uy8dWiuR3v0/g78gPbreQidnKadkgNDdii6O0dTF8GoWXW
-         e/lw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hmchGPRatpHGz7FXodcq0SJqPYC5mC9nnx68TlaFw4w=;
+        b=nKm/NU/E8zknhGFBOyhBDH4qXUn8D776cT5h6JHftF4GhhDK6x9ry2rz/3390vKj+L
+         tN2liW5eIzpYXyOpEagl2/5lPJmBZ/VQImzT4IVSWB4A1XwFTg5LAMBg+Y79lMTvnRbz
+         fqUzQGcouFhzr7nhC+k8ZJKatIpZACKQ5KsgukU8IdQ4ybdM5qw3Q2p8bw7XJfI58Ne8
+         d+GGbZTZ274frK+wfzNePMwxV38lK3jsUAI762x47ra+I05WuZNE7YyUGRj4Ej2dR8IG
+         Zvj23kfA5xhRNdBa/Sm5jyZbT83OnNaTEKCCSmD7asI0QyaFyDOXBFhqBZG9KzBxltEi
+         hTnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vqdw6T961NjpBgRT/XhyOu+dO0BOx3bSC8VPzWsBaf8=;
-        b=sT6ZrTJH9eYwVuoa82lWAUVgCCTT3S7Bpy7E2F+bnY1YPINKBqsQLmBpFE2pgL2sgo
-         lVv+zKc/2WeRfoimVaa94TXJw/Ww0QXLo6ov+r/FYO2JlXrRkMTkaCQ7QEXD84cMRLSg
-         KtkHRu5GsCcfugBMxghBN1chAP7u7bZ/4vZPa39UcalBMKJ/CjK+RbQyC2bG86M3KGYP
-         E25igVQTEmlDlwbOqTKfL+jAT6wcNCS3bA23tkGOcC5UT8c031XjHhZlB/CwfBxOWRAJ
-         2RojvBhtPuseEH4egEJEvtDzlJOSZf9lqfYv43J7ficOZghN/SqzExxwM8EdEad2ERoR
-         rXOA==
-X-Gm-Message-State: AGi0Puahq9mMeotDlBPgh5O4eTv627WE7iJlKxO+xHHKC6LPh6eQj2hI
-        IR6pn+f06i5dkX8ypkKpeYZ1WQ==
-X-Google-Smtp-Source: APiQypJJ+e8/no9p4zo1oA/7S8B1GlIpY1L/RkCv9O30uXiNL1i8dlLjNyWlL/9UZ7G1xUcxb/aAwA==
-X-Received: by 2002:a37:8346:: with SMTP id f67mr367493qkd.283.1588615146701;
-        Mon, 04 May 2020 10:59:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hmchGPRatpHGz7FXodcq0SJqPYC5mC9nnx68TlaFw4w=;
+        b=P3Ean+0IGeVNz2d5Di04OCQzHwLeJktrBgCYRPOa8l8/U498GtFDoQq+zlk8vZA3kC
+         92wnrwrXDp0nHlcJ5XJRco1IULu7I/BQi3P+/SBTqGyMcDZKXPqhbsXjjE1OOTRZ6J4p
+         cyOQl5dQN7cQ/n8w+4LaMc/pCsz7KSBeCgN2h3ahVCKM0XWY+95+QkrhTWqFkMCgsphK
+         phV1FCwkPF0fv5gnfiXPxv+c0crKXxVYna/j0VWaTUcW6tza+6N5PMGYk0K1J0BajxFB
+         xHpjTNsjiPr7dpOfx2jFAEhxwMofVEou8Jn/hludgJDIlawHORlKR4lu2JdxRNk2ECCq
+         7THg==
+X-Gm-Message-State: AGi0PuZqPPGKWl8hQL07xp8d4P2gOI4nz57EfLLr8wdwJgrsifhDZZyZ
+        SJ8un892y/O+Rwe/l80r3ow8jg==
+X-Google-Smtp-Source: APiQypKHzejQhJPuhrRIg5ZslvlTZGo4JtzrXdUU6lsW+xZU4Q0pY9zUQ7/oIZ0C/MMhJDrMkTTBcg==
+X-Received: by 2002:a05:620a:15c1:: with SMTP id o1mr387681qkm.187.1588615148533;
+        Mon, 04 May 2020 10:59:08 -0700 (PDT)
 Received: from beast.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id h19sm11271088qtk.78.2020.05.04.10.59.04
+        by smtp.gmail.com with ESMTPSA id h19sm11271088qtk.78.2020.05.04.10.59.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 10:59:05 -0700 (PDT)
+        Mon, 04 May 2020 10:59:08 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net
+To:     robh+dt@kernel.org, davem@davemloft.net
 Cc:     evgreen@chromium.org, subashab@codeaurora.org,
         cpratapa@codeaurora.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, robh+dt@kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, devicetree@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 0/4] net: ipa: I/O map SMEM and IMEM
-Date:   Mon,  4 May 2020 12:58:55 -0500
-Message-Id: <20200504175859.22606-1-elder@linaro.org>
+Subject: [PATCH net-next v2 1/4] dt-bindings: net: add IPA iommus property
+Date:   Mon,  4 May 2020 12:58:56 -0500
+Message-Id: <20200504175859.22606-2-elder@linaro.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200504175859.22606-1-elder@linaro.org>
+References: <20200504175859.22606-1-elder@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,32 +68,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds the definition of two memory regions that must be
-mapped for IPA to access through an SMMU.  It requires the SMMU to
-be defined in the IPA node in the SoC's Device Tree file.
+The IPA accesses "IMEM" and main system memory through an SMMU, so
+its DT node requires an iommus property to define range of stream IDs
+it uses.
 
-There is no change since version 1 to the content of the code in
-these patches, *however* this time the first patch is an update to
-the binding definition rather than an update to a DTS file.
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ Documentation/devicetree/bindings/net/qcom,ipa.yaml | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-					-Alex
-
-Alex Elder (4):
-  dt-bindings: net: add IPA iommus property
-  net: ipa: redefine struct ipa_mem_data
-  net: ipa: define IMEM memory region for IPA
-  net: ipa: define SMEM memory region for IPA
-
- .../devicetree/bindings/net/qcom,ipa.yaml     |  10 +-
- drivers/net/ipa/ipa.h                         |  10 +
- drivers/net/ipa/ipa_data-sc7180.c             |  14 +-
- drivers/net/ipa/ipa_data-sdm845.c             |  14 +-
- drivers/net/ipa/ipa_data.h                    |  23 +-
- drivers/net/ipa/ipa_main.c                    |   2 +-
- drivers/net/ipa/ipa_mem.c                     | 209 +++++++++++++++++-
- drivers/net/ipa/ipa_mem.h                     |   3 +-
- 8 files changed, 263 insertions(+), 22 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+index 140f15245654..7b749fc04c32 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+@@ -20,7 +20,10 @@ description:
+   The GSI is an integral part of the IPA, but it is logically isolated
+   and has a distinct interrupt and a separately-defined address space.
+ 
+-  See also soc/qcom/qcom,smp2p.txt and interconnect/interconnect.txt.
++  See also soc/qcom/qcom,smp2p.txt and interconnect/interconnect.txt.  See
++  iommu/iommu.txt and iommu/arm,smmu.yaml for more information about SMMU
++  bindings.
++
+ 
+   - |
+     --------             ---------
+@@ -54,6 +57,9 @@ properties:
+       - const: ipa-shared
+       - const: gsi
+ 
++  iommus:
++    maxItems: 1
++
+   clocks:
+     maxItems: 1
+ 
+@@ -126,6 +132,7 @@ properties:
+ 
+ required:
+   - compatible
++  - iommus
+   - reg
+   - clocks
+   - interrupts
+@@ -164,6 +171,7 @@ examples:
+                 modem-init;
+                 modem-remoteproc = <&mss_pil>;
+ 
++                iommus = <&apps_smmu 0x720 0x3>;
+                 reg = <0 0x1e40000 0 0x7000>,
+                         <0 0x1e47000 0 0x2000>,
+                         <0 0x1e04000 0 0x2c000>;
 -- 
 2.20.1
 
