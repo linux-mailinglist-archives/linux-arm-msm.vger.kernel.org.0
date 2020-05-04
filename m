@@ -2,124 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E690E1C3011
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 00:32:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 540201C321A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 07:13:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729206AbgECWcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 May 2020 18:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45018 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729171AbgECWcq (ORCPT
+        id S1726627AbgEDFNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 01:13:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbgEDFNH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 May 2020 18:32:46 -0400
-Received: from ozlabs.org (ozlabs.org [IPv6:2401:3900:2:1::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF96C061A0E;
-        Sun,  3 May 2020 15:32:46 -0700 (PDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.ozlabs.org (Postfix) with ESMTPSA id 49FgjM6fGNz9sRf;
-        Mon,  4 May 2020 08:32:39 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=canb.auug.org.au;
-        s=201702; t=1588545162;
-        bh=8dTj5935c2UPMnOTm2N4WsH3bI7fujxc7NCr+u+ZRio=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ZBaNc+xF4RH4OHLkb8hs7pW9O4WwfFWF9soPBgIv/0oKnYEJLPe+vDb5tnAIpC5zF
-         q0symjiO+didwkp56u+Qa1GGRaHyYMOc24F+N9j8+mZZb2rQECZ113HzYijc7m8Jaz
-         O8sKOgeB1kJPM+yHAKFD7IcOd9kafLh5lTl+Ic6k125yDLlL7a9hcDcgAwV4zCk50q
-         8dmbWUcQrnhoie9xiqRQc5FO/F+iN4fxoipggCfM/Nel1QY7REoiOsH4Hv+ca40xso
-         +XIgAYFqqB1zUTlWz0FRJLpod88KLZTPm+KmmotymIfPlI7S8k1rQ/BJ9rZ4pk0HsH
-         bMYXbfV0wf03A==
-Date:   Mon, 4 May 2020 08:32:39 +1000
-From:   Stephen Rothwell <sfr@canb.auug.org.au>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Fix undefined "rd_full" link error
-Message-ID: <20200504083239.004057e0@canb.auug.org.au>
-In-Reply-To: <20200430192427.4104899-1-bjorn.andersson@linaro.org>
-References: <20200430192427.4104899-1-bjorn.andersson@linaro.org>
+        Mon, 4 May 2020 01:13:07 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FC74C061A41
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 May 2020 22:13:06 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id x6so1651082plv.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 May 2020 22:13:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CGgfVInUBc8d8MeEEhRqNzZfEuhBaHkKRq5GSypONxA=;
+        b=ML7679GiJcCvmMTmxW61nvXsnDgL1EIu+eX/BfjNOZQTioT5PmIWm0iw6HgAKA9CLX
+         fujQoQ59MLeuXJBLGfQf7vz19E+afar2cBGtutwAIe1BTznB+gCPJXfCR16XPNwCg069
+         5PcIp4JY3+yw/a/zMCMvFyejBLCvLvy1ng5Y8SMlOPBLkohTz49BVDw2aABiRa8jPRqV
+         xBgCMYQPLzxXhTEE5r93YfAWnhABYgHz1EFW3461Kl1RxgGsNGtTFyFCiQhDjx5fzMGX
+         zTx3D5QZBQ7YhXZDvinmpYR17xQ2TEhat1T1XQ8f+ai/8RASDDQp/i4lUxIbeKeRSB2L
+         mF2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CGgfVInUBc8d8MeEEhRqNzZfEuhBaHkKRq5GSypONxA=;
+        b=ISMYIFDq1rBKUEFH2F6d2xUq+j3U+Xu2BFR+kKHBnC5UozpcEa0zqK+sPzScJYstWF
+         ZNN/em0JzuOu2wIFNDYEcdv0qoCBbqDzSSbQIRSYxKEq10lD7aGBQ+X6SuMOteFN4x1M
+         6M4tdiK3aTlRvs83BPduCNbtCFImSjASfmC5SWoHwEaVYve38Wo5yS/rcUzfeeU/WYSI
+         rFZjPL092zQwDjrqQ2bkB/SEAIfvt+V9l03VoGwbvUQIss7iG96X/ZOKv2ugsIMtbTV1
+         BofYyhRnohVyK9h2hUp5NnodiCwhu2AO40D7pf4WFspHbcrTczvQrYwk+nIRgh/K1f2b
+         csmA==
+X-Gm-Message-State: AGi0PuZKss3K/akL/Eb9djYaZmMZ4SvEsMOJz4cDGS6ywxmU7FJSg4ID
+        yml+QpClBHgsRxbipc2eTr8KYA==
+X-Google-Smtp-Source: APiQypI6IdV05QBzAML2J+Fi9YQIWcD1PVuThQvH6+otzWE9wJBnp3sC6BNSCfGKWji9101yrzoIJg==
+X-Received: by 2002:a17:90b:1993:: with SMTP id mv19mr14636453pjb.88.1588569185845;
+        Sun, 03 May 2020 22:13:05 -0700 (PDT)
+Received: from localhost ([122.171.118.46])
+        by smtp.gmail.com with ESMTPSA id a99sm5755483pje.35.2020.05.03.22.13.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 May 2020 22:13:05 -0700 (PDT)
+Date:   Mon, 4 May 2020 10:43:03 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom: fix wrong compatible binding
+Message-ID: <20200504051303.zvmvvjipdkjpo4yh@vireshk-i7>
+References: <20200430222225.3941-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/LBun5GZO8F8bXK.oWIHz6uA";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200430222225.3941-1-ansuelsmth@gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/LBun5GZO8F8bXK.oWIHz6uA
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-Hi all,
-
-On Thu, 30 Apr 2020 12:24:27 -0700 Bjorn Andersson <bjorn.andersson@linaro.=
-org> wrote:
->
-> rd_full should be defined outside the CONFIG_DEBUG_FS region, in order
-> to be able to link the msm driver even when CONFIG_DEBUG_FS is disabled.
->=20
-> Fixes: e515af8d4a6f ("drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP=
- buffers")
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 01-05-20, 00:22, Ansuel Smith wrote:
+> Binding in Documentation is still "operating-points-v2-kryo-cpu".
+> Restore the old binding to fix the compatibility problem.
+> 
+> Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
->  drivers/gpu/drm/msm/msm_rd.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-> index 732f65df5c4f..fea30e7aa9e8 100644
-> --- a/drivers/gpu/drm/msm/msm_rd.c
-> +++ b/drivers/gpu/drm/msm/msm_rd.c
-> @@ -29,8 +29,6 @@
->   * or shader programs (if not emitted inline in cmdstream).
->   */
-> =20
-> -#ifdef CONFIG_DEBUG_FS
-> -
->  #include <linux/circ_buf.h>
->  #include <linux/debugfs.h>
->  #include <linux/kfifo.h>
-> @@ -47,6 +45,8 @@ bool rd_full =3D false;
->  MODULE_PARM_DESC(rd_full, "If true, $debugfs/.../rd will snapshot all bu=
-ffer contents");
->  module_param_named(rd_full, rd_full, bool, 0600);
-> =20
-> +#ifdef CONFIG_DEBUG_FS
-> +
->  enum rd_sect_type {
->  	RD_NONE,
->  	RD_TEST,       /* ascii text */
-> --=20
-> 2.24.0
->=20
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index a1b8238872a2..d06b37822c3d 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -277,7 +277,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+>  	if (!np)
+>  		return -ENOENT;
+>  
+> -	ret = of_device_is_compatible(np, "operating-points-v2-qcom-cpu");
+> +	ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu");
+>  	if (!ret) {
+>  		of_node_put(np);
+>  		return -ENOENT;
 
-Added to my fixes tree form today.  I will remove it when it is merged
-upstream through someone else's tree.
+Applied. Thanks.
 
---=20
-Cheers,
-Stephen Rothwell
-
---Sig_/LBun5GZO8F8bXK.oWIHz6uA
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAl6vRocACgkQAVBC80lX
-0GwhiQf/VDWuaRaQPXVqzmyp2T9cKgo9Td1cqHy1M/7NH0U8U1gFzKaHW8LoAf+z
-t7BAowbPPIRVOag4D4xOgS0FCT1W7AlkSgyd7qy11a2HjPEGovwMGvt1Mgq9VilK
-7k35OmuUiHBXWetQzW3pu57VADvSQko9jsFnHakQLB/GeeOuPNCkDGprFRM7rOL2
-MT/3i//ryk2raPhP+G6yQzRM5Dpy6ud10T0glodLaPwK9SZ1l4q7r5TxUKCN+JlM
-siY6AhN/EvIYGA0BEs8uMZQSxJJlpXc0qlO439KlbjKuVosQ9WrJkgcvlX0YmMMJ
-h/zjahJjJzXhQNwMvemOjqLNbVdZVA==
-=YQZt
------END PGP SIGNATURE-----
-
---Sig_/LBun5GZO8F8bXK.oWIHz6uA--
+-- 
+viresh
