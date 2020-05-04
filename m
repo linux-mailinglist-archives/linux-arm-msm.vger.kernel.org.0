@@ -2,96 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B7281C4798
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 22:03:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54F641C47F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 22:24:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726404AbgEDUDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 16:03:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55992 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726334AbgEDUDA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 16:03:00 -0400
-Received: from [192.168.1.74] (75-58-59-55.lightspeed.rlghnc.sbcglobal.net [75.58.59.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726404AbgEDUYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 16:24:03 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:60764 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726111AbgEDUYD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 May 2020 16:24:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588623843; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=HTXjWdBLrHj7qKXU26YhsxMP+8VY0C42SPBv+HCFlE4=; b=foRm2c2ZYnq/kPLuyV+ZHh97aSmKmLPJJloy/gvI46e+w/7K5M0ReVFP8jXtoJfNuA4kyQk/
+ 7a6O8oPrI0lD3ki3r/j3B9UT8/vFHpu4FDzcpnbMGqVMKfEncT1KbYpxHO3VGHd1v9Cnk3CW
+ wySyiTkVXm6jR7wn3pid+rBJ4xw=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb079cd.7f8bed75ba08-smtp-out-n05;
+ Mon, 04 May 2020 20:23:41 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 82689C44788; Mon,  4 May 2020 20:23:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 740C1206A5;
-        Mon,  4 May 2020 20:02:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588622580;
-        bh=GIxo0Vm+W3zux+9Tx3/1kqa1pGgR2R/67Dfb5VXJ+I4=;
-        h=Subject:To:References:From:Date:In-Reply-To:From;
-        b=mNgiZ0Kjg0wTQw/+v4PZd/EHEfwYZfOKjaavdvVX1cdSFUs0nSI5RsWlB3Wyim1z1
-         UTEXTcGq4s8dF8BOkLpNRUVGSFI9PYoN9dclXKEy+8zmvWKoS+DUut7HpN0jg64ktd
-         R0MmkOpN0+k3SM0o0VIH0qeH+ENQwfPFv8dhA4Hs=
-Subject: Re: [PATCH] dmaengine: qcom_hidma: use true,false for bool variable
-To:     Jason Yan <yanaijie@huawei.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, vkoul@kernel.org,
-        dan.j.williams@intel.com, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200504113406.41530-1-yanaijie@huawei.com>
-From:   Sinan Kaya <okaya@kernel.org>
-Autocrypt: addr=okaya@kernel.org; keydata=
- mQENBFrnOrUBCADGOL0kF21B6ogpOkuYvz6bUjO7NU99PKhXx1MfK/AzK+SFgxJF7dMluoF6
- uT47bU7zb7HqACH6itTgSSiJeSoq86jYoq5s4JOyaj0/18Hf3/YBah7AOuwk6LtV3EftQIhw
- 9vXqCnBwP/nID6PQ685zl3vH68yzF6FVNwbDagxUz/gMiQh7scHvVCjiqkJ+qu/36JgtTYYw
- 8lGWRcto6gr0eTF8Wd8f81wspmUHGsFdN/xPsZPKMw6/on9oOj3AidcR3P9EdLY4qQyjvcNC
- V9cL9b5I/Ud9ghPwW4QkM7uhYqQDyh3SwgEFudc+/RsDuxjVlg9CFnGhS0nPXR89SaQZABEB
- AAG0HVNpbmFuIEtheWEgPG9rYXlhQGtlcm5lbC5vcmc+iQFOBBMBCAA4FiEEYdOlMSE+a7/c
- ckrQvGF4I+4LAFcFAlztcAoCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQvGF4I+4L
- AFfidAf/VKHInxep0Z96iYkIq42432HTZUrxNzG9IWk4HN7c3vTJKv2W+b9pgvBF1SmkyQSy
- 8SJ3Zd98CO6FOHA1FigFyZahVsme+T0GsS3/OF1kjrtMktoREr8t0rK0yKpCTYVdlkHadxmR
- Qs5xLzW1RqKlrNigKHI2yhgpMwrpzS+67F1biT41227sqFzW9urEl/jqGJXaB6GV+SRKSHN+
- ubWXgE1NkmfAMeyJPKojNT7ReL6eh3BNB/Xh1vQJew+AE50EP7o36UXghoUktnx6cTkge0ZS
- qgxuhN33cCOU36pWQhPqVSlLTZQJVxuCmlaHbYWvye7bBOhmiuNKhOzb3FcgT7kBDQRa5zq1
- AQgAyRq/7JZKOyB8wRx6fHE0nb31P75kCnL3oE+smKW/sOcIQDV3C7mZKLf472MWB1xdr4Tm
- eXeL/wT0QHapLn5M5wWghC80YvjjdolHnlq9QlYVtvl1ocAC28y43tKJfklhHiwMNDJfdZbw
- 9lQ2h+7nccFWASNUu9cqZOABLvJcgLnfdDpnSzOye09VVlKr3NHgRyRZa7me/oFJCxrJlKAl
- 2hllRLt0yV08o7i14+qmvxI2EKLX9zJfJ2rGWLTVe3EJBnCsQPDzAUVYSnTtqELu2AGzvDiM
- gatRaosnzhvvEK+kCuXuCuZlRWP7pWSHqFFuYq596RRG5hNGLbmVFZrCxQARAQABiQEfBBgB
- CAAJBQJa5zq1AhsMAAoJELxheCPuCwBX2UYH/2kkMC4mImvoClrmcMsNGijcZHdDlz8NFfCI
- gSb3NHkarnA7uAg8KJuaHUwBMk3kBhv2BGPLcmAknzBIehbZ284W7u3DT9o1Y5g+LDyx8RIi
- e7pnMcC+bE2IJExCVf2p3PB1tDBBdLEYJoyFz/XpdDjZ8aVls/pIyrq+mqo5LuuhWfZzPPec
- 9EiM2eXpJw+Rz+vKjSt1YIhg46YbdZrDM2FGrt9ve3YaM5H0lzJgq/JQPKFdbd5MB0X37Qc+
- 2m/A9u9SFnOovA42DgXUyC2cSbIJdPWOK9PnzfXqF3sX9Aol2eLUmQuLpThJtq5EHu6FzJ7Y
- L+s0nPaNMKwv/Xhhm6Y=
-Message-ID: <3d61f97c-6d7e-a0be-9986-99c09a0f896d@kernel.org>
-Date:   Mon, 4 May 2020 16:02:58 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6780DC433CB;
+        Mon,  4 May 2020 20:23:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6780DC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
+        saravanak@google.com, mka@chromium.org
+Cc:     nm@ti.com, agross@kernel.org, david.brown@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, vincent.guittot@linaro.org,
+        amit.kucheria@linaro.org, ulf.hansson@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v4 00/12] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+Date:   Tue,  5 May 2020 01:52:31 +0530
+Message-Id: <20200504202243.5476-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-In-Reply-To: <20200504113406.41530-1-yanaijie@huawei.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/4/2020 7:34 AM, Jason Yan wrote:
-> Fix the following coccicheck warning:
-> 
-> drivers/dma/qcom/hidma.c:553:1-17: WARNING: Assignment of 0/1 to bool
-> variable
-> 
-> Signed-off-by: Jason Yan <yanaijie@huawei.com>
-> ---
->  drivers/dma/qcom/hidma.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-> index 87490e125bc3..0a6d3ea08c78 100644
-> --- a/drivers/dma/qcom/hidma.c
-> +++ b/drivers/dma/qcom/hidma.c
-> @@ -550,7 +550,7 @@ static void hidma_free_chan_resources(struct dma_chan *dmach)
->  		kfree(mdesc);
->  	}
->  
-> -	mchan->allocated = 0;
-> +	mchan->allocated = false;
->  	spin_unlock_irqrestore(&mchan->lock, irqflags);
->  }
+This patch series aims to extend cpu based scaling support to L3/DDR on
+SDM845 and SC7180 SoCs.
 
-Acked By: Sinan Kaya <okaya@kernel.org>
+Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
+Patches [4-8] - Update bw levels based on cpu frequency change
+Patches [9-10] - Add tag setting support to OPP
+Patches [11-12] - Add the cpu opp tables for SDM845 and SC7180 SoCs.
 
+Depends on the following series:
+https://lore.kernel.org/patchwork/cover/1230626/
+
+Georgi,
+ Would it make sense to include tag support patches [9-10] in your next
+ re-spin?
+
+V4:
+ * Migrate to using Georgi's new bindings
+ * Misc fixups based on Matthias comments
+ * API fixups based on Bjorn's comments on v2
+ * Picked up a few R-bs from Matthias
+
+v3:
+ * Migrated to using Saravana's opp-kBps bindings [1]
+ * Fixed some misc comments from Rajendra
+ * Added support for SC7180
+
+v2:
+ * Incorporated Viresh's comments from:
+ https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
+ https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+ * Dropped cpufreq-map passive governor
+
+Sibi Sankar (12):
+  arm64: dts: qcom: sdm845: Add SoC compatible to MTP
+  cpufreq: blacklist SDM845 in cpufreq-dt-platdev
+  cpufreq: blacklist SC7180 in cpufreq-dt-platdev
+  OPP: Add and export helper to update voltage
+  OPP: Add and export helper to set bandwidth
+  cpufreq: qcom: Update the bandwidth levels on frequency change
+  OPP: Add and export helper to get icc path count
+  cpufreq: qcom: Disable fast switch when scaling ddr/l3
+  dt-bindings: interconnect: Add interconnect-tags bindings
+  OPP: Add support for setting interconnect-tags
+  arm64: dts: qcom: sdm845: Add cpu OPP tables
+  arm64: dts: qcom: sc7180: Add cpu OPP tables
+
+ .../bindings/interconnect/interconnect.txt    |   5 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 168 ++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 258 ++++++++++++++++++
+ drivers/cpufreq/cpufreq-dt-platdev.c          |   2 +
+ drivers/cpufreq/qcom-cpufreq-hw.c             |  89 +++++-
+ drivers/opp/core.c                            | 114 ++++++++
+ drivers/opp/of.c                              |  25 +-
+ include/linux/pm_opp.h                        |  22 ++
+ 9 files changed, 675 insertions(+), 10 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
