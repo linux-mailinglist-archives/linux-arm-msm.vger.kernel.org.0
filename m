@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D43E71C49C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 00:43:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BE481C49C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 00:43:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727806AbgEDWnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 18:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44764 "EHLO
+        id S1726338AbgEDWnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 18:43:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726530AbgEDWnR (ORCPT
+        by vger.kernel.org with ESMTP id S1728009AbgEDWnR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 4 May 2020 18:43:17 -0400
 Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0A6DC061A10
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 15:43:16 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id x25so79241wmc.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 15:43:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E9FC061A0F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 15:43:17 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id u16so52755wmc.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 15:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lUmbEdvnWPeUk4t6giKyfyBVYwPjBnJKNQQQsbV/urQ=;
-        b=GFikycEtJDisqtrSKLOaeTLwYYqS8iklzvNquIP5B5vdHasLq78Y4fBa8X8qpC5H7g
-         gqqaMWqgrbsNgOTtvFu6oA/7VnR85SMwZ2fim/BfEHlT8rs69qrgGB7k6XcUJKwWOOzg
-         xlmpHXkTXwyl8HepS+SN76+25+yos6OXavMhD+ICCX/5gMj+/USH8Yxgoes4aHVI81cU
-         IPyvJuuT0K13qy7WHNjYagvNH1GdowW4IOevVQtCJvofInfMp96fDc76YD/4uBawPNvv
-         JzYJh5KWrI9mFaLIyaFrkONd18yxbxFIaoXb//FHsT+lhEaEr3zmcgr/xWCbWWCcwyKz
-         zRRg==
+        bh=eguzFUkYwYoGv/m+tGA5f5qo5AojxZ5F9SIUcjcPN6U=;
+        b=G708xptwUNMdoaDhkWTWdkVl70aBxf1k6we+ylWmrZCMEQ116539Bcq9mHU8SFp/vr
+         z45AxdioUnE9/Rx5uU6u+hwGiqRyDdivefA9Wa6qVXlVy4Z226Q0iA8iaoN2sIfctX+g
+         9zLI0mNdUjV+1TIbXKjvoqMFZPhT2eYOzSVLAc21aZT6okWRRqPCAsjd5Amf8QMEywbL
+         HrWh+3xI0GtHFL5xSR+GOVsTPrdV3gJ4b7jSf/T8mQ3uSA/Z9usj2w/yLzoqw2+bIQbN
+         XbDHKSkyiRfCnvsDiKit8OZLq2hRyybfHEi1UTjuDPrwfXptw67cxzr89GmSP0XU+wVT
+         vQ1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lUmbEdvnWPeUk4t6giKyfyBVYwPjBnJKNQQQsbV/urQ=;
-        b=rTTU67t0sC5kWGWMwyEk8oOWZOBcDNttFedDVxG6GgNG+vs1KT7cogGKhE43A5awnS
-         1FpjD20JkixW0A/aF8MN7Cp5YaHCMhQlhj2OaxQoCngnU74cjlFtCCFuZSJwb6B63uhi
-         MKzO0lli+JZN194dEdKZR2sMC2qpf1xpvFGWAwoRywFed3SxMkgCmb4z/VTohSKGRIx4
-         AoMt0YiR2V6zUo3JjRc4jTzwjZ9F5xqGJYI9KKwJAbeznLtHqLok3R+lOT6Gt6PZyYir
-         0bTn1JluxACfTdL/7XT4oxEWRk0z2OdcmYkQZlbQnsUGJtA8k0rL/5D41XRoJ3+3G7Jx
-         UfPg==
-X-Gm-Message-State: AGi0PuYl7h1GzuAF+dGQ5hAZrRerQjdbQ31OKSvoZ0WuTAefsQVZIISX
-        mJlVIv7MCJKVO7A0Ow1K5H41rAxodWw=
-X-Google-Smtp-Source: APiQypILeXJRTqVe0dXJOUkSfx8nfwQF9nbbhp5olaJiEfZQKtxHmC4CXqx0a2GkR9492iGwqFfm/Q==
-X-Received: by 2002:a1c:7fc6:: with SMTP id a189mr16700521wmd.27.1588632195175;
-        Mon, 04 May 2020 15:43:15 -0700 (PDT)
+        bh=eguzFUkYwYoGv/m+tGA5f5qo5AojxZ5F9SIUcjcPN6U=;
+        b=NOy/txOqQZ5kyXuNgZyKKvmHzvcQFu0AkSzK2Q+IqojBBhDHb6vGd64A7er7r0IvMy
+         odKOAWyO8bXq5lE23KKLwWaQ2BJ6hrv86rZeOliRj8K3NWHFN8jt/Hx8gxg4qw4EAaVj
+         0s8tG66p+cQc1kwzwzq5KQJAtiB4PgaTFR42g7GWBQZSuMfCzXNpgKoKuov6ygzUhpZ/
+         SMbckNyJbbDzpwWUBH2TzITnwrYpq8YH4uyOU147Steu9YCrXX+VNCdRu5gLFK4wOnkF
+         28D7LPcE+jgnwJfBRKkqBWx9rCzRdRNFc5S0Z0rjF310lMvg5VwXBIeTv/3JQdjCkWw5
+         5q4w==
+X-Gm-Message-State: AGi0PuaZ0HXhs/kSXOpw8FXkxIrA0db2R4CTNMCnSdonfe54NGPUfJ0u
+        T6DVWNQ6Qn8U1fLQnMLLTxFAlw==
+X-Google-Smtp-Source: APiQypICMTKYBacQ6uREMSUVWz+Vi3PjmMK1sykrqSI26bOeTzB/YVc6M5dzRmrJaGaSLH66XLUX8A==
+X-Received: by 2002:a1c:a9c3:: with SMTP id s186mr16864695wme.89.1588632196295;
+        Mon, 04 May 2020 15:43:16 -0700 (PDT)
 Received: from localhost.localdomain ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id a13sm13895888wrv.67.2020.05.04.15.43.14
+        by smtp.gmail.com with ESMTPSA id a13sm13895888wrv.67.2020.05.04.15.43.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 15:43:14 -0700 (PDT)
+        Mon, 04 May 2020 15:43:15 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     Peter.Chen@nxp.com, gregkh@linuxfoundation.org,
         linux-usb@vger.kernel.org
 Cc:     linux-arm-msm@vger.kernel.org,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH 1/2] usb: chipidea: msm: Ensure proper controller reset using role switch API
-Date:   Mon,  4 May 2020 23:43:45 +0100
-Message-Id: <20200504224346.613377-2-bryan.odonoghue@linaro.org>
+        Jun Li <jun.li@nxp.com>, Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH 2/2] usb: chipidea: Enable user-space triggered role-switching
+Date:   Mon,  4 May 2020 23:43:46 +0100
+Message-Id: <20200504224346.613377-3-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200504224346.613377-1-bryan.odonoghue@linaro.org>
 References: <20200504224346.613377-1-bryan.odonoghue@linaro.org>
@@ -68,40 +69,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently we check to make sure there is no error state on the extcon
-handle for VBUS when writing to the HS_PHY_GENCONFIG_2 register. When using
-the USB role-switch API we still need to write to this register absent an
-extcon handle.
-
-This patch makes the appropriate update to ensure the write happens if
-role-switching is true.
-
-Fixes: 05559f10ed79 ("usb: chipidea: add role switch class support")
+The flag provided by the USB role-switch logic allow_userspace_control
+allows user-space to trigger a role-switch. Several other USB controller
+drivers already enable this feature. Let's switch it on for the chipidea
+core now also.
 
 Cc: Peter Chen <Peter.Chen@nxp.com>
+Cc: Jun Li <jun.li@nxp.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
 Cc: linux-usb@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 Cc: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/usb/chipidea/ci_hdrc_msm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/chipidea/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_msm.c b/drivers/usb/chipidea/ci_hdrc_msm.c
-index af648ba6544d..46105457e1ca 100644
---- a/drivers/usb/chipidea/ci_hdrc_msm.c
-+++ b/drivers/usb/chipidea/ci_hdrc_msm.c
-@@ -114,7 +114,7 @@ static int ci_hdrc_msm_notify_event(struct ci_hdrc *ci, unsigned event)
- 			hw_write_id_reg(ci, HS_PHY_GENCONFIG_2,
- 					HS_PHY_ULPI_TX_PKT_EN_CLR_FIX, 0);
+diff --git a/drivers/usb/chipidea/core.c b/drivers/usb/chipidea/core.c
+index ae0bdc036464..5f31fda92292 100644
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -666,6 +666,7 @@ static int ci_usb_role_switch_set(struct usb_role_switch *sw,
+ static struct usb_role_switch_desc ci_role_switch = {
+ 	.set = ci_usb_role_switch_set,
+ 	.get = ci_usb_role_switch_get,
++	.allow_userspace_control = true,
+ };
  
--		if (!IS_ERR(ci->platdata->vbus_extcon.edev)) {
-+		if (!IS_ERR(ci->platdata->vbus_extcon.edev) || ci->role_switch) {
- 			hw_write_id_reg(ci, HS_PHY_GENCONFIG_2,
- 					HS_PHY_SESS_VLD_CTRL_EN,
- 					HS_PHY_SESS_VLD_CTRL_EN);
+ static int ci_get_platdata(struct device *dev,
 -- 
 2.25.1
 
