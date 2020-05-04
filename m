@@ -2,135 +2,258 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 08DA21C3D22
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 16:34:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C6F71C3D7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 16:49:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728881AbgEDOet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 10:34:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51236 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728187AbgEDOes (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 10:34:48 -0400
-Received: from localhost (unknown [171.76.84.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D506220757;
-        Mon,  4 May 2020 14:34:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588602887;
-        bh=A61gpXUG4UlZNcao5CGbMn9uCY5KgqwpBqAKkoOg+To=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rKhHTMP32JxNwlJgGzU7jatQB87jrHF+dIUMRHmHCJfCrlk20uFsz24BOpZ1KG76Z
-         t+vupbHqjyGE4KOqOorfwez/JSQGl76/4mTP1wQEyYs7Uu3whJoV/yKUGbth5E3jc5
-         Ab7fiLo4EZn6eEfjq7ZYfuvuuJ6Ee3E9I953cBso=
-Date:   Mon, 4 May 2020 20:04:38 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 2/5] usb: renesas-xhci: Add the renesas xhci driver
-Message-ID: <20200504143438.GT1375924@vkoul-mobl>
-References: <20200430165920.1345409-1-vkoul@kernel.org>
- <20200430165920.1345409-3-vkoul@kernel.org>
- <81e0eff0-8b40-3c47-e39b-929e1dc07fd5@linux.intel.com>
+        id S1728935AbgEDOtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 10:49:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728353AbgEDOtT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 May 2020 10:49:19 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8145EC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 07:49:17 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id h11so6835997plr.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 07:49:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5lmoQJYoeg3ybSPwplhMkrooqQOGOYA7nU2sY4Dq1pc=;
+        b=R04Fjb4R2zQrBdDiS1rI1lH0gMnWxIPItV5U2BOiCIby5HxxzYV7c9vaEBIuSU6TKc
+         N9yJAqZKcVjZS3dG2Rah6YyW6mKqK9XGAwKP4ZTnARpmIBVYbSR+v9/ffySNScve9KAS
+         fFp6YUwxhiVFrKpnhfNdNztyuV6JtUulx7ImPpPksB5T3uIrbqLIc2QZ0DIaH7vmMYa/
+         mlSuf4zp+Oh+k8sETM+eBqNyneLDT6QlrGT3CmLeedUqmbAq6giRJxV29uKfbeWsbvDB
+         yM6pyiRw2db9pa0Tm3awQzKDxTdw3iafUgw096RzVZ2cKOSKyRo5hi5nclBmgK32UOHY
+         x8EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5lmoQJYoeg3ybSPwplhMkrooqQOGOYA7nU2sY4Dq1pc=;
+        b=THVpQZYM1fx3EBqfZD1KIQ3p14NWUCR5/Dr8p+fnJRPMWpPZVkuZuxi5/2B8eFAdIy
+         z72r76VsbzcZPRm7d08/+se3mJCOmvU9P+X6Z3wn6WV49/AmycHNz5+XzyuvomF1QOwl
+         d6UVD3vAtF1/2fGUNe5O7RqmR1vMMojYUOvsOGZ6ZGrR3BMUpiqlg2/L4BlIMbZ87BSi
+         0Dq8o4M4HZAuSMfLfZyI3CfCYiee4aYM+buxBoDGVueZlzsnO1b4+4D9PonYSxpTP5wq
+         wLvLX+iIlpAi9xo6EUvijK4m81EYlAZe0kSb9zvfH57cJHrdZXOCS95ERSaVJHCyOPQH
+         6q8Q==
+X-Gm-Message-State: AGi0PubsHThBahtrFJQb0PqC876ZTPn+iXo30ScRIC5QqNCUqNl0Np70
+        GoL71gOdrnXaAdaZkcDRRWKa
+X-Google-Smtp-Source: APiQypJjIapp5XKSell2YBv+inFoZ8mKXrHBT+VFs3IVljbQMp6IsqaBr1+529ONpM1jjcEHWag4sQ==
+X-Received: by 2002:a17:902:fe8e:: with SMTP id x14mr18541862plm.128.1588603756751;
+        Mon, 04 May 2020 07:49:16 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:41c:f7b5:bdcc:167e:2cd1:efea])
+        by smtp.gmail.com with ESMTPSA id p66sm9009181pfb.65.2020.05.04.07.49.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 May 2020 07:49:15 -0700 (PDT)
+Date:   Mon, 4 May 2020 20:19:06 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     davem@davemloft.net
+Cc:     gregkh@linuxfoundation.org, smohanad@codeaurora.org,
+        jhugo@codeaurora.org, kvalo@codeaurora.org,
+        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        clew@codeaurora.org, netdev@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] net: qrtr: Add MHI transport layer
+Message-ID: <20200504144906.GF3391@Mani-XPS-13-9360>
+References: <20200427075829.9304-1-manivannan.sadhasivam@linaro.org>
+ <20200427075829.9304-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <81e0eff0-8b40-3c47-e39b-929e1dc07fd5@linux.intel.com>
+In-Reply-To: <20200427075829.9304-3-manivannan.sadhasivam@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathias,
+Hi Dave,
 
-On 04-05-20, 16:01, Mathias Nyman wrote:
-> On 30.4.2020 19.59, Vinod Koul wrote:
-> > From: Christian Lamparter <chunkeey@googlemail.com>
-> > 
-> > This add a new driver for renesas xhci which is basically a firmware
-> > loader for uPD720201 and uPD720202 w/o ROM. The xhci-pci driver will
-> > invoke this driver for loading/unloading on relevant devices.
-> > 
-> > This patch adds a firmware loader for the uPD720201K8-711-BAC-A
-> > and uPD720202K8-711-BAA-A variant. Both of these chips are listed
-> > in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
-> > devices which need the firmware loader on page 2 in order to
-> > work as they "do not support the External ROM".
-> > 
-> > The "Firmware Download Sequence" is describe in chapter
-> > "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
-> > 
-> > The firmware "K2013080.mem" is available from a USB3.0 Host to
-> > PCIe Adapter (PP2U-E card) "Firmware download" archive. An
-> > alternative version can be sourced from Netgear's WNDR4700 GPL
-> > archives.
-> > 
-> > The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
-> > (2012-06-15) state that the firmware is for the following devices:
-> >  - uPD720201 ES 2.0 sample whose revision ID is 2.
-> >  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
-> >  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
-> > 
-> > Signed-off-by: Christian Lamparter <chunkeey@googlemail.com>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > [vkoul: fixed comments:
-> > 	used macros for timeout count and delay
-> > 	removed renesas_fw_alive_check
-> > 	cleaned renesas_fw_callback
-> > 	removed recursion for renesas_fw_download
-> > 	add register defines and field names
-> > 	move to a separate file
-> > 	make fw loader as sync probe so that we execute in probe and
-> >         prevent race
-> > 	export symbols for xhci-pci to use]
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  drivers/usb/host/Makefile           |   2 +-
-> >  drivers/usb/host/xhci-pci-renesas.c | 365 ++++++++++++++++++++++++++++
-> >  drivers/usb/host/xhci-pci.h         |  16 ++
-> >  3 files changed, 382 insertions(+), 1 deletion(-)
-> >  create mode 100644 drivers/usb/host/xhci-pci-renesas.c
-> >  create mode 100644 drivers/usb/host/xhci-pci.h
-> > 
-> > diff --git a/drivers/usb/host/Makefile b/drivers/usb/host/Makefile
-> > index b191361257cc..f3a5a2f01874 100644
-> > --- a/drivers/usb/host/Makefile
-> > +++ b/drivers/usb/host/Makefile
-> > @@ -70,7 +70,7 @@ obj-$(CONFIG_USB_OHCI_HCD_DAVINCI)	+= ohci-da8xx.o
-> >  obj-$(CONFIG_USB_UHCI_HCD)	+= uhci-hcd.o
-> >  obj-$(CONFIG_USB_FHCI_HCD)	+= fhci.o
-> >  obj-$(CONFIG_USB_XHCI_HCD)	+= xhci-hcd.o
-> > -obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o
-> > +obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o xhci-pci-renesas.o
+On Mon, Apr 27, 2020 at 01:28:28PM +0530, Manivannan Sadhasivam wrote:
+> MHI is the transport layer used for communicating to the external modems.
+> Hence, this commit adds MHI transport layer support to QRTR for
+> transferring the QMI messages over IPC Router.
 > 
-> Hmm, now we end up with two modules, xhci-pci and xhci-pci-renesas, even if
-> xhci-pci-renesas just includes helper functions to load firmware for renesas.
 
-Right, these are two modules. Do you forsee an issue with two ko's
+Can you please review this driver? It'd be great if this ends up in v5.8
+along with all other MHI patches.
+
+Thanks,
+Mani
+
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: netdev@vger.kernel.org
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  net/qrtr/Kconfig  |   7 +++
+>  net/qrtr/Makefile |   2 +
+>  net/qrtr/mhi.c    | 127 ++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 136 insertions(+)
+>  create mode 100644 net/qrtr/mhi.c
 > 
-> My kbuild knowledge is limited, but one way to solve this would be to 
-> rename xhci-pci.c to xhci-pci-core.c and add:
-
-Yeah i wanted to avoid the rename (stopped short of suggesting that)..
+> diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
+> index 63f89cc6e82c..8eb876471564 100644
+> --- a/net/qrtr/Kconfig
+> +++ b/net/qrtr/Kconfig
+> @@ -29,4 +29,11 @@ config QRTR_TUN
+>  	  implement endpoints of QRTR, for purpose of tunneling data to other
+>  	  hosts or testing purposes.
+>  
+> +config QRTR_MHI
+> +	tristate "MHI IPC Router channels"
+> +	depends on MHI_BUS
+> +	help
+> +	  Say Y here to support MHI based ipcrouter channels. MHI is the
+> +	  transport used for communicating to external modems.
+> +
+>  endif # QRTR
+> diff --git a/net/qrtr/Makefile b/net/qrtr/Makefile
+> index 32d4e923925d..1b1411d158a7 100644
+> --- a/net/qrtr/Makefile
+> +++ b/net/qrtr/Makefile
+> @@ -5,3 +5,5 @@ obj-$(CONFIG_QRTR_SMD) += qrtr-smd.o
+>  qrtr-smd-y	:= smd.o
+>  obj-$(CONFIG_QRTR_TUN) += qrtr-tun.o
+>  qrtr-tun-y	:= tun.o
+> +obj-$(CONFIG_QRTR_MHI) += qrtr-mhi.o
+> +qrtr-mhi-y	:= mhi.o
+> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+> new file mode 100644
+> index 000000000000..2a2abf5b070d
+> --- /dev/null
+> +++ b/net/qrtr/mhi.c
+> @@ -0,0 +1,127 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/mhi.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/skbuff.h>
+> +#include <net/sock.h>
+> +
+> +#include "qrtr.h"
+> +
+> +struct qrtr_mhi_dev {
+> +	struct qrtr_endpoint ep;
+> +	struct mhi_device *mhi_dev;
+> +	struct device *dev;
+> +};
+> +
+> +/* From MHI to QRTR */
+> +static void qcom_mhi_qrtr_dl_callback(struct mhi_device *mhi_dev,
+> +				      struct mhi_result *mhi_res)
+> +{
+> +	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
+> +	int rc;
+> +
+> +	if (!qdev || mhi_res->transaction_status)
+> +		return;
+> +
+> +	rc = qrtr_endpoint_post(&qdev->ep, mhi_res->buf_addr,
+> +				mhi_res->bytes_xferd);
+> +	if (rc == -EINVAL)
+> +		dev_err(qdev->dev, "invalid ipcrouter packet\n");
+> +}
+> +
+> +/* From QRTR to MHI */
+> +static void qcom_mhi_qrtr_ul_callback(struct mhi_device *mhi_dev,
+> +				      struct mhi_result *mhi_res)
+> +{
+> +	struct sk_buff *skb = (struct sk_buff *)mhi_res->buf_addr;
+> +
+> +	if (skb->sk)
+> +		sock_put(skb->sk);
+> +	consume_skb(skb);
+> +}
+> +
+> +/* Send data over MHI */
+> +static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
+> +{
+> +	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, ep);
+> +	int rc;
+> +
+> +	rc = skb_linearize(skb);
+> +	if (rc)
+> +		goto free_skb;
+> +
+> +	rc = mhi_queue_skb(qdev->mhi_dev, DMA_TO_DEVICE, skb, skb->len,
+> +			   MHI_EOT);
+> +	if (rc)
+> +		goto free_skb;
+> +
+> +	if (skb->sk)
+> +		sock_hold(skb->sk);
+> +
+> +	return rc;
+> +
+> +free_skb:
+> +	kfree_skb(skb);
+> +
+> +	return rc;
+> +}
+> +
+> +static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+> +			       const struct mhi_device_id *id)
+> +{
+> +	struct qrtr_mhi_dev *qdev;
+> +	int rc;
+> +
+> +	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
+> +	if (!qdev)
+> +		return -ENOMEM;
+> +
+> +	qdev->mhi_dev = mhi_dev;
+> +	qdev->dev = &mhi_dev->dev;
+> +	qdev->ep.xmit = qcom_mhi_qrtr_send;
+> +
+> +	dev_set_drvdata(&mhi_dev->dev, qdev);
+> +	rc = qrtr_endpoint_register(&qdev->ep, QRTR_EP_NID_AUTO);
+> +	if (rc)
+> +		return rc;
+> +
+> +	dev_dbg(qdev->dev, "Qualcomm MHI QRTR driver probed\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_mhi_qrtr_remove(struct mhi_device *mhi_dev)
+> +{
+> +	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
+> +
+> +	qrtr_endpoint_unregister(&qdev->ep);
+> +	dev_set_drvdata(&mhi_dev->dev, NULL);
+> +}
+> +
+> +static const struct mhi_device_id qcom_mhi_qrtr_id_table[] = {
+> +	{ .chan = "IPCR" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(mhi, qcom_mhi_qrtr_id_table);
+> +
+> +static struct mhi_driver qcom_mhi_qrtr_driver = {
+> +	.probe = qcom_mhi_qrtr_probe,
+> +	.remove = qcom_mhi_qrtr_remove,
+> +	.dl_xfer_cb = qcom_mhi_qrtr_dl_callback,
+> +	.ul_xfer_cb = qcom_mhi_qrtr_ul_callback,
+> +	.id_table = qcom_mhi_qrtr_id_table,
+> +	.driver = {
+> +		.name = "qcom_mhi_qrtr",
+> +	},
+> +};
+> +
+> +module_mhi_driver(qcom_mhi_qrtr_driver);
+> +
+> +MODULE_AUTHOR("Chris Lew <clew@codeaurora.org>");
+> +MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>");
+> +MODULE_DESCRIPTION("Qualcomm IPC-Router MHI interface driver");
+> +MODULE_LICENSE("GPL v2");
+> -- 
+> 2.17.1
 > 
-> xhci-pci-y := xhci-pci-core.o xhci-pci-renesas.o
-> 
-> unless someone can suggest a better way to solve this
-
-I dont have any better idea atm!
-
-So if you are okay with rename of file, I can do that first and then
-these patches
-
-Thanks
--- 
-~Vinod
