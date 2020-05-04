@@ -2,114 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B4AC1C3B53
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 15:32:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FFFC1C3D10
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 16:31:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728191AbgEDNcK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 09:32:10 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:8215 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728125AbgEDNcK (ORCPT
+        id S1728818AbgEDObb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 10:31:31 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:50909 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728217AbgEDObb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 09:32:10 -0400
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 May 2020 19:01:27 +0530
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 04 May 2020 19:01:07 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id EAE0346E3; Mon,  4 May 2020 19:01:05 +0530 (IST)
-From:   Krishna Manikandan <mkrishn@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org, mka@chromium.org
-Subject: [v1] drm/msm/dpu: update bandwidth threshold check
-Date:   Mon,  4 May 2020 19:01:03 +0530
-Message-Id: <1588599063-15754-1-git-send-email-mkrishn@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Mon, 4 May 2020 10:31:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588602690; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=vWmFHzkfv8jS2Mn0X+IL+VWQDo/XxfPk1Hg81BCXLGc=; b=FjGam5R/KDrNW4+rbfwYW+8mKqFA7boUXi9au+NnDrec2plDsR0Mp0XP3G7thYbc3kHLE6nH
+ Gxf/71AjsA0aXXVTF0cTRUx8WiqBnSBfkLVPso4kfyov7K8Q/qMs0rjeAO3EqN6ktOkkIZSA
+ YqNCuhxbqJFnDU8+E4ZGaDBZfdU=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb02741.7fc815623928-smtp-out-n05;
+ Mon, 04 May 2020 14:31:29 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 72747C433D2; Mon,  4 May 2020 14:31:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B2A0CC433CB;
+        Mon,  4 May 2020 14:31:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B2A0CC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v4 4/8] bus: mhi: core: Read transfer length from an event
+ properly
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>, mani@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk@codeaurora.org
+References: <1588386725-1165-1-git-send-email-bbhatt@codeaurora.org>
+ <1588386725-1165-5-git-send-email-bbhatt@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <4e187d13-951d-4833-ea82-577b0e755521@codeaurora.org>
+Date:   Mon, 4 May 2020 08:31:25 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <1588386725-1165-5-git-send-email-bbhatt@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Maximum allowed bandwidth  has no dependency on the type
-of panel used. Hence, cleanup the code to use max_bw_high
-as the threshold value for bandwidth checks.
+On 5/1/2020 8:32 PM, Bhaumik Bhatt wrote:
+> From: Hemant Kumar <hemantk@codeaurora.org>
+> 
+> When MHI Driver receives an EOT event, it reads xfer_len from the
+> event in the last TRE. The value is under control of the MHI device
+> and never validated by Host MHI driver. The value should never be
+> larger than the real size of the buffer but a malicious device can
+> set the value 0xFFFF as maximum. This causes driver to memory
+> overflow (both read or write). Fix this issue by reading minimum of
+> transfer length from event and the buffer length provided.
+> 
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Update the maximum allowed bandwidth as 6.8Gbps for
-SC7180 target.
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
 
-Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  | 23 +----------------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  4 ++--
- 2 files changed, 3 insertions(+), 24 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 11f2beb..7c230f7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -36,22 +36,6 @@ static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
- 	return to_dpu_kms(priv->kms);
- }
- 
--static bool _dpu_core_video_mode_intf_connected(struct drm_crtc *crtc)
--{
--	struct drm_crtc *tmp_crtc;
--
--	drm_for_each_crtc(tmp_crtc, crtc->dev) {
--		if ((dpu_crtc_get_intf_mode(tmp_crtc) == INTF_MODE_VIDEO) &&
--				tmp_crtc->enabled) {
--			DPU_DEBUG("video interface connected crtc:%d\n",
--				tmp_crtc->base.id);
--			return true;
--		}
--	}
--
--	return false;
--}
--
- static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
- 		struct drm_crtc *crtc,
- 		struct drm_crtc_state *state,
-@@ -94,7 +78,6 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 	u32 bw, threshold;
- 	u64 bw_sum_of_intfs = 0;
- 	enum dpu_crtc_client_type curr_client_type;
--	bool is_video_mode;
- 	struct dpu_crtc_state *dpu_cstate;
- 	struct drm_crtc *tmp_crtc;
- 	struct dpu_kms *kms;
-@@ -144,11 +127,7 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 		bw = DIV_ROUND_UP_ULL(bw_sum_of_intfs, 1000);
- 		DPU_DEBUG("calculated bandwidth=%uk\n", bw);
- 
--		is_video_mode = dpu_crtc_get_intf_mode(crtc) == INTF_MODE_VIDEO;
--		threshold = (is_video_mode ||
--			_dpu_core_video_mode_intf_connected(crtc)) ?
--			kms->catalog->perf.max_bw_low :
--			kms->catalog->perf.max_bw_high;
-+		threshold = kms->catalog->perf.max_bw_high;
- 
- 		DPU_DEBUG("final threshold bw limit = %d\n", threshold);
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index c567917..6ad7472 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -515,8 +515,8 @@
- };
- 
- static const struct dpu_perf_cfg sc7180_perf_data = {
--	.max_bw_low = 3900000,
--	.max_bw_high = 5500000,
-+	.max_bw_low = 6800000,
-+	.max_bw_high = 6800000,
- 	.min_core_ib = 2400000,
- 	.min_llcc_ib = 800000,
- 	.min_dram_ib = 800000,
 -- 
-1.9.1
-
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
