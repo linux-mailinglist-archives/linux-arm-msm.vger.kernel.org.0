@@ -2,87 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E1AE1C495A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 00:04:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEE1B1C49BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 00:43:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728049AbgEDWEF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 18:04:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38664 "EHLO
+        id S1726419AbgEDWnQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 18:43:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727843AbgEDWEE (ORCPT
+        by vger.kernel.org with ESMTP id S1726291AbgEDWnP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 18:04:04 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49B57C061A41
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 15:04:04 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id k133so8085719oih.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 15:04:04 -0700 (PDT)
+        Mon, 4 May 2020 18:43:15 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EBF4C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 15:43:15 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id x4so75323wmj.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 15:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HG81CHNe0QI0NTrcW8A+JoCmXNVDbes2uRrDzLgGKZ0=;
-        b=awQyZcp56CR+knPRnNk21A1iejTvhrYFLChzm3D8lOIkwo5L29DDqfYpOQLytNd4Wl
-         PZ0pw0oGfkICw4vK77z9xVA/P+4bMM/pOOWq1BfkSLu+gukAONxmc7l9395y0J94jMvb
-         SEljtLDp8Rd+20G3yKC4Msa9QXUUPbIL3knX4W4l9rYfWcq4mwSz728aHXV8rT09nh1c
-         u8+IB2oBb0mo0VcASnfmLUxm6hfZCTP6qL2c5S1/n8o7LSMhCNiQeCXOXjkhI7eaV0R/
-         HoJQIi2Tw4NDoVlonxzmj/pbTjhdvw7jZhGkNMRNpDiaoSDvux9z59kPjqqzBXYxli6i
-         9WKA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JjruGVFTYIkCOp/6P69N/+5GVlaNIjo9XcpDR89Pd+0=;
+        b=mQxmO5SnyZe8PfDf60tP3gPYEkzPyOIcM3Md/Gdw43BDEazdiO5THIRKvYImhxW/Zc
+         pVDzQsWFc2hJiOxJRlfPlTREeMHRkfu31jRlhnmOZdBcAH1bUT5rbqFurdQ0Uggdix30
+         CVCzDXzUR2F85C+OLcSgpFtmXOdapgTjEA677JX92wUCrj3NHgxubE5ogp1gM7sGmpjd
+         cCVWPBCJ9CfgLP9G9gl3DAArd7M2Zr3lD17FanRN4rDT+iFj21P/m11WthnGCQJwPqBp
+         Q0LSt67itKjxxTb9YnXZKvIBESSlM86++zJrBaB9GL9NByXCxAX7QTQxW2RWRd9b5MQr
+         6u7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HG81CHNe0QI0NTrcW8A+JoCmXNVDbes2uRrDzLgGKZ0=;
-        b=TULNAktfEDhrNG6TkgiEJSY4VpreE90LKzqhIeacyZ4Qn/FQYuYTMfZlJZ4vJdhJdm
-         mTX0dnBwKG9B0kBpOhOs14WT1w6r+gh1fii1RqIaNNV+Aq1Vt9ctmPnndMcODVZhoPAh
-         wlhTC95JdCnc9tntciJdtsheFo1h9r5UXPraYJAUdFrC5xNRN6f48Br4375xegOAldbC
-         kJXZkHSRI/U5M7oet9Y9kuPCDcV0YuGC6np6pimaJerXiO+PlH/cJ78NS9oHYUOH3qx+
-         2nlG6LhLAvi6fnpeKV8+gsMtiQLno87UIvdPkof90QdB0/yq7l+4BSbImM/pzjocr0Ej
-         crJA==
-X-Gm-Message-State: AGi0PuZPIElT7+p7fU4ZrBzw4zfJ65ksn8u/T/op0L6oXnuTRsciUhIm
-        PU1+1XmaWrO+JsEuRXGve2hQRxdA1thAje1p8wUbkg==
-X-Google-Smtp-Source: APiQypKDHasungWQjMayXhFnYsz3plBUGmQGh5tJ355DQrIPVoVy/eOJEF75X4WbUqO6BDVWSC9QCDmuk+RxO75/Zhw=
-X-Received: by 2002:a54:418f:: with SMTP id 15mr374635oiy.69.1588629843284;
- Mon, 04 May 2020 15:04:03 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JjruGVFTYIkCOp/6P69N/+5GVlaNIjo9XcpDR89Pd+0=;
+        b=UfwJJzHX6mO941F5uDpAGbPn/xDgdSMvdB7xA5ls6Ry/AQ6GVWDcIDup0TAipguQmb
+         26xrzajHfh1TQDI9JKJv6AJlqtjMCxoolMu2+g1SKYC8LXLtu7kE4xigZlcjH95X2YNB
+         98qX4d+tx1FwR9pstLjLz6MZgXRefMENM+gp8KQgCYyqoCZ7JS5aX1Yb5obTvUoer5Ud
+         Mk1TLTtTQZc2Xg4cNnxBwV9Rd1xyDZ8/c1r4pKSoylsOhhpfyydLIUxAt7yin/J6SY49
+         0wAurmXAoIAwuBbzx5WzsOvEcRRHi3T6uHBmrst104DPnZEUKPJ4wRbZmIuWLJK9GxfP
+         jwTQ==
+X-Gm-Message-State: AGi0PuY/A3kBmjmAuOaHBL2QgrQ8Qd1GDbb/CSvD/hkIXeKJGTF5MCfJ
+        pCmPujLg4//9sJoGrvXiISg5Ow==
+X-Google-Smtp-Source: APiQypJFVRDUjBynGeveRHht+yHkpJBWWsZUQG2vKRa9MtV1rTwsgkSsdhGYav7UCSZmEFtT5TcXUg==
+X-Received: by 2002:a1c:6a08:: with SMTP id f8mr16162694wmc.132.1588632194182;
+        Mon, 04 May 2020 15:43:14 -0700 (PDT)
+Received: from localhost.localdomain ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id a13sm13895888wrv.67.2020.05.04.15.43.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2020 15:43:13 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     Peter.Chen@nxp.com, gregkh@linuxfoundation.org,
+        linux-usb@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/2] ChipIdea USB role-switch fixes and tweaks
+Date:   Mon,  4 May 2020 23:43:44 +0100
+Message-Id: <20200504224346.613377-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20200504202243.5476-1-sibis@codeaurora.org> <20200504202243.5476-8-sibis@codeaurora.org>
-In-Reply-To: <20200504202243.5476-8-sibis@codeaurora.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Mon, 4 May 2020 15:03:26 -0700
-Message-ID: <CAGETcx9=kfuG9WtaSxsDe_SM1Gewbn889eQ--3ui3H_rzm3BRA@mail.gmail.com>
-Subject: Re: [PATCH v4 07/12] OPP: Add and export helper to get icc path count
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Nishanth Menon <nm@ti.com>, Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        linux-arm-msm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, lukasz.luba@arm.com,
-        Sudeep Holla <sudeep.holla@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 4, 2020 at 1:24 PM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> Add and export 'dev_pm_opp_get_path_count' to get the icc path count
-> associated with the device.
+This set addresses two things:
 
-This is not related to OPP. You should add this helper function to ICC
-framework?
+- A bug when using the USB role-switch API.
+  If we are using role-switch we still want to switch HS_PHY_GENCONFIG_2
+  bits.
 
--Saravana
+- Adding the flag to allow user-space to control the USB role as other
+  controllers already support.
+
+Bryan O'Donoghue (2):
+  usb: chipidea: msm: Ensure proper controller reset using role switch
+    API
+  usb: chipidea: Enable user-space triggered role-switching
+
+ drivers/usb/chipidea/ci_hdrc_msm.c | 2 +-
+ drivers/usb/chipidea/core.c        | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+-- 
+2.25.1
+
