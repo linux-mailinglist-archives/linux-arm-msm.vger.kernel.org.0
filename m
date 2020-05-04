@@ -2,103 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BE481C49C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 00:43:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E3211C4ABD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 01:55:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbgEDWnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 18:43:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44772 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728009AbgEDWnR (ORCPT
+        id S1728624AbgEDXzU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 19:55:20 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:44860 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728383AbgEDXzT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 18:43:17 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E9FC061A0F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 15:43:17 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id u16so52755wmc.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 15:43:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eguzFUkYwYoGv/m+tGA5f5qo5AojxZ5F9SIUcjcPN6U=;
-        b=G708xptwUNMdoaDhkWTWdkVl70aBxf1k6we+ylWmrZCMEQ116539Bcq9mHU8SFp/vr
-         z45AxdioUnE9/Rx5uU6u+hwGiqRyDdivefA9Wa6qVXlVy4Z226Q0iA8iaoN2sIfctX+g
-         9zLI0mNdUjV+1TIbXKjvoqMFZPhT2eYOzSVLAc21aZT6okWRRqPCAsjd5Amf8QMEywbL
-         HrWh+3xI0GtHFL5xSR+GOVsTPrdV3gJ4b7jSf/T8mQ3uSA/Z9usj2w/yLzoqw2+bIQbN
-         XbDHKSkyiRfCnvsDiKit8OZLq2hRyybfHEi1UTjuDPrwfXptw67cxzr89GmSP0XU+wVT
-         vQ1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eguzFUkYwYoGv/m+tGA5f5qo5AojxZ5F9SIUcjcPN6U=;
-        b=NOy/txOqQZ5kyXuNgZyKKvmHzvcQFu0AkSzK2Q+IqojBBhDHb6vGd64A7er7r0IvMy
-         odKOAWyO8bXq5lE23KKLwWaQ2BJ6hrv86rZeOliRj8K3NWHFN8jt/Hx8gxg4qw4EAaVj
-         0s8tG66p+cQc1kwzwzq5KQJAtiB4PgaTFR42g7GWBQZSuMfCzXNpgKoKuov6ygzUhpZ/
-         SMbckNyJbbDzpwWUBH2TzITnwrYpq8YH4uyOU147Steu9YCrXX+VNCdRu5gLFK4wOnkF
-         28D7LPcE+jgnwJfBRKkqBWx9rCzRdRNFc5S0Z0rjF310lMvg5VwXBIeTv/3JQdjCkWw5
-         5q4w==
-X-Gm-Message-State: AGi0PuaZ0HXhs/kSXOpw8FXkxIrA0db2R4CTNMCnSdonfe54NGPUfJ0u
-        T6DVWNQ6Qn8U1fLQnMLLTxFAlw==
-X-Google-Smtp-Source: APiQypICMTKYBacQ6uREMSUVWz+Vi3PjmMK1sykrqSI26bOeTzB/YVc6M5dzRmrJaGaSLH66XLUX8A==
-X-Received: by 2002:a1c:a9c3:: with SMTP id s186mr16864695wme.89.1588632196295;
-        Mon, 04 May 2020 15:43:16 -0700 (PDT)
-Received: from localhost.localdomain ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id a13sm13895888wrv.67.2020.05.04.15.43.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 15:43:15 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Peter.Chen@nxp.com, gregkh@linuxfoundation.org,
-        linux-usb@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Jun Li <jun.li@nxp.com>, Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH 2/2] usb: chipidea: Enable user-space triggered role-switching
-Date:   Mon,  4 May 2020 23:43:46 +0100
-Message-Id: <20200504224346.613377-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200504224346.613377-1-bryan.odonoghue@linaro.org>
-References: <20200504224346.613377-1-bryan.odonoghue@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mon, 4 May 2020 19:55:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588636518; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=K9ERSW++hYdlxZGrLU5hV4l4cdVt2Uci/NZf/wecqA8=; b=H/5cPwVE1GhQy1whho6mK8SWFiResHwxuqFeJj3P3IQqCSo3Gr4wUY+Ol0YF5qNN+GGk3hh8
+ NCbIJiWDnUkKFygYhjQZv292gF1IR27X3bxHa9aydGp+L144X+6RqSZyHFto1kiMSXBgkac5
+ SfudmMPizUKjYA2fH7f5PlcFKGo=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb0ab3f.7f1e7ed36378-smtp-out-n02;
+ Mon, 04 May 2020 23:54:39 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 15F19C44788; Mon,  4 May 2020 23:54:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2AE0C433CB;
+        Mon,  4 May 2020 23:54:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E2AE0C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
+        mgautam@codeaurora.org, vkoul@kernel.org, sboyd@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, jackp@codeaurora.org,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v8 0/5] Add SS/HS-USB changes for Qualcomm SM8150 chipset
+Date:   Mon,  4 May 2020 16:54:22 -0700
+Message-Id: <1588636467-23409-1-git-send-email-wcheng@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The flag provided by the USB role-switch logic allow_userspace_control
-allows user-space to trigger a role-switch. Several other USB controller
-drivers already enable this feature. Let's switch it on for the chipidea
-core now also.
+This series adds support for the Synopsis 7nm HSPHY USB driver being
+used in QCOM chipsets.  The HSPHY register map differs compared to 
+other PHY revisions.  In addition, modifications and updates are done
+to the QMP driver to add new registers/offsets, and to update the
+initialization sequence for enabling the SSUSB path on SM8150.
 
-Cc: Peter Chen <Peter.Chen@nxp.com>
-Cc: Jun Li <jun.li@nxp.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: linux-usb@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/usb/chipidea/core.c | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v8:
+ - Fix checkpatch warnings about characters per line.
+ - Rebase to linux-phy/next branch
 
-diff --git a/drivers/usb/chipidea/core.c b/drivers/usb/chipidea/core.c
-index ae0bdc036464..5f31fda92292 100644
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -666,6 +666,7 @@ static int ci_usb_role_switch_set(struct usb_role_switch *sw,
- static struct usb_role_switch_desc ci_role_switch = {
- 	.set = ci_usb_role_switch_set,
- 	.get = ci_usb_role_switch_get,
-+	.allow_userspace_control = true,
- };
- 
- static int ci_get_platdata(struct device *dev,
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+
+Changes in v7:
+ - Use _relaxed() variants for writel/readl calls in
+   phy-qcom-snps-femto-v2.c
+ - Remove comments in the phy init function
+ - Use devm_platform_ioremap_resource instead of devm_ioremap_resource
+ - Fix chipset naming in Kconfig
+ - Address minor fixups in the YAML file (remove status in example, fix
+   "Hi-speed" to "High-speed", add a newline at the end)
+
+Changes in v6:
+ - Addressed coding style errors in phy-qcom-snps-femto-v2.c
+
+Changes in v5:
+ - Reorganize IF check for when to use the proper PWRDOWN CTRL offset
+ - Rename UFS specific offset definitions in the QMP PHY driver to clearly
+   denote they are UFS specific
+ - Rename the phy-qcom-snps-7nm driver to phy-qcom-snps-femto-v2
+
+Changes in v4:
+ - Fix POWERDOWN offset for QMP PHY exit routine, and check for
+   has_phy_dp_com_ctrl instead of !has_phy_com_ctrl
+
+Changes in v3:
+ - Use devm_reset_control_get_exclusive instead of referencing index for
+   reset handle
+
+Changes in v2:
+ - Fixed YAML errors caught by dt_binding_check
+
+Jack Pham (1):
+  phy: qcom-qmp: Add SM8150 QMP USB3 PHY support
+
+Wesley Cheng (4):
+  dt-bindings: phy: Add binding for qcom,usb-snps-femto-v2
+  phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs
+  phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB
+  phy: qcom-qmp: Rename UFS PCS QMP v4 registers
+
+ .../bindings/phy/qcom,usb-snps-femto-v2.yaml       |  77 ++++++
+ drivers/phy/qualcomm/Kconfig                       |  10 +
+ drivers/phy/qualcomm/Makefile                      |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c                | 196 +++++++++++++-
+ drivers/phy/qualcomm/phy-qcom-qmp.h                | 238 +++++++++++++++--
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c      | 287 +++++++++++++++++++++
+ 6 files changed, 773 insertions(+), 36 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+
 -- 
-2.25.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
