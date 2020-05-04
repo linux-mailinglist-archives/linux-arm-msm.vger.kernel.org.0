@@ -2,258 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C6F71C3D7F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 16:49:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DD611C434A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2020 19:50:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728935AbgEDOtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 10:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55204 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728353AbgEDOtT (ORCPT
+        id S1730496AbgEDRuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 13:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55446 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1730488AbgEDRun (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 10:49:19 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8145EC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 07:49:17 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id h11so6835997plr.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 07:49:17 -0700 (PDT)
+        Mon, 4 May 2020 13:50:43 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0047C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 10:50:41 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id hi11so221297pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 10:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5lmoQJYoeg3ybSPwplhMkrooqQOGOYA7nU2sY4Dq1pc=;
-        b=R04Fjb4R2zQrBdDiS1rI1lH0gMnWxIPItV5U2BOiCIby5HxxzYV7c9vaEBIuSU6TKc
-         N9yJAqZKcVjZS3dG2Rah6YyW6mKqK9XGAwKP4ZTnARpmIBVYbSR+v9/ffySNScve9KAS
-         fFp6YUwxhiVFrKpnhfNdNztyuV6JtUulx7ImPpPksB5T3uIrbqLIc2QZ0DIaH7vmMYa/
-         mlSuf4zp+Oh+k8sETM+eBqNyneLDT6QlrGT3CmLeedUqmbAq6giRJxV29uKfbeWsbvDB
-         yM6pyiRw2db9pa0Tm3awQzKDxTdw3iafUgw096RzVZ2cKOSKyRo5hi5nclBmgK32UOHY
-         x8EQ==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=COJ4St1lQrIdf4dsEVKhZiSK4khVz5kd/fC7gBtBbkM=;
+        b=Mpd4GwJqCn6fs3imO0KHhzS3awEBa2J8gV5GcyQYNUazC5gy/M0qVgDmTLbaWH/ezn
+         Tb2Xeee7qR1lNT2zrjV3BN/ErkWgmtSPBkLoNINZke5cvXcJ4DmB6bjnXJddexYSgFBN
+         faD9o/qrTGYKpFeQcE6EKbkeSR4/vpJx3uFJI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5lmoQJYoeg3ybSPwplhMkrooqQOGOYA7nU2sY4Dq1pc=;
-        b=THVpQZYM1fx3EBqfZD1KIQ3p14NWUCR5/Dr8p+fnJRPMWpPZVkuZuxi5/2B8eFAdIy
-         z72r76VsbzcZPRm7d08/+se3mJCOmvU9P+X6Z3wn6WV49/AmycHNz5+XzyuvomF1QOwl
-         d6UVD3vAtF1/2fGUNe5O7RqmR1vMMojYUOvsOGZ6ZGrR3BMUpiqlg2/L4BlIMbZ87BSi
-         0Dq8o4M4HZAuSMfLfZyI3CfCYiee4aYM+buxBoDGVueZlzsnO1b4+4D9PonYSxpTP5wq
-         wLvLX+iIlpAi9xo6EUvijK4m81EYlAZe0kSb9zvfH57cJHrdZXOCS95ERSaVJHCyOPQH
-         6q8Q==
-X-Gm-Message-State: AGi0PubsHThBahtrFJQb0PqC876ZTPn+iXo30ScRIC5QqNCUqNl0Np70
-        GoL71gOdrnXaAdaZkcDRRWKa
-X-Google-Smtp-Source: APiQypJjIapp5XKSell2YBv+inFoZ8mKXrHBT+VFs3IVljbQMp6IsqaBr1+529ONpM1jjcEHWag4sQ==
-X-Received: by 2002:a17:902:fe8e:: with SMTP id x14mr18541862plm.128.1588603756751;
-        Mon, 04 May 2020 07:49:16 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:41c:f7b5:bdcc:167e:2cd1:efea])
-        by smtp.gmail.com with ESMTPSA id p66sm9009181pfb.65.2020.05.04.07.49.09
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 May 2020 07:49:15 -0700 (PDT)
-Date:   Mon, 4 May 2020 20:19:06 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     davem@davemloft.net
-Cc:     gregkh@linuxfoundation.org, smohanad@codeaurora.org,
-        jhugo@codeaurora.org, kvalo@codeaurora.org,
-        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        clew@codeaurora.org, netdev@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] net: qrtr: Add MHI transport layer
-Message-ID: <20200504144906.GF3391@Mani-XPS-13-9360>
-References: <20200427075829.9304-1-manivannan.sadhasivam@linaro.org>
- <20200427075829.9304-3-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=COJ4St1lQrIdf4dsEVKhZiSK4khVz5kd/fC7gBtBbkM=;
+        b=bbdwDNTnodXTo5n20LaD9+tMPmtfCoyZ08Zbm6mATyZ8tV9NwXuoeYjzI2qnkIABuk
+         VAeiB9g7QMx1ryInv1/Xvr2AoIkUZ40QrWDpCX7pNVymrfx3E7flsnw18axsWRhf+pfO
+         vQjrZVdb5kvrez850wmItN7Dctf1iMXBiMqwnGO+KqNU+pW2YWWPdpmOKl8xYXDcTxED
+         KlY/XNT64joy0e8mHIMrRQDlTWWQWJfMSyFiWSVZtuC0FY4T7QYoYavChjiYjymqHskR
+         JYyK9kQQHuqmL0F+fj95Wb3LwiIh6I8ZdtFyKhb7w2xkSkDIPA5tl+iPQtLKTM/KdoyU
+         EYHw==
+X-Gm-Message-State: AGi0PuZ5C+rACqUJPe8XBZpHkIA1LBm4l4yzMhZcRtnf0rDcezsO7+5v
+        TueHkLfk5B8ksWLv5OpVI68S0vGp++RZlg==
+X-Google-Smtp-Source: APiQypLDJBkzSpF+EsZ9GrUQlZE0DsT6W/QXtW8cnRp491M8t8tm7a6yuuNSA0A6B5WZ/k7oh57AlA==
+X-Received: by 2002:a17:90a:5648:: with SMTP id d8mr115639pji.163.1588614641276;
+        Mon, 04 May 2020 10:50:41 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id t3sm9402062pfq.110.2020.05.04.10.50.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2020 10:50:40 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        rafael.j.wysocki@intel.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     evgreen@chromium.org, swboyd@chromium.org, mka@chromium.org,
+        mkshah@codeaurora.org, Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v6 1/5] soc: qcom: rpmh-rsc: Correctly ignore CPU_CLUSTER_PM notifications
+Date:   Mon,  4 May 2020 10:50:15 -0700
+Message-Id: <20200504104917.v6.1.Ic7096b3b9b7828cdd41cd5469a6dee5eb6abf549@changeid>
+X-Mailer: git-send-email 2.26.2.526.g744177e7f7-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200427075829.9304-3-manivannan.sadhasivam@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+Our switch statement doesn't have entries for CPU_CLUSTER_PM_ENTER,
+CPU_CLUSTER_PM_ENTER_FAILED, and CPU_CLUSTER_PM_EXIT and doesn't have
+a default.  This means that we'll try to do a flush in those cases but
+we won't necessarily be the last CPU down.  That's not so ideal since
+our (lack of) locking assumes we're on the last CPU.
 
-On Mon, Apr 27, 2020 at 01:28:28PM +0530, Manivannan Sadhasivam wrote:
-> MHI is the transport layer used for communicating to the external modems.
-> Hence, this commit adds MHI transport layer support to QRTR for
-> transferring the QMI messages over IPC Router.
-> 
+Luckily this isn't as big a problem as you'd think since (at least on
+the SoC I tested) we don't get these notifications except on full
+system suspend.  ...and on full system suspend we get them on the last
+CPU down.  That means that the worst problem we hit is flushing twice.
+Still, it's good to make it correct.
 
-Can you please review this driver? It'd be great if this ends up in v5.8
-along with all other MHI patches.
+Fixes: 985427f997b6 ("soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches")
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-Thanks,
-Mani
+Changes in v6:
+- Release the lock on cluster notifications.
 
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: netdev@vger.kernel.org
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  net/qrtr/Kconfig  |   7 +++
->  net/qrtr/Makefile |   2 +
->  net/qrtr/mhi.c    | 127 ++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 136 insertions(+)
->  create mode 100644 net/qrtr/mhi.c
-> 
-> diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
-> index 63f89cc6e82c..8eb876471564 100644
-> --- a/net/qrtr/Kconfig
-> +++ b/net/qrtr/Kconfig
-> @@ -29,4 +29,11 @@ config QRTR_TUN
->  	  implement endpoints of QRTR, for purpose of tunneling data to other
->  	  hosts or testing purposes.
->  
-> +config QRTR_MHI
-> +	tristate "MHI IPC Router channels"
-> +	depends on MHI_BUS
-> +	help
-> +	  Say Y here to support MHI based ipcrouter channels. MHI is the
-> +	  transport used for communicating to external modems.
-> +
->  endif # QRTR
-> diff --git a/net/qrtr/Makefile b/net/qrtr/Makefile
-> index 32d4e923925d..1b1411d158a7 100644
-> --- a/net/qrtr/Makefile
-> +++ b/net/qrtr/Makefile
-> @@ -5,3 +5,5 @@ obj-$(CONFIG_QRTR_SMD) += qrtr-smd.o
->  qrtr-smd-y	:= smd.o
->  obj-$(CONFIG_QRTR_TUN) += qrtr-tun.o
->  qrtr-tun-y	:= tun.o
-> +obj-$(CONFIG_QRTR_MHI) += qrtr-mhi.o
-> +qrtr-mhi-y	:= mhi.o
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> new file mode 100644
-> index 000000000000..2a2abf5b070d
-> --- /dev/null
-> +++ b/net/qrtr/mhi.c
-> @@ -0,0 +1,127 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/mhi.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/skbuff.h>
-> +#include <net/sock.h>
-> +
-> +#include "qrtr.h"
-> +
-> +struct qrtr_mhi_dev {
-> +	struct qrtr_endpoint ep;
-> +	struct mhi_device *mhi_dev;
-> +	struct device *dev;
-> +};
-> +
-> +/* From MHI to QRTR */
-> +static void qcom_mhi_qrtr_dl_callback(struct mhi_device *mhi_dev,
-> +				      struct mhi_result *mhi_res)
-> +{
-> +	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
-> +	int rc;
-> +
-> +	if (!qdev || mhi_res->transaction_status)
-> +		return;
-> +
-> +	rc = qrtr_endpoint_post(&qdev->ep, mhi_res->buf_addr,
-> +				mhi_res->bytes_xferd);
-> +	if (rc == -EINVAL)
-> +		dev_err(qdev->dev, "invalid ipcrouter packet\n");
-> +}
-> +
-> +/* From QRTR to MHI */
-> +static void qcom_mhi_qrtr_ul_callback(struct mhi_device *mhi_dev,
-> +				      struct mhi_result *mhi_res)
-> +{
-> +	struct sk_buff *skb = (struct sk_buff *)mhi_res->buf_addr;
-> +
-> +	if (skb->sk)
-> +		sock_put(skb->sk);
-> +	consume_skb(skb);
-> +}
-> +
-> +/* Send data over MHI */
-> +static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
-> +{
-> +	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, ep);
-> +	int rc;
-> +
-> +	rc = skb_linearize(skb);
-> +	if (rc)
-> +		goto free_skb;
-> +
-> +	rc = mhi_queue_skb(qdev->mhi_dev, DMA_TO_DEVICE, skb, skb->len,
-> +			   MHI_EOT);
-> +	if (rc)
-> +		goto free_skb;
-> +
-> +	if (skb->sk)
-> +		sock_hold(skb->sk);
-> +
-> +	return rc;
-> +
-> +free_skb:
-> +	kfree_skb(skb);
-> +
-> +	return rc;
-> +}
-> +
-> +static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
-> +			       const struct mhi_device_id *id)
-> +{
-> +	struct qrtr_mhi_dev *qdev;
-> +	int rc;
-> +
-> +	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
-> +	if (!qdev)
-> +		return -ENOMEM;
-> +
-> +	qdev->mhi_dev = mhi_dev;
-> +	qdev->dev = &mhi_dev->dev;
-> +	qdev->ep.xmit = qcom_mhi_qrtr_send;
-> +
-> +	dev_set_drvdata(&mhi_dev->dev, qdev);
-> +	rc = qrtr_endpoint_register(&qdev->ep, QRTR_EP_NID_AUTO);
-> +	if (rc)
-> +		return rc;
-> +
-> +	dev_dbg(qdev->dev, "Qualcomm MHI QRTR driver probed\n");
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_mhi_qrtr_remove(struct mhi_device *mhi_dev)
-> +{
-> +	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
-> +
-> +	qrtr_endpoint_unregister(&qdev->ep);
-> +	dev_set_drvdata(&mhi_dev->dev, NULL);
-> +}
-> +
-> +static const struct mhi_device_id qcom_mhi_qrtr_id_table[] = {
-> +	{ .chan = "IPCR" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(mhi, qcom_mhi_qrtr_id_table);
-> +
-> +static struct mhi_driver qcom_mhi_qrtr_driver = {
-> +	.probe = qcom_mhi_qrtr_probe,
-> +	.remove = qcom_mhi_qrtr_remove,
-> +	.dl_xfer_cb = qcom_mhi_qrtr_dl_callback,
-> +	.ul_xfer_cb = qcom_mhi_qrtr_ul_callback,
-> +	.id_table = qcom_mhi_qrtr_id_table,
-> +	.driver = {
-> +		.name = "qcom_mhi_qrtr",
-> +	},
-> +};
-> +
-> +module_mhi_driver(qcom_mhi_qrtr_driver);
-> +
-> +MODULE_AUTHOR("Chris Lew <clew@codeaurora.org>");
-> +MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>");
-> +MODULE_DESCRIPTION("Qualcomm IPC-Router MHI interface driver");
-> +MODULE_LICENSE("GPL v2");
-> -- 
-> 2.17.1
-> 
+Changes in v5:
+- Corrently => Correctly
+
+Changes in v4:
+- ("...Corrently ignore CPU_CLUSTER_PM notifications") split out for v4.
+
+Changes in v3: None
+Changes in v2: None
+
+ drivers/soc/qcom/rpmh-rsc.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index a9e15699f55f..8c338335fc21 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -806,6 +806,9 @@ static int rpmh_rsc_cpu_pm_callback(struct notifier_block *nfb,
+ 	case CPU_PM_EXIT:
+ 		cpumask_clear_cpu(smp_processor_id(), &drv->cpus_entered_pm);
+ 		goto exit;
++	default:
++		ret = NOTIFY_DONE;
++		goto exit;
+ 	}
+ 
+ 	ret = rpmh_rsc_ctrlr_is_busy(drv);
+-- 
+2.26.2.526.g744177e7f7-goog
+
