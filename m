@@ -2,160 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D554C1C617C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 21:59:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04B3D1C618F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 22:05:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729158AbgEET7v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 15:59:51 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:39717 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729197AbgEET7u (ORCPT
+        id S1728135AbgEEUFK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 16:05:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47428 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728076AbgEEUFJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 15:59:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588708790; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=HSbHdKSzouu+GH1sgVv9qkTJ1zJnbqDmfNgHrzsgK2s=; b=Wx1+G9MVOqeeN4tfT0je9Or4cKRFrBeRs/hThJI6wl4vHc4sVph8edbpyKMee2Pfbd6bbuW0
- r+Z/nP2us7eV4BEYvvBxZmGOr7qSuv+09ggHYLzLavrSKe54uzw/2WPHFYI4yfKKkQnPl8eh
- 36r+6OuQVhaQ3E1x13A4DVE69EI=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb1c5b6.7fea8d269228-smtp-out-n01;
- Tue, 05 May 2020 19:59:50 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 41F89C447A1; Tue,  5 May 2020 19:59:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.0
-Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 23B3BC44791;
-        Tue,  5 May 2020 19:59:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 23B3BC44791
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-From:   Wesley Cheng <wcheng@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
-        mgautam@codeaurora.org, vkoul@kernel.org, sboyd@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, jackp@codeaurora.org,
-        Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v9 5/5] phy: qcom-qmp: Rename UFS PCS QMP v4 registers
-Date:   Tue,  5 May 2020 12:59:36 -0700
-Message-Id: <1588708776-16774-6-git-send-email-wcheng@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1588708776-16774-1-git-send-email-wcheng@codeaurora.org>
-References: <1588708776-16774-1-git-send-email-wcheng@codeaurora.org>
+        Tue, 5 May 2020 16:05:09 -0400
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B89C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 13:05:09 -0700 (PDT)
+Received: by mail-ua1-x942.google.com with SMTP id a16so911781uaq.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 13:05:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=is9Xg/jDY2hlvzxxkj8gSJyN4nwiexBQ6VoJdlH2pRs=;
+        b=FiZXSAJuepSv7GIyhKWdKF4kwyFRL5ILWzC4rUfRGiXbPxFUNekK3boOx0lu9xI00h
+         t/aEEr/a+5eY/N4p6Fsj2HjVywB8vHh6BxPihAgUTHhV7xVhNQqsZ7T/MNZfXCI6cBI6
+         UYIwPsMGXQy15XvJ8oGbgKJTQdCwM7KsMNJ44=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=is9Xg/jDY2hlvzxxkj8gSJyN4nwiexBQ6VoJdlH2pRs=;
+        b=nMTNaN0YC95CHM4cqdNd6qA/wRg69DhWWu0a3xaTAfNqjZdcwxorWLl/4MV79kUtaN
+         p+jMGGdEL1Q4EjoyY13AfYP1PLArUgiEcsQnNQaGuP0lWcj2PENXVzAglafp+vtu85Wp
+         C64s2pCvDVuY/V4ftLBKVa10TvKtVKBkL+K/mw2d16a8YPPrtbf9j5/2EAOkiiD7w/b0
+         YsZPwIgw0h/UBhCx6FmZ/Tv+3YKuf9fHXMGCChXFuL7+LCBTbqjTsJtMpmiytiLkt3Rf
+         bOypDkiJorUOqJgd3+EnVP+kvQZjn2G6LIQhsk9LOZ9d4a9oyv4v0UDTdKWlzUYrFmHS
+         jZIg==
+X-Gm-Message-State: AGi0Puby+V6bRR17Fgh8PiD5xxamtUFtZ9fGmHmfLXZ4evnncOKcwedk
+        gZeZwWIXGlTSN6x2nsq+RBDfNKfMuuQ=
+X-Google-Smtp-Source: APiQypIBh1NIFW9qGR9ipoCZN5Fg4oEtaKtUesxy9eXVAp8ddPep6grEdHDOU7nR8QkELxij704QvQ==
+X-Received: by 2002:a9f:2b0a:: with SMTP id p10mr4216839uaj.10.1588709107772;
+        Tue, 05 May 2020 13:05:07 -0700 (PDT)
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com. [209.85.217.46])
+        by smtp.gmail.com with ESMTPSA id k184sm1499879vke.42.2020.05.05.13.05.06
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 May 2020 13:05:07 -0700 (PDT)
+Received: by mail-vs1-f46.google.com with SMTP id a5so15764vsm.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 13:05:06 -0700 (PDT)
+X-Received: by 2002:a67:fc46:: with SMTP id p6mr4973549vsq.169.1588709106441;
+ Tue, 05 May 2020 13:05:06 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200425175312.124892-1-swboyd@chromium.org> <20200425175312.124892-2-swboyd@chromium.org>
+ <CAD=FV=WDmk9+e+ZXaUdhegwLCszCZXCQaiMQa_vkKsE+s6XZ0Q@mail.gmail.com> <158866060708.24786.3695568539661593702@swboyd.mtv.corp.google.com>
+In-Reply-To: <158866060708.24786.3695568539661593702@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 5 May 2020 13:04:55 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VmXvQ+=coxQrnRiB1Sgfanumo-MLUW4cv=OhDFZbEeSQ@mail.gmail.com>
+Message-ID: <CAD=FV=VmXvQ+=coxQrnRiB1Sgfanumo-MLUW4cv=OhDFZbEeSQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] soc: qcom: rpmh-rsc: Remove tcs_is_free() and
+ find_free_tcs() APIs
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The UFS QMP v4 PHY has a largely different register set versus USB and
-PCIe.  Rename the register offsets to denote that the value is specific for
-the UFS PCS register.
+Hi,
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 20 +++++++++----------
- drivers/phy/qualcomm/phy-qcom-qmp.h | 40 ++++++++++++++++++-------------------
- 2 files changed, 30 insertions(+), 30 deletions(-)
+On Mon, May 4, 2020 at 11:36 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> > > -static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+> > > -                                 const struct tcs_request *msg)
+> > > +static int check_for_req_inflight_and_find_free(struct rsc_drv *drv,
+> > > +       const struct tcs_group *tcs, const struct tcs_request *msg)
+> > >  {
+> > >         unsigned long curr_enabled;
+> > >         u32 addr;
+> > > -       int i, j, k;
+> > > -       int tcs_id = tcs->offset;
+> > > -
+> > > -       for (i = 0; i < tcs->num_tcs; i++, tcs_id++) {
+> > > -               if (tcs_is_free(drv, tcs_id))
+> > > -                       continue;
+> > > +       int j, k;
+> > > +       int i = tcs->offset;
+> > > +       unsigned long max = tcs->offset + tcs->num_tcs;
+> > > +       int first_free = i;
+> >
+> > The way "first_free" is calculated definitely adds complexity to this
+> > function.  Are we sure it's justified compared to just calling
+> > find_next_zero_bit() if the function doesn't return -EBUSY?  If you
+> > really like it this way I won't object too strongly, but I'm not
+> > convinced that it makes the code size smaller (vs. jumping to a common
+> > implementation in the kernel) and it seems unlikely to have any
+> > real-world speed impact.
+>
+> I was trying to coalesce the double loop over the free bits here by
+> adding a couple more lines to keep track of the first free bit and to
+> set the bit when it's found. It almost feels like it would be better to
+> inline this whole function into the one call site too.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index dec4a17..2d2d5ba 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -191,9 +191,9 @@ enum qphy_reg_layout {
- };
- 
- static const unsigned int sm8150_ufsphy_regs_layout[] = {
--	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
--	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_READY_STATUS,
--	[QPHY_SW_RESET]			= QPHY_V4_SW_RESET,
-+	[QPHY_START_CTRL]		= QPHY_V4_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_UFS_READY_STATUS,
-+	[QPHY_SW_RESET]			= QPHY_V4_PCS_UFS_SW_RESET,
- };
- 
- static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
-@@ -1280,13 +1280,13 @@ enum qphy_reg_layout {
- };
- 
- static const struct qmp_phy_init_tbl sm8150_ufsphy_pcs_tbl[] = {
--	QMP_PHY_INIT_CFG(QPHY_V4_RX_SIGDET_CTRL2, 0x6d),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_LARGE_AMP_DRV_LVL, 0x0a),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_SMALL_AMP_DRV_LVL, 0x02),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_MID_TERM_CTRL1, 0x43),
--	QMP_PHY_INIT_CFG(QPHY_V4_DEBUG_BUS_CLKSEL, 0x1f),
--	QMP_PHY_INIT_CFG(QPHY_V4_RX_MIN_HIBERN8_TIME, 0xff),
--	QMP_PHY_INIT_CFG(QPHY_V4_MULTI_LANE_CTRL1, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2, 0x6d),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0a),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL, 0x1f),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xff),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
- };
- 
- static const struct qmp_phy_init_tbl sm8150_usb3_serdes_tbl[] = {
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index c8c06b82..6d017a0 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -425,26 +425,26 @@
- #define QSERDES_V4_RX_VTH_CODE				0x1c4
- 
- /* Only for QMP V4 PHY - UFS PCS registers */
--#define QPHY_V4_PHY_START				0x000
--#define QPHY_V4_POWER_DOWN_CONTROL			0x004
--#define QPHY_V4_SW_RESET				0x008
--#define QPHY_V4_TIMER_20US_CORECLK_STEPS_MSB		0x00c
--#define QPHY_V4_TIMER_20US_CORECLK_STEPS_LSB		0x010
--#define QPHY_V4_PLL_CNTL				0x02c
--#define QPHY_V4_TX_LARGE_AMP_DRV_LVL			0x030
--#define QPHY_V4_TX_SMALL_AMP_DRV_LVL			0x038
--#define QPHY_V4_BIST_FIXED_PAT_CTRL			0x060
--#define QPHY_V4_TX_HSGEAR_CAPABILITY			0x074
--#define QPHY_V4_RX_HSGEAR_CAPABILITY			0x0b4
--#define QPHY_V4_DEBUG_BUS_CLKSEL			0x124
--#define QPHY_V4_LINECFG_DISABLE				0x148
--#define QPHY_V4_RX_MIN_HIBERN8_TIME			0x150
--#define QPHY_V4_RX_SIGDET_CTRL2				0x158
--#define QPHY_V4_TX_PWM_GEAR_BAND			0x160
--#define QPHY_V4_TX_HS_GEAR_BAND				0x168
--#define QPHY_V4_PCS_READY_STATUS			0x180
--#define QPHY_V4_TX_MID_TERM_CTRL1			0x1d8
--#define QPHY_V4_MULTI_LANE_CTRL1			0x1e0
-+#define QPHY_V4_PCS_UFS_PHY_START				0x000
-+#define QPHY_V4_PCS_UFS_POWER_DOWN_CONTROL			0x004
-+#define QPHY_V4_PCS_UFS_SW_RESET				0x008
-+#define QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB		0x00c
-+#define QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB		0x010
-+#define QPHY_V4_PCS_UFS_PLL_CNTL				0x02c
-+#define QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL			0x030
-+#define QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL			0x038
-+#define QPHY_V4_PCS_UFS_BIST_FIXED_PAT_CTRL			0x060
-+#define QPHY_V4_PCS_UFS_TX_HSGEAR_CAPABILITY			0x074
-+#define QPHY_V4_PCS_UFS_RX_HSGEAR_CAPABILITY			0x0b4
-+#define QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL			0x124
-+#define QPHY_V4_PCS_UFS_LINECFG_DISABLE				0x148
-+#define QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME			0x150
-+#define QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2				0x158
-+#define QPHY_V4_PCS_UFS_TX_PWM_GEAR_BAND			0x160
-+#define QPHY_V4_PCS_UFS_TX_HS_GEAR_BAND				0x168
-+#define QPHY_V4_PCS_UFS_READY_STATUS			0x180
-+#define QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1			0x1d8
-+#define QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1			0x1e0
- 
- /* PCIE GEN3 COM registers */
- #define PCIE_GEN3_QHP_COM_SSC_EN_CENTER			0x14
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Definitely a bike shed color issue.  I know it was double-looping before, but:
+
+* Neither loop was very long, a few bits at most.
+
+* The 2nd loop was in common code.  That means the "number of
+instructions" to implement this loop is small--just a function call.
+For code that isn't a hot spot it can be better to optimize for code
+size rather than speed since it means you're taking up fewer cache
+lines and thus less likely to kick out other code.  ;-)  ...but we're
+getting into micro optimization.
+
+In any case, I probably haven't convinced you.  I'm fine with your
+code and I'll shut up now.
+
+
+> > > -               curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
+> > > +       for_each_set_bit_from(i, drv->tcs_in_use, max) {
+> > > +               /* Find a free tcs to use in this group */
+> > > +               if (first_free == i)
+> > > +                       first_free = i + 1; /* Maybe the next one is free? */
+> > >
+> > > +               curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i);
+> > >                 for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
+> > > -                       addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j);
+> > > +                       addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, i, j);
+> > >                         for (k = 0; k < msg->num_cmds; k++) {
+> > >                                 if (addr == msg->cmds[k].addr)
+> > >                                         return -EBUSY;
+> > > @@ -526,28 +514,11 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+> > >                 }
+> > >         }
+> > >
+> > > -       return 0;
+> > > -}
+> > > +       if (first_free >= max)
+> > > +               return -EBUSY;
+> > >
+> > > -/**
+> > > - * find_free_tcs() - Find free tcs in the given tcs_group; only for active.
+> > > - * @tcs: A pointer to the active-only tcs_group (or the wake tcs_group if
+> > > - *       we borrowed it because there are zero active-only ones).
+> > > - *
+> > > - * Must be called with the drv->lock held since that protects tcs_in_use.
+> > > - *
+> > > - * Return: The first tcs that's free.
+> > > - */
+> > > -static int find_free_tcs(struct tcs_group *tcs)
+> > > -{
+> > > -       int i;
+> > > -
+> > > -       for (i = 0; i < tcs->num_tcs; i++) {
+> > > -               if (tcs_is_free(tcs->drv, tcs->offset + i))
+> > > -                       return tcs->offset + i;
+> > > -       }
+> > > -
+> > > -       return -EBUSY;
+> > > +       set_bit(first_free, drv->tcs_in_use);
+> >
+> > Function is not documented to also set the bit.  Do we really gain
+> > anything by setting it in this function, or can it just stay with the
+> > caller?  I'd hate to call this function
+> > check_for_req_inflight_and_find_free_and_claim_it().
+>
+> Maybe the function can be named claim_tcs_for_req() or something like
+> that. Anything to make it shorter would be good!
+
+Sure.  ...though moving the set_bit() here is just pure churn, right?
+It can be here or it can be in the calling function and there's really
+no advantage either way.  If you really like it here then fine.  I
+just see no benefit and it's just an extra line to change.
+
+
+-Doug
