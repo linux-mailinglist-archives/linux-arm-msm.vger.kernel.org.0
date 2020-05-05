@@ -2,160 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 799041C4AB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 01:55:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 066FC1C4C32
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 04:33:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728608AbgEDXzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 19:55:05 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:63111 "EHLO
+        id S1727805AbgEECcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 22:32:51 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:59639 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728223AbgEDXzE (ORCPT
+        by vger.kernel.org with ESMTP id S1726788AbgEECcv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 19:55:04 -0400
+        Mon, 4 May 2020 22:32:51 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588636504; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=HSbHdKSzouu+GH1sgVv9qkTJ1zJnbqDmfNgHrzsgK2s=; b=LskMz0xM8c9BJ+0l9WBQ0niergH0qv2UmikOAX9oDETx+Mx9ydnUTI+tR5OjYjd4qD3YUGz9
- NU7AiVOdiu0Qw/HvQM9z/4UiGseYACe1Y43J0ajw4sTVOln6XFW+KqTbJawoPITMxSjBz6St
- aLLlymQXcPEGf+q0PF0Fe4SrUwU=
+ s=smtp; t=1588645970; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=aWsP1jrgv5VOaBcGYPLjJDNZ7GM9ZWmCxTTYgdbAIYY=;
+ b=a8TmWCez8Afhptf8/LVHLfhwOts/+ZE253AimWcZvhyNdLlistR/kv38ceDMg8ll/gaN4W6l
+ MFArN4pOLLLQyq6ayjHCS2kCr9OzurY3wl87mheXokOI825xcBK0jA3sZ8Yrn0VpJWitpD3S
+ pOUogW3OVkDmFkKVvmfxnn914kM=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb0ab43.7f721f8ba030-smtp-out-n03;
- Mon, 04 May 2020 23:54:43 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 769B3C447A1; Mon,  4 May 2020 23:54:42 +0000 (UTC)
+        id 3A4F5C433BA; Tue,  5 May 2020 02:32:42 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.0
-Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DBD07C44788;
-        Mon,  4 May 2020 23:54:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DBD07C44788
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-From:   Wesley Cheng <wcheng@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
-        mgautam@codeaurora.org, vkoul@kernel.org, sboyd@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, jackp@codeaurora.org,
-        Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v8 5/5] phy: qcom-qmp: Rename UFS PCS QMP v4 registers
-Date:   Mon,  4 May 2020 16:54:27 -0700
-Message-Id: <1588636467-23409-6-git-send-email-wcheng@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1588636467-23409-1-git-send-email-wcheng@codeaurora.org>
-References: <1588636467-23409-1-git-send-email-wcheng@codeaurora.org>
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id ACAD7C433D2;
+        Tue,  5 May 2020 02:32:41 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 04 May 2020 19:32:41 -0700
+From:   bbhatt@codeaurora.org
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     mani@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, hemantk@codeaurora.org
+Subject: Re: [PATCH v4 8/8] bus: mhi: core: Ensure non-zero session or
+ sequence ID values are used
+In-Reply-To: <2a249d99-b1e7-7943-0ed4-d5529f7abc33@codeaurora.org>
+References: <1588386725-1165-1-git-send-email-bbhatt@codeaurora.org>
+ <1588386725-1165-9-git-send-email-bbhatt@codeaurora.org>
+ <2a249d99-b1e7-7943-0ed4-d5529f7abc33@codeaurora.org>
+Message-ID: <623c100dc1850c8d8f9a6412d7153fd1@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The UFS QMP v4 PHY has a largely different register set versus USB and
-PCIe.  Rename the register offsets to denote that the value is specific for
-the UFS PCS register.
+On 2020-05-04 07:33, Jeffrey Hugo wrote:
+> On 5/1/2020 8:32 PM, Bhaumik Bhatt wrote:
+>> While writing any sequence or session identifiers, it is possible that
+>> the host could write a zero value, whereas only non-zero values should
+>> be supported writes to those registers. Ensure that the host does not
+>> write a non-zero value for them and also log them in debug messages.
+>> 
+>> Suggested-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> ---
+>>   drivers/bus/mhi/core/boot.c     | 15 +++++++--------
+>>   drivers/bus/mhi/core/internal.h |  1 +
+>>   2 files changed, 8 insertions(+), 8 deletions(-)
+>> 
+>> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+>> index e5fcde1..9fe9c59 100644
+>> --- a/drivers/bus/mhi/core/boot.c
+>> +++ b/drivers/bus/mhi/core/boot.c
+>> @@ -43,10 +43,7 @@ void mhi_rddm_prepare(struct mhi_controller 
+>> *mhi_cntrl,
+>>   		      lower_32_bits(mhi_buf->dma_addr));
+>>     	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, 
+>> mhi_buf->len);
+>> -	sequence_id = prandom_u32() & BHIE_RXVECSTATUS_SEQNUM_BMSK;
+>> -
+>> -	if (unlikely(!sequence_id))
+>> -		sequence_id = 1;
+>> +	sequence_id = (MHI_RANDOM_U32_NONZERO & 
+>> BHIE_RXVECSTATUS_SEQNUM_BMSK);
+> 
+> I don't think this math works.  For example, if MHI_RANDOM_U32_NONZERO
+> is 0x0FF0, and BHIE_RXVECSTATUS_SEQNUM_BMSK is 0xF, then sequence_id
+> will end up being 0.
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 20 +++++++++----------
- drivers/phy/qualcomm/phy-qcom-qmp.h | 40 ++++++++++++++++++-------------------
- 2 files changed, 30 insertions(+), 30 deletions(-)
+In this case, SEQNUM BMSK is set to 0x3FFFFFFF so this change will still 
+work as
+we only supplied a non-zero number macro to AND with the mask.
+However, I agree that may not be the case always that we would know the 
+bitmask
+in advance so it is better to fix it for good.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index dec4a17..2d2d5ba 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -191,9 +191,9 @@ enum qphy_reg_layout {
- };
- 
- static const unsigned int sm8150_ufsphy_regs_layout[] = {
--	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
--	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_READY_STATUS,
--	[QPHY_SW_RESET]			= QPHY_V4_SW_RESET,
-+	[QPHY_START_CTRL]		= QPHY_V4_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_UFS_READY_STATUS,
-+	[QPHY_SW_RESET]			= QPHY_V4_PCS_UFS_SW_RESET,
- };
- 
- static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
-@@ -1280,13 +1280,13 @@ enum qphy_reg_layout {
- };
- 
- static const struct qmp_phy_init_tbl sm8150_ufsphy_pcs_tbl[] = {
--	QMP_PHY_INIT_CFG(QPHY_V4_RX_SIGDET_CTRL2, 0x6d),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_LARGE_AMP_DRV_LVL, 0x0a),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_SMALL_AMP_DRV_LVL, 0x02),
--	QMP_PHY_INIT_CFG(QPHY_V4_TX_MID_TERM_CTRL1, 0x43),
--	QMP_PHY_INIT_CFG(QPHY_V4_DEBUG_BUS_CLKSEL, 0x1f),
--	QMP_PHY_INIT_CFG(QPHY_V4_RX_MIN_HIBERN8_TIME, 0xff),
--	QMP_PHY_INIT_CFG(QPHY_V4_MULTI_LANE_CTRL1, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2, 0x6d),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0a),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL, 0x1f),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xff),
-+	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
- };
- 
- static const struct qmp_phy_init_tbl sm8150_usb3_serdes_tbl[] = {
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index c8c06b82..6d017a0 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -425,26 +425,26 @@
- #define QSERDES_V4_RX_VTH_CODE				0x1c4
- 
- /* Only for QMP V4 PHY - UFS PCS registers */
--#define QPHY_V4_PHY_START				0x000
--#define QPHY_V4_POWER_DOWN_CONTROL			0x004
--#define QPHY_V4_SW_RESET				0x008
--#define QPHY_V4_TIMER_20US_CORECLK_STEPS_MSB		0x00c
--#define QPHY_V4_TIMER_20US_CORECLK_STEPS_LSB		0x010
--#define QPHY_V4_PLL_CNTL				0x02c
--#define QPHY_V4_TX_LARGE_AMP_DRV_LVL			0x030
--#define QPHY_V4_TX_SMALL_AMP_DRV_LVL			0x038
--#define QPHY_V4_BIST_FIXED_PAT_CTRL			0x060
--#define QPHY_V4_TX_HSGEAR_CAPABILITY			0x074
--#define QPHY_V4_RX_HSGEAR_CAPABILITY			0x0b4
--#define QPHY_V4_DEBUG_BUS_CLKSEL			0x124
--#define QPHY_V4_LINECFG_DISABLE				0x148
--#define QPHY_V4_RX_MIN_HIBERN8_TIME			0x150
--#define QPHY_V4_RX_SIGDET_CTRL2				0x158
--#define QPHY_V4_TX_PWM_GEAR_BAND			0x160
--#define QPHY_V4_TX_HS_GEAR_BAND				0x168
--#define QPHY_V4_PCS_READY_STATUS			0x180
--#define QPHY_V4_TX_MID_TERM_CTRL1			0x1d8
--#define QPHY_V4_MULTI_LANE_CTRL1			0x1e0
-+#define QPHY_V4_PCS_UFS_PHY_START				0x000
-+#define QPHY_V4_PCS_UFS_POWER_DOWN_CONTROL			0x004
-+#define QPHY_V4_PCS_UFS_SW_RESET				0x008
-+#define QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB		0x00c
-+#define QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB		0x010
-+#define QPHY_V4_PCS_UFS_PLL_CNTL				0x02c
-+#define QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL			0x030
-+#define QPHY_V4_PCS_UFS_TX_SMALL_AMP_DRV_LVL			0x038
-+#define QPHY_V4_PCS_UFS_BIST_FIXED_PAT_CTRL			0x060
-+#define QPHY_V4_PCS_UFS_TX_HSGEAR_CAPABILITY			0x074
-+#define QPHY_V4_PCS_UFS_RX_HSGEAR_CAPABILITY			0x0b4
-+#define QPHY_V4_PCS_UFS_DEBUG_BUS_CLKSEL			0x124
-+#define QPHY_V4_PCS_UFS_LINECFG_DISABLE				0x148
-+#define QPHY_V4_PCS_UFS_RX_MIN_HIBERN8_TIME			0x150
-+#define QPHY_V4_PCS_UFS_RX_SIGDET_CTRL2				0x158
-+#define QPHY_V4_PCS_UFS_TX_PWM_GEAR_BAND			0x160
-+#define QPHY_V4_PCS_UFS_TX_HS_GEAR_BAND				0x168
-+#define QPHY_V4_PCS_UFS_READY_STATUS			0x180
-+#define QPHY_V4_PCS_UFS_TX_MID_TERM_CTRL1			0x1d8
-+#define QPHY_V4_PCS_UFS_MULTI_LANE_CTRL1			0x1e0
- 
- /* PCIE GEN3 COM registers */
- #define PCIE_GEN3_QHP_COM_SSC_EN_CENTER			0x14
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Thanks for the catch! I have updated the change to have the macro take 
+the
+bitmask as a parameter and output a non-zero value.
