@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A9771C6426
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 00:48:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 332E71C641B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 00:48:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728642AbgEEWr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 18:47:57 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:46387 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729466AbgEEWrk (ORCPT
+        id S1729247AbgEEWri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 18:47:38 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:11295 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729293AbgEEWrh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 18:47:40 -0400
+        Tue, 5 May 2020 18:47:37 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588718860; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1588718857; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=XRUBzTkZMzt3B80yri5EKdFwcdzexhuzoTj3qdX2z3s=; b=feiA6DGTaBbyCOSMlBfPoARANpTGDZTDkuzEbJO0hsO6UFwo4tjHXXNkjsV2gC7pUGvLQP6h
- hTk+FrsiCHzCT6fHhIEPjNdtTbxomLvlDct8LPBiMrx+tMh4AVLJ3BHJkHstc9hg72tPEWJ3
- dKg3LneMnoo3USTY5NIlIoRvoSk=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=L9nUz4QcIV4087LWk9ngQ8J3kGqbHnK2hICsHkNIRUU=; b=cpHvB1gwhUeNb/uGy3frtNvqwX40Ca/6jLFi7aqBSh2uIFgH3PJBeg0OIOBZvhuGKDuIoiWs
+ Ab7sGj2jQc98c3kBIg0sdpaI1NL0t/tEwPabW0L93Y4mJtOXpeL8alyXRU5pdjUOicS5maLj
+ 1l0E6toEaR3+E2omcSscUwlKwvM=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb1ecfb.7f184089f960-smtp-out-n05;
- Tue, 05 May 2020 22:47:23 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5eb1ecfa.7f7933fb4378-smtp-out-n03;
+ Tue, 05 May 2020 22:47:22 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 52818C44788; Tue,  5 May 2020 22:47:23 +0000 (UTC)
+        id 664E3C4478C; Tue,  5 May 2020 22:47:22 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
+        autolearn=ham autolearn_force=no version=3.4.0
 Received: from bbhatt-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 69064C433BA;
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D32BEC43637;
         Tue,  5 May 2020 22:47:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 69064C433BA
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D32BEC43637
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -44,9 +44,9 @@ To:     mani@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         hemantk@codeaurora.org, jhugo@codeaurora.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v6 3/8] bus: mhi: core: Add range check for channel id received in event ring
-Date:   Tue,  5 May 2020 15:47:07 -0700
-Message-Id: <1588718832-4891-4-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v6 4/8] bus: mhi: core: Read transfer length from an event properly
+Date:   Tue,  5 May 2020 15:47:08 -0700
+Message-Id: <1588718832-4891-5-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1588718832-4891-1-git-send-email-bbhatt@codeaurora.org>
 References: <1588718832-4891-1-git-send-email-bbhatt@codeaurora.org>
@@ -57,59 +57,48 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Hemant Kumar <hemantk@codeaurora.org>
 
-MHI data completion handler function reads channel id from event
-ring element. Value is under the control of MHI devices and can be
-any value between 0 and 255. In order to prevent out of bound access
-add a bound check against the max channel supported by controller
-and skip processing of that event ring element.
+When MHI Driver receives an EOT event, it reads xfer_len from the
+event in the last TRE. The value is under control of the MHI device
+and never validated by Host MHI driver. The value should never be
+larger than the real size of the buffer but a malicious device can
+set the value 0xFFFF as maximum. This causes driver to memory
+overflow (both read or write). Fix this issue by reading minimum of
+transfer length from event and the buffer length provided.
 
 Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
 ---
- drivers/bus/mhi/core/main.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/bus/mhi/core/main.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 605640c..e60ab21 100644
+index e60ab21..159732e 100644
 --- a/drivers/bus/mhi/core/main.c
 +++ b/drivers/bus/mhi/core/main.c
-@@ -776,6 +776,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 		case MHI_PKT_TYPE_TX_EVENT:
- 			chan = MHI_TRE_GET_EV_CHID(local_rp);
- 			mhi_chan = &mhi_cntrl->mhi_chan[chan];
-+			if (WARN_ON(chan >= mhi_cntrl->max_chan))
-+				goto next_event;
+@@ -514,7 +514,10 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 				mhi_cntrl->unmap_single(mhi_cntrl, buf_info);
+ 
+ 			result.buf_addr = buf_info->cb_buf;
+-			result.bytes_xferd = xfer_len;
 +
- 			parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
- 			event_quota--;
- 			break;
-@@ -784,6 +787,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 			break;
- 		}
++			/* truncate to buf len if xfer_len is larger */
++			result.bytes_xferd =
++				min_t(u16, xfer_len, buf_info->len);
+ 			mhi_del_ring_element(mhi_cntrl, buf_ring);
+ 			mhi_del_ring_element(mhi_cntrl, tre_ring);
+ 			local_rp = tre_ring->rp;
+@@ -598,7 +601,9 @@ static int parse_rsc_event(struct mhi_controller *mhi_cntrl,
  
-+next_event:
- 		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
- 		local_rp = ev_ring->rp;
- 		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-@@ -820,6 +824,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
- 
- 		chan = MHI_TRE_GET_EV_CHID(local_rp);
-+		if (WARN_ON(chan >= mhi_cntrl->max_chan))
-+			goto next_event;
+ 	result.transaction_status = (ev_code == MHI_EV_CC_OVERFLOW) ?
+ 		-EOVERFLOW : 0;
+-	result.bytes_xferd = xfer_len;
 +
- 		mhi_chan = &mhi_cntrl->mhi_chan[chan];
++	/* truncate to buf len if xfer_len is larger */
++	result.bytes_xferd = min_t(u16, xfer_len, buf_info->len);
+ 	result.buf_addr = buf_info->cb_buf;
+ 	result.dir = mhi_chan->dir;
  
- 		if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
-@@ -830,6 +837,7 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 			event_quota--;
- 		}
- 
-+next_event:
- 		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
- 		local_rp = ev_ring->rp;
- 		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
