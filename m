@@ -2,136 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4CCC1C4C52
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 04:45:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A3FA1C4CC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 05:55:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728475AbgEECow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 22:44:52 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:50548 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728453AbgEECow (ORCPT
+        id S1726551AbgEEDzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 23:55:47 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:44737 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726345AbgEEDzr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 22:44:52 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588646691; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=/XTRZZ2bPayY8twzyHVrPJbdXMuj9hYt1lUtr6/5Fs8=; b=MxHNnXkBFHAo3ldJrtdBtRV2fKNexE70lF2mqAKVXR+MC5Wm/89eXzXrGDIIhvtGYChTer3E
- GcSiwbpo7dcGwPEtnF36ABy8so7/DLE6Mbv0ed6HQZH5MpeTqpGRKArASgcXcINmWdgIQu2s
- 4hoLM3i65pLjLy4noiJk7IqtiJI=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb0d316.7fdb70018308-smtp-out-n02;
- Tue, 05 May 2020 02:44:38 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 902CDC433F2; Tue,  5 May 2020 02:44:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from bbhatt-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BF14AC433CB;
-        Tue,  5 May 2020 02:44:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BF14AC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     mani@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org, jhugo@codeaurora.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v5 8/8] bus: mhi: core: Ensure non-zero session or sequence ID values are used
-Date:   Mon,  4 May 2020 19:44:22 -0700
-Message-Id: <1588646662-25785-9-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1588646662-25785-1-git-send-email-bbhatt@codeaurora.org>
-References: <1588646662-25785-1-git-send-email-bbhatt@codeaurora.org>
+        Mon, 4 May 2020 23:55:47 -0400
+Received: by mail-ot1-f68.google.com with SMTP id j4so524842otr.11;
+        Mon, 04 May 2020 20:55:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fVpmlRqOB7eXke8uevfSsRs8l7hcoXGDZESzEE9L/Kk=;
+        b=LTmzC+z2LtrtoCvIZe1d3Ny2xovOeB6f2rKZV6s3kHfC/8qn5qyqN0p8+bwJFxotHm
+         Zw0cQLRtOx/jciMAuAv76A2SwpoR0f+ljTL7r5/5FDvvbzrApIOlmwSPydkLUer83DGe
+         cqbKEtSQEMqluaOH2T4r41hYfPcdfwjGZaxIuNBlUp1S1A2Wnm8eoEbjfMGbe9nA92u4
+         y+QXHeTAV5QAPPHHsp0MA6kO2da0R1rTufWOi0opKAD+1eLBKw16puxkFZN/E74+Q7dz
+         vLyGbrAq0NxWOQSmelz7Yg56Yk0YNBxRVO7uf358RT0tXqRrMySmI4CHpcqvK6aV3yBU
+         W98Q==
+X-Gm-Message-State: AGi0PuYeact1L4SFN2P1fgTfEUx9WOcFtUntI213U8dbVUhaLA6dZhI3
+        5tuWvi21Th2S6zfRyEkjFiQEXEw=
+X-Google-Smtp-Source: APiQypJTqz87zIpF1xabhLlbR6oZBO16QbukiXQa0HRhnMbsIVziIpe/J85nsrXb8hc4FUxAuvipIg==
+X-Received: by 2002:a9d:5e04:: with SMTP id d4mr988124oti.312.1588650945786;
+        Mon, 04 May 2020 20:55:45 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id b63sm318718otc.23.2020.05.04.20.55.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2020 20:55:44 -0700 (PDT)
+Received: (nullmailer pid 7523 invoked by uid 1000);
+        Tue, 05 May 2020 03:55:43 -0000
+Date:   Mon, 4 May 2020 22:55:43 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     skrzynka@konradybcio.pl, Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] dt-bindings: media: Document MSM8939 Venus
+Message-ID: <20200505035543.GA5765@bogus>
+References: <20200501203505.144362-1-konradybcio@gmail.com>
+ <20200501203505.144362-3-konradybcio@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200501203505.144362-3-konradybcio@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While writing any sequence or session identifiers, it is possible that
-the host could write a zero value, whereas only non-zero values should
-be supported writes to those registers. Ensure that the host does not
-write a non-zero value for them and also log them in debug messages.
+On Fri,  1 May 2020 22:35:03 +0200, Konrad Dybcio wrote:
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> ---
+>  .../bindings/media/qcom,msm8939-venus.yaml    | 119 ++++++++++++++++++
+>  1 file changed, 119 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
+> 
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- drivers/bus/mhi/core/boot.c     | 15 +++++++--------
- drivers/bus/mhi/core/internal.h |  2 ++
- 2 files changed, 9 insertions(+), 8 deletions(-)
+My bot found errors running 'make dt_binding_check' on your patch:
 
-diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-index e5fcde1..7b9b561 100644
---- a/drivers/bus/mhi/core/boot.c
-+++ b/drivers/bus/mhi/core/boot.c
-@@ -43,10 +43,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 		      lower_32_bits(mhi_buf->dma_addr));
- 
- 	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, mhi_buf->len);
--	sequence_id = prandom_u32() & BHIE_RXVECSTATUS_SEQNUM_BMSK;
--
--	if (unlikely(!sequence_id))
--		sequence_id = 1;
-+	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_RXVECSTATUS_SEQNUM_BMSK);
- 
- 	mhi_write_reg_field(mhi_cntrl, base, BHIE_RXVECDB_OFFS,
- 			    BHIE_RXVECDB_SEQNUM_BMSK, BHIE_RXVECDB_SEQNUM_SHFT,
-@@ -189,7 +186,9 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
- 		return -EIO;
- 	}
- 
--	dev_dbg(dev, "Starting AMSS download via BHIe\n");
-+	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_TXVECSTATUS_SEQNUM_BMSK);
-+	dev_dbg(dev, "Starting AMSS download via BHIe. Sequence ID:%u\n",
-+		sequence_id);
- 	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECADDR_HIGH_OFFS,
- 		      upper_32_bits(mhi_buf->dma_addr));
- 
-@@ -198,7 +197,6 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
- 
- 	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECSIZE_OFFS, mhi_buf->len);
- 
--	sequence_id = prandom_u32() & BHIE_TXVECSTATUS_SEQNUM_BMSK;
- 	mhi_write_reg_field(mhi_cntrl, base, BHIE_TXVECDB_OFFS,
- 			    BHIE_TXVECDB_SEQNUM_BMSK, BHIE_TXVECDB_SEQNUM_SHFT,
- 			    sequence_id);
-@@ -246,14 +244,15 @@ static int mhi_fw_load_sbl(struct mhi_controller *mhi_cntrl,
- 		goto invalid_pm_state;
- 	}
- 
--	dev_dbg(dev, "Starting SBL download via BHI\n");
-+	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
-+	dev_dbg(dev, "Starting SBL download via BHI. Session ID:%u\n",
-+		session_id);
- 	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
- 	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
- 		      upper_32_bits(dma_addr));
- 	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
- 		      lower_32_bits(dma_addr));
- 	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
--	session_id = prandom_u32() & BHI_TXDB_SEQNUM_BMSK;
- 	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
- 	read_unlock_bh(pm_lock);
- 
-diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-index 0965ca3..3205a92 100644
---- a/drivers/bus/mhi/core/internal.h
-+++ b/drivers/bus/mhi/core/internal.h
-@@ -452,6 +452,8 @@ enum mhi_pm_state {
- #define PRIMARY_CMD_RING		0
- #define MHI_DEV_WAKE_DB			127
- #define MHI_MAX_MTU			0xffff
-+#define MHI_RANDOM_U32_NONZERO(bmsk)	((prandom_u32_max(U32_MAX - 1) & \
-+					 (bmsk)) + 1)
- 
- enum mhi_er_type {
- 	MHI_ER_TYPE_INVALID = 0x0,
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Documentation/devicetree/bindings/media/qcom,msm8939-venus.example.dts:20:18: fatal error: dt-bindings/clock/qcom,gcc-msm8939.h: No such file or directory
+         #include <dt-bindings/clock/qcom,gcc-msm8939.h>
+                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+scripts/Makefile.lib:312: recipe for target 'Documentation/devicetree/bindings/media/qcom,msm8939-venus.example.dt.yaml' failed
+make[1]: *** [Documentation/devicetree/bindings/media/qcom,msm8939-venus.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+Makefile:1300: recipe for target 'dt_binding_check' failed
+make: *** [dt_binding_check] Error 2
+
+See https://patchwork.ozlabs.org/patch/1281452
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
