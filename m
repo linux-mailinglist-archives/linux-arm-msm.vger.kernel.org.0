@@ -2,115 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54E831C5704
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 15:33:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D2AE1C570B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 15:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729106AbgEENdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 09:33:06 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:33015 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728608AbgEENdG (ORCPT
+        id S1729054AbgEENeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 09:34:13 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:41106 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728894AbgEENeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 09:33:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588685585; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=QcmfgsQD27LgfznHzlYFE46yv5/bgTnf9gu//wV7tH8=; b=SnDImdQV+qbCysie8WwfijdO5UU2kxIu1qqeaA+i5n/vhGS+4sI4Yzd9XraYFSofNST2Nqva
- GtzjCxTHttsZsww3mBMsbtk+dvMhuhTlL0EPqx9oBy4nZ1hEp0uQU9aPx6HqJU0Xpr370gJJ
- OOyRldKqGv1NpKP7xn7d2WwVa+E=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb16b06.7f19bd6afc70-smtp-out-n04;
- Tue, 05 May 2020 13:32:54 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2D324C433BA; Tue,  5 May 2020 13:32:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.131.199.84] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68929C433F2;
-        Tue,  5 May 2020 13:32:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 68929C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 09/17] mmc: sdhci-msm: Fix error handling for
- dev_pm_opp_of_add_table()
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Pradeep P V K <ppvk@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
-References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
- <1588080785-6812-10-git-send-email-rnayak@codeaurora.org>
- <CAPDyKFrGQvcCB1wfv=iqk66uja3faMRF1gGMSE2VhB8gJcO=sg@mail.gmail.com>
- <15efa375-cf1e-b793-1d3e-29ca0a547522@codeaurora.org>
- <CAPDyKFoaJTXq2qN+HXoSUovun9+4gzLeVJ-88FKbZCSCKjByLw@mail.gmail.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <fae2c6ba-62f0-7f35-5f71-b690532963f3@codeaurora.org>
-Date:   Tue, 5 May 2020 19:02:47 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Tue, 5 May 2020 09:34:12 -0400
+Received: by mail-ot1-f65.google.com with SMTP id c3so1599227otp.8;
+        Tue, 05 May 2020 06:34:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PsjcTsG/gjBsqBJgHVlid+3Mm782eXV4Fl6ucMTeSJY=;
+        b=g0DMiLC3oTqOfJAIRYjC5H6I4dpZseKlwHFxXx/qUXM9eMOYjrpBfMmmKOQRILvIVV
+         9JnrAYWMF1E+RZRoum9jAsJ2ZwCxZgPBOkYbL1c3u6SNxHchdp517rBXpuEq/vYxaTLm
+         LXlfxlp98IqA5rJ1w5p+uaD7hkFdQg6GLuzBEcscfQOaj5pSynf/G8pN+SXfZoOA7Xrc
+         o32fHqnsqX+1uok/Kw0i9JhvCU1CYNvk/EFVTwM9Q2e8ev0D8665TfY064Tlydi/1kpD
+         VNBkHAHJLPA1xLMhvvtc+l+tPMjQAgakzPQTkkqLCtFAWbJf1jVEeXixl0o7/YCX+hV7
+         I9pg==
+X-Gm-Message-State: AGi0PubUjx4xseRr97MK/y/52Qg42/de0XMF+7+N2WT5RYuqQtNprB+c
+        X+Rj5JltFscZBAcPD2eEdA==
+X-Google-Smtp-Source: APiQypJhIFWNLw18Q+hIiasPVcWn91Fm5B/gR5rb3vMJKDZknTfScGx82vRxm9AubbYYAxYJ7/23iw==
+X-Received: by 2002:a05:6830:1b65:: with SMTP id d5mr2068968ote.141.1588685650099;
+        Tue, 05 May 2020 06:34:10 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id e91sm610862otb.40.2020.05.05.06.34.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2020 06:34:09 -0700 (PDT)
+Received: (nullmailer pid 25501 invoked by uid 1000);
+        Tue, 05 May 2020 13:34:08 -0000
+Date:   Tue, 5 May 2020 08:34:08 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        robh+dt@kernel.org, mark.rutland@arm.com, p.zabel@pengutronix.de,
+        mgautam@codeaurora.org, vkoul@kernel.org, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, jackp@codeaurora.org,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: Re: [PATCH v8 1/5] dt-bindings: phy: Add binding for
+ qcom,usb-snps-femto-v2
+Message-ID: <20200505133408.GA24731@bogus>
+References: <1588636467-23409-1-git-send-email-wcheng@codeaurora.org>
+ <1588636467-23409-2-git-send-email-wcheng@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <CAPDyKFoaJTXq2qN+HXoSUovun9+4gzLeVJ-88FKbZCSCKjByLw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1588636467-23409-2-git-send-email-wcheng@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 5/5/2020 5:03 PM, Ulf Hansson wrote:
-> On Wed, 29 Apr 2020 at 16:09, Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>
->>
->> On 4/28/2020 11:59 PM, Ulf Hansson wrote:
->>> On Tue, 28 Apr 2020 at 15:39, Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>>>
->>>> Even though specifying OPP's in device tree is optional, ignoring all errors
->>>> reported by dev_pm_opp_of_add_table() means we can't distinguish between a
->>>> missing OPP table and a wrong/buggy OPP table. While missing OPP table
->>>> (dev_pm_opp_of_add_table() returns a -ENODEV in such case) can be ignored,
->>>> a wrong/buggy OPP table in device tree should make the driver error out.
->>>>
->>>> while we fix that, lets also fix the variable names for opp/opp_table to
->>>> avoid confusion and name them opp_table/has_opp_table instead.
->>>>
->>>> Suggested-by: Matthias Kaehlcke <matthias@chromium.org>
->>>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->>>> Cc: Ulf Hansson <ulf.hansson@linaro.org>
->>>> Cc: Pradeep P V K <ppvk@codeaurora.org>
->>>> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
->>>> Cc: linux-mmc@vger.kernel.org
->>>
->>> Is this a standalone patch that I queue up via my mmc tree?
->>
->> Hi Ulf, yes, its a standalone patch which applies on top of the one
->> you already have in your tree. No other dependencies.
+On Mon,  4 May 2020 16:54:23 -0700, Wesley Cheng wrote:
+> This binding shows the descriptions and properties for the
+> Synopsis Femto USB PHY V2 used on QCOM platforms.
 > 
-> Thanks for confirming! Perhaps next time you could add this
-> information as part of a description to the patch (where we usually
-> add patch version information).
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+>  .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 77 ++++++++++++++++++++++
+>  1 file changed, 77 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
 > 
-> Anyway, applied for next!
 
-Thanks Ulf, I should have sent this out as a standalone patch instead of including
-it with the reset of the series, which caused the confusion. Sorry about that :/
+My bot found errors running 'make dt_binding_check' on your patch:
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.example.dt.yaml: phy@88e2000: 'vdda-pll-supply' is a required property
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.example.dt.yaml: phy@88e2000: 'vdda18-supply' is a required property
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.example.dt.yaml: phy@88e2000: 'vdda33-supply' is a required property
+
+See https://patchwork.ozlabs.org/patch/1283143
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
