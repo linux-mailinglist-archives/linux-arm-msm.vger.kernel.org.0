@@ -2,103 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E544F1C541F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 13:13:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B14CE1C5478
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 13:33:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728907AbgEELNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 07:13:21 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:29277 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728869AbgEELNU (ORCPT
+        id S1728827AbgEELdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 07:33:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51626 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728868AbgEELdj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 07:13:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588677200; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=ngKeYnR9lLVGbCVrsiWZkZYm3GJ2jFZWG4yZhTv6H4I=; b=L5WhsXqNlkKrGxrcCkWed2klUaL7JqPJC4gdQfVAcDMmLyoO7Yodl9O8Ax9rjJD8jb/3njuB
- CBdoT3HxM/ScMpACRiD5tbco4DbKZuPqitESaXHyx6hTs29VxxS7HxtXCgMgO9z2vQphOudK
- Mnadq77bivmq5p/EJar1vdIGFic=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb14a3f.7f190c821f10-smtp-out-n04;
- Tue, 05 May 2020 11:13:03 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 19F4FC44791; Tue,  5 May 2020 11:13:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: manafm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9BF3FC43637;
-        Tue,  5 May 2020 11:12:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9BF3FC43637
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=manafm@codeaurora.org
-From:   Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
-Subject: [PATCH 2/2] dt-bindings: thermal: tsens: Add zeroc interrupt support in yaml
-Date:   Tue,  5 May 2020 16:42:04 +0530
-Message-Id: <20200505111204.963-3-manafm@codeaurora.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200505111204.963-1-manafm@codeaurora.org>
-References: <20200505111204.963-1-manafm@codeaurora.org>
+        Tue, 5 May 2020 07:33:39 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2854AC061A41
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 04:33:39 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id g35so286167uad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 04:33:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=166ZI2PQYttk8mUuPjh9fJHZKXnQuSqSXt1RrZvFtpA=;
+        b=SbmAUPviBr80iF1qScxhl5zJVFA3V7xs4iTOq1msRXtlVS5Z9A1FelEaA5QOQUWqSn
+         Gciu/AaBzFBmE9zsnvklJwgF+se1u3nj/rAckeZ5e5cdWv6G/dnbkbVhbAILnHgR8ESS
+         0RJNI/xujs7FxJsLMC8nNRkZLo0PDbWYVPfHWPg2m1CApz8MmMYfQf4zmiPiVH+2qRQS
+         KpJhx0xg/64TubUQdiVtwLaCC/RxcIr8uKxVm8m4N4Lz4ee+Ce2Si7BmBh+ccTDUf2Ok
+         cWulD+4LSCa2nf0nb8Ruoidn+kZRLzCVPbwfVcgMFxE3RM0EQsHaWeDgVB2/Rns/tTD9
+         Y36Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=166ZI2PQYttk8mUuPjh9fJHZKXnQuSqSXt1RrZvFtpA=;
+        b=f8hmtyyaSPQmbyBPvardo89mxqyuSrGxPrrgsX9DyHnKiiHOXw3FgsMr3/69W+w6uL
+         xyj2TuRrXOCFHIrF3sQGpVV6kopyHLJCg7XsJ9X5o+Y1PsbmJpi99PQO9JR/7QU/9R9N
+         +zAE5lSBsaINSuxUmYe5cVGbGqAIMdeqRcdKdtTkpdY8vWyZAJuA6T6N86sYoQ6aHc2N
+         yijA5m6rMtCTRCN7xf6tRy0AdjwXhAoXqIy0W7jYF2eDtp4lkkp1nyufuveQd1jJ7fj/
+         G/y10lZ9t4LdDYCEJFKXMi/RypKnObFsEmSrEdRJ43up67a9o/hAn/4JzthpvBkSkHqQ
+         9gcw==
+X-Gm-Message-State: AGi0PubFjKcLpKUDQwSZ+E09xSTDbvK8opC/REaVhWdStQzAia3T3wh0
+        InltnSqZ0sRFZzkvfO1oEDxp1budFGZTvnWyi7RdTLOL
+X-Google-Smtp-Source: APiQypIVXSv4Xz1Q8pgiALwOrIbs+TbqKGJBWZAvFSYtSethZHtLnwLnQoOS0qNKX6URobh8SNfeXpV8uZemzz1NRmg=
+X-Received: by 2002:ab0:3343:: with SMTP id h3mr1749214uap.19.1588678418386;
+ Tue, 05 May 2020 04:33:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
+ <1588080785-6812-10-git-send-email-rnayak@codeaurora.org> <CAPDyKFrGQvcCB1wfv=iqk66uja3faMRF1gGMSE2VhB8gJcO=sg@mail.gmail.com>
+ <15efa375-cf1e-b793-1d3e-29ca0a547522@codeaurora.org>
+In-Reply-To: <15efa375-cf1e-b793-1d3e-29ca0a547522@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 5 May 2020 13:33:01 +0200
+Message-ID: <CAPDyKFoaJTXq2qN+HXoSUovun9+4gzLeVJ-88FKbZCSCKjByLw@mail.gmail.com>
+Subject: Re: [PATCH v3 09/17] mmc: sdhci-msm: Fix error handling for dev_pm_opp_of_add_table()
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pradeep P V K <ppvk@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add 0C (zeroc) interrupt support for tsens in yaml.
+On Wed, 29 Apr 2020 at 16:09, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+>
+> On 4/28/2020 11:59 PM, Ulf Hansson wrote:
+> > On Tue, 28 Apr 2020 at 15:39, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+> >>
+> >> Even though specifying OPP's in device tree is optional, ignoring all errors
+> >> reported by dev_pm_opp_of_add_table() means we can't distinguish between a
+> >> missing OPP table and a wrong/buggy OPP table. While missing OPP table
+> >> (dev_pm_opp_of_add_table() returns a -ENODEV in such case) can be ignored,
+> >> a wrong/buggy OPP table in device tree should make the driver error out.
+> >>
+> >> while we fix that, lets also fix the variable names for opp/opp_table to
+> >> avoid confusion and name them opp_table/has_opp_table instead.
+> >>
+> >> Suggested-by: Matthias Kaehlcke <matthias@chromium.org>
+> >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> >> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> >> Cc: Pradeep P V K <ppvk@codeaurora.org>
+> >> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> >> Cc: linux-mmc@vger.kernel.org
+> >
+> > Is this a standalone patch that I queue up via my mmc tree?
+>
+> Hi Ulf, yes, its a standalone patch which applies on top of the one
+> you already have in your tree. No other dependencies.
 
-Signed-off-by: Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
----
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Thanks for confirming! Perhaps next time you could add this
+information as part of a description to the patch (where we usually
+add patch version information).
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 2ddd39d96766..8a0893f77d20 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -52,12 +52,14 @@ properties:
-     items:
-       - description: Combined interrupt if upper or lower threshold crossed
-       - description: Interrupt if critical threshold crossed
-+      - description: Interrupt if zeroC threshold is crossed
- 
-   interrupt-names:
-     minItems: 1
-     items:
-       - const: uplow
-       - const: critical
-+      - const: zeroc
- 
-   nvmem-cells:
-     minItems: 1
-@@ -168,8 +170,9 @@ examples:
-                  <0xc222000 0x1ff>;
- 
-            interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
--                        <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
--           interrupt-names = "uplow", "critical";
-+                        <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>,
-+                        <GIC_SPI 510 IRQ_TYPE_EDGE_RISING>;
-+           interrupt-names = "uplow", "critical", "zeroc";
- 
-            #qcom,sensors = <13>;
-            #thermal-sensor-cells = <1>;
--- 
-2.26.2
+Anyway, applied for next!
+
+[...]
+
+Kind regards
+Uffe
