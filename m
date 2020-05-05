@@ -2,129 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03FDE1C53DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 13:04:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02C811C5418
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 13:13:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728233AbgEELEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 07:04:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43150 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725766AbgEELEm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 07:04:42 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1728872AbgEELMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 07:12:50 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:14403 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728770AbgEELMs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 May 2020 07:12:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588677167; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=0eyelEi64rXXRGTuED+vS31cCGjUGaQJnhSz6yhcSRw=; b=NNAUBPeONjd2ARUuYO/QsQoPLpq/5dwj2U4LsvbDSfuMOswwGcDlgdxhxvdNSVjy1ykIu9mp
+ BDEc+o7dhC2cz7X+Nyr2Zei4ah6v2QW27Hazt/KR3J9D5lyAtu21h9k4sKOQMAgfwnnPRfhH
+ TuTviQvPJG9nthBDFVlXiZBy6es=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb14a23.7f36f9414a40-smtp-out-n05;
+ Tue, 05 May 2020 11:12:35 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AAE28C433CB; Tue,  5 May 2020 11:12:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A9470206B8;
-        Tue,  5 May 2020 11:04:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588676680;
-        bh=qQz7Wc0iV6lltQX1X6gMaSxn3yyMWV+Fg5hhEXA0Ytg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BBCgI7d2H1aUoqDx3WyDtsimuN5WaE6Jo4Qzu3lJxq8tnlW/E34w/bnArIwyIWxSE
-         I9qyHEETD7eWdfvaaCTcQY/0hPIH0NTCli/NeoI323hyUWP/rvz+LNcNIFgIy9MTS2
-         WRQUjDV/k+TzdSN1KG7DuO3bNIu0rEFxQyHLGSPc=
-Date:   Tue, 5 May 2020 13:04:38 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mathias Nyman <mathias.nyman@linux.intel.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org,
+        (Authenticated sender: manafm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA761C433D2;
+        Tue,  5 May 2020 11:12:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EA761C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=manafm@codeaurora.org
+From:   Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 2/5] usb: renesas-xhci: Add the renesas xhci driver
-Message-ID: <20200505110438.GC93160@kroah.com>
-References: <20200430165920.1345409-1-vkoul@kernel.org>
- <20200430165920.1345409-3-vkoul@kernel.org>
- <81e0eff0-8b40-3c47-e39b-929e1dc07fd5@linux.intel.com>
- <20200504143438.GT1375924@vkoul-mobl>
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
+Subject: [PATCH 0/2] Add 0C (zeorC) interrupt support to tsens driver
+Date:   Tue,  5 May 2020 16:42:02 +0530
+Message-Id: <20200505111204.963-1-manafm@codeaurora.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200504143438.GT1375924@vkoul-mobl>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 04, 2020 at 08:04:38PM +0530, Vinod Koul wrote:
-> Hi Mathias,
-> 
-> On 04-05-20, 16:01, Mathias Nyman wrote:
-> > On 30.4.2020 19.59, Vinod Koul wrote:
-> > > From: Christian Lamparter <chunkeey@googlemail.com>
-> > > 
-> > > This add a new driver for renesas xhci which is basically a firmware
-> > > loader for uPD720201 and uPD720202 w/o ROM. The xhci-pci driver will
-> > > invoke this driver for loading/unloading on relevant devices.
-> > > 
-> > > This patch adds a firmware loader for the uPD720201K8-711-BAC-A
-> > > and uPD720202K8-711-BAA-A variant. Both of these chips are listed
-> > > in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
-> > > devices which need the firmware loader on page 2 in order to
-> > > work as they "do not support the External ROM".
-> > > 
-> > > The "Firmware Download Sequence" is describe in chapter
-> > > "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
-> > > 
-> > > The firmware "K2013080.mem" is available from a USB3.0 Host to
-> > > PCIe Adapter (PP2U-E card) "Firmware download" archive. An
-> > > alternative version can be sourced from Netgear's WNDR4700 GPL
-> > > archives.
-> > > 
-> > > The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
-> > > (2012-06-15) state that the firmware is for the following devices:
-> > >  - uPD720201 ES 2.0 sample whose revision ID is 2.
-> > >  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
-> > >  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
-> > > 
-> > > Signed-off-by: Christian Lamparter <chunkeey@googlemail.com>
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > [vkoul: fixed comments:
-> > > 	used macros for timeout count and delay
-> > > 	removed renesas_fw_alive_check
-> > > 	cleaned renesas_fw_callback
-> > > 	removed recursion for renesas_fw_download
-> > > 	add register defines and field names
-> > > 	move to a separate file
-> > > 	make fw loader as sync probe so that we execute in probe and
-> > >         prevent race
-> > > 	export symbols for xhci-pci to use]
-> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > ---
-> > >  drivers/usb/host/Makefile           |   2 +-
-> > >  drivers/usb/host/xhci-pci-renesas.c | 365 ++++++++++++++++++++++++++++
-> > >  drivers/usb/host/xhci-pci.h         |  16 ++
-> > >  3 files changed, 382 insertions(+), 1 deletion(-)
-> > >  create mode 100644 drivers/usb/host/xhci-pci-renesas.c
-> > >  create mode 100644 drivers/usb/host/xhci-pci.h
-> > > 
-> > > diff --git a/drivers/usb/host/Makefile b/drivers/usb/host/Makefile
-> > > index b191361257cc..f3a5a2f01874 100644
-> > > --- a/drivers/usb/host/Makefile
-> > > +++ b/drivers/usb/host/Makefile
-> > > @@ -70,7 +70,7 @@ obj-$(CONFIG_USB_OHCI_HCD_DAVINCI)	+= ohci-da8xx.o
-> > >  obj-$(CONFIG_USB_UHCI_HCD)	+= uhci-hcd.o
-> > >  obj-$(CONFIG_USB_FHCI_HCD)	+= fhci.o
-> > >  obj-$(CONFIG_USB_XHCI_HCD)	+= xhci-hcd.o
-> > > -obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o
-> > > +obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o xhci-pci-renesas.o
-> > 
-> > Hmm, now we end up with two modules, xhci-pci and xhci-pci-renesas, even if
-> > xhci-pci-renesas just includes helper functions to load firmware for renesas.
-> 
-> Right, these are two modules. Do you forsee an issue with two ko's
+Changes:
+* Add zeroc interrupt support to tsens driver
+* Update zeroc interrupt support in yaml
 
-Two kos should be fine, but as you aren't giving people the option to
-not select this, it's a bit harsh to add it.
+Manaf Meethalavalappu Pallikunhi (2):
+  drivers: thermal: tsens: Add 0C (zeorC) interrupt support
+  dt-bindings: thermal: tsens: Add zeroc interrupt support in yaml
 
-Can this be a separate module/config option?  Why force everyone to need
-this additional code if they do not have this hardware?
+ .../bindings/thermal/qcom-tsens.yaml          |  7 +-
+ drivers/thermal/qcom/tsens-common.c           | 72 ++++++++++++++++++-
+ drivers/thermal/qcom/tsens-v2.c               |  7 ++
+ drivers/thermal/qcom/tsens.c                  | 51 +++++++++++--
+ drivers/thermal/qcom/tsens.h                  | 11 +++
+ 5 files changed, 140 insertions(+), 8 deletions(-)
 
-thanks,
-
-greg k-h
+-- 
+2.26.2
