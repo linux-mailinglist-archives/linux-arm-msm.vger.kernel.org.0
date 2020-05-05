@@ -2,109 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B14CE1C5478
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 13:33:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A731C547A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 13:34:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728827AbgEELdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 07:33:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51626 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728868AbgEELdj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 07:33:39 -0400
-Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2854AC061A41
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 04:33:39 -0700 (PDT)
-Received: by mail-ua1-x943.google.com with SMTP id g35so286167uad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 04:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=166ZI2PQYttk8mUuPjh9fJHZKXnQuSqSXt1RrZvFtpA=;
-        b=SbmAUPviBr80iF1qScxhl5zJVFA3V7xs4iTOq1msRXtlVS5Z9A1FelEaA5QOQUWqSn
-         Gciu/AaBzFBmE9zsnvklJwgF+se1u3nj/rAckeZ5e5cdWv6G/dnbkbVhbAILnHgR8ESS
-         0RJNI/xujs7FxJsLMC8nNRkZLo0PDbWYVPfHWPg2m1CApz8MmMYfQf4zmiPiVH+2qRQS
-         KpJhx0xg/64TubUQdiVtwLaCC/RxcIr8uKxVm8m4N4Lz4ee+Ce2Si7BmBh+ccTDUf2Ok
-         cWulD+4LSCa2nf0nb8Ruoidn+kZRLzCVPbwfVcgMFxE3RM0EQsHaWeDgVB2/Rns/tTD9
-         Y36Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=166ZI2PQYttk8mUuPjh9fJHZKXnQuSqSXt1RrZvFtpA=;
-        b=f8hmtyyaSPQmbyBPvardo89mxqyuSrGxPrrgsX9DyHnKiiHOXw3FgsMr3/69W+w6uL
-         xyj2TuRrXOCFHIrF3sQGpVV6kopyHLJCg7XsJ9X5o+Y1PsbmJpi99PQO9JR/7QU/9R9N
-         +zAE5lSBsaINSuxUmYe5cVGbGqAIMdeqRcdKdtTkpdY8vWyZAJuA6T6N86sYoQ6aHc2N
-         yijA5m6rMtCTRCN7xf6tRy0AdjwXhAoXqIy0W7jYF2eDtp4lkkp1nyufuveQd1jJ7fj/
-         G/y10lZ9t4LdDYCEJFKXMi/RypKnObFsEmSrEdRJ43up67a9o/hAn/4JzthpvBkSkHqQ
-         9gcw==
-X-Gm-Message-State: AGi0PubFjKcLpKUDQwSZ+E09xSTDbvK8opC/REaVhWdStQzAia3T3wh0
-        InltnSqZ0sRFZzkvfO1oEDxp1budFGZTvnWyi7RdTLOL
-X-Google-Smtp-Source: APiQypIVXSv4Xz1Q8pgiALwOrIbs+TbqKGJBWZAvFSYtSethZHtLnwLnQoOS0qNKX6URobh8SNfeXpV8uZemzz1NRmg=
-X-Received: by 2002:ab0:3343:: with SMTP id h3mr1749214uap.19.1588678418386;
- Tue, 05 May 2020 04:33:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
- <1588080785-6812-10-git-send-email-rnayak@codeaurora.org> <CAPDyKFrGQvcCB1wfv=iqk66uja3faMRF1gGMSE2VhB8gJcO=sg@mail.gmail.com>
- <15efa375-cf1e-b793-1d3e-29ca0a547522@codeaurora.org>
-In-Reply-To: <15efa375-cf1e-b793-1d3e-29ca0a547522@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 5 May 2020 13:33:01 +0200
-Message-ID: <CAPDyKFoaJTXq2qN+HXoSUovun9+4gzLeVJ-88FKbZCSCKjByLw@mail.gmail.com>
-Subject: Re: [PATCH v3 09/17] mmc: sdhci-msm: Fix error handling for dev_pm_opp_of_add_table()
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
+        id S1728736AbgEELd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 07:33:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49238 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728664AbgEELd7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 May 2020 07:33:59 -0400
+Received: from localhost (unknown [122.181.213.114])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2F82C20735;
+        Tue,  5 May 2020 11:33:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588678439;
+        bh=BIDNivoYYArr1mgNzZNlFHarjyA+1JxmkV0Pd9IfbtU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hei2vThh3fDPJJe5S3ZSQeNuun9d/8uHbm3ksqhgvpfA+IF0olXgQ9b0u8FkhW7xG
+         kGappr474a7EgDcoD7MyXyWqmJDpdwzWS5WEHepav4d5I7wYvo7wTkuZn2Fumc3JWi
+         BufJSxUhnpt1nj3X4/CbkNR8POXcUA+hiCbChQBA=
+Date:   Tue, 5 May 2020 17:03:54 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Mathias Nyman <mathias.nyman@linux.intel.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Pradeep P V K <ppvk@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v12 2/5] usb: renesas-xhci: Add the renesas xhci driver
+Message-ID: <20200505113354.GX1375924@vkoul-mobl>
+References: <20200430165920.1345409-1-vkoul@kernel.org>
+ <20200430165920.1345409-3-vkoul@kernel.org>
+ <81e0eff0-8b40-3c47-e39b-929e1dc07fd5@linux.intel.com>
+ <20200504143438.GT1375924@vkoul-mobl>
+ <20200505110438.GC93160@kroah.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200505110438.GC93160@kroah.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 29 Apr 2020 at 16:09, Rajendra Nayak <rnayak@codeaurora.org> wrote:
->
->
-> On 4/28/2020 11:59 PM, Ulf Hansson wrote:
-> > On Tue, 28 Apr 2020 at 15:39, Rajendra Nayak <rnayak@codeaurora.org> wrote:
-> >>
-> >> Even though specifying OPP's in device tree is optional, ignoring all errors
-> >> reported by dev_pm_opp_of_add_table() means we can't distinguish between a
-> >> missing OPP table and a wrong/buggy OPP table. While missing OPP table
-> >> (dev_pm_opp_of_add_table() returns a -ENODEV in such case) can be ignored,
-> >> a wrong/buggy OPP table in device tree should make the driver error out.
-> >>
-> >> while we fix that, lets also fix the variable names for opp/opp_table to
-> >> avoid confusion and name them opp_table/has_opp_table instead.
-> >>
-> >> Suggested-by: Matthias Kaehlcke <matthias@chromium.org>
-> >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> >> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> >> Cc: Pradeep P V K <ppvk@codeaurora.org>
-> >> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> >> Cc: linux-mmc@vger.kernel.org
-> >
-> > Is this a standalone patch that I queue up via my mmc tree?
->
-> Hi Ulf, yes, its a standalone patch which applies on top of the one
-> you already have in your tree. No other dependencies.
+On 05-05-20, 13:04, Greg Kroah-Hartman wrote:
+> On Mon, May 04, 2020 at 08:04:38PM +0530, Vinod Koul wrote:
 
-Thanks for confirming! Perhaps next time you could add this
-information as part of a description to the patch (where we usually
-add patch version information).
+> > > > --- a/drivers/usb/host/Makefile
+> > > > +++ b/drivers/usb/host/Makefile
+> > > > @@ -70,7 +70,7 @@ obj-$(CONFIG_USB_OHCI_HCD_DAVINCI)	+= ohci-da8xx.o
+> > > >  obj-$(CONFIG_USB_UHCI_HCD)	+= uhci-hcd.o
+> > > >  obj-$(CONFIG_USB_FHCI_HCD)	+= fhci.o
+> > > >  obj-$(CONFIG_USB_XHCI_HCD)	+= xhci-hcd.o
+> > > > -obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o
+> > > > +obj-$(CONFIG_USB_XHCI_PCI)	+= xhci-pci.o xhci-pci-renesas.o
+> > > 
+> > > Hmm, now we end up with two modules, xhci-pci and xhci-pci-renesas, even if
+> > > xhci-pci-renesas just includes helper functions to load firmware for renesas.
+> > 
+> > Right, these are two modules. Do you forsee an issue with two ko's
+> 
+> Two kos should be fine, but as you aren't giving people the option to
+> not select this, it's a bit harsh to add it.
+> 
+> Can this be a separate module/config option?  Why force everyone to need
+> this additional code if they do not have this hardware?
 
-Anyway, applied for next!
+Since the code is moved out and is based on PCI ID of the device, this
+wont be invoked at all for folks not having this hardware. But adding a
+config option would work too and avoid renaming file.
 
-[...]
+I think this looks as a better option to me atm. We no longer have load
+order issue with current approach so we dont care about that as well.
 
-Kind regards
-Uffe
+Mathias, let me know if you are okay with approach, I can respin this,
+or if you have better idea do let us know
+
+Thanks
+-- 
+~Vinod
