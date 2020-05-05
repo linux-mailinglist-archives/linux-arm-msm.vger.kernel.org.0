@@ -2,89 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A3FA1C4CC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 05:55:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 421E21C4D4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 06:32:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbgEEDzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 23:55:47 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:44737 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbgEEDzr (ORCPT
+        id S1726129AbgEEEck (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 00:32:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42608 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725320AbgEEEck (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 23:55:47 -0400
-Received: by mail-ot1-f68.google.com with SMTP id j4so524842otr.11;
-        Mon, 04 May 2020 20:55:46 -0700 (PDT)
+        Tue, 5 May 2020 00:32:40 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8286BC061A10
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2020 21:32:38 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a32so466870pje.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2020 21:32:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OGLmPxsShIHn4CHHbn8Pe8eVKKsfBl2KpXHBFAlksI8=;
+        b=btGoVaOqEwDh281RyzGWWpVCibotYTf5Q5OZiRkLjKUSde0ATaySojqpvzC60y/oCY
+         LJyDkuQcisPIKzP+b1dgIQe8h/fyUo5uDW32lSNQSGFw/rvCwQ28Kh1Daiv/5BaDtQgG
+         BXISZfHmzwspCJZ+ZsuW6xjf5lZyTP06U8EVE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fVpmlRqOB7eXke8uevfSsRs8l7hcoXGDZESzEE9L/Kk=;
-        b=LTmzC+z2LtrtoCvIZe1d3Ny2xovOeB6f2rKZV6s3kHfC/8qn5qyqN0p8+bwJFxotHm
-         Zw0cQLRtOx/jciMAuAv76A2SwpoR0f+ljTL7r5/5FDvvbzrApIOlmwSPydkLUer83DGe
-         cqbKEtSQEMqluaOH2T4r41hYfPcdfwjGZaxIuNBlUp1S1A2Wnm8eoEbjfMGbe9nA92u4
-         y+QXHeTAV5QAPPHHsp0MA6kO2da0R1rTufWOi0opKAD+1eLBKw16puxkFZN/E74+Q7dz
-         vLyGbrAq0NxWOQSmelz7Yg56Yk0YNBxRVO7uf358RT0tXqRrMySmI4CHpcqvK6aV3yBU
-         W98Q==
-X-Gm-Message-State: AGi0PuYeact1L4SFN2P1fgTfEUx9WOcFtUntI213U8dbVUhaLA6dZhI3
-        5tuWvi21Th2S6zfRyEkjFiQEXEw=
-X-Google-Smtp-Source: APiQypJTqz87zIpF1xabhLlbR6oZBO16QbukiXQa0HRhnMbsIVziIpe/J85nsrXb8hc4FUxAuvipIg==
-X-Received: by 2002:a9d:5e04:: with SMTP id d4mr988124oti.312.1588650945786;
-        Mon, 04 May 2020 20:55:45 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id b63sm318718otc.23.2020.05.04.20.55.44
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OGLmPxsShIHn4CHHbn8Pe8eVKKsfBl2KpXHBFAlksI8=;
+        b=Ko8wGqPNBqXJITeBl767bxEknRwq/oKHdJJm2nHiIQevcA47soB1Q+cOU7Iu2bLnuR
+         jYSeZXZwFZRtZFtz4UxSUJfZ+1rjnnKMaAZMF+eHb+wkQsicjYuIFSM9V1tKwSPZK0zj
+         XjGH6jIJWHc0a2OIi5xVyAcLginNMdJNYQzsOXvLytpIQqvq4a/o8BgYLBnsQ6taaxb0
+         LcCe2mNP8LlM3pmnI5z09VuavZi53V7ih3EsIEBnp9oQWhzqRIxjjNwMb9yKVZxmwk85
+         ZUpbNX5wgU9ObXH9t4sl1u09aTX4DBadh8+/H+xCskN+uV3suriad6XdDFP/mvW5cW0T
+         5wmw==
+X-Gm-Message-State: AGi0Puahu0OLe6HuTo29mLiSYFZTzU0gP4QAKndCioXHZqAIQrnvwMc4
+        NaHQPZHkJMv3ZUOHUF5c22IUKw==
+X-Google-Smtp-Source: APiQypJRhfyblghgHdLN4pfxYjK2JQv0NLCq3d5jMQ6MWWmHOgq57l9LIwfyXHf0s/iviGLG8+DN3A==
+X-Received: by 2002:a17:90a:fb4e:: with SMTP id iq14mr608631pjb.146.1588653158036;
+        Mon, 04 May 2020 21:32:38 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id w11sm545075pjy.11.2020.05.04.21.32.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 20:55:44 -0700 (PDT)
-Received: (nullmailer pid 7523 invoked by uid 1000);
-        Tue, 05 May 2020 03:55:43 -0000
-Date:   Mon, 4 May 2020 22:55:43 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     skrzynka@konradybcio.pl, Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] dt-bindings: media: Document MSM8939 Venus
-Message-ID: <20200505035543.GA5765@bogus>
-References: <20200501203505.144362-1-konradybcio@gmail.com>
- <20200501203505.144362-3-konradybcio@gmail.com>
+        Mon, 04 May 2020 21:32:37 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc:     linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
+        robdclark@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/bridge: ti-sn65dsi86: Fix off-by-one error in clock choice
+Date:   Mon,  4 May 2020 21:32:29 -0700
+Message-Id: <20200504213225.1.I21646c7c37ff63f52ae6cdccc9bc829fbc3d9424@changeid>
+X-Mailer: git-send-email 2.26.2.526.g744177e7f7-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200501203505.144362-3-konradybcio@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri,  1 May 2020 22:35:03 +0200, Konrad Dybcio wrote:
-> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
-> ---
->  .../bindings/media/qcom,msm8939-venus.yaml    | 119 ++++++++++++++++++
->  1 file changed, 119 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
-> 
+If the rate in our table is _equal_ to the rate we want then it's OK
+to pick it.  It doesn't need to be greater than the one we want.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-Documentation/devicetree/bindings/media/qcom,msm8939-venus.example.dts:20:18: fatal error: dt-bindings/clock/qcom,gcc-msm8939.h: No such file or directory
-         #include <dt-bindings/clock/qcom,gcc-msm8939.h>
-                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-scripts/Makefile.lib:312: recipe for target 'Documentation/devicetree/bindings/media/qcom,msm8939-venus.example.dt.yaml' failed
-make[1]: *** [Documentation/devicetree/bindings/media/qcom,msm8939-venus.example.dt.yaml] Error 1
-make[1]: *** Waiting for unfinished jobs....
-Makefile:1300: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-See https://patchwork.ozlabs.org/patch/1281452
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 6ad688b320ae..be000b0ca56b 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -475,7 +475,7 @@ static int ti_sn_bridge_calc_min_dp_rate_idx(struct ti_sn_bridge *pdata)
+ 				   1000 * pdata->dp_lanes * DP_CLK_FUDGE_DEN);
+ 
+ 	for (i = 1; i < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut) - 1; i++)
+-		if (ti_sn_bridge_dp_rate_lut[i] > dp_rate_mhz)
++		if (ti_sn_bridge_dp_rate_lut[i] >= dp_rate_mhz)
+ 			break;
+ 
+ 	return i;
+-- 
+2.26.2.526.g744177e7f7-goog
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
