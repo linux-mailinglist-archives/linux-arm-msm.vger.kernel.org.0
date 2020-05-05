@@ -2,269 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A11D01C644A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 01:07:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9B771C64AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 01:58:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729336AbgEEXHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 19:07:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47736 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729229AbgEEXHE (ORCPT
+        id S1728934AbgEEX6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 19:58:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55638 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727895AbgEEX6I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 19:07:04 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FCDC061A41
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 16:07:04 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id a7so17224pju.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 16:07:04 -0700 (PDT)
+        Tue, 5 May 2020 19:58:08 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07097C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 16:58:07 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id v63so80460pfb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 16:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lnMvLXoN54fiT5bQ9B36ujD00twLWQQOJMf5mTznE2I=;
-        b=XcvJJmrhLeml8LvNg+e0aEqu2fgQOHjibmSlo0uENuXWka6vbu5QxddzF0qXyBySj4
-         ERWA+nfNguqgX+PjiYndGtiQ16Ig4mcMbCyL6K0dOLQdYtrnJsaL9+F94IMFpMXApxM+
-         hPms0zmx3o6GMAtdvu/GNVXSSGieqcwAqOo3A=
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=JzaMwZpjc8kiyvkXAl8SC5OdIZko9B1uAdjf5EokFQA=;
+        b=GcCRqF0rng+bDWT+XXGpRMzlhC2e6WqRpie++FCTYazS0pzx+X/KrFcQezY41N8Bqo
+         L29pS/NkKaT2NqRgus6tqpdexXorGt7AUV+kFahU2b1GCiXg75mTfXKtntElnpIKDADf
+         HGKWtD5DBrBDh7IcgMYYf2RgdPMDDROgrQGmw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lnMvLXoN54fiT5bQ9B36ujD00twLWQQOJMf5mTznE2I=;
-        b=DlSvA5Oqq1y8a69JswgjADJQL1ie7MYwO25V37iC+cuh1Cir7jAFv6AYsb4UrhlTqS
-         Zv1P9eNH/gsNThnL9GVG4y//SFqoxDrSQrJg0+znSCdcc+k7Gj9kIDnr54pRlGyt7ByC
-         MkV0vRPRi0x9fMRd5OoVw8up3ibT5cT6UpuPBdMizUb+qIfzunGET5ABw+P5dE5GJEtx
-         EBLF76QuHbAEbi4Ud8+aUV0tKfBKLzfFdeI5YZERZJ2igqnmQG/JtXLfDJqOnJ8v+sMx
-         kH7VWZFQDQntIAzmp5g/rRSP6qkEPTbOs17Q7cmy2phon9pHQket8PSihnDz4/yy5QcW
-         VSZg==
-X-Gm-Message-State: AGi0PuZGlJWi2NSC60nyIFyoUysamQBXwSwQrE1U2G2giw6y55J4qt9x
-        Li3DP/ELujZrEF1d39xXSkGMLQ==
-X-Google-Smtp-Source: APiQypKWFU3p57Hd9uUtW+gyz/ATiQN945XSVyla1OHMs2n/q7J6O7vqOVLV3UG5FLVjmrA/tShUKw==
-X-Received: by 2002:a17:90a:7105:: with SMTP id h5mr5488824pjk.3.1588720024172;
-        Tue, 05 May 2020 16:07:04 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id g43sm2932584pje.22.2020.05.05.16.07.03
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=JzaMwZpjc8kiyvkXAl8SC5OdIZko9B1uAdjf5EokFQA=;
+        b=CCy2yX9ND76cymnUyTO7IRpl3u9kd4dFjM3nH/pyxW3MS/00I4yFjCzvqU356FXwlS
+         HNEYIP6UJorbRjoX7yUz/w7aJF3kBy97137rBKwCilZTQ2Srl6AuUm6qFXSZaqlJQfgU
+         qfzPOv8CiK0QHek/vBUsr1iffv+RXq+HCxk9uXhuEcjTauxAahdZIgogphhkCh4cKv+g
+         iXqjZbXXDBy1Olhu/5M9wAJfq4ZUr89ZkkZ8gLNWjbIDNMmC3db9ud0431ZN47DBWSNr
+         JXzrA7N9V23MV2F+RgjheYFh7vrMbgsWD2mDfQcNKnIKfeK8kdmd86rx1FzzKiZtVVj0
+         tLIQ==
+X-Gm-Message-State: AGi0PuaDPIOnPRLuP56D3/de+MKCuKwnNJ0O6uXc4oYgiy0CKO7v9Gz+
+        +ri/7UMOrXx34YH4OwjDh2xw6A==
+X-Google-Smtp-Source: APiQypIqzHj2k/gz4IlPISOypaTNQykNBBmbQbErw1/2L6sk4p7yd0/jxv3gmS3o6U9qQVXKSF+LKg==
+X-Received: by 2002:a63:e62:: with SMTP id 34mr4290017pgo.300.1588723087207;
+        Tue, 05 May 2020 16:58:07 -0700 (PDT)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id b13sm42170pfo.67.2020.05.05.16.58.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 May 2020 16:07:03 -0700 (PDT)
-Date:   Tue, 5 May 2020 16:07:02 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org
-Subject: Re: [PATCH v4 5/6] media: venus: core: Add support for opp
- tables/perf voting
-Message-ID: <20200505230702.GX4525@google.com>
-References: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
- <1588507469-31889-6-git-send-email-rnayak@codeaurora.org>
+        Tue, 05 May 2020 16:58:06 -0700 (PDT)
+Subject: Re: [PATCH v3 6/7] misc: bcm-vk: add Broadcom VK driver
+To:     kbuild test robot <lkp@intel.com>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        bjorn.andersson@linaro.org, Arnd Bergmann <arnd@arndb.de>
+Cc:     kbuild-all@lists.01.org, "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Linux Memory Management List <linux-mm@kvack.org>,
+        Dan Carpenter <error27@gmail.com>
+References: <20200420162809.17529-7-scott.branden@broadcom.com>
+ <202004221945.LY6x0DQD%lkp@intel.com>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <b3e0c534-9e6a-f270-b6af-3658dca1bd42@broadcom.com>
+Date:   Tue, 5 May 2020 16:58:03 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1588507469-31889-6-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <202004221945.LY6x0DQD%lkp@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rajendra,
+All the kbuild and sparse issues should be resolved in PATCH v4.
 
-On Sun, May 03, 2020 at 05:34:28PM +0530, Rajendra Nayak wrote:
-> Add support to add OPP tables and perf voting on the OPP powerdomain.
-> This is needed so venus votes on the corresponding performance state
-> for the OPP powerdomain along with setting the core clock rate.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> Cc: linux-media@vger.kernel.org
+On 2020-04-22 4:17 a.m., kbuild test robot wrote:
+> Hi Scott,
+>
+> I love your patch! Perhaps something to improve:
+>
+> [auto build test WARNING on driver-core/driver-core-testing]
+> [also build test WARNING on next-20200421]
+> [cannot apply to char-misc/char-misc-testing kselftest/next linus/master v5.7-rc2]
+> [if your patch is applied to the wrong git tree, please drop us a note to help
+> improve the system. BTW, we also suggest to use '--base' option to specify the
+> base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
+>
+> url:    https://github.com/0day-ci/linux/commits/Scott-Branden/firmware-add-partial-read-support-in-request_firmware_into_buf/20200422-114528
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git 55623260bb33e2ab849af76edf2253bc04cb241f
+> reproduce:
+>          # apt-get install sparse
+>          # sparse version: v0.6.1-191-gc51a0382-dirty
+>          make ARCH=x86_64 allmodconfig
+>          make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
+>
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kbuild test robot <lkp@intel.com>
+>
+>
+> sparse warnings: (new ones prefixed by >>)
+>
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse: sparse: incorrect type in assignment (different address spaces) @@    expected struct bcm_vk_peer_log *p_ctl @@    got struct bcm_vk_peer_log *p_ctl @@
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse:    expected struct bcm_vk_peer_log *p_ctl
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse:    got void [noderef] <asn:2> *
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected void const [noderef] <asn:1> *from @@    got oderef] <asn:1> *from @@
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse:    expected void const [noderef] <asn:1> *from
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse:    got struct vk_image *arg
+>     drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected void const [noderef] <asn:1> *from @@    got oderef] <asn:1> *from @@
+>     drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse:    expected void const [noderef] <asn:1> *from
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse:    got struct vk_reset *arg
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected struct vk_image *arg @@    got void [nstruct vk_image *arg @@
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse:    expected struct vk_image *arg
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse:    got void [noderef] <asn:1> *argp
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected struct vk_reset *arg @@    got void [nstruct vk_reset *arg @@
+>>> drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse:    expected struct vk_reset *arg
+>     drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse:    got void [noderef] <asn:1> *argp
+> --
+>>> drivers/misc/bcm-vk/bcm_vk_msg.c:507:17: sparse: sparse: cast removes address space '<asn:2>' of expression
+>     drivers/misc/bcm-vk/bcm_vk_msg.c:707:15: sparse: sparse: cast removes address space '<asn:2>' of expression
+>     drivers/misc/bcm-vk/bcm_vk_msg.c:715:23: sparse: sparse: cast removes address space '<asn:2>' of expression
+>     drivers/misc/bcm-vk/bcm_vk_msg.c:871:31: sparse: sparse: cast removes address space '<asn:2>' of expression
+>     drivers/misc/bcm-vk/bcm_vk_msg.c:899:47: sparse: sparse: cast removes address space '<asn:2>' of expression
+>
+> vim +189 drivers/misc/bcm-vk/bcm_vk_dev.c
+>
+>     180	
+>     181	static void bcm_vk_dump_peer_log(struct bcm_vk *vk)
+>     182	{
+>     183		struct bcm_vk_peer_log log, *p_ctl;
+>     184		char loc_buf[BCM_VK_PEER_LOG_LINE_MAX];
+>     185		int cnt;
+>     186		struct device *dev = &vk->pdev->dev;
+>     187		uint data_offset;
+>     188	
+>   > 189		p_ctl = vk->bar[BAR_2] + vk->peerlog_off;
+>     190		log = *p_ctl;
+>     191		/* do a rmb() to make sure log is updated */
+>     192		rmb();
+>     193	
+>     194		dev_dbg(dev, "Peer PANIC: Size 0x%x(0x%x), [Rd Wr] = [%d %d]\n",
+>     195			log.buf_size, log.mask, log.rd_idx, log.wr_idx);
+>     196	
+>     197		cnt = 0;
+>     198		data_offset = vk->peerlog_off + sizeof(struct bcm_vk_peer_log);
+>     199		while (log.rd_idx != log.wr_idx) {
+>     200			loc_buf[cnt] = vkread8(vk, BAR_2, data_offset + log.rd_idx);
+>     201	
+>     202			if ((loc_buf[cnt] == '\0') ||
+>     203			    (cnt == (BCM_VK_PEER_LOG_LINE_MAX - 1))) {
+>     204				dev_err(dev, "%s", loc_buf);
+>     205				cnt = 0;
+>     206			} else {
+>     207				cnt++;
+>     208			}
+>     209			log.rd_idx = (log.rd_idx + 1) & log.mask;
+>     210		}
+>     211		/* update rd idx at the end */
+>     212		vkwrite32(vk, log.rd_idx, BAR_2, vk->peerlog_off);
+>     213	}
+>     214	
+>
 > ---
->  drivers/media/platform/qcom/venus/core.c       | 28 +++++++++++++
->  drivers/media/platform/qcom/venus/core.h       |  5 +++
->  drivers/media/platform/qcom/venus/pm_helpers.c | 54 ++++++++++++++++++++++++--
->  3 files changed, 83 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 194b10b9..6f72e99 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -12,6 +12,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/slab.h>
->  #include <linux/types.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <media/videobuf2-v4l2.h>
->  #include <media/v4l2-mem2mem.h>
-> @@ -214,6 +215,20 @@ static int venus_probe(struct platform_device *pdev)
->  	if (!core->pm_ops)
->  		return -ENODEV;
->  
-> +	core->opp_table = dev_pm_opp_set_clkname(dev, "core");
-> +	if (IS_ERR(core->opp_table))
-> +		return PTR_ERR(core->opp_table);
-> +
-> +	if (core->res->opp_pmdomain) {
-> +		ret = dev_pm_opp_of_add_table(dev);
-> +		if (!ret) {
-> +			core->has_opp_table = true;
-> +		} else if (ret != -ENODEV) {
-> +			dev_err(dev, "invalid OPP table in device tree\n");
+> 0-DAY CI Kernel Test Service, Intel Corporation
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 
-			dev_pm_opp_put_clkname(core->opp_table);
-
-this and removing the OPP table is also needed in other error paths below,
-which currently return directly. Looks like you want to add another label
-to the unwind path.
-
-> +			return ret;
-> +		}
-> +	}
-> +
->  	if (core->pm_ops->core_get) {
->  		ret = core->pm_ops->core_get(dev);
->  		if (ret)
-> @@ -301,6 +316,9 @@ static int venus_probe(struct platform_device *pdev)
->  err_venus_shutdown:
->  	venus_shutdown(core);
->  err_runtime_disable:
-> +	if (core->has_opp_table)
-> +		dev_pm_opp_of_remove_table(dev);
-> +	dev_pm_opp_put_clkname(core->opp_table);
-
-move this after hfi_destroy(core), to do unwinding in reverse order, it
-also allows to add the new jump label mentioned above.
-
->  	pm_runtime_set_suspended(dev);
->  	pm_runtime_disable(dev);
->  	hfi_destroy(core);
-> @@ -326,6 +344,10 @@ static int venus_remove(struct platform_device *pdev)
->  
->  	venus_firmware_deinit(core);
->  
-> +	if (core->has_opp_table)
-> +		dev_pm_opp_of_remove_table(dev);
-> +	dev_pm_opp_put_clkname(core->opp_table);
-> +
->  	pm_runtime_put_sync(dev);
->  	pm_runtime_disable(dev);
->  
-> @@ -350,6 +372,10 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
->  	if (ret)
->  		return ret;
->  
-> +	/* Drop the performance state vote */
-> +	if (core->opp_pmdomain)
-> +		dev_pm_opp_set_rate(dev, 0);
-> +
->  	if (pm_ops->core_power)
->  		ret = pm_ops->core_power(dev, POWER_OFF);
->  
-> @@ -511,6 +537,7 @@ static const struct venus_resources sdm845_res_v2 = {
->  	.vcodec_clks_num = 2,
->  	.vcodec_pmdomains = { "venus", "vcodec0", "vcodec1" },
->  	.vcodec_pmdomains_num = 3,
-> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
->  	.vcodec_num = 2,
->  	.max_load = 3110400,	/* 4096x2160@90 */
->  	.hfi_version = HFI_VERSION_4XX,
-> @@ -556,6 +583,7 @@ static const struct venus_resources sc7180_res = {
->  	.vcodec_clks_num = 2,
->  	.vcodec_pmdomains = { "venus", "vcodec0" },
->  	.vcodec_pmdomains_num = 2,
-> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
-
-The new power domain needs to be added to the SDM845 and SC7180 bindings.
-
->  	.vcodec_num = 1,
->  	.hfi_version = HFI_VERSION_4XX,
->  	.vmem_id = VIDC_RESOURCE_NONE,
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index bd3ac6a..cc1d511 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -62,6 +62,7 @@ struct venus_resources {
->  	unsigned int vcodec_clks_num;
->  	const char * const vcodec_pmdomains[VIDC_PMDOMAINS_NUM_MAX];
->  	unsigned int vcodec_pmdomains_num;
-> +	const char **opp_pmdomain;
->  	unsigned int vcodec_num;
->  	enum hfi_version hfi_version;
->  	u32 max_load;
-> @@ -144,8 +145,12 @@ struct venus_core {
->  	struct clk *vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
->  	struct icc_path *video_path;
->  	struct icc_path *cpucfg_path;
-> +	struct opp_table *opp_table;
-> +	bool has_opp_table;
->  	struct device_link *pd_dl_venus;
->  	struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
-> +	struct device_link *opp_dl_venus;
-> +	struct device *opp_pmdomain;
->  	struct video_device *vdev_dec;
->  	struct video_device *vdev_enc;
->  	struct v4l2_device v4l2_dev;
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index abf9315..30600bc 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -9,6 +9,7 @@
->  #include <linux/iopoll.h>
->  #include <linux/kernel.h>
->  #include <linux/pm_domain.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/types.h>
->  #include <media/v4l2-mem2mem.h>
-> @@ -66,10 +67,9 @@ static void core_clks_disable(struct venus_core *core)
->  
->  static int core_clks_set_rate(struct venus_core *core, unsigned long freq)
->  {
-> -	struct clk *clk = core->clks[0];
->  	int ret;
->  
-> -	ret = clk_set_rate(clk, freq);
-> +	ret = dev_pm_opp_set_rate(core->dev, freq);
->  	if (ret)
->  		return ret;
->  
-> @@ -740,13 +740,16 @@ static int venc_power_v4(struct device *dev, int on)
->  
->  static int vcodec_domains_get(struct device *dev)
->  {
-> +	int ret;
-> +	struct opp_table *opp_table;
-> +	struct device **opp_virt_dev;
->  	struct venus_core *core = dev_get_drvdata(dev);
->  	const struct venus_resources *res = core->res;
->  	struct device *pd;
->  	unsigned int i;
->  
->  	if (!res->vcodec_pmdomains_num)
-> -		return -ENODEV;
-> +		goto skip_pmdomains;
->  
->  	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
->  		pd = dev_pm_domain_attach_by_name(dev,
-> @@ -763,7 +766,41 @@ static int vcodec_domains_get(struct device *dev)
->  	if (!core->pd_dl_venus)
->  		return -ENODEV;
->  
-> +skip_pmdomains:
-> +	if (!res->opp_pmdomain || !core->has_opp_table)
-
-nit: '!res->opp_pmdomain' isn't strictly needed, 'has_opp_table' is always
-false when there is no OPP domain. It's ok if you prefer to keep it.
-
-> +		return 0;
-> +
-> +	/* Attach the power domain for setting performance state */
-> +	opp_table = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
-> +	if (IS_ERR(opp_table)) {
-> +		ret = PTR_ERR(opp_table);
-> +		goto opp_attach_err;
-> +	} else if (opp_virt_dev) {
-
-If I read dev_pm_opp_attach_genpd() correctly 'opp_virt_dev' is always
-set unless the function returns an error. If that's correct the condition
-can be removed. Otherwise you probably want to initialize 'opp_virt_dev' to
-NULL, to not rely on dev_pm_opp_attach_genpd() to do it.
