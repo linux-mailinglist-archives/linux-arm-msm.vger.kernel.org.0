@@ -2,99 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AD421C4F43
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 09:37:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AC5B1C4FCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 10:02:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728180AbgEEHhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 03:37:06 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:36762 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726575AbgEEHhG (ORCPT
+        id S1728284AbgEEICX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 04:02:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725766AbgEEICW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 03:37:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588664225; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=kIFbus3pdBIDI9q5dNQbOWwVqxDFyCbLIbVYGC3IkTQ=;
- b=Gy5K16R+n2MFe6cFLSPr3A2rkHHMovPSF1X4WzK+z6sGeo5Og2LCLwK2cDv5VH0jZyXmx45u
- eAEgkAwAVksFzBt5+fFfvsga9pcFcBp6qVTGdPpeh8KkLV8PKqqPY3/u57hrGWtbGU3uq8/c
- yqoBURrkrXl2/jJmSuiqQGWv1rE=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb11796.7fc83b4433b0-smtp-out-n03;
- Tue, 05 May 2020 07:36:54 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A2428C44788; Tue,  5 May 2020 07:36:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01650C433D2;
-        Tue,  5 May 2020 07:36:52 +0000 (UTC)
+        Tue, 5 May 2020 04:02:22 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0673C061A0F;
+        Tue,  5 May 2020 01:02:21 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id f12so1001909edn.12;
+        Tue, 05 May 2020 01:02:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZHJL/wGmA1GyknYa9LMPwyUmT5ntJmA/lvZzR1e4zDk=;
+        b=cbLyXUbnbqNHYqTiQjFmduESXf4qSe5tDFHsdxZZXZk/l62hp5Pgk+zqPkbPvIFzqk
+         amS3lkjHZuOoEWea/p+sm4wB2QLJ4WgjBjk5amoM04xJwgnbsuXq2/Ym5MuihL15/169
+         vOb4XfI9vcGlYFZcIZS6LMs2ekJScUhjxoWZ8iQAkWU4MyU3kLvKN2o9x+2g9VKp6Hz9
+         YbBtZJiyl+2UF8aHcB/ErrK0/tE8lWDESUdzH5nyd+5Qg8RI2NOkKCnK1/Uw0DwlD6xt
+         xICn3Nt9+D6KnW8L9dsUo3NZuXS6HywNOf3LrySnfjEFoqAaz92T+KzrQgDnQD25UoGw
+         ASQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZHJL/wGmA1GyknYa9LMPwyUmT5ntJmA/lvZzR1e4zDk=;
+        b=mJy1SM2engl6Db1qPe/HH3BEJEWjadHKsmLOXq+uPhl6Z5zZa3V2ywFNdFlpM6vGDp
+         v8Yavi/VjUbTFLvBDq7oapPF8gGA3xLAs11XAT4KWzXlghS090JQ/lBVATc69QNcHvsw
+         lnxeaRAFrWxexpyNWMD7yl9LwJ1/ThfW9xBBCQPyx2/p9UOWghAEsqh3a2HXa+WZsfgr
+         1UjDYYh0BBzdESad3HxhKCibcWKdCaAcOg6fynWU3TUH9x/zhyg7CqrkN7JuL4PyYeUh
+         yshqIqwShdBEc7YWjeSjXeDlAHjJEkS67CFOtWbwVLEIMFIU6M/NrvlrtLeYWmi2/Jsm
+         B+lQ==
+X-Gm-Message-State: AGi0PubwQt1/QQ86jzYoWnPtdwFw0tr/s40tRY378VV4f3wsytuLyZCh
+        4O3J27UvMmoVGKrixY5vviONZYlUf+PJPQlFymijtYp7
+X-Google-Smtp-Source: APiQypLAbEUiBKhR7J4oihPY5/Cw3SuGUar4Ny8CfFZU1JA3gTWXTGBKmn8SMdIoMJ1FxTfxf998ZFXhw5+I0wPhexs=
+X-Received: by 2002:a05:6402:22ea:: with SMTP id dn10mr1489129edb.70.1588665740372;
+ Tue, 05 May 2020 01:02:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 05 May 2020 13:06:52 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
+References: <20200501203505.144362-1-konradybcio@gmail.com>
+ <20200501203505.144362-3-konradybcio@gmail.com> <20200505035543.GA5765@bogus>
+In-Reply-To: <20200505035543.GA5765@bogus>
+From:   Konrad Dybcio <konradybcio@gmail.com>
+Date:   Tue, 5 May 2020 10:01:44 +0200
+Message-ID: <CAMS8qEUF-M13Mn91DDWLqqPLwD=t6W4BqTd+BZ9q1oa7MCo8cg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dt-bindings: media: Document MSM8939 Venus
+To:     Rob Herring <robh@kernel.org>
+Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Nishanth Menon <nm@ti.com>, Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        linux-arm-msm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, lukasz.luba@arm.com,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH v4 07/12] OPP: Add and export helper to get icc path count
-In-Reply-To: <CAGETcx9=kfuG9WtaSxsDe_SM1Gewbn889eQ--3ui3H_rzm3BRA@mail.gmail.com>
-References: <20200504202243.5476-1-sibis@codeaurora.org>
- <20200504202243.5476-8-sibis@codeaurora.org>
- <CAGETcx9=kfuG9WtaSxsDe_SM1Gewbn889eQ--3ui3H_rzm3BRA@mail.gmail.com>
-Message-ID: <9c5786c552bf7f0092cecbbdabd7761b@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-media@vger.kernel.org, DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-05 03:33, Saravana Kannan wrote:
-> On Mon, May 4, 2020 at 1:24 PM Sibi Sankar <sibis@codeaurora.org> 
-> wrote:
->> 
->> Add and export 'dev_pm_opp_get_path_count' to get the icc path count
->> associated with the device.
-> 
-> This is not related to OPP. You should add this helper function to ICC
-> framework?
+Ah, mea culpa!
 
-yes it should be, I'll work with
-Georgi so that it gets re-used in
-his series as well.
+I completely forgot to mention that this depends on the MSM8939 GCC
+driver that has been sent a few days ago, sorry.. [1]
+
+Have you found any additional mistakes in this patch that I should
+correct besides this one?
 
 
-> 
-> -Saravana
+[1] https://lwn.net/Articles/818486/
 
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Konrad
