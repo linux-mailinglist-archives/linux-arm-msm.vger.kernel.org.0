@@ -2,160 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25B2D1C5CB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 17:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D533B1C5DBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 18:38:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730085AbgEEP5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 11:57:31 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:64901 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729317AbgEEP5a (ORCPT
+        id S1730488AbgEEQiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 12:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43428 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730461AbgEEQiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 11:57:30 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588694249; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=BP/jfHmx8eY86jcPlNpWPLEBZRDhZTNjqeOkpv8ek/U=; b=r+zylgJrJcdFx971gP7SIX6GIW3Rc52jHZEJkEv0f77tMEmi/T2J8P3njhXqrpgae1sbQRC+
- X3t/e+MK/2gBObSlnE6G7To4pSJnH/QU5nC2AbKgzQ1QghUJaUtkG9eM8VZpnY7OlhoDoWGr
- WmNfbfwZU4sAoXMZM149wpspwgM=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb18cd5.7f3ee3e30df8-smtp-out-n03;
- Tue, 05 May 2020 15:57:09 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 69336C432C2; Tue,  5 May 2020 15:57:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4E2AFC433BA;
-        Tue,  5 May 2020 15:57:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4E2AFC433BA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v5 8/8] bus: mhi: core: Ensure non-zero session or
- sequence ID values are used
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>, mani@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org
-References: <1588646662-25785-1-git-send-email-bbhatt@codeaurora.org>
- <1588646662-25785-9-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <4c224193-cdcf-b304-6652-e44b60e6e624@codeaurora.org>
-Date:   Tue, 5 May 2020 09:57:06 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Tue, 5 May 2020 12:38:14 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E43BC061A41
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 09:38:14 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a5so1411339pjh.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 09:38:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=luCcYzibiHAqsrwgIRj3POtmDDa35yugcUIsAAOot40=;
+        b=MAyGVAMZyJo/oMcQG84PQl4YbqtAG2c7SWxWjvlORg+zAKlaMVkPh6jZcKqjxiiqkU
+         j1EpVWllG9hKR0QcAtWtOnnDl6jHvEDz8IvUsJp+pNyztK/bEj93JS0MtKNqcbf8rnA8
+         TdQN3YzhjTKjkOKPPsrx9bObDHOZ9LsGAto+k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=luCcYzibiHAqsrwgIRj3POtmDDa35yugcUIsAAOot40=;
+        b=ASceVlRAqtKs0fjlJONvNmIeJLQQjZVNtSUs5bWZGQsiBN52fgeKXdwi2qQPWKvEVg
+         3NJbKftkJiHPZ5qPO24dmY7bJonI4UZNmmFzZ8dIB8dq0auVZ0V0KfI8JYgoNpno8qOy
+         EC7qKSZIhacIOmLYsbN8vtMXJjP6kM4n8BN3jNUmd9lhiozbwEYv7eK7PRRU2Jf7O+Yy
+         +kjlgKU1OeE1LzOHhwdB9fIAByUkSHv+NqHnkY2Z4LVRUFOfcajnwr6yBozUlENtrW+N
+         fe4x4uHEYP02Wx7iDr4stDYKvm0QaPJUqpTfcXIoMG/kIMJN8jxhNJeDGnc11XmHjn28
+         R8HA==
+X-Gm-Message-State: AGi0Puam+e+1WEZeuixIxm8fN9t71pKDs3VHVeppWn+pToEBKzKdEsMU
+        z+/oq7KitJXUZa7gettOwXAK7WlmfGY=
+X-Google-Smtp-Source: APiQypLHwVgFzIc6p5rvaNU2w6BbNNq4RXORPRe2429s/tVbdXYceAvmwdEyYfv4yP/+tX8H/T5eCA==
+X-Received: by 2002:a17:90b:1111:: with SMTP id gi17mr4096115pjb.121.1588696693595;
+        Tue, 05 May 2020 09:38:13 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id p190sm2522949pfp.207.2020.05.05.09.38.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 May 2020 09:38:12 -0700 (PDT)
+Date:   Tue, 5 May 2020 09:38:11 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-spi@vger.kernel.org
+Subject: Re: [PATCH v4 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf
+ state
+Message-ID: <20200505163811.GW4525@google.com>
+References: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
+ <1588507469-31889-7-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1588646662-25785-9-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1588507469-31889-7-git-send-email-rnayak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/4/2020 8:44 PM, Bhaumik Bhatt wrote:
-> While writing any sequence or session identifiers, it is possible that
-> the host could write a zero value, whereas only non-zero values should
-> be supported writes to those registers. Ensure that the host does not
-> write a non-zero value for them and also log them in debug messages.
+Hi Rajendra,
+
+On Sun, May 03, 2020 at 05:34:29PM +0530, Rajendra Nayak wrote:
+> QSPI needs to vote on a performance state of a power domain depending on
+> the clock rate. Add support for it by specifying the perf state/clock rate
+> as an OPP table in device tree.
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Mark Brown <broonie@kernel.org>
+> Cc: Alok Chauhan <alokc@codeaurora.org>
+> Cc: Akash Asthana <akashast@codeaurora.org>
+> Cc: linux-spi@vger.kernel.org
 > ---
->   drivers/bus/mhi/core/boot.c     | 15 +++++++--------
->   drivers/bus/mhi/core/internal.h |  2 ++
->   2 files changed, 9 insertions(+), 8 deletions(-)
+>  drivers/spi/spi-qcom-qspi.c | 29 ++++++++++++++++++++++++++++-
+>  1 file changed, 28 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-> index e5fcde1..7b9b561 100644
-> --- a/drivers/bus/mhi/core/boot.c
-> +++ b/drivers/bus/mhi/core/boot.c
-> @@ -43,10 +43,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->   		      lower_32_bits(mhi_buf->dma_addr));
->   
->   	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, mhi_buf->len);
-> -	sequence_id = prandom_u32() & BHIE_RXVECSTATUS_SEQNUM_BMSK;
-> -
-> -	if (unlikely(!sequence_id))
-> -		sequence_id = 1;
-> +	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_RXVECSTATUS_SEQNUM_BMSK);
->   
->   	mhi_write_reg_field(mhi_cntrl, base, BHIE_RXVECDB_OFFS,
->   			    BHIE_RXVECDB_SEQNUM_BMSK, BHIE_RXVECDB_SEQNUM_SHFT,
-> @@ -189,7 +186,9 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
->   		return -EIO;
->   	}
->   
-> -	dev_dbg(dev, "Starting AMSS download via BHIe\n");
-> +	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_TXVECSTATUS_SEQNUM_BMSK);
-> +	dev_dbg(dev, "Starting AMSS download via BHIe. Sequence ID:%u\n",
-> +		sequence_id);
->   	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECADDR_HIGH_OFFS,
->   		      upper_32_bits(mhi_buf->dma_addr));
->   
-> @@ -198,7 +197,6 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
->   
->   	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECSIZE_OFFS, mhi_buf->len);
->   
-> -	sequence_id = prandom_u32() & BHIE_TXVECSTATUS_SEQNUM_BMSK;
->   	mhi_write_reg_field(mhi_cntrl, base, BHIE_TXVECDB_OFFS,
->   			    BHIE_TXVECDB_SEQNUM_BMSK, BHIE_TXVECDB_SEQNUM_SHFT,
->   			    sequence_id);
-> @@ -246,14 +244,15 @@ static int mhi_fw_load_sbl(struct mhi_controller *mhi_cntrl,
->   		goto invalid_pm_state;
->   	}
->   
-> -	dev_dbg(dev, "Starting SBL download via BHI\n");
-> +	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
-> +	dev_dbg(dev, "Starting SBL download via BHI. Session ID:%u\n",
-> +		session_id);
->   	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
->   	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
->   		      upper_32_bits(dma_addr));
->   	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
->   		      lower_32_bits(dma_addr));
->   	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
-> -	session_id = prandom_u32() & BHI_TXDB_SEQNUM_BMSK;
->   	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
->   	read_unlock_bh(pm_lock);
->   
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 0965ca3..3205a92 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -452,6 +452,8 @@ enum mhi_pm_state {
->   #define PRIMARY_CMD_RING		0
->   #define MHI_DEV_WAKE_DB			127
->   #define MHI_MAX_MTU			0xffff
-> +#define MHI_RANDOM_U32_NONZERO(bmsk)	((prandom_u32_max(U32_MAX - 1) & \
-> +					 (bmsk)) + 1)
+> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+> index 3c4f83b..eb53c00 100644
+> --- a/drivers/spi/spi-qcom-qspi.c
+> +++ b/drivers/spi/spi-qcom-qspi.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/pm_runtime.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/spi/spi.h>
+>  #include <linux/spi/spi-mem.h>
+>  
+> @@ -139,6 +140,8 @@ struct qcom_qspi {
+>  	struct device *dev;
+>  	struct clk_bulk_data *clks;
+>  	struct qspi_xfer xfer;
+> +	struct opp_table *opp_table;
+> +	bool has_opp_table;
+>  	/* Lock to protect xfer and IRQ accessed registers */
+>  	spinlock_t lock;
+>  };
+> @@ -235,7 +238,7 @@ static int qcom_qspi_transfer_one(struct spi_master *master,
+>  		speed_hz = xfer->speed_hz;
+>  
+>  	/* In regular operation (SBL_EN=1) core must be 4x transfer clock */
+> -	ret = clk_set_rate(ctrl->clks[QSPI_CLK_CORE].clk, speed_hz * 4);
+> +	ret = dev_pm_opp_set_rate(ctrl->dev, speed_hz * 4);
+>  	if (ret) {
+>  		dev_err(ctrl->dev, "Failed to set core clk %d\n", ret);
+>  		return ret;
+> @@ -481,6 +484,20 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>  	master->handle_err = qcom_qspi_handle_err;
+>  	master->auto_runtime_pm = true;
+>  
+> +	ctrl->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
+> +	if (IS_ERR(ctrl->opp_table)) {
+> +		ret = PTR_ERR(ctrl->opp_table);
+> +		goto exit_probe_master_put;
+> +	}
+> +	/* OPP table is optional */
+> +	ret = dev_pm_opp_of_add_table(&pdev->dev);
+> +	if (!ret) {
+> +		ctrl->has_opp_table = true;
+> +	} else if (ret != -ENODEV) {
+> +		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+> +		goto exit_probe_master_put;
+> +	}
+> +
+>  	pm_runtime_enable(dev);
+>  
+>  	ret = spi_register_master(master);
+> @@ -488,6 +505,9 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>  		return 0;
+>  
+>  	pm_runtime_disable(dev);
+> +	if (ctrl->has_opp_table)
+> +		dev_pm_opp_of_remove_table(&pdev->dev);
+> +	dev_pm_opp_put_clkname(ctrl->opp_table);
+>  
+>  exit_probe_master_put:
+>  	spi_master_put(master);
+> @@ -498,6 +518,11 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>  static int qcom_qspi_remove(struct platform_device *pdev)
+>  {
+>  	struct spi_master *master = platform_get_drvdata(pdev);
+> +	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
+> +
+> +	if (ctrl->has_opp_table)
+> +		dev_pm_opp_of_remove_table(&pdev->dev);
+> +	dev_pm_opp_put_clkname(ctrl->opp_table);
 
-I still think this is broken.  I'm sorry for the back and forth.
+IIUC there can still be active transfers before the controller is
+unregistered. If that is correct the above should be done after the
+spi_unregister_master() call below.
 
-So, again if prandom_u32_max returns 0xFF, and bmsk is 0xF, we get 0xF 
-by the & operation, then we add 1, which makes the result 0x10, which is 
-outside of the range of bmsk, and is basically 0, assuming the register 
-doesn't accept values outside of the lower 4 bits.
-
-I think the solution should be:
-prandom_u32_max(bmsk) + 1
-
-If we treat bmsk like a ordinary value (say 7), then prandom_u32_max 
-will return a value from 0-6.  Then by adding 1, we shift that range to 
-1-7, which I think is exactly what we want.
-
-Now, this assumes that bmsk is a contiguous mask of bits from bit 0 to 
-N.  IE 0xFF and 0x4F are valid, but 0xFB is not.  Do you think that is a 
-valid assumption?
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+>  
+>  	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
+>  	spi_unregister_master(master);
+> @@ -512,6 +537,8 @@ static int __maybe_unused qcom_qspi_runtime_suspend(struct device *dev)
+>  	struct spi_master *master = dev_get_drvdata(dev);
+>  	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
+>  
+> +	/* Drop the performance state vote */
+> +	dev_pm_opp_set_rate(dev, 0);
+>  	clk_bulk_disable_unprepare(QSPI_NUM_CLKS, ctrl->clks);
+>  
+>  	return 0;
