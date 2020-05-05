@@ -2,102 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 066FC1C4C32
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 04:33:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C1CF1C4C47
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2020 04:44:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727805AbgEECcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 May 2020 22:32:51 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:59639 "EHLO
+        id S1727093AbgEECof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 May 2020 22:44:35 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:14337 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726788AbgEECcv (ORCPT
+        by vger.kernel.org with ESMTP id S1726482AbgEECof (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 May 2020 22:32:51 -0400
+        Mon, 4 May 2020 22:44:35 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588645970; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=aWsP1jrgv5VOaBcGYPLjJDNZ7GM9ZWmCxTTYgdbAIYY=;
- b=a8TmWCez8Afhptf8/LVHLfhwOts/+ZE253AimWcZvhyNdLlistR/kv38ceDMg8ll/gaN4W6l
- MFArN4pOLLLQyq6ayjHCS2kCr9OzurY3wl87mheXokOI825xcBK0jA3sZ8Yrn0VpJWitpD3S
- pOUogW3OVkDmFkKVvmfxnn914kM=
+ s=smtp; t=1588646674; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=cnbXS/68+99rkBapeyeMgdaXL1PCbfw3dbdVHYAn7W8=; b=KALPvwsQUorr1OXgLFJmxIrAX6yV/wbj9SkKHy+um1eioszyQNKNKNUycpZRDOaD+uUCY+az
+ gad/m7YY5jY1v/pWdEMFJpFLGdwg/FkOp6xWlLK4J7PwuTVxqla021C19qsKj95+JI5B5mJj
+ N+X3KHe0TaT7z4H41i+cDMol9tI=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb0d312.7fa23d905b90-smtp-out-n03;
+ Tue, 05 May 2020 02:44:34 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3A4F5C433BA; Tue,  5 May 2020 02:32:42 +0000 (UTC)
+        id 219C9C433BA; Tue,  5 May 2020 02:44:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from bbhatt-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ACAD7C433D2;
-        Tue,  5 May 2020 02:32:41 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 04 May 2020 19:32:41 -0700
-From:   bbhatt@codeaurora.org
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     mani@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, hemantk@codeaurora.org
-Subject: Re: [PATCH v4 8/8] bus: mhi: core: Ensure non-zero session or
- sequence ID values are used
-In-Reply-To: <2a249d99-b1e7-7943-0ed4-d5529f7abc33@codeaurora.org>
-References: <1588386725-1165-1-git-send-email-bbhatt@codeaurora.org>
- <1588386725-1165-9-git-send-email-bbhatt@codeaurora.org>
- <2a249d99-b1e7-7943-0ed4-d5529f7abc33@codeaurora.org>
-Message-ID: <623c100dc1850c8d8f9a6412d7153fd1@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F7B9C433D2;
+        Tue,  5 May 2020 02:44:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F7B9C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     mani@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk@codeaurora.org, jhugo@codeaurora.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v5 0/8] Bug fixes and improved logging in MHI
+Date:   Mon,  4 May 2020 19:44:14 -0700
+Message-Id: <1588646662-25785-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-04 07:33, Jeffrey Hugo wrote:
-> On 5/1/2020 8:32 PM, Bhaumik Bhatt wrote:
->> While writing any sequence or session identifiers, it is possible that
->> the host could write a zero value, whereas only non-zero values should
->> be supported writes to those registers. Ensure that the host does not
->> write a non-zero value for them and also log them in debug messages.
->> 
->> Suggested-by: Jeffrey Hugo <jhugo@codeaurora.org>
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>   drivers/bus/mhi/core/boot.c     | 15 +++++++--------
->>   drivers/bus/mhi/core/internal.h |  1 +
->>   2 files changed, 8 insertions(+), 8 deletions(-)
->> 
->> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
->> index e5fcde1..9fe9c59 100644
->> --- a/drivers/bus/mhi/core/boot.c
->> +++ b/drivers/bus/mhi/core/boot.c
->> @@ -43,10 +43,7 @@ void mhi_rddm_prepare(struct mhi_controller 
->> *mhi_cntrl,
->>   		      lower_32_bits(mhi_buf->dma_addr));
->>     	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, 
->> mhi_buf->len);
->> -	sequence_id = prandom_u32() & BHIE_RXVECSTATUS_SEQNUM_BMSK;
->> -
->> -	if (unlikely(!sequence_id))
->> -		sequence_id = 1;
->> +	sequence_id = (MHI_RANDOM_U32_NONZERO & 
->> BHIE_RXVECSTATUS_SEQNUM_BMSK);
-> 
-> I don't think this math works.  For example, if MHI_RANDOM_U32_NONZERO
-> is 0x0FF0, and BHIE_RXVECSTATUS_SEQNUM_BMSK is 0xF, then sequence_id
-> will end up being 0.
+A set of patches for bug fixes and improved logging in mhi/core/boot.c.
+Verified on x86 and arm64 platforms.
 
-In this case, SEQNUM BMSK is set to 0x3FFFFFFF so this change will still 
-work as
-we only supplied a non-zero number macro to AND with the mask.
-However, I agree that may not be the case always that we would know the 
-bitmask
-in advance so it is better to fix it for good.
+v5:
+-Updated the macro MHI_RANDOM_U32_NONZERO to take a bitmask as the input
+parameter and output a non-zero value between 1 and U32_MAX
 
-Thanks for the catch! I have updated the change to have the macro take 
-the
-bitmask as a parameter and output a non-zero value.
+v4:
+-Dropped the change: bus: mhi: core: WARN_ON for malformed vector table
+-Updated bus: mhi: core: Read transfer length from an event properly to include
+parse rsc events
+-Use prandom_u32_max() instead of prandom_u32 to avoid if check in
+bus: mhi: core: Ensure non-zero session or sequence ID values are used
+
+v3:
+-Fixed signed-off-by tags
+-Add a refactor patch for MHI queue APIs
+-Commit text fix in bus: mhi: core: Read transfer length from an event properly
+-Fix channel ID range check for ctrl and data event rings processing
+
+v2:
+-Fix channel ID range check potential infinite loop
+-Add appropriate signed-off-by tags
+
+Bhaumik Bhatt (4):
+  bus: mhi: core: Handle firmware load using state worker
+  bus: mhi: core: Return appropriate error codes for AMSS load failure
+  bus: mhi: core: Improve debug logs for loading firmware
+  bus: mhi: core: Ensure non-zero session or sequence ID values are used
+
+Hemant Kumar (4):
+  bus: mhi: core: Refactor mhi queue APIs
+  bus: mhi: core: Cache intmod from mhi event to mhi channel
+  bus: mhi: core: Add range check for channel id received in event ring
+  bus: mhi: core: Read transfer length from an event properly
+
+ drivers/bus/mhi/core/boot.c     |  75 ++++++++++++------------
+ drivers/bus/mhi/core/init.c     |   5 +-
+ drivers/bus/mhi/core/internal.h |   6 +-
+ drivers/bus/mhi/core/main.c     | 124 ++++++++++++++++++++--------------------
+ drivers/bus/mhi/core/pm.c       |   6 +-
+ include/linux/mhi.h             |   2 -
+ 6 files changed, 109 insertions(+), 109 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
