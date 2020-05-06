@@ -2,172 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A9B771C64AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 01:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 722BF1C64F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 02:19:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728934AbgEEX6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 May 2020 19:58:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55638 "EHLO
+        id S1728356AbgEFATG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 May 2020 20:19:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727895AbgEEX6I (ORCPT
+        with ESMTP id S1728512AbgEFATD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 May 2020 19:58:08 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07097C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 16:58:07 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id v63so80460pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 16:58:07 -0700 (PDT)
+        Tue, 5 May 2020 20:19:03 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DF22C061A10
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 17:19:03 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id z1so28521vsn.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 17:19:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=JzaMwZpjc8kiyvkXAl8SC5OdIZko9B1uAdjf5EokFQA=;
-        b=GcCRqF0rng+bDWT+XXGpRMzlhC2e6WqRpie++FCTYazS0pzx+X/KrFcQezY41N8Bqo
-         L29pS/NkKaT2NqRgus6tqpdexXorGt7AUV+kFahU2b1GCiXg75mTfXKtntElnpIKDADf
-         HGKWtD5DBrBDh7IcgMYYf2RgdPMDDROgrQGmw=
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uxf7PIfuQA1AmzwbgiAc6qi52bK5LTEy5mM67o299pg=;
+        b=YP9DojNnvL0GKT59bxFJk7GMLrsEk2LCd5aowl6qLFcQdpPAxIs6zTVGg2i6fYhDJz
+         dyvRxqWVH9vP7aAeBY2R+7ovwrMKFqgr+zf5hfdg2ome+cQL9T+tX2oEiMp15mZ3FxB7
+         qL0Sg3ZHqsoiZp8InrBjMlJzG2kBeeYmEkBsk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=JzaMwZpjc8kiyvkXAl8SC5OdIZko9B1uAdjf5EokFQA=;
-        b=CCy2yX9ND76cymnUyTO7IRpl3u9kd4dFjM3nH/pyxW3MS/00I4yFjCzvqU356FXwlS
-         HNEYIP6UJorbRjoX7yUz/w7aJF3kBy97137rBKwCilZTQ2Srl6AuUm6qFXSZaqlJQfgU
-         qfzPOv8CiK0QHek/vBUsr1iffv+RXq+HCxk9uXhuEcjTauxAahdZIgogphhkCh4cKv+g
-         iXqjZbXXDBy1Olhu/5M9wAJfq4ZUr89ZkkZ8gLNWjbIDNMmC3db9ud0431ZN47DBWSNr
-         JXzrA7N9V23MV2F+RgjheYFh7vrMbgsWD2mDfQcNKnIKfeK8kdmd86rx1FzzKiZtVVj0
-         tLIQ==
-X-Gm-Message-State: AGi0PuaDPIOnPRLuP56D3/de+MKCuKwnNJ0O6uXc4oYgiy0CKO7v9Gz+
-        +ri/7UMOrXx34YH4OwjDh2xw6A==
-X-Google-Smtp-Source: APiQypIqzHj2k/gz4IlPISOypaTNQykNBBmbQbErw1/2L6sk4p7yd0/jxv3gmS3o6U9qQVXKSF+LKg==
-X-Received: by 2002:a63:e62:: with SMTP id 34mr4290017pgo.300.1588723087207;
-        Tue, 05 May 2020 16:58:07 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id b13sm42170pfo.67.2020.05.05.16.58.04
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uxf7PIfuQA1AmzwbgiAc6qi52bK5LTEy5mM67o299pg=;
+        b=KxZORL4jCHepow90rl0RRday4lFB+teZlMgtGkuW4WyeIJ40kpwo8otb7dwLGTtqi4
+         bkmuLYwNcCxV2Ds3cci+E5dyKEhlX8SN9FhjCzYByah0/Jm2CNUq4pj/Ob+33TqN8u0a
+         bnSk3Vs7EL+nRx8gCvuQhLTsL/QjIHLRCJ/r2QOok9s5xTxTPQed3joqy/0Q4V1eXutL
+         m0LaBru6N7SPXiWkVp9JfWSfV5X2ZbxCRIps6+xuEudKaLTF8P3umptnvJzoGYd4yO8f
+         GpXS+g/+4LSeIbd/i+3PxO+uNn2TQhqZa7Mwvy/DlkBbOabcC9MmOymw/TVnm/wlg5wX
+         59jQ==
+X-Gm-Message-State: AGi0PuaZdsd0dOJ/SK1vTCMVod8Gtid1RVJfj7sqkroUnNaqsnZi+p5j
+        XoXNtTwu1aaq9nRey1RLZG5oLiwZFwA=
+X-Google-Smtp-Source: APiQypJELeZ8X2CZJCUgqrefhltCKaGs1I0+T2ck0ju2RL5ofjsbFjMNqvYIZrv+jzBYzgkwNFqstw==
+X-Received: by 2002:a67:ec8e:: with SMTP id h14mr5533298vsp.5.1588724342017;
+        Tue, 05 May 2020 17:19:02 -0700 (PDT)
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com. [209.85.217.41])
+        by smtp.gmail.com with ESMTPSA id l9sm30158vsr.21.2020.05.05.17.19.00
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 May 2020 16:58:06 -0700 (PDT)
-Subject: Re: [PATCH v3 6/7] misc: bcm-vk: add Broadcom VK driver
-To:     kbuild test robot <lkp@intel.com>,
-        Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        bjorn.andersson@linaro.org, Arnd Bergmann <arnd@arndb.de>
-Cc:     kbuild-all@lists.01.org, "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Linux Memory Management List <linux-mm@kvack.org>,
-        Dan Carpenter <error27@gmail.com>
-References: <20200420162809.17529-7-scott.branden@broadcom.com>
- <202004221945.LY6x0DQD%lkp@intel.com>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <b3e0c534-9e6a-f270-b6af-3658dca1bd42@broadcom.com>
-Date:   Tue, 5 May 2020 16:58:03 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Tue, 05 May 2020 17:19:00 -0700 (PDT)
+Received: by mail-vs1-f41.google.com with SMTP id s11so8641vsm.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 17:19:00 -0700 (PDT)
+X-Received: by 2002:a05:6102:4d:: with SMTP id k13mr5406597vsp.198.1588724340078;
+ Tue, 05 May 2020 17:19:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <202004221945.LY6x0DQD%lkp@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20200504213624.1.Ibc8eeddcee94984a608d6900b46f9ffde4045da4@changeid>
+ <20200505082436.GD9658@pendragon.ideasonboard.com> <CAD=FV=WjUpwu5204K8yHzqsJv4vQX5S5CArH1Kj_kqjhZzTc9A@mail.gmail.com>
+ <20200505210609.GA6094@pendragon.ideasonboard.com> <CAD=FV=UnGOYh8JX2=fEAqPN7wqANc0QevTirNO-WUDYMPqXcrg@mail.gmail.com>
+ <20200505211401.GC6094@pendragon.ideasonboard.com> <CAD=FV=WgRC-HViMxttF4VK+n48HNRuqAau8S7mgx6oSWsbZcgA@mail.gmail.com>
+In-Reply-To: <CAD=FV=WgRC-HViMxttF4VK+n48HNRuqAau8S7mgx6oSWsbZcgA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 5 May 2020 17:18:48 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U8_Krob9oftJjzrYs1zrbLr9WZ-HSStv5_rbq9MpTChw@mail.gmail.com>
+Message-ID: <CAD=FV=U8_Krob9oftJjzrYs1zrbLr9WZ-HSStv5_rbq9MpTChw@mail.gmail.com>
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Implement lane reordering + polarity
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All the kbuild and sparse issues should be resolved in PATCH v4.
+Hi,
 
-On 2020-04-22 4:17 a.m., kbuild test robot wrote:
-> Hi Scott,
+On Tue, May 5, 2020 at 2:24 PM Doug Anderson <dianders@chromium.org> wrote:
 >
-> I love your patch! Perhaps something to improve:
+> Hi,
 >
-> [auto build test WARNING on driver-core/driver-core-testing]
-> [also build test WARNING on next-20200421]
-> [cannot apply to char-misc/char-misc-testing kselftest/next linus/master v5.7-rc2]
-> [if your patch is applied to the wrong git tree, please drop us a note to help
-> improve the system. BTW, we also suggest to use '--base' option to specify the
-> base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
+> On Tue, May 5, 2020 at 2:14 PM Laurent Pinchart
+> <laurent.pinchart@ideasonboard.com> wrote:
+> >
+> > > I'll add this documentation into the comments of the yaml, but I'm not
+> > > going to try to implement enforcement at the yaml level.
+> >
+> > Why not ? :-)
 >
-> url:    https://github.com/0day-ci/linux/commits/Scott-Branden/firmware-add-partial-read-support-in-request_firmware_into_buf/20200422-114528
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git 55623260bb33e2ab849af76edf2253bc04cb241f
-> reproduce:
->          # apt-get install sparse
->          # sparse version: v0.6.1-191-gc51a0382-dirty
->          make ARCH=x86_64 allmodconfig
->          make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
+> Because trying to describe anything in the yaml bindings that doesn't
+> fit in the exact pattern of things that the yaml bindings are designed
+> to check is like constructing the empire state building with only
+> toothpicks.
 >
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kbuild test robot <lkp@intel.com>
+> If you want to suggest some syntax that would actually make this
+> doable without blowing out the yaml bindings then I'm happy to add it.
+> Me being naive would assume that we'd need to do an exhaustive list of
+> the OK combinations.  That would be fine for the 1-land and 2-lane
+> cases, but for 4 lanes that means adding 256 entries to the bindings.
 >
->
-> sparse warnings: (new ones prefixed by >>)
->
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse: sparse: incorrect type in assignment (different address spaces) @@    expected struct bcm_vk_peer_log *p_ctl @@    got struct bcm_vk_peer_log *p_ctl @@
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse:    expected struct bcm_vk_peer_log *p_ctl
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:189:15: sparse:    got void [noderef] <asn:2> *
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected void const [noderef] <asn:1> *from @@    got oderef] <asn:1> *from @@
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse:    expected void const [noderef] <asn:1> *from
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:685:36: sparse:    got struct vk_image *arg
->     drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected void const [noderef] <asn:1> *from @@    got oderef] <asn:1> *from @@
->     drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse:    expected void const [noderef] <asn:1> *from
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:780:36: sparse:    got struct vk_reset *arg
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected struct vk_image *arg @@    got void [nstruct vk_image *arg @@
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse:    expected struct vk_image *arg
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:858:45: sparse:    got void [noderef] <asn:1> *argp
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse: sparse: incorrect type in argument 2 (different address spaces) @@    expected struct vk_reset *arg @@    got void [nstruct vk_reset *arg @@
->>> drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse:    expected struct vk_reset *arg
->     drivers/misc/bcm-vk/bcm_vk_dev.c:862:40: sparse:    got void [noderef] <asn:1> *argp
-> --
->>> drivers/misc/bcm-vk/bcm_vk_msg.c:507:17: sparse: sparse: cast removes address space '<asn:2>' of expression
->     drivers/misc/bcm-vk/bcm_vk_msg.c:707:15: sparse: sparse: cast removes address space '<asn:2>' of expression
->     drivers/misc/bcm-vk/bcm_vk_msg.c:715:23: sparse: sparse: cast removes address space '<asn:2>' of expression
->     drivers/misc/bcm-vk/bcm_vk_msg.c:871:31: sparse: sparse: cast removes address space '<asn:2>' of expression
->     drivers/misc/bcm-vk/bcm_vk_msg.c:899:47: sparse: sparse: cast removes address space '<asn:2>' of expression
->
-> vim +189 drivers/misc/bcm-vk/bcm_vk_dev.c
->
->     180	
->     181	static void bcm_vk_dump_peer_log(struct bcm_vk *vk)
->     182	{
->     183		struct bcm_vk_peer_log log, *p_ctl;
->     184		char loc_buf[BCM_VK_PEER_LOG_LINE_MAX];
->     185		int cnt;
->     186		struct device *dev = &vk->pdev->dev;
->     187		uint data_offset;
->     188	
->   > 189		p_ctl = vk->bar[BAR_2] + vk->peerlog_off;
->     190		log = *p_ctl;
->     191		/* do a rmb() to make sure log is updated */
->     192		rmb();
->     193	
->     194		dev_dbg(dev, "Peer PANIC: Size 0x%x(0x%x), [Rd Wr] = [%d %d]\n",
->     195			log.buf_size, log.mask, log.rd_idx, log.wr_idx);
->     196	
->     197		cnt = 0;
->     198		data_offset = vk->peerlog_off + sizeof(struct bcm_vk_peer_log);
->     199		while (log.rd_idx != log.wr_idx) {
->     200			loc_buf[cnt] = vkread8(vk, BAR_2, data_offset + log.rd_idx);
->     201	
->     202			if ((loc_buf[cnt] == '\0') ||
->     203			    (cnt == (BCM_VK_PEER_LOG_LINE_MAX - 1))) {
->     204				dev_err(dev, "%s", loc_buf);
->     205				cnt = 0;
->     206			} else {
->     207				cnt++;
->     208			}
->     209			log.rd_idx = (log.rd_idx + 1) & log.mask;
->     210		}
->     211		/* update rd idx at the end */
->     212		vkwrite32(vk, log.rd_idx, BAR_2, vk->peerlog_off);
->     213	}
->     214	
->
-> ---
-> 0-DAY CI Kernel Test Service, Intel Corporation
-> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> I think the correct way to do this would require adding code in the
+> <https://github.com/devicetree-org/dt-schema> project but that's
+> really only done for generic subsystem-level concepts and not for a
+> single driver.
 
+OK.  Looked at your review of the .yaml and the "uniqueItems" is
+probably the bit I didn't think of.  With that I can limit this but
+it's still a little awkward.  I still haven't figured out how to force
+data-lanes and lane-polarities to have the same number of items, too.
+I'll add this as an add-on patch to my v2 and folks can decide if they
+like it or hate it.
+
+# See ../../media/video-interface.txt for details.
+data-lanes:
+  oneOf:
+    - minItems: 1
+      maxItems: 1
+      uniqueItems: true
+      items:
+        enum:
+          - 0
+          - 1
+      description:
+        If you have 1 logical lane it can go to either physical
+        port 0 or port 1.  Port 0 is suggested.
+
+    - minItems: 2
+      maxItems: 2
+      uniqueItems: true
+      items:
+        enum:
+          - 0
+          - 1
+      description:
+        If you have 2 logical lanes they can be reordered on
+        physical ports 0 and 1.
+
+    - minItems: 4
+      maxItems: 4
+      uniqueItems: true
+      items:
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+      description:
+        If you have 4 logical lanes they can be reordered on
+        in any way.
+
+-Doug
