@@ -2,182 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B091B1C731E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 16:42:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBD0B1C7579
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 17:56:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729231AbgEFOmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 10:42:07 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:19143 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729227AbgEFOmH (ORCPT
+        id S1729832AbgEFP4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 11:56:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35572 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728991AbgEFP4y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 10:42:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588776125; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=cx846LpCI/mxVQVVyh+RuRGtZ75GrHh3+ShglsOfGD4=;
- b=VrB6p4Xy5AKLQxHK+mf/kPuXe8nDfUWFmgjtCDK/h6EpSAToQsSp3VDfDbK3/BrGvh5VHFd3
- dCobiEkVI0ORhRhXaWcydrHcufZvetJSym7qNQL0KT/aWc4wf/xj4aPQZ1aYHt5s/g/JaH4r
- Y1arxWt5q3mTsPEo5kxBIau4RXM=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb2ccb5.7f1064742c70-smtp-out-n02;
- Wed, 06 May 2020 14:41:57 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E0711C44791; Wed,  6 May 2020 14:41:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 887D4C433F2;
-        Wed,  6 May 2020 14:41:54 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 06 May 2020 20:11:54 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Nishanth Menon <nm@ti.com>, Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Wed, 6 May 2020 11:56:54 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C539C061A0F;
+        Wed,  6 May 2020 08:56:54 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id E30A9542;
+        Wed,  6 May 2020 17:56:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1588780613;
+        bh=JqP+SOCphmyvR7LY5kOsdyerYHIGqof5vTW6QMlbE0I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JSCJRr1YjHYhNJEGPipbcitzN44oikeZK4tjqwRcMKFUE4bUrDOMma8NIzvzBgk0S
+         5gJAR9gGYZ7ytOiUKewbJSais47zFkOxx0YnkZW8MXmf+cT8rRSO/PxqG9mwqEQD+v
+         AjYuBY3gGFlLCdse5mLMf21yRvmsRIJ/EgkXX6ME=
+Date:   Wed, 6 May 2020 18:56:47 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH v4 00/12] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
-In-Reply-To: <CAHLCerM_wdHDwzEDN7YxU9pBdHo3KvNyJeRWMC6seTG6aCH7nw@mail.gmail.com>
-References: <20200504202243.5476-1-sibis@codeaurora.org>
- <CAHLCerM_wdHDwzEDN7YxU9pBdHo3KvNyJeRWMC6seTG6aCH7nw@mail.gmail.com>
-Message-ID: <87126044e367432ee8722ec2346d1dd5@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Implement lane reordering +
+ polarity
+Message-ID: <20200506155647.GD15206@pendragon.ideasonboard.com>
+References: <20200504213624.1.Ibc8eeddcee94984a608d6900b46f9ffde4045da4@changeid>
+ <20200505082436.GD9658@pendragon.ideasonboard.com>
+ <CAD=FV=WjUpwu5204K8yHzqsJv4vQX5S5CArH1Kj_kqjhZzTc9A@mail.gmail.com>
+ <20200505210609.GA6094@pendragon.ideasonboard.com>
+ <CAD=FV=UnGOYh8JX2=fEAqPN7wqANc0QevTirNO-WUDYMPqXcrg@mail.gmail.com>
+ <20200505211401.GC6094@pendragon.ideasonboard.com>
+ <CAD=FV=WgRC-HViMxttF4VK+n48HNRuqAau8S7mgx6oSWsbZcgA@mail.gmail.com>
+ <CAD=FV=U8_Krob9oftJjzrYs1zrbLr9WZ-HSStv5_rbq9MpTChw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=U8_Krob9oftJjzrYs1zrbLr9WZ-HSStv5_rbq9MpTChw@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Amit,
-Thanks for taking time to review
-the series!
+Hi Doug,
 
-On 2020-05-06 18:08, Amit Kucheria wrote:
-> On Tue, May 5, 2020 at 1:54 AM Sibi Sankar <sibis@codeaurora.org> 
-> wrote:
->> 
->> This patch series aims to extend cpu based scaling support to L3/DDR 
->> on
->> SDM845 and SC7180 SoCs.
->> 
->> Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
->> Patches [4-8] - Update bw levels based on cpu frequency change
->> Patches [9-10] - Add tag setting support to OPP
->> Patches [11-12] - Add the cpu opp tables for SDM845 and SC7180 SoCs.
->> 
->> Depends on the following series:
->> https://lore.kernel.org/patchwork/cover/1230626/
+On Tue, May 05, 2020 at 05:18:48PM -0700, Doug Anderson wrote:
+> On Tue, May 5, 2020 at 2:24 PM Doug Anderson wrote:
+> > On Tue, May 5, 2020 at 2:14 PM Laurent Pinchart wrote:
+> > >
+> > > > I'll add this documentation into the comments of the yaml, but I'm not
+> > > > going to try to implement enforcement at the yaml level.
+> > >
+> > > Why not ? :-)
+> >
+> > Because trying to describe anything in the yaml bindings that doesn't
+> > fit in the exact pattern of things that the yaml bindings are designed
+> > to check is like constructing the empire state building with only
+> > toothpicks.
+> >
+> > If you want to suggest some syntax that would actually make this
+> > doable without blowing out the yaml bindings then I'm happy to add it.
+> > Me being naive would assume that we'd need to do an exhaustive list of
+> > the OK combinations.  That would be fine for the 1-land and 2-lane
+> > cases, but for 4 lanes that means adding 256 entries to the bindings.
+> >
+> > I think the correct way to do this would require adding code in the
+> > <https://github.com/devicetree-org/dt-schema> project but that's
+> > really only done for generic subsystem-level concepts and not for a
+> > single driver.
 > 
-> Are there any other dependencies for this series? I tried applying
-> this on top of Georgi's series on v5.7-rc3. Patch 12 didn't apply
-> cleanly and needed a manual fixup for the include change.
+> OK.  Looked at your review of the .yaml and the "uniqueItems" is
+> probably the bit I didn't think of.  With that I can limit this but
+> it's still a little awkward.  I still haven't figured out how to force
+> data-lanes and lane-polarities to have the same number of items, too.
+> I'll add this as an add-on patch to my v2 and folks can decide if they
+> like it or hate it.
+
+Thanks for looking into it. Looks good to me. Regarding the same number
+of items I would assume it should be possible, I would be surprised if
+the schemas allowed a different number of items for clocks and
+clock-names for instance, but maybe that's not implemented yet. In any
+case, no big deal.
+
+> # See ../../media/video-interface.txt for details.
+> data-lanes:
+>   oneOf:
+>     - minItems: 1
+>       maxItems: 1
+>       uniqueItems: true
+>       items:
+>         enum:
+>           - 0
+>           - 1
+>       description:
+>         If you have 1 logical lane it can go to either physical
+>         port 0 or port 1.  Port 0 is suggested.
 > 
-
-When I posted out it was based on
-next-20200428 tree, there shouldn't
-be any other dependency needed.
-
-> Compilation failed with:
-> Error:
-> /home/amit/work/sources/worktree-review-pipeline/arch/arm64/boot/dts/qcom/sc7180.dtsi:101.30-31
-> syntax error
-> FATAL ERROR: Unable to parse input tree
+>     - minItems: 2
+>       maxItems: 2
+>       uniqueItems: true
+>       items:
+>         enum:
+>           - 0
+>           - 1
+>       description:
+>         If you have 2 logical lanes they can be reordered on
+>         physical ports 0 and 1.
 > 
-> I've been squinting at the offending lines with no success:
->                         interconnects = <&gem_noc MASTER_APPSS_PROC
-> &mc_virt SLAVE_EBI1>,
->                                         <&osm_l3 MASTER_OSM_L3_APPS
-> &osm_l3 SLAVE_OSM_L3>;
-> 
-
-#include <dt-bindings/interconnect/qcom,sc7180.h>
-You are probably missing ^^ which
-is present in next.
-
->> Georgi,
->>  Would it make sense to include tag support patches [9-10] in your 
->> next
->>  re-spin?
->> 
->> V4:
->>  * Migrate to using Georgi's new bindings
->>  * Misc fixups based on Matthias comments
->>  * API fixups based on Bjorn's comments on v2
->>  * Picked up a few R-bs from Matthias
->> 
->> v3:
->>  * Migrated to using Saravana's opp-kBps bindings [1]
->>  * Fixed some misc comments from Rajendra
->>  * Added support for SC7180
->> 
->> v2:
->>  * Incorporated Viresh's comments from:
->>  
->> https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
->>  
->> https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
->>  * Dropped cpufreq-map passive governor
->> 
->> Sibi Sankar (12):
->>   arm64: dts: qcom: sdm845: Add SoC compatible to MTP
->>   cpufreq: blacklist SDM845 in cpufreq-dt-platdev
->>   cpufreq: blacklist SC7180 in cpufreq-dt-platdev
->>   OPP: Add and export helper to update voltage
->>   OPP: Add and export helper to set bandwidth
->>   cpufreq: qcom: Update the bandwidth levels on frequency change
->>   OPP: Add and export helper to get icc path count
->>   cpufreq: qcom: Disable fast switch when scaling ddr/l3
->>   dt-bindings: interconnect: Add interconnect-tags bindings
->>   OPP: Add support for setting interconnect-tags
->>   arm64: dts: qcom: sdm845: Add cpu OPP tables
->>   arm64: dts: qcom: sc7180: Add cpu OPP tables
->> 
->>  .../bindings/interconnect/interconnect.txt    |   5 +
->>  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 168 ++++++++++++
->>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |   2 +-
->>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 258 
->> ++++++++++++++++++
->>  drivers/cpufreq/cpufreq-dt-platdev.c          |   2 +
->>  drivers/cpufreq/qcom-cpufreq-hw.c             |  89 +++++-
->>  drivers/opp/core.c                            | 114 ++++++++
->>  drivers/opp/of.c                              |  25 +-
->>  include/linux/pm_opp.h                        |  22 ++
->>  9 files changed, 675 insertions(+), 10 deletions(-)
->> 
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
+>     - minItems: 4
+>       maxItems: 4
+>       uniqueItems: true
+>       items:
+>         enum:
+>           - 0
+>           - 1
+>           - 2
+>           - 3
+>       description:
+>         If you have 4 logical lanes they can be reordered on
+>         in any way.
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Regards,
+
+Laurent Pinchart
