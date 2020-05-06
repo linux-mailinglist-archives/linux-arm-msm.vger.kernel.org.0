@@ -2,292 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C36461C6E58
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 12:27:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A22FA1C705D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 14:33:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726354AbgEFK1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 06:27:05 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:45966 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728942AbgEFK1F (ORCPT
+        id S1728187AbgEFMdc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 08:33:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1727932AbgEFMdb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 06:27:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588760823; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=UaHLsIvtZJCLGViq44kZyptElJCG7b3oxnJwXQfSAnQ=; b=LFbjXxpmPkLc3ZX37t94Qsb5dgaFutej0C7D/HZX6gzDqZ0+b0bH+hYz/VLyNND8wEGrpwBl
- zFm3ZluMk1MHWIecCA0hayDnHkAVxknZSkcIEenBxYAwxum6v6EFDjtq0njHibIASU4w8ye0
- Q+ZqLVh/yzfO36nR+IgLOv1ektk=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb290df.7f3fd56ed420-smtp-out-n03;
- Wed, 06 May 2020 10:26:39 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1D809C43637; Wed,  6 May 2020 10:26:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.131.199.84] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2733DC433F2;
-        Wed,  6 May 2020 10:26:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2733DC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v4 5/6] media: venus: core: Add support for opp
- tables/perf voting
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org
-References: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
- <1588507469-31889-6-git-send-email-rnayak@codeaurora.org>
- <20200505230702.GX4525@google.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <8600c770-73bb-a7eb-a754-64c2ed0deccd@codeaurora.org>
-Date:   Wed, 6 May 2020 15:56:27 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Wed, 6 May 2020 08:33:31 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48673C061A41
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2020 05:33:31 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id g2so867684vsb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2020 05:33:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=r/H9a8fdUQMIeGLl1QzKMQEwsBfgzt/5wa51opjojDM=;
+        b=Al2hllyDJrpnAAgUMK4kmI3Q4IvOqQLe0OVjzxqXCK2z1jqaLkiyJi5DX4ENlFPf0W
+         zq3dCkbZ6StGLbPMWGN+pIeDc6ihuyLGPfl6IoTQYnyEGgNWapWnCjcQFlopRjCwChlR
+         IFqp5yy9xOiagdbFvp0nSlhH/Co0b5MutNTiMGGL3JrtpH8deu748hBqo6sjdzUYTw1/
+         JfRCay5/xUnGMlLQjoCnvI9Tlst1bNTeXqQ2GvhmCUOtz9WH1W3ZnCe6G9wZNli7v6JL
+         wn4mGFaQ2HLDiTV9IzsjMxEJPc13Bhm292vOZNkhKSUkyMP/Xx+1eZ5TKD+A7C4oYoKd
+         3CFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=r/H9a8fdUQMIeGLl1QzKMQEwsBfgzt/5wa51opjojDM=;
+        b=WvMeJ0iNvb+aD3Z8jJvTRFL5Axlof91KXrfSvpoCt7lYpDhN2Sts8U0HtMvIfc8lGe
+         FjMBnqfHfZCRRXW8w+sXa3FsQhfVMuOX1BfaelT4nquha1oUTyCA7KTtYiJ0ZZy/Z1Vm
+         rZLZmD+AEBDXA+nLourXvpOZPZHhtXGwbRpTcnXSGYHdLXr9wzFTu6Ch2lhj6myc7eKi
+         Pp6ao0T8nA/PtPExMpGRar2BJgw9yzeSa8eRwe9P0httcfGJxLOz2Xq3TlYIjKYrjyDh
+         PoLrPVqag+qH2ntx+aH07zIM+uQ6otK7zkNs1if7DZvszk2xfhaPKVA3n216H2feCv/f
+         4bOg==
+X-Gm-Message-State: AGi0PuaLrRhqiiJAkZpcA+7YrW0IqGV5h1PjmpwUSovAgfsQG1HSqO5A
+        HVgn8np0tDe1wfLzWHoFT72TyMcObOnT1n89dyhwZA==
+X-Google-Smtp-Source: APiQypIveNOAp+c/Cus1Zn/SarzWZcN4REWKyhbpRPZVcAdvDS7J0T6Lh9t3nKf/aERxl5/aNTXybAaSlEHODK+/ECQ=
+X-Received: by 2002:a05:6102:2e4:: with SMTP id j4mr7021578vsj.182.1588768410246;
+ Wed, 06 May 2020 05:33:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200505230702.GX4525@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200504202243.5476-1-sibis@codeaurora.org> <20200504202243.5476-2-sibis@codeaurora.org>
+In-Reply-To: <20200504202243.5476-2-sibis@codeaurora.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Wed, 6 May 2020 18:02:54 +0530
+Message-ID: <CAHLCerMMxQHK2FbtfyLAzU5Vi0HTM6sR5vdb1G_2bDo4m1KbCw@mail.gmail.com>
+Subject: Re: [PATCH v4 01/12] arm64: dts: qcom: sdm845: Add SoC compatible to MTP
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Nishanth Menon <nm@ti.com>, Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, May 5, 2020 at 1:54 AM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Add missing SoC compatible to SDM845 MTP board file.
+>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 
 
-On 5/6/2020 4:37 AM, Matthias Kaehlcke wrote:
-> Hi Rajendra,
-> 
-> On Sun, May 03, 2020 at 05:34:28PM +0530, Rajendra Nayak wrote:
->> Add support to add OPP tables and perf voting on the OPP powerdomain.
->> This is needed so venus votes on the corresponding performance state
->> for the OPP powerdomain along with setting the core clock rate.
->>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> Cc: linux-media@vger.kernel.org
->> ---
->>   drivers/media/platform/qcom/venus/core.c       | 28 +++++++++++++
->>   drivers/media/platform/qcom/venus/core.h       |  5 +++
->>   drivers/media/platform/qcom/venus/pm_helpers.c | 54 ++++++++++++++++++++++++--
->>   3 files changed, 83 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 194b10b9..6f72e99 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -12,6 +12,7 @@
->>   #include <linux/platform_device.h>
->>   #include <linux/slab.h>
->>   #include <linux/types.h>
->> +#include <linux/pm_opp.h>
->>   #include <linux/pm_runtime.h>
->>   #include <media/videobuf2-v4l2.h>
->>   #include <media/v4l2-mem2mem.h>
->> @@ -214,6 +215,20 @@ static int venus_probe(struct platform_device *pdev)
->>   	if (!core->pm_ops)
->>   		return -ENODEV;
->>   
->> +	core->opp_table = dev_pm_opp_set_clkname(dev, "core");
->> +	if (IS_ERR(core->opp_table))
->> +		return PTR_ERR(core->opp_table);
->> +
->> +	if (core->res->opp_pmdomain) {
->> +		ret = dev_pm_opp_of_add_table(dev);
->> +		if (!ret) {
->> +			core->has_opp_table = true;
->> +		} else if (ret != -ENODEV) {
->> +			dev_err(dev, "invalid OPP table in device tree\n");
-> 
-> 			dev_pm_opp_put_clkname(core->opp_table);
-> 
-> this and removing the OPP table is also needed in other error paths below,
-> which currently return directly. Looks like you want to add another label
-> to the unwind path.
-
-Thanks for spotting this, I just moved this part around in the previous rev
-and did not fix the exit path for subsequent errors.
-
-> 
->> +			return ret;
->> +		}
->> +	}
->> +
->>   	if (core->pm_ops->core_get) {
->>   		ret = core->pm_ops->core_get(dev);
->>   		if (ret)
->> @@ -301,6 +316,9 @@ static int venus_probe(struct platform_device *pdev)
->>   err_venus_shutdown:
->>   	venus_shutdown(core);
->>   err_runtime_disable:
->> +	if (core->has_opp_table)
->> +		dev_pm_opp_of_remove_table(dev);
->> +	dev_pm_opp_put_clkname(core->opp_table);
-> 
-> move this after hfi_destroy(core), to do unwinding in reverse order, it
-> also allows to add the new jump label mentioned above.
-
-right, will do.
-
-> 
->>   	pm_runtime_set_suspended(dev);
->>   	pm_runtime_disable(dev);
->>   	hfi_destroy(core);
->> @@ -326,6 +344,10 @@ static int venus_remove(struct platform_device *pdev)
->>   
->>   	venus_firmware_deinit(core);
->>   
->> +	if (core->has_opp_table)
->> +		dev_pm_opp_of_remove_table(dev);
->> +	dev_pm_opp_put_clkname(core->opp_table);
->> +
->>   	pm_runtime_put_sync(dev);
->>   	pm_runtime_disable(dev);
->>   
->> @@ -350,6 +372,10 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
->>   	if (ret)
->>   		return ret;
->>   
->> +	/* Drop the performance state vote */
->> +	if (core->opp_pmdomain)
->> +		dev_pm_opp_set_rate(dev, 0);
->> +
->>   	if (pm_ops->core_power)
->>   		ret = pm_ops->core_power(dev, POWER_OFF);
->>   
->> @@ -511,6 +537,7 @@ static const struct venus_resources sdm845_res_v2 = {
->>   	.vcodec_clks_num = 2,
->>   	.vcodec_pmdomains = { "venus", "vcodec0", "vcodec1" },
->>   	.vcodec_pmdomains_num = 3,
->> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
->>   	.vcodec_num = 2,
->>   	.max_load = 3110400,	/* 4096x2160@90 */
->>   	.hfi_version = HFI_VERSION_4XX,
->> @@ -556,6 +583,7 @@ static const struct venus_resources sc7180_res = {
->>   	.vcodec_clks_num = 2,
->>   	.vcodec_pmdomains = { "venus", "vcodec0" },
->>   	.vcodec_pmdomains_num = 2,
->> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
-> 
-> The new power domain needs to be added to the SDM845 and SC7180 bindings.
-
-true, I will add a binding update patch.
-
-> 
->>   	.vcodec_num = 1,
->>   	.hfi_version = HFI_VERSION_4XX,
->>   	.vmem_id = VIDC_RESOURCE_NONE,
->> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->> index bd3ac6a..cc1d511 100644
->> --- a/drivers/media/platform/qcom/venus/core.h
->> +++ b/drivers/media/platform/qcom/venus/core.h
->> @@ -62,6 +62,7 @@ struct venus_resources {
->>   	unsigned int vcodec_clks_num;
->>   	const char * const vcodec_pmdomains[VIDC_PMDOMAINS_NUM_MAX];
->>   	unsigned int vcodec_pmdomains_num;
->> +	const char **opp_pmdomain;
->>   	unsigned int vcodec_num;
->>   	enum hfi_version hfi_version;
->>   	u32 max_load;
->> @@ -144,8 +145,12 @@ struct venus_core {
->>   	struct clk *vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
->>   	struct icc_path *video_path;
->>   	struct icc_path *cpucfg_path;
->> +	struct opp_table *opp_table;
->> +	bool has_opp_table;
->>   	struct device_link *pd_dl_venus;
->>   	struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
->> +	struct device_link *opp_dl_venus;
->> +	struct device *opp_pmdomain;
->>   	struct video_device *vdev_dec;
->>   	struct video_device *vdev_enc;
->>   	struct v4l2_device v4l2_dev;
->> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
->> index abf9315..30600bc 100644
->> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->> @@ -9,6 +9,7 @@
->>   #include <linux/iopoll.h>
->>   #include <linux/kernel.h>
->>   #include <linux/pm_domain.h>
->> +#include <linux/pm_opp.h>
->>   #include <linux/pm_runtime.h>
->>   #include <linux/types.h>
->>   #include <media/v4l2-mem2mem.h>
->> @@ -66,10 +67,9 @@ static void core_clks_disable(struct venus_core *core)
->>   
->>   static int core_clks_set_rate(struct venus_core *core, unsigned long freq)
->>   {
->> -	struct clk *clk = core->clks[0];
->>   	int ret;
->>   
->> -	ret = clk_set_rate(clk, freq);
->> +	ret = dev_pm_opp_set_rate(core->dev, freq);
->>   	if (ret)
->>   		return ret;
->>   
->> @@ -740,13 +740,16 @@ static int venc_power_v4(struct device *dev, int on)
->>   
->>   static int vcodec_domains_get(struct device *dev)
->>   {
->> +	int ret;
->> +	struct opp_table *opp_table;
->> +	struct device **opp_virt_dev;
->>   	struct venus_core *core = dev_get_drvdata(dev);
->>   	const struct venus_resources *res = core->res;
->>   	struct device *pd;
->>   	unsigned int i;
->>   
->>   	if (!res->vcodec_pmdomains_num)
->> -		return -ENODEV;
->> +		goto skip_pmdomains;
->>   
->>   	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
->>   		pd = dev_pm_domain_attach_by_name(dev,
->> @@ -763,7 +766,41 @@ static int vcodec_domains_get(struct device *dev)
->>   	if (!core->pd_dl_venus)
->>   		return -ENODEV;
->>   
->> +skip_pmdomains:
->> +	if (!res->opp_pmdomain || !core->has_opp_table)
-> 
-> nit: '!res->opp_pmdomain' isn't strictly needed, 'has_opp_table' is always
-> false when there is no OPP domain. It's ok if you prefer to keep it.
-
-yup, looks like I can drop the !res->opp_pmdomain check.
-
-> 
->> +		return 0;
->> +
->> +	/* Attach the power domain for setting performance state */
->> +	opp_table = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
->> +	if (IS_ERR(opp_table)) {
->> +		ret = PTR_ERR(opp_table);
->> +		goto opp_attach_err;
->> +	} else if (opp_virt_dev) {
-> 
-> If I read dev_pm_opp_attach_genpd() correctly 'opp_virt_dev' is always
-> set unless the function returns an error. If that's correct the condition
-> can be removed. Otherwise you probably want to initialize 'opp_virt_dev' to
-> NULL, to not rely on dev_pm_opp_attach_genpd() to do it.
-
-The only other condition could be if res->opp_pmdomain is empty, which
-again should not happen since we do have a check above, so seems safe
-to remove the check perhaps.
-
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> ---
+>
+> v4:
+>  * Picked up R-b from Matthias
+>
+>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> index 023e8b04c7f65..1372fe8601f50 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> @@ -13,7 +13,7 @@
+>
+>  / {
+>         model = "Qualcomm Technologies, Inc. SDM845 MTP";
+> -       compatible = "qcom,sdm845-mtp";
+> +       compatible = "qcom,sdm845-mtp", "qcom,sdm845";
+>
+>         aliases {
+>                 serial0 = &uart9;
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
