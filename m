@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD9D61C7234
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 15:54:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B213E1C72ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 16:35:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728797AbgEFNyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 09:54:05 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:21794 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728662AbgEFNyF (ORCPT
+        id S1729099AbgEFOfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 10:35:03 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:52396 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729048AbgEFOfC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 09:54:05 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 May 2020 19:24:00 +0530
-Received: from minint-dvc2thc.qualcomm.com (HELO sartgarg-linux.qualcomm.com) ([10.206.24.245])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 06 May 2020 19:23:56 +0530
-Received: by sartgarg-linux.qualcomm.com (Postfix, from userid 2339771)
-        id 0E0162654; Wed,  6 May 2020 19:23:56 +0530 (IST)
-From:   Sarthak Garg <sartgarg@codeaurora.org>
+        Wed, 6 May 2020 10:35:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588775702; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=BxYWW/V07NnyjLGX0Gsq/lFAzNYmsfwcD2OCxNrEX1o=; b=ib9SKa9Xt7bHqGsX5mC4cJvjSDaDQNSRq4IZO0lHKhmD7vy+jOpcJFiRwT7NkNgEs6XXQzMh
+ 7kchTsc/XGWBPM7GZTxHVpoI5sEj5Shrodou23xTpwfZ7uu5Of/LQXlMT5xHYUcufwZypmAM
+ CLSI347BpcgLIG5VYnJs6331NAw=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb2cb01.7f3cb7d7fbc8-smtp-out-n05;
+ Wed, 06 May 2020 14:34:41 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D32E9C43636; Wed,  6 May 2020 14:34:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1D2E2C432C2;
+        Wed,  6 May 2020 14:34:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1D2E2C432C2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     vbadigan@codeaurora.org, stummala@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sarthak Garg <sartgarg@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH V1 2/2] mmc: sdhci-msm: Use maximum possible data timeout value
-Date:   Wed,  6 May 2020 19:14:31 +0530
-Message-Id: <1588772671-19675-3-git-send-email-sartgarg@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1588772671-19675-1-git-send-email-sartgarg@codeaurora.org>
-References: <1588772671-19675-1-git-send-email-sartgarg@codeaurora.org>
+Cc:     stummala@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Subject: [PATCH V1 0/2] CQE fixes
+Date:   Wed,  6 May 2020 20:04:01 +0530
+Message-Id: <1588775643-18037-1-git-send-email-vbadigan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MSM SD controller defines the usage of 0xF in data
-timeout counter register (0x2E) which is actually a reserved
-bit as per specification. This would result in maximum of 21.26 secs
-timeout value.
+Fixes for a couple of issues observed with CQE. One with CQE completion
+path and the other one is with CQE recovery path.
 
-Some SDcard taking more time than 2.67secs (timeout value corresponding
-to 0xE) and with that observed data timeout errors.
-So increasing the timeout value to max possible timeout.
+Sarthak Garg (1):
+  mmc: core: Fix recursive locking issue in CQE recovery path
 
-Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
-Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
----
- drivers/mmc/host/sdhci-msm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Veerabhadrarao Badiganti (1):
+  mmc: core: Check request type before completing the request
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 8a055dd..909855b 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1888,7 +1888,8 @@ static const struct sdhci_pltfm_data sdhci_msm_pdata = {
- 		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN |
- 		  SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
- 
--	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
-+		SDHCI_QUIRK2_USE_RESERVED_MAX_TIMEOUT,
- 	.ops = &sdhci_msm_ops,
- };
- 
+ drivers/mmc/core/block.c |  3 ++-
+ drivers/mmc/core/queue.c | 11 ++++++-----
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
 -- 
-2.7.4
-
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
