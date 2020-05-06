@@ -2,156 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6915F1C7079
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 14:39:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41B151C713F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 15:01:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728172AbgEFMjK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 08:39:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60984 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727932AbgEFMjJ (ORCPT
+        id S1728276AbgEFNBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 09:01:07 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:62383 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728286AbgEFNBG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 08:39:09 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3956C061A10
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2020 05:39:09 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id p5so606902vke.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2020 05:39:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jk2BARTLAgZL9Z1dR3KbfuvtdoJ3V9bQ1jv2jjnLH8E=;
-        b=C4fCOVohLS2kPCD5qFz2dgOue6s94XhvkFpTCsrha1pcYweNjF+IaH6gRIdYmJqdqm
-         oFgp+EDGp1FMsPCUrEo3ltTYWEoPSWIqbS9ayAQR69ak7Y+0fdpCj4xhzzsWBANxQYHy
-         Lf+rFL+y9fxw2qfR9166c35tiHl+m4NraUF/1aejcq7nzecJqYKk9oiR2DEzqt9ExSkY
-         KTXJ1/ltUftlp1HurqkUDnB4uF0yk7YH5lBAZV2tuzjt9fldDbYWU/UAKCReVqHSkL/x
-         4UzaeL1ygRqYcDPDkaSN8y88nDqRAo363pHInp7N0ypbCm1mJd3tQuJgl4t8W+HC2lpk
-         ccCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jk2BARTLAgZL9Z1dR3KbfuvtdoJ3V9bQ1jv2jjnLH8E=;
-        b=SIqe4mVY4QnRVuVGxCtdVN8t8H6eG+k6dMoWKhcyEut8NrW8rD6Zfkdv+LYduZr1rG
-         E1WvgmfBoz1srv88lG0yMU1V7pCMGjacQCKJxwL2l20bPksgKOD08o+huD84atpnOOm8
-         +cyRtZwUOFsggmOXKEN8HYcLH2DxOa+Eh0P1KQY2jP+hM4FqDUD0s1o27tj0wRb6Xs7K
-         JVnyC+0UI22xk1igTSy/d9hQ/DbWIuTvGQE+wfAfAH4Yd1+I7TaiKgfrM8m+i80kxMUA
-         568vIh5M8qhoLteYxZwU5toemdPF8BJhVZ8C08LHHtlW5hUmfE8/uqJIgu/+4owGLDz1
-         mcCg==
-X-Gm-Message-State: AGi0PuYK3JpHgYaL0hMa0NxrKblLfAfs1todXSVOlKkqqmUys45s0JUa
-        +Q7sM/PqX4RButEliC4g6GIRFy4KzE3Wfwsv6NsxWg==
-X-Google-Smtp-Source: APiQypJLk71XFPxOIJWwAizMUmAtKTR+K2mXUHbcP1wbAfkC3uIULbDNR6nha/+qS/WeZu7Io0k/dKD30Nke5CY6x+c=
-X-Received: by 2002:a1f:2a13:: with SMTP id q19mr6528853vkq.73.1588768748823;
- Wed, 06 May 2020 05:39:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200504202243.5476-1-sibis@codeaurora.org>
-In-Reply-To: <20200504202243.5476-1-sibis@codeaurora.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Wed, 6 May 2020 18:08:34 +0530
-Message-ID: <CAHLCerM_wdHDwzEDN7YxU9pBdHo3KvNyJeRWMC6seTG6aCH7nw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/12] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
+        Wed, 6 May 2020 09:01:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588770066; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=EEVpYpqQ1QRwHdkwdt5mqy1ieqOZLEZitiAbr0eLLME=; b=IGvzs3Qo8Wc9g1jHYYpFMqa677ynWkuxPnR0tSVdUQp1jyZ6y2BWXiS8Dmb6pU1QIGpVs6d5
+ kk4M5Hg3Vv0yEhfoaS4T/XOl8WzKX+PkLtUDojKjF3vUZddgUw+u6i3kwZcBVVKPQUnl5l0X
+ x1mGUT8uTDvMI0S1fUNjonsJp1I=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb2b4e8.7fc83cd1fdf8-smtp-out-n03;
+ Wed, 06 May 2020 13:00:24 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0BFC2C00456; Wed,  6 May 2020 13:00:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.57] (unknown [27.59.131.204])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B9225C433BA;
+        Wed,  6 May 2020 13:00:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B9225C433BA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+Subject: Re: [PATCH v5 1/5] mmc: core: Extend mmc_of_parse() to parse CQE
+ bindings
+To:     Chun-Hung Wu <chun-hung.wu@mediatek.com>, mirq-linux@rere.qmqm.pl,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Nishanth Menon <nm@ti.com>, Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Pan Bian <bianpan2016@163.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mathieu Malaterre <malat@debian.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Kuohong Wang <kuohong.wang@mediatek.com>,
+        Yong Mao <yong.mao@mediatek.com>
+Cc:     kernel-team@android.com, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        devicetree@vger.kernel.org, wsd_upstream@mediatek.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <1588031768-23677-1-git-send-email-chun-hung.wu@mediatek.com>
+ <1588031768-23677-2-git-send-email-chun-hung.wu@mediatek.com>
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Message-ID: <9bc2454f-0b42-e256-7927-2564b56f369f@codeaurora.org>
+Date:   Wed, 6 May 2020 18:30:04 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <1588031768-23677-2-git-send-email-chun-hung.wu@mediatek.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 5, 2020 at 1:54 AM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> This patch series aims to extend cpu based scaling support to L3/DDR on
-> SDM845 and SC7180 SoCs.
->
-> Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
-> Patches [4-8] - Update bw levels based on cpu frequency change
-> Patches [9-10] - Add tag setting support to OPP
-> Patches [11-12] - Add the cpu opp tables for SDM845 and SC7180 SoCs.
->
-> Depends on the following series:
-> https://lore.kernel.org/patchwork/cover/1230626/
 
-Are there any other dependencies for this series? I tried applying
-this on top of Georgi's series on v5.7-rc3. Patch 12 didn't apply
-cleanly and needed a manual fixup for the include change.
+On 4/28/2020 5:26 AM, Chun-Hung Wu wrote:
+> Parse CQE bindings "supports-cqe" and "disable-cqe-dcmd"
+> in mmc_of_parse().
+>
+> Signed-off-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
+> ---
+>   drivers/mmc/core/host.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+>
+> diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
+> index c876872..47521c6 100644
+> --- a/drivers/mmc/core/host.c
+> +++ b/drivers/mmc/core/host.c
+> @@ -302,6 +302,11 @@ int mmc_of_parse(struct mmc_host *host)
+>   		host->caps2 |= MMC_CAP2_NO_SD;
+>   	if (device_property_read_bool(dev, "no-mmc"))
+>   		host->caps2 |= MMC_CAP2_NO_MMC;
+> +	if (device_property_read_bool(dev, "supports-cqe"))
+> +		host->caps2 |= MMC_CAP2_CQE;
 
-Compilation failed with:
-Error: /home/amit/work/sources/worktree-review-pipeline/arch/arm64/boot/dts/qcom/sc7180.dtsi:101.30-31
-syntax error
-FATAL ERROR: Unable to parse input tree
+This change is breaking emmc driver on qcom platforms where this dt 
+property is defined.
 
-I've been squinting at the offending lines with no success:
-                        interconnects = <&gem_noc MASTER_APPSS_PROC
-&mc_virt SLAVE_EBI1>,
-                                        <&osm_l3 MASTER_OSM_L3_APPS
-&osm_l3 SLAVE_OSM_L3>;
+[    1.543453]  cqhci_deactivate+0xc/0x38
+[    1.545627]  sdhci_msm_reset+0x40/0x58
+[    1.549447]  sdhci_do_reset+0x48/0x7c
+[    1.553180]  __sdhci_read_caps+0x7c/0x214
+[    1.556913]  sdhci_setup_host+0x58/0xce8
+[    1.560905]  sdhci_msm_probe+0x588/0x8a4
+[    1.564900]  platform_drv_probe+0x4c/0xb0
 
-> Georgi,
->  Would it make sense to include tag support patches [9-10] in your next
->  re-spin?
->
-> V4:
->  * Migrate to using Georgi's new bindings
->  * Misc fixups based on Matthias comments
->  * API fixups based on Bjorn's comments on v2
->  * Picked up a few R-bs from Matthias
->
-> v3:
->  * Migrated to using Saravana's opp-kBps bindings [1]
->  * Fixed some misc comments from Rajendra
->  * Added support for SC7180
->
-> v2:
->  * Incorporated Viresh's comments from:
->  https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
->  https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
->  * Dropped cpufreq-map passive governor
->
-> Sibi Sankar (12):
->   arm64: dts: qcom: sdm845: Add SoC compatible to MTP
->   cpufreq: blacklist SDM845 in cpufreq-dt-platdev
->   cpufreq: blacklist SC7180 in cpufreq-dt-platdev
->   OPP: Add and export helper to update voltage
->   OPP: Add and export helper to set bandwidth
->   cpufreq: qcom: Update the bandwidth levels on frequency change
->   OPP: Add and export helper to get icc path count
->   cpufreq: qcom: Disable fast switch when scaling ddr/l3
->   dt-bindings: interconnect: Add interconnect-tags bindings
->   OPP: Add support for setting interconnect-tags
->   arm64: dts: qcom: sdm845: Add cpu OPP tables
->   arm64: dts: qcom: sc7180: Add cpu OPP tables
->
->  .../bindings/interconnect/interconnect.txt    |   5 +
->  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 168 ++++++++++++
->  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |   2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 258 ++++++++++++++++++
->  drivers/cpufreq/cpufreq-dt-platdev.c          |   2 +
->  drivers/cpufreq/qcom-cpufreq-hw.c             |  89 +++++-
->  drivers/opp/core.c                            | 114 ++++++++
->  drivers/opp/of.c                              |  25 +-
->  include/linux/pm_opp.h                        |  22 ++
->  9 files changed, 675 insertions(+), 10 deletions(-)
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+So, we cant have this flag defined before sdhci_setup_host().
+
+I will have to clear this cap and re-enable it in our initialization.
+
+> +	if (!device_property_read_bool(dev, "disable-cqe-dcmd")) {
+> +		host->caps2 |= MMC_CAP2_CQE_DCMD;
+> +	}
+>   
+>   	/* Must be after "non-removable" check */
+>   	if (device_property_read_u32(dev, "fixed-emmc-driver-type", &drv_type) == 0) {
