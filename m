@@ -2,119 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CAC171C72F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 16:35:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B091B1C731E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 16:42:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729094AbgEFOfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 10:35:02 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:36250 "EHLO
+        id S1729231AbgEFOmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 10:42:07 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:19143 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729044AbgEFOfC (ORCPT
+        by vger.kernel.org with ESMTP id S1729227AbgEFOmH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 10:35:02 -0400
+        Wed, 6 May 2020 10:42:07 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588775701; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=31i/QBZ+llMFh/7pc5B6BkBKk7K9R8oLXOgWY0W7TZE=; b=GRtbgN5e4fRXm3k8Q5Jd/Ie1vscH80eOCet67T4NmsQOUYGl1KyIpwwbadbjt0kPMdyWKbwo
- p65mOKo4v86vJxxdmqUSxpo+ZZ/kIuHMXpcGSWYk7aP5JN1getd9Jb3nUCQicN2/s3NmvnmQ
- Z1ks38RLjHGKM9nHouHjG9DpmUY=
+ s=smtp; t=1588776125; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=cx846LpCI/mxVQVVyh+RuRGtZ75GrHh3+ShglsOfGD4=;
+ b=VrB6p4Xy5AKLQxHK+mf/kPuXe8nDfUWFmgjtCDK/h6EpSAToQsSp3VDfDbK3/BrGvh5VHFd3
+ dCobiEkVI0ORhRhXaWcydrHcufZvetJSym7qNQL0KT/aWc4wf/xj4aPQZ1aYHt5s/g/JaH4r
+ Y1arxWt5q3mTsPEo5kxBIau4RXM=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb2cb14.7ff7e8760180-smtp-out-n05;
- Wed, 06 May 2020 14:35:00 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5eb2ccb5.7f1064742c70-smtp-out-n02;
+ Wed, 06 May 2020 14:41:57 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EF50CC432C2; Wed,  6 May 2020 14:34:58 +0000 (UTC)
+        id E0711C44791; Wed,  6 May 2020 14:41:55 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C6FF7C433D2;
-        Wed,  6 May 2020 14:34:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C6FF7C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     stummala@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sarthak Garg <sartgarg@codeaurora.org>,
-        <stable@vger.kernel.org>, Baolin Wang <baolin.wang@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Andreas Koop <andreas.koop@zf.com>,
-        Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH V1 2/2] mmc: core: Fix recursive locking issue in CQE recovery path
-Date:   Wed,  6 May 2020 20:04:03 +0530
-Message-Id: <1588775643-18037-3-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1588775643-18037-1-git-send-email-vbadigan@codeaurora.org>
-References: <1588775643-18037-1-git-send-email-vbadigan@codeaurora.org>
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 887D4C433F2;
+        Wed,  6 May 2020 14:41:54 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 06 May 2020 20:11:54 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Nishanth Menon <nm@ti.com>, Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH v4 00/12] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+In-Reply-To: <CAHLCerM_wdHDwzEDN7YxU9pBdHo3KvNyJeRWMC6seTG6aCH7nw@mail.gmail.com>
+References: <20200504202243.5476-1-sibis@codeaurora.org>
+ <CAHLCerM_wdHDwzEDN7YxU9pBdHo3KvNyJeRWMC6seTG6aCH7nw@mail.gmail.com>
+Message-ID: <87126044e367432ee8722ec2346d1dd5@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sarthak Garg <sartgarg@codeaurora.org>
+Hey Amit,
+Thanks for taking time to review
+the series!
 
-Consider the following stack trace
+On 2020-05-06 18:08, Amit Kucheria wrote:
+> On Tue, May 5, 2020 at 1:54 AM Sibi Sankar <sibis@codeaurora.org> 
+> wrote:
+>> 
+>> This patch series aims to extend cpu based scaling support to L3/DDR 
+>> on
+>> SDM845 and SC7180 SoCs.
+>> 
+>> Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
+>> Patches [4-8] - Update bw levels based on cpu frequency change
+>> Patches [9-10] - Add tag setting support to OPP
+>> Patches [11-12] - Add the cpu opp tables for SDM845 and SC7180 SoCs.
+>> 
+>> Depends on the following series:
+>> https://lore.kernel.org/patchwork/cover/1230626/
+> 
+> Are there any other dependencies for this series? I tried applying
+> this on top of Georgi's series on v5.7-rc3. Patch 12 didn't apply
+> cleanly and needed a manual fixup for the include change.
+> 
 
--001|raw_spin_lock_irqsave
--002|mmc_blk_cqe_complete_rq
--003|__blk_mq_complete_request(inline)
--003|blk_mq_complete_request(rq)
--004|mmc_cqe_timed_out(inline)
--004|mmc_mq_timed_out
+When I posted out it was based on
+next-20200428 tree, there shouldn't
+be any other dependency needed.
 
-mmc_mq_timed_out acquires the queue_lock for the first
-time. The mmc_blk_cqe_complete_rq function also tries to acquire
-the same queue lock resulting in recursive locking where the task
-is spinning for the same lock which it has already acquired leading
-to watchdog bark.
+> Compilation failed with:
+> Error:
+> /home/amit/work/sources/worktree-review-pipeline/arch/arm64/boot/dts/qcom/sc7180.dtsi:101.30-31
+> syntax error
+> FATAL ERROR: Unable to parse input tree
+> 
+> I've been squinting at the offending lines with no success:
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC
+> &mc_virt SLAVE_EBI1>,
+>                                         <&osm_l3 MASTER_OSM_L3_APPS
+> &osm_l3 SLAVE_OSM_L3>;
+> 
 
-Fix this issue with the lock only for the required critical section.
+#include <dt-bindings/interconnect/qcom,sc7180.h>
+You are probably missing ^^ which
+is present in next.
 
-Cc: <stable@vger.kernel.org> # v4.19+
-Suggested-by: Sahitya Tummala <stummala@codeaurora.org>
-Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
----
- drivers/mmc/core/queue.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+>> Georgi,
+>>  Would it make sense to include tag support patches [9-10] in your 
+>> next
+>>  re-spin?
+>> 
+>> V4:
+>>  * Migrate to using Georgi's new bindings
+>>  * Misc fixups based on Matthias comments
+>>  * API fixups based on Bjorn's comments on v2
+>>  * Picked up a few R-bs from Matthias
+>> 
+>> v3:
+>>  * Migrated to using Saravana's opp-kBps bindings [1]
+>>  * Fixed some misc comments from Rajendra
+>>  * Added support for SC7180
+>> 
+>> v2:
+>>  * Incorporated Viresh's comments from:
+>>  
+>> https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
+>>  
+>> https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+>>  * Dropped cpufreq-map passive governor
+>> 
+>> Sibi Sankar (12):
+>>   arm64: dts: qcom: sdm845: Add SoC compatible to MTP
+>>   cpufreq: blacklist SDM845 in cpufreq-dt-platdev
+>>   cpufreq: blacklist SC7180 in cpufreq-dt-platdev
+>>   OPP: Add and export helper to update voltage
+>>   OPP: Add and export helper to set bandwidth
+>>   cpufreq: qcom: Update the bandwidth levels on frequency change
+>>   OPP: Add and export helper to get icc path count
+>>   cpufreq: qcom: Disable fast switch when scaling ddr/l3
+>>   dt-bindings: interconnect: Add interconnect-tags bindings
+>>   OPP: Add support for setting interconnect-tags
+>>   arm64: dts: qcom: sdm845: Add cpu OPP tables
+>>   arm64: dts: qcom: sc7180: Add cpu OPP tables
+>> 
+>>  .../bindings/interconnect/interconnect.txt    |   5 +
+>>  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 168 ++++++++++++
+>>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |   2 +-
+>>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 258 
+>> ++++++++++++++++++
+>>  drivers/cpufreq/cpufreq-dt-platdev.c          |   2 +
+>>  drivers/cpufreq/qcom-cpufreq-hw.c             |  89 +++++-
+>>  drivers/opp/core.c                            | 114 ++++++++
+>>  drivers/opp/of.c                              |  25 +-
+>>  include/linux/pm_opp.h                        |  22 ++
+>>  9 files changed, 675 insertions(+), 10 deletions(-)
+>> 
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
 
-diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
-index 25bee3d..72bef39 100644
---- a/drivers/mmc/core/queue.c
-+++ b/drivers/mmc/core/queue.c
-@@ -107,7 +107,7 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct request *req)
- 	case MMC_ISSUE_DCMD:
- 		if (host->cqe_ops->cqe_timeout(host, mrq, &recovery_needed)) {
- 			if (recovery_needed)
--				__mmc_cqe_recovery_notifier(mq);
-+				mmc_cqe_recovery_notifier(mrq);
- 			return BLK_EH_RESET_TIMER;
- 		}
- 		/* No timeout (XXX: huh? comment doesn't make much sense) */
-@@ -131,12 +131,13 @@ static enum blk_eh_timer_return mmc_mq_timed_out(struct request *req,
- 
- 	spin_lock_irqsave(&mq->lock, flags);
- 
--	if (mq->recovery_needed || !mq->use_cqe || host->hsq_enabled)
-+	if (mq->recovery_needed || !mq->use_cqe || host->hsq_enabled) {
- 		ret = BLK_EH_RESET_TIMER;
--	else
-+		spin_unlock_irqrestore(&mq->lock, flags);
-+	} else {
-+		spin_unlock_irqrestore(&mq->lock, flags);
- 		ret = mmc_cqe_timed_out(req);
--
--	spin_unlock_irqrestore(&mq->lock, flags);
-+	}
- 
- 	return ret;
- }
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
