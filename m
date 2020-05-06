@@ -2,99 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCBBA1C6E0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 12:08:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEA391C6E33
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 12:19:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729081AbgEFKIj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 06:08:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37558 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728614AbgEFKIi (ORCPT
+        id S1728193AbgEFKTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 06:19:20 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:51851 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726354AbgEFKTT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 06:08:38 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 318FAC0610D5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2020 03:08:38 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id r26so1951983wmh.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2020 03:08:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=VzNe2ST4lz1BYAQ/p9YeE0kmmD4jLbs29p9J5C8f3PI=;
-        b=lVg/KXxsQi9o5BFRkAdFAHJvM5az1noe+ABa8yeVzaBDNNCZTnPXEe6S/aOwqh/vkp
-         8f0NhIcwAJ2PC/4vpwvKstSIXj0hfRFtrIeW0wcQYIan1lOdxvJyQqFAQfoII08sPkC4
-         DGORLRfat4zBbEEmmc9MXkI3gjVEeqX+6hILIUTcqtnxODF/CSTLO5D+jI8mALONUf+L
-         ikK7bGvxYlGDq4kzxRRF0d6+ObCh8KvLz/0bAVZgpwyprzBb9pD1uOu+cqtkevW0phpJ
-         kzTkEGZKVK++p9qj8MHC5TvynAIpX+h0IbgOi9Tqyi9CmY91FSY9d8VpzwtWlO1tQvMq
-         g81w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=VzNe2ST4lz1BYAQ/p9YeE0kmmD4jLbs29p9J5C8f3PI=;
-        b=fj/pkpIl2fC2M/RaFxXRlMrsn71HSgK2H/depxNE50SL1SB6mUW1z9eUzK0g6SNEjs
-         ACtl7rYkYfc9C8Kfd6l8ll1vM+lsfSV5rzBq8cq9azJ3Nmeqt+ViySqSoWeGcRAFfbad
-         UAoshIEpf5lJVrMoLo93NLkHKZ8LM0q70axCizXFcO1mg8JTHUqpVJ7iSgRSI6NHLyDw
-         g63v1rksN0MOSqUkXFF5lLVqn1Hnf5mSqYwUq3sJS70xyZnnVxTUs5GwdQe48Pj3A4ra
-         BBrErLJu0NwUQhJFJIGP7gZ09XCUOajv/ekfoFj0XO1RoIRTEoNfMJSFFwF0PAP8eYZZ
-         gW9A==
-X-Gm-Message-State: AGi0PuZqe/jekPZiBqPQ1cp6m7yIJqCp3gKn+u3KCqn9UCq08Z/9nGB7
-        SnvTAHULdSnGPh1NPoIbZhlDJw==
-X-Google-Smtp-Source: APiQypInYHUDNrqEUITYN/4bNtu4Kh3BGLktqne+H6HDYbuGJNmorPX8kNclKs+5lI97bApQew2ZlQ==
-X-Received: by 2002:a1c:7715:: with SMTP id t21mr3332429wmi.182.1588759716943;
-        Wed, 06 May 2020 03:08:36 -0700 (PDT)
-Received: from dell ([2.31.163.63])
-        by smtp.gmail.com with ESMTPSA id 88sm2000910wrq.77.2020.05.06.03.08.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 May 2020 03:08:36 -0700 (PDT)
-Date:   Wed, 6 May 2020 11:08:34 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
-        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        robh@kernel.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-fbdev@vger.kernel.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH V6 4/4] backlight: qcom-wled: Add support for WLED5
- peripheral that is present on PM8150L PMICs
-Message-ID: <20200506100834.GG823950@dell>
-References: <1587656017-27911-1-git-send-email-kgunda@codeaurora.org>
- <1587656017-27911-5-git-send-email-kgunda@codeaurora.org>
+        Wed, 6 May 2020 06:19:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588760359; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=IcUq3JaTDMqeMJ20mOeLmSvjfCk1bKlvregH4GOb4ZI=; b=KlPZf7uZQnIHOe0P/VQQwD74FKhNZbwZ5bV8QWGecOr149eTZGyfzMhjkG9/7rh6CIsowcfs
+ 8a+/d2BkYhtpFILSK0MVJzLpipyx1r9IG6/juUNAd1+KJxNHPRQ5RaxFGZT83Wk+WPW+tph/
+ mdFeFmlewwk8t9wCz0v+yeCeJFA=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8E989C432C2; Wed,  6 May 2020 10:19:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.131.199.84] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B5D44C433F2;
+        Wed,  6 May 2020 10:19:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B5D44C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v4 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf
+ state
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-spi@vger.kernel.org
+References: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
+ <1588507469-31889-7-git-send-email-rnayak@codeaurora.org>
+ <20200505163811.GW4525@google.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <66551105-c296-36ce-0ca7-2240c2af7db0@codeaurora.org>
+Date:   Wed, 6 May 2020 15:49:10 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1587656017-27911-5-git-send-email-kgunda@codeaurora.org>
+In-Reply-To: <20200505163811.GW4525@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Apr 2020, Kiran Gunda wrote:
 
-> From: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+On 5/5/2020 10:08 PM, Matthias Kaehlcke wrote:
+> Hi Rajendra,
 > 
-> PM8150L WLED supports the following:
->     - Two modulators and each sink can use any of the modulator
->     - Multiple CABC selection options from which one can be selected/enabled
->     - Multiple brightness width selection (12 bits to 15 bits)
+> On Sun, May 03, 2020 at 05:34:29PM +0530, Rajendra Nayak wrote:
+>> QSPI needs to vote on a performance state of a power domain depending on
+>> the clock rate. Add support for it by specifying the perf state/clock rate
+>> as an OPP table in device tree.
+>>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> Cc: Mark Brown <broonie@kernel.org>
+>> Cc: Alok Chauhan <alokc@codeaurora.org>
+>> Cc: Akash Asthana <akashast@codeaurora.org>
+>> Cc: linux-spi@vger.kernel.org
+>> ---
+>>   drivers/spi/spi-qcom-qspi.c | 29 ++++++++++++++++++++++++++++-
+>>   1 file changed, 28 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+>> index 3c4f83b..eb53c00 100644
+>> --- a/drivers/spi/spi-qcom-qspi.c
+>> +++ b/drivers/spi/spi-qcom-qspi.c
+>> @@ -8,6 +8,7 @@
+>>   #include <linux/of.h>
+>>   #include <linux/of_platform.h>
+>>   #include <linux/pm_runtime.h>
+>> +#include <linux/pm_opp.h>
+>>   #include <linux/spi/spi.h>
+>>   #include <linux/spi/spi-mem.h>
+>>   
+>> @@ -139,6 +140,8 @@ struct qcom_qspi {
+>>   	struct device *dev;
+>>   	struct clk_bulk_data *clks;
+>>   	struct qspi_xfer xfer;
+>> +	struct opp_table *opp_table;
+>> +	bool has_opp_table;
+>>   	/* Lock to protect xfer and IRQ accessed registers */
+>>   	spinlock_t lock;
+>>   };
+>> @@ -235,7 +238,7 @@ static int qcom_qspi_transfer_one(struct spi_master *master,
+>>   		speed_hz = xfer->speed_hz;
+>>   
+>>   	/* In regular operation (SBL_EN=1) core must be 4x transfer clock */
+>> -	ret = clk_set_rate(ctrl->clks[QSPI_CLK_CORE].clk, speed_hz * 4);
+>> +	ret = dev_pm_opp_set_rate(ctrl->dev, speed_hz * 4);
+>>   	if (ret) {
+>>   		dev_err(ctrl->dev, "Failed to set core clk %d\n", ret);
+>>   		return ret;
+>> @@ -481,6 +484,20 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>>   	master->handle_err = qcom_qspi_handle_err;
+>>   	master->auto_runtime_pm = true;
+>>   
+>> +	ctrl->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
+>> +	if (IS_ERR(ctrl->opp_table)) {
+>> +		ret = PTR_ERR(ctrl->opp_table);
+>> +		goto exit_probe_master_put;
+>> +	}
+>> +	/* OPP table is optional */
+>> +	ret = dev_pm_opp_of_add_table(&pdev->dev);
+>> +	if (!ret) {
+>> +		ctrl->has_opp_table = true;
+>> +	} else if (ret != -ENODEV) {
+>> +		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+>> +		goto exit_probe_master_put;
+>> +	}
+>> +
+>>   	pm_runtime_enable(dev);
+>>   
+>>   	ret = spi_register_master(master);
+>> @@ -488,6 +505,9 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>>   		return 0;
+>>   
+>>   	pm_runtime_disable(dev);
+>> +	if (ctrl->has_opp_table)
+>> +		dev_pm_opp_of_remove_table(&pdev->dev);
+>> +	dev_pm_opp_put_clkname(ctrl->opp_table);
+>>   
+>>   exit_probe_master_put:
+>>   	spi_master_put(master);
+>> @@ -498,6 +518,11 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>>   static int qcom_qspi_remove(struct platform_device *pdev)
+>>   {
+>>   	struct spi_master *master = platform_get_drvdata(pdev);
+>> +	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
+>> +
+>> +	if (ctrl->has_opp_table)
+>> +		dev_pm_opp_of_remove_table(&pdev->dev);
+>> +	dev_pm_opp_put_clkname(ctrl->opp_table);
 > 
-> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> ---
->  drivers/video/backlight/qcom-wled.c | 378 +++++++++++++++++++++++++++++++++++-
->  1 file changed, 376 insertions(+), 2 deletions(-)
+> IIUC there can still be active transfers before the controller is
+> unregistered. If that is correct the above should be done after the
+> spi_unregister_master() call below.
 
-Applied, thanks.
+ah, true. i should have read the comment below :)
+
+>>   
+>>   	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
+>>   	spi_unregister_master(master);
+>> @@ -512,6 +537,8 @@ static int __maybe_unused qcom_qspi_runtime_suspend(struct device *dev)
+>>   	struct spi_master *master = dev_get_drvdata(dev);
+>>   	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
+>>   
+>> +	/* Drop the performance state vote */
+>> +	dev_pm_opp_set_rate(dev, 0);
+>>   	clk_bulk_disable_unprepare(QSPI_NUM_CLKS, ctrl->clks);
+>>   
+>>   	return 0;
 
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
