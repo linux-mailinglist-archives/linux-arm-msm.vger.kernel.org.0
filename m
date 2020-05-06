@@ -2,142 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBD0B1C7579
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 17:56:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F4DB1C76A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 18:37:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729832AbgEFP4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 11:56:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35572 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728991AbgEFP4y (ORCPT
+        id S1729939AbgEFQgu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 12:36:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41908 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729683AbgEFQgt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 11:56:54 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C539C061A0F;
-        Wed,  6 May 2020 08:56:54 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id E30A9542;
-        Wed,  6 May 2020 17:56:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1588780613;
-        bh=JqP+SOCphmyvR7LY5kOsdyerYHIGqof5vTW6QMlbE0I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JSCJRr1YjHYhNJEGPipbcitzN44oikeZK4tjqwRcMKFUE4bUrDOMma8NIzvzBgk0S
-         5gJAR9gGYZ7ytOiUKewbJSais47zFkOxx0YnkZW8MXmf+cT8rRSO/PxqG9mwqEQD+v
-         AjYuBY3gGFlLCdse5mLMf21yRvmsRIJ/EgkXX6ME=
-Date:   Wed, 6 May 2020 18:56:47 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Implement lane reordering +
- polarity
-Message-ID: <20200506155647.GD15206@pendragon.ideasonboard.com>
-References: <20200504213624.1.Ibc8eeddcee94984a608d6900b46f9ffde4045da4@changeid>
- <20200505082436.GD9658@pendragon.ideasonboard.com>
- <CAD=FV=WjUpwu5204K8yHzqsJv4vQX5S5CArH1Kj_kqjhZzTc9A@mail.gmail.com>
- <20200505210609.GA6094@pendragon.ideasonboard.com>
- <CAD=FV=UnGOYh8JX2=fEAqPN7wqANc0QevTirNO-WUDYMPqXcrg@mail.gmail.com>
- <20200505211401.GC6094@pendragon.ideasonboard.com>
- <CAD=FV=WgRC-HViMxttF4VK+n48HNRuqAau8S7mgx6oSWsbZcgA@mail.gmail.com>
- <CAD=FV=U8_Krob9oftJjzrYs1zrbLr9WZ-HSStv5_rbq9MpTChw@mail.gmail.com>
+        Wed, 6 May 2020 12:36:49 -0400
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751E3C061A10
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2020 09:36:49 -0700 (PDT)
+Received: by mail-vk1-xa44.google.com with SMTP id g129so699568vkh.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2020 09:36:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qEp/F3SbsRoDv1jpNGzhOxbfis7J4KDcT9P9z6XWkHg=;
+        b=eVnVRn4S8Hb7sl1mAhlDpCkwg2p7TvzKWg0qVVe/dWs+kNzu0dkUnF12cuHSLRfxJA
+         k1JsPhNHp6gpFvg3metDV/hPplaRlu3pQXHecw2lhBu91JqE8L0mSdp5Zmc9jNhUWqIB
+         1xGIHjkcCR9gqoJXy85LS+19SdMWYi5+Ih9W8LUXfrQqUUPxnoOEUhmxOrI+MLwWHhr+
+         E9RKn25uZiu4s/nZwk/EVD7PaM11znkaVIxenvyVhmirLDphTRgJue6k6ZZ0J3TwDTz6
+         0ZY1n1k1WDVUIhczz4M4qBDev1+txdlb4jFvLkVck7EDsXiBjF4LLHsLj3SpxlVGryrw
+         tIxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qEp/F3SbsRoDv1jpNGzhOxbfis7J4KDcT9P9z6XWkHg=;
+        b=Nvzv1P6tRMyvfQaB0eK5PjmquJ4uiI2YjDREPtOw3RAOfML8OXHshnDPA1E7tzp7NA
+         jQxbZvINbCQOAzpX2zh5UxDR119ySeU2uKhE7al+EWCXmD3eEWtuKcpkrgiH343112rP
+         adVt1yO0Xs7VORjG1VxlMezuODLtGgFZSsEUnWcMvNF161t+SHH5vlbLpc4BYc2t3VKz
+         AckkzzR3QxXaU3JZ4gZlOFio5J3uL0EExGgvW6f+pJPz74sLlrJRbIWuGC2p4c5SvNI4
+         opiXhggleyyJSo029tZQhqRizrKR5D/9AQTj0BGIEaqQcw35rxWZwbvleU4BgTXZ2LMZ
+         6kzQ==
+X-Gm-Message-State: AGi0Pualeiy/DmzctYRNIsJny1f6xhkXvqNHpH+aK6qcIbznOBugFcZy
+        OhucFB4F/2/ZoypLVqJdlDV+VhkxWAFMo/vreEnAmg==
+X-Google-Smtp-Source: APiQypLm9f0btuKktuvMb+D03IME6dlX6dRX4NRiQ4NXE3O3t6sARzsGX6NfhfAe3VIx+4GZEIKh+9FQbLrJ4BJaBxM=
+X-Received: by 2002:a1f:8ccf:: with SMTP id o198mr8122974vkd.53.1588783008587;
+ Wed, 06 May 2020 09:36:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=U8_Krob9oftJjzrYs1zrbLr9WZ-HSStv5_rbq9MpTChw@mail.gmail.com>
+References: <1588031768-23677-1-git-send-email-chun-hung.wu@mediatek.com>
+ <1588031768-23677-2-git-send-email-chun-hung.wu@mediatek.com> <9bc2454f-0b42-e256-7927-2564b56f369f@codeaurora.org>
+In-Reply-To: <9bc2454f-0b42-e256-7927-2564b56f369f@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 6 May 2020 18:36:12 +0200
+Message-ID: <CAPDyKFq7ffHeWg-S41tLvScg_BXCUULig=G=EzD_to1TG0NhVg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/5] mmc: core: Extend mmc_of_parse() to parse CQE bindings
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Chun-Hung Wu <chun-hung.wu@mediatek.com>,
+        =?UTF-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Pan Bian <bianpan2016@163.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mathieu Malaterre <malat@debian.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Kuohong Wang <kuohong.wang@mediatek.com>,
+        Yong Mao <yong.mao@mediatek.com>,
+        Android Kernel Team <kernel-team@android.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        DTML <devicetree@vger.kernel.org>, wsd_upstream@mediatek.com,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
-
-On Tue, May 05, 2020 at 05:18:48PM -0700, Doug Anderson wrote:
-> On Tue, May 5, 2020 at 2:24 PM Doug Anderson wrote:
-> > On Tue, May 5, 2020 at 2:14 PM Laurent Pinchart wrote:
-> > >
-> > > > I'll add this documentation into the comments of the yaml, but I'm not
-> > > > going to try to implement enforcement at the yaml level.
-> > >
-> > > Why not ? :-)
+On Wed, 6 May 2020 at 15:01, Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
+>
+>
+> On 4/28/2020 5:26 AM, Chun-Hung Wu wrote:
+> > Parse CQE bindings "supports-cqe" and "disable-cqe-dcmd"
+> > in mmc_of_parse().
 > >
-> > Because trying to describe anything in the yaml bindings that doesn't
-> > fit in the exact pattern of things that the yaml bindings are designed
-> > to check is like constructing the empire state building with only
-> > toothpicks.
+> > Signed-off-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
+> > ---
+> >   drivers/mmc/core/host.c | 5 +++++
+> >   1 file changed, 5 insertions(+)
 > >
-> > If you want to suggest some syntax that would actually make this
-> > doable without blowing out the yaml bindings then I'm happy to add it.
-> > Me being naive would assume that we'd need to do an exhaustive list of
-> > the OK combinations.  That would be fine for the 1-land and 2-lane
-> > cases, but for 4 lanes that means adding 256 entries to the bindings.
+> > diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
+> > index c876872..47521c6 100644
+> > --- a/drivers/mmc/core/host.c
+> > +++ b/drivers/mmc/core/host.c
+> > @@ -302,6 +302,11 @@ int mmc_of_parse(struct mmc_host *host)
+> >               host->caps2 |= MMC_CAP2_NO_SD;
+> >       if (device_property_read_bool(dev, "no-mmc"))
+> >               host->caps2 |= MMC_CAP2_NO_MMC;
+> > +     if (device_property_read_bool(dev, "supports-cqe"))
+> > +             host->caps2 |= MMC_CAP2_CQE;
+>
+> This change is breaking emmc driver on qcom platforms where this dt
+> property is defined.
+>
+> [    1.543453]  cqhci_deactivate+0xc/0x38
+> [    1.545627]  sdhci_msm_reset+0x40/0x58
+> [    1.549447]  sdhci_do_reset+0x48/0x7c
+> [    1.553180]  __sdhci_read_caps+0x7c/0x214
+> [    1.556913]  sdhci_setup_host+0x58/0xce8
+> [    1.560905]  sdhci_msm_probe+0x588/0x8a4
+> [    1.564900]  platform_drv_probe+0x4c/0xb0
+>
+> So, we cant have this flag defined before sdhci_setup_host().
+>
+> I will have to clear this cap and re-enable it in our initialization.
+
+Thanks for reporting! I have dropped all the four patches from
+Chun-Hung, so we can figure out how to fix this.
+
+Please help to review the next version of the series.
+
+>
+> > +     if (!device_property_read_bool(dev, "disable-cqe-dcmd")) {
+> > +             host->caps2 |= MMC_CAP2_CQE_DCMD;
+> > +     }
 > >
-> > I think the correct way to do this would require adding code in the
-> > <https://github.com/devicetree-org/dt-schema> project but that's
-> > really only done for generic subsystem-level concepts and not for a
-> > single driver.
-> 
-> OK.  Looked at your review of the .yaml and the "uniqueItems" is
-> probably the bit I didn't think of.  With that I can limit this but
-> it's still a little awkward.  I still haven't figured out how to force
-> data-lanes and lane-polarities to have the same number of items, too.
-> I'll add this as an add-on patch to my v2 and folks can decide if they
-> like it or hate it.
+> >       /* Must be after "non-removable" check */
+> >       if (device_property_read_u32(dev, "fixed-emmc-driver-type", &drv_type) == 0) {
 
-Thanks for looking into it. Looks good to me. Regarding the same number
-of items I would assume it should be possible, I would be surprised if
-the schemas allowed a different number of items for clocks and
-clock-names for instance, but maybe that's not implemented yet. In any
-case, no big deal.
-
-> # See ../../media/video-interface.txt for details.
-> data-lanes:
->   oneOf:
->     - minItems: 1
->       maxItems: 1
->       uniqueItems: true
->       items:
->         enum:
->           - 0
->           - 1
->       description:
->         If you have 1 logical lane it can go to either physical
->         port 0 or port 1.  Port 0 is suggested.
-> 
->     - minItems: 2
->       maxItems: 2
->       uniqueItems: true
->       items:
->         enum:
->           - 0
->           - 1
->       description:
->         If you have 2 logical lanes they can be reordered on
->         physical ports 0 and 1.
-> 
->     - minItems: 4
->       maxItems: 4
->       uniqueItems: true
->       items:
->         enum:
->           - 0
->           - 1
->           - 2
->           - 3
->       description:
->         If you have 4 logical lanes they can be reordered on
->         in any way.
-
--- 
-Regards,
-
-Laurent Pinchart
+Kind regards
+Uffe
