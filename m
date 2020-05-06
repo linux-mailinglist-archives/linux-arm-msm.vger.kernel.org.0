@@ -2,105 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 588FE1C7768
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 19:06:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0034E1C79B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 20:56:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730244AbgEFRGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 13:06:12 -0400
-Received: from mga17.intel.com ([192.55.52.151]:50199 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729414AbgEFRGM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 13:06:12 -0400
-IronPort-SDR: jYsr5BRAERmabnP4Ig3OiKasNuJXhnWqOt/TNzbqMfhWRMi/9zj+lTLLNlAXxrtncWfFC4o8/v
- 0FIqeTHTy9Qw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2020 10:06:11 -0700
-IronPort-SDR: GOq6sHbpWl0hAI7nnkFqSmoHpX//b2n4UHYnpCorexV8zj5K42CJn3V1ngkjLCgf8KsshSvoDw
- GY5zAWmQbzKQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,360,1583222400"; 
-   d="scan'208";a="284690915"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.157]) ([10.237.72.157])
-  by fmsmga004.fm.intel.com with ESMTP; 06 May 2020 10:06:08 -0700
-Subject: Re: [PATCH V1 1/2] mmc: core: Check request type before completing
- the request
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        ulf.hansson@linaro.org
-Cc:     stummala@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        stable@vger.kernel.org, Baolin Wang <baolin.wang@linaro.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Chaotian Jing <chaotian.jing@mediatek.com>,
-        Arnd Bergmann <arnd@arndb.de>
-References: <1588775643-18037-1-git-send-email-vbadigan@codeaurora.org>
- <1588775643-18037-2-git-send-email-vbadigan@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <e4f7515c-e52e-f909-174a-8835d7e9e445@intel.com>
-Date:   Wed, 6 May 2020 20:06:29 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1730006AbgEFS4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 14:56:09 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:46108 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729882AbgEFS4J (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 May 2020 14:56:09 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id 7B2FE804F6;
+        Wed,  6 May 2020 20:56:06 +0200 (CEST)
+Date:   Wed, 6 May 2020 20:56:00 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        sean@poorly.run, seanpaul@chromium.org
+Subject: Re: [PATCH v12 2/2] dt-bindings: documenting compatible string
+ vendor "visionox"
+Message-ID: <20200506185559.GA8227@ravnborg.org>
+References: <20200421045508.21137-1-harigovi@codeaurora.org>
+ <20200429054515.4976-2-harigovi@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1588775643-18037-2-git-send-email-vbadigan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200429054515.4976-2-harigovi@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=MOBOZvRl c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8 a=e5mUnYsNAAAA:8
+        a=yl7qcXnr7a4LJ7TjansA:9 a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22
+        a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/05/20 5:34 pm, Veerabhadrarao Badiganti wrote:
-> In the request completion path with CQE, request type is being checked
-> after the request is getting completed. This is resulting in returning
-> the wrong request type and leading to the IO hang issue.
+On Wed, Apr 29, 2020 at 11:15:15AM +0530, Harigovindan P wrote:
+> Documenting compatible string vendor "visionox" in vendor-prefix yaml file.
 > 
-> ASYNC request type is getting returned for DCMD type requests.
-> Because of this mismatch, mq->cqe_busy flag is never getting cleared
-> and the driver is not invoking blk_mq_hw_run_queue. So requests are not
-> getting dispatched to the LLD from the block layer.
-> 
-> All these eventually leading to IO hang issues.
-> So, get the request type before completing the request.
-> 
-> Cc: <stable@vger.kernel.org> # v4.19+
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
 
-The fixed commit was in 4.16
+Thanks, applied.
 
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-
-Fixes: 1e8e55b67030 ("mmc: block: Add CQE support")
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-
-Thank you for finding this!
+	Sam
 
 > ---
->  drivers/mmc/core/block.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> Changes in v11:
+> 	- Added compatible string in vendor-prefix yaml file
 > 
-> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-> index 8499b56..c5367e2 100644
-> --- a/drivers/mmc/core/block.c
-> +++ b/drivers/mmc/core/block.c
-> @@ -1370,6 +1370,7 @@ static void mmc_blk_cqe_complete_rq(struct mmc_queue *mq, struct request *req)
->  	struct mmc_request *mrq = &mqrq->brq.mrq;
->  	struct request_queue *q = req->q;
->  	struct mmc_host *host = mq->card->host;
-> +	enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
->  	unsigned long flags;
->  	bool put_card;
->  	int err;
-> @@ -1399,7 +1400,7 @@ static void mmc_blk_cqe_complete_rq(struct mmc_queue *mq, struct request *req)
->  
->  	spin_lock_irqsave(&mq->lock, flags);
->  
-> -	mq->in_flight[mmc_issue_type(mq, req)] -= 1;
-> +	mq->in_flight[issue_type] -= 1;
->  
->  	put_card = (mmc_tot_in_flight(mq) == 0);
->  
+> Changes in v12:
+> 	- Fixed the string to clear dt_binding_check errors.
 > 
-
+>  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> index 66a7382add95..1c86ebbeae20 100644
+> --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> @@ -1047,6 +1047,8 @@ patternProperties:
+>      description: Tronsmart
+>    "^truly,.*":
+>      description: Truly Semiconductors Limited
+> +  "^visionox,.*":
+> +    description: Visionox
+>    "^tsd,.*":
+>      description: Theobroma Systems Design und Consulting GmbH
+>    "^tyan,.*":
+> -- 
+> 2.25.1
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
