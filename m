@@ -2,91 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 829F71C671A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 06:51:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FACF1C67BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2020 08:00:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726897AbgEFEuv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 00:50:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44472 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726885AbgEFEuv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 00:50:51 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C20C061A41
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2020 21:50:49 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id x15so413929pfa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2020 21:50:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FSudHAT4wzxoYvh1XMNs5f+xHdE9nw3XTPAzmG768CM=;
-        b=U3aDzcawg82HoyJF4XsjEECEGMvShr3jwEb08q/y3Gp5KJ+A3SFFYbESzXQpGxuCsd
-         zACdWKMqVeq0+JZChcq/Dedbf8ZWMoE0WJucb2veZ59NC8vm1DJH2xTm0/Ua6ewnL/1f
-         rU3Ur6HaT4HXlf/+xuubUBeWjsOGpYKr3JjLVJZ9419XaxgVNACzR6YpAXP2ZcreWRYT
-         6jpduQWONW5u40Rkh+SLKyLnRXEIyxom2Wq7OAVnyUpmDk3TYRx1Py8ZacO5QVW/O/DB
-         9iSGlaZthKfyUGXTH+4wCIpTPZd8MunSTBr45HNfxwdI+IeGPklbqUO8K+JU3UZpGoEs
-         SkGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=FSudHAT4wzxoYvh1XMNs5f+xHdE9nw3XTPAzmG768CM=;
-        b=n4jPOKuWlpb6W1bD/LEcAKa76XJCZCyGs8dVjVSdle/jSOXRtJksmj4Nn1HmPYpgSr
-         0RlREXqZiW//glWyoxLzRTJZ+EwVKQnWI5rgBVrDjGlOYXRvqXdyTSZX4qE/xGcWsWzI
-         Qwau1VJEWA72V01dp0KR3DBTKHcQW4AmvpgQYzUylDJ5PvzF84/Vymzms2p/POUxDYfh
-         L8mx9nF7PEBgRG1l/zG7s/OvfLqdgo0zreHX35qtzsMaUELcz7MlrmkUnIXemg4eSUJ6
-         RBmLRe5JJ9KOwd4mVnuRALLsvAV7QUhL8CIYLLz7NS2PP4SvDdCbhFKypWejFNWrSphP
-         h1Dg==
-X-Gm-Message-State: AGi0PuYsFZla794PJ+WwM5HYX+jbwlLj6A9tqjN2aFQanNKQ4rSB8XL6
-        WP9/ipDcB5Yf7fyjNplEbRJN
-X-Google-Smtp-Source: APiQypLjtuvE/fbjYHCJaAnW9hNPEbhOvT1KeTnwHy+YbHtcJlY6KdWyWjT2sssutPY0psBUFA480Q==
-X-Received: by 2002:a65:5947:: with SMTP id g7mr5550370pgu.258.1588740649191;
-        Tue, 05 May 2020 21:50:49 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:6e88:ac9a:a18c:3139:9aa9:bb73])
-        by smtp.gmail.com with ESMTPSA id n69sm3491840pjc.8.2020.05.05.21.50.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2020 21:50:48 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     davem@davemloft.net
-Cc:     kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clew@codeaurora.org,
-        gregkh@linuxfoundation.org, netdev@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 2/2] net: qrtr: Do not depend on ARCH_QCOM
-Date:   Wed,  6 May 2020 10:20:15 +0530
-Message-Id: <20200506045015.13421-2-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200506045015.13421-1-manivannan.sadhasivam@linaro.org>
-References: <20200506045015.13421-1-manivannan.sadhasivam@linaro.org>
+        id S1726438AbgEFGAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 02:00:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51634 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725771AbgEFGAu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 May 2020 02:00:50 -0400
+Received: from localhost.localdomain (unknown [122.181.213.114])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C2212206E6;
+        Wed,  6 May 2020 06:00:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588744849;
+        bh=UW8ZX3nCW0V/vYWcElzTqXesPegk9LEv9xZxzAfWIMs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=QgaxcexZO3bKQibBypoqBW6r4EeJgCwPb7CAP4UFXzg0eRhOqasRrGzjnHnWNpwU6
+         Za3ueWxG7GFWc41YY/6HQDF91totUrypO7DvGm9UM9gCp1LwHWv6LjeaOixruMTjJl
+         IUTxZ+h3b0THO+kHyVqAauYNyx54TrpaWl/3G/Hw=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        =?UTF-8?q?Andreas=20B=C3=B6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v13 0/5] usb: xhci: Add support for Renesas USB controllers
+Date:   Wed,  6 May 2020 11:30:20 +0530
+Message-Id: <20200506060025.1535960-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.25.4
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPC Router protocol is also used by external modems for exchanging the QMI
-messages. Hence, it doesn't always depend on Qualcomm platforms. One such
-instance is the QCA6390 WLAN device connected to x86 machine.
+This series add support for Renesas USB controllers uPD720201 and uPD720202.
+These require firmware to be loaded and in case devices have ROM those can
+also be programmed if empty. If ROM is programmed, it runs from ROM as well.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- net/qrtr/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+This includes patches from Christian which supported these controllers w/o
+ROM and later my patches for ROM support and debugfs hook for rom erase and
+export of xhci-pci functions.
 
-diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
-index 8eb876471564..f362ca316015 100644
---- a/net/qrtr/Kconfig
-+++ b/net/qrtr/Kconfig
-@@ -4,7 +4,6 @@
- 
- config QRTR
- 	tristate "Qualcomm IPC Router support"
--	depends on ARCH_QCOM || COMPILE_TEST
- 	---help---
- 	  Say Y if you intend to use Qualcomm IPC router protocol.  The
- 	  protocol is used to communicate with services provided by other
+Changes in v13:
+ - Make rensesas as independent module invoke by xhci-pci which can be
+   selected by users of such hardware
+
+Changes in v12:
+  - Restore back module name for xhci-pci, so now renesas is a separate
+    module, export init/exit routines from renesas modules
+  - Update changelog on patch2
+
+Changes in v11:
+  - update xhci->quirks and use that in remove function
+  - remove error return renesas_verify_fw_version()
+  - remove renesas_download_rom() and modify renesas_fw_download_image() for
+  reuse
+Changes in v10:
+  remove renesas_xhci_pci_probe and call renesas_xhci_check_request_fw and
+  also cleanup exit code along with it.
+
+Changes in v9:
+ Make fw load a sync call and have single instance of probe execute,
+   elimating probe/remove races
+ Add quirk for renesas and use that for loading
+
+Changes in v8:
+ Fix compile error reported by Kbuild-bot by making usb_hcd_pci_probe() take
+ const struct hc_driver * as argument
+
+Changes in v7:
+ Make a single module which removes issues with module loading
+ Keep the renesas code in renesas file
+ Add hc_driver as argument for usb_hcd_pci_probe and modify hdc drivers to
+   pass this and not use driver_data
+ Use driver data for fw name
+ Remove code to check if we need to load firmware or not
+ remove multiple fw version support, we can do that with symlink in
+   userspace
+
+Changes in v6:
+ Move the renesas code into a separate driver which invokes xhci-pci functions.
+
+Changes in v5:
+ Added a debugfs rom erase patch, helps in debugging
+ Squashed patch 1 & 2 as requested by Mathias
+
+Changes in v4:
+ Rollback the delay values as we got device failures
+
+Changes in v3:
+  Dropped patch 2 as discussed with Christian
+  Removed aligned 8 bytes check
+  Change order for firmware search from highest version to lowest
+  Added entry for new firmware for device 0x14 as well
+  Add tested by Christian
+
+Changes in v2:
+  used macros for timeout count and delay
+  removed renesas_fw_alive_check
+  cleaned renesas_fw_callback
+  removed recurion for renesas_fw_download
+  added MODULE_FIRMWARE
+  added comment for multip
+
+
+Christian Lamparter (1):
+  usb: renesas-xhci: Add the renesas xhci driver
+
+Vinod Koul (4):
+  usb: hci: add hc_driver as argument for usb_hcd_pci_probe
+  usb: xhci: Add support for Renesas controller with memory
+  usb: renesas-xhci: Add ROM loader for uPD720201
+  usb: xhci: provide a debugfs hook for erasing rom
+
+ drivers/usb/core/hcd-pci.c          |   7 +-
+ drivers/usb/host/Kconfig            |   9 +
+ drivers/usb/host/Makefile           |   1 +
+ drivers/usb/host/ehci-pci.c         |   6 +-
+ drivers/usb/host/ohci-pci.c         |   9 +-
+ drivers/usb/host/uhci-pci.c         |   8 +-
+ drivers/usb/host/xhci-pci-renesas.c | 678 ++++++++++++++++++++++++++++
+ drivers/usb/host/xhci-pci.c         |  47 +-
+ drivers/usb/host/xhci-pci.h         |  28 ++
+ drivers/usb/host/xhci.h             |   1 +
+ include/linux/usb/hcd.h             |   3 +-
+ 11 files changed, 775 insertions(+), 22 deletions(-)
+ create mode 100644 drivers/usb/host/xhci-pci-renesas.c
+ create mode 100644 drivers/usb/host/xhci-pci.h
+
 -- 
-2.17.1
+2.25.4
 
