@@ -2,179 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1EA81C96FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 19:01:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 642021C973B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 19:13:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbgEGRBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 13:01:19 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:35288 "EHLO
+        id S1726308AbgEGRNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 13:13:01 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:22728 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726598AbgEGRBT (ORCPT
+        by vger.kernel.org with ESMTP id S1726356AbgEGRNB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 13:01:19 -0400
+        Thu, 7 May 2020 13:13:01 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588870878; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Q6e681XAMJUtZBJD87mrFbPc1YIIh9lR85Q2LRLTHXs=; b=JfQuIsHRVByt/4XGDvZeoLsmXVtkWKBo7aJuQpClfudAEINm0PTOL5/OcPNC29v8KgEIW33z
- SbULZ626LEjBUb6GdgYtK/7mabaWhANqrTanr8PAVYt1zx0AyKopcp4iiguonthwI/oWV0Jm
- 1ngq9jKN2nkCksOA8mHljj1xPZU=
+ s=smtp; t=1588871579; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=vzkpzJDEjNzJyUMHwaXm9g/03jBlK8TCDgK+mM91/A0=; b=QMwcWeacRMRfOLujEoY1mlcj9YSJfFHkaaq7o9ChX4ccsftUNACfCwoauomkx/naYU3nHbOA
+ RNYEqa1cO8Z+13b7AH4LV0iog7TW8ipjmbtR+DmGXrV+jjr1mqmIu2tp7xHKBmIskJK774KE
+ GmBHHGtDGykLIr/nzGRn1OlND5A=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb43ec2.7fc2d7a710a0-smtp-out-n03;
- Thu, 07 May 2020 17:00:50 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5eb44199.7f979d3003e8-smtp-out-n01;
+ Thu, 07 May 2020 17:12:57 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B138FC432C2; Thu,  7 May 2020 17:00:49 +0000 (UTC)
+        id 80424C433D2; Thu,  7 May 2020 17:12:56 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.131.209.195] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jhugo-perf-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C5532C433D2;
-        Thu,  7 May 2020 17:00:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C5532C433D2
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E783DC433F2;
+        Thu,  7 May 2020 17:12:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E783DC433F2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v4 2/6] spi: spi-geni-qcom: Use OPP API to set clk/perf
- state
-To:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Alok Chauhan <alokc@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-spi@vger.kernel.org
-References: <1588507469-31889-1-git-send-email-rnayak@codeaurora.org>
- <1588507469-31889-3-git-send-email-rnayak@codeaurora.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <acc7baf9-86a3-6c78-4d62-99d4b1baa12e@codeaurora.org>
-Date:   Thu, 7 May 2020 22:30:43 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <1588507469-31889-3-git-send-email-rnayak@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        gregkh@linuxfoundation.org, rafael@kernel.org
+Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: [PATCH] bus: mhi: core: Add soc_reset sysfs
+Date:   Thu,  7 May 2020 11:12:44 -0600
+Message-Id: <1588871564-18357-1-git-send-email-jhugo@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The MHI bus supports a standardized hardware reset, which is known as the
+"SoC Reset".  This reset is similar to the reset sysfs for PCI devices -
+a hardware mechanism to reset the state back to square one.
 
-On 5/3/2020 5:34 PM, Rajendra Nayak wrote:
-> geni spi needs to express a perforamnce state requirement on CX
-> depending on the frequency of the clock rates. Use OPP table from
-> DT to register with OPP framework and use dev_pm_opp_set_rate() to
-> set the clk/perf state.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Alok Chauhan <alokc@codeaurora.org>
-> Cc: Akash Asthana <akashast@codeaurora.org>
-> Cc: linux-spi@vger.kernel.org
-> ---
-> This patch has a dependency on the 'PATCH 1/6' in this series,
-> due to the changes in include/linux/qcom-geni-se.h
-> Its ideal if this and the previous patch gets merged via the
-> msm tree (once reviewed and ack'ed)
-> Greg has already responded he is fine with it for serial.
+The MHI SoC Reset is described in the spec as a reset of last resort.  If
+some unrecoverable error has occurred where other resets have failed, SoC
+Reset is the "big hammer" that ungracefully resets the device.  This is
+effectivly the same as yanking the power on the device, and reapplying it.
+However, depending on the nature of the particular issue, the underlying
+transport link may remain active and configured.  If the link remains up,
+the device will flag a MHI system error early in the boot process after
+the reset is executed, which allows the MHI bus to process a fatal error
+event, and clean up appropiately.
 
-Mark, would you be able to review/ack this patch so it can be
-taken in via the msm tree? 'PATCH 1/6' is Ack'd by Greg, and its
-going to land via the msm tree as well.
+While the SoC Reset is generally intended as a means of recovery when all
+else has failed, it can be useful in non-error scenarios.  For example,
+if the device loads firmware from the host filesystem, the device may need
+to be fully rebooted inorder to pick up the new firmware.  In this
+scenario, the system administrator may use the soc_reset sysfs to cause
+the device to pick up the new firmware that the admin placed on the
+filesystem.
 
-> 
->   drivers/spi/spi-geni-qcom.c | 26 +++++++++++++++++++++++---
->   1 file changed, 23 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index c397242..bc2916f 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -7,6 +7,7 @@
->   #include <linux/log2.h>
->   #include <linux/module.h>
->   #include <linux/platform_device.h>
-> +#include <linux/pm_opp.h>
->   #include <linux/pm_runtime.h>
->   #include <linux/qcom-geni-se.h>
->   #include <linux/spi/spi.h>
-> @@ -95,7 +96,6 @@ static int get_spi_clk_cfg(unsigned int speed_hz,
->   {
->   	unsigned long sclk_freq;
->   	unsigned int actual_hz;
-> -	struct geni_se *se = &mas->se;
->   	int ret;
->   
->   	ret = geni_se_clk_freq_match(&mas->se,
-> @@ -112,9 +112,9 @@ static int get_spi_clk_cfg(unsigned int speed_hz,
->   
->   	dev_dbg(mas->dev, "req %u=>%u sclk %lu, idx %d, div %d\n", speed_hz,
->   				actual_hz, sclk_freq, *clk_idx, *clk_div);
-> -	ret = clk_set_rate(se->clk, sclk_freq);
-> +	ret = dev_pm_opp_set_rate(mas->dev, sclk_freq);
->   	if (ret)
-> -		dev_err(mas->dev, "clk_set_rate failed %d\n", ret);
-> +		dev_err(mas->dev, "dev_pm_opp_set_rate failed %d\n", ret);
->   	return ret;
->   }
->   
-> @@ -561,6 +561,17 @@ static int spi_geni_probe(struct platform_device *pdev)
->   	mas->se.wrapper = dev_get_drvdata(dev->parent);
->   	mas->se.base = base;
->   	mas->se.clk = clk;
-> +	mas->se.opp_table = dev_pm_opp_set_clkname(&pdev->dev, "se");
-> +	if (IS_ERR(mas->se.opp_table))
-> +		return PTR_ERR(mas->se.opp_table);
-> +	/* OPP table is optional */
-> +	ret = dev_pm_opp_of_add_table(&pdev->dev);
-> +	if (!ret) {
-> +		mas->se.has_opp_table = true;
-> +	} else if (ret != -ENODEV) {
-> +		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
-> +		return ret;
-> +	}
->   
->   	spi->bus_num = -1;
->   	spi->dev.of_node = dev->of_node;
-> @@ -596,6 +607,9 @@ static int spi_geni_probe(struct platform_device *pdev)
->   spi_geni_probe_runtime_disable:
->   	pm_runtime_disable(dev);
->   	spi_master_put(spi);
-> +	if (mas->se.has_opp_table)
-> +		dev_pm_opp_of_remove_table(&pdev->dev);
-> +	dev_pm_opp_put_clkname(mas->se.opp_table);
->   	return ret;
->   }
->   
-> @@ -604,6 +618,9 @@ static int spi_geni_remove(struct platform_device *pdev)
->   	struct spi_master *spi = platform_get_drvdata(pdev);
->   	struct spi_geni_master *mas = spi_master_get_devdata(spi);
->   
-> +	if (mas->se.has_opp_table)
-> +		dev_pm_opp_of_remove_table(&pdev->dev);
-> +	dev_pm_opp_put_clkname(mas->se.opp_table);
->   	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
->   	spi_unregister_master(spi);
->   
-> @@ -617,6 +634,9 @@ static int __maybe_unused spi_geni_runtime_suspend(struct device *dev)
->   	struct spi_master *spi = dev_get_drvdata(dev);
->   	struct spi_geni_master *mas = spi_master_get_devdata(spi);
->   
-> +	/* Drop the performance state vote */
-> +	dev_pm_opp_set_rate(dev, 0);
-> +
->   	return geni_se_resources_off(&mas->se);
->   }
->   
-> 
+Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+---
+ Documentation/ABI/testing/sysfs-bus-mhi | 10 +++++++++
+ MAINTAINERS                             |  1 +
+ drivers/bus/mhi/core/boot.c             |  4 +---
+ drivers/bus/mhi/core/init.c             | 40 +++++++++++++++++++++++++++++++++
+ drivers/bus/mhi/core/main.c             |  9 ++++++++
+ include/linux/mhi.h                     |  6 +++++
+ 6 files changed, 67 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-mhi
 
+diff --git a/Documentation/ABI/testing/sysfs-bus-mhi b/Documentation/ABI/testing/sysfs-bus-mhi
+new file mode 100644
+index 0000000..8b06404
+--- /dev/null
++++ b/Documentation/ABI/testing/sysfs-bus-mhi
+@@ -0,0 +1,10 @@
++What:           /sys/bus/mhi/devices/<controller device>/soc_reset
++Date:		May 2020
++KernelVersion:  5.8
++Contact:        linux-arm-msm@vger.kernel.org
++Description:
++                Initiates a SoC reset on the MHI controller.  A SoC reset is
++		a reset of last resort, and will require a complete re-init.
++		This can be useful as a method of recovery if the device is
++		non-responsive, or as a means of loading new firmware as a
++		system administration task.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e64e5db..f38edac 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -11018,6 +11018,7 @@ M:	Hemant Kumar <hemantk@codeaurora.org>
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
++F:	Documentation/ABI/testing/sysfs-bus-mhi
+ F:	Documentation/mhi/
+ F:	drivers/bus/mhi/
+ F:	include/linux/mhi.h
+diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+index ebad5eb..ebb8e00 100644
+--- a/drivers/bus/mhi/core/boot.c
++++ b/drivers/bus/mhi/core/boot.c
+@@ -112,9 +112,7 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
+ 			/* Hardware reset so force device to enter RDDM */
+ 			dev_dbg(dev,
+ 				"Did not enter RDDM, do a host req reset\n");
+-			mhi_write_reg(mhi_cntrl, mhi_cntrl->regs,
+-				      MHI_SOC_RESET_REQ_OFFSET,
+-				      MHI_SOC_RESET_REQ);
++			mhi_do_soc_reset(mhi_cntrl);
+ 			udelay(delayus);
+ 		}
+ 
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index eb2ab05..198afe3 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -799,6 +799,39 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
+ 	return ret;
+ }
+ 
++static ssize_t soc_reset_store(struct device *dev,
++			       struct device_attribute *attr,
++			       const char *buf, size_t count)
++{
++	struct mhi_device *mhi_dev = container_of(dev, struct mhi_device, dev);
++	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
++	unsigned long value;
++	int rc;
++
++	rc = kstrtoul(buf, 0, &value);
++
++	if (rc) {
++		count = -EINVAL;
++		goto out;
++	}
++
++	mhi_do_soc_reset(mhi_cntrl);
++
++out:
++	return count;
++}
++
++DEVICE_ATTR_WO(soc_reset);
++
++static struct attribute *reset_attrs[] = {
++	&dev_attr_soc_reset.attr,
++	NULL,
++};
++
++static struct attribute_group cntrl_soc_reset_group = {
++	.attrs = reset_attrs,
++};
++
+ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 			    struct mhi_controller_config *config)
+ {
+@@ -909,8 +942,15 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 
+ 	mhi_cntrl->mhi_dev = mhi_dev;
+ 
++	ret = device_add_group(&mhi_dev->dev, &cntrl_soc_reset_group);
++	if (ret)
++		goto error_add_reset;
++
+ 	return 0;
+ 
++error_add_reset:
++	device_del(&mhi_dev->dev);
++
+ error_add_dev:
+ 	put_device(&mhi_dev->dev);
+ 
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 0ac0643..ec7c3a0 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -1519,3 +1519,12 @@ int mhi_poll(struct mhi_device *mhi_dev, u32 budget)
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(mhi_poll);
++
++void mhi_do_soc_reset(struct mhi_controller *mhi_cntrl)
++{
++	if (mhi_cntrl)
++		mhi_write_reg(mhi_cntrl, mhi_cntrl->regs,
++			      MHI_SOC_RESET_REQ_OFFSET,
++			      MHI_SOC_RESET_REQ);
++}
++EXPORT_SYMBOL_GPL(mhi_do_soc_reset);
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 3d7c3c2..dcdacf2 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -701,4 +701,10 @@ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+ int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+ 		  struct sk_buff *skb, size_t len, enum mhi_flags mflags);
+ 
++/**
++ * mhi_do_soc_reset - Perform a SoC reset to the specified controller
++ * @mhi_cntrl: Controller to reset
++ */
++void mhi_do_soc_reset(struct mhi_controller *mhi_cntrl);
++
+ #endif /* _MHI_H_ */
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
