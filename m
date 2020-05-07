@@ -2,172 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12CC61C9D03
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 23:14:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98EA21C9D78
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 23:36:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726437AbgEGVOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 17:14:09 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60130 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726218AbgEGVOJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 17:14:09 -0400
-Received: from embeddedor (unknown [189.207.59.248])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 082C420731;
-        Thu,  7 May 2020 21:14:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588886048;
-        bh=nDy0sEtP9kF9L34Jo/5G/mMWigMW2hNi5uXvTqim0pM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=a2yUU+AIANQ4UaVmmqQneT/ArIvzOWURsUBdTfPSmBKjwPw+HrkXe9ThyjNY1zx7T
-         wLzdjKBW93PQ3BjJqvczVnRV0QVXUlCQlx2oxMz1uylAjh8xnFCxK3XcLUOCcXsWK5
-         84Y+HmMrGOCmL7pA2V+b3gyWOO8tX99O+9yyD5J4=
-Date:   Thu, 7 May 2020 16:18:34 -0500
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        id S1726900AbgEGVf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 17:35:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726660AbgEGVf1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 17:35:27 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3EB5C05BD0A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2020 14:35:26 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id u10so2603797pls.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2020 14:35:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3EHfl+OZQ86xl3nnBfabGaWfnGOtgLn9bxyisBpB13s=;
+        b=hhnnE6pMuSjGxbdEhUqhrtz8mbWCLLN5LkkxK1NxLHSPp3O0WTkCLROvKUgNxSTHGa
+         0DbNWk3aI+/KjHfsrCRBpx2/15gnwwyBeCnPpvxSK7o+bxecMGa+GPZ3UrU4d9l8PS6b
+         8wkvPLbSVLmrTJtmMesDHAslZOhOFMWognir0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3EHfl+OZQ86xl3nnBfabGaWfnGOtgLn9bxyisBpB13s=;
+        b=bGh61FAHsAWqmqWf5SAl3PjJmmBRLe9wAJtndEfuI450hQggTGXr/3IQ3cjXTC/Cth
+         Kr7mrGZbKSaj37tG29Gjczd3S7wlkTsNnGtn5r4sM/1AZgEkYx0SSJ5OqRosDUnCopE5
+         rWU3a5pGxclbifklMp++7qao0MAyj67b3EGOsYAdkMdpWVDMZS77o7hQub8+uxvBDD65
+         6lZFADVuHT02TrUhJbSR98udcvzxAIm5g5W8YH5GyjEh3mfsDLWDsot+FH41hD6Yh+yV
+         bJkd6PNxaK5Jd3uNR4pqDpjR+tv3pzAbVnP6TdoOKiDXtgd9h70a0tic7zhxv8laScJe
+         534Q==
+X-Gm-Message-State: AGi0PuYwYUUauBDGbZ0kbG+CsaQiqwG4ks4D989kURPbNOkIBQpJinOO
+        4kG1YCFHCY2fPwxjQmdGMyQSgw==
+X-Google-Smtp-Source: APiQypKQSS3uzlkYHq8gThdNX9odtEUYpe3SwGbt56mePxUb+nlwO2wwSe+J7lSKN9DYDNPgDmZloQ==
+X-Received: by 2002:a17:902:9042:: with SMTP id w2mr15140927plz.127.1588887326189;
+        Thu, 07 May 2020 14:35:26 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id i10sm5884860pfa.166.2020.05.07.14.35.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 14:35:25 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     linus.walleij@linaro.org, bgolaszewski@baylibre.com,
+        airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
+        narmstrong@baylibre.com, a.hajda@samsung.com,
+        Laurent.pinchart@ideasonboard.com, spanda@codeaurora.org
+Cc:     jonas@kwiboo.se, jeffrey.l.hugo@gmail.com,
+        linux-gpio@vger.kernel.org, bjorn.andersson@linaro.org,
+        swboyd@chromium.org, jernej.skrabec@siol.net,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] media: venus: Replace zero-length array with
- flexible-array
-Message-ID: <20200507211834.GA20715@embeddedor>
-References: <20200507190750.GA15755@embeddedor>
- <a249b3b7-56dc-8bed-f079-2cf163b46712@linaro.org>
+Subject: [PATCH v5 0/6] drm: Prepare to use a GPIO on ti-sn65dsi86 for Hot Plug Detect
+Date:   Thu,  7 May 2020 14:34:54 -0700
+Message-Id: <20200507213500.241695-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a249b3b7-56dc-8bed-f079-2cf163b46712@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 07, 2020 at 11:39:51PM +0300, Stanimir Varbanov wrote:
-> Hi Gustavo,
-> 
-> Two patches from you are already queued in media_tree for v5.8.
-> 
 
-Awesome. :)
+As talked about in commit c2bfc223882d ("drm/bridge: ti-sn65dsi86:
+Remove the mystery delay"), the normal HPD pin on ti-sn65dsi86 is
+kinda useless, at least for embedded DisplayPort (eDP).  However,
+despite the fact that the actual HPD pin on the bridge is mostly
+useless for eDP, the concept of HPD for eDP still makes sense.  It
+allows us to optimize out a hardcoded delay that many panels need if
+HPD isn't hooked up.  Panel timing diagrams show HPD as one of the
+events to measure timing from and we have to assume the worst case if
+we can't actually read HPD.
 
-Thanks, Stanimir.
---
-Gustavo
+One way to use HPD for eDP without using the mostly useless HPD pin on
+ti-sn65dsi86 is to route the panel's HPD somewhere else in the system,
+like to a GPIO.  This works great because eDP panels aren't physically
+hotplugged.  That means the debouncing logic that caused us problems
+wasn't really needed and a raw GPIO works great.
 
-> 0f61e171e4bbac4595175070c75707f1b12f4e37 media: venus: hfi_msgs.h:
-> Replace zero-length array with flexible-array member
-> 
-> 380f3bbd9562dc93be2e3cadc329b15284fbedae media: venus: hfi_cmds.h:
-> Replace zero-length array with flexible-array member
-> 
-> 
-> On 5/7/20 10:07 PM, Gustavo A. R. Silva wrote:
-> > The current codebase makes use of the zero-length array language
-> > extension to the C90 standard, but the preferred mechanism to declare
-> > variable-length types such as these ones is a flexible array member[1][2],
-> > introduced in C99:
-> > 
-> > struct foo {
-> >         int stuff;
-> >         struct boo array[];
-> > };
-> > 
-> > By making use of the mechanism above, we will get a compiler warning
-> > in case the flexible array does not occur last in the structure, which
-> > will help us prevent some kind of undefined behavior bugs from being
-> > inadvertently introduced[3] to the codebase from now on.
-> > 
-> > Also, notice that, dynamic memory allocations won't be affected by
-> > this change:
-> > 
-> > "Flexible array members have incomplete type, and so the sizeof operator
-> > may not be applied. As a quirk of the original implementation of
-> > zero-length arrays, sizeof evaluates to zero."[1]
-> > 
-> > sizeof(flexible-array-member) triggers a warning because flexible array
-> > members have incomplete type[1]. There are some instances of code in
-> > which the sizeof operator is being incorrectly/erroneously applied to
-> > zero-length arrays and the result is zero. Such instances may be hiding
-> > some bugs. So, this work (flexible-array member conversions) will also
-> > help to get completely rid of those sorts of issues.
-> > 
-> > This issue was found with the help of Coccinelle.
-> > 
-> > [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-> > [2] https://github.com/KSPP/linux/issues/21
-> > [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
-> > 
-> > Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-> > ---
-> >  drivers/media/platform/qcom/venus/hfi_cmds.h |    2 +-
-> >  drivers/media/platform/qcom/venus/hfi_msgs.h |   10 +++++-----
-> >  2 files changed, 6 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> > index cae9d5d61c0c..83705e237f1c 100644
-> > --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-> > +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> > @@ -107,7 +107,7 @@ struct hfi_session_abort_pkt {
-> >  struct hfi_session_set_property_pkt {
-> >  	struct hfi_session_hdr_pkt shdr;
-> >  	u32 num_properties;
-> > -	u32 data[0];
-> > +	u32 data[];
-> >  };
-> >  
-> >  struct hfi_session_set_buffers_pkt {
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
-> > index 7694b1d25d9d..526d9f5b487b 100644
-> > --- a/drivers/media/platform/qcom/venus/hfi_msgs.h
-> > +++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
-> > @@ -155,7 +155,7 @@ struct hfi_msg_session_empty_buffer_done_pkt {
-> >  	u32 input_tag;
-> >  	u32 packet_buffer;
-> >  	u32 extradata_buffer;
-> > -	u32 data[0];
-> > +	u32 data[];
-> >  };
-> >  
-> >  struct hfi_msg_session_fbd_compressed_pkt {
-> > @@ -175,7 +175,7 @@ struct hfi_msg_session_fbd_compressed_pkt {
-> >  	u32 picture_type;
-> >  	u32 packet_buffer;
-> >  	u32 extradata_buffer;
-> > -	u32 data[0];
-> > +	u32 data[];
-> >  };
-> >  
-> >  struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
-> > @@ -202,7 +202,7 @@ struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
-> >  	u32 picture_type;
-> >  	u32 packet_buffer;
-> >  	u32 extradata_buffer;
-> > -	u32 data[0];
-> > +	u32 data[];
-> >  };
-> >  
-> >  struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
-> > @@ -211,7 +211,7 @@ struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
-> >  	u32 filled_len;
-> >  	u32 offset;
-> >  	u32 packet_buffer2;
-> > -	u32 data[0];
-> > +	u32 data[];
-> >  };
-> >  
-> >  struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
-> > @@ -220,7 +220,7 @@ struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
-> >  	u32 filled_len;
-> >  	u32 offset;
-> >  	u32 packet_buffer3;
-> > -	u32 data[0];
-> > +	u32 data[];
-> >  };
-> >  
-> >  struct hfi_msg_session_parse_sequence_header_done_pkt {
-> > 
-> 
-> -- 
-> regards,
-> Stan
+As per the above, a smart board designer would realize the value of
+HPD and choose to route it to a GPIO somewhere on the board to avoid
+the silly sn65dsi86 debouncing.  While said "smart designer" could
+theoretically route HPD anywhere on the board, a really smart designer
+would realize that there are several GPIOs on the bridge itself that
+are nearly useless for anything but this purpose and route HPD to one
+of those.
+
+This series of patches is intended to allow the scenario described
+above.
+
+This patch has been tested on a board that is not yet mainline.  On
+the hardware I have:
+- Panel spec says HPD could take up to 200 ms to come up, so without
+  HPD hooked up we need to delay 200 ms.
+- On my board the panel is powered by the same rail as the
+  touchscreen.  By chance of probe order the touchscreen comes up
+  first.  This means by the time we check HPD in ti_sn_bridge_enable()
+  it's already up.  Thus we can use the panel on 200 ms earlier.
+- If I measure HPD on this pane it comes up ~56 ms after the panel is
+  powered.  This means I can save 144 ms of delay.
+
+Side effects (though not main goals) of this series are:
+- ti-sn65dsi86 GPIOs are now exported in Linux.
+- ti-sn65dsi86 bindings are converted to yaml.
+- Common panel bindings now have "hpd-gpios" listed.
+- The simple-panel driver in Linux can delay in prepare based on
+  "hpd-gpios"
+- ti-sn65dsi86 bindings (and current user) now specifies "no-hpd"
+  if HPD isn't hooked up.
+
+Changes in v5:
+- Use of_xlate so that numbers in dts start at 1, not 0.
+- Squash https://lore.kernel.org/r/20200506140208.v2.2.I0a2bca02b09c1fcb6b09479b489736d600b3e57f@changeid/
+
+Changes in v4:
+- Don't include gpio.h
+- Use gpiochip_get_data() instead of container_of() to get data.
+- GPIOF_DIR_XXX => GPIO_LINE_DIRECTION_XXX
+- Use Linus W's favorite syntax to read a bit from a bitfield.
+- Define and use SN_GPIO_MUX_MASK.
+- Add a comment about why we use a bitmap for gchip_output.
+- Tacked on "or is otherwise unusable." to description.
+
+Changes in v3:
+- Becaue => Because
+- Add a kernel-doc to our pdata to clarify double-duty of gchip_output.
+- More comments about how powering off affects us (get_dir, dir_input).
+- Cleanup tail of ti_sn_setup_gpio_controller() to avoid one "return".
+- Use a bitmap rather than rolling my own.
+- Remind how gpio_get_optional() works in the commit message.
+- useful implement => useful to implement
+
+Changes in v2:
+- ("Export...GPIOs") is 1/2 of replacement for ("Allow...bridge GPIOs")
+- ("dt-bindings: display: Add hpd-gpios to panel-common...") new for v2
+- ("simple...hpd-gpios") is 1/2 of replacement for ("Allow...bridge GPIOs")
+- specification => specifier.
+- power up => power.
+- Added back missing suspend-gpios.
+- data-lanes and lane-polarities are are the right place now.
+- endpoints don't need to be patternProperties.
+- Specified more details for data-lanes and lane-polarities.
+- Added old example back in, fixing bugs in it.
+- Example i2c bus is just called "i2c", not "i2c1" now.
+- ("dt-bindings: drm/bridge: ti-sn65dsi86: Document no-hpd") new for v2.
+- ("arm64: dts: sdm845: Add "no-hpd" to sn65dsi86 on cheza") new for v2.
+
+Douglas Anderson (6):
+  drm/bridge: ti-sn65dsi86: Export bridge GPIOs to Linux
+  dt-bindings: display: Add hpd-gpios to panel-common bindings
+  drm/panel-simple: Support hpd-gpios for delaying prepare()
+  dt-bindings: drm/bridge: ti-sn65dsi86: Convert to yaml
+  dt-bindings: drm/bridge: ti-sn65dsi86: Document no-hpd
+  arm64: dts: sdm845: Add "no-hpd" to sn65dsi86 on cheza
+
+ .../bindings/display/bridge/ti,sn65dsi86.txt  |  87 ------
+ .../bindings/display/bridge/ti,sn65dsi86.yaml | 293 ++++++++++++++++++
+ .../bindings/display/panel/panel-common.yaml  |   6 +
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    |   2 +
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c         | 214 +++++++++++++
+ drivers/gpu/drm/panel/panel-simple.c          |  53 ++++
+ 6 files changed, 568 insertions(+), 87 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
+ create mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+
+-- 
+2.26.2.645.ge9eca65c58-goog
+
