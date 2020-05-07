@@ -2,125 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA1BA1C974D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 19:21:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5632B1C9862
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 19:54:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726356AbgEGRVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 13:21:40 -0400
-Received: from mga17.intel.com ([192.55.52.151]:18693 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726222AbgEGRVk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 13:21:40 -0400
-IronPort-SDR: cM+Yedsq6jkDtKE2D9Ke1MlcyZHSD1bwfkm7JyAEpLhfFlLChWaMvmtH9yH3tzrD5BQUchRkKU
- 509LU12gci4Q==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2020 10:21:40 -0700
-IronPort-SDR: GK+1icHNFj19CJ+91hjNV73ayYdaExpKxnPX4/gEJDQJzbISNiD+HHK6RgHmxhcKuVCFKVYumN
- tS6M1fgmCP/A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,364,1583222400"; 
-   d="scan'208";a="285066680"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.157]) ([10.237.72.157])
-  by fmsmga004.fm.intel.com with ESMTP; 07 May 2020 10:21:34 -0700
-Subject: Re: [PATCH V2] mmc: core: Fix recursive locking issue in CQE recovery
- path
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        ulf.hansson@linaro.org
-Cc:     stummala@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sarthak Garg <sartgarg@codeaurora.org>, stable@vger.kernel.org,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>
-References: <1588775643-18037-3-git-send-email-vbadigan@codeaurora.org>
- <1588868135-31783-1-git-send-email-vbadigan@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <adecb267-0013-9eb2-42c3-89c660724176@intel.com>
-Date:   Thu, 7 May 2020 20:21:55 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726491AbgEGRyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 13:54:11 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:35619 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726367AbgEGRyL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 13:54:11 -0400
+Received: by mail-oi1-f194.google.com with SMTP id o7so6022320oif.2;
+        Thu, 07 May 2020 10:54:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g8REV0kLr+byzHuvO4ibHyw5i1CzypXIkPjjQmmKtfU=;
+        b=J8nxmyPzy/4gmrLgDtoh/l0QVEYmY7JAyOusSmf/eOMZIJkDjnD8UkPdoWeFBokjOF
+         lNzxXBbxk11hZKmPVHtwy2cZvqwBj1yd25lVTV6QWpnKIRfDXiSwq3i3QhA/mnSgGtGW
+         70kwvz+FoZXjyJQdp+eeEbCW1gERRhJcgHI8Y+cL8Kn+zik8BnT2dCzZuI5Rh8j5An4s
+         uGX12T47duLKsJ9f/4I8diDMhOsGNNtKg5n4E/AHwObGuEziOQ20uEIBtYfgiAVTbeUE
+         y1u/Y2GjfRof+Ct24b4Pa0IA79YCos5b2e5lypILK8ewqKDmIt069Dy6PwV/fFKQAoHw
+         zrsQ==
+X-Gm-Message-State: AGi0PuYSFYhHpUR8kGxSEt37vd3Kx4csTq8+By5kFfXHSo2lD1oVkAeY
+        oGt6AqTnMAcvrjFG9h9UTw==
+X-Google-Smtp-Source: APiQypICrRGa77xwpC1Feh+IttYD29SZ7QVuZ9F9xIn6Psb5EV7p01JImSfl45fb5o//MUBvzn7aqg==
+X-Received: by 2002:aca:57c4:: with SMTP id l187mr7744976oib.155.1588874050050;
+        Thu, 07 May 2020 10:54:10 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id q3sm1637241oom.12.2020.05.07.10.54.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 10:54:09 -0700 (PDT)
+Received: (nullmailer pid 18070 invoked by uid 1000);
+        Thu, 07 May 2020 17:54:08 -0000
+Date:   Thu, 7 May 2020 12:54:08 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sham Muthayyan <smuthayy@codeaurora.org>,
+        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 01/11] PCI: qcom: add missing ipq806x clocks in PCIe
+ driver
+Message-ID: <20200507175408.GA2029@bogus>
+References: <20200430220619.3169-1-ansuelsmth@gmail.com>
+ <20200430220619.3169-2-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1588868135-31783-1-git-send-email-vbadigan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200430220619.3169-2-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/05/20 7:15 pm, Veerabhadrarao Badiganti wrote:
-> From: Sarthak Garg <sartgarg@codeaurora.org>
+On Fri, May 01, 2020 at 12:06:08AM +0200, Ansuel Smith wrote:
+> Aux and Ref clk are missing in PCIe qcom driver.
+> Add support in the driver to fix PCIe initialization in ipq806x.
 > 
-> Consider the following stack trace
-> 
-> -001|raw_spin_lock_irqsave
-> -002|mmc_blk_cqe_complete_rq
-> -003|__blk_mq_complete_request(inline)
-> -003|blk_mq_complete_request(rq)
-> -004|mmc_cqe_timed_out(inline)
-> -004|mmc_mq_timed_out
-> 
-> mmc_mq_timed_out acquires the queue_lock for the first
-> time. The mmc_blk_cqe_complete_rq function also tries to acquire
-> the same queue lock resulting in recursive locking where the task
-> is spinning for the same lock which it has already acquired leading
-> to watchdog bark.
-> 
-> Fix this issue with the lock only for the required critical section.
-> 
-> Cc: <stable@vger.kernel.org>
-> Fixes: 1e8e55b67030 ("mmc: block: Add CQE support")
-> Suggested-by: Sahitya Tummala <stummala@codeaurora.org>
-> Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
+> Fixes: 82a823833f4e PCI: qcom: Add Qualcomm PCIe controller driver
+> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Cc: stable@vger.kernel.org # v4.5+
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Doesn't strike me as stable material. Looks like new h/w enablement.
 
 > ---
->  drivers/mmc/core/queue.c | 13 ++++---------
->  1 file changed, 4 insertions(+), 9 deletions(-)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 44 ++++++++++++++++++++++----
+>  1 file changed, 38 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
-> index 25bee3d..b5fd3bc 100644
-> --- a/drivers/mmc/core/queue.c
-> +++ b/drivers/mmc/core/queue.c
-> @@ -107,7 +107,7 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct request *req)
->  	case MMC_ISSUE_DCMD:
->  		if (host->cqe_ops->cqe_timeout(host, mrq, &recovery_needed)) {
->  			if (recovery_needed)
-> -				__mmc_cqe_recovery_notifier(mq);
-> +				mmc_cqe_recovery_notifier(mrq);
->  			return BLK_EH_RESET_TIMER;
->  		}
->  		/* No timeout (XXX: huh? comment doesn't make much sense) */
-> @@ -127,18 +127,13 @@ static enum blk_eh_timer_return mmc_mq_timed_out(struct request *req,
->  	struct mmc_card *card = mq->card;
->  	struct mmc_host *host = card->host;
->  	unsigned long flags;
-> -	int ret;
-> +	bool ignore_tout;
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 5ea527a6bd9f..2a39dfdccfc8 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -88,6 +88,8 @@ struct qcom_pcie_resources_2_1_0 {
+>  	struct clk *iface_clk;
+>  	struct clk *core_clk;
+>  	struct clk *phy_clk;
+> +	struct clk *aux_clk;
+> +	struct clk *ref_clk;
+>  	struct reset_control *pci_reset;
+>  	struct reset_control *axi_reset;
+>  	struct reset_control *ahb_reset;
+> @@ -246,6 +248,14 @@ static int qcom_pcie_get_resources_2_1_0(struct qcom_pcie *pcie)
+>  	if (IS_ERR(res->phy_clk))
+>  		return PTR_ERR(res->phy_clk);
 >  
->  	spin_lock_irqsave(&mq->lock, flags);
-> -
-> -	if (mq->recovery_needed || !mq->use_cqe || host->hsq_enabled)
-> -		ret = BLK_EH_RESET_TIMER;
-> -	else
-> -		ret = mmc_cqe_timed_out(req);
-> -
-> +	ignore_tout = mq->recovery_needed || !mq->use_cqe || host->hsq_enabled;
->  	spin_unlock_irqrestore(&mq->lock, flags);
->  
-> -	return ret;
-> +	return ignore_tout ? BLK_EH_RESET_TIMER : mmc_cqe_timed_out(req);
+> +	res->aux_clk = devm_clk_get_optional(dev, "aux");
+> +	if (IS_ERR(res->aux_clk))
+> +		return PTR_ERR(res->aux_clk);
+> +
+> +	res->ref_clk = devm_clk_get_optional(dev, "ref");
+> +	if (IS_ERR(res->ref_clk))
+> +		return PTR_ERR(res->ref_clk);
+
+Seems like you'd want to report an error for ipq608x? Based on the 
+commit msg, they aren't optional.
+
+> +
+>  	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
+>  	if (IS_ERR(res->pci_reset))
+>  		return PTR_ERR(res->pci_reset);
+> @@ -278,6 +288,8 @@ static void qcom_pcie_deinit_2_1_0(struct qcom_pcie *pcie)
+>  	clk_disable_unprepare(res->iface_clk);
+>  	clk_disable_unprepare(res->core_clk);
+>  	clk_disable_unprepare(res->phy_clk);
+> +	clk_disable_unprepare(res->aux_clk);
+> +	clk_disable_unprepare(res->ref_clk);
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
 >  }
 >  
->  static void mmc_mq_recovery_handler(struct work_struct *work)
-> 
+> @@ -307,16 +319,32 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  		goto err_assert_ahb;
+>  	}
+>  
+> +	ret = clk_prepare_enable(res->core_clk);
 
+Perhaps use the bulk api.
+
+> +	if (ret) {
+> +		dev_err(dev, "cannot prepare/enable core clock\n");
+> +		goto err_clk_core;
+> +	}
+> +
+>  	ret = clk_prepare_enable(res->phy_clk);
+>  	if (ret) {
+>  		dev_err(dev, "cannot prepare/enable phy clock\n");
+>  		goto err_clk_phy;
+>  	}
+>  
+> -	ret = clk_prepare_enable(res->core_clk);
+> -	if (ret) {
+> -		dev_err(dev, "cannot prepare/enable core clock\n");
+> -		goto err_clk_core;
+> +	if (res->aux_clk) {
+> +		ret = clk_prepare_enable(res->aux_clk);
+> +		if (ret) {
+> +			dev_err(dev, "cannot prepare/enable aux clock\n");
+> +			goto err_clk_aux;
+> +		}
+> +	}
+> +
+> +	if (res->ref_clk) {
+> +		ret = clk_prepare_enable(res->ref_clk);
+> +		if (ret) {
+> +			dev_err(dev, "cannot prepare/enable ref clock\n");
+> +			goto err_clk_ref;
+> +		}
+>  	}
+>  
+>  	ret = reset_control_deassert(res->ahb_reset);
+> @@ -372,10 +400,14 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	return 0;
+>  
+>  err_deassert_ahb:
+> -	clk_disable_unprepare(res->core_clk);
+> -err_clk_core:
+> +	clk_disable_unprepare(res->ref_clk);
+> +err_clk_ref:
+> +	clk_disable_unprepare(res->aux_clk);
+> +err_clk_aux:
+>  	clk_disable_unprepare(res->phy_clk);
+>  err_clk_phy:
+> +	clk_disable_unprepare(res->core_clk);
+> +err_clk_core:
+>  	clk_disable_unprepare(res->iface_clk);
+>  err_assert_ahb:
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+> -- 
+> 2.25.1
+> 
