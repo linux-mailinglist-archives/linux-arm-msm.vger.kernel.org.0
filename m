@@ -2,120 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7EDC1C8B25
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 14:39:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA4B71C8B68
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 14:53:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725857AbgEGMjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 08:39:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60182 "EHLO
+        id S1726636AbgEGMxZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 08:53:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725923AbgEGMjK (ORCPT
+        by vger.kernel.org with ESMTP id S1725923AbgEGMxW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 08:39:10 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96CF2C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2020 05:39:10 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id j2so4464293qtr.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2020 05:39:10 -0700 (PDT)
+        Thu, 7 May 2020 08:53:22 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9EF1C05BD43
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2020 05:53:22 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id t40so2578325pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2020 05:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=h23ycIj0Es66LOs2qTkk9E+KQi7x2oserJGLWTJrvVs=;
-        b=lqNDBm3iJvpBS7JbdzL2kyxWt16dNLnkmoXkQ9q1RSN8riPLMYPTfnVNAT0eD5UPxD
-         JCCcaQjA+sq7cnHg05LL+f+lJbSMRaebFXdAfGCy7AbQsk1nh5PfgLS/roGlL4RPQ7X3
-         2DY/LAqPbXOwc5L4bSrr82ySipb2EmqMq584wYJW2o4knXZTSxseA2MzOic/kwYCuBPu
-         msG261z5w5Om4CoQFyurnNxAvAkmSMSNbTOJk+kCt9jWuzoD9Dhqc8IAkl/Z2L0GJ019
-         SybDo/nS6ASTH+krIlYdTwrgoYoHvy6yEL0zDdhDJ9Nj/RgzTgotwWHwVLJ3tcEmLoyR
-         dLzg==
+        h=from:to:cc:subject:date:message-id;
+        bh=j58IuaF2tOM1RurkMuTpHXCNmLk7/z8BIzusf87nmw4=;
+        b=WYriJ/WWVBwoNsFK5/ANzj6Ty0H+3E3lGWT8zVA9rluurZstZS56Zs58ETZiotxhVA
+         yOIBJIbL6WOXuibdiwn0uQoRV3J5st8K3cqT4mz47gWoruylRY6dKdoecfOLk0nhukF/
+         Exv63QxZcRR6xd1jQz7CJxp4igEnG0MfQZ25E+KzZEleDAd38frGImj1UTFNfgcT8fBI
+         hte6Ksw6ncnoKM+YPwepcT2OzKgVXXUuBKAs5hlnRn72y2Jj9j6LR7X7zMFl86+nso3h
+         PL4HMpulQK/vmI+um2cCVD/ttQqY0RysgeB0dOXqKuRJoko6N2MRzzwfbJOMp7OZb30v
+         I/Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=h23ycIj0Es66LOs2qTkk9E+KQi7x2oserJGLWTJrvVs=;
-        b=iFRy7euhX2vh2puXKe7fEh+Cgh5k8DXl+zp6CqLBk+wbcO3+ZS5LLdBbZVnvhLCLK+
-         41jCmVXwwVjSIDjFLeeNtZh4Y7zDUC/lXIUCc8K4+gqwr3F9ZC26VaPa0M+M5j5lBwDX
-         gS4qP7SdCi/bkFMyjdxEOXAsVOnyQE3sVcg0yz1bzAWOj7X8P8HkSjSsPeNjlpDKlWp8
-         /TL0IY1ivSnpQfbjIx1Q214rFDIaVyr0bCHYpDMPOStPXu3FtdjLZsapQcQA2+4gXAyd
-         7xgU2u/xnCt5LdedFirHjXw9SJznnavq0Fw6zlRlluxH2ZZtpjWyosafDOqMuTZ5xydP
-         qFAw==
-X-Gm-Message-State: AGi0Pua+njPyApdiAjUbj9krsN25fXQuKCAc7KYJa36sMR+xCBz90GlU
-        JNYa8HZmmmtg9rayD3qQyt3leg==
-X-Google-Smtp-Source: APiQypLqMCs4Ou9WuCc1DEOntHd98ywpKjuDtL9vbFoEhoaJNfH1CgWFIpa6YJj2+txulaqSqErA7g==
-X-Received: by 2002:ac8:5204:: with SMTP id r4mr13832288qtn.39.1588855149700;
-        Thu, 07 May 2020 05:39:09 -0700 (PDT)
-Received: from [192.168.1.92] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.gmail.com with ESMTPSA id e16sm4315010qtc.92.2020.05.07.05.39.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 May 2020 05:39:09 -0700 (PDT)
-Subject: Re: [RFC PATCH v4 1/4] firmware: qcom_scm: Add support for
- programming inline crypto keys
-To:     Eric Biggers <ebiggers@kernel.org>, linux-scsi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>
-References: <20200501045111.665881-1-ebiggers@kernel.org>
- <20200501045111.665881-2-ebiggers@kernel.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <1dc13593-9ee9-aa61-978e-1e6a1d9cec0f@linaro.org>
-Date:   Thu, 7 May 2020 08:39:08 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <20200501045111.665881-2-ebiggers@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=j58IuaF2tOM1RurkMuTpHXCNmLk7/z8BIzusf87nmw4=;
+        b=M7snMTajSZ38nt46FIKKOzdfIhnyyajqOvx3WSi0mifIAzWn6LXwYF37qDsgtTtpKy
+         WqzGXfEGdjoTAOsKZaAk+GgRRJErFdlw0kpqg2qWUxjj0pjDPv1Kw5NFP599YGwNKFir
+         y7Ncc322MVSSLKA4x3UhtgTVdM5sfQBMGbIT4hW12+vau10VJPyox0HCa7MJJg08WgDt
+         Ww1KZ/8qKlOOai19KBJXZmR33CskmePqnxGR5Yqqp9TlOOJaYMJhMyZ9GMppaKSFdsxe
+         olZVAtR+1zfcz9W3rkCMxRxJLhqBwJOsTH1wifL8BUg0JZwqHwdmQbeF61l82x+QB3vk
+         Wfqg==
+X-Gm-Message-State: AGi0PuaG4nMMtOmVIOq+FBSmQxDIHsMPnvk1sThNbC5AiwrRzfzQL/cm
+        GAD9dc8ggFQGjxBqUnCyJO9H
+X-Google-Smtp-Source: APiQypJArY4q500dTsUg0P6yfcpn1Ija5V/q7fY81/0xeevRZVxUK1tNC640Mq6PqRWDx9w/R8BMiw==
+X-Received: by 2002:a17:902:7208:: with SMTP id ba8mr2699331plb.246.1588856002132;
+        Thu, 07 May 2020 05:53:22 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4072:6093:7a3f:4ddc:efce:d298:c431])
+        by smtp.gmail.com with ESMTPSA id q21sm4926190pfg.131.2020.05.07.05.53.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 05:53:21 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     davem@davemloft.net
+Cc:     kvalo@codeaurora.org, bjorn.andersson@linaro.org,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, clew@codeaurora.org,
+        gregkh@linuxfoundation.org, netdev@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 0/2] Add QRTR MHI client driver
+Date:   Thu,  7 May 2020 18:23:04 +0530
+Message-Id: <20200507125306.32157-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dave,
 
+Here is the series adding MHI client driver support to Qualcomm IPC router
+protocol. MHI is a newly added bus to kernel which is used to communicate to
+external modems over a physical interface like PCI-E. This driver is used to
+transfer the QMI messages between the host processor and external modems over
+the "IPCR" channel.
 
-On 5/1/20 12:51 AM, Eric Biggers wrote:
-> From: Eric Biggers <ebiggers@google.com>
-> 
-> Add support for the Inline Crypto Engine (ICE) key programming interface
-> that's needed for the ufs-qcom driver to use inline encryption on
-> Snapdragon SoCs.  This interface consists of two SCM calls: one to
-> program a key into a keyslot, and one to invalidate a keyslot.
-> 
-> Although the UFS specification defines a standard way to do this, on
-> these SoCs the Linux kernel isn't permitted to access the needed crypto
-> configuration registers directly; these SCM calls must be used instead.
-> 
-> Signed-off-by: Eric Biggers <ebiggers@google.com>
-> ---
->   drivers/firmware/qcom_scm.c | 101 ++++++++++++++++++++++++++++++++++++
->   drivers/firmware/qcom_scm.h |   4 ++
->   include/linux/qcom_scm.h    |  19 +++++++
->   3 files changed, 124 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 059bb0fbae9e5b..646f9613393612 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -926,6 +926,107 @@ int qcom_scm_ocmem_unlock(enum qcom_scm_ocmem_client id, u32 offset, u32 size)
->   }
->   EXPORT_SYMBOL(qcom_scm_ocmem_unlock);
->   
-> +/**
-> + * qcom_scm_ice_available() - Is the ICE key programming interface available?
-> + *
-> + * Return: true iff the SCM calls wrapped by qcom_scm_ice_invalidate_key() and/s/iff/if
+For QRTR, this driver is just another driver acting as a transport layer like
+SMD.
 
+Currently this driver is needed to control the QCA6390 WLAN device from ath11k.
+The ath11k MHI controller driver will take care of booting up QCA6390 and
+bringing it to operating state. Later, this driver will be used to transfer QMI
+messages over the MHI-IPCR channel.
 
+The second patch of this series removes the ARCH_QCOM dependency for QRTR. This
+is needed because the QRTR driver will be used with x86 machines as well to talk
+to devices like QCA6390.
+
+Thanks,
+Mani
+
+Changes in v2:
+
+* Added cover letter
+* Removed casting of void pointer.
+
+Manivannan Sadhasivam (2):
+  net: qrtr: Add MHI transport layer
+  net: qrtr: Do not depend on ARCH_QCOM
+
+ net/qrtr/Kconfig  |   8 ++-
+ net/qrtr/Makefile |   2 +
+ net/qrtr/mhi.c    | 127 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 136 insertions(+), 1 deletion(-)
+ create mode 100644 net/qrtr/mhi.c
 
 -- 
-Warm Regards
-Thara
+2.17.1
+
