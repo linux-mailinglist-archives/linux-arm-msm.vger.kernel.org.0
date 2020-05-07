@@ -2,97 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6A601C98D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:08:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22A0B1C98F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:11:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726863AbgEGSIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 14:08:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38390 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726491AbgEGSIl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 14:08:41 -0400
-Received: from gmail.com (unknown [104.132.1.76])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 11DEB2063A;
-        Thu,  7 May 2020 18:08:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588874920;
-        bh=ogm2y8+K+v2K66fHhaAiUJiOq2VE5Hw0MhEMf6zPjTM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IeDrIHQeraPu/jewQkQ/jl9TDO111AwfRXJnUvQ8hZ4pZ3QFDc/lyev4hN8G+IE/u
-         etaQbsiso8A/HIjKrHJ6yQtPuo9uD9FPpQ2EKO9AKThRlPtFlk7W/5j0Hy4udDT+xk
-         Br/N+An7o8n/faGCKnPUapfPcfEDrJAHQmBMEZRI=
-Date:   Thu, 7 May 2020 11:08:38 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        id S1728348AbgEGSKw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 14:10:52 -0400
+Received: from mail-oo1-f66.google.com ([209.85.161.66]:42285 "EHLO
+        mail-oo1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728364AbgEGSKr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 14:10:47 -0400
+Received: by mail-oo1-f66.google.com with SMTP id e18so1547996oot.9;
+        Thu, 07 May 2020 11:10:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hKmS6Bg4CcoosQWiCpcHNn0plXy0Vmb8kMKxS1isGgw=;
+        b=sB9QsRKIsc6mIBliJh/cPtUWn3H2/sF9AQq37CefkmlVvK34H0ariRfEPltO6CS4a7
+         /wL+gR7U/5UE6c0YlqfKyz0ev/0I4w52GMy1979fPhtaHaEHKaytaVzrfFmI4SOrJuUm
+         hM/vmqML2nTYBn8KMbkFPpzktFc7I9Lz+l50+EubdKLBP8RqP3ZOGikd1a0ooqP4AIK7
+         /Pu9wLMJGSBNOVDtrpmHEBVulEddBiiRTg6JyH05w05jYAbV9dJTTEr5WW4rDpI3s96P
+         Jzc7Gb0AqHIw5D6+ohcwtYcY2sDVmc+up3mUgpd70f8PuFFQ+pMDb1tC5F2QjRzli9yY
+         OdGg==
+X-Gm-Message-State: AGi0Pub1z5B0U3aU2ZsYF6KZFHVAE+i0qSVI8OeQiwPQU1LZ3SOeAODu
+        XjNktwcI0PZFbescDdsnDqDMewE=
+X-Google-Smtp-Source: APiQypLxLD7Z5qjpV5iAc4Sn8XItc1HRXVZlZO0OIEuf4nO+dnJ4UizUwjUtv7qPrOmi8Gvmnca0cQ==
+X-Received: by 2002:a4a:92d1:: with SMTP id j17mr12892021ooh.13.1588875045762;
+        Thu, 07 May 2020 11:10:45 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id t9sm1548864oie.24.2020.05.07.11.10.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 11:10:45 -0700 (PDT)
+Received: (nullmailer pid 19680 invoked by uid 1000);
+        Thu, 07 May 2020 18:10:44 -0000
+Date:   Thu, 7 May 2020 13:10:44 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>
-Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
- support
-Message-ID: <20200507180838.GC236103@gmail.com>
-References: <20200501045111.665881-1-ebiggers@kernel.org>
- <20200501045111.665881-5-ebiggers@kernel.org>
- <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
- <20200507180435.GB236103@gmail.com>
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 08/11] devicetree: bindings: pci: document PARF params
+ bindings
+Message-ID: <20200507181044.GA15159@bogus>
+References: <20200430220619.3169-1-ansuelsmth@gmail.com>
+ <20200430220619.3169-9-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200507180435.GB236103@gmail.com>
+In-Reply-To: <20200430220619.3169-9-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 07, 2020 at 11:04:35AM -0700, Eric Biggers wrote:
-> Hi Thara,
+On Fri, May 01, 2020 at 12:06:15AM +0200, Ansuel Smith wrote:
+> It is now supported the editing of Tx De-Emphasis, Tx Swing and
+> Rx equalization params on ipq8064. Document this new optional params.
 > 
-> On Thu, May 07, 2020 at 08:36:58AM -0400, Thara Gopinath wrote:
-> > 
-> > 
-> > On 5/1/20 12:51 AM, Eric Biggers wrote:
-> > > From: Eric Biggers <ebiggers@google.com>
-> > > 
-> > > Add support for Qualcomm Inline Crypto Engine (ICE) to ufs-qcom.
-> > > 
-> > > The standards-compliant parts, such as querying the crypto capabilities
-> > > and enabling crypto for individual UFS requests, are already handled by
-> > > ufshcd-crypto.c, which itself is wired into the blk-crypto framework.
-> > > However, ICE requires vendor-specific init, enable, and resume logic,
-> > > and it requires that keys be programmed and evicted by vendor-specific
-> > > SMC calls.  Make the ufs-qcom driver handle these details.
-> > > 
-> > > I tested this on Dragonboard 845c, which is a publicly available
-> > > development board that uses the Snapdragon 845 SoC and runs the upstream
-> > > Linux kernel.  This is the same SoC used in the Pixel 3 and Pixel 3 XL
-> > > phones.  This testing included (among other things) verifying that the
-> > > expected ciphertext was produced, both manually using ext4 encryption
-> > > and automatically using a block layer self-test I've written.
-> > Hello Eric,
-> > 
-> > I am interested in testing out this series on 845, 855 and if possile on 865
-> > platforms. Can you give me some more details about your testing please.
-> > 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.txt     | 36 +++++++++++++++++++
+>  1 file changed, 36 insertions(+)
 > 
-> Great!  You can test this with fscrypt, a.k.a. ext4 or f2fs encryption.
-> 
-> A basic manual test would be:
-> 
-> 1. Build a kernel with:
-> 
-> 	CONFIG_BLK_INLINE_ENCRYPTION=y
-> 	CONFIG_FS_ENCRYPTION=y
-> 	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> index 6efcef040741..8cc5aea8a1da 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> @@ -254,6 +254,42 @@
+>  			- "perst-gpios"	PCIe endpoint reset signal line
+>  			- "wake-gpios"	PCIe endpoint wake signal line
+>  
+> +- qcom,tx-deemph-gen1:
+> +	Usage: optional (available for ipq/apq8064)
+> +	Value type: <u32>
+> +	Definition: Gen1 De-emphasis value.
+> +		    For ipq806x should be set to 24.
 
-Sorry, I forgot: 'CONFIG_SCSI_UFS_CRYPTO=y' is needed too.
+Unless these need to be tuned per board, then the compatible string for 
+ipq806x should imply all these settings.
 
-- Eric
+> +
+> +- qcom,tx-deemph-gen2-3p5db:
+> +	Usage: optional (available for ipq/apq8064)
+> +	Value type: <u32>
+> +	Definition: Gen2 (3.5db) De-emphasis value.
+> +		    For ipq806x should be set to 24.
+> +
+> +- qcom,tx-deemph-gen2-6db:
+> +	Usage: optional (available for ipq/apq8064)
+> +	Value type: <u32>
+> +	Definition: Gen2 (6db) De-emphasis value.
+> +		    For ipq806x should be set to 34.
+> +
+> +- qcom,tx-swing-full:
+> +	Usage: optional (available for ipq/apq8064)
+> +	Value type: <u32>
+> +	Definition: TX launch amplitude swing_full value.
+> +		    For ipq806x should be set to 120.
+> +
+> +- qcom,tx-swing-low:
+> +	Usage: optional (available for ipq/apq8064)
+> +	Value type: <u32>
+> +	Definition: TX launch amplitude swing_low value.
+> +		    For ipq806x should be set to 120.
+> +
+> +- qcom,rx0-eq:
+> +	Usage: optional (available for ipq/apq8064)
+> +	Value type: <u32>
+> +	Definition: RX0 equalization value.
+> +		    For ipq806x should be set to 4.
+> +
+>  * Example for ipq/apq8064
+>  	pcie@1b500000 {
+>  		compatible = "qcom,pcie-apq8064", "qcom,pcie-ipq8064", "snps,dw-pcie";
+> -- 
+> 2.25.1
+> 
