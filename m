@@ -2,145 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BEA51C98B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:05:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CEC51C98D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:07:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728348AbgEGSEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 14:04:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57510 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728338AbgEGSEi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 14:04:38 -0400
-Received: from gmail.com (unknown [104.132.1.76])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F2F5E2145D;
-        Thu,  7 May 2020 18:04:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588874677;
-        bh=HOvo/RmXoD5byaAGPG/CBIZ+OxBl1+gN6PhJXjFXH7Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BfOCs51UgV5qmMXcDPdBfQv8Oy4J6tA84JuHx95Nm8Ds2BY5RM2vnKRxzmuZdt+wo
-         2sw4UpkvtBHFoVEYxFI2R8/IUDCTNZqglUmb37vy5V9TRmBbEbzNkhGE1QRMdBvZpC
-         Ho+jp1WEr+vPL6H67snKnAtTSQCmA5mmZ3HkPwss=
-Date:   Thu, 7 May 2020 11:04:35 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        id S1728238AbgEGSHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 14:07:49 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:46617 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726491AbgEGSHs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 14:07:48 -0400
+Received: by mail-oi1-f195.google.com with SMTP id c124so5823802oib.13;
+        Thu, 07 May 2020 11:07:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LAuIZE+9tBbQreQAUqWIU1efH733gN4PuPelENzqY/E=;
+        b=FsfLLKHeg6cjO+gJ/cB3aab7njnPOllcIg1KoShH8y5zX6s3aKbzT/x1DXzQAndSrp
+         TnVP9VAa8iMsK85nPYSw7eALlQXQBVWSamI7eQep2DzUvxgRj38+uuewCpg52Qn6FU9s
+         mFjP8tXIbg4avf3KIA9UuDHIXniLY2IG88kcL4VwjRccCYP0/zkxM4jQl1x+4sh/gK6G
+         kw+HwsJKKw4vbfD/t9PCgh5NYj+Q3sadDG+u/L57hpUZ6LIiPHP7o7et5BvYPzlRTf0/
+         mC/eV0l7kQf2f4FbYCJ74aaiwRh5VuVvRU1EoIgqSqX6MEvXk0oQnt2scj5IVVRE1sYT
+         XZqg==
+X-Gm-Message-State: AGi0PuZ36rQoL80bs13XjRU8QT8tWVbuBXt5q0+5Y5PI0Q4a9uBRvBOo
+        LavQbTe7QX1xXh+BGzzAgw==
+X-Google-Smtp-Source: APiQypLQMvGNIQhG4s1tkZMxpT9DVRT4GUyEp3fBPRNGGOeKQihYNc95wXho7TdFHmK0qtz1U6kbVw==
+X-Received: by 2002:a05:6808:3b7:: with SMTP id n23mr250477oie.168.1588874866696;
+        Thu, 07 May 2020 11:07:46 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id c25sm1494388otp.50.2020.05.07.11.07.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 11:07:46 -0700 (PDT)
+Received: (nullmailer pid 14721 invoked by uid 1000);
+        Thu, 07 May 2020 18:07:43 -0000
+Date:   Thu, 7 May 2020 13:07:43 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>
-Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
- support
-Message-ID: <20200507180435.GB236103@gmail.com>
-References: <20200501045111.665881-1-ebiggers@kernel.org>
- <20200501045111.665881-5-ebiggers@kernel.org>
- <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 06/11] PCI: qcom: introduce qcom_clear_and_set_dword
+Message-ID: <20200507180743.GA2255@bogus>
+References: <20200430220619.3169-1-ansuelsmth@gmail.com>
+ <20200430220619.3169-7-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
+In-Reply-To: <20200430220619.3169-7-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thara,
-
-On Thu, May 07, 2020 at 08:36:58AM -0400, Thara Gopinath wrote:
+On Fri, May 01, 2020 at 12:06:13AM +0200, Ansuel Smith wrote:
+> Use qcom_clear_and_set_dword instead of use the same code many times in
+> the entire driver.
 > 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 108 ++++++++++---------------
+>  1 file changed, 41 insertions(+), 67 deletions(-)
 > 
-> On 5/1/20 12:51 AM, Eric Biggers wrote:
-> > From: Eric Biggers <ebiggers@google.com>
-> > 
-> > Add support for Qualcomm Inline Crypto Engine (ICE) to ufs-qcom.
-> > 
-> > The standards-compliant parts, such as querying the crypto capabilities
-> > and enabling crypto for individual UFS requests, are already handled by
-> > ufshcd-crypto.c, which itself is wired into the blk-crypto framework.
-> > However, ICE requires vendor-specific init, enable, and resume logic,
-> > and it requires that keys be programmed and evicted by vendor-specific
-> > SMC calls.  Make the ufs-qcom driver handle these details.
-> > 
-> > I tested this on Dragonboard 845c, which is a publicly available
-> > development board that uses the Snapdragon 845 SoC and runs the upstream
-> > Linux kernel.  This is the same SoC used in the Pixel 3 and Pixel 3 XL
-> > phones.  This testing included (among other things) verifying that the
-> > expected ciphertext was produced, both manually using ext4 encryption
-> > and automatically using a block layer self-test I've written.
-> Hello Eric,
-> 
-> I am interested in testing out this series on 845, 855 and if possile on 865
-> platforms. Can you give me some more details about your testing please.
-> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 921030a64bab..a4fd5baada34 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -184,6 +184,16 @@ struct qcom_pcie {
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+>  
+> +static void qcom_clear_and_set_dword(void __iomem *addr, u32 clear_mask,
+> +				     u32 set_mask)
+> +{
+> +	u32 val = readl(addr);
+> +
+> +	val &= ~clear_mask;
+> +	val |= set_mask;
+> +	writel(val, addr);
+> +}
 
-Great!  You can test this with fscrypt, a.k.a. ext4 or f2fs encryption.
+If we wanted this kind of register accessor in the kernel, then we'd 
+have common ones. We don't because it hides the possible need for 
+locking on a RMW sequence.
 
-A basic manual test would be:
+Also, not a fix. Don't mix refactoring with fixes.
 
-1. Build a kernel with:
-
-	CONFIG_BLK_INLINE_ENCRYPTION=y
-	CONFIG_FS_ENCRYPTION=y
-	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
-
-2. Create a filesystem with 'mkfs.ext4 -O encrypt' or 'mkfs.f2fs -O encrypt'
-
-3. Mount the filesystem with '-o inlinecrypt'
-
-4. Create an encrypted directory and copy some files into it.
-
-5. Unmount the filesystem, and mount it *without* '-o inlinecrypt'.
-
-6. Verify that the files match the originals.
-
-If you're using a Linux distro like Debian, then creating an encrypted directory
-is most easily done using the userspace tool https://github.com/google/fscrypt.
-
-If instead your testing platform is Android, then instead of the above manual
-test you can configure Android's encryption use the hardware and then run
-VtsKernelEncryptionTest.  See the directions at
-https://source.android.com/security/encryption/file-based.
-
-Note that this patchset only includes the device tree support for Snapdragon
-845.  For 855 and 865 you'd need to add the device tree support.
-
-There are other ways this can be tested too, like xfstests, or my experimental
-blk-crypto-selftest.  Let me know if you want any other suggestions.
-
-> > +/*
-> > + * Program a key into a QC ICE keyslot, or evict a keyslot.  QC ICE requires
-> > + * vendor-specific SCM calls for this; it doesn't support the standard way.
-> > + */
-> > +int ufs_qcom_ice_program_key(struct ufs_hba *hba,
-> > +			     const union ufs_crypto_cfg_entry *cfg, int slot)
-> > +{
-> > +	union ufs_crypto_cap_entry cap;
-> > +	union {
-> > +		u8 bytes[AES_256_XTS_KEY_SIZE];
-> > +		u32 words[AES_256_XTS_KEY_SIZE / sizeof(u32)];
-> > +	} key;
-> > +	int i;
-> > +	int err;
-> Should there not be a check for here ?
-> 	if (!(host->hba->caps & UFSHCD_CAP_CRYPTO))
-> 		return 0;
-> 
-
-(Please trim your replies appropriately; I almost missed this part!)
-
-No, that's not necessary because this function is only called if we installed a
-blk_keyslot_manager to the UFS host (thus exposing its crypto support to the
-rest of the kernel).  We only do that if the driver sets UFSHCD_CAP_CRYPTO.
-
-Likewise, we don't need to check for UFSHCD_CAP_CRYPTO in
-ufshcd_crypto_keyslot_program(), ufshcd_crypto_keyslot_evict(), etc.
-
-- Eric
+Rob
