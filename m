@@ -2,128 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1161C88C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 13:48:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 587B91C8A1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 14:07:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726093AbgEGLs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 07:48:27 -0400
-Received: from mga06.intel.com ([134.134.136.31]:64619 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725903AbgEGLs0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 07:48:26 -0400
-IronPort-SDR: 0WDD4SYlelv/CMqDGbsa+Qd1M0WI661zriOKiJ/LvooJuDx2HTCleMYzxo4s8Xh6kVqvsU8E99
- JqfAMf+jr5cw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2020 04:48:24 -0700
-IronPort-SDR: i8kWrQpgWn75L4Fe2QfqwBPYtA7TVrOdZfwcIB8+RUtpWKVTAnVGtzTQxXUsavF0TyDLC53E6+
- 81IX49BuWPHQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,363,1583222400"; 
-   d="scan'208";a="339328430"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.157]) ([10.237.72.157])
-  by orsmga001.jf.intel.com with ESMTP; 07 May 2020 04:48:21 -0700
-Subject: Re: [PATCH V1 2/2] mmc: core: Fix recursive locking issue in CQE
- recovery path
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        ulf.hansson@linaro.org
-Cc:     stummala@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sarthak Garg <sartgarg@codeaurora.org>, stable@vger.kernel.org,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Andreas Koop <andreas.koop@zf.com>,
-        Thomas Gleixner <tglx@linutronix.de>
-References: <1588775643-18037-1-git-send-email-vbadigan@codeaurora.org>
- <1588775643-18037-3-git-send-email-vbadigan@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <b4a01f2c-479a-2a23-58b7-64f16cbc17a2@intel.com>
-Date:   Thu, 7 May 2020 14:48:42 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1725857AbgEGMHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 08:07:05 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:56260 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725985AbgEGMHE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 08:07:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588853223; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=CsTjSpDacRW1HUymiU2kvvRQCndHnkINhBw2dj0kpdw=;
+ b=wy32FOb0exLtrsK6W/oURLgA72jwU1Qt4BsIPjCiuJIIQf8xAV8yXXpmE5hv99MZLs4aevs2
+ uX2Gd3IhnUa7l1p8MjUShO+ySY+Rl5PkEDhs8bbjFQcKBs3yezM0MqfVzzj/BNrH6F8Pj5IN
+ XlvMRreA5t+hLO1WzvHaPcbZqcY=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb3f9d2.7efd1eecbce0-smtp-out-n02;
+ Thu, 07 May 2020 12:06:42 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AB34DC44799; Thu,  7 May 2020 12:06:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 88106C4478F;
+        Thu,  7 May 2020 12:06:41 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <1588775643-18037-3-git-send-email-vbadigan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Thu, 07 May 2020 17:36:41 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] iomm/arm-smmu: Add stall implementation hook
+In-Reply-To: <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
+References: <20200421202004.11686-1-saiprakash.ranjan@codeaurora.org>
+ <b491e02ad790a437115fdeab6b21bc48@codeaurora.org>
+ <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
+Message-ID: <fad5dc096a2bd9404341ba8738ba8fc9@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/05/20 5:34 pm, Veerabhadrarao Badiganti wrote:
-> From: Sarthak Garg <sartgarg@codeaurora.org>
-> 
-> Consider the following stack trace
-> 
-> -001|raw_spin_lock_irqsave
-> -002|mmc_blk_cqe_complete_rq
-> -003|__blk_mq_complete_request(inline)
-> -003|blk_mq_complete_request(rq)
-> -004|mmc_cqe_timed_out(inline)
-> -004|mmc_mq_timed_out
-> 
-> mmc_mq_timed_out acquires the queue_lock for the first
-> time. The mmc_blk_cqe_complete_rq function also tries to acquire
-> the same queue lock resulting in recursive locking where the task
-> is spinning for the same lock which it has already acquired leading
-> to watchdog bark.
-> 
-> Fix this issue with the lock only for the required critical section.
-> 
-> Cc: <stable@vger.kernel.org> # v4.19+
-> Suggested-by: Sahitya Tummala <stummala@codeaurora.org>
-> Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
-> ---
->  drivers/mmc/core/queue.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
-> index 25bee3d..72bef39 100644
-> --- a/drivers/mmc/core/queue.c
-> +++ b/drivers/mmc/core/queue.c
-> @@ -107,7 +107,7 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct request *req)
->  	case MMC_ISSUE_DCMD:
->  		if (host->cqe_ops->cqe_timeout(host, mrq, &recovery_needed)) {
->  			if (recovery_needed)
-> -				__mmc_cqe_recovery_notifier(mq);
-> +				mmc_cqe_recovery_notifier(mrq);
->  			return BLK_EH_RESET_TIMER;
->  		}
->  		/* No timeout (XXX: huh? comment doesn't make much sense) */
-> @@ -131,12 +131,13 @@ static enum blk_eh_timer_return mmc_mq_timed_out(struct request *req,
->  
->  	spin_lock_irqsave(&mq->lock, flags);
->  
-> -	if (mq->recovery_needed || !mq->use_cqe || host->hsq_enabled)
-> +	if (mq->recovery_needed || !mq->use_cqe || host->hsq_enabled) {
->  		ret = BLK_EH_RESET_TIMER;
-> -	else
-> +		spin_unlock_irqrestore(&mq->lock, flags);
-> +	} else {
-> +		spin_unlock_irqrestore(&mq->lock, flags);
->  		ret = mmc_cqe_timed_out(req);
-> -
-> -	spin_unlock_irqrestore(&mq->lock, flags);
-> +	}
+Hi Robin,
 
-This looks good, but I think there needs to be another change also.  I will
-send a patch for that, but in the meantime maybe you could straighten up the
-code flow through the spinlock e.g.
-
-	spin_lock_irqsave(&mq->lock, flags);
-	ignore = mq->recovery_needed || !mq->use_cqe || host->hsq_enabled;
-	spin_unlock_irqrestore(&mq->lock, flags);
-
-	return ignore ? BLK_EH_RESET_TIMER : mmc_cqe_timed_out(req);
-
-And add a fixes tag.
-
->  
->  	return ret;
->  }
+On 2020-05-07 16:25, Robin Murphy wrote:
+> On 2020-05-07 11:14 am, Sai Prakash Ranjan wrote:
+>> Hi Will, Robin
+>> 
+>> On 2020-04-22 01:50, Sai Prakash Ranjan wrote:
+>>> Add stall implementation hook to enable stalling
+>>> faults on QCOM platforms which supports it without
+>>> causing any kind of hardware mishaps. Without this
+>>> on QCOM platforms, GPU faults can cause unrelated
+>>> GPU memory accesses to return zeroes. This has the
+>>> unfortunate result of command-stream reads from CP
+>>> getting invalid data, causing a cascade of fail.
+> 
+> I think this came up before, but something about this rationale
+> doesn't add up - we're not *using* stalls at all, we're still
+> terminating faulting transactions unconditionally; we're just using
+> CFCFG to terminate them with a slight delay, rather than immediately.
+> It's really not clear how or why that makes a difference. Is it a GPU
+> bug? Or an SMMU bug? Is this reliable (or even a documented workaround
+> for something), or might things start blowing up again if any other
+> behaviour subtly changes? I'm not dead set against adding this, but
+> I'd *really* like to have a lot more confidence in it.
 > 
 
+Yes it has come up before, you can find details in below links.
+  - https://patchwork.kernel.org/patch/9953803/
+  - https://patchwork.kernel.org/patch/10618713/
+
+Rob Clark can add more details on this probably for the GPU faults.
+As for the reliability, downstream kernel(I mean kernels with which 
+android
+devices with QCOM chipsets are shipped) has stalling enabled for a long 
+time
+now and has been stable in the field. So we can say that we are safe 
+with
+this enabled in QCOM implementation.
+
+>>> Suggested-by: Rob Clark <robdclark@gmail.com>
+>>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>> ---
+>>> This has been attempted previously by Rob Clark in 2017, 2018.
+>>> Hopefully we can get something concluded in 2020.
+>>>  * https://patchwork.kernel.org/patch/9953803/
+>>>  * https://patchwork.kernel.org/patch/10618713/
+>>> ---
+>>>  drivers/iommu/arm-smmu-qcom.c | 1 +
+>>>  drivers/iommu/arm-smmu.c      | 7 +++++++
+>>>  drivers/iommu/arm-smmu.h      | 1 +
+>>>  3 files changed, 9 insertions(+)
+>>> 
+>>> diff --git a/drivers/iommu/arm-smmu-qcom.c 
+>>> b/drivers/iommu/arm-smmu-qcom.c
+>>> index 24c071c1d8b0..a13b229389d4 100644
+>>> --- a/drivers/iommu/arm-smmu-qcom.c
+>>> +++ b/drivers/iommu/arm-smmu-qcom.c
+>>> @@ -32,6 +32,7 @@ static int qcom_sdm845_smmu500_reset(struct
+>>> arm_smmu_device *smmu)
+>>> 
+>>>  static const struct arm_smmu_impl qcom_smmu_impl = {
+>>>      .reset = qcom_sdm845_smmu500_reset,
+>>> +    .stall = true,
+>>>  };
+>>> 
+>>>  struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device 
+>>> *smmu)
+>>> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+>>> index e622f4e33379..16b03fca9966 100644
+>>> --- a/drivers/iommu/arm-smmu.c
+>>> +++ b/drivers/iommu/arm-smmu.c
+>>> @@ -488,6 +488,11 @@ static irqreturn_t arm_smmu_context_fault(int
+>>> irq, void *dev)
+>>>                  fsr, iova, fsynr, cbfrsynra, idx);
+>>> 
+>>>      arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+>>> +
+>>> +    if (smmu->impl && smmu->impl->stall && (fsr & ARM_SMMU_FSR_SS))
+>>> +        arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_RESUME,
+>>> +                  ARM_SMMU_RESUME_TERMINATE);
+> 
+> Shouldn't this be *before* the write to FSR, in case the outstanding
+> fault causes that to be immediately reasserted before we write
+> CB_RESUME and we end up immediately taking the IRQ a second time?
+> 
+
+Yes, I will fixup this in the next version.
+
+> (The overall enablement being in impl is sound, but you still don't
+> get to play "works on my machine" in the architectural code :P)
+> 
+
+We could have our own context fault handler in QCOM implementation,
+but that would just be duplicating things from arm-smmu context fault
+handler. So I did not think it makes much sense to have our own
+fault handler in qcom impl just for enabling stall model.
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
