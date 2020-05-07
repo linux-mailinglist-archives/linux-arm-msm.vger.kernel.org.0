@@ -2,35 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B06D1C998A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43FEB1C9A6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 21:03:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726367AbgEGSpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 14:45:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46646 "EHLO mail.kernel.org"
+        id S1726761AbgEGTDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 15:03:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33676 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728309AbgEGSpv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 14:45:51 -0400
+        id S1726367AbgEGTDY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 15:03:24 -0400
 Received: from embeddedor (unknown [189.207.59.248])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3666920870;
-        Thu,  7 May 2020 18:45:50 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2D7FE2083B;
+        Thu,  7 May 2020 19:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588877150;
-        bh=dRXO8NWeYM9voX1lUqLjnyFnyymDA1FiAU3W8d8sdW4=;
+        s=default; t=1588878203;
+        bh=hDrhDJ+9+p7V0p39p+wAiF1BD0xFcVR0UNXHEixFP8Y=;
         h=Date:From:To:Cc:Subject:From;
-        b=lHeymKeiC/FcQsbXvpMS9igvZ7qvccUuVdEOaIBdd44VEwKRzFm5vVAv7ehaU5dWQ
-         3EP21nPSolm2gTd4IyfvCKKx8NJvlQkrCJxoQ7aLXA97yIc8tUwfV/j+q1z9hGM+gs
-         g7bWGfCOS+scn4NNMoTpIV24Zn0KpPlSyy0fstzg=
-Date:   Thu, 7 May 2020 13:50:16 -0500
+        b=E7TMDbft1Dv7fxo6+nlAZ+ThbNi/6sm0iSirDV/cgElpudWvzkztchzb4ZH1quic2
+         BYcnmjQOWzzohH4P9QwN5wb2ngO5gceV3FCZU+xk/AuVvYcdqRkMj5rDO3lG0+6WDW
+         eum6FARUXDlyK33hw53WysF9cyVMnch5R39tDOqk=
+Date:   Thu, 7 May 2020 14:07:50 -0500
 From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: qcom: bam_dma: Replace zero-length array with
- flexible-array
-Message-ID: <20200507185016.GA13883@embeddedor>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] media: venus: Replace zero-length array with flexible-array
+Message-ID: <20200507190750.GA15755@embeddedor>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -77,34 +76,70 @@ This issue was found with the help of Coccinelle.
 
 Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c         |    2 +-
- drivers/firmware/qcom_scm-legacy.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_cmds.h |    2 +-
+ drivers/media/platform/qcom/venus/hfi_msgs.h |   10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index ef73f65224b1..5a08dd0d3388 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -74,7 +74,7 @@ struct bam_async_desc {
- 	struct list_head desc_node;
- 	enum dma_transfer_direction dir;
- 	size_t length;
--	struct bam_desc_hw desc[0];
-+	struct bam_desc_hw desc[];
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
+index cae9d5d61c0c..83705e237f1c 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.h
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
+@@ -107,7 +107,7 @@ struct hfi_session_abort_pkt {
+ struct hfi_session_set_property_pkt {
+ 	struct hfi_session_hdr_pkt shdr;
+ 	u32 num_properties;
+-	u32 data[0];
++	u32 data[];
  };
  
- enum bam_reg {
-diff --git a/drivers/firmware/qcom_scm-legacy.c b/drivers/firmware/qcom_scm-legacy.c
-index 8532e7c78ef7..eba6b60bfb61 100644
---- a/drivers/firmware/qcom_scm-legacy.c
-+++ b/drivers/firmware/qcom_scm-legacy.c
-@@ -56,7 +56,7 @@ struct scm_legacy_command {
- 	__le32 buf_offset;
- 	__le32 resp_hdr_offset;
- 	__le32 id;
--	__le32 buf[0];
-+	__le32 buf[];
+ struct hfi_session_set_buffers_pkt {
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
+index 7694b1d25d9d..526d9f5b487b 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.h
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
+@@ -155,7 +155,7 @@ struct hfi_msg_session_empty_buffer_done_pkt {
+ 	u32 input_tag;
+ 	u32 packet_buffer;
+ 	u32 extradata_buffer;
+-	u32 data[0];
++	u32 data[];
  };
  
- /**
+ struct hfi_msg_session_fbd_compressed_pkt {
+@@ -175,7 +175,7 @@ struct hfi_msg_session_fbd_compressed_pkt {
+ 	u32 picture_type;
+ 	u32 packet_buffer;
+ 	u32 extradata_buffer;
+-	u32 data[0];
++	u32 data[];
+ };
+ 
+ struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
+@@ -202,7 +202,7 @@ struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
+ 	u32 picture_type;
+ 	u32 packet_buffer;
+ 	u32 extradata_buffer;
+-	u32 data[0];
++	u32 data[];
+ };
+ 
+ struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
+@@ -211,7 +211,7 @@ struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
+ 	u32 filled_len;
+ 	u32 offset;
+ 	u32 packet_buffer2;
+-	u32 data[0];
++	u32 data[];
+ };
+ 
+ struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
+@@ -220,7 +220,7 @@ struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
+ 	u32 filled_len;
+ 	u32 offset;
+ 	u32 packet_buffer3;
+-	u32 data[0];
++	u32 data[];
+ };
+ 
+ struct hfi_msg_session_parse_sequence_header_done_pkt {
 
