@@ -2,65 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF4CF1C9C2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 22:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D10241C9C8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 22:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728738AbgEGUVi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 16:21:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47816 "EHLO
+        id S1726768AbgEGUj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 16:39:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728531AbgEGUVh (ORCPT
+        by vger.kernel.org with ESMTP id S1726767AbgEGUj4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 16:21:37 -0400
-Received: from shards.monkeyblade.net (shards.monkeyblade.net [IPv6:2620:137:e000::1:9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B33D9C05BD43;
-        Thu,  7 May 2020 13:21:37 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2601:601:9f00:477::d71])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: davem-davemloft)
-        by shards.monkeyblade.net (Postfix) with ESMTPSA id DABA611950516;
-        Thu,  7 May 2020 13:21:36 -0700 (PDT)
-Date:   Thu, 07 May 2020 13:21:36 -0700 (PDT)
-Message-Id: <20200507.132136.2063178280963548327.davem@davemloft.net>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clew@codeaurora.org,
-        gregkh@linuxfoundation.org, netdev@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] Add QRTR MHI client driver
-From:   David Miller <davem@davemloft.net>
-In-Reply-To: <20200507125306.32157-1-manivannan.sadhasivam@linaro.org>
-References: <20200507125306.32157-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: Mew version 6.8 on Emacs 26.3
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+        Thu, 7 May 2020 16:39:56 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5624C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2020 13:39:55 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id v8so8357279wma.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2020 13:39:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DXskb/U1rfTLrQamxPnaslHrIBvE9Q8wGx7sKVUquCs=;
+        b=nWjU8neek1jkTd5k46MxzmPKEdK4LUWxb02CTjbKs+/rbvNriAUC1jj2lL11+w2Yig
+         wavUdNEH6nKd7Wc/eesp8xTT2jYFRNY28imtWPswr8UjcMEXyJgSk8V8lM13A713W8yu
+         LZuZ3mgoXZhZ24+nCPVgq+4hrkimkyBUF/P8bdozbd4BTI3nhZz6+Hadr40dna21NJqE
+         o5cFi99J3JTJvKld3101AY6tH6Gw+xBuW7NiHZojjMXuTenzIboycox3/yJg2PwKE3cl
+         cztmTZElbSEJAsEZx6OMDvAy1vtRiN1GC+NzVsYQ0nUVjhSFAvysNDTuDIxxT1i1JA0x
+         stkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DXskb/U1rfTLrQamxPnaslHrIBvE9Q8wGx7sKVUquCs=;
+        b=SnntLcxvOYaMsRSnRiU+i3bXXPWM2tdKFJsXwUvRypGjqezKLwtcDL0iVTcKuhFfn8
+         H+s33UQ6HmPEW74Y1y5UrCfJCoiv5mo2S6B2UfgoIDmH+37y8oxE+sRptEIviBqm4yOC
+         BtSjYmXhqZ4Apr8hS7/L8wk2GsXosadDHhcrc0NJHBV0yieTjUqqiEAZl71h5GsWu7O0
+         xDizbHQm+R78LfQ04fBM2+rNelrn8POH+3EY4S1/HwaUq6ISPFIoRGx1bmbhqDzsGp4T
+         zjUHcy3NOd7CYPFpcDma94P7FsToawnw8nImMm1oP0ZsaYCl5SHv4ZkDiPa4V22+8oGe
+         g/pA==
+X-Gm-Message-State: AGi0PuahR856hYhyltowqnf/FC+dIUa7R/1N3e0KDqNGTa1FOBwPNFjY
+        dBEML5Csdw2m/B5yqpY19GnmZg==
+X-Google-Smtp-Source: APiQypIe8aYj0LpthnAy1cmC+N58Li+3DTCxZohNo6wbhStE61FVn/fczz7X4dwdYQOkO0vNsEddrw==
+X-Received: by 2002:a7b:ca53:: with SMTP id m19mr3868667wml.182.1588883993935;
+        Thu, 07 May 2020 13:39:53 -0700 (PDT)
+Received: from [192.168.1.3] (212-5-158-166.ip.btc-net.bg. [212.5.158.166])
+        by smtp.googlemail.com with ESMTPSA id d1sm9214133wrx.65.2020.05.07.13.39.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 May 2020 13:39:53 -0700 (PDT)
+Subject: Re: [PATCH] media: venus: Replace zero-length array with
+ flexible-array
+To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200507190750.GA15755@embeddedor>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <a249b3b7-56dc-8bed-f079-2cf163b46712@linaro.org>
+Date:   Thu, 7 May 2020 23:39:51 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <20200507190750.GA15755@embeddedor>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Thu, 07 May 2020 13:21:37 -0700 (PDT)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Thu,  7 May 2020 18:23:04 +0530
+Hi Gustavo,
 
-> Here is the series adding MHI client driver support to Qualcomm IPC router
-> protocol. MHI is a newly added bus to kernel which is used to communicate to
-> external modems over a physical interface like PCI-E. This driver is used to
-> transfer the QMI messages between the host processor and external modems over
-> the "IPCR" channel.
-> 
-> For QRTR, this driver is just another driver acting as a transport layer like
-> SMD.
-> 
-> Currently this driver is needed to control the QCA6390 WLAN device from ath11k.
-> The ath11k MHI controller driver will take care of booting up QCA6390 and
-> bringing it to operating state. Later, this driver will be used to transfer QMI
-> messages over the MHI-IPCR channel.
-> 
-> The second patch of this series removes the ARCH_QCOM dependency for QRTR. This
-> is needed because the QRTR driver will be used with x86 machines as well to talk
-> to devices like QCA6390.
+Two patches from you are already queued in media_tree for v5.8.
 
-Series applied to net-next, thanks.
+0f61e171e4bbac4595175070c75707f1b12f4e37 media: venus: hfi_msgs.h:
+Replace zero-length array with flexible-array member
+
+380f3bbd9562dc93be2e3cadc329b15284fbedae media: venus: hfi_cmds.h:
+Replace zero-length array with flexible-array member
+
+
+On 5/7/20 10:07 PM, Gustavo A. R. Silva wrote:
+> The current codebase makes use of the zero-length array language
+> extension to the C90 standard, but the preferred mechanism to declare
+> variable-length types such as these ones is a flexible array member[1][2],
+> introduced in C99:
+> 
+> struct foo {
+>         int stuff;
+>         struct boo array[];
+> };
+> 
+> By making use of the mechanism above, we will get a compiler warning
+> in case the flexible array does not occur last in the structure, which
+> will help us prevent some kind of undefined behavior bugs from being
+> inadvertently introduced[3] to the codebase from now on.
+> 
+> Also, notice that, dynamic memory allocations won't be affected by
+> this change:
+> 
+> "Flexible array members have incomplete type, and so the sizeof operator
+> may not be applied. As a quirk of the original implementation of
+> zero-length arrays, sizeof evaluates to zero."[1]
+> 
+> sizeof(flexible-array-member) triggers a warning because flexible array
+> members have incomplete type[1]. There are some instances of code in
+> which the sizeof operator is being incorrectly/erroneously applied to
+> zero-length arrays and the result is zero. Such instances may be hiding
+> some bugs. So, this work (flexible-array member conversions) will also
+> help to get completely rid of those sorts of issues.
+> 
+> This issue was found with the help of Coccinelle.
+> 
+> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+> [2] https://github.com/KSPP/linux/issues/21
+> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+> 
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> ---
+>  drivers/media/platform/qcom/venus/hfi_cmds.h |    2 +-
+>  drivers/media/platform/qcom/venus/hfi_msgs.h |   10 +++++-----
+>  2 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> index cae9d5d61c0c..83705e237f1c 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> @@ -107,7 +107,7 @@ struct hfi_session_abort_pkt {
+>  struct hfi_session_set_property_pkt {
+>  	struct hfi_session_hdr_pkt shdr;
+>  	u32 num_properties;
+> -	u32 data[0];
+> +	u32 data[];
+>  };
+>  
+>  struct hfi_session_set_buffers_pkt {
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
+> index 7694b1d25d9d..526d9f5b487b 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
+> @@ -155,7 +155,7 @@ struct hfi_msg_session_empty_buffer_done_pkt {
+>  	u32 input_tag;
+>  	u32 packet_buffer;
+>  	u32 extradata_buffer;
+> -	u32 data[0];
+> +	u32 data[];
+>  };
+>  
+>  struct hfi_msg_session_fbd_compressed_pkt {
+> @@ -175,7 +175,7 @@ struct hfi_msg_session_fbd_compressed_pkt {
+>  	u32 picture_type;
+>  	u32 packet_buffer;
+>  	u32 extradata_buffer;
+> -	u32 data[0];
+> +	u32 data[];
+>  };
+>  
+>  struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
+> @@ -202,7 +202,7 @@ struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
+>  	u32 picture_type;
+>  	u32 packet_buffer;
+>  	u32 extradata_buffer;
+> -	u32 data[0];
+> +	u32 data[];
+>  };
+>  
+>  struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
+> @@ -211,7 +211,7 @@ struct hfi_msg_session_fbd_uncompressed_plane1_pkt {
+>  	u32 filled_len;
+>  	u32 offset;
+>  	u32 packet_buffer2;
+> -	u32 data[0];
+> +	u32 data[];
+>  };
+>  
+>  struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
+> @@ -220,7 +220,7 @@ struct hfi_msg_session_fbd_uncompressed_plane2_pkt {
+>  	u32 filled_len;
+>  	u32 offset;
+>  	u32 packet_buffer3;
+> -	u32 data[0];
+> +	u32 data[];
+>  };
+>  
+>  struct hfi_msg_session_parse_sequence_header_done_pkt {
+> 
+
+-- 
+regards,
+Stan
