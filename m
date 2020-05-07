@@ -2,113 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EF2A1C7E19
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 01:42:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBFE41C7E58
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 02:11:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728273AbgEFXmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 May 2020 19:42:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56454 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728237AbgEFXmU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 May 2020 19:42:20 -0400
-Received: from localhost (unknown [137.135.114.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6716D20735;
-        Wed,  6 May 2020 23:42:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588808539;
-        bh=qWFwYxWu+WrgDyHJfEd58XhfWlKT92sUdROUGTFaQfA=;
-        h=Date:From:To:To:To:Cc:Cc:Cc:Subject:In-Reply-To:References:From;
-        b=RSfMZMxoKjMj4WihxE4yE3mXY5dl2njcDLNBEidBKtEUK1XbxKu9gS1vT6waRYQK7
-         2YtZbLdA0Nr1E6LkwIafbnb2kTp4ND4bNmMzFPNTJyiXi13ZuLjxSnr3ACACVl5ufG
-         8zkoRX9vje2lzHIx1dl+h/I9EEb2/3pJFcmDLUJk=
-Date:   Wed, 06 May 2020 23:42:18 +0000
-From:   Sasha Levin <sashal@kernel.org>
-To:     Sasha Levin <sashal@kernel.org>
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Eric Anholt <eric@anholt.net>, stable@vger.kernel.org
-Cc:     stable@vger.kernel.org
-Cc:     stable@vger.kernel.org
-Subject: Re: [PATCH v3] drm/msm: Check for powered down HW in the devfreq callbacks
-In-Reply-To: <20200501194326.14593-1-jcrouse@codeaurora.org>
-References: <20200501194326.14593-1-jcrouse@codeaurora.org>
-Message-Id: <20200506234219.6716D20735@mail.kernel.org>
+        id S1726712AbgEGALD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 May 2020 20:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56534 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727869AbgEGALD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 May 2020 20:11:03 -0400
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22418C061A10
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2020 17:11:03 -0700 (PDT)
+Received: by mail-vk1-xa44.google.com with SMTP id p5so1169052vke.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2020 17:11:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GqsJ4w8SiNdYvs9i1O1oWTJDswwPt7gmDaN1Zm1BZ0o=;
+        b=IirgN5uPNEkXVYW+TZDoNzKiLHCgEcf/Gvpo4Jq41Gwh+NhrB/yfrnGR3HodSUIUhd
+         QZKBk14ylHtCo38AykpM4c/IUhnD2P4qVASnG0qtJtZwgUG2jSKcxJ7k5fsG4OSchZbg
+         PKxQo8IGYwFPa5xgd73MGzlBnay+Myfz0dQKY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GqsJ4w8SiNdYvs9i1O1oWTJDswwPt7gmDaN1Zm1BZ0o=;
+        b=cqWx03uFFOiedu5isjNcVTUYYTVUR3A+BT05hN2p226fJ751M8gjLr8MfIbKJ9CDxz
+         zFptpN34Y5N61UJdVH6EvzLENnYQ6VViIsVn7Ply2ox+6x4RtdifIG+Hkt1bcFvuGlW3
+         BzEkp3tQZfRPVQI4qCQzX685pEC1psQGc1x1SP4euShOGyzgVDjUAhkvlIXkeIpe6IHR
+         gsujfRDXcMRgg+YipCHReP/aIO/ApaDTYinxO7SQ6qe0i4BqxYqRgq9OyhO4mp6C8aFW
+         h1mVgCS+topoTAzjDu+Xv2jqkFd5tMr8c0ROD8HM4ciIc1JKpHscm65BzSOjis99VZo2
+         +q3A==
+X-Gm-Message-State: AGi0PuZFM8joqljhOlDAsbUBWdldBx3VCcr648pKMUO1f2taz4I6yqD/
+        IrDVqmYYngWMgQOGJl4onejrFG8REv8=
+X-Google-Smtp-Source: APiQypL64sITD2o4NxXTQFWYpPwlETTf66dhySBsvI49JHaP7kV1UwWbiQoNbuzFhTbmN1FLd6EmbQ==
+X-Received: by 2002:a1f:9b4f:: with SMTP id d76mr6176654vke.51.1588810261968;
+        Wed, 06 May 2020 17:11:01 -0700 (PDT)
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com. [209.85.221.181])
+        by smtp.gmail.com with ESMTPSA id g29sm1799537uah.5.2020.05.06.17.11.01
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 May 2020 17:11:01 -0700 (PDT)
+Received: by mail-vk1-f181.google.com with SMTP id w68so1036274vke.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2020 17:11:01 -0700 (PDT)
+X-Received: by 2002:a1f:9605:: with SMTP id y5mr9318997vkd.75.1588810260347;
+ Wed, 06 May 2020 17:11:00 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200423095531.9868-1-saiprakash.ranjan@codeaurora.org> <CAD=FV=W=d=KrTwgMOO-ukFc7ZhkE92qGYumUEDrtjmhQOpdWbg@mail.gmail.com>
+In-Reply-To: <CAD=FV=W=d=KrTwgMOO-ukFc7ZhkE92qGYumUEDrtjmhQOpdWbg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 6 May 2020 17:10:49 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U0Hhae3D1-P8kbcZafHeuqng11BNAbOb2YWPx+M7X5Gw@mail.gmail.com>
+Message-ID: <CAD=FV=U0Hhae3D1-P8kbcZafHeuqng11BNAbOb2YWPx+M7X5Gw@mail.gmail.com>
+Subject: Re: [PATCHv2] iommu/arm-smmu: Make remove callback message more informative
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+Hi,
 
-[This is an automated email]
+On Thu, Apr 23, 2020 at 7:35 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Thu, Apr 23, 2020 at 2:55 AM Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+> >
+> > Currently on reboot/shutdown, the following messages are
+> > displayed on the console as error messages before the
+> > system reboots/shutdown as part of remove callback.
+> >
+> > On SC7180:
+> >
+> >   arm-smmu 15000000.iommu: removing device with active domains!
+> >   arm-smmu 5040000.iommu: removing device with active domains!
+> >
+> > Make this error message more informative and less scary.
+> >
+> > Reported-by: Douglas Anderson <dianders@chromium.org>
+> > Suggested-by: Robin Murphy <robin.murphy@arm.com>
+> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > ---
+> >  drivers/iommu/arm-smmu.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-This commit has been processed because it contains a -stable tag.
-The stable tag indicates that it's relevant for the following trees: all
+Is this patch waiting on anything in particular now?  Do we need
+reviews from Robin and/or Will?
 
-The bot has tested the following trees: v5.6.8, v5.4.36, v4.19.119, v4.14.177, v4.9.220, v4.4.220.
-
-v5.6.8: Build OK!
-v5.4.36: Build OK!
-v4.19.119: Failed to apply! Possible dependencies:
-    16f37102181e ("drm/msm: a6xx: Fix improper u64 division")
-    a2c3c0a54d4c ("drm/msm/a6xx: Add devfreq support for a6xx")
-    de0a3d094de0 ("drm/msm: re-factor devfreq code")
-    f926a2e1718e ("drm/msm: a5xx: Fix improper u64 division")
-    fcf9d0b7d2f5 ("drm/msm/a6xx: Add support for an interconnect path")
-
-v4.14.177: Failed to apply! Possible dependencies:
-    4c7085a5d581 ("drm/msm: Shadow current pointer in the ring until command is complete")
-    b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
-    c09513cfebd8 ("drm/msm/adreno: a5xx: Explicitly program the CP0 performance counter")
-    cd414f3d9316 ("drm/msm: Move memptrs to msm_gpu")
-    eec874ce5ff1 ("drm/msm/adreno: load gpu at probe/bind time")
-    f7de15450e90 ("drm/msm: Add per-instance submit queues")
-    f91c14ab448a ("drm/msm: Add devfreq support for the GPU")
-    f97decac5f4c ("drm/msm: Support multiple ringbuffers")
-
-v4.9.220: Failed to apply! Possible dependencies:
-    1cec20f0ea0e ("dma-buf: Restart reservation_object_wait_timeout_rcu() after writes")
-    667ce33e57d0 ("drm/msm: support multiple address spaces")
-    78010cd9736e ("dma-buf/fence: add an lockdep_assert_held()")
-    89d777a57245 ("drm/msm: Remove 'src_clk' from adreno configuration")
-    b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
-    c09513cfebd8 ("drm/msm/adreno: a5xx: Explicitly program the CP0 performance counter")
-    f54d1867005c ("dma-buf: Rename struct fence to dma_fence")
-    f91c14ab448a ("drm/msm: Add devfreq support for the GPU")
-    fb0399819239 ("drm/msm: Add adreno_gpu_write64()")
-    fedf54132d24 ("dma-buf: Restart reservation_object_get_fences_rcu() after writes")
-
-v4.4.220: Failed to apply! Possible dependencies:
-    1aaa57f5d4b6 ("drm/msm: Free fb helper resources in msm_unload")
-    1dd0a0b18697 ("drm/msm/mdp5: Create a separate MDP5 device")
-    2b669875332f ("drm/msm: Drop load/unload drm_driver ops")
-    357ff00b08d6 ("drm/msm/adreno: support for adreno 430.")
-    667ce33e57d0 ("drm/msm: support multiple address spaces")
-    7d0c5ee9f077 ("drm/msm/adreno: get CP_RPTR from register instead of shadow memory")
-    8208ed931eea ("drm/msm: Centralize connector registration/unregistration")
-    89d777a57245 ("drm/msm: Remove 'src_clk' from adreno configuration")
-    990a40079a55 ("drm/msm/mdp5: Add MDSS top level driver")
-    a2b3a5571f38 ("drm/msm: Get irq number within kms driver itself")
-    a3ccfb9feb46 ("drm/msm: Rename async to nonblock.")
-    a5725ab0497a ("drm/msm/adreno: move function declarations to header file")
-    b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
-    ba00c3f2f0c8 ("drm/msm: remove fence_cbs")
-    c09513cfebd8 ("drm/msm/adreno: a5xx: Explicitly program the CP0 performance counter")
-    ca762a8ae7f4 ("drm/msm: introduce msm_fence_context")
-    cd79272696ef ("drm/msm: Call pm_runtime_enable/disable for newly created devices")
-    edcd60ce243d ("drm/msm: move debugfs code to it's own file")
-    f759020530e8 ("drm/msm/mdp: Detach iommu in mdp4_destroy")
-    f91c14ab448a ("drm/msm: Add devfreq support for the GPU")
-    fb0399819239 ("drm/msm: Add adreno_gpu_write64()")
-    fde5de6cb461 ("drm/msm: move fence code to it's own file")
-
-
-NOTE: The patch will not be queued to stable trees until it is upstream.
-
-How should we proceed with this patch?
-
--- 
-Thanks
-Sasha
+-Doug
