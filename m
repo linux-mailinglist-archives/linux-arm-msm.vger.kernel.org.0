@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDFD41C8B69
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 14:54:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E86451C8B6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 14:54:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726756AbgEGMxd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 08:53:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34198 "EHLO
+        id S1725857AbgEGMxi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 08:53:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726750AbgEGMx2 (ORCPT
+        by vger.kernel.org with ESMTP id S1726825AbgEGMxe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 08:53:28 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F7C8C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2020 05:53:28 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id t40so2578431pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2020 05:53:28 -0700 (PDT)
+        Thu, 7 May 2020 08:53:34 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7CD5C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2020 05:53:33 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id x10so2026408plr.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2020 05:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dg37dPXwxVA1zqP4MAiCyHp11rv8jOO4t69xsBoKeZk=;
-        b=CAMQ+RDTsVu9QOQHwz0iwiqjE2LmE5RoACvrmmOyZPYirvUaE9vyOHbEPd2SHakBL1
-         z6w58itg6u+50ITk8EGaNNKSNx8IfXud9tyo1V+NQC0PCu34SAdLeY1f3jCSFCdNzTPa
-         LjX+t1wNydfEzdpfesbVExdAILK1uz/U3LIEC5tt6y5T2vg6wKryY0Hre4lua6BET3RD
-         NRTad+fmGO/i4qSzmct/pxWXJoFCLhgagVBIiOte9cgAHBjH2T11hBCyz3d5UAl0/wDJ
-         K3UCVUsoNgOPds2xjGcxZ0r2UZ48lUQLqwgEJUeVI21BruAV8rQGI1lRf2o3NPVK6CYt
-         /OBg==
+        bh=FSudHAT4wzxoYvh1XMNs5f+xHdE9nw3XTPAzmG768CM=;
+        b=zChQe1n/nYoXG2eQ59wLEmilwuApvr+My7WLtpOewR9iHv45bxbDRms3EXufL6YTKH
+         OWT6btfmZBYj/3gY4jwWB06BhQHo19rgsuBU8TQ42IJOHTrUYeeJHmXJkk4WmQdQkno9
+         EtUhJWDvi1p98wOTB6cz0Mmk3s0uV9P2flRg7sm4+UwVpkT4lD4qkxlEHJFfkfsWFA73
+         BQfk7Sj0DicAZahZsbZ0fhd6uYDxOzDvyL90PHcNwewKQ+Pe6EwZn7x4Gx3v0WQYlvM3
+         uGLy8r+HwhFF2+IJToTexSLo1YvvMYp6eu0L6PG5m7E6v3hJqevRDrNcIeu//qBm9Y0S
+         mtfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dg37dPXwxVA1zqP4MAiCyHp11rv8jOO4t69xsBoKeZk=;
-        b=iXE5PC1sIufOZo2BLkhGgIVyanAb5zJrrD/sOLr+GrcQN053DRIKfstF+4BjCZZygz
-         Z1cUuZS3P/Z4hfNNCne7i/julKoOueRcc4Tfo72DWFgZLnUvtHB4jHVQixem9iHaMR9E
-         pGFArp2zasoObb/O1/gUZq2bDUf4fer4hCbTPO2HLoKty1Kd9A81ZH6XboWrsNzBnK2u
-         W8cQHu9zxqfPgkav/vt//R2fcq85Ey5WYU6/jOtsuKCF2n+fvD50iqApyAxQq3TRw0go
-         BwtGCrLjgJW5HDYEP6095+3cqdfIgXlwvGMzbhnn4YgTwb+uX7QHaBVU/6ZBYhvDv4iX
-         CeaQ==
-X-Gm-Message-State: AGi0PubJDfjxJ9dPe9NBApBK/MRBMu2B9LPtmaUdSHc2GJ2iq2r5qQuL
-        seINtpWZ2Y9dYz4NZU68L/EN
-X-Google-Smtp-Source: APiQypLK4Hz2TvmbLEiseouyYNMziY1XV2DJnEfo3pKeXD8olMyB7RxQNcawUu3AKZ59FccD/mE/aQ==
-X-Received: by 2002:a17:90a:2347:: with SMTP id f65mr15030520pje.165.1588856007677;
-        Thu, 07 May 2020 05:53:27 -0700 (PDT)
+        bh=FSudHAT4wzxoYvh1XMNs5f+xHdE9nw3XTPAzmG768CM=;
+        b=g1Y3hHyWF2SoZISgTCnDP/aYOqwCxcqjNKpUAhfnHCdqzanVSDMadDL+x8NnaT3r3g
+         qlDO5sHAfHrsCGdC0d3Z5zMgeaLKDUGJDs4QLtxuB5+iPcN3NYdEO0PpthoLQ2gooHiU
+         tKgARBa2SDrYa8iXuqyWJ2tTyMdiVoFRWcbf7ZWewkxBGxbeaO0fGe4hFDVC4WZ3kNfg
+         AWzvR8S0ZdMYIqWIZ1/cYEmoBwj5bV69nqL+x/2B2NEPfeAl11Ts6Lc+4H1GAHoCGkh8
+         5Wf8bEVs6Or2TvHdd7yUo42cmbdm2akOJ1VbL8MCInm29HQS0tTR0a6zZ1xUyT/JB59f
+         7U2A==
+X-Gm-Message-State: AGi0PuacvnjT2ZQs0Zr4DnFA72hIkERGgfo0IWWvi8ZL06zSaUDUtBX4
+        D/LyAJ09ZtITsCIFL/9snPrl
+X-Google-Smtp-Source: APiQypKDKJnGRlEts2i6LAyypooHfFRBkYmJIK2URw0VjzGQDoaEJsoASFZHaKeRs2QmQb3GKl6pzQ==
+X-Received: by 2002:a17:90a:284e:: with SMTP id p14mr15941533pjf.10.1588856013204;
+        Thu, 07 May 2020 05:53:33 -0700 (PDT)
 Received: from localhost.localdomain ([2409:4072:6093:7a3f:4ddc:efce:d298:c431])
-        by smtp.gmail.com with ESMTPSA id q21sm4926190pfg.131.2020.05.07.05.53.22
+        by smtp.gmail.com with ESMTPSA id q21sm4926190pfg.131.2020.05.07.05.53.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 05:53:27 -0700 (PDT)
+        Thu, 07 May 2020 05:53:32 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     davem@davemloft.net
 Cc:     kvalo@codeaurora.org, bjorn.andersson@linaro.org,
@@ -54,9 +54,9 @@ Cc:     kvalo@codeaurora.org, bjorn.andersson@linaro.org,
         linux-kernel@vger.kernel.org, clew@codeaurora.org,
         gregkh@linuxfoundation.org, netdev@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 1/2] net: qrtr: Add MHI transport layer
-Date:   Thu,  7 May 2020 18:23:05 +0530
-Message-Id: <20200507125306.32157-2-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 2/2] net: qrtr: Do not depend on ARCH_QCOM
+Date:   Thu,  7 May 2020 18:23:06 +0530
+Message-Id: <20200507125306.32157-3-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200507125306.32157-1-manivannan.sadhasivam@linaro.org>
 References: <20200507125306.32157-1-manivannan.sadhasivam@linaro.org>
@@ -65,178 +65,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MHI is the transport layer used for communicating to the external modems.
-Hence, this commit adds MHI transport layer support to QRTR for
-transferring the QMI messages over IPC Router.
+IPC Router protocol is also used by external modems for exchanging the QMI
+messages. Hence, it doesn't always depend on Qualcomm platforms. One such
+instance is the QCA6390 WLAN device connected to x86 machine.
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- net/qrtr/Kconfig  |   7 +++
- net/qrtr/Makefile |   2 +
- net/qrtr/mhi.c    | 127 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 136 insertions(+)
- create mode 100644 net/qrtr/mhi.c
+ net/qrtr/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
-index 63f89cc6e82c..8eb876471564 100644
+index 8eb876471564..f362ca316015 100644
 --- a/net/qrtr/Kconfig
 +++ b/net/qrtr/Kconfig
-@@ -29,4 +29,11 @@ config QRTR_TUN
- 	  implement endpoints of QRTR, for purpose of tunneling data to other
- 	  hosts or testing purposes.
+@@ -4,7 +4,6 @@
  
-+config QRTR_MHI
-+	tristate "MHI IPC Router channels"
-+	depends on MHI_BUS
-+	help
-+	  Say Y here to support MHI based ipcrouter channels. MHI is the
-+	  transport used for communicating to external modems.
-+
- endif # QRTR
-diff --git a/net/qrtr/Makefile b/net/qrtr/Makefile
-index 32d4e923925d..1b1411d158a7 100644
---- a/net/qrtr/Makefile
-+++ b/net/qrtr/Makefile
-@@ -5,3 +5,5 @@ obj-$(CONFIG_QRTR_SMD) += qrtr-smd.o
- qrtr-smd-y	:= smd.o
- obj-$(CONFIG_QRTR_TUN) += qrtr-tun.o
- qrtr-tun-y	:= tun.o
-+obj-$(CONFIG_QRTR_MHI) += qrtr-mhi.o
-+qrtr-mhi-y	:= mhi.o
-diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-new file mode 100644
-index 000000000000..ff0c41467fc1
---- /dev/null
-+++ b/net/qrtr/mhi.c
-@@ -0,0 +1,127 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/mhi.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/skbuff.h>
-+#include <net/sock.h>
-+
-+#include "qrtr.h"
-+
-+struct qrtr_mhi_dev {
-+	struct qrtr_endpoint ep;
-+	struct mhi_device *mhi_dev;
-+	struct device *dev;
-+};
-+
-+/* From MHI to QRTR */
-+static void qcom_mhi_qrtr_dl_callback(struct mhi_device *mhi_dev,
-+				      struct mhi_result *mhi_res)
-+{
-+	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
-+	int rc;
-+
-+	if (!qdev || mhi_res->transaction_status)
-+		return;
-+
-+	rc = qrtr_endpoint_post(&qdev->ep, mhi_res->buf_addr,
-+				mhi_res->bytes_xferd);
-+	if (rc == -EINVAL)
-+		dev_err(qdev->dev, "invalid ipcrouter packet\n");
-+}
-+
-+/* From QRTR to MHI */
-+static void qcom_mhi_qrtr_ul_callback(struct mhi_device *mhi_dev,
-+				      struct mhi_result *mhi_res)
-+{
-+	struct sk_buff *skb = mhi_res->buf_addr;
-+
-+	if (skb->sk)
-+		sock_put(skb->sk);
-+	consume_skb(skb);
-+}
-+
-+/* Send data over MHI */
-+static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
-+{
-+	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, ep);
-+	int rc;
-+
-+	rc = skb_linearize(skb);
-+	if (rc)
-+		goto free_skb;
-+
-+	rc = mhi_queue_skb(qdev->mhi_dev, DMA_TO_DEVICE, skb, skb->len,
-+			   MHI_EOT);
-+	if (rc)
-+		goto free_skb;
-+
-+	if (skb->sk)
-+		sock_hold(skb->sk);
-+
-+	return rc;
-+
-+free_skb:
-+	kfree_skb(skb);
-+
-+	return rc;
-+}
-+
-+static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
-+			       const struct mhi_device_id *id)
-+{
-+	struct qrtr_mhi_dev *qdev;
-+	int rc;
-+
-+	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
-+	if (!qdev)
-+		return -ENOMEM;
-+
-+	qdev->mhi_dev = mhi_dev;
-+	qdev->dev = &mhi_dev->dev;
-+	qdev->ep.xmit = qcom_mhi_qrtr_send;
-+
-+	dev_set_drvdata(&mhi_dev->dev, qdev);
-+	rc = qrtr_endpoint_register(&qdev->ep, QRTR_EP_NID_AUTO);
-+	if (rc)
-+		return rc;
-+
-+	dev_dbg(qdev->dev, "Qualcomm MHI QRTR driver probed\n");
-+
-+	return 0;
-+}
-+
-+static void qcom_mhi_qrtr_remove(struct mhi_device *mhi_dev)
-+{
-+	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
-+
-+	qrtr_endpoint_unregister(&qdev->ep);
-+	dev_set_drvdata(&mhi_dev->dev, NULL);
-+}
-+
-+static const struct mhi_device_id qcom_mhi_qrtr_id_table[] = {
-+	{ .chan = "IPCR" },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(mhi, qcom_mhi_qrtr_id_table);
-+
-+static struct mhi_driver qcom_mhi_qrtr_driver = {
-+	.probe = qcom_mhi_qrtr_probe,
-+	.remove = qcom_mhi_qrtr_remove,
-+	.dl_xfer_cb = qcom_mhi_qrtr_dl_callback,
-+	.ul_xfer_cb = qcom_mhi_qrtr_ul_callback,
-+	.id_table = qcom_mhi_qrtr_id_table,
-+	.driver = {
-+		.name = "qcom_mhi_qrtr",
-+	},
-+};
-+
-+module_mhi_driver(qcom_mhi_qrtr_driver);
-+
-+MODULE_AUTHOR("Chris Lew <clew@codeaurora.org>");
-+MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>");
-+MODULE_DESCRIPTION("Qualcomm IPC-Router MHI interface driver");
-+MODULE_LICENSE("GPL v2");
+ config QRTR
+ 	tristate "Qualcomm IPC Router support"
+-	depends on ARCH_QCOM || COMPILE_TEST
+ 	---help---
+ 	  Say Y if you intend to use Qualcomm IPC router protocol.  The
+ 	  protocol is used to communicate with services provided by other
 -- 
 2.17.1
 
