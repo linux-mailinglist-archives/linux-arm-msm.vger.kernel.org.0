@@ -2,89 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C73C1C98A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:04:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BEA51C98B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:05:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727993AbgEGSD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 14:03:58 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:31447 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727904AbgEGSD5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 14:03:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1588874637; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=jxc6IOMXReaSlkhn51fI24AkRcV8/V9PR5zPvCqwQdw=;
- b=lQ7LrqFYpf9Q2a8Idi+pzbHVvC75eapdjXw8ePY+N0saSD+cIgeAdGatnYVns3zXkQld8yQ/
- hiQhN2cgycwbgLpQ8Q2L+fMLTv+dummWIN+4afYpgJEKP39VaEWgCX+zz2M1hx02Zch4mfsR
- OFJbEjdQaFdQmhvpVnkZdkd65XE=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb44d8c.7f2e20e74768-smtp-out-n05;
- Thu, 07 May 2020 18:03:56 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 30AADC43637; Thu,  7 May 2020 18:03:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1728348AbgEGSEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 14:04:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57510 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728338AbgEGSEi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 14:04:38 -0400
+Received: from gmail.com (unknown [104.132.1.76])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9FFB5C433D2;
-        Thu,  7 May 2020 18:03:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id F2F5E2145D;
+        Thu,  7 May 2020 18:04:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588874677;
+        bh=HOvo/RmXoD5byaAGPG/CBIZ+OxBl1+gN6PhJXjFXH7Q=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BfOCs51UgV5qmMXcDPdBfQv8Oy4J6tA84JuHx95Nm8Ds2BY5RM2vnKRxzmuZdt+wo
+         2sw4UpkvtBHFoVEYxFI2R8/IUDCTNZqglUmb37vy5V9TRmBbEbzNkhGE1QRMdBvZpC
+         Ho+jp1WEr+vPL6H67snKnAtTSQCmA5mmZ3HkPwss=
+Date:   Thu, 7 May 2020 11:04:35 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>
+Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
+ support
+Message-ID: <20200507180435.GB236103@gmail.com>
+References: <20200501045111.665881-1-ebiggers@kernel.org>
+ <20200501045111.665881-5-ebiggers@kernel.org>
+ <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 07 May 2020 11:03:55 -0700
-From:   rishabhb@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Chris Lew <clew@codeaurora.org>, Sibi <sibis@codeaurora.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        linux-remoteproc-owner@vger.kernel.org
-Subject: Re: [PATCH 4/4] arm64: defconfig: Remove QCOM_GLINK_SSR
-In-Reply-To: <20200423003736.2027371-5-bjorn.andersson@linaro.org>
-References: <20200423003736.2027371-1-bjorn.andersson@linaro.org>
- <20200423003736.2027371-5-bjorn.andersson@linaro.org>
-Message-ID: <a783c4f600ea40b9242ccd383f464bb2@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-04-22 17:37, Bjorn Andersson wrote:
-> Remove the QCOM_GLINK_SSR option from the arm64 defconfig, as the 
-> module
-> is assimilated by QCOM_GLINK - which is selected by other means.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+Hi Thara,
 
-Acked-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-
->  arch/arm64/configs/defconfig | 1 -
->  1 file changed, 1 deletion(-)
+On Thu, May 07, 2020 at 08:36:58AM -0400, Thara Gopinath wrote:
 > 
-> diff --git a/arch/arm64/configs/defconfig 
-> b/arch/arm64/configs/defconfig
-> index f9eefb5940ca..f26a0b6ea0e8 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -838,7 +838,6 @@ CONFIG_FSL_MC_DPIO=y
->  CONFIG_IMX_SCU_SOC=y
->  CONFIG_QCOM_AOSS_QMP=y
->  CONFIG_QCOM_GENI_SE=y
-> -CONFIG_QCOM_GLINK_SSR=m
->  CONFIG_QCOM_RMTFS_MEM=m
->  CONFIG_QCOM_RPMH=y
->  CONFIG_QCOM_RPMHPD=y
+> 
+> On 5/1/20 12:51 AM, Eric Biggers wrote:
+> > From: Eric Biggers <ebiggers@google.com>
+> > 
+> > Add support for Qualcomm Inline Crypto Engine (ICE) to ufs-qcom.
+> > 
+> > The standards-compliant parts, such as querying the crypto capabilities
+> > and enabling crypto for individual UFS requests, are already handled by
+> > ufshcd-crypto.c, which itself is wired into the blk-crypto framework.
+> > However, ICE requires vendor-specific init, enable, and resume logic,
+> > and it requires that keys be programmed and evicted by vendor-specific
+> > SMC calls.  Make the ufs-qcom driver handle these details.
+> > 
+> > I tested this on Dragonboard 845c, which is a publicly available
+> > development board that uses the Snapdragon 845 SoC and runs the upstream
+> > Linux kernel.  This is the same SoC used in the Pixel 3 and Pixel 3 XL
+> > phones.  This testing included (among other things) verifying that the
+> > expected ciphertext was produced, both manually using ext4 encryption
+> > and automatically using a block layer self-test I've written.
+> Hello Eric,
+> 
+> I am interested in testing out this series on 845, 855 and if possile on 865
+> platforms. Can you give me some more details about your testing please.
+> 
+
+Great!  You can test this with fscrypt, a.k.a. ext4 or f2fs encryption.
+
+A basic manual test would be:
+
+1. Build a kernel with:
+
+	CONFIG_BLK_INLINE_ENCRYPTION=y
+	CONFIG_FS_ENCRYPTION=y
+	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+
+2. Create a filesystem with 'mkfs.ext4 -O encrypt' or 'mkfs.f2fs -O encrypt'
+
+3. Mount the filesystem with '-o inlinecrypt'
+
+4. Create an encrypted directory and copy some files into it.
+
+5. Unmount the filesystem, and mount it *without* '-o inlinecrypt'.
+
+6. Verify that the files match the originals.
+
+If you're using a Linux distro like Debian, then creating an encrypted directory
+is most easily done using the userspace tool https://github.com/google/fscrypt.
+
+If instead your testing platform is Android, then instead of the above manual
+test you can configure Android's encryption use the hardware and then run
+VtsKernelEncryptionTest.  See the directions at
+https://source.android.com/security/encryption/file-based.
+
+Note that this patchset only includes the device tree support for Snapdragon
+845.  For 855 and 865 you'd need to add the device tree support.
+
+There are other ways this can be tested too, like xfstests, or my experimental
+blk-crypto-selftest.  Let me know if you want any other suggestions.
+
+> > +/*
+> > + * Program a key into a QC ICE keyslot, or evict a keyslot.  QC ICE requires
+> > + * vendor-specific SCM calls for this; it doesn't support the standard way.
+> > + */
+> > +int ufs_qcom_ice_program_key(struct ufs_hba *hba,
+> > +			     const union ufs_crypto_cfg_entry *cfg, int slot)
+> > +{
+> > +	union ufs_crypto_cap_entry cap;
+> > +	union {
+> > +		u8 bytes[AES_256_XTS_KEY_SIZE];
+> > +		u32 words[AES_256_XTS_KEY_SIZE / sizeof(u32)];
+> > +	} key;
+> > +	int i;
+> > +	int err;
+> Should there not be a check for here ?
+> 	if (!(host->hba->caps & UFSHCD_CAP_CRYPTO))
+> 		return 0;
+> 
+
+(Please trim your replies appropriately; I almost missed this part!)
+
+No, that's not necessary because this function is only called if we installed a
+blk_keyslot_manager to the UFS host (thus exposing its crypto support to the
+rest of the kernel).  We only do that if the driver sets UFSHCD_CAP_CRYPTO.
+
+Likewise, we don't need to check for UFSHCD_CAP_CRYPTO in
+ufshcd_crypto_keyslot_program(), ufshcd_crypto_keyslot_evict(), etc.
+
+- Eric
