@@ -2,91 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E86451C8B6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 14:54:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65BA11C8B72
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 14:54:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725857AbgEGMxi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 08:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34222 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726825AbgEGMxe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 08:53:34 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7CD5C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2020 05:53:33 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id x10so2026408plr.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2020 05:53:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FSudHAT4wzxoYvh1XMNs5f+xHdE9nw3XTPAzmG768CM=;
-        b=zChQe1n/nYoXG2eQ59wLEmilwuApvr+My7WLtpOewR9iHv45bxbDRms3EXufL6YTKH
-         OWT6btfmZBYj/3gY4jwWB06BhQHo19rgsuBU8TQ42IJOHTrUYeeJHmXJkk4WmQdQkno9
-         EtUhJWDvi1p98wOTB6cz0Mmk3s0uV9P2flRg7sm4+UwVpkT4lD4qkxlEHJFfkfsWFA73
-         BQfk7Sj0DicAZahZsbZ0fhd6uYDxOzDvyL90PHcNwewKQ+Pe6EwZn7x4Gx3v0WQYlvM3
-         uGLy8r+HwhFF2+IJToTexSLo1YvvMYp6eu0L6PG5m7E6v3hJqevRDrNcIeu//qBm9Y0S
-         mtfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=FSudHAT4wzxoYvh1XMNs5f+xHdE9nw3XTPAzmG768CM=;
-        b=g1Y3hHyWF2SoZISgTCnDP/aYOqwCxcqjNKpUAhfnHCdqzanVSDMadDL+x8NnaT3r3g
-         qlDO5sHAfHrsCGdC0d3Z5zMgeaLKDUGJDs4QLtxuB5+iPcN3NYdEO0PpthoLQ2gooHiU
-         tKgARBa2SDrYa8iXuqyWJ2tTyMdiVoFRWcbf7ZWewkxBGxbeaO0fGe4hFDVC4WZ3kNfg
-         AWzvR8S0ZdMYIqWIZ1/cYEmoBwj5bV69nqL+x/2B2NEPfeAl11Ts6Lc+4H1GAHoCGkh8
-         5Wf8bEVs6Or2TvHdd7yUo42cmbdm2akOJ1VbL8MCInm29HQS0tTR0a6zZ1xUyT/JB59f
-         7U2A==
-X-Gm-Message-State: AGi0PuacvnjT2ZQs0Zr4DnFA72hIkERGgfo0IWWvi8ZL06zSaUDUtBX4
-        D/LyAJ09ZtITsCIFL/9snPrl
-X-Google-Smtp-Source: APiQypKDKJnGRlEts2i6LAyypooHfFRBkYmJIK2URw0VjzGQDoaEJsoASFZHaKeRs2QmQb3GKl6pzQ==
-X-Received: by 2002:a17:90a:284e:: with SMTP id p14mr15941533pjf.10.1588856013204;
-        Thu, 07 May 2020 05:53:33 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:6093:7a3f:4ddc:efce:d298:c431])
-        by smtp.gmail.com with ESMTPSA id q21sm4926190pfg.131.2020.05.07.05.53.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 05:53:32 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     davem@davemloft.net
-Cc:     kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clew@codeaurora.org,
-        gregkh@linuxfoundation.org, netdev@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 2/2] net: qrtr: Do not depend on ARCH_QCOM
-Date:   Thu,  7 May 2020 18:23:06 +0530
-Message-Id: <20200507125306.32157-3-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200507125306.32157-1-manivannan.sadhasivam@linaro.org>
-References: <20200507125306.32157-1-manivannan.sadhasivam@linaro.org>
+        id S1726908AbgEGMyE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 08:54:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37154 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725947AbgEGMyD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 08:54:03 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AEE472082E;
+        Thu,  7 May 2020 12:54:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588856043;
+        bh=ejai9cTPU/wXSWdxchfGt1itA5yy8fQdOCXV1pCVHB8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RQWnluLJiArcmPu9fOV36aetvJ89LlV4OkXKlOag7m8wEFYv8k8CmgXArbDzu6Wsq
+         pswbvEeTfFU5iF88PS7C3PtcspXniovK40FRu2E7ppNmm6cyjd3Iso9XksHltSy6+K
+         p+BGlBgqY06MAoY6CKRIfJ85jBPtzde5OXgykwOI=
+Date:   Thu, 7 May 2020 13:53:58 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] iomm/arm-smmu: Add stall implementation hook
+Message-ID: <20200507125357.GA31783@willie-the-truck>
+References: <20200421202004.11686-1-saiprakash.ranjan@codeaurora.org>
+ <b491e02ad790a437115fdeab6b21bc48@codeaurora.org>
+ <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPC Router protocol is also used by external modems for exchanging the QMI
-messages. Hence, it doesn't always depend on Qualcomm platforms. One such
-instance is the QCA6390 WLAN device connected to x86 machine.
+On Thu, May 07, 2020 at 11:55:54AM +0100, Robin Murphy wrote:
+> On 2020-05-07 11:14 am, Sai Prakash Ranjan wrote:
+> > On 2020-04-22 01:50, Sai Prakash Ranjan wrote:
+> > > Add stall implementation hook to enable stalling
+> > > faults on QCOM platforms which supports it without
+> > > causing any kind of hardware mishaps. Without this
+> > > on QCOM platforms, GPU faults can cause unrelated
+> > > GPU memory accesses to return zeroes. This has the
+> > > unfortunate result of command-stream reads from CP
+> > > getting invalid data, causing a cascade of fail.
+> 
+> I think this came up before, but something about this rationale doesn't add
+> up - we're not *using* stalls at all, we're still terminating faulting
+> transactions unconditionally; we're just using CFCFG to terminate them with
+> a slight delay, rather than immediately. It's really not clear how or why
+> that makes a difference. Is it a GPU bug? Or an SMMU bug? Is this reliable
+> (or even a documented workaround for something), or might things start
+> blowing up again if any other behaviour subtly changes? I'm not dead set
+> against adding this, but I'd *really* like to have a lot more confidence in
+> it.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- net/qrtr/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+Rob mentioned something about the "bus returning zeroes" before, but I agree
+that we need more information so that we can reason about this and maintain
+the code as the driver continues to change. That needs to be a comment in
+the driver, and I don't think "but android seems to work" is a good enough
+justification. There was some interaction with HUPCF as well.
 
-diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
-index 8eb876471564..f362ca316015 100644
---- a/net/qrtr/Kconfig
-+++ b/net/qrtr/Kconfig
-@@ -4,7 +4,6 @@
- 
- config QRTR
- 	tristate "Qualcomm IPC Router support"
--	depends on ARCH_QCOM || COMPILE_TEST
- 	---help---
- 	  Say Y if you intend to use Qualcomm IPC router protocol.  The
- 	  protocol is used to communicate with services provided by other
--- 
-2.17.1
+As a template, I'd suggest:
 
+> > > diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+> > > index 8d1cd54d82a6..d5134e0d5cce 100644
+> > > --- a/drivers/iommu/arm-smmu.h
+> > > +++ b/drivers/iommu/arm-smmu.h
+> > > @@ -386,6 +386,7 @@ struct arm_smmu_impl {
+> > >      int (*init_context)(struct arm_smmu_domain *smmu_domain);
+> > >      void (*tlb_sync)(struct arm_smmu_device *smmu, int page, int sync,
+> > >               int status);
+
+/*
+ * Stall transactions on a context fault, where they will be terminated
+ * in response to the resulting IRQ rather than immediately. This should
+ * pretty much always be set to "false" as stalling can introduce the
+ * potential for deadlock in most SoCs, however it is needed on Qualcomm
+ * XXXX because YYYY.
+ */
+
+> > > +    bool stall;
+
+Hmm, the more I think about this, the more I think this is an erratum
+workaround in disguise, in which case this could be better named...
+
+Will
