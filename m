@@ -2,78 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED23C1C990C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:14:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B06D1C998A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 20:45:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbgEGSOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 14:14:19 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:41591 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbgEGSOS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 14:14:18 -0400
-Received: by mail-oi1-f196.google.com with SMTP id 19so6057023oiy.8;
-        Thu, 07 May 2020 11:14:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bqvmG1HWU4qDf3HKBnBhC+AWlEauaP8o4/CF6AJISL0=;
-        b=iSUXC9FtqIsaz5t/tsaDPTR3YMAKjOQOdYIxB/sUlRcaOuSAG8eIGs6buiJiEuxFw8
-         SvYzxzEX55/hjfBmuDdvth3x4AwYnV1rDoRtbvHXJwyNoytTHZLDzXkAf1G2tZaHljFE
-         rQ2qyhuoWc5OeXRPEuNtwG5WV8bSWlVIfAafdl1ZolXwIMLbbblB2P+Mih6hpRvLIGmE
-         J0h9duhUHWG8Mk0LjbGGjDPPXyAKlj+TpDTyuUJtj4KNauGrCbSV6SCsgWkXifWR+7BY
-         ocV1HC72TBNhK88kr7JXT0AW0kUwiCzoV9TLgNbHXAQo6SJYI6sdAXzNz17lJoy6+Hvn
-         UWMg==
-X-Gm-Message-State: AGi0PuaFC0zawbDbCiduKWFE28QweaAJ7YXjXzD/ER7M8fExMKI1r2Q7
-        VfQ9qFyRmXNAdtHcIgVsFQ==
-X-Google-Smtp-Source: APiQypJjqWjf+xvhTf9ElI+7SobF1c8l+Bvu1wEqEqBkg7vIj/KOJeoIu4c/pPG8DqzuQbZDurAklA==
-X-Received: by 2002:aca:b2c2:: with SMTP id b185mr3192687oif.169.1588875257552;
-        Thu, 07 May 2020 11:14:17 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id m16sm1500117oop.40.2020.05.07.11.14.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 11:14:16 -0700 (PDT)
-Received: (nullmailer pid 25817 invoked by uid 1000);
-        Thu, 07 May 2020 18:14:15 -0000
-Date:   Thu, 7 May 2020 13:14:15 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 10/11] devicetree: bindings: pci: add ipq8064 rev 2
- variant to qcom,pcie
-Message-ID: <20200507181415.GA25718@bogus>
-References: <20200430220619.3169-1-ansuelsmth@gmail.com>
- <20200430220619.3169-11-ansuelsmth@gmail.com>
+        id S1726367AbgEGSpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 14:45:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46646 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728309AbgEGSpv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 14:45:51 -0400
+Received: from embeddedor (unknown [189.207.59.248])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3666920870;
+        Thu,  7 May 2020 18:45:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588877150;
+        bh=dRXO8NWeYM9voX1lUqLjnyFnyymDA1FiAU3W8d8sdW4=;
+        h=Date:From:To:Cc:Subject:From;
+        b=lHeymKeiC/FcQsbXvpMS9igvZ7qvccUuVdEOaIBdd44VEwKRzFm5vVAv7ehaU5dWQ
+         3EP21nPSolm2gTd4IyfvCKKx8NJvlQkrCJxoQ7aLXA97yIc8tUwfV/j+q1z9hGM+gs
+         g7bWGfCOS+scn4NNMoTpIV24Zn0KpPlSyy0fstzg=
+Date:   Thu, 7 May 2020 13:50:16 -0500
+From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom: bam_dma: Replace zero-length array with
+ flexible-array
+Message-ID: <20200507185016.GA13883@embeddedor>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200430220619.3169-11-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri,  1 May 2020 00:06:17 +0200, Ansuel Smith wrote:
-> Document qcom,pcie-ipq8064-v2 needed to use different phy_tx0_term_offset.
-> In ipq8064 phy_tx0_term_offset is 7.
-> In ipq8064 v2 other SoC it's set to 0 by default.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  Documentation/devicetree/bindings/pci/qcom,pcie.txt | 1 +
->  1 file changed, 1 insertion(+)
-> 
+The current codebase makes use of the zero-length array language
+extension to the C90 standard, but the preferred mechanism to declare
+variable-length types such as these ones is a flexible array member[1][2],
+introduced in C99:
 
-Acked-by: Rob Herring <robh@kernel.org>
+struct foo {
+        int stuff;
+        struct boo array[];
+};
+
+By making use of the mechanism above, we will get a compiler warning
+in case the flexible array does not occur last in the structure, which
+will help us prevent some kind of undefined behavior bugs from being
+inadvertently introduced[3] to the codebase from now on.
+
+Also, notice that, dynamic memory allocations won't be affected by
+this change:
+
+"Flexible array members have incomplete type, and so the sizeof operator
+may not be applied. As a quirk of the original implementation of
+zero-length arrays, sizeof evaluates to zero."[1]
+
+sizeof(flexible-array-member) triggers a warning because flexible array
+members have incomplete type[1]. There are some instances of code in
+which the sizeof operator is being incorrectly/erroneously applied to
+zero-length arrays and the result is zero. Such instances may be hiding
+some bugs. So, this work (flexible-array member conversions) will also
+help to get completely rid of those sorts of issues.
+
+This issue was found with the help of Coccinelle.
+
+[1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+[2] https://github.com/KSPP/linux/issues/21
+[3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+---
+ drivers/dma/qcom/bam_dma.c         |    2 +-
+ drivers/firmware/qcom_scm-legacy.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index ef73f65224b1..5a08dd0d3388 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -74,7 +74,7 @@ struct bam_async_desc {
+ 	struct list_head desc_node;
+ 	enum dma_transfer_direction dir;
+ 	size_t length;
+-	struct bam_desc_hw desc[0];
++	struct bam_desc_hw desc[];
+ };
+ 
+ enum bam_reg {
+diff --git a/drivers/firmware/qcom_scm-legacy.c b/drivers/firmware/qcom_scm-legacy.c
+index 8532e7c78ef7..eba6b60bfb61 100644
+--- a/drivers/firmware/qcom_scm-legacy.c
++++ b/drivers/firmware/qcom_scm-legacy.c
+@@ -56,7 +56,7 @@ struct scm_legacy_command {
+ 	__le32 buf_offset;
+ 	__le32 resp_hdr_offset;
+ 	__le32 id;
+-	__le32 buf[0];
++	__le32 buf[];
+ };
+ 
+ /**
+
