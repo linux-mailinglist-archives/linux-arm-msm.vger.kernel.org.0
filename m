@@ -2,105 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B0AA1C8D87
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 16:06:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E69911C8E2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2020 16:16:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbgEGOGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 May 2020 10:06:00 -0400
-Received: from mga02.intel.com ([134.134.136.20]:59853 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726267AbgEGOF7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 May 2020 10:05:59 -0400
-IronPort-SDR: RP/Y2f1PV6Emv49xb6l2YoaXl7/QebIatPptIWObMuuctY/UK0QSHCdI1hudmEjixDfd464bDX
- /sPvo1RSme8g==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2020 07:05:58 -0700
-IronPort-SDR: 5tCBvfLrV57N2TTqBGhMqkkL/5QL+bUuW+LU44NCJSYKO4wgf/ixNS2eiWonlITIrNCWcGxFft
- bqNf61n2K5pA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,363,1583222400"; 
-   d="scan'208";a="339361341"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.157]) ([10.237.72.157])
-  by orsmga001.jf.intel.com with ESMTP; 07 May 2020 07:05:55 -0700
-Subject: [PATCH] mmc: block: Fix request completion in the CQE timeout path
-From:   Adrian Hunter <adrian.hunter@intel.com>
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        ulf.hansson@linaro.org
-Cc:     stummala@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sarthak Garg <sartgarg@codeaurora.org>, stable@vger.kernel.org,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Christoph Hellwig <hch@lst.de>
-References: <1588775643-18037-1-git-send-email-vbadigan@codeaurora.org>
- <1588775643-18037-3-git-send-email-vbadigan@codeaurora.org>
- <b4a01f2c-479a-2a23-58b7-64f16cbc17a2@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <66747f4c-e61f-509f-a3cc-7e3499a844e4@intel.com>
-Date:   Thu, 7 May 2020 17:06:15 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726742AbgEGOOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 May 2020 10:14:08 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:22299 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726393AbgEGOOH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 May 2020 10:14:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588860846; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ouV/sAAm+HHkNw8+tVJPzvplbCTaOzR2TqpfgCh2bos=;
+ b=QMsCoa2wTR63avSvyibQmfBmEmm1eyLxK8+FOe7VkKg1SCAESBG6VELxw5JJd/iXIBTE3crW
+ oVbFPYkmQwlN0KmDx8DjyieoHRC3l0PSIs6iVCTiyyPiIes/xo2XMTr6pIyDKkpO12/xlRuD
+ 7gACt8gHv9DLNtuvoMRoHvvk8i0=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb417aa.7f54e805f5a8-smtp-out-n02;
+ Thu, 07 May 2020 14:14:02 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9F620C4478C; Thu,  7 May 2020 14:14:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC865C433F2;
+        Thu,  7 May 2020 14:14:01 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <b4a01f2c-479a-2a23-58b7-64f16cbc17a2@intel.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Thu, 07 May 2020 19:44:01 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCHv4 4/6] iommu/arm-smmu-qcom: Request direct mapping for
+ modem device
+In-Reply-To: <20200507130210.GB31783@willie-the-truck>
+References: <cover.1587407458.git.saiprakash.ranjan@codeaurora.org>
+ <8ef5d93c74f5cd9e4a6edab86d1d46efbf3aa038.1587407458.git.saiprakash.ranjan@codeaurora.org>
+ <20200507130210.GB31783@willie-the-truck>
+Message-ID: <f41beaa18f0ba49c3c6f7552291a0641@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-First, it should be noted that the CQE timeout (60 seconds) is substantial
-so a CQE request that times out is really stuck, and the race between
-timeout and completion is extremely unlikely. Nevertheless this patch
-fixes an issue with it.
+Hey WIll,
 
-Commit ad73d6feadbd7b ("mmc: complete requests from ->timeout")
-preserved the existing functionality, to complete the request.
-However that had only been necessary because the block layer
-timeout handler had been marking the request to prevent it from being
-completed normally. That restriction was removed at the same time, the
-result being that a request that has gone will have been completed anyway.
-That is, the completion in the timeout handler became unnecessary.
+On 2020-05-07 18:32, Will Deacon wrote:
+> On Tue, Apr 21, 2020 at 12:03:52AM +0530, Sai Prakash Ranjan wrote:
+>> From: Sibi Sankar <sibis@codeaurora.org>
+>> 
+>> The Q6 modem sub-system has direct access to DDR through memnoc.
+>> Also SMMU is not expected to provide access control/translation
+>> for these SIDs (sandboxing of the modem is achieved through XPUs
+>> engaged using SMC calls). So request direct mapping for modem on
+>> platforms which don't have TrustZone.
+> 
+> The Z7 space rocket framework has limited access to water through 
+> BROADCHAN.
+> Also, this commit message really sucks. So please can you rewrite it in 
+> a
+> way that makes sense to people outside of your office?
 
-At the time, the unnecessary completion was harmless because the block
-layer would ignore it, although that changed in kernel v5.0.
+lol, sure I'll re-word ^^ tday
 
-Note for stable, this patch will not apply cleanly without patch "mmc:
-core: Fix recursive locking issue in CQE recovery path"
+> 
+> Will
 
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: ad73d6feadbd7b ("mmc: complete requests from ->timeout")
-Cc: stable@vger.kernel.org
----
-
-
-This is the patch I alluded to when replying to "mmc: core: Fix recursive
-locking issue in CQE recovery path"
-
-
- drivers/mmc/core/queue.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
-index 72bef39d7011..10ea67892b5f 100644
---- a/drivers/mmc/core/queue.c
-+++ b/drivers/mmc/core/queue.c
-@@ -110,8 +110,7 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct
-request *req)
- 				mmc_cqe_recovery_notifier(mrq);
- 			return BLK_EH_RESET_TIMER;
- 		}
--		/* No timeout (XXX: huh? comment doesn't make much sense) */
--		blk_mq_complete_request(req);
-+		/* The request has gone already */
- 		return BLK_EH_DONE;
- 	default:
- 		/* Timeout is handled by mmc core */
 -- 
-2.17.1
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
