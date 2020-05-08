@@ -2,141 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 035D51CA3BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 08:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82EBC1CA3BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 08:22:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727802AbgEHGWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 02:22:16 -0400
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:18276 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727118AbgEHGWO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1727778AbgEHGWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 02:22:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50400 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727772AbgEHGWO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 8 May 2020 02:22:14 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 May 2020 11:52:06 +0530
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 08 May 2020 11:51:57 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 221CD3AD3; Fri,  8 May 2020 11:51:56 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org, jdas@codeaurora.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH 3/3] Enable Request API for Capture Buffers
-Date:   Fri,  8 May 2020 11:51:30 +0530
-Message-Id: <1588918890-673-4-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
-References: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
+Received: from Mani-XPS-13-9360 (unknown [157.50.45.37])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id EBF9920708;
+        Fri,  8 May 2020 06:22:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588918933;
+        bh=H8zuyDp1NSPLZp+cpCXhgJA2Fnax9JHQV+55OBnqXrs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YbNGxWKGoAbQlIBxjjbQ50GfZ5hQXSuBQeJB2fDkA7O/rA2genrPzVovrSS7IudZe
+         ub6DD1eN+ceb8S/EJYH7iKtYHXcqDxgb/dNCzRI5r2u4sBgkOB6hd6cAaT2aqYlifX
+         04QIuWVoj3dJbvot5OqYaoq5R/pubhxCPiVk5i9w=
+Date:   Fri, 8 May 2020 11:52:04 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk@codeaurora.org, jhugo@codeaurora.org
+Subject: Re: [PATCH v6 8/8] bus: mhi: core: Ensure non-zero session or
+ sequence ID values are used
+Message-ID: <20200508062204.GC2696@Mani-XPS-13-9360>
+References: <1588718832-4891-1-git-send-email-bbhatt@codeaurora.org>
+ <1588718832-4891-9-git-send-email-bbhatt@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1588718832-4891-9-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-- Removed restrictions from V4l2 Framework to allow
-  request APIs on Capture buffers.
+On Tue, May 05, 2020 at 03:47:12PM -0700, Bhaumik Bhatt wrote:
+> While writing any sequence or session identifiers, it is possible that
+> the host could write a zero value, whereas only non-zero values should
+> be supported writes to those registers. Ensure that the host does not
+> write a non-zero value for them and also log them in debug messages.
+> 
 
-Change-Id: I9ba37e948eed027344ba2ceb7eb1ff117793ae31
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- drivers/media/common/videobuf2/videobuf2-v4l2.c |  4 +---
- drivers/media/platform/qcom/venus/helpers.c     |  2 +-
- drivers/media/platform/qcom/venus/venc.c        |  6 ++++--
- drivers/media/v4l2-core/v4l2-mem2mem.c          | 17 +++++++++++------
- 4 files changed, 17 insertions(+), 12 deletions(-)
+Seems like you are reworking the existing checks also. So please mention
+that in commit message. Something like:
 
-diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
-index 5a9ba38..00f6970 100644
---- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
-+++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
-@@ -424,9 +424,7 @@ static int vb2_queue_or_prepare_buf(struct vb2_queue *q, struct media_device *md
- 	 * It's easy to forget this callback, but is it important to correctly
- 	 * validate the 'field' value at QBUF time.
- 	 */
--	if (WARN_ON((q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT ||
--		     q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) &&
--		    !q->ops->buf_out_validate))
-+	if (WARN_ON(!q->ops->buf_out_validate))
- 		return -EINVAL;
- 
- 	if (b->request_fd < 0) {
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index c966c24..a27e9bf 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -609,7 +609,7 @@ void venus_helper_get_ts_metadata(struct venus_inst *inst, u64 timestamp_us,
- 		fdata.filled_len = 0;
- 		fdata.offset = 0;
- 	}
--	if(req && type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-+	if(req)
- 	{
- 		ret = v4l2_ctrl_request_setup(req, &inst->ctrl_handler);
- 		if (ret)
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 599cfae..10a07bc 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1085,8 +1085,8 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 	} else {
- 		vbuf->sequence = inst->sequence_out++;
- 	}
--	if (buf_type == HFI_BUFFER_INPUT)
--		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req, &inst->ctrl_handler);
-+	//if (buf_type == HFI_BUFFER_INPUT)
-+	v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req, &inst->ctrl_handler);
- 	v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
- }
- 
-@@ -1146,6 +1146,8 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
- 	dst_vq->allow_zero_bytesused = 1;
- 	dst_vq->min_buffers_needed = 1;
- 	dst_vq->dev = inst->core->dev;
-+	dst_vq->supports_requests = 1;
-+	dst_vq->requires_requests = 1;
- 	dst_vq->lock = src_vq->lock;
- 	ret = vb2_queue_init(dst_vq);
- 	if (ret) {
-diff --git a/drivers/media/v4l2-core/v4l2-mem2mem.c b/drivers/media/v4l2-core/v4l2-mem2mem.c
-index 19937dd..ffacb29 100644
---- a/drivers/media/v4l2-core/v4l2-mem2mem.c
-+++ b/drivers/media/v4l2-core/v4l2-mem2mem.c
-@@ -493,12 +493,12 @@ int v4l2_m2m_qbuf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
- 	int ret;
- 
- 	vq = v4l2_m2m_get_vq(m2m_ctx, buf->type);
--	if (!V4L2_TYPE_IS_OUTPUT(vq->type) &&
-+	/*if (!V4L2_TYPE_IS_OUTPUT(vq->type) &&
- 	    (buf->flags & V4L2_BUF_FLAG_REQUEST_FD)) {
- 		dprintk("%s: requests cannot be used with capture buffers\n",
- 			__func__);
- 		return -EPERM;
--	}
-+	}*/
- 	ret = vb2_qbuf(vq, vdev->v4l2_dev->mdev, buf);
- 	if (!ret && !(buf->flags & V4L2_BUF_FLAG_IN_REQUEST))
- 		v4l2_m2m_try_schedule(m2m_ctx);
-@@ -1019,10 +1019,15 @@ void v4l2_m2m_request_queue(struct media_request *req)
- 		if (vb2_request_object_is_buffer(obj)) {
- 			/* Sanity checks */
- 			vb = container_of(obj, struct vb2_buffer, req_obj);
--			WARN_ON(!V4L2_TYPE_IS_OUTPUT(vb->vb2_queue->type));
--			m2m_ctx_obj = container_of(vb->vb2_queue,
--						   struct v4l2_m2m_ctx,
--						   out_q_ctx.q);
-+			//WARN_ON(!V4L2_TYPE_IS_OUTPUT(vb->vb2_queue->type));
-+			if (V4L2_TYPE_IS_OUTPUT(vb->vb2_queue->type))
-+				m2m_ctx_obj = container_of(vb->vb2_queue,
-+						struct v4l2_m2m_ctx,
-+						out_q_ctx.q);
-+			else
-+				m2m_ctx_obj = container_of(vb->vb2_queue,
-+						struct v4l2_m2m_ctx,
-+						cap_q_ctx.q);
- 			WARN_ON(m2m_ctx && m2m_ctx_obj != m2m_ctx);
- 			m2m_ctx = m2m_ctx_obj;
- 		}
--- 
-1.9.1
+'A macro is introduced to simplify this check and the existing checks are
+also converted to use this macro.'
 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/boot.c     | 15 +++++++--------
+>  drivers/bus/mhi/core/internal.h |  1 +
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+> index e5fcde1..7b9b561 100644
+> --- a/drivers/bus/mhi/core/boot.c
+> +++ b/drivers/bus/mhi/core/boot.c
+> @@ -43,10 +43,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+>  		      lower_32_bits(mhi_buf->dma_addr));
+>  
+>  	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, mhi_buf->len);
+> -	sequence_id = prandom_u32() & BHIE_RXVECSTATUS_SEQNUM_BMSK;
+> -
+> -	if (unlikely(!sequence_id))
+> -		sequence_id = 1;
+> +	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_RXVECSTATUS_SEQNUM_BMSK);
+>  
+
+This is what I referred.
+
+Thanks,
+Mani
+
+>  	mhi_write_reg_field(mhi_cntrl, base, BHIE_RXVECDB_OFFS,
+>  			    BHIE_RXVECDB_SEQNUM_BMSK, BHIE_RXVECDB_SEQNUM_SHFT,
+> @@ -189,7 +186,9 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
+>  		return -EIO;
+>  	}
+>  
+> -	dev_dbg(dev, "Starting AMSS download via BHIe\n");
+> +	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_TXVECSTATUS_SEQNUM_BMSK);
+> +	dev_dbg(dev, "Starting AMSS download via BHIe. Sequence ID:%u\n",
+> +		sequence_id);
+>  	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECADDR_HIGH_OFFS,
+>  		      upper_32_bits(mhi_buf->dma_addr));
+>  
+> @@ -198,7 +197,6 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
+>  
+>  	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECSIZE_OFFS, mhi_buf->len);
+>  
+> -	sequence_id = prandom_u32() & BHIE_TXVECSTATUS_SEQNUM_BMSK;
+>  	mhi_write_reg_field(mhi_cntrl, base, BHIE_TXVECDB_OFFS,
+>  			    BHIE_TXVECDB_SEQNUM_BMSK, BHIE_TXVECDB_SEQNUM_SHFT,
+>  			    sequence_id);
+> @@ -246,14 +244,15 @@ static int mhi_fw_load_sbl(struct mhi_controller *mhi_cntrl,
+>  		goto invalid_pm_state;
+>  	}
+>  
+> -	dev_dbg(dev, "Starting SBL download via BHI\n");
+> +	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
+> +	dev_dbg(dev, "Starting SBL download via BHI. Session ID:%u\n",
+> +		session_id);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
+>  		      upper_32_bits(dma_addr));
+>  	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
+>  		      lower_32_bits(dma_addr));
+>  	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
+> -	session_id = prandom_u32() & BHI_TXDB_SEQNUM_BMSK;
+>  	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
+>  	read_unlock_bh(pm_lock);
+>  
+> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> index 0965ca3..80b32c2 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -452,6 +452,7 @@ enum mhi_pm_state {
+>  #define PRIMARY_CMD_RING		0
+>  #define MHI_DEV_WAKE_DB			127
+>  #define MHI_MAX_MTU			0xffff
+> +#define MHI_RANDOM_U32_NONZERO(bmsk)	(prandom_u32_max(bmsk) + 1)
+>  
+>  enum mhi_er_type {
+>  	MHI_ER_TYPE_INVALID = 0x0,
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
