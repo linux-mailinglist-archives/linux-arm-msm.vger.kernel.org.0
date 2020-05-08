@@ -2,137 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 663181CA97C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 13:25:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4F001CAA02
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 13:51:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbgEHLZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 07:25:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47366 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726616AbgEHLZY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 07:25:24 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA43C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 04:25:23 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id 50so898663wrc.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 04:25:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OEiRu8fDMHeMig14yk3oyA1kFIFsdb4VwqJUmgquhAU=;
-        b=bCQwNkMxTP26uja13yTIfjw4d95B04dqZEDRutICRJJ8ZwGLnZeERJ7C+TPFnPBlfK
-         7p2VFComMa+YxIY6YW38xPSW/CVkMNsEuPbNO65LYtwX4KzQjiLGxO8P7T48r0TEv7vY
-         nYVq0r7DR+0pNJweI5Mho2Vw2spPcLSXBgJXQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OEiRu8fDMHeMig14yk3oyA1kFIFsdb4VwqJUmgquhAU=;
-        b=TWwxoL6Wlz9NjNSNu8YIlB/PIsavhHi4wpe2sDPkGGOJY93a+eTCfOlNSEo1iL2bXC
-         aO8hIRjJ4NdJ7Qgv4mrG/S/7aOzo3AFjOgMnJ3j5NmSWKg2llHBev1T1ixPVte7u1wif
-         7M1GoSzuI7GTw2oPa+yj74aALMnfjzacCnkG/budDL+ViyyzswD8MykTV3NnIAYKq1Ru
-         ogBEO7zI1X32zeyqiS279XBXIh2FzPvbt1zEqX0q1U9UHbox1OUS+1FxpGNDjaa7usUy
-         3xpa3TmCTeskHkhlQCNZ7H0mu287vrbnN2QeXiMqMB5zC0vTDys6K2mmr0afOvFEDPRj
-         t6xg==
-X-Gm-Message-State: AGi0Pua8LJ6bCgO/A4rJnth37JKa8/nI02px6JPDo4Gf6QtUjgsrSAJV
-        9Hu7LNqvNJ1c2ESiFI4SvQBa1g==
-X-Google-Smtp-Source: APiQypJs8jtJoIl/vfKuSaY8FiKYZTELm86tssK3d01t6Nnw698gk4T87xzYbAg88YZscEM1ahFKyw==
-X-Received: by 2002:adf:e7cb:: with SMTP id e11mr2314069wrn.145.1588937122602;
-        Fri, 08 May 2020 04:25:22 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id h17sm12978205wmm.6.2020.05.08.04.25.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2020 04:25:21 -0700 (PDT)
-Date:   Fri, 8 May 2020 13:25:19 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Emil Velikov <emil.l.velikov@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 10/36] drm/gem: add _locked suffix to drm_object_put
-Message-ID: <20200508112519.GI1383626@phenom.ffwll.local>
-References: <20200507150822.114464-1-emil.l.velikov@gmail.com>
- <20200507150822.114464-11-emil.l.velikov@gmail.com>
- <20200508064053.GB1383626@phenom.ffwll.local>
- <CACvgo53fa1R3gD8hCg+Ch2Tj0ZnDVScNXiZO5FbGfK_VbAP_nQ@mail.gmail.com>
+        id S1727113AbgEHLvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 07:51:46 -0400
+Received: from ns.mm-sol.com ([37.157.136.199]:40315 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726636AbgEHLvp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 May 2020 07:51:45 -0400
+Received: from [192.168.1.3] (212-5-158-166.ip.btc-net.bg [212.5.158.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 01B60CFDF;
+        Fri,  8 May 2020 14:51:41 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1588938702; bh=HKXtAHb8XwUHfwx+lbiW6p1jjEHLBjHzXIcqdmJHqqo=;
+        h=Subject:To:Cc:From:Date:From;
+        b=NcEbwqswZH8u+RVQPQUWGHPsbLKm/6gGSfUMjoePLqgP5XBQXk/R3Pzr2joHoZqrj
+         gT1XmmZQx+hqZpAr5etbQx4ZdzWwa1VL5orRtSAI74Hvb1UvTjNjR53rmM8Z7jpcpZ
+         hSph9EnkKjuNmd94CpveOGlmHUW7+EEJzTqIgJn2cHUZfqs2LZ/+ZJvtTY5/wPQTJk
+         LFvY5GpWPCkLJ9v2DCZ+YOF515eUW9F6RmQijf7dUm82opTPWIKqkYPmemhhMvJr6B
+         UpPP0qYaDClC2ZcC9pRu15T1DFmq7JLMo2S31rMKbzoF2O0YgYmaPx7Vlf7NW5iig6
+         DYEUGUywDP6Bg==
+Subject: Re: [PATCH v3 01/11] PCI: qcom: add missing ipq806x clocks in PCIe
+ driver
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sham Muthayyan <smuthayy@codeaurora.org>, stable@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200430220619.3169-1-ansuelsmth@gmail.com>
+ <20200430220619.3169-2-ansuelsmth@gmail.com>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <3228e401-f9cd-a550-0bd4-80f01b35971a@mm-sol.com>
+Date:   Fri, 8 May 2020 14:51:39 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACvgo53fa1R3gD8hCg+Ch2Tj0ZnDVScNXiZO5FbGfK_VbAP_nQ@mail.gmail.com>
-X-Operating-System: Linux phenom 5.4.0-4-amd64 
+In-Reply-To: <20200430220619.3169-2-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 08, 2020 at 12:00:40PM +0100, Emil Velikov wrote:
-> On Fri, 8 May 2020 at 07:40, Daniel Vetter <daniel@ffwll.ch> wrote:
-> >
-> > On Thu, May 07, 2020 at 04:07:56PM +0100, Emil Velikov wrote:
-> > > From: Emil Velikov <emil.velikov@collabora.com>
-> > >
-> > > Vast majority of DRM (core and drivers) are struct_mutex free.
-> > >
-> > > As such we have only a handful of cases where the locked helper should
-> > > be used. Make that stand out a little bit better.
-> > >
-> > > Done via the following script:
-> > >
-> > > __from=drm_gem_object_put
-> > > __to=drm_gem_object_put_locked
-> > >
-> > > for __file in $(git grep --name-only --word-regexp $__from); do
-> > >   sed -i  "s/\<$__from\>/$__to/g" $__file;
-> > > done
-> > >
-> > > Cc: Rob Clark <robdclark@gmail.com>
-> > > Cc: Sean Paul <sean@poorly.run>
-> > > Cc: linux-arm-msm@vger.kernel.org
-> > > Signed-off-by: Emil Velikov <emil.velikov@collabora.com>
-> >
-> > Since
-> >
-> > commit 48e7f18392c66f9b69ebac11c54f1a2e033ced54
-> > Author: Kristian H. Kristensen <hoegsberg@gmail.com>
-> > Date:   Wed Mar 20 10:09:08 2019 -0700
-> >
-> >     drm/msm: Implement .gem_free_object_unlocked
-> >
-> > msm doesn't need the struct_mutex in the bo_put anymore, the only reason
-> > we had to use the _locked version here is historical accidents I think.
-> >
-> > I think you could convert these all to the _unlocked variant and then
-> > entirely drop the _locked version.
-> >
-> Did not check the msm driver closely, but it makes sense. Let's keep
-> that as follow-up series?
-> We're already at 36 patches, plus mixing mostly mechanical and locking
-> changes doesn't sound wise.
+Hi Ansuel,
 
-My idea was to simply throw this patch out, and replace it by an msm patch
-to switch over to the unlocked variant.
-
-Well maybe then needs 2nd patch to throw the locked version out.
-
-So feels a bit a detour to touch msm twice, which is why I suggested to do
-the more direct route. But if you feel strongly I guess we can go this way
-and then follow up with converting msm to unlocked and throwing the
-_locked variant out for good too.
--Daniel
-
-
-> > Once we have that we could move struct_mutex into each driver (at least
-> > for msm and i915) since it's purely internal, and then wrap it in an
-> > #ifdef CONFIG_DRM_LEGACY to gloriously sunset it all :-)
-> >
-> Indeed, we're nearly there.
+On 5/1/20 1:06 AM, Ansuel Smith wrote:
+> Aux and Ref clk are missing in PCIe qcom driver.
+> Add support in the driver to fix PCIe initialization in ipq806x.
 > 
-> -Emil
+> Fixes: 82a823833f4e PCI: qcom: Add Qualcomm PCIe controller driver
+> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Cc: stable@vger.kernel.org # v4.5+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 44 ++++++++++++++++++++++----
+>  1 file changed, 38 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 5ea527a6bd9f..2a39dfdccfc8 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -88,6 +88,8 @@ struct qcom_pcie_resources_2_1_0 {
+>  	struct clk *iface_clk;
+>  	struct clk *core_clk;
+>  	struct clk *phy_clk;
+> +	struct clk *aux_clk;
+> +	struct clk *ref_clk;
+>  	struct reset_control *pci_reset;
+>  	struct reset_control *axi_reset;
+>  	struct reset_control *ahb_reset;
+> @@ -246,6 +248,14 @@ static int qcom_pcie_get_resources_2_1_0(struct qcom_pcie *pcie)
+>  	if (IS_ERR(res->phy_clk))
+>  		return PTR_ERR(res->phy_clk);
+>  
+> +	res->aux_clk = devm_clk_get_optional(dev, "aux");
+> +	if (IS_ERR(res->aux_clk))
+> +		return PTR_ERR(res->aux_clk);
+> +
+> +	res->ref_clk = devm_clk_get_optional(dev, "ref");
+> +	if (IS_ERR(res->ref_clk))
+> +		return PTR_ERR(res->ref_clk);
+> +
+>  	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
+>  	if (IS_ERR(res->pci_reset))
+>  		return PTR_ERR(res->pci_reset);
+> @@ -278,6 +288,8 @@ static void qcom_pcie_deinit_2_1_0(struct qcom_pcie *pcie)
+>  	clk_disable_unprepare(res->iface_clk);
+>  	clk_disable_unprepare(res->core_clk);
+>  	clk_disable_unprepare(res->phy_clk);
+> +	clk_disable_unprepare(res->aux_clk);
+> +	clk_disable_unprepare(res->ref_clk);
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+>  }
+>  
+> @@ -307,16 +319,32 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  		goto err_assert_ahb;
+>  	}
+>  
+> +	ret = clk_prepare_enable(res->core_clk);
+> +	if (ret) {
+> +		dev_err(dev, "cannot prepare/enable core clock\n");
+> +		goto err_clk_core;
+> +	}
+> +
+>  	ret = clk_prepare_enable(res->phy_clk);
+>  	if (ret) {
+>  		dev_err(dev, "cannot prepare/enable phy clock\n");
+>  		goto err_clk_phy;
+>  	}
+>  
+> -	ret = clk_prepare_enable(res->core_clk);
+> -	if (ret) {
+> -		dev_err(dev, "cannot prepare/enable core clock\n");
+> -		goto err_clk_core;
+> +	if (res->aux_clk) {
+
+you don't need this check, clk_prepare_enable handles NULL
+
+> +		ret = clk_prepare_enable(res->aux_clk);
+> +		if (ret) {
+> +			dev_err(dev, "cannot prepare/enable aux clock\n");
+> +			goto err_clk_aux;
+> +		}
+> +	}
+> +
+> +	if (res->ref_clk) {
+
+here too
+
+> +		ret = clk_prepare_enable(res->ref_clk);
+> +		if (ret) {
+> +			dev_err(dev, "cannot prepare/enable ref clock\n");
+> +			goto err_clk_ref;
+> +		}
+>  	}
+>  
+>  	ret = reset_control_deassert(res->ahb_reset);
+> @@ -372,10 +400,14 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	return 0;
+>  
+>  err_deassert_ahb:
+> -	clk_disable_unprepare(res->core_clk);
+> -err_clk_core:
+> +	clk_disable_unprepare(res->ref_clk);
+> +err_clk_ref:
+> +	clk_disable_unprepare(res->aux_clk);
+> +err_clk_aux:
+>  	clk_disable_unprepare(res->phy_clk);
+>  err_clk_phy:
+> +	clk_disable_unprepare(res->core_clk);
+> +err_clk_core:
+>  	clk_disable_unprepare(res->iface_clk);
+>  err_assert_ahb:
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+> 
 
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+regards,
+Stan
