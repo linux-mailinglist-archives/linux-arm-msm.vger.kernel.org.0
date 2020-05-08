@@ -2,177 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 328CE1CB6AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 20:06:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99B971CB6EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 20:16:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726873AbgEHSG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 14:06:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50256 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726767AbgEHSG2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 14:06:28 -0400
-Received: from Mani-XPS-13-9360 (unknown [157.50.42.125])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 861432184D;
-        Fri,  8 May 2020 18:06:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588961187;
-        bh=Llo0ppLHEjiUIwHwXrazLds7Sltj/OckCnhe03ATkO8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rA28MiJPK34JbYbio9amTTVrqvuuNGuG3Z6s3RoUK5yiBrw3LoQ5FKrdZTyRVRZMz
-         jo7eaISgFyUWWIIC4qUtOtkGbdh07OaHVJnP4gTc//dOm7LxEL7MtarmquT5vi+hQL
-         Rwja0kHcvaI6XeZNzE/hQpW4qvje2f6nVFlm3UTo=
-Date:   Fri, 8 May 2020 23:36:18 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org
-Subject: Re: [PATCH v6 3/8] bus: mhi: core: Add range check for channel id
- received in event ring
-Message-ID: <20200508180618.GA16542@Mani-XPS-13-9360>
-References: <1588718832-4891-1-git-send-email-bbhatt@codeaurora.org>
- <1588718832-4891-4-git-send-email-bbhatt@codeaurora.org>
- <20200508054518.GA2696@Mani-XPS-13-9360>
- <82e131f8-8c67-23c3-3ac2-a05eb04d50ba@codeaurora.org>
+        id S1727812AbgEHSQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 14:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55228 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1727051AbgEHSQr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 May 2020 14:16:47 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E04C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 11:16:46 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id n11so1217116pgl.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 11:16:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+GOH5CMg7TvSS6YmTrREiB8ZfgmAvE4FrlRLVno4k3I=;
+        b=g9JK9p2CwrlaLOL8A569zbG2FhvCXA0Yr6GrjYIjREdGi8LSk7LZwvUosKYkCdmE9Y
+         jMjDNlHDG4AIH2M0p5xhbfoLAfJ6oycHeyUoCO6sPPXJ9WYlK594DZll1NwBW6Mo8wTw
+         Cs4gmZxDkrNqI12zR/cOcGpVqskqvqXRs6zY4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+GOH5CMg7TvSS6YmTrREiB8ZfgmAvE4FrlRLVno4k3I=;
+        b=mO4SAttcj0BAgaVgOjJ44RwihJpGaXq+OTmesm5DTeHLNj6P74TRIgXQwsro40n3WA
+         p1Bnx29Tub0gFGfry/bjAbL57bv+TJwuB8i51/a/Kc78Objw0Pm8nkNg0Pdk5MBYmfza
+         J3r+mP0Nu4ue3ooVLf8GlnFzHUlTw1MDlhTw6Js1ovxc6tDyBXF2GsZFNed12q/QtDd3
+         LkIzqsAWVzs2zZll8xoWhRayQPzJe/ZxiAwZeTVWapWu13KwxJD/y2vHSsOVJ5STXKPo
+         JgUHfcKpiLMnTBTqrbp5iyxWoghH+99oEsjffFwJ53dO0+FE2wenYRt6mRScI/y5r52A
+         A6Cg==
+X-Gm-Message-State: AGi0Pub7nCmF3Mg9UTo4DutwA6qAsX7EGuWO5+11036X332aCN6Jb7xl
+        dHEMLp8ArPntgU4qLxSyewJ0Mw==
+X-Google-Smtp-Source: APiQypKTdb8iFKBow7shDIzD5hpaZSYnHSE35O6SgM6uO8zUROwHLZrsgE/x3ND5myPlWgtEE9ekrg==
+X-Received: by 2002:a65:6652:: with SMTP id z18mr3191808pgv.76.1588961806473;
+        Fri, 08 May 2020 11:16:46 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id gn20sm2993706pjb.24.2020.05.08.11.16.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 May 2020 11:16:45 -0700 (PDT)
+Date:   Fri, 8 May 2020 11:16:44 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        evgreen@chromium.org, georgi.djakov@linaro.org
+Subject: Re: [PATCH V5 3/7] i2c: i2c-qcom-geni: Add interconnect support
+Message-ID: <20200508181644.GC4525@google.com>
+References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org>
+ <1588919619-21355-4-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <82e131f8-8c67-23c3-3ac2-a05eb04d50ba@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1588919619-21355-4-git-send-email-akashast@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hemant,
-
-On Fri, May 08, 2020 at 10:34:13AM -0700, Hemant Kumar wrote:
-> Hi Mani,
+On Fri, May 08, 2020 at 12:03:35PM +0530, Akash Asthana wrote:
+> Get the interconnect paths for I2C based Serial Engine device
+> and vote according to the bus speed of the driver.
 > 
-> On 5/7/20 10:45 PM, Manivannan Sadhasivam wrote:
-> > On Tue, May 05, 2020 at 03:47:07PM -0700, Bhaumik Bhatt wrote:
-> > > From: Hemant Kumar <hemantk@codeaurora.org>
-> > > 
-> > > MHI data completion handler function reads channel id from event
-> > > ring element. Value is under the control of MHI devices and can be
-> > > any value between 0 and 255. In order to prevent out of bound access
-> > > add a bound check against the max channel supported by controller
-> > > and skip processing of that event ring element.
-> > > 
-> > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> > > ---
-> > >   drivers/bus/mhi/core/main.c | 8 ++++++++
-> > >   1 file changed, 8 insertions(+)
-> > > 
-> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > > index 605640c..e60ab21 100644
-> > > --- a/drivers/bus/mhi/core/main.c
-> > > +++ b/drivers/bus/mhi/core/main.c
-> > > @@ -776,6 +776,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
-> > >   		case MHI_PKT_TYPE_TX_EVENT:
-> > >   			chan = MHI_TRE_GET_EV_CHID(local_rp);
-> > >   			mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> > 
-> > Check should be done before this statement, isn't it?
-> my bad. thanks for pointing that out.
-> > 
-> > > +			if (WARN_ON(chan >= mhi_cntrl->max_chan))
-> > > +				goto next_event;
-> > > +
-> > 
-> > I don't prefer using gotos for non exit paths but I don't have a better solution
-> > here. But you can try to wrap 'WARN_ON' inside the 'MHI_TRE_GET_EV_CHID'
-> > definition and the just use:
-> Instead of moving WARN_ON to macro as it requires mhi_cntrl->max_chan to
-> compare, how about just adding WARN_ON statement above if condition like
-> this
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> ---
+> Changes in V2:
+>  - As per Bjorn's comment, removed se == NULL check from geni_i2c_icc_get
+>  - As per Bjorn's comment, removed code to set se->icc_path* to NULL in failure
+>  - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
+>    path handle
+>  - As per Matthias comment, added error handling for icc_set_bw call
 > 
-> 		WARN_ON(chan >= mhi_cntrl->max_chan);
-
-Okay.
-
-> 		/*
->  		 * Only process the event ring elements whose channel
-> 		 * ID is within the maximum supported range.
-> 		 */
->  		if (chan < mhi_cntrl->max_chan) {
->                       	mhi_chan = &mhi_cntrl->mhi_chan[chan];
->                        	parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
->                           	event_quota--;
->  		}
->  		break;
-> > 
-> > 			/*
-> > 			 * Only process the event ring elements whose channel
-> > 			 * ID is within the maximum supported range.
-> > 			 */
-> > 			if (chan < mhi_cntrl->max_chan) {
-> >                          	mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> >                          	parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
-> >                          	event_quota--;
-> > 			}
-> > 			break;
-> > 
-> > This looks more clean.
+> Changes in V3:
+>  - As per Matthias comment, use common library APIs defined in geni-se
+>    driver for ICC functionality.
 > 
-> > 
-> > >   			parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
-> > >   			event_quota--;
-> > >   			break;
-> > > @@ -784,6 +787,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
-> > >   			break;
-> > >   		}
-> > > +next_event:
-> > >   		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
-> > >   		local_rp = ev_ring->rp;
-> > >   		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-> > 
-> > So you want the count to get increased for skipped element also?
-> yeah idea is to have total count of events processed even if channel id is
-> not correct for that event. This fix is a security fix considering that the
-> MHI device is considered as non-secured and MHI host is trying
-> to continue function normally and just reporting it as warning.
+> Changes in V4:
+>  - Move peak_bw guess as twice of avg_bw if nothing mentioned explicitly
+>    to ICC core.
 > 
-
-Okay.
-
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > > @@ -820,6 +824,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
-> > >   		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
-> > >   		chan = MHI_TRE_GET_EV_CHID(local_rp);
-> > > +		if (WARN_ON(chan >= mhi_cntrl->max_chan))
-> > > +			goto next_event;
-> > > +
-> > >   		mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> > >   		if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
-> > > @@ -830,6 +837,7 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
-> > >   			event_quota--;
-> > >   		}
-> > > +next_event:
-> > >   		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
-> > >   		local_rp = ev_ring->rp;
-> > >   		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
-> Even this function has the same goto statement. For consistency i would do
-> same thing here as well. Let me know what do you think about above
-> suggestion for both functions.
-
-Above looks good to me. So please go ahead.
-
-Thanks,
-Mani
-
-> > > -- 
-> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > > a Linux Foundation Collaborative Project
-> > > 
+> Changes in V5:
+>  - Use icc_enable/disable in power on/off call.
 > 
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+>  drivers/i2c/busses/i2c-qcom-geni.c | 29 ++++++++++++++++++++++++++++-
+>  1 file changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 18d1e4f..f2e786d 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -557,6 +557,25 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>  	gi2c->adap.dev.of_node = dev->of_node;
+>  	strlcpy(gi2c->adap.name, "Geni-I2C", sizeof(gi2c->adap.name));
+>  
+> +	ret = geni_icc_get(&gi2c->se, "qup-memory");
+> +	if (ret)
+> +		return ret;
+> +	/*
+> +	 * Set the bus quota for core and cpu to a reasonable value for
+> +	 * register access.
+> +	 * Set quota for DDR based on bus speed.
+> +	 */
+> +	geni_icc_bw_init(&gi2c->se.icc_paths[GENI_TO_CORE], GENI_DEFAULT_BW,
+> +				0);
+> +	geni_icc_bw_init(&gi2c->se.icc_paths[CPU_TO_GENI], GENI_DEFAULT_BW,
+> +				0);
+> +	geni_icc_bw_init(&gi2c->se.icc_paths[GENI_TO_DDR],
+> +				Bps_to_icc(gi2c->clk_freq_out), 0);
+> +
+> +	ret = geni_icc_set_bw(&gi2c->se);
+> +	if (ret)
+> +		return ret;
+> +
+>  	ret = geni_se_resources_on(&gi2c->se);
+>  	if (ret) {
+>  		dev_err(dev, "Error turning on resources %d\n", ret);
+> @@ -579,6 +598,10 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> +	ret = geni_icc_disable(&gi2c->se);
+> +	if (ret)
+> +		return ret;
+> +
+>  	dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
+>  
+>  	gi2c->suspended = 1;
+> @@ -623,7 +646,7 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+>  		gi2c->suspended = 1;
+>  	}
+>  
+> -	return 0;
+> +	return geni_icc_disable(&gi2c->se);
+>  }
+>  
+>  static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+> @@ -631,6 +654,10 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+>  	int ret;
+>  	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+>  
+> +	ret = geni_icc_enable(&gi2c->se);
+> +	if (ret)
+> +		return ret;
+> +
+>  	ret = geni_se_resources_on(&gi2c->se);
+>  	if (ret)
+>  		return ret;
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
