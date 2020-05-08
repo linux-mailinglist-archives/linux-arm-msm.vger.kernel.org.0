@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E5401CB918
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 22:42:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C35811CB91C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 22:43:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727082AbgEHUmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 16:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
+        id S1727819AbgEHUmo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 16:42:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726904AbgEHUmi (ORCPT
+        by vger.kernel.org with ESMTP id S1727820AbgEHUmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 16:42:38 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE879C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 13:42:38 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id n11so1378220pgl.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 13:42:38 -0700 (PDT)
+        Fri, 8 May 2020 16:42:44 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25405C05BD43
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 13:42:44 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id a5so4828361pjh.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 13:42:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IBjZaeV/yVk7fuwGQGUHTk1sOmmkUmvCZN2IjQ15Yy4=;
-        b=PsFyNRZMuKZdfpfsrd0aae4b6JbHEwSmclMr3HcLeNlhOtWQbRlb6IiJp/k2lFA+UR
-         X4XMUnzptg8P5o5vgMebZ3+Nlpn1dKNHezr2ZHi9AcDe8QGes9d0yOkec/PHIeSDyNSR
-         0ybB+26ijXpU45trQLQUdK5MLoS1/53E7dpawNdk8cepX/vKfrD6KdWLzmEiuWjUnTO/
-         QkPngZnESCHPqKy/QLkcvNSMCKWmHpRtrOw2Vzw25KKr4da8gF+48LVvqB+ARkgVJb4R
-         H5e/wXuUQhSHxqtbqIB0ZVE28bVBaeI6CBdMPKs2iD0w0NMta4k+tz+Ly3U/zkNDCQ4d
-         bgJw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=v/kJOzHQVNztoa88Zqa893txGdJr3NbK0Uy6cZ9N+p4=;
+        b=DpwtSGfUSL9CaKsXqVEz6+TLkdcWRpU57TbJQD2eIMJuVeMUFx37rOlwnIXKjG0zg1
+         +T9J0pJVRIGiPFPXLEG2zpm4A7vsYF252Wlid8+YjZBVRvYfbOs2dz7Qpb/m5iRtWtlK
+         VvZG3TgTNpJq7gSlWQlFU0fi8IsfhcBGaKSY0ikVodZYDbeUbOJinlO3Y+N2eR4u2ISv
+         +SlnwR1RvQ+7JDhuoTMdWxwG2DJuiimRfvT8+B8F2ZnkmQKYNDLRpSXcAAWBJ5R5EMd5
+         z/M2wfmFJT4uyoxKQwU6JiCkKwCF0XQPOUaRuzoK+hO9E2951WDCcYkuMAbpCZrpyWQW
+         devQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IBjZaeV/yVk7fuwGQGUHTk1sOmmkUmvCZN2IjQ15Yy4=;
-        b=GXL+5mM17m6j3tzXnkr/8cqnFK17Ee9JArh+CrvGQUKEoDsnRG0JrPQ4OeNJDnuW8E
-         Xv0K1QBwfdO98EyTk8HB9vApIgz08jaYkI2gDF1Xy6e9qTNjK4M67JsxX5GmD1HfY5nx
-         gCrTIItEJcTVrMX/rNS4skqmlL+hVTk4f0xYvHBOktHuOA0uEF0vgFB9rdp0HnNexpBf
-         VSU2VXylhPjswhxlqPOEO8gf3KEZ2RqrflR20KdUGLGt7Vw3D7oY3Tq5T2QDfgUO7P2m
-         D2gv0J/LNCNENnPMsKSG48FO4i3Xt48IOyD9mJrgk/TcDWn2IsFaLq+EQdT5uFrRb3Kp
-         WA2A==
-X-Gm-Message-State: AGi0PuaGJW8JKCDccT+E+oWcf/7lfPGFbfyoWFXnY/nbOdGY5KjnNkG4
-        BDLjDczsPCeqIrD/z13EacH5SQ==
-X-Google-Smtp-Source: APiQypKvfsoPkqUFTHLiIaxJOs+z8dFE5Fs3OqOcqMbFROZ9Urm0vgvAP2XbKX/7Bkz5oyGlbvhDmA==
-X-Received: by 2002:a63:7801:: with SMTP id t1mr3415934pgc.192.1588970557422;
-        Fri, 08 May 2020 13:42:37 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=v/kJOzHQVNztoa88Zqa893txGdJr3NbK0Uy6cZ9N+p4=;
+        b=XPTHafncL3KRIm1AfIsmBdZ0/aHr5BPC7nhajY3qFb/5X9sd6gFMk4R71VTMvjZFFe
+         z9FUJali2D7HhBWSnAhgLqRINx0/Jv5EPVaCj9vGTl0g8PuL7GAGqnGe73xdo1f+3Aiv
+         bp/BfRkJpw13bmuF6HWneKNy2I6c5i0YAajh5WkrqzORTtHlWCXCpaZvqORa/9uuc1JN
+         1KzmFG0EekzGGIM6EA1wXvx6z4W81azo4WIPjgOWMh+pb5Ba+NOVGXZFPjSHyEQV3H8s
+         I/QmO4fLos7S1peMBugDNHohtm2rW7SIwT5io0tpWD1LNk/xejhwF+meMUx7hMV0hiDg
+         VLSQ==
+X-Gm-Message-State: AGi0Pub+VFSJMA1V5vr0e8CE+LUz7cQPKKqCuDcgxqRa3OIci1Mxg2cz
+        O7DfMO9fWBLYizoWgsEggGKR7w==
+X-Google-Smtp-Source: APiQypJAb3f+QC64YiN7o7OeDguzr0+81s7Vq9M944QMiAehMTcBe6OBqfD9/1Clsaudgtub5c7lTA==
+X-Received: by 2002:a17:90b:8c8:: with SMTP id ds8mr7896979pjb.164.1588970563609;
+        Fri, 08 May 2020 13:42:43 -0700 (PDT)
 Received: from nagraj.local ([49.206.21.239])
-        by smtp.gmail.com with ESMTPSA id h191sm2670720pfe.44.2020.05.08.13.42.33
+        by smtp.gmail.com with ESMTPSA id h191sm2670720pfe.44.2020.05.08.13.42.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2020 13:42:36 -0700 (PDT)
+        Fri, 08 May 2020 13:42:43 -0700 (PDT)
 From:   Sumit Semwal <sumit.semwal@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         broonie@kernel.org, robh+dt@kernel.org
@@ -55,10 +55,12 @@ Cc:     nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         kgunda@codeaurora.org, rnayak@codeaurora.org,
         Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [v2 0/4] Qualcomm labibb regulator driver 
-Date:   Sat,  9 May 2020 02:11:56 +0530
-Message-Id: <20200508204200.13481-1-sumit.semwal@linaro.org>
+Subject: [v2 1/4] dt-bindings: regulator: Add labibb regulator
+Date:   Sat,  9 May 2020 02:11:57 +0530
+Message-Id: <20200508204200.13481-2-sumit.semwal@linaro.org>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200508204200.13481-1-sumit.semwal@linaro.org>
+References: <20200508204200.13481-1-sumit.semwal@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,37 +68,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds a driver for LAB/IBB regulators found on some Qualcomm SoCs.
-These regulators provide positive and/or negative boost power supplies
-for LCD/LED display panels connected to the SoC.
+From: Nisha Kumari <nishakumari@codeaurora.org>
 
-This series adds the support for pmi8998 PMIC found in SDM845 family of SoCs.
+Adding the devicetree binding for labibb regulator.
 
-Changes from v1:
-- Incorporated review comments from v1
-- Changed from virtual-regulator based handling to individual regulator based
-  handling.
-- Reworked the core to merge most of enable/disable functions, combine the
-  regulator_ops into one and allow for future variations.
-- is_enabled() is now _really_ is_enabled()
-- Simplified the SC interrupt handling - use regmap_read_poll_timeout,
-  REGULATOR_EVENT_OVER_CURRENT handling and notification to clients.
+Signed-off-by: Nisha Kumari <nishakumari@codeaurora.org>
+Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
 
-Nisha Kumari (4):
-  dt-bindings: regulator: Add labibb regulator
-  arm64: dts: qcom: pmi8998: Add nodes for LAB and IBB regulators
-  regulator: qcom: Add labibb driver
-  regulator: qcom: labibb: Add SC interrupt handling
-
- .../regulator/qcom-labibb-regulator.txt       |  47 +++
- arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  16 +
- drivers/regulator/Kconfig                     |  10 +
- drivers/regulator/Makefile                    |   1 +
- drivers/regulator/qcom-labibb-regulator.c     | 385 ++++++++++++++++++
- 5 files changed, 459 insertions(+)
+--
+v2: updated for better compatible string and names.
+---
+ .../regulator/qcom-labibb-regulator.txt       | 47 +++++++++++++++++++
+ 1 file changed, 47 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.txt
- create mode 100644 drivers/regulator/qcom-labibb-regulator.c
 
+diff --git a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.txt
+new file mode 100644
+index 000000000000..6e639d69f780
+--- /dev/null
++++ b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.txt
+@@ -0,0 +1,47 @@
++Qualcomm's LAB(LCD AMOLED Boost)/IBB(Inverting Buck Boost) Regulator
++
++LAB can be used as a positive boost power supply and IBB can be used as a negative
++boost power supply for display panels. Currently implemented for pmi8998.
++
++Main node required properties:
++
++- compatible:			Must be:
++				"qcom,pmi8998-lab-ibb"
++- #address-cells:		Must be 1
++- #size-cells:			Must be 0
++
++LAB subnode required properties:
++
++- interrupts:			Specify the interrupts as per the interrupt
++				encoding.
++- interrupt-names:		Interrupt names to match up 1-to-1 with
++				the interrupts specified in 'interrupts'
++				property.
++
++IBB subnode required properties:
++
++- interrupts:			Specify the interrupts as per the interrupt
++				encoding.
++- interrupt-names:		Interrupt names to match up 1-to-1 with
++				the interrupts specified in 'interrupts'
++				property.
++
++Example:
++	pmi8998_lsid1: pmic@3 {
++		labibb {
++			compatible = "qcom,pmi8998-lab-ibb";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			lab: lab {
++				interrupts = <0x3 0xde 0x0 IRQ_TYPE_EDGE_RISING>;
++				interrupt-names = "lab-sc-err";
++			};
++
++			ibb: ibb {
++				interrupts = <0x3 0xdc 0x2 IRQ_TYPE_EDGE_RISING>;
++				interrupt-names = "ibb-sc-err";
++			};
++
++		};
++	};
 -- 
 2.26.2
 
