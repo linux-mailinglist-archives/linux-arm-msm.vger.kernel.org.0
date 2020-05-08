@@ -2,100 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 837401CA807
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 12:15:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A0D71CA81D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 12:16:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726519AbgEHKPA convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Fri, 8 May 2020 06:15:00 -0400
-Received: from relay-2.mailobj.net ([213.182.54.5]:57668 "EHLO
-        relay-2.mailobj.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbgEHKPA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 06:15:00 -0400
-X-Greylist: delayed 513 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 May 2020 06:14:59 EDT
-Received: from v-1.localdomain (v-1.in.mailobj.net [192.168.90.191])
-        by relay-2.mailobj.net (Postfix) with SMTP id 9444E1260;
-        Fri,  8 May 2020 12:06:24 +0200 (CEST)
-Received: by ip-25.net-c.com [213.182.54.25] with ESMTP
-        Fri,  8 May 2020 12:06:54 +0200 (CEST)
-X-EA-Auth: JUxpYiSKTpkM9V+rU9V0BU8epqnXhebRD8yjIF7jR1pZKnJA2GA5WdqvQBqCGcWMtdmrVddBC9U8ArbU/gIAaADoMi9lxTmxhCg4+3N3sF0=
-Message-ID: <f9413ee5ca2fb0d85015f8b5988cbc61418e50f0.camel@mailoo.org>
-Subject: Re: [PATCH v3 0/2] Add Qualcomm MSM8939 GCC binding and driver
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        shawn.guo@linaro.org, p.zabel@pengutronix.de,
-        Konrad Dybcio <konradybcio@gmail.com>
-Date:   Fri, 08 May 2020 12:06:23 +0200
-In-Reply-To: <90cda746-2caa-cb79-9304-17a97886f1fc@linaro.org>
-References: <20200423103406.481289-1-bryan.odonoghue@linaro.org>
-         <e9d181a9-938c-a69b-8325-2aabeefd0934@nexus-software.ie>
-         <90cda746-2caa-cb79-9304-17a97886f1fc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+        id S1727787AbgEHKQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 06:16:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50488 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727067AbgEHKQK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 May 2020 06:16:10 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C9444208CA;
+        Fri,  8 May 2020 10:16:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1588932970;
+        bh=YGEI/+0gDSV2c28r0kRxWh7f8OBuz8IatLkeXFJ3ljU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YoAN7qlLIAZ1T+s5CkQBoIfFHSE181OCTvxRlrMGlReNdRkT29WxPWffsFAKqNQol
+         Vo8PyYLWNEnCtxjFgBTrTTS+8hLmFm+mmwmUeIR09d3LBQzj2iwtT4BEz2UChn10i3
+         YvD90hpN0DNg6GCbanfROaaXlRrVpVGIP//r3Jfo=
+Date:   Fri, 8 May 2020 11:16:06 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org,
+        georgi.djakov@linaro.org
+Subject: Re: [PATCH V5 4/7] spi: spi-geni-qcom: Add interconnect support
+Message-ID: <20200508101606.GA4820@sirena.org.uk>
+References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org>
+ <1588919619-21355-5-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="xHFwDpU9dbj6ez1V"
+Content-Disposition: inline
+In-Reply-To: <1588919619-21355-5-git-send-email-akashast@codeaurora.org>
+X-Cookie: Give him an evasive answer.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le jeudi 07 mai 2020 à 17:06 +0100, Bryan O'Donoghue a écrit :
-> On 07/05/2020 16:57, Bryan O'Donoghue wrote:
-> > On 23/04/2020 11:34, Bryan O'Donoghue wrote:
-> > > V3:
-> > > This update removes the old clock name arrays which I forgot to prune in
-> > > the previous V2.
-> > > 
-> > > git diff bod/clk-next+msm8939 bod/clk-next+msm8939-v2.1
-> > 
-> > I should have mentioned.
-> > 
-> > If you want to test this you'll need to do the following to your 
-> > msm8939.dtsi
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi 
-> > b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-> > index 996425a70014..2d54ad7f99b6 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-> > @@ -673,6 +673,10 @@ gcc: clock-controller@1800000 {
-> >                          reg = <0x1800000 0x80000>;
-> > +                       clock-names = "xo",
-> > +                                     "sleep_clk";
-> > +                       clocks = <&xo_board>,
-> > +                                <&sleep_clk>;
-> >                  };
-> > 
-> > "xo" and "sleep_clk" names can be resolved.
-> > 
-> > ---
-> > bod
-> 
-> and this...
-> 
-> clocks {
->      xo_board: xo_board {
->          compatible = "fixed-clock";
->          #clock-cells = <0>;
->          clock-frequency = <19200000>;
->      };
-> 
->      sleep_clk: sleep_clk {
->          compatible = "fixed-clock";
->          #clock-cells = <0>;
->          clock-frequency = <32768>;
->      };
-> };
-> 
 
-Thank you, works for me over v5.7-rc2 with an Alcatel Idol 3 (5.5").
+--xHFwDpU9dbj6ez1V
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Tested-by: Vincent Knecht <vincent.knecht@mailoo.org>
+On Fri, May 08, 2020 at 12:03:36PM +0530, Akash Asthana wrote:
+> Get the interconnect paths for SPI based Serial Engine device
+> and vote according to the current bus speed of the driver.
 
+Acked-by: Mark Brown <broonie@kernel.org>
 
+--xHFwDpU9dbj6ez1V
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl61MWYACgkQJNaLcl1U
+h9D2Fwf/YN2kAVjUWmgGjkLy1PIbV8pDp1D4CL5sodjeVkmqqc7ikp/yP0S3pZYd
+yUZRdzOhe8VfN3bQaPbffIzBB7+8YTW0pyTbfZ62siyV/tvd6iccyFU2ky6nMP59
+RHhKCTHRS7/Wg+Yfa5OsUPLYcWbyTSkXJhaDI/6GBVcZZGpDMQFMo4pwuAUvdrLn
+pxWZM0UpOyIyzjA7SrfDgbswMvsqfrP2+UwEH9zS25ikGZPKl3zoMP716OceG1lD
+fE3GmFerys88TpXVKnJT1JGnhJl8/D56MplgIOUHB17Z6GJpRnhX+JeEE/WfDxtb
+lMOCuM5/EJiTbx/2yHm5WMlH46pS/A==
+=LNgz
+-----END PGP SIGNATURE-----
+
+--xHFwDpU9dbj6ez1V--
