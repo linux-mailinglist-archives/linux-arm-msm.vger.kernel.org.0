@@ -2,79 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF8D71CA823
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 12:16:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E5771CA8E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 13:03:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726863AbgEHKQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 06:16:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51582 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726618AbgEHKQh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 06:16:37 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A0012208D6;
-        Fri,  8 May 2020 10:16:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588932997;
-        bh=nS2DJCtX+w5i4l8PcByQhOeNMlTOU9+iFfEluOHR3k4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tHAs/lMocaFqIJKctYDJk7UaFhmgEplZL4y8tvUudH+fVLuTvfEOB89Qlp+V9rpXa
-         nnGt38Ee/zIIEAT+MPuXG4TpJ4Q+JWBU6EAzH9BkaRWuoAGzctKRz4VNDdV0co88n0
-         nzWsuXgd5e4tN18M8pz1gScAtwnML51OT+ljqVUQ=
-Date:   Fri, 8 May 2020 11:16:34 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, evgreen@chromium.org,
-        georgi.djakov@linaro.org
-Subject: Re: [PATCH V5 6/7] spi: spi-qcom-qspi: Add interconnect support
-Message-ID: <20200508101634.GB4820@sirena.org.uk>
-References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org>
- <1588919619-21355-7-git-send-email-akashast@codeaurora.org>
+        id S1726636AbgEHLDT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 07:03:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43958 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726638AbgEHLDT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 May 2020 07:03:19 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFD56C05BD43
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 04:03:18 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id s11so810666vsm.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 04:03:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xsARK8m2kbq0Zr2zKJTKwOxWZK2b9prwvHMpuqEUsJE=;
+        b=cGnZ0+ZF/Dx8pTwaHccjYE+sv8QDNdIrTeTdUueGoQQpqwxEgD5P7spn5lqDL3T1hH
+         xBOYz3suUIVyNyxUDjr8ENFzWCf3sAXP0EVlb2ffYYGcMmrVYiBOq/bGK2BK+rK7Wxat
+         PoU+z0UDXSKIyAazVWK9/DCKfYG+BfW4vJA9lTuY5hE+aFHmAW40owKTeex1dG/pCzF7
+         s4SSf2tm22GeMEPSNCHjiuajvOWvwZZ/GOpprxHSTGHDIuQqf/XJ2pK1xH5HHlyAXNTA
+         xWybVQHKdZzobYQC9NCErKI763B0iuHm6wB7NPY3StdLFxY/75nDf0ircWN/9p1uOetI
+         7rNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xsARK8m2kbq0Zr2zKJTKwOxWZK2b9prwvHMpuqEUsJE=;
+        b=dsEhC+8fWrWRc12uBMpFwaWwcV2bZ6vwFTHDGjyIpkAM2dmb5Y3kOc2BHCqMnzqtVn
+         sO4IUur7LehwPxGw3mAY7PTdg1Rrqq35fJ2OdgAX0TLg9u5t/MqNEqOJa6RgZ22lENq5
+         rp1ZGPOSAIONJv9LySm6xepM4GbinXhJsaiYZnzV+o+Zb5674k/x9AOx9bZQFVRFVn4o
+         WN9Bu5sxBeICwvWfMu318fnIhLOsScecZnX210dtVb0htVShzMZMHi+TNXQZrWE3RXik
+         HNNH6fgrnznQJjPfhf9oVZfgXbntxv8jHKNTbbcBNuW7JS55rmDbrOPuitfnqz0qPdhD
+         AQhA==
+X-Gm-Message-State: AGi0PuaJRM3U1/9VnMOsb/60QgDUUMXiH/HsevJqKA+y+nELvCPr5uIR
+        2Kx/qSRNs5dI1xIzum1g3JjQOYT7SFQBy0J4Epc=
+X-Google-Smtp-Source: APiQypLg2nw5JS30eG8gfMVjlZF4wIipc4S2/yOsZLaXmtS+vGoewtpS8IoEdUfGSOrd+rZntJigiKbfMoHIRnpR+68=
+X-Received: by 2002:a67:2c16:: with SMTP id s22mr1247832vss.85.1588935792154;
+ Fri, 08 May 2020 04:03:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="GID0FwUMdk1T2AWN"
-Content-Disposition: inline
-In-Reply-To: <1588919619-21355-7-git-send-email-akashast@codeaurora.org>
-X-Cookie: Give him an evasive answer.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200507150822.114464-1-emil.l.velikov@gmail.com>
+ <20200507150822.114464-11-emil.l.velikov@gmail.com> <20200508064053.GB1383626@phenom.ffwll.local>
+In-Reply-To: <20200508064053.GB1383626@phenom.ffwll.local>
+From:   Emil Velikov <emil.l.velikov@gmail.com>
+Date:   Fri, 8 May 2020 12:00:40 +0100
+Message-ID: <CACvgo53fa1R3gD8hCg+Ch2Tj0ZnDVScNXiZO5FbGfK_VbAP_nQ@mail.gmail.com>
+Subject: Re: [PATCH 10/36] drm/gem: add _locked suffix to drm_object_put
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     ML dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 8 May 2020 at 07:40, Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Thu, May 07, 2020 at 04:07:56PM +0100, Emil Velikov wrote:
+> > From: Emil Velikov <emil.velikov@collabora.com>
+> >
+> > Vast majority of DRM (core and drivers) are struct_mutex free.
+> >
+> > As such we have only a handful of cases where the locked helper should
+> > be used. Make that stand out a little bit better.
+> >
+> > Done via the following script:
+> >
+> > __from=drm_gem_object_put
+> > __to=drm_gem_object_put_locked
+> >
+> > for __file in $(git grep --name-only --word-regexp $__from); do
+> >   sed -i  "s/\<$__from\>/$__to/g" $__file;
+> > done
+> >
+> > Cc: Rob Clark <robdclark@gmail.com>
+> > Cc: Sean Paul <sean@poorly.run>
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Signed-off-by: Emil Velikov <emil.velikov@collabora.com>
+>
+> Since
+>
+> commit 48e7f18392c66f9b69ebac11c54f1a2e033ced54
+> Author: Kristian H. Kristensen <hoegsberg@gmail.com>
+> Date:   Wed Mar 20 10:09:08 2019 -0700
+>
+>     drm/msm: Implement .gem_free_object_unlocked
+>
+> msm doesn't need the struct_mutex in the bo_put anymore, the only reason
+> we had to use the _locked version here is historical accidents I think.
+>
+> I think you could convert these all to the _unlocked variant and then
+> entirely drop the _locked version.
+>
+Did not check the msm driver closely, but it makes sense. Let's keep
+that as follow-up series?
+We're already at 36 patches, plus mixing mostly mechanical and locking
+changes doesn't sound wise.
 
---GID0FwUMdk1T2AWN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Once we have that we could move struct_mutex into each driver (at least
+> for msm and i915) since it's purely internal, and then wrap it in an
+> #ifdef CONFIG_DRM_LEGACY to gloriously sunset it all :-)
+>
+Indeed, we're nearly there.
 
-On Fri, May 08, 2020 at 12:03:38PM +0530, Akash Asthana wrote:
-> Get the interconnect paths for QSPI device and vote according to the
-> current bus speed of the driver.
-
-Acked-by: Mark Brown <broonie@kernel.org>
-
---GID0FwUMdk1T2AWN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl61MYIACgkQJNaLcl1U
-h9Arjwf+MQ4LQJXdoA+P+XL2usk8PqV3hkVKWimMalsw1Plbzbf6P/PJNMb/iGtF
-yUwy73NHCaRqlHzHNLWXOmAARlOUL4vYTddrK42p+Ay3hUzu6sPFF1ZMSkr4qwJZ
-hkpd8fpNLBY0l9FsmkBxLkKVTZQwn4u07GzuaLtXWo36ivYNmngu1Dl6LPYRUa76
-/NO8s+trO4wXPOgbFgVFt/avRtOolHEB0rLZSwR0NOVVdfDszsEiQFBv5iu467VN
-CadV73GRR/xGUYyX24I04hrHhj6AmOiCuqrU58O7+XbqP5a1oR75wAdOGXIF7kWc
-TRjqMat80dIRUuYylMoJoNMRu9hAjQ==
-=cZ76
------END PGP SIGNATURE-----
-
---GID0FwUMdk1T2AWN--
+-Emil
