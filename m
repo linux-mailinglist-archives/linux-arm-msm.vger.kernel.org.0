@@ -2,147 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C9B71CA5C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 10:12:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99BB21CA5E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 10:18:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726946AbgEHIMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 04:12:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45718 "EHLO
+        id S1726807AbgEHISd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 04:18:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726048AbgEHIMo (ORCPT
+        with ESMTP id S1726746AbgEHISc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 04:12:44 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C7E9C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 01:12:44 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id i5so344678uaq.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 01:12:44 -0700 (PDT)
+        Fri, 8 May 2020 04:18:32 -0400
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E592C05BD43
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 01:18:32 -0700 (PDT)
+Received: by mail-ua1-x942.google.com with SMTP id z16so347964uae.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 01:18:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=3qSRHUifjbk+HUdGENBz7hCntYdpN9AnCceyczmR5K8=;
-        b=bt2hFTGCydhLSFbkAe8V54kz5sIGzjphQmKjLWusmdrLinuBd/8MNgqUGb3Vcvyfz4
-         5WOZZkzGVPztQScyPU4rjZYXRttK+2KB2vksoVsqbrTMEpvDkng2aUcmRdHrY1ckrhfd
-         18tHqkEVFkXmU6FCT6zwz0WSiYZibxyL3TCzt8NDe4m4ub1tG28FwJ97Q8hm/N2yGbvc
-         19amIqAYR6zjuPLLmi+xx8OtJDQErjZARzor78PKBD9d6sdve/6pYrrTmgAi94mr5oRr
-         cr39P91QlCHlnRtJ0z4xHZP1yOOy3J40QslF60sEcdo1WD3f36NVZWUZ/73sT/9BrGrh
-         p3eA==
+        bh=bJPuuntZlyPktcvouMtEMcRXu/bHP0lxYUGNqG/wwec=;
+        b=XLFb5O24UDkagdH/uOB3eXjd2JILpBfOOgDrS9QVue3xsAGnEEJkSltb7/cok3nupa
+         WCySEqYIvOkec/rE7Xn2Yq/0sjXONb98Gt4Pr+edjjMKEPuXrBIjlXKLvPrljUEJnTqe
+         Y0n59JOGKhYdQXxPusx44/H3xunCUZ7f74wMTOrNXGKvX4TIbKjFvnAznMMEXZf5rTXz
+         eaQrLNPxNBpKjqMSEKqgudbPBKXIdysHgtzUsacjN4x2bPAyQn/ULDYxlblOE7BU8wL8
+         E7HWpDnz/RjC0JINvLsDXIYp6qFT6rlRYr4HxnOzBQ2WzyImn19iVOZm7yBfT/8VnOf/
+         ai7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=3qSRHUifjbk+HUdGENBz7hCntYdpN9AnCceyczmR5K8=;
-        b=r5Qbw5+sDX0iSO5PsPh3PHyuj9oG4w85WOLU+zge/KWrdGGuaCP6VGFOEc3dqJIcKW
-         GKpgTbgndxTkWBBSvETlYaoBt+o3iTuON3mCSgGgnT8zXlepUiWSL/aV76SZ8U2me9Jx
-         02JE+zuBDRr0Qutn4MhiMXRad2zy7WarpMsRNSWUSpUEgIfpcTnlx++6C0czKW3d1JrX
-         u8hLx7+lmC/9M/CWE3lRZALN1LO0GwiIwC1Ks1Zu82y28YgcAYKBDqhskeoigigxgvTr
-         R3+mnzPwcCrLkB/BIDn3CiR19irqAIf0tmexzLiD4YOl69kIOHs4SJ5BX1pXT1UoQEzw
-         95ag==
-X-Gm-Message-State: AGi0PuZT9grtxMNgwJUzI5SyLeYzUtfTNc0nI+JmuwU//Fd1z71QZPOZ
-        H0hNsTUxN0EKJm44+P9hHnwLGE7aWeVA5TnB5h/3SA==
-X-Google-Smtp-Source: APiQypKnxqPoiIGzGmHjHQ5icfU4dREH6aBXxiWoN65/pfxFA66QolnDH/zeV4F47VJdX6STgPe/li/OREXUv5IJfW8=
-X-Received: by 2002:a9f:26e2:: with SMTP id 89mr950098uay.104.1588925563578;
- Fri, 08 May 2020 01:12:43 -0700 (PDT)
+        bh=bJPuuntZlyPktcvouMtEMcRXu/bHP0lxYUGNqG/wwec=;
+        b=FxAXGdK8tlPOz0OC9Msb6YcV2TBB4qnxEmPfuMlDxHqKrj3aB/4sINNgLWt5fAQTJn
+         Fxcqujv2Y68RL5xBxxeTpeVSjuUvPTvORPuZXlx6yoeQoCd3ap5ly6bDinvvxQaSvMBZ
+         SM0yzXJVBNZDpMAEWbEBvo/VP/Kw4MUwbb9e5r0/oo18zMzphN+bvq0M95ZXL1EpeVg1
+         Wsyyf5KL/smcr1bkbiNTuIxFlqyOP22eVxbxrshug4qik+MsRiRpJCpJifO7GTHyaYjF
+         MBbdM9UlEkgVCl149G+c3+2BmvzZ+U5aEqsMcwr8wkpeXgu+Hew68S/MOFXjMEybuT6Q
+         knJw==
+X-Gm-Message-State: AGi0PubJRk0/aZkRb10ZK2ruWlZMYvghC2+1kA9ITewNkzf9Y2HHocSe
+        HN5Ol9jFJuFOQXqcnKk0Omox5saI9Fy5mU9Osq0WEg==
+X-Google-Smtp-Source: APiQypKdQso64EgPEWBYjRx71h5U/5siNxu0JtIlehtPAZ8Eg05DqIqWRugC48y3iDP4vq4H+ef9bwEbxz9g+8Xi4I0=
+X-Received: by 2002:ab0:544a:: with SMTP id o10mr919614uaa.15.1588925911701;
+ Fri, 08 May 2020 01:18:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <1588775643-18037-3-git-send-email-vbadigan@codeaurora.org> <1588868135-31783-1-git-send-email-vbadigan@codeaurora.org>
-In-Reply-To: <1588868135-31783-1-git-send-email-vbadigan@codeaurora.org>
+References: <CAPDyKFo10JFbe7ZFnRBE2e55eGs-odAWYxU+Ep0S74003aLGpg@mail.gmail.com>
+ <20200508062227.23144-1-adrian.hunter@intel.com>
+In-Reply-To: <20200508062227.23144-1-adrian.hunter@intel.com>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 8 May 2020 10:12:07 +0200
-Message-ID: <CAPDyKFr=JEbRace-K1grWbKgn2jBiM5VXbknOj2DjeZDy4e8bQ@mail.gmail.com>
-Subject: Re: [PATCH V2] mmc: core: Fix recursive locking issue in CQE recovery path
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+Date:   Fri, 8 May 2020 10:17:55 +0200
+Message-ID: <CAPDyKFqAuxDhxpMOJSWut3YbE=p0w53KStDn1JAbizJMoWeDBQ@mail.gmail.com>
+Subject: Re: [PATCH RESEND] mmc: block: Fix request completion in the CQE
+ timeout path
+To:     Adrian Hunter <adrian.hunter@intel.com>
+Cc:     linux-mmc <linux-mmc@vger.kernel.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
         Sahitya Tummala <stummala@codeaurora.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Sarthak Garg <sartgarg@codeaurora.org>,
-        "# 4.0+" <stable@vger.kernel.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         Baolin Wang <baolin.wang@linaro.org>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        Andreas Koop <andreas.koop@zf.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
         Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>
+        Christoph Hellwig <hch@lst.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 May 2020 at 18:15, Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
+On Fri, 8 May 2020 at 08:22, Adrian Hunter <adrian.hunter@intel.com> wrote:
 >
-> From: Sarthak Garg <sartgarg@codeaurora.org>
+> First, it should be noted that the CQE timeout (60 seconds) is substantial
+> so a CQE request that times out is really stuck, and the race between
+> timeout and completion is extremely unlikely. Nevertheless this patch
+> fixes an issue with it.
 >
-> Consider the following stack trace
+> Commit ad73d6feadbd7b ("mmc: complete requests from ->timeout")
+> preserved the existing functionality, to complete the request.
+> However that had only been necessary because the block layer
+> timeout handler had been marking the request to prevent it from being
+> completed normally. That restriction was removed at the same time, the
+> result being that a request that has gone will have been completed anyway.
+> That is, the completion was unnecessary.
 >
-> -001|raw_spin_lock_irqsave
-> -002|mmc_blk_cqe_complete_rq
-> -003|__blk_mq_complete_request(inline)
-> -003|blk_mq_complete_request(rq)
-> -004|mmc_cqe_timed_out(inline)
-> -004|mmc_mq_timed_out
+> At the time, the unnecessary completion was harmless because the block
+> layer would ignore it, although that changed in kernel v5.0.
 >
-> mmc_mq_timed_out acquires the queue_lock for the first
-> time. The mmc_blk_cqe_complete_rq function also tries to acquire
-> the same queue lock resulting in recursive locking where the task
-> is spinning for the same lock which it has already acquired leading
-> to watchdog bark.
+> Note for stable, this patch will not apply cleanly without patch "mmc:
+> core: Fix recursive locking issue in CQE recovery path"
 >
-> Fix this issue with the lock only for the required critical section.
->
-> Cc: <stable@vger.kernel.org>
-> Fixes: 1e8e55b67030 ("mmc: block: Add CQE support")
-> Suggested-by: Sahitya Tummala <stummala@codeaurora.org>
-> Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
+> Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+> Fixes: ad73d6feadbd7b ("mmc: complete requests from ->timeout")
+> Cc: stable@vger.kernel.org
 
 Applied for fixes, thanks!
 
 Kind regards
 Uffe
 
-
 > ---
->  drivers/mmc/core/queue.c | 13 ++++---------
->  1 file changed, 4 insertions(+), 9 deletions(-)
+>  drivers/mmc/core/queue.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
 > diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
-> index 25bee3d..b5fd3bc 100644
+> index 72bef39d7011..10ea67892b5f 100644
 > --- a/drivers/mmc/core/queue.c
 > +++ b/drivers/mmc/core/queue.c
-> @@ -107,7 +107,7 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct request *req)
->         case MMC_ISSUE_DCMD:
->                 if (host->cqe_ops->cqe_timeout(host, mrq, &recovery_needed)) {
->                         if (recovery_needed)
-> -                               __mmc_cqe_recovery_notifier(mq);
-> +                               mmc_cqe_recovery_notifier(mrq);
+> @@ -110,8 +110,7 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct request *req)
+>                                 mmc_cqe_recovery_notifier(mrq);
 >                         return BLK_EH_RESET_TIMER;
 >                 }
->                 /* No timeout (XXX: huh? comment doesn't make much sense) */
-> @@ -127,18 +127,13 @@ static enum blk_eh_timer_return mmc_mq_timed_out(struct request *req,
->         struct mmc_card *card = mq->card;
->         struct mmc_host *host = card->host;
->         unsigned long flags;
-> -       int ret;
-> +       bool ignore_tout;
->
->         spin_lock_irqsave(&mq->lock, flags);
-> -
-> -       if (mq->recovery_needed || !mq->use_cqe || host->hsq_enabled)
-> -               ret = BLK_EH_RESET_TIMER;
-> -       else
-> -               ret = mmc_cqe_timed_out(req);
-> -
-> +       ignore_tout = mq->recovery_needed || !mq->use_cqe || host->hsq_enabled;
->         spin_unlock_irqrestore(&mq->lock, flags);
->
-> -       return ret;
-> +       return ignore_tout ? BLK_EH_RESET_TIMER : mmc_cqe_timed_out(req);
->  }
->
->  static void mmc_mq_recovery_handler(struct work_struct *work)
+> -               /* No timeout (XXX: huh? comment doesn't make much sense) */
+> -               blk_mq_complete_request(req);
+> +               /* The request has gone already */
+>                 return BLK_EH_DONE;
+>         default:
+>                 /* Timeout is handled by mmc core */
 > --
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+> 2.17.1
+>
