@@ -2,95 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1CB51CA50A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 09:21:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A30711CA5C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 10:12:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727123AbgEHHVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 03:21:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37664 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727774AbgEHHVA (ORCPT
+        id S1726817AbgEHIMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 04:12:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45698 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbgEHIMi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 03:21:00 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2956CC05BD09
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 00:21:00 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <pza@pengutronix.de>)
-        id 1jWxJS-0001g6-HU; Fri, 08 May 2020 09:20:50 +0200
-Received: from pza by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <pza@pengutronix.de>)
-        id 1jWxJR-0002Lo-IX; Fri, 08 May 2020 09:20:49 +0200
-Date:   Fri, 8 May 2020 09:20:49 +0200
-From:   Philipp Zabel <pza@pengutronix.de>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sham Muthayyan <smuthayy@codeaurora.org>,
-        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 04/11] PCI: qcom: add missing reset for ipq806x
-Message-ID: <20200508072049.GA31261@pengutronix.de>
-References: <20200430220619.3169-1-ansuelsmth@gmail.com>
- <20200430220619.3169-5-ansuelsmth@gmail.com>
+        Fri, 8 May 2020 04:12:38 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BAD3C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 01:12:38 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id 47so345682uaj.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 01:12:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZWwTq3jHgl0vF+73+HcJrJHO5r6wPiuEt3hWYFmGy1s=;
+        b=MFDfKpxPwGsj8xTnETNOiIP+xhjHs/bQFbn69qKF1+HzOOwBZFODhnJN2quiwfekXx
+         Kys+dq0GQgoVpit/riusVb0+s/xZ85m5lorNpLqOTdA1PEm/OO0liOG2TUWKIvDWXTry
+         V8jXdk7ZZYqJy9G6BaSzPi9rzCcnz2cxUoQDKwLTFL2iIhWIrM1cI3v0yUE5W6pGLwOW
+         HZruxyg48j0ztKttfSHufyK/4KcfPsiRFNmOkYU7oK+ui/HkQKZkN0x/zTPQ6HDuFk7+
+         +WyMfSYgt4y85fBKqLJ35BFKrNbu3ho2tJcPyeXb/DD0G/Rb7DdG1b09SICIJ/rb13rB
+         h7XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZWwTq3jHgl0vF+73+HcJrJHO5r6wPiuEt3hWYFmGy1s=;
+        b=XFWEaD05WHxp+NlWzr4l/Zk9uxNLu+y9CM+cu8/7gx9Ck3+/SCzEy7SDqIzyYueTVq
+         qfaen+NnjeKJpFQizicaKDpuJHHtefFJDjBLiDzytRdOu8k6P9sSbh+Mim1HfaJLxzxL
+         0ERaqch3Wefi+rEDbLhE8HYEPfSzr1ldocUs0K1f32gQPZgsuO6W+dREONIXHZKnVcja
+         HSo0c5n+h6pDQ2mHbkirtXA7jUzjQMDIyrnbJWBtEJXHKBYLmDd5Vme1vINCIvXDWPS9
+         FrRznr14Iu7ZKXY0vNzP4/ZguuRBvoT4WXH9rlDJDH3EOa8UdqCcLKl2KQca9uhA1Hfw
+         C3HA==
+X-Gm-Message-State: AGi0PuYWbha53INDp8NeQ4Oo8B6neohvz5jyT6sdFdJNmdLBvZP5v83o
+        xR8infm1PQefolVoO6WVn1h4POKm4x7oTo5QS1RZXg==
+X-Google-Smtp-Source: APiQypK1UlkumqiTdJM/8YlLN6wYa3E2QGBvtJ2jz2DQhm09vLS24dPjTwAN95MP173PKwYSE1aF5bp/sM3ZgZd+E8w=
+X-Received: by 2002:ab0:5ca:: with SMTP id e68mr886565uae.19.1588925557511;
+ Fri, 08 May 2020 01:12:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200430220619.3169-5-ansuelsmth@gmail.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-IRC:  #ptxdist @freenode
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-Uptime: 09:18:34 up 78 days, 14:49, 108 users,  load average: 0.06, 0.16,
- 0.24
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: pza@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+References: <1588775643-18037-1-git-send-email-vbadigan@codeaurora.org> <1588775643-18037-2-git-send-email-vbadigan@codeaurora.org>
+In-Reply-To: <1588775643-18037-2-git-send-email-vbadigan@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 8 May 2020 10:12:01 +0200
+Message-ID: <CAPDyKFpon+ojJgj-CZ5rSiPR=EOA-3DBfN=28zkVjNXUVytZzA@mail.gmail.com>
+Subject: Re: [PATCH V1 1/2] mmc: core: Check request type before completing
+ the request
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "# 4.0+" <stable@vger.kernel.org>,
+        Baolin Wang <baolin.wang@linaro.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ansuel,
+On Wed, 6 May 2020 at 16:34, Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
+>
+> In the request completion path with CQE, request type is being checked
+> after the request is getting completed. This is resulting in returning
+> the wrong request type and leading to the IO hang issue.
+>
+> ASYNC request type is getting returned for DCMD type requests.
+> Because of this mismatch, mq->cqe_busy flag is never getting cleared
+> and the driver is not invoking blk_mq_hw_run_queue. So requests are not
+> getting dispatched to the LLD from the block layer.
+>
+> All these eventually leading to IO hang issues.
+> So, get the request type before completing the request.
+>
+> Cc: <stable@vger.kernel.org> # v4.19+
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-On Fri, May 01, 2020 at 12:06:11AM +0200, Ansuel Smith wrote:
-> Add missing ext reset used by ipq8064 SoC in PCIe qcom driver.
-> 
-> Fixes: 82a823833f4e PCI: qcom: Add Qualcomm PCIe controller driver
-> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> Cc: stable@vger.kernel.org # v4.5+
+Applied for fixes, and by updating the tags that were provided by
+Adrian, thanks!
+
+Kind regards
+Uffe
+
+
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 7a8901efc031..921030a64bab 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-[...]
-> @@ -347,6 +353,12 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
->  		goto err_deassert_ahb;
->  	}
->  
-> +	ret = reset_control_deassert(res->ext_reset);
-> +	if (ret) {
-> +		dev_err(dev, "cannot assert ext reset\n");
-                                     ^
-This probably should say "cannot deassert ext reset". Apart from this,
-
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-
-regards
-Philipp
+>  drivers/mmc/core/block.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+> index 8499b56..c5367e2 100644
+> --- a/drivers/mmc/core/block.c
+> +++ b/drivers/mmc/core/block.c
+> @@ -1370,6 +1370,7 @@ static void mmc_blk_cqe_complete_rq(struct mmc_queue *mq, struct request *req)
+>         struct mmc_request *mrq = &mqrq->brq.mrq;
+>         struct request_queue *q = req->q;
+>         struct mmc_host *host = mq->card->host;
+> +       enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
+>         unsigned long flags;
+>         bool put_card;
+>         int err;
+> @@ -1399,7 +1400,7 @@ static void mmc_blk_cqe_complete_rq(struct mmc_queue *mq, struct request *req)
+>
+>         spin_lock_irqsave(&mq->lock, flags);
+>
+> -       mq->in_flight[mmc_issue_type(mq, req)] -= 1;
+> +       mq->in_flight[issue_type] -= 1;
+>
+>         put_card = (mmc_tot_in_flight(mq) == 0);
+>
+> --
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
