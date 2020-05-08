@@ -2,577 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D0631CAA49
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 14:08:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0C6D1CAF36
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 15:17:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726756AbgEHMIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 08:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
+        id S1729236AbgEHNPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 09:15:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726746AbgEHMIr (ORCPT
+        by vger.kernel.org with ESMTP id S1727958AbgEHMpp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 08:08:47 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6A7C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 05:08:47 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id 1so888804vsl.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 05:08:47 -0700 (PDT)
+        Fri, 8 May 2020 08:45:45 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B24C05BD43;
+        Fri,  8 May 2020 05:45:44 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id o14so460579ljp.4;
+        Fri, 08 May 2020 05:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5SyPH2CZ5tBu4ViQVOy63JPru+LCGwfYyc0LzBLtvi0=;
-        b=acewf4vkJJORpTF1l8RNAwwKF7M5SNGvYfA8GV47empkp1nZicdd29RwG3Ndpii/bb
-         EMQrf76aYfiLNpYRkvsjkS8+KAkav2IcB5UILAN2wNnP1lLI65+/9U15PPdeqoEgVUGV
-         Miuo2L5k9AuwhFSjqz4NPJLJq2bcUzaPuVa6e3YkFhb4qh/NCqpLhrFRUsHe1LQXpLaX
-         zebq44Iy2PapNZwTyoU/yvjEPlDFJZ79RvcEhcYFMUna7EY8Nghtn/ZcTcSkZx4MX0AX
-         Ji/rmR6wigR/puduTmnOrAKUj82sCtq+VWjkfD6NaXVSNohukMHdT1sRgUkbcAE75Lqs
-         SPaw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=YSng6s9kq7jWuWtp8R03+la3j7hugWr6HZq0thRDMsw=;
+        b=b69aJl/1L7KB2qJ0oF7F6kv2hwxAQ4daURADql9u/ekBS/L1Tz2ZHu89m3XVcb2w6W
+         dNwZGU1DjplF/G0O18SW/cEBR4KEayJ4aU1GHAQjI843Tce1+GtZRPrc9bl1C6X0Ac+a
+         9eBUM4ABedE0ae3lmUoA4hrodg3QrX7lNRZPUjk8kviXNLv+Ud32Srz8spWXDFJlrtCx
+         0IQqzPRS9tWz5bONsL5w7EiC89orR/22yzymWjK3xsZS3mhrzdLq1WYwb22m577hA4hr
+         BHSJza1xJZUtIhyLawSd4eSrSVxZ+Xu8RAiERDAn9m9vZpe7zrGe1JJrwNqj7kH/McZq
+         6rBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5SyPH2CZ5tBu4ViQVOy63JPru+LCGwfYyc0LzBLtvi0=;
-        b=HMQQqf7uYptL+eYCCotsR/oj/c6UJD7UarnmrfwcZ+WdGOiIfC0OLlv7Pk5gCgUMkG
-         mVlYyXbS7bbjGRsV3p5etSFurUI+Tmyuq25dq0pTb6oZsXcXvGH4JuAnWQY7k6Hr7NI2
-         J3GgCZXI1dh6XVZ2H25lKRidTd6H8Y4Z7ICZp3MvzHptKu48D+27jxMnIp6kh/iwwKEn
-         1xSeCBQ21tMc5um76DtoidZK1qJ+YsKXnyCc1Yc8d7dEUHJhWv2qZP00eseAqbDdhT5u
-         tl0+uDHW64+7+JUzFE0HjrNrRYwUJFolTOzjwn5t+CrtcCYuVjW8jq1bZWkGiAvQV75q
-         PgSg==
-X-Gm-Message-State: AGi0PuZnA4lp7Ev+ocE4IB+MrapeFO/rSGX5TBvogqqi8UlqnIGi4f4b
-        0lKTxptWyA8BGBxSk7fMP6FjqP0a3MjjubmnO6dJmQ==
-X-Google-Smtp-Source: APiQypLlv2YF8bnQfqGWUqveDn2hM7vRF0CfzVxySFo7pUGZVG33QKEH/4GFg1+ESMQJ2n8II0BWUEwGgXVsLK4Yir0=
-X-Received: by 2002:a67:ead1:: with SMTP id s17mr1591398vso.200.1588939726015;
- Fri, 08 May 2020 05:08:46 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :date:message-id:mime-version;
+        bh=YSng6s9kq7jWuWtp8R03+la3j7hugWr6HZq0thRDMsw=;
+        b=BYL79snopseVuk2BNcws7JxWnX6bFj59xWTGaA6jWzndbKquQmeMFnUHhmC2AAuy8G
+         ZLjT1bTNbtGIy3Pz+GIyD0R5PS3l+A4cyT/NGdcpeTZ2iD2T70Aoh0dweLriBjpXHoaJ
+         5CnXGIBEGz3BMwaECXp+2NQ4inYz41JCQm9s6ThB5PYjh6AGyRVWioJe38p/NC8PBLkK
+         5FMx8GmmqjFkC41XfYOqhTat6I8tBdGxbC0sl/NIEZDdWte5585zPAfCbgDeoc5dYBIV
+         69FgRUsyTf0tRvu+OVL1TFQml9Fx+HmQq1/w+re36rx4NGyvjsIxLLp+GWtdyqcL4y0o
+         KuLg==
+X-Gm-Message-State: AOAM531PGdJSEB4EgZUy34zS69hY0rdBpeiW414hYkSibkB3NrxcBliv
+        RF7br3dGDCVCW0d+kL3pHLpbpuKiOLk=
+X-Google-Smtp-Source: ABdhPJwDS/GZZFlRRnVMI1EzibGW84OxWoBLd1oUiwjHRj+J4PaXXb+wv/M7CIgJEp5mHbyNe2lZQg==
+X-Received: by 2002:a2e:6e13:: with SMTP id j19mr1615226ljc.292.1588941943223;
+        Fri, 08 May 2020 05:45:43 -0700 (PDT)
+Received: from saruman (91-155-214-58.elisa-laajakaista.fi. [91.155.214.58])
+        by smtp.gmail.com with ESMTPSA id r3sm1133891lfm.52.2020.05.08.05.45.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 08 May 2020 05:45:42 -0700 (PDT)
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        jackp@codeaurora.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: Re: [RFC 1/3] usb: dwc3: Resize TX FIFOs to meet EP bursting requirements
+In-Reply-To: <1588888768-25315-2-git-send-email-wcheng@codeaurora.org>
+References: <1588888768-25315-1-git-send-email-wcheng@codeaurora.org> <1588888768-25315-2-git-send-email-wcheng@codeaurora.org>
+Date:   Fri, 08 May 2020 15:45:37 +0300
+Message-ID: <878si2mw7i.fsf@kernel.org>
 MIME-Version: 1.0
-References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
- <20200402081349.GA932@gerhold.net> <20200403013119.GB20625@builder.lan>
- <20200403100923.GB2652@gerhold.net> <20200403175934.GA96064@gerhold.net>
- <20200423045506.GJ987656@yoga> <20200426123140.GA190483@gerhold.net>
- <20200506211801.GA165066@gerhold.net> <20200507053435.GC3236072@builder.lan>
-In-Reply-To: <20200507053435.GC3236072@builder.lan>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 8 May 2020 14:08:09 +0200
-Message-ID: <CAPDyKFohjoY0rsTwVGQY_csDRfvxF0RiU+d12EpC+mk6BC95gA@mail.gmail.com>
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ Lina
-
-On Thu, 7 May 2020 at 07:33, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Wed 06 May 14:18 PDT 2020, Stephan Gerhold wrote:
->
-> Viresh, Ulf,
->
-> Stephan is trying to describe the relationship between the CPU rail and
-> the memory rail on db410c (where the performance state of the memory
-> rail needs to be kept above the performance state of the CPU supply.
->
-> The latter is modelled as a power-domain and the performance state
-> changes as expected, but no one enables the power-domain.
-
-Just to make one thing clear, from a genpd framework point of view,
-power on/off of a genpd is orthogonal to setting/aggregating
-performance states for it.
-
-It's instead up to the genpd provider to deal with this (as I
-understand, that seems to be the issue from the below discussions).
-
->
-> What's the appropriate method for ensuring the power-domain is
-> enabled/disabled as needed? Should it be referenced in the hierarchical
-> power domain for the CPUs perhaps?
-
-If I understand the dependency correctly, perhaps you are right that
-there needs to be a subdomain assigned. Although, I don't know if this
-ever has been tested to work for a real use case, when it comes to
-performance state propagations upwards in the hierarchy.
-
-Viresh?
-
-If you also need to manage genpd power on/off, that should be managed
-by using runtime PM reference counting on those devices that are
-attached to the genpd in question.
-
-Kind regards
-Uffe
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
 
->
-> Regards,
-> Bjorn
->
-> > Hi,
-> >
-> > On Sun, Apr 26, 2020 at 02:31:48PM +0200, Stephan Gerhold wrote:
-> > > On Wed, Apr 22, 2020 at 09:55:06PM -0700, Bjorn Andersson wrote:
-> > > > On Fri 03 Apr 11:00 PDT 2020, Stephan Gerhold wrote:
-> > > >
-> > > > > On Fri, Apr 03, 2020 at 12:09:25PM +0200, Stephan Gerhold wrote:
-> > > > > > On Thu, Apr 02, 2020 at 06:31:19PM -0700, Bjorn Andersson wrote:
-> > > > > > > On Thu 02 Apr 01:13 PDT 2020, Stephan Gerhold wrote:
-> > > > > > >
-> > > > > > > > Hi,
-> > > > > > > >
-> > > > > > > > On Wed, Apr 01, 2020 at 07:50:59PM +0200, Loic Poulain wrote:
-> > > > > > > > > The highest cpu frequency opps have been dropped because CPR is not
-> > > > > > > > > supported. However, we can simply specify operating voltage so that
-> > > > > > > > > they match the max corner voltages for each freq. With that, we can
-> > > > > > > > > support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
-> > > > > > > > > fine tune operating voltages and optimize power consumption.
-> > > > > > > >
-> > > > > > > > Thanks for the patch! I was wondering how to enable the higher CPU
-> > > > > > > > frequencies for a while now...
-> > > > > > > >
-> > > > > > > > I was actually quite excited to see CPR being mainlined for QCS404.
-> > > > > > > > If we are trying to add such a workaround (rather than CPR) for MSM8916
-> > > > > > > > now, does that mean it's unlikely to see CPR working for MSM8916
-> > > > > > > > anytime soon?
-> > > > > > > >
-> > > > > > > > AFAICT, there is a WIP branch from Niklas Cassel here:
-> > > > > > > > https://git.linaro.org/people/nicolas.dechesne/niklas.cassel/kernel.git/log/?h=cpr-msm8916-mainline
-> > > > > > > > but it hasn't been updated for a while. (Not sure if it was working
-> > > > > > > > already...)
-> > > > > > > >
-> > > > > > > > Can someone explain what is missing to make CPR work for MSM8916?
-> > > > > > > >
-> > > > > > >
-> > > > > > > CPR needs to control 3 things; VDD_APC, VDD_MX and MEMACC. On QCS404 it
-> > > > > > > seems we don't have to adjust VDD_MX, so the code for this is missing
-> > > > > > > from the driver.
-> > > > > > >
-> > > > > > > So, afaict, what's missing is that rpmpd.c needs to gain support for
-> > > > > > > 8916, then the CPR driver needs to gain a cpr_acc_desc and compatible
-> > > > > > > for 8916, it needs to reference the VDDMX power domain and before/after
-> > > > > > > we're adjusting the corner of the CPR we need to adjust the MX according
-> > > > > > > to the mapping specified in the downstream kernel (i.e.  1->4, 2->5 and
-> > > > > > > 3->7).
-> > > > > > >
-> > > > > > >
-> > > > > > > Unfortunately, the requirement that VDDMX (VDD_MEM I presume) must be
-> > > > > > > higher than VDD_APC most likely needs to be taken into consideration for
-> > > > > > > Loic's proposed static voltage scaling as well. Unless VDD_MEM is left
-> > > > > > > in Turbo mode from the boot loader I think we need to take VDDMX to
-> > > > > > > corner 7 for speeds 998MHz and above (i.e. where we pull VDD_APC to
-> > > > > > > 1.35V).
-> > > > > > >
-> > > > > >
-> > > > > > I see! I wonder how hard it would be to add MSM8916 to rpmpd,
-> > > > > > looking at previous commits it's mainly setting up a few defines?
-> > > > > >
-> > > > > > If I understand it correctly, the OPPs from rpmpd could then be
-> > > > > > referenced as "required-opps" in the CPU OPP table so that VDD_MX is
-> > > > > > scaled together with the CPU frequency, and doesn't need to stay at
-> > > > > > turbo mode (like in v3 from Loic) the whole time.
-> > > > > >
-> > > > >
-> > > > > I have been thinking about this some more and I think I came up with
-> > > > > some changes that make sense (but not entirely sure).
-> > > > >
-> > > > > Based on the available downstream sources I guessed the defines to add
-> > > > > for MSM8916 to the rpmpd driver. Then I added the VDD_MX OPPs as
-> > > > > "required-opps" to the CPU OPP table so it would vote for the appopriate
-> > > > > corners (with the mapping you mentioned above).
-> > > > >
-> > > >
-> > > > I was not aware it was possible to describe the dependency between the
-> > > > CPU opp table and MX in this fashion. If that's the case then this looks
-> > > > really good and it should be straight forward to add MSM8916 support to
-> > > > the CPR driver as well.
-> > > >
-> > >
-> > > Indeed!
-> > >
-> > > > > I haven't tested it yet, maybe I can get some feedback first if the code
-> > > > > seems reasonable or if I'm missing something obvious? :)
-> > > > >
-> > > >
-> > > > Have you tested this yet?
-> > > >
-> > >
-> > > I just did. It does not fully work, yet:
-> > >
-> > > rpmpd_set_performance() is indeed called as necessary when switching the
-> > > CPU frequency. When I set 200 MHz it sets corner 3, with 533 MHz corner 4
-> > > and starting with 998 MHz corner 6. So far so good :)
-> > >
-> > > However, there is never actually anything sent to the RPM. :(
-> > > It bails out in rpmpd_set_performance() before calling rpmpd_aggregate_corner():
-> > >
-> > >     /* Always send updates for vfc and vfl */
-> > >     if (!pd->enabled && pd->key != KEY_FLOOR_CORNER &&
-> > >         pd->key != KEY_FLOOR_LEVEL)
-> > >             goto out;
-> > >
-> > > Seems like we just try to set performance states, but never actually
-> > > enable (rpmpd_power_on()) the power domain (pd->enabled == false).
-> > >
-> > > I'm not sure which of the components involved here should handle that.
-> > > The OPP core when setting required OPPs, the genpd core etc.
-> > >
-> > > Any ideas?
-> > >
-> > > Thanks,
-> > > Stephan
-> > >
-> >
-> > For now I have added something to qcom-cpufreq-nvmem.c to power on/enable
-> > the power domain (not really sure if it belongs there...):
-> >
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > index a1b8238872a2..ed352ead037e 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > @@ -26,6 +26,7 @@
-> >  #include <linux/platform_device.h>
-> >  #include <linux/pm_domain.h>
-> >  #include <linux/pm_opp.h>
-> > +#include <linux/pm_runtime.h>
-> >  #include <linux/slab.h>
-> >  #include <linux/soc/qcom/smem.h>
-> >
-> > @@ -370,10 +371,13 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
-> >               }
-> >
-> >               if (drv->data->genpd_names) {
-> > +                     struct device **pd_dev;
-> > +                     const char **name = drv->data->genpd_names;
-> > +
-> >                       drv->genpd_opp_tables[cpu] =
-> >                               dev_pm_opp_attach_genpd(cpu_dev,
-> >                                                       drv->data->genpd_names,
-> > -                                                     NULL);
-> > +                                                     &pd_dev);
-> >                       if (IS_ERR(drv->genpd_opp_tables[cpu])) {
-> >                               ret = PTR_ERR(drv->genpd_opp_tables[cpu]);
-> >                               if (ret != -EPROBE_DEFER)
-> > @@ -382,6 +386,12 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
-> >                                               ret);
-> >                               goto free_genpd_opp;
-> >                       }
-> > +
-> > +                     while (*name) {
-> > +                             pm_runtime_get_sync(*pd_dev);
-> > +                             name++;
-> > +                             pd_dev++;
-> > +                     }
-> >               }
-> >       }
-> >
-> > I really wonder why this doesn't affect CPR (or does it?).
-> > So far I was not able to find anything that would power on/enable
-> > the "cpr" power domain either. But I don't have a qcs404 to verify.
-> >
-> > As far as I can tell from the log, the corner votes are correctly sent
-> > to the RPM now when the CPU frequency is changed.
-> >
-> > However...
-> >
-> > > > > Also: Is there a good way to validate these changes?
-> > > > > I suppose I could check the genpd state but that wouldn't tell me if the
-> > > > > corner was applied correctly. Maybe I can check the actual voltage
-> > > > > through the SPMI interface, hm...
-> > > > >
-> > > >
-> > > > Validating that S2 and VDD_MX changes appropriately in Linux would be a
-> > > > pretty good test.
-> > > >
-> >
-> > Unfortunately I was not able to see any change in the voltage of L3 yet.
-> > On samsung-a5u, /sys/class/regulator/<l3 spmi regulator>/microvolts
-> > permanently reports 1300000 uV, even after a few different corner votes.
-> >
-> > I'm not sure if:
-> >
-> >   - This is normal (maybe some other remoteproc has a higher vote?)
-> >     - I tried to disable wcnss, venus and hexagon without difference
-> >
-> >   - I'm just missing something in the code
-> >
-> >   - This is some peculiarity of the RPM firmware on samsung-a5u.
-> >     (Although that seems quite unlikely to me...)
-> >
-> > Any ideas? :/
-> >
-> > Thanks,
-> > Stephan
-> >
-> > > > > If this seems like a good approach I can split up the changes in
-> > > > > reasonable patches and post it separately. For now the full diff below.
-> > > > >
-> > > >
-> > > > Please do
-> > > >
-> > > > Regards,
-> > > > Bjorn
-> > > >
-> > > > > Stephan
-> > > > >
-> > > > >  arch/arm64/boot/dts/qcom/msm8916.dtsi  | 65 +++++++++++++++++++++++++++++-----
-> > > > >  drivers/cpufreq/cpufreq-dt-platdev.c   |  1 +
-> > > > >  drivers/cpufreq/qcom-cpufreq-nvmem.c   | 11 ++++++
-> > > > >  drivers/soc/qcom/rpmpd.c               | 21 +++++++++++
-> > > > >  include/dt-bindings/power/qcom-rpmpd.h |  7 ++++
-> > > > >  5 files changed, 96 insertions(+), 9 deletions(-)
-> > > > >
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > > > index b0a82447976a..5b8fce8609d0 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > > > > @@ -10,6 +10,7 @@
-> > > > >  #include <dt-bindings/soc/qcom,apr.h>
-> > > > >  #include <dt-bindings/sound/qcom,q6afe.h>
-> > > > >  #include <dt-bindings/thermal/thermal.h>
-> > > > > +#include <dt-bindings/power/qcom-rpmpd.h>
-> > > > >
-> > > > >  / {
-> > > > >         interrupt-parent = <&intc>;
-> > > > > @@ -108,8 +109,8 @@ CPU0: cpu@0 {
-> > > > >                         cpu-supply = <&pm8916_spmi_s2>;
-> > > > >                         operating-points-v2 = <&cpu_opp_table>;
-> > > > >                         #cooling-cells = <2>;
-> > > > > -                       power-domains = <&CPU_PD0>;
-> > > > > -                       power-domain-names = "psci";
-> > > > > +                       power-domains = <&CPU_PD0>, <&rpmpd MSM8916_VDDMX_AO>;
-> > > > > +                       power-domain-names = "psci", "mx";
-> > > > >                 };
-> > > > >
-> > > > >                 CPU1: cpu@1 {
-> > > > > @@ -122,8 +123,8 @@ CPU1: cpu@1 {
-> > > > >                         cpu-supply = <&pm8916_spmi_s2>;
-> > > > >                         operating-points-v2 = <&cpu_opp_table>;
-> > > > >                         #cooling-cells = <2>;
-> > > > > -                       power-domains = <&CPU_PD1>;
-> > > > > -                       power-domain-names = "psci";
-> > > > > +                       power-domains = <&CPU_PD1>, <&rpmpd MSM8916_VDDMX_AO>;
-> > > > > +                       power-domain-names = "psci", "mx";
-> > > > >                 };
-> > > > >
-> > > > >                 CPU2: cpu@2 {
-> > > > > @@ -136,8 +137,8 @@ CPU2: cpu@2 {
-> > > > >                         cpu-supply = <&pm8916_spmi_s2>;
-> > > > >                         operating-points-v2 = <&cpu_opp_table>;
-> > > > >                         #cooling-cells = <2>;
-> > > > > -                       power-domains = <&CPU_PD2>;
-> > > > > -                       power-domain-names = "psci";
-> > > > > +                       power-domains = <&CPU_PD2>, <&rpmpd MSM8916_VDDMX_AO>;
-> > > > > +                       power-domain-names = "psci", "mx";
-> > > > >                 };
-> > > > >
-> > > > >                 CPU3: cpu@3 {
-> > > > > @@ -150,8 +151,8 @@ CPU3: cpu@3 {
-> > > > >                         cpu-supply = <&pm8916_spmi_s2>;
-> > > > >                         operating-points-v2 = <&cpu_opp_table>;
-> > > > >                         #cooling-cells = <2>;
-> > > > > -                       power-domains = <&CPU_PD3>;
-> > > > > -                       power-domain-names = "psci";
-> > > > > +                       power-domains = <&CPU_PD3>, <&rpmpd MSM8916_VDDMX_AO>;
-> > > > > +                       power-domain-names = "psci", "mx";
-> > > > >                 };
-> > > > >
-> > > > >                 L2_0: l2-cache {
-> > > > > @@ -343,40 +344,52 @@ modem_alert0: trip-point@0 {
-> > > > >         };
-> > > > >
-> > > > >         cpu_opp_table: cpu_opp_table {
-> > > > > -               compatible = "operating-points-v2";
-> > > > > +               /*
-> > > > > +                * FIXME: The naming here is really weird, since MSM8916 does
-> > > > > +                * not have kyro. Maybe we should add a more generic compatible?
-> > > > > +                */
-> > > > > +               compatible = "operating-points-v2-kryo-cpu";
-> > > > >                 opp-shared;
-> > > > >
-> > > > >                 opp-200000000 {
-> > > > >                         opp-hz = /bits/ 64 <200000000>;
-> > > > >                         opp-microvolt = <1050000>;
-> > > > > +                       required-opps = <&rpmpd_opp_svs_soc>;
-> > > > >                 };
-> > > > >                 opp-400000000 {
-> > > > >                         opp-hz = /bits/ 64 <400000000>;
-> > > > >                         opp-microvolt = <1050000>;
-> > > > > +                       required-opps = <&rpmpd_opp_svs_soc>;
-> > > > >                 };
-> > > > >                 opp-533330000 {
-> > > > >                         opp-hz = /bits/ 64 <533330000>;
-> > > > >                         opp-microvolt = <1150000>;
-> > > > > +                       required-opps = <&rpmpd_opp_nom>;
-> > > > >                 };
-> > > > >                 opp-800000000 {
-> > > > >                         opp-hz = /bits/ 64 <800000000>;
-> > > > >                         opp-microvolt = <1150000>;
-> > > > > +                       required-opps = <&rpmpd_opp_nom>;
-> > > > >                 };
-> > > > >                 opp-998400000 {
-> > > > >                         opp-hz = /bits/ 64 <998400000>;
-> > > > >                         opp-microvolt = <1350000>;
-> > > > > +                       required-opps = <&rpmpd_opp_super_turbo>;
-> > > > >                 };
-> > > > >                 opp-1094400000 {
-> > > > >                         opp-hz = /bits/ 64 <1094400000>;
-> > > > >                         opp-microvolt = <1350000>;
-> > > > > +                       required-opps = <&rpmpd_opp_super_turbo>;
-> > > > >                 };
-> > > > >                 opp-1152000000 {
-> > > > >                         opp-hz = /bits/ 64 <1152000000>;
-> > > > >                         opp-microvolt = <1350000>;
-> > > > > +                       required-opps = <&rpmpd_opp_super_turbo>;
-> > > > >                 };
-> > > > >                 opp-1209600000 {
-> > > > >                         opp-hz = /bits/ 64 <1209600000>;
-> > > > >                         opp-microvolt = <1350000>;
-> > > > > +                       required-opps = <&rpmpd_opp_super_turbo>;
-> > > > >                 };
-> > > > >         };
-> > > > >
-> > > > > @@ -1710,6 +1723,40 @@ rpmcc: qcom,rpmcc {
-> > > > >                                         #clock-cells = <1>;
-> > > > >                                 };
-> > > > >
-> > > > > +                               rpmpd: power-controller {
-> > > > > +                                       compatible = "qcom,msm8916-rpmpd";
-> > > > > +                                       #power-domain-cells = <1>;
-> > > > > +                                       operating-points-v2 = <&rpmpd_opp_table>;
-> > > > > +
-> > > > > +                                       rpmpd_opp_table: opp-table {
-> > > > > +                                               compatible = "operating-points-v2";
-> > > > > +
-> > > > > +                                               rpmpd_opp_ret: opp1 {
-> > > > > +                                                       opp-level = <1>;
-> > > > > +                                               };
-> > > > > +
-> > > > > +                                               rpmpd_opp_svs: opp2 {
-> > > > > +                                                       opp-level = <2>;
-> > > > > +                                               };
-> > > > > +
-> > > > > +                                               rpmpd_opp_svs_soc: opp3 {
-> > > > > +                                                       opp-level = <3>;
-> > > > > +                                               };
-> > > > > +
-> > > > > +                                               rpmpd_opp_nom: opp4 {
-> > > > > +                                                       opp-level = <4>;
-> > > > > +                                               };
-> > > > > +
-> > > > > +                                               rpmpd_opp_turbo: opp5 {
-> > > > > +                                                       opp-level = <5>;
-> > > > > +                                               };
-> > > > > +
-> > > > > +                                               rpmpd_opp_super_turbo: opp6 {
-> > > > > +                                                       opp-level = <6>;
-> > > > > +                                               };
-> > > > > +                                       };
-> > > > > +                               };
-> > > > > +
-> > > > >                                 smd_rpm_regulators: pm8916-regulators {
-> > > > >                                         compatible = "qcom,rpm-pm8916-regulators";
-> > > > >
-> > > > > diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-> > > > > index f2ae9cd455c1..b0f6bd0fffc1 100644
-> > > > > --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> > > > > +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> > > > > @@ -128,6 +128,7 @@ static const struct of_device_id blacklist[] __initconst = {
-> > > > >         { .compatible = "nvidia,tegra210", },
-> > > > >
-> > > > >         { .compatible = "qcom,apq8096", },
-> > > > > +       { .compatible = "qcom,msm8916", },
-> > > > >         { .compatible = "qcom,msm8996", },
-> > > > >         { .compatible = "qcom,qcs404", },
-> > > > >
-> > > > > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > > > > index f0d2d5035413..c77a30349d08 100644
-> > > > > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > > > > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > > > > @@ -129,6 +129,16 @@ static const struct qcom_cpufreq_match_data match_data_kryo = {
-> > > > >         .get_version = qcom_cpufreq_kryo_name_version,
-> > > > >  };
-> > > > >
-> > > > > +static const char *msm8916_genpd_names[] = { "mx", NULL };
-> > > > > +
-> > > > > +static const struct qcom_cpufreq_match_data match_data_msm8916 = {
-> > > > > +       /*
-> > > > > +        * FIXME: Might need to implement .get_version here to handle
-> > > > > +        * different frequencies depending on speedbin/pvs version.
-> > > > > +        */
-> > > > > +       .genpd_names = msm8916_genpd_names,
-> > > > > +};
-> > > > > +
-> > > > >  static const char *qcs404_genpd_names[] = { "cpr", NULL };
-> > > > >
-> > > > >  static const struct qcom_cpufreq_match_data match_data_qcs404 = {
-> > > > > @@ -301,6 +311,7 @@ static struct platform_driver qcom_cpufreq_driver = {
-> > > > >
-> > > > >  static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
-> > > > >         { .compatible = "qcom,apq8096", .data = &match_data_kryo },
-> > > > > +       { .compatible = "qcom,msm8916", .data = &match_data_msm8916 },
-> > > > >         { .compatible = "qcom,msm8996", .data = &match_data_kryo },
-> > > > >         { .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
-> > > > >         {},
-> > > > > diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-> > > > > index 2b1834c5609a..192ba9099964 100644
-> > > > > --- a/drivers/soc/qcom/rpmpd.c
-> > > > > +++ b/drivers/soc/qcom/rpmpd.c
-> > > > > @@ -115,6 +115,26 @@ struct rpmpd_desc {
-> > > > >
-> > > > >  static DEFINE_MUTEX(rpmpd_lock);
-> > > > >
-> > > > > +/* msm8916 RPM Power Domains */
-> > > > > +DEFINE_RPMPD_PAIR(msm8916, vddcx, vddcx_ao, SMPA, CORNER, 1);
-> > > > > +DEFINE_RPMPD_PAIR(msm8916, vddmx, vddmx_ao, LDOA, CORNER, 3);
-> > > > > +
-> > > > > +DEFINE_RPMPD_VFC(msm8916, vddcx_vfc, SMPA, 1);
-> > > > > +
-> > > > > +static struct rpmpd *msm8916_rpmpds[] = {
-> > > > > +       [MSM8916_VDDCX] =       &msm8916_vddcx,
-> > > > > +       [MSM8916_VDDCX_AO] =    &msm8916_vddcx_ao,
-> > > > > +       [MSM8916_VDDCX_VFC] =   &msm8916_vddcx_vfc,
-> > > > > +       [MSM8916_VDDMX] =       &msm8916_vddmx,
-> > > > > +       [MSM8916_VDDMX_AO] =    &msm8916_vddmx_ao,
-> > > > > +};
-> > > > > +
-> > > > > +static const struct rpmpd_desc msm8916_desc = {
-> > > > > +       .rpmpds = msm8916_rpmpds,
-> > > > > +       .num_pds = ARRAY_SIZE(msm8916_rpmpds),
-> > > > > +       .max_state = MAX_8996_RPMPD_STATE,
-> > > > > +};
-> > > > > +
-> > > > >  /* msm8976 RPM Power Domains */
-> > > > >  DEFINE_RPMPD_PAIR(msm8976, vddcx, vddcx_ao, SMPA, LEVEL, 2);
-> > > > >  DEFINE_RPMPD_PAIR(msm8976, vddmx, vddmx_ao, SMPA, LEVEL, 6);
-> > > > > @@ -220,6 +240,7 @@ static const struct rpmpd_desc qcs404_desc = {
-> > > > >  };
-> > > > >
-> > > > >  static const struct of_device_id rpmpd_match_table[] = {
-> > > > > +       { .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
-> > > > >         { .compatible = "qcom,msm8976-rpmpd", .data = &msm8976_desc },
-> > > > >         { .compatible = "qcom,msm8996-rpmpd", .data = &msm8996_desc },
-> > > > >         { .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
-> > > > > diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-> > > > > index 3f74096d5a7c..70d304a2deae 100644
-> > > > > --- a/include/dt-bindings/power/qcom-rpmpd.h
-> > > > > +++ b/include/dt-bindings/power/qcom-rpmpd.h
-> > > > > @@ -51,6 +51,13 @@
-> > > > >  #define RPMH_REGULATOR_LEVEL_TURBO     384
-> > > > >  #define RPMH_REGULATOR_LEVEL_TURBO_L1  416
-> > > > >
-> > > > > +/* MSM8916 Power Domain Indexes */
-> > > > > +#define MSM8916_VDDCX          0
-> > > > > +#define MSM8916_VDDCX_AO       1
-> > > > > +#define MSM8916_VDDCX_VFC      2
-> > > > > +#define MSM8916_VDDMX          3
-> > > > > +#define MSM8916_VDDMX_AO       4
-> > > > > +
-> > > > >  /* MSM8976 Power Domain Indexes */
-> > > > >  #define MSM8976_VDDCX          0
-> > > > >  #define MSM8976_VDDCX_AO       1
+Hi,
+
+Wesley Cheng <wcheng@codeaurora.org> writes:
+> Some devices have USB compositions which may require multiple endpoints
+> that support EP bursting.  HW defined TX FIFO sizes may not always be
+> sufficient for these compositions.  By utilizing flexible TX FIFO
+> allocation, this allows for endpoints to request the required FIFO depth =
+to
+> achieve higher bandwidth.  With some higher bMaxBurst configurations, usi=
+ng
+> a larger TX FIFO size results in better TX throughput.
+
+This needs to be carefully thought out as it can introduce situations
+where gadget drivers that worked previously stop working.
+
+> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> index 4c171a8..e815c13 100644
+> --- a/drivers/usb/dwc3/core.h
+> +++ b/drivers/usb/dwc3/core.h
+> @@ -675,6 +675,7 @@ struct dwc3_event_buffer {
+>   *		isochronous START TRANSFER command failure workaround
+>   * @start_cmd_status: the status of testing START TRANSFER command with
+>   *		combo_num =3D 'b00
+> + * @fifo_depth: allocated TXFIFO depth
+>   */
+>  struct dwc3_ep {
+>  	struct usb_ep		endpoint;
+> @@ -718,6 +719,7 @@ struct dwc3_ep {
+>  	u8			resource_index;
+>  	u32			frame_number;
+>  	u32			interval;
+> +	int			fifo_depth;
+>=20=20
+>  	char			name[20];
+>=20=20
+> @@ -1004,6 +1006,7 @@ struct dwc3_scratchpad_array {
+>   * 	1	- utmi_l1_suspend_n
+>   * @is_fpga: true when we are using the FPGA board
+>   * @pending_events: true when we have pending IRQs to be handled
+> + * @needs_fifo_resize: not all users might want fifo resizing, flag it
+>   * @pullups_connected: true when Run/Stop bit is set
+>   * @setup_packet_pending: true when there's a Setup Packet in FIFO. Work=
+around
+>   * @three_stage_setup: set if we perform a three phase setup
+> @@ -1044,6 +1047,7 @@ struct dwc3_scratchpad_array {
+>   * @dis_metastability_quirk: set to disable metastability quirk.
+>   * @imod_interval: set the interrupt moderation interval in 250ns
+>   *                 increments or 0 to disable.
+> + * @last_fifo_depth: total TXFIFO depth of all enabled USB IN/INT endpoi=
+nts
+>   */
+>  struct dwc3 {
+>  	struct work_struct	drd_work;
+> @@ -1204,6 +1208,7 @@ struct dwc3 {
+>  	unsigned		is_utmi_l1_suspend:1;
+>  	unsigned		is_fpga:1;
+>  	unsigned		pending_events:1;
+> +	unsigned		needs_fifo_resize:1;
+
+Instead of passing a flag, this could be detected in runtime during ->udc_s=
+tart()
+
+> diff --git a/drivers/usb/dwc3/ep0.c b/drivers/usb/dwc3/ep0.c
+> index 6dee4da..7ee2302 100644
+> --- a/drivers/usb/dwc3/ep0.c
+> +++ b/drivers/usb/dwc3/ep0.c
+> @@ -611,6 +612,43 @@ static int dwc3_ep0_set_config(struct dwc3 *dwc, str=
+uct usb_ctrlrequest *ctrl)
+>  		return -EINVAL;
+>=20=20
+>  	case USB_STATE_ADDRESS:
+
+are you sure it's safe to fiddle with TX FIFO allocation at SetAddress()
+time?
+
+> +		/*
+> +		 * If tx-fifo-resize flag is not set for the controller, then
+> +		 * do not clear existing allocated TXFIFO since we do not
+> +		 * allocate it again in dwc3_gadget_resize_tx_fifos
+> +		 */
+> +		if (dwc->needs_fifo_resize) {
+> +			/* Read ep0IN related TXFIFO size */
+> +			dep =3D dwc->eps[1];
+> +			size =3D dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(0));
+> +			if (dwc3_is_usb31(dwc))
+> +				dep->fifo_depth =3D DWC31_GTXFIFOSIZ_TXFDEP(size);
+> +			else
+> +				dep->fifo_depth =3D DWC3_GTXFIFOSIZ_TXFDEP(size);
+> +
+> +			dwc->last_fifo_depth =3D dep->fifo_depth;
+> +			/* Clear existing TXFIFO for all IN eps except ep0 */
+> +			for (num =3D 3; num < min_t(int, dwc->num_eps,
+> +				DWC3_ENDPOINTS_NUM); num +=3D 2) {
+> +				dep =3D dwc->eps[num];
+> +				/* Don't change TXFRAMNUM on usb31 version */
+> +				size =3D dwc3_is_usb31(dwc) ?
+> +					dwc3_readl(dwc->regs,
+> +						   DWC3_GTXFIFOSIZ(num >> 1)) &
+> +						   DWC31_GTXFIFOSIZ_TXFRAMNUM :
+> +						   0;
+> +
+> +				dwc3_writel(dwc->regs,
+> +					    DWC3_GTXFIFOSIZ(num >> 1),
+> +					    size);
+> +				dep->fifo_depth =3D 0;
+> +
+> +				dev_dbg(dwc->dev, "%s(): %s fifo_depth:%x\n",
+> +					__func__, dep->name,
+> +					dep->fifo_depth);
+
+no dev_dbg() calls in this driver, please.
+
+> diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+> index 00746c2..6baca05 100644
+> --- a/drivers/usb/dwc3/gadget.c
+> +++ b/drivers/usb/dwc3/gadget.c
+> @@ -540,6 +540,97 @@ static int dwc3_gadget_start_config(struct dwc3_ep *=
+dep)
+>  	return 0;
+>  }
+>=20=20
+> +/*
+> + * dwc3_gadget_resize_tx_fifos - reallocate fifo spaces for current use-=
+case
+> + * @dwc: pointer to our context structure
+> + *
+> + * This function will a best effort FIFO allocation in order
+> + * to improve FIFO usage and throughput, while still allowing
+> + * us to enable as many endpoints as possible.
+> + *
+> + * Keep in mind that this operation will be highly dependent
+> + * on the configured size for RAM1 - which contains TxFifo -,
+> + * the amount of endpoints enabled on coreConsultant tool, and
+> + * the width of the Master Bus.
+> + *
+> + * In the ideal world, we would always be able to satisfy the
+> + * following equation:
+> + *
+> + * ((512 + 2 * MDWIDTH-Bytes) + (Number of IN Endpoints - 1) * \
+> + * (3 * (1024 + MDWIDTH-Bytes) + MDWIDTH-Bytes)) / MDWIDTH-Bytes
+> + *
+> + * Unfortunately, due to many variables that's not always the case.
+> + */
+> +static int dwc3_gadget_resize_tx_fifos(struct dwc3 *dwc, struct dwc3_ep =
+*dep)
+> +{
+> +	int fifo_size, mdwidth, max_packet =3D 1024;
+> +	int tmp, mult =3D 1, fifo_0_start, ram1_depth;
+> +
+> +	if (!dwc->needs_fifo_resize)
+> +		return 0;
+> +
+> +	/* resize IN endpoints excepts ep0 */
+
+typo: excepts
+
+> +	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <=3D 1)
+> +		return 0;
+> +
+> +	/* Don't resize already resized IN endpoint */
+> +	if (dep->fifo_depth) {
+> +		dev_dbg(dwc->dev, "%s fifo_depth:%d is already set\n",
+> +					dep->endpoint.name, dep->fifo_depth);
+
+no dev_dbg()
+
+> @@ -620,6 +711,10 @@ static int __dwc3_gadget_ep_enable(struct dwc3_ep *d=
+ep, unsigned int action)
+>  	int			ret;
+>=20=20
+>  	if (!(dep->flags & DWC3_EP_ENABLED)) {
+> +		ret =3D dwc3_gadget_resize_tx_fifos(dwc, dep);
+
+technically, you're no resizing a single FIFO. In any case, what happens
+when you run out of space midway through the resizing? You already
+accepted the gadget driver, you're already bound to it, then you resize
+the FIFOs and things start to fall apart. How do we handle that?
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl61VHEACgkQzL64meEa
+mQaO5hAAijU5AvEFe4sTMgb/COtCQI4iIFQWYlb/myz6eJ/um98np7FTt/nJuxbn
+Z1SjqTkKgOcAA542perYF9xmAjsB7ll4Nmluq1Z6brX1Pr3H6JbnPTKq2uvXF4+v
+OgMPIYa3X8hgK5Wi/wyooVm6IlbymDOHGHCI2/3X1YVrs1wZg9HznPibFooMIVS7
+pFwO95hnMSDLnzklaIbQYurpGt3KPjBJCSkyxZoUTCpcL5gbgCFE62kSCmJnjIoX
+dncti3l6eBc1D2eGf8Vl926WbsrROrnX7bD/56CA4Wrk3XfA4JzouMOpxLuTl6ca
+RcQYauEXIsm6SgrD10l3Dw3DEC44wEo+IUd6H7eF+96HHRtvgEYiFp165LyOOvtB
+s6QX1XnzZbHUa0CbaHZ8TmgefWMe9faCdPiILCQP7UDHS2/tyoePVd/W77TydlFP
+2f8UiAmJwGhVWx4evDBvCKYUCH049OY9xi980U4yMw+A3U6jicOGuUI5kiCHWENO
+l6l4M6V/mR1Q/bJaoFNyddTCMBOUCSM6Og2Hy8sfcRSvzf1PzuUMHNhFxGFExIKM
+gO68Hllos8wpaHTnDXRemD97zzzKufB/kYc/PQ0rqpk3LNaUHftozhODkjnMua6m
+K69ac7JRE/ElKMEbQFcnsO9426COQTv5KLJULWApDuHQoCaqwHI=
+=bjYh
+-----END PGP SIGNATURE-----
+--=-=-=--
