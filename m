@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B1CD1CBAFE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 00:59:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07F151CBB04
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 00:59:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728110AbgEHW7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 18:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43494 "EHLO
+        id S1728288AbgEHW7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 18:59:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727849AbgEHW7X (ORCPT
+        with ESMTP id S1728279AbgEHW7Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 18:59:23 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2990BC05BD43
+        Fri, 8 May 2020 18:59:24 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6D5C05BD43
         for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 15:59:23 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id s10so1391390plr.1
+Received: by mail-pg1-x543.google.com with SMTP id a4so1557798pgc.0
         for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 15:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=o4yPuc1IBO0Fpnm5cH3RYbHF1/VvJ8rseVz+WFhHEck=;
-        b=VPEPKfr0LpFXRwKZseBAaugcPZIisNSbI8QDDiJ5iM7IDfqVfeloezY7Mx5OmrxuXJ
-         n0fWKGZ6VaznJFxuCz+eQRHIKwjre+sRj8KVs5Rwrq+C/UWwJDgi5xda9Gf7lFEVTATy
-         pryaY5dZVtK7IlkgvcMQje0Wi0ArhUEKlGh3c=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vsTJfgywY7Yh1c9SFAQgkpGdzTCsAoe2msx951M+8gg=;
+        b=n9+oTteokcsg2gGmnR4zRXRtCjsq5CrG2/r4VvKp5PLRS6msCbvUx5BSWg8VI7PfNH
+         fzOsZRW3n3BzVqfaRQEfeYZ0ExlYzMI38EGyARXFt1+uLUQiP9Ay33UhJpvbrHKTotIb
+         LxOQG9/Gg5iz7YwU/lMlQXNVEpWwfcZUhnxWM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=o4yPuc1IBO0Fpnm5cH3RYbHF1/VvJ8rseVz+WFhHEck=;
-        b=Nv8GPIrRBVEKancV+gV/E7qjwSvzY+fqY070ckTbGId4ULO3Eyyujr9X7bqwmkYoOl
-         VnqgdXRqpjB2AXQlIsM7oIpK/eIZ04k50ykHj9l5KsDrkhyiCwG3o3giVBgv09eLX7SG
-         2ri2L/L8TjpSjaaqSaYW0e+4+D1br74cWN4J2HckLy54E8z7BX9CJZ+rmxFxGhXiv9/K
-         JtTilb9UUEuQCjcwdyS0swvKkXj5j05/JRwGRo5Ioio3MBev+N2H/loEGTp7t4YXexgQ
-         YaG8Sl+OdzOZVP+WFxCJn78JXpd9OdUSCDVN7w46IV/d8l4/GMO/dup6TENRUvqiH0zs
-         W6+w==
-X-Gm-Message-State: AGi0PuaV55ZPjsk9BVAINxfIYQbfbhX7LpQmFR8A4ZdQRzks6AUaE0Ej
-        0NoXlEm0ZJomX91VFydL1wwGAQ==
-X-Google-Smtp-Source: APiQypLq9GOG18q+UNqlsvudYEAfECHIF4Ub5kQ4kC7q+ReXKvIaZAAJMf/RFYQ9gNVjy8LNt8MdNw==
-X-Received: by 2002:a17:902:23:: with SMTP id 32mr4625148pla.40.1588978762408;
-        Fri, 08 May 2020 15:59:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vsTJfgywY7Yh1c9SFAQgkpGdzTCsAoe2msx951M+8gg=;
+        b=cS0P6m65N3cxY3bVA30Pg3G+MJGiSEvl6NZPY1cCRkp9rq+0l1wvv1cE4FehYkhOAE
+         02pL14FULnVKcq51/EcP31zfraisA1E1Aj20sKU8U/+/Afd+DdAjNRBK9sKnyqrBp86Q
+         JocwxUzTq4QpANg/92xlHnHx8hp0edPhJNBnAT23fBe5dsr1Hb7ajoXjJtYk2HCl1Poy
+         +8X/cpj1ebUJGwPHdrL1D2NSqTjVchvOz3D6vTWPpl98kSodWB1TxjtBSmitAO91ASB2
+         DAYJCRRwLwwKB2hLSwBxMGiEQamreDdHanr8TrvbMvCrGj9IBSuuv9SyngzCawslFXzC
+         uO4g==
+X-Gm-Message-State: AGi0PuasDpXB0cCiIWBobHI0p6zqUjlYIRKCQfNhbMoAb/qgPjlLIqMI
+        XL29s6LnmaepfhQXnFmAYOXbcQ==
+X-Google-Smtp-Source: APiQypLZztC92CaipNrfEO6dJof+q2mxxAWh+ZlB67X3GIWQuimnyFCwmWlKu1p11C9clTK29MCtRg==
+X-Received: by 2002:a62:780b:: with SMTP id t11mr5202971pfc.196.1588978763500;
+        Fri, 08 May 2020 15:59:23 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id i72sm3062874pfe.104.2020.05.08.15.59.21
+        by smtp.gmail.com with ESMTPSA id i72sm3062874pfe.104.2020.05.08.15.59.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2020 15:59:21 -0700 (PDT)
+        Fri, 08 May 2020 15:59:23 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Thierry Reding <thierry.reding@gmail.com>,
         Sam Ravnborg <sam@ravnborg.org>
@@ -53,11 +53,14 @@ Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
         Douglas Anderson <dianders@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] panel: simple: Fix size and bpp of BOE NV133FHM-N61
-Date:   Fri,  8 May 2020 15:59:00 -0700
-Message-Id: <20200508155859.1.I4d29651c0837b4095fb4951253f44036a371732f@changeid>
+Subject: [PATCH 2/3] dt-bindings: display: simple: Add BOE NV133FHM-N62
+Date:   Fri,  8 May 2020 15:59:01 -0700
+Message-Id: <20200508155859.2.I37c879ef4ec6d4028a3d45728bc3a58060bba175@changeid>
 X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
+In-Reply-To: <20200508155859.1.I4d29651c0837b4095fb4951253f44036a371732f@changeid>
+References: <20200508155859.1.I4d29651c0837b4095fb4951253f44036a371732f@changeid>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -65,44 +68,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The BOE NV133FHM-N61 is documented in the original commit to be a
-13.3" panel, but the size listed in our struct doesn't match.
-Specifically:
-
-  math.sqrt(30.0 * 30.0 + 18.7 * 18.7) / 2.54 ==> 13.92
-
-Searching around on the Internet shows that the size that was in the
-structure was the "Outline Size", not the "Display Area".  Let's fix
+This panel appears to be the same or nearly the same as the BOE
+NV133FHM-N61, but since (in the very least) it identifies itself as a
+different model in the EDID we should add a new compatible string for
 it.
 
-Also the Internet says that this panel supports 262K colors.  That's
-6bpp, not 8bpp.
-
-Fixes: b0c664cc80e8 ("panel: simple: Add BOE NV133FHM-N61")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
- drivers/gpu/drm/panel/panel-simple.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../devicetree/bindings/display/panel/panel-simple.yaml         | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index d6c29543e510..7219436499f1 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1189,10 +1189,10 @@ static const struct drm_display_mode boe_nv133fhm_n61_modes = {
- static const struct panel_desc boe_nv133fhm_n61 = {
- 	.modes = &boe_nv133fhm_n61_modes,
- 	.num_modes = 1,
--	.bpc = 8,
-+	.bpc = 6,
- 	.size = {
--		.width = 300,
--		.height = 187,
-+		.width = 294,
-+		.height = 165,
- 	},
- 	.delay = {
- 		.hpd_absent_delay = 200,
+diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+index fdd74d07f645..d6cca1479633 100644
+--- a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
++++ b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+@@ -75,6 +75,8 @@ properties:
+       - boe,nv101wxmn51
+         # BOE NV133FHM-N61 13.3" FHD (1920x1080) TFT LCD Panel
+       - boe,nv133fhm-n61
++        # BOE NV133FHM-N62 13.3" FHD (1920x1080) TFT LCD Panel
++      - boe,nv133fhm-n62
+         # BOE NV140FHM-N49 14.0" FHD a-Si FT panel
+       - boe,nv140fhmn49
+         # CDTech(H.K.) Electronics Limited 4.3" 480x272 color TFT-LCD panel
 -- 
 2.26.2.645.ge9eca65c58-goog
 
