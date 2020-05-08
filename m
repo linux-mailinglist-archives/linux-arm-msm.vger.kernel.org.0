@@ -2,138 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82EBC1CA3BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 08:22:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E62F71CA3C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 08:22:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbgEHGWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 02:22:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50400 "EHLO mail.kernel.org"
+        id S1727790AbgEHGWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 02:22:16 -0400
+Received: from mga06.intel.com ([134.134.136.31]:24128 "EHLO mga06.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727772AbgEHGWO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1727770AbgEHGWO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 8 May 2020 02:22:14 -0400
-Received: from Mani-XPS-13-9360 (unknown [157.50.45.37])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EBF9920708;
-        Fri,  8 May 2020 06:22:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588918933;
-        bh=H8zuyDp1NSPLZp+cpCXhgJA2Fnax9JHQV+55OBnqXrs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YbNGxWKGoAbQlIBxjjbQ50GfZ5hQXSuBQeJB2fDkA7O/rA2genrPzVovrSS7IudZe
-         ub6DD1eN+ceb8S/EJYH7iKtYHXcqDxgb/dNCzRI5r2u4sBgkOB6hd6cAaT2aqYlifX
-         04QIuWVoj3dJbvot5OqYaoq5R/pubhxCPiVk5i9w=
-Date:   Fri, 8 May 2020 11:52:04 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org, jhugo@codeaurora.org
-Subject: Re: [PATCH v6 8/8] bus: mhi: core: Ensure non-zero session or
- sequence ID values are used
-Message-ID: <20200508062204.GC2696@Mani-XPS-13-9360>
-References: <1588718832-4891-1-git-send-email-bbhatt@codeaurora.org>
- <1588718832-4891-9-git-send-email-bbhatt@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1588718832-4891-9-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+IronPort-SDR: YwEr+wjliCFSMMF5hdlG5SkFgXtOTO77I9OtFK7cpkNHx/nyVa8kCIQE+8UqG7E6KXLst5HCt8
+ BFE2+ad9JhPg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2020 23:22:10 -0700
+IronPort-SDR: azBkB2zReMIRea4nr8iqnhF23nH8YNMx7xCa674lRJsz0a/NiGX79HxSVrTkw+t1KLQBS2ryzl
+ Hj6QdGpZZndQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,366,1583222400"; 
+   d="scan'208";a="370353268"
+Received: from ahunter-desktop.fi.intel.com ([10.237.72.157])
+  by fmsmga001.fm.intel.com with ESMTP; 07 May 2020 23:22:07 -0700
+From:   Adrian Hunter <adrian.hunter@intel.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     linux-mmc <linux-mmc@vger.kernel.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sarthak Garg <sartgarg@codeaurora.org>,
+        Baolin Wang <baolin.wang@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Christoph Hellwig <hch@lst.de>
+Subject: [PATCH RESEND] mmc: block: Fix request completion in the CQE timeout path
+Date:   Fri,  8 May 2020 09:22:27 +0300
+Message-Id: <20200508062227.23144-1-adrian.hunter@intel.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <CAPDyKFo10JFbe7ZFnRBE2e55eGs-odAWYxU+Ep0S74003aLGpg@mail.gmail.com>
+References: <CAPDyKFo10JFbe7ZFnRBE2e55eGs-odAWYxU+Ep0S74003aLGpg@mail.gmail.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki, Business Identity Code: 0357606 - 4, Domiciled in Helsinki
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 05, 2020 at 03:47:12PM -0700, Bhaumik Bhatt wrote:
-> While writing any sequence or session identifiers, it is possible that
-> the host could write a zero value, whereas only non-zero values should
-> be supported writes to those registers. Ensure that the host does not
-> write a non-zero value for them and also log them in debug messages.
-> 
+First, it should be noted that the CQE timeout (60 seconds) is substantial
+so a CQE request that times out is really stuck, and the race between
+timeout and completion is extremely unlikely. Nevertheless this patch
+fixes an issue with it.
 
-Seems like you are reworking the existing checks also. So please mention
-that in commit message. Something like:
+Commit ad73d6feadbd7b ("mmc: complete requests from ->timeout")
+preserved the existing functionality, to complete the request.
+However that had only been necessary because the block layer
+timeout handler had been marking the request to prevent it from being
+completed normally. That restriction was removed at the same time, the
+result being that a request that has gone will have been completed anyway.
+That is, the completion was unnecessary.
 
-'A macro is introduced to simplify this check and the existing checks are
-also converted to use this macro.'
+At the time, the unnecessary completion was harmless because the block
+layer would ignore it, although that changed in kernel v5.0.
 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/boot.c     | 15 +++++++--------
->  drivers/bus/mhi/core/internal.h |  1 +
->  2 files changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-> index e5fcde1..7b9b561 100644
-> --- a/drivers/bus/mhi/core/boot.c
-> +++ b/drivers/bus/mhi/core/boot.c
-> @@ -43,10 +43,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->  		      lower_32_bits(mhi_buf->dma_addr));
->  
->  	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, mhi_buf->len);
-> -	sequence_id = prandom_u32() & BHIE_RXVECSTATUS_SEQNUM_BMSK;
-> -
-> -	if (unlikely(!sequence_id))
-> -		sequence_id = 1;
-> +	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_RXVECSTATUS_SEQNUM_BMSK);
->  
+Note for stable, this patch will not apply cleanly without patch "mmc:
+core: Fix recursive locking issue in CQE recovery path"
 
-This is what I referred.
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: ad73d6feadbd7b ("mmc: complete requests from ->timeout")
+Cc: stable@vger.kernel.org
+---
+ drivers/mmc/core/queue.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Thanks,
-Mani
+diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
+index 72bef39d7011..10ea67892b5f 100644
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -110,8 +110,7 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct request *req)
+ 				mmc_cqe_recovery_notifier(mrq);
+ 			return BLK_EH_RESET_TIMER;
+ 		}
+-		/* No timeout (XXX: huh? comment doesn't make much sense) */
+-		blk_mq_complete_request(req);
++		/* The request has gone already */
+ 		return BLK_EH_DONE;
+ 	default:
+ 		/* Timeout is handled by mmc core */
+-- 
+2.17.1
 
->  	mhi_write_reg_field(mhi_cntrl, base, BHIE_RXVECDB_OFFS,
->  			    BHIE_RXVECDB_SEQNUM_BMSK, BHIE_RXVECDB_SEQNUM_SHFT,
-> @@ -189,7 +186,9 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
->  		return -EIO;
->  	}
->  
-> -	dev_dbg(dev, "Starting AMSS download via BHIe\n");
-> +	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_TXVECSTATUS_SEQNUM_BMSK);
-> +	dev_dbg(dev, "Starting AMSS download via BHIe. Sequence ID:%u\n",
-> +		sequence_id);
->  	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECADDR_HIGH_OFFS,
->  		      upper_32_bits(mhi_buf->dma_addr));
->  
-> @@ -198,7 +197,6 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
->  
->  	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECSIZE_OFFS, mhi_buf->len);
->  
-> -	sequence_id = prandom_u32() & BHIE_TXVECSTATUS_SEQNUM_BMSK;
->  	mhi_write_reg_field(mhi_cntrl, base, BHIE_TXVECDB_OFFS,
->  			    BHIE_TXVECDB_SEQNUM_BMSK, BHIE_TXVECDB_SEQNUM_SHFT,
->  			    sequence_id);
-> @@ -246,14 +244,15 @@ static int mhi_fw_load_sbl(struct mhi_controller *mhi_cntrl,
->  		goto invalid_pm_state;
->  	}
->  
-> -	dev_dbg(dev, "Starting SBL download via BHI\n");
-> +	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
-> +	dev_dbg(dev, "Starting SBL download via BHI. Session ID:%u\n",
-> +		session_id);
->  	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
->  	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
->  		      upper_32_bits(dma_addr));
->  	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
->  		      lower_32_bits(dma_addr));
->  	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
-> -	session_id = prandom_u32() & BHI_TXDB_SEQNUM_BMSK;
->  	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
->  	read_unlock_bh(pm_lock);
->  
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 0965ca3..80b32c2 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -452,6 +452,7 @@ enum mhi_pm_state {
->  #define PRIMARY_CMD_RING		0
->  #define MHI_DEV_WAKE_DB			127
->  #define MHI_MAX_MTU			0xffff
-> +#define MHI_RANDOM_U32_NONZERO(bmsk)	(prandom_u32_max(bmsk) + 1)
->  
->  enum mhi_er_type {
->  	MHI_ER_TYPE_INVALID = 0x0,
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
