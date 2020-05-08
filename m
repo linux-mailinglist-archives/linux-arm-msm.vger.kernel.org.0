@@ -2,104 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3C4F1CA3CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 08:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D8F51CA3DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 08:29:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726756AbgEHGYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 02:24:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51682 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725897AbgEHGYg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 02:24:36 -0400
-Received: from Mani-XPS-13-9360 (unknown [157.50.45.37])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726207AbgEHG3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 02:29:43 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:61612 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726792AbgEHG3n (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 May 2020 02:29:43 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588919382; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=CF2yXGR1Cj7U8eHdFjQo7x7s1pH7cJ9xAyOsnmO0Hew=; b=dCU6a2wtkms+lWSZSZhloxAd3f+0mOY7FNKjzAfQEZawIIiVn7tu7Z0VgIdgvFfDJbTtrM6h
+ 71rlh0ejgfzr1Hex0UCkmdYrbeCagxi5LqrGlkyKeeEWvGKwGs6f1gnCDqPKHxnTFoCiHkvu
+ CTxtqE+PQI7iPC58Pcnm0sWLPBQ=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb4fc50.7f0f278679d0-smtp-out-n01;
+ Fri, 08 May 2020 06:29:36 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1DDFAC43637; Fri,  8 May 2020 06:29:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.24.160] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D7B6F20708;
-        Fri,  8 May 2020 06:24:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588919076;
-        bh=ipSng+pkwhd74+txooJRJcZ+/1mr44m5cObyP7Qx0oA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AzLqG0QnN9DhncY4Cpt5RkNjQy3WPL6ROQ/g1g+9Qdw3KW08CunrKG0SlczG1L940
-         8QCYB+jIfbCq672M0cWSF56EIgZH1roYdqqQ6tzhtPWK5RDFFBZwuP3wtPtPoeaCHg
-         F97Oc+V4etkKTJdM/iZNNMr3I8PukgEWVVERHBZk=
-Date:   Fri, 8 May 2020 11:54:27 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org, jhugo@codeaurora.org
-Subject: Re: [PATCH v6 0/8] Bug fixes and improved logging in MHI
-Message-ID: <20200508062427.GD2696@Mani-XPS-13-9360>
-References: <1588718832-4891-1-git-send-email-bbhatt@codeaurora.org>
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2FD94C433D2;
+        Fri,  8 May 2020 06:29:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2FD94C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sanm@codeaurora.org
+Subject: Re: [PATCH v7 0/4] ADD interconnect support for Qualcomm DWC3 driver
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
+ <20200429183542.GS4525@google.com>
+From:   "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Message-ID: <a119cf75-8bda-f380-8249-173fa426279c@codeaurora.org>
+Date:   Fri, 8 May 2020 11:59:27 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1588718832-4891-1-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200429183542.GS4525@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bhaumik,
+Hi Felipe,
 
-Can you please send the next version to my linaro.org mail address? Since
-it is what listed in MAINTAINERS file for now, I'd like to use it for MHI
-work.
+Any update about landing this series.
 
-Thanks,
-Mani
+Regards
 
-On Tue, May 05, 2020 at 03:47:04PM -0700, Bhaumik Bhatt wrote:
-> A set of patches for bug fixes and improved logging in mhi/core/boot.c.
-> Verified on x86 and arm64 platforms.
-> 
-> v6:
-> -Updated the MHI_RANDOM_U32_NONZERO to only give a random number upto the
-> supplied bitmask
-> 
-> v5:
-> -Updated the macro MHI_RANDOM_U32_NONZERO to take a bitmask as the input
-> parameter and output a non-zero value between 1 and U32_MAX
-> 
-> v4:
-> -Dropped the change: bus: mhi: core: WARN_ON for malformed vector table
-> -Updated bus: mhi: core: Read transfer length from an event properly to include
-> parse rsc events
-> -Use prandom_u32_max() instead of prandom_u32 to avoid if check in
-> bus: mhi: core: Ensure non-zero session or sequence ID values are used
-> 
-> v3:
-> -Fixed signed-off-by tags
-> -Add a refactor patch for MHI queue APIs
-> -Commit text fix in bus: mhi: core: Read transfer length from an event properly
-> -Fix channel ID range check for ctrl and data event rings processing
-> 
-> v2:
-> -Fix channel ID range check potential infinite loop
-> -Add appropriate signed-off-by tags
-> 
-> Bhaumik Bhatt (4):
->   bus: mhi: core: Handle firmware load using state worker
->   bus: mhi: core: Return appropriate error codes for AMSS load failure
->   bus: mhi: core: Improve debug logs for loading firmware
->   bus: mhi: core: Ensure non-zero session or sequence ID values are used
-> 
-> Hemant Kumar (4):
->   bus: mhi: core: Refactor mhi queue APIs
->   bus: mhi: core: Cache intmod from mhi event to mhi channel
->   bus: mhi: core: Add range check for channel id received in event ring
->   bus: mhi: core: Read transfer length from an event properly
-> 
->  drivers/bus/mhi/core/boot.c     |  75 ++++++++++++------------
->  drivers/bus/mhi/core/init.c     |   5 +-
->  drivers/bus/mhi/core/internal.h |   5 +-
->  drivers/bus/mhi/core/main.c     | 124 ++++++++++++++++++++--------------------
->  drivers/bus/mhi/core/pm.c       |   6 +-
->  include/linux/mhi.h             |   2 -
->  6 files changed, 108 insertions(+), 109 deletions(-)
-> 
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Sandeep
+
+On 4/30/2020 12:05 AM, Matthias Kaehlcke wrote:
+> Hi Felipe,
+>
+> all patches of this series have been reviewed and there are no outstanding
+> comments, so I guess it should be ready to land?
+>
+> Thanks
+>
+> Matthias
+>
+> On Wed, Apr 01, 2020 at 10:45:41AM +0530, Sandeep Maheswaram wrote:
+>> This path series aims to add interconnect support in
+>> dwc3-qcom driver on SDM845 and SC7180 SoCs.
+>>
+>> Changes from v6 -> v7
+>>    > [PATCH 2/4] Fixed review comments from Matthias in DWC3 driver.
+>>    > Other patches remain unchanged.
+>>
+>> Changes from v5 -> v6
+>>    > [PATCH 1/4] Addressed comments from Rob.
+>>    > [PATCH 2/4] Fixed review comments from Matthias in DWC3 driver.
+>>    > [PATCH 3/4] Ignoring 80 char limit in defining interconnect paths.
+>>    > Added [PATCH 4/4] in this series. Adding interconnect nodes for SC7180.
+>>      Depends on patch https://patchwork.kernel.org/patch/11417989/.	
+>>
+>> Changes from v4 -> v5
+>>    > [PATCH 1/3] Added the interconnect properties in yaml. This patch depends
+>>      on series https://patchwork.kernel.org/cover/11372641/.
+>>    > [PATCH 2/3] Fixed review comments from Matthias in DWC3 driver.
+>>    > [PATCH 3/3] Modified as per the new interconnect nodes in sdm845. Depends
+>>      on series https://patchwork.kernel.org/cover/11372211/.
+>>
+>>
+>> Changes from v3 -> v4
+>>    > Fixed review comments from Matthias
+>>    > [PATCH 1/3] and [PATCH 3/3] remains unchanged
+>>
+>> Changes from v2 -> v3
+>>    > Fixed review comments from Matthias and Manu
+>>    > changed the functions prefix from usb_* to dwc3_qcom_*
+>>
+>> Changes since V1:
+>>    > Comments by Georgi Djakov on "[PATCH 2/3]" addressed
+>>    > [PATCH 1/3] and [PATCH 3/3] remains unchanged
+>>
+>>
+>> Sandeep Maheswaram (4):
+>>    dt-bindings: usb: qcom,dwc3: Introduce interconnect properties for
+>>      Qualcomm DWC3 driver
+>>    usb: dwc3: qcom: Add interconnect support in dwc3 driver
+>>    arm64: dts: qcom: sdm845: Add interconnect properties for USB
+>>    arm64: dts: qcom: sc7180: Add interconnect properties for USB
+>>
+>>   .../devicetree/bindings/usb/qcom,dwc3.yaml         |   8 ++
+>>   arch/arm64/boot/dts/qcom/sc7180.dtsi               |   4 +
+>>   arch/arm64/boot/dts/qcom/sdm845.dtsi               |   8 ++
+>>   drivers/usb/dwc3/dwc3-qcom.c                       | 128 ++++++++++++++++++++-
+>>   4 files changed, 146 insertions(+), 2 deletions(-)
+>>
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>>
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
