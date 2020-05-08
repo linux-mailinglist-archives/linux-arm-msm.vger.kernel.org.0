@@ -2,143 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EC131CB800
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 21:15:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B0CD1CB8DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2020 22:18:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726811AbgEHTO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 15:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36208 "EHLO
+        id S1727803AbgEHUS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 16:18:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726797AbgEHTO6 (ORCPT
+        by vger.kernel.org with ESMTP id S1726885AbgEHUS1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 15:14:58 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D39C4C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 12:14:56 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id a4so1298425pgc.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 12:14:56 -0700 (PDT)
+        Fri, 8 May 2020 16:18:27 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 765D5C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 13:18:26 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id c124so9319307oib.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 13:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=B766Kq3wwMIZDh21Hnvsv+cWtRtFWNJvMN2IylFQHjI=;
-        b=LjzDUAM/U9Np2yDM7Gd/ghWCHkZnU5fcEJvc0bEeg7q4hhHoLA7UleUGvoE06Em1En
-         ahxEMpiQiF14yRL/UdS8hWULOzgsOlxJEMkaL6NWRHmQ24D//SdIkgbHHGRy0qA5Ml7U
-         cIVSdQ1efavQWrtxD04bOr2MRhrHgPNFrb77g=
+        d=kali-org.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=MlAF25STO+yL73T826E97sego/sVxlAzSPlYezFQQ8Y=;
+        b=M4wNj8YoS4oXNM+w8CGcPv9cdsOnbF6k1MPswMkN4CdLOM5RdeVNUzYv+X5YCsEnzi
+         xYZkEqKyVkGQEcxj/htYstjJ0wc1UIMuy0eUZoj1S6c8w9/bLDzVsmynO2XBu3+96nsQ
+         uTSZDLsiyHW6NO8wGBT0nID4rhBc8bn+w+QDfNFEDWU2PEw9Se4UdhcUZ/BC3XQtiHEg
+         VX3cEytz5wr13F0Oqqg20fRXPEplfSqoouLHNDjXWfhvsocPckRpWOgxvOZFD4Y0nThi
+         mk3oVyl/MLOkyL/WZSUXJvtQGIttYyRjdD0zLZFrCloBLZ31RPdgnhrBzpnBYPzoUp97
+         4+Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=B766Kq3wwMIZDh21Hnvsv+cWtRtFWNJvMN2IylFQHjI=;
-        b=Hy0gC1b628NhaHnSoSMKnOOFYef56/wVEVbx77xsZwgEHsFkPV3wzHwVfPNtixb4kf
-         08vDKPTAaw38gnIDhQm7PO+dl3dhMc4XIgAdsdSCyH0RD171OXI7mGjMjyJIleLwLF4R
-         15CQ6hYRfxnaY2aVkjAiH9yG+UWDdnBpZ8IUnfalgDy1IE4qzuh34CWSveibVF5x4gUT
-         2UXIV1Eob8xLyQWNY0szSU/ejeZSNDImIKYmClfZbcyAoZFjqlwaQ+xPvyozye5X74v+
-         aIh+THlbzyiT9+WRR43QJNYvpGfAL6Lxbu5SPHoynxSsXg6EaXL12cxYVrxWA182iBy5
-         vvMQ==
-X-Gm-Message-State: AGi0PubCWrKNsudKrr/4UHh4S6Tb97Pa3M+Hzh+OZj2FcwMUnuyPnaVK
-        7t3mwzhfYySdkTE31RIEIW3Ayw==
-X-Google-Smtp-Source: APiQypLoabMFrHcLg+AaIOSyN1MVOq0lrqEGKCkCFnD47I2CUY1crIKVFHSJx855pUPM6XCezTC8dw==
-X-Received: by 2002:a62:5cc7:: with SMTP id q190mr4241312pfb.98.1588965296322;
-        Fri, 08 May 2020 12:14:56 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id g16sm2550307pfq.203.2020.05.08.12.14.54
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=MlAF25STO+yL73T826E97sego/sVxlAzSPlYezFQQ8Y=;
+        b=sGmX2HI47AlBXobXkjCfFqzxuMJ2H71eq2zB3J0EfeUMN0jQUYCgdk6GHyqDYJYg35
+         mguiU7M7dAtf9lTqOQdHqTVFGXmFA4qelpPiIQQhvFF4BZ4p+IeJoNMRdrgmTKM+UcO6
+         QK4BV4T4cXOXkrJsWNcR7TR4Luxm4j34VJ8jexDnEGn/8uKrhdCwyJLVBd2W8Z9dihwh
+         TYOdPnGR8MKwgVp6NDQXEdub38mvbcY2NBm26lxRKpere6c/IaLLRmw+nVH3gERlftfA
+         fL/X4wE7Loel9A+9rtgIHvxIv+Mi9XOVinc/sEiAcY8raMPJmQfyUPoFKxeDWEklS/WZ
+         Adpw==
+X-Gm-Message-State: AGi0Puamk53Rd8Nd26dVXrCO9xPcMJ+WXmrw8HctBJKqQxkxObZpbcQF
+        ndbhyhBxTuZpt2eeV5gNxCXueQ==
+X-Google-Smtp-Source: APiQypKS8r9Jmzko+elY+jhmRk/eq+lV7F00Vg+u5ZpDoj3UGL6QIMuIZ1vm2RILFJAOf49KcfGPog==
+X-Received: by 2002:aca:d585:: with SMTP id m127mr11865717oig.27.1588969105589;
+        Fri, 08 May 2020 13:18:25 -0700 (PDT)
+Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
+        by smtp.gmail.com with ESMTPSA id q12sm632331otn.57.2020.05.08.13.18.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 May 2020 12:14:55 -0700 (PDT)
-Date:   Fri, 8 May 2020 12:14:54 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org, georgi.djakov@linaro.org
-Subject: Re: [PATCH V5 2/7] soc: qcom-geni-se: Add interconnect support to
- fix earlycon crash
-Message-ID: <20200508191454.GH4525@google.com>
-References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org>
- <1588919619-21355-3-git-send-email-akashast@codeaurora.org>
- <20200508175938.GB4525@google.com>
+        Fri, 08 May 2020 13:18:24 -0700 (PDT)
+Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
+ support
+To:     Eric Biggers <ebiggers@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>
+References: <20200501045111.665881-1-ebiggers@kernel.org>
+ <20200501045111.665881-5-ebiggers@kernel.org>
+ <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
+ <20200507180435.GB236103@gmail.com> <20200507180838.GC236103@gmail.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <150ddaaf-12ec-231e-271a-c65b1d88d30f@kali.org>
+Date:   Fri, 8 May 2020 15:18:23 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20200507180838.GC236103@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200508175938.GB4525@google.com>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 08, 2020 at 10:59:38AM -0700, Matthias Kaehlcke wrote:
-> Hi Akash,
-> 
-> overall this looks good to me, a few comments inline
-> 
-> On Fri, May 08, 2020 at 12:03:34PM +0530, Akash Asthana wrote:
-> > QUP core clock is shared among all the SE drivers present on particular
-> > QUP wrapper, the system will reset(unclocked access) if earlycon used after
-> > QUP core clock is put to 0 from other SE drivers before real console comes
-> > up.
-> > 
-> > As earlycon can't vote for it's QUP core need, to fix this add ICC
-> > support to common/QUP wrapper driver and put vote for QUP core from
-> > probe on behalf of earlycon and remove vote during earlycon exit call.
-> > 
-> > Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> > Reported-by: Matthias Kaehlcke <mka@chromium.org>
-> > ---
-> > Change in V3:
-> >  - Add geni_remove_earlycon_icc_vote API that will be used by earlycon
-> >    exit function to remove ICC vote for earlyconsole.
-> >  - Remove suspend/resume hook for geni-se driver as we are no longer
-> >    removing earlyconsole ICC vote from system suspend, we are removing
-> >    from earlycon exit.
-> > 
-> > Change in V4:
-> >  - As per Matthias comment make 'earlycon_wrapper' as static structure.
-> > 
-> > Changes in V5:
-> >  - Vote for core path only after checking whether "qcom_geni" earlycon is
-> >    actually present or not by traversing over structure "console_drivers".
-> > 
-> >  drivers/soc/qcom/qcom-geni-se.c       | 63 +++++++++++++++++++++++++++++++++++
-> >  drivers/tty/serial/qcom_geni_serial.c |  7 ++++
-> >  include/linux/qcom-geni-se.h          |  2 ++
-> >  3 files changed, 72 insertions(+)
-> > 
-> > diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> > index 63403bf..66fe6f2 100644
-> > --- a/drivers/soc/qcom/qcom-geni-se.c
-> > +++ b/drivers/soc/qcom/qcom-geni-se.c
 
-...
+On 5/7/20 1:08 PM, Eric Biggers wrote:
+> On Thu, May 07, 2020 at 11:04:35AM -0700, Eric Biggers wrote:
+>> Hi Thara,
+>>
+>> On Thu, May 07, 2020 at 08:36:58AM -0400, Thara Gopinath wrote:
+>>>
+>>> On 5/1/20 12:51 AM, Eric Biggers wrote:
+>>>> From: Eric Biggers <ebiggers@google.com>
+>>>>
+>>>> Add support for Qualcomm Inline Crypto Engine (ICE) to ufs-qcom.
+>>>>
+>>>> The standards-compliant parts, such as querying the crypto capabilities
+>>>> and enabling crypto for individual UFS requests, are already handled by
+>>>> ufshcd-crypto.c, which itself is wired into the blk-crypto framework.
+>>>> However, ICE requires vendor-specific init, enable, and resume logic,
+>>>> and it requires that keys be programmed and evicted by vendor-specific
+>>>> SMC calls.  Make the ufs-qcom driver handle these details.
+>>>>
+>>>> I tested this on Dragonboard 845c, which is a publicly available
+>>>> development board that uses the Snapdragon 845 SoC and runs the upstream
+>>>> Linux kernel.  This is the same SoC used in the Pixel 3 and Pixel 3 XL
+>>>> phones.  This testing included (among other things) verifying that the
+>>>> expected ciphertext was produced, both manually using ext4 encryption
+>>>> and automatically using a block layer self-test I've written.
+>>> Hello Eric,
+>>>
+>>> I am interested in testing out this series on 845, 855 and if possile on 865
+>>> platforms. Can you give me some more details about your testing please.
+>>>
+>> Great!  You can test this with fscrypt, a.k.a. ext4 or f2fs encryption.
+>>
+>> A basic manual test would be:
+>>
+>> 1. Build a kernel with:
+>>
+>> 	CONFIG_BLK_INLINE_ENCRYPTION=y
+>> 	CONFIG_FS_ENCRYPTION=y
+>> 	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+> Sorry, I forgot: 'CONFIG_SCSI_UFS_CRYPTO=y' is needed too.
+>
+> - Eric
 
-> > +#ifdef CONFIG_SERIAL_EARLYCON
-> > +	if (console_drivers)
-> 
-> The loop should have curly braces ("use braces when a loop contains more than
-> a single simple statement"), even though the compiler doesn't need them in
-> this case. This is not a loop, but I was told by a maintainer that it equally
-> applies, which makes sense.
-> 
-> You could avoid one level of indentation through:
-> 
-> if (!console_drivers)
-> 	goto exit;
-> 
-> > +		for_each_console(bcon)
+I took a look into this as well - is v12 the latest of the fscrypt
+inline crypto patches?
 
-Actually the NULL check of 'console_drivers' is not needed:
+I see a EXPORT_SYMBOL_GPL(fscrypt_inode_uses_inline_crypto) but it seems
+like it should be EXPORT_SYMBOL_GPL(__fscrypt_inode_uses_inline_crypto)
+otherwise you end up with
 
-#define for_each_console(con) \
-        for (con = console_drivers; con != NULL; con = con->next)
 
-see also:
+WARNING: modpost: "fscrypt_inode_uses_inline_crypto" [vmlinux] is a
+static EXPORT_SYMBOL_GPL
 
-commit caa72c3bc584bc28b557bcf1a47532a7a6f37e6f
-Author: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Date:   Mon Feb 3 15:31:25 2020 +0200
 
-    console: Drop double check for console_drivers being non-NULL
+when you have something like CONFIG_F2FS_FS=m
+
+
+Apologies but I'm not sure where the original patchset is to send as a
+reply to them.
+
