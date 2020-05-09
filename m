@@ -2,117 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18BED1CC12D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 14:11:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A4D51CC15B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 14:39:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727093AbgEIMLo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 May 2020 08:11:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52788 "EHLO
+        id S1726370AbgEIMjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 May 2020 08:39:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726782AbgEIMLn (ORCPT
+        by vger.kernel.org with ESMTP id S1726017AbgEIMjL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 May 2020 08:11:43 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6422DC061A0C;
-        Sat,  9 May 2020 05:11:43 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id h12so6062976pjz.1;
-        Sat, 09 May 2020 05:11:43 -0700 (PDT)
+        Sat, 9 May 2020 08:39:11 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F570C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 May 2020 05:39:11 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id u10so1906051pls.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 May 2020 05:39:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/wlJFZjwuM81Jh/anwiOMAgeJWfW7ajnVCis2G3dl9k=;
-        b=dKc+TMdVfruQ8XRDND37cvnLytXndIhsz15FSm3KMnB9sjom5WRjcOrEvJU+yPeS5m
-         uLGz8hq/6wUQa1UkJ6D9OOEWccrMgIgPRCSIg41TqPjfkTuKUC0Ehrb+iO1d1/2GLrOm
-         /fKTPoievZIameK2E1CPZF8ocqWO3Z/8TRLiqbEGadpMGPJn0yM6uLIs+CgTu4DUWr7y
-         eICNRW91C5opv2i6zQ/H16dMo5H6yMCP35TW1giskIX62HHVkbyL2rmiTQ+sX9p12pPZ
-         Jah2nAq0kBHiHiaNOja7ue0FFq5bhpEQjX4Ou6kmfYW07JR8EQFVw7saNPEW96vRu0/p
-         8Rcw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=zz6Bha52VCZ61VoetFX6PmuaWb+O9/LCwGgsnXFAyiY=;
+        b=Zhr8xkcT/iFzof+8Lq/M9MZn7g26C7RBMOmnVug1qXGSTBCXQnz/ChHs/kf5zBhZxS
+         CUO45SVfyihUDzPPrW3YtxnkKJrULl2FOTQI6VDNEsK41/hpPXFB1COOP7fM24ckQmST
+         a9dmXLIC2HllaOujQVp3/Q0s9f9oxatHZ/LjUGqDdNpF8EK1NvnPtwyZQ22B8IsIp9Sl
+         HHY91TRuYwk9GHNIeg5zdUtQ6fmeV1PgGFeYiEYQH6uqVf/yLFFeXjUVsEjaX4iCdUOY
+         Sd0RATJf9q/HYxWiBXznULNGDlcfwfkgt+XcLZsyp5CwSAeYbkpsFpTIAKZ+Ow+VIHdP
+         njWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/wlJFZjwuM81Jh/anwiOMAgeJWfW7ajnVCis2G3dl9k=;
-        b=hBSOicqiMoRvQ1+95fkuDEIgq954Ssij6PrQLa2WsiDEGxpO/m6OCYqr/YLIK0PAhL
-         9Z+ScU431BFPewKX2WzmbLkb0Oy8Dy2JHC22QJlhItxp0tFvEPHkoL44ONNZR2ukhQn8
-         GM78JBbnJ+8uQGl5tOUW+q35ij9PKW2VYWKoOAgGktu7lm3JZDuQSQdoPI8JjTzKsQOa
-         FBQhRkzZAM77Q/+8+m0kNzZi+zpkg01akDdrQXFJXyIVoX5iv9ciBJ1mSBzZpH/vrS7M
-         339HsfyYA72cpUg+C0OlHatXNxC4OPQXHuHmEkPxgu2LslWbPI+sg02baWTVWmYmWje9
-         +Q2w==
-X-Gm-Message-State: AGi0PualsD2RU/X9pST9Rw80C4HX1EAELEXi8gcTxHS47/7haxh8Vlyl
-        M/AnUdY0EHZN4bu4sUBvD5eCH38/8mqpoDE5SxzGgzfq
-X-Google-Smtp-Source: APiQypI4sdcR01RdvjwOkHbMaSexjDF1WdE/GFMDiJPbhE1E1Lit7yy20vvFbGNhhAxdgjUqXNuG191HfxC7kMjnnGw=
-X-Received: by 2002:a17:90b:94a:: with SMTP id dw10mr11427305pjb.228.1589026302658;
- Sat, 09 May 2020 05:11:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org> <1588919619-21355-3-git-send-email-akashast@codeaurora.org>
-In-Reply-To: <1588919619-21355-3-git-send-email-akashast@codeaurora.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Sat, 9 May 2020 15:11:31 +0300
-Message-ID: <CAHp75Vdjz7RBbyPwZwvNq5njwb_Jc76U=3pDpswmoFCFaGtNAQ@mail.gmail.com>
-Subject: Re: [PATCH V5 2/7] soc: qcom-geni-se: Add interconnect support to fix
- earlycon crash
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>, agross@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wolfram Sang <wsa@the-dreams.de>,
-        Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, mgautam@codeaurora.org,
-        linux-arm-msm@vger.kernel.org,
-        "open list:SERIAL DRIVERS" <linux-serial@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=zz6Bha52VCZ61VoetFX6PmuaWb+O9/LCwGgsnXFAyiY=;
+        b=tFqxLGVXZCeSpyL/oN2lVfLvIIuU7flQYrnkYfT3NERrXvvojsBG0E8vu/jpqH+2Fn
+         6Yi0BI4cFMu09WMmVql5FSZitV2hox+hspv4eNx/kZD766opYzCxbxIAyJw53cdK5b8X
+         a0YQpZA8Jg0Ft5eKBw1wzxs1BNIS8V5XCCcIpaseCLd2QEq5HVc3nAsfanPetY2fj0wv
+         ZKFV4Kpl8qt/7ciOSEquhIc1azBzLI2dzezC86BUiuV4M37iEET+eWQ9mBEfBTGJSy4z
+         kNRdYh3qiiPe8e9p7zG6/MHQalEgZFCBF8CCmAieMvhB859p1wxcNJsD6p35OD6nr/u4
+         c9Iw==
+X-Gm-Message-State: AGi0PuYZ/zeNxQIpZjeZ6AlKBHZtxR1pKNbAhj12kP0AUq8rFQHe29sA
+        2K1/wdGqLWqHA7iFFVE/9msm3Q==
+X-Google-Smtp-Source: APiQypIDp6M2kg12boFEgMkHohjl3ZCmHkBzrqrA40GcGuCiJCUfA199wQAB34aIsB+rp94t27z9ag==
+X-Received: by 2002:a17:90a:a012:: with SMTP id q18mr10307037pjp.220.1589027949364;
+        Sat, 09 May 2020 05:39:09 -0700 (PDT)
+Received: from localhost.localdomain ([80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id o6sm4447828pfp.172.2020.05.09.05.39.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 09 May 2020 05:39:08 -0700 (PDT)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Cc:     Brian Masney <masneyb@onstation.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH 0/2] Add adreno a405 GPU support
+Date:   Sat,  9 May 2020 20:38:44 +0800
+Message-Id: <20200509123846.27932-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 8, 2020 at 9:34 AM Akash Asthana <akashast@codeaurora.org> wrote:
->
-> QUP core clock is shared among all the SE drivers present on particular
-> QUP wrapper, the system will reset(unclocked access) if earlycon used after
-> QUP core clock is put to 0 from other SE drivers before real console comes
-> up.
->
-> As earlycon can't vote for it's QUP core need, to fix this add ICC
-> support to common/QUP wrapper driver and put vote for QUP core from
-> probe on behalf of earlycon and remove vote during earlycon exit call.
+The series adds support for adreno a405 found on MSM8936/MSM8939 and APQ
+variants.
 
-...
+Shawn Guo (2):
+  drm/msm/a4xx: add adreno a405 support
+  drm/msm/a4xx: add a405_registers for a405 device
 
-> +       for_each_child_of_node(parent, child) {
-
-> +               if (of_device_is_compatible(child, "qcom,geni-se-qup")) {
-
-if (!...)
- continue;
-
-will save you a readability of the loop body.
-
-Or...
-
-> +                       wrapper = platform_get_drvdata(of_find_device_by_node(
-> +                                       child));
-
-...leave this on one line
-
-> +                       icc_put(wrapper->to_core.path);
-> +                       wrapper->to_core.path = NULL;
-> +               }
-
-And here is the question, what do you want to do if you find more
-devices with the same compatible string?
-
-> +       }
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c      | 82 ++++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 11 +++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  2 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 ++
+ 4 files changed, 84 insertions(+), 16 deletions(-)
 
 -- 
-With Best Regards,
-Andy Shevchenko
+2.17.1
+
