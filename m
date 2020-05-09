@@ -2,88 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D726D1CC503
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2020 00:49:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C66C51CC506
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2020 00:50:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727976AbgEIWs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 May 2020 18:48:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38554 "EHLO
+        id S1728420AbgEIWt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 May 2020 18:49:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727887AbgEIWs6 (ORCPT
+        with ESMTP id S1726908AbgEIWt7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 May 2020 18:48:58 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1712DC05BD09
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 May 2020 15:48:58 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id a7so2048265uak.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 May 2020 15:48:58 -0700 (PDT)
+        Sat, 9 May 2020 18:49:59 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48ADFC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 May 2020 15:49:59 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id g2so3367375vsb.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 May 2020 15:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=n1z6oppBATgO51fKBm6uoe5dBY+8qJAJ+NcU9svBiBE=;
-        b=UDXkhZzqvn6HISO/zwZFZ7FZVudKN1BUwwPpa1bhMiQAp57zi77qXCZkWGSGbJnaj+
-         CpidWsT8xIRgF3KBvMaUmHntjppKEZZbn2EZCUsY4wsc5xKCasW7y1lBeLcBAmQozU70
-         +WBgYOmN9SKxTya/oya8RORLtmXdR1BuD2x84=
+        bh=TXUBBXmljQ5wXNIAowkwYkd4kb/4nsVYm0GYUwUuYac=;
+        b=Tkqv2f5gzC+XAAIPgdH4R2bngWQK+egYnu5AfQSyhmjrOFiaTRmfAv7lxgLnmQRtYh
+         NBnfLaEJwQKjW3zaO8N1Ey2h0IUcGByzxK0QPSE9/2kqI0YP0aHCLIuvqeL3qlQkJmgq
+         GdgmD/Eytja1TI6YPeB/tQ7b4pxyojrn+yLps=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=n1z6oppBATgO51fKBm6uoe5dBY+8qJAJ+NcU9svBiBE=;
-        b=etnrEEsYrLoV8qliwZY6/6DE+6oPhwfBYl8raYxbQ5205VWFXFH9yfo/WwLcbbbfh9
-         90/TBzs5KH/rZqrp0CZzKK04Y7czl81IYE6+FqICI+p9FTGdyF1s0GD4ztk8l5zOhuHy
-         jNW9imji/0+a7dHnQsFNgPRcZM4ZbUq7otHKiuygObqGMT6qL0MXGzufLdcnDHtv7SyT
-         ttZBsU9B3S+BS7AiMAFLP6zmbCl8zRVS2cAXK4Irp4K6HyC/A1AXQabhBUkzTf2g93t0
-         WkY3lW5qucGZgiQO+1uj1m3pEgnOlFEUoV4WuCUROeMqNSvdOzY7cLeWbo3lclCJz/hi
-         03vw==
-X-Gm-Message-State: AGi0PuZdAvIENzliAYqdR8ZBG0QzYB6TenvAwNx/eNlJYkxUuX7J3sMY
-        wcNWhe5zQKpulueHZDCO25hRc9A9sCM=
-X-Google-Smtp-Source: APiQypLWd16te8UpM5T8YxbM1lbPQbnXaR32QNQh245ztZsdpCMCOFeg3b0+Qrd7U8CFoAZnMX9NSA==
-X-Received: by 2002:ab0:142f:: with SMTP id b44mr6803689uae.113.1589064536756;
-        Sat, 09 May 2020 15:48:56 -0700 (PDT)
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com. [209.85.222.47])
-        by smtp.gmail.com with ESMTPSA id x6sm5362607vkx.1.2020.05.09.15.48.54
+        bh=TXUBBXmljQ5wXNIAowkwYkd4kb/4nsVYm0GYUwUuYac=;
+        b=c+zgqaM517Awel46NKO5a7LjboKPR+KfPvKaLL/CVnF5+O4E8BNzjQR8GL3eu28Fdy
+         DcAW5lHZwxO88buf/mkxFlnhpvZvYXBZU4zaLQzMSu7eHTKSCnLNhcpAAMvqJ2tCBl8t
+         F0K5ABITjK+0QfXTazBQmXQRnXnVOiWDhL1pJnSz9YqMDXT4sPdjnC8dDE8hfUdv6zv6
+         UFrzo4KWIvVyIyKbAnQefAzyhVdcelUFlrgpDb4oYOXfjuJ2PL0/zv2HPlGp5x/cUNb+
+         d5GMjHPiQtVvvGCAjqXDlaBU7gNZPKfsvl/htgsnOaDRCIx+qGZ3TJJckSAqfzSi4kma
+         fMiw==
+X-Gm-Message-State: AGi0PuZ+qiP7Rf+iPFpOZj3LkoSZn4OFDN/9NCa9UDky9+0heJEPEBfw
+        59pROtxJjC53zd3U2heMjZrxNFjNDBU=
+X-Google-Smtp-Source: APiQypLbHgv1ixX+qTKGmp7XsSqN8OA8NHtq0R9wZfp8E3RUSyskepfnnNjtBX4e5h8V0tmXXXlp5w==
+X-Received: by 2002:a67:d81b:: with SMTP id e27mr7155253vsj.40.1589064598196;
+        Sat, 09 May 2020 15:49:58 -0700 (PDT)
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com. [209.85.222.54])
+        by smtp.gmail.com with ESMTPSA id y143sm5341337vky.9.2020.05.09.15.49.57
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 May 2020 15:48:55 -0700 (PDT)
-Received: by mail-ua1-f47.google.com with SMTP id r2so2049358uam.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 May 2020 15:48:54 -0700 (PDT)
-X-Received: by 2002:ab0:b13:: with SMTP id b19mr6914696uak.91.1589064534355;
- Sat, 09 May 2020 15:48:54 -0700 (PDT)
+        Sat, 09 May 2020 15:49:57 -0700 (PDT)
+Received: by mail-ua1-f54.google.com with SMTP id 36so2047258uaf.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 May 2020 15:49:57 -0700 (PDT)
+X-Received: by 2002:ab0:45c7:: with SMTP id u65mr7022602uau.8.1589064596879;
+ Sat, 09 May 2020 15:49:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200507213500.241695-1-dianders@chromium.org> <20200509201511.GD30802@ravnborg.org>
-In-Reply-To: <20200509201511.GD30802@ravnborg.org>
+References: <20200508155859.1.I4d29651c0837b4095fb4951253f44036a371732f@changeid>
+ <20200509200021.GA30802@ravnborg.org>
+In-Reply-To: <20200509200021.GA30802@ravnborg.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Sat, 9 May 2020 15:48:42 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VBU7JmTdvgWjyj_ytrFmz6Gkx2OjVr1FxLh9DBG_jN6w@mail.gmail.com>
-Message-ID: <CAD=FV=VBU7JmTdvgWjyj_ytrFmz6Gkx2OjVr1FxLh9DBG_jN6w@mail.gmail.com>
-Subject: Re: [PATCH v5 0/6] drm: Prepare to use a GPIO on ti-sn65dsi86 for Hot
- Plug Detect
-To:     Sam Ravnborg <sam@ravnborg.org>, LinusW <linus.walleij@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Sandeep Panda <spanda@codeaurora.org>,
+Date:   Sat, 9 May 2020 15:49:45 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W+sAfu-A0ScE+hzNOd=jxnf+YZgwygPoR-gFqm0b++5A@mail.gmail.com>
+Message-ID: <CAD=FV=W+sAfu-A0ScE+hzNOd=jxnf+YZgwygPoR-gFqm0b++5A@mail.gmail.com>
+Subject: Re: [PATCH 1/3] panel: simple: Fix size and bpp of BOE NV133FHM-N61
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
         Rob Clark <robdclark@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
         LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -93,117 +76,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Sat, May 9, 2020 at 1:15 PM Sam Ravnborg <sam@ravnborg.org> wrote:
+On Sat, May 9, 2020 at 1:00 PM Sam Ravnborg <sam@ravnborg.org> wrote:
 >
-> Hi Douglas.
+> Hi Douglas
 >
-> On Thu, May 07, 2020 at 02:34:54PM -0700, Douglas Anderson wrote:
+> On Fri, May 08, 2020 at 03:59:00PM -0700, Douglas Anderson wrote:
+> > The BOE NV133FHM-N61 is documented in the original commit to be a
+> > 13.3" panel, but the size listed in our struct doesn't match.
+> > Specifically:
 > >
-> > As talked about in commit c2bfc223882d ("drm/bridge: ti-sn65dsi86:
-> > Remove the mystery delay"), the normal HPD pin on ti-sn65dsi86 is
-> > kinda useless, at least for embedded DisplayPort (eDP).  However,
-> > despite the fact that the actual HPD pin on the bridge is mostly
-> > useless for eDP, the concept of HPD for eDP still makes sense.  It
-> > allows us to optimize out a hardcoded delay that many panels need if
-> > HPD isn't hooked up.  Panel timing diagrams show HPD as one of the
-> > events to measure timing from and we have to assume the worst case if
-> > we can't actually read HPD.
+> >   math.sqrt(30.0 * 30.0 + 18.7 * 18.7) / 2.54 ==> 13.92
 > >
-> > One way to use HPD for eDP without using the mostly useless HPD pin on
-> > ti-sn65dsi86 is to route the panel's HPD somewhere else in the system,
-> > like to a GPIO.  This works great because eDP panels aren't physically
-> > hotplugged.  That means the debouncing logic that caused us problems
-> > wasn't really needed and a raw GPIO works great.
+> > Searching around on the Internet shows that the size that was in the
+> > structure was the "Outline Size", not the "Display Area".  Let's fix
+> > it.
 > >
-> > As per the above, a smart board designer would realize the value of
-> > HPD and choose to route it to a GPIO somewhere on the board to avoid
-> > the silly sn65dsi86 debouncing.  While said "smart designer" could
-> > theoretically route HPD anywhere on the board, a really smart designer
-> > would realize that there are several GPIOs on the bridge itself that
-> > are nearly useless for anything but this purpose and route HPD to one
-> > of those.
+> > Also the Internet says that this panel supports 262K colors.  That's
+> > 6bpp, not 8bpp.
 > >
-> > This series of patches is intended to allow the scenario described
-> > above.
-> >
-> > This patch has been tested on a board that is not yet mainline.  On
-> > the hardware I have:
-> > - Panel spec says HPD could take up to 200 ms to come up, so without
-> >   HPD hooked up we need to delay 200 ms.
-> > - On my board the panel is powered by the same rail as the
-> >   touchscreen.  By chance of probe order the touchscreen comes up
-> >   first.  This means by the time we check HPD in ti_sn_bridge_enable()
-> >   it's already up.  Thus we can use the panel on 200 ms earlier.
-> > - If I measure HPD on this pane it comes up ~56 ms after the panel is
-> >   powered.  This means I can save 144 ms of delay.
-> >
-> > Side effects (though not main goals) of this series are:
-> > - ti-sn65dsi86 GPIOs are now exported in Linux.
-> > - ti-sn65dsi86 bindings are converted to yaml.
-> > - Common panel bindings now have "hpd-gpios" listed.
-> > - The simple-panel driver in Linux can delay in prepare based on
-> >   "hpd-gpios"
-> > - ti-sn65dsi86 bindings (and current user) now specifies "no-hpd"
-> >   if HPD isn't hooked up.
-> >
-> > Changes in v5:
-> > - Use of_xlate so that numbers in dts start at 1, not 0.
-> > - Squash https://lore.kernel.org/r/20200506140208.v2.2.I0a2bca02b09c1fcb6b09479b489736d600b3e57f@changeid/
-> >
-> > Changes in v4:
-> > - Don't include gpio.h
-> > - Use gpiochip_get_data() instead of container_of() to get data.
-> > - GPIOF_DIR_XXX => GPIO_LINE_DIRECTION_XXX
-> > - Use Linus W's favorite syntax to read a bit from a bitfield.
-> > - Define and use SN_GPIO_MUX_MASK.
-> > - Add a comment about why we use a bitmap for gchip_output.
-> > - Tacked on "or is otherwise unusable." to description.
-> >
-> > Changes in v3:
-> > - Becaue => Because
-> > - Add a kernel-doc to our pdata to clarify double-duty of gchip_output.
-> > - More comments about how powering off affects us (get_dir, dir_input).
-> > - Cleanup tail of ti_sn_setup_gpio_controller() to avoid one "return".
-> > - Use a bitmap rather than rolling my own.
-> > - Remind how gpio_get_optional() works in the commit message.
-> > - useful implement => useful to implement
-> >
-> > Changes in v2:
-> > - ("Export...GPIOs") is 1/2 of replacement for ("Allow...bridge GPIOs")
-> > - ("dt-bindings: display: Add hpd-gpios to panel-common...") new for v2
-> > - ("simple...hpd-gpios") is 1/2 of replacement for ("Allow...bridge GPIOs")
-> > - specification => specifier.
-> > - power up => power.
-> > - Added back missing suspend-gpios.
-> > - data-lanes and lane-polarities are are the right place now.
-> > - endpoints don't need to be patternProperties.
-> > - Specified more details for data-lanes and lane-polarities.
-> > - Added old example back in, fixing bugs in it.
-> > - Example i2c bus is just called "i2c", not "i2c1" now.
-> > - ("dt-bindings: drm/bridge: ti-sn65dsi86: Document no-hpd") new for v2.
-> > - ("arm64: dts: sdm845: Add "no-hpd" to sn65dsi86 on cheza") new for v2.
-> >
-> > Douglas Anderson (6):
-> >   drm/bridge: ti-sn65dsi86: Export bridge GPIOs to Linux
-> >   dt-bindings: display: Add hpd-gpios to panel-common bindings
-> >   drm/panel-simple: Support hpd-gpios for delaying prepare()
-> >   dt-bindings: drm/bridge: ti-sn65dsi86: Convert to yaml
-> >   dt-bindings: drm/bridge: ti-sn65dsi86: Document no-hpd
-> >   arm64: dts: sdm845: Add "no-hpd" to sn65dsi86 on cheza
+> > Fixes: b0c664cc80e8 ("panel: simple: Add BOE NV133FHM-N61")
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 >
-> Applied:
-> >   dt-bindings: display: Add hpd-gpios to panel-common bindings
-> >   drm/panel-simple: Support hpd-gpios for delaying prepare()
-> to drm-misc-next.
->
-> The others was missing reviews so we need to wait for feedback.
+> Added to drm-misc-next as I did not think this had to be updated in
+> mainline right now. Let me know if you expect it to land in mainline
+> soonish.
 
-Thanks!
-
-Given the previous feedback from Linus W, Stephen, and Laurent I
-expect things are good enough to land now, but it'd be good to get
-confirmation (I removed some of the previous tags just to get
-confirmation).  If we can get review tags early next week maybe it'll
-still be in time to land for 5.8?
+drm-misc-next is perfect, thanks!
 
 -Doug
