@@ -2,103 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F39C41CBB49
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 01:33:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AF851CBC76
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 04:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727774AbgEHXdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 May 2020 19:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48804 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727934AbgEHXdx (ORCPT
+        id S1728158AbgEIC06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 May 2020 22:26:58 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:54989 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728353AbgEIC05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 May 2020 19:33:53 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1EBC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2020 16:33:52 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id f7so1765633pfa.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2020 16:33:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aH8P4+Ei6pqqMKSRAGY6lrlBj9MTJLPAq1y54tH7x5M=;
-        b=c2jrSafQfRhEZd9jTfLKbDy93UfmN/2t2IeoD8u5JqRk43Wn2SFjno2k+3fw8Ww7ha
-         m/86nRlyZIcjbgT65I6GDky8MnlZk9UJacJo9vtbWrY6C2A8oO28CkrUfd8wSgbGF8ot
-         w3YXATiZu/A7UtV8gDeP4jKT01vaiwWb7Walg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aH8P4+Ei6pqqMKSRAGY6lrlBj9MTJLPAq1y54tH7x5M=;
-        b=DZXF5LNfcMNBTxP/+OeUcoDTpRUnjm/z47t9Wvyg+ho1EgTpyhT3Z+EWyNaS7Qp8LC
-         66PAXbeF6lBOtCf1GdEKQ6gDeCFGufnhKcmZYAIcGbkgy9MAAKTO/J6AAh2Lpkso/vPU
-         5KvtmVDNRxc9FK3kU+IXVhPB/yunuLUElVb+ZgfFMezJtSs5EmuGhOe6LuKMRx814V8M
-         TCLaV8dcPYxTkKtlIplCvHTCr+RNStsonF4qFiW1IQ4IJm1EJ+grOyI5jacWiQV6HOl/
-         wBGiHrBaGi7EQF5nwrC58m9kbIAuNSksxOfjFxgAlqgPBZXDD3TsvCx8z1MzVo/SKmNN
-         5ZyA==
-X-Gm-Message-State: AGi0PuZv5vbh5Q77YHif7ZM22PLoVn+9HAW89Y8a+fgy/t54kysTF5Nh
-        TYIdfLWocQoS77SeJFXLcLy4fw==
-X-Google-Smtp-Source: APiQypJvhMuGbXg+gBKnMJeVTmbSCsAWmHD2jkpOVJl3TZQ859+Dq6ODnzjWWTM/O3Ntaprp3YQ5hw==
-X-Received: by 2002:a63:575f:: with SMTP id h31mr3707439pgm.200.1588980831399;
-        Fri, 08 May 2020 16:33:51 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id p66sm2713991pfb.65.2020.05.08.16.33.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2020 16:33:50 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Cc:     linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
-        robdclark@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/bridge: ti-sn65dsi86: Clear old error bits before AUX transfers
-Date:   Fri,  8 May 2020 16:33:29 -0700
-Message-Id: <20200508163314.1.Idfa69d5d3fc9623083c0ff78572fea87dccb199c@changeid>
-X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Fri, 8 May 2020 22:26:57 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1588991217; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=YtPxi5kfb+cESe9JYSmogjGyixblplgPG0hQEsBH8Jw=; b=C42SvG0bIU+85i2ZZH3W81M7knwxgyjXlEvS8a+ipPoJQiJ8YrdkW6o/p80vOUauyNRtraje
+ PSKxz2gQtmTY8mTHKMXPA06yaQYIpzZjPRgbclYQjpBlv01Dzbvhw17REnQS+0kCVd9DjWB5
+ 0Ln5m3wDT0RHzwATK1sr5yijNKA=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eb614f0.7f4f9b90d6f8-smtp-out-n05;
+ Sat, 09 May 2020 02:26:56 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A1B9AC43636; Sat,  9 May 2020 02:26:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from bbhatt-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C0BBBC433F2;
+        Sat,  9 May 2020 02:26:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C0BBBC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk@codeaurora.org, jhugo@codeaurora.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v7 0/8] Bug fixes and improved logging in MHI
+Date:   Fri,  8 May 2020 19:26:40 -0700
+Message-Id: <1588991208-26928-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The AUX channel transfer error bits in the status register are latched
-and need to be cleared.  Clear them before doing our transfer so we
-don't see old bits and get confused.
+A set of patches for bug fixes and improved logging in mhi/core/boot.c.
+Verified on x86 and arm64 platforms.
 
-Without this patch having a single failure would mean that all future
-transfers would look like they failed.
+v7:
+-Updated commit text for macro inclusion
+-Updated channel ID bound checks
+-Fixed non-uniform placement of function parameters to be within 80 characters
+-Sent to correct Maintainer email ID
 
-Fixes: b814ec6d4535 ("drm/bridge: ti-sn65dsi86: Implement AUX channel")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+v6:
+-Updated the MHI_RANDOM_U32_NONZERO to only give a random number upto the
+supplied bitmask
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+v5:
+-Updated the macro MHI_RANDOM_U32_NONZERO to take a bitmask as the input
+parameter and output a non-zero value between 1 and U32_MAX
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 6ad688b320ae..d865cc2565bc 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -827,6 +827,12 @@ static ssize_t ti_sn_aux_transfer(struct drm_dp_aux *aux,
- 				     buf[i]);
- 	}
- 
-+	/* Clear old status bits before start so we don't get confused */
-+	regmap_write(pdata->regmap, SN_AUX_CMD_STATUS_REG,
-+		     AUX_IRQ_STATUS_NAT_I2C_FAIL |
-+		     AUX_IRQ_STATUS_AUX_RPLY_TOUT |
-+		     AUX_IRQ_STATUS_AUX_SHORT);
-+
- 	regmap_write(pdata->regmap, SN_AUX_CMD_REG, request_val | AUX_CMD_SEND);
- 
- 	ret = regmap_read_poll_timeout(pdata->regmap, SN_AUX_CMD_REG, val,
+v4:
+-Dropped the change: bus: mhi: core: WARN_ON for malformed vector table
+-Updated bus: mhi: core: Read transfer length from an event properly to include
+parse rsc events
+-Use prandom_u32_max() instead of prandom_u32 to avoid if check in
+bus: mhi: core: Ensure non-zero session or sequence ID values are used
+
+v3:
+-Fixed signed-off-by tags
+-Add a refactor patch for MHI queue APIs
+-Commit text fix in bus: mhi: core: Read transfer length from an event properly
+-Fix channel ID range check for ctrl and data event rings processing
+
+v2:
+-Fix channel ID range check potential infinite loop
+-Add appropriate signed-off-by tags
+
+Bhaumik Bhatt (4):
+  bus: mhi: core: Handle firmware load using state worker
+  bus: mhi: core: Return appropriate error codes for AMSS load failure
+  bus: mhi: core: Improve debug logs for loading firmware
+  bus: mhi: core: Ensure non-zero session or sequence ID values are used
+
+Hemant Kumar (4):
+  bus: mhi: core: Refactor mhi queue APIs
+  bus: mhi: core: Cache intmod from mhi event to mhi channel
+  bus: mhi: core: Add range check for channel id received in event ring
+  bus: mhi: core: Read transfer length from an event properly
+
+ drivers/bus/mhi/core/boot.c     |  75 +++++++++----------
+ drivers/bus/mhi/core/init.c     |   5 +-
+ drivers/bus/mhi/core/internal.h |   5 +-
+ drivers/bus/mhi/core/main.c     | 156 +++++++++++++++++++++-------------------
+ drivers/bus/mhi/core/pm.c       |   6 +-
+ include/linux/mhi.h             |   2 -
+ 6 files changed, 129 insertions(+), 120 deletions(-)
+
 -- 
-2.26.2.645.ge9eca65c58-goog
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
