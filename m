@@ -2,187 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E74BA1CC084
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 12:48:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18BED1CC12D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 14:11:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727838AbgEIKsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 May 2020 06:48:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39874 "EHLO
+        id S1727093AbgEIMLo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 May 2020 08:11:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726877AbgEIKsS (ORCPT
+        by vger.kernel.org with ESMTP id S1726782AbgEIMLn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 May 2020 06:48:18 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B09BC061A0C;
-        Sat,  9 May 2020 03:48:18 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id r26so13400642wmh.0;
-        Sat, 09 May 2020 03:48:18 -0700 (PDT)
+        Sat, 9 May 2020 08:11:43 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6422DC061A0C;
+        Sat,  9 May 2020 05:11:43 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id h12so6062976pjz.1;
+        Sat, 09 May 2020 05:11:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KPkpTBXFZk8/9lQwGo/IWPlBj9LHEhRMLSp+d9p19Sc=;
-        b=Tr8y0xKXAra5GctwNvLtRyAa1bba2IwoqopYCSTNHICLbOXZewzdKG3+udL1UvFsh0
-         lNiKP14hDcrxr64CbT5564HTEDJ4WPTLmMe8uAA84YyfqxxHW9/OyFLysZqeaKu5Cq8R
-         7ME8lRPiqLeOlcacLG/JJICWBqAuafxmgACnP7pBZsuBk1AsX7k6fcfFbIqNiQyeQmjD
-         qKMoe6YWOalzhwiYIlNfusY9r3SqQcDtMzVex3TZFjcPhRZgxTK5s66919wAkoOey45B
-         b030+OHYlYaXzynu/V2dsq5Vzp4+nWzFKDqLRHN1/dft0MhE/sDZeCcZIzv0cMtYvsVm
-         yA9Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/wlJFZjwuM81Jh/anwiOMAgeJWfW7ajnVCis2G3dl9k=;
+        b=dKc+TMdVfruQ8XRDND37cvnLytXndIhsz15FSm3KMnB9sjom5WRjcOrEvJU+yPeS5m
+         uLGz8hq/6wUQa1UkJ6D9OOEWccrMgIgPRCSIg41TqPjfkTuKUC0Ehrb+iO1d1/2GLrOm
+         /fKTPoievZIameK2E1CPZF8ocqWO3Z/8TRLiqbEGadpMGPJn0yM6uLIs+CgTu4DUWr7y
+         eICNRW91C5opv2i6zQ/H16dMo5H6yMCP35TW1giskIX62HHVkbyL2rmiTQ+sX9p12pPZ
+         Jah2nAq0kBHiHiaNOja7ue0FFq5bhpEQjX4Ou6kmfYW07JR8EQFVw7saNPEW96vRu0/p
+         8Rcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KPkpTBXFZk8/9lQwGo/IWPlBj9LHEhRMLSp+d9p19Sc=;
-        b=MDWFr3C+/9aat/Rt3NnQ0v/ycjyF4knr6/PTE2+5FOmYgJDNSCvYlZ64CdAlQTpOKT
-         dknvzNGl8caIKVrasCUNlMAUWgT6RZDTW+9Sc5aN2j0izc9hE0Ke1S1FFkgFB4V6a0Ui
-         kxr/07xGlUxEGDNGMV43UWdKrIoplOUiD1aijT7EWd82p68mU9hO7VsruobMFHWxJ8Vo
-         FHfGBpnrkOtnQIp0XPlHXoSo3IpSrge0k954vg6Xs5sgyryRibx4OxVDNhGUFTWb06Py
-         UZppFE1Gjzp8gxghE4fkZiiFPEeavAQtX+Qe/i33QZdMuhB9FfVyDyEqoeQ2PNruGpCP
-         3Mbg==
-X-Gm-Message-State: AGi0PuaqL9iFjNj9NrAUyfYjKc8WwTz7nVkqdwhNlER6y8hPlI7Rb6rc
-        JNMEcTSuHYUmNfXxZBR7lAI=
-X-Google-Smtp-Source: APiQypKzJQGVgMUTZFyTGkaa+3CHh+R+8aV9dtiRSenGbepLQYS189mR2vWZ/oegBvt0gO7U8I+WjA==
-X-Received: by 2002:a05:600c:24cf:: with SMTP id 15mr20121734wmu.94.1589021296925;
-        Sat, 09 May 2020 03:48:16 -0700 (PDT)
-Received: from localhost.localdomain (abag125.neoplus.adsl.tpnet.pl. [83.6.170.125])
-        by smtp.googlemail.com with ESMTPSA id p7sm7819484wrf.31.2020.05.09.03.48.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 May 2020 03:48:16 -0700 (PDT)
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        zhengbin <zhengbin13@huawei.com>,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [v2 PATCH] drivers: gpu: drm: Add MDP5 configuration for MSM8x36.
-Date:   Sat,  9 May 2020 12:48:10 +0200
-Message-Id: <20200509104812.202981-1-konradybcio@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/wlJFZjwuM81Jh/anwiOMAgeJWfW7ajnVCis2G3dl9k=;
+        b=hBSOicqiMoRvQ1+95fkuDEIgq954Ssij6PrQLa2WsiDEGxpO/m6OCYqr/YLIK0PAhL
+         9Z+ScU431BFPewKX2WzmbLkb0Oy8Dy2JHC22QJlhItxp0tFvEPHkoL44ONNZR2ukhQn8
+         GM78JBbnJ+8uQGl5tOUW+q35ij9PKW2VYWKoOAgGktu7lm3JZDuQSQdoPI8JjTzKsQOa
+         FBQhRkzZAM77Q/+8+m0kNzZi+zpkg01akDdrQXFJXyIVoX5iv9ciBJ1mSBzZpH/vrS7M
+         339HsfyYA72cpUg+C0OlHatXNxC4OPQXHuHmEkPxgu2LslWbPI+sg02baWTVWmYmWje9
+         +Q2w==
+X-Gm-Message-State: AGi0PualsD2RU/X9pST9Rw80C4HX1EAELEXi8gcTxHS47/7haxh8Vlyl
+        M/AnUdY0EHZN4bu4sUBvD5eCH38/8mqpoDE5SxzGgzfq
+X-Google-Smtp-Source: APiQypI4sdcR01RdvjwOkHbMaSexjDF1WdE/GFMDiJPbhE1E1Lit7yy20vvFbGNhhAxdgjUqXNuG191HfxC7kMjnnGw=
+X-Received: by 2002:a17:90b:94a:: with SMTP id dw10mr11427305pjb.228.1589026302658;
+ Sat, 09 May 2020 05:11:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org> <1588919619-21355-3-git-send-email-akashast@codeaurora.org>
+In-Reply-To: <1588919619-21355-3-git-send-email-akashast@codeaurora.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Sat, 9 May 2020 15:11:31 +0300
+Message-ID: <CAHp75Vdjz7RBbyPwZwvNq5njwb_Jc76U=3pDpswmoFCFaGtNAQ@mail.gmail.com>
+Subject: Re: [PATCH V5 2/7] soc: qcom-geni-se: Add interconnect support to fix
+ earlycon crash
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>, agross@kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@the-dreams.de>,
+        Mark Brown <broonie@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-i2c <linux-i2c@vger.kernel.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org,
+        "open list:SERIAL DRIVERS" <linux-serial@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change adds MDP5 configuration for MSM8x36-based SoCs,
-like MSM8936, 8939 and their APQ variants.
-The configuration is based on MSM8916's, but adds some notable
-features, like ad and pp blocks, along with some register
-changes.
+On Fri, May 8, 2020 at 9:34 AM Akash Asthana <akashast@codeaurora.org> wrote:
+>
+> QUP core clock is shared among all the SE drivers present on particular
+> QUP wrapper, the system will reset(unclocked access) if earlycon used after
+> QUP core clock is put to 0 from other SE drivers before real console comes
+> up.
+>
+> As earlycon can't vote for it's QUP core need, to fix this add ICC
+> support to common/QUP wrapper driver and put vote for QUP core from
+> probe on behalf of earlycon and remove vote during earlycon exit call.
 
-changes since v1:
-- add an ad block
-- add a second mixer @ 0x47000
-- adjust .max_width
-- write a more descriptive commit message
+...
 
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 76 ++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
+> +       for_each_child_of_node(parent, child) {
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index e3c4c250238b7..a7df8dbffdc2b 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -342,6 +342,81 @@ static const struct mdp5_cfg_hw msm8x16_config = {
- 	.max_clk = 320000000,
- };
- 
-+static const struct mdp5_cfg_hw msm8x36_config = {
-+	.name = "msm8x36",
-+	.mdp = {
-+		.count = 1,
-+		.base = { 0x0 },
-+		.caps = MDP_CAP_SMP |
-+			0,
-+	},
-+	.smp = {
-+		.mmb_count = 8,
-+		.mmb_size = 10240,
-+		.clients = {
-+			[SSPP_VIG0] = 1, [SSPP_DMA0] = 4,
-+			[SSPP_RGB0] = 7, [SSPP_RGB1] = 8,
-+		},
-+	},
-+	.ctl = {
-+		.count = 3,
-+		.base = { 0x01000, 0x01200, 0x01400 },
-+		.flush_hw_mask = 0x4003ffff,
-+	},
-+	.pipe_vig = {
-+		.count = 1,
-+		.base = { 0x04000 },
-+		.caps = MDP_PIPE_CAP_HFLIP | MDP_PIPE_CAP_VFLIP |
-+				MDP_PIPE_CAP_SCALE | MDP_PIPE_CAP_CSC |
-+				MDP_PIPE_CAP_DECIMATION,
-+	},
-+	.pipe_rgb = {
-+		.count = 2,
-+		.base = { 0x14000, 0x16000 },
-+		.caps = MDP_PIPE_CAP_HFLIP | MDP_PIPE_CAP_VFLIP |
-+				MDP_PIPE_CAP_DECIMATION,
-+	},
-+	.pipe_dma = {
-+		.count = 1,
-+		.base = { 0x24000 },
-+		.caps = MDP_PIPE_CAP_HFLIP | MDP_PIPE_CAP_VFLIP,
-+	},
-+	.lm = {
-+		.count = 2,
-+		.base = { 0x44000, 0x47000 },
-+		.instances = {
-+				{ .id = 0, .pp = 0, .dspp = 0,
-+				  .caps = MDP_LM_CAP_DISPLAY, },
-+				{ .id = 1, .pp = -1, .dspp = -1,
-+				  .caps = MDP_LM_CAP_WB, },
-+				},
-+		.nb_stages = 8,
-+		.max_width = 2560,
-+		.max_height = 0xFFFF,
-+	},
-+	.pp = {
-+		.count = 1,
-+		.base = { 0x70000 },
-+	},
-+	.ad = {
-+		.count = 1,
-+		.base = { 0x78000 },
-+	},
-+	.dspp = {
-+		.count = 1,
-+		.base = { 0x54000 },
-+	},
-+	.intf = {
-+		.base = { 0x00000, 0x6a800, 0x6b000 },
-+		.connect = {
-+			[0] = INTF_DISABLED,
-+			[1] = INTF_DSI,
-+			[2] = INTF_DSI,
-+		},
-+	},
-+	.max_clk = 366670000,
-+};
-+
- static const struct mdp5_cfg_hw msm8x94_config = {
- 	.name = "msm8x94",
- 	.mdp = {
-@@ -840,6 +915,7 @@ static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
- 	{ .revision = 2, .config = { .hw = &msm8x74v2_config } },
- 	{ .revision = 3, .config = { .hw = &apq8084_config } },
- 	{ .revision = 6, .config = { .hw = &msm8x16_config } },
-+	{ .revision = 8, .config = { .hw = &msm8x36_config } },
- 	{ .revision = 9, .config = { .hw = &msm8x94_config } },
- 	{ .revision = 7, .config = { .hw = &msm8x96_config } },
- 	{ .revision = 11, .config = { .hw = &msm8x76_config } },
+> +               if (of_device_is_compatible(child, "qcom,geni-se-qup")) {
+
+if (!...)
+ continue;
+
+will save you a readability of the loop body.
+
+Or...
+
+> +                       wrapper = platform_get_drvdata(of_find_device_by_node(
+> +                                       child));
+
+...leave this on one line
+
+> +                       icc_put(wrapper->to_core.path);
+> +                       wrapper->to_core.path = NULL;
+> +               }
+
+And here is the question, what do you want to do if you find more
+devices with the same compatible string?
+
+> +       }
+
 -- 
-2.26.2
-
+With Best Regards,
+Andy Shevchenko
