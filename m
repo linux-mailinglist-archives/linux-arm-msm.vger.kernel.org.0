@@ -2,75 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26A721CBE96
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 09:53:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B6F01CBF19
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2020 10:33:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725930AbgEIHxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 May 2020 03:53:12 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190]:4371 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725920AbgEIHxM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 May 2020 03:53:12 -0400
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id 9064E33347D0D4770EB6;
-        Sat,  9 May 2020 15:53:06 +0800 (CST)
-Received: from localhost.localdomain.localdomain (10.175.113.25) by
- DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
- 14.3.487.0; Sat, 9 May 2020 15:52:57 +0800
-From:   Wei Yongjun <weiyongjun1@huawei.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>
-CC:     Wei Yongjun <weiyongjun1@huawei.com>,
-        <linux-arm-msm@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        Hulk Robot <hulkci@huawei.com>
-Subject: [PATCH -next] bus: mhi: core: Fix some error return code
-Date:   Sat, 9 May 2020 07:56:54 +0000
-Message-ID: <20200509075654.175002-1-weiyongjun1@huawei.com>
-X-Mailer: git-send-email 2.20.1
+        id S1728060AbgEIIcc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 May 2020 04:32:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47150 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728056AbgEIIcb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 9 May 2020 04:32:31 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81770C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 May 2020 01:32:31 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id f6so2034274pgm.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 May 2020 01:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=peLvqahApCXlAKnnF8w/bg1cqALJbiZS/A1EF+xPi00=;
+        b=LrbMYBHzrTEwUubsD4bXrHd/O12wcfnLcBB2xQEAly6vOFT1BbjY/OqmXAH2/UgrNe
+         Bn2Ntnvlc6r64PRHhJdWxMwdWuWrDeGeaJCa6Y5mRpDFTa9XTtWM919aSunq6GHWU9K0
+         aHVu8iGJBhVUs03cl/333GJrymWHOWRgkAPM53+dXf8LAlErRZQuQGtFxe96Wr743hkm
+         mXcbSS2jWNM8RRZqxVgNqCy9bQNpWbG9RPEH0nG7QER5kRsNLQaSyf7BFIupJpVOHYin
+         y0vKJKK71+7a7+wddE17YP3Fgc22b5V9aNw7LcMvUBa7ezSd3tOYnGhnutguBQAjT5Wh
+         gB1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=peLvqahApCXlAKnnF8w/bg1cqALJbiZS/A1EF+xPi00=;
+        b=NWtEv3Uej/6ZyutWBPEJShuS+Q+S7BlSpaS54OpNEaG02DtxSqi+cNJlgg8NasWA7a
+         Qv4QAsmctJOQBokOwWFvKLz1sDNjX7bpBah+sfqZ85I+0wprhI1hFNoQ2X4m2REnkF1l
+         9hnQf5jasj16KShhIryZOMiiDb+8iGTnkd27WSrYXzIu6rxuFQX1e9jtcMpLaVoP+moG
+         YeDYoKsqrp69Tcr+hCpbNDnMCxIoEBcZnVlqHqoIW6TcOm/BGPSBu7gmxFseIVRgggSI
+         incDFmkUZiIlw8kj3iKD1KU8tNbBVmMp0+O+vGmuGiBcobljWiDcWJhZgRBitBgCi4Je
+         fsSw==
+X-Gm-Message-State: AGi0PubBdgyqUGV2S41JHBI5vVq1l1U9pRcrBYsL7D8tYRUpVyu6Kmjg
+        /eEWUqpPPK+fe4ZzXa1+HyJC44McmA==
+X-Google-Smtp-Source: APiQypKCtnP3YGP/0tbBzeoYE1Kt/ecQul45s9TbKG8s3Zx0j34tYMOJO44U4dTeAf9UBrLGuJRYVg==
+X-Received: by 2002:aa7:9ac9:: with SMTP id x9mr6681146pfp.304.1589013150928;
+        Sat, 09 May 2020 01:32:30 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6e0c:55d2:2cb4:da01:ad1e:6ad9])
+        by smtp.gmail.com with ESMTPSA id h13sm3044895pgm.69.2020.05.09.01.32.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 09 May 2020 01:32:30 -0700 (PDT)
+Date:   Sat, 9 May 2020 14:02:23 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk@codeaurora.org, jhugo@codeaurora.org
+Subject: Re: [PATCH v7 0/8] Bug fixes and improved logging in MHI
+Message-ID: <20200509083222.GJ5845@Mani-XPS-13-9360>
+References: <1588991208-26928-1-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Originating-IP: [10.175.113.25]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1588991208-26928-1-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix to return negative error code from the error handling case
-instead of 0 in mhi_init_dev_ctxt() and mhi_driver_probe().
+Hi Bhaumik,
 
-Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
----
- drivers/bus/mhi/core/init.c | 2 ++
- 1 file changed, 2 insertions(+)
+On Fri, May 08, 2020 at 07:26:40PM -0700, Bhaumik Bhatt wrote:
+> A set of patches for bug fixes and improved logging in mhi/core/boot.c.
+> Verified on x86 and arm64 platforms.
+> 
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index eb2ab058a01d..1f8c82603179 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -291,6 +291,7 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
- 	}
- 
- 	/* Setup cmd context */
-+	ret = -ENOMEM;
- 	mhi_ctxt->cmd_ctxt = mhi_alloc_coherent(mhi_cntrl,
- 						sizeof(*mhi_ctxt->cmd_ctxt) *
- 						NR_OF_CMD_RINGS,
-@@ -1100,6 +1101,7 @@ static int mhi_driver_probe(struct device *dev)
- 		}
- 	}
- 
-+	ret = -EINVAL;
- 	if (dl_chan) {
- 		/*
- 		 * If channel supports LPM notifications then status_cb should
+Series applied to mhi-next! I'll wait for one more -rc before sending the
+final series to Greg for v5.8. If any other series gets reviewed by that point,
+I'll club them together for the final one.
 
+Thanks,
+Mani
 
-
+> v7:
+> -Updated commit text for macro inclusion
+> -Updated channel ID bound checks
+> -Fixed non-uniform placement of function parameters to be within 80 characters
+> -Sent to correct Maintainer email ID
+> 
+> v6:
+> -Updated the MHI_RANDOM_U32_NONZERO to only give a random number upto the
+> supplied bitmask
+> 
+> v5:
+> -Updated the macro MHI_RANDOM_U32_NONZERO to take a bitmask as the input
+> parameter and output a non-zero value between 1 and U32_MAX
+> 
+> v4:
+> -Dropped the change: bus: mhi: core: WARN_ON for malformed vector table
+> -Updated bus: mhi: core: Read transfer length from an event properly to include
+> parse rsc events
+> -Use prandom_u32_max() instead of prandom_u32 to avoid if check in
+> bus: mhi: core: Ensure non-zero session or sequence ID values are used
+> 
+> v3:
+> -Fixed signed-off-by tags
+> -Add a refactor patch for MHI queue APIs
+> -Commit text fix in bus: mhi: core: Read transfer length from an event properly
+> -Fix channel ID range check for ctrl and data event rings processing
+> 
+> v2:
+> -Fix channel ID range check potential infinite loop
+> -Add appropriate signed-off-by tags
+> 
+> Bhaumik Bhatt (4):
+>   bus: mhi: core: Handle firmware load using state worker
+>   bus: mhi: core: Return appropriate error codes for AMSS load failure
+>   bus: mhi: core: Improve debug logs for loading firmware
+>   bus: mhi: core: Ensure non-zero session or sequence ID values are used
+> 
+> Hemant Kumar (4):
+>   bus: mhi: core: Refactor mhi queue APIs
+>   bus: mhi: core: Cache intmod from mhi event to mhi channel
+>   bus: mhi: core: Add range check for channel id received in event ring
+>   bus: mhi: core: Read transfer length from an event properly
+> 
+>  drivers/bus/mhi/core/boot.c     |  75 +++++++++----------
+>  drivers/bus/mhi/core/init.c     |   5 +-
+>  drivers/bus/mhi/core/internal.h |   5 +-
+>  drivers/bus/mhi/core/main.c     | 156 +++++++++++++++++++++-------------------
+>  drivers/bus/mhi/core/pm.c       |   6 +-
+>  include/linux/mhi.h             |   2 -
+>  6 files changed, 129 insertions(+), 120 deletions(-)
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
