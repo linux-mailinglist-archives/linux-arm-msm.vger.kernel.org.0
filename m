@@ -2,55 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81A621CD409
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 10:34:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B20D11CD55D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 11:36:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728454AbgEKIel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 04:34:41 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:53066 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729089AbgEKIek (ORCPT
+        id S1728341AbgEKJgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 05:36:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50110 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725790AbgEKJgC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 04:34:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589186079; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=HW3utqtp4BWVdYE+diHc7x+j4fFpQqSh4h84hivsY/I=; b=PFshIi9UoCmeWxyNUM7UzovUpks8jYphi9Q1uedNasuQhfidNM3EojU20myC3JTWwXxz7lOE
- /jvd2aEpKTdzIK327eHv5Ytj9CJxNnbDDmi35eHPF2roe7wOncxSt/EOCD8TPc6RHEx80rn+
- Pg51Y/HX6KzxMDc+lcXheWr77m4=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eb90e0d.7f2e1fd9b880-smtp-out-n05;
- Mon, 11 May 2020 08:34:21 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AF926C433BA; Mon, 11 May 2020 08:34:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54B11C432C2;
-        Mon, 11 May 2020 08:34:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54B11C432C2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, coresight@lists.linaro.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] coresight: replicator: Reset replicator if context is lost
-Date:   Mon, 11 May 2020 14:04:00 +0530
-Message-Id: <20200511083400.26554-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
+        Mon, 11 May 2020 05:36:02 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172D2C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 02:36:02 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id g12so18366958wmh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 02:36:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GPf4uEQTc/afTL7c/d2cSeqRiW2RQV3fjrBit70wmW4=;
+        b=WOk5qAdJnGfzedSYVjf9nBySpoGM+n2oOhUsj1JX9TIbBH8jTCWX2rsyBduOMQCSc7
+         neKaN8es7sL9BwmHgzRQCqOJyE9qnPM80O5sRkjxPrHc9R6U3W/hmK9HzJHex4UHmHjX
+         jK07NS0y3glRT5GD/LViGMTUeQNL/dzkeL3Ho=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GPf4uEQTc/afTL7c/d2cSeqRiW2RQV3fjrBit70wmW4=;
+        b=r2fHGK1JaO5L6G9pdVqN4I2CbWCT991R6/UY/qoCKnaLPRCfD+cElvJ+FKHuWkXkvr
+         DT3vVIfJeYPERjHt8dg2vxZl4WaKvcB1gLBCUgB4OylDYnUhVsjwBTcW2j7Jq9KEi3Hu
+         KA7qbaZRf/BdfHVQlW9rnGp24lNeCy49AoIWz9p/egn+bzSywNgFnTPWZtvaFK8tPpWT
+         SdjZPbo6GqWhhOCk3syB0WNYrOKytaoCWGFjgMB+YfkzICaKXks5dxaLy0vcBdNk2ZbH
+         iqpqAJggMSQhc6kd/8CEhapStKdIaLxJa/VeoGRjfClCDG4Xa2AD0kdQ5bZsiDyxHA5Z
+         1Mfw==
+X-Gm-Message-State: AGi0PuZruk5+bwRlhmgFbp3BBlm3boXe+FXCshfAqQPivNYoev72btBa
+        qDnkkBytJxigsZHA2RY1/kKdrXQm/h8=
+X-Google-Smtp-Source: APiQypLI5J/YwNBWeinmIVZanIUCMAm2cxmh3WAHdA3Qh3SfT+IosHz9CBc6cX7rogzLt2gPdQQ8nQ==
+X-Received: by 2002:a1c:a102:: with SMTP id k2mr9162940wme.39.1589189760853;
+        Mon, 11 May 2020 02:36:00 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id q17sm9013945wmk.36.2020.05.11.02.35.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2020 02:36:00 -0700 (PDT)
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+To:     DRI Development <dri-devel@lists.freedesktop.org>
+Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 1/9] drm/msm: Don't call dma_buf_vunmap without _vmap
+Date:   Mon, 11 May 2020 11:35:46 +0200
+Message-Id: <20200511093554.211493-2-daniel.vetter@ffwll.ch>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200511093554.211493-1-daniel.vetter@ffwll.ch>
+References: <20200511093554.211493-1-daniel.vetter@ffwll.ch>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -58,45 +65,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some QCOM SoCs, replicators in Always-On domain loses its
-context as soon as the clock is disabled. Currently as a part
-of pm_runtime workqueue, clock is disabled after the replicator
-is initialized by amba_pm_runtime_suspend assuming that context
-is not lost which is not true for replicators with such
-limitations. Hence check the replicator idfilter registers
-in dynamic_replicator_enable() and reset again.
+I honestly don't exactly understand what's going on here, but the
+current code is wrong for sure: It calls dma_buf_vunmap without ever
+calling dma_buf_vmap.
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+What I'm not sure about is whether the WARN_ON is correct:
+- msm imports dma-buf using drm_prime_sg_to_page_addr_arrays. Which is
+  a pretty neat layering violation of how you shouldn't peek behind
+  the curtain of the dma-buf exporter, but par for course. Note that
+  all the nice new helpers don't (and we should probably have a bit a
+  warning about this in the kerneldoc).
+
+- but then in the get_vaddr() in msm_gem.c, and that seems to happily
+  wrap a vmap() around any object with ->pages set (so including
+  imported dma-buf)
+
+- I'm not seeing any guarantees that userspace can't use an imported
+  dma-buf for e.g. MSM_SUBMIT_CMD_BUF in a5xx_submit_in_rb, so no
+  guarantees that an imported dma-buf won't end up with a ->vaddr set.
+
+But even if that WARN_ON is wrong, cleaning up a vmap() done by msm by
+calling dma_buf_vmap is the wrong thing to do.
+
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
 ---
+ drivers/gpu/drm/msm/msm_gem.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-More info here - https://lore.kernel.org/patchwork/patch/1231182/
-
----
- drivers/hwtracing/coresight/coresight-replicator.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/drivers/hwtracing/coresight/coresight-replicator.c b/drivers/hwtracing/coresight/coresight-replicator.c
-index e7dc1c31d20d..11df63f51071 100644
---- a/drivers/hwtracing/coresight/coresight-replicator.c
-+++ b/drivers/hwtracing/coresight/coresight-replicator.c
-@@ -68,6 +68,17 @@ static int dynamic_replicator_enable(struct replicator_drvdata *drvdata,
- 	int rc = 0;
- 	u32 reg;
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 5a6a79fbc9d6..3305a457960e 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -907,8 +907,7 @@ static void free_object(struct msm_gem_object *msm_obj)
+ 	put_iova(obj);
  
-+	/*
-+	 * On some QCOM SoCs with replicators in Always-On domain, disabling
-+	 * clock will result in replicator losing its context. Currently
-+	 * as a part of pm_runtime workqueue, amba_pm_runtime_suspend disables
-+	 * clock assuming the context is not lost which is not true for cases
-+	 * with hardware limitations as the above.
-+	 */
-+	if ((readl_relaxed(drvdata->base + REPLICATOR_IDFILTER0) == 0) &&
-+	    (readl_relaxed(drvdata->base + REPLICATOR_IDFILTER1) == 0))
-+		dynamic_replicator_reset(drvdata);
-+
- 	switch (outport) {
- 	case 0:
- 		reg = REPLICATOR_IDFILTER0;
+ 	if (obj->import_attach) {
+-		if (msm_obj->vaddr)
+-			dma_buf_vunmap(obj->import_attach->dmabuf, msm_obj->vaddr);
++		WARN_ON(msm_obj->vaddr);
+ 
+ 		/* Don't drop the pages for imported dmabuf, as they are not
+ 		 * ours, just free the array we allocated:
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.2
+
