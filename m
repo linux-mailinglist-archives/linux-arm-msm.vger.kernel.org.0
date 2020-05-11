@@ -2,99 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 505F51CE76D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 23:28:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D038E1CE8CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 01:05:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725860AbgEKV2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 17:28:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725810AbgEKV2S (ORCPT
+        id S1727067AbgEKXFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 19:05:39 -0400
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:36551 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725836AbgEKXFi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 17:28:18 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84AC6C061A0C;
-        Mon, 11 May 2020 14:28:16 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id y16so5656282wrs.3;
-        Mon, 11 May 2020 14:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZMZjW73mpC0xf7aOeUO3KofewvEynGV+TSklGgHPDCE=;
-        b=QoIDfMJFKM0pxVu3Gthdx/Bs7sDwRhRKjPcBbRALOEOmvxibo/V0esB/uWaYBO45nk
-         n+CeIYr+Df9R7Z8AfNyvXvGwK0qBnMlrCujn08owf9m8TknKtD4cFIBqEyNcPElKmr+X
-         AiG+xDkvlqE1BMysPjuU4QOlBBqwBjsmNeP1J6XHMr9L8n/kCNuR8FVN61XacIbqbx1M
-         b1SZplrHlbQjCUSqwIPmAuilPgRDBWWIbREHQ1d3rx+GG05S3H56gO5PFjCIE1JvIKaR
-         SFo+WKV4zLM6Xm13hDsACNF4ArZ7A/ZXIyH3kP0iSFSW9HE/HbDZBBOO7mSQN8kf4ViK
-         Qrhw==
+        Mon, 11 May 2020 19:05:38 -0400
+Received: by mail-oi1-f193.google.com with SMTP id x7so15730423oic.3;
+        Mon, 11 May 2020 16:05:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZMZjW73mpC0xf7aOeUO3KofewvEynGV+TSklGgHPDCE=;
-        b=biGZrF6RzMMdwGq4xPotnUPGq3563UR9B5qtJ1XrgqpyaFBdZfxEXvjaBpwcQ6aCa5
-         CMDHfNo388+IOUszHHZh9iSk8MItidbievvNGdqsdohtW41s2h7qVECFrd2xkVDwO28R
-         qGF8za8sj6RLtym4MxARy2M77hKz9Q9fFBMTVoPwLVVPrmFs1+C3HoVucM/qWvFlYhSu
-         UuMjGkAaPTQo74H06rXlwmz3ePCUQIo5KuvshJOQ7dOIBC9UeTGvsgBGlgoZ2Iog5q68
-         9gojJ1q4M16NdCO7YM4oCWcLvixohG060pQMXwDQDvanUEwQ9GJFpsC7SULCPutjt2Dl
-         qSNw==
-X-Gm-Message-State: AGi0PuYWXZ5Qswda5xcpxBosZdWN2Usk2p6IUvS9rDiFjU3Y6ZrA7w1w
-        hPVsmNN1+5aocEUBpzZk9Sk=
-X-Google-Smtp-Source: APiQypJqaxQpoMB59mBICnMYc9SoOYskJ65Yd8XiW3gpMOb9FzTEweVpT3HF5gv8JS95oQHhV5Fg7g==
-X-Received: by 2002:adf:e4c2:: with SMTP id v2mr20651517wrm.72.1589232495323;
-        Mon, 11 May 2020 14:28:15 -0700 (PDT)
-Received: from localhost.localdomain (abae78.neoplus.adsl.tpnet.pl. [83.6.168.78])
-        by smtp.googlemail.com with ESMTPSA id w10sm20196258wrg.52.2020.05.11.14.28.14
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uQPtZnlk6tVZCxmnEPskW6TpGbRAQgAZrpD/f0dkcoA=;
+        b=PW9hOHLMeomgn1/vgqpawvQr2qXknAgCe6u64YyLAdSgHMiJJRWTcsafZrmfTX3/GD
+         Q+XK/4F80PI3Gca+beYJbBIl4uA5Bk/jad4J4ucuWE3ojoP34kt2DIF5IFyCuwzT6y/s
+         A/lVcXBVikkyljv/CdKxxUp0kJ+qjWAAK7TOVL3Z5wMdRhmIo20d7WE6cG/3OWOPGqPs
+         tKZiWyTZ8BYGnwInLdQrJm/jTVDq7LEOvcfeORmFGELS/b+E3UCd89UK7E5UPHJpviki
+         TLZS/Y3NaGnBTPwULN/aAah6b891zbJ87psLOkaIckJdTPtc1/8wwYMfS6495fAswqCq
+         xOHg==
+X-Gm-Message-State: AGi0PuYAD5kN/qeLOYx8wCgT/ZkLyd9Cu5EZ195AzwBC8vXQ2vAVijVg
+        9xfSVkuV3KjUPHLBX6kOmQ==
+X-Google-Smtp-Source: APiQypKnBJSyR/IWwACxzGz7RWmKQhCKJO8hffRYERtZ/2ymbdXAqGeJp/Hg0+RfGyBC13R2O6Y9tw==
+X-Received: by 2002:aca:4e10:: with SMTP id c16mr21483560oib.140.1589238338044;
+        Mon, 11 May 2020 16:05:38 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id t10sm3152164oou.38.2020.05.11.16.05.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 14:28:14 -0700 (PDT)
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Vincent Knecht <vincent.knecht@mailoo.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] soc: qcom: socinfo: add msm8936/39 and apq8036/39 soc ids
-Date:   Mon, 11 May 2020 23:27:33 +0200
-Message-Id: <20200511212733.214464-1-konradybcio@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        Mon, 11 May 2020 16:05:37 -0700 (PDT)
+Received: (nullmailer pid 23889 invoked by uid 1000);
+        Mon, 11 May 2020 23:05:36 -0000
+Date:   Mon, 11 May 2020 18:05:36 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: aoss: Add SM8250 compatible
+Message-ID: <20200511230536.GA23509@bogus>
+References: <20200427054202.2822144-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200427054202.2822144-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vincent Knecht <vincent.knecht@mailoo.org>
+On Sun, 26 Apr 2020 22:42:02 -0700, Bjorn Andersson wrote:
+> Add SM8250 compatible to the qcom_aoss binding and driver.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 1 +
+>  drivers/soc/qcom/qcom_aoss.c                                 | 1 +
+>  2 files changed, 2 insertions(+)
+> 
 
-This patch adds missing SoC IDs for MSM8936/39 and
-their APQ variants.
-
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
----
-Changes since v1:
-	- Add a proper commit log
-	- Add a missing sign-off
- drivers/soc/qcom/socinfo.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index ebb49aee179bb..14831ed392e28 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -188,6 +188,10 @@ static const struct soc_id soc_id[] = {
- 	{ 216, "MSM8674PRO" },
- 	{ 217, "MSM8974-AA" },
- 	{ 218, "MSM8974-AB" },
-+	{ 233, "MSM8936" },
-+	{ 239, "MSM8939" },
-+	{ 240, "APQ8036" },
-+	{ 241, "APQ8039" },
- 	{ 246, "MSM8996" },
- 	{ 247, "APQ8016" },
- 	{ 248, "MSM8216" },
--- 
-2.26.2
-
+Acked-by: Rob Herring <robh@kernel.org>
