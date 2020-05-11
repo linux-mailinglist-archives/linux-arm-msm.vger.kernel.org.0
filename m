@@ -2,104 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A7B61CD9C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 14:26:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 267681CDB89
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 15:43:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730058AbgEKM0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 08:26:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48468 "EHLO
+        id S1729485AbgEKNn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 09:43:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730042AbgEKM0b (ORCPT
+        by vger.kernel.org with ESMTP id S1729514AbgEKNn0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 08:26:31 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 304A1C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 05:26:31 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id fu13so7700600pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 05:26:31 -0700 (PDT)
+        Mon, 11 May 2020 09:43:26 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 376E3C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 06:43:25 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id w7so11030170wre.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 06:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XND7Ft1QHmviKkz6VujX9JUe2hE4nNkjYKIH9ZGOL2c=;
-        b=qq74y2cmWrgyNBuVo+ZVQ82V6vuYaeXy47j9lpqUOsM5LvjXdIpScs5Cyl8Woe2rKJ
-         wbeZGdChqEHWYorM2c8iT+ZzGdPgYODIHY0yc8UfNgRbe0kedUDdsTlRpZUuCgD+Xp06
-         zCmV1VYQx6p5E3PmCTciMt2nmg4AMB00wgMERiE9GJHgkg5iWu1ODLrXpFTISIHCssK0
-         Pq7e++v0MLeOZBPcwVdvcZ+dp5s+yTCRB8Q25/8dNmXYCEhlsDAa0qoWua15uG9Nhon3
-         /0cdL5w8rP3i10tpxI7R4WSEKga8awqQ34bJYAIrheJXcM277MC79Wcnzw06DSWv0+5a
-         Kc9A==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0fpk5Xqv9Yro05H314xa5B77PsSpk1e22VGbukZepR0=;
+        b=mEYRAbohHj9FT80QIN/XzGP0RK1RJdYQ+SPBVrhjGvEG1fo/b/wSbQUryrPWgltT0o
+         IkcFU/TN3+CssRVyv7w9pbFo1Ao857ZUnI61mXnTixG4CNdUkxo1TqBtb+18gV/r0s9T
+         PPmzLqaj4sRqLx9LKDx1ZKjj7S/l7K66pZ7BoueguIMGC7RkhcUpGCTxIqf80k1bRJMt
+         K4r7mmsbyu5ERiD9qkW6VioEmXn0IV06q0wEgK46c748II6H/HGiqFskqR/x66mf2GeN
+         X68E2XP0oEEZzqsVFopP+39+jSNN9eg9gI+iHo96H/QWJXde4g2p+s6l6KmyLM09APAS
+         DDWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XND7Ft1QHmviKkz6VujX9JUe2hE4nNkjYKIH9ZGOL2c=;
-        b=DgIxNKF6qmPbG2Bzh1isUVki6l4NgADcABFrjEZEnR3a5O3Kv/6WcSxEiOWm4GuIcq
-         UTncfm72WUdhDNOYCCfRS71iuLY2nmDch6XLN03jC6Ls6E152XYuSDZdQ0tBHSJPBClV
-         FaoGJrGe9hMS5dvjLmYkUMdNNWye/XTEu8NAryfaiJ/zPdnnhl4uLQUZR22L+NBxANiY
-         bPKHR5ZpbPoRhDmjqYveZ9xzuXTAcxiqd6LACf0XLzvzmanapHKpzqv33VS1extgnzac
-         C8cUlEd3NE611UIIzhgWbfIEYzLjX1Vu2hVBPGYqAB3h4klmpHx+mBJxOwvC1/j6Fq57
-         Mq+w==
-X-Gm-Message-State: AGi0PubxkhRPhUpF0qwknVUrQB+RXiWSDsX+4F9Fli3zhf2zZ9z1X8PD
-        smtYZZYtoRHckjX6CRZL17TLmQ==
-X-Google-Smtp-Source: APiQypI5fvYsRF8XnQe9EPoaeEun1n645HV0jOql6fL0RQEqTubw4z2wfOtKrErX3Fbm2RhA6mQO2w==
-X-Received: by 2002:a17:90a:fa3:: with SMTP id 32mr22841991pjz.224.1589199990623;
-        Mon, 11 May 2020 05:26:30 -0700 (PDT)
-Received: from localhost ([45.127.45.102])
-        by smtp.gmail.com with ESMTPSA id y2sm9235710pfq.16.2020.05.11.05.26.29
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0fpk5Xqv9Yro05H314xa5B77PsSpk1e22VGbukZepR0=;
+        b=Yguq1H1RZuFHr/1MaIw+u3gIvwyjV7kSc/C4l65ZseGa2bUb81bAGasDGTX5s7/Wm8
+         rvZzGU+G/poBIFituJcP+vPrtZF7ob+Rx03bnD/pbYEGbJznNbrQQ/zPDmua8TsOZnOs
+         dBu7Qeo4e05k1sJpOA/4no9Vlx1FNkppC4MeAbn0moQF5bNP3IjFAOkv7LS8ojJ/MJx5
+         V7bLYON3zRIvVuGTxsiafpAG9yfGT73M5OedTezOwO0fHPtflGROsgSzN/QJ1EKiwcDs
+         I/knWjyUn5aiqSYzWoH8HWSl2TZYHZs20XlP8JOTF4zGN03ybK1MbM2Lag6v4rtfRnh9
+         R2hw==
+X-Gm-Message-State: AGi0Pubjv01kUY5LTa4miVacKizHjXpmHnYLHDrgG01NCjflAT7A8ZsR
+        6GnA27sZow6SfE+NlYGNO2oIzg==
+X-Google-Smtp-Source: APiQypItJDTCfkEocXHWq2r5Ng7HfPcqePb/ZXsdjVC/ZzMJj4eOCaQ+uMUlRLgbkt8pygDOHi6PUw==
+X-Received: by 2002:adf:eac6:: with SMTP id o6mr18960567wrn.297.1589204603437;
+        Mon, 11 May 2020 06:43:23 -0700 (PDT)
+Received: from google.com ([2a00:79e0:d:110:d6cc:2030:37c1:9964])
+        by smtp.gmail.com with ESMTPSA id q184sm27142122wma.25.2020.05.11.06.43.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 05:26:29 -0700 (PDT)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org,
-        Amit Daniel Kachhap <amit.kachhap@gmail.com>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Javi Merino <javi.merino@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-pm@vger.kernel.org
-Subject: [PATCH 14/14] thermal/of: Rename of-thermal.c
-Date:   Mon, 11 May 2020 17:55:02 +0530
-Message-Id: <f5e233d5c5dcc7c7cb56b3448da255cb2c9ef0d1.1589199124.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1589199124.git.amit.kucheria@linaro.org>
-References: <cover.1589199124.git.amit.kucheria@linaro.org>
+        Mon, 11 May 2020 06:43:22 -0700 (PDT)
+Date:   Mon, 11 May 2020 14:43:19 +0100
+From:   Quentin Perret <qperret@google.com>
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+Subject: Re: [PATCH v7 04/15] PM / EM: add support for other devices than
+ CPUs in Energy Model
+Message-ID: <20200511134319.GA29112@google.com>
+References: <20200511111912.3001-1-lukasz.luba@arm.com>
+ <20200511111912.3001-5-lukasz.luba@arm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200511111912.3001-5-lukasz.luba@arm.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Core thermal framework code files should start with thermal_*.
-of-thermal.c does not follow this pattern and can easily be confused
-with platform driver.
+Hey Lukasz,
 
-Fix this by renaming it to thermal_of.c
+On Monday 11 May 2020 at 12:19:01 (+0100), Lukasz Luba wrote:
+<snip>
+> @@ -27,12 +29,15 @@ struct em_perf_state {
+>   * em_perf_domain - Performance domain
+>   * @table:		List of performance states, in ascending order
+>   * @nr_perf_states:	Number of performance states
+> - * @cpus:		Cpumask covering the CPUs of the domain
+> + * @cpus:		Cpumask covering the CPUs of the domain. It's here
+> + *			for performance reasons to avoid potential cache
+> + *			misses during energy calculations in the scheduler
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
----
- drivers/thermal/Makefile                       | 2 +-
- drivers/thermal/{of-thermal.c => thermal_of.c} | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename drivers/thermal/{of-thermal.c => thermal_of.c} (100%)
+And because that saves a pointer, and simplifies allocating/freeing that
+memory region :)
 
-diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
-index 09ff0e259d46..d7969dd553cb 100644
---- a/drivers/thermal/Makefile
-+++ b/drivers/thermal/Makefile
-@@ -9,7 +9,7 @@ thermal_sys-y			+= thermal_core.o thermal_sysfs.o \
- 
- # interface to/from other layers providing sensors
- thermal_sys-$(CONFIG_THERMAL_HWMON)		+= thermal_hwmon.o
--thermal_sys-$(CONFIG_THERMAL_OF)		+= of-thermal.o
-+thermal_sys-$(CONFIG_THERMAL_OF)		+= thermal_of.o
- 
- # governors
- thermal_sys-$(CONFIG_THERMAL_GOV_FAIR_SHARE)	+= gov_fair_share.o
-diff --git a/drivers/thermal/of-thermal.c b/drivers/thermal/thermal_of.c
-similarity index 100%
-rename from drivers/thermal/of-thermal.c
-rename to drivers/thermal/thermal_of.c
--- 
-2.20.1
+<snip>
+> diff --git a/kernel/power/energy_model.c b/kernel/power/energy_model.c
+> index 5b8a1566526a..9cc7f2973600 100644
+> --- a/kernel/power/energy_model.c
+> +++ b/kernel/power/energy_model.c
+> @@ -2,8 +2,9 @@
+>  /*
+>   * Energy Model of CPUs
 
+Should this comment change too?
+
+<snip>
+> -static void em_debug_create_pd(struct em_perf_domain *pd, int cpu)
+> +static void em_debug_create_pd(struct device *dev)
+>  {
+>  	struct dentry *d;
+> -	char name[8];
+>  	int i;
+>  
+> -	snprintf(name, sizeof(name), "pd%d", cpu);
+> -
+>  	/* Create the directory of the performance domain */
+> -	d = debugfs_create_dir(name, rootdir);
+> +	d = debugfs_create_dir(dev_name(dev), rootdir);
+
+So what will be the name for the perf domain of CPUs now? cpuX?
+
+<snip>
+> @@ -142,8 +149,8 @@ em_create_pd(struct device *dev, int nr_states, struct em_data_callback *cb,
+>  		 */
+>  		opp_eff = freq / power;
+>  		if (opp_eff >= prev_opp_eff)
+> -			pr_warn("pd%d: hertz/watts ratio non-monotonically decreasing: em_perf_state %d >= em_perf_state%d\n",
+> -					cpu, i, i - 1);
+> +			dev_dbg(dev, "EM: hertz/watts ratio non-monotonically decreasing: em_perf_state %d >= em_perf_state%d\n",
+> +					i, i - 1);
+
+It feels like changing from warn to debug doesn't really belong to this
+patch no?
+
+<snip>
+> @@ -216,47 +274,50 @@ int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
+>  	 */
+>  	mutex_lock(&em_pd_mutex);
+>  
+> -	for_each_cpu(cpu, span) {
+> -		/* Make sure we don't register again an existing domain. */
+> -		if (READ_ONCE(per_cpu(em_data, cpu))) {
+> -			ret = -EEXIST;
+> -			goto unlock;
+> -		}
+> +	if (dev->em_pd) {
+> +		ret = -EEXIST;
+> +		goto unlock;
+> +	}
+>  
+> -		/*
+> -		 * All CPUs of a domain must have the same micro-architecture
+> -		 * since they all share the same table.
+> -		 */
+> -		cap = arch_scale_cpu_capacity(cpu);
+> -		if (prev_cap && prev_cap != cap) {
+> -			pr_err("CPUs of %*pbl must have the same capacity\n",
+> -							cpumask_pr_args(span));
+> +	if (_is_cpu_device(dev)) {
+
+Something like
+
+	if (!_is_cpu_device(dev))
+		goto device;
+
+would limit the diff a bit, but that may just be personal taste.
+
+But appart from these nits, the patch LGTM.
+
+Thanks,
+Quentin
