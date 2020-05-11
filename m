@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27D621CDB97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 15:44:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5CB41CDBA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 15:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729954AbgEKNos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 09:44:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60686 "EHLO
+        id S1729662AbgEKNqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 09:46:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729279AbgEKNor (ORCPT
+        by vger.kernel.org with ESMTP id S1729659AbgEKNqB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 09:44:47 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F3FDC05BD0A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 06:44:47 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id e16so11040729wra.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 06:44:47 -0700 (PDT)
+        Mon, 11 May 2020 09:46:01 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5DCC05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 06:46:01 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id i15so11012187wrx.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 06:46:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=hpFE9CUsmF5QuTw9fCnRsO/HIcrfLKfZVWo5gx0AO38=;
-        b=m0ElpsF0pRp5TglEUDXatsddqa+Pb36Mj0Ppynh2iPIzzZz0EgUlzEtzkWyZeAg3vB
-         uBs8o5cgAfl1IJaebtKgziRr73o57iHO5kRqVLTfaRC9X/zbKfqE0X7WUY3tyIHVtzsE
-         vFx9MY8AD+wURjQHSKOL4msglFChmdK1OF0GOTXEyOPCB+/qCeUlNUl3WRSD8mjpJY46
-         hSQALRhOTEhqYS5oyb8QdeT0A4PD7fA1adHgJP7v3DqW9SxYfGkzAgGWjuOFXLrwzjzb
-         N6qFsfSm3T/OSIzW2mqIAKD2F9YJwb6IdZnQgigtlyOUiCH7V2syhUCmrF3QsgphlAHW
-         IDRg==
+        bh=Q2BxZKtzYVJdnhKDk6kHCLe3qRzlCf6s3v+h+pLemAg=;
+        b=vt3tIM8SXmyGE76DoZTOdmElnTIl4bMIltVntIAc0he88Sp9qJRB/V82zw+WrS5ihG
+         EJG7w8kdcUMgSuW4nZHMeP55c/FdVaRUqO93oTbSH/bkPfFrlHPMjgPH5/AEfRuoUu/U
+         Ak1f5Qmm6SUMcApwnUw266CxwLZzc4MxBgHsCu1MEztG1efH6KjzjCsHLbufXO/JHkyg
+         4qqYKPjp/oW9mizuM4Pn3HGbqhzheYTNDFkaLvftrCVNM/VYgWqz1bSWSuZetRx/q5K6
+         et6c5WXisyQm9pdE/trnsAi0Rc4P282oAY4w74LRTcifJkmjSnGbQrMkFE8BBK/CLrHU
+         kIFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=hpFE9CUsmF5QuTw9fCnRsO/HIcrfLKfZVWo5gx0AO38=;
-        b=Qfm7zkDNcmKBNdOjDtTGPDerbHg4Vv6cNXBRyDjYJVYJ4uQNl7A25yzQYw+IxpA/DB
-         HkwQvMPI3JBRSPq8gbBc3mgQaM7CCD5CVTfEsCzDa4CaVKMkggP8qDG6//t6tKPZuUg5
-         aHl7xS6tQtP0SXYLApeLeeKvKesx8uwfvm0xUy7quej30Upqr4fMPTZMiun+iSGLkSFD
-         p9Y8d5efLd/4Ro/pqldj7wGwXbf8kkiuLByjUI344lEQfuLagJWNV3iNDvkj91r7/Q4p
-         T4Ax/um4UnUUEIoTSZCKM6aViGQqI2lshfUpX5KUUE8WHvidPJkE1E9BfjThDKNdatvv
-         9nTw==
-X-Gm-Message-State: AGi0PuaCBeVmHNSc5RaFAN9j1dvtfobir8tj/JAm9frz0XqK7UT7LAv0
-        1pHo/QdE7UCs0rbvVjlwgoegzw==
-X-Google-Smtp-Source: APiQypLqeWUYDX3crs5ryt2QKIDbqRz/76rh57q7pYtJbxnpgj5n76IycVeDM/ojI700iAgxeVhE4Q==
-X-Received: by 2002:adf:e28c:: with SMTP id v12mr21053389wri.157.1589204686152;
-        Mon, 11 May 2020 06:44:46 -0700 (PDT)
+        bh=Q2BxZKtzYVJdnhKDk6kHCLe3qRzlCf6s3v+h+pLemAg=;
+        b=MzWPSudt6R+DEBhjrotNFvCd3D74DBoWvpkm3Z/9QhLEQIDDZhyaJ48M3LZY4ZYJWX
+         WbUmzSmJVETz+0eqB2sDFGQYkkoyXaFF8NIt+mMq5oSZiBgLwDyfVJNSEWQ20iwviCVh
+         7xwINlAQ9qZ9GOeehtctqU3MnAtRG9VDwD7G9i/1H4jec0GRguFcXcFaw+ziIsjVGZ2V
+         8hnO9EosThb/HsW9U7HlDFESA07RAmrm5x6eFHq1kek0AWv3lg3P6Q8jj2ph4BL+HPgW
+         cFVTWPGqAjVk7u1PL5+vrP5jgUFb3mNjl4V7z+4y67x2ojlLLNzNsIHef+jYdhVweHBN
+         zGkA==
+X-Gm-Message-State: AGi0PuY+kVz3HEx0ostcsoKRbhD6lG5U46rT2n6BxGqinD4h7iEVhPfM
+        nuF4J8O/beEEXN7V7P/qrT6coA==
+X-Google-Smtp-Source: APiQypIZNeq7ry3Hj06e+ssDcQCx46NyjFOu4uu1tNoXA1NhJj0eKvkluOlZpeHyLFtt4scGQaFK5w==
+X-Received: by 2002:adf:810a:: with SMTP id 10mr19863253wrm.101.1589204759978;
+        Mon, 11 May 2020 06:45:59 -0700 (PDT)
 Received: from google.com ([2a00:79e0:d:110:d6cc:2030:37c1:9964])
-        by smtp.gmail.com with ESMTPSA id a15sm18111170wrw.56.2020.05.11.06.44.45
+        by smtp.gmail.com with ESMTPSA id q184sm27152043wma.25.2020.05.11.06.45.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 06:44:45 -0700 (PDT)
-Date:   Mon, 11 May 2020 14:44:41 +0100
+        Mon, 11 May 2020 06:45:58 -0700 (PDT)
+Date:   Mon, 11 May 2020 14:45:55 +0100
 From:   Quentin Perret <qperret@google.com>
 To:     Lukasz Luba <lukasz.luba@arm.com>
 Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
@@ -70,28 +70,29 @@ Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
         airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
         lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
         orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-Subject: Re: [PATCH v7 05/15] PM / EM: remove em_register_perf_domain
-Message-ID: <20200511134441.GB29112@google.com>
+Subject: Re: [PATCH v7 06/15] PM / EM: change name of em_pd_energy to
+ em_cpu_energy
+Message-ID: <20200511134555.GC29112@google.com>
 References: <20200511111912.3001-1-lukasz.luba@arm.com>
- <20200511111912.3001-6-lukasz.luba@arm.com>
+ <20200511111912.3001-7-lukasz.luba@arm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200511111912.3001-6-lukasz.luba@arm.com>
+In-Reply-To: <20200511111912.3001-7-lukasz.luba@arm.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Monday 11 May 2020 at 12:19:02 (+0100), Lukasz Luba wrote:
-> Remove old function em_register_perf_domain which is no longer needed.
-> There is em_dev_register_perf_domain that covers old use cases and new as
-> well.
+On Monday 11 May 2020 at 12:19:03 (+0100), Lukasz Luba wrote:
+> Energy Model framework supports now other devices than CPUs. Refactor some
+> of the functions in order to prevent wrong usage. The old function
+> em_pd_energy has to generic name. It must not be used without proper
+> cpumask pointer, which is possible only for CPU devices. Thus, rename it
+> and add proper description to warn of potential wrong usage for other
+> devices.
 > 
 > Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 > Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-
-So, as mentioned in patch 03, I think this one could be squashed. But in
-any case:
 
 Acked-by: Quentin Perret <qperret@google.com>
