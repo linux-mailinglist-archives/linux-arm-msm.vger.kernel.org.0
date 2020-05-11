@@ -2,89 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D996C1CCB8D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2020 16:30:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60CBD1CD145
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 07:29:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728907AbgEJOae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 May 2020 10:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42510 "EHLO
+        id S1726161AbgEKF3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 01:29:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728888AbgEJOae (ORCPT
+        by vger.kernel.org with ESMTP id S1725916AbgEKF3E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 May 2020 10:30:34 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A440C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 May 2020 07:30:34 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id k7so1497794pjs.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 May 2020 07:30:34 -0700 (PDT)
+        Mon, 11 May 2020 01:29:04 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D10AC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 May 2020 22:29:04 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id hi11so7280374pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 May 2020 22:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=VB6QB0k6yF1xCUNO7qdS9eL2WdSOXXOnR9sFnZiLOd4=;
-        b=R+MsY9WCtRMMxoxZF4KOot1ecgDsOPB1vYqBzsx/sSAFnQsx9ArlIiv1oWrbe6IYzM
-         Zk2VyZUIcN0aB7+7F+8JD/UHUpzpXTubVIrv/E6LkNO2Guiz9jcOztegpRyY0GE9Pcvu
-         tCW74BbqPjb/gEN6ITnZvVZDxPyiMjQpEKZieR+v/hGQJ5Sj3AQG05OZwCtLAz7iWZnF
-         YGG7EPQZ685umqmg2iQn37HlDAlMZfaujGc/l6o+gOSBjXcFfJTtIsAat0fm8UZpDH9H
-         lxZMu7JeudSu6i/Sa4g+vY0TUnSRefgt8matT62fUh8rEHNhj6DVXiBA3VM8gkamkaSq
-         z4TA==
+        bh=pnWjpI2HZoB7egROoPywdAvISX8a3wpWqZxbYcZah50=;
+        b=K3CuEQRS9GJA7CFCxX2sO1PzOSPOcnTC/fsP7WCbuotLjwO3DyzaG3fnNmIBsqh4FK
+         v4HylMvofLvpHa1/N7WbgvQS4nkWdxLM63eVnBFYgxeTLzMRs93i48bSZiNcCG35u3ST
+         8lx/oravI78kfSjiWLQ42JLDyCFN55Ys+I/Zk0m+qKr2kodU5+JjOpUTuAohxZzC6owU
+         JsQrE/1l+tAqQNMI9okEuyEfzQB3zYmU6QrjIQC3Kano/M+zYEQx3iAOvXhRKYIY3Byh
+         RKLteLPDuRCM+aBicPGXOv22pCEbGH4MEEEjP2qOxwv8DRvQGjoa0CgOk0fc3zpJ9To8
+         V9nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VB6QB0k6yF1xCUNO7qdS9eL2WdSOXXOnR9sFnZiLOd4=;
-        b=oRRPTG2dLQYMwqWz7r+39ZjIGSoBmm4oHNjrPJr2FXjKMEgalEvRoGtTx5zp4yKqOF
-         f9BGkh2jktEZilAFPg2UMAo+oKFu+2UpQ9GBMMHVVhTeMWLIMTCcdNxvZmKnGKHEtx0J
-         m+eEQagZY4PFagZ31PcKa+5hilb1NHtx0e6oR44xdbmUkg1yKslVq9ZFLErsxwC3W+22
-         H3TL+GT54D9Zc/2vKJokgpBom+hnNKwaScfnytaCjlAZP8u0oaKyddAwb1kgv38De/Ar
-         hcYT0F7yMFiuvyT5FMkOJIEVYnFfB+lGQjPLyODepWzBx44LYCEmbUoWi7Ne7yeY7ukl
-         sYjA==
-X-Gm-Message-State: AGi0PuYMELbmWQflsV7MBqA16KrLGMN00yd44313f5CG93MtOyf6yhBu
-        5iN6dbrCVpKhZ84vTqpSPypTgQ==
-X-Google-Smtp-Source: APiQypLVS+XTU5o7852M9jAyZ4wpgBqMnBWgIepU1EgoKyX04/8LK6qI8+34szonUh28DVcCpNNSNw==
-X-Received: by 2002:a17:902:bc86:: with SMTP id bb6mr10879547plb.243.1589121033101;
-        Sun, 10 May 2020 07:30:33 -0700 (PDT)
-Received: from dragon ([80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id g40sm7631138pje.38.2020.05.10.07.30.29
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 May 2020 07:30:32 -0700 (PDT)
-Date:   Sun, 10 May 2020 22:30:21 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Joerg Roedel <joro@8bytes.org>,
+        bh=pnWjpI2HZoB7egROoPywdAvISX8a3wpWqZxbYcZah50=;
+        b=ZQJuaJRG9DP16O2ZWRgZkgFMV8MNQx+OvXQgAVmE4DcelpEqXa2yoxYRf1ks8JCvHg
+         YGvzUlzbIU0R4lAxYHosQfhvnYNFjEtU7zReNR/q/7S7QmcuvHqgFO5sjzsGPA5CYHHl
+         fJNJDZF5Qq3ri12qanexmvYEsggTQasMbf6pNW7lDaucnAxvpPtfN+lPj/ptbHh6nsQ6
+         LlqwMjf56/2FZghZJPCQu//xViP+TaU34sfpg7ccNOTHygJUo/1BAxGpIRaCJhc7ZigI
+         T+06uBjltyEgAfVUOv5mQXXRRGCjOWbr0auytC45yckUpnmA+rovMdRcFEFqnN9IIBCW
+         C3kg==
+X-Gm-Message-State: AGi0PuZhikgdEPcIFGpF5Wgbs21cTuPtXp2NbryP70brpDuxikeHHcUI
+        snCDw41cdhKx8yygdcvb17CcMw==
+X-Google-Smtp-Source: APiQypKfYKTz4bAJ45zCiyx319AtlPqmTqr+KnLBj6SEwv1lLSCeD1hyO5nOGhu4rnt7BuLXCA1+/w==
+X-Received: by 2002:a17:902:d70f:: with SMTP id w15mr13986176ply.55.1589174943717;
+        Sun, 10 May 2020 22:29:03 -0700 (PDT)
+Received: from localhost ([122.167.130.103])
+        by smtp.gmail.com with ESMTPSA id ev5sm22505078pjb.1.2020.05.10.22.29.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 10 May 2020 22:29:03 -0700 (PDT)
+Date:   Mon, 11 May 2020 10:59:01 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Loic Poulain <loic.poulain@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org
-Subject: Re: [PATCH] iommu/qcom: add optional clock for TLB invalidate
-Message-ID: <20200510143020.GA16939@dragon>
-References: <20200509130825.28248-1-shawn.guo@linaro.org>
- <e8150781-6000-dedc-ca10-6cee232c4364@linaro.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200511052901.tfjpjawhca7w3tun@vireshk-i7>
+References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+ <20200402081349.GA932@gerhold.net>
+ <20200403013119.GB20625@builder.lan>
+ <20200403100923.GB2652@gerhold.net>
+ <20200403175934.GA96064@gerhold.net>
+ <20200423045506.GJ987656@yoga>
+ <20200426123140.GA190483@gerhold.net>
+ <20200506211801.GA165066@gerhold.net>
+ <20200507053435.GC3236072@builder.lan>
+ <CAPDyKFohjoY0rsTwVGQY_csDRfvxF0RiU+d12EpC+mk6BC95gA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e8150781-6000-dedc-ca10-6cee232c4364@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAPDyKFohjoY0rsTwVGQY_csDRfvxF0RiU+d12EpC+mk6BC95gA@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stanimir,
-
-On Sat, May 09, 2020 at 04:21:20PM +0300, Stanimir Varbanov wrote:
-...
-> > @@ -839,6 +849,12 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
-> >  		return PTR_ERR(qcom_iommu->bus_clk);
-> >  	}
-> >  
-> > +	qcom_iommu->tlb_clk = devm_clk_get(dev, "tlb");
+On 08-05-20, 14:08, Ulf Hansson wrote:
+> + Lina
 > 
-> IMO, devm_clk_get_optional() would be better.
+> On Thu, 7 May 2020 at 07:33, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Wed 06 May 14:18 PDT 2020, Stephan Gerhold wrote:
+> >
+> > Viresh, Ulf,
+> >
+> > Stephan is trying to describe the relationship between the CPU rail and
+> > the memory rail on db410c (where the performance state of the memory
+> > rail needs to be kept above the performance state of the CPU supply.
+> >
+> > The latter is modelled as a power-domain and the performance state
+> > changes as expected, but no one enables the power-domain.
+> 
+> Just to make one thing clear, from a genpd framework point of view,
+> power on/off of a genpd is orthogonal to setting/aggregating
+> performance states for it.
+> 
+> It's instead up to the genpd provider to deal with this (as I
+> understand, that seems to be the issue from the below discussions).
+> 
+> >
+> > What's the appropriate method for ensuring the power-domain is
+> > enabled/disabled as needed? Should it be referenced in the hierarchical
+> > power domain for the CPUs perhaps?
+> 
+> If I understand the dependency correctly, perhaps you are right that
+> there needs to be a subdomain assigned. Although, I don't know if this
+> ever has been tested to work for a real use case, when it comes to
+> performance state propagations upwards in the hierarchy.
+> 
+> Viresh?
 
-Yes, indeed.  The function will make it clear that the clock is
-an optional one.  I will make the change in v2.
+I have modeled that with a fake system, and yes it was tested. But not on real
+hardware but it should work nevertheless.
 
-Thanks for the comment!
-
-Shawn
+-- 
+viresh
