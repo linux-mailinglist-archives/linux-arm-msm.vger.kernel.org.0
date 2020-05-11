@@ -2,114 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B20D11CD55D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 11:36:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B0A21CD699
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 12:31:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728341AbgEKJgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 05:36:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50110 "EHLO
+        id S1729287AbgEKKbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 06:31:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725790AbgEKJgC (ORCPT
+        by vger.kernel.org with ESMTP id S1728209AbgEKKbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 05:36:02 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172D2C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 02:36:02 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id g12so18366958wmh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 02:36:02 -0700 (PDT)
+        Mon, 11 May 2020 06:31:34 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F251C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 03:31:34 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id f7so4549738pfa.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 03:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GPf4uEQTc/afTL7c/d2cSeqRiW2RQV3fjrBit70wmW4=;
-        b=WOk5qAdJnGfzedSYVjf9nBySpoGM+n2oOhUsj1JX9TIbBH8jTCWX2rsyBduOMQCSc7
-         neKaN8es7sL9BwmHgzRQCqOJyE9qnPM80O5sRkjxPrHc9R6U3W/hmK9HzJHex4UHmHjX
-         jK07NS0y3glRT5GD/LViGMTUeQNL/dzkeL3Ho=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CqplYl+v02aohkq5RzICqUNP1BB3Vo0bAlpeWACTjsg=;
+        b=OIBL1c2oNzdA2PW88y02Kjfx9QecMEVWtmhdOX5GmiAkqxQPazll/DY7jcMX0QhJBJ
+         kD2Wm8bk/cKnXsWcaOGX6KZsLXPiDPI4ErKmMPTADvrqBOlc1FZx/RXhvdU4vOWYUUdi
+         1AQwqke7d04b99Jcov11RRnRbbzPEGE7WzlCmM053XTdZvxp1WwW9r3ZRaHMqB5SxByq
+         vitkEBdX1YsCPq2PyK/HYpU62qi8Br2QwOm1Ab7E7CFCaxirT8iYzHdcXsMYiKRao16z
+         1ZmcJH1AUORI81vKWaLUPYsAECPrag5WjRYvJCfTMSg32l9743Vc1BT3cdJbhzJY5CCi
+         JWCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GPf4uEQTc/afTL7c/d2cSeqRiW2RQV3fjrBit70wmW4=;
-        b=r2fHGK1JaO5L6G9pdVqN4I2CbWCT991R6/UY/qoCKnaLPRCfD+cElvJ+FKHuWkXkvr
-         DT3vVIfJeYPERjHt8dg2vxZl4WaKvcB1gLBCUgB4OylDYnUhVsjwBTcW2j7Jq9KEi3Hu
-         KA7qbaZRf/BdfHVQlW9rnGp24lNeCy49AoIWz9p/egn+bzSywNgFnTPWZtvaFK8tPpWT
-         SdjZPbo6GqWhhOCk3syB0WNYrOKytaoCWGFjgMB+YfkzICaKXks5dxaLy0vcBdNk2ZbH
-         iqpqAJggMSQhc6kd/8CEhapStKdIaLxJa/VeoGRjfClCDG4Xa2AD0kdQ5bZsiDyxHA5Z
-         1Mfw==
-X-Gm-Message-State: AGi0PuZruk5+bwRlhmgFbp3BBlm3boXe+FXCshfAqQPivNYoev72btBa
-        qDnkkBytJxigsZHA2RY1/kKdrXQm/h8=
-X-Google-Smtp-Source: APiQypLI5J/YwNBWeinmIVZanIUCMAm2cxmh3WAHdA3Qh3SfT+IosHz9CBc6cX7rogzLt2gPdQQ8nQ==
-X-Received: by 2002:a1c:a102:: with SMTP id k2mr9162940wme.39.1589189760853;
-        Mon, 11 May 2020 02:36:00 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id q17sm9013945wmk.36.2020.05.11.02.35.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 02:36:00 -0700 (PDT)
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-To:     DRI Development <dri-devel@lists.freedesktop.org>
-Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 1/9] drm/msm: Don't call dma_buf_vunmap without _vmap
-Date:   Mon, 11 May 2020 11:35:46 +0200
-Message-Id: <20200511093554.211493-2-daniel.vetter@ffwll.ch>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200511093554.211493-1-daniel.vetter@ffwll.ch>
-References: <20200511093554.211493-1-daniel.vetter@ffwll.ch>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CqplYl+v02aohkq5RzICqUNP1BB3Vo0bAlpeWACTjsg=;
+        b=cUCHDaFWR/ZYigJghs/F6V4VC3CrRRAxPVJemxu6tDJuUjMwBCu1KAcAk/mKs89wY3
+         z2VouT9y07EZ2p2vAZybCAIkMSB2BbdtFPG5udqT4t2OP2lYTyndaAs2i6pbUS225ZES
+         uJHM8UYwd+sgnNYZFestXBdQNY5kHG/kUkB4n8jRJCVdY23n1JJCZ1+45ZcpAisPk7cR
+         KAESmUFM3skaFmLe8/c9rJO3V3JPRkscUfCkVGSuITkLr1bq8LGoiK5A/ZQ/7nBIwnBZ
+         PyBOP7/gyr4JB1TWxzKvzZfUbZwkKpwDKGH6s2raWY5DVZYN5Dx5pZ0Blyr7fJoSfczu
+         ooTA==
+X-Gm-Message-State: AGi0PuYd1DZ/ejy1L5YvHkCGDqztLL4GsghDFgiztY4kw5kfGDB+MoBw
+        cJNcS9B1ZUDWbchmLOmAhqMC
+X-Google-Smtp-Source: APiQypKT9DJXaUsGN5QsdS+95yeBUKH3QXCgmQXSohCAoBOYC3R8g/K5YAe87nP1a2HOXw9ax/ANdg==
+X-Received: by 2002:a62:1789:: with SMTP id 131mr15905969pfx.287.1589193093396;
+        Mon, 11 May 2020 03:31:33 -0700 (PDT)
+Received: from mani ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id n23sm9552826pjq.18.2020.05.11.03.31.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 May 2020 03:31:32 -0700 (PDT)
+Date:   Mon, 11 May 2020 16:01:24 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Wei Yongjun <weiyongjun1@huawei.com>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Hulk Robot <hulkci@huawei.com>
+Subject: Re: [PATCH -next] bus: mhi: core: Fix some error return code
+Message-ID: <20200511103124.GA12753@mani>
+References: <20200509075654.175002-1-weiyongjun1@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200509075654.175002-1-weiyongjun1@huawei.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I honestly don't exactly understand what's going on here, but the
-current code is wrong for sure: It calls dma_buf_vunmap without ever
-calling dma_buf_vmap.
+On 0509, Wei Yongjun wrote:
+> Fix to return negative error code from the error handling case
+> instead of 0 in mhi_init_dev_ctxt() and mhi_driver_probe().
+> 
+> Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 
-What I'm not sure about is whether the WARN_ON is correct:
-- msm imports dma-buf using drm_prime_sg_to_page_addr_arrays. Which is
-  a pretty neat layering violation of how you shouldn't peek behind
-  the curtain of the dma-buf exporter, but par for course. Note that
-  all the nice new helpers don't (and we should probably have a bit a
-  warning about this in the kerneldoc).
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-- but then in the get_vaddr() in msm_gem.c, and that seems to happily
-  wrap a vmap() around any object with ->pages set (so including
-  imported dma-buf)
+Thanks,
+Mani
 
-- I'm not seeing any guarantees that userspace can't use an imported
-  dma-buf for e.g. MSM_SUBMIT_CMD_BUF in a5xx_submit_in_rb, so no
-  guarantees that an imported dma-buf won't end up with a ->vaddr set.
-
-But even if that WARN_ON is wrong, cleaning up a vmap() done by msm by
-calling dma_buf_vmap is the wrong thing to do.
-
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
----
- drivers/gpu/drm/msm/msm_gem.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 5a6a79fbc9d6..3305a457960e 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -907,8 +907,7 @@ static void free_object(struct msm_gem_object *msm_obj)
- 	put_iova(obj);
- 
- 	if (obj->import_attach) {
--		if (msm_obj->vaddr)
--			dma_buf_vunmap(obj->import_attach->dmabuf, msm_obj->vaddr);
-+		WARN_ON(msm_obj->vaddr);
- 
- 		/* Don't drop the pages for imported dmabuf, as they are not
- 		 * ours, just free the array we allocated:
--- 
-2.26.2
-
+> ---
+>  drivers/bus/mhi/core/init.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index eb2ab058a01d..1f8c82603179 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -291,6 +291,7 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  	}
+>  
+>  	/* Setup cmd context */
+> +	ret = -ENOMEM;
+>  	mhi_ctxt->cmd_ctxt = mhi_alloc_coherent(mhi_cntrl,
+>  						sizeof(*mhi_ctxt->cmd_ctxt) *
+>  						NR_OF_CMD_RINGS,
+> @@ -1100,6 +1101,7 @@ static int mhi_driver_probe(struct device *dev)
+>  		}
+>  	}
+>  
+> +	ret = -EINVAL;
+>  	if (dl_chan) {
+>  		/*
+>  		 * If channel supports LPM notifications then status_cb should
+> 
+> 
+> 
