@@ -2,91 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A5591CE5A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 22:35:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AA841CE5A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2020 22:36:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731629AbgEKUfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 16:35:05 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:43341 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727873AbgEKUfE (ORCPT
+        id S1729857AbgEKUgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 16:36:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40312 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727873AbgEKUgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 16:35:04 -0400
-Received: by mail-oi1-f193.google.com with SMTP id j16so16281447oih.10;
-        Mon, 11 May 2020 13:35:03 -0700 (PDT)
+        Mon, 11 May 2020 16:36:21 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51986C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 13:36:21 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id e10so2470062edq.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2020 13:36:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1uYG9e4dVm6PWRoL8m/kIoqP3zhS97zMzITiZZkfVo8=;
+        b=TsuiNVSyuVdgW/EOzGASz9Q20Ckfj8RkQ+7t6+K55MZvuz5looNlvY2UVaTiu4R7SX
+         RSXam1aHMNhP1jHAnq5ySmGP9uVuKt9OMtP5D6/BBZk/0jDoDd27QodPfH2c8fdfqlB5
+         k1k7ulQCJnd+duACVn752X2Q8GTSOF2nrvDlAJjbkn0vICeXl6yUbNBy5rgxzZaVDENS
+         j6z+P5ADfDcau3xp6mHV0P9kN9eHCe1pbal8KmOjZ8/oHatHc8LOr3yslCouXWD5fC19
+         DCrz26wwRFkxxuycZ2Vl77jnp3OEm/4hPwa0L9LOmIGQEsvJl+tS4TEl/Sn2NA/3S5dC
+         8dBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xPfARJBDe31edRqTmB22eqqJ1jCXSCt4soTep9+eCZE=;
-        b=I3feRbee1STlb3Rm82R2kiNQj+ZBEHmm5dfpcX0CGR32SIzX3MEBRcYiC+WFuLk8eo
-         ZZKAmlyK/kUcZ2K1TyQntfaGIP46H1wKL2nQ4LqSlmRFNOXWSS6ceAiMJy02a2g6iBQ9
-         YDTdvAGeFYIEQ243RGt5YXfM66y4bcSxwy9vL5o066SZbkvH5JBhneU5IyKH/ymgT+8y
-         fsGjdcKN940bS+/XJ62nD9oRvPpyb4rgPOJtjy6PBWU0Lr04pDi5DYwBqDYK/qkXBKnH
-         dQvquvJgDKQInlbusEpYRcf5C411lG9BhU/X6rmKtdVd3fPhRuQ+pNSR6EntiUCCsbR8
-         tAjQ==
-X-Gm-Message-State: AGi0PuZUrCLP/Nx+RwYfy5lD5+6gRkDg/Tm9WkE5brEj4LelOc+UkGVp
-        DnrxKhkArVk3iHePTsA2d5oDEGc=
-X-Google-Smtp-Source: APiQypLhCz0Iweh6mDeRxFs1JldCYPCWFDZ/eWcgs5VYLylwJuEA3ROhRph1lzQha6aqqe17WNMHUA==
-X-Received: by 2002:aca:5643:: with SMTP id k64mr19984093oib.152.1589229303517;
-        Mon, 11 May 2020 13:35:03 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id y25sm1875229oto.29.2020.05.11.13.35.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 13:35:02 -0700 (PDT)
-Received: (nullmailer pid 32429 invoked by uid 1000);
-        Mon, 11 May 2020 20:35:01 -0000
-Date:   Mon, 11 May 2020 15:35:01 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        shawn.guo@linaro.org, p.zabel@pengutronix.de
-Subject: Re: [PATCH v3 2/2] clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock
- Controller
-Message-ID: <20200511203501.GA29988@bogus>
-References: <20200423103406.481289-1-bryan.odonoghue@linaro.org>
- <20200423103406.481289-3-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1uYG9e4dVm6PWRoL8m/kIoqP3zhS97zMzITiZZkfVo8=;
+        b=c0fjf3WjETN3Z9Gzgehm9mpwupppvYSP+A6TlSCghTgZ1oiZY+EmqeERuV64HU/h1K
+         soT60TU3vcYq1ijKnRjvlFpIuyGgKLM3IRbj/7OqhRRiVAQWlYrt8gHplqmJkQbRek5r
+         4t5gO8VyHHJnyfpWRNWUrv4WcITB11Qv+AHxx6ngRK0gHH5q5Ukbd4q+O/cfeZw9Cexi
+         0bBH5THBbm+eQ7c1cNvSDi76jGSn+fnIPWbfVa2AgBlGrZQqkxKyOi3J4tRrMuncJ2cF
+         2c0Fl/iYbIPvqH6d2R89w0Q/aBYmUVoSpFJ44f+uZrIPRpKeJMXIVaZmYy83QsGJjcqo
+         whrg==
+X-Gm-Message-State: AGi0PuZL45ODbxRfFWpT/h2lG9SVV72xaY48cLgfcLtlaFgDJkOSswFO
+        6bahW/PzvJx3pTDgG3I03rZx0EeKtpsh55cL8zQ=
+X-Google-Smtp-Source: APiQypJd2EfcwETUCT/8L023guh6ESXaqu8nohL13MgmMY+BO2wuzIUOXD9NKuPFyN2oza0kbWSA/6s1ReCwUv+XQNE=
+X-Received: by 2002:a50:d7c7:: with SMTP id m7mr15478740edj.101.1589229379271;
+ Mon, 11 May 2020 13:36:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200423103406.481289-3-bryan.odonoghue@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200511093554.211493-1-daniel.vetter@ffwll.ch>
+ <20200511093554.211493-2-daniel.vetter@ffwll.ch> <CAF6AEGuy050MWGxHk48i2f4XqKuF-9q9+FD3N8z55s6sQ+CALQ@mail.gmail.com>
+ <CAKMK7uEq1vPPB9AaXb-Me6FG_pwGdRwzu87jNGquHexDRHMowg@mail.gmail.com>
+In-Reply-To: <CAKMK7uEq1vPPB9AaXb-Me6FG_pwGdRwzu87jNGquHexDRHMowg@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 11 May 2020 13:36:38 -0700
+Message-ID: <CAF6AEGuGH1-5mhtwfCC=pMe+DtLHGQxhfibJuMSDsDusMmeaEg@mail.gmail.com>
+Subject: Re: [PATCH 1/9] drm/msm: Don't call dma_buf_vunmap without _vmap
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 23, 2020 at 11:34:06AM +0100, Bryan O'Donoghue wrote:
-> This patch adds support for the MSM8939 GCC. The MSM8939 is based on the
-> MSM8916. MSM8939 is compatible in several ways with MSM8916 but, has
-> additional functional blocks added which require additional PLL sources. In
-> some cases functional blocks from the MSM8916 have different clock sources
-> or different supported frequencies.
-> 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Philipp Zabel <p.zabel@pengutronix.de>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  drivers/clk/qcom/Kconfig                     |    8 +
->  drivers/clk/qcom/Makefile                    |    1 +
->  drivers/clk/qcom/gcc-msm8939.c               | 3999 ++++++++++++++++++
+On Mon, May 11, 2020 at 8:29 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+>
+> On Mon, May 11, 2020 at 5:24 PM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Mon, May 11, 2020 at 2:36 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+> > >
+> > > I honestly don't exactly understand what's going on here, but the
+> > > current code is wrong for sure: It calls dma_buf_vunmap without ever
+> > > calling dma_buf_vmap.
+> > >
+> > > What I'm not sure about is whether the WARN_ON is correct:
+> > > - msm imports dma-buf using drm_prime_sg_to_page_addr_arrays. Which is
+> > >   a pretty neat layering violation of how you shouldn't peek behind
+> > >   the curtain of the dma-buf exporter, but par for course. Note that
+> > >   all the nice new helpers don't (and we should probably have a bit a
+> > >   warning about this in the kerneldoc).
+> > >
+> > > - but then in the get_vaddr() in msm_gem.c, and that seems to happily
+> > >   wrap a vmap() around any object with ->pages set (so including
+> > >   imported dma-buf)
+> > >
+> > > - I'm not seeing any guarantees that userspace can't use an imported
+> > >   dma-buf for e.g. MSM_SUBMIT_CMD_BUF in a5xx_submit_in_rb, so no
+> > >   guarantees that an imported dma-buf won't end up with a ->vaddr set.
+> >
+> > fwiw, a5xx_submit_in_rb() isn't a "normal" path (build-time disabled
+> > by default, and restricted to sudo).. it really only exists to
+> > simplify poking at fw.
+> >
+> > There could be vmap's in the msm_gem_submit path, however.  If we
+> > don't, we should probably just disallow using an imported dma-buf as
+> > cmdstream.. I don't think there is any sane reason to permit that.  We
+> > should probably also disallow get_vaddr() on imported buffers.
+>
+> Yeah if that's possible and won't blow up (I can't test) I think it'd
+> be best. Something like
+> if (bo->import_attach) return NULL; should do the trick I think.
+> Should I type that up as v2 of this?
 
->  include/dt-bindings/clock/qcom,gcc-msm8939.h |   27 +
->  include/dt-bindings/reset/qcom,gcc-msm8939.h |   10 +
+Sure.  It should probably be something like
 
-These go in patch 1.
+  if (obj->import_attach)
+    return ERR_PTR(-ESOMETHING)
 
->  5 files changed, 4045 insertions(+)
->  create mode 100644 drivers/clk/qcom/gcc-msm8939.c
+looks like the gem-submit path handles an IS_ERR() return
+
+BR,
+-R
+
+
+> -Daniel
+>
+> >
+> > BR,
+> > -R
+> >
+> > >
+> > > But even if that WARN_ON is wrong, cleaning up a vmap() done by msm by
+> > > calling dma_buf_vmap is the wrong thing to do.
+> > >
+> > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> > > Cc: Rob Clark <robdclark@gmail.com>
+> > > Cc: Sean Paul <sean@poorly.run>
+> > > Cc: linux-arm-msm@vger.kernel.org
+> > > Cc: freedreno@lists.freedesktop.org
+> > > ---
+> > >  drivers/gpu/drm/msm/msm_gem.c | 3 +--
+> > >  1 file changed, 1 insertion(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> > > index 5a6a79fbc9d6..3305a457960e 100644
+> > > --- a/drivers/gpu/drm/msm/msm_gem.c
+> > > +++ b/drivers/gpu/drm/msm/msm_gem.c
+> > > @@ -907,8 +907,7 @@ static void free_object(struct msm_gem_object *msm_obj)
+> > >         put_iova(obj);
+> > >
+> > >         if (obj->import_attach) {
+> > > -               if (msm_obj->vaddr)
+> > > -                       dma_buf_vunmap(obj->import_attach->dmabuf, msm_obj->vaddr);
+> > > +               WARN_ON(msm_obj->vaddr);
+> > >
+> > >                 /* Don't drop the pages for imported dmabuf, as they are not
+> > >                  * ours, just free the array we allocated:
+> > > --
+> > > 2.26.2
+> > >
+>
+>
+>
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> +41 (0) 79 365 57 48 - http://blog.ffwll.ch
