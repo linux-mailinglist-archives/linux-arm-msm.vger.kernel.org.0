@@ -2,83 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FE941CF948
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 17:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CB1B1CF965
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 17:38:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730287AbgELPeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 11:34:06 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:19061 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730382AbgELPeG (ORCPT
+        id S1727847AbgELPhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 11:37:53 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:45782 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727795AbgELPhw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 11:34:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589297645; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=dze1SlsXMpqtXCRYq9gWZjlDDJ3FZrxJhv0pJVE1AgI=; b=Pbt056Y50u2HUElqeOnfzUEkWb1QbCEvUIprUR5hwXaIQOUrAbPj2qsP7Mrub9BudxypKdpA
- 8NRKIlIyWdu4gw8yprbrVfLbh1wvHhLDE2kccUgy5lNjUET0KMQrgonX5Xp6bQXg131COhsL
- iMHiCHeLp4YF7SnIXqnyXwv8CFQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ebac19b.7fa3d65d7ed8-smtp-out-n05;
- Tue, 12 May 2020 15:32:43 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BE76EC433BA; Tue, 12 May 2020 15:32:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CEFC9C433CB;
-        Tue, 12 May 2020 15:32:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CEFC9C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v1 6/6] bus: mhi: core: Introduce sysfs entries for MHI
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hemantk@codeaurora.org
-References: <1589250796-32020-1-git-send-email-bbhatt@codeaurora.org>
- <1589250796-32020-7-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <7a77e057-a053-89df-4f6e-6e0aa1cce256@codeaurora.org>
-Date:   Tue, 12 May 2020 09:32:41 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Tue, 12 May 2020 11:37:52 -0400
+Received: by mail-ot1-f68.google.com with SMTP id e20so10819530otk.12;
+        Tue, 12 May 2020 08:37:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zHYiE//KG7sYXg64AbmwY8PpXkOO57mwt3IeZH0kDgI=;
+        b=uZ4lN6si6itnhwYMyQfa8sfYoD/0xbapa23BzeKRnf/8TpRUqJmMM7JVcWBb6OCXHz
+         ovv/0B94ymp/UdqBOoyCiJ4Dkq4y5So6Vc79lbVi8bW3YZU6TDAoXLK65Jjey7xEjgAN
+         p/U1nY04i8E5ZTEgTNOqp7bvcO1Uc0R19hUqJmWOwoSq10R961vI4NX77HTDZhSR5VDO
+         fo8RYuD6uH9+Vdd1KMPoXzt2MqUXYt4yp73BcWnZJegR6dsrWGRMeTZDkXOxLQP0JQ4j
+         tCqm6DfurhMVspWdTMbVF5m/y2JU8OY3hCieVWQbpBvuJoXbsqi/exRdga6nw8yeCbnL
+         4goQ==
+X-Gm-Message-State: AGi0PuZuQyC5bOYUY3SOxWbClqVxVgvSrd9MIHO67ai62tr0PP7QJ6xB
+        Nyap5yb5XeC5zn/IwOrKiQ==
+X-Google-Smtp-Source: APiQypKGiqazmKa1llrIVH5iI9hlhiwrjndF3SjPLhcd9EbAnc9f9RBnfa/Ps9rE2pQdkek8vTqmUQ==
+X-Received: by 2002:a05:6830:1082:: with SMTP id y2mr16684544oto.123.1589297871719;
+        Tue, 12 May 2020 08:37:51 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id t20sm3501710ott.51.2020.05.12.08.37.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 May 2020 08:37:50 -0700 (PDT)
+Received: (nullmailer pid 24997 invoked by uid 1000);
+        Tue, 12 May 2020 15:37:49 -0000
+Date:   Tue, 12 May 2020 10:37:49 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
+        linux-remoteproc@vger.kernel.org, Ohad Ben-Cohen <ohad@wizery.com>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: qcom: pas: Add SM8250
+ remoteprocs
+Message-ID: <20200512153749.GA24921@bogus>
+References: <20200430180051.3795305-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1589250796-32020-7-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200430180051.3795305-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/11/2020 8:33 PM, Bhaumik Bhatt wrote:
-> Introduce sysfs entries to enable userspace clients the ability to read
-> the serial number and the OEM PK Hash values obtained from BHI. OEMs
-> need to read these device-specific hardware information values through
-> userspace for factory testing purposes and cannot be exposed via degbufs
-> as it may remain disabled for performance reasons. Also, update the
-> documentation for ABI to include these entries.
+On Thu, 30 Apr 2020 11:00:50 -0700, Bjorn Andersson wrote:
+> Add the SM8250 audio, compute and sensor remoteprocs to the PAS DT
+> binding.
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->   Documentation/ABI/stable/sysfs-bus-mhi | 25 ++++++++++++++++
->   drivers/bus/mhi/core/init.c            | 53 ++++++++++++++++++++++++++++++++++
->   2 files changed, 78 insertions(+)
->   create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+> 
+> Changes since v1:
+> - Changed adsp power-domains to lcx and added missing lmx
+> 
+>  .../devicetree/bindings/remoteproc/qcom,adsp.txt         | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
 
-I think you need to update MAINTAINERS as well.
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Acked-by: Rob Herring <robh@kernel.org>
