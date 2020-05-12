@@ -2,79 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 418561CEA40
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 03:49:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08C3F1CEA49
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 03:52:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728492AbgELBtO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 21:49:14 -0400
-Received: from mail-oo1-f68.google.com ([209.85.161.68]:45656 "EHLO
-        mail-oo1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727886AbgELBtO (ORCPT
+        id S1726415AbgELBwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 21:52:23 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:20702 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726874AbgELBwW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 21:49:14 -0400
-Received: by mail-oo1-f68.google.com with SMTP id p123so1226044oop.12;
-        Mon, 11 May 2020 18:49:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qyS6MkhXHBKw55KmTZ5skJnQyiabgnNPBApKYQW8lbs=;
-        b=WTOs/5YsBeW8Irx6ICXsJVMl11WiUFktKwdQ49CajcqrvNMFVBQykk8lY91rn3YC0A
-         8a6D+nO/dvBNuHmqpcf38nPgV/SQVeax1OsDqDeyBrGx7xm1U4/mz5A4ShOwxbnIlLSU
-         7lIOQApCPRwOF1sRm/7FrSM6OQqF/4zeBQ1suz8U7KdrNPrzlyNbT3kdR2RW4VbMemFF
-         W44tDtoh65HOIe9PYnOkwRJe3NN83aLB5P2XGbb0LqcLb8z3+uvlxP8AEq/UWiXoprbB
-         wsCYhY8LSCHGynfaWAlQpAeLJmdLyOxkKQTedw5sumqzc2OO/WOo7S8+MwGq2VL5FKA7
-         IIfA==
-X-Gm-Message-State: AGi0Pubsc/+DyIMmdU8YOplBHZl/nlDHxEJsejUKH8BjGN11H2Hnfb0E
-        cfcLzTrQRtQyt4Uj4Ho/Mg==
-X-Google-Smtp-Source: APiQypKdwSaX0fVfyQQECJ+IcqIuXGQV1KHcMgLThCmBXgBvOFuAaR2UI6Zz6VxsqyMDL6UwN37aSg==
-X-Received: by 2002:a4a:3ed6:: with SMTP id t205mr4101984oot.51.1589248153449;
-        Mon, 11 May 2020 18:49:13 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id j3sm3112516otq.22.2020.05.11.18.49.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 18:49:12 -0700 (PDT)
-Received: (nullmailer pid 8810 invoked by uid 1000);
-        Tue, 12 May 2020 01:49:11 -0000
-Date:   Mon, 11 May 2020 20:49:11 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     Jonathan.Cameron@huawei.com, Mark Rutland <mark.rutland@arm.com>,
-        linus.walleij@linaro.org, Lars-Peter Clausen <lars@metafoo.de>,
-        mka@chromium.org, aghayal@codeaurora.org,
-        Jonathan Cameron <jic23@kernel.org>, agross@kernel.org,
-        kgunda@codeaurora.org, bjorn.andersson@linaro.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm-owner@vger.kernel.org, linux-kernel@vger.kernel.org,
-        smohanad@codeaurora.org, linux-iio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Hartmut Knaack <knaack.h@gmx.de>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH V3 1/4] iio: adc: Convert the QCOM SPMI ADC bindings to
- .yaml format
-Message-ID: <20200512014911.GA8752@bogus>
-References: <1587993846-30773-1-git-send-email-jprakash@codeaurora.org>
- <1587993846-30773-2-git-send-email-jprakash@codeaurora.org>
+        Mon, 11 May 2020 21:52:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589248342; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=5GcdiONqEv36FWjP2qQN8cdoBoN6pSTyf2ili7mG7S0=; b=SpGZ4/97ARwgNvMRhi1Mlzs6FfZtcqRXUGjXulgLT06cczzp+qBRsa0dQ2553Bvetl7Kn7BD
+ YuC/I8WqNyOGrWX5rS/7i8Nq3UygEKJ0y7dRIgkZzfODoX/r7ir3jaA7OeoRDoLOCDEOOpP7
+ LgDfg2eSK/E4aASY/ozgzgwZmRU=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eba0150.7f297b1a0490-smtp-out-n04;
+ Tue, 12 May 2020 01:52:16 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 07F42C433CB; Tue, 12 May 2020 01:52:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BEA28C433F2;
+        Tue, 12 May 2020 01:52:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BEA28C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v4] bus: mhi: core: Handle syserr during power_up
+To:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1588868371-8365-1-git-send-email-jhugo@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <523be297-0852-e114-44c0-232f30f593c4@codeaurora.org>
+Date:   Mon, 11 May 2020 18:52:13 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1587993846-30773-2-git-send-email-jprakash@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1588868371-8365-1-git-send-email-jhugo@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Apr 2020 18:54:02 +0530, Jishnu Prakash wrote:
-> Convert the adc bindings from .txt to .yaml format.
-> 
-> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
-> ---
->  .../devicetree/bindings/iio/adc/qcom,spmi-vadc.txt | 173 --------------
->  .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 252 +++++++++++++++++++++
->  2 files changed, 252 insertions(+), 173 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.txt
->  create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+
+On 5/7/20 9:19 AM, Jeffrey Hugo wrote:
+> The MHI device may be in the syserr state when we attempt to init it in
+> power_up().  Since we have no local state, the handling is simple -
+> reset the device and wait for it to transition out of the reset state.
+> 
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
