@@ -2,103 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FD331CF98B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 17:45:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13C751CFC2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 19:30:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbgELPps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 11:45:48 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:38605 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726465AbgELPps (ORCPT
+        id S1727104AbgELRaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 13:30:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38214 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726031AbgELRav (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 11:45:48 -0400
-Received: by mail-ot1-f67.google.com with SMTP id m33so10871642otc.5;
-        Tue, 12 May 2020 08:45:47 -0700 (PDT)
+        Tue, 12 May 2020 13:30:51 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83327C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 10:30:51 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id y9so3067157plk.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 10:30:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uwHdadffELF6O3Ox9C2J9UrmgnS3D4KFbraj16AD0PI=;
+        b=fCfpVlpsGcefVpnK833KEICYAiK6PPdm+7Hgo6P4xiIs1AthyUaTes1RRoyWsfR9i5
+         H/6RCPsfT3DzDeNiBbY6Y5M9mgBVDL22QcZ2U1CmFm2KueiDUE3vI1FmZH3Q0wlqzrTH
+         KrteQlpjsS14+Hx6q5m7GiiE3Y/+TfnARNv+9Oi1R6sCLHD5GtNe3VeJafdqLF/N8ZMX
+         wJW3S//w/5fkW/G7lZDeZRXG869TUAMDA97RGg+l3kU9olTViqTFXG//p/uyJdU3qv3T
+         ev7rHopoKPWCHVsVEg2TeavP9Ezgo4y8vNDKUTGu007zd733XFthSI9JYj8hX0V01wPv
+         mJjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wjhqZR0KFtDODzXTbFPWHQLNPIl2BEjWfgjvJzwWtyM=;
-        b=DXdivuamiPck6uKR1utxJP9eYvBK8zO8w62MapXJMpjeEK+/xSvnLLZhBJ1QwKMdOf
-         VIjkP8q3P21ERM2InRTa580tE/HfLQwzi9jc22+fJ9jplwflr2EThPE1TJjfLvV4Imnf
-         dBmSP/q5m8pCi1wYjrclErYqgeHfbp5YtJwKa/2CB7gaxIi82KuIn9wqnki2AaOX/qIp
-         i+xaDUGNv6Dm1GEtMNrTLJE2X+6LJggN8rmAG43Upm91/5UFhERZNL2GEIfkvF138oea
-         ipBpwKNnv7XPehFzFp6rO6UAc9F0lPjyz2cAs8myU81/0fOKmvx3hv8EwS0DCDnqlssx
-         BLPA==
-X-Gm-Message-State: AGi0PuZOJJzMthXFSrTcvXuRZe69ZE6RMh+LxermEnfFV2ix3Ql3EahY
-        eWaqe/MCC10vjs//CHNdUg==
-X-Google-Smtp-Source: APiQypL6/T/FPzkcOYcltEodmiZvU7X6jDCHWnt/PGwkj5Xv0c65PIVAc4kQx2qq4cpuP4NKW2EpCw==
-X-Received: by 2002:a05:6830:1e25:: with SMTP id t5mr16362224otr.358.1589298347136;
-        Tue, 12 May 2020 08:45:47 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id d61sm3517309otb.58.2020.05.12.08.45.44
+         :mime-version:content-disposition:in-reply-to;
+        bh=uwHdadffELF6O3Ox9C2J9UrmgnS3D4KFbraj16AD0PI=;
+        b=Wi0gBWXN88uMqVhpYEWwPtHYEWt/UvmydqCIOwNLXwigKLYIIqgmSNB84VER6gJFAK
+         Xho4nuSxzRuw5qCTpb0eEdqXouAQa84HrGijVmNjOYIFwzX7eEYx8kJiVntz0/ZlTyaw
+         nzCHnjjmYdCKLVku4udbzZukguLTAzDAYvdK97sWi+XbfAcXQaPWc9q1sEqyku3qJADf
+         HGGRzuiw7qVeNYBsdMdJbf2V+2kEdASogX4M5LCfl8za5FCKHyRuWhLtf98J+NGmPkBV
+         AL2lt5yR4CVVCr0nHqPSCk/h+cmmufzQCs7viIsPKx/D3uaFKERXfTQ43W75jBjxPXc/
+         E8UA==
+X-Gm-Message-State: AGi0PuZ9qsp5p6jCFVFrKHF5byV8CS29Xrlc4X1oKI5udbB+Vwu/dhhV
+        4F7eutC/DDSoXUfRRe0gYidl9A==
+X-Google-Smtp-Source: APiQypJ1naeDJnJozrJ4B9Xp2/Gjh1uEfEb/1H/CK20riED1XpH9FpOX7zFR/K2HUX3er/fBTJ2MNw==
+X-Received: by 2002:a17:90a:5b:: with SMTP id 27mr31396022pjb.190.1589304651035;
+        Tue, 12 May 2020 10:30:51 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id l15sm13636543pjk.56.2020.05.12.10.30.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 08:45:45 -0700 (PDT)
-Received: (nullmailer pid 4011 invoked by uid 1000);
-        Tue, 12 May 2020 15:45:44 -0000
-Date:   Tue, 12 May 2020 10:45:44 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     ansuelsmth@gmail.com
-Cc:     'Bjorn Andersson' <bjorn.andersson@linaro.org>,
-        'Andy Gross' <agross@kernel.org>,
-        'Bjorn Helgaas' <bhelgaas@google.com>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        'Stanimir Varbanov' <svarbanov@mm-sol.com>,
-        'Lorenzo Pieralisi' <lorenzo.pieralisi@arm.com>,
-        'Andrew Murray' <amurray@thegoodpenguin.co.uk>,
-        'Philipp Zabel' <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: R: [PATCH v3 08/11] devicetree: bindings: pci: document PARF
- params bindings
-Message-ID: <20200512154544.GA823@bogus>
-References: <20200430220619.3169-1-ansuelsmth@gmail.com>
- <20200430220619.3169-9-ansuelsmth@gmail.com>
- <20200507181044.GA15159@bogus>
- <062301d624a6$8be610d0$a3b23270$@gmail.com>
+        Tue, 12 May 2020 10:30:50 -0700 (PDT)
+Date:   Tue, 12 May 2020 10:29:17 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, arnd@arndb.de,
+        Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [PATCH v2] misc: fastrpc: fix potential fastrpc_invoke_ctx leak
+Message-ID: <20200512172917.GG57962@builder.lan>
+References: <20200512110930.2550-1-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <062301d624a6$8be610d0$a3b23270$@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200512110930.2550-1-srinivas.kandagatla@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 07, 2020 at 09:34:35PM +0200, ansuelsmth@gmail.com wrote:
-> > On Fri, May 01, 2020 at 12:06:15AM +0200, Ansuel Smith wrote:
-> > > It is now supported the editing of Tx De-Emphasis, Tx Swing and
-> > > Rx equalization params on ipq8064. Document this new optional params.
-> > >
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > >  .../devicetree/bindings/pci/qcom,pcie.txt     | 36 +++++++++++++++++++
-> > >  1 file changed, 36 insertions(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > > index 6efcef040741..8cc5aea8a1da 100644
-> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > > @@ -254,6 +254,42 @@
-> > >  			- "perst-gpios"	PCIe endpoint reset signal line
-> > >  			- "wake-gpios"	PCIe endpoint wake signal line
-> > >
-> > > +- qcom,tx-deemph-gen1:
-> > > +	Usage: optional (available for ipq/apq8064)
-> > > +	Value type: <u32>
-> > > +	Definition: Gen1 De-emphasis value.
-> > > +		    For ipq806x should be set to 24.
-> > 
-> > Unless these need to be tuned per board, then the compatible string for
-> > ipq806x should imply all these settings.
-> > 
+On Tue 12 May 04:09 PDT 2020, Srinivas Kandagatla wrote:
+
+> fastrpc_invoke_ctx can have refcount of 2 in error path where
+> rpmsg_send() fails to send invoke message. decrement the refcount
+> properly in the error path to fix this leak.
 > 
-> It was requested by v2 to make this settings tunable. These don't change are
-> all the same for every ipq806x SoC. The original implementation had this 
-> value hardcoded for ipq806x. Should I restore this and drop this patch? 
+> This also fixes below static checker warning:
+> 
+> drivers/misc/fastrpc.c:990 fastrpc_internal_invoke()
+> warn: 'ctx->refcount.refcount.ref.counter' not decremented on lines: 990.
+> 
+> Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context")
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-Yes, please.
+Thanks, that looks better.
 
-Rob
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> ---
+> Changes since v1:
+> 	moved fastrpc_context_put to fastrpc_invoke_send()
+> 
+>  drivers/misc/fastrpc.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 9065d3e71ff7..7939c55daceb 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -904,6 +904,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
+>  	struct fastrpc_channel_ctx *cctx;
+>  	struct fastrpc_user *fl = ctx->fl;
+>  	struct fastrpc_msg *msg = &ctx->msg;
+> +	int ret;
+>  
+>  	cctx = fl->cctx;
+>  	msg->pid = fl->tgid;
+> @@ -919,7 +920,13 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
+>  	msg->size = roundup(ctx->msg_sz, PAGE_SIZE);
+>  	fastrpc_context_get(ctx);
+>  
+> -	return rpmsg_send(cctx->rpdev->ept, (void *)msg, sizeof(*msg));
+> +	ret = rpmsg_send(cctx->rpdev->ept, (void *)msg, sizeof(*msg));
+> +
+> +	if (ret)
+> +		fastrpc_context_put(ctx);
+> +
+> +	return ret;
+> +
+>  }
+>  
+>  static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+> -- 
+> 2.21.0
+> 
