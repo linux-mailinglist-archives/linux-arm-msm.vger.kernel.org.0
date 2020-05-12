@@ -2,126 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13C751CFC2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 19:30:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C41F81CFC74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 19:43:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbgELRaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 13:30:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38214 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726031AbgELRav (ORCPT
+        id S1726465AbgELRm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 13:42:28 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:13457 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730238AbgELRm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 13:30:51 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83327C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 10:30:51 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id y9so3067157plk.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 10:30:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uwHdadffELF6O3Ox9C2J9UrmgnS3D4KFbraj16AD0PI=;
-        b=fCfpVlpsGcefVpnK833KEICYAiK6PPdm+7Hgo6P4xiIs1AthyUaTes1RRoyWsfR9i5
-         H/6RCPsfT3DzDeNiBbY6Y5M9mgBVDL22QcZ2U1CmFm2KueiDUE3vI1FmZH3Q0wlqzrTH
-         KrteQlpjsS14+Hx6q5m7GiiE3Y/+TfnARNv+9Oi1R6sCLHD5GtNe3VeJafdqLF/N8ZMX
-         wJW3S//w/5fkW/G7lZDeZRXG869TUAMDA97RGg+l3kU9olTViqTFXG//p/uyJdU3qv3T
-         ev7rHopoKPWCHVsVEg2TeavP9Ezgo4y8vNDKUTGu007zd733XFthSI9JYj8hX0V01wPv
-         mJjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uwHdadffELF6O3Ox9C2J9UrmgnS3D4KFbraj16AD0PI=;
-        b=Wi0gBWXN88uMqVhpYEWwPtHYEWt/UvmydqCIOwNLXwigKLYIIqgmSNB84VER6gJFAK
-         Xho4nuSxzRuw5qCTpb0eEdqXouAQa84HrGijVmNjOYIFwzX7eEYx8kJiVntz0/ZlTyaw
-         nzCHnjjmYdCKLVku4udbzZukguLTAzDAYvdK97sWi+XbfAcXQaPWc9q1sEqyku3qJADf
-         HGGRzuiw7qVeNYBsdMdJbf2V+2kEdASogX4M5LCfl8za5FCKHyRuWhLtf98J+NGmPkBV
-         AL2lt5yR4CVVCr0nHqPSCk/h+cmmufzQCs7viIsPKx/D3uaFKERXfTQ43W75jBjxPXc/
-         E8UA==
-X-Gm-Message-State: AGi0PuZ9qsp5p6jCFVFrKHF5byV8CS29Xrlc4X1oKI5udbB+Vwu/dhhV
-        4F7eutC/DDSoXUfRRe0gYidl9A==
-X-Google-Smtp-Source: APiQypJ1naeDJnJozrJ4B9Xp2/Gjh1uEfEb/1H/CK20riED1XpH9FpOX7zFR/K2HUX3er/fBTJ2MNw==
-X-Received: by 2002:a17:90a:5b:: with SMTP id 27mr31396022pjb.190.1589304651035;
-        Tue, 12 May 2020 10:30:51 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l15sm13636543pjk.56.2020.05.12.10.30.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 10:30:50 -0700 (PDT)
-Date:   Tue, 12 May 2020 10:29:17 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, arnd@arndb.de,
-        Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [PATCH v2] misc: fastrpc: fix potential fastrpc_invoke_ctx leak
-Message-ID: <20200512172917.GG57962@builder.lan>
-References: <20200512110930.2550-1-srinivas.kandagatla@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200512110930.2550-1-srinivas.kandagatla@linaro.org>
+        Tue, 12 May 2020 13:42:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589305347; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=mnWGuuIZg71oek6vJFSBqS0FGbEd8YQLoUbrM1p6Dsg=; b=LrFCXyj813/wOdWT05daL/9xLJR7ytXlyqCFNKqRsTxOkHj5PsPrMqTHkENG+4qpRa1Ay9iQ
+ 9VyRWuxyhzWyn4IzARLsFVtja0DoUAtp6g4Yw/VC+iUZh6RhVGNfQYWFo4sodDWR/Yhr2tKi
+ 4h2xUEZP6rT0WwYxbLJVAboGxuw=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ebadffe.7f38d41c83e8-smtp-out-n01;
+ Tue, 12 May 2020 17:42:22 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6FE52C43637; Tue, 12 May 2020 17:42:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from bbhatt-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 268A1C433F2;
+        Tue, 12 May 2020 17:42:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 268A1C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk@codeaurora.org, jhugo@codeaurora.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v2 0/6] Introduce features and debugfs/sysfs entries for MHI
+Date:   Tue, 12 May 2020 10:42:08 -0700
+Message-Id: <1589305334-19466-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 12 May 04:09 PDT 2020, Srinivas Kandagatla wrote:
+Introduce independent bus and device voting mechanism for clients and save
+hardware information from BHI.
+Allow reading and modifying some MHI variables for debug, test, and
+information purposes using debugfs.
+Read values for device specific hardware information to be used by OEMs in
+factory testing such as serial number and PK hash using sysfs.
 
-> fastrpc_invoke_ctx can have refcount of 2 in error path where
-> rpmsg_send() fails to send invoke message. decrement the refcount
-> properly in the error path to fix this leak.
-> 
-> This also fixes below static checker warning:
-> 
-> drivers/misc/fastrpc.c:990 fastrpc_internal_invoke()
-> warn: 'ctx->refcount.refcount.ref.counter' not decremented on lines: 990.
-> 
-> Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context")
-> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+This set of patches was tested on arm64 and x86.
 
-Thanks, that looks better.
+v2:
+-Please note: an upcoming ath11k driver patch will depend on the following patch:
+"bus: mhi: core: Introduce independent voting mechanism"
+-Fixed typo in one of the patches
+-Updated MAINTAINERS for the sysfs ABI documentation
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Bhaumik Bhatt (6):
+  bus: mhi: core: Introduce independent voting mechanism
+  bus: mhi: core: Use generic name field for an MHI device
+  bus: mhi: core: Introduce helper function to check device state
+  bus: mhi: core: Introduce debugfs entries and counters for MHI
+  bus: mhi: core: Read and save device hardware information from BHI
+  bus: mhi: core: Introduce sysfs entries for MHI
 
-Regards,
-Bjorn
+ Documentation/ABI/stable/sysfs-bus-mhi |  25 ++
+ MAINTAINERS                            |   1 +
+ drivers/bus/mhi/Kconfig                |   8 +
+ drivers/bus/mhi/core/Makefile          |   5 +-
+ drivers/bus/mhi/core/boot.c            |  17 +-
+ drivers/bus/mhi/core/debugfs.c         | 431 +++++++++++++++++++++++++++++++++
+ drivers/bus/mhi/core/init.c            |  80 +++++-
+ drivers/bus/mhi/core/internal.h        |  29 +++
+ drivers/bus/mhi/core/main.c            |   6 +-
+ drivers/bus/mhi/core/pm.c              |  79 ++++--
+ include/linux/mhi.h                    |  39 ++-
+ 11 files changed, 673 insertions(+), 47 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+ create mode 100644 drivers/bus/mhi/core/debugfs.c
 
-> ---
-> Changes since v1:
-> 	moved fastrpc_context_put to fastrpc_invoke_send()
-> 
->  drivers/misc/fastrpc.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 9065d3e71ff7..7939c55daceb 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -904,6 +904,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
->  	struct fastrpc_channel_ctx *cctx;
->  	struct fastrpc_user *fl = ctx->fl;
->  	struct fastrpc_msg *msg = &ctx->msg;
-> +	int ret;
->  
->  	cctx = fl->cctx;
->  	msg->pid = fl->tgid;
-> @@ -919,7 +920,13 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
->  	msg->size = roundup(ctx->msg_sz, PAGE_SIZE);
->  	fastrpc_context_get(ctx);
->  
-> -	return rpmsg_send(cctx->rpdev->ept, (void *)msg, sizeof(*msg));
-> +	ret = rpmsg_send(cctx->rpdev->ept, (void *)msg, sizeof(*msg));
-> +
-> +	if (ret)
-> +		fastrpc_context_put(ctx);
-> +
-> +	return ret;
-> +
->  }
->  
->  static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
-> -- 
-> 2.21.0
-> 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
