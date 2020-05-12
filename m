@@ -2,113 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EFF81CF31D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 13:11:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53EEE1CF325
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 13:13:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729450AbgELLLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 07:11:20 -0400
-Received: from foss.arm.com ([217.140.110.172]:52600 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726891AbgELLLT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 07:11:19 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C9E0930E;
-        Tue, 12 May 2020 04:11:18 -0700 (PDT)
-Received: from [10.37.12.83] (unknown [10.37.12.83])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BB2703F71E;
-        Tue, 12 May 2020 04:11:08 -0700 (PDT)
-Subject: Re: [PATCH v7 03/15] PM / EM: update callback structure and add
- device pointer
-To:     Quentin Perret <qperret@google.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200511111912.3001-1-lukasz.luba@arm.com>
- <20200511111912.3001-4-lukasz.luba@arm.com>
- <20200511115722.GA13741@google.com>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <a2c20b82-58e3-a2ef-2d8d-edbaf05277ec@arm.com>
-Date:   Tue, 12 May 2020 12:11:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20200511115722.GA13741@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1726891AbgELLNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 07:13:23 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:44249 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728371AbgELLNW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 May 2020 07:13:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589282002; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=HNMNvE1RKyVaf0z8m4G3vU23gxuWwcMYFNc8gKBsWwQ=; b=HLkyTXHmD6Hc7puOBnPYb3FNuyaxe9BkrHfP0fOtfmS6aHRLOJyyhKsV8C+DkzIS39o4+uC8
+ 4JFXJWsSZLEsaqg3VQJ+d0UwF++BbaT7+L8l74+WuDXBwDAS+jIux3QrOj+Bk9qHajM4dDmN
+ XG9n979sVK5AH972QGL/yccOgcA=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eba84c7.7f0061264500-smtp-out-n02;
+ Tue, 12 May 2020 11:13:11 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EF36AC43637; Tue, 12 May 2020 11:13:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5ECEBC433CB;
+        Tue, 12 May 2020 11:13:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5ECEBC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     stanimir.varbanov@linaro.org, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH] dt-bindings: media: venus: Add an optional power domain for perf voting
+Date:   Tue, 12 May 2020 16:42:46 +0530
+Message-Id: <1589281966-13436-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Quentin,
+Add an optional power domain which when specified can be used for
+setting the performance state of Venus.
 
-On 5/11/20 12:57 PM, Quentin Perret wrote:
-> On Monday 11 May 2020 at 12:19:00 (+0100), Lukasz Luba wrote:
->> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
->> index 61623e2ff149..11ee24e06d12 100644
->> --- a/drivers/cpufreq/scmi-cpufreq.c
->> +++ b/drivers/cpufreq/scmi-cpufreq.c
->> @@ -103,17 +103,12 @@ scmi_get_sharing_cpus(struct device *cpu_dev, struct cpumask *cpumask)
->>   }
->>   
->>   static int __maybe_unused
->> -scmi_get_cpu_power(unsigned long *power, unsigned long *KHz, int cpu)
->> +scmi_get_cpu_power(unsigned long *power, unsigned long *KHz,
->> +		   struct device *cpu_dev)
->>   {
->> -	struct device *cpu_dev = get_cpu_device(cpu);
->>   	unsigned long Hz;
->>   	int ret, domain;
->>   
->> -	if (!cpu_dev) {
->> -		pr_err("failed to get cpu%d device\n", cpu);
->> -		return -ENODEV;
->> -	}
->> -
->>   	domain = handle->perf_ops->device_domain_id(cpu_dev);
->>   	if (domain < 0)
->>   		return domain;
->> @@ -200,7 +195,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->>   
->>   	policy->fast_switch_possible = true;
->>   
->> -	em_register_perf_domain(policy->cpus, nr_opp, &em_cb);
-> 
-> So this one has no users after this patch right? I suppose you could
-> squash patch 05 in this one. But no big deal.
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+---
+ Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 4 +++-
+ Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-Yes, it was tricky to me to decide the splits suggested by Daniel and
-this is the example. I had to introduce the em_dev_register_perf_domain
-and make clients of it before I remove the old em_register_perf_domain
-completely. I agree it could also go with the patch 5, but it does not
-harm to be here.
-
-> 
-> Acked-by: Quentin Perret <qperret@google.com>
-
-Thank you for this ACKs and the earlier.
-
-Regards,
-Lukasz
-
-> 
->> +	em_dev_register_perf_domain(cpu_dev, nr_opp, &em_cb, policy->cpus);
->>   
->>   	return 0;
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+index 764affa..d5babcd 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+@@ -25,12 +25,14 @@ properties:
+     maxItems: 1
+ 
+   power-domains:
+-    maxItems: 2
++    minItems: 2
++    maxItems: 3
+ 
+   power-domain-names:
+     items:
+       - const: venus
+       - const: vcodec0
++      - const: opp-pd
+ 
+   clocks:
+     maxItems: 5
+diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+index 8552f4a..b82321c 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+@@ -25,13 +25,15 @@ properties:
+     maxItems: 1
+ 
+   power-domains:
+-    maxItems: 3
++    minItems: 3
++    maxItems: 4
+ 
+   power-domain-names:
+     items:
+       - const: venus
+       - const: vcodec0
+       - const: vcodec1
++      - const: opp-pd
+ 
+   clocks:
+     maxItems: 7
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
