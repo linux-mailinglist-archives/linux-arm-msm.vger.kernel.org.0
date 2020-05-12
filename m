@@ -2,71 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 08C3F1CEA49
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 03:52:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E82B11CEA4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 03:53:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726415AbgELBwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 May 2020 21:52:23 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:20702 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726874AbgELBwW (ORCPT
+        id S1728073AbgELBxk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 May 2020 21:53:40 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:42755 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726874AbgELBxj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 May 2020 21:52:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589248342; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=5GcdiONqEv36FWjP2qQN8cdoBoN6pSTyf2ili7mG7S0=; b=SpGZ4/97ARwgNvMRhi1Mlzs6FfZtcqRXUGjXulgLT06cczzp+qBRsa0dQ2553Bvetl7Kn7BD
- YuC/I8WqNyOGrWX5rS/7i8Nq3UygEKJ0y7dRIgkZzfODoX/r7ir3jaA7OeoRDoLOCDEOOpP7
- LgDfg2eSK/E4aASY/ozgzgwZmRU=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5eba0150.7f297b1a0490-smtp-out-n04;
- Tue, 12 May 2020 01:52:16 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 07F42C433CB; Tue, 12 May 2020 01:52:15 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BEA28C433F2;
-        Tue, 12 May 2020 01:52:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BEA28C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v4] bus: mhi: core: Handle syserr during power_up
-To:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1588868371-8365-1-git-send-email-jhugo@codeaurora.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <523be297-0852-e114-44c0-232f30f593c4@codeaurora.org>
-Date:   Mon, 11 May 2020 18:52:13 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Mon, 11 May 2020 21:53:39 -0400
+Received: by mail-ot1-f65.google.com with SMTP id m18so9240060otq.9;
+        Mon, 11 May 2020 18:53:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=daFGYc0o3GvaIjPzR6/Udzzo+tWkkyO8hcjap5qbb9s=;
+        b=rAPYIyvPktcQBkvsNMQPf03clZxcHy2Ni04E6qIkzy4uSyBTh31u1KCoIiTqR099pC
+         03UK55XaqerqRx+4FAThgoy+5KyxRyvlR7mG0WbCoj9vh1NKsGuP5lFXiifxCuoVHbC1
+         cDyq0IdtrnBpRaKzLMHX3yCGB9UmRX/sN7mRHILRHnrodMM4//fT5yiHDD/kWQBvcxrz
+         SqDaZkf+OnvYGoI+sfzK18bhZYwUFLmx9NtSRS8I2/u32LBSNLFsnryy1H5oXuI03KGl
+         Ps2jXMQtJPaLnoP6lQ17uAhKvWReIA91OqEZ7mtB1dHw9oEdbj1iYK4BXlU+w+4jxpBW
+         HGpg==
+X-Gm-Message-State: AGi0PuZGiMWLTJG4enFLHDThbrQdBc6ZlTwJrkAHaNuPiYUqc0JY14Qs
+        WuxNPibtuSxOqC9bpjURuQ==
+X-Google-Smtp-Source: APiQypIxgXqdx3cx31SCjMZl/t8jJMjD1vREWgFc4w7UpMQFE2oKD32mY52N/woXbeBeF4cYmIRKnA==
+X-Received: by 2002:a9d:5cc1:: with SMTP id r1mr14040732oti.329.1589248418475;
+        Mon, 11 May 2020 18:53:38 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id l21sm3263751ooq.18.2020.05.11.18.53.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2020 18:53:37 -0700 (PDT)
+Received: (nullmailer pid 14764 invoked by uid 1000);
+        Tue, 12 May 2020 01:53:36 -0000
+Date:   Mon, 11 May 2020 20:53:36 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     Hartmut Knaack <knaack.h@gmx.de>, devicetree@vger.kernel.org,
+        mka@chromium.org, Jonathan.Cameron@huawei.com,
+        linux-arm-msm-owner@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Mark Rutland <mark.rutland@arm.com>,
+        bjorn.andersson@linaro.org, smohanad@codeaurora.org,
+        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+        aghayal@codeaurora.org, kgunda@codeaurora.org,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [PATCH V3 2/4] iio: adc: Add PMIC7 ADC bindings
+Message-ID: <20200512015336.GA14725@bogus>
+References: <1587993846-30773-1-git-send-email-jprakash@codeaurora.org>
+ <1587993846-30773-3-git-send-email-jprakash@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1588868371-8365-1-git-send-email-jhugo@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1587993846-30773-3-git-send-email-jprakash@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/7/20 9:19 AM, Jeffrey Hugo wrote:
-> The MHI device may be in the syserr state when we attempt to init it in
-> power_up().  Since we have no local state, the handling is simple -
-> reset the device and wait for it to transition out of the reset state.
+On Mon, 27 Apr 2020 18:54:03 +0530, Jishnu Prakash wrote:
+> Add documentation for PMIC7 ADC peripheral.
+> For the PMIC7-type PMICs, ADC peripheral is present in HW for the
+> following PMICs: PMK8350, PM8350, PM8350b, PMR735a and PMR735b.
+> Of these, only the ADC peripheral on PMK8350 is exposed directly to SW.
+> If SW needs to communicate with ADCs on other PMICs, it specifies the
+> PMIC to PMK8350 through the newly added SID register and communication
+> between PMK8350 ADC and other PMIC ADCs is carried out through
+> PBS(Programmable Boot Sequence) at the firmware level.
 > 
-> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> In addition, add definitions for ADC channels and virtual channel
+> definitions (combination of ADC channel number and PMIC SID number)
+> per PMIC, to be used by ADC clients for PMIC7.
+> 
+> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+> ---
+>  .../bindings/iio/adc/qcom,spmi-vadc.yaml           | 38 ++++++++--
+>  include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h    | 67 ++++++++++++++++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h   | 88 ++++++++++++++++++++++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h   | 46 +++++++++++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h   | 28 +++++++
+>  include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h   | 28 +++++++
+>  include/dt-bindings/iio/qcom,spmi-vadc.h           | 78 ++++++++++++++++++-
+>  7 files changed, 366 insertions(+), 7 deletions(-)
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h
+>  create mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h
+> 
 
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
