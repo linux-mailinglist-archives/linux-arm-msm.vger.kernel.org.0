@@ -2,87 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50E101CF462
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 14:30:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 009231CF63B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 15:55:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729436AbgELMat (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 08:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47872 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727859AbgELMat (ORCPT
+        id S1729570AbgELNzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 09:55:22 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:34650 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729336AbgELNzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 08:30:49 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E82C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 05:30:48 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id w10so2690617ljo.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 05:30:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DkbzZyFNKR5xF9Zj0XXSLiW6F+Uc35unyhuy5/Nx/Q0=;
-        b=exCeW+nP77zJ0TV1K0EGNA+H5dOM/e46KBa/p2zQGq61zsrFTTx7KZa5cldAt97Ijl
-         uwywF17fXwO0Y2J8N458zCY761VkF06TyT0wXmXeCEhP522u18UyGR4fACmDugGvm7g+
-         iKwhuQc5slkVhiBkG+a0xKgBo9iJpN4k+oOr+Avdnnhsa1Qb0NQn+t7ztSODllLqm/Oo
-         ea0/5ry8lpH3UTmbt0dCeMpjgutQAtCibc8scwfVMNVVolq4HhKolP10/HvVk4H6fkf0
-         N5h2cevIpBluCumqyoMVJ26Z24EyM2rmAUzbkxtbZtIGQRGc1VHm7JEsplkKN7zh0nWF
-         6EQg==
+        Tue, 12 May 2020 09:55:21 -0400
+Received: by mail-ot1-f66.google.com with SMTP id 72so10560406otu.1;
+        Tue, 12 May 2020 06:55:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DkbzZyFNKR5xF9Zj0XXSLiW6F+Uc35unyhuy5/Nx/Q0=;
-        b=jXhidJoWEvfO/E9mt7BBhbAFOgA7k/oo2oQCq38Au/c+VCvuq5V/lIKY1M5e74mhzk
-         4sdWslcrcOVXB9RsI4OD7hVLLzZ81XlM8dTfDAr3aYoKIbTBoEHoZ8/6yN9IHHeWss6a
-         v6n3MU1hbx9rnt4whmbr38jznXBYwxwlrEIK/vhCueZLgObDRwPNaDNRjOB5cKHSnXH8
-         hW3ganzqsLFBORHXzYQJQ8u4iDippuiqUC5KoDG2t9pGCfj2ob5mFm4UNfuF9Rp7oftS
-         /h81OUJ6TcmlQl/G6vbDFdlQWycADXDSvXThj/190gEndP9Gwht7uPhL7GnbmQ2gSsDQ
-         Jwug==
-X-Gm-Message-State: AOAM531hI1D3tnOMGcC+38m6h9fzy8EQR7raLzWx3QvbBvqL6TgN//Qj
-        4FBnLAdKAQbrCPm6gG+un+/fHN8yt8rzR/sSMcMNJ6nb
-X-Google-Smtp-Source: ABdhPJyQ1XkAcDYdXIDP8J2lY9e4GdpmrmWTg4XAQwyJXe2xgn9EQQgalxHJmKDmPx5R0kd7PzBNkmSwwYjMe3jXEHA=
-X-Received: by 2002:a2e:8805:: with SMTP id x5mr14097206ljh.223.1589286646283;
- Tue, 12 May 2020 05:30:46 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=khg2FYARhLY8jqsBiK9GfQxfbP399NswSSMlCJ79cLM=;
+        b=fdt4dCi+9JHwU6QYCXD707nyx9WyWLk8TVC506x3oH2VaZ1Wv/t1qFCUaB6jjmFV33
+         VEey+YQhbckwbLfOYnK6lzkYOO57/7AxxxIUchgwRxg9dPH/T5bAZF3QukXm0jFMI9hx
+         r/NPFY/aDvFNYFlnYI6QoRWd/KgbIhLIPRLJWdf0wZRN11URfCwyDTUOf7PH9OCLbKUM
+         tWpUcKCpT9tqvetzd0qk2ZR2eFzbnzrLSs3+t+faCUSFCkNK5K9p4ORY+GlIoYnRRL6Y
+         LyEuIKV9xGUut8jisWn8krAKj9w6QzVPcvte3HpzdPVuKjUlq75u4F2vBZJ0WO+faUkH
+         akyQ==
+X-Gm-Message-State: AGi0PuZzzyGY1VL5QXockgblvC0WcLdLOgjlqVkKtCQs7lsfWY277ezK
+        7ljkkLLAagjBbEQqlCSgNQ==
+X-Google-Smtp-Source: APiQypKVsMAlzHWT4/uwIBYqnJvQSdDTmKbo3XbCiLwbvxcmGGslzIJ4I5g3PCFGhGT1be+4rgh52g==
+X-Received: by 2002:a9d:7e99:: with SMTP id m25mr3878487otp.45.1589291720627;
+        Tue, 12 May 2020 06:55:20 -0700 (PDT)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id i127sm2764595oih.38.2020.05.12.06.55.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 May 2020 06:55:19 -0700 (PDT)
+Received: (nullmailer pid 26214 invoked by uid 1000);
+        Tue, 12 May 2020 13:55:19 -0000
+Date:   Tue, 12 May 2020 08:55:19 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     mka@chromium.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
+        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        stanimir.varbanov@linaro.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: media: venus: Add an optional power domain
+ for perf voting
+Message-ID: <20200512135519.GA24061@bogus>
+References: <1589281966-13436-1-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-References: <1588314617-4556-1-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1588314617-4556-1-git-send-email-mkshah@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 12 May 2020 14:30:35 +0200
-Message-ID: <CACRpkdau3+OytK93=6SA-mzdcded6Jsx=WoxgXXd4KMUc_WwPg@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: Add affinity callbacks to msmgpio IRQ chip
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Andy Gross <andy.gross@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1589281966-13436-1-git-send-email-rnayak@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 1, 2020 at 8:31 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+On Tue, 12 May 2020 16:42:46 +0530, Rajendra Nayak wrote:
+> Add an optional power domain which when specified can be used for
+> setting the performance state of Venus.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 4 +++-
+>  Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 4 +++-
+>  2 files changed, 6 insertions(+), 2 deletions(-)
+> 
 
-> From: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
->
-> Wakeup capable GPIO IRQs routed via PDC are not being migrated when a CPU
-> is hotplugged. Add affinity callbacks to msmgpio IRQ chip to update the
-> affinity of wakeup capable IRQs.
->
-> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-> [mkshah: updated commit text and minor code fixes]
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 
-Patch applied for fixes, will go upstream soon (unless
-Bjorn stops me).
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Yours,
-Linus Walleij
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.example.dt.yaml: video-codec@aa00000: power-domain-names: ['venus', 'vcodec0', 'vcodec1'] is too short
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/media/qcom,sc7180-venus.example.dt.yaml: video-codec@aa00000: power-domain-names: ['venus', 'vcodec0'] is too short
+
+See https://patchwork.ozlabs.org/patch/1288381
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
+
