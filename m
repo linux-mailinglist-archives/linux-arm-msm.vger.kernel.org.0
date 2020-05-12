@@ -2,68 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ADFB1CFEC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 21:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE1401CFF18
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2020 22:14:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725950AbgELT5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 15:57:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60992 "EHLO
+        id S1731048AbgELUOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 16:14:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgELT5m (ORCPT
+        with ESMTP id S1731019AbgELUOI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 15:57:42 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8668BC05BD09
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 12:57:42 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id z1so6890608pfn.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 12:57:42 -0700 (PDT)
+        Tue, 12 May 2020 16:14:08 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9EA3C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 13:14:07 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id j21so6683236pgb.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 13:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=1psTwvcMYpTlpczp4vTp5xf7H5Bk+BZ23G7yvOHtOms=;
-        b=El/bqf4wDveDEiTDXcScWyBiRrWf6eAeAsz3ooMr11JsFE6beIk89EXPcqbHIcH7F0
-         4tNzcwqc8QmWjPm1A+BqT9XyEKpx81sYFEb/7J8JlcE1iOs21Vb6ZnyWV3wSimw6DPGD
-         n302fYLzBN0oMvb6jFlLMTizkbyEIvVlwfiKbKrthHm5RsZauiF4i5MxNIjGGqu2QA07
-         0TjGDYtgWuOH+pylHcfQrjJGLxVq3i81tsX00lMhd/+3/Da0c5k9OHij/ruxvFraAb1K
-         Waks40En5VF8A9SUKdd764BkePOn20EoCmMprVnlXjeQb1nm/0SiF4DNbzooWUv5IHt/
-         l2sQ==
+        bh=yVbj2kYfNqCNXaolI+2XZgrd+V6K2rPAmk0JT9WEG78=;
+        b=XGD5nBU6JrgC3849IVhQBhLqb1DDeB1ZmAVFp8cIEyJsRPDHURkLigCz3PiMl7Ibc0
+         olFg2EW2Ea8pV2fcljIxY+SKxK842KxdaADXpXUSOUkRzWQSSCleFzHmUMyS0BngOzmd
+         8awe6Jo+tpxpuQPUPPXTJCg8e1Q14JdyAH+akE2eqErRb7x5ZL1xEeVzHL7snHDl6g+o
+         k+K9FDTPEIGp8hQ66LJEb/DvA4adP7J/6VfDCBij1qKrWNP9rRmZOiiUL78dAwu3VibT
+         5eBp724V5jFFRw4tibJ3CJOKfgk0ySonTB8eWh7Y6sLU/+jVyQe/ghI2DfjvVhl+bj6R
+         AVbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=1psTwvcMYpTlpczp4vTp5xf7H5Bk+BZ23G7yvOHtOms=;
-        b=dnWZ4C/5VKHZ762ino7j9bHWl03E88rBFIGh+zRrLsEhAaDL20Q34W7C26fMMtrAr0
-         9zBJKM9XpjOLEdi1De/gkGZks4QbObUQbZbMHrv8Dh1I8KOXIPGUSI4uhZhtkRCuISFm
-         TrW3gWK1xliws31/wjSYr9RpbKssY2RUHmz/2ImB8D3GwIm4Jc5As4fH9CkEV2N0wVvq
-         N7FW6UhymO9P9m7oD6Ydn4laMBCRRtJMqOVlAm7GJxpBSCZR3vHEup1oMUV3mrXuWrlX
-         3w9PtYwVj5mo38duqMTudgztiYCZ0UFB+u9Qgzf8VATGQ+8gLOn2IIK3rGN56iffA7+y
-         j2Kg==
-X-Gm-Message-State: AGi0PubbqrencZNV79D3wADg/ObMtFkp1rmPpb+RuWsQ0TDmYZHtDrGO
-        w9JRFj9XLwcshzDx9rnMNTsx4g==
-X-Google-Smtp-Source: APiQypL0VtphI0YrUqP9ATJ5zZvSYtoaqUqrSdwWQ7JLvFmjvSe5bb+FGzlag56wLCaSIPLRqA7QdQ==
-X-Received: by 2002:a63:554c:: with SMTP id f12mr21482392pgm.163.1589313461706;
-        Tue, 12 May 2020 12:57:41 -0700 (PDT)
+        bh=yVbj2kYfNqCNXaolI+2XZgrd+V6K2rPAmk0JT9WEG78=;
+        b=XTPQk9hq3j5PT5QxgWbz0RsI68d5s8eUPzshzEIdn8kMq7KUxCc7rpiR/9WvNtsb2c
+         tgiMdPAZSlQE3XgG5dfBSf8joHtL1OQ9DKvoWfPV3IJg3Uvox4MH8S0o49IJxPrSw6tE
+         F4FwhKK/i6EBu0a28D8efo2uN8YxhxK1RDOr2lykb190C5xIx0+oNdXSzAY9vBVgvShy
+         XJjJFQKFAljnYvZaP8tC4T2xdr9M/184Ge66G51sXv4ChnKv8Um/+AFaqjo1SPM1XwWB
+         WU9/t9tOXk5WbNbspY9Y3Nc/JPp/Ycwu5lVVJ2uQzv6Kls1r2FRMpBllE8mg0MhLfa7V
+         zaOQ==
+X-Gm-Message-State: AGi0PubmomFkTaQHaEj665k30CsNaiz1jqBygt/l/AoNBdg2+aCQEv7r
+        5efQQL5YyRN2/DeiCFxUNDTdXA==
+X-Google-Smtp-Source: APiQypK8S/5rcF+l1u/BQzeTY26XrRavipgCWhCkuOvvbFE6MVs3TXr//7a9kTCmKjx8LHEFh1l7FA==
+X-Received: by 2002:a62:7b03:: with SMTP id w3mr22334202pfc.313.1589314447191;
+        Tue, 12 May 2020 13:14:07 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t7sm3065968pjf.30.2020.05.12.12.57.40
+        by smtp.gmail.com with ESMTPSA id o11sm11110711pgp.62.2020.05.12.13.14.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 12:57:41 -0700 (PDT)
-Date:   Tue, 12 May 2020 12:56:08 -0700
+        Tue, 12 May 2020 13:14:06 -0700 (PDT)
+Date:   Tue, 12 May 2020 13:12:33 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
 Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
         robh+dt@kernel.org, jassisinghbrar@gmail.com,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V4 2/8] dt-bindings: clock: Add schema for QCOM IPQ apss
- pll
-Message-ID: <20200512195608.GH2165@builder.lan>
+Subject: Re: [PATCH V4 5/8] clk: qcom: Add ipq apss clock controller
+Message-ID: <20200512201233.GI2165@builder.lan>
 References: <1588573224-3038-1-git-send-email-sivaprak@codeaurora.org>
- <1588573224-3038-3-git-send-email-sivaprak@codeaurora.org>
+ <1588573224-3038-6-git-send-email-sivaprak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1588573224-3038-3-git-send-email-sivaprak@codeaurora.org>
+In-Reply-To: <1588573224-3038-6-git-send-email-sivaprak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -71,82 +70,175 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sun 03 May 23:20 PDT 2020, Sivaprakash Murugesan wrote:
 
-> Add dt-binding for apss pll found on QCOM IPQ platforms
+> The CPU on Qualcomm ipq platform is clocked primarily by a aplha PLL
+> and xo which are connected to a mux and enable block.
 > 
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-
-This seems quite similar to the existing qcom,a53pll binding, can't you
-just describe both in the same binding?
-
-> ---
->  .../bindings/clock/qcom,ipq-apsspll.yaml           | 49 ++++++++++++++++++++++
->  1 file changed, 49 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq-apsspll.yaml
+> Add support for the mux and enable block which feeds the CPU on ipq
+> based devices.
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq-apsspll.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq-apsspll.yaml
-> new file mode 100644
-> index 0000000..dd12ec4
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq-apsspll.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,ipq-apsspll.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm IPQ APSS PLL Binding
-> +
-> +maintainers:
-> +  - Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> +
-> +description:
-> +  The APSS PLL is the main clock that feds the CPUs on QCOM IPQ platforms.
-> +  It can support frequencies above 1GHz.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,ipq-apss-pll
 
-Allow me to claim that this is not the last IPQ, with an APSS PLL, which
-means that this compatible is no good.
-
-I think you want a compatible on the format qcom,ipq<numbers>-a53pll.
+As with the A53 binding, I don't believe that this driver will support
+all past, present and future IPQ APSSs. Please make it more specific.
 
 Regards,
 Bjorn
 
+> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> ---
+> [V4]
+>  * Addressed review comments
+>  drivers/clk/qcom/Kconfig    |  11 +++++
+>  drivers/clk/qcom/Makefile   |   1 +
+>  drivers/clk/qcom/apss-ipq.c | 106 ++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 118 insertions(+)
+>  create mode 100644 drivers/clk/qcom/apss-ipq.c
+> 
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index e70aa01..8d8465e 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -97,6 +97,17 @@ config IPQ_APSS_PLL
+>  	  Say Y if you want to support CPU frequency scaling on ipq based
+>  	  devices.
+>  
+> +config IPQ_APSS
+> +	tristate "IPQ APSS Clock Controller"
+> +	select IPQ_APSS_PLL
+> +	depends on QCOM_APCS_IPC || COMPILE_TEST
+> +	help
+> +	  Support for APSS clock controller on IPQ platforms. The
+> +	  APSS clock controller manages the Mux and enable block that feeds the
+> +	  CPUs.
+> +	  Say Y if you want to support CPU frequency scaling on
+> +	  ipq based devices.
 > +
-> +  reg:
-> +    maxItems: 1
+>  config IPQ_GCC_4019
+>  	tristate "IPQ4019 Global Clock Controller"
+>  	help
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index b4a6ba1..aab7a58 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -20,6 +20,7 @@ clk-qcom-$(CONFIG_QCOM_GDSC) += gdsc.o
+>  obj-$(CONFIG_APQ_GCC_8084) += gcc-apq8084.o
+>  obj-$(CONFIG_APQ_MMCC_8084) += mmcc-apq8084.o
+>  obj-$(CONFIG_IPQ_APSS_PLL) += apss-ipq-pll.o
+> +obj-$(CONFIG_IPQ_APSS) += apss-ipq.o
+>  obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
+>  obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
+>  obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
+> diff --git a/drivers/clk/qcom/apss-ipq.c b/drivers/clk/qcom/apss-ipq.c
+> new file mode 100644
+> index 0000000..59ed8e7
+> --- /dev/null
+> +++ b/drivers/clk/qcom/apss-ipq.c
+> @@ -0,0 +1,106 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+> + */
 > +
-> +  '#clock-cells':
-> +    const: 0
+> +#include <linux/kernel.h>
+> +#include <linux/err.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/regmap.h>
+> +#include <linux/module.h>
 > +
-> +  clocks:
-> +    items:
-> +      - description: board XO clock
+> +#include <dt-bindings/clock/qcom,apss-ipq.h>
 > +
-> +  clock-names:
-> +    items:
-> +      - const: xo
+> +#include "common.h"
+> +#include "clk-regmap.h"
+> +#include "clk-branch.h"
+> +#include "clk-alpha-pll.h"
+> +#include "clk-regmap-mux.h"
 > +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - '#clock-cells'
+> +enum {
+> +	P_XO,
+> +	P_APSS_PLL_EARLY,
+> +};
 > +
-> +additionalProperties: false
+> +static const struct clk_parent_data parents_apcs_alias0_clk_src[] = {
+> +	{ .fw_name = "xo" },
+> +	{ .fw_name = "pll" },
+> +};
 > +
-> +examples:
-> +  - |
-> +    a53pll_ipq: clock@b116000 {
-> +        compatible = "qcom,ipq-apss-pll";
-> +        reg = <0x0b116000 0x40>;
-> +        #clock-cells = <0>;
-> +        clocks = <&xo>;
-> +        clock-names = "xo";
-> +    };
+> +static const struct parent_map parents_apcs_alias0_clk_src_map[] = {
+> +	{ P_XO, 0 },
+> +	{ P_APSS_PLL_EARLY, 5 },
+> +};
+> +
+> +static struct clk_regmap_mux apcs_alias0_clk_src = {
+> +	.reg = 0x0050,
+> +	.width = 3,
+> +	.shift = 7,
+> +	.parent_map = parents_apcs_alias0_clk_src_map,
+> +	.clkr.hw.init = &(struct clk_init_data){
+> +		.name = "apcs_alias0_clk_src",
+> +		.parent_data = parents_apcs_alias0_clk_src,
+> +		.num_parents = 2,
+> +		.ops = &clk_regmap_mux_closest_ops,
+> +		.flags = CLK_SET_RATE_PARENT,
+> +	},
+> +};
+> +
+> +static struct clk_branch apcs_alias0_core_clk = {
+> +	.halt_reg = 0x0058,
+> +	.clkr = {
+> +		.enable_reg = 0x0058,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "apcs_alias0_core_clk",
+> +			.parent_hws = (const struct clk_hw *[]){
+> +				&apcs_alias0_clk_src.clkr.hw },
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static const struct regmap_config apss_ipq_regmap_config = {
+> +	.reg_bits       = 32,
+> +	.reg_stride     = 4,
+> +	.val_bits       = 32,
+> +	.max_register   = 0x1000,
+> +	.fast_io        = true,
+> +};
+> +
+> +static struct clk_regmap *apss_ipq_clks[] = {
+> +	[APCS_ALIAS0_CLK_SRC] = &apcs_alias0_clk_src.clkr,
+> +	[APCS_ALIAS0_CORE_CLK] = &apcs_alias0_core_clk.clkr,
+> +};
+> +
+> +static const struct qcom_cc_desc apss_ipq_desc = {
+> +	.config = &apss_ipq_regmap_config,
+> +	.clks = apss_ipq_clks,
+> +	.num_clks = ARRAY_SIZE(apss_ipq_clks),
+> +};
+> +
+> +static int apss_ipq_probe(struct platform_device *pdev)
+> +{
+> +	struct regmap *regmap;
+> +
+> +	regmap = dev_get_regmap(pdev->dev.parent, NULL);
+> +	if (IS_ERR(regmap))
+> +		return PTR_ERR(regmap);
+> +
+> +	return qcom_cc_really_probe(pdev, &apss_ipq_desc, regmap);
+> +}
+> +
+> +static struct platform_driver apss_ipq_driver = {
+> +	.probe = apss_ipq_probe,
+> +	.driver = {
+> +		.name   = "qcom,apss-ipq-clk",
+> +	},
+> +};
+> +
+> +module_platform_driver(apss_ipq_driver);
+> +
+> +MODULE_DESCRIPTION("QCOM APSS IPQ CLK Driver");
+> +MODULE_LICENSE("GPL v2");
 > -- 
 > 2.7.4
 > 
