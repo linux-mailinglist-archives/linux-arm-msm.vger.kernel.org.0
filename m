@@ -2,115 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D7E81D1DA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:39:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 658E81D1DAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:40:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389392AbgEMSjj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 14:39:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47272 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2389733AbgEMSjj (ORCPT
+        id S2390174AbgEMSj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 14:39:56 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:39986 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389724AbgEMSj4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 14:39:39 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13F5C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:39:38 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id l11so752967wru.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:39:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=QevyPaB54vabz1NgQweuhMZ/4PP5dMX078Hx9aqjxfc=;
-        b=ewIInpz3Jv/IrkCkWkGiBC6UAat93L2zYEJfVB/67p9YtVYuw3NEVn0LJQPhSBnoBR
-         pZUumCJ55i5Nmpq7zEeDDK+k0WKMCo5B9vDp02gV9BZTg4fT1dN/flqFNi79peEEs67R
-         mFiPZ7/V5n0/0I8UIXjKTwwVnG1krpdxHa9WI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=QevyPaB54vabz1NgQweuhMZ/4PP5dMX078Hx9aqjxfc=;
-        b=QOkDvmkYUPaaec0QEqPtZN+NXTOQXBYvreqYyfzAlrUMLLX6L+7Jnr5j9JknC/DYO4
-         8qQGR6DFfOu/MKv0zfRODQIp/JfpteieKg7N5/bmdxiYpC6nLJidBV1RsjyICQf0QZwd
-         sHd2yDNzZRcoBzG+TtBuDuEQ4M2jXL6ge+vnf/c0/0QS/Z85hPOzIATUuNeIO+lp9L5K
-         H9gTCprgBtovrWp/IMQIEqsabM9UYtlc8U8QNnkY7w/KLEg5vsM6OkmlLcWvVs0D5G92
-         oWAzWB6glXxYIdtnjvUA3oVGJtvuXtNFbV1HWtBQIuJ9MFzQzYu5bO9CmogWT3JCel1N
-         WGhg==
-X-Gm-Message-State: AOAM532q8wDtOHeVPRcYZVkcojGi5cXAybfiruxXHfhiEg1KysS8vuB4
-        yZMhxoMoT+JAlwbw6FuezszGHw==
-X-Google-Smtp-Source: ABdhPJzhf+mYsAycvYoLOXU1WHfMH8XPnenYApwbY7dPsUsGlZ8N8UGzdao3+8+YZVroo8SME6sfvg==
-X-Received: by 2002:adf:e38b:: with SMTP id e11mr706640wrm.343.1589395177524;
-        Wed, 13 May 2020 11:39:37 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id x24sm501774wrd.51.2020.05.13.11.39.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 May 2020 11:39:36 -0700 (PDT)
-Subject: Re: [PATCH v5 6/7] misc: bcm-vk: add Broadcom VK driver
-To:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Desmond Yan <desmond.yan@broadcom.com>,
-        James Hu <james.hu@broadcom.com>
-References: <20200508002739.19360-1-scott.branden@broadcom.com>
- <20200508002739.19360-7-scott.branden@broadcom.com>
- <20200513003830.GJ11244@42.do-not-panic.com>
- <60372b2f-c03d-6384-43a7-8b97413b6672@broadcom.com>
- <20200513065046.GA764247@kroah.com>
- <20200513123033.GL11244@42.do-not-panic.com>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <2eaa3047-4833-8d1c-d8c7-fc602468eae3@broadcom.com>
-Date:   Wed, 13 May 2020 11:39:30 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Wed, 13 May 2020 14:39:56 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589395194; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=jCjI/gfur3KFMSkfL+KsuB3WZ9C3iTq+gW/Y6HRbx7U=; b=KCYMCu0NJDaCvHyeQ1nC1pfnBMvITGvy5b9ys6fIJ0NM8SgSDDg693zAq1joJkaCe/QLXCAG
+ m+0I/TjCn11+zKn/nF++7vf0+X53ZoZQu8XLjL316FbIEhlbUsnw9Rg6SXP48TVt793KJ+mR
+ baQMxwWvRVHNTYs2VY1VkTbELc0=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ebc3eee.7fe5ffe3ba78-smtp-out-n05;
+ Wed, 13 May 2020 18:39:42 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3D8E0C433BA; Wed, 13 May 2020 18:39:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6A1EC433D2;
+        Wed, 13 May 2020 18:39:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B6A1EC433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v1 3/5] bus: mhi: core: Skip handling BHI irq if MHI reg
+ access is not allowed
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org
+References: <1589248989-23824-1-git-send-email-hemantk@codeaurora.org>
+ <1589248989-23824-4-git-send-email-hemantk@codeaurora.org>
+ <20200512065349.GE4928@Mani-XPS-13-9360>
+ <5e9a15ed-4bad-744a-af07-b28c3bcc47c4@codeaurora.org>
+ <20200513070402.GA26866@Mani-XPS-13-9360>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <d8893525-f19d-d839-5ba3-218b5ee2ed20@codeaurora.org>
+Date:   Wed, 13 May 2020 11:39:40 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20200513123033.GL11244@42.do-not-panic.com>
+In-Reply-To: <20200513070402.GA26866@Mani-XPS-13-9360>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for link.
+Hi Mani,
 
-On 2020-05-13 5:30 a.m., Luis Chamberlain wrote:
-> On Wed, May 13, 2020 at 08:50:46AM +0200, Greg Kroah-Hartman wrote:
->> On Tue, May 12, 2020 at 11:31:28PM -0700, Scott Branden wrote:
+On 5/13/20 12:04 AM, Manivannan Sadhasivam wrote:
+> On Tue, May 12, 2020 at 05:28:45PM -0700, Hemant Kumar wrote:
+>> Hi Mani,
 >>
->> That's not how kernel drivers in the tree work, sorry.  They do not
->> contain "older kernel support" in them, they work as a whole with the
->> rest of the kernel they ship with only.
+>> On 5/11/20 11:53 PM, Manivannan Sadhasivam wrote:
+>>> On Mon, May 11, 2020 at 07:03:07PM -0700, Hemant Kumar wrote:
+>>>> Driver continues handling of BHI interrupt even if MHI register access
+>>>> is not allowed. By doing so it calls the status call back and performs
+>>>> early notification for the MHI client. This is not needed when MHI
+>>>> register access is not allowed. Hence skip the handling in this case and
+>>>> return. Also add debug log to print device state, local EE and device EE
+>>>> when reg access is valid.
+>>>>
+>>>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+>>>> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>>>> ---
+>>>>    drivers/bus/mhi/core/main.c | 21 ++++++++++++++-------
+>>>>    1 file changed, 14 insertions(+), 7 deletions(-)
+>>>>
+>>>> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>>>> index 9ec9b36..467c0ba 100644
+>>>> --- a/drivers/bus/mhi/core/main.c
+>>>> +++ b/drivers/bus/mhi/core/main.c
+>>>> @@ -369,22 +369,29 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
+>>>>    	return IRQ_HANDLED;
+>>>>    }
+>>>> -irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *dev)
+>>>> +irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+>>>>    {
+>>>> -	struct mhi_controller *mhi_cntrl = dev;
+>>>> +	struct mhi_controller *mhi_cntrl = priv;
+>>>> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>>>>    	enum mhi_state state = MHI_STATE_MAX;
+>>>>    	enum mhi_pm_state pm_state = 0;
+>>>>    	enum mhi_ee_type ee = 0;
+>>>>    	write_lock_irq(&mhi_cntrl->pm_lock);
+>>>> -	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+>>>> -		state = mhi_get_mhi_state(mhi_cntrl);
+>>>> -		ee = mhi_cntrl->ee;
+>>>> -		mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
+>>>> +	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+>>>> +		write_unlock_irq(&mhi_cntrl->pm_lock);
+>>>
+>>> write_lock is only used for protecting 'mhi_cntrl->ee' but here we are not
+>>> updating it if reg access is not valid. So there is no reason to hold this lock.
+>> Original code is using write_lock to protect pm_state as well as
+>> mhi_cntrl->ee. This patch is keeping the lock same as original code. Just if
+>> condition logic is negated here due to that write_unlock_irq is added under
+>> if condition.
+> 
+> 'mhi_cntrl->pm_state' is not always protected by 'pm_lock' and that too
+> write_lock is used here but 'pm_state' is not modified. So as like in most of
+> the places, locks are abused here as well.
+> 
+> I think after 5.8, you should really think about fixing the usage of locks
+> throughout the MHI stack.
+> 
+> So I'll take this patch as it is.
+> 
+Thanks for accepting this patch. Will revisit and review usage of locks 
+in MHI stack and identify areas of improvement.
+> Thanks,
+> Mani
+> 
+>>>
+>>>> +		goto exit_intvec;
+>>>>    	}
+>>>> +	state = mhi_get_mhi_state(mhi_cntrl);
+>>>> +	ee = mhi_cntrl->ee;
+>>>> +	mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
+>>>
+>>> But it is needed here.
+>>>
+>>> Thanks,
+>>> Mani
+>>>
+>>>> +	dev_dbg(dev, "local ee:%s device ee:%s dev_state:%s\n",
+>>>> +		TO_MHI_EXEC_STR(mhi_cntrl->ee), TO_MHI_EXEC_STR(ee),
+>>>> +		TO_MHI_STATE_STR(state));
+>>>> +
+>>>>    	if (state == MHI_STATE_SYS_ERR) {
+>>>> -		dev_dbg(&mhi_cntrl->mhi_dev->dev, "System error detected\n");
+>>>> +		dev_dbg(dev, "System error detected\n");
+>>>>    		pm_state = mhi_tryset_pm_state(mhi_cntrl,
+>>>>    					       MHI_PM_SYS_ERR_DETECT);
+>>>>    	}
+>>>> -- 
+>>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>>>> a Linux Foundation Collaborative Project
 >>
->> Otherwise all drivers would be a total mess over time, can you imagine
->> doing this for the next 20+ years?  Not maintainable.
-> Scott, now imagine the amount of cleanup you'd need to do to your driver
-> to get it to a state where it doesn't depend on any old kernel. That's
-> the exact shape of the driver we want.
->
-> To backport, you can look into the backports project which strives to
-> backport drivers automatically [0] to older kernels.
->
-> [0] https://backports.wiki.kernel.org/index.php/Main_Page
->
->    Luis
-Will drop legacy support from patch and look closer at this.
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
 
-Thanks,
-  Scott
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
