@@ -2,80 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 158FB1D1AF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 18:24:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B62971D1B75
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 18:45:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731549AbgEMQYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 12:24:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41734 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732380AbgEMQYD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 12:24:03 -0400
-Received: from localhost.localdomain (pool-96-246-152-186.nycmny.fios.verizon.net [96.246.152.186])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 00E8D20659;
-        Wed, 13 May 2020 16:24:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589387042;
-        bh=GMIEwlaUuMOKi5AkDYUqDh+tZ9JXGeSF/BENEVLdelE=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=O2CCNQtPLWuis6Iyzz3t9LE9/0N1orztrF73b2GHGrbexfrSZMT8U1JojVtMomoti
-         4IWbO2zbjaT+y5cJm/QTf5h8Q0wwikUv/jNNnCpLz84UNFT4gDGcQZaIiYJsKfrFCx
-         p/BF5chqdi5380TQ6UASs7NhMo537xeK2eTcgF54=
-Message-ID: <1589387039.5098.147.camel@kernel.org>
-Subject: Re: [PATCH v5 0/7] firmware: add partial read support in
- request_firmware_into_buf
-From:   Mimi Zohar <zohar@kernel.org>
-To:     Scott Branden <scott.branden@broadcom.com>,
-        Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Date:   Wed, 13 May 2020 12:23:59 -0400
-In-Reply-To: <20200508002739.19360-1-scott.branden@broadcom.com>
-References: <20200508002739.19360-1-scott.branden@broadcom.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S2389274AbgEMQpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 12:45:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57842 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728068AbgEMQpv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 May 2020 12:45:51 -0400
+X-Greylist: delayed 164 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 13 May 2020 09:45:50 PDT
+Received: from mxa1.seznam.cz (mxa1.seznam.cz [IPv6:2a02:598:a::78:90])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB57C061A0C;
+        Wed, 13 May 2020 09:45:50 -0700 (PDT)
+Received: from email.seznam.cz
+        by email-smtpc25a.ko.seznam.cz (email-smtpc25a.ko.seznam.cz [10.53.18.34])
+        id 01f9a2ac5af7f6c500506ef2;
+        Wed, 13 May 2020 18:45:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
+        t=1589388343; bh=HOw/beXCV8NM3f8Zz2gwYM60zg/PgILleFcF555HlSQ=;
+        h=Received:Subject:To:Cc:References:From:Message-ID:Date:User-Agent:
+         MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+         Content-Language;
+        b=Fkzu73s01g06qdTZvb350vh0/bI6/0G0gU8ztoOxL7T14AE3ruvRU20ZaYLxs6Tm9
+         JALoIPdqd6Zh4mh+xYPHlGb3BxSnv4wXvLZv2ELiYVO+r0/Q3zG0fdIE78NxdzcYzJ
+         bSLDxFRPE42aF68Eoax34bKz2YLh1swagx5vRHa4=
+Received: from [192.168.1.167] (212.69.128.228 [212.69.128.228])
+        by email-relay2.ko.seznam.cz (Seznam SMTPD 1.3.114) with ESMTP;
+        Wed, 13 May 2020 18:42:49 +0200 (CEST)  
+Subject: Re: [PATCH] arm64: dts: qcom: disable the new cti nodes on devices
+ with broken coresight
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20200513154718.17401-1-michael.srba@seznam.cz>
+ <CAOCk7No3bJMpZNjXaNv-OScaLXPKbdj3d_n20ss3MyciPO=e3g@mail.gmail.com>
+From:   Michael Srba <Michael.Srba@seznam.cz>
+Message-ID: <af456130-e54c-28ff-b71e-f2da43331a8f@seznam.cz>
+Date:   Wed, 13 May 2020 18:42:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <CAOCk7No3bJMpZNjXaNv-OScaLXPKbdj3d_n20ss3MyciPO=e3g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Scott,
+On 13. 05. 20 18:04, Jeffrey Hugo wrote:
+> On Wed, May 13, 2020 at 9:53 AM <michael.srba@seznam.cz> wrote:
+>> From: Michael Srba <michael.srba@seznam.cz>
+>>
+>> Attempting to enable these devices causes a "synchronous
+>> external abort". Suspected cause is that the debug power
+>> domain is not enabled by default on this device.
+>> Disable these devices for now to avoid the crash.
+>>
+>> See: https://lore.kernel.org/linux-arm-msm/20190618202623.GA53651@gerhold.net/
+>>
+>> Fixes: b1fcc5702a41 ("arm64: dts: qcom: msm8916: Add CTI options")
+>> Signed-off-by: Michael Srba <michael.srba@seznam.cz>
+>>
+>> ---
+>>  arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts       | 6 ++++++
+>>  arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 6 ++++++
+>>  2 files changed, 12 insertions(+)
+> Why are we disabling these in board specific files?  Seems like these
+> should be disabled in the base msm8916.dtsi.  Otherwise, the next
+> board that gets brought up is probably going to hit this same exact
+> issue.
+>
+> This also follows the solution that msm8998 did for the same issue.
 
-On Thu, 2020-05-07 at 17:27 -0700, Scott Branden wrote:
-> Please consider this version series ready for upstream acceptance.
-> 
-> This patch series adds partial read support in request_firmware_into_buf.
-> In order to accept the enhanced API it has been requested that kernel
-> selftests and upstreamed driver utilize the API enhancement and so
-> are included in this patch series.
-> 
-> Also in this patch series is the addition of a new Broadcom VK driver
-> utilizing the new request_firmware_into_buf enhanced API.
+I would also advocate for having them disabled by default. I *think* it was
+brought up initially, but that would be before the msm8998 change.
 
-Up to now, the firmware blob was read into memory allowing IMA to
-verify the file signature.  With this change, ima_post_read_file()
-will not be able to verify the file signature.
-
-(I don't think any of the other LSMs are on this hook, but you might
-want to Cc the LSM or integrity mailing list.)
-
-Mimi
