@@ -2,87 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61C0C1D2026
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 22:24:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07FB21D207A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 22:59:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390671AbgEMUYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 16:24:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35638 "EHLO
+        id S1725943AbgEMU7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 16:59:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732650AbgEMUYX (ORCPT
+        with ESMTP id S1726098AbgEMU7U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 16:24:23 -0400
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AB52C061A0C;
-        Wed, 13 May 2020 13:24:22 -0700 (PDT)
-Received: by mail-il1-x143.google.com with SMTP id b71so1028722ilg.8;
-        Wed, 13 May 2020 13:24:22 -0700 (PDT)
+        Wed, 13 May 2020 16:59:20 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73936C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 13:59:19 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id u5so284146pgn.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 13:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/0PPB26EjKCEK4FysNGX/JGmScpUolfSHa5EDihTllg=;
-        b=DpjJjWPSkGc4uBWZSWOu3a8gE6D6kgBELTVAJpfcmJe1rw9c6mQsnxzKwM1zWR0/ep
-         P5fMP0DWk7itrunwNIy89fS79ZFHjAytH+q8pUfPM9MhERs1zJOWV7zlLf7OOSsvAF19
-         DtiOpo1mT/B0SkrptWiIV+aE8JC8gnj880EUrOE0MfzlUy38V89twiW3UMD84y0VR0hX
-         dyOZuCVuwgoZ12QiEUTSS8IBOi40/2l3zvwbFqJ3y2DmIRGRSGXXFnZbmI+P5pnpxvl3
-         kJHFFx1Zys8+ZbxEPxXWEgBBO9GIMc3agGS3DdgKeZFeppAcemofiiHSfdCoO3gGLeqk
-         ynjQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=uaj9L7wTibe3Srb7QlLrRgpbwAw3iewpnn7RnSIv5I8=;
+        b=iaIq54LdYnfPTNfS44OsJ+ciGZe6w3yPt6q6lA1tXrAsYK9YE3h+ZMZ2MShZcqd1WF
+         0yg0sCdohed5MqX/R4az4SG9BeXS/cOarDzLr0T2pBx+eZi4H83eTchxqrAimPQJy6ol
+         d38765yeX+WRXcFd/xLsQJgmRKB7W3AYs2VX4pdEbeU9qXjLysjwL8iXyCy4nBPnWQYg
+         CcQdTmN5omQ+B3G91l8U0++jnVGbyGAQO2NP5YGRMVVFG7iN9GIQkVi98K0eI2OxlxMV
+         56qWjpQjEPoaiZROFEsmtUdGJmda4a+mgBHaK67gMAealXCnzQpPBP34CmKM1PX57GQ4
+         perg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/0PPB26EjKCEK4FysNGX/JGmScpUolfSHa5EDihTllg=;
-        b=PNj/PM/Hyok/+3kDFIpMreIuOf8otYIyQ4SHSbk3Ay8BAQ7zlxBAdJxLWd23gDIXkH
-         HstACWlY4NNjGz2++d1Msg2elZaE8XdRvyf4ItXZp8jZJJWKAVxpFmiGziscASE+amdi
-         ids1aXmHQiyjLSsLvQWIuVoO74Riqe7V2rVBNp7BKFnWkzdVodZYDc4no4eJpxns23BB
-         Swh4FCLD+ZOquguMk8srf+0z+A7sUdxxXMwoubKOzpFzJtDzJhieMjm5rdcFCynbmy0K
-         Jb7cGCcDNTsWjxcnQ+2zwEef0ooCNCCtDhkOPK7uKIPbjym3LzU5XkthNjKdOT+k0K/g
-         ckaA==
-X-Gm-Message-State: AOAM531dsFiIrk3JXs6EeGYpLv4OGPvzpGgp2/9tfzQHexr8wq237aqk
-        8zZ8XaHM5dUtVz/9Kk37DIPsH0fSRHucDV3efqQ=
-X-Google-Smtp-Source: ABdhPJxbUfrjvMOE70gMloZvlIhKbhNjJILxo1CxWouTHXmQImiYKQ7qMPsPb6ZN1UHsnym1/2QR7EQ6Tgsn6w7xjDI=
-X-Received: by 2002:a92:4b11:: with SMTP id m17mr1298260ilg.42.1589401461922;
- Wed, 13 May 2020 13:24:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uaj9L7wTibe3Srb7QlLrRgpbwAw3iewpnn7RnSIv5I8=;
+        b=MtHfxH2tPkxutIDM9ypHErTBGkxwxzg0yPY0vsFcuOYZ4/eqfWhL+zYDC4QybMeuLV
+         WeRGRkwENBg8HK2vwWMoQG9/ywCR/LX/y3kWRcOikJRJ4lk1V+n4eBbKmITv7sGYvjZj
+         WpVMMO4Z1ZEwUuACKXd08Iy+EmGrWcr8ENMQhjchOFISdKKyYQ9m3qd54/PcQaMwLtP9
+         R4SEf1fFT6gF1+e24Ke3l66vzcpnDYZsHg9/SSPGUKZymcyQMb+KvteJ605Vc+s3gI/e
+         qfOwU9h9naCgfii1HOxuRQUHMLZluvXWaxN6eqsORKdYCTjR39rRZwgDNKQL5qc0lzVw
+         X4lQ==
+X-Gm-Message-State: AOAM530kzqUVHBohZ8EKjNE+kvUVdr+73ocB13tRRzVNpgzWlaMmjoCm
+        sFK4nJ4G3DhPf1YwWZey0rCv7w==
+X-Google-Smtp-Source: ABdhPJxHSTEOa5EHFLJiF8h8WzUgD8o6B/nx5qEh/Al8PX7Jdx3ub10Y6XacwkN56goCHSv+A+Jt7A==
+X-Received: by 2002:a62:1d48:: with SMTP id d69mr1102657pfd.102.1589403558913;
+        Wed, 13 May 2020 13:59:18 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id e21sm501052pga.71.2020.05.13.13.59.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2020 13:59:18 -0700 (PDT)
+Date:   Wed, 13 May 2020 14:59:15 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Arun Kumar Neelakantam <aneela@codeaurora.org>
+Cc:     ohad@wizery.com, bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sricharan@codeaurora.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH V5 1/5] rpmsg: glink: Use complete_all for open states
+Message-ID: <20200513205915.GA8328@xps15>
+References: <1589346606-15046-1-git-send-email-aneela@codeaurora.org>
+ <1589346606-15046-2-git-send-email-aneela@codeaurora.org>
 MIME-Version: 1.0
-References: <20200513184735.30104-1-michael.srba@seznam.cz>
-In-Reply-To: <20200513184735.30104-1-michael.srba@seznam.cz>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Wed, 13 May 2020 14:24:10 -0600
-Message-ID: <CAOCk7No9mnXwsmCZF14Hsx=oikCRe=PVcjoRsFsR5ZjftHPndw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916: Disable coresight by default
-To:     michael.srba@seznam.cz
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1589346606-15046-2-git-send-email-aneela@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 12:50 PM <michael.srba@seznam.cz> wrote:
->
-> From: Michael Srba <michael.srba@seznam.cz>
->
-> On some msm8916 devices, attempts at initializing coresight cause the boot to
-> fail. This was fixed by disabling the coresight-related nodes in the board dts
-> files. However, a cleaner approach was chosen for fixing the same issue on
-> msm8998: disabling coresight by default, and enabling it in board dts files
-> where desired.
->
-> This patch implements the same solution for msm8916, removes now redundant
-> overwrites in board specific dts files and and enables coresight in db410c's
-> board dts in order to keep the current behavior.
->
-> Fixes: b1fcc5702a41 ("arm64: dts: qcom: msm8916: Add CTI options")
-> Signed-off-by: Michael Srba <michael.srba@seznam.cz>
+Hi Arun,
 
-Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+On Wed, May 13, 2020 at 10:40:02AM +0530, Arun Kumar Neelakantam wrote:
+> From: Chris Lew <clew@codeaurora.org>
+> 
+> The open_req and open_ack completion variables are the state variables
+> to represet a remote channel as open. Use complete_all so there are no
+
+s/represet/represent
+
+> races with waiters and using completion_done.
+> 
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+> ---
+>  drivers/rpmsg/qcom_glink_native.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index 1995f5b..604f11f 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -970,7 +970,7 @@ static int qcom_glink_rx_open_ack(struct qcom_glink *glink, unsigned int lcid)
+>  		return -EINVAL;
+>  	}
+>  
+> -	complete(&channel->open_ack);
+> +	complete_all(&channel->open_ack);
+
+If you do this and as per the note in the comment section above
+completion_done(), there shouldn't be a need to call completion_done() in
+qcom_glink_announce_create().
+
+Thanks,
+Mathieu 
+
+>  
+>  	return 0;
+>  }
+> @@ -1413,7 +1413,7 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
+>  	channel->rcid = ret;
+>  	spin_unlock_irqrestore(&glink->idr_lock, flags);
+>  
+> -	complete(&channel->open_req);
+> +	complete_all(&channel->open_req);
+>  
+>  	if (create_device) {
+>  		rpdev = kzalloc(sizeof(*rpdev), GFP_KERNEL);
+> -- 
+> 2.7.4
