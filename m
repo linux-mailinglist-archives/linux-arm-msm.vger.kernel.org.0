@@ -2,153 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 752041D2187
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 23:56:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F0E21D2192
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 23:59:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729894AbgEMV4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 17:56:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
+        id S1730239AbgEMV7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 17:59:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729829AbgEMV4O (ORCPT
+        by vger.kernel.org with ESMTP id S1729973AbgEMV7V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 17:56:14 -0400
+        Wed, 13 May 2020 17:59:21 -0400
 Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B40FCC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 14:56:12 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id a5so11668574pjh.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 14:56:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A48DC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 14:59:21 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id z15so2226643pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 14:59:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=URXKt/CtJiUnLhAXRhzn7WHXaaovZqdso8oMCz+GR2c=;
-        b=zgg3uSPYjx1Fq9SF/NJZDBOu6PaZKWswvNlnYpfhfyOpMHs9QgxJblQ9SHH8w4SVTm
-         U/j8SreK901TGCI8VLZe+cGqfFACPgDBgsFNopQ6IwqhF0IGJlDwWt28aZCXIRLHhV2x
-         vGCe2fw3s0+OSJ931/VrF+xGe/D1G4Mu+Q3175i9r/udCjesuDuaEWCHLlw4srYQ47+p
-         wQodfH6T46WwVYrSeeva9WEM7EAc8UE64FUDcZ5lurlWEXPtrB5JiLHgSI1uOj7xhpoR
-         zZalj0FxzE0WLn62TQJhBirmicHXekBH1wLvNpHuHHRl8xSfazqCZmDTTVBbex0zdZlN
-         pr+Q==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7pp6apoeGPwsmz3EODeA5qYm2MMJs0qtqXKCwErAfV8=;
+        b=TheeZ54cr+FeMuAS2vi5yX0aQyRJfj9Tv3o9dhV+7Oc/5ELg7XfHc86ONBb1ms1kTI
+         CtivEFPsUCfONxBbdaa6ZlldLTTKPGBsjs4w8qeJaNjw1ZLo/WHGzr0myuXsM8cHZL1G
+         EQvChDRCxHwNvngJehWaHP3WId+AxlRjSzZNI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=URXKt/CtJiUnLhAXRhzn7WHXaaovZqdso8oMCz+GR2c=;
-        b=XZUelDxwzDYaBCWWtcqVL9pliqZrFVS92ST0Jwx4AbM3fexVINLhmL/xBidY8ZYmS4
-         WhHgmit6JblXxtG2N76QENHQYmqUgdHeHb0XJ00FWyexW8WYozqx1I81rHWKOPu72i4c
-         O9BiGCGXu0UqW70jv9OfN9kJWTKe/dszUR09qSdQ+U1//rVI6LWI3DbwC8SScpXcURrG
-         Wo6v4POfw/UvD+t4gDSCYwtQquer3GZp3QUcc19VfiuTt8sMwAjSaIbCg8nX5BIhwFyy
-         Zr4qmOcZ6KBYAm0myoMeeoky45FYJVQt7AOvX1KrHLrrqNsPWaD1lo/0PHtS3ZCTmbYi
-         5H8g==
-X-Gm-Message-State: AGi0PuaO3mk3WWvbuhH9/UdOp9Qxkn6S0hPQMSSQfkc/yBW9aFufNevc
-        8X/0ergTFtFr7fKJ/Sn/HsJeqg==
-X-Google-Smtp-Source: APiQypLfZxmnarSDfauVRkIFplhL7r6EsFhDlKlDgtFu9R1IGXvtHs2lg5ugQzGaB0VBgM7OJ3kYkg==
-X-Received: by 2002:a17:90a:d3cc:: with SMTP id d12mr37699942pjw.158.1589406972131;
-        Wed, 13 May 2020 14:56:12 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id b24sm475244pfi.4.2020.05.13.14.56.10
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7pp6apoeGPwsmz3EODeA5qYm2MMJs0qtqXKCwErAfV8=;
+        b=Ki/yj5AdpEZKjB7ykSyDiR7MhzsnwiLQ+VfzE2ZET3ZDtVuUeVtNRLwA64sHChAslu
+         YZ3Fix0eo7xWWKhz/IH0yW0g5tCwMj0Yh9zRyT4BmJovaO50P8i0ngm2dxvHlgh5h2Io
+         1wK4MgZU/+HMH1bDE8gmchKoHudb4lLUIG9DQvecjutOxsW2UVmi2oQ2u77aG54jBo+y
+         g2NUuXgI+4Q4dmsYhOPhZJYxcSw/6qcNNFPSoxR05x5K8zry/06yTKnpIah4C1FjzLJg
+         piHUfvOVjSJ57fMrmzgVf2Nl3h795+T5ZceBYwpG8DJbJq7tACppc9yCqleOlsYIroeG
+         OPeQ==
+X-Gm-Message-State: AGi0Puanwg4UFBFSBs5Dh1/Q2AFb76hjjGG0UH7mchc4+5B61fWumsiU
+        F8nxg96/4sZD4Ysap4MDEubyiw==
+X-Google-Smtp-Source: APiQypK3GMSIszeEasa/zWj9qGCgZc21TG0YHWt6LSG2kEdQcDyiNAr0jp/J25jv9rT19qSb0zBg4w==
+X-Received: by 2002:a17:90a:5a4d:: with SMTP id m13mr27500208pji.108.1589407160465;
+        Wed, 13 May 2020 14:59:20 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id k27sm547169pgb.30.2020.05.13.14.59.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 14:56:11 -0700 (PDT)
-Date:   Wed, 13 May 2020 15:56:09 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arun Kumar Neelakantam <aneela@codeaurora.org>
-Cc:     ohad@wizery.com, bjorn.andersson@linaro.org, clew@codeaurora.org,
-        sricharan@codeaurora.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH V5 3/5] rpmsg: glink: Add support for rpmsg glink chrdev
-Message-ID: <20200513215609.GB8328@xps15>
-References: <1589346606-15046-1-git-send-email-aneela@codeaurora.org>
- <1589346606-15046-4-git-send-email-aneela@codeaurora.org>
+        Wed, 13 May 2020 14:59:19 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     linus.walleij@linaro.org, bgolaszewski@baylibre.com,
+        airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
+        narmstrong@baylibre.com, a.hajda@samsung.com,
+        Laurent.pinchart@ideasonboard.com, spanda@codeaurora.org
+Cc:     bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org,
+        swboyd@chromium.org, devicetree@vger.kernel.org,
+        jeffrey.l.hugo@gmail.com, jernej.skrabec@siol.net,
+        linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
+        jonas@kwiboo.se, linux-gpio@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v6 0/3] drm: Prepare to use a GPIO on ti-sn65dsi86 for Hot Plug Detect
+Date:   Wed, 13 May 2020 14:58:59 -0700
+Message-Id: <20200513215902.261547-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1589346606-15046-4-git-send-email-aneela@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 10:40:04AM +0530, Arun Kumar Neelakantam wrote:
-> From: Chris Lew <clew@codeaurora.org>
-> 
-> RPMSG provides a char device interface to userspace. Probe the rpmsg
-> chrdev channel to enable the rpmsg_ctrl device creation on glink
-> transports.
-> 
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
-> ---
->  drivers/rpmsg/qcom_glink_native.c | 40 ++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 39 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 604f11f..3a7f87c 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1178,7 +1178,7 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
->  	__be32 *val = defaults;
->  	int size;
->  
-> -	if (glink->intentless)
-> +	if (glink->intentless || !completion_done(&channel->open_ack))
 
-Please move this to patch 01.
+As talked about in commit c2bfc223882d ("drm/bridge: ti-sn65dsi86:
+Remove the mystery delay"), the normal HPD pin on ti-sn65dsi86 is
+kinda useless, at least for embedded DisplayPort (eDP).  However,
+despite the fact that the actual HPD pin on the bridge is mostly
+useless for eDP, the concept of HPD for eDP still makes sense.  It
+allows us to optimize out a hardcoded delay that many panels need if
+HPD isn't hooked up.  Panel timing diagrams show HPD as one of the
+events to measure timing from and we have to assume the worst case if
+we can't actually read HPD.
 
->  		return 0;
->  
->  	prop = of_find_property(np, "qcom,intents", NULL);
-> @@ -1574,6 +1574,40 @@ static void qcom_glink_cancel_rx_work(struct qcom_glink *glink)
->  		kfree(dcmd);
->  }
->  
-> +static void qcom_glink_device_release(struct device *dev)
-> +{
-> +	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
-> +	struct glink_channel *channel = to_glink_channel(rpdev->ept);
-> +
-> +	/* Release qcom_glink_alloc_channel() reference */
-> +	kref_put(&channel->refcount, qcom_glink_channel_release);
-> +	kfree(rpdev);
-> +}
-> +
-> +static int qcom_glink_create_chrdev(struct qcom_glink *glink)
-> +{
-> +	struct rpmsg_device *rpdev;
-> +	struct glink_channel *channel;
-> +
-> +	rpdev = kzalloc(sizeof(*rpdev), GFP_KERNEL);
-> +	if (!rpdev)
-> +		return -ENOMEM;
-> +
-> +	channel = qcom_glink_alloc_channel(glink, "rpmsg_chrdev");
-> +	if (IS_ERR(channel)) {
-> +		kfree(rpdev);
-> +		return PTR_ERR(channel);
-> +	}
-> +	channel->rpdev = rpdev;
-> +
-> +	rpdev->ept = &channel->ept;
-> +	rpdev->ops = &glink_device_ops;
-> +	rpdev->dev.parent = glink->dev;
-> +	rpdev->dev.release = qcom_glink_device_release;
-> +
-> +	return rpmsg_chrdev_register_device(rpdev);
-> +}
-> +
->  struct qcom_glink *qcom_glink_native_probe(struct device *dev,
->  					   unsigned long features,
->  					   struct qcom_glink_pipe *rx,
-> @@ -1633,6 +1667,10 @@ struct qcom_glink *qcom_glink_native_probe(struct device *dev,
->  	if (ret)
->  		return ERR_PTR(ret);
->  
-> +	ret = qcom_glink_create_chrdev(glink);
-> +	if (ret)
-> +		dev_err(glink->dev, "failed to register chrdev\n");
-> +
->  	return glink;
->  }
->  EXPORT_SYMBOL_GPL(qcom_glink_native_probe);
-> -- 
-> 2.7.4
+One way to use HPD for eDP without using the mostly useless HPD pin on
+ti-sn65dsi86 is to route the panel's HPD somewhere else in the system,
+like to a GPIO.  This works great because eDP panels aren't physically
+hotplugged.  That means the debouncing logic that caused us problems
+wasn't really needed and a raw GPIO works great.
+
+As per the above, a smart board designer would realize the value of
+HPD and choose to route it to a GPIO somewhere on the board to avoid
+the silly sn65dsi86 debouncing.  While said "smart designer" could
+theoretically route HPD anywhere on the board, a really smart designer
+would realize that there are several GPIOs on the bridge itself that
+are nearly useless for anything but this purpose and route HPD to one
+of those.
+
+This series of patches is intended to allow the scenario described
+above.
+
+This patch has been tested on a board that is not yet mainline.  On
+the hardware I have:
+- Panel spec says HPD could take up to 200 ms to come up, so without
+  HPD hooked up we need to delay 200 ms.
+- On my board the panel is powered by the same rail as the
+  touchscreen.  By chance of probe order the touchscreen comes up
+  first.  This means by the time we check HPD in ti_sn_bridge_enable()
+  it's already up.  Thus we can use the panel on 200 ms earlier.
+- If I measure HPD on this pane it comes up ~56 ms after the panel is
+  powered.  This means I can save 144 ms of delay.
+
+Side effects (though not main goals) of this series are:
+- ti-sn65dsi86 GPIOs are now exported in Linux.
+- ti-sn65dsi86 bindings are converted to yaml.
+- Common panel bindings now have "hpd-gpios" listed.
+- The simple-panel driver in Linux can delay in prepare based on
+  "hpd-gpios"
+- ti-sn65dsi86 bindings (and current user) now specifies "no-hpd"
+  if HPD isn't hooked up.
+
+Patch v6 collects tags that were sent for v5 and does the one
+fix that Linus W. requested.  It also drops patches that have
+already landed.
+
+Changes in v6:
+- pdata->gchip.base = -1
+
+Changes in v5:
+- Use of_xlate so that numbers in dts start at 1, not 0.
+- Squash https://lore.kernel.org/r/20200506140208.v2.2.I0a2bca02b09c1fcb6b09479b489736d600b3e57f@changeid/
+
+Changes in v4:
+- Don't include gpio.h
+- Use gpiochip_get_data() instead of container_of() to get data.
+- GPIOF_DIR_XXX => GPIO_LINE_DIRECTION_XXX
+- Use Linus W's favorite syntax to read a bit from a bitfield.
+- Define and use SN_GPIO_MUX_MASK.
+- Add a comment about why we use a bitmap for gchip_output.
+- Tacked on "or is otherwise unusable." to description.
+
+Changes in v3:
+- Becaue => Because
+- Add a kernel-doc to our pdata to clarify double-duty of gchip_output.
+- More comments about how powering off affects us (get_dir, dir_input).
+- Cleanup tail of ti_sn_setup_gpio_controller() to avoid one "return".
+- Use a bitmap rather than rolling my own.
+- useful implement => useful to implement
+
+Changes in v2:
+- ("Export...GPIOs") is 1/2 of replacement for ("Allow...bridge GPIOs")
+- specification => specifier.
+- power up => power.
+- Added back missing suspend-gpios.
+- data-lanes and lane-polarities are are the right place now.
+- endpoints don't need to be patternProperties.
+- Specified more details for data-lanes and lane-polarities.
+- Added old example back in, fixing bugs in it.
+- Example i2c bus is just called "i2c", not "i2c1" now.
+- ("dt-bindings: drm/bridge: ti-sn65dsi86: Document no-hpd") new for v2.
+
+Douglas Anderson (3):
+  drm/bridge: ti-sn65dsi86: Export bridge GPIOs to Linux
+  dt-bindings: drm/bridge: ti-sn65dsi86: Convert to yaml
+  dt-bindings: drm/bridge: ti-sn65dsi86: Document no-hpd
+
+ .../bindings/display/bridge/ti,sn65dsi86.txt  |  87 ------
+ .../bindings/display/bridge/ti,sn65dsi86.yaml | 293 ++++++++++++++++++
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c         | 215 +++++++++++++
+ 3 files changed, 508 insertions(+), 87 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
+ create mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+
+-- 
+2.26.2.645.ge9eca65c58-goog
+
