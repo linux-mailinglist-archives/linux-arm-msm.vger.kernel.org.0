@@ -2,185 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEEF41D1E94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 21:09:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ABDA1D1EE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 21:18:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390442AbgEMTJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 15:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52002 "EHLO
+        id S2390356AbgEMTSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 15:18:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732218AbgEMTJ0 (ORCPT
+        by vger.kernel.org with ESMTP id S1732218AbgEMTSc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 15:09:26 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C94DCC061A0F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 12:09:25 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id t11so175124pgg.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 12:09:25 -0700 (PDT)
+        Wed, 13 May 2020 15:18:32 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99DF9C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 12:18:32 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id z15so2112974pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 12:18:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mPeSDkrzJQqPILvuZ/g9BUh2SNJeTKycrCrn0jKvjdo=;
-        b=sKxE6EzbsM/5GH2G8e1JZrsFqmIjEw7ypaSkS74AMV7acR+v3CGethJTLeVs13G/3u
-         nDbxtDSrvq7nrnsdM6XOF0SjhCUytV6HQ7Gx0VQPYkpdnRUU74E4im3+TQWPGfh0RfQb
-         oLxpqHSIKaG2oPfjP6ohs1AMYLZsWbwd5tjnQGxyUL3hFOVw8jMn2cNqEpqAJfzKZ7RY
-         dxdM56PLiktpJp2OuMrAsgmPUuOwLr3QDv0nrTPFJFqFR7Hj1/1Ouzt2RXtiThAX6xPM
-         ECzQp/nnLcf48LBoYcQgEUBiL6ah4FOCbtElly68Vy+ntBZBiU2KQ3S0x0w0RQQP79q6
-         lheQ==
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=qcgpVTGY9wq1jzZvcaJkFQL+JrVfapS8nFhj9eA+ABc=;
+        b=PKR2BUB+pog2PEu9p/br0Lry5EXdc2KN6bOwJFyF1W4C+jUuMVRpfoHaza2pnCSoJC
+         C3/3pubb5sNA2c5ilG2xU+VRIP6IPZjNTi8SGl4twLBbc40AOYPQkQbFX4agaa6J5I2p
+         kQkSAiHTagcd7+07Xjd3fGOAZRu3XLx6/Wy0Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mPeSDkrzJQqPILvuZ/g9BUh2SNJeTKycrCrn0jKvjdo=;
-        b=PFK/AZt68D3pT02Bdb1+o0RXx1DpRmQ193h9/ap82bOCMKUJSjkCiKXl2tjWII8dKg
-         HcV3f66isRT5Loo+CcmpdTiNtzkHqdnckQb6AHMoxUVMKCK0NPz0oMgoCUu7LPWjuT0R
-         c9IhkB+mzNdw2MPuLe0ZFDPIXPWUcG4kBVRu9TtsGyxM3aQtpWjHkErp7pnJsqvHWAzB
-         JejvOX+cR2H4L2HDgWbrzbS9rYWH+B+OGRS/VpKcVN6Ttj+Lcx8ZbABT9bDwtzQGs/Ei
-         FVdMNQ767WxNOjbBetG7JV2HoDDOBQtaNhoFs/UsZ2wTTfvuDuKlxMIfZA13gmuNqHbJ
-         rr/g==
-X-Gm-Message-State: AOAM5325VXo6DlnyNx9QLW+QwIhg69y0nZyLkDp6bLeHiS/i8S4Ld5XP
-        5gwHmHU21yKWjQ8Pf2hbRiSezw==
-X-Google-Smtp-Source: ABdhPJxvuxhAazLApTjz3FqiX9smw1rIvssGyz1uG1QoLowJJkwfEt4wQlhuMvntn7nvwUy9jgxE4g==
-X-Received: by 2002:a62:3642:: with SMTP id d63mr731063pfa.222.1589396964679;
-        Wed, 13 May 2020 12:09:24 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v3sm252249pfv.186.2020.05.13.12.09.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 12:09:24 -0700 (PDT)
-Date:   Wed, 13 May 2020 12:07:52 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Mark Brown <broonie@kernel.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH v5 2/6] spi: spi-geni-qcom: Use OPP API to set clk/perf
- state
-Message-ID: <20200513190752.GS2165@builder.lan>
-References: <1589368382-19607-1-git-send-email-rnayak@codeaurora.org>
- <1589368382-19607-3-git-send-email-rnayak@codeaurora.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=qcgpVTGY9wq1jzZvcaJkFQL+JrVfapS8nFhj9eA+ABc=;
+        b=UDvp11+53uX3sAvXWPQMl2p4Cj7MS9cDBhuBY10a1ZRNDK4t0e7N/QaqRAzaOMkoE5
+         a/JS2dFigiv0UQhpv8Ci0MUUase0q0KGC3RIApGbbjn+xU7uFc30DxjcBKFyOSmeZobP
+         0bbqK03kg8xTJYtR/Ck6D93BxVUFs1toROTJE0ad6pVa+oOSmVWt7CYt3cYRidOfhQYD
+         eOu8TE4XCJ4kST0migWVP1b4TRQSOOCY8pd8LRLI+D6RiLcJladSd9Mu2fWhDsbDcR4V
+         uMSTJ8x/XLSNvzdnUg6yaDU2QbLX55YRJGVwupEslNi1yXNcUYEs+1XE3UN50ekGgchK
+         bQsQ==
+X-Gm-Message-State: AOAM5304H5XHxvwHbqnPZ5Iocv3kM1NzWDTcFNRMKDo3ptQljVB1qq55
+        Os/6ezSfMn003NrLl9IJvwHQjg==
+X-Google-Smtp-Source: ABdhPJxJVr3lxhEfVIbkG1ij/W35rEZtckIrZ7uIVDMxUKUrxWF05zoes3fP2LI5LZG41vLjul9Jjg==
+X-Received: by 2002:a17:902:ec04:: with SMTP id l4mr669377pld.6.1589397511978;
+        Wed, 13 May 2020 12:18:31 -0700 (PDT)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id y6sm15938924pjw.15.2020.05.13.12.18.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2020 12:18:31 -0700 (PDT)
+Subject: Re: [PATCH v5 1/7] fs: introduce kernel_pread_file* support
+To:     Mimi Zohar <zohar@kernel.org>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        linux-security-module <linux-security-module@vger.kernel.org>,
+        linux-integrity <linux-integrity@vger.kernel.org>
+References: <20200508002739.19360-1-scott.branden@broadcom.com>
+ <20200508002739.19360-2-scott.branden@broadcom.com>
+ <1589395153.5098.158.camel@kernel.org>
+ <0e6b5f65-8c61-b02e-7d35-b4ae52aebcf3@broadcom.com>
+ <1589396593.5098.166.camel@kernel.org>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <e1b92047-7003-0615-3d58-1388ec27c78a@broadcom.com>
+Date:   Wed, 13 May 2020 12:18:27 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1589368382-19607-3-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <1589396593.5098.166.camel@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 13 May 04:12 PDT 2020, Rajendra Nayak wrote:
 
-> geni spi needs to express a perforamnce state requirement on CX
-> depending on the frequency of the clock rates. Use OPP table from
-> DT to register with OPP framework and use dev_pm_opp_set_rate() to
-> set the clk/perf state.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Alok Chauhan <alokc@codeaurora.org>
-> Cc: Akash Asthana <akashast@codeaurora.org>
-> Cc: linux-spi@vger.kernel.org
-> ---
-> This patch will need to land via the msm tree because of a dependency
-> with another change.
-> Change in v5: OPP cleanup done as the last thing in spi_geni_remove()
-> 
->  drivers/spi/spi-geni-qcom.c | 26 +++++++++++++++++++++++---
->  1 file changed, 23 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index c397242..0d7ead1 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -7,6 +7,7 @@
->  #include <linux/log2.h>
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/qcom-geni-se.h>
->  #include <linux/spi/spi.h>
-> @@ -95,7 +96,6 @@ static int get_spi_clk_cfg(unsigned int speed_hz,
->  {
->  	unsigned long sclk_freq;
->  	unsigned int actual_hz;
-> -	struct geni_se *se = &mas->se;
->  	int ret;
->  
->  	ret = geni_se_clk_freq_match(&mas->se,
-> @@ -112,9 +112,9 @@ static int get_spi_clk_cfg(unsigned int speed_hz,
->  
->  	dev_dbg(mas->dev, "req %u=>%u sclk %lu, idx %d, div %d\n", speed_hz,
->  				actual_hz, sclk_freq, *clk_idx, *clk_div);
-> -	ret = clk_set_rate(se->clk, sclk_freq);
-> +	ret = dev_pm_opp_set_rate(mas->dev, sclk_freq);
->  	if (ret)
-> -		dev_err(mas->dev, "clk_set_rate failed %d\n", ret);
-> +		dev_err(mas->dev, "dev_pm_opp_set_rate failed %d\n", ret);
->  	return ret;
->  }
->  
-> @@ -561,6 +561,17 @@ static int spi_geni_probe(struct platform_device *pdev)
->  	mas->se.wrapper = dev_get_drvdata(dev->parent);
->  	mas->se.base = base;
->  	mas->se.clk = clk;
-> +	mas->se.opp_table = dev_pm_opp_set_clkname(&pdev->dev, "se");
-> +	if (IS_ERR(mas->se.opp_table))
-> +		return PTR_ERR(mas->se.opp_table);
-> +	/* OPP table is optional */
-> +	ret = dev_pm_opp_of_add_table(&pdev->dev);
-> +	if (!ret) {
-> +		mas->se.has_opp_table = true;
-> +	} else if (ret != -ENODEV) {
-> +		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
-> +		return ret;
-> +	}
->  
->  	spi->bus_num = -1;
->  	spi->dev.of_node = dev->of_node;
-> @@ -596,6 +607,9 @@ static int spi_geni_probe(struct platform_device *pdev)
->  spi_geni_probe_runtime_disable:
->  	pm_runtime_disable(dev);
->  	spi_master_put(spi);
-> +	if (mas->se.has_opp_table)
 
-Why do you need has_opp_table?
+On 2020-05-13 12:03 p.m., Mimi Zohar wrote:
+> On Wed, 2020-05-13 at 11:53 -0700, Scott Branden wrote:
+>> Hi Mimi,
+>>
+>> On 2020-05-13 11:39 a.m., Mimi Zohar wrote:
+>>> [Cc'ing linux-security-module, linux-integrity]
+>>>
+>>> On Thu, 2020-05-07 at 17:27 -0700, Scott Branden wrote:
+>>>> Add kernel_pread_file* support to kernel to allow for partial read
+>>>> of files with an offset into the file.  Existing kernel_read_file
+>>>> functions call new kernel_pread_file functions with offset=0 and
+>>>> flags=KERNEL_PREAD_FLAG_WHOLE.
+>>>>
+>>>> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+>>>> ---
+>>> <snip>
+>>>
+>>>> @@ -941,14 +955,16 @@ int kernel_read_file(struct file *file, void **buf, loff_t *size,
+>> The checkpatch shows this as kernel_read_file when it is actually the
+>> new function kernel_pread_file.
+>> Please see the call to kernel_pread_file from kernel_read_file in the
+>> complete patch rather this snippet.
+>>>>    
+>>>>    		if (bytes == 0)
+>>>>    			break;
+>>>> +
+>>>> +		buf_pos += bytes;
+>>>>    	}
+>>>>    
+>>>> -	if (pos != i_size) {
+>>>> +	if (pos != read_end) {
+>>>>    		ret = -EIO;
+>>>>    		goto out_free;
+>>>>    	}
+>>>>    
+>>>> -	ret = security_kernel_post_read_file(file, *buf, i_size, id);
+>>>> +	ret = security_kernel_post_read_file(file, *buf, alloc_size, id);
+>>>>    	if (!ret)
+>>>>    		*size = pos;
+>>> Prior to the patch set that introduced this security hook, firmware
+>>> would be read twice, once for measuring/appraising the firmware and
+>>> again reading the file contents into memory.  Partial reads will break
+>>> both IMA's measuring the file and appraising the file signatures.
+>> The partial file read support is needed for request_firmware_into_buf
+>> from drivers.  The EXPORT_SYMBOL_GPL is being removed so that
+>> there can be no abuse of the partial file read support.  Such file
+>> integrity checks are not needed for this use case.  The partial file
+>> (firmware image) is actually downloaded in portions and verified on the
+>> device it is loaded to.
+> It's all fine that the device will verify the firmware, but shouldn't
+> the kernel be able to also verify the firmware file signature it is
+> providing to the device, before providing it?
+Even if the kernel successfully verified the firmware file signature it
+would just be wasting its time.  The kernel in these use cases is not always
+trusted.  The device needs to authenticate the firmware image itself.
+>
+> The device firmware is being downloaded piecemeal from somewhere and
+> won't be measured?
+It doesn't need to be measured for current driver needs.
+If someone has such need the infrastructure could be added to the kernel
+at a later date.  Existing functionality is not broken in any way by 
+this patch series.
+>
+> Mimi
 
-Afaict if dev_pm_opp_of_add_table() returns -ENODEV there's no attached
-opp-table and dev_pm_opp_of_remove_table() is a nop.
-
-Regards,
-Bjorn
-
-> +		dev_pm_opp_of_remove_table(&pdev->dev);
-> +	dev_pm_opp_put_clkname(mas->se.opp_table);
->  	return ret;
->  }
->  
-> @@ -609,6 +623,9 @@ static int spi_geni_remove(struct platform_device *pdev)
->  
->  	free_irq(mas->irq, spi);
->  	pm_runtime_disable(&pdev->dev);
-> +	if (mas->se.has_opp_table)
-> +		dev_pm_opp_of_remove_table(&pdev->dev);
-> +	dev_pm_opp_put_clkname(mas->se.opp_table);
->  	return 0;
->  }
->  
-> @@ -617,6 +634,9 @@ static int __maybe_unused spi_geni_runtime_suspend(struct device *dev)
->  	struct spi_master *spi = dev_get_drvdata(dev);
->  	struct spi_geni_master *mas = spi_master_get_devdata(spi);
->  
-> +	/* Drop the performance state vote */
-> +	dev_pm_opp_set_rate(dev, 0);
-> +
->  	return geni_se_resources_off(&mas->se);
->  }
->  
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
