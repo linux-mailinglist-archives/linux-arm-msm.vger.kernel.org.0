@@ -2,357 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A99481D1DFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:50:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78E241D1E02
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:52:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390277AbgEMSue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 14:50:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48980 "EHLO
+        id S2387597AbgEMSwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 14:52:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2387462AbgEMSue (ORCPT
+        by vger.kernel.org with ESMTP id S2387507AbgEMSwk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 14:50:34 -0400
-Received: from mxa2.seznam.cz (mxa2.seznam.cz [IPv6:2a02:598:2::90])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2A4C061A0C;
-        Wed, 13 May 2020 11:50:33 -0700 (PDT)
-Received: from email.seznam.cz
-        by email-smtpc25a.ng.seznam.cz (email-smtpc25a.ng.seznam.cz [10.23.18.34])
-        id 5989d7e10287838858201bbf;
-        Wed, 13 May 2020 20:50:21 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
-        t=1589395821; bh=7OSh5aIXDq9/eo++d56tCZG9ZYJX4E/V+wxJv3MwvRI=;
-        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
-         Content-Transfer-Encoding;
-        b=ewxniBxkw2CEd+RHE9YBPBcxcdsLae2+rx5djacSBGHPH17PuJkS0yDZcOqVN7R3C
-         de5eVtqTAzqzOUd/8LKS8IvzrBFBgXkzsXYzgS80tg+Pddkh2m8Hbr3gDz0Jg6psTW
-         QbnSuNBPkG5mvycaBK30QwL5/8yZ4+jPcGTPvcyc=
-Received: from localhost.localdomain (212.69.128.228 [212.69.128.228])
-        by email-relay21.ng.seznam.cz (Seznam SMTPD 1.3.114) with ESMTP;
-        Wed, 13 May 2020 20:50:17 +0200 (CEST)  
-From:   michael.srba@seznam.cz
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Michael Srba <michael.srba@seznam.cz>
-Subject: [PATCH] arm64: dts: qcom: msm8916: Disable coresight by default
-Date:   Wed, 13 May 2020 20:47:35 +0200
-Message-Id: <20200513184735.30104-1-michael.srba@seznam.cz>
-X-Mailer: git-send-email 2.24.0
+        Wed, 13 May 2020 14:52:40 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7EFCC061A0F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:52:40 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id 145so127898pfw.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=55S1W6TTYrq5jCy+aRb1ISBrR0y1QRvglHPRUtnEv6Q=;
+        b=lBG/Qgo+Ax78eFvqJn8FT+S4IBj5w+CI9qc+N9JxBUxtA1Xt49ES/ypdnWKpnR770Q
+         rM0w2m122Ns0meblJH0cAT/hGObZd+38md03rX9plidRUovVVW0FZ9zn+IaRh7XJH3pC
+         Yzi7xpwX8KmJWoGU4veJe2a2uJDOG/yUHapRo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=55S1W6TTYrq5jCy+aRb1ISBrR0y1QRvglHPRUtnEv6Q=;
+        b=WKXl2576qLNp7yL/dehnyPnO/S0tB+bZQJiaeYOc01a2mfe04QRM8mqLwZnQVh7AlO
+         xFFtEtAxGMyvmb2DO5B1HVyfTU2BI/0fRgZaEVa7Jkh4rZOS8YEHkSWg0QoANJjPgrNh
+         6+cxjjt2De2Cw+GybEE83qHMm9c67WgcBFSbdNOkhtbEXjHoSEoO1pLyfy9QqwSHS4zL
+         WcI1wKb72jAUzvxNTSMhZ7b07AuzDZW/EJ03MH41cMxLazpLYMOH/dN8YN0FFGCEkZnf
+         yPk/A0iqDX3sLF8Q179Zuzn7Bglu56Ur/PJLFdrQYJDYqbR+xX8URJdguGahQ6Q/2Fu6
+         fDRw==
+X-Gm-Message-State: AOAM531wwn55Q9b9AxAfSoPH4K1JTqHiwzJFGCLMBXXbNYrdRKCsE6pe
+        bjTiLqrdTtMjcfQt/tMPcU+f2g==
+X-Google-Smtp-Source: ABdhPJzsV6PSMzFfikXn8WgT71tJ22aXWOMIaDLRL+l3D+CRH92hL3qhqme/nvEMAKaBL4tSGo1sFw==
+X-Received: by 2002:aa7:939c:: with SMTP id t28mr670237pfe.38.1589395960135;
+        Wed, 13 May 2020 11:52:40 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id d126sm248338pfc.81.2020.05.13.11.52.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2020 11:52:39 -0700 (PDT)
+Date:   Wed, 13 May 2020 11:52:38 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-spi@vger.kernel.org
+Subject: Re: [PATCH v5 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf
+ state
+Message-ID: <20200513185238.GN4525@google.com>
+References: <1589368382-19607-1-git-send-email-rnayak@codeaurora.org>
+ <1589368382-19607-7-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1589368382-19607-7-git-send-email-rnayak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Michael Srba <michael.srba@seznam.cz>
+On Wed, May 13, 2020 at 04:43:02PM +0530, Rajendra Nayak wrote:
+> QSPI needs to vote on a performance state of a power domain depending on
+> the clock rate. Add support for it by specifying the perf state/clock rate
+> as an OPP table in device tree.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Mark Brown <broonie@kernel.org>
+> Cc: Alok Chauhan <alokc@codeaurora.org>
+> Cc: Akash Asthana <akashast@codeaurora.org>
+> Cc: linux-spi@vger.kernel.org
+> ---
+> Change in v5: OPP cleanup done as the last thing in qcom_qspi_remove()
+> 
+>  drivers/spi/spi-qcom-qspi.c | 29 ++++++++++++++++++++++++++++-
+>  1 file changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+> index 3c4f83b..c853eba 100644
+> --- a/drivers/spi/spi-qcom-qspi.c
+> +++ b/drivers/spi/spi-qcom-qspi.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/pm_runtime.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/spi/spi.h>
+>  #include <linux/spi/spi-mem.h>
+>  
+> @@ -139,6 +140,8 @@ struct qcom_qspi {
+>  	struct device *dev;
+>  	struct clk_bulk_data *clks;
+>  	struct qspi_xfer xfer;
+> +	struct opp_table *opp_table;
+> +	bool has_opp_table;
+>  	/* Lock to protect xfer and IRQ accessed registers */
+>  	spinlock_t lock;
+>  };
+> @@ -235,7 +238,7 @@ static int qcom_qspi_transfer_one(struct spi_master *master,
+>  		speed_hz = xfer->speed_hz;
+>  
+>  	/* In regular operation (SBL_EN=1) core must be 4x transfer clock */
+> -	ret = clk_set_rate(ctrl->clks[QSPI_CLK_CORE].clk, speed_hz * 4);
+> +	ret = dev_pm_opp_set_rate(ctrl->dev, speed_hz * 4);
+>  	if (ret) {
+>  		dev_err(ctrl->dev, "Failed to set core clk %d\n", ret);
+>  		return ret;
+> @@ -481,6 +484,20 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>  	master->handle_err = qcom_qspi_handle_err;
+>  	master->auto_runtime_pm = true;
+>  
+> +	ctrl->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
+> +	if (IS_ERR(ctrl->opp_table)) {
+> +		ret = PTR_ERR(ctrl->opp_table);
+> +		goto exit_probe_master_put;
+> +	}
+> +	/* OPP table is optional */
+> +	ret = dev_pm_opp_of_add_table(&pdev->dev);
+> +	if (!ret) {
+> +		ctrl->has_opp_table = true;
+> +	} else if (ret != -ENODEV) {
+> +		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+> +		goto exit_probe_master_put;
+> +	}
+> +
+>  	pm_runtime_enable(dev);
+>  
+>  	ret = spi_register_master(master);
+> @@ -488,6 +505,9 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>  		return 0;
+>  
+>  	pm_runtime_disable(dev);
+> +	if (ctrl->has_opp_table)
+> +		dev_pm_opp_of_remove_table(&pdev->dev);
+> +	dev_pm_opp_put_clkname(ctrl->opp_table);
+>  
+>  exit_probe_master_put:
+>  	spi_master_put(master);
+> @@ -498,11 +518,16 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>  static int qcom_qspi_remove(struct platform_device *pdev)
+>  {
+>  	struct spi_master *master = platform_get_drvdata(pdev);
+> +	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
+>  
+>  	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
+>  	spi_unregister_master(master);
+>  
+>  	pm_runtime_disable(&pdev->dev);
+> +	if (ctrl->has_opp_table)
+> +		dev_pm_opp_of_remove_table(&pdev->dev);
+> +	dev_pm_opp_put_clkname(ctrl->opp_table);
+> +
+>
 
-On some msm8916 devices, attempts at initializing coresight cause the boot to
-fail. This was fixed by disabling the coresight-related nodes in the board dts
-files. However, a cleaner approach was chosen for fixing the same issue on
-msm8998: disabling coresight by default, and enabling it in board dts files
-where desired.
+remove 2nd empty line.
 
-This patch implements the same solution for msm8916, removes now redundant 
-overwrites in board specific dts files and and enables coresight in db410c's
-board dts in order to keep the current behavior.
+Maybe this can be done when the patch is applied if there are no other reasons
+to respin the series?
 
-Fixes: b1fcc5702a41 ("arm64: dts: qcom: msm8916: Add CTI options")
-Signed-off-by: Michael Srba <michael.srba@seznam.cz>
-
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi     | 21 +++++++++++
- .../boot/dts/qcom/msm8916-longcheer-l8150.dts | 23 ------------
- .../qcom/msm8916-samsung-a2015-common.dtsi    | 23 ------------
- arch/arm64/boot/dts/qcom/msm8916.dtsi         | 35 +++++++++++++++++++
- 4 files changed, 56 insertions(+), 46 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-index 14982762088d..07c150b0ed54 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-@@ -519,6 +519,27 @@ mpps@a000 {
- 		wcnss@a21b000 {
- 			status = "okay";
- 		};
-+
-+		tpiu@820000 { status = "okay"; };
-+		funnel@821000 { status = "okay"; };
-+		replicator@824000 { status = "okay"; };
-+		etf@825000 { status = "okay"; };
-+		etr@826000 { status = "okay"; };
-+		funnel@841000 { status = "okay"; };
-+		debug@850000 { status = "okay"; };
-+		debug@852000 { status = "okay"; };
-+		debug@854000 { status = "okay"; };
-+		debug@856000 { status = "okay"; };
-+		etm@85c000 { status = "okay"; };
-+		etm@85d000 { status = "okay"; };
-+		etm@85e000 { status = "okay"; };
-+		etm@85f000 { status = "okay"; };
-+		cti@810000 { status = "okay"; };
-+		cti@811000 { status = "okay"; };
-+		cti@858000 { status = "okay"; };
-+		cti@859000 { status = "okay"; };
-+		cti@85a000 { status = "okay"; };
-+		cti@85b000 { status = "okay"; };
- 	};
- 
- 	usb2513 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index d1ccb9472c8b..691eb1a87bc9 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -82,29 +82,6 @@ phy {
- 		wcnss@a21b000 {
- 			status = "okay";
- 		};
--
--		/*
--		 * Attempting to enable these devices causes a "synchronous
--		 * external abort". Suspected cause is that the debug power
--		 * domain is not enabled by default on this device.
--		 * Disable these devices for now to avoid the crash.
--		 *
--		 * See: https://lore.kernel.org/linux-arm-msm/20190618202623.GA53651@gerhold.net/
--		 */
--		tpiu@820000 { status = "disabled"; };
--		funnel@821000 { status = "disabled"; };
--		replicator@824000 { status = "disabled"; };
--		etf@825000 { status = "disabled"; };
--		etr@826000 { status = "disabled"; };
--		funnel@841000 { status = "disabled"; };
--		debug@850000 { status = "disabled"; };
--		debug@852000 { status = "disabled"; };
--		debug@854000 { status = "disabled"; };
--		debug@856000 { status = "disabled"; };
--		etm@85c000 { status = "disabled"; };
--		etm@85d000 { status = "disabled"; };
--		etm@85e000 { status = "disabled"; };
--		etm@85f000 { status = "disabled"; };
- 	};
- 
- 	// FIXME: Use extcon device provided by charger driver when available
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index 43c5e0f882f1..af812f76e8be 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -75,29 +75,6 @@ phy {
- 		wcnss@a21b000 {
- 			status = "okay";
- 		};
--
--		/*
--		 * Attempting to enable these devices causes a "synchronous
--		 * external abort". Suspected cause is that the debug power
--		 * domain is not enabled by default on this device.
--		 * Disable these devices for now to avoid the crash.
--		 *
--		 * See: https://lore.kernel.org/linux-arm-msm/20190618202623.GA53651@gerhold.net/
--		 */
--		tpiu@820000 { status = "disabled"; };
--		funnel@821000 { status = "disabled"; };
--		replicator@824000 { status = "disabled"; };
--		etf@825000 { status = "disabled"; };
--		etr@826000 { status = "disabled"; };
--		funnel@841000 { status = "disabled"; };
--		debug@850000 { status = "disabled"; };
--		debug@852000 { status = "disabled"; };
--		debug@854000 { status = "disabled"; };
--		debug@856000 { status = "disabled"; };
--		etm@85c000 { status = "disabled"; };
--		etm@85d000 { status = "disabled"; };
--		etm@85e000 { status = "disabled"; };
--		etm@85f000 { status = "disabled"; };
- 	};
- 
- 	gpio-keys {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 8b429954ea29..5cf117e247df 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1228,6 +1228,8 @@ tpiu@820000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
- 			clock-names = "apb_pclk", "atclk";
- 
-+			status = "disabled";
-+
- 			in-ports {
- 				port {
- 					tpiu_in: endpoint {
-@@ -1244,6 +1246,8 @@ funnel@821000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
- 			clock-names = "apb_pclk", "atclk";
- 
-+			status = "disabled";
-+
- 			in-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -1283,6 +1287,8 @@ replicator@824000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
- 			clock-names = "apb_pclk", "atclk";
- 
-+			status = "disabled";
-+
- 			out-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -1317,6 +1323,8 @@ etf@825000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
- 			clock-names = "apb_pclk", "atclk";
- 
-+			status = "disabled";
-+
- 			in-ports {
- 				port {
- 					etf_in: endpoint {
-@@ -1341,6 +1349,8 @@ etr@826000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
- 			clock-names = "apb_pclk", "atclk";
- 
-+			status = "disabled";
-+
- 			in-ports {
- 				port {
- 					etr_in: endpoint {
-@@ -1357,6 +1367,8 @@ funnel@841000 {	/* APSS funnel only 4 inputs are used */
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
- 			clock-names = "apb_pclk", "atclk";
- 
-+			status = "disabled";
-+
- 			in-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -1402,6 +1414,7 @@ debug@850000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
- 			clock-names = "apb_pclk";
- 			cpu = <&CPU0>;
-+			status = "disabled";
- 		};
- 
- 		debug@852000 {
-@@ -1410,6 +1423,7 @@ debug@852000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
- 			clock-names = "apb_pclk";
- 			cpu = <&CPU1>;
-+			status = "disabled";
- 		};
- 
- 		debug@854000 {
-@@ -1418,6 +1432,7 @@ debug@854000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
- 			clock-names = "apb_pclk";
- 			cpu = <&CPU2>;
-+			status = "disabled";
- 		};
- 
- 		debug@856000 {
-@@ -1426,6 +1441,7 @@ debug@856000 {
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
- 			clock-names = "apb_pclk";
- 			cpu = <&CPU3>;
-+			status = "disabled";
- 		};
- 
- 		etm0: etm@85c000 {
-@@ -1438,6 +1454,8 @@ etm0: etm@85c000 {
- 
- 			cpu = <&CPU0>;
- 
-+			status = "disabled";
-+
- 			out-ports {
- 				port {
- 					etm0_out: endpoint {
-@@ -1457,6 +1475,8 @@ etm1: etm@85d000 {
- 
- 			cpu = <&CPU1>;
- 
-+			status = "disabled";
-+
- 			out-ports {
- 				port {
- 					etm1_out: endpoint {
-@@ -1476,6 +1496,8 @@ etm2: etm@85e000 {
- 
- 			cpu = <&CPU2>;
- 
-+			status = "disabled";
-+
- 			out-ports {
- 				port {
- 					etm2_out: endpoint {
-@@ -1495,6 +1517,8 @@ etm3: etm@85f000 {
- 
- 			cpu = <&CPU3>;
- 
-+			status = "disabled";
-+
- 			out-ports {
- 				port {
- 					etm3_out: endpoint {
-@@ -1512,6 +1536,8 @@ cti@810000 {
- 
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
- 			clock-names = "apb_pclk";
-+
-+			status = "disabled";
- 		};
- 
- 		/* CTI 1 - TPIU connections */
-@@ -1521,6 +1547,8 @@ cti@811000 {
- 
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
- 			clock-names = "apb_pclk";
-+
-+			status = "disabled";
- 		};
- 
- 		/* CTIs 2-11 - no information - not instantiated */
-@@ -1538,6 +1566,7 @@ cti@858000 {
- 			cpu = <&CPU0>;
- 			arm,cs-dev-assoc = <&etm0>;
- 
-+			status = "disabled";
- 		};
- 
- 		/* CTI - CPU-1 */
-@@ -1551,6 +1580,8 @@ cti@859000 {
- 
- 			cpu = <&CPU1>;
- 			arm,cs-dev-assoc = <&etm1>;
-+
-+			status = "disabled";
- 		};
- 
- 		/* CTI - CPU-2 */
-@@ -1564,6 +1595,8 @@ cti@85a000 {
- 
- 			cpu = <&CPU2>;
- 			arm,cs-dev-assoc = <&etm2>;
-+
-+			status = "disabled";
- 		};
- 
- 		/* CTI - CPU-3 */
-@@ -1577,6 +1610,8 @@ cti@85b000 {
- 
- 			cpu = <&CPU3>;
- 			arm,cs-dev-assoc = <&etm3>;
-+
-+			status = "disabled";
- 		};
- 
- 
--- 
-2.24.0
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
