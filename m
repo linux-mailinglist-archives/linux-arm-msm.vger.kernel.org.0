@@ -2,164 +2,343 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 658E81D1DAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:40:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC8B91D1DB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:41:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390174AbgEMSj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 14:39:56 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:39986 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389724AbgEMSj4 (ORCPT
+        id S2389579AbgEMSl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 14:41:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47552 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2387492AbgEMSl2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 14:39:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589395194; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=jCjI/gfur3KFMSkfL+KsuB3WZ9C3iTq+gW/Y6HRbx7U=; b=KCYMCu0NJDaCvHyeQ1nC1pfnBMvITGvy5b9ys6fIJ0NM8SgSDDg693zAq1joJkaCe/QLXCAG
- m+0I/TjCn11+zKn/nF++7vf0+X53ZoZQu8XLjL316FbIEhlbUsnw9Rg6SXP48TVt793KJ+mR
- baQMxwWvRVHNTYs2VY1VkTbELc0=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ebc3eee.7fe5ffe3ba78-smtp-out-n05;
- Wed, 13 May 2020 18:39:42 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3D8E0C433BA; Wed, 13 May 2020 18:39:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6A1EC433D2;
-        Wed, 13 May 2020 18:39:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B6A1EC433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v1 3/5] bus: mhi: core: Skip handling BHI irq if MHI reg
- access is not allowed
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org
-References: <1589248989-23824-1-git-send-email-hemantk@codeaurora.org>
- <1589248989-23824-4-git-send-email-hemantk@codeaurora.org>
- <20200512065349.GE4928@Mani-XPS-13-9360>
- <5e9a15ed-4bad-744a-af07-b28c3bcc47c4@codeaurora.org>
- <20200513070402.GA26866@Mani-XPS-13-9360>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <d8893525-f19d-d839-5ba3-218b5ee2ed20@codeaurora.org>
-Date:   Wed, 13 May 2020 11:39:40 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Wed, 13 May 2020 14:41:28 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 628D1C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:41:28 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id a5so11479427pjh.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:41:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qqS14t8H02Fv7hWfyEPJzlH+UmqqsaPVREz98ODrRok=;
+        b=jKjBPPN/1yanI61VjiiDpMMNFJYZYR/is1pBkEn2TDprQrrosPQLqsJWfcpsYTvJ1u
+         CQ+6l0V7ju76j/3hgBe7nRgyp3Kh+Yh35T4oFcSwznBAhfEEP/nuDVxdwkfCWQQb3N5U
+         tY6+1NHYvviIc82Qd0YBO4M86Vxo5J6d5Mvcc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qqS14t8H02Fv7hWfyEPJzlH+UmqqsaPVREz98ODrRok=;
+        b=XwVoFx2lDDHxuEFUPXO+F41lOs7b0TcTl/rjE8C0d1M32v2J2jgUwA/2lL+69dyoOy
+         XEkM6VrcKI85kOanLAVv1FvtDI6UZZOCykc5rPTHH5M9XKB5aqlnL37jC2i837NIC8iu
+         U1OTU/qZrzcJrqNHclBVHbQU15mgtURbEZdVUCTUU0TGGZhIK6mf0JU5w6qnNhGxASJO
+         6RF9iHwrTiV2LxDv+wuhpoptUnAtPK4WKOUrYlBAWEmGvfSp2VGNeAGRn3h2CqS9UYuM
+         dLF6WDk3690N90A/FdQWt+uF0F+GFYMTh+9DxNcozOXZkc80GN76sF8wbuEx2aO26aVc
+         TYEw==
+X-Gm-Message-State: AGi0PuZR53rng9J/zm4KAqMxnTNfqV1we6uBMTSS2ebIKk0GsfaGQ/mj
+        9DECTjlG2FhipH+Y/ZbV59n0ag==
+X-Google-Smtp-Source: APiQypLdRE6hiXyRqJsD92hrWHzCEo4WW6QuTHMdTZVeKho3+AczlTUSZwXnkGrgT+Ml1FHUepYzLA==
+X-Received: by 2002:a17:90a:d504:: with SMTP id t4mr35934036pju.123.1589395287805;
+        Wed, 13 May 2020 11:41:27 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id d124sm225558pfa.98.2020.05.13.11.41.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2020 11:41:27 -0700 (PDT)
+Date:   Wed, 13 May 2020 11:41:26 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org
+Subject: Re: [PATCH v5 5/6] media: venus: core: Add support for opp
+ tables/perf voting
+Message-ID: <20200513184126.GM4525@google.com>
+References: <1589368382-19607-1-git-send-email-rnayak@codeaurora.org>
+ <1589368382-19607-6-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200513070402.GA26866@Mani-XPS-13-9360>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1589368382-19607-6-git-send-email-rnayak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+On Wed, May 13, 2020 at 04:43:01PM +0530, Rajendra Nayak wrote:
+> Add support to add OPP tables and perf voting on the OPP powerdomain.
+> This is needed so venus votes on the corresponding performance state
+> for the OPP powerdomain along with setting the core clock rate.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> Cc: linux-media@vger.kernel.org
+> ---
+> Changes in v5: Fixed up error handling in probe and vcodec_domains_get()
+> Bindings update to add optional PD https://lore.kernel.org/patchwork/patch/1241077/
+> 
+>  drivers/media/platform/qcom/venus/core.c       | 45 +++++++++++++++++----
+>  drivers/media/platform/qcom/venus/core.h       |  5 +++
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 54 ++++++++++++++++++++++++--
+>  3 files changed, 93 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 194b10b9..2a8ff08 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/slab.h>
+>  #include <linux/types.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/pm_runtime.h>
+>  #include <media/videobuf2-v4l2.h>
+>  #include <media/v4l2-mem2mem.h>
+> @@ -214,21 +215,37 @@ static int venus_probe(struct platform_device *pdev)
+>  	if (!core->pm_ops)
+>  		return -ENODEV;
+>  
+> +	core->opp_table = dev_pm_opp_set_clkname(dev, "core");
+> +	if (IS_ERR(core->opp_table))
+> +		return PTR_ERR(core->opp_table);
+> +
+> +	if (core->res->opp_pmdomain) {
+> +		ret = dev_pm_opp_of_add_table(dev);
+> +		if (!ret) {
+> +			core->has_opp_table = true;
+> +		} else if (ret != -ENODEV) {
+> +			dev_err(dev, "invalid OPP table in device tree\n");
+> +			return ret;
+> +		}
+> +	}
+> +
+>  	if (core->pm_ops->core_get) {
+>  		ret = core->pm_ops->core_get(dev);
+>  		if (ret)
+> -			return ret;
+> +			goto err_opp_cleanup;
+>  	}
+>  
+>  	ret = dma_set_mask_and_coherent(dev, core->res->dma_mask);
+>  	if (ret)
+> -		return ret;
+> +		goto err_opp_cleanup;
+>  
+>  	if (!dev->dma_parms) {
+>  		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
+>  					      GFP_KERNEL);
+> -		if (!dev->dma_parms)
+> -			return -ENOMEM;
+> +		if (!dev->dma_parms) {
+> +			ret = -ENOMEM;
+> +			goto err_opp_cleanup;
+> +		}
+>  	}
+>  	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
+>  
+> @@ -240,15 +257,15 @@ static int venus_probe(struct platform_device *pdev)
+>  					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+>  					"venus", core);
+>  	if (ret)
+> -		return ret;
+> +		goto err_opp_cleanup;
+>  
+>  	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
+>  	if (ret)
+> -		return ret;
+> +		goto err_opp_cleanup;
+>  
+>  	ret = hfi_create(core, &venus_core_ops);
+>  	if (ret)
+> -		return ret;
+> +		goto err_opp_cleanup;
+>  
+>  	pm_runtime_enable(dev);
+>  
+> @@ -304,6 +321,10 @@ static int venus_probe(struct platform_device *pdev)
+>  	pm_runtime_set_suspended(dev);
+>  	pm_runtime_disable(dev);
+>  	hfi_destroy(core);
+> +err_opp_cleanup:
+> +	if (core->has_opp_table)
+> +		dev_pm_opp_of_remove_table(dev);
+> +	dev_pm_opp_put_clkname(core->opp_table);
+>  	return ret;
+>  }
+>  
+> @@ -329,6 +350,10 @@ static int venus_remove(struct platform_device *pdev)
+>  	pm_runtime_put_sync(dev);
+>  	pm_runtime_disable(dev);
+>  
+> +	if (core->has_opp_table)
+> +		dev_pm_opp_of_remove_table(dev);
+> +	dev_pm_opp_put_clkname(core->opp_table);
+> +
+>  	if (pm_ops->core_put)
+>  		pm_ops->core_put(dev);
+>  
+> @@ -350,6 +375,10 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	/* Drop the performance state vote */
+> +	if (core->opp_pmdomain)
+> +		dev_pm_opp_set_rate(dev, 0);
+> +
+>  	if (pm_ops->core_power)
+>  		ret = pm_ops->core_power(dev, POWER_OFF);
+>  
+> @@ -511,6 +540,7 @@ static const struct venus_resources sdm845_res_v2 = {
+>  	.vcodec_clks_num = 2,
+>  	.vcodec_pmdomains = { "venus", "vcodec0", "vcodec1" },
+>  	.vcodec_pmdomains_num = 3,
+> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
+>  	.vcodec_num = 2,
+>  	.max_load = 3110400,	/* 4096x2160@90 */
+>  	.hfi_version = HFI_VERSION_4XX,
+> @@ -556,6 +586,7 @@ static const struct venus_resources sc7180_res = {
+>  	.vcodec_clks_num = 2,
+>  	.vcodec_pmdomains = { "venus", "vcodec0" },
+>  	.vcodec_pmdomains_num = 2,
+> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
+>  	.vcodec_num = 1,
+>  	.hfi_version = HFI_VERSION_4XX,
+>  	.vmem_id = VIDC_RESOURCE_NONE,
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index bd3ac6a..cc1d511 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -62,6 +62,7 @@ struct venus_resources {
+>  	unsigned int vcodec_clks_num;
+>  	const char * const vcodec_pmdomains[VIDC_PMDOMAINS_NUM_MAX];
+>  	unsigned int vcodec_pmdomains_num;
+> +	const char **opp_pmdomain;
+>  	unsigned int vcodec_num;
+>  	enum hfi_version hfi_version;
+>  	u32 max_load;
+> @@ -144,8 +145,12 @@ struct venus_core {
+>  	struct clk *vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
+>  	struct icc_path *video_path;
+>  	struct icc_path *cpucfg_path;
+> +	struct opp_table *opp_table;
+> +	bool has_opp_table;
+>  	struct device_link *pd_dl_venus;
+>  	struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
+> +	struct device_link *opp_dl_venus;
+> +	struct device *opp_pmdomain;
+>  	struct video_device *vdev_dec;
+>  	struct video_device *vdev_enc;
+>  	struct v4l2_device v4l2_dev;
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index abf9315..bfe7421 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -9,6 +9,7 @@
+>  #include <linux/iopoll.h>
+>  #include <linux/kernel.h>
+>  #include <linux/pm_domain.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/pm_runtime.h>
+>  #include <linux/types.h>
+>  #include <media/v4l2-mem2mem.h>
+> @@ -66,10 +67,9 @@ static void core_clks_disable(struct venus_core *core)
+>  
+>  static int core_clks_set_rate(struct venus_core *core, unsigned long freq)
+>  {
+> -	struct clk *clk = core->clks[0];
+>  	int ret;
+>  
+> -	ret = clk_set_rate(clk, freq);
+> +	ret = dev_pm_opp_set_rate(core->dev, freq);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -740,13 +740,16 @@ static int venc_power_v4(struct device *dev, int on)
+>  
+>  static int vcodec_domains_get(struct device *dev)
+>  {
+> +	int ret;
+> +	struct opp_table *opp_table;
+> +	struct device **opp_virt_dev;
+>  	struct venus_core *core = dev_get_drvdata(dev);
+>  	const struct venus_resources *res = core->res;
+>  	struct device *pd;
+>  	unsigned int i;
+>  
+>  	if (!res->vcodec_pmdomains_num)
+> -		return -ENODEV;
+> +		goto skip_pmdomains;
+>  
+>  	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
+>  		pd = dev_pm_domain_attach_by_name(dev,
+> @@ -763,7 +766,41 @@ static int vcodec_domains_get(struct device *dev)
+>  	if (!core->pd_dl_venus)
+>  		return -ENODEV;
+>  
+> +skip_pmdomains:
+> +	if (!core->has_opp_table)
+> +		return 0;
+> +
+> +	/* Attach the power domain for setting performance state */
+> +	opp_table = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
+> +	if (IS_ERR(opp_table)) {
+> +		ret = PTR_ERR(opp_table);
+> +		goto opp_attach_err;
+> +	}
+> +
+> +	core->opp_pmdomain = *opp_virt_dev;
+> +	core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
+> +					     DL_FLAG_RPM_ACTIVE |
+> +					     DL_FLAG_PM_RUNTIME |
+> +					     DL_FLAG_STATELESS);
+> +	if (!core->opp_dl_venus) {
+> +		ret = -ENODEV;
+> +		goto opp_dl_add_err;
+> +	}
+> +
+>  	return 0;
+> +
+> +opp_dl_add_err:
+> +	dev_pm_domain_detach(core->opp_pmdomain, true);
+> +opp_attach_err:
+> +	if (core->pd_dl_venus) {
+> +		device_link_del(core->pd_dl_venus);
+> +		for (i = 0; i < res->vcodec_pmdomains_num; i++) {
+> +			if (IS_ERR_OR_NULL(core->pmdomains[i]))
+> +				continue;
+> +			dev_pm_domain_detach(core->pmdomains[i], true);
+> +		}
+> +	}
+> +	return ret;
+>  }
+>  
+>  static void vcodec_domains_put(struct device *dev)
+> @@ -773,7 +810,7 @@ static void vcodec_domains_put(struct device *dev)
+>  	unsigned int i;
+>  
+>  	if (!res->vcodec_pmdomains_num)
+> -		return;
+> +		goto skip_pmdomains;
+>  
+>  	if (core->pd_dl_venus)
+>  		device_link_del(core->pd_dl_venus);
+> @@ -783,6 +820,15 @@ static void vcodec_domains_put(struct device *dev)
+>  			continue;
+>  		dev_pm_domain_detach(core->pmdomains[i], true);
+>  	}
+> +
+> +skip_pmdomains:
+> +	if (!res->opp_pmdomain)
+> +		return;
+> +
+> +	if (core->opp_dl_venus)
+> +		device_link_del(core->opp_dl_venus);
+> +
+> +	dev_pm_domain_detach(core->opp_pmdomain, true);
+>  }
+>  
+>  static int core_get_v4(struct device *dev)
 
-On 5/13/20 12:04 AM, Manivannan Sadhasivam wrote:
-> On Tue, May 12, 2020 at 05:28:45PM -0700, Hemant Kumar wrote:
->> Hi Mani,
->>
->> On 5/11/20 11:53 PM, Manivannan Sadhasivam wrote:
->>> On Mon, May 11, 2020 at 07:03:07PM -0700, Hemant Kumar wrote:
->>>> Driver continues handling of BHI interrupt even if MHI register access
->>>> is not allowed. By doing so it calls the status call back and performs
->>>> early notification for the MHI client. This is not needed when MHI
->>>> register access is not allowed. Hence skip the handling in this case and
->>>> return. Also add debug log to print device state, local EE and device EE
->>>> when reg access is valid.
->>>>
->>>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
->>>> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
->>>> ---
->>>>    drivers/bus/mhi/core/main.c | 21 ++++++++++++++-------
->>>>    1 file changed, 14 insertions(+), 7 deletions(-)
->>>>
->>>> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->>>> index 9ec9b36..467c0ba 100644
->>>> --- a/drivers/bus/mhi/core/main.c
->>>> +++ b/drivers/bus/mhi/core/main.c
->>>> @@ -369,22 +369,29 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
->>>>    	return IRQ_HANDLED;
->>>>    }
->>>> -irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *dev)
->>>> +irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->>>>    {
->>>> -	struct mhi_controller *mhi_cntrl = dev;
->>>> +	struct mhi_controller *mhi_cntrl = priv;
->>>> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->>>>    	enum mhi_state state = MHI_STATE_MAX;
->>>>    	enum mhi_pm_state pm_state = 0;
->>>>    	enum mhi_ee_type ee = 0;
->>>>    	write_lock_irq(&mhi_cntrl->pm_lock);
->>>> -	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
->>>> -		state = mhi_get_mhi_state(mhi_cntrl);
->>>> -		ee = mhi_cntrl->ee;
->>>> -		mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
->>>> +	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
->>>> +		write_unlock_irq(&mhi_cntrl->pm_lock);
->>>
->>> write_lock is only used for protecting 'mhi_cntrl->ee' but here we are not
->>> updating it if reg access is not valid. So there is no reason to hold this lock.
->> Original code is using write_lock to protect pm_state as well as
->> mhi_cntrl->ee. This patch is keeping the lock same as original code. Just if
->> condition logic is negated here due to that write_unlock_irq is added under
->> if condition.
-> 
-> 'mhi_cntrl->pm_state' is not always protected by 'pm_lock' and that too
-> write_lock is used here but 'pm_state' is not modified. So as like in most of
-> the places, locks are abused here as well.
-> 
-> I think after 5.8, you should really think about fixing the usage of locks
-> throughout the MHI stack.
-> 
-> So I'll take this patch as it is.
-> 
-Thanks for accepting this patch. Will revisit and review usage of locks 
-in MHI stack and identify areas of improvement.
-> Thanks,
-> Mani
-> 
->>>
->>>> +		goto exit_intvec;
->>>>    	}
->>>> +	state = mhi_get_mhi_state(mhi_cntrl);
->>>> +	ee = mhi_cntrl->ee;
->>>> +	mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
->>>
->>> But it is needed here.
->>>
->>> Thanks,
->>> Mani
->>>
->>>> +	dev_dbg(dev, "local ee:%s device ee:%s dev_state:%s\n",
->>>> +		TO_MHI_EXEC_STR(mhi_cntrl->ee), TO_MHI_EXEC_STR(ee),
->>>> +		TO_MHI_STATE_STR(state));
->>>> +
->>>>    	if (state == MHI_STATE_SYS_ERR) {
->>>> -		dev_dbg(&mhi_cntrl->mhi_dev->dev, "System error detected\n");
->>>> +		dev_dbg(dev, "System error detected\n");
->>>>    		pm_state = mhi_tryset_pm_state(mhi_cntrl,
->>>>    					       MHI_PM_SYS_ERR_DETECT);
->>>>    	}
->>>> -- 
->>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->>>> a Linux Foundation Collaborative Project
->>
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
