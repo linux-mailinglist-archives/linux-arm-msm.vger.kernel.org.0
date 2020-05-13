@@ -2,91 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBE8E1D06A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 07:51:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C596E1D06B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 07:57:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728845AbgEMFvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 01:51:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37880 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728680AbgEMFvo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 01:51:44 -0400
-Received: from localhost (unknown [106.200.233.149])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 420BB205C9;
-        Wed, 13 May 2020 05:51:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589349104;
-        bh=JIVkHaAe6zIIWxhNRMgSqeXbtj4d7lTqShCIfC4OdH4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dOCeiQC7fZb1Bsc2EtNeF8a+YfrZFN/vdFkbuJuJul/K2/x9owzSrlDpFYtKu2DAj
-         MPzxKYRCcQobgTGvo/Cq0ZTxy2zdlKmOND3pMvk4txaac3Gw4NQqv8i601rVA9hx/z
-         8GJwA8Sxnqas3HlDBVgfXJmkpbJp0o3PTGsc544Q=
-Date:   Wed, 13 May 2020 11:21:39 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org,
+        id S1728707AbgEMF53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 01:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41132 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728784AbgEMF53 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 May 2020 01:57:29 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D015C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 22:57:29 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id x77so7538752pfc.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 22:57:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kcyyNciXuByQ3loktJkU4jCSR6CJ8Ob9Xjb+xzFsaeI=;
+        b=uSuhoH0eMm36ZmB2Fj4UvKsgN/+ZX1g/k1KEpzJIpbdClvv6EyyLOo7Xhggv5m5whY
+         fumXDtsw61PgVLyJv2XjsNuuuTuZjCZvWyabAK+NvvkfNV0tCUa+gHZc9WhLMPFjreoK
+         EwT4KhQzxnMfDwSNS8mbvvmwljx32IjcWYMh8pjl7UzEBBJsTevzdSozStSlvgQrPAfe
+         nQeawgeQN9j+hQquwiMcT19uaLzEMQbVmFFzglN9Bj16ZuEP8iVNoH0pQQSyQpLuNYVg
+         EJWC67O81VXreR59gfK39BQ4XBVYSaoFfjGBH7ASGAuHeCSgqkbavrNhxciR6oNvCDl5
+         +LpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kcyyNciXuByQ3loktJkU4jCSR6CJ8Ob9Xjb+xzFsaeI=;
+        b=lVr6DqvimaXtg+ozn0aIybeXCidEdNgp/6krW+aO9YYKjs0/ePlXf5iFPuvaXL0vau
+         c14dRr82iNAtA9SgwBmHNPH7LoUsKpIkxGQAzoMPFLjTb/rbR2AgoOJjWuSL0DjskdDq
+         7J0IInvZjQajIdUSYnY9mrtG+gDUE21zmJ0BC60gp2FeMS8H5Xn7UgNZI/8kzFBEo4bg
+         BDbCeo42kIvi4ZRV6kzVANjmtFOvO5By6bmagSFDWmkGh+Ug85QrCZUZ80yzKIo3sXcs
+         fGKatYV4h3KKlY8ZfzGthHQHtlDRMKsXBCkeLOTOjcIsjk2YsHe/mvoAQ9GaEfy5IyL6
+         s9LA==
+X-Gm-Message-State: AGi0PuZx5Un/9k149yc/h8L5Xyj43SCZTpegAI+bB4nbbDWxcMcf66/P
+        NgLrVnSNkCk2lyH0zXf7clBLMw==
+X-Google-Smtp-Source: APiQypL7n3HR1/A2BsmbmDuES13Hpi9E5nO3B4RrCgr0yhFV1nEZmheX1W1DXxDuIqkSRWwoDZ7KGg==
+X-Received: by 2002:a63:f610:: with SMTP id m16mr22384313pgh.174.1589349448543;
+        Tue, 12 May 2020 22:57:28 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id w192sm14131161pff.126.2020.05.12.22.57.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 May 2020 22:57:27 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: gcc: Add missing UFS clocks for SM8150
-Message-ID: <20200513055139.GA14092@vkoul-mobl>
-References: <20200424044311.2155917-1-vkoul@kernel.org>
- <20200424044311.2155917-2-vkoul@kernel.org>
- <158784189516.117437.15588556636278394035@swboyd.mtv.corp.google.com>
- <20200427045534.GB4625@vkoul-mobl.Dlink>
- <158933311835.215346.12980712108351352362@swboyd.mtv.corp.google.com>
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/5] remoteproc: qcom: PIL info support
+Date:   Tue, 12 May 2020 22:56:36 -0700
+Message-Id: <20200513055641.1413100-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <158933311835.215346.12980712108351352362@swboyd.mtv.corp.google.com>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-05-20, 18:25, Stephen Boyd wrote:
-> Quoting Vinod Koul (2020-04-26 21:55:34)
-> > On 25-04-20, 12:11, Stephen Boyd wrote:
-> > > Quoting Vinod Koul (2020-04-23 21:43:11)
-> > > > Add the missing ufs card and ufs phy clocks for SM8150. They were missed
-> > > > in earlier addition of clock driver.
-> > > > 
-> > > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > > ---
-> > > >  drivers/clk/qcom/gcc-sm8150.c | 84 +++++++++++++++++++++++++++++++++++
-> > > >  1 file changed, 84 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-> > > > index 5c3dc34c955e..4354620fa12d 100644
-> > > > --- a/drivers/clk/qcom/gcc-sm8150.c
-> > > > +++ b/drivers/clk/qcom/gcc-sm8150.c
-> > > > @@ -2881,6 +2881,45 @@ static struct clk_branch gcc_ufs_card_phy_aux_hw_ctl_clk = {
-> > > >         },
-> > > >  };
-> > > >  
-> > > > +/* external clocks so add BRANCH_HALT_SKIP */
-> > > > +static struct clk_branch gcc_ufs_card_rx_symbol_0_clk = {
-> > > > +       .halt_check = BRANCH_HALT_SKIP,
-> > > > +       .clkr = {
-> > > > +               .enable_reg = 0x7501c,
-> > > > +               .enable_mask = BIT(0),
-> > > > +               .hw.init = &(struct clk_init_data){
-> > > > +                       .name = "gcc_ufs_card_rx_symbol_0_clk",
-> > > 
-> > > Any reason to not use .fw_name?
-> > 
-> > Did i understand it correct that you would like these to have .fw_name
-> > for parent? Should we start adding these clocks in DT description?
-> 
-> Sorry I misread the patch. This isn't a parent name description so .name
-> is correct here.
+Introduce support for filling out the relocation information in IMEM, to aid
+post mortem debug tools to locate the various remoteprocs.
 
-No worries, I will add fixes and send the update
+Bjorn Andersson (5):
+  dt-bindings: remoteproc: Add Qualcomm PIL info binding
+  remoteproc: qcom: Introduce helper to store pil info in IMEM
+  remoteproc: qcom: Update PIL relocation info on load
+  arm64: dts: qcom: qcs404: Add IMEM and PIL info region
+  arm64: dts: qcom: sdm845: Add IMEM and PIL info region
 
-Thanks
+ .../bindings/remoteproc/qcom,pil-info.yaml    |  44 +++++++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  15 +++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  15 +++
+ drivers/remoteproc/Kconfig                    |   6 +
+ drivers/remoteproc/Makefile                   |   1 +
+ drivers/remoteproc/qcom_pil_info.c            | 124 ++++++++++++++++++
+ drivers/remoteproc/qcom_pil_info.h            |   7 +
+ drivers/remoteproc/qcom_q6v5_adsp.c           |  16 ++-
+ drivers/remoteproc/qcom_q6v5_mss.c            |   3 +
+ drivers/remoteproc/qcom_q6v5_pas.c            |  15 ++-
+ drivers/remoteproc/qcom_q6v5_wcss.c           |  14 +-
+ drivers/remoteproc/qcom_wcnss.c               |  14 +-
+ 12 files changed, 262 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+ create mode 100644 drivers/remoteproc/qcom_pil_info.c
+ create mode 100644 drivers/remoteproc/qcom_pil_info.h
+
 -- 
-~Vinod
+2.26.2
+
