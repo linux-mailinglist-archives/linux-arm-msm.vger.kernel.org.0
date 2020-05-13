@@ -2,109 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CA1B1D0904
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 08:51:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 511871D0910
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 08:54:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729578AbgEMGvg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 02:51:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33440 "EHLO mail.kernel.org"
+        id S1729585AbgEMGyi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 02:54:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34034 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729367AbgEMGvg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 02:51:36 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        id S1729367AbgEMGyi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 May 2020 02:54:38 -0400
+Received: from localhost.localdomain (unknown [106.200.233.149])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C200120708;
-        Wed, 13 May 2020 06:51:34 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2B64A20708;
+        Wed, 13 May 2020 06:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589352695;
-        bh=1qCCaoL90dc2Pbll3pbUgayrYdx2p3xBrdsudFye97I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EUObQxdCqiKC50wbixd8dCuSEVwdylTYNMtCxinCVQJCukVAHoic+oS5YXnWAYnoC
-         AY+ftw6Nt583iXFll4aTCRIQjp+3yfPSYlve5MQ5n+xRBF+gYurnu52FGB5/Ez/gky
-         IJi3NqGiRY2Cs39SpeeHFF6tuWa2ruyVhg5iKYZ0=
-Date:   Wed, 13 May 2020 08:51:33 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Mimi Zohar <zohar@linux.vnet.ibm.com>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v5 1/7] fs: introduce kernel_pread_file* support
-Message-ID: <20200513065133.GB764247@kroah.com>
-References: <20200508002739.19360-1-scott.branden@broadcom.com>
- <20200508002739.19360-2-scott.branden@broadcom.com>
- <20200513002741.GG11244@42.do-not-panic.com>
- <2e4bc125-5fe5-e3e5-4881-29374da942aa@broadcom.com>
+        s=default; t=1589352877;
+        bh=22+HUZ7CroqaJ9Md5zbkNTrqb86GmjlwQWZmqM3ms+g=;
+        h=From:To:Cc:Subject:Date:From;
+        b=YuM9peVHpnfWYVgcL/DOKy592qks+dgV9GiTuuDuop8qcwMzRkZB//iifzgpfkJZH
+         9fhYxi6QzaojhRjPwBJ8Aqtdy62X+YVzosn+JO65+/ep8cDHEaHdK2FA4+5jZjNJGl
+         ihEgNipSM4btV3fcXx2VTeeDlKM5yhONRxkOWjGE=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] clk: qcom: gcc: Add GPU and NPU clocks for SM8150
+Date:   Wed, 13 May 2020 12:24:19 +0530
+Message-Id: <20200513065420.32735-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.25.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <2e4bc125-5fe5-e3e5-4881-29374da942aa@broadcom.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 12, 2020 at 11:23:27PM -0700, Scott Branden wrote:
-> Hi Luis,
-> 
-> A few comments inline before I cleanup.
-> 
-> On 2020-05-12 5:27 p.m., Luis Chamberlain wrote:
-> > On Thu, May 07, 2020 at 05:27:33PM -0700, Scott Branden wrote:
-> > > diff --git a/fs/exec.c b/fs/exec.c
-> > > index 06b4c550af5d..cfab212fab9d 100644
-> > > --- a/fs/exec.c
-> > > +++ b/fs/exec.c
-> > > @@ -896,10 +896,14 @@ struct file *open_exec(const char *name)
-> > >   }
-> > >   EXPORT_SYMBOL(open_exec);
-> > > -int kernel_read_file(struct file *file, void **buf, loff_t *size,
-> > > -		     loff_t max_size, enum kernel_read_file_id id)
-> > > -{
-> > > -	loff_t i_size, pos;
-> > > +int kernel_pread_file(struct file *file, void **buf, loff_t *size,
-> > > +		      loff_t pos, loff_t max_size, unsigned int flags,
-> > You use int flags, but.. these are mutually exclusive operations, and
-> > so flags is a misnomer. Just use an enum instead of a define, that way
-> > we can use kdoc for documentation.
-> OK, flags could be used to expand with additional flag options in the future
-> (without change to function prototype, but will change to enum if that is
-> what is desired.
-> > > +EXPORT_SYMBOL_GPL(kernel_pread_file);
-> > > +EXPORT_SYMBOL_GPL(kernel_pread_file_from_path);
-> > > +EXPORT_SYMBOL_GPL(kernel_pread_file_from_path_initns);
-> > > +EXPORT_SYMBOL_GPL(kernel_pread_file_from_fd);
-> > If no one is using these don't export them. I think you only use one of
-> > these. In fact just remove the code from the ones which are not used.
-> I do not use them but added them to provide consistent api with
-> kernel_read_file_* functions.  That way someone can take advantage of the
-> _from_path and from_fd variants in the future if desired. But if you want
-> them removed it is simple to drop the EXPORT_SYMBOL_GPL and then add that
-> back when first driver that calls them needs them in the future.
+Add the GPU and NPU clocks for SM8150. They were missed in earlier
+addition of clock driver.
 
-We do not export symbols when there are no in-kernel users.
+Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+Changes in v2:
+  - add fixes tag
+  - remove BRANCH_HALT_SKIP from these clk
 
-> Note: Existing kernel_read_file_from_path_initns is not used in the kernel. 
-> Should we delete that as well?
+ drivers/clk/qcom/gcc-sm8150.c | 64 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-Probably, yes.
+diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+index ef98fdc51755..7c82dd85deaf 100644
+--- a/drivers/clk/qcom/gcc-sm8150.c
++++ b/drivers/clk/qcom/gcc-sm8150.c
+@@ -1617,6 +1617,36 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk = {
+ 	},
+ };
+ 
++static struct clk_branch gcc_gpu_gpll0_clk_src = {
++	.clkr = {
++		.enable_reg = 0x52004,
++		.enable_mask = BIT(15),
++		.hw.init = &(struct clk_init_data){
++			.name = "gcc_gpu_gpll0_clk_src",
++			.parent_hws = (const struct clk_hw *[]){
++				&gpll0.clkr.hw },
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch gcc_gpu_gpll0_div_clk_src = {
++	.clkr = {
++		.enable_reg = 0x52004,
++		.enable_mask = BIT(16),
++		.hw.init = &(struct clk_init_data){
++			.name = "gcc_gpu_gpll0_div_clk_src",
++			.parent_hws = (const struct clk_hw *[]){
++				&gcc_gpu_gpll0_clk_src.clkr.hw },
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
+ static struct clk_branch gcc_gpu_iref_clk = {
+ 	.halt_reg = 0x8c010,
+ 	.halt_check = BRANCH_HALT,
+@@ -1699,6 +1729,36 @@ static struct clk_branch gcc_npu_cfg_ahb_clk = {
+ 	},
+ };
+ 
++static struct clk_branch gcc_npu_gpll0_clk_src = {
++	.clkr = {
++		.enable_reg = 0x52004,
++		.enable_mask = BIT(18),
++		.hw.init = &(struct clk_init_data){
++			.name = "gcc_npu_gpll0_clk_src",
++			.parent_hws = (const struct clk_hw *[]){
++				&gpll0.clkr.hw },
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch gcc_npu_gpll0_div_clk_src = {
++	.clkr = {
++		.enable_reg = 0x52004,
++		.enable_mask = BIT(19),
++		.hw.init = &(struct clk_init_data){
++			.name = "gcc_npu_gpll0_div_clk_src",
++			.parent_hws = (const struct clk_hw *[]){
++				&gcc_npu_gpll0_clk_src.clkr.hw },
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
+ static struct clk_branch gcc_npu_trig_clk = {
+ 	.halt_reg = 0x4d00c,
+ 	.halt_check = BRANCH_VOTED,
+@@ -3375,12 +3435,16 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
+ 	[GCC_GP3_CLK] = &gcc_gp3_clk.clkr,
+ 	[GCC_GP3_CLK_SRC] = &gcc_gp3_clk_src.clkr,
+ 	[GCC_GPU_CFG_AHB_CLK] = &gcc_gpu_cfg_ahb_clk.clkr,
++	[GCC_GPU_GPLL0_CLK_SRC] = &gcc_gpu_gpll0_clk_src.clkr,
++	[GCC_GPU_GPLL0_DIV_CLK_SRC] = &gcc_gpu_gpll0_div_clk_src.clkr,
+ 	[GCC_GPU_IREF_CLK] = &gcc_gpu_iref_clk.clkr,
+ 	[GCC_GPU_MEMNOC_GFX_CLK] = &gcc_gpu_memnoc_gfx_clk.clkr,
+ 	[GCC_GPU_SNOC_DVM_GFX_CLK] = &gcc_gpu_snoc_dvm_gfx_clk.clkr,
+ 	[GCC_NPU_AT_CLK] = &gcc_npu_at_clk.clkr,
+ 	[GCC_NPU_AXI_CLK] = &gcc_npu_axi_clk.clkr,
+ 	[GCC_NPU_CFG_AHB_CLK] = &gcc_npu_cfg_ahb_clk.clkr,
++	[GCC_NPU_GPLL0_CLK_SRC] = &gcc_npu_gpll0_clk_src.clkr,
++	[GCC_NPU_GPLL0_DIV_CLK_SRC] = &gcc_npu_gpll0_div_clk_src.clkr,
+ 	[GCC_NPU_TRIG_CLK] = &gcc_npu_trig_clk.clkr,
+ 	[GCC_PCIE0_PHY_REFGEN_CLK] = &gcc_pcie0_phy_refgen_clk.clkr,
+ 	[GCC_PCIE1_PHY_REFGEN_CLK] = &gcc_pcie1_phy_refgen_clk.clkr,
+-- 
+2.25.4
 
-thanks,
-
-greg k-h
