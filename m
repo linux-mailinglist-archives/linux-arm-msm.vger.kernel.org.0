@@ -2,96 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63F5D1D03B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 02:38:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEB1C1D03FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 02:55:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729646AbgEMAie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 20:38:34 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33816 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728131AbgEMAie (ORCPT
+        id S1732092AbgEMAzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 20:55:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51006 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732070AbgEMAza (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 20:38:34 -0400
-Received: by mail-pl1-f196.google.com with SMTP id g11so2895193plp.1;
-        Tue, 12 May 2020 17:38:33 -0700 (PDT)
+        Tue, 12 May 2020 20:55:30 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01F46C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 17:55:29 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id t40so10220369pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 17:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+aVsTRV0Vd7AjARuX1FSoP3j3p4vMbsUynYNIWG2zcg=;
+        b=ITZ6s8nfqeBtfn0oVoLGCgrnjOV1Xy0pZ3QdECW67KsV/hkeylPh/9bZ5pY1ytrDEv
+         MYdwBAJh+8DHuXK6VaGPgTKlQozijma7VAZhrA2jziS2Wlfl2Aj0GO+oGXYBdvOHYkNI
+         1zyQX/hfzOnC2niIDuG1u0ohwO0xg+hWVawxT9+Pn0+2OOKKwn0xZv2Qvv+BXw3KPfaT
+         Ba0QGr4CYQTEmMg3MUxArtF/PEekKi386oRGyi9pXGwCAQiIgxbtoqYViHsSJgREiy1K
+         Y7ilsmDsR0Th/RdJdnf+j5yqKLOCA3bz1sKYYSDzKdxvqgerEGPd3qk7PmVJDXYSzYoI
+         zGxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CwfbmlNBUU40Zjz8zlAOmtB3ueHeKYzt7ce5wGYgKFA=;
-        b=aqH3pLaspKAfdvXZwLL+58pl/C0iJGFYNZL9atbYNikaxnaboV71owlw3D92JfvO52
-         9Sw7zuGnvVs3qsa0ApEweFJZjUZyrqNDe4obTWdgwjzpWrdfOV1AEAuu1Gb0eiql5upu
-         9LVVb1XJGntMunkvt9nun+ezBsbvd49ziTxGlXL3MsMZw81wPFh0LKzifFYt1cV6ioLL
-         EwCj8D2NbAIvS8afGYccqfmo2wzaT+gzJQ7ZO06v36zTfe84tUOCJLqnY4UQbUyGTi5R
-         OQx89I+OnxW6MV3WNoxvMZIDC3mBvful16jnzhkwCQ4RLPVDxTqLTO+jr1ocBfZLa7Kb
-         6Faw==
-X-Gm-Message-State: AGi0Puaq/9hTNvkY2An66cyZMbS8frs00te00VhubT+nvAq4qVCuIFHl
-        omaUKZsGlJK1LxOqrl1SICQ=
-X-Google-Smtp-Source: APiQypJrCgiM6NaHCnvonCFy7Yn3t2eJw+MEKj198/6OsHFmSqfNPQsM3ObIs9iYeLONwztqCuqQlw==
-X-Received: by 2002:a17:902:bd81:: with SMTP id q1mr22856141pls.46.1589330312971;
-        Tue, 12 May 2020 17:38:32 -0700 (PDT)
-Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
-        by smtp.gmail.com with ESMTPSA id j26sm13098929pfr.215.2020.05.12.17.38.31
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+aVsTRV0Vd7AjARuX1FSoP3j3p4vMbsUynYNIWG2zcg=;
+        b=OcjlCAf5iVUKsFjWXg9VlT3hNhIZGd8KWXENfLCFZXUiu4lvdoQUibNsiWorzWFiOF
+         33qE3XqKRJ/QuZ2Bc3aahnJvLwPHbkEvjqr5BuorzJ6Lfh1ykWve2/8IA3mPiDR8m/0y
+         8CAIUmVmjN51sMvizRN4FdEA/fErckYskTmUh29Fxc1MgDH9PLG0hYHcq6HBRR+sH85K
+         lzgKVG4a3d9rDLQl3sDPLnJrmusWYUE1QnQyHl/T5FZAZyUw3+Gw+lXQp5rFAQIU7VGF
+         n6VKg1k/Qls191pJLvB2NH99mWdAAP1w5B4JV59lFCXhXruYwimj7J6Vh2fTy9ej0dXv
+         B70g==
+X-Gm-Message-State: AGi0PuZVIKI7dQj5AKQClK8GdOpVUMsLyZdboSXlOoYdvyFw/Rbfqzk7
+        HzypDrjWbSyWy6M+lHM1x6nhMw==
+X-Google-Smtp-Source: APiQypI3O4oBkDtpKaBNHwg5f+8AZEbJC5eKmdrym5Hi5g9Mw7N4wvHIlkhR/lrQNiEANYIJvRADLA==
+X-Received: by 2002:a17:90a:da05:: with SMTP id e5mr32780994pjv.140.1589331329287;
+        Tue, 12 May 2020 17:55:29 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id p2sm11057428pgh.25.2020.05.12.17.55.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 17:38:31 -0700 (PDT)
-Received: by 42.do-not-panic.com (Postfix, from userid 1000)
-        id 60B934063E; Wed, 13 May 2020 00:38:30 +0000 (UTC)
-Date:   Wed, 13 May 2020 00:38:30 +0000
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Desmond Yan <desmond.yan@broadcom.com>,
-        James Hu <james.hu@broadcom.com>
-Subject: Re: [PATCH v5 6/7] misc: bcm-vk: add Broadcom VK driver
-Message-ID: <20200513003830.GJ11244@42.do-not-panic.com>
-References: <20200508002739.19360-1-scott.branden@broadcom.com>
- <20200508002739.19360-7-scott.branden@broadcom.com>
+        Tue, 12 May 2020 17:55:28 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] hwspinlock: qcom: Allow dropping the intermediate TCSR mutex syscon
+Date:   Tue, 12 May 2020 17:54:37 -0700
+Message-Id: <20200513005441.1102586-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200508002739.19360-7-scott.branden@broadcom.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 07, 2020 at 05:27:38PM -0700, Scott Branden wrote:
-> +#if defined(CONFIG_REQ_FW_INTO_BUF_PRIV)
-> +
-> +#define KERNEL_PREAD_FLAG_PART	0x0001 /* Allow reading part of file */
-> +#define REQUEST_FIRMWARE_INTO_BUF request_firmware_into_buf_priv
-> +int request_firmware_into_buf_priv(const struct firmware **firmware_p,
-> +				   const char *name, struct device *device,
-> +				   void *buf, size_t size,
-> +				   size_t offset, unsigned int pread_flags);
-> +
-> +#else
-> +
-> +#define REQUEST_FIRMWARE_INTO_BUF request_firmware_into_buf
-> +
-> +#endif
-> +
-> +#endif
+In all modern Qualcomm platforms the mutex region of the TCSR is forked
+off into its own block, all with a offset of 0 and stride of 4096.
+Update the binding to allow the hardware block to be described directly
+on the mmio bus, in addition to allowing the existing syscon based
+definition.
 
-Please clean this up, the code must reflect only the code upstream. No
-config stuff like this should be used on the driver. I had to stop my
-review here.
+Bjorn Andersson (4):
+  dt-bindings: hwlock: qcom: Migrate binding to YAML
+  dt-bindings: hwlock: qcom: Allow device on mmio bus
+  hwspinlock: qcom: Allow mmio usage in addition to syscon
+  arm64: dts: qcom: sm8250: Drop tcsr_mutex syscon
 
-  Luis
+ .../bindings/hwlock/qcom-hwspinlock.yaml      | 65 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 11 +--
+ drivers/hwspinlock/qcom_hwspinlock.c          | 72 ++++++++++++++-----
+ 3 files changed, 124 insertions(+), 24 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
+
+-- 
+2.26.2
+
