@@ -2,117 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32F4C1D11A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 13:43:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE62B1D1278
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 14:16:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730978AbgEMLn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 07:43:26 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:33783 "EHLO extserv.mm-sol.com"
+        id S1732665AbgEMMQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 08:16:42 -0400
+Received: from mga01.intel.com ([192.55.52.88]:56785 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730865AbgEMLn0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 07:43:26 -0400
-Received: from [192.168.1.2] (212-5-158-106.ip.btc-net.bg [212.5.158.106])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id 9C99ECF91;
-        Wed, 13 May 2020 14:43:22 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1589370203; bh=SfnCIB+8RFBof4rOiXKZEaO1H4Zs48OzWFikIfT1iwQ=;
-        h=Subject:To:Cc:From:Date:From;
-        b=TG2XL/Lz+6wKPzf06k6uckSQT66ndTZ1r1+kKU7cOezGqpnPjSF26SMuR02fm/M+z
-         gwN2M1aaB1stRmsmmmGRGdrmvS3Sdycjc5/r0MOSzPkvgby3hl79aeF7JlDzIybZq5
-         +vlWZrLULb0105fVqQpL/230Zp0eGCTCIl1oMm2rw7QUJGV4XJLwNEon4QwdRXdoP+
-         VDE6otKk9QjNaoMaoWnpaNOmW38mXTtqz+aM9gxjNzKcgwL8DbrwAEUD1Le9NKmNBs
-         NkCjPEYfa2+wEpX8EUffhfbT1OS9RMT2rFXja3EJZ1xL0HBBH0i0JChMhW7+la+qJO
-         p5XGs0TOaKsMQ==
-Subject: Re: R: [PATCH v3 08/11] devicetree: bindings: pci: document PARF
- params bindings
-To:     Rob Herring <robh@kernel.org>, ansuelsmth@gmail.com
-Cc:     'Bjorn Andersson' <bjorn.andersson@linaro.org>,
-        'Andy Gross' <agross@kernel.org>,
-        'Bjorn Helgaas' <bhelgaas@google.com>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        'Lorenzo Pieralisi' <lorenzo.pieralisi@arm.com>,
-        'Andrew Murray' <amurray@thegoodpenguin.co.uk>,
-        'Philipp Zabel' <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200430220619.3169-1-ansuelsmth@gmail.com>
- <20200430220619.3169-9-ansuelsmth@gmail.com> <20200507181044.GA15159@bogus>
- <062301d624a6$8be610d0$a3b23270$@gmail.com> <20200512154544.GA823@bogus>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <99f42001-0f41-5e63-f6ad-2e744ec86d36@mm-sol.com>
-Date:   Wed, 13 May 2020 14:43:20 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1731675AbgEMMQm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 May 2020 08:16:42 -0400
+IronPort-SDR: fufWq6ANfXbdsyo23WG4YKPeBc+JR1vCkXaj7TK4pts1ItDRhYlgSvxuLxqddBj9cqkpz+koQR
+ TWDMKgRIjhZg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2020 05:16:41 -0700
+IronPort-SDR: vxpSKFUq4un6BaMkWuW/HPptZRc+5qMKMNoe5QE5bKIqfs3dY5oA/+JG6itCGxg+lbhl9Mz110
+ 1my/3CM+CcQA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,387,1583222400"; 
+   d="scan'208";a="298348570"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.170]) ([10.237.72.170])
+  by orsmga008.jf.intel.com with ESMTP; 13 May 2020 05:16:38 -0700
+Subject: Re: [PATCH v13 0/5] usb: xhci: Add support for Renesas USB
+ controllers
+To:     Vinod Koul <vkoul@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        =?UTF-8?Q?Andreas_B=c3=b6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200506060025.1535960-1-vkoul@kernel.org>
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=mathias.nyman@linux.intel.com; prefer-encrypt=mutual; keydata=
+ mQINBFMB0ccBEADd+nZnZrFDsIjQtclVz6OsqFOQ6k0nQdveiDNeBuwyFYykkBpaGekoHZ6f
+ lH4ogPZzQ+pzoJEMlRGXc881BIggKMCMH86fYJGfZKWdfpg9O6mqSxyEuvBHKe9eZCBKPvoC
+ L2iwygtO8TcXXSCynvXSeZrOwqAlwnxWNRm4J2ikDck5S5R+Qie0ZLJIfaId1hELofWfuhy+
+ tOK0plFR0HgVVp8O7zWYT2ewNcgAzQrRbzidA3LNRfkL7jrzyAxDapuejuK8TMrFQT/wW53e
+ uegnXcRJaibJD84RUJt+mJrn5BvZ0MYfyDSc1yHVO+aZcpNr+71yZBQVgVEI/AuEQ0+p9wpt
+ O9Wt4zO2KT/R5lq2lSz1MYMJrtfFRKkqC6PsDSB4lGSgl91XbibK5poxrIouVO2g9Jabg04T
+ MIPpVUlPme3mkYHLZUsboemRQp5/pxV4HTFR0xNBCmsidBICHOYAepCzNmfLhfo1EW2Uf+t4
+ L8IowAaoURKdgcR2ydUXjhACVEA/Ldtp3ftF4hTQ46Qhba/p4MUFtDAQ5yeA5vQVuspiwsqB
+ BoL/298+V119JzM998d70Z1clqTc8fiGMXyVnFv92QKShDKyXpiisQn2rrJVWeXEIVoldh6+
+ J8M3vTwzetnvIKpoQdSFJ2qxOdQ8iYRtz36WYl7hhT3/hwkHuQARAQABtCdNYXRoaWFzIE55
+ bWFuIDxtYXRoaWFzLm55bWFuQGdtYWlsLmNvbT6JAjsEEwECACUCGwMGCwkIBwMCBhUIAgkK
+ CwQWAgMBAh4BAheABQJTAeo1AhkBAAoJEFiDn/uYk8VJOdIP/jhA+RpIZ7rdUHFIYkHEKzHw
+ tkwrJczGA5TyLgQaI8YTCTPSvdNHU9Rj19mkjhUO/9MKvwfoT2RFYqhkrtk0K92STDaBNXTL
+ JIi4IHBqjXOyJ/dPADU0xiRVtCHWkBgjEgR7Wihr7McSdVpgupsaXhbZjXXgtR/N7PE0Wltz
+ hAL2GAnMuIeJyXhIdIMLb+uyoydPCzKdH6znfu6Ox76XfGWBCqLBbvqPXvk4oH03jcdt+8UG
+ 2nfSeti/To9ANRZIlSKGjddCGMa3xzjtTx9ryf1Xr0MnY5PeyNLexpgHp93sc1BKxKKtYaT0
+ lR6p0QEKeaZ70623oB7Sa2Ts4IytqUVxkQKRkJVWeQiPJ/dZYTK5uo15GaVwufuF8VTwnMkC
+ 4l5X+NUYNAH1U1bpRtlT40aoLEUhWKAyVdowxW4yGCP3nL5E69tZQQgsag+OnxBa6f88j63u
+ wxmOJGNXcwCerkCb+wUPwJzChSifFYmuV5l89LKHgSbv0WHSN9OLkuhJO+I9fsCNvro1Y7dT
+ U/yq4aSVzjaqPT3yrnQkzVDxrYT54FLWO1ssFKAOlcfeWzqrT9QNcHIzHMQYf5c03Kyq3yMI
+ Xi91hkw2uc/GuA2CZ8dUD3BZhUT1dm0igE9NViE1M7F5lHQONEr7MOCg1hcrkngY62V6vh0f
+ RcDeV0ISwlZWuQINBFMB0ccBEACXKmWvojkaG+kh/yipMmqZTrCozsLeGitxJzo5hq9ev31N
+ 2XpPGx4AGhpccbco63SygpVN2bOd0W62fJJoxGohtf/g0uVtRSuK43OTstoBPqyY/35+VnAV
+ oA5cnfvtdx5kQPIL6LRcxmYKgN4/3+A7ejIxbOrjWFmbWCC+SgX6mzHHBrV0OMki8R+NnrNa
+ NkUmMmosi7jBSKdoi9VqDqgQTJF/GftvmaZHqgmVJDWNrCv7UiorhesfIWPt1O/AIk9luxlE
+ dHwkx5zkWa9CGYvV6LfP9BznendEoO3qYZ9IcUlW727Le80Q1oh69QnHoI8pODDBBTJvEq1h
+ bOWcPm/DsNmDD8Rwr/msRmRyIoxjasFi5WkM/K/pzujICKeUcNGNsDsEDJC5TCmRO/TlvCvm
+ 0X+vdfEJRZV6Z+QFBflK1asUz9QHFre5csG8MyVZkwTR9yUiKi3KiqQdaEu+LuDD2CGF5t68
+ xEl66Y6mwfyiISkkm3ETA4E8rVZP1rZQBBm83c5kJEDvs0A4zrhKIPTcI1smK+TWbyVyrZ/a
+ mGYDrZzpF2N8DfuNSqOQkLHIOL3vuOyx3HPzS05lY3p+IIVmnPOEdZhMsNDIGmVorFyRWa4K
+ uYjBP/W3E5p9e6TvDSDzqhLoY1RHfAIadM3I8kEx5wqco67VIgbIHHB9DbRcxQARAQABiQIf
+ BBgBAgAJBQJTAdHHAhsMAAoJEFiDn/uYk8VJb7AQAK56tgX8V1Wa6RmZDmZ8dmBC7W8nsMRz
+ PcKWiDSMIvTJT5bygMy1lf7gbHXm7fqezRtSfXAXr/OJqSA8LB2LWfThLyuuCvrdNsQNrI+3
+ D+hjHJjhW/4185y3EdmwwHcelixPg0X9EF+lHCltV/w29Pv3PiGDkoKxJrnOpnU6jrwiBebz
+ eAYBfpSEvrCm4CR4hf+T6MdCs64UzZnNt0nxL8mLCCAGmq1iks9M4bZk+LG36QjCKGh8PDXz
+ 9OsnJmCggptClgjTa7pO6040OW76pcVrP2rZrkjo/Ld/gvSc7yMO/m9sIYxLIsR2NDxMNpmE
+ q/H7WO+2bRG0vMmsndxpEYS4WnuhKutoTA/goBEhtHu1fg5KC+WYXp9wZyTfeNPrL0L8F3N1
+ BCEYefp2JSZ/a355X6r2ROGSRgIIeYjAiSMgGAZMPEVsdvKsYw6BH17hDRzltNyIj5S0dIhb
+ Gjynb3sXforM/GVbr4mnuxTdLXQYlj2EJ4O4f0tkLlADT7podzKSlSuZsLi2D+ohKxtP3U/r
+ 42i8PBnX2oAV0UIkYk7Oel/3hr0+BP666SnTls9RJuoXc7R5XQVsomqXID6GmjwFQR5Wh/RE
+ IJtkiDAsk37cfZ9d1kZ2gCQryTV9lmflSOB6AFZkOLuEVSC5qW8M/s6IGDfYXN12YJaZPptJ fiD/
+Message-ID: <edb2df23-6193-fdb1-d9f9-ffc33a40c05e@linux.intel.com>
+Date:   Wed, 13 May 2020 15:19:29 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200512154544.GA823@bogus>
+In-Reply-To: <20200506060025.1535960-1-vkoul@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/12/20 6:45 PM, Rob Herring wrote:
-> On Thu, May 07, 2020 at 09:34:35PM +0200, ansuelsmth@gmail.com wrote:
->>> On Fri, May 01, 2020 at 12:06:15AM +0200, Ansuel Smith wrote:
->>>> It is now supported the editing of Tx De-Emphasis, Tx Swing and
->>>> Rx equalization params on ipq8064. Document this new optional params.
->>>>
->>>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->>>> ---
->>>>  .../devicetree/bindings/pci/qcom,pcie.txt     | 36 +++++++++++++++++++
->>>>  1 file changed, 36 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>> b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>>> index 6efcef040741..8cc5aea8a1da 100644
->>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>>> @@ -254,6 +254,42 @@
->>>>  			- "perst-gpios"	PCIe endpoint reset signal line
->>>>  			- "wake-gpios"	PCIe endpoint wake signal line
->>>>
->>>> +- qcom,tx-deemph-gen1:
->>>> +	Usage: optional (available for ipq/apq8064)
->>>> +	Value type: <u32>
->>>> +	Definition: Gen1 De-emphasis value.
->>>> +		    For ipq806x should be set to 24.
->>>
->>> Unless these need to be tuned per board, then the compatible string for
->>> ipq806x should imply all these settings.
->>>
->>
->> It was requested by v2 to make this settings tunable. These don't change are
->> all the same for every ipq806x SoC. The original implementation had this 
->> value hardcoded for ipq806x. Should I restore this and drop this patch?
+On 6.5.2020 9.00, Vinod Koul wrote:
+> This series add support for Renesas USB controllers uPD720201 and uPD720202.
+> These require firmware to be loaded and in case devices have ROM those can
+> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
 > 
-> Yes, please.
-
-I still think that the values for tx deemph and tx swing should be
-tunable. But I can live with them in the driver if they not break
-support for apq8064.
-
-The default values in the registers for apq8064 and ipq806x are:
-
-			default		your change
-TX_DEEMPH_GEN1		21		24
-TX_DEEMPH_GEN2_3_5DB	21		24
-TX_DEEMPH_GEN2_6DB	32		34
-
-TX_SWING_FULL		121		120
-TX_SWING_LOW		121		120
-
-So until now (without your change) apq8064 worked with default values.
-
-> 
-> Rob
+> This includes patches from Christian which supported these controllers w/o
+> ROM and later my patches for ROM support and debugfs hook for rom erase and
+> export of xhci-pci functions.
 > 
 
--- 
-regards,
-Stan
+First four patches look ok to me, but 5/5 that adds rom erase debugfs support
+still needs some work.
+
+If you prefer I can take the first four, maybe we can get them to 5.8, and then
+later add that debugs rom erase support.
+
+Let me know what you prefer
+
+-Mathias
+
