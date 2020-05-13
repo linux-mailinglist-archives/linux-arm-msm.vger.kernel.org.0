@@ -2,99 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50E5C1D05B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 05:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0CAB1D05B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 05:58:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725898AbgEMD4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 23:56:01 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:51244 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727107AbgEMD4B (ORCPT
+        id S1727790AbgEMD6A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 23:58:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1727107AbgEMD6A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 23:56:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589342160; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=IgFKDSGjknGTNYONGt6w814LAjM7eJe3jLXGqPrlFK8=; b=HYjsghxmUwr39jNg7/wvMbOtPd9kFeZ3lF18xfljZcuTNxWncALiQQdCZE6DjuSz15B8sPWZ
- T5D6b6t435bHPsHBpW7p/qsvlJxHvzGKOXg/PiLA5+T8whHCXwG2o7t3t+utBytB74zqpBAU
- 281OvFfMmXMpYwbgPY+395OY9C4=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ebb6fb3.7fea8db43e68-smtp-out-n01;
- Wed, 13 May 2020 03:55:31 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7BCA3C433BA; Wed, 13 May 2020 03:55:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.105] (unknown [49.207.133.81])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sivaprak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 996DCC433F2;
-        Wed, 13 May 2020 03:55:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 996DCC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
-Subject: Re: [PATCH V4 8/8] arm64: dts: ipq6018: Add a53 pll and apcs clock
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1588573224-3038-1-git-send-email-sivaprak@codeaurora.org>
- <1588573224-3038-9-git-send-email-sivaprak@codeaurora.org>
- <20200512202439.GK2165@builder.lan>
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Message-ID: <80039c21-41cf-2ace-939a-ef48fd773aa4@codeaurora.org>
-Date:   Wed, 13 May 2020 09:25:22 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Tue, 12 May 2020 23:58:00 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2BEC061A0C;
+        Tue, 12 May 2020 20:57:58 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id w10so5402418ljo.0;
+        Tue, 12 May 2020 20:57:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6jF36zZV4YkOjjEEZcxlJOpsCDyfDyyD6Cte3hhe7uI=;
+        b=Y9XbgXJjX+6b/Our6/e59lW7rMJCRfJO6yDzwJR1u5a+RhYXDVOjWj/MbixpXAlrui
+         tpctqJeC0xlc287Dtv0RlCI9Uv3LvCKCDQXDdmqtodxedvelQUWwAUVoxR6kLxDRPBIw
+         nnlXH487hTvFkMAeK0XmN2uMADfBTpXbEGCqUQGJTLs+JgJVU8YQdc+gqaczKCjXk/ww
+         dLIJykfm8bjmnLHP0QANywpt1aM1jPQBkTI2QIZlSz01me1G9dgncXGPbNmvdgzbDn0n
+         //rocSpNRMykFJEJry29KXF0+QRYEnhnH9lQeHG/nK33ixD2idsoyYRUOyXRCyNyY5bP
+         eGfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6jF36zZV4YkOjjEEZcxlJOpsCDyfDyyD6Cte3hhe7uI=;
+        b=VCNKvjEATSZPebT/uMWXPV+aiuagMob3Tt1iB7EcG7jewtj56cnFMjN5bs1b9WjOxB
+         ptl56bTA7Gvi39MNjBjV7Z0Qalv+GWqZq+mv/GHfD99gvlhG6D90Yo6akDRV4cOd95q8
+         fUDcMV2pykWwBOwc0JZcCXphLySwNYeFRaohvewJiZHZaPuxWu+IbAQwQ9BPWpstV/jC
+         +YXuHn2WnqnthCdP/hD4H3kbBNjTRR04Zt1zGxNW7WgLgrYJLW23yQ9h58I0D/uFFjUT
+         weYBy2P9C/VyO+S5U5Vmm8opsF1tP86HWehZ90NVq831ZWprbmIT3YGapmLa5VAbEg3L
+         TlEg==
+X-Gm-Message-State: AOAM533uKDX8Xhqatz8+O2rNWsb9r7+25n2poKInd8Qp4rh6UO7d8/4W
+        cKGloUYyLQldsBSmSsNEU8/4HvKkLmr4A/sFl0d8L/6m
+X-Google-Smtp-Source: ABdhPJxfEIMDcND6bucfnbiaUf/kKcp6Jv+7+dq6HYchFLm1kBE0LRNTGoe8f4XeHYTkPvaQm5pT9GMkoE/Myrf+lFY=
+X-Received: by 2002:a2e:9490:: with SMTP id c16mr15831301ljh.110.1589342276826;
+ Tue, 12 May 2020 20:57:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200512202439.GK2165@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20200513005441.1102586-1-bjorn.andersson@linaro.org> <20200513005441.1102586-4-bjorn.andersson@linaro.org>
+In-Reply-To: <20200513005441.1102586-4-bjorn.andersson@linaro.org>
+From:   Baolin Wang <baolin.wang7@gmail.com>
+Date:   Wed, 13 May 2020 11:57:42 +0800
+Message-ID: <CADBw62oF=o4xxar8yO+xwhLa3h2oD_GD_tWhFo1DDTJGgFnEjg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] hwspinlock: qcom: Allow mmio usage in addition to syscon
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Devicetree List <devicetree@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Wed, May 13, 2020 at 8:55 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> In all modern Qualcomm platforms the mutex region of the TCSR is forked
+> off into its own block, all with a offset of 0 and stride of 4096. So
+> add support for directly memory mapping this register space, to avoid
+> the need to represent this block using a syscon.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/hwspinlock/qcom_hwspinlock.c | 72 +++++++++++++++++++++-------
+>  1 file changed, 56 insertions(+), 16 deletions(-)
+>
+> diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
+> index f0da544b14d2..d8d4d729816c 100644
+> --- a/drivers/hwspinlock/qcom_hwspinlock.c
+> +++ b/drivers/hwspinlock/qcom_hwspinlock.c
+> @@ -70,41 +70,81 @@ static const struct of_device_id qcom_hwspinlock_of_match[] = {
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_hwspinlock_of_match);
+>
+> -static int qcom_hwspinlock_probe(struct platform_device *pdev)
+> +static struct regmap *qcom_hwspinlock_probe_syscon(struct platform_device *pdev,
+> +                                                  u32 *base, u32 *stride)
+>  {
+> -       struct hwspinlock_device *bank;
+>         struct device_node *syscon;
+> -       struct reg_field field;
+>         struct regmap *regmap;
+> -       size_t array_size;
+> -       u32 stride;
+> -       u32 base;
+>         int ret;
+> -       int i;
+>
+>         syscon = of_parse_phandle(pdev->dev.of_node, "syscon", 0);
+> -       if (!syscon) {
+> -               dev_err(&pdev->dev, "no syscon property\n");
+> -               return -ENODEV;
+> -       }
+> +       if (!syscon)
+> +               return ERR_PTR(-ENODEV);
+>
+>         regmap = syscon_node_to_regmap(syscon);
+>         of_node_put(syscon);
+>         if (IS_ERR(regmap))
+> -               return PTR_ERR(regmap);
+> +               return regmap;
+>
+> -       ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 1, &base);
+> +       ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 1, base);
+>         if (ret < 0) {
+>                 dev_err(&pdev->dev, "no offset in syscon\n");
+> -               return -EINVAL;
+> +               return ERR_PTR(-EINVAL);
+>         }
+>
+> -       ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 2, &stride);
+> +       ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 2, stride);
+>         if (ret < 0) {
+>                 dev_err(&pdev->dev, "no stride syscon\n");
+> -               return -EINVAL;
+> +               return ERR_PTR(-EINVAL);
+>         }
+>
+> +       return regmap;
+> +}
+> +
+> +static const struct regmap_config tcsr_mutex_config = {
+> +       .reg_bits               = 32,
+> +       .reg_stride             = 4,
+> +       .val_bits               = 32,
+> +       .max_register           = 0x40000,
+> +       .fast_io                = true,
+> +};
+> +
+> +static struct regmap *qcom_hwspinlock_probe_mmio(struct platform_device *pdev,
+> +                                                u32 *offset, u32 *stride)
+> +{
+> +       struct device *dev = &pdev->dev;
+> +       struct resource *res;
+> +       void __iomem *base;
+> +
+> +       /* All modern platform has offset 0 and stride of 4k */
+> +       *offset = 0;
+> +       *stride = 0x1000;
+> +
+> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       base = devm_ioremap_resource(&pdev->dev, res);
 
-On 5/13/2020 1:54 AM, Bjorn Andersson wrote:
-> On Sun 03 May 23:20 PDT 2020, Sivaprakash Murugesan wrote:
+I think you can use devm_platform_ioremap_resource(pdev, 0) to
+simplify your code, otherwise looks good to me.
+Reviewed-by: Baolin Wang <baolin.wang7@gmail.com>
+
+> +       if (IS_ERR(base))
+> +               return ERR_CAST(base);
+> +
+> +       return devm_regmap_init_mmio(dev, base, &tcsr_mutex_config);
+> +}
+> +
+> +static int qcom_hwspinlock_probe(struct platform_device *pdev)
+> +{
+> +       struct hwspinlock_device *bank;
+> +       struct reg_field field;
+> +       struct regmap *regmap;
+> +       size_t array_size;
+> +       u32 stride;
+> +       u32 base;
+> +       int i;
+> +
+> +       regmap = qcom_hwspinlock_probe_syscon(pdev, &base, &stride);
+> +       if (IS_ERR(regmap) && PTR_ERR(regmap) == -ENODEV)
+> +               regmap = qcom_hwspinlock_probe_mmio(pdev, &base, &stride);
+> +
+> +       if (IS_ERR(regmap))
+> +               return PTR_ERR(regmap);
+> +
+>         array_size = QCOM_MUTEX_NUM_LOCKS * sizeof(struct hwspinlock);
+>         bank = devm_kzalloc(&pdev->dev, sizeof(*bank) + array_size, GFP_KERNEL);
+>         if (!bank)
+> --
+> 2.26.2
 >
->> add support for apps pll and apcs clock.
->>
->> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 16 +++++++++++++---
->>   1 file changed, 13 insertions(+), 3 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> index 1aa8d85..af2ceeb 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> @@ -294,12 +294,22 @@
->>   		};
->>   
->>   		apcs_glb: mailbox@b111000 {
->> -			compatible = "qcom,ipq8074-apcs-apps-global";
->> -			reg = <0x0b111000 0xc>;
->> -
->> +			compatible = "qcom,ipq6018-apcs-apps-global";
->> +			reg = <0x0b111000 0x1000>;
-> My documentation states that IPQ8074 indeed has this block at
-> 0x0b111000, but IPQ6018 it's at 0x6b111000. Can you confirm this is
-> correct? Same with the pll below.
-The address 0x6b111000 is how the RPM sees this block. For A53 it is 
-still 0xb111000
->
-> Apart from that the patch looks good.
->
-> Regards,
-> Bjorn
+
+
+-- 
+Baolin Wang
