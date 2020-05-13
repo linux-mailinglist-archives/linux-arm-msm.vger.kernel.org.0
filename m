@@ -2,120 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 073221D210C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 23:29:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 752041D2187
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 23:56:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729159AbgEMV2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 17:28:51 -0400
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:50457 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728879AbgEMV2u (ORCPT
+        id S1729894AbgEMV4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 17:56:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729829AbgEMV4O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 17:28:50 -0400
-Received: by mail-pj1-f65.google.com with SMTP id t9so11666936pjw.0;
-        Wed, 13 May 2020 14:28:50 -0700 (PDT)
+        Wed, 13 May 2020 17:56:14 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B40FCC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 14:56:12 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id a5so11668574pjh.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 14:56:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=URXKt/CtJiUnLhAXRhzn7WHXaaovZqdso8oMCz+GR2c=;
+        b=zgg3uSPYjx1Fq9SF/NJZDBOu6PaZKWswvNlnYpfhfyOpMHs9QgxJblQ9SHH8w4SVTm
+         U/j8SreK901TGCI8VLZe+cGqfFACPgDBgsFNopQ6IwqhF0IGJlDwWt28aZCXIRLHhV2x
+         vGCe2fw3s0+OSJ931/VrF+xGe/D1G4Mu+Q3175i9r/udCjesuDuaEWCHLlw4srYQ47+p
+         wQodfH6T46WwVYrSeeva9WEM7EAc8UE64FUDcZ5lurlWEXPtrB5JiLHgSI1uOj7xhpoR
+         zZalj0FxzE0WLn62TQJhBirmicHXekBH1wLvNpHuHHRl8xSfazqCZmDTTVBbex0zdZlN
+         pr+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=jFpZxJjBWza/kWR3tD171A9RdRcfWTU4Z4g63bnqZJQ=;
-        b=MXCkU6xI6IpcuACtIHMntxwRWcX5rt9K4YNzkCn+FF6wXtHQSwhfb84wUHf8iSNe4J
-         +KmNJgVPnwCnIdC9PujSz50jeePyRF4FfjbkCbtU9s3Ph+OzvS5q1nEQMSu10koDvjjC
-         bU3B53dxr9P/pF856iTKjhEyRi7j5BeWoSVks68BEDRCUfQ+zNs2zQwygxZ27dilh+L1
-         iutpZRFnjZTHs5PIwGUzeBdUZMjB9YRMrGlFeFFalyorWVRym2bFqM847OOjaEkF35/u
-         14h7gaxzyBEp0VCpdz8ZGdoQ4plJJzosX4wo5j+SzydlgtOXz1v+MzPDDDM1Bq3VUBrH
-         fTDA==
-X-Gm-Message-State: AGi0Pua5Q5h8OqRvZ/Lnh2+pXKFC/ecP3QSamFmB54DeI5khulfXSr64
-        byHbXx66Z7hapTqZV3ADv0N7sh449Mlmlg==
-X-Google-Smtp-Source: APiQypIK+uC5UrzbKxzZc1CCBNVsrdbUnp3vZEUQzYdaSLvxgjqSKS3rrrSs5sXQv9l3ptXF/JHruw==
-X-Received: by 2002:a17:90a:9311:: with SMTP id p17mr36891312pjo.145.1589405329840;
-        Wed, 13 May 2020 14:28:49 -0700 (PDT)
-Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
-        by smtp.gmail.com with ESMTPSA id 82sm414078pfv.214.2020.05.13.14.28.48
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=URXKt/CtJiUnLhAXRhzn7WHXaaovZqdso8oMCz+GR2c=;
+        b=XZUelDxwzDYaBCWWtcqVL9pliqZrFVS92ST0Jwx4AbM3fexVINLhmL/xBidY8ZYmS4
+         WhHgmit6JblXxtG2N76QENHQYmqUgdHeHb0XJ00FWyexW8WYozqx1I81rHWKOPu72i4c
+         O9BiGCGXu0UqW70jv9OfN9kJWTKe/dszUR09qSdQ+U1//rVI6LWI3DbwC8SScpXcURrG
+         Wo6v4POfw/UvD+t4gDSCYwtQquer3GZp3QUcc19VfiuTt8sMwAjSaIbCg8nX5BIhwFyy
+         Zr4qmOcZ6KBYAm0myoMeeoky45FYJVQt7AOvX1KrHLrrqNsPWaD1lo/0PHtS3ZCTmbYi
+         5H8g==
+X-Gm-Message-State: AGi0PuaO3mk3WWvbuhH9/UdOp9Qxkn6S0hPQMSSQfkc/yBW9aFufNevc
+        8X/0ergTFtFr7fKJ/Sn/HsJeqg==
+X-Google-Smtp-Source: APiQypLfZxmnarSDfauVRkIFplhL7r6EsFhDlKlDgtFu9R1IGXvtHs2lg5ugQzGaB0VBgM7OJ3kYkg==
+X-Received: by 2002:a17:90a:d3cc:: with SMTP id d12mr37699942pjw.158.1589406972131;
+        Wed, 13 May 2020 14:56:12 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id b24sm475244pfi.4.2020.05.13.14.56.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 14:28:48 -0700 (PDT)
-Received: by 42.do-not-panic.com (Postfix, from userid 1000)
-        id D5FDC4063E; Wed, 13 May 2020 21:28:47 +0000 (UTC)
-Date:   Wed, 13 May 2020 21:28:47 +0000
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Mimi Zohar <zohar@kernel.org>
-Cc:     Scott Branden <scott.branden@broadcom.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        linux-security-module <linux-security-module@vger.kernel.org>,
-        linux-integrity <linux-integrity@vger.kernel.org>
-Subject: Re: [PATCH v5 1/7] fs: introduce kernel_pread_file* support
-Message-ID: <20200513212847.GT11244@42.do-not-panic.com>
-References: <20200508002739.19360-1-scott.branden@broadcom.com>
- <20200508002739.19360-2-scott.branden@broadcom.com>
- <1589395153.5098.158.camel@kernel.org>
- <0e6b5f65-8c61-b02e-7d35-b4ae52aebcf3@broadcom.com>
- <1589396593.5098.166.camel@kernel.org>
- <e1b92047-7003-0615-3d58-1388ec27c78a@broadcom.com>
- <1589398747.5098.178.camel@kernel.org>
- <a228ae0f-d551-e0e8-446e-5ae63462c520@broadcom.com>
- <1589404814.5098.185.camel@kernel.org>
+        Wed, 13 May 2020 14:56:11 -0700 (PDT)
+Date:   Wed, 13 May 2020 15:56:09 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Arun Kumar Neelakantam <aneela@codeaurora.org>
+Cc:     ohad@wizery.com, bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sricharan@codeaurora.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH V5 3/5] rpmsg: glink: Add support for rpmsg glink chrdev
+Message-ID: <20200513215609.GB8328@xps15>
+References: <1589346606-15046-1-git-send-email-aneela@codeaurora.org>
+ <1589346606-15046-4-git-send-email-aneela@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1589404814.5098.185.camel@kernel.org>
+In-Reply-To: <1589346606-15046-4-git-send-email-aneela@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 05:20:14PM -0400, Mimi Zohar wrote:
-> On Wed, 2020-05-13 at 12:41 -0700, Scott Branden wrote:
-> > 
-> > On 2020-05-13 12:39 p.m., Mimi Zohar wrote:
-> > > On Wed, 2020-05-13 at 12:18 -0700, Scott Branden wrote:
-> > >> On 2020-05-13 12:03 p.m., Mimi Zohar wrote:
-> > >>> On Wed, 2020-05-13 at 11:53 -0700, Scott Branden wrote:
-> > >> Even if the kernel successfully verified the firmware file signature it
-> > >> would just be wasting its time.  The kernel in these use cases is not always
-> > >> trusted.  The device needs to authenticate the firmware image itself.
-> > > There are also environments where the kernel is trusted and limits the
-> > > firmware being provided to the device to one which they signed.
-> > >
-> > >>> The device firmware is being downloaded piecemeal from somewhere and
-> > >>> won't be measured?
-> > >> It doesn't need to be measured for current driver needs.
-> > > Sure the device doesn't need the kernel measuring the firmware, but
-> > > hardened environments do measure firmware.
-> > >
-> > >> If someone has such need the infrastructure could be added to the kernel
-> > >> at a later date.  Existing functionality is not broken in any way by
-> > >> this patch series.
-> > > Wow!  You're saying that your patch set takes precedence over the
-> > > existing expectations and can break them.
-> > Huh? I said existing functionality is NOT broken by this patch series.
+On Wed, May 13, 2020 at 10:40:04AM +0530, Arun Kumar Neelakantam wrote:
+> From: Chris Lew <clew@codeaurora.org>
 > 
-> Assuming a system is configured to measure and appraise firmware
-> (rules below), with this change the firmware file will not be properly
-> measured and will fail signature verification.
+> RPMSG provides a char device interface to userspace. Probe the rpmsg
+> chrdev channel to enable the rpmsg_ctrl device creation on glink
+> transports.
 > 
-> Sample IMA policy rules:
-> measure func=FIRMWARE_CHECK
-> appraise func=FIRMWARE_CHECK appraise_type=imasig
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+> ---
+>  drivers/rpmsg/qcom_glink_native.c | 40 ++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 39 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index 604f11f..3a7f87c 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -1178,7 +1178,7 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
+>  	__be32 *val = defaults;
+>  	int size;
+>  
+> -	if (glink->intentless)
+> +	if (glink->intentless || !completion_done(&channel->open_ack))
 
-Would a pre and post lsm hook for pread do it?
+Please move this to patch 01.
 
-  Luis
+>  		return 0;
+>  
+>  	prop = of_find_property(np, "qcom,intents", NULL);
+> @@ -1574,6 +1574,40 @@ static void qcom_glink_cancel_rx_work(struct qcom_glink *glink)
+>  		kfree(dcmd);
+>  }
+>  
+> +static void qcom_glink_device_release(struct device *dev)
+> +{
+> +	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
+> +	struct glink_channel *channel = to_glink_channel(rpdev->ept);
+> +
+> +	/* Release qcom_glink_alloc_channel() reference */
+> +	kref_put(&channel->refcount, qcom_glink_channel_release);
+> +	kfree(rpdev);
+> +}
+> +
+> +static int qcom_glink_create_chrdev(struct qcom_glink *glink)
+> +{
+> +	struct rpmsg_device *rpdev;
+> +	struct glink_channel *channel;
+> +
+> +	rpdev = kzalloc(sizeof(*rpdev), GFP_KERNEL);
+> +	if (!rpdev)
+> +		return -ENOMEM;
+> +
+> +	channel = qcom_glink_alloc_channel(glink, "rpmsg_chrdev");
+> +	if (IS_ERR(channel)) {
+> +		kfree(rpdev);
+> +		return PTR_ERR(channel);
+> +	}
+> +	channel->rpdev = rpdev;
+> +
+> +	rpdev->ept = &channel->ept;
+> +	rpdev->ops = &glink_device_ops;
+> +	rpdev->dev.parent = glink->dev;
+> +	rpdev->dev.release = qcom_glink_device_release;
+> +
+> +	return rpmsg_chrdev_register_device(rpdev);
+> +}
+> +
+>  struct qcom_glink *qcom_glink_native_probe(struct device *dev,
+>  					   unsigned long features,
+>  					   struct qcom_glink_pipe *rx,
+> @@ -1633,6 +1667,10 @@ struct qcom_glink *qcom_glink_native_probe(struct device *dev,
+>  	if (ret)
+>  		return ERR_PTR(ret);
+>  
+> +	ret = qcom_glink_create_chrdev(glink);
+> +	if (ret)
+> +		dev_err(glink->dev, "failed to register chrdev\n");
+> +
+>  	return glink;
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_glink_native_probe);
+> -- 
+> 2.7.4
