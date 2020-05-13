@@ -2,111 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4320C1D0406
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 02:55:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3468C1D044F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 03:25:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732110AbgEMAzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 May 2020 20:55:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51056 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732119AbgEMAzh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 May 2020 20:55:37 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1174C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 17:55:35 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id v63so7225041pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 May 2020 17:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8wwa3jMzBsVMJhoFoeC5HT1Ng/t6lRTgcx0Z6MLydpE=;
-        b=LJOeK6k167T0qHY/gHMk23W6JRgArf4RIgYDYeFgTsfbhyZqu+osvBhNLNcuVPjbKy
-         PG/guFzPEwywB449YFQpC9DO6jCJtzM0O7yOGK/mIVmS4ECi4TtLmxARO6QqV3fnEM//
-         Jel0ZKNx+9d6UXfedIsiPRzPC9phkUE+gKTkBAO++xhgPvoBwVSljFo/pYjYqRdJPSFB
-         jj8H+/dCw5hsa8VYYbe/fiGFxSjwh82/FyOh+nhoezLFEdezhwbpQ7z107Bjc4EAdfjQ
-         7l6TTbXKLuAKvoj6j3d9vpQ1z4qM7Jf08DmfIaCwEY8uyE3GxHBTKO+mBCQY9MeZcTTm
-         WodA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8wwa3jMzBsVMJhoFoeC5HT1Ng/t6lRTgcx0Z6MLydpE=;
-        b=SDgoXZGgPRuefowP5VV+sx20o+I0cVAIVH1VECjMdtNk4uKshTrp3NTc/WrlTMTthn
-         pENOy/hXUZ1ZhK71V7ryDpCblpNudlrBUaUSurwnIYSb8nUWMHrAMW2IQQV40XeW78H3
-         CBGHAwsyDtDxZ4TElBfGAPzP37NaLCpbdgOlQ0OGJy6RX7RtU/wPjarONKNN42d/Jg58
-         p5hcoLQoEuLnskaRFoKMMKPlzrj03HuWODluIQIwQbGAWNclYT0lI9PGaZbr/OrnR0wE
-         RiJB3tqrSARyNKwHmmmt+sbRAjdqHYf+5s7XDgWcIKvzRKlxLZd5xPA4xCIIJR9ExyT5
-         ts6w==
-X-Gm-Message-State: AGi0PubpedDQOYYc821W1LhIMn9VCeaOWleQJWAebHNe7unKyIUEa33M
-        BnEyy8noq3dnes2Hty4gotxTRg==
-X-Google-Smtp-Source: APiQypK8A9XkNcELLFq9SHtAPbnP58OXlvL1We6HYrbyzS93bOuj6d8WCwO3j1pBijtX2cVIhuXkqA==
-X-Received: by 2002:a62:c1c4:: with SMTP id i187mr24691197pfg.319.1589331335353;
-        Tue, 12 May 2020 17:55:35 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id p2sm11057428pgh.25.2020.05.12.17.55.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 17:55:34 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8250: Drop tcsr_mutex syscon
-Date:   Tue, 12 May 2020 17:54:41 -0700
-Message-Id: <20200513005441.1102586-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200513005441.1102586-1-bjorn.andersson@linaro.org>
-References: <20200513005441.1102586-1-bjorn.andersson@linaro.org>
+        id S1731298AbgEMBZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 May 2020 21:25:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35416 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728131AbgEMBZT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 May 2020 21:25:19 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2E40E206F5;
+        Wed, 13 May 2020 01:25:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1589333119;
+        bh=W/ynoi3nuHXkxtpSAmA548nlbfjCmEtCLVDmlqPwuxA=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=LNw/+Dg9HIVJMykSCCfxacM5QHGkBefqgBk5fndlZKTbeeLw+YuuMel/dz5jH8N9Z
+         BO42HgnHaFcv0+/egBe4uPPiYg9kuDQniFi/SpBXspwTqxdSAJ14rczFG1fMElP/3u
+         zXrlebmkNjDyY8hQ42cvLD9TsP1hk2Ee3L2k3euI=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200427045534.GB4625@vkoul-mobl.Dlink>
+References: <20200424044311.2155917-1-vkoul@kernel.org> <20200424044311.2155917-2-vkoul@kernel.org> <158784189516.117437.15588556636278394035@swboyd.mtv.corp.google.com> <20200427045534.GB4625@vkoul-mobl.Dlink>
+Subject: Re: [PATCH 2/2] clk: qcom: gcc: Add missing UFS clocks for SM8150
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Vinod Koul <vkoul@kernel.org>
+Date:   Tue, 12 May 2020 18:25:18 -0700
+Message-ID: <158933311835.215346.12980712108351352362@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that we don't need the intermediate syscon to represent the TCSR
-mutexes, update the dts to describe the TCSR mutex directly.
+Quoting Vinod Koul (2020-04-26 21:55:34)
+> On 25-04-20, 12:11, Stephen Boyd wrote:
+> > Quoting Vinod Koul (2020-04-23 21:43:11)
+> > > Add the missing ufs card and ufs phy clocks for SM8150. They were mis=
+sed
+> > > in earlier addition of clock driver.
+> > >=20
+> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > > ---
+> > >  drivers/clk/qcom/gcc-sm8150.c | 84 +++++++++++++++++++++++++++++++++=
+++
+> > >  1 file changed, 84 insertions(+)
+> > >=20
+> > > diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8=
+150.c
+> > > index 5c3dc34c955e..4354620fa12d 100644
+> > > --- a/drivers/clk/qcom/gcc-sm8150.c
+> > > +++ b/drivers/clk/qcom/gcc-sm8150.c
+> > > @@ -2881,6 +2881,45 @@ static struct clk_branch gcc_ufs_card_phy_aux_=
+hw_ctl_clk =3D {
+> > >         },
+> > >  };
+> > > =20
+> > > +/* external clocks so add BRANCH_HALT_SKIP */
+> > > +static struct clk_branch gcc_ufs_card_rx_symbol_0_clk =3D {
+> > > +       .halt_check =3D BRANCH_HALT_SKIP,
+> > > +       .clkr =3D {
+> > > +               .enable_reg =3D 0x7501c,
+> > > +               .enable_mask =3D BIT(0),
+> > > +               .hw.init =3D &(struct clk_init_data){
+> > > +                       .name =3D "gcc_ufs_card_rx_symbol_0_clk",
+> >=20
+> > Any reason to not use .fw_name?
+>=20
+> Did i understand it correct that you would like these to have .fw_name
+> for parent? Should we start adding these clocks in DT description?
+>=20
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index ecbcf725fba2..6e28754705b9 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -146,12 +146,6 @@ scm: scm {
- 		};
- 	};
- 
--	tcsr_mutex: hwlock {
--		compatible = "qcom,tcsr-mutex";
--		syscon = <&tcsr_mutex_regs 0 0x1000>;
--		#hwlock-cells = <1>;
--	};
--
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -569,9 +563,10 @@ rpmhpd_opp_turbo_l1: opp10 {
- 			};
- 		};
- 
--		tcsr_mutex_regs: syscon@1f40000 {
--			compatible = "syscon";
-+		tcsr_mutex: hwlock@1f40000 {
-+			compatible = "qcom,tcsr-mutex";
- 			reg = <0x0 0x01f40000 0x0 0x40000>;
-+			#hwlock-cells = <1>;
- 		};
- 
- 		slpi: remoteproc@5c00000 {
--- 
-2.26.2
-
+Sorry I misread the patch. This isn't a parent name description so .name
+is correct here.
