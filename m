@@ -2,125 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EC441D21C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 00:13:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFCFC1D2253
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 00:48:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730813AbgEMWNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 18:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52820 "EHLO
+        id S1731601AbgEMWsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 18:48:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730790AbgEMWNq (ORCPT
+        by vger.kernel.org with ESMTP id S1731622AbgEMWsO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 18:13:46 -0400
+        Wed, 13 May 2020 18:48:14 -0400
 Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA35C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 15:13:45 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id mq3so11694302pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 15:13:45 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18739C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 15:48:14 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id k7so6724893pjs.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 15:48:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=e6RXpgluKwXPp3KRCdiHCqL2rdUeYjnysCP7SSKxBOM=;
-        b=LGDhXSd0LFpWl0o4hxng7L0J/q4lMorH0G9DAzNLEG6GsWcHLUtoAH9bXfmTzMvKRa
-         MisrArcyuTh1Bsi5exkoTVN7yPz3JxQZ7ZmU2nWMe1VMvRBilgdpvx+CZ0zvuHMO0Ff5
-         NFroCGOcnA/3y1zhVVW/FjOG2/QonmXAuEaIRFDjjofin1chGunmrkyLBuz1/KgOVJmP
-         G0JVlbFeyvOhfPfxuEHvNmMd0b7BfVwAlbHyBl2Rqfh8LlvooW/O/KR4lZVNFGOhamDm
-         MSrZef83Fqmuwe5ckDlVz19PjhbP1SGvTVLwScfx/1jq9n4OQ4m0pp94Yi+2AxVEI2sa
-         U/xA==
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=H+AfxUaMnhwNQoaeoLBhnhy670cA4ggBoeJoS1eRurw=;
+        b=JGD7HQd4cFtwAgY6blAgbXdG6kcGmAAG1VWu80Jyf2foqmg/CPidgYdJYYyspMDrP4
+         /EVgNm2nMhqtWEvVGt5m0mjK4HAef18Jhth28pHYJDCID+v52/KeMHGrvvt4kUngLxIi
+         v69i+/VoYcfURFZw1kflWQB7jS9mJAyZnR3NM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=e6RXpgluKwXPp3KRCdiHCqL2rdUeYjnysCP7SSKxBOM=;
-        b=YD7B0HNqRr3dGUgQLxaHS68Hqwi833vycEaV86Z7EpjCClXshiPwsdPl3l9VCXL1/u
-         h9TSyiuVL3KwNpe3fFUbWr+mFzrjZiLxXYKBLdrrYnh0QRSgVBSD9u9hwU2pqmlIXVUb
-         0bEnckJd8H6tlfncIo0RsRLCBw5Z5sH8dRzs6C4sn1CgxG08N7ZVKpEuA5Schw6fnhlm
-         E3kH0iLHOSEownKtYY1UaFE1HE96wUv9CCCzxUFbmVDgwNOOBPIGmJ/0XsA2MARFQ4BV
-         H2HADXuNIqL7tDFhDYbviCHF/YMF4bB6AxhE5WOuNE7DQFCcrIesh8SW1T1IdUdDAYOT
-         VXDA==
-X-Gm-Message-State: AOAM532lP0RBW5HZWlyOiY/v4VJGadvykgxjBUewd27D1MPcOfkcfBRo
-        nBNjRMqufWA+4XFK3h7/M0/XBw==
-X-Google-Smtp-Source: ABdhPJyplZyfECUA4JUBp4ymP477fQ0nX0LINWjlkQLJAuqkagunu2xqRi+StBi4BXbgxBkDbzGzgg==
-X-Received: by 2002:a17:902:fe8d:: with SMTP id x13mr1277189plm.198.1589408025407;
-        Wed, 13 May 2020 15:13:45 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id y24sm456127pfn.211.2020.05.13.15.13.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 15:13:44 -0700 (PDT)
-Date:   Wed, 13 May 2020 16:13:42 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arun Kumar Neelakantam <aneela@codeaurora.org>
-Cc:     ohad@wizery.com, bjorn.andersson@linaro.org, clew@codeaurora.org,
-        sricharan@codeaurora.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH V5 5/5] rpmsg: glink: unregister rpmsg device during
- endpoint destroy
-Message-ID: <20200513221342.GC8328@xps15>
-References: <1589346606-15046-1-git-send-email-aneela@codeaurora.org>
- <1589346606-15046-6-git-send-email-aneela@codeaurora.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=H+AfxUaMnhwNQoaeoLBhnhy670cA4ggBoeJoS1eRurw=;
+        b=OAswhEVbt06Vn7qrqyPgqVRD763ERwOZpj39EN1T8aMtM+Yw/SqIpBx7dQSlXKVN+H
+         9GBj9Ha8YI+bT6B7UbZ6VI64ngn9feYT5fBj+ai7Smt1GYBKaOzA1m06N1UtAl+rIYb4
+         5cD1t+3FD5IfYb5K7T7wIHF65c5fuyqrFRkoEqWupqeZhd9txZmctwA6nICb50lX4YR6
+         h+GwrkB7DReALdmSSUDW9eb7bKq/8PSU/FtT6uhSHlRtirH+sTbD2wCNziIH8IvU+TcO
+         6K/DtTnu8Lkfcz7vZDaaoFQyZBHvm6LvwsOKLD1Zb2m9t2F+e/JuJqHZQUPUnHynmCA5
+         T+KQ==
+X-Gm-Message-State: AOAM532l9rosV4feNUuavwqBfmTRETGk3vXGH/TKuucDUgnN/zMeCe7Q
+        OC0PPy0B+pGU3JbYqtxOjmq+bg==
+X-Google-Smtp-Source: ABdhPJybl/6AytHcx4YvEW8rJAb5cTYd9TKvgTzZxRiFPIg0ucMe2oMrD9kjvJc/qEKo/373gAT/Yg==
+X-Received: by 2002:a17:902:465:: with SMTP id 92mr1264035ple.227.1589410093370;
+        Wed, 13 May 2020 15:48:13 -0700 (PDT)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id f64sm16806846pjd.5.2020.05.13.15.48.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2020 15:48:12 -0700 (PDT)
+Subject: Re: [PATCH v5 1/7] fs: introduce kernel_pread_file* support
+To:     Mimi Zohar <zohar@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        linux-security-module <linux-security-module@vger.kernel.org>,
+        linux-integrity <linux-integrity@vger.kernel.org>
+References: <20200508002739.19360-1-scott.branden@broadcom.com>
+ <20200508002739.19360-2-scott.branden@broadcom.com>
+ <1589395153.5098.158.camel@kernel.org>
+ <0e6b5f65-8c61-b02e-7d35-b4ae52aebcf3@broadcom.com>
+ <1589396593.5098.166.camel@kernel.org>
+ <e1b92047-7003-0615-3d58-1388ec27c78a@broadcom.com>
+ <1589398747.5098.178.camel@kernel.org>
+ <a228ae0f-d551-e0e8-446e-5ae63462c520@broadcom.com>
+ <1589404814.5098.185.camel@kernel.org>
+ <20200513212847.GT11244@42.do-not-panic.com>
+ <1589407924.5098.208.camel@kernel.org>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <f8de785c-60df-3fec-c2c6-b1dd2c77db17@broadcom.com>
+Date:   Wed, 13 May 2020 15:48:08 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1589346606-15046-6-git-send-email-aneela@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1589407924.5098.208.camel@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 10:40:06AM +0530, Arun Kumar Neelakantam wrote:
-> Rpmsg device unregister is not happening if channel close is triggered
-> from local side and causing re-registration of device failures.
-> 
-> Unregister rpmsg device for local close in endpoint destroy path.
-> 
-> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
-> ---
->  drivers/rpmsg/qcom_glink_native.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 0e8a28c0..fc8ef66 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1207,6 +1207,7 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
->  {
->  	struct glink_channel *channel = to_glink_channel(ept);
->  	struct qcom_glink *glink = channel->glink;
-> +	struct rpmsg_channel_info chinfo;
->  	unsigned long flags;
->  
->  	spin_lock_irqsave(&channel->recv_lock, flags);
-> @@ -1214,6 +1215,13 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
->  	spin_unlock_irqrestore(&channel->recv_lock, flags);
->  
->  	/* Decouple the potential rpdev from the channel */
-> +	if (channel->rpdev) {
 
-If we proceed this way no other channel can have an rpdev.  I would hope that
-unregistration of rpdev would be more symetrical to what is done in patch 03.
 
-Thanks,
-Mathieu
+On 2020-05-13 3:12 p.m., Mimi Zohar wrote:
+> On Wed, 2020-05-13 at 21:28 +0000, Luis Chamberlain wrote:
+>> On Wed, May 13, 2020 at 05:20:14PM -0400, Mimi Zohar wrote:
+>>> On Wed, 2020-05-13 at 12:41 -0700, Scott Branden wrote:
+>>>> On 2020-05-13 12:39 p.m., Mimi Zohar wrote:
+>>>>> On Wed, 2020-05-13 at 12:18 -0700, Scott Branden wrote:
+>>>>>> On 2020-05-13 12:03 p.m., Mimi Zohar wrote:
+>>>>>>> On Wed, 2020-05-13 at 11:53 -0700, Scott Branden wrote:
+>>>>>> Even if the kernel successfully verified the firmware file signature it
+>>>>>> would just be wasting its time.  The kernel in these use cases is not always
+>>>>>> trusted.  The device needs to authenticate the firmware image itself.
+>>>>> There are also environments where the kernel is trusted and limits the
+>>>>> firmware being provided to the device to one which they signed.
+>>>>>
+>>>>>>> The device firmware is being downloaded piecemeal from somewhere and
+>>>>>>> won't be measured?
+>>>>>> It doesn't need to be measured for current driver needs.
+>>>>> Sure the device doesn't need the kernel measuring the firmware, but
+>>>>> hardened environments do measure firmware.
+>>>>>
+>>>>>> If someone has such need the infrastructure could be added to the kernel
+>>>>>> at a later date.  Existing functionality is not broken in any way by
+>>>>>> this patch series.
+>>>>> Wow!  You're saying that your patch set takes precedence over the
+>>>>> existing expectations and can break them.
+>>>> Huh? I said existing functionality is NOT broken by this patch series.
+>>> Assuming a system is configured to measure and appraise firmware
+>>> (rules below), with this change the firmware file will not be properly
+>>> measured and will fail signature verification.
+So no existing functionality has been broken.
+>>>
+>>> Sample IMA policy rules:
+>>> measure func=FIRMWARE_CHECK
+>>> appraise func=FIRMWARE_CHECK appraise_type=imasig
+>> Would a pre and post lsm hook for pread do it?
+> IMA currently measures and verifies the firmware file signature on the
+> post hook.  The file is read once into a buffer.  With this change,
+> IMA would need to be on the pre hook, to read the entire file,
+> calculating the file hash and verifying the file signature.  Basically
+> the firmware would be read once for IMA and again for the device.
+The entire file may not fit into available memory to measure and 
+verify.  Hence the reason for a partial read.
 
-> +		strncpy(chinfo.name, channel->name, sizeof(chinfo.name));
-> +		chinfo.src = RPMSG_ADDR_ANY;
-> +		chinfo.dst = RPMSG_ADDR_ANY;
-> +
-> +		rpmsg_unregister_device(glink->dev, &chinfo);
-> +	}
->  	channel->rpdev = NULL;
->  
->  	qcom_glink_send_close_req(glink, channel);
-> @@ -1477,6 +1485,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
->  
->  		rpmsg_unregister_device(glink->dev, &chinfo);
->  	}
-> +	channel->rpdev = NULL;
->  
->  	qcom_glink_send_close_ack(glink, channel->rcid);
->  
-> -- 
-> 2.7.4
+Is there some way we could add a flag when calling the 
+request_firmware_into_buf to indicate it is ok that the data requested 
+does not need to be measured?
+> Mimi
+
