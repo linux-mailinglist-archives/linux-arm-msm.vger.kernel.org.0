@@ -2,343 +2,357 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC8B91D1DB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:41:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A99481D1DFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 20:50:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389579AbgEMSl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 14:41:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47552 "EHLO
+        id S2390277AbgEMSue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 14:50:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2387492AbgEMSl2 (ORCPT
+        by vger.kernel.org with ESMTP id S2387462AbgEMSue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 14:41:28 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 628D1C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:41:28 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id a5so11479427pjh.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 11:41:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qqS14t8H02Fv7hWfyEPJzlH+UmqqsaPVREz98ODrRok=;
-        b=jKjBPPN/1yanI61VjiiDpMMNFJYZYR/is1pBkEn2TDprQrrosPQLqsJWfcpsYTvJ1u
-         CQ+6l0V7ju76j/3hgBe7nRgyp3Kh+Yh35T4oFcSwznBAhfEEP/nuDVxdwkfCWQQb3N5U
-         tY6+1NHYvviIc82Qd0YBO4M86Vxo5J6d5Mvcc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qqS14t8H02Fv7hWfyEPJzlH+UmqqsaPVREz98ODrRok=;
-        b=XwVoFx2lDDHxuEFUPXO+F41lOs7b0TcTl/rjE8C0d1M32v2J2jgUwA/2lL+69dyoOy
-         XEkM6VrcKI85kOanLAVv1FvtDI6UZZOCykc5rPTHH5M9XKB5aqlnL37jC2i837NIC8iu
-         U1OTU/qZrzcJrqNHclBVHbQU15mgtURbEZdVUCTUU0TGGZhIK6mf0JU5w6qnNhGxASJO
-         6RF9iHwrTiV2LxDv+wuhpoptUnAtPK4WKOUrYlBAWEmGvfSp2VGNeAGRn3h2CqS9UYuM
-         dLF6WDk3690N90A/FdQWt+uF0F+GFYMTh+9DxNcozOXZkc80GN76sF8wbuEx2aO26aVc
-         TYEw==
-X-Gm-Message-State: AGi0PuZR53rng9J/zm4KAqMxnTNfqV1we6uBMTSS2ebIKk0GsfaGQ/mj
-        9DECTjlG2FhipH+Y/ZbV59n0ag==
-X-Google-Smtp-Source: APiQypLdRE6hiXyRqJsD92hrWHzCEo4WW6QuTHMdTZVeKho3+AczlTUSZwXnkGrgT+Ml1FHUepYzLA==
-X-Received: by 2002:a17:90a:d504:: with SMTP id t4mr35934036pju.123.1589395287805;
-        Wed, 13 May 2020 11:41:27 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id d124sm225558pfa.98.2020.05.13.11.41.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 May 2020 11:41:27 -0700 (PDT)
-Date:   Wed, 13 May 2020 11:41:26 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org
-Subject: Re: [PATCH v5 5/6] media: venus: core: Add support for opp
- tables/perf voting
-Message-ID: <20200513184126.GM4525@google.com>
-References: <1589368382-19607-1-git-send-email-rnayak@codeaurora.org>
- <1589368382-19607-6-git-send-email-rnayak@codeaurora.org>
+        Wed, 13 May 2020 14:50:34 -0400
+Received: from mxa2.seznam.cz (mxa2.seznam.cz [IPv6:2a02:598:2::90])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2A4C061A0C;
+        Wed, 13 May 2020 11:50:33 -0700 (PDT)
+Received: from email.seznam.cz
+        by email-smtpc25a.ng.seznam.cz (email-smtpc25a.ng.seznam.cz [10.23.18.34])
+        id 5989d7e10287838858201bbf;
+        Wed, 13 May 2020 20:50:21 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
+        t=1589395821; bh=7OSh5aIXDq9/eo++d56tCZG9ZYJX4E/V+wxJv3MwvRI=;
+        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+         Content-Transfer-Encoding;
+        b=ewxniBxkw2CEd+RHE9YBPBcxcdsLae2+rx5djacSBGHPH17PuJkS0yDZcOqVN7R3C
+         de5eVtqTAzqzOUd/8LKS8IvzrBFBgXkzsXYzgS80tg+Pddkh2m8Hbr3gDz0Jg6psTW
+         QbnSuNBPkG5mvycaBK30QwL5/8yZ4+jPcGTPvcyc=
+Received: from localhost.localdomain (212.69.128.228 [212.69.128.228])
+        by email-relay21.ng.seznam.cz (Seznam SMTPD 1.3.114) with ESMTP;
+        Wed, 13 May 2020 20:50:17 +0200 (CEST)  
+From:   michael.srba@seznam.cz
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Michael Srba <michael.srba@seznam.cz>
+Subject: [PATCH] arm64: dts: qcom: msm8916: Disable coresight by default
+Date:   Wed, 13 May 2020 20:47:35 +0200
+Message-Id: <20200513184735.30104-1-michael.srba@seznam.cz>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1589368382-19607-6-git-send-email-rnayak@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 04:43:01PM +0530, Rajendra Nayak wrote:
-> Add support to add OPP tables and perf voting on the OPP powerdomain.
-> This is needed so venus votes on the corresponding performance state
-> for the OPP powerdomain along with setting the core clock rate.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> Cc: linux-media@vger.kernel.org
-> ---
-> Changes in v5: Fixed up error handling in probe and vcodec_domains_get()
-> Bindings update to add optional PD https://lore.kernel.org/patchwork/patch/1241077/
-> 
->  drivers/media/platform/qcom/venus/core.c       | 45 +++++++++++++++++----
->  drivers/media/platform/qcom/venus/core.h       |  5 +++
->  drivers/media/platform/qcom/venus/pm_helpers.c | 54 ++++++++++++++++++++++++--
->  3 files changed, 93 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 194b10b9..2a8ff08 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -12,6 +12,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/slab.h>
->  #include <linux/types.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <media/videobuf2-v4l2.h>
->  #include <media/v4l2-mem2mem.h>
-> @@ -214,21 +215,37 @@ static int venus_probe(struct platform_device *pdev)
->  	if (!core->pm_ops)
->  		return -ENODEV;
->  
-> +	core->opp_table = dev_pm_opp_set_clkname(dev, "core");
-> +	if (IS_ERR(core->opp_table))
-> +		return PTR_ERR(core->opp_table);
-> +
-> +	if (core->res->opp_pmdomain) {
-> +		ret = dev_pm_opp_of_add_table(dev);
-> +		if (!ret) {
-> +			core->has_opp_table = true;
-> +		} else if (ret != -ENODEV) {
-> +			dev_err(dev, "invalid OPP table in device tree\n");
-> +			return ret;
-> +		}
-> +	}
-> +
->  	if (core->pm_ops->core_get) {
->  		ret = core->pm_ops->core_get(dev);
->  		if (ret)
-> -			return ret;
-> +			goto err_opp_cleanup;
->  	}
->  
->  	ret = dma_set_mask_and_coherent(dev, core->res->dma_mask);
->  	if (ret)
-> -		return ret;
-> +		goto err_opp_cleanup;
->  
->  	if (!dev->dma_parms) {
->  		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
->  					      GFP_KERNEL);
-> -		if (!dev->dma_parms)
-> -			return -ENOMEM;
-> +		if (!dev->dma_parms) {
-> +			ret = -ENOMEM;
-> +			goto err_opp_cleanup;
-> +		}
->  	}
->  	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
->  
-> @@ -240,15 +257,15 @@ static int venus_probe(struct platform_device *pdev)
->  					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
->  					"venus", core);
->  	if (ret)
-> -		return ret;
-> +		goto err_opp_cleanup;
->  
->  	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
->  	if (ret)
-> -		return ret;
-> +		goto err_opp_cleanup;
->  
->  	ret = hfi_create(core, &venus_core_ops);
->  	if (ret)
-> -		return ret;
-> +		goto err_opp_cleanup;
->  
->  	pm_runtime_enable(dev);
->  
-> @@ -304,6 +321,10 @@ static int venus_probe(struct platform_device *pdev)
->  	pm_runtime_set_suspended(dev);
->  	pm_runtime_disable(dev);
->  	hfi_destroy(core);
-> +err_opp_cleanup:
-> +	if (core->has_opp_table)
-> +		dev_pm_opp_of_remove_table(dev);
-> +	dev_pm_opp_put_clkname(core->opp_table);
->  	return ret;
->  }
->  
-> @@ -329,6 +350,10 @@ static int venus_remove(struct platform_device *pdev)
->  	pm_runtime_put_sync(dev);
->  	pm_runtime_disable(dev);
->  
-> +	if (core->has_opp_table)
-> +		dev_pm_opp_of_remove_table(dev);
-> +	dev_pm_opp_put_clkname(core->opp_table);
-> +
->  	if (pm_ops->core_put)
->  		pm_ops->core_put(dev);
->  
-> @@ -350,6 +375,10 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
->  	if (ret)
->  		return ret;
->  
-> +	/* Drop the performance state vote */
-> +	if (core->opp_pmdomain)
-> +		dev_pm_opp_set_rate(dev, 0);
-> +
->  	if (pm_ops->core_power)
->  		ret = pm_ops->core_power(dev, POWER_OFF);
->  
-> @@ -511,6 +540,7 @@ static const struct venus_resources sdm845_res_v2 = {
->  	.vcodec_clks_num = 2,
->  	.vcodec_pmdomains = { "venus", "vcodec0", "vcodec1" },
->  	.vcodec_pmdomains_num = 3,
-> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
->  	.vcodec_num = 2,
->  	.max_load = 3110400,	/* 4096x2160@90 */
->  	.hfi_version = HFI_VERSION_4XX,
-> @@ -556,6 +586,7 @@ static const struct venus_resources sc7180_res = {
->  	.vcodec_clks_num = 2,
->  	.vcodec_pmdomains = { "venus", "vcodec0" },
->  	.vcodec_pmdomains_num = 2,
-> +	.opp_pmdomain = (const char *[]) { "opp-pd", NULL },
->  	.vcodec_num = 1,
->  	.hfi_version = HFI_VERSION_4XX,
->  	.vmem_id = VIDC_RESOURCE_NONE,
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index bd3ac6a..cc1d511 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -62,6 +62,7 @@ struct venus_resources {
->  	unsigned int vcodec_clks_num;
->  	const char * const vcodec_pmdomains[VIDC_PMDOMAINS_NUM_MAX];
->  	unsigned int vcodec_pmdomains_num;
-> +	const char **opp_pmdomain;
->  	unsigned int vcodec_num;
->  	enum hfi_version hfi_version;
->  	u32 max_load;
-> @@ -144,8 +145,12 @@ struct venus_core {
->  	struct clk *vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
->  	struct icc_path *video_path;
->  	struct icc_path *cpucfg_path;
-> +	struct opp_table *opp_table;
-> +	bool has_opp_table;
->  	struct device_link *pd_dl_venus;
->  	struct device *pmdomains[VIDC_PMDOMAINS_NUM_MAX];
-> +	struct device_link *opp_dl_venus;
-> +	struct device *opp_pmdomain;
->  	struct video_device *vdev_dec;
->  	struct video_device *vdev_enc;
->  	struct v4l2_device v4l2_dev;
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index abf9315..bfe7421 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -9,6 +9,7 @@
->  #include <linux/iopoll.h>
->  #include <linux/kernel.h>
->  #include <linux/pm_domain.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/types.h>
->  #include <media/v4l2-mem2mem.h>
-> @@ -66,10 +67,9 @@ static void core_clks_disable(struct venus_core *core)
->  
->  static int core_clks_set_rate(struct venus_core *core, unsigned long freq)
->  {
-> -	struct clk *clk = core->clks[0];
->  	int ret;
->  
-> -	ret = clk_set_rate(clk, freq);
-> +	ret = dev_pm_opp_set_rate(core->dev, freq);
->  	if (ret)
->  		return ret;
->  
-> @@ -740,13 +740,16 @@ static int venc_power_v4(struct device *dev, int on)
->  
->  static int vcodec_domains_get(struct device *dev)
->  {
-> +	int ret;
-> +	struct opp_table *opp_table;
-> +	struct device **opp_virt_dev;
->  	struct venus_core *core = dev_get_drvdata(dev);
->  	const struct venus_resources *res = core->res;
->  	struct device *pd;
->  	unsigned int i;
->  
->  	if (!res->vcodec_pmdomains_num)
-> -		return -ENODEV;
-> +		goto skip_pmdomains;
->  
->  	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
->  		pd = dev_pm_domain_attach_by_name(dev,
-> @@ -763,7 +766,41 @@ static int vcodec_domains_get(struct device *dev)
->  	if (!core->pd_dl_venus)
->  		return -ENODEV;
->  
-> +skip_pmdomains:
-> +	if (!core->has_opp_table)
-> +		return 0;
-> +
-> +	/* Attach the power domain for setting performance state */
-> +	opp_table = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
-> +	if (IS_ERR(opp_table)) {
-> +		ret = PTR_ERR(opp_table);
-> +		goto opp_attach_err;
-> +	}
-> +
-> +	core->opp_pmdomain = *opp_virt_dev;
-> +	core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
-> +					     DL_FLAG_RPM_ACTIVE |
-> +					     DL_FLAG_PM_RUNTIME |
-> +					     DL_FLAG_STATELESS);
-> +	if (!core->opp_dl_venus) {
-> +		ret = -ENODEV;
-> +		goto opp_dl_add_err;
-> +	}
-> +
->  	return 0;
-> +
-> +opp_dl_add_err:
-> +	dev_pm_domain_detach(core->opp_pmdomain, true);
-> +opp_attach_err:
-> +	if (core->pd_dl_venus) {
-> +		device_link_del(core->pd_dl_venus);
-> +		for (i = 0; i < res->vcodec_pmdomains_num; i++) {
-> +			if (IS_ERR_OR_NULL(core->pmdomains[i]))
-> +				continue;
-> +			dev_pm_domain_detach(core->pmdomains[i], true);
-> +		}
-> +	}
-> +	return ret;
->  }
->  
->  static void vcodec_domains_put(struct device *dev)
-> @@ -773,7 +810,7 @@ static void vcodec_domains_put(struct device *dev)
->  	unsigned int i;
->  
->  	if (!res->vcodec_pmdomains_num)
-> -		return;
-> +		goto skip_pmdomains;
->  
->  	if (core->pd_dl_venus)
->  		device_link_del(core->pd_dl_venus);
-> @@ -783,6 +820,15 @@ static void vcodec_domains_put(struct device *dev)
->  			continue;
->  		dev_pm_domain_detach(core->pmdomains[i], true);
->  	}
-> +
-> +skip_pmdomains:
-> +	if (!res->opp_pmdomain)
-> +		return;
-> +
-> +	if (core->opp_dl_venus)
-> +		device_link_del(core->opp_dl_venus);
-> +
-> +	dev_pm_domain_detach(core->opp_pmdomain, true);
->  }
->  
->  static int core_get_v4(struct device *dev)
+From: Michael Srba <michael.srba@seznam.cz>
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+On some msm8916 devices, attempts at initializing coresight cause the boot to
+fail. This was fixed by disabling the coresight-related nodes in the board dts
+files. However, a cleaner approach was chosen for fixing the same issue on
+msm8998: disabling coresight by default, and enabling it in board dts files
+where desired.
+
+This patch implements the same solution for msm8916, removes now redundant 
+overwrites in board specific dts files and and enables coresight in db410c's
+board dts in order to keep the current behavior.
+
+Fixes: b1fcc5702a41 ("arm64: dts: qcom: msm8916: Add CTI options")
+Signed-off-by: Michael Srba <michael.srba@seznam.cz>
+
+---
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi     | 21 +++++++++++
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts | 23 ------------
+ .../qcom/msm8916-samsung-a2015-common.dtsi    | 23 ------------
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         | 35 +++++++++++++++++++
+ 4 files changed, 56 insertions(+), 46 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+index 14982762088d..07c150b0ed54 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+@@ -519,6 +519,27 @@ mpps@a000 {
+ 		wcnss@a21b000 {
+ 			status = "okay";
+ 		};
++
++		tpiu@820000 { status = "okay"; };
++		funnel@821000 { status = "okay"; };
++		replicator@824000 { status = "okay"; };
++		etf@825000 { status = "okay"; };
++		etr@826000 { status = "okay"; };
++		funnel@841000 { status = "okay"; };
++		debug@850000 { status = "okay"; };
++		debug@852000 { status = "okay"; };
++		debug@854000 { status = "okay"; };
++		debug@856000 { status = "okay"; };
++		etm@85c000 { status = "okay"; };
++		etm@85d000 { status = "okay"; };
++		etm@85e000 { status = "okay"; };
++		etm@85f000 { status = "okay"; };
++		cti@810000 { status = "okay"; };
++		cti@811000 { status = "okay"; };
++		cti@858000 { status = "okay"; };
++		cti@859000 { status = "okay"; };
++		cti@85a000 { status = "okay"; };
++		cti@85b000 { status = "okay"; };
+ 	};
+ 
+ 	usb2513 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+index d1ccb9472c8b..691eb1a87bc9 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+@@ -82,29 +82,6 @@ phy {
+ 		wcnss@a21b000 {
+ 			status = "okay";
+ 		};
+-
+-		/*
+-		 * Attempting to enable these devices causes a "synchronous
+-		 * external abort". Suspected cause is that the debug power
+-		 * domain is not enabled by default on this device.
+-		 * Disable these devices for now to avoid the crash.
+-		 *
+-		 * See: https://lore.kernel.org/linux-arm-msm/20190618202623.GA53651@gerhold.net/
+-		 */
+-		tpiu@820000 { status = "disabled"; };
+-		funnel@821000 { status = "disabled"; };
+-		replicator@824000 { status = "disabled"; };
+-		etf@825000 { status = "disabled"; };
+-		etr@826000 { status = "disabled"; };
+-		funnel@841000 { status = "disabled"; };
+-		debug@850000 { status = "disabled"; };
+-		debug@852000 { status = "disabled"; };
+-		debug@854000 { status = "disabled"; };
+-		debug@856000 { status = "disabled"; };
+-		etm@85c000 { status = "disabled"; };
+-		etm@85d000 { status = "disabled"; };
+-		etm@85e000 { status = "disabled"; };
+-		etm@85f000 { status = "disabled"; };
+ 	};
+ 
+ 	// FIXME: Use extcon device provided by charger driver when available
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+index 43c5e0f882f1..af812f76e8be 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+@@ -75,29 +75,6 @@ phy {
+ 		wcnss@a21b000 {
+ 			status = "okay";
+ 		};
+-
+-		/*
+-		 * Attempting to enable these devices causes a "synchronous
+-		 * external abort". Suspected cause is that the debug power
+-		 * domain is not enabled by default on this device.
+-		 * Disable these devices for now to avoid the crash.
+-		 *
+-		 * See: https://lore.kernel.org/linux-arm-msm/20190618202623.GA53651@gerhold.net/
+-		 */
+-		tpiu@820000 { status = "disabled"; };
+-		funnel@821000 { status = "disabled"; };
+-		replicator@824000 { status = "disabled"; };
+-		etf@825000 { status = "disabled"; };
+-		etr@826000 { status = "disabled"; };
+-		funnel@841000 { status = "disabled"; };
+-		debug@850000 { status = "disabled"; };
+-		debug@852000 { status = "disabled"; };
+-		debug@854000 { status = "disabled"; };
+-		debug@856000 { status = "disabled"; };
+-		etm@85c000 { status = "disabled"; };
+-		etm@85d000 { status = "disabled"; };
+-		etm@85e000 { status = "disabled"; };
+-		etm@85f000 { status = "disabled"; };
+ 	};
+ 
+ 	gpio-keys {
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 8b429954ea29..5cf117e247df 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1228,6 +1228,8 @@ tpiu@820000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
+ 
++			status = "disabled";
++
+ 			in-ports {
+ 				port {
+ 					tpiu_in: endpoint {
+@@ -1244,6 +1246,8 @@ funnel@821000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
+ 
++			status = "disabled";
++
+ 			in-ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -1283,6 +1287,8 @@ replicator@824000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
+ 
++			status = "disabled";
++
+ 			out-ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -1317,6 +1323,8 @@ etf@825000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
+ 
++			status = "disabled";
++
+ 			in-ports {
+ 				port {
+ 					etf_in: endpoint {
+@@ -1341,6 +1349,8 @@ etr@826000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
+ 
++			status = "disabled";
++
+ 			in-ports {
+ 				port {
+ 					etr_in: endpoint {
+@@ -1357,6 +1367,8 @@ funnel@841000 {	/* APSS funnel only 4 inputs are used */
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
+ 
++			status = "disabled";
++
+ 			in-ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -1402,6 +1414,7 @@ debug@850000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
+ 			clock-names = "apb_pclk";
+ 			cpu = <&CPU0>;
++			status = "disabled";
+ 		};
+ 
+ 		debug@852000 {
+@@ -1410,6 +1423,7 @@ debug@852000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
+ 			clock-names = "apb_pclk";
+ 			cpu = <&CPU1>;
++			status = "disabled";
+ 		};
+ 
+ 		debug@854000 {
+@@ -1418,6 +1432,7 @@ debug@854000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
+ 			clock-names = "apb_pclk";
+ 			cpu = <&CPU2>;
++			status = "disabled";
+ 		};
+ 
+ 		debug@856000 {
+@@ -1426,6 +1441,7 @@ debug@856000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
+ 			clock-names = "apb_pclk";
+ 			cpu = <&CPU3>;
++			status = "disabled";
+ 		};
+ 
+ 		etm0: etm@85c000 {
+@@ -1438,6 +1454,8 @@ etm0: etm@85c000 {
+ 
+ 			cpu = <&CPU0>;
+ 
++			status = "disabled";
++
+ 			out-ports {
+ 				port {
+ 					etm0_out: endpoint {
+@@ -1457,6 +1475,8 @@ etm1: etm@85d000 {
+ 
+ 			cpu = <&CPU1>;
+ 
++			status = "disabled";
++
+ 			out-ports {
+ 				port {
+ 					etm1_out: endpoint {
+@@ -1476,6 +1496,8 @@ etm2: etm@85e000 {
+ 
+ 			cpu = <&CPU2>;
+ 
++			status = "disabled";
++
+ 			out-ports {
+ 				port {
+ 					etm2_out: endpoint {
+@@ -1495,6 +1517,8 @@ etm3: etm@85f000 {
+ 
+ 			cpu = <&CPU3>;
+ 
++			status = "disabled";
++
+ 			out-ports {
+ 				port {
+ 					etm3_out: endpoint {
+@@ -1512,6 +1536,8 @@ cti@810000 {
+ 
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
+ 			clock-names = "apb_pclk";
++
++			status = "disabled";
+ 		};
+ 
+ 		/* CTI 1 - TPIU connections */
+@@ -1521,6 +1547,8 @@ cti@811000 {
+ 
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
+ 			clock-names = "apb_pclk";
++
++			status = "disabled";
+ 		};
+ 
+ 		/* CTIs 2-11 - no information - not instantiated */
+@@ -1538,6 +1566,7 @@ cti@858000 {
+ 			cpu = <&CPU0>;
+ 			arm,cs-dev-assoc = <&etm0>;
+ 
++			status = "disabled";
+ 		};
+ 
+ 		/* CTI - CPU-1 */
+@@ -1551,6 +1580,8 @@ cti@859000 {
+ 
+ 			cpu = <&CPU1>;
+ 			arm,cs-dev-assoc = <&etm1>;
++
++			status = "disabled";
+ 		};
+ 
+ 		/* CTI - CPU-2 */
+@@ -1564,6 +1595,8 @@ cti@85a000 {
+ 
+ 			cpu = <&CPU2>;
+ 			arm,cs-dev-assoc = <&etm2>;
++
++			status = "disabled";
+ 		};
+ 
+ 		/* CTI - CPU-3 */
+@@ -1577,6 +1610,8 @@ cti@85b000 {
+ 
+ 			cpu = <&CPU3>;
+ 			arm,cs-dev-assoc = <&etm3>;
++
++			status = "disabled";
+ 		};
+ 
+ 
+-- 
+2.24.0
+
