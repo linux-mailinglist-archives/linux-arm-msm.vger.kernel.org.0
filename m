@@ -2,117 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE62B1D1278
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 14:16:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57D9A1D12B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2020 14:30:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732665AbgEMMQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 May 2020 08:16:42 -0400
-Received: from mga01.intel.com ([192.55.52.88]:56785 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731675AbgEMMQm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 May 2020 08:16:42 -0400
-IronPort-SDR: fufWq6ANfXbdsyo23WG4YKPeBc+JR1vCkXaj7TK4pts1ItDRhYlgSvxuLxqddBj9cqkpz+koQR
- TWDMKgRIjhZg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2020 05:16:41 -0700
-IronPort-SDR: vxpSKFUq4un6BaMkWuW/HPptZRc+5qMKMNoe5QE5bKIqfs3dY5oA/+JG6itCGxg+lbhl9Mz110
- 1my/3CM+CcQA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,387,1583222400"; 
-   d="scan'208";a="298348570"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.170]) ([10.237.72.170])
-  by orsmga008.jf.intel.com with ESMTP; 13 May 2020 05:16:38 -0700
-Subject: Re: [PATCH v13 0/5] usb: xhci: Add support for Renesas USB
- controllers
-To:     Vinod Koul <vkoul@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        =?UTF-8?Q?Andreas_B=c3=b6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200506060025.1535960-1-vkoul@kernel.org>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=mathias.nyman@linux.intel.com; prefer-encrypt=mutual; keydata=
- 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 fiD/
-Message-ID: <edb2df23-6193-fdb1-d9f9-ffc33a40c05e@linux.intel.com>
-Date:   Wed, 13 May 2020 15:19:29 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1730062AbgEMMah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 May 2020 08:30:37 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39872 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729975AbgEMMag (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 May 2020 08:30:36 -0400
+Received: by mail-pf1-f196.google.com with SMTP id b190so2184148pfg.6;
+        Wed, 13 May 2020 05:30:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=s6UKwXNDP9/u6KtJrcoesDc1tFaVGyXaG/2QuDgOJR0=;
+        b=co8jHKFL+Mb5LtsFAWfz0YLxscLUWImEz3JVJoLLy+1eHoHJIi4hF4uTrWG9HJgDTn
+         ZToyMAiUq6QvCHrPeAWZ96cCXKk1eFQ/02XJMBb7qo7wKKIgXWQo2zBe963txR4Yxatw
+         fM86kAWoRt5Ax8A9Dc/mB9pWO/Qe3NT1tPnlX35HxDVRTrHx5lExXQDfoccQ5ZxkuoZY
+         L0qzOJl8vPHZbVbzNRstQuNAVB0hGC95jvV3g8vhhEjLTra9wm35eq6z/GnTFZvkgrf8
+         f1G3PmOqwXgW8xnMq6/+jhQpCy2zei1NulWChf0s0X/mTzSyPXjRWqB5rUS/Apjv3VRo
+         5mCg==
+X-Gm-Message-State: AGi0Pub+uZ7owmH5WLkKMnUpFV8w076KIJ0R0rdMsPp6eDZs7JyarhB+
+        PQuDbcVwAUaOq9i1PRja/FE=
+X-Google-Smtp-Source: APiQypJgfhEo9WP6IGCoJH2PF3oIVLchRnTrr8jLp5QQMzfIh8kliCILIbT2GCnajLPHNpJWyqBd/w==
+X-Received: by 2002:a63:f809:: with SMTP id n9mr24815453pgh.355.1589373036088;
+        Wed, 13 May 2020 05:30:36 -0700 (PDT)
+Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
+        by smtp.gmail.com with ESMTPSA id x23sm12936041pgf.32.2020.05.13.05.30.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2020 05:30:34 -0700 (PDT)
+Received: by 42.do-not-panic.com (Postfix, from userid 1000)
+        id A33864063E; Wed, 13 May 2020 12:30:33 +0000 (UTC)
+Date:   Wed, 13 May 2020 12:30:33 +0000
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Scott Branden <scott.branden@broadcom.com>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Desmond Yan <desmond.yan@broadcom.com>,
+        James Hu <james.hu@broadcom.com>
+Subject: Re: [PATCH v5 6/7] misc: bcm-vk: add Broadcom VK driver
+Message-ID: <20200513123033.GL11244@42.do-not-panic.com>
+References: <20200508002739.19360-1-scott.branden@broadcom.com>
+ <20200508002739.19360-7-scott.branden@broadcom.com>
+ <20200513003830.GJ11244@42.do-not-panic.com>
+ <60372b2f-c03d-6384-43a7-8b97413b6672@broadcom.com>
+ <20200513065046.GA764247@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <20200506060025.1535960-1-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200513065046.GA764247@kroah.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.5.2020 9.00, Vinod Koul wrote:
-> This series add support for Renesas USB controllers uPD720201 and uPD720202.
-> These require firmware to be loaded and in case devices have ROM those can
-> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
+On Wed, May 13, 2020 at 08:50:46AM +0200, Greg Kroah-Hartman wrote:
+> On Tue, May 12, 2020 at 11:31:28PM -0700, Scott Branden wrote:
+> > Hi Luis,
+> > 
+> > On 2020-05-12 5:38 p.m., Luis Chamberlain wrote:
+> > > On Thu, May 07, 2020 at 05:27:38PM -0700, Scott Branden wrote:
+> > > > +#if defined(CONFIG_REQ_FW_INTO_BUF_PRIV)
+> > > > +
+> > > > +#define KERNEL_PREAD_FLAG_PART	0x0001 /* Allow reading part of file */
+> > > > +#define REQUEST_FIRMWARE_INTO_BUF request_firmware_into_buf_priv
+> > > > +int request_firmware_into_buf_priv(const struct firmware **firmware_p,
+> > > > +				   const char *name, struct device *device,
+> > > > +				   void *buf, size_t size,
+> > > > +				   size_t offset, unsigned int pread_flags);
+> > > > +
+> > > > +#else
+> > > > +
+> > > > +#define REQUEST_FIRMWARE_INTO_BUF request_firmware_into_buf
+> > > > +
+> > > > +#endif
+> > > > +
+> > > > +#endif
+> > > Please clean this up, the code must reflect only the code upstream. No
+> > > config stuff like this should be used on the driver. I had to stop my
+> > > review here.
+> > The CONFIG_ prefix shouldn't have been there as there is no Kconfig option
+> > to select this.
+> > Would like to just change it to a normal define without CONFIG_ prefix
+> > instead?
+> > This code is here to allow a limited version of the driver to run on older
+> > kernels which do not have the necessary partial file read support.
+> > By having it in the upstream codebase we don't need to maintain an internal
+> > version of the driver.  User can take the upstream kernel module and compile
+> > it against an old version of the kernel by via the define.
 > 
-> This includes patches from Christian which supported these controllers w/o
-> ROM and later my patches for ROM support and debugfs hook for rom erase and
-> export of xhci-pci functions.
+> That's not how kernel drivers in the tree work, sorry.  They do not
+> contain "older kernel support" in them, they work as a whole with the
+> rest of the kernel they ship with only.
 > 
+> Otherwise all drivers would be a total mess over time, can you imagine
+> doing this for the next 20+ years?  Not maintainable.
 
-First four patches look ok to me, but 5/5 that adds rom erase debugfs support
-still needs some work.
+Scott, now imagine the amount of cleanup you'd need to do to your driver
+to get it to a state where it doesn't depend on any old kernel. That's
+the exact shape of the driver we want.
 
-If you prefer I can take the first four, maybe we can get them to 5.8, and then
-later add that debugs rom erase support.
+To backport, you can look into the backports project which strives to
+backport drivers automatically [0] to older kernels.
 
-Let me know what you prefer
+[0] https://backports.wiki.kernel.org/index.php/Main_Page
 
--Mathias
-
+  Luis
