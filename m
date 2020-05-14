@@ -2,129 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AA991D2CB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 12:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D24A81D2D3A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 12:49:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726389AbgENK1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 06:27:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55914 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726234AbgENK1y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 06:27:54 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A3C9A20734;
-        Thu, 14 May 2020 10:27:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589452073;
-        bh=8YB9PkihPxyIdTMoNW95kPZVAuM1cjE/7vhXPSTIK6A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=z958oHucrRPdewqJv4Gvyp12/z5HkOQ/5iRnCCEMxauRv6a9Gum/JsyXEO9hVeonn
-         LeYX3KtpbsiqpvCUULsndaaqF0yUVMDsq0uZ52Dtw4kLAzvISzWugYxsisv/0eJMjY
-         bajxmRGO6M5HGRqZeSfStnIFQpCsf3MCtHIxfAVs=
-Date:   Thu, 14 May 2020 11:24:58 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org,
+        id S1726166AbgENKtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 06:49:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57496 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726160AbgENKtX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 May 2020 06:49:23 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A19C061A0C;
+        Thu, 14 May 2020 03:49:21 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id a9so2205663lfb.8;
+        Thu, 14 May 2020 03:49:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=ihBtKopP3k1Y1JCaSjxHNdvYIfEueCdWieJSz6SvBN4=;
+        b=cdbYIJYI4NcPSHfXQP07wl2UNIDAxSzXgr70FR6ySmwbSMRzx8KwYUedNTajATJy/V
+         WKHUAcz8fGKYFbQKBnpHjKNb5/BtjeFwc7j+qHSH+r6CZ6GMYgkrBDx1kpCWi97NidTH
+         rLPuqm07AeGkf/mjPYIMXanP0sJaGaY55Q81xIGQR/wNjOFkEdtTmIDay2rhpGrrjMmN
+         qviYV4EAXvXUo1D24t+bER/5c0QLaxujdOwoxc9iwoSUSYb9Z592o6ZrpEA1Fna6UdNq
+         BynEx9iqLFaPGBtBzpj5xjiWel2Ikw31NmXP/eyJrdimO2kr0qUWqZZNfNQmo+0neqix
+         rrFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :date:message-id:mime-version;
+        bh=ihBtKopP3k1Y1JCaSjxHNdvYIfEueCdWieJSz6SvBN4=;
+        b=n2kWgQbgVDxbKo2s+6TawAIoVPHUg+SxZlnzuZ0zEYcHnyIeABr27R1Ko5wfpqR5vs
+         61jymtHBOuIo5g2NiVezufWLIU7LQKDD1kDvDqI1ip+1vaF9bpwRSSHEouFcb3NLbbqQ
+         9yWAKH3oFxo+SytwYsvK9lycwtnsx4ynP5Kli/negXx3aAR1k1kJvx7Po/PK2p/3610M
+         yctMvXAZmo2SpE4qmtOn5vL42qpSN4ghC5JE/WMLpFHhxmGs9rjcU5icJ9YtbMm4O07x
+         yC4B3f33SyNOdekxewc2IUrZvf3GqyZ20LB4nfA4UEKcKCX7xcQamZiGYOBK/oa8D9J+
+         Q0AA==
+X-Gm-Message-State: AOAM53208ZE6+byIRp6ZIyD0L8Cm+P/GAo8k+E9/4oszC6MGPe+EOazl
+        GKplIoOmnj13lcj9WRN8tyg=
+X-Google-Smtp-Source: ABdhPJzemH7406zwPBPhxjJ/sOFlUJLUa/CJWeWsI8Bjd4BU54bVJGKrYv8rSvofcAhwn7pE2K814w==
+X-Received: by 2002:ac2:4945:: with SMTP id o5mr2888415lfi.21.1589453360383;
+        Thu, 14 May 2020 03:49:20 -0700 (PDT)
+Received: from saruman (91-155-214-58.elisa-laajakaista.fi. [91.155.214.58])
+        by smtp.gmail.com with ESMTPSA id v4sm1276524ljj.104.2020.05.14.03.49.18
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 May 2020 03:49:19 -0700 (PDT)
+From:   Felipe Balbi <balbi@kernel.org>
+To:     "Sandeep Maheswaram \(Temp\)" <sanm@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v13 5/5] usb: xhci: provide a debugfs hook for erasing rom
-Message-ID: <20200514092458.GA1591384@kroah.com>
-References: <20200506060025.1535960-1-vkoul@kernel.org>
- <20200506060025.1535960-6-vkoul@kernel.org>
- <caa2c5f4-a858-d699-27af-7b0c22b4dc40@linux.intel.com>
- <20200513124554.GA1083139@kroah.com>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Subject: Re: [PATCH v7 0/4] ADD interconnect support for Qualcomm DWC3 driver
+In-Reply-To: <a119cf75-8bda-f380-8249-173fa426279c@codeaurora.org>
+References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org> <20200429183542.GS4525@google.com> <a119cf75-8bda-f380-8249-173fa426279c@codeaurora.org>
+Date:   Thu, 14 May 2020 13:49:15 +0300
+Message-ID: <87eerm4wr8.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200513124554.GA1083139@kroah.com>
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 02:45:54PM +0200, Greg Kroah-Hartman wrote:
-> On Wed, May 13, 2020 at 03:36:19PM +0300, Mathias Nyman wrote:
-> > On 6.5.2020 9.00, Vinod Koul wrote:
-> > > run "echo 1 > /sys/kernel/debug/renesas-usb/rom_erase" to erase
-> > > firmware when driver is loaded.
-> > > 
-> > > Subsequent init of driver shall reload the firmware
-> > > 
-> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > ---
-> > >  drivers/usb/host/xhci-pci-renesas.c | 33 +++++++++++++++++++++++++++++
-> > >  1 file changed, 33 insertions(+)
-> > > 
-> > > diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
-> > > index f7d2445d30ec..fa32ec352dc8 100644
-> > > --- a/drivers/usb/host/xhci-pci-renesas.c
-> > > +++ b/drivers/usb/host/xhci-pci-renesas.c
-> > > @@ -2,6 +2,7 @@
-> > >  /* Copyright (C) 2019-2020 Linaro Limited */
-> > >  
-> > >  #include <linux/acpi.h>
-> > > +#include <linux/debugfs.h>
-> > >  #include <linux/firmware.h>
-> > >  #include <linux/module.h>
-> > >  #include <linux/pci.h>
-> > > @@ -170,6 +171,8 @@ static int renesas_fw_verify(const void *fw_data,
-> > >  	return 0;
-> > >  }
-> > >  
-> > > +static void debugfs_init(struct pci_dev *pdev);
-> > > +
-> > >  static bool renesas_check_rom(struct pci_dev *pdev)
-> > >  {
-> > >  	u16 rom_status;
-> > > @@ -183,6 +186,7 @@ static bool renesas_check_rom(struct pci_dev *pdev)
-> > >  	rom_status &= RENESAS_ROM_STATUS_ROM_EXISTS;
-> > >  	if (rom_status) {
-> > >  		dev_dbg(&pdev->dev, "External ROM exists\n");
-> > > +		debugfs_init(pdev);
-> > >  		return true; /* External ROM exists */
-> > >  	}
-> > >  
-> > > @@ -449,6 +453,34 @@ static void renesas_rom_erase(struct pci_dev *pdev)
-> > >  	dev_dbg(&pdev->dev, "ROM Erase... Done success\n");
-> > >  }
-> > >  
-> > > +static int debugfs_rom_erase(void *data, u64 value)
-> > > +{
-> > > +	struct pci_dev *pdev = data;
-> > > +
-> > > +	if (value == 1) {
-> > > +		dev_dbg(&pdev->dev, "Userspace requested ROM erase\n");
-> > > +		renesas_rom_erase(pdev);
-> > > +		return 0;
-> > > +	}
-> > > +	return -EINVAL;
-> > > +}
-> > > +DEFINE_DEBUGFS_ATTRIBUTE(rom_erase_ops, NULL, debugfs_rom_erase, "%llu\n");
-> > > +
-> > > +static struct dentry *debugfs_root;
-> > > +
-> > > +static void debugfs_init(struct pci_dev *pdev)
-> > > +{
-> > > +	debugfs_root = debugfs_create_dir("renesas_usb", NULL);
-> > 
-> > This will create a renesas_usb directory right under debugfs root.
-> > xhci has its own struct dentry xhci_debugfs_root; 
-> > Use that as parent instead
-> 
-> Ah, I misssed that, a follow-on patch can do this, right?
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Actually, a whole new series with this changed is good, I didn't take
-these for now, for some reason I thought I had.
+"Sandeep Maheswaram (Temp)" <sanm@codeaurora.org> writes:
 
-thanks,
+> Hi Felipe,
+>
+> Any update about landing this series.
 
-greg k-h
+in my tree now
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl69IisACgkQzL64meEa
+mQbu6A//fIS1BToxj09T/BzusfhWqlmhP82ZlNUi/d/TwchOeTjRexbJ1nYm+i+F
++DelctoeEuZhzYlQr91ZgliYidtTH26NRBAna9Lld6pDlJg31YS8NxB1s9KNNaz5
+9s2HKUt//5ZRzvxhhZZgIvv84iE7cXviVzSzbZ/cU5PjKXJ1E8zsvrbQ9biWP7P6
+AMNP+MbwSBDH2EYz3JyjqmlsBO3oEnJ7IyZDJnMcfXiCIscf7AKYaQY6WOrEj5WH
+ioJFm/GmfJ6Nh77DAtYNjHitz45tFzWGxRbjhUKqIbCnnVMOmwJ8zJNqYH8LDk8X
+ZfEdCU3FcDO98D0izBf0PdAfypa1MFul4bLBaPNKahDjKJKQq6fKvHNMF71ORflI
+HoCy9nm0czUSAIC6i1BZjmEK9yNkMmyKpXGC3YBDw1aQbzrV4uIjZqGRfnzpAzvY
+ng03LpR1BDemQiw869vPmVkX2Y86PaFFnigKaMS2wBN6QBtt6XGePGqf5i3PYmYa
+yEMWBJgRptHAkimChB8EJd02DLeXczae3i85qPFA56Tl9OvMpldIhjD7y47kFKW3
+AseQQAFult5iMM0xIZIXgRXG1JDKajMMqHTz6j7sh/OxnHcrOaSA5mi+XPHp4F94
+z+e8VD3UHm7iHKzOIttpyeTf6l9bP4wczMPup4YhwcaB0xOMY6U=
+=/l/R
+-----END PGP SIGNATURE-----
+--=-=-=--
