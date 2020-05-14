@@ -2,103 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22ADD1D320A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 16:02:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4BEF1D321C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 16:06:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726179AbgENOC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 10:02:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59382 "EHLO
+        id S1726813AbgENOGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 10:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726037AbgENOC3 (ORCPT
+        by vger.kernel.org with ESMTP id S1726667AbgENOGn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 10:02:29 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B903EC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 07:02:28 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id h16so2473003eds.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 07:02:28 -0700 (PDT)
+        Thu, 14 May 2020 10:06:43 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4497DC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 07:06:42 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id s8so4258834wrt.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 07:06:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0a3V5jmjGRHrvpegmiJsNOOrUHQvBZ4nobS3syH2lOg=;
-        b=P+r2tTRptAL94be2yJTghePE0UJFO9u4RqWWaZMVBsVTzVVkYrNPXKen7lsvqC9Mzf
-         Ue/6/LRS5fi7NdgkTRXVNZ+JbVsl3J88TNiGRvMkw7JLM56MjQEzg70P0UU1Er5VkbMD
-         y1GUnu8+PHoCbpXVijZQ+V2ey9ktwjzIhuB8pe79eA9bd5szcqg8M3C0HePU/HXD8sFt
-         QdV3CVt87uRc7xYf8Dzh3Th9sxDXKCcDjlgr1jj2aG/ezrrFWY8wI/pXhzGNN/jdDF/w
-         XJWLcPKZ82dFYkmEPVD2zTewvyn1bpsQbXWEiYs5EB9/zSE/ZJql0lShnSfFdRPMNfqr
-         N0gQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LNkj51r2L9rZ0K9EyWV0hvRQYzmcF5SBVqNFyVyFPAo=;
+        b=FFVssbIpXryFajjJXelTChxllm6xJFU04WJDqYHF38lQ/dFAnf2M7LYURSvd2MAZLH
+         1aFzJ5ydJ+ryiTLpYI4YhCocurxWwXswgOTYigjFTMJstIFj/kqzctDv7RL4JFBcM55O
+         +ZKs8WrMfnD+KDmRrrXs8Z/FeIbgrcGT3m7Rn28Ve7jUxrDRv4iah9/vpyOz9A7RC9kx
+         ilf3YTjrAeBfYkZnxl7oVDtVX5zOe0QTre9YKfBEldQO+nq+dZRH1JJTuU7lnGhbE/UG
+         yM7qAoLViyV1mRjKxwVf5+28hiHEm9lkR5c2ODp4AA2GEtpKS1GdNnrVQVkyTtf5kSgh
+         78OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0a3V5jmjGRHrvpegmiJsNOOrUHQvBZ4nobS3syH2lOg=;
-        b=A12yw/JE1j+dq1RvFo7Vr2cbS1iL3Hi1pAyaTrmrdJgn5mU+tV/lUc+adQNQqBIDQF
-         zIwz1VzPcm/EVdCb3G03njGy2ccCNVJ8qjPeVebMozgn1ZmN6ypYweQC5Y5FMiI4/3u4
-         A90APOCWd4lIK9fiCVQAAFSyzFIU/MtZWTdq7QeOLT4Mkm6jarFkXXmDutIP5vHZib8Z
-         p/4RhgRUCUeMRTMngAiZ+JjYfnIHb5fz+rCGZL9Y6qUKs/FdgU00LcG73vWukGaZFcI2
-         /eGmAgJUBVyWaRx9NvlzkjgAF4joZC2BDUt2AYEaxzWl2y8yjpIhp65HBVyN8+y3Wt54
-         kNDA==
-X-Gm-Message-State: AOAM533GQyr/neNb1cUeyZ260AYrqvfXHFCD7yIr2rmxTZgQ7zRWI3UU
-        UmyTSVxP0SBdhJYzAliY3oYCSkr/Pkv1JoO6KWR3pg==
-X-Google-Smtp-Source: ABdhPJzxROIVBbrJVN5njvqUZ2G2Yhy2TLpAVfDIwqO1jLUGiQyvUC1NixURN8sEFAx1heyOQhXZ6MaaOmTNaWgkTnw=
-X-Received: by 2002:aa7:c6d5:: with SMTP id b21mr3900715eds.97.1589464947048;
- Thu, 14 May 2020 07:02:27 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LNkj51r2L9rZ0K9EyWV0hvRQYzmcF5SBVqNFyVyFPAo=;
+        b=PINHPpmq+DpFKCWEKpxmI6IXMNe+1wTfZVY+AV/+v+X1yzNHJ9xOUCg3MkZZDMtcl7
+         YJ8QlJYWlYGPMjWAsFQ7F6obphRVlGh/rqbICtTJUEMxg8OsL9Kteb12jVRmpEYWZpdk
+         cEHWT1AV3GrokcNVRdD1bAE5lcaVgQsHCisenc6ktDq/HBGd0P/dSmlgCUWR/0J1suzo
+         I2VLSDFPkbRiugUecNPLeRTO6W3iUxOD+xYO8lpkBJD8X3oqmL35Azy2DphvkY6dsKqK
+         pVI4IT25TiC9L2p14J/igJy7k2XNY89YhK+NMByfRdgwd6WfWBqm8artIZqBGUs9/kjN
+         iSJg==
+X-Gm-Message-State: AOAM532lt46g3vHZZwORkOj/856SNP7cHDeASVgpvCEI0cG19Li5LEwz
+        lIG4eFLv/AYfJUWmONCmA+12Dw==
+X-Google-Smtp-Source: ABdhPJwWfEo76YwG+HFwYeVUwbduEOE4F024tHFCHqVD7jVePGd1AlpWVV1SVylPxSX56t17X0n1JQ==
+X-Received: by 2002:a5d:5388:: with SMTP id d8mr5583058wrv.242.1589465200349;
+        Thu, 14 May 2020 07:06:40 -0700 (PDT)
+Received: from localhost.localdomain ([37.120.32.219])
+        by smtp.gmail.com with ESMTPSA id t22sm10487621wmj.37.2020.05.14.07.06.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2020 07:06:39 -0700 (PDT)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        Robert Foss <robert.foss@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: c630: Add WiFi node
+Date:   Thu, 14 May 2020 16:06:06 +0200
+Message-Id: <20200514140606.1343766-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20191018055841.3729591-1-bjorn.andersson@linaro.org>
+References: <20191018055841.3729591-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <20200429052932.GA2627045@builder.lan>
-In-Reply-To: <20200429052932.GA2627045@builder.lan>
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-Date:   Thu, 14 May 2020 07:00:48 -0700
-Message-ID: <CAOCOHw4GmTYiXrd3z9B-YHq3wcwLYXg4y=nkJWhLCDw9G08KqQ@mail.gmail.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT fixes for v5.7
-To:     arm-soc <arm@kernel.org>, soc@kernel.org
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LAKML <linux-arm-kernel@lists.infradead.org>,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Arnd, Olof?
+> Specify regulators and enable the &wifi node. The firmware uses the 8
+> bit version of the host capability message, so specify this quirk.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-On Tue, Apr 28, 2020 at 10:28 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> The following changes since commit 8f3d9f354286745c751374f5f1fcafee6b3f3136:
->
->   Linux 5.7-rc1 (2020-04-12 12:35:55 -0700)
->
-> are available in the Git repository at:
->
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-5.7
->
-> for you to fetch changes up to 7710f80ecd9c74544a22557ab581cf603e713f51:
->
->   arm64: dts: qcom: db820c: fix audio configuration (2020-04-22 19:26:14 -0700)
->
-> ----------------------------------------------------------------
-> Qualcomm ARM64 DT fixes for v5.7
->
-> This reduces the (hard coded) CPU voltage to a safe level on MSM8996 and
-> updates the audio nodes on db820c, db845c and c630 to reflect audio
-> changes that landed late in the cycle.
->
-> ----------------------------------------------------------------
-> Bjorn Andersson (1):
->       arm64: dts: qcom: msm8996: Reduce vdd_apc voltage
->
-> Srinivas Kandagatla (3):
->       arm64: qcom: c630: fix asm dai setup
->       arm64: dts: qcom: db845c: fix asm dai setup
->       arm64: dts: qcom: db820c: fix audio configuration
->
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi       | 23 +++++++++++++++++++---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi              |  2 ++
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts         |  3 ---
->  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      |  2 --
->  4 files changed, 22 insertions(+), 8 deletions(-)
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
