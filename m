@@ -2,138 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E8821D3639
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 18:17:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BC4C1D3658
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 18:21:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726126AbgENQRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 12:17:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52438 "EHLO
+        id S1725938AbgENQVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 12:21:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726113AbgENQRa (ORCPT
+        with ESMTP id S1725954AbgENQVN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 12:17:30 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD2EC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:17:30 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id j127so918051vke.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:17:30 -0700 (PDT)
+        Thu, 14 May 2020 12:21:13 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C141C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:21:13 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id g12so33529516wmh.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OqjZEsENiuJ7Z2+zCW9pzRm/SY0vcINZf6TSPb9wFL8=;
-        b=T5HS0B1fvJofutv3NJqUrbAvHVxEP8Z/4pbg8rWnyUbriguTHHrLowQ8XSkvu1D4nb
-         CKxxadhSnrOhka8fhDtg4GRuLt/M9djey/HD7gL8AniRdx98Ev//amZicIk25BLCfDDp
-         gSMyC2uil/ZYl+myPhupP0IWuS1OqIEI9X8ZY=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KV4BSoviEBOfIIyT+7Io9PqJ+AxGL6m4ncG0jX3R3Vg=;
+        b=iiHyiJ4q0+KsNNeDxvvCz9wtZO9sC8IuSU69MkWg6ukuylaAreG2+ufhhS2q0LvI4a
+         9ZFBQEB3gresJbeadDdort7B7CJztVaOzd+imGLK9adisFs8l1EkEXwjPix6DMwXWpjX
+         /bCdQB8gtMafG88ExRQb7sOFOT2TnNJlqCmCoaS8LyHnYhBzplYGqcazpRuc/Byl/kdH
+         h8OE0uxsaWxjlIp/J8ewc/SWJUPpFj3CJfpjNNHOJYP6BbciN+6P7zMR4GQBICDm8oYj
+         m2m8J1vRn9sCMPHm5LZbqiU0px2GbT9jNPn6q/3jziLa6B8kfu211fXDrBPg+K08gUdF
+         P8BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OqjZEsENiuJ7Z2+zCW9pzRm/SY0vcINZf6TSPb9wFL8=;
-        b=iFYENTSBXcVTo+/FkuCLdyZQJng2vIZkLAM/m+PzFSjYtrDWXFQ4knRX6fLVAnb8RV
-         6xlkhDfnWgW/mDKa9kqPb07mD1mIXrrq+ZWbZYVENH6UNzwArQ053e5ozO7s5hXFjqnd
-         /nwBAhMY5zVrULx/WafSEn1RpaIU2yXxh5S4Wfv1HJ9C1RDMI0FIWdqTj9hJEeBfEP8R
-         twZJem9ZQVxN+Gh+jrf0fDC+6B0BUHy47NHxbH2YW9/KP94qOdPT8Ktg+XMAJVN/Gmjn
-         Nn8d4+wIw38VUiVvdFQSAmjzHZCnwGOoswjznKFNx7BjDwSln2x7DPLfPvDlcmdfy7kF
-         mNJQ==
-X-Gm-Message-State: AOAM532eSKSTuWY6NjGTG33afvATnCaTbX1HBqBsbV6pXiKEpu8X8+Rw
-        NqdrAi6xK6nAB8GgCjEes/QOAlIM3Yg=
-X-Google-Smtp-Source: ABdhPJxhqtl8OSI9qj4bIKqmVWVziJnrYTUVG97tFygw6gINyWujf5UZTVjoTurt6ozyGPI5UlOvcA==
-X-Received: by 2002:ac5:c810:: with SMTP id y16mr4111959vkl.49.1589473048717;
-        Thu, 14 May 2020 09:17:28 -0700 (PDT)
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com. [209.85.221.173])
-        by smtp.gmail.com with ESMTPSA id h2sm258818vkn.12.2020.05.14.09.17.27
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 May 2020 09:17:27 -0700 (PDT)
-Received: by mail-vk1-f173.google.com with SMTP id z3so259895vka.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:17:27 -0700 (PDT)
-X-Received: by 2002:a1f:9605:: with SMTP id y5mr4360665vkd.75.1589473046623;
- Thu, 14 May 2020 09:17:26 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KV4BSoviEBOfIIyT+7Io9PqJ+AxGL6m4ncG0jX3R3Vg=;
+        b=cBvQZrrXhDOAJnbvUg0QazqovOaKPWufT/dumm85k1/2iQ4SBg9T+OD2qZlUUaMOq3
+         q2JwZZyfbWjp4iAiZBMq4HfjDEUZ5ZPk8TNPSbYJdfbhasO1s86JrGeE9nT2SDjtIGa/
+         qd0MI1hYxyocjpo1PXFCouTVp7Y6Xp5kY870A4vOZy+SgBEdYAs8L/OyneHhWbuB+VTs
+         KRZhjQvsaMjb6fDQbD6+UPpywn5Y7KGsnZHkSejjWIMFvmGmm85t77OoTNkyfQMB8cuM
+         41OK7Gljt98SucAkiDIchjmsPr9AbizI62/tzWx4JKwORwThv+1hx8CaoWvZtKwS2MV7
+         rUug==
+X-Gm-Message-State: AGi0PuZ1lAB3IruPNFbThxOliJFNs0o/dOvdN2dagHbF4qIR5iZr7ZRQ
+        AdZCcaGgCgW4IerADuKvCQ3ohw==
+X-Google-Smtp-Source: APiQypKzrysBhAd4T+CnYHlYyQM0grnydFJdjF31clt1OcgBcXllaYep5/9TgtCb41lshr5MEdxP5g==
+X-Received: by 2002:a1c:ed04:: with SMTP id l4mr49969579wmh.93.1589473272074;
+        Thu, 14 May 2020 09:21:12 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id b14sm29577880wmb.18.2020.05.14.09.21.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2020 09:21:11 -0700 (PDT)
+Date:   Thu, 14 May 2020 17:21:09 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     jason.wessel@windriver.com, gregkh@linuxfoundation.org,
+        corbet@lwn.net, frowand.list@gmail.com, bjorn.andersson@linaro.org,
+        linux-serial@vger.kernel.org, mingo@redhat.com, hpa@zytor.com,
+        jslaby@suse.com, kgdb-bugreport@lists.sourceforge.net,
+        sumit.garg@linaro.org, will@kernel.org, tglx@linutronix.de,
+        agross@kernel.org, catalin.marinas@arm.com, bp@alien8.de,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dave Martin <Dave.Martin@arm.com>,
+        Enrico Weigelt <info@metux.net>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        James Morse <james.morse@arm.com>,
+        Juergen Gross <jgross@suse.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+        Russell King <linux@armlinux.org.uk>,
+        jinho lim <jordan.lim@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, x86@kernel.org
+Subject: Re: [PATCH v4 00/12] kgdb: Support late serial drivers; enable early
+ debug w/ boot consoles
+Message-ID: <20200514162109.6qt5drd27hpilijh@holly.lan>
+References: <20200507200850.60646-1-dianders@chromium.org>
 MIME-Version: 1.0
-References: <1588339863-1322-1-git-send-email-kalyan_t@codeaurora.org>
-In-Reply-To: <1588339863-1322-1-git-send-email-kalyan_t@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 14 May 2020 09:17:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UJGivCyp=t0J++1DbSFDVf+5zSCcXgh83VZtssBmavjg@mail.gmail.com>
-Message-ID: <CAD=FV=UJGivCyp=t0J++1DbSFDVf+5zSCcXgh83VZtssBmavjg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: ensure device suspend happens during PM sleep
-To:     Kalyan Thota <kalyan_t@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        mkrishn@codeaurora.org, travitej@codeaurora.org,
-        nganji@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200507200850.60646-1-dianders@chromium.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, May 07, 2020 at 01:08:38PM -0700, Douglas Anderson wrote:
+> <snip>
+>
+> My first attempt was to try to get the existing "ekgdboc" to work
+> earlier.  I tried that for a bit until I realized that it needed to
+> work at the tty layer and I couldn't find any serial drivers that
+> managed to register themselves to the tty layer super early at boot.
+> The only documented use of "ekgdboc" is "ekgdboc=kbd" and that's a bit
+> of a special snowflake.  Trying to get my serial driver and all its
+> dependencies to probe normally and register the tty driver super early
+> at boot seemed like a bad way to go.  In fact, all the complexity
+> needed to do something like this is why the system already has a
+> special concept of a "boot console" that lives only long enough to
+> transition to the normal console.
+> 
+> <snip>
+> 
+> The devices I had for testing were:
+> - arm32: rk3288-veyron-jerry
+> - arm64: rk3399-gru-kevin
+> - arm64: qcom-sc7180-trogdor (not mainline yet)
+> 
+> These are the devices I tested this series on.  I tried to test
+> various combinations of enabling/disabling various options and I
+> hopefully caught the corner cases, but I'd appreciate any extra
+> testing people can do.  Notably I didn't test on x86, but (I think) I
+> didn't touch much there so I shouldn't have broken anything.
 
-On Fri, May 1, 2020 at 6:31 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
->
-> "The PM core always increments the runtime usage counter
-> before calling the ->suspend() callback and decrements it
-> after calling the ->resume() callback"
->
-> DPU and DSI are managed as runtime devices. When
-> suspend is triggered, PM core adds a refcount on all the
-> devices and calls device suspend, since usage count is
-> already incremented, runtime suspend was not getting called
-> and it kept the clocks on which resulted in target not
-> entering into XO shutdown.
->
-> Add changes to force suspend on runtime devices during pm sleep.
->
-> Changes in v1:
->  - Remove unnecessary checks in the function
->     _dpu_kms_disable_dpu (Rob Clark).
->
-> Changes in v2:
->  - Avoid using suspend_late to reset the usagecount
->    as suspend_late might not be called during suspend
->    call failures (Doug).
->
-> Changes in v3:
->  - Use force suspend instead of managing device usage_count
->    via runtime put and get API's to trigger callbacks (Doug).
->
-> Changes in v4:
->  - Check the return values of pm_runtime_force_suspend and
->    pm_runtime_force_resume API's and pass appropriately (Doug).
->
-> Changes in v5:
-
-Can you please put the version number properly in your subject?  It's
-really hard to tell one version of your patch from another.
+I have tested a slightly earlier version using qemu and will test this
+set before it moves forwards.
 
 
->  - With v4 patch, test cycle has uncovered issues in device resume.
->
->    On bubs: cmd tx failures were seen as SW is sending panel off
->    commands when the dsi resources are turned off.
->
->    Upon suspend, DRM driver will issue a NULL composition to the
->    dpu, followed by turning off all the HW blocks.
->
->    v5 changes will serialize the NULL commit and resource unwinding
->    by handling them under PM prepare and PM complete phases there by
->    ensuring that clks are on when panel off commands are being
->    processed.
+>  .../admin-guide/kernel-parameters.txt         |  20 ++
+>  Documentation/dev-tools/kgdb.rst              |  24 ++
+>  arch/arm64/Kconfig                            |   1 +
+>  arch/arm64/include/asm/debug-monitors.h       |   2 +
+>  arch/arm64/kernel/debug-monitors.c            |   2 +-
+>  arch/arm64/kernel/traps.c                     |   3 +
+>  arch/x86/Kconfig                              |   1 +
+>  drivers/tty/serial/8250/8250_early.c          |  23 ++
+>  drivers/tty/serial/amba-pl011.c               |  32 +++
+>  drivers/tty/serial/kgdboc.c                   | 268 ++++++++++++++++--
+>  drivers/tty/serial/qcom_geni_serial.c         |  32 +++
+>  include/linux/kgdb.h                          |   4 +
+>  kernel/debug/debug_core.c                     |  52 +++-
+>  lib/Kconfig.kgdb                              |  18 ++
+>  14 files changed, 436 insertions(+), 46 deletions(-)
 
-I'm still most definitely not an expert in how all the DRM pieces all
-hook up together, but the solution you have in this patch seems wrong
-to me.  As far as I can tell the "prepare" state isn't supposed to be
-actually doing the suspend work and here that's exactly what you're
-doing.  I think you should find a different solution to ensure
-ordering is correct.
+Any thoughts on how best to land these changes?
 
--Doug
+AFAICT the arm64 and 8250/amba-pl011/qcom_geni_serial code
+could be applied independently of the kgdb changes (though we must keep
+changes to drivers/tty/serial/kgdboc alongside the kgdb changes).
+
+I can hoover them up but I'd need a solid set of acks and
+I don't think we've got that yet.
+
+I'd also be happy to ack where needed and let someone else pick it up
+(the other changes queued for kgdb this cycle are pretty small so we
+shouldn't see much conflict in kernel/debug/ ).
+
+
+Daniel.
