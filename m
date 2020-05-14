@@ -2,131 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E16F31D402C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 23:36:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE9151D4050
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 23:42:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728113AbgENVgq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 17:36:46 -0400
-Received: from mout.kundenserver.de ([217.72.192.75]:52391 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727929AbgENVgq (ORCPT
+        id S1727890AbgENVmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 17:42:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46742 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727837AbgENVmF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 17:36:46 -0400
-Received: from mail-qk1-f178.google.com ([209.85.222.178]) by
- mrelayeu.kundenserver.de (mreue107 [212.227.15.145]) with ESMTPSA (Nemesis)
- id 1M42X0-1jZLX22GaO-0000DG; Thu, 14 May 2020 23:36:44 +0200
-Received: by mail-qk1-f178.google.com with SMTP id b6so437741qkh.11;
-        Thu, 14 May 2020 14:36:44 -0700 (PDT)
-X-Gm-Message-State: AOAM532SsbXHphUrFp5DWXHU3Jupvx/OQZtF8qspUWft88ybQRx2PqyD
-        12ZNvxQuTOn9EELv9Fa3BXAOKabPUnKGsg5ARfs=
-X-Google-Smtp-Source: ABdhPJyf3ejLTtFf2bw9TFZMrkQqIINAK+cKTga/j0F6QfpmJ7vEMLRjK3kWorufMiwjUS2MDYyqF80Qn+VqVO6qVho=
-X-Received: by 2002:ae9:ed95:: with SMTP id c143mr436949qkg.394.1589492203356;
- Thu, 14 May 2020 14:36:43 -0700 (PDT)
+        Thu, 14 May 2020 17:42:05 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5DCC05BD09
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 14:42:04 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id i15so684474wrx.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 14:42:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yI1U8AUDDWNI+XLdCwvv3rQd/eXkcVvXBcnHMoqn2qs=;
+        b=Kk1bCOr+u0FZ27Ewkgo62P8UuxadSMbSCNxeDyztymTB+LAUTxnvfBx3RKlx8eaDBq
+         4gRT1WWY3+SYT8cT9GDQ9735amGfk5TXyyUGW/yi29CejUWYEFd/16MeVgD5sWoQ5OSo
+         Tgvz0PxpMiQ2OsiNskkJ21U01V81g9N09C2MvATjUyDiL313bTfOsylyNWH+0YJW2wyb
+         Wt93Al6Ou9B2ql9V3jjVMwGbbfq6xQ4z5E/5VZC5Qb+Pc5XpXyvnmihbVNgrsE7HHat6
+         3gNtsoydhQWTtpT/WxmG37CoTNcL0aIK7eP7onAZ5SxJJKHym0OATkLunzM9zlc54mXz
+         qzXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yI1U8AUDDWNI+XLdCwvv3rQd/eXkcVvXBcnHMoqn2qs=;
+        b=subRpE0+LSmw/XyQ9TVtWCYt8quAiZEg4UibaC/0eTAL74cxWwONwexK3maNAxwNx+
+         JgI89BWJAlwZHwa4z7XmPC6ILbbSbv/+IRiusvSrvx4UGh1Ucy3S+m7wVV9L4oxRvbmn
+         x4D21RNQl4SbEZ95IJ3kZizcmCop13/52zRyWXXu40BozUoeUuoeKqrHsPvYLiXJJQfg
+         XxMtJB+QMLV8RwcLg1Rmk+CZMV92NnhPxpQ8n0LMNLw5bvXPubR2SXAYaue5vzjbYLjR
+         MqB7gu7TrH9kfo5rZpj/9384KbADymnXrXmJM8W3msdB7jpkXH3kmgjjyatR+7XPYlLN
+         sG2A==
+X-Gm-Message-State: AOAM5320AdxwH8r58wqaPvwNkVFbsdtBj7/lAIxIV0MmtG8eKzaZwSYM
+        UMxAvKRroFRAVCQk860062ArgA==
+X-Google-Smtp-Source: ABdhPJwjLsGzxSnhBdTpwCv1KxMeZM+KqYK5ICQ+zgFr9Y8weXPm1qgo3lpneSurN2sf/JsKaNVavQ==
+X-Received: by 2002:a5d:60c3:: with SMTP id x3mr506758wrt.48.1589492523207;
+        Thu, 14 May 2020 14:42:03 -0700 (PDT)
+Received: from [192.168.0.38] ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id p8sm406400wre.11.2020.05.14.14.42.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 May 2020 14:42:02 -0700 (PDT)
+Subject: Re: [PATCH v4 2/2] clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock
+ Controller
+To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        shawn.guo@linaro.org, p.zabel@pengutronix.de,
+        vincent.knecht@mailoo.org, konradybcio@gmail.com
+References: <20200512115023.2856617-1-bryan.odonoghue@linaro.org>
+ <20200512115023.2856617-3-bryan.odonoghue@linaro.org>
+ <158949186096.215346.4442403798485610696@swboyd.mtv.corp.google.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <ae2045bf-52f9-9be8-b48a-90d65c1ab96d@linaro.org>
+Date:   Thu, 14 May 2020 22:42:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org> <1589465266-20056-6-git-send-email-jhugo@codeaurora.org>
-In-Reply-To: <1589465266-20056-6-git-send-email-jhugo@codeaurora.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Thu, 14 May 2020 23:36:27 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a34ks226S9UJMfCNdY3KWiBS+vscYdKwLW7wkLj0H_4Cw@mail.gmail.com>
-Message-ID: <CAK8P3a34ks226S9UJMfCNdY3KWiBS+vscYdKwLW7wkLj0H_4Cw@mail.gmail.com>
-Subject: Re: [RFC PATCH 5/8] qaic: Implement data path
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     gregkh <gregkh@linuxfoundation.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        wufan@codeaurora.org, pratanan@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:vywY2JzhnvgMQcwkUNAYtUf8F0GUkknK2pgFUj3r5QUPsSVcAns
- Hbbe4fbwwtqAriQQppePPJFYgpdBwdrzcLN0Wzma0B7/qZwQwxxshuwr5v7NI2BvgoVTx/e
- SfIhmIMMH00X3fG8O5mifUbzjBw3lfz+hGw81FbztSrkvxP6y4LC0cYr6Us5pZDJMhImTXY
- 7TiNbMfF06Y3kNjN/R+PA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hJNjae5Rvjo=:8+LH4etshqOjzgjVFBKerj
- qs628UALW3crvjgO8MYCBwm9U/EssceLvTqBNzSYaHNHDJ9vVUukVpZpYOZLn2jtcOmH7UAVK
- Lbv1gUuOxbU7huCOjt7LMmqFV9h37NgJv5c2cKAryP9yWfDyvwgy1ZMh7Bn6nf/ld+3zK0DcK
- uxLKSKdUNGHWEX12O19uz139wVNKJC8GvF/duJtv0EMeu090IpgMbUF2iF6pTJ2ibOHHtpTk/
- AzMDS3imMdLMkBQE7R2gZupgxdAjqr6DVk6mmhW0ZZRAg9TX9E3RLPG4vRw+ZSHMjPsEhFfI+
- Td49s++yl2awUrXtfndYA0TAgASoC5tXQP2OepRqwwPweTfXf9Zg2EAVs9esgicPFJQlbAGTR
- vzXI3UmXlmpMVKL11KtVj/nZbjwJCrWk41EHub0uKTfHxr/RfzMMlQEJV4vV/iUdo/O9Pkvpe
- ukxC7r3t0oF6I2ZzUBWgidBenXvyiGNEXFPhvWVo718Z3ZleBNUjVw207CECgruYqtU9ZIDdm
- x/RRfnC52LTOomSESCuce6oen5aOEJyfBR3iYfTkMDWfY9fUu3ha8TilzT4oi1BPW+hwUvuD+
- PRteInwcxWbJqi1pTKTgp5IaS8cEfesnp1wqsyTTW3IZrBDnWn+NCqVF/V7DiZBY5ak9MUbTo
- +lE0tSLbH3P33dUzCOnFjz9DGi9twTvx5BgSPJvBvhpJju18maIYHm+WRQP0isyPySqY7ClMe
- 3WRixmX+YFxx0AFFNukMnPHHVCyl/47jxzRbsxWH72TCanAcFcDwhzBF63ciDlqKuWCXPm/95
- 9eLMfkAHsxmKB4Y/7sU9sGa0sP2PK+YVixmtSr6rw+NHdr7CmA=
+In-Reply-To: <158949186096.215346.4442403798485610696@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 14, 2020 at 4:09 PM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> +struct dbc_req { /* everything must be little endian encoded */
+On 14/05/2020 22:31, Stephen Boyd wrote:
+> Quoting Bryan O'Donoghue (2020-05-12 04:50:23)
+>> This patch adds support for the MSM8939 GCC. The MSM8939 is based on the
+>> MSM8916. MSM8939 is compatible in several ways with MSM8916 but, has
+>> additional functional blocks added which require additional PLL sources. In
+>> some cases functional blocks from the MSM8916 have different clock sources
+>> or different supported frequencies.
+>>
+>> Cc: Andy Gross <agross@kernel.org>
+>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Cc: Michael Turquette <mturquette@baylibre.com>
+>> Cc: Stephen Boyd <sboyd@kernel.org>
+>> Cc: Rob Herring <robh+dt@kernel.org>
+>> Cc: Philipp Zabel <p.zabel@pengutronix.de>
+>> Cc: linux-arm-msm@vger.kernel.org
+>> Cc: linux-clk@vger.kernel.org
+>> Cc: linux-kernel@vger.kernel.org
+>> Cc: devicetree@vger.kernel.org
+>> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> 
+> Is this a co-developed-by tag?
 
-Instead of the comment, I suppose you want to use __le16 and __le32
-types and let sparse check that you got it right.
+Yep. I'm squashing down about 30-some internal patches to this one patch 
+here including one or two from Shawn in this set.
 
-> +       u16     req_id;
-> +       u8      seq_id;
-> +       u8      cmd;
-> +       u32     resv;
-> +       u64     src_addr;
-> +       u64     dest_addr;
-> +       u32     len;
-> +       u32     resv2;
-> +       u64     db_addr; /* doorbell address */
-> +       u8      db_len; /* not a raw value, special encoding */
-> +       u8      resv3;
-> +       u16     resv4;
-> +       u32     db_data;
-> +       u32     sem_cmd0;
-> +       u32     sem_cmd1;
-> +       u32     sem_cmd2;
-> +       u32     sem_cmd3;
-> +} __packed;
+I wasn't quite sure what the etiquette on Co-developed was i.e. it 
+wasn't something git allowed me to specify with a "git commit -s 
+--co-developed="xyz"" so I just retained the SOB.
 
-All members are naturally aligned, so better drop the __packed
-annotation get better code, unless the structure itself is
-at an unaligned offset in memory.
+Looking through git logs I see an example
 
-> +struct dbc_rsp { /* everything must be little endian encoded */
-> +       u16     req_id;
-> +       u16     status;
-> +} __packed;
+I'll apply a
+Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
 
-Same here.
+for v5.
 
-> +       init_completion(&mem->xfer_done);
-> +       list_add_tail(&mem->list, &dbc->xfer_list);
-> +       tail = (tail + mem->nents) % dbc->nelem;
-> +       __raw_writel(cpu_to_le32(tail), dbc->dbc_base + REQTP_OFF);
+>> +static int gcc_msm8939_probe(struct platform_device *pdev)
+>> +{
+>> +       int ret;
+>> +       struct regmap *regmap;
+>> +
+>> +       ret = qcom_cc_probe(pdev, &gcc_msm8939_desc);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       regmap = dev_get_regmap(&pdev->dev, NULL);
+>> +       clk_pll_configure_sr_hpm_lp(&gpll3, regmap, &gpll3_config, true);
+>> +       clk_pll_configure_sr_hpm_lp(&gpll4, regmap, &gpll4_config, true);
+> 
+> We should probably configure these before registering the clks. Can you
+> do the usual, map registers, configure stuff, and then
+> qcom_cc_really_probe()?
 
-What is this __raw accessor for? This generally results in non-portable
-code that should be replaced with writel() or something specific to
-the bus on the architecture you deal with.
+I think so. If there was a good reason to configure the plls after the 
+registration, I can't recall what that was, maybe the original flow from 
+downstream ...
 
-> +       spin_lock_irqsave(&qdev->dbc[exec->dbc_id].xfer_lock, flags);
-> +       req_id = qdev->dbc[exec->dbc_id].next_req_id++;
-> +       queued = mem->queued;
-> +       mem->queued = true;
-> +       spin_unlock_irqrestore(&qdev->dbc[exec->dbc_id].xfer_lock, flags);
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm GCC MSM8939 Driver");
+>> +MODULE_LICENSE("GPL v2");
+>> +MODULE_ALIAS("platform:gcc-msm8939");
+> 
+> The module alias isn't needed right?
 
-No need for 'irqsave' locks when you know that interrupts are enabled.
+Nope g/msm8916/s//msm8939/g - I can zap that.
 
-> +       head = le32_to_cpu(__raw_readl(dbc->dbc_base + RSPHP_OFF));
-> +       tail = le32_to_cpu(__raw_readl(dbc->dbc_base + RSPTP_OFF));
+Thanks for the review.
 
-More __raw accessors to replace.
-
-> +       case QAIC_IOCTL_MEM_NR:
-> +               if (_IOC_DIR(cmd) != (_IOC_READ | _IOC_WRITE) ||
-> +                   _IOC_SIZE(cmd) != sizeof(struct qaic_mem_req)) {
-> +                       ret = -EINVAL;
-> +                       break;
-
-This looks like a very verbose way to check 'cmd' against a known
-constant. Why not use 'switch (cmd)' like all other drivers?
-
-      Arnd
+---
+bod
