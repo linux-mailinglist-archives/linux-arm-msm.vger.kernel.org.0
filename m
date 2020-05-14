@@ -2,97 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2D1F1D28E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 09:37:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28C961D2A6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 10:40:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbgENHhl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 03:37:41 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:10440 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726078AbgENHhk (ORCPT
+        id S1726033AbgENIkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 04:40:32 -0400
+Received: from m176149.mail.qiye.163.com ([59.111.176.149]:31346 "EHLO
+        m176149.mail.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725946AbgENIkc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 03:37:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589441860; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=y4vCCmSr1ZBPDi4lPBD+cRmxDnvjeGEo2YEOpKBr8SQ=; b=GTRSeEapZYp5SgbxxUy4RMvI3kKCWWlAxq5R5kmzQmqIfzQOu1ZWpH9qB3x02vsPIVFU6VjT
- 4njU+Ipe3tXNtCOl6Hz/LvXNhHiCjjtvGiDlUdUodiFyCBYmTUr/kTTl7GALEP4+qSHP5CSK
- VkdIkleEFB19XQ/drmDhpxi6sNE=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ebcf543.7f9c849e23b0-smtp-out-n04;
- Thu, 14 May 2020 07:37:39 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DBB43C432C2; Thu, 14 May 2020 07:37:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.24.246] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A39FC43636;
-        Thu, 14 May 2020 07:37:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3A39FC43636
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V5 4/7] spi: spi-geni-qcom: Add interconnect support
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org, georgi.djakov@linaro.org
-References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org>
- <1588919619-21355-5-git-send-email-akashast@codeaurora.org>
- <20200508182532.GD4525@google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <6a7b8129-6542-042f-e418-c4b49303d944@codeaurora.org>
-Date:   Thu, 14 May 2020 13:07:28 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Thu, 14 May 2020 04:40:32 -0400
+X-Greylist: delayed 447 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 May 2020 04:40:30 EDT
+Received: from vivo.com (wm-9.qy.internal [127.0.0.1])
+        by m176149.mail.qiye.163.com (Hmail) with ESMTP id 28275282644;
+        Thu, 14 May 2020 16:32:59 +0800 (CST)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+Message-ID: <APkAOQB-CI1Ksc35Em0ifKrK.3.1589445179140.Hmail.wenhu.wang@vivo.com>
+To:     Wang Wenhu <wenhu.wang@vivo.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel@vivo.com
+Subject: =?UTF-8?B?UmU6W1BBVENIXSBzb2M6IHFtaTogbW92ZSB0bHYtbWljcm9zIHRvIGhlYWRlciBmaWxl?=
+X-Priority: 3
+X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
+X-Originating-IP: 58.251.74.227
+In-Reply-To: <20200413035758.60238-1-wenhu.wang@vivo.com>
 MIME-Version: 1.0
-In-Reply-To: <20200508182532.GD4525@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: from wenhu.wang@vivo.com( [58.251.74.227) ] by ajax-webmail ( [127.0.0.1] ) ; Thu, 14 May 2020 16:32:59 +0800 (GMT+08:00)
+From:   =?UTF-8?B?546L5paH6JmO?= <wenhu.wang@vivo.com>
+Date:   Thu, 14 May 2020 16:32:59 +0800 (GMT+08:00)
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZT1VMSU9CQkJCS09NSElOTFlXWShZQU
+        hPN1dZLVlBSVdZCQ4XHghZQVk1NCk2OjckKS43PlkG
+X-HM-Sender-Digest: e1kJHlYWEh9ZQUhMSkJNT0pMTUxIN1dZDB4ZWUEPCQ4eV1kSHx4VD1lB
+        WUc6KxA6NCo5VjgySjAIGEhOPhZLEh0wCTBVSFVKTkNCT09OSkNKSU9MVTMWGhIXVQweFRMOVQwa
+        FRw7DRINFFUYFBZFWVdZEgtZQVlOQ1VJTkpVTE9VSUlMWVdZCAFZQUNPQkg3Bg++
+X-HM-Tid: 0a721250b7269395kuws28275282644
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
-
-....
-
-;
->>   
->> +	ret = geni_icc_get(&mas->se, NULL);
->> +	if (ret)
->> +		goto spi_geni_probe_runtime_disable;
->> +	/* Set the bus quota to a reasonable value for register access */
->> +	geni_icc_bw_init(&mas->se.icc_paths[GENI_TO_CORE],
->> +			Bps_to_icc(CORE_2X_50_MHZ), 0);
->> +	geni_icc_bw_init(&mas->se.icc_paths[CPU_TO_GENI], GENI_DEFAULT_BW, 0);
->> +
->> +	/* Set BW for register access */
-> This comment doesn't add any value. Register access is mentioned a few lines
-> above and from the function name it's evident that it sets the ICC bandwidth.
-ok
->
->> +	ret = geni_icc_set_bw(&mas->se);
->>
->> +		return ret;
->>   
->>   	return geni_se_resources_on(&mas->se);
->>   }
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+SGkgYWxsLApBbnkgY29tbWVudHMgaGVyZT8KClJlZ2FyZHMsCldlbmh1Cgo+SXQncyBoaWdobHkg
+aGVscGZ1bCB0byBtb3ZlIHRoZSBkZWZpbml0aW9ucyBvZiBUTFYgcmVsYXRlZCBtaWNyb3MKPmlu
+dG8gaGVhZGVyIGZpbGUgZm9yIHVzZXIgcmVmZXJlbmNlLiBUaGUgT1BUSU9OQUxfVExWX1RZUEVf
+U1RBUlQKPnNob3VsZCBiZSBrbm93biB0byBhbnkgdXNlciB0aGF0IG1pZ2h0IGRlZmluZSBtZXNz
+YWdlcyBjb250YWluaW5nCj5vcHRpb25hbCBmaWVsZHMuIFNJWkUgZmllbGRzIGFyZSB0aGUgc2Ft
+ZSwgZm9yIHVzZXJzIHRvIGNhbGN1bGF0ZQo+bWVzc2FnZSBidWZmZXIgbGVuZ3RoLgo+Cj5XaGls
+ZSBlbmNvZGluZyBtZXNzYWdlcywgVHlwZSBhbHdheXMgb2NjdXJzIHRvZ2V0aGVyIHdpdGggTGVu
+Z3RoLgo+U28gdGhlIGJldHRlciB3YXkgaXMgdG8gdXNlIFRMX1NJWkUsIHJhdGhlciB0aGFuIChU
+X1NJWkUgKyBMX1NJWkUpLgo+Cj5TaWduZWQtb2ZmLWJ5OiBXYW5nIFdlbmh1IDx3ZW5odS53YW5n
+QHZpdm8uY29tPgo+LS0tCj4gZHJpdmVycy9zb2MvcWNvbS9xbWlfZW5jZGVjLmMgfCAyOCArKysr
+KysrKysrKystLS0tLS0tLS0tLS0tLS0tCj4gaW5jbHVkZS9saW51eC9zb2MvcWNvbS9xbWkuaCAg
+fCAgNSArKysrKwo+IDIgZmlsZXMgY2hhbmdlZCwgMTcgaW5zZXJ0aW9ucygrKSwgMTYgZGVsZXRp
+b25zKC0pCj4KPmRpZmYgLS1naXQgYS9kcml2ZXJzL3NvYy9xY29tL3FtaV9lbmNkZWMuYyBiL2Ry
+aXZlcnMvc29jL3Fjb20vcW1pX2VuY2RlYy5jCj5pbmRleCAzYWFhYjcxZDFiMmMuLmE2NzRjNjhl
+ZmFiMiAxMDA2NDQKPi0tLSBhL2RyaXZlcnMvc29jL3Fjb20vcW1pX2VuY2RlYy5jCj4rKysgYi9k
+cml2ZXJzL3NvYy9xY29tL3FtaV9lbmNkZWMuYwo+QEAgLTUzLDEwICs1Myw2IEBAIGRvIHsgXAo+
+IAlkZWNvZGVkX2J5dGVzICs9IHJjOyBcCj4gfSB3aGlsZSAoMCkKPiAKPi0jZGVmaW5lIFRMVl9M
+RU5fU0laRSBzaXplb2YodTE2KQo+LSNkZWZpbmUgVExWX1RZUEVfU0laRSBzaXplb2YodTgpCj4t
+I2RlZmluZSBPUFRJT05BTF9UTFZfVFlQRV9TVEFSVCAweDEwCj4tCj4gc3RhdGljIGludCBxbWlf
+ZW5jb2RlKHN0cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwKPiAJ
+CSAgICAgIGNvbnN0IHZvaWQgKmluX2Nfc3RydWN0LCB1MzIgb3V0X2J1Zl9sZW4sCj4gCQkgICAg
+ICBpbnQgZW5jX2xldmVsKTsKPkBAIC0xNDIsNyArMTM4LDcgQEAgc3RhdGljIGludCBxbWlfY2Fs
+Y19taW5fbXNnX2xlbihzdHJ1Y3QgcW1pX2VsZW1faW5mbyAqZWlfYXJyYXksCj4gCQkgKiBuZXN0
+ZWQgc3RydWN0dXJlLgo+IAkJICovCj4gCQlpZiAobGV2ZWwgPT0gMSkKPi0JCQltaW5fbXNnX2xl
+biArPSAoVExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4rCQkJbWluX21zZ19sZW4gKz0g
+UU1JX1RMVl9UTF9TSVpFOwo+IAl9Cj4gCj4gCXJldHVybiBtaW5fbXNnX2xlbjsKPkBAIC0yNTMs
+OCArMjQ5LDcgQEAgc3RhdGljIGludCBxbWlfZW5jb2RlX3N0cmluZ19lbGVtKHN0cnVjdCBxbWlf
+ZWxlbV9pbmZvICplaV9hcnJheSwKPiAJfQo+IAo+IAlpZiAoZW5jX2xldmVsID09IDEpIHsKPi0J
+CWlmIChzdHJpbmdfbGVuICsgVExWX0xFTl9TSVpFICsgVExWX1RZUEVfU0laRSA+Cj4tCQkgICAg
+b3V0X2J1Zl9sZW4pIHsKPisJCWlmIChzdHJpbmdfbGVuICsgUU1JX1RMVl9UTF9TSVpFID4gb3V0
+X2J1Zl9sZW4pIHsKPiAJCQlwcl9lcnIoIiVzOiBPdXRwdXQgbGVuICVkID4gT3V0IEJ1ZiBsZW4g
+JWRcbiIsCj4gCQkJICAgICAgIF9fZnVuY19fLCBzdHJpbmdfbGVuLCBvdXRfYnVmX2xlbik7Cj4g
+CQkJcmV0dXJuIC1FVE9PU01BTEw7Cj5AQCAtMzExLDcgKzMwNiw3IEBAIHN0YXRpYyBpbnQgcW1p
+X2VuY29kZShzdHJ1Y3QgcW1pX2VsZW1faW5mbyAqZWlfYXJyYXksIHZvaWQgKm91dF9idWYsCj4g
+CXRsdl9wb2ludGVyID0gYnVmX2RzdDsKPiAJdGx2X2xlbiA9IDA7Cj4gCWlmIChlbmNfbGV2ZWwg
+PT0gMSkKPi0JCWJ1Zl9kc3QgPSBidWZfZHN0ICsgKFRMVl9MRU5fU0laRSArIFRMVl9UWVBFX1NJ
+WkUpOwo+KwkJYnVmX2RzdCA9IGJ1Zl9kc3QgKyBRTUlfVExWX1RMX1NJWkU7Cj4gCj4gCXdoaWxl
+ICh0ZW1wX2VpLT5kYXRhX3R5cGUgIT0gUU1JX0VPVEkpIHsKPiAJCWJ1Zl9zcmMgPSBpbl9jX3N0
+cnVjdCArIHRlbXBfZWktPm9mZnNldDsKPkBAIC0zNDIsOCArMzM3LDggQEAgc3RhdGljIGludCBx
+bWlfZW5jb2RlKHN0cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwK
+PiAJCQlkYXRhX2xlbl9zeiA9IHRlbXBfZWktPmVsZW1fc2l6ZSA9PSBzaXplb2YodTgpID8KPiAJ
+CQkJCXNpemVvZih1OCkgOiBzaXplb2YodTE2KTsKPiAJCQkvKiBDaGVjayB0byBhdm9pZCBvdXQg
+b2YgcmFuZ2UgYnVmZmVyIGFjY2VzcyAqLwo+LQkJCWlmICgoZGF0YV9sZW5fc3ogKyBlbmNvZGVk
+X2J5dGVzICsgVExWX0xFTl9TSVpFICsKPi0JCQkgICAgVExWX1RZUEVfU0laRSkgPiBvdXRfYnVm
+X2xlbikgewo+KwkJCWlmICgoZGF0YV9sZW5fc3ogKyBlbmNvZGVkX2J5dGVzICsgUU1JX1RMVl9U
+TF9TSVpFKSA+Cj4rCQkJICAgIG91dF9idWZfbGVuKSB7Cj4gCQkJCXByX2VycigiJXM6IFRvbyBT
+bWFsbCBCdWZmZXIgQERBVEFfTEVOXG4iLAo+IAkJCQkgICAgICAgX19mdW5jX18pOwo+IAkJCQly
+ZXR1cm4gLUVUT09TTUFMTDsKPkBAIC0zNjcsNyArMzYyLDcgQEAgc3RhdGljIGludCBxbWlfZW5j
+b2RlKHN0cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwKPiAJCWNh
+c2UgUU1JX1NJR05FRF80X0JZVEVfRU5VTToKPiAJCQkvKiBDaGVjayB0byBhdm9pZCBvdXQgb2Yg
+cmFuZ2UgYnVmZmVyIGFjY2VzcyAqLwo+IAkJCWlmICgoKGRhdGFfbGVuX3ZhbHVlICogdGVtcF9l
+aS0+ZWxlbV9zaXplKSArCj4tCQkJICAgIGVuY29kZWRfYnl0ZXMgKyBUTFZfTEVOX1NJWkUgKyBU
+TFZfVFlQRV9TSVpFKSA+Cj4rCQkJICAgIGVuY29kZWRfYnl0ZXMgKyBRTUlfVExWX1RMX1NJWkUp
+ID4KPiAJCQkgICAgb3V0X2J1Zl9sZW4pIHsKPiAJCQkJcHJfZXJyKCIlczogVG9vIFNtYWxsIEJ1
+ZmZlciBAZGF0YV90eXBlOiVkXG4iLAo+IAkJCQkgICAgICAgX19mdW5jX18sIHRlbXBfZWktPmRh
+dGFfdHlwZSk7Cj5AQCAtNDEwLDEwICs0MDUsMTAgQEAgc3RhdGljIGludCBxbWlfZW5jb2RlKHN0
+cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwKPiAKPiAJCWlmIChl
+bmNvZGVfdGx2ICYmIGVuY19sZXZlbCA9PSAxKSB7Cj4gCQkJUU1JX0VOQ0RFQ19FTkNPREVfVExW
+KHRsdl90eXBlLCB0bHZfbGVuLCB0bHZfcG9pbnRlcik7Cj4tCQkJZW5jb2RlZF9ieXRlcyArPSAo
+VExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4rCQkJZW5jb2RlZF9ieXRlcyArPSBRTUlf
+VExWX1RMX1NJWkU7Cj4gCQkJdGx2X3BvaW50ZXIgPSBidWZfZHN0Owo+IAkJCXRsdl9sZW4gPSAw
+Owo+LQkJCWJ1Zl9kc3QgPSBidWZfZHN0ICsgVExWX0xFTl9TSVpFICsgVExWX1RZUEVfU0laRTsK
+PisJCQlidWZfZHN0ID0gYnVmX2RzdCArIFFNSV9UTFZfVExfU0laRTsKPiAJCQllbmNvZGVfdGx2
+ID0gMDsKPiAJCX0KPiAJfQo+QEAgLTYxMywxMCArNjA4LDExIEBAIHN0YXRpYyBpbnQgcW1pX2Rl
+Y29kZShzdHJ1Y3QgcW1pX2VsZW1faW5mbyAqZWlfYXJyYXksIHZvaWQgKm91dF9jX3N0cnVjdCwK
+PiAJCQl0bHZfcG9pbnRlciA9IGJ1Zl9zcmM7Cj4gCQkJUU1JX0VOQ0RFQ19ERUNPREVfVExWKCZ0
+bHZfdHlwZSwKPiAJCQkJCSAgICAgICZ0bHZfbGVuLCB0bHZfcG9pbnRlcik7Cj4tCQkJYnVmX3Ny
+YyArPSAoVExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4tCQkJZGVjb2RlZF9ieXRlcyAr
+PSAoVExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4rCQkJYnVmX3NyYyArPSBRTUlfVExW
+X1RMX1NJWkU7Cj4rCQkJZGVjb2RlZF9ieXRlcyArPSBRTUlfVExWX1RMX1NJWkU7Cj4gCQkJdGVt
+cF9laSA9IGZpbmRfZWkoZWlfYXJyYXksIHRsdl90eXBlKTsKPi0JCQlpZiAoIXRlbXBfZWkgJiYg
+dGx2X3R5cGUgPCBPUFRJT05BTF9UTFZfVFlQRV9TVEFSVCkgewo+KwkJCWlmICghdGVtcF9laSAm
+JiB0bHZfdHlwZSA8Cj4rCQkJICAgIFFNSV9PUFRJT05BTF9UTFZfVFlQRV9TVEFSVCkgewo+IAkJ
+CQlwcl9lcnIoIiVzOiBJbnZhbCBlbGVtZW50IGluZm9cbiIsIF9fZnVuY19fKTsKPiAJCQkJcmV0
+dXJuIC1FSU5WQUw7Cj4gCQkJfSBlbHNlIGlmICghdGVtcF9laSkgewo+ZGlmZiAtLWdpdCBhL2lu
+Y2x1ZGUvbGludXgvc29jL3Fjb20vcW1pLmggYi9pbmNsdWRlL2xpbnV4L3NvYy9xY29tL3FtaS5o
+Cj5pbmRleCBlNzEyZjk0Yjg5ZmMuLmViNTNhZWJkZjQ1ZSAxMDA2NDQKPi0tLSBhL2luY2x1ZGUv
+bGludXgvc29jL3Fjb20vcW1pLmgKPisrKyBiL2luY2x1ZGUvbGludXgvc29jL3Fjb20vcW1pLmgK
+PkBAIC0zNCw2ICszNCwxMSBAQCBzdHJ1Y3QgcW1pX2hlYWRlciB7Cj4gI2RlZmluZSBRTUlfSU5E
+SUNBVElPTgk0Cj4gCj4gI2RlZmluZSBRTUlfQ09NTU9OX1RMVl9UWVBFIDAKPisjZGVmaW5lIFFN
+SV9PUFRJT05BTF9UTFZfVFlQRV9TVEFSVCAweDEwCj4rCj4rI2RlZmluZSBRTUlfVExWX0xFTl9T
+SVpFIHNpemVvZih1MTYpCj4rI2RlZmluZSBRTUlfVExWX1RZUEVfU0laRSBzaXplb2YodTgpCj4r
+I2RlZmluZSBRTUlfVExWX1RMX1NJWkUgKFFNSV9UTFZfTEVOX1NJWkUgKyBRTUlfVExWX1RZUEVf
+U0laRSkKPiAKPiBlbnVtIHFtaV9lbGVtX3R5cGUgewo+IAlRTUlfRU9USSwKPi0tIAo+Mi4xNy4x
+Cj4KDQoNCg==
