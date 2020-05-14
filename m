@@ -2,131 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28C961D2A6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 10:40:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AA991D2CB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 12:28:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726033AbgENIkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 04:40:32 -0400
-Received: from m176149.mail.qiye.163.com ([59.111.176.149]:31346 "EHLO
-        m176149.mail.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbgENIkc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 04:40:32 -0400
-X-Greylist: delayed 447 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 May 2020 04:40:30 EDT
-Received: from vivo.com (wm-9.qy.internal [127.0.0.1])
-        by m176149.mail.qiye.163.com (Hmail) with ESMTP id 28275282644;
-        Thu, 14 May 2020 16:32:59 +0800 (CST)
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-Message-ID: <APkAOQB-CI1Ksc35Em0ifKrK.3.1589445179140.Hmail.wenhu.wang@vivo.com>
-To:     Wang Wenhu <wenhu.wang@vivo.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1726389AbgENK1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 06:27:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55914 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726234AbgENK1y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 May 2020 06:27:54 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A3C9A20734;
+        Thu, 14 May 2020 10:27:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1589452073;
+        bh=8YB9PkihPxyIdTMoNW95kPZVAuM1cjE/7vhXPSTIK6A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=z958oHucrRPdewqJv4Gvyp12/z5HkOQ/5iRnCCEMxauRv6a9Gum/JsyXEO9hVeonn
+         LeYX3KtpbsiqpvCUULsndaaqF0yUVMDsq0uZ52Dtw4kLAzvISzWugYxsisv/0eJMjY
+         bajxmRGO6M5HGRqZeSfStnIFQpCsf3MCtHIxfAVs=
+Date:   Thu, 14 May 2020 11:24:58 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Mathias Nyman <mathias.nyman@linux.intel.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@vivo.com
-Subject: =?UTF-8?B?UmU6W1BBVENIXSBzb2M6IHFtaTogbW92ZSB0bHYtbWljcm9zIHRvIGhlYWRlciBmaWxl?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
-X-Originating-IP: 58.251.74.227
-In-Reply-To: <20200413035758.60238-1-wenhu.wang@vivo.com>
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v13 5/5] usb: xhci: provide a debugfs hook for erasing rom
+Message-ID: <20200514092458.GA1591384@kroah.com>
+References: <20200506060025.1535960-1-vkoul@kernel.org>
+ <20200506060025.1535960-6-vkoul@kernel.org>
+ <caa2c5f4-a858-d699-27af-7b0c22b4dc40@linux.intel.com>
+ <20200513124554.GA1083139@kroah.com>
 MIME-Version: 1.0
-Received: from wenhu.wang@vivo.com( [58.251.74.227) ] by ajax-webmail ( [127.0.0.1] ) ; Thu, 14 May 2020 16:32:59 +0800 (GMT+08:00)
-From:   =?UTF-8?B?546L5paH6JmO?= <wenhu.wang@vivo.com>
-Date:   Thu, 14 May 2020 16:32:59 +0800 (GMT+08:00)
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZT1VMSU9CQkJCS09NSElOTFlXWShZQU
-        hPN1dZLVlBSVdZCQ4XHghZQVk1NCk2OjckKS43PlkG
-X-HM-Sender-Digest: e1kJHlYWEh9ZQUhMSkJNT0pMTUxIN1dZDB4ZWUEPCQ4eV1kSHx4VD1lB
-        WUc6KxA6NCo5VjgySjAIGEhOPhZLEh0wCTBVSFVKTkNCT09OSkNKSU9MVTMWGhIXVQweFRMOVQwa
-        FRw7DRINFFUYFBZFWVdZEgtZQVlOQ1VJTkpVTE9VSUlMWVdZCAFZQUNPQkg3Bg++
-X-HM-Tid: 0a721250b7269395kuws28275282644
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200513124554.GA1083139@kroah.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgYWxsLApBbnkgY29tbWVudHMgaGVyZT8KClJlZ2FyZHMsCldlbmh1Cgo+SXQncyBoaWdobHkg
-aGVscGZ1bCB0byBtb3ZlIHRoZSBkZWZpbml0aW9ucyBvZiBUTFYgcmVsYXRlZCBtaWNyb3MKPmlu
-dG8gaGVhZGVyIGZpbGUgZm9yIHVzZXIgcmVmZXJlbmNlLiBUaGUgT1BUSU9OQUxfVExWX1RZUEVf
-U1RBUlQKPnNob3VsZCBiZSBrbm93biB0byBhbnkgdXNlciB0aGF0IG1pZ2h0IGRlZmluZSBtZXNz
-YWdlcyBjb250YWluaW5nCj5vcHRpb25hbCBmaWVsZHMuIFNJWkUgZmllbGRzIGFyZSB0aGUgc2Ft
-ZSwgZm9yIHVzZXJzIHRvIGNhbGN1bGF0ZQo+bWVzc2FnZSBidWZmZXIgbGVuZ3RoLgo+Cj5XaGls
-ZSBlbmNvZGluZyBtZXNzYWdlcywgVHlwZSBhbHdheXMgb2NjdXJzIHRvZ2V0aGVyIHdpdGggTGVu
-Z3RoLgo+U28gdGhlIGJldHRlciB3YXkgaXMgdG8gdXNlIFRMX1NJWkUsIHJhdGhlciB0aGFuIChU
-X1NJWkUgKyBMX1NJWkUpLgo+Cj5TaWduZWQtb2ZmLWJ5OiBXYW5nIFdlbmh1IDx3ZW5odS53YW5n
-QHZpdm8uY29tPgo+LS0tCj4gZHJpdmVycy9zb2MvcWNvbS9xbWlfZW5jZGVjLmMgfCAyOCArKysr
-KysrKysrKystLS0tLS0tLS0tLS0tLS0tCj4gaW5jbHVkZS9saW51eC9zb2MvcWNvbS9xbWkuaCAg
-fCAgNSArKysrKwo+IDIgZmlsZXMgY2hhbmdlZCwgMTcgaW5zZXJ0aW9ucygrKSwgMTYgZGVsZXRp
-b25zKC0pCj4KPmRpZmYgLS1naXQgYS9kcml2ZXJzL3NvYy9xY29tL3FtaV9lbmNkZWMuYyBiL2Ry
-aXZlcnMvc29jL3Fjb20vcW1pX2VuY2RlYy5jCj5pbmRleCAzYWFhYjcxZDFiMmMuLmE2NzRjNjhl
-ZmFiMiAxMDA2NDQKPi0tLSBhL2RyaXZlcnMvc29jL3Fjb20vcW1pX2VuY2RlYy5jCj4rKysgYi9k
-cml2ZXJzL3NvYy9xY29tL3FtaV9lbmNkZWMuYwo+QEAgLTUzLDEwICs1Myw2IEBAIGRvIHsgXAo+
-IAlkZWNvZGVkX2J5dGVzICs9IHJjOyBcCj4gfSB3aGlsZSAoMCkKPiAKPi0jZGVmaW5lIFRMVl9M
-RU5fU0laRSBzaXplb2YodTE2KQo+LSNkZWZpbmUgVExWX1RZUEVfU0laRSBzaXplb2YodTgpCj4t
-I2RlZmluZSBPUFRJT05BTF9UTFZfVFlQRV9TVEFSVCAweDEwCj4tCj4gc3RhdGljIGludCBxbWlf
-ZW5jb2RlKHN0cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwKPiAJ
-CSAgICAgIGNvbnN0IHZvaWQgKmluX2Nfc3RydWN0LCB1MzIgb3V0X2J1Zl9sZW4sCj4gCQkgICAg
-ICBpbnQgZW5jX2xldmVsKTsKPkBAIC0xNDIsNyArMTM4LDcgQEAgc3RhdGljIGludCBxbWlfY2Fs
-Y19taW5fbXNnX2xlbihzdHJ1Y3QgcW1pX2VsZW1faW5mbyAqZWlfYXJyYXksCj4gCQkgKiBuZXN0
-ZWQgc3RydWN0dXJlLgo+IAkJICovCj4gCQlpZiAobGV2ZWwgPT0gMSkKPi0JCQltaW5fbXNnX2xl
-biArPSAoVExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4rCQkJbWluX21zZ19sZW4gKz0g
-UU1JX1RMVl9UTF9TSVpFOwo+IAl9Cj4gCj4gCXJldHVybiBtaW5fbXNnX2xlbjsKPkBAIC0yNTMs
-OCArMjQ5LDcgQEAgc3RhdGljIGludCBxbWlfZW5jb2RlX3N0cmluZ19lbGVtKHN0cnVjdCBxbWlf
-ZWxlbV9pbmZvICplaV9hcnJheSwKPiAJfQo+IAo+IAlpZiAoZW5jX2xldmVsID09IDEpIHsKPi0J
-CWlmIChzdHJpbmdfbGVuICsgVExWX0xFTl9TSVpFICsgVExWX1RZUEVfU0laRSA+Cj4tCQkgICAg
-b3V0X2J1Zl9sZW4pIHsKPisJCWlmIChzdHJpbmdfbGVuICsgUU1JX1RMVl9UTF9TSVpFID4gb3V0
-X2J1Zl9sZW4pIHsKPiAJCQlwcl9lcnIoIiVzOiBPdXRwdXQgbGVuICVkID4gT3V0IEJ1ZiBsZW4g
-JWRcbiIsCj4gCQkJICAgICAgIF9fZnVuY19fLCBzdHJpbmdfbGVuLCBvdXRfYnVmX2xlbik7Cj4g
-CQkJcmV0dXJuIC1FVE9PU01BTEw7Cj5AQCAtMzExLDcgKzMwNiw3IEBAIHN0YXRpYyBpbnQgcW1p
-X2VuY29kZShzdHJ1Y3QgcW1pX2VsZW1faW5mbyAqZWlfYXJyYXksIHZvaWQgKm91dF9idWYsCj4g
-CXRsdl9wb2ludGVyID0gYnVmX2RzdDsKPiAJdGx2X2xlbiA9IDA7Cj4gCWlmIChlbmNfbGV2ZWwg
-PT0gMSkKPi0JCWJ1Zl9kc3QgPSBidWZfZHN0ICsgKFRMVl9MRU5fU0laRSArIFRMVl9UWVBFX1NJ
-WkUpOwo+KwkJYnVmX2RzdCA9IGJ1Zl9kc3QgKyBRTUlfVExWX1RMX1NJWkU7Cj4gCj4gCXdoaWxl
-ICh0ZW1wX2VpLT5kYXRhX3R5cGUgIT0gUU1JX0VPVEkpIHsKPiAJCWJ1Zl9zcmMgPSBpbl9jX3N0
-cnVjdCArIHRlbXBfZWktPm9mZnNldDsKPkBAIC0zNDIsOCArMzM3LDggQEAgc3RhdGljIGludCBx
-bWlfZW5jb2RlKHN0cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwK
-PiAJCQlkYXRhX2xlbl9zeiA9IHRlbXBfZWktPmVsZW1fc2l6ZSA9PSBzaXplb2YodTgpID8KPiAJ
-CQkJCXNpemVvZih1OCkgOiBzaXplb2YodTE2KTsKPiAJCQkvKiBDaGVjayB0byBhdm9pZCBvdXQg
-b2YgcmFuZ2UgYnVmZmVyIGFjY2VzcyAqLwo+LQkJCWlmICgoZGF0YV9sZW5fc3ogKyBlbmNvZGVk
-X2J5dGVzICsgVExWX0xFTl9TSVpFICsKPi0JCQkgICAgVExWX1RZUEVfU0laRSkgPiBvdXRfYnVm
-X2xlbikgewo+KwkJCWlmICgoZGF0YV9sZW5fc3ogKyBlbmNvZGVkX2J5dGVzICsgUU1JX1RMVl9U
-TF9TSVpFKSA+Cj4rCQkJICAgIG91dF9idWZfbGVuKSB7Cj4gCQkJCXByX2VycigiJXM6IFRvbyBT
-bWFsbCBCdWZmZXIgQERBVEFfTEVOXG4iLAo+IAkJCQkgICAgICAgX19mdW5jX18pOwo+IAkJCQly
-ZXR1cm4gLUVUT09TTUFMTDsKPkBAIC0zNjcsNyArMzYyLDcgQEAgc3RhdGljIGludCBxbWlfZW5j
-b2RlKHN0cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwKPiAJCWNh
-c2UgUU1JX1NJR05FRF80X0JZVEVfRU5VTToKPiAJCQkvKiBDaGVjayB0byBhdm9pZCBvdXQgb2Yg
-cmFuZ2UgYnVmZmVyIGFjY2VzcyAqLwo+IAkJCWlmICgoKGRhdGFfbGVuX3ZhbHVlICogdGVtcF9l
-aS0+ZWxlbV9zaXplKSArCj4tCQkJICAgIGVuY29kZWRfYnl0ZXMgKyBUTFZfTEVOX1NJWkUgKyBU
-TFZfVFlQRV9TSVpFKSA+Cj4rCQkJICAgIGVuY29kZWRfYnl0ZXMgKyBRTUlfVExWX1RMX1NJWkUp
-ID4KPiAJCQkgICAgb3V0X2J1Zl9sZW4pIHsKPiAJCQkJcHJfZXJyKCIlczogVG9vIFNtYWxsIEJ1
-ZmZlciBAZGF0YV90eXBlOiVkXG4iLAo+IAkJCQkgICAgICAgX19mdW5jX18sIHRlbXBfZWktPmRh
-dGFfdHlwZSk7Cj5AQCAtNDEwLDEwICs0MDUsMTAgQEAgc3RhdGljIGludCBxbWlfZW5jb2RlKHN0
-cnVjdCBxbWlfZWxlbV9pbmZvICplaV9hcnJheSwgdm9pZCAqb3V0X2J1ZiwKPiAKPiAJCWlmIChl
-bmNvZGVfdGx2ICYmIGVuY19sZXZlbCA9PSAxKSB7Cj4gCQkJUU1JX0VOQ0RFQ19FTkNPREVfVExW
-KHRsdl90eXBlLCB0bHZfbGVuLCB0bHZfcG9pbnRlcik7Cj4tCQkJZW5jb2RlZF9ieXRlcyArPSAo
-VExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4rCQkJZW5jb2RlZF9ieXRlcyArPSBRTUlf
-VExWX1RMX1NJWkU7Cj4gCQkJdGx2X3BvaW50ZXIgPSBidWZfZHN0Owo+IAkJCXRsdl9sZW4gPSAw
-Owo+LQkJCWJ1Zl9kc3QgPSBidWZfZHN0ICsgVExWX0xFTl9TSVpFICsgVExWX1RZUEVfU0laRTsK
-PisJCQlidWZfZHN0ID0gYnVmX2RzdCArIFFNSV9UTFZfVExfU0laRTsKPiAJCQllbmNvZGVfdGx2
-ID0gMDsKPiAJCX0KPiAJfQo+QEAgLTYxMywxMCArNjA4LDExIEBAIHN0YXRpYyBpbnQgcW1pX2Rl
-Y29kZShzdHJ1Y3QgcW1pX2VsZW1faW5mbyAqZWlfYXJyYXksIHZvaWQgKm91dF9jX3N0cnVjdCwK
-PiAJCQl0bHZfcG9pbnRlciA9IGJ1Zl9zcmM7Cj4gCQkJUU1JX0VOQ0RFQ19ERUNPREVfVExWKCZ0
-bHZfdHlwZSwKPiAJCQkJCSAgICAgICZ0bHZfbGVuLCB0bHZfcG9pbnRlcik7Cj4tCQkJYnVmX3Ny
-YyArPSAoVExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4tCQkJZGVjb2RlZF9ieXRlcyAr
-PSAoVExWX1RZUEVfU0laRSArIFRMVl9MRU5fU0laRSk7Cj4rCQkJYnVmX3NyYyArPSBRTUlfVExW
-X1RMX1NJWkU7Cj4rCQkJZGVjb2RlZF9ieXRlcyArPSBRTUlfVExWX1RMX1NJWkU7Cj4gCQkJdGVt
-cF9laSA9IGZpbmRfZWkoZWlfYXJyYXksIHRsdl90eXBlKTsKPi0JCQlpZiAoIXRlbXBfZWkgJiYg
-dGx2X3R5cGUgPCBPUFRJT05BTF9UTFZfVFlQRV9TVEFSVCkgewo+KwkJCWlmICghdGVtcF9laSAm
-JiB0bHZfdHlwZSA8Cj4rCQkJICAgIFFNSV9PUFRJT05BTF9UTFZfVFlQRV9TVEFSVCkgewo+IAkJ
-CQlwcl9lcnIoIiVzOiBJbnZhbCBlbGVtZW50IGluZm9cbiIsIF9fZnVuY19fKTsKPiAJCQkJcmV0
-dXJuIC1FSU5WQUw7Cj4gCQkJfSBlbHNlIGlmICghdGVtcF9laSkgewo+ZGlmZiAtLWdpdCBhL2lu
-Y2x1ZGUvbGludXgvc29jL3Fjb20vcW1pLmggYi9pbmNsdWRlL2xpbnV4L3NvYy9xY29tL3FtaS5o
-Cj5pbmRleCBlNzEyZjk0Yjg5ZmMuLmViNTNhZWJkZjQ1ZSAxMDA2NDQKPi0tLSBhL2luY2x1ZGUv
-bGludXgvc29jL3Fjb20vcW1pLmgKPisrKyBiL2luY2x1ZGUvbGludXgvc29jL3Fjb20vcW1pLmgK
-PkBAIC0zNCw2ICszNCwxMSBAQCBzdHJ1Y3QgcW1pX2hlYWRlciB7Cj4gI2RlZmluZSBRTUlfSU5E
-SUNBVElPTgk0Cj4gCj4gI2RlZmluZSBRTUlfQ09NTU9OX1RMVl9UWVBFIDAKPisjZGVmaW5lIFFN
-SV9PUFRJT05BTF9UTFZfVFlQRV9TVEFSVCAweDEwCj4rCj4rI2RlZmluZSBRTUlfVExWX0xFTl9T
-SVpFIHNpemVvZih1MTYpCj4rI2RlZmluZSBRTUlfVExWX1RZUEVfU0laRSBzaXplb2YodTgpCj4r
-I2RlZmluZSBRTUlfVExWX1RMX1NJWkUgKFFNSV9UTFZfTEVOX1NJWkUgKyBRTUlfVExWX1RZUEVf
-U0laRSkKPiAKPiBlbnVtIHFtaV9lbGVtX3R5cGUgewo+IAlRTUlfRU9USSwKPi0tIAo+Mi4xNy4x
-Cj4KDQoNCg==
+On Wed, May 13, 2020 at 02:45:54PM +0200, Greg Kroah-Hartman wrote:
+> On Wed, May 13, 2020 at 03:36:19PM +0300, Mathias Nyman wrote:
+> > On 6.5.2020 9.00, Vinod Koul wrote:
+> > > run "echo 1 > /sys/kernel/debug/renesas-usb/rom_erase" to erase
+> > > firmware when driver is loaded.
+> > > 
+> > > Subsequent init of driver shall reload the firmware
+> > > 
+> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > > ---
+> > >  drivers/usb/host/xhci-pci-renesas.c | 33 +++++++++++++++++++++++++++++
+> > >  1 file changed, 33 insertions(+)
+> > > 
+> > > diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
+> > > index f7d2445d30ec..fa32ec352dc8 100644
+> > > --- a/drivers/usb/host/xhci-pci-renesas.c
+> > > +++ b/drivers/usb/host/xhci-pci-renesas.c
+> > > @@ -2,6 +2,7 @@
+> > >  /* Copyright (C) 2019-2020 Linaro Limited */
+> > >  
+> > >  #include <linux/acpi.h>
+> > > +#include <linux/debugfs.h>
+> > >  #include <linux/firmware.h>
+> > >  #include <linux/module.h>
+> > >  #include <linux/pci.h>
+> > > @@ -170,6 +171,8 @@ static int renesas_fw_verify(const void *fw_data,
+> > >  	return 0;
+> > >  }
+> > >  
+> > > +static void debugfs_init(struct pci_dev *pdev);
+> > > +
+> > >  static bool renesas_check_rom(struct pci_dev *pdev)
+> > >  {
+> > >  	u16 rom_status;
+> > > @@ -183,6 +186,7 @@ static bool renesas_check_rom(struct pci_dev *pdev)
+> > >  	rom_status &= RENESAS_ROM_STATUS_ROM_EXISTS;
+> > >  	if (rom_status) {
+> > >  		dev_dbg(&pdev->dev, "External ROM exists\n");
+> > > +		debugfs_init(pdev);
+> > >  		return true; /* External ROM exists */
+> > >  	}
+> > >  
+> > > @@ -449,6 +453,34 @@ static void renesas_rom_erase(struct pci_dev *pdev)
+> > >  	dev_dbg(&pdev->dev, "ROM Erase... Done success\n");
+> > >  }
+> > >  
+> > > +static int debugfs_rom_erase(void *data, u64 value)
+> > > +{
+> > > +	struct pci_dev *pdev = data;
+> > > +
+> > > +	if (value == 1) {
+> > > +		dev_dbg(&pdev->dev, "Userspace requested ROM erase\n");
+> > > +		renesas_rom_erase(pdev);
+> > > +		return 0;
+> > > +	}
+> > > +	return -EINVAL;
+> > > +}
+> > > +DEFINE_DEBUGFS_ATTRIBUTE(rom_erase_ops, NULL, debugfs_rom_erase, "%llu\n");
+> > > +
+> > > +static struct dentry *debugfs_root;
+> > > +
+> > > +static void debugfs_init(struct pci_dev *pdev)
+> > > +{
+> > > +	debugfs_root = debugfs_create_dir("renesas_usb", NULL);
+> > 
+> > This will create a renesas_usb directory right under debugfs root.
+> > xhci has its own struct dentry xhci_debugfs_root; 
+> > Use that as parent instead
+> 
+> Ah, I misssed that, a follow-on patch can do this, right?
+
+Actually, a whole new series with this changed is good, I didn't take
+these for now, for some reason I thought I had.
+
+thanks,
+
+greg k-h
