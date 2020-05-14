@@ -2,115 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65DFF1D3192
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 15:44:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77DEE1D31A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 15:45:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbgENNn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 09:43:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43094 "EHLO mail.kernel.org"
+        id S1727095AbgENNp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 09:45:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43744 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726011AbgENNn5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 09:43:57 -0400
+        id S1726128AbgENNp0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 May 2020 09:45:26 -0400
 Received: from localhost (unknown [122.182.193.86])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 73A9720727;
-        Thu, 14 May 2020 13:43:56 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0FC942054F;
+        Thu, 14 May 2020 13:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589463837;
-        bh=y4VzPym1d+/Z4xemvKYw47+MBhvwt35MP+RtdYnYgFA=;
+        s=default; t=1589463925;
+        bh=BiyP19s8ArH79tbowm7Md7c5VYSdaAeLlwmIsR16syE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IJbGJe2wq1Li8vFevWYTNVN7S8uiBSoYVpBYDeEzXLwSmfvKnxM1gm3vNqNM9TQf4
-         i37jRjCerc0nXX56O21u20NQy1qKhXfcfX6Mv0YIASFHWtF+XhRlR71ByQ4sciqmrH
-         A0BnFg5Y08mLSnYDgDnAJH1mTVhdJ9AbtTqudBhg=
-Date:   Thu, 14 May 2020 19:13:53 +0530
+        b=KajdqBrH81XEVNYOh/a8PIo3/kb/e2owHgWHMPDdeB4GQ3X5E3E1phiTooLAkNa80
+         TLdxD64/QO/QMzEPLRauoyehamXgtHgTNmsGaEpOFgGQVGv0sMszopoXoDEdwZqieo
+         XnwCk/RnWwSTKrnoIiYrRrtX9NiRLcFfwXXkmUdM=
+Date:   Thu, 14 May 2020 19:15:21 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: db820c: fix audio configuration
-Message-ID: <20200514134353.GT14092@vkoul-mobl>
-References: <20200417092327.7341-1-srinivas.kandagatla@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: qcom: pas: Add SM8250
+ remoteprocs
+Message-ID: <20200514134521.GU14092@vkoul-mobl>
+References: <20200430180051.3795305-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200417092327.7341-1-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20200430180051.3795305-1-bjorn.andersson@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-04-20, 10:23, Srinivas Kandagatla wrote:
-> After patch f864edff110d ("ASoC: qdsp6: q6routing: remove default routing")
-> and 9b60441692d9 ("ASoC: qdsp6: q6asm-dai: only enable dais from device tree")
-> asm dais and routing needs to be properly specified at device tree level.
-> 
-> This patch fixes this.
+On 30-04-20, 11:00, Bjorn Andersson wrote:
+> Add the SM8250 audio, compute and sensor remoteprocs to the PAS DT
+> binding.
 
-Can we add the Fixes tag here please?
-
-Other than that lgtm:
 
 Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 22 +++++++++++++++++++-
->  arch/arm64/boot/dts/qcom/msm8996.dtsi        |  2 ++
->  2 files changed, 23 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> index 4692b7ad16b7..cf217b6b2b39 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> @@ -908,10 +908,30 @@
->  	status = "okay";
->  };
+> Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Changed adsp power-domains to lcx and added missing lmx
+> 
+>  .../devicetree/bindings/remoteproc/qcom,adsp.txt         | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
+> index 9938918b2fea..c18c1b8d2869 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.txt
+> @@ -21,6 +21,9 @@ on the Qualcomm ADSP Hexagon core.
+>  		    "qcom,sm8150-cdsp-pas"
+>  		    "qcom,sm8150-mpss-pas"
+>  		    "qcom,sm8150-slpi-pas"
+> +		    "qcom,sm8250-adsp-pas"
+> +		    "qcom,sm8250-cdsp-pas"
+> +		    "qcom,sm8250-slpi-pas"
 >  
-> +&q6asmdai {
-> +	dai@0 {
-> +		reg = <0>;
-> +		direction = <2>;
-> +	};
-> +
-> +	dai@1 {
-> +		reg = <1>;
-> +		direction = <2>;
-> +	};
-> +
-> +	dai@2 {
-> +		reg = <2>;
-> +		direction = <1>;
-> +	};
-> +};
-> +
->  &sound {
->  	compatible = "qcom,apq8096-sndcard";
->  	model = "DB820c";
-> -	audio-routing =	"RX_BIAS", "MCLK";
-> +	audio-routing =	"RX_BIAS", "MCLK",
-> +		"MM_DL1",  "MultiMedia1 Playback",
-> +		"MM_DL2",  "MultiMedia2 Playback",
-> +		"MultiMedia3 Capture", "MM_UL3";
+>  - interrupts-extended:
+>  	Usage: required
+> @@ -44,6 +47,9 @@ on the Qualcomm ADSP Hexagon core.
+>  	qcom,sm8150-adsp-pas:
+>  	qcom,sm8150-cdsp-pas:
+>  	qcom,sm8150-slpi-pas:
+> +	qcom,sm8250-adsp-pas:
+> +	qcom,sm8250-cdsp-pas:
+> +	qcom,sm8250-slpi-pas:
+>  		    must be "wdog", "fatal", "ready", "handover", "stop-ack"
+>  	qcom,qcs404-wcss-pas:
+>  	qcom,sm8150-mpss-pas:
+> @@ -105,10 +111,13 @@ on the Qualcomm ADSP Hexagon core.
+>  	qcom,sdm845-cdsp-pas:
+>  	qcom,sm8150-adsp-pas:
+>  	qcom,sm8150-cdsp-pas:
+> +	qcom,sm8250-cdsp-pas:
+>  		    must be "cx", "load_state"
+>  	qcom,sm8150-mpss-pas:
+>  		    must be "cx", "load_state", "mss"
+> +	qcom,sm8250-adsp-pas:
+>  	qcom,sm8150-slpi-pas:
+> +	qcom,sm8250-slpi-pas:
+>  		    must be "lcx", "lmx", "load_state"
 >  
->  	mm1-dai-link {
->  		link-name = "MultiMedia1";
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 14827adebd94..98634d5c4440 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -2066,6 +2066,8 @@
->  						reg = <APR_SVC_ASM>;
->  						q6asmdai: dais {
->  							compatible = "qcom,q6asm-dais";
-> +							#address-cells = <1>;
-> +							#size-cells = <0>;
->  							#sound-dai-cells = <1>;
->  							iommus = <&lpass_q6_smmu 1>;
->  						};
+>  - memory-region:
 > -- 
-> 2.21.0
+> 2.24.0
 
 -- 
 ~Vinod
