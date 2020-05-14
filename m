@@ -2,196 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFEEF1D3E5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 22:03:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 129941D3E80
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 22:08:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729102AbgENUDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 16:03:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59624 "EHLO
+        id S1729237AbgENUHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 16:07:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729103AbgENUDz (ORCPT
+        by vger.kernel.org with ESMTP id S1726035AbgENUHa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 16:03:55 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C00FC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 13:03:54 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id u188so266948wmu.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 13:03:54 -0700 (PDT)
+        Thu, 14 May 2020 16:07:30 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6E2BC061A0C;
+        Thu, 14 May 2020 13:07:29 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id se13so3870446ejb.9;
+        Thu, 14 May 2020 13:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0T9FZKzhaNIAyAMhurXfRjBv09XxUrY4eeMiZKg77EU=;
-        b=VAIiWBZd2orVmWNlsBdww0kQaG/rvtc7vet7nyyZlSVy3XFuYBQVE80Glibbmi1Q/H
-         P7xZZPm/sIwfTWY1GifVPJ6d0KCv5ZLDS22MX0SAdwHCH6ahi3ME03a3kF/lqQvAxdpl
-         XDNuG1qZ6i5qtfURURGheV0H/P+nYP3ryGwSk=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cQmt30TFAqZp3yOvZIOG5QAMcRr8CjctI3ajbEh56NE=;
+        b=ApMDbkPkRNIC/7RcXmpSwCcvYGJNF485BSW10W+PTcRPdHjRQRRnSgDZgC9dL4dLcZ
+         JO5wK4BbdxmM2pyFjSSy6wjHui7t4pMqh9zGKL9gQFfuAppjsMceZAYYi/M0YJYPObEp
+         DTXpB5VoTaSbeFi/T96dsKzdeXHuOrIhQ/ha4fOq8+9MmKSfP3GzfOExSzDBXD/Aqjfr
+         FpLfUl72IjTNWr3lADuDZ3WRxfEpFdpvdS87vfPuXJB5oNZs9ePpW8x8N676aWYOjt8X
+         Wb9sj3/B9GV0IqdjPbU/x4WmHD10OFpG5eiR0xKbWBoBn9hjAqjxJ4HjRcLY++/IUaNv
+         jx9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0T9FZKzhaNIAyAMhurXfRjBv09XxUrY4eeMiZKg77EU=;
-        b=Vzg5mL3wwgLF92sX83JfeYsYTqbN0oGqHaEEIN1VKD5HqgMmnNLPVMxwTVT48+Cr1P
-         bFJnhLAW37WDMXymSx8RRONxEDbjm02e0WGxwii7tSHPGsgb9QoXgaeF+eXKepeQiV1C
-         zsEgIOY2EJj4b1IbKEiBybSXoQTXM5Osmirkq1n5cfe03bzJmGm6hNTO+axMygE3V7en
-         +IxND6gHVBMu51gI8HDkYkKLaYa2AOwtb02tG+J9WMY9HjMjQOm0wUD5G+KeuO4xxzrn
-         FWGh3NXcktUpmUDfV4caXOxK//gUK861DjFZhRLG61T7ftZdhNnVLVSln84Tu6T35eXO
-         /iNw==
-X-Gm-Message-State: AOAM532yccdNEBMu5djtV4VqzRtNVsDxtxAIgDvLwASrIQEDEgYYWDmY
-        hN545fKycPAdMQIJLPJfgOLNSg==
-X-Google-Smtp-Source: ABdhPJyYd+AOcu5tx+w8CHn4dey+W+3+gPxvcA9FEiyAuntQNRmQiufc1W5mxesih8+QEvnI7mVCfQ==
-X-Received: by 2002:a1c:c309:: with SMTP id t9mr14300wmf.113.1589486633043;
-        Thu, 14 May 2020 13:03:53 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id q14sm18882wrc.66.2020.05.14.13.03.51
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cQmt30TFAqZp3yOvZIOG5QAMcRr8CjctI3ajbEh56NE=;
+        b=jJVNdxJxcjK4jGgJ+Fl8oRGSvM7pSg/erUUCX7Z1/3V9Xv5c+YcjgW5ZErIfBck060
+         vdtUj+reaTsssgVUNeyaJ+WHNfYsr3CoeDMEMN/zkdwqk31u7uEsX5NoZLGhOH1KiW3y
+         RvEgWnjvqussp/cLN6NSZ+69iTF5IS6ZiMuQ6eYcCd2qqynsvYv+hgLAqQWpNX/pTzAM
+         MnU6b77KXsW3MpVyrPC/v2E1OnQZpsOHdB0gNaZwP5cgVAnk8KMl+CSO7GewgMRE5LsV
+         AheSMlNy/QWWrf/RdTyTHX+O36lS+6Je6gJKrkFQpQmH6BRHfxhmjIBQ7NisbUp3F4EP
+         25oQ==
+X-Gm-Message-State: AOAM531Fe5pYRwaXlubvdLPWWet2zMpG05Nn9xbMac9RidRWzbBNIlFi
+        WQgZtT8qfaf1BEY1Vj/nrUo=
+X-Google-Smtp-Source: ABdhPJyZAqVxxW4F6pijP3vARs0Mzl6g5yvW5S652fmezLr8yo1QqHC5CwiciahBVh46lbuFoEDTFg==
+X-Received: by 2002:a17:906:5795:: with SMTP id k21mr5504825ejq.374.1589486848391;
+        Thu, 14 May 2020 13:07:28 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host122-89-dynamic.247-95-r.retail.telecomitalia.it. [95.247.89.122])
+        by smtp.googlemail.com with ESMTPSA id bd10sm1472edb.10.2020.05.14.13.07.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2020 13:03:52 -0700 (PDT)
-Date:   Thu, 14 May 2020 22:03:49 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Kefeng Wang <wangkefeng.wang@huawei.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Russell King <linux@armlinux.org.uk>,
+        Thu, 14 May 2020 13:07:27 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Uwe Kleine Konig <u.kleine-koenig@pengutronix.de>,
-        linux-pwm@vger.kernel.org,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        linux-arm-msm@vger.kernel.org, Jyri Sarha <jsarha@ti.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Allison Randal <allison@lohutok.net>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Zheng Bin <zhengbin13@huawei.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        patches@opensource.cirrus.com, Enrico Weigelt <info@metux.net>
-Subject: Re: [PATCH v1 08/18] backlight: add backlight_is_blank()
-Message-ID: <20200514200349.GD206103@phenom.ffwll.local>
-References: <20200514191001.457441-1-sam@ravnborg.org>
- <20200514191001.457441-9-sam@ravnborg.org>
- <20200514194116.GB206103@phenom.ffwll.local>
- <20200514194646.GA460099@ravnborg.org>
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v4 00/10] Multiple fixes in PCIe qcom driver
+Date:   Thu, 14 May 2020 22:07:01 +0200
+Message-Id: <20200514200712.12232-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200514194646.GA460099@ravnborg.org>
-X-Operating-System: Linux phenom 5.6.0-1-amd64 
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 14, 2020 at 09:46:46PM +0200, Sam Ravnborg wrote:
-> Hi Daniel.
-> 
-> On Thu, May 14, 2020 at 09:41:16PM +0200, Daniel Vetter wrote:
-> > On Thu, May 14, 2020 at 09:09:51PM +0200, Sam Ravnborg wrote:
-> > > The backlight support has two properties that express the state:
-> > > - power
-> > > - state
-> > > 
-> > > It is un-documented and easy to get wrong.
-> > > Add backlight_is_blank() helper to make it simpler for drivers
-> > > to get the check of the state correct.
-> > > 
-> > > A lot of drivers also includes checks for fb_blank.
-> > > This check is redundant when the state is checked
-> > > as thus not needed in this helper function.
-> > > Rolling out this helper to all relevant backlight drivers
-> > > will eliminate almost all accesses to fb_blank.
-> > > 
-> > > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> > > Cc: Lee Jones <lee.jones@linaro.org>
-> > > Cc: Daniel Thompson <daniel.thompson@linaro.org>
-> > > Cc: Jingoo Han <jingoohan1@gmail.com>
-> > > ---
-> > >  include/linux/backlight.h | 17 +++++++++++++++++
-> > >  1 file changed, 17 insertions(+)
-> > > 
-> > > diff --git a/include/linux/backlight.h b/include/linux/backlight.h
-> > > index b7839ea9d00a..e67e926de1e2 100644
-> > > --- a/include/linux/backlight.h
-> > > +++ b/include/linux/backlight.h
-> > > @@ -165,6 +165,23 @@ static inline int backlight_disable(struct backlight_device *bd)
-> > >  	return backlight_update_status(bd);
-> > >  }
-> > >  
-> > > +/**
-> > > + * backlight_is_blank - Return true if display is expected to be blank
-> > > + * @bd: the backlight device
-> > > + *
-> > > + * Display is expected to be blank if any of these is true::
-> > > + *
-> > > + *   1) if power in not UNBLANK
-> > > + *   2) if state indicate BLANK or SUSPENDED
-> > > + *
-> > > + * Returns true if display is expected to be blank, false otherwise.
-> > > + */
-> > > +static inline bool backlight_is_blank(struct backlight_device *bd)
-> > > +{
-> > > +	return bd->props.power != FB_BLANK_UNBLANK ||
-> > > +	       bd->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK);
-> > 
-> > This definition here doesn't match backlight_enabled/disable() functions
-> > we added. I think to avoid lots of pondering and surprises we should try
-> > to make sure these are all matching, so that once we rolled them out
-> > everywhere, we can just replace the complicated state with one flag.
-> 
-> Will add it in v2. When all user of fb_blank is dropped we can
-> safely remove it then.
-> And as you said on irc, the risk of introducing regressions is lower
-> as we see some creative uses in the drivers today.
-> I already did some kind of audit - but I may have missed something.
+This contains multiple fix for PCIe qcom driver.
+Some optional reset and clocks were missing.
+Fix a problem with no PARF programming that cause kernel lock on load.
+Add support to force gen 1 speed if needed. (due to hardware limitation)
+Add ipq8064 rev 2 support that use a different tx termination offset.
 
-btw one pattern I've seen in a few places with a few greps I've just done
-is maybe worth putting into a helper too:
+v4:
+* Fix grammar error across all patch subject
+* Use bulk api for clks
+* Program PARF only in ipq8064 SoC
+* Program tx term only in ipq8064 SoC
+* Drop configurable tx-dempth rx-eq
+* Make added clk optional
 
-backlight_force_enable(bl)
-{
-	if (bl->brightness == 0)
-		bl->brightness = bl->max_brightness;
-	backlight_enable(backlight);
-}
+v3:
+* Fix check reported by checkpatch --strict
+* Rename force_gen1 to gen
 
-Just in case you run out of ideas anytime soon :-)
+v2:
+* Drop iATU programming (already done in pcie init)
+* Use max-link-speed instead of force-gen1 custom definition
+* Drop MRRS to 256B (Can't find a realy reason why this was suggested)
+* Introduce a new variant for different revision of ipq8064
 
-Cheers, Daniel
+Abhishek Sahu (1):
+  PCI: qcom: Change duplicate PCI reset to phy reset
 
-> 
-> 	Sam
-> 
-> > 
-> > > +}
-> > > +
-> > >  extern struct backlight_device *backlight_device_register(const char *name,
-> > >  	struct device *dev, void *devdata, const struct backlight_ops *ops,
-> > >  	const struct backlight_properties *props);
-> > > -- 
-> > > 2.25.1
-> > > 
-> > 
-> > -- 
-> > Daniel Vetter
-> > Software Engineer, Intel Corporation
-> > http://blog.ffwll.ch
-> > _______________________________________________
-> > dri-devel mailing list
-> > dri-devel@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
+Ansuel Smith (8):
+  PCI: qcom: Add missing ipq806x clocks in PCIe driver
+  dt-bindings: PCI: qcom: Add missing clks
+  PCI: qcom: Add missing reset for ipq806x
+  dt-bindings: PCI: qcom: Add ext reset
+  PCI: qcom: Use bulk clk api and assert on error
+  PCI: qcom: Define some PARF params needed for ipq8064 SoC
+  PCI: qcom: Add ipq8064 rev2 variant and set tx term offset
+  dt-bindings: PCI: qcom: Add ipq8064 rev 2 variant
+
+Sham Muthayyan (1):
+  PCI: qcom: Add Force GEN1 support
+
+ .../devicetree/bindings/pci/qcom,pcie.txt     |  15 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        | 171 ++++++++++++------
+ 2 files changed, 123 insertions(+), 63 deletions(-)
 
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+2.25.1
+
