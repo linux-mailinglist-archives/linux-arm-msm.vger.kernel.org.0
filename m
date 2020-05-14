@@ -2,252 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A51D1D2821
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 08:46:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62FBB1D2831
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 08:53:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbgENGqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 02:46:16 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:20100 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726133AbgENGqP (ORCPT
+        id S1725967AbgENGxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 02:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48766 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725909AbgENGxN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 02:46:15 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589438774; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=cKgghdOXnhc+2aVtVa22OYQ1NH4oXGcYByObqibfJT4=; b=wiGTUWdE0K2I7SrvVCrcQEXWt3kOGF7py4+jWyhZ67n0T3rzSt+/zo78xrDinyc8dhhHwaBm
- dTFqEHu6xBp67F2PCsBiWaLtGuhbXiiJGzgjWCODMerPe9bj8dd00jz9xjlqEIAZ6xtqkD2D
- ETONjcwDWiY47PeaZffqjBOB2BY=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5ebce92332b098143c915613 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 14 May 2020 06:45:54
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1886DC43636; Thu, 14 May 2020 06:45:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.24.246] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A0AD8C433D2;
-        Thu, 14 May 2020 06:45:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A0AD8C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V5 2/7] soc: qcom-geni-se: Add interconnect support to fix
- earlycon crash
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org, georgi.djakov@linaro.org
-References: <1588919619-21355-1-git-send-email-akashast@codeaurora.org>
- <1588919619-21355-3-git-send-email-akashast@codeaurora.org>
- <20200508175938.GB4525@google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <294b33e5-cf5a-8abc-2152-afa01664d962@codeaurora.org>
-Date:   Thu, 14 May 2020 12:15:44 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Thu, 14 May 2020 02:53:13 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F73C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 23:53:13 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id j28so496811vkn.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2020 23:53:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AD73/gyPw537Xp1vDJOYvLHr7JMtBDUrFsijP0WuRks=;
+        b=RdSLSskx2Wvw3alRl86UnDw5dnN1+ZHo+jEuOiDqNYvb3EfRrfuQ1fjHd8pEofVcmx
+         OSOsg5Ki+jgXdahzTq8BYmydYLkEp/D/1CWEiD9WIoLB/oyMT0/XdOe73UgI9Xo/PX8Z
+         vAsKTrb1XOhLWFCweUDfv5clUyY9/Ct0OqoS4jylDHfwnX2dZaBf96hPr9UjJyc9qJ54
+         LfhUMigof8LCnYdiDSe3krEkaZ0cdi5WNh7X76KkQjTeQbosgpRBGY0UM/FYTbyUC8gZ
+         fAmJrAfp1zGCiCU5/M/YWEfBTBFrgSdaXqABtBbjTfwTGLLBBjxmcCGYThD0EubKLklL
+         Y/WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AD73/gyPw537Xp1vDJOYvLHr7JMtBDUrFsijP0WuRks=;
+        b=cfa7tWJAd1dc6tbrf7oeeK/PpE1sIinb9s8fkhen3ocrcvMNPxFN5oJQj6A3VP5AdU
+         VnaTvsi8mPnRNz9pcQcAkP3WseNLTsQcQgJlqGBI3QBDK1c+Wy051dG/vRMb9xfc8Vu5
+         mglK3Z5utGmKS2mxkyWWzcKlWPfP4WFhGlg/AtvAoCqXTU2bI0c0PvD/rg3j3+LnCjRK
+         GoRQajpx0xFVPjG6wiaOFBO3fUjEUgH6q3UQDawZsniDaBljQPBxm4hKBWo+luC1OtxJ
+         g5fwK5VCh5lWKb86jufMqT/y+1y7TlWHmJ/w05bDLLwqhyIMh3PtDjhXMp/mmffuzuvr
+         27FQ==
+X-Gm-Message-State: AOAM533uF7iU1yV6nfPa5p/VeqPBlRPwORkMXGV4rjJ0V9Yj22HzK2D3
+        d0InGHP0m8hTHVJrNH2TqpojlNnk1qlVQig6jzsElw==
+X-Google-Smtp-Source: ABdhPJwqOdHWX9G/Vc1PEWvZMXQ69dsTzV+tAJwC+UvjMCX5pJg7UnTD2qxWptjx7wEK5anGtRzdU/mrdZoXOnfLCtw=
+X-Received: by 2002:a1f:a786:: with SMTP id q128mr2448341vke.86.1589439192297;
+ Wed, 13 May 2020 23:53:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200508175938.GB4525@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20200514062836.190194-1-vkoul@kernel.org>
+In-Reply-To: <20200514062836.190194-1-vkoul@kernel.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Thu, 14 May 2020 12:22:33 +0530
+Message-ID: <CAHLCerN_pxkqJojJLL5ztbYCeFZ9Mco6oM-=0mdmh5iSydxrUg@mail.gmail.com>
+Subject: Re: [PATCH] net: stmmac: fix num_por initialization
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+        lakml <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rahul Ankushrao Kawadgave <rahulak@qti.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On Thu, May 14, 2020 at 11:59 AM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> Driver missed initializing num_por which is por values that driver
 
-On 5/8/2020 11:29 PM, Matthias Kaehlcke wrote:
-> Hi Akash,
->
-> overall this looks good to me, a few comments inline
->
-> On Fri, May 08, 2020 at 12:03:34PM +0530, Akash Asthana wrote:
->> QUP core clock is shared among all the SE drivers present on particular
->> QUP wrapper, the system will reset(unclocked access) if earlycon used after
->> QUP core clock is put to 0 from other SE drivers before real console comes
->> up.
->>
->> As earlycon can't vote for it's QUP core need, to fix this add ICC
->> support to common/QUP wrapper driver and put vote for QUP core from
->> probe on behalf of earlycon and remove vote during earlycon exit call.
->>
->> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
->> Reported-by: Matthias Kaehlcke <mka@chromium.org>
->> ---
->> Change in V3:
->>   - Add geni_remove_earlycon_icc_vote API that will be used by earlycon
->>     exit function to remove ICC vote for earlyconsole.
->>   - Remove suspend/resume hook for geni-se driver as we are no longer
->>     removing earlyconsole ICC vote from system suspend, we are removing
->>     from earlycon exit.
->>
->> Change in V4:
->>   - As per Matthias comment make 'earlycon_wrapper' as static structure.
->>
->> Changes in V5:
->>   - Vote for core path only after checking whether "qcom_geni" earlycon is
->>     actually present or not by traversing over structure "console_drivers".
->>
->>   drivers/soc/qcom/qcom-geni-se.c       | 63 +++++++++++++++++++++++++++++++++++
->>   drivers/tty/serial/qcom_geni_serial.c |  7 ++++
->>   include/linux/qcom-geni-se.h          |  2 ++
->>   3 files changed, 72 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
->> index 63403bf..66fe6f2 100644
->> --- a/drivers/soc/qcom/qcom-geni-se.c
->> +++ b/drivers/soc/qcom/qcom-geni-se.c
->> @@ -3,6 +3,7 @@
->>   
->>   #include <linux/acpi.h>
->>   #include <linux/clk.h>
->> +#include <linux/console.h>
->>   #include <linux/slab.h>
->>   #include <linux/dma-mapping.h>
->>   #include <linux/io.h>
->> @@ -90,11 +91,14 @@ struct geni_wrapper {
->>   	struct device *dev;
->>   	void __iomem *base;
->>   	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
->> +	struct geni_icc_path to_core;
->>   };
->>   
->>   static const char * const icc_path_names[] = {"qup-core", "qup-config",
->>   								"qup-memory"};
->>   
->> +static struct geni_wrapper *earlycon_wrapper;
->> +
->>   #define QUP_HW_VER_REG			0x4
->>   
->>   /* Common SE registers */
->> @@ -812,11 +816,33 @@ int geni_icc_disable(struct geni_se *se)
->>   }
->>   EXPORT_SYMBOL(geni_icc_disable);
->>   
->> +void geni_remove_earlycon_icc_vote(void)
->> +{
->> +	struct geni_wrapper *wrapper = earlycon_wrapper;
->> +	struct device_node *parent = of_get_next_parent(wrapper->dev->of_node);
-> Do we need to check that earlycon_wrapper != NULL before dereferencing it?
-> In theory this should not happen, but better be safe.
-Ok, I will add NULL check.
->
->> +	struct device_node *child;
->> +
->> +	for_each_child_of_node(parent, child) {
->> +		if (of_device_is_compatible(child, "qcom,geni-se-qup")) {
->> +			wrapper = platform_get_drvdata(of_find_device_by_node(
->> +					child));
->> +			icc_put(wrapper->to_core.path);
->> +			wrapper->to_core.path = NULL;
-> nit: setting the path to NULL isn't really needed IIUC.
-icc_put just free the path and don't reinitialize the path to NULL, if 
-the path is used after it is put target will crash. So just for safety I 
-am setting this path to NULL.
->
->> +		}
->> +	}
->> +	of_node_put(parent);
->> +
->> +	earlycon_wrapper = NULL;
->> +}
->> +EXPORT_SYMBOL(geni_remove_earlycon_icc_vote);
->> +
->>   static int geni_se_probe(struct platform_device *pdev)
->>   {
->>   	struct device *dev = &pdev->dev;
->>   	struct resource *res;
->>   	struct geni_wrapper *wrapper;
->> +	struct console *bcon;
->> +	int earlycon_present = 0;
-> use bool & true/false
->
-> The variable is only used when CONFIG_SERIAL_EARLYCON is set, I think
-> you need to add '__maybe_unused' to avoid a compiler warning then earlycon
-> support is disabled.
->
-> bikeshed: 'has_earlycon' would be slightly more concise (feel free to ignore).
-Ok
->
->>   	int ret;
->>   
->>   	wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
->> @@ -839,6 +865,43 @@ static int geni_se_probe(struct platform_device *pdev)
->>   		}
->>   	}
->>   
->> +#ifdef CONFIG_SERIAL_EARLYCON
->> +	if (console_drivers)
-> The loop should have curly braces ("use braces when a loop contains more than
-> a single simple statement"), even though the compiler doesn't need them in
-> this case. This is not a loop, but I was told by a maintainer that it equally
-> applies, which makes sense.
->
-> You could avoid one level of indentation through:
-Ok
->
-> if (!console_drivers)
-> 	goto exit;
+Nit: s/is/is one of the/ ?
 
-I think I can omit this extra check because "for_each_console" will take 
-care of this.
+> configures to hardware. In order to get this values, add a new structure
 
+Nit: s/this/these
+
+> ethqos_emac_driver_data which holds por and num_por values and populate
+> that in driver probe.
 >
->> +		for_each_console(bcon)
-> ditto (braces)
+> Fixes: a7c30e62d4b8 ("net: stmmac: Add driver for Qualcomm ethqos")
+> Reported-by: Rahul Ankushrao Kawadgave <rahulak@qti.qualcomm.com>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+
+Otherwise,
+
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+
+> ---
+>  .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
 >
->> +			if (!strcmp(bcon->name, "qcom_geni")) {
->> +				earlycon_present = 1;
->> +				break;
->> +			}
->> +	if (!earlycon_present)
->> +		goto exit;
->> +
->> +	wrapper->to_core.path = devm_of_icc_get(dev, "qup-core");
->> +	if (IS_ERR(wrapper->to_core.path))
->> +		return PTR_ERR(wrapper->to_core.path);
->> +	/*
->> +	 * Put minmal BW request on core clocks on behalf of early console.
->> +	 * The vote will be removed earlycon exit function.
->> +	 *
->> +	 * Note: We are putting vote on each QUP wrapper instead only to which
->> +	 * earlycon is connected because QUP core clock of different wrapper
->> +	 * share same voltage domain. If core1 is put to 0, then core2 will
->> +	 * also run at 0, if not voted. Default ICC vote will be removed ASA
->> +	 * we touch any of the core clock.
->> +	 * core1 = core2 = max(core1, core2)
->> +	 */
->> +	ret = icc_set_bw(wrapper->to_core.path, GENI_DEFAULT_BW,
->> +							GENI_DEFAULT_BW);
-> nit: the indentation is a bit odd. Align with 'wrapper->to_core.path' or a
-> nearby tab stop?
-
-ok
-
-
-Thanks for providing the feedback.
-
-Regards,
-
-Akash
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index e0a5fe83d8e0..bfc4a92f1d92 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -75,6 +75,11 @@ struct ethqos_emac_por {
+>         unsigned int value;
+>  };
+>
+> +struct ethqos_emac_driver_data {
+> +       const struct ethqos_emac_por *por;
+> +       unsigned int num_por;
+> +};
+> +
+>  struct qcom_ethqos {
+>         struct platform_device *pdev;
+>         void __iomem *rgmii_base;
+> @@ -171,6 +176,11 @@ static const struct ethqos_emac_por emac_v2_3_0_por[] = {
+>         { .offset = RGMII_IO_MACRO_CONFIG2,     .value = 0x00002060 },
+>  };
+>
+> +static const struct ethqos_emac_driver_data emac_v2_3_0_data = {
+> +       .por = emac_v2_3_0_por,
+> +       .num_por = ARRAY_SIZE(emac_v2_3_0_por),
+> +};
+> +
+>  static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+>  {
+>         unsigned int val;
+> @@ -442,6 +452,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>         struct device_node *np = pdev->dev.of_node;
+>         struct plat_stmmacenet_data *plat_dat;
+>         struct stmmac_resources stmmac_res;
+> +       const struct ethqos_emac_driver_data *data;
+>         struct qcom_ethqos *ethqos;
+>         struct resource *res;
+>         int ret;
+> @@ -471,7 +482,9 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>                 goto err_mem;
+>         }
+>
+> -       ethqos->por = of_device_get_match_data(&pdev->dev);
+> +       data = of_device_get_match_data(&pdev->dev);
+> +       ethqos->por = data->por;
+> +       ethqos->num_por = data->num_por;
+>
+>         ethqos->rgmii_clk = devm_clk_get(&pdev->dev, "rgmii");
+>         if (IS_ERR(ethqos->rgmii_clk)) {
+> @@ -526,7 +539,7 @@ static int qcom_ethqos_remove(struct platform_device *pdev)
+>  }
+>
+>  static const struct of_device_id qcom_ethqos_match[] = {
+> -       { .compatible = "qcom,qcs404-ethqos", .data = &emac_v2_3_0_por},
+> +       { .compatible = "qcom,qcs404-ethqos", .data = &emac_v2_3_0_data},
+>         { }
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_ethqos_match);
+> --
+> 2.25.4
+>
