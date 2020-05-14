@@ -2,122 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BAC091D2E57
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 13:30:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B21E1D2EA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 13:46:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726067AbgENLag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 07:30:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35664 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726010AbgENLag (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 07:30:36 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F17C061A0C;
-        Thu, 14 May 2020 04:30:35 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id o14so3114219ljp.4;
-        Thu, 14 May 2020 04:30:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=ah//zqGVr2uq0yxwfS0temU7octJ3zdlPot3c86bBKg=;
-        b=ZWiahqDG1NmV5BZmHPba70NLT3jWoiGhVL8LiWzNM5EhW7iB8gMGIHJWV5rCTG8rSo
-         HQJAj/lGM8deoncy8mlMupsfxwUzmZfcH7LSJB4TBSc5VzKIqmp9ASkktLIpfvCVNc3A
-         BoMwqKygagvsl3T0XOfD4ktdNoyypTKBqlGaj+q0h9E0RS2FYPE/MZptMW8/G1zMOSQW
-         HVAoWBCuHRgv0LAKY8q86/wb7mFb7ezeOtSWtnkM57R2R6U0QTqBIQpwkwljLayq4+jk
-         pfTZPKz/kEOk9lEBP50dMvgmYYWd9kRdtTbQY2kjDY48W1NzTDBvZQGOhiLt3kCT8Jp6
-         i9Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :date:message-id:mime-version;
-        bh=ah//zqGVr2uq0yxwfS0temU7octJ3zdlPot3c86bBKg=;
-        b=koOyuQU/wwm2FhIT6rroXW1il2D/fegpTtMkuxpKgHU+yClv9vji5dI+CgMs/OX86d
-         Fc3y2zVxP7icLfiPAiowYKxaRQm5WXYA6Jw1tRN89WZzbj40k2UJFeCw+Qk/8XwO2MU9
-         PH+2KIQPJIUNbiOYmh3B6yHL8dqUJL1nxuU69F7J5x8U9Q4krHORUJe+nu6RCcC3jVO/
-         MZPHcqZFQr+AOuwJyHbBnjQw+5MtvrHH3L3+sSyfaqp3PVuIC3mjJ8mfPedsakuPRVIc
-         z85p1xxvZu6/LwFBouuJCjkF5/zyMS30l2if9t4YuS2gQiqbM3PkppfNEETemn3KpVmf
-         Efog==
-X-Gm-Message-State: AOAM5315o8hDrmT/oEty2sXiBLL1JpbFe5lFr8fhXUYp6YNL+rBJ7rZq
-        Y9s4lC16jd9ESp/cU8wPAK4=
-X-Google-Smtp-Source: ABdhPJzBPTrOoPSmDrxxlZaojs5Gyl65qbnn/VHe5j3S87HnxSM5SrSaFP8FYBZdlRTpPyemwx7bpg==
-X-Received: by 2002:a2e:a313:: with SMTP id l19mr2474879lje.133.1589455834002;
-        Thu, 14 May 2020 04:30:34 -0700 (PDT)
-Received: from saruman (91-155-214-58.elisa-laajakaista.fi. [91.155.214.58])
-        by smtp.gmail.com with ESMTPSA id l26sm1340749ljc.49.2020.05.14.04.30.32
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 May 2020 04:30:33 -0700 (PDT)
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1726128AbgENLqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 07:46:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36282 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726094AbgENLqR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 May 2020 07:46:17 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3C8CF20671;
+        Thu, 14 May 2020 11:46:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1589456776;
+        bh=UtLC4FWAsNQWwvCkA9XvZziuOBZQynG4YRxwXmBREJk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VpUXVPsjb6XXHHj8Jd5OYhOJjs7MFOWwmYR1ninaO5RdEQysSTdrsQnGrzQNlVeOn
+         HG3jBh/tByOyLl2yHY4zpwz8hSKJ7L3p67eKfExi1BX2R/cIjAMxhXPR6RA68UJdBk
+         UQyejP/bee3FZ201AfCKnIhMb6w5i27Gi37Uxq/0=
+Date:   Thu, 14 May 2020 13:46:14 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Mathias Nyman <mathias.nyman@linux.intel.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: Re: [PATCH v7 2/4] usb: dwc3: qcom: Add interconnect support in dwc3 driver
-In-Reply-To: <878shu4uwk.fsf@kernel.org>
-References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org> <1585718145-29537-3-git-send-email-sanm@codeaurora.org> <878shu4uwk.fsf@kernel.org>
-Date:   Thu, 14 May 2020 14:30:28 +0300
-Message-ID: <875zcy4uuj.fsf@kernel.org>
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v13 5/5] usb: xhci: provide a debugfs hook for erasing rom
+Message-ID: <20200514114614.GA1893226@kroah.com>
+References: <20200506060025.1535960-1-vkoul@kernel.org>
+ <20200506060025.1535960-6-vkoul@kernel.org>
+ <caa2c5f4-a858-d699-27af-7b0c22b4dc40@linux.intel.com>
+ <20200513124554.GA1083139@kroah.com>
+ <20200514092458.GA1591384@kroah.com>
+ <20200514112618.GP14092@vkoul-mobl>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200514112618.GP14092@vkoul-mobl>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On Thu, May 14, 2020 at 04:56:18PM +0530, Vinod Koul wrote:
+> On 14-05-20, 11:24, Greg Kroah-Hartman wrote:
+> > On Wed, May 13, 2020 at 02:45:54PM +0200, Greg Kroah-Hartman wrote:
+> 
+> > > Ah, I misssed that, a follow-on patch can do this, right?
+> > 
+> > Actually, a whole new series with this changed is good, I didn't take
+> > these for now, for some reason I thought I had.
+> 
+> Do you mind taking these except this patch (last). I will spin this
+> later
 
-Felipe Balbi <balbi@kernel.org> writes:
+Can you resend, they are not in my patch queue anymore.
 
-> Hi,
->
-> Sandeep Maheswaram <sanm@codeaurora.org> writes:
->> +static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
->> +{
->> +	struct device *dev =3D qcom->dev;
->> +	int ret;
->> +
->> +	if (!device_is_bound(&qcom->dwc3->dev))
->> +		return -EPROBE_DEFER;
->
-> this breaks allmodconfig. I'm dropping this series from my queue for
-> this merge window.
+thanks,
 
-Sorry, I meant this patch ;-)
-
-=2D-=20
-balbi
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl69K9QACgkQzL64meEa
-mQZ7vhAArWjaK6Aj1DN1EzYA0n/cMOhFyrbXdSjFMQVnz2FVLtseCEoKC6OdSMLx
-jGEzTYRjI+78Ypm8agyAVxlEvWvpG9z7NNNTA8yDIevNKQ47q5M/XWRsI2ueElV1
-LG6mt2SdK5RH1Id4BQAIZ36/IG/CIlQiml4EJYUtT0RjNhCmP7kI73bN4bp8EH3u
-8TGjNwFfguoI0RjJLXbOSIkTvYUbMFv/X3Ap5qk7sne3BBBMZkNGepGG5t8HGWHa
-uFgM1IXpgVQ3Wnua5nlSjk/PYjm+Vkm/z4Tj646+cUZHyhlZNpwSlMDtrPT9euAS
-7cWU4zVE2ve74Jpu2CJbVuHEpVmNSoh4zlnqDHpth8AEfiSndn4AlzkHd7ZLY1lA
-ZEXGRu8aylz4/fIQMlxA1J2NiV+81zi8awOD4D4/ERBJrf5Fx5s41ChUXXynbmrx
-OSube67GvjjMZdCG1gjZatIIex8pj0DMM91bDAEPvZIbr/Z1G5FwrNnoIaJpE3Xi
-DT9N6CGkz+PvOpME7y/CLpOlfqYe1Js/+RkzRJ80Qwy/G1V5n7McOKSU4o7AOmZk
-m40we7nmSzN+Q1KmAh0EzjtfLhrUWGMcuwRcI+p5jc40G/4dm6ySKVv9b5z+l+No
-1yahDWmAwNgIDBJtRvET0vbw5F7oaCqzy+p+lKq7s/8UnxLVJNQ=
-=mQ/l
------END PGP SIGNATURE-----
---=-=-=--
+greg k-h
