@@ -2,132 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C94081D3667
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 18:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E3221D36AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 18:40:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbgENQYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 12:24:50 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:18730 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725975AbgENQYt (ORCPT
+        id S1726241AbgENQkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 12:40:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56044 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbgENQkg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 12:24:49 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589473489; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=nVgMACd1zvIq4WhGfSju+6OvJNb61oG1e/CVzd4fVNc=; b=OAPdlR0aUGdRjmISPK65wTl8D4BQS8fHYbkX86UGFi3G+hOBTeEoLzS0z81GnY/vtGOtnQrJ
- +BroxJduzBXd6T1778xWMa8cbk+B5+aj50yOJYv68fWpRBroSyTo4dkAcjW9JlxTRpLN7Ksp
- yWWRwgVJuLEllIo7eLd4ooE8bxU=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ebd70cf.7f6d1a141ce0-smtp-out-n03;
- Thu, 14 May 2020 16:24:47 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D542FC432C2; Thu, 14 May 2020 16:24:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 982E6C433D2;
-        Thu, 14 May 2020 16:24:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 982E6C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [RFC PATCH 3/8] qaic: Create char dev
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     arnd@arndb.de, manivannan.sadhasivam@linaro.org,
-        bjorn.andersson@linaro.org, wufan@codeaurora.org,
-        pratanan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org>
- <1589465266-20056-4-git-send-email-jhugo@codeaurora.org>
- <20200514141211.GA2643665@kroah.com>
- <0421a64a-10f3-08df-9ef1-14fdb570db0d@codeaurora.org>
- <20200514155615.GA2963499@kroah.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <4be546d3-b571-0659-0140-f34ec88f95ff@codeaurora.org>
-Date:   Thu, 14 May 2020 10:24:44 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Thu, 14 May 2020 12:40:36 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B210AC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:40:36 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id r3so1833078qve.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HWFeoUCCAGrwFNZxgc3//5BRvEIhNROwr+Wf1EbQfmY=;
+        b=UvPlZl0iOaSxRCrz4fSlO6xyQ4m5RIN2qw1rZtiYNuvBFSSNHUv+z6jsScDG2JkoLZ
+         9KPzqq9Yz+Xek9thEBwb1hxG4RE2BMXein7EOEaNp8aruvGk13N+6glTTIgL7iBjci/B
+         OvS5nH3CBDh2XG23YTlRN04vrysWYTmp0OAqk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HWFeoUCCAGrwFNZxgc3//5BRvEIhNROwr+Wf1EbQfmY=;
+        b=uiYQQMCAFxU/r4iCXTtU+1JlL1COUat4opO7fh1Dc6FodfGyUpcoVvDSx2epJrgEco
+         ddnG86iatAxI4AKnZTPiMwQVHL/ELO/GDPzeocFajNukwbGKRbe9dd4XpdNN5eJOyI3q
+         c1YYUmaHCIw4RNW/OYFXxsK6crZASX7Ui7+3wpD3U09iZUe4HYdR1fmgNB98dg9gjtYS
+         na9Y/N7MXM++NbOlcN4uG6FX07o2qNPV4gj3U+DDGQCWh6MoH5qrGFBuuvZmR27uqJZb
+         g7wK6r9kxGc9umTsTpvf+J0t+blFzmx4bYnj6nPNp4ZP5A8Z/NLoiWW59FC5tcXO+lgK
+         es5g==
+X-Gm-Message-State: AOAM532RLJ65M2RJF4WdFRqIfzAkoksx9h4dZid8jHP8zFK02XOrazrl
+        xIDq9keu9sxyIVcnuRZMIZrOWm/czV4=
+X-Google-Smtp-Source: ABdhPJxIXhSQlp7IBYAJdun8ixJwBidTfoH0vCTq4Bpcd71axdx8UyqerejHSWVginoBN3PoRnUxhg==
+X-Received: by 2002:ad4:4b72:: with SMTP id m18mr5763900qvx.62.1589474435579;
+        Thu, 14 May 2020 09:40:35 -0700 (PDT)
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com. [209.85.219.52])
+        by smtp.gmail.com with ESMTPSA id h12sm3018149qtb.19.2020.05.14.09.40.35
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 May 2020 09:40:35 -0700 (PDT)
+Received: by mail-qv1-f52.google.com with SMTP id l3so1988810qvo.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 09:40:35 -0700 (PDT)
+X-Received: by 2002:a67:bd07:: with SMTP id y7mr4374233vsq.109.1589474077707;
+ Thu, 14 May 2020 09:34:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200514155615.GA2963499@kroah.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200507200850.60646-1-dianders@chromium.org> <20200514162109.6qt5drd27hpilijh@holly.lan>
+In-Reply-To: <20200514162109.6qt5drd27hpilijh@holly.lan>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 14 May 2020 09:34:26 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X+t_Wg5KadZBTGHMSEXY3c-t6DZAtdaLXys31QJJpGGA@mail.gmail.com>
+Message-ID: <CAD=FV=X+t_Wg5KadZBTGHMSEXY3c-t6DZAtdaLXys31QJJpGGA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/12] kgdb: Support late serial drivers; enable early
+ debug w/ boot consoles
+To:     Daniel Thompson <daniel.thompson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>
+Cc:     Jason Wessel <jason.wessel@windriver.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-serial@vger.kernel.org, Ingo Molnar <mingo@redhat.com>,
+        "H. Peter Anvin" <hpa@zytor.com>, Jiri Slaby <jslaby@suse.com>,
+        kgdb-bugreport@lists.sourceforge.net,
+        Sumit Garg <sumit.garg@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>, bp@alien8.de,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dave Martin <Dave.Martin@arm.com>,
+        Enrico Weigelt <info@metux.net>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        James Morse <james.morse@arm.com>,
+        Juergen Gross <jgross@suse.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+        Russell King <linux@armlinux.org.uk>,
+        jinho lim <jordan.lim@samsung.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-doc@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        x86@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/14/2020 9:56 AM, Greg KH wrote:
-> On Thu, May 14, 2020 at 09:05:30AM -0600, Jeffrey Hugo wrote:
->> Wow, thank you for the near immediate response.  I'm am quite impressed.
->>
->> On 5/14/2020 8:12 AM, Greg KH wrote:
->>> On Thu, May 14, 2020 at 08:07:41AM -0600, Jeffrey Hugo wrote:
->>>>    /* Copyright (c) 2019-2020, The Linux Foundation. All rights reserved. */
->>>> +#include <linux/cdev.h>
->>>> +#include <linux/idr.h>
->>>> +#include <linux/list.h>
->>>> +#include <linux/kref.h>
->>>> +#include <linux/mhi.h>
->>>>    #include <linux/module.h>
->>>>    #include <linux/msi.h>
->>>> +#include <linux/mutex.h>
->>>>    #include <linux/pci.h>
->>>>    #include <linux/pci_ids.h>
->>>> @@ -13,9 +19,242 @@
->>>>    #define PCI_DEV_AIC100			0xa100
->>>>    #define QAIC_NAME			"Qualcomm Cloud AI 100"
->>>> +#define QAIC_MAX_MINORS			256
->>>
->>> Why have a max?
->>>
->>> Why not just use a misc device so you make the logic a lot simple, no
->>> class or chardev logic to mess with at all.
->>
->> It was our understanding that the preference is not to add new misc devices.
-> 
-> Huh, who said that?  Not the char/misc maintainer (i.e. me) :)
-> 
->> As I go and try to find a supporting reference for that, I cannot find one,
->> so I'm not entirely sure where that idea came from.
->>
->> In addition, we see that the Habana Labs driver also uses chardev, and has
->> chosen the same max.  We assumed that since their driver is already
->> accepted, using the same mechanisms where applicable would be the preferred
->> approach.
-> 
-> They had good reasons why not to use a chardev and convinced me of it.
-> If you can't come up with them, then stick with a misc for now please.
+Hi,
 
-Interesting.  I didn't see any discussion on this.
+On Thu, May 14, 2020 at 9:21 AM Daniel Thompson
+<daniel.thompson@linaro.org> wrote:
+>
+> On Thu, May 07, 2020 at 01:08:38PM -0700, Douglas Anderson wrote:
+> > <snip>
+> >
+> > My first attempt was to try to get the existing "ekgdboc" to work
+> > earlier.  I tried that for a bit until I realized that it needed to
+> > work at the tty layer and I couldn't find any serial drivers that
+> > managed to register themselves to the tty layer super early at boot.
+> > The only documented use of "ekgdboc" is "ekgdboc=kbd" and that's a bit
+> > of a special snowflake.  Trying to get my serial driver and all its
+> > dependencies to probe normally and register the tty driver super early
+> > at boot seemed like a bad way to go.  In fact, all the complexity
+> > needed to do something like this is why the system already has a
+> > special concept of a "boot console" that lives only long enough to
+> > transition to the normal console.
+> >
+> > <snip>
+> >
+> > The devices I had for testing were:
+> > - arm32: rk3288-veyron-jerry
+> > - arm64: rk3399-gru-kevin
+> > - arm64: qcom-sc7180-trogdor (not mainline yet)
+> >
+> > These are the devices I tested this series on.  I tried to test
+> > various combinations of enabling/disabling various options and I
+> > hopefully caught the corner cases, but I'd appreciate any extra
+> > testing people can do.  Notably I didn't test on x86, but (I think) I
+> > didn't touch much there so I shouldn't have broken anything.
+>
+> I have tested a slightly earlier version using qemu and will test this
+> set before it moves forwards.
+>
+>
+> >  .../admin-guide/kernel-parameters.txt         |  20 ++
+> >  Documentation/dev-tools/kgdb.rst              |  24 ++
+> >  arch/arm64/Kconfig                            |   1 +
+> >  arch/arm64/include/asm/debug-monitors.h       |   2 +
+> >  arch/arm64/kernel/debug-monitors.c            |   2 +-
+> >  arch/arm64/kernel/traps.c                     |   3 +
+> >  arch/x86/Kconfig                              |   1 +
+> >  drivers/tty/serial/8250/8250_early.c          |  23 ++
+> >  drivers/tty/serial/amba-pl011.c               |  32 +++
+> >  drivers/tty/serial/kgdboc.c                   | 268 ++++++++++++++++--
+> >  drivers/tty/serial/qcom_geni_serial.c         |  32 +++
+> >  include/linux/kgdb.h                          |   4 +
+> >  kernel/debug/debug_core.c                     |  52 +++-
+> >  lib/Kconfig.kgdb                              |  18 ++
+> >  14 files changed, 436 insertions(+), 46 deletions(-)
+>
+> Any thoughts on how best to land these changes?
+>
+> AFAICT the arm64
 
->> Specific to the max, 256 was chosen as being a factor larger than the
->> largest system we have, therefore we figured it wouldn't be hit for a long
->> while even as we try to have a look at what might happen down the road.
->> Looking at the Habana code, it looks like they have the same value for much
->> of the same reasons, although their usecases may vary from ours somewhat.
-> 
-> Max numbers for no good reason are not a good thing to have.
-> 
->> At this time, I don't think we have a strong requirement for a chardev, so
->> we could investigate a switch over to a misc dev if you would prefer that
->> over following the Habana Labs precedent.  All I ask is a confirmation that
->> is the approach you would like to see going forward after reviewing the
->> above.
-> 
-> Please use misc.
+I was hoping to get an Ack from Will or Catalin for my most recent
+arm64 patch [1] and then it could land in your tree.  However, it
+wouldn't be the end of the world if that landed later.  "kgdbwait"
+would be broken if you used it together with "kgdb_earlycon" but
+overall we'd still be in a better place than we were.
 
-Ok, will investigate.
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+> and 8250/amba-pl011/qcom_geni_serial code
+> could be applied independently of the kgdb changes
+
+Right, that would be OK.  Nobody would actually be able to use
+"kgdb_earlycon" until those landed but there would be no problem with
+those two landing separately.
+
+
+> (though we must keep
+> changes to drivers/tty/serial/kgdboc alongside the kgdb changes).
+>
+> I can hoover them up but I'd need a solid set of acks and
+> I don't think we've got that yet.
+
+It would be nice for it to be explicit, but "get_maintainer" says that
+Greg KH is the maintainer of serial drivers.  Git log confirms that he
+also has been the one landing changes to these files.  Early-on he
+provided his Reviewed-by for the series as a whole, so he's aware of
+it and maybe would be fine w/ the serial changes landing through the
+kgdb tree?
+
+Greg: is that correct?
+
+
+> I'd also be happy to ack where needed and let someone else pick it up
+> (the other changes queued for kgdb this cycle are pretty small so we
+> shouldn't see much conflict in kernel/debug/ ).
+
+It feels to me that the kgdb tree is the best destination for all
+these patches if possible.
+
+
+[1] https://lore.kernel.org/r/20200513160501.1.I0b5edf030cc6ebef6ab4829f8867cdaea42485d8@changeid
+
+-Doug
