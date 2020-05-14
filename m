@@ -2,533 +2,290 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3391D3CFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 21:17:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AA361D3D8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 21:34:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728928AbgENTK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 15:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51298 "EHLO
+        id S1726188AbgENTeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 15:34:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730308AbgENTKy (ORCPT
+        by vger.kernel.org with ESMTP id S1726128AbgENTeU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 15:10:54 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E01EC061A0C;
-        Thu, 14 May 2020 12:10:54 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id d21so4742718ljg.9;
-        Thu, 14 May 2020 12:10:54 -0700 (PDT)
+        Thu, 14 May 2020 15:34:20 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36BE7C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 12:34:20 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id t9so13022694pjw.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 12:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0TjjfHtIftg6y1deaf9Au+YmodMuSD9MQOJ+iJ1XC7I=;
-        b=qB5TrxOzjLBBhlSoGt8TqwqgBxxHnB0NHvQ5aJh23W7xd7hF8BHRW1acVqQuik1z8G
-         WCT7g1li4wyVYG5WrY0Gemk+2wP79/KYP9bmc5dLvzzKxVs1Ke4S3CghcZzH5wJkcGVL
-         WNsxhcM1y//UKZWYIujGlYMZtUmGZODaYaLqgoI5xT53TP9oo+uDOLZZw2+9lzJ24bKN
-         aEoxZ7aeHyJdqoSMBituxppxjqTodvptmgzozN94QgdBlRT/+s2+xGG050MB14g18D3v
-         TaF2DptPjPQpk7APo75MKikXLg4XHptLwAFmgkEohJD5YUJnd3qpy+Ud93+GLXu8GPX5
-         WEGQ==
+        d=linaro.org; s=google;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=McFSJB7HsIwhycgIHB7X1kIeZAvcAuEmliX4NQltzFU=;
+        b=pqQpJEReLZpYwUZQWIgGAUmcsgMkgpjAeLyW1/1iYNBAnvXpGrOHV8iAoPAOdLiFIG
+         H1qrzRHwDoSP0yC1MNqUPh3qTgyJ+8oEqzzyzhXHr4SHnq9u9qXEnRWJjGgeqwilAVil
+         P3qr+R30kQ4GnI2hOFrDAhnRbH8Y05mnE+Zi/cso7Vg21Q/66uEZ2a0LhMrhTX1dxQ9Y
+         VPa2AmG3FkHaoJlinyYVc73/dmLpsnPJFseWsApiZ7kErQpMNRyIEqLvyCX3SHSY8R7/
+         l6Lv3hdl8aumVCuaaKzPiJ+LmLO8/npeV488C0GG3amWHNKHiCZZS2WM/d/Jpa3vEmQe
+         cvsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=0TjjfHtIftg6y1deaf9Au+YmodMuSD9MQOJ+iJ1XC7I=;
-        b=f6l5i0+WjRj+W3rqQRt8weljgpMBDngzJrbkBZtHR/DO/3Qw8BJIHlOpYaJx5/zV4W
-         8MaYRRKI63gNCcBCzvxlzvGMa46vP5Q8/aU46v87C9fDRbhSAZZvjOopPlp2tf+Iekwh
-         OozvuVNcZJYm2cRlwo0eFEhoyEuU3vfhqPDRXjb7njbe82njRZe0JAHcZ/gexOr/Ju/0
-         SW7cNSb45jfOW5fAO74Z0gr/Qj/v6iDVcVg9A1Ee1DJ5wGJ/q/7V3zQ87zg9xs9Wwaw/
-         +oxUsTTQ+Nl161s8xypOieoewyyyY3dBrMiEfQWDWQqiDp0WUEfb+Gk4kRBPU4F+0DvK
-         uWeg==
-X-Gm-Message-State: AOAM530HdIVKil6mv6V1d+q2aay1Bo8qV4wDe5/vO8FY2pT6RhorYtpw
-        gzeD8qBNyubIUfs9BZIFJok=
-X-Google-Smtp-Source: ABdhPJxpxx/dPjZR2NjE1DnmTmJigaruwKU6OtMCe86mU8Qk4zIy8kOoYxSwtVLnPSHdFZ1PkniTQw==
-X-Received: by 2002:a05:651c:1027:: with SMTP id w7mr3670125ljm.205.1589483452641;
-        Thu, 14 May 2020 12:10:52 -0700 (PDT)
-Received: from saturn.lan ([2a00:fd00:805f:db00:8d23:71d:e677:1c7c])
-        by smtp.gmail.com with ESMTPSA id q30sm2362958lfd.32.2020.05.14.12.10.50
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=McFSJB7HsIwhycgIHB7X1kIeZAvcAuEmliX4NQltzFU=;
+        b=Km8FPOfQXY7VqjQwmWx9BnlYrUdDoXsDjhZrIpzbvVMVQr9BEkJJ8XY8MSMDHdr5CE
+         fEdbBqGtQJIXfYweeUMr2ESv+HntSM4WeSPLZQ4mrM9JHlWtK/172j1hdy0LGmgtlY9u
+         TbRkTIzKWx33/0Y4cK/lU5yZPNqVhickb5/2Oa4tjLotQP91Pm9AlJU+hpedRM59M/OS
+         LxCajHJTdtPusrjwWkJE3gOIDxhXk8YwOHu/KaApvKy1gYmeX+XHW5wPIrlv2lViuReg
+         hEVyWTFf4Oqx07UT8BI/hgyGLhG8JXwIfBVVOytKD2xss3KBefruQ4W7iqhMQvz+lebS
+         3VkQ==
+X-Gm-Message-State: AOAM533/M2xrwnZUL+n5WPlxnj1epTdDdD5UF9Ogurm629ydfmNnxNbg
+        W74R+h+glPVDE2T5dmPBYp7sdBC83gg=
+X-Google-Smtp-Source: ABdhPJwKVXS6X4qpAkvwaENwakprdx3N54UWjg/skU1suyXAI3EjF3LRZlARYv8qTSuTIMqgkhZ3MQ==
+X-Received: by 2002:a17:902:7c05:: with SMTP id x5mr114752pll.278.1589484859261;
+        Thu, 14 May 2020 12:34:19 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id v10sm16642902pjy.48.2020.05.14.12.34.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2020 12:10:52 -0700 (PDT)
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     Allison Randal <allison@lohutok.net>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Enrico Weigelt <info@metux.net>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jonathan Corbet <corbet@lwn.net>, Jyri Sarha <jsarha@ti.com>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Kefeng Wang <wangkefeng.wang@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Russell King <linux@armlinux.org.uk>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Uwe Kleine Konig <u.kleine-koenig@pengutronix.de>,
-        Zheng Bin <zhengbin13@huawei.com>
-Subject: [PATCH v1 18/18] backlight: use backlight_is_blank() in all backlight drivers
-Date:   Thu, 14 May 2020 21:10:01 +0200
-Message-Id: <20200514191001.457441-19-sam@ravnborg.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200514191001.457441-1-sam@ravnborg.org>
-References: <20200514191001.457441-1-sam@ravnborg.org>
+        Thu, 14 May 2020 12:34:18 -0700 (PDT)
+From:   bjorn.andersson@linaro.org
+X-Google-Original-From: Bjorn Andersson <bjorn.andersson@linaro.org>, Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Date:   Thu, 14 May 2020 12:32:49 -0700
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     Joerg Roedel <joro@8bytes.org>, linux-tegra@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
+Message-ID: <20200514193249.GE279327@builder.lan>
+References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+ <20200228025700.GA856087@builder>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200228025700.GA856087@builder>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replaces the open-coded checks if the state etc.,
-with the backlight_is_blank() helper.
-This increases readability of the code and aling
-the functionality.
+On Thu 27 Feb 18:57 PST 2020, Bjorn Andersson wrote:
 
-Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-Cc: Lee Jones <lee.jones@linaro.org>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>
-Cc: Michael Hennerich <michael.hennerich@analog.com>
-Cc: Support Opensource <support.opensource@diasemi.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: "Uwe Kleine-König" <u.kleine-koenig@pengutronix.de>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-pwm@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: patches@opensource.cirrus.com
----
- drivers/video/backlight/88pm860x_bl.c    |  8 +-------
- drivers/video/backlight/adp5520_bl.c     |  5 +----
- drivers/video/backlight/adp8860_bl.c     |  5 +----
- drivers/video/backlight/adp8870_bl.c     |  5 +----
- drivers/video/backlight/as3711_bl.c      |  8 +++-----
- drivers/video/backlight/bd6107.c         |  4 +---
- drivers/video/backlight/corgi_lcd.c      |  5 +----
- drivers/video/backlight/cr_bllcd.c       | 22 +++++++---------------
- drivers/video/backlight/da903x_bl.c      |  8 +-------
- drivers/video/backlight/ep93xx_bl.c      |  3 +--
- drivers/video/backlight/gpio_backlight.c |  4 +---
- drivers/video/backlight/hp680_bl.c       |  4 +---
- drivers/video/backlight/jornada720_bl.c  |  2 +-
- drivers/video/backlight/kb3886_bl.c      |  4 +---
- drivers/video/backlight/led_bl.c         |  4 +---
- drivers/video/backlight/lm3533_bl.c      |  4 +---
- drivers/video/backlight/locomolcd.c      |  4 +---
- drivers/video/backlight/lv5207lp.c       |  4 +---
- drivers/video/backlight/max8925_bl.c     |  8 +-------
- drivers/video/backlight/pwm_bl.c         |  4 +---
- drivers/video/backlight/qcom-wled.c      |  4 +---
- drivers/video/backlight/tps65217_bl.c    |  4 +---
- drivers/video/backlight/wm831x_bl.c      |  8 +-------
- 23 files changed, 31 insertions(+), 100 deletions(-)
+Rob, Will, we're reaching the point where upstream has enough
+functionality that this is becoming a critical issue for us.
 
-diff --git a/drivers/video/backlight/88pm860x_bl.c b/drivers/video/backlight/88pm860x_bl.c
-index 20d96a5ac384..162c83ab0f5a 100644
---- a/drivers/video/backlight/88pm860x_bl.c
-+++ b/drivers/video/backlight/88pm860x_bl.c
-@@ -123,13 +123,7 @@ static int pm860x_backlight_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.state & BL_CORE_SUSPENDED)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return pm860x_backlight_set(bl, brightness);
-diff --git a/drivers/video/backlight/adp5520_bl.c b/drivers/video/backlight/adp5520_bl.c
-index 0f63f76723a5..d817b0d95c9d 100644
---- a/drivers/video/backlight/adp5520_bl.c
-+++ b/drivers/video/backlight/adp5520_bl.c
-@@ -67,10 +67,7 @@ static int adp5520_bl_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return adp5520_bl_set(bl, brightness);
-diff --git a/drivers/video/backlight/adp8860_bl.c b/drivers/video/backlight/adp8860_bl.c
-index 19968104fc47..a0ce2a3701fa 100644
---- a/drivers/video/backlight/adp8860_bl.c
-+++ b/drivers/video/backlight/adp8860_bl.c
-@@ -363,10 +363,7 @@ static int adp8860_bl_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return adp8860_bl_set(bl, brightness);
-diff --git a/drivers/video/backlight/adp8870_bl.c b/drivers/video/backlight/adp8870_bl.c
-index 4c0032010cfe..ae4269fdb189 100644
---- a/drivers/video/backlight/adp8870_bl.c
-+++ b/drivers/video/backlight/adp8870_bl.c
-@@ -401,10 +401,7 @@ static int adp8870_bl_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return adp8870_bl_set(bl, brightness);
-diff --git a/drivers/video/backlight/as3711_bl.c b/drivers/video/backlight/as3711_bl.c
-index 33f0f0f2e8b3..7fa76008c7bf 100644
---- a/drivers/video/backlight/as3711_bl.c
-+++ b/drivers/video/backlight/as3711_bl.c
-@@ -107,13 +107,11 @@ static int as3711_bl_update_status(struct backlight_device *bl)
- 	int brightness = bl->props.brightness;
- 	int ret = 0;
- 
--	dev_dbg(&bl->dev, "%s(): brightness %u, pwr %x, blank %x, state %x\n",
-+	dev_dbg(&bl->dev, "%s(): brightness %u, pwr %x, state %x\n",
- 		__func__, bl->props.brightness, bl->props.power,
--		bl->props.fb_blank, bl->props.state);
-+		bl->props.state);
- 
--	if (bl->props.power != FB_BLANK_UNBLANK ||
--	    bl->props.fb_blank != FB_BLANK_UNBLANK ||
--	    bl->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	if (data->type == AS3711_BL_SU1) {
-diff --git a/drivers/video/backlight/bd6107.c b/drivers/video/backlight/bd6107.c
-index d5d5fb457e78..f6a5c1dba3bc 100644
---- a/drivers/video/backlight/bd6107.c
-+++ b/drivers/video/backlight/bd6107.c
-@@ -84,9 +84,7 @@ static int bd6107_backlight_update_status(struct backlight_device *backlight)
- 	struct bd6107 *bd = bl_get_data(backlight);
- 	int brightness = backlight->props.brightness;
- 
--	if (backlight->props.power != FB_BLANK_UNBLANK ||
--	    backlight->props.fb_blank != FB_BLANK_UNBLANK ||
--	    backlight->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
-+	if (backlight_is_blank(backlight))
- 		brightness = 0;
- 
- 	if (brightness) {
-diff --git a/drivers/video/backlight/corgi_lcd.c b/drivers/video/backlight/corgi_lcd.c
-index 25ef0cbd7583..c9adf4e26355 100644
---- a/drivers/video/backlight/corgi_lcd.c
-+++ b/drivers/video/backlight/corgi_lcd.c
-@@ -422,10 +422,7 @@ static int corgi_bl_update_status(struct backlight_device *bd)
- 	struct corgi_lcd *lcd = bl_get_data(bd);
- 	int intensity = bd->props.brightness;
- 
--	if (bd->props.power != FB_BLANK_UNBLANK)
--		intensity = 0;
--
--	if (bd->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bd))
- 		intensity = 0;
- 
- 	if (corgibl_flags & CORGIBL_SUSPENDED)
-diff --git a/drivers/video/backlight/cr_bllcd.c b/drivers/video/backlight/cr_bllcd.c
-index 4624b7b7c6a6..d5ab7675f55c 100644
---- a/drivers/video/backlight/cr_bllcd.c
-+++ b/drivers/video/backlight/cr_bllcd.c
-@@ -59,26 +59,18 @@ struct cr_panel {
- 
- static int cr_backlight_set_intensity(struct backlight_device *bd)
- {
--	int intensity = bd->props.brightness;
- 	u32 addr = gpio_bar + CRVML_PANEL_PORT;
- 	u32 cur = inl(addr);
- 
--	if (bd->props.power == FB_BLANK_UNBLANK)
--		intensity = FB_BLANK_UNBLANK;
--	if (bd->props.fb_blank == FB_BLANK_UNBLANK)
--		intensity = FB_BLANK_UNBLANK;
--	if (bd->props.power == FB_BLANK_POWERDOWN)
--		intensity = FB_BLANK_POWERDOWN;
--	if (bd->props.fb_blank == FB_BLANK_POWERDOWN)
--		intensity = FB_BLANK_POWERDOWN;
--
--	if (intensity == FB_BLANK_UNBLANK) { /* FULL ON */
--		cur &= ~CRVML_BACKLIGHT_OFF;
--		outl(cur, addr);
--	} else if (intensity == FB_BLANK_POWERDOWN) { /* OFF */
-+	if (backlight_is_blank(bd)) {
-+		/* OFF */
- 		cur |= CRVML_BACKLIGHT_OFF;
- 		outl(cur, addr);
--	} /* anything else, don't bother */
-+	} else {
-+		/* FULL ON */
-+		cur &= ~CRVML_BACKLIGHT_OFF;
-+		outl(cur, addr);
-+	}
- 
- 	return 0;
- }
-diff --git a/drivers/video/backlight/da903x_bl.c b/drivers/video/backlight/da903x_bl.c
-index 62540e4bdedb..ca351badfdcf 100644
---- a/drivers/video/backlight/da903x_bl.c
-+++ b/drivers/video/backlight/da903x_bl.c
-@@ -79,13 +79,7 @@ static int da903x_backlight_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.state & BL_CORE_SUSPENDED)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return da903x_backlight_set(bl, brightness);
-diff --git a/drivers/video/backlight/ep93xx_bl.c b/drivers/video/backlight/ep93xx_bl.c
-index 4149e0b2f83c..491185df1411 100644
---- a/drivers/video/backlight/ep93xx_bl.c
-+++ b/drivers/video/backlight/ep93xx_bl.c
-@@ -38,8 +38,7 @@ static int ep93xxbl_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK ||
--	    bl->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return ep93xxbl_set(bl, brightness);
-diff --git a/drivers/video/backlight/gpio_backlight.c b/drivers/video/backlight/gpio_backlight.c
-index 75409ddfba3e..94b65e4d2aa0 100644
---- a/drivers/video/backlight/gpio_backlight.c
-+++ b/drivers/video/backlight/gpio_backlight.c
-@@ -25,9 +25,7 @@ static int gpio_backlight_get_next_brightness(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK ||
--	    bl->props.fb_blank != FB_BLANK_UNBLANK ||
--	    bl->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return brightness;
-diff --git a/drivers/video/backlight/hp680_bl.c b/drivers/video/backlight/hp680_bl.c
-index 8ea42b8d9bc8..01d805ca8415 100644
---- a/drivers/video/backlight/hp680_bl.c
-+++ b/drivers/video/backlight/hp680_bl.c
-@@ -35,9 +35,7 @@ static void hp680bl_send_intensity(struct backlight_device *bd)
- 	u16 v;
- 	int intensity = bd->props.brightness;
- 
--	if (bd->props.power != FB_BLANK_UNBLANK)
--		intensity = 0;
--	if (bd->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bd))
- 		intensity = 0;
- 	if (hp680bl_suspended)
- 		intensity = 0;
-diff --git a/drivers/video/backlight/jornada720_bl.c b/drivers/video/backlight/jornada720_bl.c
-index f0385f9cf9da..996f7ba3b373 100644
---- a/drivers/video/backlight/jornada720_bl.c
-+++ b/drivers/video/backlight/jornada720_bl.c
-@@ -54,7 +54,7 @@ static int jornada_bl_update_status(struct backlight_device *bd)
- 	jornada_ssp_start();
- 
- 	/* If backlight is off then really turn it off */
--	if ((bd->props.power != FB_BLANK_UNBLANK) || (bd->props.fb_blank != FB_BLANK_UNBLANK)) {
-+	if (backlight_is_blank(bd)) {
- 		ret = jornada_ssp_byte(BRIGHTNESSOFF);
- 		if (ret != TXDUMMY) {
- 			dev_info(&bd->dev, "brightness off timeout\n");
-diff --git a/drivers/video/backlight/kb3886_bl.c b/drivers/video/backlight/kb3886_bl.c
-index 1dfe13c18925..a0fd5d3d82f5 100644
---- a/drivers/video/backlight/kb3886_bl.c
-+++ b/drivers/video/backlight/kb3886_bl.c
-@@ -89,9 +89,7 @@ static int kb3886bl_send_intensity(struct backlight_device *bd)
- {
- 	int intensity = bd->props.brightness;
- 
--	if (bd->props.power != FB_BLANK_UNBLANK)
--		intensity = 0;
--	if (bd->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bd))
- 		intensity = 0;
- 	if (kb3886bl_flags & KB3886BL_SUSPENDED)
- 		intensity = 0;
-diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
-index 3f66549997c8..c655ddd99cfb 100644
---- a/drivers/video/backlight/led_bl.c
-+++ b/drivers/video/backlight/led_bl.c
-@@ -56,9 +56,7 @@ static int led_bl_update_status(struct backlight_device *bl)
- 	struct led_bl_data *priv = bl_get_data(bl);
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK ||
--	    bl->props.fb_blank != FB_BLANK_UNBLANK ||
--	    bl->props.state & BL_CORE_FBBLANK)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	if (brightness > 0)
-diff --git a/drivers/video/backlight/lm3533_bl.c b/drivers/video/backlight/lm3533_bl.c
-index ee09d1bd02b9..476146b62c4e 100644
---- a/drivers/video/backlight/lm3533_bl.c
-+++ b/drivers/video/backlight/lm3533_bl.c
-@@ -41,9 +41,7 @@ static int lm3533_bl_update_status(struct backlight_device *bd)
- 	struct lm3533_bl *bl = bl_get_data(bd);
- 	int brightness = bd->props.brightness;
- 
--	if (bd->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--	if (bd->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bd))
- 		brightness = 0;
- 
- 	return lm3533_ctrlbank_set_brightness(&bl->cb, (u8)brightness);
-diff --git a/drivers/video/backlight/locomolcd.c b/drivers/video/backlight/locomolcd.c
-index cdc02e04f89d..8064cad8d683 100644
---- a/drivers/video/backlight/locomolcd.c
-+++ b/drivers/video/backlight/locomolcd.c
-@@ -113,9 +113,7 @@ static int locomolcd_set_intensity(struct backlight_device *bd)
- {
- 	int intensity = bd->props.brightness;
- 
--	if (bd->props.power != FB_BLANK_UNBLANK)
--		intensity = 0;
--	if (bd->props.fb_blank != FB_BLANK_UNBLANK)
-+	if (backlight_is_blank(bd))
- 		intensity = 0;
- 	if (locomolcd_flags & LOCOMOLCD_SUSPENDED)
- 		intensity = 0;
-diff --git a/drivers/video/backlight/lv5207lp.c b/drivers/video/backlight/lv5207lp.c
-index c6ad73a784e2..ef8aa9803577 100644
---- a/drivers/video/backlight/lv5207lp.c
-+++ b/drivers/video/backlight/lv5207lp.c
-@@ -48,9 +48,7 @@ static int lv5207lp_backlight_update_status(struct backlight_device *backlight)
- 	struct lv5207lp *lv = bl_get_data(backlight);
- 	int brightness = backlight->props.brightness;
- 
--	if (backlight->props.power != FB_BLANK_UNBLANK ||
--	    backlight->props.fb_blank != FB_BLANK_UNBLANK ||
--	    backlight->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
-+	if (backlight_is_blank(backlight))
- 		brightness = 0;
- 
- 	if (brightness) {
-diff --git a/drivers/video/backlight/max8925_bl.c b/drivers/video/backlight/max8925_bl.c
-index 97cc260ff9d1..b8af2c6407d3 100644
---- a/drivers/video/backlight/max8925_bl.c
-+++ b/drivers/video/backlight/max8925_bl.c
-@@ -66,13 +66,7 @@ static int max8925_backlight_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.state & BL_CORE_SUSPENDED)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return max8925_backlight_set(bl, brightness);
-diff --git a/drivers/video/backlight/pwm_bl.c b/drivers/video/backlight/pwm_bl.c
-index 82b8d7594701..7d0ffcd37f07 100644
---- a/drivers/video/backlight/pwm_bl.c
-+++ b/drivers/video/backlight/pwm_bl.c
-@@ -111,9 +111,7 @@ static int pwm_backlight_update_status(struct backlight_device *bl)
- 	int brightness = bl->props.brightness;
- 	struct pwm_state state;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK ||
--	    bl->props.fb_blank != FB_BLANK_UNBLANK ||
--	    bl->props.state & BL_CORE_FBBLANK)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	if (pb->notify)
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 3d276b30a78c..9600f5d58ece 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -261,9 +261,7 @@ static int wled_update_status(struct backlight_device *bl)
- 	u16 brightness = bl->props.brightness;
- 	int rc = 0;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK ||
--	    bl->props.fb_blank != FB_BLANK_UNBLANK ||
--	    bl->props.state & BL_CORE_FBBLANK)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	mutex_lock(&wled->lock);
-diff --git a/drivers/video/backlight/tps65217_bl.c b/drivers/video/backlight/tps65217_bl.c
-index 762e3feed097..1041e5e62ee3 100644
---- a/drivers/video/backlight/tps65217_bl.c
-+++ b/drivers/video/backlight/tps65217_bl.c
-@@ -82,9 +82,7 @@ static int tps65217_bl_update_status(struct backlight_device *bl)
- 	if (bl->props.state & BL_CORE_SUSPENDED)
- 		brightness = 0;
- 
--	if ((bl->props.power != FB_BLANK_UNBLANK) ||
--		(bl->props.fb_blank != FB_BLANK_UNBLANK))
--		/* framebuffer in low power mode or blanking active */
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	if (brightness > 0) {
-diff --git a/drivers/video/backlight/wm831x_bl.c b/drivers/video/backlight/wm831x_bl.c
-index e55977d54c15..dc2ab6c8b7f9 100644
---- a/drivers/video/backlight/wm831x_bl.c
-+++ b/drivers/video/backlight/wm831x_bl.c
-@@ -93,13 +93,7 @@ static int wm831x_backlight_update_status(struct backlight_device *bl)
- {
- 	int brightness = bl->props.brightness;
- 
--	if (bl->props.power != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
--		brightness = 0;
--
--	if (bl->props.state & BL_CORE_SUSPENDED)
-+	if (backlight_is_blank(bl))
- 		brightness = 0;
- 
- 	return wm831x_backlight_set(bl, brightness);
--- 
-2.25.1
+E.g. Lenovo Yoga C630 is lacking this and a single dts patch to boot
+mainline with display, GPU, WiFi and audio working and the story is
+similar on several devboards.
 
+As previously described, the only thing I want is the stream mapping
+related to the display controller in place, either with the CB with
+translation disabled or possibly with a way to specify the framebuffer
+region (although this turns out to mess things up in the display
+driver...)
+
+I did pick this up again recently and concluded that by omitting the
+streams for the USB controllers causes an instability issue seen on one
+of the controller to disappear. So I would prefer if we somehow could
+have a mechanism to only pick the display streams and the context
+allocation for this.
+
+
+Can you please share some pointers/insights/wishes for how we can
+conclude on this subject?
+
+
+PS. The list of devices specified
+https://lore.kernel.org/linux-arm-msm/cover.1587407458.git.saiprakash.ranjan@codeaurora.org/
+covers this need as well, if that matters...
+
+Thanks,
+Bjorn
+
+> On Mon 09 Dec 07:07 PST 2019, Thierry Reding wrote:
+> 
+> > From: Thierry Reding <treding@nvidia.com>
+> > 
+> 
+> Sorry for the slow response on this, finally got the time to go through
+> this in detail and try it out on some Qualcomm boards.
+> 
+> > On some platforms, the firmware will setup hardware to read from a given
+> > region of memory. One such example is a display controller that is
+> > scanning out a splash screen from physical memory.
+> > 
+> 
+> This particular use case is the one that we need to figure out for
+> Qualcomm devices as well; on some devices it's a simple splash screen
+> (that on many devices can be disabled), but for others we have EFIFB
+> on the display and no (sane) means to disable this.
+> 
+> > During Linux' boot process, the ARM SMMU will configure all contexts to
+> > fault by default. This means that memory accesses that happen by an SMMU
+> > master before its driver has had a chance to properly set up the IOMMU
+> > will cause a fault. This is especially annoying for something like the
+> > display controller scanning out a splash screen because the faults will
+> > result in the display controller getting bogus data (all-ones on Tegra)
+> > and since it repeatedly scans that framebuffer, it will keep triggering
+> > such faults and spam the boot log with them.
+> > 
+> 
+> As my proposed patches indicated, the Qualcomm platform boots with
+> stream mapping setup for the hardware used by the bootloader, but
+> relying on the associated context banks not being enabled.
+> 
+> USFCFG in SCR0 is set and any faults resulting of this will trap into
+> secure world and the device will be reset.
+> 
+> > In order to work around such problems, scan the device tree for IOMMU
+> > masters and set up a special identity domain that will map 1:1 all of
+> > the reserved regions associated with them. This happens before the SMMU
+> > is enabled, so that the mappings are already set up before translations
+> > begin.
+> > 
+> > One thing that was pointed out earlier, and which I don't have a good
+> > idea on how to solve it, is that the early identity domain is not
+> > discarded. The assumption is that the standard direct mappings code of
+> > the IOMMU framework will replace the early identity domain once devices
+> > are properly attached to domains, but we don't have a good point in time
+> > when it would be safe to remove the early identity domain.
+> > 
+> > One option that I can think of would be to create an early identity
+> > domain for each master and inherit it when that master is attached to
+> > the domain later on, but that seems rather complicated from an book-
+> > keeping point of view and tricky because we need to be careful not to
+> > map regions twice, etc.
+> > 
+> 
+> The one concern I ran into with this approach (after resolving below
+> issues) is that when the display driver probes a new domain will be
+> created automatically and I get a stream of "Unhandled context fault" in
+> the log until the driver has mapped the framebuffer in the newly
+> allocated context.
+> 
+> This is normally not a problem, as we seem to be able to do this
+> initialization in a few frames, but for the cases where the display
+> driver probe defer this is a problem.
+> 
+> But at least these devices doesn't reboot, so this is way better than the
+> current state.
+> 
+> > Any good ideas on how to solve this? It'd also be interesting to see if
+> > there's a more generic way of doing this. I know that something like
+> > this isn't necessary on earlier Tegra SoCs with the custom Tegra SMMU
+> > because translations are only enabled when the devices are attached to a
+> > domain. I'm not sure about other IOMMUs, but in the absence of a struct
+> > device, I suspect that we can't really do anything really generic that
+> > would work across drivers.
+> > 
+> 
+> As I indicated above I managed to get this working on the boards we have
+> that uses the arm-smmu driver.
+> 
+> ## SDM845
+> Booting the SDM845 shows the following register stream mapping register
+> content:
+>   SMR(0): 0x80080880 S2CR(0): 0x0
+>   SMR(1): 0x80080c80 S2CR(1): 0x0
+>   SMR(2): 0x800f00a0 S2CR(2): 0x1
+>   SMR(3): 0x800f00c0 S2CR(3): 0x1
+>   SMR(4): 0x800f00e0 S2CR(4): 0x2
+>   SMR(5): 0x800f0100 S2CR(5): 0x2
+>   SMR(6): 0x0 S2CR(6): 0x0
+>   SMR(7): 0x0 S2CR(7): 0x0
+>   SMR(8): 0x0 S2CR(8): 0x200ff
+>   SMR(9): 0x0 S2CR(9): 0x200ff
+>   ...
+> 
+> Here stream 0 and 1 (SID 0x880 and 0xc80) are the display streams, the
+> remainder are related to storage and USB - which afaict doesn't need to be
+> maintained.
+> 
+> As the display uses context bank 0, using this as the identity bank results in
+> a couple of occurrences of:
+>   Unhandled context fault: fsr=0x402, iova=0x9da00000, fsynr=0x370020, cbfrsynra=0x880, cb=0
+> 
+> Which we survive, but as we reach arm_smmu_device_reset() to flush out the new
+> stream mapping we start by writing S2CR(0) = 0, then SMR(0) = 0x800810a0. So
+> until SMR(4) is written we're lacking a valid stream mapping for the display,
+> and hence if the screen does refresh in during time period the device reboots.
+> 
+> 
+> In addition to this, the iommu_iova_to_phys() you perform in the mapping loop
+> results in a large number of "translation fault!" printouts from
+> arm_smmu_iova_to_phys_hard().
+> 
+> ## SM8150
+> Boots with the following stream mapping:
+>   SMR(0): 0x800006a0 S2CR(0): 0x0
+>   SMR(1): 0x800006c0 S2CR(1): 0x0
+>   SMR(2): 0x80000300 S2CR(2): 0x1
+>   SMR(3): 0x84200800 S2CR(3): 0x2
+>   SMR(4): 0x0 S2CR(4): 0x0
+>   SMR(5): 0x0 S2CR(5): 0x0
+>   SMR(6): 0x0 S2CR(6): 0x200ff
+>   SMR(7): 0x0 S2CR(7): 0x200ff
+>   ...
+> 
+> Here stream 3 (sid 0x800) is the display stream.
+> 
+> Mapping the various memory regions into the first context works fine, but
+> unless the display stream happens to be allocated to stream 3 (e.g. it always
+> ends up in slot 1 with my current DT) the board reboots shortly after we start
+> writing out the SMRs. I've not yet figured out why the board faults because of
+> the move to an earlier SMR index. (Perhaps because we clear the previously used
+> display SMR valid bit?)
+> 
+> 
+> ## Conclusions
+> Both of these platforms indicates that moving the stream mapping around is
+> going to cause issues, so inspired by my proposal I added below snippet right
+> before the call to arm_smmu_setup_identity(), in order to populate the stream
+> mapping selection.
+> 
+> 	for (i = 0; i < smmu->num_mapping_groups; i++) {
+> 		smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
+> 		smmu->smrs[i].mask = FIELD_GET(ARM_SMMU_SMR_MASK, smr);
+> 		smmu->smrs[i].id = FIELD_GET(ARM_SMMU_SMR_ID, smr);
+> 		smmu->smrs[i].valid = !!(smr & ARM_SMMU_SMR_VALID);
+> 	}
+> 
+> With this both boards boots fine, but I know Will had reservations wrt trusting
+> these values. Perhaps we could use the read back values (with some sanity
+> checking) only for setting up identity mapping?
+> 
+> 
+> With this I also tested booting MSM8996 (the db820c board) and except for
+> spending about 75 seconds printing below error in the kernel log during boot
+> things seems to be functional.
+> 
+> [   96.670723] arm-smmu b40000.iommu: translation fault!
+> [   96.675038] arm-smmu b40000.iommu: PAR = 0x300000203
+> 
+> 
+> Removing the call to iommu_iova_to_phys() in the mapping loop (as I know
+> that I don't have any memory regions with multiple clients) solves the
+> log spamming and all three boards seems to be functional.
+> 
+> Regards,
+> Bjorn
+> 
+> > Thierry
+> > 
+> > Thierry Reding (2):
+> >   iommu: arm-smmu: Extract arm_smmu_of_parse()
+> >   iommu: arm-smmu: Add support for early direct mappings
+> > 
+> >  drivers/iommu/arm-smmu.c | 195 +++++++++++++++++++++++++++++++++++++--
+> >  drivers/iommu/arm-smmu.h |   2 +
+> >  2 files changed, 189 insertions(+), 8 deletions(-)
+> > 
+> > -- 
+> > 2.23.0
+> > 
+> > 
+> > _______________________________________________
+> > linux-arm-kernel mailing list
+> > linux-arm-kernel@lists.infradead.org
+> > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
