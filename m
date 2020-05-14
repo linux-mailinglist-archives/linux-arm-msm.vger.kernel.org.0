@@ -2,104 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E80BF1D3E43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 21:59:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFEEF1D3E5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2020 22:03:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729029AbgENT6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 15:58:55 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:28479 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728840AbgENT6z (ORCPT
+        id S1729102AbgENUDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 16:03:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59624 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729103AbgENUDz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 15:58:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589486334; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=E3JOrY4A58gZsnsClzyUNWC3fBr+ONS0bBEOUGfz3Ts=; b=efu3k+G2xJPeT2qs5QuaQ0mF1JofJmXmvk3xPUsvDK95w0i42aUxiUel7iurN04pKXoZ/Eyn
- r0+axRfmmRRRRx0JDZ/DTiKxpRYEpcOuEAfS+OtgPkM/vGBTU0rj/j4/EmDNgYbOpibpcChQ
- LGE9Qq4c9UqkdztPL2w5Q0SBFAQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5ebda2ee61db07dc42de77ca (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 14 May 2020 19:58:38
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0DBC8C44788; Thu, 14 May 2020 19:58:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9E486C433D2;
-        Thu, 14 May 2020 19:58:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9E486C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Leo Yan <leo.yan@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Tingwei Zhang <tingwei@codeaurora.org>,
-        coresight@lists.linaro.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv2 2/2] dt-bindings: arm: coresight: Add support to skip trace unit power up
-Date:   Fri, 15 May 2020 01:27:56 +0530
-Message-Id: <b5f1161d7b007682d2526f88e31795572f920202.1589485594.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <cover.1589485594.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1589485594.git.saiprakash.ranjan@codeaurora.org>
+        Thu, 14 May 2020 16:03:55 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C00FC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 13:03:54 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id u188so266948wmu.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 13:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0T9FZKzhaNIAyAMhurXfRjBv09XxUrY4eeMiZKg77EU=;
+        b=VAIiWBZd2orVmWNlsBdww0kQaG/rvtc7vet7nyyZlSVy3XFuYBQVE80Glibbmi1Q/H
+         P7xZZPm/sIwfTWY1GifVPJ6d0KCv5ZLDS22MX0SAdwHCH6ahi3ME03a3kF/lqQvAxdpl
+         XDNuG1qZ6i5qtfURURGheV0H/P+nYP3ryGwSk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0T9FZKzhaNIAyAMhurXfRjBv09XxUrY4eeMiZKg77EU=;
+        b=Vzg5mL3wwgLF92sX83JfeYsYTqbN0oGqHaEEIN1VKD5HqgMmnNLPVMxwTVT48+Cr1P
+         bFJnhLAW37WDMXymSx8RRONxEDbjm02e0WGxwii7tSHPGsgb9QoXgaeF+eXKepeQiV1C
+         zsEgIOY2EJj4b1IbKEiBybSXoQTXM5Osmirkq1n5cfe03bzJmGm6hNTO+axMygE3V7en
+         +IxND6gHVBMu51gI8HDkYkKLaYa2AOwtb02tG+J9WMY9HjMjQOm0wUD5G+KeuO4xxzrn
+         FWGh3NXcktUpmUDfV4caXOxK//gUK861DjFZhRLG61T7ftZdhNnVLVSln84Tu6T35eXO
+         /iNw==
+X-Gm-Message-State: AOAM532yccdNEBMu5djtV4VqzRtNVsDxtxAIgDvLwASrIQEDEgYYWDmY
+        hN545fKycPAdMQIJLPJfgOLNSg==
+X-Google-Smtp-Source: ABdhPJyYd+AOcu5tx+w8CHn4dey+W+3+gPxvcA9FEiyAuntQNRmQiufc1W5mxesih8+QEvnI7mVCfQ==
+X-Received: by 2002:a1c:c309:: with SMTP id t9mr14300wmf.113.1589486633043;
+        Thu, 14 May 2020 13:03:53 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id q14sm18882wrc.66.2020.05.14.13.03.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2020 13:03:52 -0700 (PDT)
+Date:   Thu, 14 May 2020 22:03:49 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Kefeng Wang <wangkefeng.wang@huawei.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Andy Gross <agross@kernel.org>,
+        Uwe Kleine Konig <u.kleine-koenig@pengutronix.de>,
+        linux-pwm@vger.kernel.org,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        linux-arm-msm@vger.kernel.org, Jyri Sarha <jsarha@ti.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Zheng Bin <zhengbin13@huawei.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        patches@opensource.cirrus.com, Enrico Weigelt <info@metux.net>
+Subject: Re: [PATCH v1 08/18] backlight: add backlight_is_blank()
+Message-ID: <20200514200349.GD206103@phenom.ffwll.local>
+References: <20200514191001.457441-1-sam@ravnborg.org>
+ <20200514191001.457441-9-sam@ravnborg.org>
+ <20200514194116.GB206103@phenom.ffwll.local>
+ <20200514194646.GA460099@ravnborg.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200514194646.GA460099@ravnborg.org>
+X-Operating-System: Linux phenom 5.6.0-1-amd64 
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Tingwei Zhang <tingwei@codeaurora.org>
+On Thu, May 14, 2020 at 09:46:46PM +0200, Sam Ravnborg wrote:
+> Hi Daniel.
+> 
+> On Thu, May 14, 2020 at 09:41:16PM +0200, Daniel Vetter wrote:
+> > On Thu, May 14, 2020 at 09:09:51PM +0200, Sam Ravnborg wrote:
+> > > The backlight support has two properties that express the state:
+> > > - power
+> > > - state
+> > > 
+> > > It is un-documented and easy to get wrong.
+> > > Add backlight_is_blank() helper to make it simpler for drivers
+> > > to get the check of the state correct.
+> > > 
+> > > A lot of drivers also includes checks for fb_blank.
+> > > This check is redundant when the state is checked
+> > > as thus not needed in this helper function.
+> > > Rolling out this helper to all relevant backlight drivers
+> > > will eliminate almost all accesses to fb_blank.
+> > > 
+> > > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> > > Cc: Lee Jones <lee.jones@linaro.org>
+> > > Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> > > Cc: Jingoo Han <jingoohan1@gmail.com>
+> > > ---
+> > >  include/linux/backlight.h | 17 +++++++++++++++++
+> > >  1 file changed, 17 insertions(+)
+> > > 
+> > > diff --git a/include/linux/backlight.h b/include/linux/backlight.h
+> > > index b7839ea9d00a..e67e926de1e2 100644
+> > > --- a/include/linux/backlight.h
+> > > +++ b/include/linux/backlight.h
+> > > @@ -165,6 +165,23 @@ static inline int backlight_disable(struct backlight_device *bd)
+> > >  	return backlight_update_status(bd);
+> > >  }
+> > >  
+> > > +/**
+> > > + * backlight_is_blank - Return true if display is expected to be blank
+> > > + * @bd: the backlight device
+> > > + *
+> > > + * Display is expected to be blank if any of these is true::
+> > > + *
+> > > + *   1) if power in not UNBLANK
+> > > + *   2) if state indicate BLANK or SUSPENDED
+> > > + *
+> > > + * Returns true if display is expected to be blank, false otherwise.
+> > > + */
+> > > +static inline bool backlight_is_blank(struct backlight_device *bd)
+> > > +{
+> > > +	return bd->props.power != FB_BLANK_UNBLANK ||
+> > > +	       bd->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK);
+> > 
+> > This definition here doesn't match backlight_enabled/disable() functions
+> > we added. I think to avoid lots of pondering and surprises we should try
+> > to make sure these are all matching, so that once we rolled them out
+> > everywhere, we can just replace the complicated state with one flag.
+> 
+> Will add it in v2. When all user of fb_blank is dropped we can
+> safely remove it then.
+> And as you said on irc, the risk of introducing regressions is lower
+> as we see some creative uses in the drivers today.
+> I already did some kind of audit - but I may have missed something.
 
-Add "qcom,skip-power-up" property to identify systems which can
-skip powering up of trace unit since they share the same power
-domain as their CPU core. This is required to identify such
-systems with hardware errata which stops the CPU watchdog counter
-when the power up bit is set (TRCPDCR.PU).
+btw one pattern I've seen in a few places with a few greps I've just done
+is maybe worth putting into a helper too:
 
-Signed-off-by: Tingwei Zhang <tingwei@codeaurora.org>
-Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- Documentation/devicetree/bindings/arm/coresight.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+backlight_force_enable(bl)
+{
+	if (bl->brightness == 0)
+		bl->brightness = bl->max_brightness;
+	backlight_enable(backlight);
+}
 
-diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
-index 846f6daae71b..e4b2eda0b53b 100644
---- a/Documentation/devicetree/bindings/arm/coresight.txt
-+++ b/Documentation/devicetree/bindings/arm/coresight.txt
-@@ -108,6 +108,13 @@ its hardware characteristcs.
- 	* arm,cp14: must be present if the system accesses ETM/PTM management
- 	  registers via co-processor 14.
- 
-+	* qcom,skip-power-up: boolean. Indicates that an implementation can
-+	  skip powering up the trace unit. TRCPDCR.PU does not have to be set
-+	  on Qualcomm Technologies Inc. systems since ETMs are in the same power
-+	  domain as their CPU cores. This property is required to identify such
-+	  systems with hardware errata where the CPU watchdog counter is stopped
-+	  when TRCPDCR.PU is set.
-+
- * Optional property for TMC:
- 
- 	* arm,buffer-size: size of contiguous buffer space for TMC ETR
+Just in case you run out of ideas anytime soon :-)
+
+Cheers, Daniel
+
+> 
+> 	Sam
+> 
+> > 
+> > > +}
+> > > +
+> > >  extern struct backlight_device *backlight_device_register(const char *name,
+> > >  	struct device *dev, void *devdata, const struct backlight_ops *ops,
+> > >  	const struct backlight_properties *props);
+> > > -- 
+> > > 2.25.1
+> > > 
+> > 
+> > -- 
+> > Daniel Vetter
+> > Software Engineer, Intel Corporation
+> > http://blog.ffwll.ch
+> > _______________________________________________
+> > dri-devel mailing list
+> > dri-devel@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
