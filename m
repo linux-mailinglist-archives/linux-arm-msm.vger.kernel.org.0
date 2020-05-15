@@ -2,152 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03EA51D5ACF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 22:43:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCE6B1D5AD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 22:44:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726278AbgEOUm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 16:42:59 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:40020 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726179AbgEOUm6 (ORCPT
+        id S1726245AbgEOUoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 16:44:23 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34302 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726183AbgEOUoX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 16:42:58 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id 61A66804E6;
-        Fri, 15 May 2020 22:42:47 +0200 (CEST)
-Date:   Fri, 15 May 2020 22:42:45 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     Allison Randal <allison@lohutok.net>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Enrico Weigelt <info@metux.net>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jonathan Corbet <corbet@lwn.net>, Jyri Sarha <jsarha@ti.com>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Kefeng Wang <wangkefeng.wang@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Russell King <linux@armlinux.org.uk>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Uwe Kleine Konig <u.kleine-koenig@pengutronix.de>,
-        Zheng Bin <zhengbin13@huawei.com>
-Subject: Re: [PATCH v1 06/18] backlight: make of_find_backlight_by_node()
- static
-Message-ID: <20200515204245.GA543522@ravnborg.org>
-References: <20200514191001.457441-1-sam@ravnborg.org>
- <20200514191001.457441-7-sam@ravnborg.org>
+        Fri, 15 May 2020 16:44:23 -0400
+Received: by mail-pg1-f195.google.com with SMTP id f6so1556771pgm.1;
+        Fri, 15 May 2020 13:44:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=31jlI11UdSuUne5CytA8aXHN1DKoQTYg2m0ehqqjq1w=;
+        b=Nr+wW/S0YqcnjY3rjCXDlQrzv69mSln+17NZYJDLMkCwVVBL60VVJL9eMr6Fjr6FRe
+         y1vMkFjtrFGZvpZYEa4V3B+VFXvBeYsjOW2yFXWIfCdbaw8qGUfXgEfA8JnEd77NpHkM
+         K1exf67FVJxF5dISa4eBFkR92IPx3QOCu6wdB7WU5RtOb9BL2gYFfQ/2I/ChL48SUQ3u
+         G2LvSldXyL79rsseNGTBQ7rylGTgVizsuMJ2MFwUO3d691/WAldvB4HSwfzwa9T3iPO2
+         zG6gdZZVIqOLNwHh3qh2ljcXbfk/ikpthkFBFGZEobrRlhhfFTdOM5Qc2nNrK74Ow5no
+         boWw==
+X-Gm-Message-State: AOAM531L1yg6BCFa3ACHakiMnjYtZArjgDej+/Xw3filWH3cQxXlEKmD
+        DlxfYWMHZ6LKoL7ZCdGelQBK/j14GqeJ1A==
+X-Google-Smtp-Source: ABdhPJw7XG8gdnNFvqQp/E+s55309E2Xi/QpwKoZegblz+akssDO8WQKCDIfy7AdJqwWny83PlCUZA==
+X-Received: by 2002:a62:e70b:: with SMTP id s11mr5672379pfh.32.1589575462477;
+        Fri, 15 May 2020 13:44:22 -0700 (PDT)
+Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
+        by smtp.gmail.com with ESMTPSA id f6sm2707575pfd.175.2020.05.15.13.44.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 May 2020 13:44:21 -0700 (PDT)
+Received: by 42.do-not-panic.com (Postfix, from userid 1000)
+        id B5A6B40246; Fri, 15 May 2020 20:44:20 +0000 (UTC)
+Date:   Fri, 15 May 2020 20:44:20 +0000
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v5 2/7] firmware: add offset to request_firmware_into_buf
+Message-ID: <20200515204420.GB11244@42.do-not-panic.com>
+References: <20200508002739.19360-1-scott.branden@broadcom.com>
+ <20200508002739.19360-3-scott.branden@broadcom.com>
+ <20200513003301.GH11244@42.do-not-panic.com>
+ <3919bb12-522d-11fd-302b-91dc0fcff363@broadcom.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200514191001.457441-7-sam@ravnborg.org>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=MOBOZvRl c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8 a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8
-        a=7mnRyIj4PDRz4dp46dkA:9 a=CjuIK1q_8ugA:10 a=E9Po1WZjFZOl8hwRPBS3:22
-        a=cvBusfyB2V15izCimMoJ:22
+In-Reply-To: <3919bb12-522d-11fd-302b-91dc0fcff363@broadcom.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi myself and others.
+On Wed, May 13, 2020 at 11:35:06AM -0700, Scott Branden wrote:
+> On 2020-05-12 5:33 p.m., Luis Chamberlain wrote:
+> > On Thu, May 07, 2020 at 05:27:34PM -0700, Scott Branden wrote:
+> > flags? But its a single variable enum!
+> fw_opt is an existing enum which doesn't really act like an enum.
+> It is a series of BIT defines in an enum that are then OR'd together in the
+> (existing) code?
 
-On Thu, May 14, 2020 at 09:09:49PM +0200, Sam Ravnborg wrote:
-> There are no external users of of_find_backlight_by_node().
-> Make it static so we keep it that way.
-> 
-> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Cc: Daniel Thompson <daniel.thompson@linaro.org>
-> Cc: Jingoo Han <jingoohan1@gmail.com>
-> ---
->  drivers/video/backlight/backlight.c | 22 +++++++++-------------
->  include/linux/backlight.h           | 10 ----------
->  2 files changed, 9 insertions(+), 23 deletions(-)
-> 
-> diff --git a/drivers/video/backlight/backlight.c b/drivers/video/backlight/backlight.c
-> index 547aa3e1a03a..91dfcf4a2087 100644
-> --- a/drivers/video/backlight/backlight.c
-> +++ b/drivers/video/backlight/backlight.c
-> @@ -577,19 +577,9 @@ static int of_parent_match(struct device *dev, const void *data)
->  	return dev->parent && dev->parent->of_node == data;
->  }
->  
-> -/**
-> - * of_find_backlight_by_node() - find backlight device by device-tree node
-> - * @node: device-tree node of the backlight device
-> - *
-> - * Returns a pointer to the backlight device corresponding to the given DT
-> - * node or NULL if no such backlight device exists or if the device hasn't
-> - * been probed yet.
-> - *
-> - * This function obtains a reference on the backlight device and it is the
-> - * caller's responsibility to drop the reference by calling put_device() on
-> - * the backlight device's .dev field.
-> - */
-> -struct backlight_device *of_find_backlight_by_node(struct device_node *node)
-> +/* Find backlight device by device-tree node */
-> +static struct backlight_device *
-> +of_find_backlight_by_node(struct device_node *node)
->  {
->  	struct device *dev;
->  
-> @@ -598,6 +588,12 @@ struct backlight_device *of_find_backlight_by_node(struct device_node *node)
->  	return dev ? to_backlight_device(dev) : NULL;
->  }
->  EXPORT_SYMBOL(of_find_backlight_by_node);
-Dropped this EXPORT in v2.
-
-	Sam
-
-> +#else
-> +static struct backlight_device *
-> +of_find_backlight_by_node(struct device_node *node)
-> +{
-> +	return NULL;
-> +}
->  #endif
->  
->  static struct backlight_device *of_find_backlight(struct device *dev)
-> diff --git a/include/linux/backlight.h b/include/linux/backlight.h
-> index 3d757a850b88..b7839ea9d00a 100644
-> --- a/include/linux/backlight.h
-> +++ b/include/linux/backlight.h
-> @@ -198,16 +198,6 @@ struct generic_bl_info {
->  	void (*kick_battery)(void);
->  };
->  
-> -#ifdef CONFIG_OF
-> -struct backlight_device *of_find_backlight_by_node(struct device_node *node);
-> -#else
-> -static inline struct backlight_device *
-> -of_find_backlight_by_node(struct device_node *node)
-> -{
-> -	return NULL;
-> -}
-> -#endif
-> -
->  #if IS_ENABLED(CONFIG_BACKLIGHT_CLASS_DEVICE)
->  struct backlight_device *devm_of_find_backlight(struct device *dev);
->  #else
-> -- 
-> 2.25.1
+Indeed, in retrospect that is odd, it should be a u32 then. Please feel
+free to fix.
+ 
+  Luis
