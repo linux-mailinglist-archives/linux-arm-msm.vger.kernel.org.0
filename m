@@ -2,310 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 688F81D4D98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 14:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B59681D4DF1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 14:43:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726160AbgEOMYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 08:24:39 -0400
-Received: from mx2.suse.de ([195.135.220.15]:38958 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726122AbgEOMYj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 08:24:39 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 21197B12D;
-        Fri, 15 May 2020 12:24:39 +0000 (UTC)
-Subject: Re: [PATCH v2 11/38] drm/gem: add _locked suffix to drm_object_put
-To:     Emil Velikov <emil.l.velikov@gmail.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org
-References: <20200515095118.2743122-1-emil.l.velikov@gmail.com>
- <20200515095118.2743122-12-emil.l.velikov@gmail.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- mQENBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAG0J1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPokBVAQTAQgAPhYh
- BHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsDBQkDwmcABQsJCAcCBhUKCQgLAgQWAgMB
- Ah4BAheAAAoJEGgNwR1TC3ojR80H/jH+vYavwQ+TvO8ksXL9JQWc3IFSiGpuSVXLCdg62AmR
- irxW+qCwNncNQyb9rd30gzdectSkPWL3KSqEResBe24IbA5/jSkPweJasgXtfhuyoeCJ6PXo
- clQQGKIoFIAEv1s8l0ggPZswvCinegl1diyJXUXmdEJRTWYAtxn/atut1o6Giv6D2qmYbXN7
- mneMC5MzlLaJKUtoH7U/IjVw1sx2qtxAZGKVm4RZxPnMCp9E1MAr5t4dP5gJCIiqsdrVqI6i
- KupZstMxstPU//azmz7ZWWxT0JzgJqZSvPYx/SATeexTYBP47YFyri4jnsty2ErS91E6H8os
- Bv6pnSn7eAq5AQ0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRH
- UE9eosYbT6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgT
- RjP+qbU63Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+R
- dhgATnWWGKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zb
- ehDda8lvhFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r
- 12+lqdsAEQEAAYkBPAQYAQgAJhYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsMBQkD
- wmcAAAoJEGgNwR1TC3ojpfcIAInwP5OlcEKokTnHCiDTz4Ony4GnHRP2fXATQZCKxmu4AJY2
- h9ifw9Nf2TjCZ6AMvC3thAN0rFDj55N9l4s1CpaDo4J+0fkrHuyNacnT206CeJV1E7NYntxU
- n+LSiRrOdywn6erjxRi9EYTVLCHcDhBEjKmFZfg4AM4GZMWX1lg0+eHbd5oL1as28WvvI/uI
- aMyV8RbyXot1r/8QLlWldU3NrTF5p7TMU2y3ZH2mf5suSKHAMtbE4jKJ8ZHFOo3GhLgjVrBW
- HE9JXO08xKkgD+w6v83+nomsEuf6C6LYrqY/tsZvyEX6zN8CtirPdPWu/VXNRYAl/lat7lSI
- 3H26qrE=
-Message-ID: <e1853951-9179-89b1-2edd-fad2488db38f@suse.de>
-Date:   Fri, 15 May 2020 14:24:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1726179AbgEOMn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 08:43:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45978 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726162AbgEOMn1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 May 2020 08:43:27 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1E7C05BD0A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2020 05:43:27 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id p127so2033292oia.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2020 05:43:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9kyKQJ2homgfOAGe2E1L8oQbfswl7dsX3WsAr4pTpyU=;
+        b=Oo9OGukz5vUHYyRByCYNK/z6d0nJShT6FToPuhH7CdqfE/KavEedAAbKnns+xOYN+J
+         Z08K+t8JrWFGeQnTCBt7JFjpEIT4vJAJ5KicPopY2h0ZOFoQndYWT9gZTi30+JnRA+Fr
+         qtwrAgrSOOlza4w2ABgZTQ5Y19H55pKEVIuFjSqBY9xAScqvbE7+d1/+moUUQfquKqfB
+         CYrYHRjwMcciZWRcPjYi77FbyrI3Cfpv5UzUlYIqGYmEwPwGjETl641wvrQiLG/De5wm
+         5saCZMJ8cYzU7sQCcMrZpsIbY3VuUOaMcLJVgsABUZITVEPALqEH9/3Pra47q507KVD5
+         j+tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9kyKQJ2homgfOAGe2E1L8oQbfswl7dsX3WsAr4pTpyU=;
+        b=L0byOTOlQFawbZxP0ToWBA6UWNrkKsqsTaBw6LhvobIuzgygLs26qevLuodocwD3QV
+         9YyGOVBusJCw10toH30GBh7l3yZgeULTCweZdR/LM0ZrrH2xfJ2QFldkbo+JD8+Xpkm/
+         0tyexNgvjX0skPZsFbIwMt0TYFqCGMnpqL+hh/BCMpH2LnjDwCCpH/Qx0Lji9gqkoeqz
+         wEYICigMrHuN/krWI6flxeWHHQBKxErS3wXGvYcTnHQqip4QDtFd68QbOeifyOQe8m4L
+         HokWWYW8dOiLVHj+UoNmHo6s8IBMgrlj287913dgrUy0y0v/hHwxvudE1FGqCvT5AQw4
+         vhuA==
+X-Gm-Message-State: AOAM530P027tChCZDPampsFr3THJukHFrxz+mFgoIselD8RgQZt7m3A1
+        l7qH/hqRfOUeZuD4Lk2H8csLdBJiVmtqjyfTIdIx1g==
+X-Google-Smtp-Source: ABdhPJy+1AdH+F1A47Jf7bOpVkDcWVzgX3aG8AI4XCFKUwvfwJRnwkqCm8z/w434pIjAqu5A/i+DJskOoy/UVbu+yS4=
+X-Received: by 2002:aca:1812:: with SMTP id h18mr1815141oih.133.1589546606362;
+ Fri, 15 May 2020 05:43:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200515095118.2743122-12-emil.l.velikov@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="JAtGb8RBTqHrj6lLDdec8A1DvWXqb3nx9"
+References: <20200515090820.1744353-1-robert.foss@linaro.org>
+In-Reply-To: <20200515090820.1744353-1-robert.foss@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Fri, 15 May 2020 14:43:14 +0200
+Message-ID: <CAG3jFyuz4PRQvTKPTz9u4fo43=Te=uVyQbSs95vZntLce+2pVw@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: apq8016-sbc-d3: Add Qualcomm APQ8016
+ SBC + D3Camera mezzanine
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---JAtGb8RBTqHrj6lLDdec8A1DvWXqb3nx9
-Content-Type: multipart/mixed; boundary="ORO6v91dQ17jS7kgcmZyndEKFqLgvzxfU";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Emil Velikov <emil.l.velikov@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org
-Message-ID: <e1853951-9179-89b1-2edd-fad2488db38f@suse.de>
-Subject: Re: [PATCH v2 11/38] drm/gem: add _locked suffix to drm_object_put
-References: <20200515095118.2743122-1-emil.l.velikov@gmail.com>
- <20200515095118.2743122-12-emil.l.velikov@gmail.com>
-In-Reply-To: <20200515095118.2743122-12-emil.l.velikov@gmail.com>
-
---ORO6v91dQ17jS7kgcmZyndEKFqLgvzxfU
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-
-Hi Emil
-
-Am 15.05.20 um 11:50 schrieb Emil Velikov:
-> From: Emil Velikov <emil.velikov@collabora.com>
->=20
-> Vast majority of DRM (core and drivers) are struct_mutex free.
->=20
-> As such we have only a handful of cases where the locked helper should
-> be used. Make that stand out a little bit better.
->=20
-> Done via the following script:
->=20
-> __from=3Ddrm_gem_object_put
-> __to=3Ddrm_gem_object_put_locked
->=20
-> for __file in $(git grep --name-only --word-regexp $__from); do
->   sed -i  "s/\<$__from\>/$__to/g" $__file;
-> done
->=20
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Emil Velikov <emil.velikov@collabora.com>
-> Acked-by: Sam Ravnborg <sam@ravnborg.org>
+On Fri, 15 May 2020 at 11:08, Robert Foss <robert.foss@linaro.org> wrote:
+>
+> Add device treee support for the Qualcomm APQ8016 SBC, otherwise known as
+> the Dragonboard 410c with the D3Camera mezzanine expansion board.
+>
+> The D3Camera mezzanine ships in a kit with a OmniVision 5640 sensor module,
+> which is what this DT targets.
+>
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
->  drivers/gpu/drm/drm_gem.c                 | 6 +++---
->  drivers/gpu/drm/msm/adreno/a5xx_debugfs.c | 4 ++--
->  drivers/gpu/drm/msm/msm_drv.c             | 2 +-
->  drivers/gpu/drm/msm/msm_gem.c             | 6 +++---
->  drivers/gpu/drm/msm/msm_gem_submit.c      | 2 +-
->  drivers/gpu/drm/msm/msm_gpu.c             | 2 +-
->  include/drm/drm_gem.h                     | 4 ++--
->  7 files changed, 13 insertions(+), 13 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> index 599d5ff53b73..f21327ebc562 100644
-> --- a/drivers/gpu/drm/drm_gem.c
-> +++ b/drivers/gpu/drm/drm_gem.c
-> @@ -983,7 +983,7 @@ drm_gem_object_free(struct kref *kref)
->  EXPORT_SYMBOL(drm_gem_object_free);
-> =20
->  /**
-> - * drm_gem_object_put - release a GEM buffer object reference
-> + * drm_gem_object_put_locked - release a GEM buffer object reference
->   * @obj: GEM buffer object
->   *
->   * This releases a reference to @obj. Callers must hold the
-> @@ -994,7 +994,7 @@ EXPORT_SYMBOL(drm_gem_object_free);
->   * drm_gem_object_put_unlocked() instead.
->   */
->  void
-> -drm_gem_object_put(struct drm_gem_object *obj)
-> +drm_gem_object_put_locked(struct drm_gem_object *obj)
->  {
->  	if (obj) {
->  		WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
-> @@ -1002,7 +1002,7 @@ drm_gem_object_put(struct drm_gem_object *obj)
->  		kref_put(&obj->refcount, drm_gem_object_free);
->  	}
->  }
-> -EXPORT_SYMBOL(drm_gem_object_put);
-> +EXPORT_SYMBOL(drm_gem_object_put_locked);
-> =20
->  /**
->   * drm_gem_vm_open - vma->ops->open implementation for GEM
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c b/drivers/gpu/dr=
-m/msm/adreno/a5xx_debugfs.c
-> index 8cae2ca4af6b..68eddac7771c 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-> @@ -124,13 +124,13 @@ reset_set(void *data, u64 val)
-> =20
->  	if (a5xx_gpu->pm4_bo) {
->  		msm_gem_unpin_iova(a5xx_gpu->pm4_bo, gpu->aspace);
-> -		drm_gem_object_put(a5xx_gpu->pm4_bo);
-> +		drm_gem_object_put_locked(a5xx_gpu->pm4_bo);
->  		a5xx_gpu->pm4_bo =3D NULL;
->  	}
-> =20
->  	if (a5xx_gpu->pfp_bo) {
->  		msm_gem_unpin_iova(a5xx_gpu->pfp_bo, gpu->aspace);
-> -		drm_gem_object_put(a5xx_gpu->pfp_bo);
-> +		drm_gem_object_put_locked(a5xx_gpu->pfp_bo);
->  		a5xx_gpu->pfp_bo =3D NULL;
->  	}
-> =20
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_dr=
-v.c
-> index 29295dee2a2e..6baed5b43ea3 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -932,7 +932,7 @@ static int msm_ioctl_gem_madvise(struct drm_device =
-*dev, void *data,
->  		ret =3D 0;
->  	}
-> =20
-> -	drm_gem_object_put(obj);
-> +	drm_gem_object_put_locked(obj);
-> =20
->  unlock:
->  	mutex_unlock(&dev->struct_mutex);
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_ge=
-m.c
-> index 5a6a79fbc9d6..8696c405f709 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -879,7 +879,7 @@ void msm_gem_describe_objects(struct list_head *lis=
-t, struct seq_file *m)
->  }
->  #endif
-> =20
-> -/* don't call directly!  Use drm_gem_object_put() and friends */
-> +/* don't call directly!  Use drm_gem_object_put_locked() and friends *=
-/
->  void msm_gem_free_object(struct drm_gem_object *obj)
->  {
->  	struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
-> @@ -1183,7 +1183,7 @@ static void *_msm_gem_kernel_new(struct drm_devic=
-e *dev, uint32_t size,
->  	return vaddr;
->  err:
->  	if (locked)
-> -		drm_gem_object_put(obj);
-> +		drm_gem_object_put_locked(obj);
->  	else
->  		drm_gem_object_put_unlocked(obj);
-> =20
-> @@ -1215,7 +1215,7 @@ void msm_gem_kernel_put(struct drm_gem_object *bo=
-,
->  	msm_gem_unpin_iova(bo, aspace);
-> =20
->  	if (locked)
-> -		drm_gem_object_put(bo);
-> +		drm_gem_object_put_locked(bo);
->  	else
->  		drm_gem_object_put_unlocked(bo);
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm=
-/msm_gem_submit.c
-> index 385d4965a8d0..8f450a245cfb 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -387,7 +387,7 @@ static void submit_cleanup(struct msm_gem_submit *s=
-ubmit)
->  		struct msm_gem_object *msm_obj =3D submit->bos[i].obj;
->  		submit_unlock_unpin_bo(submit, i, false);
->  		list_del_init(&msm_obj->submit_entry);
-> -		drm_gem_object_put(&msm_obj->base);
-> +		drm_gem_object_put_locked(&msm_obj->base);
->  	}
->  }
-> =20
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gp=
-u.c
-> index 615c5cda5389..86a68f96c48d 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -694,7 +694,7 @@ static void retire_submit(struct msm_gpu *gpu, stru=
-ct msm_ringbuffer *ring,
->  		/* move to inactive: */
->  		msm_gem_move_to_inactive(&msm_obj->base);
->  		msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
-> -		drm_gem_object_put(&msm_obj->base);
-> +		drm_gem_object_put_locked(&msm_obj->base);
->  	}
-> =20
->  	pm_runtime_mark_last_busy(&gpu->pdev->dev);
-> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-> index c3bdade093ae..a231a2b3f5ac 100644
-> --- a/include/drm/drm_gem.h
-> +++ b/include/drm/drm_gem.h
-> @@ -187,7 +187,7 @@ struct drm_gem_object {
->  	 *
->  	 * Reference count of this object
->  	 *
-> -	 * Please use drm_gem_object_get() to acquire and drm_gem_object_put(=
-)
-> +	 * Please use drm_gem_object_get() to acquire and drm_gem_object_put_=
-locked()
->  	 * or drm_gem_object_put_unlocked() to release a reference to a GEM
+>
+> Changes since v1:
+>  - Vinod: Changed license to GPL+BSD
+>  - Vinod: Changed copyright year to 2020
+>  - Nico: Changed name of mezzanine to d3camera
+>
+>  arch/arm64/boot/dts/qcom/Makefile             |  1 +
+>  .../boot/dts/qcom/apq8016-sbc-d3camera.dts    | 45 +++++++++++++++++++
+>  2 files changed, 46 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts
+>
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index cc103f7020fd..3f95b522694e 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -1,5 +1,6 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  dtb-$(CONFIG_ARCH_QCOM)        += apq8016-sbc.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += apq8016-sbc-d3camera.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += apq8096-db820c.dtb
+>  dtb-$(CONFIG_ARCH_QCOM) += apq8096-ifc6640.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += ipq6018-cp01-c1.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts
+> new file mode 100644
+> index 000000000000..752e5ec47499
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts
+> @@ -0,0 +1,45 @@
+> +// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
 
-_put_unlocked() is going away. I think you have to update this line in
-patch 12. (?)
+This copyright is incorrect, and should instead assigned to Linaro.
+I'll spin a new version with this change.
 
-Best regards
-Thomas
-
->  	 * buffer object.
->  	 */
-> @@ -375,7 +375,7 @@ drm_gem_object_put_unlocked(struct drm_gem_object *=
-obj)
->  	kref_put(&obj->refcount, drm_gem_object_free);
->  }
-> =20
-> -void drm_gem_object_put(struct drm_gem_object *obj);
-> +void drm_gem_object_put_locked(struct drm_gem_object *obj);
-> =20
->  int drm_gem_handle_create(struct drm_file *file_priv,
->  			  struct drm_gem_object *obj,
->=20
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-
-
---ORO6v91dQ17jS7kgcmZyndEKFqLgvzxfU--
-
---JAtGb8RBTqHrj6lLDdec8A1DvWXqb3nx9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEyBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl6+igAACgkQaA3BHVML
-eiMY+wfyAwyHWFTWHDVaul/1oWzxMz+HSOEUFB1DD6I+cRyBqmgsPWm0D0ex/4ou
-Djn1twVLtLaLQAW7ISmhv+LwirtQ7mdPE+fTc+oe+hkHVIEcIqnbDRf9JOW1wgen
-E9AxBh2dk/lU/GX/lzveegbT4S0VO37b89g7yecKp7ejMP8+LucAI9BpPudcFxcj
-9KiG9go1WdHwyGqtOcKV3291PL0Oj4ORlD7ToRda0ozZo6PGjQcUlmK8U8uk/gMc
-mbBXa93DyU/OvLVX+/311e5zEPIUACqAOukXilBUdzj2D8NzNwSUmS26ACexDa51
-JuLXbyqCOVgT2HeLD+/8MSA39Et5
-=UY0v
------END PGP SIGNATURE-----
-
---JAtGb8RBTqHrj6lLDdec8A1DvWXqb3nx9--
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "apq8016-sbc.dtsi"
+> +
+> +/ {
+> +       model = "Qualcomm Technologies, Inc. APQ 8016 SBC w/ D3Camera Mezzanine";
+> +       compatible = "qcom,apq8016-sbc", "qcom,apq8016", "qcom,sbc";
+> +};
+> +
+> +&cci_i2c0 {
+> +       /delete-node/ camera_rear@3b;
+> +
+> +       camera_rear@76 {
+> +               compatible = "ovti,ov5640";
+> +               reg = <0x76>;
+> +
+> +               enable-gpios = <&msmgpio 34 GPIO_ACTIVE_HIGH>;
+> +               reset-gpios = <&msmgpio 35 GPIO_ACTIVE_LOW>;
+> +               pinctrl-names = "default";
+> +               pinctrl-0 = <&camera_rear_default>;
+> +
+> +               clocks = <&gcc GCC_CAMSS_MCLK0_CLK>;
+> +               clock-names = "xclk";
+> +               clock-frequency = <23880000>;
+> +
+> +               vdddo-supply = <&camera_vdddo_1v8>;
+> +               vdda-supply = <&camera_vdda_2v8>;
+> +               vddd-supply = <&camera_vddd_1v5>;
+> +
+> +               status = "ok";
+> +
+> +               port {
+> +                       ov5640_ep: endpoint {
+> +                               clock-lanes = <1>;
+> +                               data-lanes = <0 2>;
+> +                               remote-endpoint = <&csiphy0_ep>;
+> +                       };
+> +               };
+> +       };
+> +};
+> --
+> 2.25.1
+>
