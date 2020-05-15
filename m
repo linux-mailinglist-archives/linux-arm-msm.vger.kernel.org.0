@@ -2,86 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 866C81D43E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 05:10:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 054091D4433
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 05:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728004AbgEODKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 23:10:46 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:42446 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726192AbgEODKp (ORCPT
+        id S1728165AbgEOD5Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 23:57:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48826 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1727910AbgEOD5Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 23:10:45 -0400
-Received: by mail-ot1-f68.google.com with SMTP id m18so795105otq.9;
-        Thu, 14 May 2020 20:10:44 -0700 (PDT)
+        Thu, 14 May 2020 23:57:16 -0400
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 471D9C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 20:57:16 -0700 (PDT)
+Received: by mail-io1-xd42.google.com with SMTP id o5so1156134iow.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 20:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nOIJwK9iadOQS8VS9oX0d0eobJTm/S5dRf232DfhV2Q=;
+        b=jZGcHekf36InUx+/RT41yJ39LwB4eBQd7vT66ue0xAbo5xTuZa/i0CJGeuQo7uasFj
+         KWR4W7zbDPi+yq6TlwQ/zf00VGEQsa9I4hgKLRy95YYxTa/7/vLLZ4zckSK3fiLThmnp
+         7APyzonChcoUD6QuyiXT4zmroeoUonhrx7iX00yfVl9XCl3PDxXPwMf1n6VJgz6HgOY+
+         A99tLzeweiB5AaZ9lVTuw1dif9/03YSktMiID+xWBMBqbu3KL5JcKrJE0YqaeoLj+OtY
+         31xcKDIp1GOlgt95Lo/67hHz6ooA4vlcpH+Xi4ndyRh2QHgKM65UGQ6Ra684eiFjo8Jq
+         6sig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=satk6u22dpbc73y0fCNGBups5k0IDQTUclEtwsGIwFY=;
-        b=hycZH147PsVU3nPsskBa0KEawdINGuHNcnVHCGEf5pDkzqaZw8WadosHzNE+ZfuFYU
-         3nipe+tK6xQGhY7AaEhDJpoZ+n/jhasbAQ6cOhoYdSWomGOOQ84QQdDh+l4Oty6mPapG
-         cw4Cqqj+XtLS8d8k94/JkdgBc1VA2emhXxlUnOV1HrRQ+e+y8fz6m5WVNUrVSKCUDAuj
-         uOaC0+4QEVh6ZSHJAv87JBknxRfF8Ct0y7xKcOkPciyn1nnrvk/vOZE6gV3jX4WE9ANh
-         Xxhn+wpSEeNihePUssiR/YwI4kurym6aYOLBzGWPhSL4Pn7bO8rWmcveTOtxhgYHEKQT
-         lbyQ==
-X-Gm-Message-State: AOAM530Q/kthxDctz6GeWw9DmVZpApq+UzwJ8xu5h7ojsVCNizBbjtAg
-        WN85HQByA26KkOYFo3GdpA==
-X-Google-Smtp-Source: ABdhPJzV9kaQXKl6yL5gJAxk/H6tfOxArW47aEseyEx9jXzvLnsk+fLxjrjwNKiocZDIePjTlsZzeg==
-X-Received: by 2002:a9d:1ee7:: with SMTP id n94mr759604otn.26.1589512244486;
-        Thu, 14 May 2020 20:10:44 -0700 (PDT)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id d10sm257313ote.10.2020.05.14.20.10.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2020 20:10:43 -0700 (PDT)
-Received: (nullmailer pid 26194 invoked by uid 1000);
-        Fri, 15 May 2020 03:10:42 -0000
-Date:   Thu, 14 May 2020 22:10:42 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, jackp@codeaurora.org
-Subject: Re: [RFC 3/3] dt-bindings: usb: dwc3: Add entry for tx-fifo-resize
-Message-ID: <20200515031042.GA25107@bogus>
-References: <1588888768-25315-1-git-send-email-wcheng@codeaurora.org>
- <1588888768-25315-4-git-send-email-wcheng@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nOIJwK9iadOQS8VS9oX0d0eobJTm/S5dRf232DfhV2Q=;
+        b=i8eGKxil4JleiWWZcGKwtFC7mjhuBAkIN1OgckrqX/feHaeTtVlw2qduATXZ0E/lDX
+         9S/d7lnSpLcCtrgrSg4JsYuLuyRArrF7X229/+NbMA8v79COeDrVR5RKnyFbZ4wvdGsR
+         UWj34S9+cHJ8wR1GBau5rbIFDZx0+oeEqiVdXLcJ8+bE7G7aGlCGmsoBV4JAMo1xizQF
+         IL/vJUuwybzyVWSFZyVsE6gyDCdaiO/i5VAyWzbKjW7UoOYdFhZz455fjwPHUrYBqXO3
+         nyyqHARd3MONnHNyOqmZxHkQI1VRqK623ZNHAODFuQDqlMM3S5Ujz7RJt+zDKMhjcZjA
+         OgNA==
+X-Gm-Message-State: AOAM5327E9meG5cekQtrZxNGZYR4h9eABOPRpgv+Y6v7IlS080X0P3zy
+        rdk7flhqTjIeZSwGxumQG3PZ6tMoIepcnChJaZFr0A==
+X-Google-Smtp-Source: ABdhPJz4yECgbKlvcTa70WHzfNcxbCgYqFO0xfvcC6KgNtx0n8f7dausExrVZi/vmEvOALHEs8Dq89VdSz06od9lItk=
+X-Received: by 2002:a6b:e60b:: with SMTP id g11mr1143301ioh.96.1589515035477;
+ Thu, 14 May 2020 20:57:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1588888768-25315-4-git-send-email-wcheng@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
+ <1585718145-29537-3-git-send-email-sanm@codeaurora.org> <878shu4uwk.fsf@kernel.org>
+ <875zcy4uuj.fsf@kernel.org> <20200514171352.GP4525@google.com> <abbc3f8c-c8c9-c189-735e-f8058dab3e40@linaro.org>
+In-Reply-To: <abbc3f8c-c8c9-c189-735e-f8058dab3e40@linaro.org>
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+Date:   Fri, 15 May 2020 09:27:03 +0530
+Message-ID: <CAKohpon+JBpV3fC7j=rhc1R4gi_mVG6teBDrE8Yryd4QXfw9bw@mail.gmail.com>
+Subject: Re: [PATCH v7 2/4] usb: dwc3: qcom: Add interconnect support in dwc3 driver
+To:     Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "open list:ULTRA-WIDEBAND (UWB) SUBSYSTEM:" 
+        <linux-usb@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 07, 2020 at 02:59:28PM -0700, Wesley Cheng wrote:
-> Re-introduce the comment for the tx-fifo-resize setting for the DWC3
-> controller.
+On Fri, 15 May 2020 at 02:33, Georgi Djakov <georgi.djakov@linaro.org> wrote:
 
-Why?
+> ---8<---
+> diff --git a/drivers/usb/dwc3/Kconfig b/drivers/usb/dwc3/Kconfig
+> index 206caa0ea1c6..6661788b1a76 100644
+> --- a/drivers/usb/dwc3/Kconfig
+> +++ b/drivers/usb/dwc3/Kconfig
+> @@ -129,6 +129,7 @@ config USB_DWC3_QCOM
+>         tristate "Qualcomm Platform"
+>         depends on ARCH_QCOM || COMPILE_TEST
+>         depends on EXTCON || !EXTCON
+> +       depends on INTERCONNECT || !INTERCONNECT
 
-> 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/usb/dwc3.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/dwc3.txt b/Documentation/devicetree/bindings/usb/dwc3.txt
-> index 9946ff9..489f5da 100644
-> --- a/Documentation/devicetree/bindings/usb/dwc3.txt
-> +++ b/Documentation/devicetree/bindings/usb/dwc3.txt
-> @@ -105,7 +105,7 @@ Optional properties:
->  			1-16 (DWC_usb31 programming guide section 1.2.3) to
->  			enable periodic ESS TX threshold.
->  
-> - - <DEPRECATED> tx-fifo-resize: determines if the FIFO *has* to be reallocated.
-> + - tx-fifo-resize: determines if the FIFO *has* to be reallocated.
->   - snps,incr-burst-type-adjustment: Value for INCR burst type of GSBUSCFG0
->  			register, undefined length INCR burst type enable and INCRx type.
->  			When just one value, which means INCRX burst mode enabled. When
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+Again, as I said yesterday. This looks incorrect and may not fix the problem..
+
+With this we will be able to select USB_DWC3_QCOM even when INTERCONNECT=m.
+
+What we perhaps need here is:
+depends on INTERCONNECT != m
+
+--
+viresh
