@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 349ED1D55CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 18:23:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 833761D55CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 18:23:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726198AbgEOQXF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 12:23:05 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:59513 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726185AbgEOQXF (ORCPT
+        id S1726244AbgEOQXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 12:23:11 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:59612 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726223AbgEOQXL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 12:23:05 -0400
+        Fri, 15 May 2020 12:23:11 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589559784; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=jr+Pq8PUO8hvm/NpQeG3PNW0H4SGlfkDWJS5UbVcagI=; b=gNm1hFTVN1W9IGc5xIK5981//0FZE9EybRcSXMfCOVt3OZHqsame7TNHQxSommQhOGYRfEsX
- 5x0CqbF8JkfYimEy5uwDTfAP9gzI5Mrlu0thpbL/fxC/m7A2S55tKZNOkLkknJNnAoZOqFHL
- bnhe4N9Tvc0SNw4OAL1gkb900Kc=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1589559790; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=/cjiKMtWjyQDHb/fWlonhViUa3h5d5yJ+6+0Knzjss0=; b=SvZ6Ok+TZA9mS5XlGtbfvqqek6cX02//pv3SkIoS9c2ua3CLR1Smwtvgp6CWVZChvUZ8NAL0
+ Oo5ImgAodZGxF6bsvcRUCecIqUGWaF2P1anPLYQaICfejF34CiZPofQre7y2APL8vG8n7R+o
+ 9nJq4WpYt2jOkPbP+P+Ba+SWJqs=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ebec1d8.7fb2f0ea4dc0-smtp-out-n04;
- Fri, 15 May 2020 16:22:48 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ebec1de.7f54e714ee30-smtp-out-n02;
+ Fri, 15 May 2020 16:22:54 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5D260C4478C; Fri, 15 May 2020 16:22:48 +0000 (UTC)
+        id 670B1C432C2; Fri, 15 May 2020 16:22:54 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 13E12C433F2;
-        Fri, 15 May 2020 16:22:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 13E12C433F2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0B23C433F2;
+        Fri, 15 May 2020 16:22:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B0B23C433F2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -50,10 +50,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>, Leo Yan <leo.yan@linaro.org>,
         Tingwei Zhang <tingwei@codeaurora.org>,
         coresight@lists.linaro.org,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv3 0/2] coresight: etm4x: Add support to skip trace unit power up
-Date:   Fri, 15 May 2020 21:52:31 +0530
-Message-Id: <cover.1589558615.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv3 1/2] coresight: etm4x: Add support to skip trace unit power up
+Date:   Fri, 15 May 2020 21:52:32 +0530
+Message-Id: <d29a1d5a29541d216f4a6f184f2db27dfe7232b1.1589558615.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.22.0
+In-Reply-To: <cover.1589558615.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1589558615.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -61,30 +63,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds support to skip powering up of trace unit on systems
-with an errata which stops CPU watchdog counter when power up bit is
-set (TRCPDCR.PU = 1). Setting this bit is not required on Qualcomm
-Technologies Inc. chipsets where this errata exists since the ETMs
-are in the same power domain as their respective CPU cores.
+From: Tingwei Zhang <tingwei@codeaurora.org>
 
-Changes since v2:
- * Fix checkpatch warning for 80 characters.
+On some Qualcomm Technologies Inc. SoCs like SC7180, there
+exists a hardware errata where the APSS (Application Processor
+SubSystem)/CPU watchdog counter is stopped when the trace unit
+power up ETM register is set (TRCPDCR.PU = 1). Since the ETMs
+share the same power domain as that of respective CPU cores,
+they are powered on when the CPU core is powered on. So we can
+skip powering up of trace unit after checking for this errata
+via new property called "qcom,skip-power-up".
 
-Changes since v1:
- * Use qcom,skip-power-up for naming as suggested by Mathieu.
- * Have check for DT property in initialization as per Mathieu.
- * Reword description for property as per Mathieu.
- * Split up dt-binding patch as checkpatch complains.
-
-Tingwei Zhang (2):
-  coresight: etm4x: Add support to skip trace unit power up
-  dt-bindings: arm: coresight: Add support to skip trace unit power up
-
- .../devicetree/bindings/arm/coresight.txt     |  7 +++++
+Signed-off-by: Tingwei Zhang <tingwei@codeaurora.org>
+Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
  drivers/hwtracing/coresight/coresight-etm4x.c | 27 ++++++++++++-------
  drivers/hwtracing/coresight/coresight-etm4x.h |  3 +++
- 3 files changed, 27 insertions(+), 10 deletions(-)
+ 2 files changed, 20 insertions(+), 10 deletions(-)
 
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c b/drivers/hwtracing/coresight/coresight-etm4x.c
+index fb0f5f4f3a91..c16532e1e968 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+@@ -196,12 +196,14 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
+ 	writel_relaxed(config->vmid_mask0, drvdata->base + TRCVMIDCCTLR0);
+ 	writel_relaxed(config->vmid_mask1, drvdata->base + TRCVMIDCCTLR1);
+ 
+-	/*
+-	 * Request to keep the trace unit powered and also
+-	 * emulation of powerdown
+-	 */
+-	writel_relaxed(readl_relaxed(drvdata->base + TRCPDCR) | TRCPDCR_PU,
+-		       drvdata->base + TRCPDCR);
++	if (!drvdata->skip_power_up) {
++		/*
++		 * Request to keep the trace unit powered and also
++		 * emulation of powerdown
++		 */
++		writel_relaxed(readl_relaxed(drvdata->base + TRCPDCR) |
++			       TRCPDCR_PU, drvdata->base + TRCPDCR);
++	}
+ 
+ 	/* Enable the trace unit */
+ 	writel_relaxed(1, drvdata->base + TRCPRGCTLR);
+@@ -476,10 +478,12 @@ static void etm4_disable_hw(void *info)
+ 
+ 	CS_UNLOCK(drvdata->base);
+ 
+-	/* power can be removed from the trace unit now */
+-	control = readl_relaxed(drvdata->base + TRCPDCR);
+-	control &= ~TRCPDCR_PU;
+-	writel_relaxed(control, drvdata->base + TRCPDCR);
++	if (!drvdata->skip_power_up) {
++		/* power can be removed from the trace unit now */
++		control = readl_relaxed(drvdata->base + TRCPDCR);
++		control &= ~TRCPDCR_PU;
++		writel_relaxed(control, drvdata->base + TRCPDCR);
++	}
+ 
+ 	control = readl_relaxed(drvdata->base + TRCPRGCTLR);
+ 
+@@ -1429,6 +1433,9 @@ static int etm4_probe(struct amba_device *adev, const struct amba_id *id)
+ 			return -ENOMEM;
+ 	}
+ 
++	if (fwnode_property_present(dev_fwnode(dev), "qcom,skip-power-up"))
++		drvdata->skip_power_up = true;
++
+ 	/* Validity for the resource is already checked by the AMBA core */
+ 	base = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(base))
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
+index 4a695bf90582..72c9a55e67df 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x.h
++++ b/drivers/hwtracing/coresight/coresight-etm4x.h
+@@ -407,6 +407,8 @@ struct etmv4_save_state {
+  * @config:	structure holding configuration parameters.
+  * @save_state:	State to be preserved across power loss
+  * @state_needs_restore: True when there is context to restore after PM exit
++ * @skip_power_up: Indicates if an implementation can skip powering up
++ *		   the trace unit.
+  */
+ struct etmv4_drvdata {
+ 	void __iomem			*base;
+@@ -454,6 +456,7 @@ struct etmv4_drvdata {
+ 	struct etmv4_config		config;
+ 	struct etmv4_save_state		*save_state;
+ 	bool				state_needs_restore;
++	bool				skip_power_up;
+ };
+ 
+ /* Address comparator access types */
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
