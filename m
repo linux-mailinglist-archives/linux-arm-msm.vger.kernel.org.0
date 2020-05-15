@@ -2,80 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 954771D41E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 01:56:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35CA61D4218
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 02:32:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726135AbgENX4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 19:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39382 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728084AbgENX4T (ORCPT
+        id S1728458AbgEOAcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 20:32:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44916 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728219AbgEOAcG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 19:56:19 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07331C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 16:56:18 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id a5so167859pjh.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 16:56:17 -0700 (PDT)
+        Thu, 14 May 2020 20:32:06 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 069BBC05BD43
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 17:32:05 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id f6so173005pgm.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 17:32:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=V7AO4OblGlSBwQug8IWxWej/AMRXHDQKDH+1XWLNVew=;
-        b=hzggQepQrsKGGnBsKsAANMRY17+1T0uMxt3OSRHq07nFJRt3KU5oRuA+Eo5PsWfqs+
-         PFCm8AqB0mGEx18uOYHt+Lq7Ec3Xank+8pNhj4oDSf+u4lUtGp76aHY4RkH+YZphAaRt
-         R/ShiS2/ZyKNvNg3n6iPwASRzJF7ENniMAaps=
+        bh=ksohmisiygmMHSWmZNuyiGcxOl23DTxWznhnrAA0Tbc=;
+        b=cPk6Aai/Cgvqt0Hw0nAvV2PJi+S+U0lQ3s+kR1zT8quJNLuBg2FCokbhC2GzfDSzJJ
+         F5bmAzSUpSBwRoZ1Ym+YE2Zs64UYZ9YUoW+PRgtrsZynF/QJDpka4gEPcaI0pKdfmbQA
+         B4Z8rYbMian4pw77PaNRSd1O+Vcxwo0afwBs8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=V7AO4OblGlSBwQug8IWxWej/AMRXHDQKDH+1XWLNVew=;
-        b=YMsYtKUFpZl8kg/IDdn/rkSkSYL00VuHc9ROmXAhS0RhcwruaEgUmhBGRcrxWRYc+J
-         vU8YPi3+8O/rsTHWP6+lo/QFs6M2+3/MuWCGIm+x1HlTVuf4CHEZsbjfioOpLwfOwleC
-         kXSyIP+0Ly74XDD21zkKLK0VsYwqC48j8TfHWWH1+4b1PWKtGC4z18QA9oFg1azAHw9M
-         4IsVACJySkdUx3UQWb6K4/Bal+NZXunIl9upLHdKEwk5wW8fnlmLYHna4PoRk3Ov0e50
-         jUx1SWdTndrSWc7SLa69awrlFwpjiHiO3cBUvkQCdPdxgy4LCJtn4exLH4IovyIHVDqP
-         RyEQ==
-X-Gm-Message-State: AOAM533WofwY65GXRE5CoXjQC7vYqQUwHpxaN2RERsyg+Dw/v+Y0U5x6
-        GEMgIFAexkW/0uNdTvjdj5KcDw==
-X-Google-Smtp-Source: ABdhPJyi+LzUx1kJiRE6ItqiavOmXdW/8OwRjVGekQrbAMGtyQUoyeqnUTlfgO4bMCWn2eddMBgRCQ==
-X-Received: by 2002:a17:902:c487:: with SMTP id n7mr979410plx.316.1589500577438;
-        Thu, 14 May 2020 16:56:17 -0700 (PDT)
+        bh=ksohmisiygmMHSWmZNuyiGcxOl23DTxWznhnrAA0Tbc=;
+        b=MDqDUBxDLXzIyrEAo/FevF6qpYIVOnpdinnNn9938HPTe17hlSWw7VvYN/QV9tmYk3
+         U7kC1piopmnAlohIB8rnFfOOXO3dFUW5CPq3GEvt85C9XLRl02uM1Xo4MowI1/2rKX1p
+         /73tvRbI6EDX4nx6yhTR2UPmRI25EWpZ+Xw6CDQ4n6lzT5KiGqHx+ZF7ZeeVI9FDkia1
+         2uW9GQutCSQb/QuM0qzTskdAn2axfmV97YlmqTlitV5J+0ZZuXZX6Pk2gWsx7PJ2LOKU
+         5+C/FdmXolSgI8sf1iEMAzVweDloR22iOERBXLTvfBAx6XWs1L01foDBNrO4WXG5K1LL
+         Sytg==
+X-Gm-Message-State: AOAM533Za6OX57sviNZZEJW/XkMhKtwGpWSMA20yU5kl/aKLPq2sDs6a
+        R0JSGDq9xqATnWQrmi7JjqTIDw==
+X-Google-Smtp-Source: ABdhPJxP4fdAV/QiAEsyatfE+OPdd5pusF9BcQ3lUqxkmtep+uuG0U2tNiNsF7/PknZVYJq9lJXrlA==
+X-Received: by 2002:a62:8888:: with SMTP id l130mr1187943pfd.140.1589502725382;
+        Thu, 14 May 2020 17:32:05 -0700 (PDT)
 Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id w14sm260208pgo.75.2020.05.14.16.56.16
+        by smtp.gmail.com with ESMTPSA id z1sm163461pjn.43.2020.05.14.17.32.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 May 2020 16:56:16 -0700 (PDT)
-Date:   Thu, 14 May 2020 16:56:15 -0700
+        Thu, 14 May 2020 17:32:04 -0700 (PDT)
+Date:   Thu, 14 May 2020 17:32:02 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Sharat Masetty <smasetty@codeaurora.org>
 Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
-        georgi.djakov@linaro.org
-Subject: Re: [PATCH 0/6] Add support for GPU DDR BW scaling
-Message-ID: <20200514235615.GT4525@google.com>
+        georgi.djakov@linaro.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: Re: [PATCH 3/6] OPP: Add and export helper to set bandwidth
+Message-ID: <20200515003202.GU4525@google.com>
 References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
+ <1589453659-27581-4-git-send-email-smasetty@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
+In-Reply-To: <1589453659-27581-4-git-send-email-smasetty@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 14, 2020 at 04:24:13PM +0530, Sharat Masetty wrote:
+On Thu, May 14, 2020 at 04:24:16PM +0530, Sharat Masetty wrote:
+> From: Sibi Sankar <sibis@codeaurora.org>
+> 
+> Add and export 'dev_pm_opp_set_bw' to set the bandwidth
+> levels associated with an OPP for a given frequency.
 
-> Subject: [PATCH 0/6] Add support for GPU DDR BW scaling
-
-For anything but the first version the subject (for all patches) should
-include the version (i.e. [v2, 0/6], etc for this series).
-
-> This is a rework of my previous series [1], but this time based on the bindings
-> from Georgi [2] + a few fixes which look to be fixed in v8 of Georgi's series
-> [3]. The work is based on the chromeOS tip.
-
-Chrome OS is irrelevant here, the series should be based on Linus' or
-one of the relevant maintainer trees (+ the patches it depends on).
-If it is actually based on the Chrome OS kernel tree (v5.4 I imagine)
-there will likely be conflicts which will make maintainers unhappy.
+Wait, this looks very much like Sibi's patch from v4 of the "DDR/L3
+Scaling support on SDM845 and SC7180 SoCs" series
+(https://patchwork.kernel.org/patch/11527571/). Please don't repost
+patches from other series (unless the series/patch was clearly
+abandonded, which isn't the case here). Instead mention the patch
+as a dependency.
