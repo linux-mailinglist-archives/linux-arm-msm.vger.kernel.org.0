@@ -2,98 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5A001D43BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 04:50:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 089DE1D43D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 05:01:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727930AbgEOCuu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 22:50:50 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:39987 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbgEOCut (ORCPT
+        id S1726665AbgEODBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 23:01:38 -0400
+Received: from mail-oo1-f65.google.com ([209.85.161.65]:34966 "EHLO
+        mail-oo1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726192AbgEODBh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 22:50:49 -0400
-Received: by mail-ot1-f66.google.com with SMTP id d26so779867otc.7;
-        Thu, 14 May 2020 19:50:49 -0700 (PDT)
+        Thu, 14 May 2020 23:01:37 -0400
+Received: by mail-oo1-f65.google.com with SMTP id c187so144288ooc.2;
+        Thu, 14 May 2020 20:01:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ozglBc+sLmCi94fyi9hM4nMjLfjck0uiAKDPMtJ/ktQ=;
-        b=ECr0/UAyKyFFDJ2ku3XmPI+IYNoD1zjVfsHkXTU2ANlRVHZ7cWvSfbHLwLqLA5cUjY
-         vKdcBSdLDbpY2qiojfBzO5Jvu6FcYhDmwPi6YOpUlgIo9wJ8RJcSr6F4p9T0QKAalWob
-         yFpd0XwOpIHnTRoZqAS1QQR70nfhZ98klOnUFf4FILfn4QKiiXxStBtctn+rmTQ8lHcj
-         H34xjdQA/aAV5Kp1CmtaO6INa3715cnwGMFGg6/pBpMKygs1vVSDQU1kJNyLNbx03cvD
-         ZiomcyYOdIdjCexPmshbyprfnu1HfHe+RAqg6O+s9x8975NhwsrVGv40zE1v15kGeLNb
-         MPlQ==
-X-Gm-Message-State: AOAM531svvF5TG5dhnjmLUyBgVQRJZqOpJbqQbsDQcoj/lkOIRkppxiL
-        qvWrbtwzjIaOW0YAyZrW1w==
-X-Google-Smtp-Source: ABdhPJyf3I3BEvGznd2LmPlqdpXGJf9rz4M+SJAOYC+ZrQGj/mDBIoUotlVom7IQ3onC2yi+Xbff4w==
-X-Received: by 2002:a9d:7414:: with SMTP id n20mr773057otk.61.1589511048634;
-        Thu, 14 May 2020 19:50:48 -0700 (PDT)
+        bh=fzt3fbDfPhMLsvVChoRsuRz5dmNGR0DOVOHIwVjbwCo=;
+        b=mL4cYKK2sFj7olXwtcGYQfn1+Z7h0DR2lYKGpzhm4rKkf0dmqIB6d0hpu87RazerRu
+         hBUxMUVyTxop+z5QBEY/iPd4eVBv+JPxJrNIFxS8F/S1Xny7VggovMKbW8uWDKxncwuQ
+         AItsfksuSuITQ18n5log+gj+wmbibK9lYTVRqyF57p3/LMwszmbOfa3iNUF2+RgCj1z9
+         hRshMe4eqHNYmtNxZxXd8aJ49p0h57ixAyOFtEZxIje2equV9gWCY9Y1vzh40LCJj1wq
+         EY7+nCiucAKJe5Zxa6vyupbEemCNBP+h9eg62g76WMClqNS21jycAWP/yWMt6QPz8EtH
+         Ocgg==
+X-Gm-Message-State: AOAM531m1ab1jlxrZPBTr6hH3H6oSywa4iOu/NSKHdKJu2+bpWHTd3wT
+        HyRmS3+oD6/YyIF1kkkjmw==
+X-Google-Smtp-Source: ABdhPJx3IazIe047SWhLhbb8iub9o9mvI5+SddR6eHlIPjOIaHcBm7Kf5QHuVnMUBWQ/xZh8l1RlWg==
+X-Received: by 2002:a4a:a448:: with SMTP id w8mr871623ool.78.1589511695032;
+        Thu, 14 May 2020 20:01:35 -0700 (PDT)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id o17sm237457otp.79.2020.05.14.19.50.47
+        by smtp.gmail.com with ESMTPSA id o21sm265756ook.8.2020.05.14.20.01.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2020 19:50:48 -0700 (PDT)
-Received: (nullmailer pid 30844 invoked by uid 1000);
-        Fri, 15 May 2020 02:50:47 -0000
-Date:   Thu, 14 May 2020 21:50:47 -0500
+        Thu, 14 May 2020 20:01:34 -0700 (PDT)
+Received: (nullmailer pid 13459 invoked by uid 1000);
+        Fri, 15 May 2020 03:01:33 -0000
+Date:   Thu, 14 May 2020 22:01:33 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Sarthak Garg <sartgarg@codeaurora.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        vbadigan@codeaurora.org, stummala@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH V1 1/7] dt-bindings: mmc: Add information for DLL
- register properties
-Message-ID: <20200515025047.GA27895@bogus>
-References: <1588838535-6050-1-git-send-email-sartgarg@codeaurora.org>
- <1588838535-6050-2-git-send-email-sartgarg@codeaurora.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mgautam@codeaurora.org, rojay@codeaurora.org,
+        skakit@codeaurora.org, mka@chromium.org
+Subject: Re: [PATCH V6 3/3] dt-bindings: serial: Add binding for UART pin swap
+Message-ID: <20200515030133.GA11479@bogus>
+References: <1588863647-17240-1-git-send-email-akashast@codeaurora.org>
+ <1588863647-17240-4-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1588838535-6050-2-git-send-email-sartgarg@codeaurora.org>
+In-Reply-To: <1588863647-17240-4-git-send-email-akashast@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 07, 2020 at 01:32:08PM +0530, Sarthak Garg wrote:
-> Add information regarding DLL register properties for getting target
-> specific configurations. These DLL register settings may vary from
-> target to target.
+On Thu, May 07, 2020 at 08:30:47PM +0530, Akash Asthana wrote:
+> Add documentation to support RX-TX & CTS-RTS GPIO pin swap in HW.
 > 
-> Also new compatible string value for sm8250 target.
-> 
-> Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  Documentation/devicetree/bindings/serial/serial.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> index 5445931..b8e1d2b 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> @@ -17,6 +17,7 @@ Required properties:
->  		"qcom,msm8916-sdhci", "qcom,sdhci-msm-v4"
->  		"qcom,msm8992-sdhci", "qcom,sdhci-msm-v4"
->  		"qcom,msm8996-sdhci", "qcom,sdhci-msm-v4"
-> +		"qcom,sm8250-sdhci", "qcom,sdhci-msm-v5"
->  		"qcom,sdm845-sdhci", "qcom,sdhci-msm-v5"
->  		"qcom,qcs404-sdhci", "qcom,sdhci-msm-v5"
->  		"qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
-> @@ -46,6 +47,13 @@ Required properties:
->  	"cal"	- reference clock for RCLK delay calibration (optional)
->  	"sleep"	- sleep clock for RCLK delay calibration (optional)
+> diff --git a/Documentation/devicetree/bindings/serial/serial.yaml b/Documentation/devicetree/bindings/serial/serial.yaml
+> index 53204d9..e657dd6 100644
+> --- a/Documentation/devicetree/bindings/serial/serial.yaml
+> +++ b/Documentation/devicetree/bindings/serial/serial.yaml
+> @@ -67,6 +67,12 @@ properties:
+>        (wired and enabled by pinmux configuration).  This depends on both the
+>        UART hardware and the board wiring.
 >  
-> +- qcom,ddr-config: Certain chipsets and platforms require particular settings
-> +	for the DDR_CONFIG register. Use this field to specify the register
-> +	value as per the Hardware Programming Guide.
+> +  rx-tx-swap:
+> +    description: RX and TX pins are swapped.
 > +
-> +- qcom,dll-config: Chipset and Platform specific value. Use this field to
-> +	specify the DLL_CONFIG register value as per Hardware Programming Guide.
+> +  cts-rts-swap:
+> +    description: CTS and RTS pins are swapped.
 
-Board specific or SoC specific? If the latter, imply this from the 
-compatible string.
+Need 'type: boolean' on both of these.
+
+> +
+>  if:
+>    required:
+>      - uart-has-rtscts
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
