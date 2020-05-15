@@ -2,85 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C2061D4378
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 04:18:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D92D1D4386
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 04:29:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728027AbgEOCSA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 22:18:00 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:42116 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726122AbgEOCSA (ORCPT
+        id S1727803AbgEOC34 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 22:29:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34792 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726140AbgEOC34 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 22:18:00 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589509079; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=LIkYfJRN7PLEeEi/ulUhazbev/1bwcEkEalsKq0bNh4=; b=BhUQDGDlwcwrAXVQ52t/FqUidQUqe31o4/k2t3Y7pnGxF4nnvaX+S+i4RTd3ZOm7g6JL3H5f
- zJh59/KwPbz4yKkKXcpaSQ/7YnUbWX+ddtUZmYyxMbgLqsaXPkipq2Cyc44mM/1TdSs/jQ15
- cS0JQsBJ52HUJG6IYYo25Rthq70=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5ebdfbccaefa5a01cc8977a4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 May 2020 02:17:48
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 80536C432C2; Fri, 15 May 2020 02:17:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jhugo-perf-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20700C433D2;
-        Fri, 15 May 2020 02:17:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 20700C433D2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH] bus: mhi: core: Use current ee in intvec handler
-Date:   Thu, 14 May 2020 20:17:29 -0600
-Message-Id: <1589509049-14532-1-git-send-email-jhugo@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Thu, 14 May 2020 22:29:56 -0400
+Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 344D2C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 19:29:56 -0700 (PDT)
+Received: by mail-vk1-xa43.google.com with SMTP id s85so181307vks.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 19:29:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3JifzVBQeOFFZWECIooC1r1MBLb2LpZu3OhDsGzyQwI=;
+        b=ZkBlAm2iPlEcr/Yn4qDW9Yq6BXZNd/Rv6CWBamTR7L/fNW4uy8Bxdam5xyBgH6mbo1
+         T9Ggd5HVo4MANHIcEtjG+/EYbItWYAcFGy6VOaG4l12Ns/5lLWeKwxJvDB7zq3rfA+q8
+         W+9nwtTERzKqQY51VK5fKIGpSe5CpsH5S4Cxk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3JifzVBQeOFFZWECIooC1r1MBLb2LpZu3OhDsGzyQwI=;
+        b=lhcK28tWleewgMLndpkg1Lpg2dZNe5Z3Po+j30GF/psoSyneQsYSz8XtKXJtgq3VmF
+         cgGR6E+jLTHaQJMr3fB5bPHzgLfvBXBEG+rDqnEywQxnsndvTgRj5zar5lSeUh7PlKYL
+         G+ow0+cGVBxkGLA2wLl1iOv+QYzgHZvPTK27A71UHqG6FummmPmz6vuI86O+qxAdWOtF
+         H8G1LRjewE9fpUdthLnpy8OAIyyNQkwhORUqV6+e75c2kvfdl6H4ccLqJfj3Akqch6R0
+         /BgsL3z6R8IMCIVVXoTLFVdagaG3BzsSGhcKTgYemuS/naMmrlJnToaeko/dc0MlZa+6
+         /BEQ==
+X-Gm-Message-State: AOAM533b+oSgK26CAUsgGXqiJKIQl2VRPlH1CMOHJqQY22jSzllHVHOQ
+        EtpezWw8mmtzTfRiKKhj+DbTRkSiwU4=
+X-Google-Smtp-Source: ABdhPJzS2Ux580nGgj3eAdEUnEVd/liDgr5Jtaz8tLaMdbjVwScQ/fccp0w55NZLe9+JB5ktePjWyw==
+X-Received: by 2002:a1f:a150:: with SMTP id k77mr1147411vke.88.1589509794980;
+        Thu, 14 May 2020 19:29:54 -0700 (PDT)
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com. [209.85.221.172])
+        by smtp.gmail.com with ESMTPSA id n22sm241426vkf.13.2020.05.14.19.29.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 May 2020 19:29:53 -0700 (PDT)
+Received: by mail-vk1-f172.google.com with SMTP id m18so184813vkk.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 19:29:52 -0700 (PDT)
+X-Received: by 2002:a1f:2c41:: with SMTP id s62mr1100387vks.40.1589509792456;
+ Thu, 14 May 2020 19:29:52 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200504104917.v6.1.Ic7096b3b9b7828cdd41cd5469a6dee5eb6abf549@changeid>
+In-Reply-To: <20200504104917.v6.1.Ic7096b3b9b7828cdd41cd5469a6dee5eb6abf549@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 14 May 2020 19:29:41 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UbcUersNDYK9LQiGb55PUN-HSwxjCZdxo6QqUV=N=UTQ@mail.gmail.com>
+Message-ID: <CAD=FV=UbcUersNDYK9LQiGb55PUN-HSwxjCZdxo6QqUV=N=UTQ@mail.gmail.com>
+Subject: Re: [PATCH v6 1/5] soc: qcom: rpmh-rsc: Correctly ignore
+ CPU_CLUSTER_PM notifications
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Evan Green <evgreen@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The intvec handler stores the caches ee in a local variable for use in
-processing the intvec.  It should instead use the current ee which is
-read at the beginning of the intvec incase that the intvec is related to
-an ee change.  Otherwise, the handler might make the wrong decision
-based on an incorrect ee.
+Hi,
 
-Fixes: 3000f85b8f47 (bus: mhi: core: Add support for basic PM operations)
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
----
- drivers/bus/mhi/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, May 4, 2020 at 10:50 AM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> Our switch statement doesn't have entries for CPU_CLUSTER_PM_ENTER,
+> CPU_CLUSTER_PM_ENTER_FAILED, and CPU_CLUSTER_PM_EXIT and doesn't have
+> a default.  This means that we'll try to do a flush in those cases but
+> we won't necessarily be the last CPU down.  That's not so ideal since
+> our (lack of) locking assumes we're on the last CPU.
+>
+> Luckily this isn't as big a problem as you'd think since (at least on
+> the SoC I tested) we don't get these notifications except on full
+> system suspend.  ...and on full system suspend we get them on the last
+> CPU down.  That means that the worst problem we hit is flushing twice.
+> Still, it's good to make it correct.
+>
+> Fixes: 985427f997b6 ("soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches")
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> Changes in v6:
+> - Release the lock on cluster notifications.
+>
+> Changes in v5:
+> - Corrently => Correctly
+>
+> Changes in v4:
+> - ("...Corrently ignore CPU_CLUSTER_PM notifications") split out for v4.
+>
+> Changes in v3: None
+> Changes in v2: None
+>
+>  drivers/soc/qcom/rpmh-rsc.c | 3 +++
+>  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 7272a5a..0a41fe5 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -386,8 +386,8 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *dev)
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
- 		state = mhi_get_mhi_state(mhi_cntrl);
--		ee = mhi_cntrl->ee;
- 		mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
-+		ee = mhi_cntrl->ee;
- 	}
- 
- 	if (state == MHI_STATE_SYS_ERR) {
--- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+The bugfixes in this series seem somewhat important to land.  Is there
+something delaying them?  Are we waiting for some tags from Maulik?
 
+-Doug
