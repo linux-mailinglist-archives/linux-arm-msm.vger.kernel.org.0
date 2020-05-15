@@ -2,199 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 333BF1D5558
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 17:59:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 349ED1D55CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 18:23:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726863AbgEOP7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 11:59:05 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:31439 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726652AbgEOP7F (ORCPT
+        id S1726198AbgEOQXF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 12:23:05 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:59513 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726185AbgEOQXF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 11:59:05 -0400
+        Fri, 15 May 2020 12:23:05 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589558343; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=qxsW8J//wgvAmbboym2DVFK7T00YKI0V2xlBc3zGI9A=;
- b=KEEKWvbt+O6HXnwQsAaEoIYWqSgmNqLEOWTh0z5E3xveaK90fuJ1Ti3B+I1CH5J/CGZuzyGD
- KHXbT2TmggNBOTMuYmjWqN0apvplZwwdNEc0HX39+GvEqJgC52nEGN0DWL+8inxXM7Q/DtoX
- 4NhjQPpmSGzxX4DmpfXV+HmZBJc=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ s=smtp; t=1589559784; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=jr+Pq8PUO8hvm/NpQeG3PNW0H4SGlfkDWJS5UbVcagI=; b=gNm1hFTVN1W9IGc5xIK5981//0FZE9EybRcSXMfCOVt3OZHqsame7TNHQxSommQhOGYRfEsX
+ 5x0CqbF8JkfYimEy5uwDTfAP9gzI5Mrlu0thpbL/fxC/m7A2S55tKZNOkLkknJNnAoZOqFHL
+ bnhe4N9Tvc0SNw4OAL1gkb900Kc=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ebebc30.7fd92b617f10-smtp-out-n05;
- Fri, 15 May 2020 15:58:40 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ebec1d8.7fb2f0ea4dc0-smtp-out-n04;
+ Fri, 15 May 2020 16:22:48 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 243A2C43636; Fri, 15 May 2020 15:58:40 +0000 (UTC)
+        id 5D260C4478C; Fri, 15 May 2020 16:22:48 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1D64AC433D2;
-        Fri, 15 May 2020 15:58:39 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 15 May 2020 21:28:39 +0530
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 13E12C433F2;
+        Fri, 15 May 2020 16:22:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 13E12C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Coresight ML <coresight@lists.linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Leo Yan <leo.yan@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
         Tingwei Zhang <tingwei@codeaurora.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Mike Leach <mike.leach@linaro.org>
-Subject: Re: [PATCH] coresight: etm4x: Add support to disable trace unit power
- up
-In-Reply-To: <20200515155144.GA7085@xps15>
-References: <20200514105915.27516-1-saiprakash.ranjan@codeaurora.org>
- <20200514180055.GA29384@xps15>
- <2c932d57288508cc72a6ee323cf5595e@codeaurora.org>
- <CANLsYkxun2EWGeLU42ShbqkJMtCTh+Q9L3t=CXQR+-2zVuuJYg@mail.gmail.com>
- <a0f8f01f28506e10001885e387d3cb4f@codeaurora.org>
- <20200515155144.GA7085@xps15>
-Message-ID: <89be7790b7fdd4b0268919e060198926@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        coresight@lists.linaro.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv3 0/2] coresight: etm4x: Add support to skip trace unit power up
+Date:   Fri, 15 May 2020 21:52:31 +0530
+Message-Id: <cover.1589558615.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathieu,
+This series adds support to skip powering up of trace unit on systems
+with an errata which stops CPU watchdog counter when power up bit is
+set (TRCPDCR.PU = 1). Setting this bit is not required on Qualcomm
+Technologies Inc. chipsets where this errata exists since the ETMs
+are in the same power domain as their respective CPU cores.
 
-On 2020-05-15 21:21, Mathieu Poirier wrote:
-> On Fri, May 15, 2020 at 08:37:13PM +0530, Sai Prakash Ranjan wrote:
->> Hi Mathieu,
->> 
->> On 2020-05-15 20:22, Mathieu Poirier wrote:
->> > On Thu, 14 May 2020 at 12:39, Sai Prakash Ranjan
->> > <saiprakash.ranjan@codeaurora.org> wrote:
->> > >
->> > > Hi Mathieu,
->> > >
->> > > On 2020-05-14 23:30, Mathieu Poirier wrote:
->> > > > Good morning Sai,
->> > > >
->> > > > On Thu, May 14, 2020 at 04:29:15PM +0530, Sai Prakash Ranjan wrote:
->> > > >> From: Tingwei Zhang <tingwei@codeaurora.org>
->> > > >>
->> > > >> On some Qualcomm Technologies Inc. SoCs like SC7180, there
->> > > >> exists a hardware errata where the APSS (Application Processor
->> > > >> SubSystem)/CPU watchdog counter is stopped when ETM register
->> > > >> TRCPDCR.PU=1.
->> > > >
->> > > > Fun stuff...
->> > > >
->> > >
->> > > Yes :)
->> > >
->> > > >> Since the ETMs share the same power domain as
->> > > >> that of respective CPU cores, they are powered on when the
->> > > >> CPU core is powered on. So we can disable powering up of the
->> > > >> trace unit after checking for this errata via new property
->> > > >> called "qcom,tupwr-disable".
->> > > >>
->> > > >> Signed-off-by: Tingwei Zhang <tingwei@codeaurora.org>
->> > > >> Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> > > >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> > > >
->> > > > Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> > > > Signed-off-by: Tingwei Zhang <tingwei@codeaurora.org>
->> > > >
->> > >
->> > > Tingwei is the author, so if I understand correctly, his signed-off-by
->> > > should appear first, am I wrong?
->> >
->> > It's a gray area and depends on who's code is more prevalent in the
->> > patch.  If Tingwei wrote the most of the code then his name is in the
->> > "from:" section, yours as co-developer and he signs off on it (as I
->> > suggested).  If you did most of the work then it is the opposite.
->> > Adding a Co-developed and a signed-off with the same name doesn't make
->> > sense.
->> >
->> 
->> I did check the documentation for submitting patches:
->> Documentation/process/submitting-patches.rst. And it clearly states
->> that "Co-developed-by must be followed by Signed-off by the co-author
->> and the last Signed-off-by: must always be that of the developer
->> submitting the patch".
->> 
->> Quoting below from the doc:
->> 
->> Co-developed-by: <snip> ...Since
->> Co-developed-by: denotes authorship, every Co-developed-by: must be
->> immediately
->> followed by a Signed-off-by: of the associated co-author.  Standard 
->> sign-off
->> procedure applies, i.e. the ordering of Signed-off-by: tags should 
->> reflect
->> the
->> chronological history of the patch insofar as possible, regardless of
->> whether
->> the author is attributed via From: or Co-developed-by:.  Notably, the 
->> last
->> Signed-off-by: must always be that of the developer submitting the 
->> patch.
-> 
-> Ah yes, glad to see that got clarified.  You can ignore my 
-> recommendation on
-> that snippet.
-> 
->> 
->> > >
->> > > >> ---
->> > > >>  .../devicetree/bindings/arm/coresight.txt     |  6 ++++
->> > > >>  drivers/hwtracing/coresight/coresight-etm4x.c | 29
->> > > >> ++++++++++++-------
->> > > >
->> > > > Please split in two patches.
->> > > >
->> > >
->> > > Sure, I will split the dt-binding into separate patch, checkpatch did
->> > > warn.
->> >
->> > And you still sent me the patch...  I usually run checkpatch before
->> > all the submissions I review and flatly ignore patches that return
->> > errors.  You got lucky...
->> >
->> 
->> I did not mean to ignore it or else I wouldn't have run checkpatch 
->> itself.
->> I checked other cases like "arm,scatter-gather" where the binding and 
->> the
->> driver change was in a single patch, hence I thought it's not a very 
->> strict
->> rule.
-> 
-> The patch has another warning for a line over 80 characters, that 
-> should have
-> been fixed before sending.  Putting DT changes in a separate patch is 
-> always
-> better for the DT people.  They review tons of patches and making their 
-> life
-> easier is always a good thing.
-> 
+Changes since v2:
+ * Fix checkpatch warning for 80 characters.
 
-Ok, I will fix this and resend. I did not want to change it in case if 
-it affects
-readability since most maintainers prefer to ignore this 80 characters 
-warning if
-it affects readability. I will keep this in mind for future patches as 
-well.
+Changes since v1:
+ * Use qcom,skip-power-up for naming as suggested by Mathieu.
+ * Have check for DT property in initialization as per Mathieu.
+ * Reword description for property as per Mathieu.
+ * Split up dt-binding patch as checkpatch complains.
 
-Thanks,
-Sai
+Tingwei Zhang (2):
+  coresight: etm4x: Add support to skip trace unit power up
+  dt-bindings: arm: coresight: Add support to skip trace unit power up
+
+ .../devicetree/bindings/arm/coresight.txt     |  7 +++++
+ drivers/hwtracing/coresight/coresight-etm4x.c | 27 ++++++++++++-------
+ drivers/hwtracing/coresight/coresight-etm4x.h |  3 +++
+ 3 files changed, 27 insertions(+), 10 deletions(-)
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
