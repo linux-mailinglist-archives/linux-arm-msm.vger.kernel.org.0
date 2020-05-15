@@ -2,127 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 223261D4B4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 12:45:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D68801D4B94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 12:52:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728280AbgEOKp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 06:45:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55836 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728013AbgEOKpY (ORCPT
+        id S1725919AbgEOKwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 06:52:04 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:59317 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726087AbgEOKwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 06:45:24 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB599C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2020 03:45:23 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e16so2962879wra.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2020 03:45:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Cd7qB8BAMww/iv9WmCLhIPHREYnAoZQ6w79B6P0E6xg=;
-        b=xP+CinPdhHJdBjl9cEQqmu4DEA3UtVXZdBP7jqRNyAo0v9749k2ET+YUkOxJpV8x48
-         /zi9CEO2JexEpMGzWxjP+uS7KXXviQr7dpYE8UAf3Yhvjt9YIOIeSMSlQ6arlBHRgllI
-         GSyelo7kJIw2le571fQUHCKuHVftyT/NiPioOYLVs6camgsZAbgkYFMSwOu7e0nwDQB6
-         a66nTFdjPwh+BuzvO8QOtsWxvH/AFnK4HGT8J7Yxoybk1PSqW7a62ZOMEAodFlT86hS5
-         0iw+hj9gW3zvmz1F0DySLxkKplkE60LPynfbBQtp7qra3lLh2Qoqa+pqhfZeVVv8unTh
-         Z1tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Cd7qB8BAMww/iv9WmCLhIPHREYnAoZQ6w79B6P0E6xg=;
-        b=EFuwnQ4159MExyWAlp7QhQLtyk2YbMJbf0imY6h9N2/6o31+46b0NTEJrdmSbWXJN5
-         dNFiW/j/JZCVxnemZBgUv3gI4Up9Ulv8gnoK1abFqjKIH3BgN7jvqZB73Zx/Xjhjhj41
-         Cma/kkKWUs5wX6nmUG3hD9GGn0rWSzJFOyX50He19hVmqkkLM9+mLieV2qO16cEylTYt
-         M1dpHRZ5dPOlgnWs7mEIPYJCVOZTsT4IDF822qUXH3ltchkAgk9bZkQuOMwD4DF5rh71
-         y9qWkMpshWh7IF08IVp0PT4ls9b65QYFFunmWju9+wWBnbul7TECsaxuHaBKxaxIG9sm
-         BXmw==
-X-Gm-Message-State: AOAM531R7Y3oMKHyuV/QmN8SefBOv0B15peAfRumhcDCXk0+G4aFGSeu
-        WPgQkfet80kHgezpGH80HYrh8s9TDI8=
-X-Google-Smtp-Source: ABdhPJzbfw5o04oHo9dS73R/kDPCPBnMrv+TxxiUYGhV32BiVaTVeZw53f6QhVV5pucVUf2qfhjPXw==
-X-Received: by 2002:adf:dd01:: with SMTP id a1mr3533148wrm.224.1589539522608;
-        Fri, 15 May 2020 03:45:22 -0700 (PDT)
-Received: from dell ([2.31.163.63])
-        by smtp.gmail.com with ESMTPSA id b14sm3022482wmb.18.2020.05.15.03.45.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2020 03:45:21 -0700 (PDT)
-Date:   Fri, 15 May 2020 11:45:20 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     devicetree@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Fri, 15 May 2020 06:52:01 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589539920; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=rikjA8AJzTjEwmm7HWKZ8WqApUeJq1rP63ws+xHT7Sg=; b=eC3cry8xvq7QQfsDODdZQVfNIX0E63UzPVNIoyxijMAinEggIoxXuIoY7JRNRRI0ssSNnVMj
+ WRom8yZjiJQm5yPF0+zLNZmjrj5PqUdD41c7u4POHQmSGTTT6LroNRUq9BquWBv3Y2gIGNCP
+ fYumTs+RKmm4/qxD2OYekyB99nA=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5ebe74490404ab4a8d7ec3ed (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 May 2020 10:51:53
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6D884C44791; Fri, 15 May 2020 10:51:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E096BC433F2;
+        Fri, 15 May 2020 10:51:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E096BC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 2/2] mfd: Introduce QTI I2C PMIC controller
-Message-ID: <20200515104520.GK271301@dell>
-References: <cover.1588115326.git.gurus@codeaurora.org>
- <5644dea146f8b49a5b827c56392ff916bfb343e9.1588115326.git.gurus@codeaurora.org>
- <20200429075010.GX3559@dell>
- <20200501011319.GA28441@codeaurora.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 0/2]  arm64: dts: qcom: sc7180: Add support for ETMv4 PM and skipping power up.
+Date:   Fri, 15 May 2020 16:21:35 +0530
+Message-Id: <cover.1589539293.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200501011319.GA28441@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Apr 2020, Guru Das Srinagesh wrote:
+Patch 1 is a resend of https://lore.kernel.org/patchwork/patch/1230367/ since
+that patch seems to have added the property to replicator node instead of 
+etm7 node either when the patch was applied to the tree.
 
-> On Wed, Apr 29, 2020 at 08:50:10AM +0100, Lee Jones wrote:
-> > On Tue, 28 Apr 2020, Guru Das Srinagesh wrote:
-> > 
-> > > The Qualcomm Technologies, Inc. I2C PMIC Controller is used by
-> > > multi-function PMIC devices which communicate over the I2C bus.  The
-> > > controller enumerates all child nodes as platform devices, and
-> > > instantiates a regmap interface for them to communicate over the I2C
-> > > bus.
-> > > 
-> > > The controller also controls interrupts for all of the children platform
-> > > devices.  The controller handles the summary interrupt by deciphering
-> > > which peripheral triggered the interrupt, and which of the peripheral
-> > > interrupts were triggered.  Finally, it calls the interrupt handlers for
-> > > each of the virtual interrupts that were registered.
-> > > 
-> > > Nicholas Troast is the original author of this driver.
-> > > 
-> > > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> > > ---
-> > >  drivers/mfd/Kconfig         |  11 +
-> > >  drivers/mfd/Makefile        |   1 +
-> > >  drivers/mfd/qcom-i2c-pmic.c | 737 ++++++++++++++++++++++++++++++++++++++++++++
-> > 
-> > The vast majority of this driver deals with IRQ handling.  Why can't
-> > this be split out into its own IRQ Chip driver and moved to
-> > drivers/irqchip?
-> 
-> There appear to be quite a few in-tree MFD drivers that register IRQ
-> controllers, like this driver does:
-> 
-> $ grep --exclude-dir=.git -rnE "irq_domain_(add|create).+\(" drivers/mfd | wc -l
-> 23
-> 
-> As a further example, drivers/mfd/stpmic1.c closely resembles this
-> driver in that it uses both devm_regmap_add_irq_chip() as well as
-> devm_of_platform_populate().
-> 
-> As such, it seems like this driver is in line with some of the
-> architectural choices that have been accepted in already-merged drivers.
-> Could you please elaborate on your concerns?
+Patch 2 adds support to skip powering up of ETM to workaround the hardware
+errata where CPU watchdog counter is stopped when power up bit is set.
+Depends on https://lore.kernel.org/patchwork/cover/1242100/ changes.
 
-It is true that *basic* IRQ domain support has been added to these
-drivers in the past.  However, IMHO the support added to this driver
-goes beyond those realms such that it would justify a driver of its
-own.
+Sai Prakash Ranjan (2):
+  arm64: dts: qcom: sc7180: Support ETMv4 power management
+  arm64: dts: qcom: sc7180: Add support to skip powering up of ETM
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
