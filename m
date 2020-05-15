@@ -2,115 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3ED01D47F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 10:19:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D2131D4814
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 10:26:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727811AbgEOITD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 04:19:03 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:25607 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726648AbgEOITC (ORCPT
+        id S1726730AbgEOI0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 04:26:24 -0400
+Received: from lelv0142.ext.ti.com ([198.47.23.249]:44720 "EHLO
+        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726727AbgEOI0Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 04:19:02 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589530742; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=b15zrAYlQprMOsxRmwfaMv2/XJdzaN8Ceooz+8pLgE4=;
- b=YjVBVd1u98mSAa1xla5zOZqufbDFIHLCpTSqlWn3Rxnt6FegYBJUWvE36IuO50OqdMSn8zkL
- 05Jzq90B1I2Gs1u+JRWt8FrFfp8Fz+76nvSjyY9QhIaRWX6NmMq50lckMyJ7s4KQSNzMhvWP
- fupH0ZhbLfGFoVWSC8FNWIkc+uY=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5ebe506f5d62762fd4a5b16c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 May 2020 08:18:55
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5C29FC43637; Fri, 15 May 2020 08:18:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9BAE7C433D2;
-        Fri, 15 May 2020 08:18:53 +0000 (UTC)
+        Fri, 15 May 2020 04:26:24 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 04F8P1NG021893;
+        Fri, 15 May 2020 03:25:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1589531101;
+        bh=Px6iCJwnI8YajMcWG373WIy5UPHIryjVVh9cUJkFXx8=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=WpN+3lkFY/ptLOdJKVpECcyKk3t5+KMRLMiysBBJWiWVNtxMvpy5WhCFTWmVYDe5U
+         P2bW9FTVkKJHNN/zjQJwmNU1ZX8WecazeJBHtSZqYyZO5YhZR0MkoaKoULdn4Tn+TO
+         xr8TVjqdd+/Fjjv2X1NFWCAPNB+A/9xi2x6JVmms=
+Received: from DLEE112.ent.ti.com (dlee112.ent.ti.com [157.170.170.23])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 04F8P1o6002790
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 15 May 2020 03:25:01 -0500
+Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE112.ent.ti.com
+ (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Fri, 15
+ May 2020 03:25:00 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Fri, 15 May 2020 03:25:00 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04F8Osi6105749;
+        Fri, 15 May 2020 03:24:54 -0500
+Subject: Re: [PATCH v1 01/18] drm/omap: display: use devm_of_find_backlight
+To:     Sam Ravnborg <sam@ravnborg.org>, <dri-devel@lists.freedesktop.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>
+CC:     Allison Randal <allison@lohutok.net>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Enrico Weigelt <info@metux.net>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Jonathan Corbet <corbet@lwn.net>, Jyri Sarha <jsarha@ti.com>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Kefeng Wang <wangkefeng.wang@huawei.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        <patches@opensource.cirrus.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine Konig <u.kleine-koenig@pengutronix.de>,
+        Zheng Bin <zhengbin13@huawei.com>
+References: <20200514191001.457441-1-sam@ravnborg.org>
+ <20200514191001.457441-2-sam@ravnborg.org>
+From:   Tomi Valkeinen <tomi.valkeinen@ti.com>
+Message-ID: <6d733332-35d9-7799-c0e5-9f012485d738@ti.com>
+Date:   Fri, 15 May 2020 11:24:53 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200514191001.457441-2-sam@ravnborg.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 15 May 2020 13:48:53 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     will@kernel.org, robin.murphy@arm.com, joro@8bytes.org
-Cc:     bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, dianders@chromium.org,
-        evgreen@chromium.org, mka@chromium.org,
-        linux-kernel-owner@vger.kernel.org, swboyd@chromium.org
-Subject: Re: [PATCH v6] iommu/arm-smmu-qcom: Request direct mapping for modem
- device
-In-Reply-To: <20200511175532.25874-1-sibis@codeaurora.org>
-References: <20200511175532.25874-1-sibis@codeaurora.org>
-Message-ID: <0f0679f57a213536dfbba78b5c2dab5c@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Will,
-
-On 2020-05-11 23:25, Sibi Sankar wrote:
-> The modem remote processor has two access paths to DDR. One path is
-> directly connected to DDR and another path goes through an SMMU. The
-> SMMU path is configured to be a direct mapping because it's used by
-> various peripherals in the modem subsystem. Typically this direct
-> mapping is configured statically at EL2 by QHEE (Qualcomm's Hypervisor
-> Execution Environment) before the kernel is entered.
+On 14/05/2020 22:09, Sam Ravnborg wrote:
+> Look up backlight device using devm_of_find_backlight().
+> This simplifies the code and prevents us from hardcoding
+> the node name in the driver.
 > 
-> In certain firmware configuration, especially when the kernel is 
-> already
-> in full control of the SMMU, defer programming the modem SIDs to the
-> kernel. Let's add compatibles here so that we can have the kernel
-> program the SIDs for the modem in these cases.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Tomi Valkeinen <tomi.valkeinen@ti.com>
+> Cc: Zheng Bin <zhengbin13@huawei.com>
+> Cc: Kate Stewart <kstewart@linuxfoundation.org>
+> Cc: Enrico Weigelt <info@metux.net>
+> Cc: Allison Randal <allison@lohutok.net>
+> Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+> Cc: Sam Ravnborg <sam@ravnborg.org>
 > ---
+>   .../gpu/drm/omapdrm/displays/panel-dsi-cm.c    | 18 ++++++++----------
+>   1 file changed, 8 insertions(+), 10 deletions(-)
 
-Now that the patch is reworded can
-you please pick it up since its the
-only pending path from the series.
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ti.com>
 
-> 
-> V6
->  * Rebased on Will's for-joerg/arm-smmu/updates
->  * Reword commit message and add more details [Stephen]
-> 
->  drivers/iommu/arm-smmu-qcom.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/iommu/arm-smmu-qcom.c 
-> b/drivers/iommu/arm-smmu-qcom.c
-> index 5bedf21587a56..cf01d0215a397 100644
-> --- a/drivers/iommu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm-smmu-qcom.c
-> @@ -17,7 +17,9 @@ static const struct of_device_id
-> qcom_smmu_client_of_match[] = {
->  	{ .compatible = "qcom,mdp4" },
->  	{ .compatible = "qcom,mdss" },
->  	{ .compatible = "qcom,sc7180-mdss" },
-> +	{ .compatible = "qcom,sc7180-mss-pil" },
->  	{ .compatible = "qcom,sdm845-mdss" },
-> +	{ .compatible = "qcom,sdm845-mss-pil" },
->  	{ }
->  };
+  Tomi
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
