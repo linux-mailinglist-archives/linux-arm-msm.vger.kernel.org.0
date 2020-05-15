@@ -2,141 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D3101D5AF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 22:48:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3638C1D5B31
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 23:09:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbgEOUsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 16:48:38 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:41002 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbgEOUsh (ORCPT
+        id S1726247AbgEOVJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 17:09:09 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:21970 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726231AbgEOVJJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 16:48:37 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 15 May 2020 17:09:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589576948; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=tMa0XjTHFu9sNkikzcNxomTk26A/Z3fbNKIPFzqYgHI=; b=VHNY3rF7ADaNvV8LLW2LrpmTbVBHV2iP4a2wJSqcxoIza/GQSxRM+578of5f+kI8r8cF0S4Y
+ cD1MBXoVCVPwKfUhIKml90JIA7pOibjfKdywnw0Q11RUHRNKOJlGHoWxTTqQXAMvLO2a6Q3b
+ 9Lh0aIQyLe1VY1XwZpwRxfQHgQ4=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ebf04ee.7f628e639538-smtp-out-n02;
+ Fri, 15 May 2020 21:09:02 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E2E1FC43636; Fri, 15 May 2020 21:09:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id CC3198052B;
-        Fri, 15 May 2020 22:48:30 +0200 (CEST)
-Date:   Fri, 15 May 2020 22:48:29 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     Allison Randal <allison@lohutok.net>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Enrico Weigelt <info@metux.net>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jonathan Corbet <corbet@lwn.net>, Jyri Sarha <jsarha@ti.com>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Kefeng Wang <wangkefeng.wang@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Russell King <linux@armlinux.org.uk>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Uwe Kleine Konig <u.kleine-koenig@pengutronix.de>,
-        Zheng Bin <zhengbin13@huawei.com>
-Subject: Re: [PATCH v1 0/18] backlight updates
-Message-ID: <20200515204829.GB543522@ravnborg.org>
-References: <20200514191001.457441-1-sam@ravnborg.org>
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B082CC433F2;
+        Fri, 15 May 2020 21:09:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B082CC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [RFC PATCH 3/8] qaic: Create char dev
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     arnd@arndb.de, manivannan.sadhasivam@linaro.org,
+        bjorn.andersson@linaro.org, wufan@codeaurora.org,
+        pratanan@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org>
+ <1589465266-20056-4-git-send-email-jhugo@codeaurora.org>
+ <20200514141211.GA2643665@kroah.com>
+ <0421a64a-10f3-08df-9ef1-14fdb570db0d@codeaurora.org>
+ <20200514155615.GA2963499@kroah.com>
+ <4be546d3-b571-0659-0140-f34ec88f95ff@codeaurora.org>
+Message-ID: <4683046a-c6b5-30a5-ef02-2f610523ae1c@codeaurora.org>
+Date:   Fri, 15 May 2020 15:08:59 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200514191001.457441-1-sam@ravnborg.org>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=MOBOZvRl c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=kj9zAlcOel0A:10 a=Bma9T9PxULoPMS20tvwA:9 a=CjuIK1q_8ugA:10
+In-Reply-To: <4be546d3-b571-0659-0140-f34ec88f95ff@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all.
-i
-...
-
-> Sam Ravnborg (18):
->       drm/omap: display: use devm_of_find_backlight
->       drm/tilcdc: use devm_of_find_backlight
-Tomi - thanks for the prompt review of the above two patches.
-
->       video: amba-clcd: use devm_of_find_backlight
-Any takes for review/ack of this patch?
-
->       backlight: make of_find_backlight static
->       backlight: drop backlight_put()
->       backlight: make of_find_backlight_by_node() static
-The above three patches are moved to the end of the patchset in v2.
-They cannot be applied before the users are gone.
-As we will remove users of of_find_backlight_by_node() in
-drm-misc-next, we can only merge the "make static" patches in the
-backlight tree after the merge window.
-So move them to the end so we may apply other patches before.
-
-I plan to send v2 end of the weekend, and hope for some feedback on the
-doc pathches until then.
-
-	Sam
-
->       backlight: refactor fb_notifier_callback()
->       backlight: add backlight_is_blank()
->       backlight: improve backlight_ops documentation
->       backlight: improve backlight_properties documentation
->       backlight: improve backlight_device documentation
->       backlight: document inline functions in backlight.h
->       backlight: document enums in backlight.h
->       backlight: remove the unused backlight_bl driver
->       backlight: drop extern from prototypes
->       backlight: add overview and update doc
->       backlight: wire up kernel-doc documentation
->       backlight: use backlight_is_blank() in all backlight drivers
+On 5/14/2020 10:24 AM, Jeffrey Hugo wrote:
+> On 5/14/2020 9:56 AM, Greg KH wrote:
+>> Please use misc.
 > 
->  Documentation/gpu/backlight.rst                 |  12 +
->  Documentation/gpu/index.rst                     |   1 +
->  drivers/gpu/drm/omapdrm/displays/panel-dsi-cm.c |  18 +-
->  drivers/gpu/drm/tilcdc/tilcdc_panel.c           |  17 +-
->  drivers/video/backlight/88pm860x_bl.c           |   8 +-
->  drivers/video/backlight/Kconfig                 |   8 -
->  drivers/video/backlight/Makefile                |   1 -
->  drivers/video/backlight/adp5520_bl.c            |   5 +-
->  drivers/video/backlight/adp8860_bl.c            |   5 +-
->  drivers/video/backlight/adp8870_bl.c            |   5 +-
->  drivers/video/backlight/as3711_bl.c             |   8 +-
->  drivers/video/backlight/backlight.c             | 237 ++++++++------
->  drivers/video/backlight/bd6107.c                |   4 +-
->  drivers/video/backlight/corgi_lcd.c             |   5 +-
->  drivers/video/backlight/cr_bllcd.c              |  22 +-
->  drivers/video/backlight/da903x_bl.c             |   8 +-
->  drivers/video/backlight/ep93xx_bl.c             |   3 +-
->  drivers/video/backlight/generic_bl.c            | 110 -------
->  drivers/video/backlight/gpio_backlight.c        |   4 +-
->  drivers/video/backlight/hp680_bl.c              |   4 +-
->  drivers/video/backlight/jornada720_bl.c         |   2 +-
->  drivers/video/backlight/kb3886_bl.c             |   4 +-
->  drivers/video/backlight/led_bl.c                |   4 +-
->  drivers/video/backlight/lm3533_bl.c             |   4 +-
->  drivers/video/backlight/locomolcd.c             |   4 +-
->  drivers/video/backlight/lv5207lp.c              |   4 +-
->  drivers/video/backlight/max8925_bl.c            |   8 +-
->  drivers/video/backlight/pwm_bl.c                |   4 +-
->  drivers/video/backlight/qcom-wled.c             |   4 +-
->  drivers/video/backlight/tps65217_bl.c           |   4 +-
->  drivers/video/backlight/wm831x_bl.c             |   8 +-
->  drivers/video/fbdev/amba-clcd.c                 |  19 +-
->  include/linux/backlight.h                       | 415 +++++++++++++++++++-----
->  33 files changed, 536 insertions(+), 433 deletions(-)
+> Ok, will investigate.
 > 
+
+Misc looks like it'll work, and I'm expecting to have that in the next 
+revision.  However, a few of us looked at misc vs chardev, and didn't 
+see much of a difference.
+
+We were hoping you'd be kind enough to educate us on the considerations 
+between the two, in-case we missed something that ends up being very 
+relevant.  We attempted to find relevant documentation within the 
+kernel, and in Linux Device Drivers 3rd edition, but did not find any 
+besides just reading the misc dev code.  If we missed something, please 
+point us to it.
+
+By going with a misc device, we see two possible limitations -
+
+1. You don't have your own major number, so userspace may have to do a 
+bit more work to identify your device.  However, given that the driver 
+assigns the device name, one would think that the device name would be 
+pretty unique.  So, it seems like this would have a minor impact to udev 
+rules.
+
+2. There are a limited number of dynamic minor numbers for misc devs 
+(64), so if you are expecting more devices than that, a misc dev is not 
+appropiate.  Also, these minors are shared with other misc dev users, so 
+depending on the system configuration, you might have significantly less 
+than 64 minors available for use.
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
