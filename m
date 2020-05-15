@@ -2,106 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 259631D481A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 10:27:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4B051D4826
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 10:31:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726980AbgEOI1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 04:27:15 -0400
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:35600 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726727AbgEOI1P (ORCPT
+        id S1727814AbgEOIbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 04:31:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35022 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726694AbgEOIbs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 04:27:15 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 04F8PsoG018359;
-        Fri, 15 May 2020 03:25:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1589531154;
-        bh=wo1viBSz+UU+XEhVTlUn5Xt1kcyL3FUqz2ByY4yEDj0=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=fF1k2IGxGrOuos+bQoXmh+BExWfMIoCXLGLzSyjSI9R83lttfFDtFRvwACPnEySme
-         PH/wbUwkvzzDwyObKKDPTLJeHGuxKnbxq68ke8RZ9DfbSfosxoxJxYBNOOoV2XQ7uM
-         s63rJZAwhKOKyjRuGQuFJ/7HJPF2teMoSdYUUeTk=
-Received: from DLEE108.ent.ti.com (dlee108.ent.ti.com [157.170.170.38])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 04F8PsvU086517
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 15 May 2020 03:25:54 -0500
-Received: from DLEE100.ent.ti.com (157.170.170.30) by DLEE108.ent.ti.com
- (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Fri, 15
- May 2020 03:25:54 -0500
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Fri, 15 May 2020 03:25:54 -0500
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04F8Pl1Z008089;
-        Fri, 15 May 2020 03:25:48 -0500
-Subject: Re: [PATCH v1 02/18] drm/tilcdc: use devm_of_find_backlight
-To:     Sam Ravnborg <sam@ravnborg.org>, <dri-devel@lists.freedesktop.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>
-CC:     Allison Randal <allison@lohutok.net>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Enrico Weigelt <info@metux.net>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jonathan Corbet <corbet@lwn.net>, Jyri Sarha <jsarha@ti.com>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Kefeng Wang <wangkefeng.wang@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        <patches@opensource.cirrus.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine Konig <u.kleine-koenig@pengutronix.de>,
-        Zheng Bin <zhengbin13@huawei.com>
-References: <20200514191001.457441-1-sam@ravnborg.org>
- <20200514191001.457441-3-sam@ravnborg.org>
-From:   Tomi Valkeinen <tomi.valkeinen@ti.com>
-Message-ID: <9e234824-3cf6-ead4-561b-70c1966ac5fd@ti.com>
-Date:   Fri, 15 May 2020 11:25:47 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Fri, 15 May 2020 04:31:48 -0400
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ACB6C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2020 01:31:48 -0700 (PDT)
+Received: by mail-oi1-x241.google.com with SMTP id o7so1547854oif.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2020 01:31:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qH+EwBLeoTrVnjbfZOg/tXxPcMHnGZvYgXulHKPhGds=;
+        b=AwQU4FZ+/b1Gt5/SnZhbk1z+4qLxmM69app8fOWHEdscysuzaIgES+BUe0BsQxVfTt
+         tHfXEGUATu9ZndTbYaNDMn+I0SC9ybzqrf4EXrWxgn+jKMmqpRbTx5LV5CUNhmq64VZJ
+         rKItQltA814EtSEBq58E/Ug7Snd87vXNSNKK4VvjplKeI2mkmRn3N5Oklx1NNee1m7Hf
+         qGkxPJPoCkbeg0HVbUdLbL3M35ds5gUUyAb6iXfBA5wuZj9epKU1K7ZambfaofWhgHa3
+         8B2WtoO4BuLK6teLmgTmF3G7XYF5aXjcyZTFEyCjlMV71uMKIYUzAm4GBJis72cdGeqZ
+         4a3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qH+EwBLeoTrVnjbfZOg/tXxPcMHnGZvYgXulHKPhGds=;
+        b=DQySSJltOhAErq14sntZbiejSqiHkoh5Cc14/hpdBBa0Repfq2NqReOmcO/AX52DZc
+         6iSKotw/uVOp5R7HmmnyR6YXR+7DOC87ksG886BGkhz2ZlNtGqvbtIbZK1MzWOBEVlZt
+         WaeLvMpOOqYkGtAlvCYk92OwLxKCBy7Jz8l3tQMIBh3uOrEVAfnuKnGhxb+pmohfU37e
+         N00uiJI4VHg91kvVMy/VBukE5GgrdURXXII9Cv65UWJMhUIR9WuDTR0EBPwsPfU0cwZA
+         OisuIUU1MqC6Um+20mT7Q09DvyIb5fQLrZ2Den6DWYJyTv5+ReVB4sqfcHLPeSLEPShX
+         dbxQ==
+X-Gm-Message-State: AOAM533faFK7YPP6YMHkj+LltPu0xz6IVLt4+hLPYjoR9Obg6T9o1iRh
+        IaM3OlPfTbUudk54PrqNxjrL7d3oAOA7N8Ls4IMPug==
+X-Google-Smtp-Source: ABdhPJy28bLOOaddFHAGxZVzh5D5A7M9Z00/42Bv2Msat2DEz6gGAy0wE+LNMGBCnOUDZRJIQNie/7RhEfsNWbjYGeA=
+X-Received: by 2002:aca:f146:: with SMTP id p67mr1387057oih.56.1589531507959;
+ Fri, 15 May 2020 01:31:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200514191001.457441-3-sam@ravnborg.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+References: <20200422111014.616233-1-robert.foss@linaro.org> <20200514172223.GF14092@vkoul-mobl>
+In-Reply-To: <20200514172223.GF14092@vkoul-mobl>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Fri, 15 May 2020 10:31:36 +0200
+Message-ID: <CAG3jFyuaU-HNq4nnRQfz04a+t=pLvKz82vRpJi7r_KGxuSYC-A@mail.gmail.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: apq8016-sbc-d3: Add Qualcomm APQ8016
+ SBC + D3 mezzanine
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/05/2020 22:09, Sam Ravnborg wrote:
-> Look up backlight device using devm_of_find_backlight().
-> This simplifies the code and prevents us from hardcoding
-> the node name in the driver.
-> 
-> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Jyri Sarha <jsarha@ti.com>
-> Cc: Tomi Valkeinen <tomi.valkeinen@ti.com>
-> ---
->   drivers/gpu/drm/tilcdc/tilcdc_panel.c | 17 ++++++-----------
->   1 file changed, 6 insertions(+), 11 deletions(-)
+On Thu, 14 May 2020 at 19:22, Vinod Koul <vkoul@kernel.org> wrote:
+>
+> On 22-04-20, 13:10, Robert Foss wrote:
+> > Add device treee support for the Qualcomm APQ8016 SBC, otherwise known as
+> > the Dragonboard 410c with the D3 mezzanine expansion board.
+> >
+> > The D3 mezzanine ships in a kit with a OmniVision 5640 sensor module,
+> > which is what this DT targets.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile           |  1 +
+> >  arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts | 45 +++++++++++++++++++++
+> >  2 files changed, 46 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index cc103f7020fd..025362471929 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -1,5 +1,6 @@
+> >  # SPDX-License-Identifier: GPL-2.0
+> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc-d3.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8096-db820c.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM) += apq8096-ifc6640.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += ipq6018-cp01-c1.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts
+> > new file mode 100644
+> > index 000000000000..1b85adeeada1
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3.dts
+> > @@ -0,0 +1,45 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+>
+> Dual BSD + GPL please
 
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ti.com>
+Thanks.
 
-  Tomi
+>
+> > +/*
+> > + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+>
+> we are in 2020 now :)
 
--- 
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+Maybe I should fix that.
+I'll change the name of the d3 mezzanine to d3camera as well.
+
+>
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "apq8016-sbc.dtsi"
+> > +
+> > +/ {
+> > +     model = "Qualcomm Technologies, Inc. APQ 8016 SBC w/ D3 Mezzanine";
+> > +     compatible = "qcom,apq8016-sbc", "qcom,apq8016", "qcom,sbc";
+> > +};
+> > +
+> > +&cci_i2c0 {
+> > +     /delete-node/ camera_rear@3b;
+> > +
+> > +     camera_rear@76 {
+> > +             compatible = "ovti,ov5640";
+> > +             reg = <0x76>;
+> > +
+> > +             enable-gpios = <&msmgpio 34 GPIO_ACTIVE_HIGH>;
+> > +             reset-gpios = <&msmgpio 35 GPIO_ACTIVE_LOW>;
+> > +             pinctrl-names = "default";
+> > +             pinctrl-0 = <&camera_rear_default>;
+> > +
+> > +             clocks = <&gcc GCC_CAMSS_MCLK0_CLK>;
+> > +             clock-names = "xclk";
+> > +             clock-frequency = <23880000>;
+> > +
+> > +             vdddo-supply = <&camera_vdddo_1v8>;
+> > +             vdda-supply = <&camera_vdda_2v8>;
+> > +             vddd-supply = <&camera_vddd_1v5>;
+> > +
+> > +             status = "ok";
+> > +
+> > +             port {
+> > +                     ov5640_ep: endpoint {
+> > +                             clock-lanes = <1>;
+> > +                             data-lanes = <0 2>;
+> > +                             remote-endpoint = <&csiphy0_ep>;
+> > +                     };
+> > +             };
+> > +     };
+> > +};
+> > --
+> > 2.25.1
+>
+> --
+> ~Vinod
