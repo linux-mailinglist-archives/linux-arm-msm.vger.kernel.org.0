@@ -2,76 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5A9B1D4230
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 02:40:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6C4B1D423E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 02:43:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726100AbgEOAkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 20:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727995AbgEOAkA (ORCPT
+        id S1728243AbgEOAnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 20:43:33 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:24266 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726046AbgEOAnc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 20:40:00 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6638C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 17:39:59 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id p21so156076pgm.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2020 17:39:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=MxFx2v3CXXJI2uqpzJc0nTIbU803tm+QFkEcg6RoGME=;
-        b=ncWP6c8T/qeB5mTi8dmQ/2f++LBk5CizP09+SlPJnyCzgNs/XM3OV3LABFolMAuaaE
-         UYHUIc3yE2lEXImqHTT1olFACAUL2RuRf0qtmuTLimsMw3ZEFjzxm4slAwvUIDb2cFT/
-         wcJNyV8sDtE3sXgsivVXiTYvixU3wl/p0/67k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=MxFx2v3CXXJI2uqpzJc0nTIbU803tm+QFkEcg6RoGME=;
-        b=Ei2sfLQohrjJhIJPTj7ovDmNMKH91sN1zRqDmePqBsSbpo/pli6PykQN/yNYa6d5HI
-         nv0JwynT/CT3/SaQruTQxWkb1gBy/qTGxpyWqhxt8LCaI0rhPdvzHXgBDbY492NRUxHA
-         N9HoqcsI/TnycCmfQfK2oO/LzCUcL2WTuFfQGLLFz8EfOANgWDt2p67l4yeGT4o/ZQ9P
-         yClFyP6EPFGK7oVLaA7/nuADUu7aaKach+xpZKjxtNZLfSi4QAJ+BvaaITiTJ+bowZL2
-         5C3Eg0cJW8u5OBZrocjLe2vPBGx0wKWN/AMu4fDD8iwWJLCDxm0o4HxqV6x+mB/bNYwc
-         Fd9Q==
-X-Gm-Message-State: AOAM530Ysn/gzUqCajpeOthbiwtANiUaKBAWBvEyK4870Yo4yIpwJU0b
-        SGJDMeymink9bS9jfHyWrQnDDYrAJ68=
-X-Google-Smtp-Source: ABdhPJyyWhg/HZloV77tc/5SwAYHguc5UciRxuk4OrFHLyBPk1weM70XMcLYipySphGQrca0OnCZSQ==
-X-Received: by 2002:a62:3343:: with SMTP id z64mr1187982pfz.55.1589503199243;
-        Thu, 14 May 2020 17:39:59 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id 138sm334556pfz.31.2020.05.14.17.39.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 May 2020 17:39:58 -0700 (PDT)
-Date:   Thu, 14 May 2020 17:39:57 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
-        georgi.djakov@linaro.org
-Subject: Re: [PATCH 4/6] drm: msm: a6xx: send opp instead of a frequency
-Message-ID: <20200515003957.GV4525@google.com>
-References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
- <1589453659-27581-5-git-send-email-smasetty@codeaurora.org>
+        Thu, 14 May 2020 20:43:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589503411; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=kdpRzSIT5/hIc7vcNeyMqzjWoQQArjD4VznLGNTtXU4=; b=m+yfrLPnQj5l/ZwrJhKVoZsySCqOnUcS96iDB73FunbM5hMovr1Wbl5O+0rAkk4Zj0iRpCmI
+ NWpnGKKAIjKlofWTywooO6d7aXoKoLcxFfHpumasthlYJ8rmSUnb74tvoT7mkYTCH6AYEQAP
+ HdxzLh9T69jnbcM/D8P7h9huHrY=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ebde59d.7f8d2ef5e148-smtp-out-n03;
+ Fri, 15 May 2020 00:43:09 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A3DB9C432C2; Fri, 15 May 2020 00:43:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9295BC433D2;
+        Fri, 15 May 2020 00:43:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9295BC433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [RFC PATCH 1/8] qaic: Add skeleton driver
+To:     arnd@arndb.de, gregkh@linuxfoundation.org
+Cc:     manivannan.sadhasivam@linaro.org, bjorn.andersson@linaro.org,
+        wufan@codeaurora.org, pratanan@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org>
+ <1589465266-20056-2-git-send-email-jhugo@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <bc74cb1d-cd97-819c-5e0d-e9cd1e01dbf4@codeaurora.org>
+Date:   Thu, 14 May 2020 18:43:06 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1589453659-27581-5-git-send-email-smasetty@codeaurora.org>
+In-Reply-To: <1589465266-20056-2-git-send-email-jhugo@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 14, 2020 at 04:24:17PM +0530, Sharat Masetty wrote:
-> This patch changes the plumbing to send the devfreq recommended opp rather
-> than the frequency. Also consolidate and rearrange the code in a6xx to set
-> the GPU frequency and the icc vote in preparation for the upcoming
-> changes for GPU->DDR scaling votes.
+On 5/14/2020 8:07 AM, Jeffrey Hugo wrote:
+> +#define QAIC_NAME			"Qualcomm Cloud AI 100"
+<snip>
+> +static struct pci_driver qaic_pci_driver = {
+> +	.name = QAIC_NAME,
 
-Could this be relatively easily split in two patches, one passing the OPP
-instead of the frequency, and another doing the consolidation? It typically
-makes reviewing easier when logically unrelated changes are done in separate
-patches.
+A question about the community's preference here.
+
+Our driver name is very verbose due to the desire to have the proper 
+"branding".  However, I can see it being a bit obtuse, particularly in logs.
+
+Would the community prefer something more succinct here, such as "qaic"?
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
