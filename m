@@ -2,64 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4B5F1D45FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 08:37:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3ED01D47F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 10:19:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbgEOGhl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 May 2020 02:37:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50884 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726191AbgEOGhl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 May 2020 02:37:41 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727811AbgEOITD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 May 2020 04:19:03 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:25607 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726648AbgEOITC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 May 2020 04:19:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589530742; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=b15zrAYlQprMOsxRmwfaMv2/XJdzaN8Ceooz+8pLgE4=;
+ b=YjVBVd1u98mSAa1xla5zOZqufbDFIHLCpTSqlWn3Rxnt6FegYBJUWvE36IuO50OqdMSn8zkL
+ 05Jzq90B1I2Gs1u+JRWt8FrFfp8Fz+76nvSjyY9QhIaRWX6NmMq50lckMyJ7s4KQSNzMhvWP
+ fupH0ZhbLfGFoVWSC8FNWIkc+uY=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ebe506f5d62762fd4a5b16c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 May 2020 08:18:55
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5C29FC43637; Fri, 15 May 2020 08:18:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 718992065F;
-        Fri, 15 May 2020 06:37:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589524660;
-        bh=/sejV8BirlA+9XJW7afKnpotS1fQXEqPb8/TeQ6TDYA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=xxppYZUv2kisbDZrnltv/c6K4fzrP9l7WQz1h1yifRH3No6IR1HFWaAEvQdB6QxOn
-         Yo376PHcJjyyqnHjzp8yJ5swSubvROWSCeI4gp/Q3z0YET3LnSw8T8+nnlJxz3Qt7V
-         +V7jy71pWwfHu+RtWWNHDBIB7V8aJJi57utGHspQ=
-Date:   Fri, 15 May 2020 08:37:38 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     arnd@arndb.de, manivannan.sadhasivam@linaro.org,
-        bjorn.andersson@linaro.org, wufan@codeaurora.org,
-        pratanan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 1/8] qaic: Add skeleton driver
-Message-ID: <20200515063738.GA1006524@kroah.com>
-References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org>
- <1589465266-20056-2-git-send-email-jhugo@codeaurora.org>
- <bc74cb1d-cd97-819c-5e0d-e9cd1e01dbf4@codeaurora.org>
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9BAE7C433D2;
+        Fri, 15 May 2020 08:18:53 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bc74cb1d-cd97-819c-5e0d-e9cd1e01dbf4@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 15 May 2020 13:48:53 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     will@kernel.org, robin.murphy@arm.com, joro@8bytes.org
+Cc:     bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, dianders@chromium.org,
+        evgreen@chromium.org, mka@chromium.org,
+        linux-kernel-owner@vger.kernel.org, swboyd@chromium.org
+Subject: Re: [PATCH v6] iommu/arm-smmu-qcom: Request direct mapping for modem
+ device
+In-Reply-To: <20200511175532.25874-1-sibis@codeaurora.org>
+References: <20200511175532.25874-1-sibis@codeaurora.org>
+Message-ID: <0f0679f57a213536dfbba78b5c2dab5c@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 14, 2020 at 06:43:06PM -0600, Jeffrey Hugo wrote:
-> On 5/14/2020 8:07 AM, Jeffrey Hugo wrote:
-> > +#define QAIC_NAME			"Qualcomm Cloud AI 100"
-> <snip>
-> > +static struct pci_driver qaic_pci_driver = {
-> > +	.name = QAIC_NAME,
-> 
-> A question about the community's preference here.
-> 
-> Our driver name is very verbose due to the desire to have the proper
-> "branding".  However, I can see it being a bit obtuse, particularly in logs.
-> 
-> Would the community prefer something more succinct here, such as "qaic"?
+Hey Will,
 
-Make it the same a KBUILD_MODNAME and then no one can complain :)
+On 2020-05-11 23:25, Sibi Sankar wrote:
+> The modem remote processor has two access paths to DDR. One path is
+> directly connected to DDR and another path goes through an SMMU. The
+> SMMU path is configured to be a direct mapping because it's used by
+> various peripherals in the modem subsystem. Typically this direct
+> mapping is configured statically at EL2 by QHEE (Qualcomm's Hypervisor
+> Execution Environment) before the kernel is entered.
+> 
+> In certain firmware configuration, especially when the kernel is 
+> already
+> in full control of the SMMU, defer programming the modem SIDs to the
+> kernel. Let's add compatibles here so that we can have the kernel
+> program the SIDs for the modem in these cases.
+> 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
 
-thanks,
+Now that the patch is reworded can
+you please pick it up since its the
+only pending path from the series.
 
-greg k-h
+> 
+> V6
+>  * Rebased on Will's for-joerg/arm-smmu/updates
+>  * Reword commit message and add more details [Stephen]
+> 
+>  drivers/iommu/arm-smmu-qcom.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/iommu/arm-smmu-qcom.c 
+> b/drivers/iommu/arm-smmu-qcom.c
+> index 5bedf21587a56..cf01d0215a397 100644
+> --- a/drivers/iommu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm-smmu-qcom.c
+> @@ -17,7 +17,9 @@ static const struct of_device_id
+> qcom_smmu_client_of_match[] = {
+>  	{ .compatible = "qcom,mdp4" },
+>  	{ .compatible = "qcom,mdss" },
+>  	{ .compatible = "qcom,sc7180-mdss" },
+> +	{ .compatible = "qcom,sc7180-mss-pil" },
+>  	{ .compatible = "qcom,sdm845-mdss" },
+> +	{ .compatible = "qcom,sdm845-mss-pil" },
+>  	{ }
+>  };
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
