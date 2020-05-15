@@ -2,88 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 089DE1D43D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 05:01:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 866C81D43E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2020 05:10:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726665AbgEODBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 May 2020 23:01:38 -0400
-Received: from mail-oo1-f65.google.com ([209.85.161.65]:34966 "EHLO
-        mail-oo1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726192AbgEODBh (ORCPT
+        id S1728004AbgEODKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 May 2020 23:10:46 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:42446 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726192AbgEODKp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 May 2020 23:01:37 -0400
-Received: by mail-oo1-f65.google.com with SMTP id c187so144288ooc.2;
-        Thu, 14 May 2020 20:01:35 -0700 (PDT)
+        Thu, 14 May 2020 23:10:45 -0400
+Received: by mail-ot1-f68.google.com with SMTP id m18so795105otq.9;
+        Thu, 14 May 2020 20:10:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fzt3fbDfPhMLsvVChoRsuRz5dmNGR0DOVOHIwVjbwCo=;
-        b=mL4cYKK2sFj7olXwtcGYQfn1+Z7h0DR2lYKGpzhm4rKkf0dmqIB6d0hpu87RazerRu
-         hBUxMUVyTxop+z5QBEY/iPd4eVBv+JPxJrNIFxS8F/S1Xny7VggovMKbW8uWDKxncwuQ
-         AItsfksuSuITQ18n5log+gj+wmbibK9lYTVRqyF57p3/LMwszmbOfa3iNUF2+RgCj1z9
-         hRshMe4eqHNYmtNxZxXd8aJ49p0h57ixAyOFtEZxIje2equV9gWCY9Y1vzh40LCJj1wq
-         EY7+nCiucAKJe5Zxa6vyupbEemCNBP+h9eg62g76WMClqNS21jycAWP/yWMt6QPz8EtH
-         Ocgg==
-X-Gm-Message-State: AOAM531m1ab1jlxrZPBTr6hH3H6oSywa4iOu/NSKHdKJu2+bpWHTd3wT
-        HyRmS3+oD6/YyIF1kkkjmw==
-X-Google-Smtp-Source: ABdhPJx3IazIe047SWhLhbb8iub9o9mvI5+SddR6eHlIPjOIaHcBm7Kf5QHuVnMUBWQ/xZh8l1RlWg==
-X-Received: by 2002:a4a:a448:: with SMTP id w8mr871623ool.78.1589511695032;
-        Thu, 14 May 2020 20:01:35 -0700 (PDT)
+        bh=satk6u22dpbc73y0fCNGBups5k0IDQTUclEtwsGIwFY=;
+        b=hycZH147PsVU3nPsskBa0KEawdINGuHNcnVHCGEf5pDkzqaZw8WadosHzNE+ZfuFYU
+         3nipe+tK6xQGhY7AaEhDJpoZ+n/jhasbAQ6cOhoYdSWomGOOQ84QQdDh+l4Oty6mPapG
+         cw4Cqqj+XtLS8d8k94/JkdgBc1VA2emhXxlUnOV1HrRQ+e+y8fz6m5WVNUrVSKCUDAuj
+         uOaC0+4QEVh6ZSHJAv87JBknxRfF8Ct0y7xKcOkPciyn1nnrvk/vOZE6gV3jX4WE9ANh
+         Xxhn+wpSEeNihePUssiR/YwI4kurym6aYOLBzGWPhSL4Pn7bO8rWmcveTOtxhgYHEKQT
+         lbyQ==
+X-Gm-Message-State: AOAM530Q/kthxDctz6GeWw9DmVZpApq+UzwJ8xu5h7ojsVCNizBbjtAg
+        WN85HQByA26KkOYFo3GdpA==
+X-Google-Smtp-Source: ABdhPJzV9kaQXKl6yL5gJAxk/H6tfOxArW47aEseyEx9jXzvLnsk+fLxjrjwNKiocZDIePjTlsZzeg==
+X-Received: by 2002:a9d:1ee7:: with SMTP id n94mr759604otn.26.1589512244486;
+        Thu, 14 May 2020 20:10:44 -0700 (PDT)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id o21sm265756ook.8.2020.05.14.20.01.34
+        by smtp.gmail.com with ESMTPSA id d10sm257313ote.10.2020.05.14.20.10.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2020 20:01:34 -0700 (PDT)
-Received: (nullmailer pid 13459 invoked by uid 1000);
-        Fri, 15 May 2020 03:01:33 -0000
-Date:   Thu, 14 May 2020 22:01:33 -0500
+        Thu, 14 May 2020 20:10:43 -0700 (PDT)
+Received: (nullmailer pid 26194 invoked by uid 1000);
+        Fri, 15 May 2020 03:10:42 -0000
+Date:   Thu, 14 May 2020 22:10:42 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
+        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mgautam@codeaurora.org, rojay@codeaurora.org,
-        skakit@codeaurora.org, mka@chromium.org
-Subject: Re: [PATCH V6 3/3] dt-bindings: serial: Add binding for UART pin swap
-Message-ID: <20200515030133.GA11479@bogus>
-References: <1588863647-17240-1-git-send-email-akashast@codeaurora.org>
- <1588863647-17240-4-git-send-email-akashast@codeaurora.org>
+        linux-usb@vger.kernel.org, jackp@codeaurora.org
+Subject: Re: [RFC 3/3] dt-bindings: usb: dwc3: Add entry for tx-fifo-resize
+Message-ID: <20200515031042.GA25107@bogus>
+References: <1588888768-25315-1-git-send-email-wcheng@codeaurora.org>
+ <1588888768-25315-4-git-send-email-wcheng@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1588863647-17240-4-git-send-email-akashast@codeaurora.org>
+In-Reply-To: <1588888768-25315-4-git-send-email-wcheng@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 07, 2020 at 08:30:47PM +0530, Akash Asthana wrote:
-> Add documentation to support RX-TX & CTS-RTS GPIO pin swap in HW.
+On Thu, May 07, 2020 at 02:59:28PM -0700, Wesley Cheng wrote:
+> Re-introduce the comment for the tx-fifo-resize setting for the DWC3
+> controller.
+
+Why?
+
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/serial/serial.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  Documentation/devicetree/bindings/usb/dwc3.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/serial/serial.yaml b/Documentation/devicetree/bindings/serial/serial.yaml
-> index 53204d9..e657dd6 100644
-> --- a/Documentation/devicetree/bindings/serial/serial.yaml
-> +++ b/Documentation/devicetree/bindings/serial/serial.yaml
-> @@ -67,6 +67,12 @@ properties:
->        (wired and enabled by pinmux configuration).  This depends on both the
->        UART hardware and the board wiring.
+> diff --git a/Documentation/devicetree/bindings/usb/dwc3.txt b/Documentation/devicetree/bindings/usb/dwc3.txt
+> index 9946ff9..489f5da 100644
+> --- a/Documentation/devicetree/bindings/usb/dwc3.txt
+> +++ b/Documentation/devicetree/bindings/usb/dwc3.txt
+> @@ -105,7 +105,7 @@ Optional properties:
+>  			1-16 (DWC_usb31 programming guide section 1.2.3) to
+>  			enable periodic ESS TX threshold.
 >  
-> +  rx-tx-swap:
-> +    description: RX and TX pins are swapped.
-> +
-> +  cts-rts-swap:
-> +    description: CTS and RTS pins are swapped.
-
-Need 'type: boolean' on both of these.
-
-> +
->  if:
->    required:
->      - uart-has-rtscts
+> - - <DEPRECATED> tx-fifo-resize: determines if the FIFO *has* to be reallocated.
+> + - tx-fifo-resize: determines if the FIFO *has* to be reallocated.
+>   - snps,incr-burst-type-adjustment: Value for INCR burst type of GSBUSCFG0
+>  			register, undefined length INCR burst type enable and INCRx type.
+>  			When just one value, which means INCRX burst mode enabled. When
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
