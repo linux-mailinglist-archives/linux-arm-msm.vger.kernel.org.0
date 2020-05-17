@@ -2,124 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E825F1D6781
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2020 12:47:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9390D1D6775
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2020 12:47:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727900AbgEQKr1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 May 2020 06:47:27 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:40005 "EHLO
+        id S1727845AbgEQKrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 May 2020 06:47:04 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:39520 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727941AbgEQKr1 (ORCPT
+        by vger.kernel.org with ESMTP id S1727834AbgEQKrD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 May 2020 06:47:27 -0400
+        Sun, 17 May 2020 06:47:03 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589712446; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=q9iI9zh/lVW9wi2kuh1erK872V+tOBI5Kri0nX3QX1U=; b=OcifvWB5ZBt4Imo9Kw8k77itlEYztx2TPo+ZZSPhlUVqs3xVBuSWkHyJF3dkTD2uEKSWLBS/
- IZ0UxYGkgipcWXjpDdTwPsCX53/ljEq4idpYq7tHC6Ds0hO5KMlBFKIubUQAh+XhF0DoZspP
- WFaIE/aFvCswW7N/DOpAAHOGWHw=
+ s=smtp; t=1589712422; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=bpYRKGxi7S4lmPb9T2zE3w/nH3uH2ZxR+FnFM4pHa+Y=; b=rmE+uGGfYIA+Bkyt7xArMuGiDzCayiXyZ/8QNwNEthJ3+0OOUtW/oNdNqWSE3d/ltLBPY2Xx
+ UltUnkBkpwRz8KiTztLXQxmjLKVQuXDy1KFxvRw10/9z5XwJs1ImSask+jZy7y4XYzS99Uxl
+ R4yOnuBWunPQPFa+u3q2wyhNDdY=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec1163e.7f453b6a4e30-smtp-out-n05;
- Sun, 17 May 2020 10:47:26 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ec11626.7f9b1f1e1570-smtp-out-n01;
+ Sun, 17 May 2020 10:47:02 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 527B6C4478C; Sun, 17 May 2020 10:47:25 +0000 (UTC)
+        id 2BE57C433D2; Sun, 17 May 2020 10:47:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from pillair-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: manafm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A30F1C44791;
-        Sun, 17 May 2020 10:47:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A30F1C44791
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B753DC433F2;
+        Sun, 17 May 2020 10:46:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B753DC433F2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=manafm@codeaurora.org
-From:   Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
-Subject: [PATCH v2 2/2] dt-bindings: thermal: tsens: Add zeroc interrupt support in yaml
-Date:   Sun, 17 May 2020 16:16:27 +0530
-Message-Id: <20200517104627.29501-3-manafm@codeaurora.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200517104627.29501-1-manafm@codeaurora.org>
-References: <20200517104627.29501-1-manafm@codeaurora.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
+From:   Rakesh Pillai <pillair@codeaurora.org>
+To:     devicetree@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Rakesh Pillai <pillair@codeaurora.org>
+Subject: [PATCH v9] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
+Date:   Sun, 17 May 2020 16:16:51 +0530
+Message-Id: <1589712411-26718-1-git-send-email-pillair@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add zeroc interrupt support for tsens in yaml.
+Add device node for the ath10k SNOC platform driver probe
+and add resources required for WCN3990 on sc7180 soc.
 
-Signed-off-by: Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
+Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
 ---
- .../bindings/thermal/qcom-tsens.yaml          | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Changes from v8:
+- Removed the qcom,msa-fixed-perm
+---
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts |  7 +++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 2ddd39d96766..717b0dd967e2 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -52,12 +52,14 @@ properties:
-     items:
-       - description: Combined interrupt if upper or lower threshold crossed
-       - description: Interrupt if critical threshold crossed
-+      - description: Interrupt if zeroC threshold is crossed
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index 4e9149d..38b102e 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -389,6 +389,13 @@
+ 	};
+ };
  
-   interrupt-names:
-     minItems: 1
-     items:
-       - const: uplow
-       - const: critical
-+      - const: zeroc
++&wifi {
++	status = "okay";
++	wifi-firmware {
++		iommus = <&apps_smmu 0xc2 0x1>;
++	};
++};
++
+ /* PINCTRL - additions to nodes defined in sc7180.dtsi */
  
-   nvmem-cells:
-     minItems: 1
-@@ -109,8 +111,10 @@ allOf:
-       properties:
-         interrupts:
-           minItems: 2
-+          maxItems: 3
-         interrupt-names:
-           minItems: 2
-+          maxItems: 3
+ &qspi_clk {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index f1280e0..dd4e095 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -63,6 +63,11 @@
+ 			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
++
++		wlan_fw_mem: memory@94100000 {
++			reg = <0 0x94100000 0 0x200000>;
++			no-map;
++		};
+ 	};
  
- required:
-   - compatible
-@@ -174,4 +178,21 @@ examples:
-            #qcom,sensors = <13>;
-            #thermal-sensor-cells = <1>;
-     };
+ 	reserved_memory: reserved-memory {
+@@ -944,6 +949,28 @@
+ 			};
+ 		};
+ 
++		wifi: wifi@18800000 {
++			compatible = "qcom,wcn3990-wifi";
++			reg = <0 0x18800000 0 0x800000>;
++			reg-names = "membase";
++			iommus = <&apps_smmu 0xc0 0x1>;
++			interrupts =
++				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
++				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
++				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
++				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
++				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
++				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
++				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
++				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
++				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
++				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
++				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
++				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
++			memory-region = <&wlan_fw_mem>;
++			status = "disabled";
++		};
 +
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example 4 (for any platform containing v2.6+ of the TSENS IP):
-+    tsens4: thermal-sensor@c265000 {
-+           compatible = "qcom,sc7180-tsens", "qcom,tsens-v2";
-+           reg = <0xc265000 0x1ff>,
-+                 <0xc223000 0x1ff>;
-+
-+           interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-+                        <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>,
-+                        <GIC_SPI 501 IRQ_TYPE_EDGE_RISING>;
-+           interrupt-names = "uplow", "critical", "zeroc";
-+
-+           #qcom,sensors = <15>;
-+           #thermal-sensor-cells = <1>;
-+    };
- ...
+ 		config_noc: interconnect@1500000 {
+ 			compatible = "qcom,sc7180-config-noc";
+ 			reg = <0 0x01500000 0 0x28000>;
 -- 
-2.26.2
+2.7.4
