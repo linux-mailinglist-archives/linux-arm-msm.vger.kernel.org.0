@@ -2,130 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9390D1D6775
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2020 12:47:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3D961D67EA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2020 14:06:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727845AbgEQKrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 May 2020 06:47:04 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:39520 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727834AbgEQKrD (ORCPT
+        id S1727972AbgEQMGD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 May 2020 08:06:03 -0400
+Received: from h2.fbrelay.privateemail.com ([131.153.2.43]:43659 "EHLO
+        h2.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727915AbgEQMGD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 May 2020 06:47:03 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589712422; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=bpYRKGxi7S4lmPb9T2zE3w/nH3uH2ZxR+FnFM4pHa+Y=; b=rmE+uGGfYIA+Bkyt7xArMuGiDzCayiXyZ/8QNwNEthJ3+0OOUtW/oNdNqWSE3d/ltLBPY2Xx
- UltUnkBkpwRz8KiTztLXQxmjLKVQuXDy1KFxvRw10/9z5XwJs1ImSask+jZy7y4XYzS99Uxl
- R4yOnuBWunPQPFa+u3q2wyhNDdY=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec11626.7f9b1f1e1570-smtp-out-n01;
- Sun, 17 May 2020 10:47:02 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2BE57C433D2; Sun, 17 May 2020 10:47:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pillair-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        Sun, 17 May 2020 08:06:03 -0400
+Received: from MTA-05-3.privateemail.com (mta-05.privateemail.com [198.54.127.60])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B753DC433F2;
-        Sun, 17 May 2020 10:46:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B753DC433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v9] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Sun, 17 May 2020 16:16:51 +0530
-Message-Id: <1589712411-26718-1-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        by h1.fbrelay.privateemail.com (Postfix) with ESMTPS id 073E4805AB;
+        Sun, 17 May 2020 07:54:32 -0400 (EDT)
+Received: from MTA-05.privateemail.com (localhost [127.0.0.1])
+        by MTA-05.privateemail.com (Postfix) with ESMTP id 9D2016004B;
+        Sun, 17 May 2020 07:54:29 -0400 (EDT)
+Received: from localhost.localdomain (unknown [10.20.151.204])
+        by MTA-05.privateemail.com (Postfix) with ESMTPA id 19FDA60049;
+        Sun, 17 May 2020 11:54:29 +0000 (UTC)
+From:   Eli Riggs <eli@rje.li>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, Eli Riggs <eli@rje.li>
+Subject: [PATCH 1/3] dt-bindings: arm: qcom: Add sm6125 SoC and xiaomi,willow
+Date:   Sun, 17 May 2020 04:54:06 -0700
+Message-Id: <20200517115410.3374-1-eli@rje.li>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for the ath10k SNOC platform driver probe
-and add resources required for WCN3990 on sc7180 soc.
+Add compatibles for SM6125 aka SDM665 aka Snapdragon 665, as well
+as xiaomi,willow aka Xiaomi Redmi Note 8T, the international
+edition of the Note 8.
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+Signed-off-by: Eli Riggs <eli@rje.li>
 ---
-Changes from v8:
-- Removed the qcom,msa-fixed-perm
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  7 +++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 4e9149d..38b102e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -389,6 +389,13 @@
- 	};
- };
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 64ddae3bd39fd..4142e38a353ef 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -38,6 +38,7 @@ description: |
+         msm8996
+         sc7180
+         sdm845
++        sm6125
  
-+&wifi {
-+	status = "okay";
-+	wifi-firmware {
-+		iommus = <&apps_smmu 0xc2 0x1>;
-+	};
-+};
+   The 'board' element must be one of the following strings:
+ 
+@@ -158,4 +159,9 @@ properties:
+               - qcom,ipq6018-cp01-c1
+           - const: qcom,ipq6018
+ 
++      - items:
++          - enum:
++              - xiaomi,willow
++          - const: qcom,sm6125
 +
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
- &qspi_clk {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index f1280e0..dd4e095 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -63,6 +63,11 @@
- 			clock-frequency = <32764>;
- 			#clock-cells = <0>;
- 		};
-+
-+		wlan_fw_mem: memory@94100000 {
-+			reg = <0 0x94100000 0 0x200000>;
-+			no-map;
-+		};
- 	};
- 
- 	reserved_memory: reserved-memory {
-@@ -944,6 +949,28 @@
- 			};
- 		};
- 
-+		wifi: wifi@18800000 {
-+			compatible = "qcom,wcn3990-wifi";
-+			reg = <0 0x18800000 0 0x800000>;
-+			reg-names = "membase";
-+			iommus = <&apps_smmu 0xc0 0x1>;
-+			interrupts =
-+				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-+				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-+				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-+				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-+				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-+				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-+				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-+				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-+				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-+				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-+				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-+				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-+			memory-region = <&wlan_fw_mem>;
-+			status = "disabled";
-+		};
-+
- 		config_noc: interconnect@1500000 {
- 			compatible = "qcom,sc7180-config-noc";
- 			reg = <0 0x01500000 0 0x28000>;
+ ...
 -- 
-2.7.4
+2.20.1
+
