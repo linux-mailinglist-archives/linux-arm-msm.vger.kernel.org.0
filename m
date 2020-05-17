@@ -2,126 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDD271D6C67
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2020 21:37:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C4861D6C70
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2020 21:39:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726299AbgEQThZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 May 2020 15:37:25 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:14570 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726271AbgEQThZ (ORCPT
+        id S1726269AbgEQTis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 May 2020 15:38:48 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:46524 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726693AbgEQTis (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 May 2020 15:37:25 -0400
+        Sun, 17 May 2020 15:38:48 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589744244; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1589744327; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=CsqgeE+faSNQ00Ax1SuNjJJHtZAQakq3R2LnrPY8eDk=; b=T04bod5n+ER7Kecz4wzEbvxpWrwwHIZneOx7pqt686VoHVqXmSRdI0VIDJfBRbXmTezducg1
- uYUtXad/RATrTp9hBUI63MxfTV/735NnWIWkQVZF9UTlwMyBQ+W0ixi/dh9nXwmeGaIIbh6S
- 7mhUALHkEsa92T5nxPoPBRgmka8=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ Subject: Sender; bh=0O8z3VVrmPj5u81vYKpNmSGfVT78wO0SwTwsfqos8a0=; b=QmHxiJwOZhErdTQ1HxWofAsjncNsAdwAmaWy1MDHdPmr3OIOVwOdxAk0OgHFd1rTr0BITbZA
+ aLUdw5lRJ4+9wu+28+Sv2wKxjjD5YkhRT81+UHDnoHvjstxv3VJDAUwQarHxJ7X3JCCUUxJx
+ rH3Y/G3c02JKVV5zldPwqHKz31w=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5ec192748ebbf95ecb84825c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 17 May 2020 19:37:24
- GMT
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec192b8.7f844379cf80-smtp-out-n03;
+ Sun, 17 May 2020 19:38:32 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 890DFC432C2; Sun, 17 May 2020 19:37:23 +0000 (UTC)
+        id 6DE4AC433F2; Sun, 17 May 2020 19:38:32 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
+        autolearn=ham autolearn_force=no version=3.4.0
 Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F53FC433F2;
-        Sun, 17 May 2020 19:37:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6F53FC433F2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EFF3C432C2;
+        Sun, 17 May 2020 19:38:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7EFF3C432C2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [RFC PATCH 3/8] qaic: Create char dev
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     arnd@arndb.de, manivannan.sadhasivam@linaro.org,
-        bjorn.andersson@linaro.org, wufan@codeaurora.org,
-        pratanan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org>
- <1589465266-20056-4-git-send-email-jhugo@codeaurora.org>
- <20200514141211.GA2643665@kroah.com>
- <0421a64a-10f3-08df-9ef1-14fdb570db0d@codeaurora.org>
- <20200514155615.GA2963499@kroah.com>
- <4be546d3-b571-0659-0140-f34ec88f95ff@codeaurora.org>
- <4683046a-c6b5-30a5-ef02-2f610523ae1c@codeaurora.org>
- <20200516070131.GB3964535@kroah.com>
- <8e06c718-8b8a-f09a-4685-11c0c1581a0c@codeaurora.org>
- <20200517071417.GA3090070@kroah.com>
+Subject: Re: [PATCH] bus: mhi: core: Use current ee in intvec handler
+To:     bbhatt@codeaurora.org
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-kernel-owner@vger.kernel.org
+References: <1589509049-14532-1-git-send-email-jhugo@codeaurora.org>
+ <aab020af0372b11ff63ba4526aab0fdc@codeaurora.org>
 From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <46581ccf-9cd4-3b9f-9b03-ed1264dac03b@codeaurora.org>
-Date:   Sun, 17 May 2020 13:37:20 -0600
+Message-ID: <713dc189-561d-3c4a-f856-26d006524485@codeaurora.org>
+Date:   Sun, 17 May 2020 13:38:30 -0600
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20200517071417.GA3090070@kroah.com>
+In-Reply-To: <aab020af0372b11ff63ba4526aab0fdc@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/17/2020 1:14 AM, Greg KH wrote:
-> On Sat, May 16, 2020 at 03:29:19PM -0600, Jeffrey Hugo wrote:
->> On 5/16/2020 1:01 AM, Greg KH wrote:
->>> On Fri, May 15, 2020 at 03:08:59PM -0600, Jeffrey Hugo wrote:
->>>> 2. There are a limited number of dynamic minor numbers for misc devs (64),
->>>> so if you are expecting more devices than that, a misc dev is not
->>>> appropiate.  Also, these minors are shared with other misc dev users, so
->>>> depending on the system configuration, you might have significantly less
->>>> than 64 minors available for use.
->>>
->>> I'm pretty sure we can have more than 64 misc devices, that limitation
->>> should have been removed a while ago.  Try it and see :)
+On 5/15/2020 8:58 PM, bbhatt@codeaurora.org wrote:
+> On 2020-05-14 19:17, Jeffrey Hugo wrote:
+>> The intvec handler stores the caches ee in a local variable for use in
+>> processing the intvec.  It should instead use the current ee which is
+>> read at the beginning of the intvec incase that the intvec is related to
+>> an ee change.  Otherwise, the handler might make the wrong decision
+>> based on an incorrect ee.
 >>
->> In total, there can be more tha 64 misc devices.  However my previous
->> comment was specific to dynamic minors (ie devices which do not have an
->> assigned minor).  The limit on dynamic minors still apears to be 64. Looking
->> at the code -
+>> Fixes: 3000f85b8f47 (bus: mhi: core: Add support for basic PM operations)
+>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>> ---
+>>  drivers/bus/mhi/core/main.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> DYNAMIC_MINORS is still 64
->> https://elixir.bootlin.com/linux/v5.7-rc5/source/drivers/char/misc.c#L63
+>> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> index 7272a5a..0a41fe5 100644
+>> --- a/drivers/bus/mhi/core/main.c
+>> +++ b/drivers/bus/mhi/core/main.c
+>> @@ -386,8 +386,8 @@ irqreturn_t mhi_intvec_threaded_handler(int
+>> irq_number, void *dev)
+>>      write_lock_irq(&mhi_cntrl->pm_lock);
+>>      if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+>>          state = mhi_get_mhi_state(mhi_cntrl);
+>> -        ee = mhi_cntrl->ee;
+>>          mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
+>> +        ee = mhi_cntrl->ee;
+>>      }
 >>
->> I see the same in -next
->>
->> DYNAMIC_MINORS is used to size a bitmap - one bit for each dynamic minor
->> misc device that exists at one particular point in time.  After all 64 bits
->> are consumed by misc_register() by clients requesting a dynamic minor, no
->> more dynamic minor misc devices can be registered until some are
->> unregistered.
->>
->> What am I missing?
+>>      if (state == MHI_STATE_SYS_ERR) {
+> Hi Jeff,
 > 
-> Oops, nothing, my fault.  We fixed up the allocation of more dynamic
-> majors for chardev in 2017 and for some reason I thought we also
-> increased the number of misc dynamic minors at the same time, but that
-> was incorrect.
+> Let's hold off on this change for now please as we have some good set of
+> bug fixes and improvements coming in very soon. They're only pending post
+> to LKML.
 
-No problem.
-
-> I'll gladly take patches that bump up the number of misc minors if
-> needed.
-
-I don't think its needed at this time, but I will keep that in mind.
-
-> But to get back to the main issue here, you are only going to have 1 or
-> maybe 2 of these devices in a system at a time, right?  So "burning" a
-> whole major number for that feels like a waste.
-
-Depends on what the customer wants to do.  We support a number of 
-systems, but one in particular has the capability of 6-12 devices.
+Does that series of changes address the same issue this patch does, and 
+are they going to be posted soon (ie this week)?
 
 -- 
 Jeffrey Hugo
