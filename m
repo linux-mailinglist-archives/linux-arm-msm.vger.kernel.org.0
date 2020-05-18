@@ -2,106 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AFF91D7986
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 15:19:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 446821D7ADF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 16:17:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726775AbgERNTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 09:19:20 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:52176 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726855AbgERNTU (ORCPT
+        id S1727944AbgERORJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 10:17:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55702 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726998AbgERORJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 09:19:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589807959; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=/vpx/m8pDfBLAbCOs2E0+YfNBsuZAzWzTkmXxzLVrpo=; b=Bae+kLlW0UQUhfVjiQv8aV72beSsDiV520x62YU9wbZs05eVNRXHHJkwfMNFtuqB3glzJT9E
- CHmNLso2tpFYOYvnTASQ/PLyOleXRi4cwkJbSGB5bKcpmV/ZfmJ2GKLn+SGm/oPTZOQHK3bs
- M0y5eJlIKkBvT3pIdMI+GJAAlyM=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec28b4c.7f67d74a74c8-smtp-out-n04;
- Mon, 18 May 2020 13:19:08 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2392CC432C2; Mon, 18 May 2020 13:19:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from [192.168.0.11] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A269C433F2;
-        Mon, 18 May 2020 13:19:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3A269C433F2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V6 3/3] dt-bindings: serial: Add binding for UART pin swap
-To:     Rob Herring <robh@kernel.org>
-Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mgautam@codeaurora.org, rojay@codeaurora.org,
-        skakit@codeaurora.org, mka@chromium.org
-References: <1588863647-17240-1-git-send-email-akashast@codeaurora.org>
- <1588863647-17240-4-git-send-email-akashast@codeaurora.org>
- <20200515030133.GA11479@bogus>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <884f8277-715c-3377-12b2-c9d9a8413842@codeaurora.org>
-Date:   Mon, 18 May 2020 18:49:02 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <20200515030133.GA11479@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Mon, 18 May 2020 10:17:09 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703DEC061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 07:17:09 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id f4so4847050pgi.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 07:17:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=W3AJP+K6AJWkLLQOo9n4PqYM8LSyyANs3tFVvvOywL0=;
+        b=RGQGUk/tfqqGuNXaGCxWTAJNAvEYjiPagQiljTFsC+DRC//qRlcq2CWGWMvHiXJihY
+         9uxXBWzoPBe6/fy7ptegsd0TVwq2SL2047RWsMNmixmgsDCE6Nu8PWqddaBuxacnLzq1
+         BApJwnG7ysiu3yG4rkBPROgngJtLEhJCGnY1PTcdYMcD/2uNrL59mmwmMcB6pqD/28kv
+         7ou+8yie54wvh8+oBAVgWAI1RsEILuVQDtIwbY89Eo8MM2R2DLKTr+pI/rKTFDwf+thB
+         hUXJZ5MAhsYufcndvkOLf0IBzdTpuhN3Q7SnhKQ3wZoug1lziVjcDnVeA/fHAbAtCCuV
+         7ofg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=W3AJP+K6AJWkLLQOo9n4PqYM8LSyyANs3tFVvvOywL0=;
+        b=kN5ftk5T2YMMM7AiJ9ewyUPkvfGASFL842yZ9ZV5A/EBD+qnd0w5n8x5+79E2NCXD+
+         AtdxskmF3EYOxe4Lv1IqSyBi34JaCzNs5IWfenoXK3KNfWccM3S2+q9TEbiZN2w0PYEO
+         BYuVQDcJ1PCqzAWIThuqkWG3iWVKRXWqMdST/M0MURB7hfzRcahFqoYqbRcwdm8PkZYd
+         jcubqRhhTNdlO5eOzmTFqUKucTrLKFWhmTF71KbOU45U2x+PqOasSf3PuUacMSQaGcb8
+         E2QPYguFDjkU3WbnTcIKLCZchn+k1pLkcC5Pqg9oG1BQBmlsohstLu2uGrBEpgNYQ2Sk
+         URAw==
+X-Gm-Message-State: AOAM530rJvvTMTcDQA7V4R78fHr2C7cqHckHm6q01TwFpQKA8+te4LUH
+        c4IffzlKACjRrMEzUDSXG3ftVw==
+X-Google-Smtp-Source: ABdhPJyB3kYEFH6mVDkfhufF/BWyyWJtV7hYZRoT5slsf4JckFiNnVBK34o/hvILNZSnTXLimy+Xkw==
+X-Received: by 2002:a65:4c41:: with SMTP id l1mr15489284pgr.43.1589811428911;
+        Mon, 18 May 2020 07:17:08 -0700 (PDT)
+Received: from localhost.localdomain ([80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id d184sm8730925pfc.130.2020.05.18.07.17.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 07:17:08 -0700 (PDT)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Joerg Roedel <joro@8bytes.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH v2] iommu/qcom: add optional 'tbu' clock for TLB invalidate
+Date:   Mon, 18 May 2020 22:16:56 +0800
+Message-Id: <20200518141656.26284-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On some SoCs like MSM8939 with A405 adreno, there is a gfx_tbu clock
+needs to be on while doing TLB invalidate. Otherwise, TLBSYNC status
+will not be correctly reflected, causing the system to go into a bad
+state.  Add it as an optional clock, so that platforms that have this
+clock can pass it over DT.
 
-On 5/15/2020 8:31 AM, Rob Herring wrote:
-> On Thu, May 07, 2020 at 08:30:47PM +0530, Akash Asthana wrote:
->> Add documentation to support RX-TX & CTS-RTS GPIO pin swap in HW.
->>
->> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
->> ---
->>   Documentation/devicetree/bindings/serial/serial.yaml | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/serial/serial.yaml b/Documentation/devicetree/bindings/serial/serial.yaml
->> index 53204d9..e657dd6 100644
->> --- a/Documentation/devicetree/bindings/serial/serial.yaml
->> +++ b/Documentation/devicetree/bindings/serial/serial.yaml
->> @@ -67,6 +67,12 @@ properties:
->>         (wired and enabled by pinmux configuration).  This depends on both the
->>         UART hardware and the board wiring.
->>   
->> +  rx-tx-swap:
->> +    description: RX and TX pins are swapped.
->> +
->> +  cts-rts-swap:
->> +    description: CTS and RTS pins are swapped.
-> Need 'type: boolean' on both of these.
+While adding the third clock, let's switch to bulk clk API to simplify
+the enable/disable calls.  clk_bulk_get() cannot used because the
+existing two clocks are required while the new one is optional.
 
-okay, will correct in next version
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+Changes for v2:
+ - Use devm_clk_get_optional() to simplify code and improve readability.
+ - Rename the new clock from 'tlb' to 'tbu'.
+ - qcom_iommu: use bulk clk API to simplfy enable/disable.
 
-Regards,
+ drivers/iommu/qcom_iommu.c | 62 ++++++++++++++++----------------------
+ 1 file changed, 26 insertions(+), 36 deletions(-)
 
-Akash
-
->
->> +
->>   if:
->>     required:
->>       - uart-has-rtscts
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-
+diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
+index 0e2a96467767..116d8188f87f 100644
+--- a/drivers/iommu/qcom_iommu.c
++++ b/drivers/iommu/qcom_iommu.c
+@@ -37,14 +37,20 @@
+ 
+ #define SMMU_INTR_SEL_NS     0x2000
+ 
++enum qcom_iommu_clk {
++	CLK_IFACE,
++	CLK_BUS,
++	CLK_TBU,
++	CLK_NUM,
++};
++
+ struct qcom_iommu_ctx;
+ 
+ struct qcom_iommu_dev {
+ 	/* IOMMU core code handle */
+ 	struct iommu_device	 iommu;
+ 	struct device		*dev;
+-	struct clk		*iface_clk;
+-	struct clk		*bus_clk;
++	struct clk_bulk_data clks[CLK_NUM];
+ 	void __iomem		*local_base;
+ 	u32			 sec_id;
+ 	u8			 num_ctxs;
+@@ -626,32 +632,6 @@ static const struct iommu_ops qcom_iommu_ops = {
+ 	.pgsize_bitmap	= SZ_4K | SZ_64K | SZ_1M | SZ_16M,
+ };
+ 
+-static int qcom_iommu_enable_clocks(struct qcom_iommu_dev *qcom_iommu)
+-{
+-	int ret;
+-
+-	ret = clk_prepare_enable(qcom_iommu->iface_clk);
+-	if (ret) {
+-		dev_err(qcom_iommu->dev, "Couldn't enable iface_clk\n");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(qcom_iommu->bus_clk);
+-	if (ret) {
+-		dev_err(qcom_iommu->dev, "Couldn't enable bus_clk\n");
+-		clk_disable_unprepare(qcom_iommu->iface_clk);
+-		return ret;
+-	}
+-
+-	return 0;
+-}
+-
+-static void qcom_iommu_disable_clocks(struct qcom_iommu_dev *qcom_iommu)
+-{
+-	clk_disable_unprepare(qcom_iommu->bus_clk);
+-	clk_disable_unprepare(qcom_iommu->iface_clk);
+-}
+-
+ static int qcom_iommu_sec_ptbl_init(struct device *dev)
+ {
+ 	size_t psize = 0;
+@@ -808,6 +788,7 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	struct qcom_iommu_dev *qcom_iommu;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
++	struct clk *clk;
+ 	int ret, max_asid = 0;
+ 
+ 	/* find the max asid (which is 1:1 to ctx bank idx), so we know how
+@@ -827,17 +808,26 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	if (res)
+ 		qcom_iommu->local_base = devm_ioremap_resource(dev, res);
+ 
+-	qcom_iommu->iface_clk = devm_clk_get(dev, "iface");
+-	if (IS_ERR(qcom_iommu->iface_clk)) {
++	clk = devm_clk_get(dev, "iface");
++	if (IS_ERR(clk)) {
+ 		dev_err(dev, "failed to get iface clock\n");
+-		return PTR_ERR(qcom_iommu->iface_clk);
++		return PTR_ERR(clk);
+ 	}
++	qcom_iommu->clks[CLK_IFACE].clk = clk;
+ 
+-	qcom_iommu->bus_clk = devm_clk_get(dev, "bus");
+-	if (IS_ERR(qcom_iommu->bus_clk)) {
++	clk = devm_clk_get(dev, "bus");
++	if (IS_ERR(clk)) {
+ 		dev_err(dev, "failed to get bus clock\n");
+-		return PTR_ERR(qcom_iommu->bus_clk);
++		return PTR_ERR(clk);
++	}
++	qcom_iommu->clks[CLK_BUS].clk = clk;
++
++	clk = devm_clk_get_optional(dev, "tbu");
++	if (IS_ERR(clk)) {
++		dev_err(dev, "failed to get tbu clock\n");
++		return PTR_ERR(clk);
+ 	}
++	qcom_iommu->clks[CLK_TBU].clk = clk;
+ 
+ 	if (of_property_read_u32(dev->of_node, "qcom,iommu-secure-id",
+ 				 &qcom_iommu->sec_id)) {
+@@ -909,14 +899,14 @@ static int __maybe_unused qcom_iommu_resume(struct device *dev)
+ {
+ 	struct qcom_iommu_dev *qcom_iommu = dev_get_drvdata(dev);
+ 
+-	return qcom_iommu_enable_clocks(qcom_iommu);
++	return clk_bulk_prepare_enable(CLK_NUM, qcom_iommu->clks);
+ }
+ 
+ static int __maybe_unused qcom_iommu_suspend(struct device *dev)
+ {
+ 	struct qcom_iommu_dev *qcom_iommu = dev_get_drvdata(dev);
+ 
+-	qcom_iommu_disable_clocks(qcom_iommu);
++	clk_bulk_disable_unprepare(CLK_NUM, qcom_iommu->clks);
+ 
+ 	return 0;
+ }
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.17.1
+
