@@ -2,225 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BD9E1D7F8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 19:03:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47E671D802C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 19:31:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbgERRDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 13:03:40 -0400
-Received: from mga14.intel.com ([192.55.52.115]:51867 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726958AbgERRDk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 13:03:40 -0400
-IronPort-SDR: UJAhcV0hIdAGDvxncguY1T4xIAH5p43qKqu7V2Pbb7EIHTOlUqj8U9fk/vsfBWSjhPDkJKrD88
- U5Q8H7wY9+YQ==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2020 10:03:38 -0700
-IronPort-SDR: pKtxDuWKX1oYAizRStGbvkJdLKNNCHg2tJSb/F0sX9Ke5ECDD66CKShy8scFV05EHzv05NbVTR
- 3BljPhTDViAg==
-X-IronPort-AV: E=Sophos;i="5.73,407,1583222400"; 
-   d="scan'208";a="439291692"
-Received: from ahermans-mobl.ger.corp.intel.com (HELO localhost) ([10.252.41.209])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2020 10:03:24 -0700
-From:   Jani Nikula <jani.nikula@intel.com>
-To:     Daniel Thompson <daniel.thompson@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Russell King <linux@armlinux.org.uk>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH v2 06/16] backlight: improve backlight_device documentation
-In-Reply-To: <20200518160324.mak4mhgyrgdbr7ww@holly.lan>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20200517190139.740249-1-sam@ravnborg.org> <20200517190139.740249-7-sam@ravnborg.org> <20200518160324.mak4mhgyrgdbr7ww@holly.lan>
-Date:   Mon, 18 May 2020 20:03:21 +0300
-Message-ID: <87o8ql2n1i.fsf@intel.com>
+        id S1728355AbgERRbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 13:31:31 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:13585 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727006AbgERRbb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 May 2020 13:31:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589823091; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=QSSrzFNbEG3tmCT2karWtCRJnIeHXfmV1PvTWjMC/xc=;
+ b=tzpeiWW1BGUUtEUq4tRpRYONfIJNOTx/CjNbuxDwJSuUb5VIYNc3ZF29C4Y76BD/qflBAphE
+ 8Fclm6y0oWZjkTz1XJZi+ZkgFXoeYxbKCft0Auwks7X2yIeSMzvvky5WyVfZNfWdy17j7kOQ
+ F5iMDB6xlz+xSbNUkORemOU/HBQ=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec2c664.7f51d3af67d8-smtp-out-n04;
+ Mon, 18 May 2020 17:31:16 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E90B3C432C2; Mon, 18 May 2020 17:31:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2309FC433D2;
+        Mon, 18 May 2020 17:31:13 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 18 May 2020 10:31:13 -0700
+From:   bbhatt@codeaurora.org
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: core: Use current ee in intvec handler
+In-Reply-To: <713dc189-561d-3c4a-f856-26d006524485@codeaurora.org>
+References: <1589509049-14532-1-git-send-email-jhugo@codeaurora.org>
+ <aab020af0372b11ff63ba4526aab0fdc@codeaurora.org>
+ <713dc189-561d-3c4a-f856-26d006524485@codeaurora.org>
+Message-ID: <9f19fb80d6cb410809efd27d27390709@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 18 May 2020, Daniel Thompson <daniel.thompson@linaro.org> wrote:
-> On Sun, May 17, 2020 at 09:01:29PM +0200, Sam Ravnborg wrote:
->> Improve the documentation for backlight_device and
->> adapt it to kernel-doc style.
+On 2020-05-17 12:38, Jeffrey Hugo wrote:
+> On 5/15/2020 8:58 PM, bbhatt@codeaurora.org wrote:
+>> On 2020-05-14 19:17, Jeffrey Hugo wrote:
+>>> The intvec handler stores the caches ee in a local variable for use 
+>>> in
+>>> processing the intvec.  It should instead use the current ee which is
+>>> read at the beginning of the intvec incase that the intvec is related 
+>>> to
+>>> an ee change.  Otherwise, the handler might make the wrong decision
+>>> based on an incorrect ee.
+>>> 
+>>> Fixes: 3000f85b8f47 (bus: mhi: core: Add support for basic PM 
+>>> operations)
+>>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>>> ---
+>>>  drivers/bus/mhi/core/main.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>> 
+>>> diff --git a/drivers/bus/mhi/core/main.c 
+>>> b/drivers/bus/mhi/core/main.c
+>>> index 7272a5a..0a41fe5 100644
+>>> --- a/drivers/bus/mhi/core/main.c
+>>> +++ b/drivers/bus/mhi/core/main.c
+>>> @@ -386,8 +386,8 @@ irqreturn_t mhi_intvec_threaded_handler(int
+>>> irq_number, void *dev)
+>>>      write_lock_irq(&mhi_cntrl->pm_lock);
+>>>      if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+>>>          state = mhi_get_mhi_state(mhi_cntrl);
+>>> -        ee = mhi_cntrl->ee;
+>>>          mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
+>>> +        ee = mhi_cntrl->ee;
+>>>      }
+>>> 
+>>>      if (state == MHI_STATE_SYS_ERR) {
+>> Hi Jeff,
 >> 
->> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
->> Cc: Lee Jones <lee.jones@linaro.org>
->> Cc: Daniel Thompson <daniel.thompson@linaro.org>
->> Cc: Jingoo Han <jingoohan1@gmail.com>
->> ---
->>  include/linux/backlight.h | 81 ++++++++++++++++++++++++++++-----------
->>  1 file changed, 58 insertions(+), 23 deletions(-)
->> 
->> diff --git a/include/linux/backlight.h b/include/linux/backlight.h
->> index 7f9cef299d6e..e2d72936bf05 100644
->> --- a/include/linux/backlight.h
->> +++ b/include/linux/backlight.h
->> @@ -14,21 +14,6 @@
->>  #include <linux/mutex.h>
->>  #include <linux/notifier.h>
->>  
->> -/* Notes on locking:
->> - *
->> - * backlight_device->ops_lock is an internal backlight lock protecting the
->> - * ops pointer and no code outside the core should need to touch it.
->> - *
->> - * Access to update_status() is serialised by the update_lock mutex since
->> - * most drivers seem to need this and historically get it wrong.
->> - *
->> - * Most drivers don't need locking on their get_brightness() method.
->> - * If yours does, you need to implement it in the driver. You can use the
->> - * update_lock mutex if appropriate.
->> - *
->> - * Any other use of the locks below is probably wrong.
->> - */
->> -
->>  enum backlight_update_reason {
->>  	BACKLIGHT_UPDATE_HOTKEY,
->>  	BACKLIGHT_UPDATE_SYSFS,
->> @@ -221,30 +206,80 @@ struct backlight_properties {
->>  	enum backlight_scale scale;
->>  };
->>  
->> +/**
->> + * struct backlight_device - backlight device data
->> + *
->> + * This structure holds all data required by a backlight device.
->> + */
->>  struct backlight_device {
->> -	/* Backlight properties */
->> +	/**
->> +	 * @props:
->> +	 *
->
-> As last patch. Why no brief descriptions?
-
-There are no "brief descriptions" in kernel-doc struct member inline
-markup.
-
-It would be possible to shorten this to:
-
-	/**
-	 * @props: Backlight properties
-	 */
-
-BR,
-Jani.
-
-
->
->
->> +	 * Backlight properties
->> +	 */
->>  	struct backlight_properties props;
->>  
->> -	/* Serialise access to update_status method */
->> +	/**
->> +	 * @update_lock:
->> +	 *
->> +	 * update_lock is an internal backlight lock that serialise access
->> +	 * to the update_status() method. The iupdate_lock mutex shall not be used
->> +	 * by backlight drivers.
->
-> In addition to the typo this directly contradicts the advice in the
-> original "Notes on locking".
->
-> A change this dramatic needs to be fully explaining in the patch
-> description.
->
->
-> Daniel.
->
->
->> +	 */
->>  	struct mutex update_lock;
->>  
->> -	/* This protects the 'ops' field. If 'ops' is NULL, the driver that
->> -	   registered this device has been unloaded, and if class_get_devdata()
->> -	   points to something in the body of that driver, it is also invalid. */
->> +	/**
->> +	 * @ops_lock:
->> +	 *
->> +	 * ops_lock is an internal backlight lock that protects the ops pointer
->> +	 * and is used around all accesses to ops and when the operations are
->> +	 * invoked. The mutex shall not be used by backlight drivers.
->> +	 */
->>  	struct mutex ops_lock;
->> +
->> +	/**
->> +	 * @ops:
->> +	 *
->> +	 * Pointer to the backlight operations. If ops is NULL, the driver that
->> +	 * registered this device has been unloaded, and if class_get_devdata()
->> +	 * points to something in the body of that driver, it is also invalid.
->> +	 */
->>  	const struct backlight_ops *ops;
->>  
->> -	/* The framebuffer notifier block */
->> +	/**
->> +	 * @fb_notif:
->> +	 *
->> +	 * The framebuffer notifier block
->> +	 */
->>  	struct notifier_block fb_notif;
->>  
->> -	/* list entry of all registered backlight devices */
->> +	/**
->> +	 * @entry:
->> +	 *
->> +	 * List entry of all registered backlight devices
->> +	 */
->>  	struct list_head entry;
->>  
->> +	/**
->> +	 * @dev:
->> +	 *
->> +	 * Parent device.
->> +	 */
->>  	struct device dev;
->>  
->> -	/* Multiple framebuffers may share one backlight device */
->> +	/**
->> +	 * @fb_bl_on:
->> +	 *
->> +	 * Multiple fbdev's may share one backlight device. The fb_bl_on
->> +	 * records the state of the individual fbdev.
->> +	 */
->>  	bool fb_bl_on[FB_MAX];
->>  
->> +	/**
->> +	 * @use_count:
->> +	 *
->> +	 * The number of uses of fb_bl_on.
->> +	 */
->>  	int use_count;
->>  };
->>  
->> -- 
->> 2.25.1
->> 
-
--- 
-Jani Nikula, Intel Open Source Graphics Center
+>> Let's hold off on this change for now please as we have some good set 
+>> of
+>> bug fixes and improvements coming in very soon. They're only pending 
+>> post
+>> to LKML.
+> 
+> Does that series of changes address the same issue this patch does,
+> and are they going to be posted soon (ie this week)?
+Yes.
