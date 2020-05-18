@@ -2,121 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 557961D7D59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 17:50:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 339721D7D53
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 17:50:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727020AbgERPuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 11:50:54 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:52324 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727035AbgERPux (ORCPT
+        id S1728300AbgERPuL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 11:50:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42070 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727973AbgERPuL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 11:50:53 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589817052; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=MA7x95uTokqN/aU7nVR9VOVc4EF74ZFKJm4hvl9kPak=; b=dMwg11uCHw18KMXBOJmTbThho/QRAsHH9gH6KSIOjYx6o+2wKi75ZFEcKIviAppNjmv+t1AR
- s0ZpMHXflBTq58/EZKmSx2e4VVXhntG2LBcsizs5AlO4KYTBCfxSUljrVqNFeY2sMSO+mcbX
- qvFVg8kPTzl0A+zHW0Xi532Jb6Q=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec2aecd.7fd5868fa960-smtp-out-n01;
- Mon, 18 May 2020 15:50:37 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B71BDC433D2; Mon, 18 May 2020 15:50:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from groverm-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: groverm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6C9E4C43636;
-        Mon, 18 May 2020 15:50:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6C9E4C43636
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=groverm@codeaurora.org
-From:   Mayank Grover <groverm@codeaurora.org>
-To:     linus.walleij@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, neeraju@codeaurora.org,
-        Mayank Grover <groverm@codeaurora.org>
-Subject: [PATCH] pinctrl: msm: Add check for pinctrl group is valid
-Date:   Mon, 18 May 2020 21:20:25 +0530
-Message-Id: <1589817025-21886-1-git-send-email-groverm@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Mon, 18 May 2020 11:50:11 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B01C061A0C;
+        Mon, 18 May 2020 08:50:10 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id l3so8806548edq.13;
+        Mon, 18 May 2020 08:50:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Mam0jmHC79p3v1pPEObliIl7gHrMe1XbetijSP5zncI=;
+        b=CKIBsRZpRkNM2DDbEI75O6uMEon9GctsfbkrnQTJSoogb19ygIStXRAshUF0c4I+Rn
+         91ArQTPD46KbURQ22gY6qmEIkkhxJIZBohLJQEgroA0QMp9vHrbwpU3X4HHDs1l+gp4d
+         4jSFDJXSyXFJhcVKJijVmZaQJ6m11lnzI/SVjZO/F52kjZiiHR3s2cc3ErKUJmndJ5N6
+         CzwPDMSIJzeh6hdg7YX3FJIhhYTjLinSUYE7CnNVVQW7OV8bb2mV6F4qS8TjRbWS6oCm
+         Y8wuubh8LckHgZANHBsAL2uW/BDjWb+XKejPT89jttAzED+dqYcVJOViqAL4g1yFeDyI
+         Pqbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Mam0jmHC79p3v1pPEObliIl7gHrMe1XbetijSP5zncI=;
+        b=Nm18XtwJHGC7we9Z6P46DtGR7JBOXkt21BUlivXXNoqKMLxy1+bDonW4zJveuMinzG
+         6aUm9+blQM3j7D4sENsqRpV7GOL2E5jZ5DG34kKMdfjTW1QiZGwgqxJUrJpFSSGri+1k
+         /imtPo0SvjEhhkC/Pv+Hiu4rrOKsccI3/2ROXvLjWVman3kJlpsWqqsNtUYxS6K7WErl
+         0H/sMgm70jqS4f77RDDRFVaZY+NeTwwsngRBpiwcUN1NvZGJR22QizWg2hEy6uuswrLQ
+         b9RMSdEwEpX/4puGo6hGkEqC5/5eW/oq8FHZBfR/BGFfqrhkXLVuth9zgnLH4Pw+S80C
+         9j9A==
+X-Gm-Message-State: AOAM530EgHznjBkyWoy71HBdd+AnsAqnDZ+ZpTAKAO+ciQKw8P591037
+        97xECYPcfTZNBMGaLczGnvqP+u5AWAabfJ8acOI=
+X-Google-Smtp-Source: ABdhPJwAak2gmrJ75fYqfKG002IIAJ3g+T9yn75xNxFIQ0i05jgSdssvyWPSh4oXD0jc4sg7my3h0ep4LvxCtfrPbVs=
+X-Received: by 2002:aa7:c38f:: with SMTP id k15mr482553edq.7.1589817009296;
+ Mon, 18 May 2020 08:50:09 -0700 (PDT)
+MIME-Version: 1.0
+References: <1580249770-1088-1-git-send-email-jcrouse@codeaurora.org>
+ <1580249770-1088-3-git-send-email-jcrouse@codeaurora.org> <20200318224840.GA10796@willie-the-truck>
+ <CAF6AEGu-hj6=3rsCe5XeBq_ffoq9VFmL+ycrQ8N=iv89DZf=8Q@mail.gmail.com> <20200518151838.GL32394@willie-the-truck>
+In-Reply-To: <20200518151838.GL32394@willie-the-truck>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 18 May 2020 08:50:27 -0700
+Message-ID: <CAF6AEGswv3ZaJyy_kYv6FKAjO5=_juDwEtK+VE9TcVMLGvrdwA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/6] arm/smmu: Add auxiliary domain support for arm-smmuv2
+To:     Will Deacon <will@kernel.org>
+Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The list of reserved gpio pins for platform are populated
-in gpiochip valid_mask.
+On Mon, May 18, 2020 at 8:18 AM Will Deacon <will@kernel.org> wrote:
+>
+> On Wed, Mar 18, 2020 at 04:43:07PM -0700, Rob Clark wrote:
+> > On Wed, Mar 18, 2020 at 3:48 PM Will Deacon <will@kernel.org> wrote:
+> > > On Tue, Jan 28, 2020 at 03:16:06PM -0700, Jordan Crouse wrote:
+> > > > Support auxiliary domains for arm-smmu-v2 to initialize and support
+> > > > multiple pagetables for a single SMMU context bank. Since the smmu-v2
+> > > > hardware doesn't have any built in support for switching the pagetable
+> > > > base it is left as an exercise to the caller to actually use the pagetable.
+> > > >
+> > > > Aux domains are supported if split pagetable (TTBR1) support has been
+> > > > enabled on the master domain.  Each auxiliary domain will reuse the
+> > > > configuration of the master domain. By default the a domain with TTBR1
+> > > > support will have the TTBR0 region disabled so the first attached aux
+> > > > domain will enable the TTBR0 region in the hardware and conversely the
+> > > > last domain to be detached will disable TTBR0 translations.  All subsequent
+> > > > auxiliary domains create a pagetable but not touch the hardware.
+> > > >
+> > > > The leaf driver will be able to query the physical address of the
+> > > > pagetable with the DOMAIN_ATTR_PTBASE attribute so that it can use the
+> > > > address with whatever means it has to switch the pagetable base.
+> > > >
+> > > > Following is a pseudo code example of how a domain can be created
+> > > >
+> > > >  /* Check to see if aux domains are supported */
+> > > >  if (iommu_dev_has_feature(dev, IOMMU_DEV_FEAT_AUX)) {
+> > > >        iommu = iommu_domain_alloc(...);
+> > > >
+> > > >        if (iommu_aux_attach_device(domain, dev))
+> > > >                return FAIL;
+> > > >
+> > > >       /* Save the base address of the pagetable for use by the driver
+> > > >       iommu_domain_get_attr(domain, DOMAIN_ATTR_PTBASE, &ptbase);
+> > > >  }
+> > >
+> > > I'm not really understanding what the pagetable base gets used for here and,
+> > > to be honest with you, the whole thing feels like a huge layering violation
+> > > with the way things are structured today. Why doesn't the caller just
+> > > interface with io-pgtable directly?
+> > >
+> > > Finally, if we need to support context-switching TTBR0 for a live domain
+> > > then that code really needs to live inside the SMMU driver because the
+> > > ASID and TLB management necessary to do that safely doesn't belong anywhere
+> > > else.
+> >
+> > We do in fact need live domain switching, that is really the whole
+> > point.  The GPU CP (command processor/parser) is directly updating
+> > TTBR0 and triggering TLB flush, asynchronously from the CPU.
+> >
+> > And I think the answer about ASID is easy (on current hw).. it must be zero[*].
+>
+> Using ASID zero is really bad, because it means that you will end up sharing
+> TLB entries with whichever device is using context bank 0.
+>
+> Is the SMMU only used by the GPU in your SoC?
+>
 
-Here on MSM common driver introduce ability to check if
-pingroup is valid, by parsing pins in pingroup against
-reserved pins for gpios. This does not handle non-gpio
-pingroups.
+yes, the snapdragon SoCs have two SMMU instances, one used by the GPU,
+where ASID0/cb0 is the gpu itself, and another cb is the GMU
+(basically power control for the gpu), and the second SMMU is
+everything else.
 
-Signed-off-by: Mayank Grover <groverm@codeaurora.org>
----
- drivers/pinctrl/qcom/pinctrl-msm.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 85858c1..b6ebe26 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -261,6 +261,24 @@ static unsigned msm_regval_to_drive(u32 val)
- 	return (val + 1) * 2;
- }
- 
-+static bool msm_pingroup_is_valid(struct msm_pinctrl *pctrl,
-+				  const struct msm_pingroup *g)
-+{
-+	const unsigned int *pins = g->pins;
-+	unsigned int num_pins = g->npins;
-+	struct gpio_chip *chip = &pctrl->chip;
-+	unsigned int max_gpios = chip->ngpio;
-+	unsigned int i;
-+
-+	for (i = 0; i < num_pins; i++) {
-+		/* Doesn't handle non-gpio pingroups */
-+		if (pins[i] < max_gpios &&
-+		    !gpiochip_line_is_valid(chip, pins[i]))
-+			return false;
-+	}
-+	return true;
-+}
-+
- static int msm_config_group_get(struct pinctrl_dev *pctldev,
- 				unsigned int group,
- 				unsigned long *config)
-@@ -276,6 +294,10 @@ static int msm_config_group_get(struct pinctrl_dev *pctldev,
- 
- 	g = &pctrl->soc->groups[group];
- 
-+	/* Check if group has all valid pins */
-+	if (!msm_pingroup_is_valid(pctrl, g))
-+		return -EINVAL;
-+
- 	ret = msm_config_reg(pctrl, g, param, &mask, &bit);
- 	if (ret < 0)
- 		return ret;
-@@ -355,6 +377,10 @@ static int msm_config_group_set(struct pinctrl_dev *pctldev,
- 
- 	g = &pctrl->soc->groups[group];
- 
-+	/* Check if group has all valid pins */
-+	if (!msm_pingroup_is_valid(pctrl, g))
-+		return -EINVAL;
-+
- 	for (i = 0; i < num_configs; i++) {
- 		param = pinconf_to_config_param(configs[i]);
- 		arg = pinconf_to_config_argument(configs[i]);
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-member of the Code Aurora Forum, hosted by The Linux Foundation
+BR,
+-R
