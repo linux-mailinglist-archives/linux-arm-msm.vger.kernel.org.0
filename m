@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AA651D8608
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:22:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 688F11D863A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:24:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730643AbgERSWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 14:22:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37948 "EHLO
+        id S1730912AbgERSYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 14:24:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729033AbgERSWh (ORCPT
+        with ESMTP id S1730407AbgERSX6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 14:22:37 -0400
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B12C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:22:37 -0700 (PDT)
-Received: by mail-ua1-x942.google.com with SMTP id k3so3822912ual.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:22:37 -0700 (PDT)
+        Mon, 18 May 2020 14:23:58 -0400
+Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F807C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:23:58 -0700 (PDT)
+Received: by mail-ua1-x941.google.com with SMTP id c17so3822074uaq.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=B7TcTnxdgBKTVFL5gUH9Cy+Jbda1czl9E/pUOuzMN/k=;
-        b=Evwhtrr7DfFquZt/cm+QLYTGVqidVIKhvJS22rNpNJk94fG/F9IzQhDU4y/bCEU4cH
-         xd+K0m6JnG5eb4d5M7YXq22v9ymYRgljTktq1YE98d9c1ZmfHOsOmS8lske6MfpztrSe
-         NRMzZXp+d2uuIbdUtV6Dcuz5dAbQ4ji99HeIk=
+        bh=66BENZkKJdscrKXw0ODwzFcr1IXdRBxhdFQSFMOWssw=;
+        b=BbisGLjf3FNDMjbQcmYHxKKASqShM9Q38fh+ZAm2fNnRRbEZE92f5+zgkfkWsT6lzP
+         Y6UYWsK2IzFEBWi0s8uR39LnFO7d6cgo+9iao9K8JC9jHGO0f5tSauFodWvkfSjYOpST
+         bff0D8UDAWveJEHNLUFT1N2rh+cvyKIZNzXVg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=B7TcTnxdgBKTVFL5gUH9Cy+Jbda1czl9E/pUOuzMN/k=;
-        b=qUR25E4csav6o4B/kmkGafA14ajfDpBPO2mHkE/pK8IPZ6e28sNk7oCkN9WjQCqJSo
-         54zG3xn7Edh/KGAyA6LXMhT56ij3CfDaJOTJBY1RKVB2cvpCJN76Gk6G2NoQaiSWW1cl
-         jky5H5iaLFNzkrQDcbhgUj1DHmj5IrTZP0hzstde54e+V/253NuaeBcbtrVVNP0XcuYh
-         aNJp8B6FyXB69UgWH32EROvmUS7PHMIz/7+WcOaiEfheiZdUSCthVXV5rvJvI0eWPX/c
-         wR82PEnSllNffBtAPftvYZKaiuxnjQ++ROKNUmpuTaTfuwV/BMK1FJd5ttBXRD340F5V
-         NGyg==
-X-Gm-Message-State: AOAM531Upusw7DFpAAEa/4gwbCvavsMAquU33Cy4+OWfpZOgnTDI1Il+
-        Ij2HhCUUAg7MW8JbZaJiTbO1jJfDUc0=
-X-Google-Smtp-Source: ABdhPJxQYzbnkr2VsFui2l1Oxt/SV2sJMBEhp4qYiPsxte9H/gIZTEl3Yb52kVtsXrPQnaBocLKF2w==
-X-Received: by 2002:ab0:688a:: with SMTP id t10mr2029690uar.75.1589826155848;
-        Mon, 18 May 2020 11:22:35 -0700 (PDT)
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
-        by smtp.gmail.com with ESMTPSA id h23sm3011345uap.7.2020.05.18.11.22.34
+        bh=66BENZkKJdscrKXw0ODwzFcr1IXdRBxhdFQSFMOWssw=;
+        b=XVu5fHX8uWyxJqbVGxAUTvLoyzYQiII7wR1yvVPQASuDD79Px0SGf0wyzzFhBox2W8
+         w7IyK1w+retZPS7eqQ+H0/COMRhp0jIoPd/tkOHnj9wd+6FErV1deD4IdsBqr/HrWrR8
+         hVD0K4QMIrB8W7D/SXBdAra6uKJCXqQKyy5T8lkKUDCRGhq509306C+Vzj3kE/l99vH9
+         Hj2oUHkPuLREFw1IDPDC7U4Yd80mKqbTr7yV/VI60wNYE5IF8elvCAK1KUusEQ8bfm9z
+         5v5w4VGTp8rhNaeZBXjPXhC1YXJSw5xw/2MDPiK7odUgKbI6mzBqpwMzXjx7MtC0fLXP
+         IG2w==
+X-Gm-Message-State: AOAM5302CuEsZph+AmFZcqUYuftpueJsxUSLkLNk2rJDlcWi3vqHwply
+        HD/+1fsONgsu5Cww5P4WlD0UkXwP4wU=
+X-Google-Smtp-Source: ABdhPJwHU4JYN2cxSgn+Ao4AYHJAR16xkCtco/lAlx3L1s6avUNmYrQKd32fioN7OfHxJgnLa+eQTA==
+X-Received: by 2002:ab0:6f08:: with SMTP id r8mr6811070uah.111.1589826237083;
+        Mon, 18 May 2020 11:23:57 -0700 (PDT)
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com. [209.85.217.52])
+        by smtp.gmail.com with ESMTPSA id k5sm1494402vkk.10.2020.05.18.11.23.55
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2020 11:22:35 -0700 (PDT)
-Received: by mail-vs1-f47.google.com with SMTP id u2so2428241vsi.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:22:34 -0700 (PDT)
-X-Received: by 2002:a67:d199:: with SMTP id w25mr5312377vsi.169.1589826154516;
- Mon, 18 May 2020 11:22:34 -0700 (PDT)
+        Mon, 18 May 2020 11:23:56 -0700 (PDT)
+Received: by mail-vs1-f52.google.com with SMTP id u2so2430967vsi.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:23:55 -0700 (PDT)
+X-Received: by 2002:a67:e952:: with SMTP id p18mr5212098vso.73.1589826235405;
+ Mon, 18 May 2020 11:23:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200506140208.v2.1.Ibc8eeddcee94984a608d6900b46f9ffde4045da4@changeid>
- <CAF6AEGvXkeOrHGMHo=C1zXhDc9rquQJc8oGDB4VDfhTfdtqyTg@mail.gmail.com>
-In-Reply-To: <CAF6AEGvXkeOrHGMHo=C1zXhDc9rquQJc8oGDB4VDfhTfdtqyTg@mail.gmail.com>
+References: <20200504213225.1.I21646c7c37ff63f52ae6cdccc9bc829fbc3d9424@changeid>
+ <CAF6AEGs0qpzgGW8rYdmFqKW=QBbRxxzCWjO0LXsbm6hA0AJNyQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGs0qpzgGW8rYdmFqKW=QBbRxxzCWjO0LXsbm6hA0AJNyQ@mail.gmail.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 18 May 2020 11:22:22 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V9Aphv=sV36CcK=ka2zNh7Hwiog4qiUEC7wpgjqYSi5Q@mail.gmail.com>
-Message-ID: <CAD=FV=V9Aphv=sV36CcK=ka2zNh7Hwiog4qiUEC7wpgjqYSi5Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] drm/bridge: ti-sn65dsi86: Implement lane
- reordering + polarity
+Date:   Mon, 18 May 2020 11:23:44 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WQ2HtnWFyhachm9QyhkXVhMzRoiR=rWbmukmVYciL3Gw@mail.gmail.com>
+Message-ID: <CAD=FV=WQ2HtnWFyhachm9QyhkXVhMzRoiR=rWbmukmVYciL3Gw@mail.gmail.com>
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Fix off-by-one error in clock choice
 To:     Rob Clark <robdclark@gmail.com>, Sam Ravnborg <sam@ravnborg.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -70,7 +69,7 @@ Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         David Airlie <airlied@linux.ie>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Sandeep Panda <spanda@codeaurora.org>,
         Sean Paul <seanpaul@chromium.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -81,29 +80,19 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Sam,
 
-On Fri, May 15, 2020 at 2:43 PM Rob Clark <robdclark@gmail.com> wrote:
+On Fri, May 15, 2020 at 2:49 PM Rob Clark <robdclark@gmail.com> wrote:
 >
-> On Wed, May 6, 2020 at 2:03 PM Douglas Anderson <dianders@chromium.org> wrote:
+> On Mon, May 4, 2020 at 9:32 PM Douglas Anderson <dianders@chromium.org> wrote:
 > >
-> > The ti-sn65dsi86 MIPI DSI to eDP bridge chip supports arbitrary
-> > remapping of eDP lanes and also polarity inversion.  Both of these
-> > features have been described in the device tree bindings for the
-> > device since the beginning but were never implemented in the driver.
-> > Implement both of them.
+> > If the rate in our table is _equal_ to the rate we want then it's OK
+> > to pick it.  It doesn't need to be greater than the one we want.
 > >
-> > Part of this change also allows you to (via the same device tree
-> > bindings) specify to use fewer than the max number of DP lanes that
-> > the panel reports.  This could be useful if your display supports more
-> > lanes but only a few are hooked up on your board.
-> >
+> > Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
 > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 >
 > Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-I guess get_maintainer is somehow not tagging you and I haven't got it
-through my thick skull to CC you each time.  If you're willing, I
-think this patch is ready too.  Happy to re-post it with you in the To
-list if it helps.
+...and I think this is the last of the patches I stupidly didn't CC
+you on that's ready to go.
 
 -Doug
