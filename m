@@ -2,119 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF76B1D839A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:06:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D81E1D869E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:28:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732022AbgERSGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 14:06:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35404 "EHLO
+        id S1732079AbgERSZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 14:25:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732269AbgERSGR (ORCPT
+        with ESMTP id S1731425AbgERSZV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 14:06:17 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CDF0C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:06:17 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id w188so2666862vkf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:06:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c3UXUPcrt3P6Bgw39Gw3bWHJNGcf+91G7bjcoOjFILM=;
-        b=li91YZRk4xYKI9MXE0tWUzbZMwcWG60O5oELkyNKU4sTYVNPY20T5Tu/2C4PXO0pSb
-         metKaUg3abydKAsYDkjq5QAPkQqK7PqGeCwzCrjMqbAJG1JvjKQ0vB5xZdrqIZcj7Gph
-         UoleVSIHc/fp4FoD48l5IFZcAOxm20aQrn4GE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c3UXUPcrt3P6Bgw39Gw3bWHJNGcf+91G7bjcoOjFILM=;
-        b=oCyDlwFcTj4BqMbveQ75zeudCgaoUcvoFgzOmy3PgiK20SUM7WBjwb0hluKNFBpi8j
-         kAp3gIt+ENsyQPh7QPkAqr2RzdHBBnEHKVKuSDg3j9Vhn7q1WDznskzDD/nyFb7qKP9w
-         m8k8pn3eWeZMGwaDr81cpSyK4kaJRBYELo8QNl+IRUGTPndGyk0piuro2KKwg7mtWBpE
-         RrlNQXagDibomH7jb1JJsgxXgYzZsjk23XXeqeyeTz5mkLuScbmANmusdinfMP/GrYHa
-         zjCupyIlJDBhltsKajmIGqwzogmw6mU4Cay0yTs6vkrxT4LU4ohf+VUKnEbZyk3YfYGT
-         UcEA==
-X-Gm-Message-State: AOAM533CjH7N7xwss8tGzP+t7s79avPY9VOy+sqrsNXAuKqz165iQOMi
-        fc3C6UW9Wh8O359LDlTk7XMqVevlkK4=
-X-Google-Smtp-Source: ABdhPJzm+XfPdjDQ8WQBlR/HzjaJCXpiAOzi5Fv+4Zs2fwg8fvksrP1ogUcXaYf6Gm2YMxWWyi0EMQ==
-X-Received: by 2002:a05:6122:11bc:: with SMTP id y28mr6808556vkn.75.1589825175591;
-        Mon, 18 May 2020 11:06:15 -0700 (PDT)
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com. [209.85.221.182])
-        by smtp.gmail.com with ESMTPSA id s3sm3363386uao.0.2020.05.18.11.06.15
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2020 11:06:15 -0700 (PDT)
-Received: by mail-vk1-f182.google.com with SMTP id 21so2650831vkq.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:06:15 -0700 (PDT)
-X-Received: by 2002:a1f:4e46:: with SMTP id c67mr11262026vkb.92.1589825169814;
- Mon, 18 May 2020 11:06:09 -0700 (PDT)
+        Mon, 18 May 2020 14:25:21 -0400
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27CDCC061A0C;
+        Mon, 18 May 2020 11:25:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender:
+        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=jJIjBXlG7IUX19DcU/q8Cx0YzyqRNE0zmnPm1XRvWis=; b=NoaDH0jJOxZtDH2Lc2tVLtZBoU
+        4g2DpdUFXRRiZNgfYcB3J/CDjStsP7Z6dk3oHi0DBa+r2Go8o/aBONUjT7Y1V8/2brOe8krLRQ8ig
+        fMz7QeCm0aPRpPAnRKgFqLAHoxlW4oVsR4/WPvS4cmxAXmTEvDkrqNYIlNRQrDqinHp2IwawAuDQx
+        fMOwwqCv9srkN2+kHuP44sFY5FwSfoYEwtkwm88+UZ4oyRKRQRRqCHFo5niukz3LY7UlO5XGu29xW
+        /SsMv6YH25xpoeG5Vkvdhl4mHOVuiv0muHTnz4J0pnYazJXup59eo16t097JJUUF2HTXs2Z+z2Jqd
+        HNhdM8KQ==;
+Received: from [2001:4d48:ad59:1409:4::2] (helo=youmian.o362.us)
+        by the.earth.li with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1jakCR-0008IU-A6; Mon, 18 May 2020 19:09:15 +0100
+Date:   Mon, 18 May 2020 19:09:10 +0100
+From:   Jonathan McDowell <noodles@earth.li>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] Add initial support for MikroTik RB3011
+Message-ID: <cover.1589824955.git.noodles@earth.li>
 MIME-Version: 1.0
-References: <20200507213500.241695-1-dianders@chromium.org>
- <20200509201511.GD30802@ravnborg.org> <CAD=FV=VBU7JmTdvgWjyj_ytrFmz6Gkx2OjVr1FxLh9DBG_jN6w@mail.gmail.com>
- <CAD=FV=UNuwb+YYJKw9+HNMKUNfuNFxj+Gr+yB9tXANbXAvDgCg@mail.gmail.com> <20200518175939.GA770425@ravnborg.org>
-In-Reply-To: <20200518175939.GA770425@ravnborg.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 18 May 2020 11:05:58 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XmUrF3nCZF4dDom5RrWrdVe-iJocenU3cJEDx-gGkDRA@mail.gmail.com>
-Message-ID: <CAD=FV=XmUrF3nCZF4dDom5RrWrdVe-iJocenU3cJEDx-gGkDRA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/6] drm: Prepare to use a GPIO on ti-sn65dsi86 for Hot
- Plug Detect
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     LinusW <linus.walleij@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Jonas Karlman <jonas@kwiboo.se>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sam,
+This patches do some prep (device tree vendor addition, missing ethernet
+definitions for IPQ8064 dts) and then add an initial device tree for the
+MikroTik RB3011 1U router, which is an IPQ8064 device with 1G RAM. They
+are sufficient to boot with an initrd, the serial console and the first
+5 switch ports fully functional (the second bank of 5 require some extra
+patches to the QCA8K driver which will follow later). The bootloader NOR
+is also supported, but the 128MB NAND is not yet enabled.
 
-On Mon, May 18, 2020 at 10:59 AM Sam Ravnborg <sam@ravnborg.org> wrote:
->
-> Hi Douglas.
->
-> > > Given the previous feedback from Linus W, Stephen, and Laurent I
-> > > expect things are good enough to land now, but it'd be good to get
-> > > confirmation (I removed some of the previous tags just to get
-> > > confirmation).  If we can get review tags early next week maybe it'll
-> > > still be in time to land for 5.8?
-> >
-> > I think all the others have reviews now.  Is there anything blocking
-> > them from getting applied?
-> Applied, including the small fix pointed out by Linus.
+Jonathan McDowell (3):
+  dt-bindings: vendor-prefixes: Add MikroTik
+  ARM: dts: qcom: add ethernet definitions to ipq8064
+  ARM: dts: qcom: Add MikroTik RB3011
 
-Thanks!  Ugh, I just realized what the problem was.  I posted a v6
-with this fix but insanely somehow didn't CC you (!!!).  It was here:
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ arch/arm/boot/dts/Makefile                    |   1 +
+ arch/arm/boot/dts/qcom-ipq8064-rb3011.dts     | 308 ++++++++++++++++++
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           | 108 ++++++
+ 4 files changed, 419 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
 
-https://lore.kernel.org/r/20200513215902.261547-1-dianders@chromium.org
+-- 
+2.20.1
 
-I'm super sorry about that and thanks for fixing the nit.  That was
-the only difference between v5 and v6.  I just checked what you pushed
-and it looks great, thank you.
-
--Doug
