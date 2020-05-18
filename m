@@ -2,106 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47E671D802C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 19:31:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0314E1D85A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728355AbgERRbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 13:31:31 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:13585 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727006AbgERRbb (ORCPT
+        id S1731485AbgERSUB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 14:20:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731149AbgERRxa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 13:31:31 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589823091; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=QSSrzFNbEG3tmCT2karWtCRJnIeHXfmV1PvTWjMC/xc=;
- b=tzpeiWW1BGUUtEUq4tRpRYONfIJNOTx/CjNbuxDwJSuUb5VIYNc3ZF29C4Y76BD/qflBAphE
- 8Fclm6y0oWZjkTz1XJZi+ZkgFXoeYxbKCft0Auwks7X2yIeSMzvvky5WyVfZNfWdy17j7kOQ
- F5iMDB6xlz+xSbNUkORemOU/HBQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec2c664.7f51d3af67d8-smtp-out-n04;
- Mon, 18 May 2020 17:31:16 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E90B3C432C2; Mon, 18 May 2020 17:31:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2309FC433D2;
-        Mon, 18 May 2020 17:31:13 +0000 (UTC)
+        Mon, 18 May 2020 13:53:30 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F09C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 10:53:30 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id h26so8876312lfg.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 10:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=auxOAvLWtf1pZZSyVWFPai0DZNGDmQxFTyydphVNHvc=;
+        b=Vl9mmuiC7+19REd6VDHNPar684dLArGlRGMkQn5oqgGISgDn9rA9Lik+VFA810mJKY
+         Z/lqU/1LmGYWo/ob8AYxr4Q2/sNWezCyNM2TzOQag9de1dtWzYYjvtcqYLaj5UZ/eRSs
+         j8hcnYEluwCIYYQEZhNVvSaQXUVwZaW1vekivhtGXj6agpH6us2lt2eVka42V2tC3FBb
+         anttD+3GT6y2WprpvsdRhnf8iEsWgi9AJN5Lcv6UsJMZ0dJcUwz0KICOSnVe+AkXm4jK
+         rk7WxHuCvOQsbVbuTW9D42lNo27aBJenp/CL1EDodgfeQDkV7DKsAI6jISrExqk+E3OT
+         iqGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=auxOAvLWtf1pZZSyVWFPai0DZNGDmQxFTyydphVNHvc=;
+        b=FkmZxm8EWWlcwwdagMQOhWRxd6BnXeJA7r52P3a5h/se+1klE4c1mh8HkW8VdJGlHd
+         /MjUJ4GriNrQO28liYicvwdFGxvFAkqgTszjsQ8FZeXkUX8rVrNnLY8fFTcM6dg5/ynp
+         30PDz/A89B5PHaR19IQjQAJGniu7X2q3b+Pq0ohMkAQQeQzxKATK4OAyFaS/GUGxtGGD
+         dYxxnKOlmrKqYQVb/kyTGTtorNXYYqs119w33RbLc/0Y05hPMgv0VR7JkoJPURd8BkLb
+         aUAxOnaKAxMF+YnQz04T57EVTp4UbOplKe/FLUQeydBkaMdGLSG7R5hz2aUOj76k9lMu
+         WB0A==
+X-Gm-Message-State: AOAM531PGOaTJKNQkZXu3jWhUHtWigSq6pC1s3uvfYJ6Ed/M5oUuUoT6
+        eHoZuwXlfU+znHaCNMpx2DTit0n7jBu+Zwo0hHQcQg==
+X-Google-Smtp-Source: ABdhPJzv50aTNUNlvFS55s6qXm4/Sd4s/08q5esk2oruVv0ektYpkAo/7FrkfziK8Eed36WkBnmqcTgcwCr6rqNC7Eg=
+X-Received: by 2002:a19:48c9:: with SMTP id v192mr8337329lfa.20.1589824408382;
+ Mon, 18 May 2020 10:53:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Mon, 18 May 2020 10:31:13 -0700
-From:   bbhatt@codeaurora.org
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: core: Use current ee in intvec handler
-In-Reply-To: <713dc189-561d-3c4a-f856-26d006524485@codeaurora.org>
-References: <1589509049-14532-1-git-send-email-jhugo@codeaurora.org>
- <aab020af0372b11ff63ba4526aab0fdc@codeaurora.org>
- <713dc189-561d-3c4a-f856-26d006524485@codeaurora.org>
-Message-ID: <9f19fb80d6cb410809efd27d27390709@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20200506060025.1535960-1-vkoul@kernel.org> <20200506060025.1535960-4-vkoul@kernel.org>
+In-Reply-To: <20200506060025.1535960-4-vkoul@kernel.org>
+From:   Anders Roxell <anders.roxell@linaro.org>
+Date:   Mon, 18 May 2020 19:53:17 +0200
+Message-ID: <CADYN=9JLeWHODRWDEcTE_6iZ3TX-E4yyx3OwqzK-H-ytLAmQUg@mail.gmail.com>
+Subject: Re: [PATCH v13 3/5] usb: xhci: Add support for Renesas controller
+ with memory
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        =?UTF-8?Q?Andreas_B=C3=B6hler?= <dev@aboehler.at>,
+        linux-usb@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-17 12:38, Jeffrey Hugo wrote:
-> On 5/15/2020 8:58 PM, bbhatt@codeaurora.org wrote:
->> On 2020-05-14 19:17, Jeffrey Hugo wrote:
->>> The intvec handler stores the caches ee in a local variable for use 
->>> in
->>> processing the intvec.  It should instead use the current ee which is
->>> read at the beginning of the intvec incase that the intvec is related 
->>> to
->>> an ee change.  Otherwise, the handler might make the wrong decision
->>> based on an incorrect ee.
->>> 
->>> Fixes: 3000f85b8f47 (bus: mhi: core: Add support for basic PM 
->>> operations)
->>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
->>> ---
->>>  drivers/bus/mhi/core/main.c | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>> 
->>> diff --git a/drivers/bus/mhi/core/main.c 
->>> b/drivers/bus/mhi/core/main.c
->>> index 7272a5a..0a41fe5 100644
->>> --- a/drivers/bus/mhi/core/main.c
->>> +++ b/drivers/bus/mhi/core/main.c
->>> @@ -386,8 +386,8 @@ irqreturn_t mhi_intvec_threaded_handler(int
->>> irq_number, void *dev)
->>>      write_lock_irq(&mhi_cntrl->pm_lock);
->>>      if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
->>>          state = mhi_get_mhi_state(mhi_cntrl);
->>> -        ee = mhi_cntrl->ee;
->>>          mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
->>> +        ee = mhi_cntrl->ee;
->>>      }
->>> 
->>>      if (state == MHI_STATE_SYS_ERR) {
->> Hi Jeff,
->> 
->> Let's hold off on this change for now please as we have some good set 
->> of
->> bug fixes and improvements coming in very soon. They're only pending 
->> post
->> to LKML.
-> 
-> Does that series of changes address the same issue this patch does,
-> and are they going to be posted soon (ie this week)?
-Yes.
+On Wed, 6 May 2020 at 08:01, Vinod Koul <vkoul@kernel.org> wrote:
+>
+> Some rensas controller like uPD720201 and uPD720202 need firmware to be
+> loaded. Add these devices in pci table and invoke renesas firmware loader
+> functions to check and load the firmware into device memory when
+> required.
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+
+Hi, I got a build error when I built an arm64 allmodconfig kernel.
+
+building obj-arm64-next-20200518
+
+aarch64-linux-gnu-ld: drivers/usb/host/xhci-pci.o: in function
+`xhci_pci_remove':
+/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:411:
+undefined reference to `renesas_xhci_pci_exit'
+aarch64-linux-gnu-ld:
+/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:411:(.text+0xd8):
+relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol
+`renesas_xhci_pci_exit'
+aarch64-linux-gnu-ld: drivers/usb/host/xhci-pci.o: in function `xhci_pci_probe':
+/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:345:
+undefined reference to `renesas_xhci_check_request_fw'
+aarch64-linux-gnu-ld:
+/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:345:(.text+0x2298):
+relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol
+`renesas_xhci_check_request_fw'
+make[1]: *** [/srv/src/kernel/next/Makefile:1126: vmlinux] Error 1
+make[1]: Target 'Image' not remade because of errors.
+make: *** [Makefile:185: __sub-make] Error 2
+make: Target 'Image' not remade because of errors.
+
+When I reverted this patch from todays next tag next-20200518 I
+managed to build.
+
+
+Cheers,
+Anders
+
+> ---
+>  drivers/usb/host/xhci-pci.c | 35 ++++++++++++++++++++++++++++++++++-
+>  drivers/usb/host/xhci.h     |  1 +
+>  2 files changed, 35 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+> index b6c2f5c530e3..ef513c2fb843 100644
+> --- a/drivers/usb/host/xhci-pci.c
+> +++ b/drivers/usb/host/xhci-pci.c
+> @@ -15,6 +15,7 @@
+>
+>  #include "xhci.h"
+>  #include "xhci-trace.h"
+> +#include "xhci-pci.h"
+>
+>  #define SSIC_PORT_NUM          2
+>  #define SSIC_PORT_CFG2         0x880c
+> @@ -87,7 +88,16 @@ static int xhci_pci_reinit(struct xhci_hcd *xhci, struct pci_dev *pdev)
+>
+>  static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+>  {
+> -       struct pci_dev          *pdev = to_pci_dev(dev);
+> +       struct pci_dev                  *pdev = to_pci_dev(dev);
+> +       struct xhci_driver_data         *driver_data;
+> +       const struct pci_device_id      *id;
+> +
+> +       id = pci_match_id(pdev->driver->id_table, pdev);
+> +
+> +       if (id && id->driver_data) {
+> +               driver_data = (struct xhci_driver_data *)id->driver_data;
+> +               xhci->quirks |= driver_data->quirks;
+> +       }
+>
+>         /* Look for vendor-specific quirks */
+>         if (pdev->vendor == PCI_VENDOR_ID_FRESCO_LOGIC &&
+> @@ -328,6 +338,14 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
+>         int retval;
+>         struct xhci_hcd *xhci;
+>         struct usb_hcd *hcd;
+> +       struct xhci_driver_data *driver_data;
+> +
+> +       driver_data = (struct xhci_driver_data *)id->driver_data;
+> +       if (driver_data && driver_data->quirks & XHCI_RENESAS_FW_QUIRK) {
+> +               retval = renesas_xhci_check_request_fw(dev, id);
+> +               if (retval)
+> +                       return retval;
+> +       }
+>
+>         /* Prevent runtime suspending between USB-2 and USB-3 initialization */
+>         pm_runtime_get_noresume(&dev->dev);
+> @@ -389,6 +407,9 @@ static void xhci_pci_remove(struct pci_dev *dev)
+>         struct xhci_hcd *xhci;
+>
+>         xhci = hcd_to_xhci(pci_get_drvdata(dev));
+> +       if (xhci->quirks & XHCI_RENESAS_FW_QUIRK)
+> +               renesas_xhci_pci_exit(dev);
+> +
+>         xhci->xhc_state |= XHCI_STATE_REMOVING;
+>
+>         if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
+> @@ -540,14 +561,26 @@ static void xhci_pci_shutdown(struct usb_hcd *hcd)
+>
+>  /*-------------------------------------------------------------------------*/
+>
+> +static const struct xhci_driver_data reneses_data = {
+> +       .quirks  = XHCI_RENESAS_FW_QUIRK,
+> +       .firmware = "renesas_usb_fw.mem",
+> +};
+> +
+>  /* PCI driver selection metadata; PCI hotplugging uses this */
+>  static const struct pci_device_id pci_ids[] = {
+> +       { PCI_DEVICE(0x1912, 0x0014),
+> +               .driver_data =  (unsigned long)&reneses_data,
+> +       },
+> +       { PCI_DEVICE(0x1912, 0x0015),
+> +               .driver_data =  (unsigned long)&reneses_data,
+> +       },
+>         /* handle any USB 3.0 xHCI controller */
+>         { PCI_DEVICE_CLASS(PCI_CLASS_SERIAL_USB_XHCI, ~0),
+>         },
+>         { /* end: all zeroes */ }
+>  };
+>  MODULE_DEVICE_TABLE(pci, pci_ids);
+> +MODULE_FIRMWARE("renesas_usb_fw.mem");
+>
+>  /* pci driver glue; this is a "new style" PCI driver module */
+>  static struct pci_driver xhci_pci_driver = {
+> diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+> index 3289bb516201..4047363c7423 100644
+> --- a/drivers/usb/host/xhci.h
+> +++ b/drivers/usb/host/xhci.h
+> @@ -1873,6 +1873,7 @@ struct xhci_hcd {
+>  #define XHCI_DEFAULT_PM_RUNTIME_ALLOW  BIT_ULL(33)
+>  #define XHCI_RESET_PLL_ON_DISCONNECT   BIT_ULL(34)
+>  #define XHCI_SNPS_BROKEN_SUSPEND    BIT_ULL(35)
+> +#define XHCI_RENESAS_FW_QUIRK  BIT_ULL(36)
+>
+>         unsigned int            num_active_eps;
+>         unsigned int            limit_active_eps;
+> --
+> 2.25.4
+>
