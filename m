@@ -2,232 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A5EB1D8854
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 21:40:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E65801D8894
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 21:57:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728316AbgERTkF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 15:40:05 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:45562 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727987AbgERTkE (ORCPT
+        id S1728618AbgERT5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 15:57:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52766 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726478AbgERT5C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 15:40:04 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 754DB20053;
-        Mon, 18 May 2020 21:39:59 +0200 (CEST)
-Date:   Mon, 18 May 2020 21:39:58 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, seanpaul@chromium.org,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [REPOST PATCH v2] drm/bridge: ti-sn65dsi86: Implement lane
- reordering + polarity
-Message-ID: <20200518193958.GA888662@ravnborg.org>
-References: <20200518114656.REPOST.v2.1.Ibc8eeddcee94984a608d6900b46f9ffde4045da4@changeid>
+        Mon, 18 May 2020 15:57:02 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C0CC05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 12:57:01 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id w64so853262wmg.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 12:57:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PbdRyg5kcd//DX8aThqSi8QmNWbORlgHp5rh1J6SqIY=;
+        b=kA7beYhILj0prjYk3znsZ8vtZ7ZDrlQiKMA8sojxIRQXdGFCC8xIgp5oYZcsv/epOa
+         z+WwumTl1Z5l7ZX9B/eSRrqY5mx549cQYP//s64DW4RKuMRcjPBWW5fQi5fAZlenSkZJ
+         Nt1WvnhlH1BgUXRpg/hIsSY/DfNuQGXGDvjHA4ulU45A3PQ10l2Ii7oIjU1ZrqUblkDo
+         NA0ch0kHTUl/VyMp6QdehDNFFaESotNNxJsywuZFaJQrnp3f1uIg+jX+nk1vK3Ecm+b4
+         P6xmu/BErHxodXVZt88F3zAeY0oXRqfODvYoE6KNDpKet9iKSLYq8FddTeCPBpnQTVNX
+         KOyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PbdRyg5kcd//DX8aThqSi8QmNWbORlgHp5rh1J6SqIY=;
+        b=rIH8+pQBfWN+hz84JFkdY4+/+EKUBdZamPW6yVaSszbmA/x6842kmuRhGfdA/EHrPm
+         7bR3wCZsOsQTOdMSq+7+66xLF0q+5PqQH1/Not9KmCFgfIB4NpGvfvtkvuu43dyadfQ2
+         iB+9j+PuRA4FAyecy+NbfhojwXvno/64/Eh8fAxh7WevRcJyo3dnW+CXnfeKs79Xmgcp
+         deQmTU/9Ypk3svyjYWKCpm3Q9Tkd6McsjgOq2ShGtYgKiaXZFG327ugbUkreiLY+oBzu
+         8VxDvSmQC6EOSOKmtLeTG80G6rFhjg09LgJCHewl0xOc/mYB0eP40izlm6rS2CaGBiQi
+         3fcQ==
+X-Gm-Message-State: AOAM531YSsea5AvkwyFW8ODZ1DFyCzI9NoSaCPmL37eqWp529o+d9zap
+        eyUU1oM3Tqn2X3QkEJ0PbB3aRA==
+X-Google-Smtp-Source: ABdhPJzoU8qbbvxxC3cizf6NI6NFIEqaKyHByjJ4SgRZLqqZ0f2ZQseTGjC1Xa9OdZep5QtoO5pCtw==
+X-Received: by 2002:a1c:3b87:: with SMTP id i129mr1150807wma.38.1589831819961;
+        Mon, 18 May 2020 12:56:59 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id u10sm769695wmc.31.2020.05.18.12.56.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 12:56:59 -0700 (PDT)
+Date:   Mon, 18 May 2020 20:56:56 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Andy Gross <agross@kernel.org>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
+        linux-pwm@vger.kernel.org,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        linux-arm-msm@vger.kernel.org,
+        Support Opensource <support.opensource@diasemi.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        patches@opensource.cirrus.com
+Subject: Re: [PATCH v2 15/16] backlight: make of_find_backlight_by_node()
+ static
+Message-ID: <20200518195656.z2wag34mbr3e2hip@holly.lan>
+References: <20200517190139.740249-1-sam@ravnborg.org>
+ <20200517190139.740249-16-sam@ravnborg.org>
+ <20200518165648.ltgtofjsteyyse4j@holly.lan>
+ <20200518181227.GC770425@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200518114656.REPOST.v2.1.Ibc8eeddcee94984a608d6900b46f9ffde4045da4@changeid>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=ULXz4hXy c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=kj9zAlcOel0A:10 a=cm27Pg_UAAAA:8 a=pGLkceISAAAA:8
-        a=8XhiRY50PI37qDso4jsA:9 a=6bwV8OXODjhHDt9b:21 a=zV5TzvQiLlDj4gTl:21
-        a=CjuIK1q_8ugA:10 a=xmb-EsYY8bH0VWELuYED:22
+In-Reply-To: <20200518181227.GC770425@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Douglas.
+On Mon, May 18, 2020 at 08:12:27PM +0200, Sam Ravnborg wrote:
+> On Mon, May 18, 2020 at 05:56:48PM +0100, Daniel Thompson wrote:
+> > On Sun, May 17, 2020 at 09:01:38PM +0200, Sam Ravnborg wrote:
+> > > There are no external users of of_find_backlight_by_node().
+> > > Make it static so we keep it that way.
+> > > 
+> > > v2:
+> > >   - drop EXPORT of of_find_backlight_by_node
+> > > 
+> > > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> > > Cc: Lee Jones <lee.jones@linaro.org>
+> > > Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> > > Cc: Jingoo Han <jingoohan1@gmail.com>
+> > 
+> > Assuming the 0day-ci comments are because some of the patches have
+> > already been sucked up in a different tree then:
+> Correct. For now only drm-misc-next have no users of
+> of_find_backlight_by_node() which is why the other trees failed.
+> 
+>  
+> > Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+> Thanks for all your reviews!
+> I will shortly (within a few days) address the comments and send out a v3.
+> 
+> Is is correct that I assume you or Lee or Jingoo will apply the patches
+> to a backlight tree somewhere when they are ready?
+> If you have a tree you use for backlight patches I can base v3 on that,
+> given that I get a link and have access to pull from it.
 
-On Mon, May 18, 2020 at 11:47:17AM -0700, Douglas Anderson wrote:
-> The ti-sn65dsi86 MIPI DSI to eDP bridge chip supports arbitrary
-> remapping of eDP lanes and also polarity inversion.  Both of these
-> features have been described in the device tree bindings for the
-> device since the beginning but were never implemented in the driver.
-> Implement both of them.
-> 
-> Part of this change also allows you to (via the same device tree
-> bindings) specify to use fewer than the max number of DP lanes that
-> the panel reports.  This could be useful if your display supports more
-> lanes but only a few are hooked up on your board.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Reviewed-by: Rob Clark <robdclark@gmail.com>
-> ---
-> Re-posting patch v2, patch #1.  I added tags and put Sam in the "To"
-> list.  Patch #2 was dropped since it was squashed elsewhere.  This now
-> applies to the top of drm-misc-next.
-> 
-> Changes in v2:
-> - Use SN_MAX_DP_LANES instead of 4 in one place.
-> - Comment that we aren't doing full validation of dts params.
-> - Check dp_lanes <= SN_MAX_DP_LANES to avoid buffer overrun.
-> - Add missing of_node_put()
+Absent holidays and the like, Lee usually does that actual patch
+hoovering.
 
-Applied to drm-misc-next.
 
-	Sam
-
-> 
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 82 ++++++++++++++++++++++-----
->  1 file changed, 68 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index 1855fb9f09f2..2240e9973178 100644
-> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -50,8 +50,12 @@
->  #define SN_CHA_VERTICAL_BACK_PORCH_REG		0x36
->  #define SN_CHA_HORIZONTAL_FRONT_PORCH_REG	0x38
->  #define SN_CHA_VERTICAL_FRONT_PORCH_REG		0x3A
-> +#define SN_LN_ASSIGN_REG			0x59
-> +#define  LN_ASSIGN_WIDTH			2
->  #define SN_ENH_FRAME_REG			0x5A
->  #define  VSTREAM_ENABLE				BIT(3)
-> +#define  LN_POLRS_OFFSET			4
-> +#define  LN_POLRS_MASK				0xf0
->  #define SN_DATA_FORMAT_REG			0x5B
->  #define  BPP_18_RGB				BIT(0)
->  #define SN_HPD_DISABLE_REG			0x5C
-> @@ -98,6 +102,7 @@
->  
->  #define SN_REGULATOR_SUPPLY_NUM		4
->  
-> +#define SN_MAX_DP_LANES			4
->  #define SN_NUM_GPIOS			4
->  #define SN_GPIO_PHYSICAL_OFFSET		1
->  
-> @@ -116,6 +121,8 @@
->   * @enable_gpio:  The GPIO we toggle to enable the bridge.
->   * @supplies:     Data for bulk enabling/disabling our regulators.
->   * @dp_lanes:     Count of dp_lanes we're using.
-> + * @ln_assign:    Value to program to the LN_ASSIGN register.
-> + * @ln_polr:      Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
->   *
->   * @gchip:        If we expose our GPIOs, this is used.
->   * @gchip_output: A cache of whether we've set GPIOs to output.  This
-> @@ -141,6 +148,8 @@ struct ti_sn_bridge {
->  	struct gpio_desc		*enable_gpio;
->  	struct regulator_bulk_data	supplies[SN_REGULATOR_SUPPLY_NUM];
->  	int				dp_lanes;
-> +	u8				ln_assign;
-> +	u8				ln_polrs;
->  
->  	struct gpio_chip		gchip;
->  	DECLARE_BITMAP(gchip_output, SN_NUM_GPIOS);
-> @@ -708,26 +717,20 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
->  	int dp_rate_idx;
->  	unsigned int val;
->  	int ret = -EINVAL;
-> +	int max_dp_lanes;
->  
-> -	/*
-> -	 * Run with the maximum number of lanes that the DP sink supports.
-> -	 *
-> -	 * Depending use cases, we might want to revisit this later because:
-> -	 * - It's plausible that someone may have run fewer lines to the
-> -	 *   sink than the sink actually supports, assuming that the lines
-> -	 *   will just be driven at a higher rate.
-> -	 * - The DP spec seems to indicate that it's more important to minimize
-> -	 *   the number of lanes than the link rate.
-> -	 *
-> -	 * If we do revisit, it would be important to measure the power impact.
-> -	 */
-> -	pdata->dp_lanes = ti_sn_get_max_lanes(pdata);
-> +	max_dp_lanes = ti_sn_get_max_lanes(pdata);
-> +	pdata->dp_lanes = min(pdata->dp_lanes, max_dp_lanes);
->  
->  	/* DSI_A lane config */
-> -	val = CHA_DSI_LANES(4 - pdata->dsi->lanes);
-> +	val = CHA_DSI_LANES(SN_MAX_DP_LANES - pdata->dsi->lanes);
->  	regmap_update_bits(pdata->regmap, SN_DSI_LANES_REG,
->  			   CHA_DSI_LANES_MASK, val);
->  
-> +	regmap_write(pdata->regmap, SN_LN_ASSIGN_REG, pdata->ln_assign);
-> +	regmap_update_bits(pdata->regmap, SN_ENH_FRAME_REG, LN_POLRS_MASK,
-> +			   pdata->ln_polrs << LN_POLRS_OFFSET);
-> +
->  	/* set dsi clk frequency value */
->  	ti_sn_bridge_set_dsi_rate(pdata);
->  
-> @@ -1089,6 +1092,55 @@ static int ti_sn_setup_gpio_controller(struct ti_sn_bridge *pdata)
->  	return ret;
->  }
->  
-> +static void ti_sn_bridge_parse_lanes(struct ti_sn_bridge *pdata,
-> +				     struct device_node *np)
-> +{
-> +	u32 lane_assignments[SN_MAX_DP_LANES] = { 0, 1, 2, 3 };
-> +	u32 lane_polarities[SN_MAX_DP_LANES] = { };
-> +	struct device_node *endpoint;
-> +	u8 ln_assign = 0;
-> +	u8 ln_polrs = 0;
-> +	int dp_lanes;
-> +	int i;
-> +
-> +	/*
-> +	 * Read config from the device tree about lane remapping and lane
-> +	 * polarities.  These are optional and we assume identity map and
-> +	 * normal polarity if nothing is specified.  It's OK to specify just
-> +	 * data-lanes but not lane-polarities but not vice versa.
-> +	 *
-> +	 * Error checking is light (we just make sure we don't crash or
-> +	 * buffer overrun) and we assume dts is well formed and specifying
-> +	 * mappings that the hardware supports.
-> +	 */
-> +	endpoint = of_graph_get_endpoint_by_regs(np, 1, -1);
-> +	dp_lanes = of_property_count_u32_elems(endpoint, "data-lanes");
-> +	if (dp_lanes > 0 && dp_lanes <= SN_MAX_DP_LANES) {
-> +		of_property_read_u32_array(endpoint, "data-lanes",
-> +					   lane_assignments, dp_lanes);
-> +		of_property_read_u32_array(endpoint, "lane-polarities",
-> +					   lane_polarities, dp_lanes);
-> +	} else {
-> +		dp_lanes = SN_MAX_DP_LANES;
-> +	}
-> +	of_node_put(endpoint);
-> +
-> +	/*
-> +	 * Convert into register format.  Loop over all lanes even if
-> +	 * data-lanes had fewer elements so that we nicely initialize
-> +	 * the LN_ASSIGN register.
-> +	 */
-> +	for (i = SN_MAX_DP_LANES - 1; i >= 0; i--) {
-> +		ln_assign = ln_assign << LN_ASSIGN_WIDTH | lane_assignments[i];
-> +		ln_polrs = ln_polrs << 1 | lane_polarities[i];
-> +	}
-> +
-> +	/* Stash in our struct for when we power on */
-> +	pdata->dp_lanes = dp_lanes;
-> +	pdata->ln_assign = ln_assign;
-> +	pdata->ln_polrs = ln_polrs;
-> +}
-> +
->  static int ti_sn_bridge_probe(struct i2c_client *client,
->  			      const struct i2c_device_id *id)
->  {
-> @@ -1131,6 +1183,8 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
->  		return ret;
->  	}
->  
-> +	ti_sn_bridge_parse_lanes(pdata, client->dev.of_node);
-> +
->  	ret = ti_sn_bridge_parse_regulators(pdata);
->  	if (ret) {
->  		DRM_ERROR("failed to parse regulators\n");
-> -- 
-> 2.26.2.761.g0e0b3e54be-goog
+Daniel.
