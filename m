@@ -2,137 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64C411D7C16
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 17:00:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D04C51D7C25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 17:01:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbgERPAG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 11:00:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47584 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726998AbgERPAF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 11:00:05 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 118762065F;
-        Mon, 18 May 2020 15:00:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589814004;
-        bh=RNl6fktbFCVNb99FAXoUAHm7HFGk+HnBZtNJ3HcZJYk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uNdmSK6qwH2wEs1Dmvxn71gST5OtXhoWG1ERuWlW5HjkBatY1wakm3u6qeoCeqxQW
-         UuvTXUIqydZD04oNCS+WbK4w0/gvCkAac2cxw5Mi7eEB0fEgZsx14Ig0Tku6fZMYvL
-         iKvPC/+BLbKoO+lQB9OJpljl83PFqCY4jW7yueIM=
-Date:   Mon, 18 May 2020 15:59:59 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        robin.murphy@arm.com, linux-arm-kernel@lists.infradead.org,
-        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/5] iommu/arm-smmu: Add support for TTBR1
-Message-ID: <20200518145959.GK32394@willie-the-truck>
-References: <20200409233350.6343-1-jcrouse@codeaurora.org>
- <20200409233350.6343-3-jcrouse@codeaurora.org>
+        id S1728162AbgERPBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 11:01:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34424 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727954AbgERPBB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 May 2020 11:01:01 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEAF2C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 08:01:00 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id m12so9632820wmc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 08:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8++mCf4jSObKvczsPrCihMEuKhSX0mbSobsPe+OlqoE=;
+        b=b1KoRPzh9KeASUfJshq63jbOp9jg3g/1rpHNd1w/o+KQuz4BhUdHMX05yfqVsWYET4
+         HWW1Mpp4YrWFk67arh4A2bp+D+x9YrUAJr/tgsIAjZJUb6vepsGF6L3fMH55zsUrFIJJ
+         0mSRpAxHlAsHOcYM7awxP5nAJX3vNXuaewFgbEE/Hvb/P6FI263krXKqG4gsb/p58602
+         4K8Vm/tZRVERoDDdHDD4wyRS1FQHHf2xLhg532Qj8v0QFQpgmlSBqNl6gRqp2Yf+6yyv
+         4yJ79yABAK+WKH83YZfPZ9vmS3WqBCP17g2A7bVa+J/erzwnI8YSkmsnjUUgCuiCKS2S
+         jqLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8++mCf4jSObKvczsPrCihMEuKhSX0mbSobsPe+OlqoE=;
+        b=B9qZ5N0nViom2XsWpYMTjX70K11rYYcW6sR/OGohaWY2A0qALWhEnhlb1ZWa/DdtKZ
+         LMZU0EyAZ9LKp732+yNWt7UymbOlhfCj+qEJQx4zl2ROr9xepR3LaU5KGmZFeFtQ5PHN
+         8NuaGQpKgsyLd7NRL1dMoph+08HFJ8VJdZr7XuBhfVawpgunUJ2F0VF1OXQRYZUX+ByA
+         ezofPPymc7uesF3xPtxvCu1t+Cwth0ymbgoK9cbvhT4Z0OurUuQ769J4hQx0MAmSKwjl
+         ML0Y5SFRMxatE5boAUtbGcpOYiQIRorMV4Tzn8eNm4pkMDhJIig/XwEzQ04syKa/3QwI
+         uNIA==
+X-Gm-Message-State: AOAM533ZrE9zOWqhpAY4J3LuTlwH9U8UIFw9j6Mj6/KfF9IWVDEmTLO0
+        lMfW9/tMcS9soCApfv8s8NlVBg==
+X-Google-Smtp-Source: ABdhPJwVYyW+g2DU5vF2SFs8kROpaXsS+0st9Moezr7mqbpA2jZeUyxRLI/bkAyeZ7mLDzH+DnX7+w==
+X-Received: by 2002:a1c:770e:: with SMTP id t14mr20423003wmi.86.1589814058651;
+        Mon, 18 May 2020 08:00:58 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id j2sm16678993wrp.47.2020.05.18.08.00.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 08:00:57 -0700 (PDT)
+Date:   Mon, 18 May 2020 16:00:55 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Russell King <linux@armlinux.org.uk>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH v2 03/16] backlight: add backlight_is_blank()
+Message-ID: <20200518150055.2vaaoucf4nodwoz5@holly.lan>
+References: <20200517190139.740249-1-sam@ravnborg.org>
+ <20200517190139.740249-4-sam@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200409233350.6343-3-jcrouse@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200517190139.740249-4-sam@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 09, 2020 at 05:33:47PM -0600, Jordan Crouse wrote:
-> Add support to enable TTBR1 if the domain requests it via the
-> DOMAIN_ATTR_SPLIT_TABLES attribute. If enabled by the hardware
-> and pagetable configuration the driver will configure the TTBR1 region
-> and program the domain pagetable on TTBR1. TTBR0 will be disabled.
+On Sun, May 17, 2020 at 09:01:26PM +0200, Sam Ravnborg wrote:
+> The backlight support has two properties that express the state:
+> - power
+> - state
 > 
-> After attaching the device the value of he domain attribute can
-> be queried to see if the split pagetables were successfully programmed.
-> The domain geometry will be updated as well so that the caller can
-> determine the active region for the pagetable that was programmed.
+> It is un-documented and easy to get wrong.
+> Add backlight_is_blank() helper to make it simpler for drivers
+> to get the check of the state correct.
 > 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> A lot of drivers also includes checks for fb_blank.
+> This check is redundant when the state is checked
+> and thus not needed in this helper function.
+> But added anyway to avoid introducing subtle bug
+> due to the creative use in some drivers.
+> 
+> Rolling out this helper to all relevant backlight drivers
+> will eliminate almost all accesses to fb_blank.
+> 
+> v2:
+>   - Added fb_blank condition (Daniel)
+> 
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> Cc: Jingoo Han <jingoohan1@gmail.com>
+
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+
+
 > ---
+>  include/linux/backlight.h | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 > 
->  drivers/iommu/arm-smmu.c | 48 ++++++++++++++++++++++++++++++++++------
->  drivers/iommu/arm-smmu.h | 24 +++++++++++++++-----
->  2 files changed, 59 insertions(+), 13 deletions(-)
+> diff --git a/include/linux/backlight.h b/include/linux/backlight.h
+> index c7d6b2e8c3b5..a0a083b35c47 100644
+> --- a/include/linux/backlight.h
+> +++ b/include/linux/backlight.h
+> @@ -175,6 +175,25 @@ static inline void backlight_put(struct backlight_device *bd)
+>  		put_device(&bd->dev);
+>  }
+>  
+> +/**
+> + * backlight_is_blank - Return true if display is expected to be blank
+> + * @bd: the backlight device
+> + *
+> + * Display is expected to be blank if any of these is true::
+> + *
+> + *   1) if power in not UNBLANK
+> + *   2) if fb_blank is not UNBLANK
+> + *   3) if state indicate BLANK or SUSPENDED
+> + *
+> + * Returns true if display is expected to be blank, false otherwise.
+> + */
+> +static inline bool backlight_is_blank(struct backlight_device *bd)
+> +{
+> +	return bd->props.power != FB_BLANK_UNBLANK ||
+> +	       bd->props.fb_blank != FB_BLANK_UNBLANK ||
+> +	       bd->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK);
+> +}
+> +
+>  extern struct backlight_device *backlight_device_register(const char *name,
+>  	struct device *dev, void *devdata, const struct backlight_ops *ops,
+>  	const struct backlight_properties *props);
+> -- 
+> 2.25.1
 > 
-> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> index a6a5796e9c41..db6d503c1673 100644
-> --- a/drivers/iommu/arm-smmu.c
-> +++ b/drivers/iommu/arm-smmu.c
-> @@ -555,11 +555,16 @@ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
->  			cb->ttbr[0] = pgtbl_cfg->arm_v7s_cfg.ttbr;
->  			cb->ttbr[1] = 0;
->  		} else {
-> -			cb->ttbr[0] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> -			cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> -						  cfg->asid);
-> -			cb->ttbr[1] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> -						 cfg->asid);
-> +			cb->ttbr[0] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> +				cfg->asid);
-> +
-> +			if (pgtbl_cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1) {
-> +				cb->ttbr[1] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> +			} else {
-> +				cb->ttbr[0] |= pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> +				cb->ttbr[1] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> +							 cfg->asid);
-> +			}
-
-This looks odd to me. As I mentioned before, the SMMU driver absolutely has
-to manage the ASID space, so we should be setting it in both TTBRs here.
-
-> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> index 8d1cd54d82a6..5f6d0af7c8c8 100644
-> --- a/drivers/iommu/arm-smmu.h
-> +++ b/drivers/iommu/arm-smmu.h
-> @@ -172,6 +172,7 @@ enum arm_smmu_cbar_type {
->  #define ARM_SMMU_TCR_SH0		GENMASK(13, 12)
->  #define ARM_SMMU_TCR_ORGN0		GENMASK(11, 10)
->  #define ARM_SMMU_TCR_IRGN0		GENMASK(9, 8)
-> +#define ARM_SMMU_TCR_EPD0		BIT(7)
->  #define ARM_SMMU_TCR_T0SZ		GENMASK(5, 0)
->  
->  #define ARM_SMMU_VTCR_RES1		BIT(31)
-> @@ -343,16 +344,27 @@ struct arm_smmu_domain {
->  	struct mutex			init_mutex; /* Protects smmu pointer */
->  	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
->  	struct iommu_domain		domain;
-> +	bool				split_pagetables;
->  };
->  
->  static inline u32 arm_smmu_lpae_tcr(struct io_pgtable_cfg *cfg)
->  {
-> -	return ARM_SMMU_TCR_EPD1 |
-> -	       FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
-> -	       FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
-> -	       FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
-> -	       FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
-> -	       FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
-> +	u32 tcr = FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
-> +		FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
-> +		FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
-> +		FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
-> +		FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
-> +
-> +       /*
-> +	* When TTBR1 is selected shift the TCR fields by 16 bits and disable
-> +	* translation in TTBR0
-> +	*/
-> +	if (cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1)
-> +		tcr = (tcr << 16) | ARM_SMMU_TCR_EPD0;
-
-This looks reasonably dodgy to me, as you copy a RESERVED bit into the A1
-field. Furthermore, for 32-bit context banks you've got the EAE bit to
-contend with as well.
-
-Perhaps we shouldn't expose DOMAIN_ATTR_SPLIT_TABLES for anything other than
-the 64-bit page table format.
-
-Will
