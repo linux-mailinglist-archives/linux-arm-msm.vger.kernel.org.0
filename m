@@ -2,155 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 614131D7E4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:22:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 291A91D7E59
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:25:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727782AbgERQWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 12:22:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47282 "EHLO
+        id S1728305AbgERQZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 12:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727938AbgERQWj (ORCPT
+        with ESMTP id S1728283AbgERQZX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 12:22:39 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52124C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:22:39 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id z4so122944wmi.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:22:39 -0700 (PDT)
+        Mon, 18 May 2020 12:25:23 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DE94C05BD09;
+        Mon, 18 May 2020 09:25:23 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id be9so4810706edb.2;
+        Mon, 18 May 2020 09:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=h21pn6leaS0udA+6sZ78ZisTbB55GhG4Y4hXmjrbCNk=;
-        b=jtq+ZxtjGw+wtB+PoQzf2Zy8k44Nvyst4cTaGBxSsLBiGNiFcdcwYCggaUNSXBTHbP
-         C6xsjI4bHaWGTLU7uc45ahTni5fXJFj9fncUXM8sIJwXflk6HJO3GUczzmfXouSR+Q+A
-         +BIYwtjcvefIcztkcvZfFJsPGXItC1IEoOL/Yz5oK8angtsjM1jVg+6nOPwtcb/0Ss/c
-         ngKNRig/r38qSKmbIBBoMCzWvMayHMJ/cu/eDzQhPltuwHLrGHouCWx8Ge+U2NnNouo3
-         Tv6KjvptIZ2Sd4TOC91xAkTRpKVAj+cHXvrhpvgkpOQLuzFhoRRngdKp30A2z0kRd5cE
-         w3bw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=C9o4dW1opf6PK9dDJU+olx6LivIhnF/LUajcX/auTKM=;
+        b=mk9a0EE30LQPszKX5ot6/btd4Lvv+bgSkXNddm9G/X4xPGhTcYfGn9iToM4kQPb/aU
+         bCDe3NfgCGMurJGVDAnSpPBLaTOXEd/bT2NFKE/v4MuX2/c2VqGk+EFAfp7T2o2JYqMA
+         zsJwIKhZtvZ7nq9HWgQl35cR3+Ew4PlBMq6VU8M0Ii/nrjhC4DWDeqVzm5wmoA02AZHy
+         aHi0JKC+zVh29NEUQL+FyqnIzfROsHeli2W1Lc2Lop/O2qTCY5exQhzQXiRDVaqnRNKF
+         nC62vqaYbx5FkbjCkN6dXtoAEhJxwRuhHYF2cCsn1WJ6lfpVyExb4l1U+fIwjAg1W4AN
+         GfMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=h21pn6leaS0udA+6sZ78ZisTbB55GhG4Y4hXmjrbCNk=;
-        b=uHfxBfWtJAT52xVMTO+/Cho48sqgvbSQuu4INus16uju2MRsSZJNsHSm1IHGlpMqq8
-         nucKOa/OZc6yA73nrI9JlIX+c8fsxJlCuMW73m7Cq8oZPS5MYdnv59pBtoV6LyH+QZbp
-         W23wSVWRESZQbE+Jdm0gHKTYFqREWhHazCRqf/0kJafx+SRkVM1CUdzgbM7+EKLRTvC1
-         c97cne3lj2dRKsLKh6WdUlLjzzI13TXvy6sfKaL64LEuMS0SO1Q9R2r91QGZK8ZMSRW1
-         866S2Qc7jf9s/k3+e4HmbVGkuRRaE58/Z8ZeekAAZzRCIsYNQX34QHh5AyfPHdmX6Q6U
-         JYoQ==
-X-Gm-Message-State: AOAM532BnNAC7jaPxESlCNLcSS/pOCgLkuuc1IvvAdAfC43nxi2A6vzj
-        0xBAB20dxeeRB/ghtSbKgeY+Yg==
-X-Google-Smtp-Source: ABdhPJxo15H/x7EEu/9WMN/iuxjvzEmsBbPIXj17etTJA8QzpdJAzwsllFGjEWc6leX17MJxQrFDtw==
-X-Received: by 2002:a1c:9989:: with SMTP id b131mr164743wme.176.1589818957967;
-        Mon, 18 May 2020 09:22:37 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id w13sm16554687wrm.28.2020.05.18.09.22.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 09:22:37 -0700 (PDT)
-Date:   Mon, 18 May 2020 17:22:35 +0100
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Russell King <linux@armlinux.org.uk>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH v2 10/16] backlight: drop extern from prototypes
-Message-ID: <20200518162235.nn4zuv3uuteaq36k@holly.lan>
-References: <20200517190139.740249-1-sam@ravnborg.org>
- <20200517190139.740249-11-sam@ravnborg.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=C9o4dW1opf6PK9dDJU+olx6LivIhnF/LUajcX/auTKM=;
+        b=M1zNNeqSHzaJHlA8Ygw1NXYyDMeK8r2DA7jEs2ykoCWjJ0BimjqxJrHO8P/+HWuxuI
+         4AulfHf379MAOT2zt2/B8mqdsjOZpa88XgOHvrvtTI87cYhk31REH7uhPtdDESizq9bW
+         KS6n+8cmH+oqu2Nu9eu0RcpPfINX48Rf6btD/5NyLDUZnAMtXJQfQMXv5anx8pgsOH+y
+         30dYhUQJ53itOhS6tEWmgXI4krT/1vfwfcJ8fis5TgTUxwDQN03+lrvik0k/+VN3EzQG
+         bj4gbxZj1+O4BCcOTYxy3A8wV7RaiU4WpYo3PekQWNMeb3U3QW1mUk/5s9hNCrI9v57E
+         nJfw==
+X-Gm-Message-State: AOAM533rI4c+hclhXg4kVpSFlJDT/+DbhrTYxLwnenoX4K9gbNoDvKC9
+        E3adgO174xa5kDtjjcWE0ejpe3/8E5gZytcLFo0=
+X-Google-Smtp-Source: ABdhPJwYjoPZytoziRsU8pzisjXxK0MKS7CxJZXMVVTHEUikl7yW7jJlqgckmGbHBkbra1XtkUxs8t43eY3HhJcYOUQ=
+X-Received: by 2002:a05:6402:1a29:: with SMTP id be9mr7821163edb.70.1589819121915;
+ Mon, 18 May 2020 09:25:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200517190139.740249-11-sam@ravnborg.org>
+References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
+ <1589453659-27581-6-git-send-email-smasetty@codeaurora.org> <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com>
+In-Reply-To: <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 18 May 2020 09:25:41 -0700
+Message-ID: <CAF6AEGtoNwUGX-r7QytGn5hSU-VD4RJZyhcb3WdgAgAFR5BK4A@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 5/6] drm: msm: a6xx: use dev_pm_opp_set_bw to
+ set DDR bandwidth
+To:     Sharat Masetty <smasetty@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 17, 2020 at 09:01:33PM +0200, Sam Ravnborg wrote:
-> No need to put "extern" in front of prototypes.
-> While touching the prototypes adjust indent to follow
-> the kernel style.
-> 
-> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Cc: Daniel Thompson <daniel.thompson@linaro.org>
-> Cc: Jingoo Han <jingoohan1@gmail.com>
+On Mon, May 18, 2020 at 7:23 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+>
+> On Thu, May 14, 2020 at 04:24:18PM +0530, Sharat Masetty wrote:
+> > This patches replaces the previously used static DDR vote and uses
+> > dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
+> > GPU frequency.
+> >
+> > Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +-----
+> >  1 file changed, 1 insertion(+), 5 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > index 2d8124b..79433d3 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > @@ -141,11 +141,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+> >
+> >       gmu->freq = gmu->gpu_freqs[perf_index];
+> >
+> > -     /*
+> > -      * Eventually we will want to scale the path vote with the frequency but
+> > -      * for now leave it at max so that the performance is nominal.
+> > -      */
+> > -     icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
+> > +     dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
+> >  }
+>
+> This adds an implicit requirement that all targets need bandwidth settings
+> defined in the OPP or they won't get a bus vote at all. I would prefer that
+> there be an default escape valve but if not you'll need to add
+> bandwidth values for the sdm845 OPP that target doesn't regress.
+>
 
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+it looks like we could maybe do something like:
 
+  ret = dev_pm_opp_set_bw(...);
+  if (ret) {
+      dev_warn_once(dev, "no bandwidth settings");
+      icc_set_bw(...);
+  }
 
+?
 
-> ---
->  include/linux/backlight.h | 35 +++++++++++++++++++----------------
->  1 file changed, 19 insertions(+), 16 deletions(-)
-> 
-> diff --git a/include/linux/backlight.h b/include/linux/backlight.h
-> index eae7a5e66248..308aec67fa4f 100644
-> --- a/include/linux/backlight.h
-> +++ b/include/linux/backlight.h
-> @@ -444,22 +444,25 @@ static inline bool backlight_is_blank(struct backlight_device *bd)
->  	       bd->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK);
->  }
->  
-> -extern struct backlight_device *backlight_device_register(const char *name,
-> -	struct device *dev, void *devdata, const struct backlight_ops *ops,
-> -	const struct backlight_properties *props);
-> -extern struct backlight_device *devm_backlight_device_register(
-> -	struct device *dev, const char *name, struct device *parent,
-> -	void *devdata, const struct backlight_ops *ops,
-> -	const struct backlight_properties *props);
-> -extern void backlight_device_unregister(struct backlight_device *bd);
-> -extern void devm_backlight_device_unregister(struct device *dev,
-> -					struct backlight_device *bd);
-> -extern void backlight_force_update(struct backlight_device *bd,
-> -				   enum backlight_update_reason reason);
-> -extern int backlight_register_notifier(struct notifier_block *nb);
-> -extern int backlight_unregister_notifier(struct notifier_block *nb);
-> -extern struct backlight_device *backlight_device_get_by_type(enum backlight_type type);
-> -extern int backlight_device_set_brightness(struct backlight_device *bd, unsigned long brightness);
-> +struct backlight_device *
-> +backlight_device_register(const char *name, struct device *dev, void *devdata,
-> +			  const struct backlight_ops *ops,
-> +			  const struct backlight_properties *props);
-> +struct backlight_device *
-> +devm_backlight_device_register(struct device *dev, const char *name,
-> +			       struct device *parent, void *devdata,
-> +			       const struct backlight_ops *ops,
-> +			       const struct backlight_properties *props);
-> +void backlight_device_unregister(struct backlight_device *bd);
-> +void devm_backlight_device_unregister(struct device *dev,
-> +				      struct backlight_device *bd);
-> +void backlight_force_update(struct backlight_device *bd,
-> +			    enum backlight_update_reason reason);
-> +int backlight_register_notifier(struct notifier_block *nb);
-> +int backlight_unregister_notifier(struct notifier_block *nb);
-> +struct backlight_device *backlight_device_get_by_type(enum backlight_type type);
-> +int backlight_device_set_brightness(struct backlight_device *bd,
-> +				    unsigned long brightness);
->  
->  #define to_backlight_device(obj) container_of(obj, struct backlight_device, dev)
->  
-> -- 
-> 2.25.1
-> 
+BR,
+-R
+
+> Jordan
+>
+> >  unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
+> > --
+> > 2.7.4
+> >
+>
+> --
+> The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
