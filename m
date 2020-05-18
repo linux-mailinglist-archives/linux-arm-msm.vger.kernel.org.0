@@ -2,245 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A73E91D877B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:47:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B0E31D8796
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:52:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729269AbgERSrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 14:47:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
+        id S1729189AbgERSwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 14:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727938AbgERSri (ORCPT
+        with ESMTP id S1728639AbgERSwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 14:47:38 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C55BC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:47:38 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id k22so4592926pls.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:47:38 -0700 (PDT)
+        Mon, 18 May 2020 14:52:49 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B0BC05BD0A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:52:49 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id f6so5273818pgm.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 11:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fI9/Coy2jHU24hv3APejJ/BFCoipYPisETaqwXZO4ww=;
-        b=Wx0bS0ptDbThH06HCY0b1DBY2CcuHMoNlOElrVm8xW7XiC+ldEXxJH8tuZKYr9nHut
-         XrzWPXrLPMmTRrsYhiO6C97bnWtz5QJubocZPZmSynQkozHiwSQJ9u8CcWZcho2f8V2M
-         NncIB27kIHIR7LNvbIuihEXs2fQgdx8pnEYlQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=NHsRyL8eiYlYHJa5uCVqQW9LciNEIDRKfuP+gda9x1Y=;
+        b=dyfhdYXm4n0gy9np+W03BFusRSTd7VtjW+8PkcdsGSxtJz4guXAz37sSB8hMWjUGph
+         zbDr6UdFU/HTP8pjg+drIGkkBBSVOQ37ReH9JLvb9yONunabVH65e6e23eGbkbGY19v9
+         GYZEQHhy/JoXqdeSmftdi3L9aSvvTfzlZU/fAwO9dwPfGvDv9hafxxBGfPN/fWmMfVyh
+         82VnVi2KZXkHpXzaJ4jUl/VE7wzOAmR4MdKOPCVflq5/SJemnEyWcSTYPEHQLslG6Lz+
+         Z3ZA3TnxdgplAbEzKzHTm3aKJd+81u90aL+aUWFoGVkXrG15xE7IVQKaOjYT7wydzKos
+         k4pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fI9/Coy2jHU24hv3APejJ/BFCoipYPisETaqwXZO4ww=;
-        b=EcMovjZ3OgKNS3L3RaDEBOOzvAFH+4uEgrG8713HYLHA+Q9Z6FKQO5QvsdGytmLqT0
-         2q7K3PtbwPyQ2Qc9/6Asu0nE+dtyQYB2992k46eL1bataQQmoaLzXWUIk1yoWrLW1a7J
-         AERCOYqw4Chxcx9lIT91pCmvppXOwPs4jQSGiSM7GLBdaFiMaz8Cxbuq0j+G3bJgMduj
-         gU0Cck25y4gjORJPGSb5jlnlZjJFxPtGrLi9nao3oUvXsbadjdk+O5yPGc0qDi0h0lRr
-         eF7iQW2h3Fe9bfDYFbToL6+s0bZVMwHOyOlTl0FrrdB3anKsz+xNVlhOIHOsJ4nmnP13
-         Y4xA==
-X-Gm-Message-State: AOAM531wwlKRelXG0mR9xxruwsu5swr2kJi04jIJ8Sg2XKEDu7JRuNoZ
-        BxPh/lvBXf+KMmSKUZYsxrCc0w==
-X-Google-Smtp-Source: ABdhPJzq4lauJpJkoub5/jaKiCGMylfupnMDHNkDWGZnlKDqbU8PYXnVGgLx0sxltYZyEvgnmNutQQ==
-X-Received: by 2002:a17:90a:ee85:: with SMTP id i5mr767777pjz.165.1589827658054;
-        Mon, 18 May 2020 11:47:38 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id s136sm9302719pfc.29.2020.05.18.11.47.37
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NHsRyL8eiYlYHJa5uCVqQW9LciNEIDRKfuP+gda9x1Y=;
+        b=qA7l5ceSi5X4FBxv+cd/L3w1bEZHDBHu3Umrl6TW4J730JQwfFAOV6222kpZV2uR21
+         eZDnlECHf2xuRGsUUYFrbIvKSBSX0jPvBD/EblVQIVskiJYleMqwmxi4hFj8fUneETYv
+         51y9TVjUNZvCD82OZ10h8ThLRcVcK4jMCdpX76FzrKKxGF1HgvWhC+VX94PWr6x4hOw1
+         st0gj6R4uZQA6uFPdqP07XKlRyLfL+KpQhPbU+SPt0DA64DXB4OqIpgLtkwXADVfzIaM
+         TLdzOhOgE1Tb/K2GBXBV8sA3ELZWct48SGL9FQsC19L/S87K8ved1RvJztYHjov9mNIG
+         lZGg==
+X-Gm-Message-State: AOAM530uErhFxnjCZiqes953w/AC7KRyyljz3ckp9FWd01MHCQRromI/
+        U14uu28gBvLnKzkm9PcHnWaq3Q==
+X-Google-Smtp-Source: ABdhPJwuOK5f/6WvkScgGfZPG6iAsM8lfv6feBqqP52/8AtflODCDgQ3dim7PNYVoCPioH3FmWoAqg==
+X-Received: by 2002:a63:f70e:: with SMTP id x14mr15583487pgh.394.1589827968132;
+        Mon, 18 May 2020 11:52:48 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 3sm9698235pfo.27.2020.05.18.11.52.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 11:47:37 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Sam Ravnborg <sam@ravnborg.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, seanpaul@chromium.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [REPOST PATCH v2] drm/bridge: ti-sn65dsi86: Implement lane reordering + polarity
-Date:   Mon, 18 May 2020 11:47:17 -0700
-Message-Id: <20200518114656.REPOST.v2.1.Ibc8eeddcee94984a608d6900b46f9ffde4045da4@changeid>
-X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be-goog
+        Mon, 18 May 2020 11:52:47 -0700 (PDT)
+Date:   Mon, 18 May 2020 11:51:24 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Support ETMv4 power
+ management
+Message-ID: <20200518185124.GG2165@builder.lan>
+References: <cover.1589539293.git.saiprakash.ranjan@codeaurora.org>
+ <b0a2ac4ffefe7d3e216a83ab56867620f120ff08.1589539293.git.saiprakash.ranjan@codeaurora.org>
+ <56a5563205da61c47eb4f8bbf6120e28@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <56a5563205da61c47eb4f8bbf6120e28@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The ti-sn65dsi86 MIPI DSI to eDP bridge chip supports arbitrary
-remapping of eDP lanes and also polarity inversion.  Both of these
-features have been described in the device tree bindings for the
-device since the beginning but were never implemented in the driver.
-Implement both of them.
+On Fri 15 May 03:55 PDT 2020, Sai Prakash Ranjan wrote:
 
-Part of this change also allows you to (via the same device tree
-bindings) specify to use fewer than the max number of DP lanes that
-the panel reports.  This could be useful if your display supports more
-lanes but only a few are hooked up on your board.
+> Hi Bjorn,
+> 
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
----
-Re-posting patch v2, patch #1.  I added tags and put Sam in the "To"
-list.  Patch #2 was dropped since it was squashed elsewhere.  This now
-applies to the top of drm-misc-next.
+Hi Sai,
 
-Changes in v2:
-- Use SN_MAX_DP_LANES instead of 4 in one place.
-- Comment that we aren't doing full validation of dts params.
-- Check dp_lanes <= SN_MAX_DP_LANES to avoid buffer overrun.
-- Add missing of_node_put()
+> On 2020-05-15 16:21, Sai Prakash Ranjan wrote:
+> > Now that deep idle states are properly supported on SC7180,
+> > we need to add "coresight-loses-context-with-cpu" property
+> > to avoid failure of trace session because of losing context
+> > on entering deep idle states.
+> > 
+> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > ---
+> > 
+> > Resending this because the last patch sent here -
+> > https://lore.kernel.org/patchwork/patch/1230367/
+> > seems to have added "coresight-loses-context-with-cpu" to
+> > replicator node instead of etm7 node.
+> > 
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > index 4069bb1c93af..8b3707347547 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > @@ -1656,6 +1656,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> > @@ -1674,6 +1675,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> > @@ -1692,6 +1694,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> > @@ -1710,6 +1713,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> > @@ -1728,6 +1732,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> > @@ -1746,6 +1751,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> > @@ -1764,6 +1770,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> > @@ -1782,6 +1789,7 @@
+> > 
+> >  			clocks = <&aoss_qmp>;
+> >  			clock-names = "apb_pclk";
+> > +			arm,coresight-loses-context-with-cpu;
+> > 
+> >  			out-ports {
+> >  				port {
+> 
+> 
+> The previous version of this patch in QCOM tree seems to have added the
+> property to replicator node instead of etm7 node, can you please drop
+> that from the tree and apply this one?
+> 
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 82 ++++++++++++++++++++++-----
- 1 file changed, 68 insertions(+), 14 deletions(-)
+I'm not able to replace the old commit without rewriting the history of
+the branch. So I've applied a patch ontop of the branch to fix this up
+instead.
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 1855fb9f09f2..2240e9973178 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -50,8 +50,12 @@
- #define SN_CHA_VERTICAL_BACK_PORCH_REG		0x36
- #define SN_CHA_HORIZONTAL_FRONT_PORCH_REG	0x38
- #define SN_CHA_VERTICAL_FRONT_PORCH_REG		0x3A
-+#define SN_LN_ASSIGN_REG			0x59
-+#define  LN_ASSIGN_WIDTH			2
- #define SN_ENH_FRAME_REG			0x5A
- #define  VSTREAM_ENABLE				BIT(3)
-+#define  LN_POLRS_OFFSET			4
-+#define  LN_POLRS_MASK				0xf0
- #define SN_DATA_FORMAT_REG			0x5B
- #define  BPP_18_RGB				BIT(0)
- #define SN_HPD_DISABLE_REG			0x5C
-@@ -98,6 +102,7 @@
- 
- #define SN_REGULATOR_SUPPLY_NUM		4
- 
-+#define SN_MAX_DP_LANES			4
- #define SN_NUM_GPIOS			4
- #define SN_GPIO_PHYSICAL_OFFSET		1
- 
-@@ -116,6 +121,8 @@
-  * @enable_gpio:  The GPIO we toggle to enable the bridge.
-  * @supplies:     Data for bulk enabling/disabling our regulators.
-  * @dp_lanes:     Count of dp_lanes we're using.
-+ * @ln_assign:    Value to program to the LN_ASSIGN register.
-+ * @ln_polr:      Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
-  *
-  * @gchip:        If we expose our GPIOs, this is used.
-  * @gchip_output: A cache of whether we've set GPIOs to output.  This
-@@ -141,6 +148,8 @@ struct ti_sn_bridge {
- 	struct gpio_desc		*enable_gpio;
- 	struct regulator_bulk_data	supplies[SN_REGULATOR_SUPPLY_NUM];
- 	int				dp_lanes;
-+	u8				ln_assign;
-+	u8				ln_polrs;
- 
- 	struct gpio_chip		gchip;
- 	DECLARE_BITMAP(gchip_output, SN_NUM_GPIOS);
-@@ -708,26 +717,20 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
- 	int dp_rate_idx;
- 	unsigned int val;
- 	int ret = -EINVAL;
-+	int max_dp_lanes;
- 
--	/*
--	 * Run with the maximum number of lanes that the DP sink supports.
--	 *
--	 * Depending use cases, we might want to revisit this later because:
--	 * - It's plausible that someone may have run fewer lines to the
--	 *   sink than the sink actually supports, assuming that the lines
--	 *   will just be driven at a higher rate.
--	 * - The DP spec seems to indicate that it's more important to minimize
--	 *   the number of lanes than the link rate.
--	 *
--	 * If we do revisit, it would be important to measure the power impact.
--	 */
--	pdata->dp_lanes = ti_sn_get_max_lanes(pdata);
-+	max_dp_lanes = ti_sn_get_max_lanes(pdata);
-+	pdata->dp_lanes = min(pdata->dp_lanes, max_dp_lanes);
- 
- 	/* DSI_A lane config */
--	val = CHA_DSI_LANES(4 - pdata->dsi->lanes);
-+	val = CHA_DSI_LANES(SN_MAX_DP_LANES - pdata->dsi->lanes);
- 	regmap_update_bits(pdata->regmap, SN_DSI_LANES_REG,
- 			   CHA_DSI_LANES_MASK, val);
- 
-+	regmap_write(pdata->regmap, SN_LN_ASSIGN_REG, pdata->ln_assign);
-+	regmap_update_bits(pdata->regmap, SN_ENH_FRAME_REG, LN_POLRS_MASK,
-+			   pdata->ln_polrs << LN_POLRS_OFFSET);
-+
- 	/* set dsi clk frequency value */
- 	ti_sn_bridge_set_dsi_rate(pdata);
- 
-@@ -1089,6 +1092,55 @@ static int ti_sn_setup_gpio_controller(struct ti_sn_bridge *pdata)
- 	return ret;
- }
- 
-+static void ti_sn_bridge_parse_lanes(struct ti_sn_bridge *pdata,
-+				     struct device_node *np)
-+{
-+	u32 lane_assignments[SN_MAX_DP_LANES] = { 0, 1, 2, 3 };
-+	u32 lane_polarities[SN_MAX_DP_LANES] = { };
-+	struct device_node *endpoint;
-+	u8 ln_assign = 0;
-+	u8 ln_polrs = 0;
-+	int dp_lanes;
-+	int i;
-+
-+	/*
-+	 * Read config from the device tree about lane remapping and lane
-+	 * polarities.  These are optional and we assume identity map and
-+	 * normal polarity if nothing is specified.  It's OK to specify just
-+	 * data-lanes but not lane-polarities but not vice versa.
-+	 *
-+	 * Error checking is light (we just make sure we don't crash or
-+	 * buffer overrun) and we assume dts is well formed and specifying
-+	 * mappings that the hardware supports.
-+	 */
-+	endpoint = of_graph_get_endpoint_by_regs(np, 1, -1);
-+	dp_lanes = of_property_count_u32_elems(endpoint, "data-lanes");
-+	if (dp_lanes > 0 && dp_lanes <= SN_MAX_DP_LANES) {
-+		of_property_read_u32_array(endpoint, "data-lanes",
-+					   lane_assignments, dp_lanes);
-+		of_property_read_u32_array(endpoint, "lane-polarities",
-+					   lane_polarities, dp_lanes);
-+	} else {
-+		dp_lanes = SN_MAX_DP_LANES;
-+	}
-+	of_node_put(endpoint);
-+
-+	/*
-+	 * Convert into register format.  Loop over all lanes even if
-+	 * data-lanes had fewer elements so that we nicely initialize
-+	 * the LN_ASSIGN register.
-+	 */
-+	for (i = SN_MAX_DP_LANES - 1; i >= 0; i--) {
-+		ln_assign = ln_assign << LN_ASSIGN_WIDTH | lane_assignments[i];
-+		ln_polrs = ln_polrs << 1 | lane_polarities[i];
-+	}
-+
-+	/* Stash in our struct for when we power on */
-+	pdata->dp_lanes = dp_lanes;
-+	pdata->ln_assign = ln_assign;
-+	pdata->ln_polrs = ln_polrs;
-+}
-+
- static int ti_sn_bridge_probe(struct i2c_client *client,
- 			      const struct i2c_device_id *id)
- {
-@@ -1131,6 +1183,8 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
- 		return ret;
- 	}
- 
-+	ti_sn_bridge_parse_lanes(pdata, client->dev.of_node);
-+
- 	ret = ti_sn_bridge_parse_regulators(pdata);
- 	if (ret) {
- 		DRM_ERROR("failed to parse regulators\n");
--- 
-2.26.2.761.g0e0b3e54be-goog
+Please review the branch and let me know if there's any issues.
 
+Regards,
+Bjorn
