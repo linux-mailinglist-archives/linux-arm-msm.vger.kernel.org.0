@@ -2,128 +2,380 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 291A91D7E59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:25:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94AF81D7EF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:45:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728305AbgERQZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 12:25:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47744 "EHLO
+        id S1728526AbgERQoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 12:44:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728283AbgERQZX (ORCPT
+        with ESMTP id S1728470AbgERQoy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 12:25:23 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DE94C05BD09;
-        Mon, 18 May 2020 09:25:23 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id be9so4810706edb.2;
-        Mon, 18 May 2020 09:25:23 -0700 (PDT)
+        Mon, 18 May 2020 12:44:54 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB8C7C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:44:53 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id k12so184027wmj.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:44:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=C9o4dW1opf6PK9dDJU+olx6LivIhnF/LUajcX/auTKM=;
-        b=mk9a0EE30LQPszKX5ot6/btd4Lvv+bgSkXNddm9G/X4xPGhTcYfGn9iToM4kQPb/aU
-         bCDe3NfgCGMurJGVDAnSpPBLaTOXEd/bT2NFKE/v4MuX2/c2VqGk+EFAfp7T2o2JYqMA
-         zsJwIKhZtvZ7nq9HWgQl35cR3+Ew4PlBMq6VU8M0Ii/nrjhC4DWDeqVzm5wmoA02AZHy
-         aHi0JKC+zVh29NEUQL+FyqnIzfROsHeli2W1Lc2Lop/O2qTCY5exQhzQXiRDVaqnRNKF
-         nC62vqaYbx5FkbjCkN6dXtoAEhJxwRuhHYF2cCsn1WJ6lfpVyExb4l1U+fIwjAg1W4AN
-         GfMA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+sSdxG+45JpBCxiSG1ik2FxZ+bBTihebjB6gLOUfFzM=;
+        b=qi2t/txwnCWqkyu0dzRq40kNxzJcobBleEXk3LfNng3HXN84pj842BwzG+E676NYHA
+         LPU0g5wSgYgr0h+ICuxqA9hPgmgGK8SyPCEnuXgtnKERg7si/YVm04xcDuNoc9RjdYvH
+         eMc0MzcYgNtrCxKqmhEQyHPHStcY8PPfCcBl5QLp7587Ae+JXRhdRn2BJRRsoU8mti1X
+         UH1wetZA8F1CKHFEWjzUAPE88O6xy02pyphDcCJkWnczaUaDLWywCNB81GKgJWtc08Zf
+         aV4nokY1a13ZJkb8qjv2U1b5Xw6zxJEKiw9p3i1PLahl/Oc6rhDudqCSyuus75HFEjn+
+         sGSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=C9o4dW1opf6PK9dDJU+olx6LivIhnF/LUajcX/auTKM=;
-        b=M1zNNeqSHzaJHlA8Ygw1NXYyDMeK8r2DA7jEs2ykoCWjJ0BimjqxJrHO8P/+HWuxuI
-         4AulfHf379MAOT2zt2/B8mqdsjOZpa88XgOHvrvtTI87cYhk31REH7uhPtdDESizq9bW
-         KS6n+8cmH+oqu2Nu9eu0RcpPfINX48Rf6btD/5NyLDUZnAMtXJQfQMXv5anx8pgsOH+y
-         30dYhUQJ53itOhS6tEWmgXI4krT/1vfwfcJ8fis5TgTUxwDQN03+lrvik0k/+VN3EzQG
-         bj4gbxZj1+O4BCcOTYxy3A8wV7RaiU4WpYo3PekQWNMeb3U3QW1mUk/5s9hNCrI9v57E
-         nJfw==
-X-Gm-Message-State: AOAM533rI4c+hclhXg4kVpSFlJDT/+DbhrTYxLwnenoX4K9gbNoDvKC9
-        E3adgO174xa5kDtjjcWE0ejpe3/8E5gZytcLFo0=
-X-Google-Smtp-Source: ABdhPJwYjoPZytoziRsU8pzisjXxK0MKS7CxJZXMVVTHEUikl7yW7jJlqgckmGbHBkbra1XtkUxs8t43eY3HhJcYOUQ=
-X-Received: by 2002:a05:6402:1a29:: with SMTP id be9mr7821163edb.70.1589819121915;
- Mon, 18 May 2020 09:25:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+sSdxG+45JpBCxiSG1ik2FxZ+bBTihebjB6gLOUfFzM=;
+        b=rkvK9gJGuXK6Ux0Wm68bJfxrP6RFc+KRDwbDk8z5pD/YddGjwcLUO6E028kJbHboZC
+         WhYBg1PiYyKbQEo1LNmDkz8q8pXePjlfdqQ2kZNVor39hGGyecM1LqnnfDFRF7Kjzu7L
+         t9/GmSLqguCONlhmCzQk/zTAoIV8LBIlyZDHrwXxE/v5/SGAeqsFaCNGLF9VtMbk/aGq
+         /FMA3BOb/a4bityLTaUvU+ctoWkpR5WIqCUjCreT+7YRHxQp+i6mMfQv0/y4JW85Og5+
+         XfQLdiPNWcGZTj9cUWOsTGeO7vC4Am1CQmPx3NPlMV5eUBoK+NHQiYnFeViAXeyG3AcE
+         d9SA==
+X-Gm-Message-State: AOAM531VXgbaEnmVuo9ysL4dwJwTC6KeEv9gXwRNK7bfqzqAya3g3Wlb
+        MkYXXPcfUis9iKPIiXuxRIM0KQ==
+X-Google-Smtp-Source: ABdhPJzO877HAa1ZHgwuZWeR9A/8kBtLG2o9lvW6ij/N2C4EC8BPHaOEi2q/cYUsrO5/9i2xn7nESw==
+X-Received: by 2002:a7b:c1d2:: with SMTP id a18mr254461wmj.176.1589820292494;
+        Mon, 18 May 2020 09:44:52 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id a13sm16775503wrv.67.2020.05.18.09.44.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 09:44:51 -0700 (PDT)
+Date:   Mon, 18 May 2020 17:44:49 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        linux-pwm@vger.kernel.org,
+        Support Opensource <support.opensource@diasemi.com>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-arm-msm@vger.kernel.org,
+        Russell King <linux@armlinux.org.uk>,
+        patches@opensource.cirrus.com,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH v2 11/16] backlight: add overview and update existing doc
+Message-ID: <20200518164449.2dgazleaxozxdwx7@holly.lan>
+References: <20200517190139.740249-1-sam@ravnborg.org>
+ <20200517190139.740249-12-sam@ravnborg.org>
 MIME-Version: 1.0
-References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
- <1589453659-27581-6-git-send-email-smasetty@codeaurora.org> <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com>
-In-Reply-To: <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 18 May 2020 09:25:41 -0700
-Message-ID: <CAF6AEGtoNwUGX-r7QytGn5hSU-VD4RJZyhcb3WdgAgAFR5BK4A@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 5/6] drm: msm: a6xx: use dev_pm_opp_set_bw to
- set DDR bandwidth
-To:     Sharat Masetty <smasetty@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200517190139.740249-12-sam@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 18, 2020 at 7:23 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> On Thu, May 14, 2020 at 04:24:18PM +0530, Sharat Masetty wrote:
-> > This patches replaces the previously used static DDR vote and uses
-> > dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
-> > GPU frequency.
-> >
-> > Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +-----
-> >  1 file changed, 1 insertion(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > index 2d8124b..79433d3 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > @@ -141,11 +141,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
-> >
-> >       gmu->freq = gmu->gpu_freqs[perf_index];
-> >
-> > -     /*
-> > -      * Eventually we will want to scale the path vote with the frequency but
-> > -      * for now leave it at max so that the performance is nominal.
-> > -      */
-> > -     icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
-> > +     dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
-> >  }
->
-> This adds an implicit requirement that all targets need bandwidth settings
-> defined in the OPP or they won't get a bus vote at all. I would prefer that
-> there be an default escape valve but if not you'll need to add
-> bandwidth values for the sdm845 OPP that target doesn't regress.
->
+On Sun, May 17, 2020 at 09:01:34PM +0200, Sam Ravnborg wrote:
+> Add overview chapter to backlight.c.
+> Update existing kernel-doc to follow a more consistent
+> style and drop kernel-doc for deprecated functions.
+> 
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> Cc: Jingoo Han <jingoohan1@gmail.com>
+> ---
+>  drivers/video/backlight/backlight.c | 131 +++++++++++++++++++---------
+>  1 file changed, 90 insertions(+), 41 deletions(-)
+> 
+> diff --git a/drivers/video/backlight/backlight.c b/drivers/video/backlight/backlight.c
+> index 17f04cff50ab..2212f0e3570e 100644
+> --- a/drivers/video/backlight/backlight.c
+> +++ b/drivers/video/backlight/backlight.c
+> @@ -22,6 +22,45 @@
+>  #include <asm/backlight.h>
+>  #endif
+>  
+> +/**
+> + * DOC: overview
+> + *
+> + * The backlight core supports implementing backlight drivers.
+> + *
+> + * backlight is controlled from userspace via firmware, a platform
+> + * specific way or via sysfs. The backlight core provide support
+> + * for all three types of backlight control.
 
-it looks like we could maybe do something like:
+This paragraph seems very difficult for a reader to absorb (isn't
+"controlled from userspace via firmware" more like the backlight
+subsytem notifying the userspace when something else controls the
+backlight behind the userspace's back).
 
-  ret = dev_pm_opp_set_bw(...);
-  if (ret) {
-      dev_warn_once(dev, "no bandwidth settings");
-      icc_set_bw(...);
-  }
+Maybe just drop the paragraph? Notifications are covered further down
+anyway.
 
-?
 
-BR,
--R
+> + *
+> + * A backlight driver registers a driver using
+> + * devm_backlight_device_register(). The properties of the backlight
+> + * driver such as type and max_brightness must be specified.
+> + * When the core detect changes in for example brightness or power state
+> + * the update_status() operation is called. The backlight driver shall
+> + * implement this operation and use it to adjust backlight.
+> + *
+> + * Several sysfs attributes are provided by the backlight core::
+> + *
+> + * - brightness         R/W, set the requested brightness level
+> + * - actual_brighness   RO, the brightness level used by the HW
+> + * - max_brightness     RO, the maximum  brightness level supported
 
-> Jordan
->
-> >  unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
-> > --
-> > 2.7.4
-> >
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+I've not come across this markup before. Do all these extra
+spaces create readable output when formatted?
+
+
+> + *
+> + * See Documentation/ABI/stable/sysfs-class-backlight for the full list.
+> + *
+> + * The driver shall implement the get_brightness() operation if
+> + * the HW do not support all the levels that can be specified in
+> + * brightness, thus providing user-space access to the actual level
+> + * via the actual_brightness attribute.
+
+Again... this doesn't look like the formatted output will get a
+paragraph break here.
+
+
+> + * When the backlight changes this is reported to user-space using
+> + * an uevent connected to the actual_brightness attribute.
+> + * When brightness is set by platform specific means, for example
+> + * a hot-key to adjust backlight, the driver must notify the backlight
+> + * core that brighness has changed using backlight_force_update().
+> + *
+> + * The backlight driver core receives notifications from fbdev and
+> + * if the event is FB_EVENT_BLANK the value of blank, from the FBIOBLANK
+> + * ioclt, is passed to the driver via the update_status() operation.
+> + */
+> +
+>  static struct list_head backlight_dev_list;
+>  static struct mutex backlight_dev_list_mutex;
+>  static struct blocking_notifier_head backlight_notifier;
+> @@ -40,9 +79,17 @@ static const char *const backlight_scale_types[] = {
+>  
+>  #if defined(CONFIG_FB) || (defined(CONFIG_FB_MODULE) && \
+>  			   defined(CONFIG_BACKLIGHT_CLASS_DEVICE_MODULE))
+> -/* This callback gets called when something important happens inside a
+> - * framebuffer driver. We're looking if that important event is blanking,
+> - * and if it is and necessary, we're switching backlight power as well ...
+> +/*
+> + * fb_notifier_callback
+> + *
+> + * This callback gets called when something important happens inside a
+> + * framebuffer driver. The backlight core only care about FB_BLANK_UNBLANK
+
+s/care/cares/
+
+> + * which is reported to the driver using backlight_update_status()
+> + * as a state change.
+> + *
+> + * There may be several fbdev's connected to the backlight device,
+> + * in which case they are kept track of. A state change is only reported
+> + * if there is a change in backligt for the specified fbdev.
+
+Typo.
+
+
+>   */
+>  static int fb_notifier_callback(struct notifier_block *self,
+>  				unsigned long event, void *data)
+> @@ -318,12 +365,16 @@ static struct attribute *bl_device_attrs[] = {
+>  ATTRIBUTE_GROUPS(bl_device);
+>  
+>  /**
+> - * backlight_force_update - tell the backlight subsystem that hardware state
+> - *   has changed
+> + * backlight_force_update - force an update due to a hardware change
+>   * @bd: the backlight device to update
+> + * @reason: the method used for the backlight update
+>   *
+>   * Updates the internal state of the backlight in response to a hardware event,
+> - * and generate a uevent to notify userspace
+> + * and generate an uevent to notify userspace.
+
+s/generate/generates/
+
+
+> + * A backlight driver shall call backlight_force_update() when the backlight
+> + * is changed using, for example, a hot-key.
+> + * The updated brightness is read using get_brightness() and the brightness
+> + * value is reported using an uevent.
+
+There seem to be several missing paragraph breaks above.
+
+>   */
+>  void backlight_force_update(struct backlight_device *bd,
+>  			    enum backlight_update_reason reason)
+> @@ -336,19 +387,7 @@ void backlight_force_update(struct backlight_device *bd,
+>  }
+>  EXPORT_SYMBOL(backlight_force_update);
+>  
+> -/**
+> - * backlight_device_register - create and register a new object of
+> - *   backlight_device class.
+> - * @name: the name of the new object(must be the same as the name of the
+> - *   respective framebuffer device).
+> - * @parent: a pointer to the parent device
+> - * @devdata: an optional pointer to be stored for private driver use. The
+> - *   methods may retrieve it by using bl_get_data(bd).
+> - * @ops: the backlight operations structure.
+> - *
+> - * Creates and registers new backlight device. Returns either an
+> - * ERR_PTR() or a pointer to the newly allocated device.
+> - */
+> +/* deprecated - use devm_backlight_device_register() */
+>  struct backlight_device *backlight_device_register(const char *name,
+>  	struct device *parent, void *devdata, const struct backlight_ops *ops,
+>  	const struct backlight_properties *props)
+> @@ -415,6 +454,15 @@ struct backlight_device *backlight_device_register(const char *name,
+>  }
+>  EXPORT_SYMBOL(backlight_device_register);
+>  
+> +/** backlight_device_get_by_type - find first backlight device of a type
+> + * @type: the type of backlight device
+> + *
+> + * Look up the first backlight device of the specified type
+> + *
+> + * RETURNS:
+> + *
+> + * Pointer to backlight device if any was found. Otherwise NULL.
+> + */
+>  struct backlight_device *backlight_device_get_by_type(enum backlight_type type)
+>  {
+>  	bool found = false;
+> @@ -433,12 +481,7 @@ struct backlight_device *backlight_device_get_by_type(enum backlight_type type)
+>  }
+>  EXPORT_SYMBOL(backlight_device_get_by_type);
+>  
+> -/**
+> - * backlight_device_unregister - unregisters a backlight device object.
+> - * @bd: the backlight device object to be unregistered and freed.
+> - *
+> - * Unregisters a previously registered via backlight_device_register object.
+> - */
+> +/* deprecated - use devm_backlight_device_unregister() */
+>  void backlight_device_unregister(struct backlight_device *bd)
+>  {
+>  	if (!bd)
+> @@ -486,10 +529,12 @@ static int devm_backlight_device_match(struct device *dev, void *res,
+>   * backlight_register_notifier - get notified of backlight (un)registration
+>   * @nb: notifier block with the notifier to call on backlight (un)registration
+>   *
+> - * @return 0 on success, otherwise a negative error code
+> - *
+>   * Register a notifier to get notified when backlight devices get registered
+>   * or unregistered.
+> + *
+> + * RETURNS:
+> + *
+> + * 0 on success, otherwise a negative error code
+>   */
+>  int backlight_register_notifier(struct notifier_block *nb)
+>  {
+> @@ -501,10 +546,12 @@ EXPORT_SYMBOL(backlight_register_notifier);
+>   * backlight_unregister_notifier - unregister a backlight notifier
+>   * @nb: notifier block to unregister
+>   *
+> - * @return 0 on success, otherwise a negative error code
+> - *
+>   * Register a notifier to get notified when backlight devices get registered
+>   * or unregistered.
+> + *
+> + * RETURNS:
+> + *
+> + * 0 on success, otherwise a negative error code
+>   */
+>  int backlight_unregister_notifier(struct notifier_block *nb)
+>  {
+> @@ -513,20 +560,22 @@ int backlight_unregister_notifier(struct notifier_block *nb)
+>  EXPORT_SYMBOL(backlight_unregister_notifier);
+>  
+>  /**
+> - * devm_backlight_device_register - resource managed backlight_device_register()
+> + * devm_backlight_device_register - registering a new backlight device
+
+s/registering/register/
+
+>   * @dev: the device to register
+>   * @name: the name of the device
+> - * @parent: a pointer to the parent device
+> + * @parent: a pointer to the parent device (often the same as @dev)
+>   * @devdata: an optional pointer to be stored for private driver use
+>   * @ops: the backlight operations structure
+>   * @props: the backlight properties
+>   *
+> - * @return a struct backlight on success, or an ERR_PTR on error
+> + * Creates and registers new backlight device. When a backlight device
+> + * is registered the configuration must be specified in the @props
+> + * parameter. See description of &backlight_properties.
+>   *
+> - * Managed backlight_device_register(). The backlight_device returned
+> - * from this function are automatically freed on driver detach.
+> - * See backlight_device_register() for more information.
+> - */
+> + * RETURNS:
+> + *
+> + * struct backlight on success, or an ERR_PTR on error
+> +*/
+>  struct backlight_device *devm_backlight_device_register(struct device *dev,
+>  	const char *name, struct device *parent, void *devdata,
+>  	const struct backlight_ops *ops,
+> @@ -553,13 +602,13 @@ struct backlight_device *devm_backlight_device_register(struct device *dev,
+>  EXPORT_SYMBOL(devm_backlight_device_register);
+>  
+>  /**
+> - * devm_backlight_device_unregister - resource managed backlight_device_unregister()
+> + * devm_backlight_device_unregister - backlight device unregister
+
+s/backlight device unregister/unregister backlight device/
+
+
+Daniel.
+
+
+>   * @dev: the device to unregister
+>   * @bd: the backlight device to unregister
+>   *
+> - * Deallocated a backlight allocated with devm_backlight_device_register().
+> + * Deallocates a backlight allocated with devm_backlight_device_register().
+>   * Normally this function will not need to be called and the resource management
+> - * code will ensure that the resource is freed.
+> + * code will ensure that the resources are freed.
+>   */
+>  void devm_backlight_device_unregister(struct device *dev,
+>  				struct backlight_device *bd)
+> @@ -650,8 +699,8 @@ static void devm_backlight_release(void *data)
+>  }
+>  
+>  /**
+> - * devm_of_find_backlight - Resource-managed of_find_backlight()
+> - * @dev: Device
+> + * devm_of_find_backlight - find backlight for a device
+> + * @dev: the device
+>   *
+>   * Device managed version of of_find_backlight().
+>   * The reference on the backlight device is automatically
+> -- 
+> 2.25.1
+> 
 > _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
