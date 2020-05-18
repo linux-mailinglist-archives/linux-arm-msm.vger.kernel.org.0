@@ -2,84 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6439E1D7B2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 16:25:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA87C1D7B63
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 16:38:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727063AbgEROZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 10:25:28 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:40979 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726997AbgEROZ2 (ORCPT
+        id S1726989AbgEROit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 10:38:49 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:43264 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726918AbgEROiq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 10:25:28 -0400
-Received: by mail-io1-f67.google.com with SMTP id o5so10726187iow.8;
-        Mon, 18 May 2020 07:25:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SZe4KkbwE56KDTMKfhIY8zuuqSvnZMQNRzwLYA4Q1D8=;
-        b=IHluULF2U3tbPUVHWVz+g1iIY5h90IKnUbay/RXRajnTCsWp+FHuKwdPmgO50LlBcb
-         PPAYKu8Pr+kqoBQ1Mdnj7qHf3zBLfe0KCr4D8j8xzqyd7xB5sttmWcA1wxFgqv5G9bga
-         lAaniaAck8pAK9AmnrktpKtvWMWrMVm3G6gcKXiRIybUnCcf6CfYwGKuAD7kGKqQBB/h
-         ID6fFZAm4UmEg5PwdoDwa27P28VnWtenlySISRjQlH6k5Cm3BzFZCivZENlJjHqAlU/k
-         0COllF7Qbcsd2VcfUAkj22Az3mDIZg6vI1Wk4qMWqeC+ksBf+KWm9t1C4M8akC2nme3h
-         5awQ==
-X-Gm-Message-State: AOAM531JCwgdPSWTscoRfrQxKmpR8Dxw7HxpBY9WuJP5FrqmcD3PJcsH
-        EbUnfhYuVQWDpqmSWl3A+Gy8YVI=
-X-Google-Smtp-Source: ABdhPJyKv1wlOzsUmKiSN/1DWeAReVlpAMVDXgnN2mAfLRgIhbynvN1AQFddzQKeqdfbxgYbQj8RhA==
-X-Received: by 2002:a05:6638:2144:: with SMTP id z4mr12789399jaj.35.1589811926731;
-        Mon, 18 May 2020 07:25:26 -0700 (PDT)
-Received: from rob-hp-laptop ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id c13sm4894758ilu.81.2020.05.18.07.25.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 07:25:26 -0700 (PDT)
-Received: (nullmailer pid 16096 invoked by uid 1000);
-        Mon, 18 May 2020 14:25:25 -0000
-Date:   Mon, 18 May 2020 08:25:25 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        shawn.guo@linaro.org, konradybcio@gmail.com,
-        linux-kernel@vger.kernel.org, p.zabel@pengutronix.de,
-        sboyd@kernel.org, devicetree@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, vincent.knecht@mailoo.org,
-        mturquette@baylibre.com, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v5 1/2] clk: qcom: Add DT bindings for MSM8939 GCC
-Message-ID: <20200518142525.GA15759@bogus>
-References: <20200517131348.688405-1-bryan.odonoghue@linaro.org>
- <20200517131348.688405-2-bryan.odonoghue@linaro.org>
+        Mon, 18 May 2020 10:38:46 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589812724; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=3jVQXLzS5PJPwz3uBBdwOaWCIbfx2OWYegKT20Bvp3w=; b=aTCc9QLpZMczBI/96R4flviI4po9D+uT2ytcrCEjYjD0Vjbv7DYsSZmqxSYGFlVMv0bRDe+R
+ ZjGj1SI6VZRJanE292S/Pju5Ose415HmO51oIOOHBMZFAQWyjFE+rOG1LWQMVk8OaAPlOt/q
+ 0b7ZEys/NnmD6SHfMr+/K7o+KaY=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec29df4.7f257815dca8-smtp-out-n01;
+ Mon, 18 May 2020 14:38:44 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E2A79C432C2; Mon, 18 May 2020 14:38:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 59E58C433F2;
+        Mon, 18 May 2020 14:38:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 59E58C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 18 May 2020 08:38:40 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Brian Masney <masneyb@onstation.org>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/a4xx: add adreno a405 support
+Message-ID: <20200518143840.GA3915@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Shawn Guo <shawn.guo@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Brian Masney <masneyb@onstation.org>,
+        Konrad Dybcio <konradybcio@gmail.com>
+References: <20200509123846.27932-1-shawn.guo@linaro.org>
+ <20200509123846.27932-2-shawn.guo@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200517131348.688405-2-bryan.odonoghue@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200509123846.27932-2-shawn.guo@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 17 May 2020 14:13:47 +0100, Bryan O'Donoghue wrote:
-> Add compatible strings and the include files for the MSM8939 GCC.
-> 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Tested-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On Sat, May 09, 2020 at 08:38:45PM +0800, Shawn Guo wrote:
+> It adds support for adreno a405 found on MSM8939.  The adreno_is_a430()
+> check in adreno_submit() needs an extension to cover a405.  The
+> downstream driver suggests it should cover the whole a4xx generation.
+> That's why it gets changed to adreno_is_a4xx(), while a420 is not
+> tested though.
+
+This looks good to me and if it boots then that's the best test of all.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 > ---
->  .../devicetree/bindings/clock/qcom,gcc.yaml   |   3 +
->  include/dt-bindings/clock/qcom,gcc-msm8939.h  | 206 ++++++++++++++++++
->  include/dt-bindings/reset/qcom,gcc-msm8939.h  | 110 ++++++++++
->  3 files changed, 319 insertions(+)
->  create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8939.h
->  create mode 100644 include/dt-bindings/reset/qcom,gcc-msm8939.h
+>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c      | 29 +++++++++++++---------
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 11 ++++++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  2 +-
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 ++++
+>  4 files changed, 34 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> index 253d8d85daad..70de59751188 100644
+> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> @@ -66,19 +66,22 @@ static void a4xx_enable_hwcg(struct msm_gpu *gpu)
+>  		}
+>  	}
+>  
+> -	for (i = 0; i < 4; i++) {
+> -		gpu_write(gpu, REG_A4XX_RBBM_CLOCK_CTL_MARB_CCU(i),
+> -				0x00000922);
+> -	}
+> +	/* No CCU for A405 */
+> +	if (!adreno_is_a405(adreno_gpu)) {
+> +		for (i = 0; i < 4; i++) {
+> +			gpu_write(gpu, REG_A4XX_RBBM_CLOCK_CTL_MARB_CCU(i),
+> +					0x00000922);
+> +		}
+>  
+> -	for (i = 0; i < 4; i++) {
+> -		gpu_write(gpu, REG_A4XX_RBBM_CLOCK_HYST_RB_MARB_CCU(i),
+> -				0x00000000);
+> -	}
+> +		for (i = 0; i < 4; i++) {
+> +			gpu_write(gpu, REG_A4XX_RBBM_CLOCK_HYST_RB_MARB_CCU(i),
+> +					0x00000000);
+> +		}
+>  
+> -	for (i = 0; i < 4; i++) {
+> -		gpu_write(gpu, REG_A4XX_RBBM_CLOCK_DELAY_RB_MARB_CCU_L1(i),
+> -				0x00000001);
+> +		for (i = 0; i < 4; i++) {
+> +			gpu_write(gpu, REG_A4XX_RBBM_CLOCK_DELAY_RB_MARB_CCU_L1(i),
+> +					0x00000001);
+> +		}
+>  	}
+>  
+>  	gpu_write(gpu, REG_A4XX_RBBM_CLOCK_MODE_GPC, 0x02222222);
+> @@ -137,7 +140,9 @@ static int a4xx_hw_init(struct msm_gpu *gpu)
+>  	uint32_t *ptr, len;
+>  	int i, ret;
+>  
+> -	if (adreno_is_a420(adreno_gpu)) {
+> +	if (adreno_is_a405(adreno_gpu)) {
+> +		gpu_write(gpu, REG_A4XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x00000003);
+> +	} else if (adreno_is_a420(adreno_gpu)) {
+>  		gpu_write(gpu, REG_A4XX_VBIF_ABIT_SORT, 0x0001001F);
+>  		gpu_write(gpu, REG_A4XX_VBIF_ABIT_SORT_CONF, 0x000000A4);
+>  		gpu_write(gpu, REG_A4XX_VBIF_GATE_OFF_WRREQ_EN, 0x00000001);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index cb3a6e597d76..b69757383965 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -92,6 +92,17 @@ static const struct adreno_info gpulist[] = {
+>  		.gmem  = SZ_1M,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+>  		.init  = a3xx_gpu_init,
+> +	}, {
+> +		.rev   = ADRENO_REV(4, 0, 5, ANY_ID),
+> +		.revn  = 405,
+> +		.name  = "A405",
+> +		.fw = {
+> +			[ADRENO_FW_PM4] = "a420_pm4.fw",
+> +			[ADRENO_FW_PFP] = "a420_pfp.fw",
+> +		},
+> +		.gmem  = SZ_256K,
+> +		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.init  = a4xx_gpu_init,
+>  	}, {
+>  		.rev   = ADRENO_REV(4, 2, 0, ANY_ID),
+>  		.revn  = 420,
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 1d5c43c22269..3ddbf507941c 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -459,7 +459,7 @@ void adreno_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+>  				break;
+>  			/* fall-thru */
+>  		case MSM_SUBMIT_CMD_BUF:
+> -			OUT_PKT3(ring, adreno_is_a430(adreno_gpu) ?
+> +			OUT_PKT3(ring, adreno_is_a4xx(adreno_gpu) ?
+>  				CP_INDIRECT_BUFFER_PFE : CP_INDIRECT_BUFFER_PFD, 2);
+>  			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
+>  			OUT_RING(ring, submit->cmd[i].size);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 9ff4e550e7bd..35f744834ea9 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -202,6 +202,11 @@ static inline bool adreno_is_a4xx(struct adreno_gpu *gpu)
+>  	return (gpu->revn >= 400) && (gpu->revn < 500);
+>  }
+>  
+> +static inline int adreno_is_a405(struct adreno_gpu *gpu)
+> +{
+> +	return gpu->revn == 405;
+> +}
+> +
+>  static inline int adreno_is_a420(struct adreno_gpu *gpu)
+>  {
+>  	return gpu->revn == 420;
+> -- 
+> 2.17.1
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
