@@ -2,137 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 920891D7D30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 17:45:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 557961D7D59
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 17:50:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727903AbgERPp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 11:45:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38388 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727005AbgERPp2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 11:45:28 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727020AbgERPuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 11:50:54 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:52324 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727035AbgERPux (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 May 2020 11:50:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589817052; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=MA7x95uTokqN/aU7nVR9VOVc4EF74ZFKJm4hvl9kPak=; b=dMwg11uCHw18KMXBOJmTbThho/QRAsHH9gH6KSIOjYx6o+2wKi75ZFEcKIviAppNjmv+t1AR
+ s0ZpMHXflBTq58/EZKmSx2e4VVXhntG2LBcsizs5AlO4KYTBCfxSUljrVqNFeY2sMSO+mcbX
+ qvFVg8kPTzl0A+zHW0Xi532Jb6Q=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec2aecd.7fd5868fa960-smtp-out-n01;
+ Mon, 18 May 2020 15:50:37 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B71BDC433D2; Mon, 18 May 2020 15:50:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from groverm-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3E63920657;
-        Mon, 18 May 2020 15:45:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589816727;
-        bh=lkx1dqDKnZ+7YQ40oS1fSOiu3vaTshH77dFDIsJ7zpY=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=1R3PT4Fh7iXsD1dBKDsTA2zU+v6Fh9XxL6QeojwFzCuedeAidtnj708jw4tqa4daW
-         WQzvXD/kyiA6nLQ/cGC3LCXT/X1PHq4EszC5UwDZfsIpkO7JTCeIkjtPCyXP0PWYuV
-         HoXh0/YZGhjrBX0kbc703WUMPr7fTluicvDCKH8s=
-Date:   Mon, 18 May 2020 16:45:23 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] iomm/arm-smmu: Add stall implementation hook
-Message-ID: <20200518154522.GN32394@willie-the-truck>
-References: <20200421202004.11686-1-saiprakash.ranjan@codeaurora.org>
- <b491e02ad790a437115fdeab6b21bc48@codeaurora.org>
- <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
- <20200507125357.GA31783@willie-the-truck>
- <CAF6AEGuLU+_qP8HNO1s9PTPHqJnCMHzehmcT8NiJhiAwrfSH6w@mail.gmail.com>
- <CAF6AEGvuHKObTR97XdSXjmjKB+qjQ8N1_wxM=ZU8bEkF=cXp-A@mail.gmail.com>
- <20200511173008.GA24282@jcrouse1-lnx.qualcomm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200511173008.GA24282@jcrouse1-lnx.qualcomm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        (Authenticated sender: groverm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6C9E4C43636;
+        Mon, 18 May 2020 15:50:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6C9E4C43636
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=groverm@codeaurora.org
+From:   Mayank Grover <groverm@codeaurora.org>
+To:     linus.walleij@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, neeraju@codeaurora.org,
+        Mayank Grover <groverm@codeaurora.org>
+Subject: [PATCH] pinctrl: msm: Add check for pinctrl group is valid
+Date:   Mon, 18 May 2020 21:20:25 +0530
+Message-Id: <1589817025-21886-1-git-send-email-groverm@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 11, 2020 at 11:30:08AM -0600, Jordan Crouse wrote:
-> On Fri, May 08, 2020 at 08:40:40AM -0700, Rob Clark wrote:
-> > On Fri, May 8, 2020 at 8:32 AM Rob Clark <robdclark@gmail.com> wrote:
-> > >
-> > > On Thu, May 7, 2020 at 5:54 AM Will Deacon <will@kernel.org> wrote:
-> > > >
-> > > > On Thu, May 07, 2020 at 11:55:54AM +0100, Robin Murphy wrote:
-> > > > > On 2020-05-07 11:14 am, Sai Prakash Ranjan wrote:
-> > > > > > On 2020-04-22 01:50, Sai Prakash Ranjan wrote:
-> > > > > > > Add stall implementation hook to enable stalling
-> > > > > > > faults on QCOM platforms which supports it without
-> > > > > > > causing any kind of hardware mishaps. Without this
-> > > > > > > on QCOM platforms, GPU faults can cause unrelated
-> > > > > > > GPU memory accesses to return zeroes. This has the
-> > > > > > > unfortunate result of command-stream reads from CP
-> > > > > > > getting invalid data, causing a cascade of fail.
-> > > > >
-> > > > > I think this came up before, but something about this rationale doesn't add
-> > > > > up - we're not *using* stalls at all, we're still terminating faulting
-> > > > > transactions unconditionally; we're just using CFCFG to terminate them with
-> > > > > a slight delay, rather than immediately. It's really not clear how or why
-> > > > > that makes a difference. Is it a GPU bug? Or an SMMU bug? Is this reliable
-> > > > > (or even a documented workaround for something), or might things start
-> > > > > blowing up again if any other behaviour subtly changes? I'm not dead set
-> > > > > against adding this, but I'd *really* like to have a lot more confidence in
-> > > > > it.
-> > > >
-> > > > Rob mentioned something about the "bus returning zeroes" before, but I agree
-> > > > that we need more information so that we can reason about this and maintain
-> > > > the code as the driver continues to change. That needs to be a comment in
-> > > > the driver, and I don't think "but android seems to work" is a good enough
-> > > > justification. There was some interaction with HUPCF as well.
-> > >
-> > > The issue is that there are multiple parallel memory accesses
-> > > happening at the same time, for example CP (the cmdstream processor)
-> > > will be reading ahead and setting things up for the next draw or
-> > > compute grid, in parallel with some memory accesses from the shader
-> > > which could trigger a fault.  (And with faults triggered by something
-> > > in the shader, there are *many* shader threads running in parallel so
-> > > those tend to generate a big number of faults at the same time.)
-> > >
-> > > We need either CFCFG or HUPCF, otherwise what I have observed is that
-> > > while the fault happens, CP's memory access will start returning
-> > > zero's instead of valid cmdstream data, which triggers a GPU hang.  I
-> > > can't say whether this is something unique to qcom's implementation of
-> > > the smmu spec or not.
-> > >
-> > > *Often* a fault is the result of the usermode gl/vk/cl driver bug,
-> > > although I don't think that is an argument against fixing this in the
-> > > smmu driver.. I've been carrying around a local patch to set HUPCF for
-> > > *years* because debugging usermode driver issues is so much harder
-> > > without.  But there are some APIs where faults can be caused by the
-> > > user's app on top of the usermode driver.
-> > >
-> > 
-> > Also, I'll add to that, a big wish of mine is to have stall with the
-> > ability to resume later from a wq context.  That would enable me to
-> > hook in the gpu crash dump handling for faults, which would make
-> > debugging these sorts of issues much easier.  I think I posted a
-> > prototype of this quite some time back, which would schedule a worker
-> > on the first fault (since there are cases where you see 1000's of
-> > faults at once), which grabbed some information about the currently
-> > executing submit and some gpu registers to indicate *where* in the
-> > submit (a single submit could have 100's or 1000's of draws), and then
-> > resumed the iommu cb.
-> > 
-> > (This would ofc eventually be useful for svm type things.. I expect
-> > we'll eventually care about that too.)
-> 
-> Rob is right about HUPCF. Due to the parallel nature of the command processor
-> there is always a very good chance that a CP access is somewhere in the bus so
-> any pagefault is usually a death sentence. The GPU context bank would always
-> want HUPCF set to 1.
+The list of reserved gpio pins for platform are populated
+in gpiochip valid_mask.
 
-So this sounds like an erratum to me, and I'm happy to set HUPCF if we
-detect the broken implementation. However, it will need an entry in
-Documentation/arm64/silicon-errata.rst and a decent comment in the driver
-to explain what we're doing and why.
+Here on MSM common driver introduce ability to check if
+pingroup is valid, by parsing pins in pingroup against
+reserved pins for gpios. This does not handle non-gpio
+pingroups.
 
-Thanks,
+Signed-off-by: Mayank Grover <groverm@codeaurora.org>
+---
+ drivers/pinctrl/qcom/pinctrl-msm.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-Will
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 85858c1..b6ebe26 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -261,6 +261,24 @@ static unsigned msm_regval_to_drive(u32 val)
+ 	return (val + 1) * 2;
+ }
+ 
++static bool msm_pingroup_is_valid(struct msm_pinctrl *pctrl,
++				  const struct msm_pingroup *g)
++{
++	const unsigned int *pins = g->pins;
++	unsigned int num_pins = g->npins;
++	struct gpio_chip *chip = &pctrl->chip;
++	unsigned int max_gpios = chip->ngpio;
++	unsigned int i;
++
++	for (i = 0; i < num_pins; i++) {
++		/* Doesn't handle non-gpio pingroups */
++		if (pins[i] < max_gpios &&
++		    !gpiochip_line_is_valid(chip, pins[i]))
++			return false;
++	}
++	return true;
++}
++
+ static int msm_config_group_get(struct pinctrl_dev *pctldev,
+ 				unsigned int group,
+ 				unsigned long *config)
+@@ -276,6 +294,10 @@ static int msm_config_group_get(struct pinctrl_dev *pctldev,
+ 
+ 	g = &pctrl->soc->groups[group];
+ 
++	/* Check if group has all valid pins */
++	if (!msm_pingroup_is_valid(pctrl, g))
++		return -EINVAL;
++
+ 	ret = msm_config_reg(pctrl, g, param, &mask, &bit);
+ 	if (ret < 0)
+ 		return ret;
+@@ -355,6 +377,10 @@ static int msm_config_group_set(struct pinctrl_dev *pctldev,
+ 
+ 	g = &pctrl->soc->groups[group];
+ 
++	/* Check if group has all valid pins */
++	if (!msm_pingroup_is_valid(pctrl, g))
++		return -EINVAL;
++
+ 	for (i = 0; i < num_configs; i++) {
+ 		param = pinconf_to_config_param(configs[i]);
+ 		arg = pinconf_to_config_argument(configs[i]);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+member of the Code Aurora Forum, hosted by The Linux Foundation
