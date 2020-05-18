@@ -2,108 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A67731D7B1F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 16:23:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6439E1D7B2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 16:25:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbgEROXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 10:23:41 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:18402 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727036AbgEROXk (ORCPT
+        id S1727063AbgEROZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 10:25:28 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:40979 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726997AbgEROZ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 10:23:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589811820; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=XnR/IfU/T1PqN5i2mz+2EYG87NYU7KY5NbZ546eRMTY=; b=I2090KQYWETotrIHXA/VWgowJYVvIxCFa2/EalawraV0K1tV7X0yKlRicd6EBJi3409+ILZ0
- 5GY/rqDf/XbQMH7IqMQJ/J/FW/4iAvmo2uB1dA3lyQd+L6gk7FNeK7Rkuwa2O1FcgGnIvIi1
- +Y3TLOpXBsyNzjslTlT+l0FnXp4=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec29a6a.7f4e7306c420-smtp-out-n03;
- Mon, 18 May 2020 14:23:38 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7DF14C433F2; Mon, 18 May 2020 14:23:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D63DCC44791;
-        Mon, 18 May 2020 14:23:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D63DCC44791
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 18 May 2020 08:23:34 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, georgi.djakov@linaro.org,
-        mka@chromium.org
-Subject: Re: [PATCH 5/6] drm: msm: a6xx: use dev_pm_opp_set_bw to set DDR
- bandwidth
-Message-ID: <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Sharat Masetty <smasetty@codeaurora.org>,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, georgi.djakov@linaro.org,
-        mka@chromium.org
-References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
- <1589453659-27581-6-git-send-email-smasetty@codeaurora.org>
+        Mon, 18 May 2020 10:25:28 -0400
+Received: by mail-io1-f67.google.com with SMTP id o5so10726187iow.8;
+        Mon, 18 May 2020 07:25:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SZe4KkbwE56KDTMKfhIY8zuuqSvnZMQNRzwLYA4Q1D8=;
+        b=IHluULF2U3tbPUVHWVz+g1iIY5h90IKnUbay/RXRajnTCsWp+FHuKwdPmgO50LlBcb
+         PPAYKu8Pr+kqoBQ1Mdnj7qHf3zBLfe0KCr4D8j8xzqyd7xB5sttmWcA1wxFgqv5G9bga
+         lAaniaAck8pAK9AmnrktpKtvWMWrMVm3G6gcKXiRIybUnCcf6CfYwGKuAD7kGKqQBB/h
+         ID6fFZAm4UmEg5PwdoDwa27P28VnWtenlySISRjQlH6k5Cm3BzFZCivZENlJjHqAlU/k
+         0COllF7Qbcsd2VcfUAkj22Az3mDIZg6vI1Wk4qMWqeC+ksBf+KWm9t1C4M8akC2nme3h
+         5awQ==
+X-Gm-Message-State: AOAM531JCwgdPSWTscoRfrQxKmpR8Dxw7HxpBY9WuJP5FrqmcD3PJcsH
+        EbUnfhYuVQWDpqmSWl3A+Gy8YVI=
+X-Google-Smtp-Source: ABdhPJyKv1wlOzsUmKiSN/1DWeAReVlpAMVDXgnN2mAfLRgIhbynvN1AQFddzQKeqdfbxgYbQj8RhA==
+X-Received: by 2002:a05:6638:2144:: with SMTP id z4mr12789399jaj.35.1589811926731;
+        Mon, 18 May 2020 07:25:26 -0700 (PDT)
+Received: from rob-hp-laptop ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id c13sm4894758ilu.81.2020.05.18.07.25.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 07:25:26 -0700 (PDT)
+Received: (nullmailer pid 16096 invoked by uid 1000);
+        Mon, 18 May 2020 14:25:25 -0000
+Date:   Mon, 18 May 2020 08:25:25 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        shawn.guo@linaro.org, konradybcio@gmail.com,
+        linux-kernel@vger.kernel.org, p.zabel@pengutronix.de,
+        sboyd@kernel.org, devicetree@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, vincent.knecht@mailoo.org,
+        mturquette@baylibre.com, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v5 1/2] clk: qcom: Add DT bindings for MSM8939 GCC
+Message-ID: <20200518142525.GA15759@bogus>
+References: <20200517131348.688405-1-bryan.odonoghue@linaro.org>
+ <20200517131348.688405-2-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1589453659-27581-6-git-send-email-smasetty@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20200517131348.688405-2-bryan.odonoghue@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 14, 2020 at 04:24:18PM +0530, Sharat Masetty wrote:
-> This patches replaces the previously used static DDR vote and uses
-> dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
-> GPU frequency.
+On Sun, 17 May 2020 14:13:47 +0100, Bryan O'Donoghue wrote:
+> Add compatible strings and the include files for the MSM8939 GCC.
 > 
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Michael Turquette <mturquette@baylibre.com>
+> Cc: Stephen Boyd <sboyd@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-clk@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Tested-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 2d8124b..79433d3 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -141,11 +141,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
-> 
->  	gmu->freq = gmu->gpu_freqs[perf_index];
-> 
-> -	/*
-> -	 * Eventually we will want to scale the path vote with the frequency but
-> -	 * for now leave it at max so that the performance is nominal.
-> -	 */
-> -	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
-> +	dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
->  }
-
-This adds an implicit requirement that all targets need bandwidth settings
-defined in the OPP or they won't get a bus vote at all. I would prefer that
-there be an default escape valve but if not you'll need to add
-bandwidth values for the sdm845 OPP that target doesn't regress.
-
-Jordan
-
->  unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
-> --
-> 2.7.4
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   |   3 +
+>  include/dt-bindings/clock/qcom,gcc-msm8939.h  | 206 ++++++++++++++++++
+>  include/dt-bindings/reset/qcom,gcc-msm8939.h  | 110 ++++++++++
+>  3 files changed, 319 insertions(+)
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8939.h
+>  create mode 100644 include/dt-bindings/reset/qcom,gcc-msm8939.h
 > 
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Rob Herring <robh@kernel.org>
