@@ -2,118 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 405BF1D7434
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 11:39:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0F4F1D74F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 12:16:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726779AbgERJjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 05:39:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40562 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726726AbgERJjq (ORCPT
+        id S1726270AbgERKQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 06:16:23 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:39208 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726130AbgERKQX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 05:39:46 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0352C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 02:39:44 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id u2so1376218vsi.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 02:39:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MorV8jZrfJk/BfhvGvB2TOF5zsx+Wxk/DjWRxlh/fVE=;
-        b=xBsGXK3kMfgTXnjc7qVZN+0UmomJeOzYsQPrIb+9tF4CbFMgiDA6C3PuDbob77YJzH
-         FakKCYPW/HtfPZpXfBOyOYW0f7QZes8e5nPCLSZE43x+uz7Ov/yGJKNJ3oXG0aXkDfXj
-         Lw3GWaG0HNNSs9qAMMfQLkd8seEktWf/on2x39MxXgiQu9TXpXfUnFnYs4tpAnPd2/Rv
-         VpQvQx/2Xwr1nGWIGgHhIpV/nMsBOdUrQqKVNLRTwGJnx4K1o0ySdlQIz+nnmTH3bw+p
-         mz06rbqx0UNN4Ln5H+Ua9xKlFSdlyB6LA5QtAYNP53JHZADQXnmfihvNji0GkjP/E2ct
-         VRFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MorV8jZrfJk/BfhvGvB2TOF5zsx+Wxk/DjWRxlh/fVE=;
-        b=HuASbj7FKcKEhcwOU73jL+HHj17inBeo6n4fpU5NR1MAZPxlW8wkR7ZJpotcrwsGYC
-         AmCxQPdL2vJVipj9/4KWSCJsypkIRgRkUeg0rxRcqPHpwC4ORDsHjVrtG4+yyQUUQB9S
-         CPEetKQVlDSVuf4M8pCAveAH9r3ubl/vVRSyGsU91RxSzbnoKBUwldBCz51wCahD6zJd
-         vhPFMdz3WZu6GB8MeJuMK82EH9y/HLwCagMB+iHjR2fw6HodShoqZQFfjkg5jdHJ24rP
-         eu+im+WR4LwuOJIui8glQf4pb6d6NAyLdzd6++chjKGp9TQoP1Vx8anFi3qghzPjxNkm
-         LB9Q==
-X-Gm-Message-State: AOAM533EdQccLwq6M/bJZ1Xifqhrb9srpripUPRxoivBycKed6cvUcJT
-        Ud0Jpr6BRAIHcGKj5cqEEHF/WF4tkLih8ph6/Dbe0jjh
-X-Google-Smtp-Source: ABdhPJxJq8NTrKez2Q/RxkVPbbOJtDSlSlSG3djZ0+NTOrY+UEne/3D3GaPsOLbplZSqzwcILBswQF/S3sTSohFoEoA=
-X-Received: by 2002:a67:690e:: with SMTP id e14mr3632665vsc.34.1589794783785;
- Mon, 18 May 2020 02:39:43 -0700 (PDT)
+        Mon, 18 May 2020 06:16:23 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id 55002804CE;
+        Mon, 18 May 2020 12:16:13 +0200 (CEST)
+Date:   Mon, 18 May 2020 12:16:09 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Russell King <linux@armlinux.org.uk>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH v2 01/16] video: amba-clcd: use devm_of_find_backlight
+Message-ID: <20200518101609.GA759699@ravnborg.org>
+References: <20200517190139.740249-1-sam@ravnborg.org>
+ <20200517190139.740249-2-sam@ravnborg.org>
+ <CACRpkdbogVA=12Xzh6jC0AaE7DrH8Z7iVuG3s_gS4MQBYF61Dw@mail.gmail.com>
 MIME-Version: 1.0
-References: <1588772671-19675-1-git-send-email-sartgarg@codeaurora.org> <1588772671-19675-2-git-send-email-sartgarg@codeaurora.org>
-In-Reply-To: <1588772671-19675-2-git-send-email-sartgarg@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 18 May 2020 11:39:07 +0200
-Message-ID: <CAPDyKFo0CabC_O-NusH4tUzjnG37_XQhY=QNhgnkQMoTokfaQg@mail.gmail.com>
-Subject: Re: [PATCH V1 1/2] mmc: sdhci: Introduce new quirk to use reserved timeout
-To:     Sarthak Garg <sartgarg@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdbogVA=12Xzh6jC0AaE7DrH8Z7iVuG3s_gS4MQBYF61Dw@mail.gmail.com>
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=MOBOZvRl c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8 a=PHq6YzTAAAAA:8 a=hD80L64hAAAA:8
+        a=sozttTNsAAAA:8 a=KKAkSRfTAAAA:8 a=QyXUC8HyAAAA:8 a=cm27Pg_UAAAA:8
+        a=RYpW3c0wQFxx2xuxHgkA:9 a=CjuIK1q_8ugA:10 a=E9Po1WZjFZOl8hwRPBS3:22
+        a=ZKzU8r6zoKMcqsNulkmm:22 a=aeg5Gbbo78KNqacMgKqU:22
+        a=cvBusfyB2V15izCimMoJ:22 a=xmb-EsYY8bH0VWELuYED:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 May 2020 at 15:53, Sarthak Garg <sartgarg@codeaurora.org> wrote:
->
-> Introduce a new quirk for letting vendor drivers to use reserved
-> timeout value (0xF) in timeout control register.
->
-> Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
-> Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
-> ---
->  drivers/mmc/host/sdhci.c | 3 ++-
->  drivers/mmc/host/sdhci.h | 5 +++++
->  2 files changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-> index 1bb6b67..07528a9 100644
-> --- a/drivers/mmc/host/sdhci.c
-> +++ b/drivers/mmc/host/sdhci.c
-> @@ -967,7 +967,8 @@ static u8 sdhci_calc_timeout(struct sdhci_host *host, struct mmc_command *cmd,
->         }
->
->         if (count >= 0xF) {
-> -               if (!(host->quirks2 & SDHCI_QUIRK2_DISABLE_HW_TIMEOUT))
-> +               if (!(host->quirks2 & SDHCI_QUIRK2_DISABLE_HW_TIMEOUT) ||
-> +               !(host->quirks2 & SDHCI_QUIRK2_USE_RESERVED_MAX_TIMEOUT))
+Hi Linus.
 
-I don't quite get how this can make your variant use 0xF rather than 0xE?
+On Mon, May 18, 2020 at 10:10:12AM +0200, Linus Walleij wrote:
+> On Sun, May 17, 2020 at 9:01 PM Sam Ravnborg <sam@ravnborg.org> wrote:
+> 
+> > Look up backlight device using devm_of_find_backlight().
+> > This simplifies the code and prevents us from hardcoding
+> > the node name in the driver.
+> >
+> > v2:
+> >   - Added Cc: Peter Ujfalusi
+> >
+> > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> > Cc: Russell King <linux@armlinux.org.uk>
+> > Cc: Sam Ravnborg <sam@ravnborg.org>
+> > Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+> > Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
+> > Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > Cc: Jani Nikula <jani.nikula@intel.com>
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> 
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Thanks. I went ahead and applied this now, so we could kill
+the last user of of_find_backlight_by_node().
 
-To me it looks like an updated conditional check to print a debug message, no?
+I hope we can make of_find_backlight_by_node() static after the merge window
+so no new users appears.
 
->                         DBG("Too large timeout 0x%x requested for CMD%d!\n",
->                             count, cmd->opcode);
->                 count = 0xE;
-> diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-> index 8d2a096..02f8779 100644
-> --- a/drivers/mmc/host/sdhci.h
-> +++ b/drivers/mmc/host/sdhci.h
-> @@ -476,6 +476,11 @@ struct sdhci_host {
->   * block count.
->   */
->  #define SDHCI_QUIRK2_USE_32BIT_BLK_CNT                 (1<<18)
-> +/*
-> + * Some controllers define the usage of 0xF in data timeout counter
-> + * register (0x2E) which is actually a reserved bit as per specification.
-> + */
-> +#define SDHCI_QUIRK2_USE_RESERVED_MAX_TIMEOUT          (1<<19)
->
->         int irq;                /* Device IRQ */
->         void __iomem *ioaddr;   /* Mapped address */
-> --
-> 2.7.4
->
-
-Kind regards
-Uffe
+	Sam
