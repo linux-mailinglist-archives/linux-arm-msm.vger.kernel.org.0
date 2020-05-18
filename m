@@ -2,107 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 911E71D8898
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 21:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A88EE1D88C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 22:06:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728621AbgERT50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 15:57:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41980 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726478AbgERT50 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 15:57:26 -0400
-Received: from localhost (unknown [122.178.242.232])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726959AbgERUEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 16:04:09 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:56393 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726250AbgERUEJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 May 2020 16:04:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589832248; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=uo59LCImq0/Qfc0TPHY693ynMcaKgKao0O2qJkiCa9o=; b=S++3tz7H1LksXW6Sw7voLlEWCYJgciwlfuu4/xoZxWmMUlVVWuo9upGiKevZfoy2DVvRtJyJ
+ alsYDhSbmhMQ+sOAhk6E378Y57cz8ttg4uR2bRwbmxks7Yib6Ig10e4hMcMGD5u5quGmVTAY
+ QijuVEuNXe+NC4J4UGxJsXmi6XE=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec2ea37.7f93ace636f8-smtp-out-n04;
+ Mon, 18 May 2020 20:04:07 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 887F0C432C2; Mon, 18 May 2020 20:04:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from bbhatt-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E35B320657;
-        Mon, 18 May 2020 19:57:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589831845;
-        bh=DRz4DAY0Mnx2npyUdBsc9qwGVxIZLo1A/yWb9iqMvwc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Qc0a6OQvdCAEnO3CUTnrYxiYhaPyQTi55+IhPmvKayJnYlwQi4oxEdbuCAAoaqMDa
-         dFImllZ7cfaCePbe7ebGoK91XABYlDlmrHmwm9ncKc6LY2DAeuS62km5DMrPTVNXnA
-         BpsvtV7X7O3awzJsEdsD90yUG11JfNCxNl9brLZE=
-Date:   Tue, 19 May 2020 01:27:19 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Anders Roxell <anders.roxell@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v13 3/5] usb: xhci: Add support for Renesas controller
- with memory
-Message-ID: <20200518195719.GG374218@vkoul-mobl.Dlink>
-References: <20200506060025.1535960-1-vkoul@kernel.org>
- <20200506060025.1535960-4-vkoul@kernel.org>
- <CADYN=9JLeWHODRWDEcTE_6iZ3TX-E4yyx3OwqzK-H-ytLAmQUg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADYN=9JLeWHODRWDEcTE_6iZ3TX-E4yyx3OwqzK-H-ytLAmQUg@mail.gmail.com>
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F2FF1C433D2;
+        Mon, 18 May 2020 20:04:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F2FF1C433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v3 0/7] Introduce features and debugfs/sysfs entries for MHI
+Date:   Mon, 18 May 2020 13:03:54 -0700
+Message-Id: <1589832241-13867-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Anders,
+Introduce independent bus and device voting mechanism for clients and save
+hardware information from BHI.
+Allow reading and modifying some MHI variables for debug, test, and
+informational purposes using debugfs.
+Read values for device specific hardware information to be used by OEMs in
+factory testing such as serial number and PK hash using sysfs.
 
-On 18-05-20, 19:53, Anders Roxell wrote:
-> On Wed, 6 May 2020 at 08:01, Vinod Koul <vkoul@kernel.org> wrote:
-> >
-> > Some rensas controller like uPD720201 and uPD720202 need firmware to be
-> > loaded. Add these devices in pci table and invoke renesas firmware loader
-> > functions to check and load the firmware into device memory when
-> > required.
-> >
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> 
-> Hi, I got a build error when I built an arm64 allmodconfig kernel.
+This set of patches was tested on arm64 and x86.
 
-Thanks for this. This is happening as we have default y for USB_XHCI_PCI
-and then we make USB_XHCI_PCI_RENESAS=m. That should be not allowed as
-we export as symbol so both can be inbuilt or modules but USB_XHCI_PCI=y
-and USB_XHCI_PCI_RENESAS=m cant. While it is valid that USB_XHCI_PCI=y|m
-and USB_XHCI_PCI_RENESAS=n
+v3:
+-Add patch to check for pending packets in suspend as a dependency for the
+independent voting mechanism introduction
+-Include register dump entry for debugfs to dump MHI, BHI, and BHIe registers
+-Update commit message for the debugfs patch
+-Updated Documentation/ABI with the required info for sysfs
+-Updated debugfs patch to include a new KConfig entry and dependencies
+-Updated reviewed-by for some patches
 
-So this seems to get fixed by below for me. I have tested with
- - both y and m (easy)
- - make USB_XHCI_PCI_RENESAS=n, USB_XHCI_PCI=y|m works
- - try making USB_XHCI_PCI=y and USB_XHCI_PCI_RENESAS=m, then
-   USB_XHCI_PCI=m by kbuild :)
- - try making USB_XHCI_PCI=m and USB_XHCI_PCI_RENESAS=y, kbuild gives
-   error prompt that it will be m due to depends
+v2:
+-Added a new debugfs.c file for specific debugfs entries and code
+-Updated commit text and addressed some comments for voting change
+-Made sure sysfs is only used for serial number and OEM PK hash usage
 
-Thanks to all the fixes done by Arnd which pointed me to this. Pls
-verify and I will send the fix with you as reported :)
+Bhaumik Bhatt (7):
+  bus: mhi: core: Abort suspends due to outgoing pending packets
+  bus: mhi: core: Introduce independent voting mechanism
+  bus: mhi: core: Use generic name field for an MHI device
+  bus: mhi: core: Introduce helper function to check device state
+  bus: mhi: core: Introduce debugfs entries and counters for MHI
+  bus: mhi: core: Read and save device hardware information from BHI
+  bus: mhi: core: Introduce sysfs entries for MHI
 
----- >8 ----
-
-diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
-index b5c542d6a1c5..92783d175b3f 100644
---- a/drivers/usb/host/Kconfig
-+++ b/drivers/usb/host/Kconfig
-@@ -40,11 +40,11 @@ config USB_XHCI_DBGCAP
- config USB_XHCI_PCI
-        tristate
-        depends on USB_PCI
-+       depends on USB_XHCI_PCI_RENESAS || !USB_XHCI_PCI_RENESAS
-        default y
- 
- config USB_XHCI_PCI_RENESAS
-        tristate "Support for additional Renesas xHCI controller with firwmare"
--       depends on USB_XHCI_PCI
-        ---help---
-          Say 'Y' to enable the support for the Renesas xHCI controller with
-          firwmare. Make sure you have the firwmare for the device and
+ Documentation/ABI/stable/sysfs-bus-mhi |  25 ++
+ MAINTAINERS                            |   1 +
+ drivers/bus/mhi/Kconfig                |   8 +
+ drivers/bus/mhi/core/Makefile          |   5 +-
+ drivers/bus/mhi/core/boot.c            |  17 +-
+ drivers/bus/mhi/core/debugfs.c         | 501 +++++++++++++++++++++++++++++++++
+ drivers/bus/mhi/core/init.c            |  80 +++++-
+ drivers/bus/mhi/core/internal.h        |  29 ++
+ drivers/bus/mhi/core/main.c            |   6 +-
+ drivers/bus/mhi/core/pm.c              |  79 ++++--
+ include/linux/mhi.h                    |  39 ++-
+ 11 files changed, 745 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+ create mode 100644 drivers/bus/mhi/core/debugfs.c
 
 -- 
-~Vinod
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
