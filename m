@@ -2,104 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C4861D6C70
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2020 21:39:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 933D61D71B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 09:25:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726269AbgEQTis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 May 2020 15:38:48 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:46524 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726693AbgEQTis (ORCPT
+        id S1726800AbgERHZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 03:25:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726127AbgERHZO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 May 2020 15:38:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589744327; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=0O8z3VVrmPj5u81vYKpNmSGfVT78wO0SwTwsfqos8a0=; b=QmHxiJwOZhErdTQ1HxWofAsjncNsAdwAmaWy1MDHdPmr3OIOVwOdxAk0OgHFd1rTr0BITbZA
- aLUdw5lRJ4+9wu+28+Sv2wKxjjD5YkhRT81+UHDnoHvjstxv3VJDAUwQarHxJ7X3JCCUUxJx
- rH3Y/G3c02JKVV5zldPwqHKz31w=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec192b8.7f844379cf80-smtp-out-n03;
- Sun, 17 May 2020 19:38:32 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6DE4AC433F2; Sun, 17 May 2020 19:38:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EFF3C432C2;
-        Sun, 17 May 2020 19:38:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7EFF3C432C2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] bus: mhi: core: Use current ee in intvec handler
-To:     bbhatt@codeaurora.org
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-References: <1589509049-14532-1-git-send-email-jhugo@codeaurora.org>
- <aab020af0372b11ff63ba4526aab0fdc@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <713dc189-561d-3c4a-f856-26d006524485@codeaurora.org>
-Date:   Sun, 17 May 2020 13:38:30 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Mon, 18 May 2020 03:25:14 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3493AC05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 00:25:14 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id o14so8695611ljp.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 00:25:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=A4X2qdsWrVq8ys2tL3BwSCqBZMXXWj5rnnEaJc5JZaE=;
+        b=eLfcfSqtRDuc6tbg88OApOzoqUcIS4NG8GeiZWnCrgN+ybEldsNH1oGxujMdMe5Bzf
+         9bter5swZM+kfB23l91tUOydEeSmenGgjwlIHMzPGWZnZjn80YKa/MhPyZgN4AZ6c+K1
+         ZAPmMlZ3l46v6YcSSsLIqCv2e9sMbN6cuproPK+HqWPMNvN+HzOasHiI8ySQ7FbD/vrl
+         16n7FLJa3FLZICDzHSVgoGMDLudAgYf7FewpKz/VQ7aM7FPhEiJa0VjIpuszLuqRVn09
+         660pC6OZGCB8RP19vKSAvyGq7Nsjb/9WIQru91qiA2NxLdLMYd87kvRI1ka/402H9eHR
+         njoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=A4X2qdsWrVq8ys2tL3BwSCqBZMXXWj5rnnEaJc5JZaE=;
+        b=HPbNBHJM+eCOyIqTq2DkNIbdv6epmBfhfVJoLN5HuGKuQoy4G1FiRWZAUXbS0tr6Tc
+         i9rPLCGYDJgiXHNUiQ14RLOu34jOZY3CGlvfFp/YammRsV2K+bxX7sOA0X8HJMPfBEJH
+         sEkUcrgtj2n948bp/PROY9gemimRAyPipH+R/Q/TP0w23U3a5qw5y+5KxP+tDOyJZ839
+         /K1jXEGKL8ALNkPODW9ouvjAQbQdVxqqAwnfnxYArqPtWXU/ho8aOkgq4ukRA9ZYY8bi
+         K5t10KqfwkEy+QtmBj/EL1YL5KU1Hb4Kl5AgurNrDXNH0/Pl6t8y73vVkV1yfEpSqy+S
+         twuA==
+X-Gm-Message-State: AOAM532r7okmJ2MqmedVdRFNzceWMGwUCCSfjwi6lx//WrDeQJnQaAZq
+        XTZGDRsC46YFru30ClBzDpCaKiy2bl57semYfNvuqw==
+X-Google-Smtp-Source: ABdhPJwMZMkCfCW9raRwDJrjtwYd9CAK3CzuX6TpRrPy9cZjubvsZSWmsZiS6MCkoF/MQ2FSXPfidMfY+ruGlhpXcFU=
+X-Received: by 2002:a2e:8805:: with SMTP id x5mr9995860ljh.223.1589786712610;
+ Mon, 18 May 2020 00:25:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <aab020af0372b11ff63ba4526aab0fdc@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1589361736-816-1-git-send-email-jprakash@codeaurora.org> <1589361736-816-2-git-send-email-jprakash@codeaurora.org>
+In-Reply-To: <1589361736-816-2-git-send-email-jprakash@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 18 May 2020 09:25:01 +0200
+Message-ID: <CACRpkdbcRQT=tK=jTbTvgoZvyzC4kSkkj2PK14nKE3WamVZz7w@mail.gmail.com>
+Subject: Re: [PATCH V4 1/5] iio: adc: Convert the QCOM SPMI ADC bindings to
+ .yaml format
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        smohanad@codeaurora.org, Kiran Gunda <kgunda@codeaurora.org>,
+        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-iio <linux-iio@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-arm-msm-owner@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/15/2020 8:58 PM, bbhatt@codeaurora.org wrote:
-> On 2020-05-14 19:17, Jeffrey Hugo wrote:
->> The intvec handler stores the caches ee in a local variable for use in
->> processing the intvec.  It should instead use the current ee which is
->> read at the beginning of the intvec incase that the intvec is related to
->> an ee change.  Otherwise, the handler might make the wrong decision
->> based on an incorrect ee.
->>
->> Fixes: 3000f85b8f47 (bus: mhi: core: Add support for basic PM operations)
->> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/main.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> index 7272a5a..0a41fe5 100644
->> --- a/drivers/bus/mhi/core/main.c
->> +++ b/drivers/bus/mhi/core/main.c
->> @@ -386,8 +386,8 @@ irqreturn_t mhi_intvec_threaded_handler(int
->> irq_number, void *dev)
->>      write_lock_irq(&mhi_cntrl->pm_lock);
->>      if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
->>          state = mhi_get_mhi_state(mhi_cntrl);
->> -        ee = mhi_cntrl->ee;
->>          mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
->> +        ee = mhi_cntrl->ee;
->>      }
->>
->>      if (state == MHI_STATE_SYS_ERR) {
-> Hi Jeff,
-> 
-> Let's hold off on this change for now please as we have some good set of
-> bug fixes and improvements coming in very soon. They're only pending post
-> to LKML.
+On Wed, May 13, 2020 at 11:22 AM Jishnu Prakash <jprakash@codeaurora.org> wrote:
 
-Does that series of changes address the same issue this patch does, and 
-are they going to be posted soon (ie this week)?
+> Convert the adc bindings from .txt to .yaml format.
+>
+> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+> Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+
+Yours,
+Linus Walleij
