@@ -2,57 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EC971D733E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 10:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 405BF1D7434
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 11:39:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726378AbgERIqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 04:46:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48352 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726040AbgERIqs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 04:46:48 -0400
-Received: from localhost (unknown [171.76.87.222])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B0AEC20787;
-        Mon, 18 May 2020 08:46:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589791608;
-        bh=l41k8WOcSAevgUEovK3C8Xo8J7ox25uuSDhcFkvYpME=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kCMS6DwyvYiVn3BYBDobSkQ6vUV+f3uqfoIWHATqXG/4v+T3yG793kDq1wE0gym+y
-         UgEUzF69Aey/VAHOD4rtW/Jc03pUSdMHzB3ihyFYGqCw433kLDYusnJYfPvYMuNAc6
-         htZfQaeanyYlle3yRa61rmTkYGEnGagllo055HHs=
-Date:   Mon, 18 May 2020 14:16:37 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>
-Subject: Re: [PATCH v3] arm64: dts: qcom: apq8016-sbc-d3: Add Qualcomm
- APQ8016 SBC + D3Camera mezzanine
-Message-ID: <20200518084637.GE374218@vkoul-mobl.Dlink>
-References: <20200518082129.2103683-1-robert.foss@linaro.org>
+        id S1726779AbgERJjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 05:39:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40562 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726726AbgERJjq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 May 2020 05:39:46 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0352C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 02:39:44 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id u2so1376218vsi.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 02:39:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MorV8jZrfJk/BfhvGvB2TOF5zsx+Wxk/DjWRxlh/fVE=;
+        b=xBsGXK3kMfgTXnjc7qVZN+0UmomJeOzYsQPrIb+9tF4CbFMgiDA6C3PuDbob77YJzH
+         FakKCYPW/HtfPZpXfBOyOYW0f7QZes8e5nPCLSZE43x+uz7Ov/yGJKNJ3oXG0aXkDfXj
+         Lw3GWaG0HNNSs9qAMMfQLkd8seEktWf/on2x39MxXgiQu9TXpXfUnFnYs4tpAnPd2/Rv
+         VpQvQx/2Xwr1nGWIGgHhIpV/nMsBOdUrQqKVNLRTwGJnx4K1o0ySdlQIz+nnmTH3bw+p
+         mz06rbqx0UNN4Ln5H+Ua9xKlFSdlyB6LA5QtAYNP53JHZADQXnmfihvNji0GkjP/E2ct
+         VRFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MorV8jZrfJk/BfhvGvB2TOF5zsx+Wxk/DjWRxlh/fVE=;
+        b=HuASbj7FKcKEhcwOU73jL+HHj17inBeo6n4fpU5NR1MAZPxlW8wkR7ZJpotcrwsGYC
+         AmCxQPdL2vJVipj9/4KWSCJsypkIRgRkUeg0rxRcqPHpwC4ORDsHjVrtG4+yyQUUQB9S
+         CPEetKQVlDSVuf4M8pCAveAH9r3ubl/vVRSyGsU91RxSzbnoKBUwldBCz51wCahD6zJd
+         vhPFMdz3WZu6GB8MeJuMK82EH9y/HLwCagMB+iHjR2fw6HodShoqZQFfjkg5jdHJ24rP
+         eu+im+WR4LwuOJIui8glQf4pb6d6NAyLdzd6++chjKGp9TQoP1Vx8anFi3qghzPjxNkm
+         LB9Q==
+X-Gm-Message-State: AOAM533EdQccLwq6M/bJZ1Xifqhrb9srpripUPRxoivBycKed6cvUcJT
+        Ud0Jpr6BRAIHcGKj5cqEEHF/WF4tkLih8ph6/Dbe0jjh
+X-Google-Smtp-Source: ABdhPJxJq8NTrKez2Q/RxkVPbbOJtDSlSlSG3djZ0+NTOrY+UEne/3D3GaPsOLbplZSqzwcILBswQF/S3sTSohFoEoA=
+X-Received: by 2002:a67:690e:: with SMTP id e14mr3632665vsc.34.1589794783785;
+ Mon, 18 May 2020 02:39:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200518082129.2103683-1-robert.foss@linaro.org>
+References: <1588772671-19675-1-git-send-email-sartgarg@codeaurora.org> <1588772671-19675-2-git-send-email-sartgarg@codeaurora.org>
+In-Reply-To: <1588772671-19675-2-git-send-email-sartgarg@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 18 May 2020 11:39:07 +0200
+Message-ID: <CAPDyKFo0CabC_O-NusH4tUzjnG37_XQhY=QNhgnkQMoTokfaQg@mail.gmail.com>
+Subject: Re: [PATCH V1 1/2] mmc: sdhci: Introduce new quirk to use reserved timeout
+To:     Sarthak Garg <sartgarg@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-05-20, 10:21, Robert Foss wrote:
-> Add device treee support for the Qualcomm APQ8016 SBC, otherwise known as
-> the Dragonboard 410c with the D3Camera mezzanine expansion board.
-> 
-> The D3Camera mezzanine ships in a kit with a OmniVision 5640 sensor module,
-> which is what this DT targets.
+On Wed, 6 May 2020 at 15:53, Sarthak Garg <sartgarg@codeaurora.org> wrote:
+>
+> Introduce a new quirk for letting vendor drivers to use reserved
+> timeout value (0xF) in timeout control register.
+>
+> Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
+> Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
+> ---
+>  drivers/mmc/host/sdhci.c | 3 ++-
+>  drivers/mmc/host/sdhci.h | 5 +++++
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> index 1bb6b67..07528a9 100644
+> --- a/drivers/mmc/host/sdhci.c
+> +++ b/drivers/mmc/host/sdhci.c
+> @@ -967,7 +967,8 @@ static u8 sdhci_calc_timeout(struct sdhci_host *host, struct mmc_command *cmd,
+>         }
+>
+>         if (count >= 0xF) {
+> -               if (!(host->quirks2 & SDHCI_QUIRK2_DISABLE_HW_TIMEOUT))
+> +               if (!(host->quirks2 & SDHCI_QUIRK2_DISABLE_HW_TIMEOUT) ||
+> +               !(host->quirks2 & SDHCI_QUIRK2_USE_RESERVED_MAX_TIMEOUT))
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+I don't quite get how this can make your variant use 0xF rather than 0xE?
 
--- 
-~Vinod
+To me it looks like an updated conditional check to print a debug message, no?
+
+>                         DBG("Too large timeout 0x%x requested for CMD%d!\n",
+>                             count, cmd->opcode);
+>                 count = 0xE;
+> diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
+> index 8d2a096..02f8779 100644
+> --- a/drivers/mmc/host/sdhci.h
+> +++ b/drivers/mmc/host/sdhci.h
+> @@ -476,6 +476,11 @@ struct sdhci_host {
+>   * block count.
+>   */
+>  #define SDHCI_QUIRK2_USE_32BIT_BLK_CNT                 (1<<18)
+> +/*
+> + * Some controllers define the usage of 0xF in data timeout counter
+> + * register (0x2E) which is actually a reserved bit as per specification.
+> + */
+> +#define SDHCI_QUIRK2_USE_RESERVED_MAX_TIMEOUT          (1<<19)
+>
+>         int irq;                /* Device IRQ */
+>         void __iomem *ioaddr;   /* Mapped address */
+> --
+> 2.7.4
+>
+
+Kind regards
+Uffe
