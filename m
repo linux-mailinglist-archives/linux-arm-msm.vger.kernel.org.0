@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 186D81D7F26
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:50:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B62F61D7F39
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:53:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728470AbgERQuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 12:50:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51770 "EHLO
+        id S1727006AbgERQxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 12:53:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726958AbgERQuo (ORCPT
+        with ESMTP id S1726958AbgERQxH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 12:50:44 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D99C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:50:44 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id w7so12633000wre.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:50:43 -0700 (PDT)
+        Mon, 18 May 2020 12:53:07 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 708ACC05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:53:07 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id 50so12649265wrc.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BdW89KVUrfgJZgJ6lFQwQ5B2siSxs0MlWvrsl3aUQvQ=;
-        b=kyAoq1KRo6MAV61Q5tg0wLc1p7tEFFGM9R1ue2/8u5qXYjgnOMfFMq2+VHjUopZxUE
-         hNwkvfIh6pLFNnvXrcmBW1+67wD6TWvuEohaowOSAcNnMqfaec+9mCC3UifrTn6DKq4M
-         zNp47EWNQpzTFKO/Bi26pxmQ5fSWHCYiF+3yzgKP5JC5NhHJGTETi+b8zUAaLD3zNIcU
-         cmu2QwQOGNnfevQqsaxnRfFi7Xu7DRu6IhBsEKE4EYZumKv62GY3NjicT5Xrhs0DeF63
-         z7ZlNqwgdXA4FVYyRhaNtapFsuZMyzJcEzLrohOHDnUB2MVZrSBHWdLXyBO2dqOYLvpe
-         nTCQ==
+        bh=ijBAqWhjVT2LjRwjHCsApAQ5X0eCT7RC7hJgLAkyqw8=;
+        b=wgPUN3+2/K0kG4HK1mqjblfGmptTaw2oeUN7NSXv6BL7pOrux4WPaa0WU849PQB3TD
+         wAeOYNkGKELEztGhwlrSxxaOgMkAtov0DVH1Y+Rfl+NbKuW+iZSawH2gTraEW2M2rFcv
+         IKi3OseZdHVsvG87ZueXMlEotysdOgqJXfkaNGZ0GVLu5LABAzTWdL7CyrGwKZLLohQs
+         +oBLX40blfzWsC5DK56HRy2F0lD0/jWW0yZhZex2k/VP0rOypoCUIMSFTT/RqcCs7NXI
+         G0IFpvEwO3mzCp0yRW118dCUuTAgNeerRl6HbTg2RVUtoHdILMZ1Zx9jz3PPo3MW1Mtx
+         kxIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BdW89KVUrfgJZgJ6lFQwQ5B2siSxs0MlWvrsl3aUQvQ=;
-        b=Fn6Ly6hpCESQGFDW0cJoYyWhJzcW2ranzjhvLfb31j8QAthhuz3A1uEfun7/Pk5vtp
-         NCMl6UjmItBG9YooWDkqWxsr9LN1xq3UXCB5qV+H1VO7owxaItHU44xB5XjOyv854AbS
-         yCxWh3vMxJz0f4SCon9Q1QlYp7QKOQZN0wexe5G/l7P7NUMVtSaU0rKQl2xJRj2pDd0t
-         StGwxuXC3Z4nFeeX0XlFz8WXFlDFH3VIv9zSVfh2digEPKScKvA/O8AIbiPccapEE+0C
-         7mjtPpEy5/UdArS06/Rg/anyYPkuxbS1XANCnpbi/0X1kQxca8tQHxT8syJzHSB3DJ7t
-         rmtg==
-X-Gm-Message-State: AOAM532WF2B63PoIo17dbAKjKzeW1MGjxPuh9JpHxY8dsdg6bXZR7h+l
-        892iTM2SgfqETnGQl+algzm5Og==
-X-Google-Smtp-Source: ABdhPJx5yS9SSHVUTWVYS7UghxQM9AekWaDO8lrmLR36Nmb3f1pPvSwvNzKB+hZoMPyglpPGPYxrww==
-X-Received: by 2002:adf:fb08:: with SMTP id c8mr21082644wrr.421.1589820642769;
-        Mon, 18 May 2020 09:50:42 -0700 (PDT)
+        bh=ijBAqWhjVT2LjRwjHCsApAQ5X0eCT7RC7hJgLAkyqw8=;
+        b=a2WBsZ87GJc7Xj4QbxHB9Ik42EQaDJiod8Pwz9emleZOy3E9nbBVVtwbWib55qSyrI
+         MVh1iejGFpP/mKIwM7MB7Jdlosm4AxOk+79NTGoELwUnTqPBd4wPn9HP746pYdgtje2v
+         vIJ7HWXS7UFwKElFToG7IPWeSWM1lA0Prj3hid1kdZxhl2+a0pcOPHeauNRfOCGdFC0/
+         IgtF8G2rXGDzpFUdSvxuxf6q7ZOqUciH6J1Tj4t674Ewuw2fT5Zkq3Jl9Yl6/pBO83NX
+         KIB9nNEmcGeHtup+VBSkrteUIxZOUaCNlwyMkw9x4sFsg7Wu7s1aOsYu+Wcq1gBgt7vO
+         U8Ig==
+X-Gm-Message-State: AOAM5331hME0G37WXU12I3Jx9KfrkLgkDASJR0YGok6Nfmulp7oxsmBZ
+        WkTXYWLIMQhjoqRCrzs16QvCGg==
+X-Google-Smtp-Source: ABdhPJwXbF7kj+gBYCRIblwP4oXxUs4NfAF8BsL5zMjdb2Km2HpvTtBro/yU94ectqx4vHKNdUFiqg==
+X-Received: by 2002:a5d:6108:: with SMTP id v8mr20068342wrt.286.1589820786103;
+        Mon, 18 May 2020 09:53:06 -0700 (PDT)
 Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id w13sm16641638wrm.28.2020.05.18.09.50.41
+        by smtp.gmail.com with ESMTPSA id x24sm18288668wrd.51.2020.05.18.09.53.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 09:50:42 -0700 (PDT)
-Date:   Mon, 18 May 2020 17:50:40 +0100
+        Mon, 18 May 2020 09:53:05 -0700 (PDT)
+Date:   Mon, 18 May 2020 17:53:02 +0100
 From:   Daniel Thompson <daniel.thompson@linaro.org>
 To:     Sam Ravnborg <sam@ravnborg.org>
 Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
@@ -73,72 +73,124 @@ Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
         Support Opensource <support.opensource@diasemi.com>,
         Thierry Reding <thierry.reding@gmail.com>,
         Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH v2 12/16] backlight: wire up kernel-doc documentation
-Message-ID: <20200518165040.4es3gdydes4so72k@holly.lan>
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH v2 13/16] backlight: make of_find_backlight static
+Message-ID: <20200518165302.4andpp27rxj5ub2x@holly.lan>
 References: <20200517190139.740249-1-sam@ravnborg.org>
- <20200517190139.740249-13-sam@ravnborg.org>
+ <20200517190139.740249-14-sam@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200517190139.740249-13-sam@ravnborg.org>
+In-Reply-To: <20200517190139.740249-14-sam@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 17, 2020 at 09:01:35PM +0200, Sam Ravnborg wrote:
-> Include backlight so the documentation is now generated
-> with make htmldocs and friends.
+On Sun, May 17, 2020 at 09:01:36PM +0200, Sam Ravnborg wrote:
+> There are no external users of of_find_backlight,
+> as they have all changed to use the managed version.
+> Make of_find_backlight static to prevent new external users.
 > 
 > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: David Airlie <airlied@linux.ie>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Jonathan Corbet <corbet@lwn.net>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> Cc: Jingoo Han <jingoohan1@gmail.com>
 
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+In principle I'm OK with this... just a couple of tiny nitpicks in the
+new documentation.
+
+
+Daniel.
 
 
 > ---
->  Documentation/gpu/backlight.rst | 12 ++++++++++++
->  Documentation/gpu/index.rst     |  1 +
->  2 files changed, 13 insertions(+)
->  create mode 100644 Documentation/gpu/backlight.rst
+>  drivers/video/backlight/backlight.c | 31 ++++++++++-------------------
+>  include/linux/backlight.h           |  6 ------
+>  2 files changed, 11 insertions(+), 26 deletions(-)
 > 
-> diff --git a/Documentation/gpu/backlight.rst b/Documentation/gpu/backlight.rst
-> new file mode 100644
-> index 000000000000..9ebfc9d0aced
-> --- /dev/null
-> +++ b/Documentation/gpu/backlight.rst
-> @@ -0,0 +1,12 @@
-> +=================
-> +Backlight support
-> +=================
-> +
-> +.. kernel-doc:: drivers/video/backlight/backlight.c
-> +   :doc: overview
-> +
-> +.. kernel-doc:: include/linux/backlight.h
-> +   :internal:
-> +
-> +.. kernel-doc:: drivers/video/backlight/backlight.c
-> +   :export:
-> diff --git a/Documentation/gpu/index.rst b/Documentation/gpu/index.rst
-> index 1fcf8e851e15..c9a51e3bfb5a 100644
-> --- a/Documentation/gpu/index.rst
-> +++ b/Documentation/gpu/index.rst
-> @@ -12,6 +12,7 @@ Linux GPU Driver Developer's Guide
->     drm-uapi
->     drm-client
->     drivers
-> +   backlight
->     vga-switcheroo
->     vgaarbiter
->     todo
+> diff --git a/drivers/video/backlight/backlight.c b/drivers/video/backlight/backlight.c
+> index 2212f0e3570e..e23b09d03a65 100644
+> --- a/drivers/video/backlight/backlight.c
+> +++ b/drivers/video/backlight/backlight.c
+> @@ -650,22 +650,7 @@ struct backlight_device *of_find_backlight_by_node(struct device_node *node)
+>  EXPORT_SYMBOL(of_find_backlight_by_node);
+>  #endif
+>  
+> -/**
+> - * of_find_backlight - Get backlight device
+> - * @dev: Device
+> - *
+> - * This function looks for a property named 'backlight' on the DT node
+> - * connected to @dev and looks up the backlight device.
+> - *
+> - * Call backlight_put() to drop the reference on the backlight device.
+> - *
+> - * Returns:
+> - * A pointer to the backlight device if found.
+> - * Error pointer -EPROBE_DEFER if the DT property is set, but no backlight
+> - * device is found.
+> - * NULL if there's no backlight property.
+> - */
+> -struct backlight_device *of_find_backlight(struct device *dev)
+> +static struct backlight_device *of_find_backlight(struct device *dev)
+>  {
+>  	struct backlight_device *bd = NULL;
+>  	struct device_node *np;
+> @@ -691,7 +676,6 @@ struct backlight_device *of_find_backlight(struct device *dev)
+>  
+>  	return bd;
+>  }
+> -EXPORT_SYMBOL(of_find_backlight);
+>  
+>  static void devm_backlight_release(void *data)
+>  {
+> @@ -702,9 +686,16 @@ static void devm_backlight_release(void *data)
+>   * devm_of_find_backlight - find backlight for a device
+>   * @dev: the device
+>   *
+> - * Device managed version of of_find_backlight().
+> - * The reference on the backlight device is automatically
+> - * dropped on driver detach.
+> + * This function looks for a property named 'backlight' on the DT node
+> + * connected to @dev and looks up the backlight device.
+
+Should this be a full paragraph?
+
+> + * The lookup is device managed so the reference to the backlight device
+> + * is automatically dropped on driver detach.
+> + *
+> + * Returns:
+
+Wasn't this upper case everywhere else?
+
+
+> + * A pointer to the backlight device if found.
+> + * Error pointer -EPROBE_DEFER if the DT property is set, but no backlight
+> + * device is found.
+> + * NULL if there's no backlight property.
+>   */
+>  struct backlight_device *devm_of_find_backlight(struct device *dev)
+>  {
+> diff --git a/include/linux/backlight.h b/include/linux/backlight.h
+> index 308aec67fa4f..99e7cdace2be 100644
+> --- a/include/linux/backlight.h
+> +++ b/include/linux/backlight.h
+> @@ -494,14 +494,8 @@ of_find_backlight_by_node(struct device_node *node)
+>  #endif
+>  
+>  #if IS_ENABLED(CONFIG_BACKLIGHT_CLASS_DEVICE)
+> -struct backlight_device *of_find_backlight(struct device *dev);
+>  struct backlight_device *devm_of_find_backlight(struct device *dev);
+>  #else
+> -static inline struct backlight_device *of_find_backlight(struct device *dev)
+> -{
+> -	return NULL;
+> -}
+> -
+>  static inline struct backlight_device *
+>  devm_of_find_backlight(struct device *dev)
+>  {
 > -- 
 > 2.25.1
 > 
