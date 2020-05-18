@@ -2,90 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 933D61D71B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 09:25:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1DD21D728B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 10:10:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726800AbgERHZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 03:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
+        id S1726872AbgERIK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 04:10:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726127AbgERHZO (ORCPT
+        with ESMTP id S1726573AbgERIKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 03:25:14 -0400
+        Mon, 18 May 2020 04:10:25 -0400
 Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3493AC05BD09
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 00:25:14 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id o14so8695611ljp.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 00:25:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67759C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 01:10:25 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id l19so8810458lje.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 01:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=A4X2qdsWrVq8ys2tL3BwSCqBZMXXWj5rnnEaJc5JZaE=;
-        b=eLfcfSqtRDuc6tbg88OApOzoqUcIS4NG8GeiZWnCrgN+ybEldsNH1oGxujMdMe5Bzf
-         9bter5swZM+kfB23l91tUOydEeSmenGgjwlIHMzPGWZnZjn80YKa/MhPyZgN4AZ6c+K1
-         ZAPmMlZ3l46v6YcSSsLIqCv2e9sMbN6cuproPK+HqWPMNvN+HzOasHiI8ySQ7FbD/vrl
-         16n7FLJa3FLZICDzHSVgoGMDLudAgYf7FewpKz/VQ7aM7FPhEiJa0VjIpuszLuqRVn09
-         660pC6OZGCB8RP19vKSAvyGq7Nsjb/9WIQru91qiA2NxLdLMYd87kvRI1ka/402H9eHR
-         njoA==
+        bh=em2U7B8TyUf30bEUcMzbKLuDgDBEeuKa70ZTt7cbEvc=;
+        b=m1FCdPoToBswJghU2vv7XgNi/QYDpr6H1HoZ8l66YdZB6QB8h78vyCPO/e0/UGxjP6
+         ZZ9EIgnMMJomAK4cszeOzFycO84gRnDipsqV03FiSgCmau5uUwee47aNVA7b3+VPi4ki
+         Bgb2OQym51ongcbux98NBFutl7ayLusleUKtnyW0cJzZCeitLERQVbEOKXlyCpR3mIcf
+         YhEPxn98P/gy/dhY47yCDz99uDc6z9IZswOJ99IUoNYcs33mWpgKi6C9dh932hxLWt22
+         kO1po+jMFgfWYzMjO/iN1RAqobkw+LnxY7Q/1aaThEIvvI83HggVrqEHhquOQwfpTPH7
+         GDlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=A4X2qdsWrVq8ys2tL3BwSCqBZMXXWj5rnnEaJc5JZaE=;
-        b=HPbNBHJM+eCOyIqTq2DkNIbdv6epmBfhfVJoLN5HuGKuQoy4G1FiRWZAUXbS0tr6Tc
-         i9rPLCGYDJgiXHNUiQ14RLOu34jOZY3CGlvfFp/YammRsV2K+bxX7sOA0X8HJMPfBEJH
-         sEkUcrgtj2n948bp/PROY9gemimRAyPipH+R/Q/TP0w23U3a5qw5y+5KxP+tDOyJZ839
-         /K1jXEGKL8ALNkPODW9ouvjAQbQdVxqqAwnfnxYArqPtWXU/ho8aOkgq4ukRA9ZYY8bi
-         K5t10KqfwkEy+QtmBj/EL1YL5KU1Hb4Kl5AgurNrDXNH0/Pl6t8y73vVkV1yfEpSqy+S
-         twuA==
-X-Gm-Message-State: AOAM532r7okmJ2MqmedVdRFNzceWMGwUCCSfjwi6lx//WrDeQJnQaAZq
-        XTZGDRsC46YFru30ClBzDpCaKiy2bl57semYfNvuqw==
-X-Google-Smtp-Source: ABdhPJwMZMkCfCW9raRwDJrjtwYd9CAK3CzuX6TpRrPy9cZjubvsZSWmsZiS6MCkoF/MQ2FSXPfidMfY+ruGlhpXcFU=
-X-Received: by 2002:a2e:8805:: with SMTP id x5mr9995860ljh.223.1589786712610;
- Mon, 18 May 2020 00:25:12 -0700 (PDT)
+        bh=em2U7B8TyUf30bEUcMzbKLuDgDBEeuKa70ZTt7cbEvc=;
+        b=Kgo42wxcwYYVy2TpRJg9+X8odStbXkg7DKcuCEvPkPyTVFsU+/2iw0MiSigqp2MesC
+         BTW3uHReNrqSQfAHqXvt2MHxXtZ4Y9rktezRGB+pZSbq/Pc8lHgJri+VTR1Aog9OchCY
+         MeV+WrmZOodEeRN3WBzpVCj7+4kZ1ge9C8fO1SO4aNCK+Fd3bu+kL7qCytkvzjDFEXEa
+         UF6fnd9M9esvUpkEM2lEN1aqbQ4NbWaco+JJ7raAYWa8KczynE7PGOdrvWvapUF4yRHS
+         AncxSrV2/A82VrQXYn2U3NFtxQ7q9cwUN5GGLme/RLI1PH33zITJNIHC0qsXdja9QEvY
+         hW/w==
+X-Gm-Message-State: AOAM531sm2op5iNoE3J95rQv2hxvaGDukKQTbOTwUZTMu/mEoS54U4e+
+        quGA3QJGMD+RwDchUHQ6ojdK36bSrJAxIfav5T0F0A==
+X-Google-Smtp-Source: ABdhPJzmyKywKnrt+mhTCQKuNKDH+mnRR3odpUAZzgZQXdX7WCuZf65U7KFkVSK7USoDQJabCtlLvrEg8KE48wcD13A=
+X-Received: by 2002:a2e:980d:: with SMTP id a13mr9750278ljj.277.1589789423940;
+ Mon, 18 May 2020 01:10:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <1589361736-816-1-git-send-email-jprakash@codeaurora.org> <1589361736-816-2-git-send-email-jprakash@codeaurora.org>
-In-Reply-To: <1589361736-816-2-git-send-email-jprakash@codeaurora.org>
+References: <20200517190139.740249-1-sam@ravnborg.org> <20200517190139.740249-2-sam@ravnborg.org>
+In-Reply-To: <20200517190139.740249-2-sam@ravnborg.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 18 May 2020 09:25:01 +0200
-Message-ID: <CACRpkdbcRQT=tK=jTbTvgoZvyzC4kSkkj2PK14nKE3WamVZz7w@mail.gmail.com>
-Subject: Re: [PATCH V4 1/5] iio: adc: Convert the QCOM SPMI ADC bindings to
- .yaml format
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Date:   Mon, 18 May 2020 10:10:12 +0200
+Message-ID: <CACRpkdbogVA=12Xzh6jC0AaE7DrH8Z7iVuG3s_gS4MQBYF61Dw@mail.gmail.com>
+Subject: Re: [PATCH v2 01/16] video: amba-clcd: use devm_of_find_backlight
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        smohanad@codeaurora.org, Kiran Gunda <kgunda@codeaurora.org>,
-        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        linux-iio <linux-iio@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Russell King <linux@armlinux.org.uk>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 11:22 AM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+On Sun, May 17, 2020 at 9:01 PM Sam Ravnborg <sam@ravnborg.org> wrote:
 
-> Convert the adc bindings from .txt to .yaml format.
+> Look up backlight device using devm_of_find_backlight().
+> This simplifies the code and prevents us from hardcoding
+> the node name in the driver.
 >
-> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
-> Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> v2:
+>   - Added Cc: Peter Ujfalusi
+>
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Russell King <linux@armlinux.org.uk>
+> Cc: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+> Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
+> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Jani Nikula <jani.nikula@intel.com>
+> Cc: Douglas Anderson <dianders@chromium.org>
 
 Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
