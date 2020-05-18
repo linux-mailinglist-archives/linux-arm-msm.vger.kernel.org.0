@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 754F81D7DB8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:03:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22A501D7DBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 18:04:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727973AbgERQD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 12:03:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44218 "EHLO
+        id S1727020AbgERQEt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 12:04:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727007AbgERQD3 (ORCPT
+        with ESMTP id S1727777AbgERQEs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 12:03:29 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27C13C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:03:29 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id f13so40479wmc.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:03:29 -0700 (PDT)
+        Mon, 18 May 2020 12:04:48 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61686C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:04:48 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id i15so12472153wrx.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 09:04:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ecSXsQvIgVKx2CnvVEKEY28m8eCL4Ahrzs7wwcHakZY=;
-        b=fIksCWZ3vAnb0g8NSSRrNtrtGHGNWC2FoiKZBSTLJHpVT/03Sfjce+PjK8DcPC3r9q
-         yOtVBzrL3+4izdDqzWYr6vKJXk3McXVZZWhRhj5chIxSZ25GEq29mlpqF3OkW0os3J+9
-         ahy8bD0j3PO+OLKFZODf9FAPhFHjIc3wt5HddyHVu5AzoPeCAZ65mBpzv5hNRJekl8ST
-         pQrymwzaZ46zN9Ke5kxTCbnhNehSgvbuNMSjrmD4SG4YeFzcPW1LV1OH1Mw6MHHETGuM
-         N90F6hrB3jTfi8S7Aw3E92m/XqEhkwLdHJuXS3lJN3HVJpTNXtBYeyHI65RxDOBqjtK+
-         lpyA==
+        bh=YP8CIZVjkkHF2G0WX+WhQCb99+RXsj9eHVsB1xIYlDI=;
+        b=iOGhTJKYxRyBmpnPYcOpuh0C1+CJnkg4S++Jh+yKaD7pVGeDnZYU9er35/bOk37Bqe
+         kgZqGbDMSeGsQOzKfYNnDtoruFmL7pc6khugd9Zel6TlNeCOYuBfTdLCA68Y/ZIDHFmu
+         RZ/iGj0XqPfgyNg59+qkCWZOL5Z8DC45MfpQ+g0kx2DqLHfMFZCm2xSF8rpNpO7ljpFb
+         sknr2cUsEoCXXlS6FlBtUar6I6lhst8bUG2kYwbbKCXmEMfToo/EVMIBanLd9WgfVUdC
+         U49r5NM+AX1WMt2t3EFt0BtOZbU5WxOWFWTXWgvYtK4T+kTAcfQ9ZLdiIc0/GWw0uifU
+         2tIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ecSXsQvIgVKx2CnvVEKEY28m8eCL4Ahrzs7wwcHakZY=;
-        b=iN1ndBfD1dwRKP2/+MSHs85epZfJA46rV/o30iUAX9/cXGQFlKIuXy+DVt+19fX/90
-         prDM+vqWVqLuUdgJyyiM018DRSHzCkP3Qod8rIsz/XcUqWxtc0L7lC5IFShLF5AnTwXI
-         i6Jg1tASMxLuyZsrvNlQe+VQG2NmPoknmUEElzHCERRy9stPLXUTQGtLNYX+m6pu7riH
-         DwLOIei/YasGk/ByTJaoDB/7fw8BKfwQFHZxj/S+FR5RQ2sSzBzn+slMhyhhgLgbYMW5
-         tG4R6mUkt/ZiXHJiuKSvqSXwdrr0epUiQvBjbgUBrWrm+50HMEyvrKSwckZT1tELrqv4
-         Dv5Q==
-X-Gm-Message-State: AOAM532Fb3YSedLFyib/0u6jtzZXaweso0zHeS+ra7wOdB6B+9/CeZhG
-        8AWvo0z+mHUNjONOoHVtpDl9Ww==
-X-Google-Smtp-Source: ABdhPJxFgNO9b9jlLxpfUXNaNfUUnCRDLCIAOn/J8fn7iQhxyB1B5pJXyH5klpegs358QA3oeUa1+Q==
-X-Received: by 2002:a1c:3585:: with SMTP id c127mr114635wma.34.1589817807441;
-        Mon, 18 May 2020 09:03:27 -0700 (PDT)
+        bh=YP8CIZVjkkHF2G0WX+WhQCb99+RXsj9eHVsB1xIYlDI=;
+        b=uZOVfsk7vhyQVBKKssx8uNFz6sr5Lf66enzVJPKYvtLMC6DplGDxkR+cYXOkZSgb6q
+         wqvPG0nSISt6lEF2Ax20whfDi1lo1pNcWGFbVvYgUUKRM/iEMNXE5KDTI/H6ayYxZGNR
+         5i5ii8xHdsMLq6rPRHVuO13gxNeW8wipBDnOamMvUw6FSdcSuks3N8sU0LQ7f2i3yHzD
+         i7ujakYo2T9pvsgtuwfoz/mzCFDfn1QuyW6dyMduOSyuwSTBidgrrK3YqNC5NLqKHFt/
+         8QGtANShp4ptD6UBq3EvPUlYCxqTe5iAlu9YbUdi8msHQtlkry4Ao15X3VA1ATDjs8LA
+         x+LA==
+X-Gm-Message-State: AOAM533fOY7B82cB5cZO4tf0aGhanaqL0W1QdEzqyxlTQXHm/LaMO4dk
+        CO85vJ97zXTsOT+xVtJllkEVqg==
+X-Google-Smtp-Source: ABdhPJzvNP6Gmw/v+NTHrtZ9cGIGmEaLhbGhqaJPSjy5MpKyEdqde80GInq/3Ai1iSjkpQfKhVnU7A==
+X-Received: by 2002:a5d:6412:: with SMTP id z18mr20016286wru.290.1589817887106;
+        Mon, 18 May 2020 09:04:47 -0700 (PDT)
 Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id a74sm11197wme.23.2020.05.18.09.03.25
+        by smtp.gmail.com with ESMTPSA id c17sm17357566wrn.59.2020.05.18.09.04.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 09:03:26 -0700 (PDT)
-Date:   Mon, 18 May 2020 17:03:24 +0100
+        Mon, 18 May 2020 09:04:46 -0700 (PDT)
+Date:   Mon, 18 May 2020 17:04:44 +0100
 From:   Daniel Thompson <daniel.thompson@linaro.org>
 To:     Sam Ravnborg <sam@ravnborg.org>
 Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
@@ -74,162 +74,75 @@ Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
         Thierry Reding <thierry.reding@gmail.com>,
         Thomas Zimmermann <tzimmermann@suse.de>,
         Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH v2 06/16] backlight: improve backlight_device
- documentation
-Message-ID: <20200518160324.mak4mhgyrgdbr7ww@holly.lan>
+Subject: Re: [PATCH v2 07/16] backlight: document inline functions in
+ backlight.h
+Message-ID: <20200518160444.huxyjm2wxajnyfmx@holly.lan>
 References: <20200517190139.740249-1-sam@ravnborg.org>
- <20200517190139.740249-7-sam@ravnborg.org>
+ <20200517190139.740249-8-sam@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200517190139.740249-7-sam@ravnborg.org>
+In-Reply-To: <20200517190139.740249-8-sam@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 17, 2020 at 09:01:29PM +0200, Sam Ravnborg wrote:
-> Improve the documentation for backlight_device and
-> adapt it to kernel-doc style.
+On Sun, May 17, 2020 at 09:01:30PM +0200, Sam Ravnborg wrote:
+> Add documentation for the inline functions in backlight.h
 > 
 > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
 > Cc: Lee Jones <lee.jones@linaro.org>
 > Cc: Daniel Thompson <daniel.thompson@linaro.org>
 > Cc: Jingoo Han <jingoohan1@gmail.com>
 > ---
->  include/linux/backlight.h | 81 ++++++++++++++++++++++++++++-----------
->  1 file changed, 58 insertions(+), 23 deletions(-)
+>  include/linux/backlight.h | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
 > diff --git a/include/linux/backlight.h b/include/linux/backlight.h
-> index 7f9cef299d6e..e2d72936bf05 100644
+> index e2d72936bf05..98349a2984dc 100644
 > --- a/include/linux/backlight.h
 > +++ b/include/linux/backlight.h
-> @@ -14,21 +14,6 @@
->  #include <linux/mutex.h>
->  #include <linux/notifier.h>
->  
-> -/* Notes on locking:
-> - *
-> - * backlight_device->ops_lock is an internal backlight lock protecting the
-> - * ops pointer and no code outside the core should need to touch it.
-> - *
-> - * Access to update_status() is serialised by the update_lock mutex since
-> - * most drivers seem to need this and historically get it wrong.
-> - *
-> - * Most drivers don't need locking on their get_brightness() method.
-> - * If yours does, you need to implement it in the driver. You can use the
-> - * update_lock mutex if appropriate.
-> - *
-> - * Any other use of the locks below is probably wrong.
-> - */
-> -
->  enum backlight_update_reason {
->  	BACKLIGHT_UPDATE_HOTKEY,
->  	BACKLIGHT_UPDATE_SYSFS,
-> @@ -221,30 +206,80 @@ struct backlight_properties {
->  	enum backlight_scale scale;
+> @@ -283,6 +283,10 @@ struct backlight_device {
+>  	int use_count;
 >  };
 >  
 > +/**
-> + * struct backlight_device - backlight device data
-> + *
-> + * This structure holds all data required by a backlight device.
-> + */
->  struct backlight_device {
-> -	/* Backlight properties */
-> +	/**
-> +	 * @props:
-> +	 *
+> + * backlight_update_status - force an update of the backligt device status
 
-As last patch. Why no brief descriptions?
+Typo.
 
+Other than that,
 
-> +	 * Backlight properties
-> +	 */
->  	struct backlight_properties props;
->  
-> -	/* Serialise access to update_status method */
-> +	/**
-> +	 * @update_lock:
-> +	 *
-> +	 * update_lock is an internal backlight lock that serialise access
-> +	 * to the update_status() method. The iupdate_lock mutex shall not be used
-> +	 * by backlight drivers.
-
-In addition to the typo this directly contradicts the advice in the
-original "Notes on locking".
-
-A change this dramatic needs to be fully explaining in the patch
-description.
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
 
 Daniel.
 
-
-> +	 */
->  	struct mutex update_lock;
+> + * @bd: the backlight device
+> + */
+>  static inline int backlight_update_status(struct backlight_device *bd)
+>  {
+>  	int ret = -ENOENT;
+> @@ -375,6 +379,18 @@ extern int backlight_device_set_brightness(struct backlight_device *bd, unsigned
 >  
-> -	/* This protects the 'ops' field. If 'ops' is NULL, the driver that
-> -	   registered this device has been unloaded, and if class_get_devdata()
-> -	   points to something in the body of that driver, it is also invalid. */
-> +	/**
-> +	 * @ops_lock:
-> +	 *
-> +	 * ops_lock is an internal backlight lock that protects the ops pointer
-> +	 * and is used around all accesses to ops and when the operations are
-> +	 * invoked. The mutex shall not be used by backlight drivers.
-> +	 */
->  	struct mutex ops_lock;
-> +
-> +	/**
-> +	 * @ops:
-> +	 *
-> +	 * Pointer to the backlight operations. If ops is NULL, the driver that
-> +	 * registered this device has been unloaded, and if class_get_devdata()
-> +	 * points to something in the body of that driver, it is also invalid.
-> +	 */
->  	const struct backlight_ops *ops;
+>  #define to_backlight_device(obj) container_of(obj, struct backlight_device, dev)
 >  
-> -	/* The framebuffer notifier block */
-> +	/**
-> +	 * @fb_notif:
-> +	 *
-> +	 * The framebuffer notifier block
-> +	 */
->  	struct notifier_block fb_notif;
->  
-> -	/* list entry of all registered backlight devices */
-> +	/**
-> +	 * @entry:
-> +	 *
-> +	 * List entry of all registered backlight devices
-> +	 */
->  	struct list_head entry;
->  
-> +	/**
-> +	 * @dev:
-> +	 *
-> +	 * Parent device.
-> +	 */
->  	struct device dev;
->  
-> -	/* Multiple framebuffers may share one backlight device */
-> +	/**
-> +	 * @fb_bl_on:
-> +	 *
-> +	 * Multiple fbdev's may share one backlight device. The fb_bl_on
-> +	 * records the state of the individual fbdev.
-> +	 */
->  	bool fb_bl_on[FB_MAX];
->  
-> +	/**
-> +	 * @use_count:
-> +	 *
-> +	 * The number of uses of fb_bl_on.
-> +	 */
->  	int use_count;
->  };
->  
+> +/**
+> + * bl_get_data - access devdata
+> + * @bl_dev: pointer to backlight device
+> + *
+> + * When a backlight device is registered the driver has the possibility
+> + * to supply a void * devdata. bl_get_data() return a pointer to the
+> + * devdata.
+> + *
+> + * RETURNS:
+> + *
+> + * pointer to devdata stored while registering the backlight device.
+> + */
+>  static inline void * bl_get_data(struct backlight_device *bl_dev)
+>  {
+>  	return dev_get_drvdata(&bl_dev->dev);
 > -- 
 > 2.25.1
 > 
