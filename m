@@ -2,213 +2,258 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0314E1D85A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 20:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 972A01D82BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2020 19:59:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731485AbgERSUB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 14:20:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
+        id S1731968AbgERR6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 13:58:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731149AbgERRxa (ORCPT
+        with ESMTP id S1731963AbgERR6t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 13:53:30 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F09C05BD09
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 10:53:30 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id h26so8876312lfg.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 10:53:30 -0700 (PDT)
+        Mon, 18 May 2020 13:58:49 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA882C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 10:58:48 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id w64so484193wmg.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 10:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=auxOAvLWtf1pZZSyVWFPai0DZNGDmQxFTyydphVNHvc=;
-        b=Vl9mmuiC7+19REd6VDHNPar684dLArGlRGMkQn5oqgGISgDn9rA9Lik+VFA810mJKY
-         Z/lqU/1LmGYWo/ob8AYxr4Q2/sNWezCyNM2TzOQag9de1dtWzYYjvtcqYLaj5UZ/eRSs
-         j8hcnYEluwCIYYQEZhNVvSaQXUVwZaW1vekivhtGXj6agpH6us2lt2eVka42V2tC3FBb
-         anttD+3GT6y2WprpvsdRhnf8iEsWgi9AJN5Lcv6UsJMZ0dJcUwz0KICOSnVe+AkXm4jK
-         rk7WxHuCvOQsbVbuTW9D42lNo27aBJenp/CL1EDodgfeQDkV7DKsAI6jISrExqk+E3OT
-         iqGg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JcQPpn/8Qske42SdTGdaDbTrNDjZkL6arDPQ+Oq5m/E=;
+        b=A6sVdY9ZTFt5uBkQBFNu2+Q51qV7PtSAYYL5tWVLKk7AP6Vscge6DYyFmy+EV0mMvC
+         ZJYNo8z7r2qWtET6q268I0b3z95HbyNdAnvbcAfY2hlnx4QDmIgtWQoqyB1ZGl5L2YoY
+         td2vrO/yKhWBuozXs5MfwlyLzwH1HlXlPrbPj72wqjloywx23TffcW2TlwnKS8H33u5N
+         EWlZySkfNZIix6zKndP9CFfyS2rUdh9MykOl8kzyGGSWsO4znYMsn/JHjAn95gjlB9Xc
+         ZCuuDgDFsqDzlWFlZn60Wjtcq/rTmYMJBZFdMIlorpwKmX9v1m+aUhTVZBuWyFgsBq+o
+         0wGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=auxOAvLWtf1pZZSyVWFPai0DZNGDmQxFTyydphVNHvc=;
-        b=FkmZxm8EWWlcwwdagMQOhWRxd6BnXeJA7r52P3a5h/se+1klE4c1mh8HkW8VdJGlHd
-         /MjUJ4GriNrQO28liYicvwdFGxvFAkqgTszjsQ8FZeXkUX8rVrNnLY8fFTcM6dg5/ynp
-         30PDz/A89B5PHaR19IQjQAJGniu7X2q3b+Pq0ohMkAQQeQzxKATK4OAyFaS/GUGxtGGD
-         dYxxnKOlmrKqYQVb/kyTGTtorNXYYqs119w33RbLc/0Y05hPMgv0VR7JkoJPURd8BkLb
-         aUAxOnaKAxMF+YnQz04T57EVTp4UbOplKe/FLUQeydBkaMdGLSG7R5hz2aUOj76k9lMu
-         WB0A==
-X-Gm-Message-State: AOAM531PGOaTJKNQkZXu3jWhUHtWigSq6pC1s3uvfYJ6Ed/M5oUuUoT6
-        eHoZuwXlfU+znHaCNMpx2DTit0n7jBu+Zwo0hHQcQg==
-X-Google-Smtp-Source: ABdhPJzv50aTNUNlvFS55s6qXm4/Sd4s/08q5esk2oruVv0ektYpkAo/7FrkfziK8Eed36WkBnmqcTgcwCr6rqNC7Eg=
-X-Received: by 2002:a19:48c9:: with SMTP id v192mr8337329lfa.20.1589824408382;
- Mon, 18 May 2020 10:53:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200506060025.1535960-1-vkoul@kernel.org> <20200506060025.1535960-4-vkoul@kernel.org>
-In-Reply-To: <20200506060025.1535960-4-vkoul@kernel.org>
-From:   Anders Roxell <anders.roxell@linaro.org>
-Date:   Mon, 18 May 2020 19:53:17 +0200
-Message-ID: <CADYN=9JLeWHODRWDEcTE_6iZ3TX-E4yyx3OwqzK-H-ytLAmQUg@mail.gmail.com>
-Subject: Re: [PATCH v13 3/5] usb: xhci: Add support for Renesas controller
- with memory
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JcQPpn/8Qske42SdTGdaDbTrNDjZkL6arDPQ+Oq5m/E=;
+        b=Fk+6ZjKmqgvclNPJte5yfQyY70J5/eeNEm07MxM/9rKcrmMtpiiFNKc/ygMY2sTAg/
+         W1yKxLHNzAA3NU5Z5vdiyLOlmDAjaqWxEiBFtr2vt3vy+W4iX9UXQcKmzO267HTXz35j
+         jV3uukFswczeKtwvRM+o7Ng3LKMZ267SoedRURnbQpcIJ/Fz0RUSGzwuN1CKk1yqc5+i
+         ytjAXqLes0inKOR4S+WrWsjxbY1YOcZCLAhaINHfXp5o31rDxqQYvTAnR5Bh10uP6XeP
+         sKzIth9aiCxW7fUz8tyMNjMT5BUJ58QLF0kSo2V+fxDfjc66rvj+Sf7ElrO5OEDRfOoq
+         0hzA==
+X-Gm-Message-State: AOAM533YNdwje/nMlxrJeEgnRzRavb9BcazRSSGRq6MA+yA3ZqBerZmv
+        5ABnJiClBq84I8eJKdhfsEdKzA==
+X-Google-Smtp-Source: ABdhPJzlkX5mlMq+o1Eawxybh6+vja1NRE3jDgeLBrfENsGuF4ESeez0ZivS6kcv2Hvz7B0CqN9vOg==
+X-Received: by 2002:a05:600c:220f:: with SMTP id z15mr559467wml.95.1589824727605;
+        Mon, 18 May 2020 10:58:47 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id n13sm17169533wrs.2.2020.05.18.10.58.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 10:58:46 -0700 (PDT)
+Date:   Mon, 18 May 2020 18:58:43 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Jani Nikula <jani.nikula@intel.com>
+Cc:     Sam Ravnborg <sam@ravnborg.org>, dri-devel@lists.freedesktop.org,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        =?UTF-8?Q?Andreas_B=C3=B6hler?= <dev@aboehler.at>,
-        linux-usb@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Russell King <linux@armlinux.org.uk>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH v2 06/16] backlight: improve backlight_device
+ documentation
+Message-ID: <20200518175843.fw74gkdm4ib2w5is@holly.lan>
+References: <20200517190139.740249-1-sam@ravnborg.org>
+ <20200517190139.740249-7-sam@ravnborg.org>
+ <20200518160324.mak4mhgyrgdbr7ww@holly.lan>
+ <87o8ql2n1i.fsf@intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87o8ql2n1i.fsf@intel.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 May 2020 at 08:01, Vinod Koul <vkoul@kernel.org> wrote:
->
-> Some rensas controller like uPD720201 and uPD720202 need firmware to be
-> loaded. Add these devices in pci table and invoke renesas firmware loader
-> functions to check and load the firmware into device memory when
-> required.
->
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+On Mon, May 18, 2020 at 08:03:21PM +0300, Jani Nikula wrote:
+> On Mon, 18 May 2020, Daniel Thompson <daniel.thompson@linaro.org> wrote:
+> > On Sun, May 17, 2020 at 09:01:29PM +0200, Sam Ravnborg wrote:
+> >> Improve the documentation for backlight_device and
+> >> adapt it to kernel-doc style.
+> >> 
+> >> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> >> Cc: Lee Jones <lee.jones@linaro.org>
+> >> Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> >> Cc: Jingoo Han <jingoohan1@gmail.com>
+> >> ---
+> >>  include/linux/backlight.h | 81 ++++++++++++++++++++++++++++-----------
+> >>  1 file changed, 58 insertions(+), 23 deletions(-)
+> >> 
+> >> diff --git a/include/linux/backlight.h b/include/linux/backlight.h
+> >> index 7f9cef299d6e..e2d72936bf05 100644
+> >> --- a/include/linux/backlight.h
+> >> +++ b/include/linux/backlight.h
+> >> @@ -14,21 +14,6 @@
+> >>  #include <linux/mutex.h>
+> >>  #include <linux/notifier.h>
+> >>  
+> >> -/* Notes on locking:
+> >> - *
+> >> - * backlight_device->ops_lock is an internal backlight lock protecting the
+> >> - * ops pointer and no code outside the core should need to touch it.
+> >> - *
+> >> - * Access to update_status() is serialised by the update_lock mutex since
+> >> - * most drivers seem to need this and historically get it wrong.
+> >> - *
+> >> - * Most drivers don't need locking on their get_brightness() method.
+> >> - * If yours does, you need to implement it in the driver. You can use the
+> >> - * update_lock mutex if appropriate.
+> >> - *
+> >> - * Any other use of the locks below is probably wrong.
+> >> - */
+> >> -
+> >>  enum backlight_update_reason {
+> >>  	BACKLIGHT_UPDATE_HOTKEY,
+> >>  	BACKLIGHT_UPDATE_SYSFS,
+> >> @@ -221,30 +206,80 @@ struct backlight_properties {
+> >>  	enum backlight_scale scale;
+> >>  };
+> >>  
+> >> +/**
+> >> + * struct backlight_device - backlight device data
+> >> + *
+> >> + * This structure holds all data required by a backlight device.
+> >> + */
+> >>  struct backlight_device {
+> >> -	/* Backlight properties */
+> >> +	/**
+> >> +	 * @props:
+> >> +	 *
+> >
+> > As last patch. Why no brief descriptions?
+> 
+> There are no "brief descriptions" in kernel-doc struct member inline
+> markup.
+> 
+> It would be possible to shorten this to:
+> 
+> 	/**
+> 	 * @props: Backlight properties
+> 	 */
 
-Hi, I got a build error when I built an arm64 allmodconfig kernel.
-
-building obj-arm64-next-20200518
-
-aarch64-linux-gnu-ld: drivers/usb/host/xhci-pci.o: in function
-`xhci_pci_remove':
-/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:411:
-undefined reference to `renesas_xhci_pci_exit'
-aarch64-linux-gnu-ld:
-/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:411:(.text+0xd8):
-relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol
-`renesas_xhci_pci_exit'
-aarch64-linux-gnu-ld: drivers/usb/host/xhci-pci.o: in function `xhci_pci_probe':
-/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:345:
-undefined reference to `renesas_xhci_check_request_fw'
-aarch64-linux-gnu-ld:
-/srv/src/kernel/next/obj-arm64-next-20200518/../drivers/usb/host/xhci-pci.c:345:(.text+0x2298):
-relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol
-`renesas_xhci_check_request_fw'
-make[1]: *** [/srv/src/kernel/next/Makefile:1126: vmlinux] Error 1
-make[1]: Target 'Image' not remade because of errors.
-make: *** [Makefile:185: __sub-make] Error 2
-make: Target 'Image' not remade because of errors.
-
-When I reverted this patch from todays next tag next-20200518 I
-managed to build.
+Sorry. Loose phrasing on my part... basically the question is why
+deviate from the form proposed in "Writing kernel-doc comments"?
 
 
-Cheers,
-Anders
+Daniel.
 
-> ---
->  drivers/usb/host/xhci-pci.c | 35 ++++++++++++++++++++++++++++++++++-
->  drivers/usb/host/xhci.h     |  1 +
->  2 files changed, 35 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-> index b6c2f5c530e3..ef513c2fb843 100644
-> --- a/drivers/usb/host/xhci-pci.c
-> +++ b/drivers/usb/host/xhci-pci.c
-> @@ -15,6 +15,7 @@
->
->  #include "xhci.h"
->  #include "xhci-trace.h"
-> +#include "xhci-pci.h"
->
->  #define SSIC_PORT_NUM          2
->  #define SSIC_PORT_CFG2         0x880c
-> @@ -87,7 +88,16 @@ static int xhci_pci_reinit(struct xhci_hcd *xhci, struct pci_dev *pdev)
->
->  static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
->  {
-> -       struct pci_dev          *pdev = to_pci_dev(dev);
-> +       struct pci_dev                  *pdev = to_pci_dev(dev);
-> +       struct xhci_driver_data         *driver_data;
-> +       const struct pci_device_id      *id;
-> +
-> +       id = pci_match_id(pdev->driver->id_table, pdev);
-> +
-> +       if (id && id->driver_data) {
-> +               driver_data = (struct xhci_driver_data *)id->driver_data;
-> +               xhci->quirks |= driver_data->quirks;
-> +       }
->
->         /* Look for vendor-specific quirks */
->         if (pdev->vendor == PCI_VENDOR_ID_FRESCO_LOGIC &&
-> @@ -328,6 +338,14 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
->         int retval;
->         struct xhci_hcd *xhci;
->         struct usb_hcd *hcd;
-> +       struct xhci_driver_data *driver_data;
-> +
-> +       driver_data = (struct xhci_driver_data *)id->driver_data;
-> +       if (driver_data && driver_data->quirks & XHCI_RENESAS_FW_QUIRK) {
-> +               retval = renesas_xhci_check_request_fw(dev, id);
-> +               if (retval)
-> +                       return retval;
-> +       }
->
->         /* Prevent runtime suspending between USB-2 and USB-3 initialization */
->         pm_runtime_get_noresume(&dev->dev);
-> @@ -389,6 +407,9 @@ static void xhci_pci_remove(struct pci_dev *dev)
->         struct xhci_hcd *xhci;
->
->         xhci = hcd_to_xhci(pci_get_drvdata(dev));
-> +       if (xhci->quirks & XHCI_RENESAS_FW_QUIRK)
-> +               renesas_xhci_pci_exit(dev);
-> +
->         xhci->xhc_state |= XHCI_STATE_REMOVING;
->
->         if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
-> @@ -540,14 +561,26 @@ static void xhci_pci_shutdown(struct usb_hcd *hcd)
->
->  /*-------------------------------------------------------------------------*/
->
-> +static const struct xhci_driver_data reneses_data = {
-> +       .quirks  = XHCI_RENESAS_FW_QUIRK,
-> +       .firmware = "renesas_usb_fw.mem",
-> +};
-> +
->  /* PCI driver selection metadata; PCI hotplugging uses this */
->  static const struct pci_device_id pci_ids[] = {
-> +       { PCI_DEVICE(0x1912, 0x0014),
-> +               .driver_data =  (unsigned long)&reneses_data,
-> +       },
-> +       { PCI_DEVICE(0x1912, 0x0015),
-> +               .driver_data =  (unsigned long)&reneses_data,
-> +       },
->         /* handle any USB 3.0 xHCI controller */
->         { PCI_DEVICE_CLASS(PCI_CLASS_SERIAL_USB_XHCI, ~0),
->         },
->         { /* end: all zeroes */ }
->  };
->  MODULE_DEVICE_TABLE(pci, pci_ids);
-> +MODULE_FIRMWARE("renesas_usb_fw.mem");
->
->  /* pci driver glue; this is a "new style" PCI driver module */
->  static struct pci_driver xhci_pci_driver = {
-> diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-> index 3289bb516201..4047363c7423 100644
-> --- a/drivers/usb/host/xhci.h
-> +++ b/drivers/usb/host/xhci.h
-> @@ -1873,6 +1873,7 @@ struct xhci_hcd {
->  #define XHCI_DEFAULT_PM_RUNTIME_ALLOW  BIT_ULL(33)
->  #define XHCI_RESET_PLL_ON_DISCONNECT   BIT_ULL(34)
->  #define XHCI_SNPS_BROKEN_SUSPEND    BIT_ULL(35)
-> +#define XHCI_RENESAS_FW_QUIRK  BIT_ULL(36)
->
->         unsigned int            num_active_eps;
->         unsigned int            limit_active_eps;
-> --
-> 2.25.4
->
+
+
+> >
+> >> +	 * Backlight properties
+> >> +	 */
+> >>  	struct backlight_properties props;
+> >>  
+> >> -	/* Serialise access to update_status method */
+> >> +	/**
+> >> +	 * @update_lock:
+> >> +	 *
+> >> +	 * update_lock is an internal backlight lock that serialise access
+> >> +	 * to the update_status() method. The iupdate_lock mutex shall not be used
+> >> +	 * by backlight drivers.
+> >
+> > In addition to the typo this directly contradicts the advice in the
+> > original "Notes on locking".
+> >
+> > A change this dramatic needs to be fully explaining in the patch
+> > description.
+> >
+> >
+> > Daniel.
+> >
+> >
+> >> +	 */
+> >>  	struct mutex update_lock;
+> >>  
+> >> -	/* This protects the 'ops' field. If 'ops' is NULL, the driver that
+> >> -	   registered this device has been unloaded, and if class_get_devdata()
+> >> -	   points to something in the body of that driver, it is also invalid. */
+> >> +	/**
+> >> +	 * @ops_lock:
+> >> +	 *
+> >> +	 * ops_lock is an internal backlight lock that protects the ops pointer
+> >> +	 * and is used around all accesses to ops and when the operations are
+> >> +	 * invoked. The mutex shall not be used by backlight drivers.
+> >> +	 */
+> >>  	struct mutex ops_lock;
+> >> +
+> >> +	/**
+> >> +	 * @ops:
+> >> +	 *
+> >> +	 * Pointer to the backlight operations. If ops is NULL, the driver that
+> >> +	 * registered this device has been unloaded, and if class_get_devdata()
+> >> +	 * points to something in the body of that driver, it is also invalid.
+> >> +	 */
+> >>  	const struct backlight_ops *ops;
+> >>  
+> >> -	/* The framebuffer notifier block */
+> >> +	/**
+> >> +	 * @fb_notif:
+> >> +	 *
+> >> +	 * The framebuffer notifier block
+> >> +	 */
+> >>  	struct notifier_block fb_notif;
+> >>  
+> >> -	/* list entry of all registered backlight devices */
+> >> +	/**
+> >> +	 * @entry:
+> >> +	 *
+> >> +	 * List entry of all registered backlight devices
+> >> +	 */
+> >>  	struct list_head entry;
+> >>  
+> >> +	/**
+> >> +	 * @dev:
+> >> +	 *
+> >> +	 * Parent device.
+> >> +	 */
+> >>  	struct device dev;
+> >>  
+> >> -	/* Multiple framebuffers may share one backlight device */
+> >> +	/**
+> >> +	 * @fb_bl_on:
+> >> +	 *
+> >> +	 * Multiple fbdev's may share one backlight device. The fb_bl_on
+> >> +	 * records the state of the individual fbdev.
+> >> +	 */
+> >>  	bool fb_bl_on[FB_MAX];
+> >>  
+> >> +	/**
+> >> +	 * @use_count:
+> >> +	 *
+> >> +	 * The number of uses of fb_bl_on.
+> >> +	 */
+> >>  	int use_count;
+> >>  };
+> >>  
+> >> -- 
+> >> 2.25.1
+> >> 
+> 
+> -- 
+> Jani Nikula, Intel Open Source Graphics Center
