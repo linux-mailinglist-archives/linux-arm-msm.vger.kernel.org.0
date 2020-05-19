@@ -2,219 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB0BB1D8D3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 03:44:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A26E21D8E0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 05:09:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbgESBnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 May 2020 21:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50288 "EHLO
+        id S1727964AbgESDJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 May 2020 23:09:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726227AbgESBnA (ORCPT
+        with ESMTP id S1727045AbgESDJB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 May 2020 21:43:00 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC3EC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 18:42:58 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id 145so5783813pfw.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 18:42:58 -0700 (PDT)
+        Mon, 18 May 2020 23:09:01 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3285C05BD09
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 20:08:59 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id 4so10034754qtb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 20:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Slf7JvWKOrM5x0/oFbmF5JJYCBnsK+Ra0wqdUtMN3PI=;
-        b=d6Vp9MSwRJLOki7yPmsFP9mtreGeqohuis73sWEhgrcFYq0NCg+DdODWp7JbWlpmsC
-         40DHVtyAZTwv9j60eD4l7aNT5Z8A/jr5T7yEVrEiewA0xp4t5oa+kpa++9NnVekVk9kU
-         rseFenuXW3aZaXjw2sea/r89ld2mr27Ko0dlaSICFAi2P+H8AKiR5GXQtHVeyGYwFxai
-         s3SesYrMYBTcXbHvdSR4dw6B7htGt4cnDcLtY/5RnV2AdXbwSQ6YkLf8qtlda9QkT8oC
-         Tu5mQoqTlqjgNa9DbGtrdKjcTDYgMwqsFu5ubJLnATlwTn2DYZaUfE4MgHl35bBUR5y4
-         a9dg==
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mQJ5GEq7PDJ+xmAy1f1Vg4ydmsBKJSVL7rBc7e/vN0Q=;
+        b=tuU+WBq+N01erbYivv1k/19CTmRAoPPA+gTWI2uPJpN5ra9HL7KDI0EOkRqal8XT5+
+         UmJu47AJ0w83pu/+rzwUJjZyXM2l5j1yzJctHB7SWyjyUZ7SdmyNTCw6ef5eVpdmNM8Q
+         cJXVx8QHLckBAxV+yRAtLeDXOIlPb0doargDP1sxtACXPLZQSRwvWgcrwm/cCmCHi4rH
+         pw5KH+asQZ/FEyXaRkStMrXR32n09Ee7EDVH0FIzpDyGoWd4hqRqaU/vkfutWmQX2PLX
+         UqDYLDRo/4/rFsP80YDtdPPeirV7Azpe9aKEiHmNQPGsjSrpLOh6Sn0sAwYDQMZ06ky8
+         dUCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Slf7JvWKOrM5x0/oFbmF5JJYCBnsK+Ra0wqdUtMN3PI=;
-        b=FC1adCT5nmNHk8QEVKKEM141lvn1VdHD45mW4dVY8hJNShd1tulFJnJwTNIzd0ObGo
-         Vtmg/fbFK4+GC6wz/u89SqwstoUH0OFm7X/JHWYvx5nN/6hD23pDt54rQ+G1UuNmVRcG
-         uafryER6NUYpOlNzj+j3XMcOgXnvs2TG9qn1MMF5ujlhb7SdQv2JuV2V7gqDgDhDDPul
-         txSU98j+5tzgTfVqFlL5u9/SxA8fiIeZRrlHZeF69MFz43jm4M972jKkG8G/TXQAx50n
-         gcthLDxnw9X0Z2mmj1vC5LxoRoDHjBeMUq14vA7HNhbl8FWf7mDEB1YV2mF2W73FDLJK
-         T4Qg==
-X-Gm-Message-State: AOAM531ux3n6vunUPkHfnDhQgrbzQXgquRjx8euyDtWP7Rf+mB92IQ63
-        0DF4cYD0XeV4wi1rvKavHi8KmQ==
-X-Google-Smtp-Source: ABdhPJx65eKPngn5OVLo7uoRDLU6Jsu4qJjlV5sooVcPZdPqE8dlBaKsMWwqnQE75tPyXN6IiNKBbw==
-X-Received: by 2002:a63:b146:: with SMTP id g6mr17214044pgp.396.1589852578368;
-        Mon, 18 May 2020 18:42:58 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 14sm605798pjm.49.2020.05.18.18.42.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mQJ5GEq7PDJ+xmAy1f1Vg4ydmsBKJSVL7rBc7e/vN0Q=;
+        b=HiBY7vnDrie0FRp3HePXgbe/Eh65IgbCOsH/6sTgEzxI1eUnqzFATJn4sxPI3ju2g+
+         hX+zWS1MXD9wzNZJprucrMBeSt3aUpWKM8MxMDxqhkfOLc4L9DEPH/Ej6Cc5ZESbbaDq
+         zSOPcKcgRH4SljoM5KKRDtU2CuceQcWNKgkueXsD3LCm2aWHVsby2C/75tqzTctXqb5y
+         VEm8BCTDuLSbRQzdjdr1jwZYUvjGfMEnRFcw7mbKna7H2/ZwSFELQqxW3smo0ST52yXR
+         cJl18x36zARCasayPMWZfwumF2euJEKSaPtnr0DyiWMNHpBKEUmyxXUc5uVV068A9BQk
+         n9yg==
+X-Gm-Message-State: AOAM530fbLWwSvbrxIsvtTlf3I8gXPRq58I3A4iqKzRDlnFPzDFyZ9mz
+        oLgEvh+do6j7TU1kcR8cRRSgqLS+060=
+X-Google-Smtp-Source: ABdhPJyqNsHhYZbp5yPpTg7RdDlSSku/gcOTr/4QKk3jwHyz0DH+TNY+8xf4dnxg+M92BBjHTCB5Gg==
+X-Received: by 2002:ac8:37e6:: with SMTP id e35mr13537025qtc.310.1589857739104;
+        Mon, 18 May 2020 20:08:59 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id s74sm9941014qka.54.2020.05.18.20.08.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 18:42:57 -0700 (PDT)
-Date:   Mon, 18 May 2020 18:41:35 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Joerg Roedel <joro@8bytes.org>,
-        Andy Gross <agross@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org
-Subject: Re: [PATCH v2] iommu/qcom: add optional 'tbu' clock for TLB
- invalidate
-Message-ID: <20200519014135.GV2165@builder.lan>
-References: <20200518141656.26284-1-shawn.guo@linaro.org>
+        Mon, 18 May 2020 20:08:58 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     freedreno@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: don't try to set GPU frequency when GMU is suspended
+Date:   Mon, 18 May 2020 23:07:33 -0400
+Message-Id: <20200519030735.24713-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200518141656.26284-1-shawn.guo@linaro.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 18 May 07:16 PDT 2020, Shawn Guo wrote:
+This fixes changing the frequency in sysfs while suspended, for example
+when doing something like this:
 
-> On some SoCs like MSM8939 with A405 adreno, there is a gfx_tbu clock
-> needs to be on while doing TLB invalidate. Otherwise, TLBSYNC status
-> will not be correctly reflected, causing the system to go into a bad
-> state.  Add it as an optional clock, so that platforms that have this
-> clock can pass it over DT.
-> 
-> While adding the third clock, let's switch to bulk clk API to simplify
-> the enable/disable calls.  clk_bulk_get() cannot used because the
-> existing two clocks are required while the new one is optional.
-> 
+cat devfreq/3d00000.gpu/max_freq > devfreq/3d00000.gpu/min_freq
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-Regards,
-Bjorn
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index aec54cde8534..9498803dcad9 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -151,13 +151,20 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
+ 			break;
+ 
+ 	gmu->current_perf_index = perf_index;
++	gmu->freq = gmu->gpu_freqs[perf_index];
++
++	/*
++	 * devfreq may try to change frequency target even when suspended
++	 * this can happen when changing frequency through sysfs
++	 * don't try to set freq when suspended, it will be set on resume
++	 */
++	if (!pm_runtime_active(gmu->dev))
++		return;
+ 
+ 	if (gmu->legacy)
+ 		__a6xx_gmu_set_freq(gmu, perf_index);
+ 	else
+ 		a6xx_hfi_set_freq(gmu, perf_index);
+-
+-	gmu->freq = gmu->gpu_freqs[perf_index];
+ }
+ 
+ unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
+-- 
+2.26.1
 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
-> Changes for v2:
->  - Use devm_clk_get_optional() to simplify code and improve readability.
->  - Rename the new clock from 'tlb' to 'tbu'.
->  - qcom_iommu: use bulk clk API to simplfy enable/disable.
-> 
->  drivers/iommu/qcom_iommu.c | 62 ++++++++++++++++----------------------
->  1 file changed, 26 insertions(+), 36 deletions(-)
-> 
-> diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-> index 0e2a96467767..116d8188f87f 100644
-> --- a/drivers/iommu/qcom_iommu.c
-> +++ b/drivers/iommu/qcom_iommu.c
-> @@ -37,14 +37,20 @@
->  
->  #define SMMU_INTR_SEL_NS     0x2000
->  
-> +enum qcom_iommu_clk {
-> +	CLK_IFACE,
-> +	CLK_BUS,
-> +	CLK_TBU,
-> +	CLK_NUM,
-> +};
-> +
->  struct qcom_iommu_ctx;
->  
->  struct qcom_iommu_dev {
->  	/* IOMMU core code handle */
->  	struct iommu_device	 iommu;
->  	struct device		*dev;
-> -	struct clk		*iface_clk;
-> -	struct clk		*bus_clk;
-> +	struct clk_bulk_data clks[CLK_NUM];
->  	void __iomem		*local_base;
->  	u32			 sec_id;
->  	u8			 num_ctxs;
-> @@ -626,32 +632,6 @@ static const struct iommu_ops qcom_iommu_ops = {
->  	.pgsize_bitmap	= SZ_4K | SZ_64K | SZ_1M | SZ_16M,
->  };
->  
-> -static int qcom_iommu_enable_clocks(struct qcom_iommu_dev *qcom_iommu)
-> -{
-> -	int ret;
-> -
-> -	ret = clk_prepare_enable(qcom_iommu->iface_clk);
-> -	if (ret) {
-> -		dev_err(qcom_iommu->dev, "Couldn't enable iface_clk\n");
-> -		return ret;
-> -	}
-> -
-> -	ret = clk_prepare_enable(qcom_iommu->bus_clk);
-> -	if (ret) {
-> -		dev_err(qcom_iommu->dev, "Couldn't enable bus_clk\n");
-> -		clk_disable_unprepare(qcom_iommu->iface_clk);
-> -		return ret;
-> -	}
-> -
-> -	return 0;
-> -}
-> -
-> -static void qcom_iommu_disable_clocks(struct qcom_iommu_dev *qcom_iommu)
-> -{
-> -	clk_disable_unprepare(qcom_iommu->bus_clk);
-> -	clk_disable_unprepare(qcom_iommu->iface_clk);
-> -}
-> -
->  static int qcom_iommu_sec_ptbl_init(struct device *dev)
->  {
->  	size_t psize = 0;
-> @@ -808,6 +788,7 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
->  	struct qcom_iommu_dev *qcom_iommu;
->  	struct device *dev = &pdev->dev;
->  	struct resource *res;
-> +	struct clk *clk;
->  	int ret, max_asid = 0;
->  
->  	/* find the max asid (which is 1:1 to ctx bank idx), so we know how
-> @@ -827,17 +808,26 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
->  	if (res)
->  		qcom_iommu->local_base = devm_ioremap_resource(dev, res);
->  
-> -	qcom_iommu->iface_clk = devm_clk_get(dev, "iface");
-> -	if (IS_ERR(qcom_iommu->iface_clk)) {
-> +	clk = devm_clk_get(dev, "iface");
-> +	if (IS_ERR(clk)) {
->  		dev_err(dev, "failed to get iface clock\n");
-> -		return PTR_ERR(qcom_iommu->iface_clk);
-> +		return PTR_ERR(clk);
->  	}
-> +	qcom_iommu->clks[CLK_IFACE].clk = clk;
->  
-> -	qcom_iommu->bus_clk = devm_clk_get(dev, "bus");
-> -	if (IS_ERR(qcom_iommu->bus_clk)) {
-> +	clk = devm_clk_get(dev, "bus");
-> +	if (IS_ERR(clk)) {
->  		dev_err(dev, "failed to get bus clock\n");
-> -		return PTR_ERR(qcom_iommu->bus_clk);
-> +		return PTR_ERR(clk);
-> +	}
-> +	qcom_iommu->clks[CLK_BUS].clk = clk;
-> +
-> +	clk = devm_clk_get_optional(dev, "tbu");
-> +	if (IS_ERR(clk)) {
-> +		dev_err(dev, "failed to get tbu clock\n");
-> +		return PTR_ERR(clk);
->  	}
-> +	qcom_iommu->clks[CLK_TBU].clk = clk;
->  
->  	if (of_property_read_u32(dev->of_node, "qcom,iommu-secure-id",
->  				 &qcom_iommu->sec_id)) {
-> @@ -909,14 +899,14 @@ static int __maybe_unused qcom_iommu_resume(struct device *dev)
->  {
->  	struct qcom_iommu_dev *qcom_iommu = dev_get_drvdata(dev);
->  
-> -	return qcom_iommu_enable_clocks(qcom_iommu);
-> +	return clk_bulk_prepare_enable(CLK_NUM, qcom_iommu->clks);
->  }
->  
->  static int __maybe_unused qcom_iommu_suspend(struct device *dev)
->  {
->  	struct qcom_iommu_dev *qcom_iommu = dev_get_drvdata(dev);
->  
-> -	qcom_iommu_disable_clocks(qcom_iommu);
-> +	clk_bulk_disable_unprepare(CLK_NUM, qcom_iommu->clks);
->  
->  	return 0;
->  }
-> -- 
-> 2.17.1
-> 
