@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3143B1D9973
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 16:23:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2F381D9A7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 16:57:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728837AbgESOXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 10:23:45 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:32425 "EHLO
+        id S1727910AbgESO5y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 10:57:54 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:23871 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728725AbgESOXp (ORCPT
+        by vger.kernel.org with ESMTP id S1728725AbgESO5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 10:23:45 -0400
+        Tue, 19 May 2020 10:57:53 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589898224; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1589900271; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=zgED/ndZHabjc446rJZWog4aE0Cl1Q+S59WZU+Bl6ws=; b=tBIesUtQkd5ggdeugfvw5AVp2BsCh80sS1bw35oxMUPSYgHLLYt90Q6pnvox8eq/l1bExnzj
- LKip3ptQfh1KiLuX07BWDcHgPFCt8EL704DSQWcnlOJNEB5nybvEll1pCDoTBsRkgo3n1KJI
- Ir019BPhYOkAdUdbXySBCudkyWg=
+ Subject: Sender; bh=eQq0+XA7BHUTFnG43onEtGZel2grOtppjsJggmTLEhg=; b=pMSCJkwzMGgaVkTg2bICwivdxF4z2Dpc8069oUe/f7Qz7h/dU4OQUH63/jascAPFFmqhSETt
+ k1ShvcVMamm44Irz6q5hUnkcQg36gpQwFkVe5S1J9YAYmEAPKqdkK16MnFvVF+CTOGWd2Z7r
+ Ll7gwMmOu1nwqRrgrFqoQKGs/nU=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec3ebe0.7f0bdba0aab0-smtp-out-n01;
- Tue, 19 May 2020 14:23:28 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ec3f3e6.7fc6707bb730-smtp-out-n05;
+ Tue, 19 May 2020 14:57:42 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CC62FC43636; Tue, 19 May 2020 14:23:27 +0000 (UTC)
+        id F3EE4C43637; Tue, 19 May 2020 14:57:41 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,26 +34,28 @@ Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 92721C432C2;
-        Tue, 19 May 2020 14:23:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 92721C432C2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7B3BAC433F2;
+        Tue, 19 May 2020 14:57:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7B3BAC433F2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v1 3/3] bus: mhi: clients: Add user space client interface
- driver
-To:     Hemant Kumar <hemantk@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bbhatt@codeaurora.org
-References: <1589840619-18520-1-git-send-email-hemantk@codeaurora.org>
- <1589840619-18520-4-git-send-email-hemantk@codeaurora.org>
+Subject: Re: [RFC PATCH 0/8] Qualcomm Cloud AI 100 driver
+To:     Dave Airlie <airlied@gmail.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        manivannan.sadhasivam@linaro.org, bjorn.andersson@linaro.org,
+        wufan@codeaurora.org, pratanan@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org>
+ <CAPM=9txXskVu_yD3DNuR0HgSUsE2v1Pv98dm=AHGvv_z2XKTAQ@mail.gmail.com>
 From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <3ee9c396-d1e3-d50a-cd27-7b88f84cb37f@codeaurora.org>
-Date:   Tue, 19 May 2020 08:23:25 -0600
+Message-ID: <93238096-5861-c140-b94f-6137977c3d65@codeaurora.org>
+Date:   Tue, 19 May 2020 08:57:38 -0600
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <1589840619-18520-4-git-send-email-hemantk@codeaurora.org>
+In-Reply-To: <CAPM=9txXskVu_yD3DNuR0HgSUsE2v1Pv98dm=AHGvv_z2XKTAQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -62,143 +64,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/18/2020 4:23 PM, Hemant Kumar wrote:
-> +static ssize_t mhi_uci_read(struct file *file,
-> +			    char __user *buf,
-> +			    size_t count,
-> +			    loff_t *ppos)
-> +{
-> +	struct uci_dev *uci_dev = file->private_data;
-> +	struct mhi_device *mhi_dev = uci_dev->mhi_dev;
-> +	struct uci_chan *uci_chan = &uci_dev->dl_chan;
-> +	struct device *dev = &mhi_dev->dev;
-> +	struct uci_buf *uci_buf;
-> +	char *ptr;
-> +	size_t to_copy;
-> +	int ret = 0;
-> +
-> +	if (!buf)
-> +		return -EINVAL;
-> +
-> +	dev_dbg(dev, "Client provided buf len:%lu\n", count);
-> +
-> +	/* confirm channel is active */
-> +	spin_lock_bh(&uci_chan->lock);
-> +	if (!uci_dev->enabled) {
-> +		spin_unlock_bh(&uci_chan->lock);
-> +		return -ERESTARTSYS;
-> +	}
-> +
-> +	/* No data available to read, wait */
-> +	if (!uci_chan->cur_buf && list_empty(&uci_chan->pending)) {
-> +		dev_dbg(dev, "No data available to read waiting\n");
-> +
-> +		spin_unlock_bh(&uci_chan->lock);
-> +		ret = wait_event_interruptible(uci_chan->wq,
-> +					       (!uci_dev->enabled ||
-> +					      !list_empty(&uci_chan->pending)));
-> +		if (ret == -ERESTARTSYS) {
-> +			dev_dbg(dev, "Exit signal caught for node\n");
-> +			return -ERESTARTSYS;
-> +		}
-> +
-> +		spin_lock_bh(&uci_chan->lock);
-> +		if (!uci_dev->enabled) {
-> +			dev_dbg(dev, "node is disabled\n");
-> +			ret = -ERESTARTSYS;
-> +			goto read_error;
-> +		}
-> +	}
-> +
-> +	/* new read, get the next descriptor from the list */
-> +	if (!uci_chan->cur_buf) {
-> +		uci_buf = list_first_entry_or_null(&uci_chan->pending,
-> +						   struct uci_buf, node);
-> +		if (unlikely(!uci_buf)) {
-> +			ret = -EIO;
-> +			goto read_error;
-> +		}
-> +
-> +		list_del(&uci_buf->node);
-> +		uci_chan->cur_buf = uci_buf;
-> +		uci_chan->rx_size = uci_buf->len;
-> +		dev_dbg(dev, "Got pkt of size:%zu\n", uci_chan->rx_size);
-> +	}
-> +
-> +	uci_buf = uci_chan->cur_buf;
-> +
-> +	/* Copy the buffer to user space */
-> +	to_copy = min_t(size_t, count, uci_chan->rx_size);
-> +	ptr = uci_buf->data + (uci_buf->len - uci_chan->rx_size);
-> +	spin_unlock_bh(&uci_chan->lock);
+On 5/18/2020 11:08 PM, Dave Airlie wrote:
+> On Fri, 15 May 2020 at 00:12, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>>
+>> Introduction:
+>> Qualcomm Cloud AI 100 is a PCIe adapter card which contains a dedicated
+>> SoC ASIC for the purpose of efficently running Deep Learning inference
+>> workloads in a data center environment.
+>>
+>> The offical press release can be found at -
+>> https://www.qualcomm.com/news/releases/2019/04/09/qualcomm-brings-power-efficient-artificial-intelligence-inference
+>>
+>> The offical product website is -
+>> https://www.qualcomm.com/products/datacenter-artificial-intelligence
+>>
+>> At the time of the offical press release, numerious technology news sites
+>> also covered the product.  Doing a search of your favorite site is likely
+>> to find their coverage of it.
+>>
+>> It is our goal to have the kernel driver for the product fully upstream.
+>> The purpose of this RFC is to start that process.  We are still doing
+>> development (see below), and thus not quite looking to gain acceptance quite
+>> yet, but now that we have a working driver we beleive we are at the stage
+>> where meaningful conversation with the community can occur.
+> 
+> 
+> Hi Jeffery,
+> 
+> Just wondering what the userspace/testing plans for this driver.
+> 
+> This introduces a new user facing API for a device without pointers to
+> users or tests for that API.
 
-This presents a race condition.  Imagine if you will, two processes are 
-in read() at the same time.  They will be contending for the lock.  One 
-will win, and enter the above critical section.  As soon as the winner 
-gets here and unlocks the lock, the loser will get the lock and enter 
-the critical section.  There is a possibility that both processes get to 
-this point at roughly the same time, and thus both have a cached version 
-of the identical cur_buf pointer.  At this point, bad things can happen.
+We have daily internal testing, although I don't expect you to take my 
+word for that.
 
-If both processes consume the entire buffer, they will then both 
-re-queue the buffer to MHI.  You then can cause memory corruption, and a 
-kernel crash if the buffer is consumed, then freed, then the memory is 
-allocated to somewhere else in the kernel, then MHI consumed the buffer 
-again (memory corruption).  If the buffer gets freed again, slub may 
-trigger a BUG_ON if the allocation for elsewhere is completely different 
-in structure.
+I would like to get one of these devices into the hands of Linaro, so 
+that it can be put into KernelCI.  Similar to other Qualcomm products. 
+I'm trying to convince the powers that be to make this happen.
 
-I think you need a mutex covering the entire read() operation to 
-serialize it.
+Regarding what the community could do on its own, everything but the 
+Linux driver is considered proprietary - that includes the on device 
+firmware and the entire userspace stack.  This is a decision above my 
+pay grade.
 
-> +
-> +	ret = copy_to_user(buf, ptr, to_copy);
-> +	if (ret)
-> +		return ret;
-> +
-> +	spin_lock_bh(&uci_chan->lock);
-> +
-> +	/* Buffer already queued from diff thread while we dropped lock */
-> +	if (to_copy && !uci_chan->rx_size) {
-> +		dev_dbg(dev, "Bailout as buffer already queued (%lu %lu)\n",
-> +			to_copy, uci_chan->rx_size);
-> +		goto read_error;
-> +	}
-> +
-> +	dev_dbg(dev, "Copied %lu of %lu bytes\n", to_copy, uci_chan->rx_size);
-> +	uci_chan->rx_size -= to_copy;
-> +
-> +	/* we finished with this buffer, queue it back to hardware */
-> +	if (!uci_chan->rx_size) {
-> +		uci_chan->cur_buf = NULL;
-> +
-> +		if (uci_dev->enabled)
-> +			ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE,
-> +					    uci_buf->data,
-> +					    uci_dev->actual_mtu, MHI_EOT);
-> +		else
-> +			ret = -ERESTARTSYS;
-> +
-> +		if (ret) {
-> +			dev_err(dev, "Failed to recycle element\n");
-> +			kfree(uci_buf->data);
-> +			goto read_error;
-> +		}
-> +	}
-> +	spin_unlock_bh(&uci_chan->lock);
-> +
-> +	dev_dbg(dev, "Returning %lu bytes\n", to_copy);
-> +
-> +	return to_copy;
-> +
-> +read_error:
-> +	spin_unlock_bh(&uci_chan->lock);
-> +
-> +	return ret;
-> +}
-> +
+I've asked for authorization to develop and publish a simple userspace 
+application that might enable the community to do such testing, but 
+obtaining that authorization has been slow.
 
+> Although this isn't a graphics driver, and Greg will likely merge
+> anything to the kernel you throw at him, I do wonder how to validate
+> the uapi from a security perspective. It's always interesting when
+> someone wraps a DMA engine with user ioctls, and without enough
+> information to decide if the DMA engine is secure against userspace
+> misprogramming it.
 
+I'm curious, what information might you be looking for?  Are you 
+concerned about the device attacking the host, or the host attacking the 
+device?
+
+> Also if we don't understand the programming API on board the device,
+> we can't tell if the "core" on the device are able to reprogram the
+> device engines either.
+
+So, you are looking for details about the messaging protocol which are 
+considered opaque to the kernel driver?  Or something else?
+
+> Figuring this out is difficult at the best of times, it helps if there
+> is access to the complete device documentation or user space side
+> drivers in order to faciliate this.
+
+Regarding access to documentation, sadly that isn't going to happen now, 
+or in the near future.  Again, above my pay grade.  The only public 
+"documentation" is what you can see from my emails.
+
+I understand your position, and if I can "bound" the information you are 
+looking for, I can see what I can do about getting you what you want. 
+No promises, but I will try.
+
+> The other area I mention is testing the uAPI, how do you envisage
+> regression testing and long term sustainability of the uAPI?
+
+Can you clarify what you mean by "uAPI"?  Are you referring to the 
+interface between the device and the kernel driver?
 
 -- 
 Jeffrey Hugo
