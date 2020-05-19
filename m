@@ -2,112 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49C321D8F2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 07:27:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7F801D8FBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 08:06:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbgESF1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 01:27:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56754 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbgESF1A (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 01:27:00 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8740CC061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 22:27:00 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id l73so781833pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 22:27:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=W2vog2Ri9IlYWlm16x+nWE4J9X1Hn0Mx2FQVvFcJuHk=;
-        b=FT4SKc2ToN/s8tkRnP+yLFiYtCWtUqBarM8+cWRx8BQ8UCvrDq+w6KD6qPZCtS/Fjy
-         sJzek8MBmQPdo6/B+Zb2aM1vdOoXeM/b+epi+H4OZZRwrf/ZsNpGAMEgF/F4s4iLniMF
-         5VFAHju27XsW7im3sxHSOptozVRVB3W5qTdC/NVR5dHUBxhFp4Qqr348GRv3NeQrGIPR
-         tR5jKbOsOmOwa2Qdg4UE1D8FWzZYACIbgjhWgKtuuz9m4vgZh+j8gz4AR8EfHiHcQ9FM
-         0tz4na/4jRLHVe5fxxMsYQ7XXYrW1lNrK3MX++qs4ujZ3Ttlq8uGV0bVvBGK7HpukP0n
-         6nKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=W2vog2Ri9IlYWlm16x+nWE4J9X1Hn0Mx2FQVvFcJuHk=;
-        b=WKv+oJYSOQQgeMatQh69oJgBtJXSG+0InhNEz0vYyBRCArXmBnkXS3urCi8rhz3MUO
-         cf3LbVA/yB7mNsBX9eZThaObztmgWoE4ZG0GVWCYRtBGW5+L6mFzGRCxNahGl5zLJxLV
-         thZ4SZ0u83CudNb9cPIb55PYLPD8DDMHPcyQkAzQ6G+LgxRr+RPipAgzxqxxZ8YIY7eE
-         8NquE6PqT2m6SXkGEapFhjtJOl/uwazbQbftO83tfbyJaATo5zUQzqnyAsw3085j45le
-         3BtBsR1X8x2mEnkagGzUU+Z2T0/n6SkoOdYYJbcusfLTWr7g73YDLZyQ1yfohE2x08dR
-         JLOw==
-X-Gm-Message-State: AOAM532E2VdypNa5Xf8lDP/ml3f+uBlga61b5RhfFrBbSalFtySaEiYe
-        EL6GFdU8R6kxnvzCaEWNHvjILw==
-X-Google-Smtp-Source: ABdhPJwMuyEr5qpyZilygNDQcs8MRuHwtC4LblBDYasXBuyhM8nMs4L6z5w2Ju5o13iWIu4WIK/6hA==
-X-Received: by 2002:a17:902:ff09:: with SMTP id f9mr20398811plj.322.1589866019941;
-        Mon, 18 May 2020 22:26:59 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z25sm9983081pfa.213.2020.05.18.22.26.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 22:26:59 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Daniele Debernardi <drebrez@gmail.com>,
-        Abhishek Sahu <absahu@codeaurora.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [GIT PULL] Qualcomm ARM dts updates for v5.8
-Date:   Mon, 18 May 2020 22:25:38 -0700
-Message-Id: <20200519052538.1250076-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.26.2
+        id S1728336AbgESGGa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 02:06:30 -0400
+Received: from mga06.intel.com ([134.134.136.31]:64617 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726605AbgESGGa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 May 2020 02:06:30 -0400
+IronPort-SDR: BZlag0r54CUUkHZ95LDcdeeXpWopqoYiU98hkO2Skc7hPdwqF/JvNxdIk9TMvS3DqU7XDRqNbV
+ RT0ca3jWVMrg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2020 23:06:29 -0700
+IronPort-SDR: 0Zq/ts77AzmTnn2r14Z7pySU9ywSyMmjOltrW4304M4U2WFglB2je7SSShrIar6VU9najVe+Kp
+ f6OGOsc1h5aA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,409,1583222400"; 
+   d="scan'208";a="253269468"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.157]) ([10.237.72.157])
+  by fmsmga007.fm.intel.com with ESMTP; 18 May 2020 23:06:27 -0700
+Subject: Re: [PATCH V1 3/3] mmc: sdhci: Allow platform controlled voltage
+ switching
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Vijay Viswanath <vviswana@codeaurora.org>
+References: <1589541535-8523-1-git-send-email-vbadigan@codeaurora.org>
+ <1589541535-8523-4-git-send-email-vbadigan@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <480cc8ee-27ae-2538-68d6-c382dbaca6bb@intel.com>
+Date:   Tue, 19 May 2020 09:06:43 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1589541535-8523-4-git-send-email-vbadigan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 8f3d9f354286745c751374f5f1fcafee6b3f3136:
+On 15/05/20 2:18 pm, Veerabhadrarao Badiganti wrote:
+> From: Vijay Viswanath <vviswana@codeaurora.org>
+> 
+> If vendor platform drivers are controlling whole logic of voltage
+> switching, then sdhci driver no need control vqmmc regulator.
+> So skip enabling/disable vqmmc from SDHC driver.
+> 
+> Signed-off-by: Vijay Viswanath <vviswana@codeaurora.org>
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+>  drivers/mmc/host/sdhci.c | 32 +++++++++++++++++++-------------
+>  drivers/mmc/host/sdhci.h |  1 +
+>  2 files changed, 20 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> index 1bb6b67..c010823 100644
+> --- a/drivers/mmc/host/sdhci.c
+> +++ b/drivers/mmc/host/sdhci.c
+> @@ -4098,6 +4098,7 @@ int sdhci_setup_host(struct sdhci_host *host)
+>  	unsigned int override_timeout_clk;
+>  	u32 max_clk;
+>  	int ret;
+> +	bool enable_vqmmc = false;
+>  
+>  	WARN_ON(host == NULL);
+>  	if (host == NULL)
+> @@ -4111,9 +4112,12 @@ int sdhci_setup_host(struct sdhci_host *host)
+>  	 * the host can take the appropriate action if regulators are not
+>  	 * available.
+>  	 */
+> -	ret = mmc_regulator_get_supply(mmc);
+> -	if (ret)
+> -		return ret;
+> +	if (!mmc->supply.vqmmc) {
+> +		ret = mmc_regulator_get_supply(mmc);
+> +		if (ret)
+> +			return ret;
+> +		enable_vqmmc  = true;
+> +	}
+>  
+>  	DBG("Version:   0x%08x | Present:  0x%08x\n",
+>  	    sdhci_readw(host, SDHCI_HOST_VERSION),
+> @@ -4373,7 +4377,15 @@ int sdhci_setup_host(struct sdhci_host *host)
+>  		mmc->caps |= MMC_CAP_NEEDS_POLL;
+>  
+>  	if (!IS_ERR(mmc->supply.vqmmc)) {
+> -		ret = regulator_enable(mmc->supply.vqmmc);
+> +		if (enable_vqmmc) {
+> +			ret = regulator_enable(mmc->supply.vqmmc);
+> +			if (ret) {
+> +				pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
+> +					mmc_hostname(mmc), ret);
+> +				mmc->supply.vqmmc = ERR_PTR(-EINVAL);
+> +			}
+> +			host->vqmmc_enabled = !ret;
+> +		}
+>  
+>  		/* If vqmmc provides no 1.8V signalling, then there's no UHS */
+>  		if (!regulator_is_supported_voltage(mmc->supply.vqmmc, 1700000,
+> @@ -4386,12 +4398,6 @@ int sdhci_setup_host(struct sdhci_host *host)
+>  		if (!regulator_is_supported_voltage(mmc->supply.vqmmc, 2700000,
+>  						    3600000))
+>  			host->flags &= ~SDHCI_SIGNALING_330;
+> -
+> -		if (ret) {
+> -			pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
+> -				mmc_hostname(mmc), ret);
+> -			mmc->supply.vqmmc = ERR_PTR(-EINVAL);
+> -		}
+>  	}
+>  
+>  	if (host->quirks2 & SDHCI_QUIRK2_NO_1_8_V) {
+> @@ -4625,7 +4631,7 @@ int sdhci_setup_host(struct sdhci_host *host)
+>  	return 0;
+>  
+>  unreg:
+> -	if (!IS_ERR(mmc->supply.vqmmc))
+> +	if (host->vqmmc_enabled)
+>  		regulator_disable(mmc->supply.vqmmc);
+>  undma:
+>  	if (host->align_buffer)
+> @@ -4643,7 +4649,7 @@ void sdhci_cleanup_host(struct sdhci_host *host)
+>  {
+>  	struct mmc_host *mmc = host->mmc;
+>  
+> -	if (!IS_ERR(mmc->supply.vqmmc))
+> +	if (host->vqmmc_enabled)
+>  		regulator_disable(mmc->supply.vqmmc);
+>  
+>  	if (host->align_buffer)
+> @@ -4780,7 +4786,7 @@ void sdhci_remove_host(struct sdhci_host *host, int dead)
+>  
+>  	destroy_workqueue(host->complete_wq);
+>  
+> -	if (!IS_ERR(mmc->supply.vqmmc))
+> +	if (host->vqmmc_enabled)
+>  		regulator_disable(mmc->supply.vqmmc);
+>  
+>  	if (host->align_buffer)
+> diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
+> index 8d2a096..24d27e1 100644
+> --- a/drivers/mmc/host/sdhci.h
+> +++ b/drivers/mmc/host/sdhci.h
+> @@ -570,6 +570,7 @@ struct sdhci_host {
+>  	u32 caps1;		/* CAPABILITY_1 */
+>  	bool read_caps;		/* Capability flags have been read */
+>  
+> +	bool vqmmc_enabled;	/* Vqmmc is enabled */
 
-  Linux 5.7-rc1 (2020-04-12 12:35:55 -0700)
+Last time around there was dissatisfaction with this variable name.  Perhaps
+change it to sdhci_core_to_disable_vqmmc
 
-are available in the Git repository at:
+>  	unsigned int            ocr_avail_sdio;	/* OCR bit masks */
+>  	unsigned int            ocr_avail_sd;
+>  	unsigned int            ocr_avail_mmc;
+> 
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.8
-
-for you to fetch changes up to cd13c72c1853f219e1f5577a107f48b9f9c44fdd:
-
-  ARM: dts: qcom: msm8974-klte: Add max77826 pmic node (2020-04-21 00:23:27 -0700)
-
-----------------------------------------------------------------
-Qualcomm ARM dts updates for v5.8
-
-This adds SCM firmware node for IPQ806x and fixes the high resolution
-timer for IPQ4019. Samsung Galaxy S5 gains regulators, eMMC and USB
-support.
-
-----------------------------------------------------------------
-Abhishek Sahu (1):
-      ARM: dts: qcom: ipq4019: fix high resolution timer
-
-Ansuel Smith (1):
-      ARM: dts: qcom: add scm definition to ipq806x
-
-Daniele Debernardi (5):
-      ARM: dts: qcom: msm8974-klte: Add pma8084 regulator nodes
-      ARM: dts: qcom: msm8974-klte: Remove inherited vreg_boost node
-      ARM: dts: qcom: msm8974-klte: Add gpio-keys nodes
-      ARM: dts: qcom: msm8974-klte: Add sdhci1 node
-      ARM: dts: qcom: msm8974-klte: Add USB node
-
-Iskren Chernev (1):
-      ARM: dts: qcom: msm8974-klte: Add max77826 pmic node
-
- arch/arm/boot/dts/qcom-ipq4019.dtsi             |   1 +
- arch/arm/boot/dts/qcom-ipq8064.dtsi             |   6 +
- arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts | 405 +++++++++++++++++++++++-
- arch/arm/boot/dts/qcom-msm8974.dtsi             |  11 +
- 4 files changed, 421 insertions(+), 2 deletions(-)
