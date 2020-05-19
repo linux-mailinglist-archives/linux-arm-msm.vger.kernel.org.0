@@ -2,190 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EB7B1DA563
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 01:26:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF1211DA56F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 01:27:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728301AbgESX0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 19:26:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56456 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725998AbgESX0F (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 19:26:05 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1302C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 16:26:04 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id nu7so393135pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 16:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=o1nk3e7Hsby7x4Ub20aIHxa82tR9fW/umMvTM9rKISk=;
-        b=hyFWCJ1ji28KGi7XMbjo2ZeeZD9a4yQ3KrtWD0u9ykevNP52LvLwXh0wfok0MP56km
-         pEKk9ZSP4HEpLOWsEX1apDTwk/+Uc8bXuDbiYRaRZTwtTSXYWD35qFT9E8XPWJtqm8B8
-         VNjzUCl57jqbgGeUX06EhWqfO+b3qhoONqJmEcrldnVVSPYftOWl+imwh7jPXAyOhuOe
-         7AX7QH5RZ6bDFIiUIeWcNjAyQ9Bd0soIsGrZPWf9wp8xkbM1JMaPFpaVphJMswuIwiLF
-         jVfCFDKg8LN13dAJH/pQ7wNsnlAMS80pwFrQbIyYWUIaG08ccDoJD78Dc+TM++spUHUE
-         dv2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=o1nk3e7Hsby7x4Ub20aIHxa82tR9fW/umMvTM9rKISk=;
-        b=s2bHhD0DETD6wi82zpQEjVf7Ta7UPf4/DVegRMgkmpKszJUXDvKjVhihrWMN/qFeJh
-         vy2qss89915NcZ1Bf0XOvWyXWS1VmE7hO6f8J+bnDzB4xuuVmVd3ZfLoqn2Y6hd2BM8R
-         TWPZza+q7nddIZ+RNwDu6pL9kho9iUBA6DmjQeV8x8WB/VPkYRepNS9+UGkLv20aMK9U
-         W0tHI8p0Dv6oU59UM7UFr55OOdIV2HOktmEFbuyhxo3RBiEh+DDCQQh0+/VijHIkxwUF
-         lkYJ2ok5Gvp3lGLRH2FcufUIsFk+wS3dfnzww0XYUiY/D+BOPkK70GhsOXazgrWUMSa6
-         oHEA==
-X-Gm-Message-State: AOAM532da5wdpXxBk4xq0fdt704xoLQl72UNpZguF+/Oa2Qx3LN+pPSG
-        mRTlrXNZucJIrWEw6vsVD3d66Q==
-X-Google-Smtp-Source: ABdhPJwIaUrLIl1h4oKC2Zpxord9bh4XxK3fZAdVQpeaxzA/bI1iAMfOCqAsvKQsdp773VOcn7w60g==
-X-Received: by 2002:a17:902:ba8e:: with SMTP id k14mr1730650pls.85.1589930764297;
-        Tue, 19 May 2020 16:26:04 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o11sm443867pfd.195.2020.05.19.16.26.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2020 16:26:03 -0700 (PDT)
-Date:   Tue, 19 May 2020 16:24:42 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Robert Foss <robert.foss@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>
-Subject: Re: [PATCH v3] arm64: dts: qcom: apq8016-sbc-d3: Add Qualcomm
- APQ8016 SBC + D3Camera mezzanine
-Message-ID: <20200519232442.GE2165@builder.lan>
-References: <20200518082129.2103683-1-robert.foss@linaro.org>
- <20200519102256.GB8114@Mani-XPS-13-9360>
-MIME-Version: 1.0
+        id S1728085AbgESX0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 19:26:46 -0400
+Received: from mail-am6eur05on2047.outbound.protection.outlook.com ([40.107.22.47]:6028
+        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726178AbgESX0q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 May 2020 19:26:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PuF9ygxDkSvzgwixLZ00oT9AykrzJWzXOJFYJJ1fWWCxlkQLANBlyEvNwHgjpv+fupuFY4OH2CC/VuCGHsO2V9A2NNV8IxEcjf9QFdaYi25Kcm632YTSUPXnUtphkn3X2N15T8DhnYBF7yuiONQAwt1LUJcngQaEYjs5lfvdmRCLByrwnRO4w6sooU1UhFhKQVuWTDNR+3nAB6VDM4HCJDvqK0N+iVD9jYP49395MdGYaOyW9HUtrMlnTOr3ovGOaqJvcMGURvnRYcq2bp8l6l6RE7vrLBsYK9f3rEX8J5ysbxzB2Wz7gmTM8dChHEEPk6baffghufQL1TTgXOfJ7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3out6jrln7PxKdCWAHNqerkDXxM/y0YwkyhcP1vS2nU=;
+ b=n6w6UxWhc6giMAPOIx0sbFTcVf5RbWMZ8MaEE9XVEiGImr/V/68cCDIGbW6XOIYz/RI6sqMjrIzuezYgkv0OkFDfeAuyr+rB6anQK1RgIS7ARo/mrbc0mBqFWsuco9wi6zuTh29CIC9tl1L2bdzFMuI8IvgesDtjbVmoFSfVe0IOMmQe82Yh6z1Ou0wgXeyP6Ik//CFvtZ9nptH8n+3uQMg0SSAXVBSZskx12/ol/8udmUKI6dT6YR1eO6nQ5yCnYg0dsRx4z2sIT8QVy2sDzdt2NXqu49Vcf3g4Ge8AAH/YuFEEITazVq7wlX7+xxwzCqAKCabj/P6HYUMlOZC7dw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=mellanox.com; dmarc=pass action=none header.from=mellanox.com;
+ dkim=pass header.d=mellanox.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Mellanox.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3out6jrln7PxKdCWAHNqerkDXxM/y0YwkyhcP1vS2nU=;
+ b=gYkf9VsFBNPcRj3HyTf8PE/g4EqNG+7pB66uIb8+aDO13k0AIjswBpmgPGFtzbZtcofNMa6pSQM916McPQ8AGus7Y0avGfuESu8rtJk34L6+5dMv1BnDzXl8LA/TSRe2suRDIkqilb1ZiQW9277udDaZGfDEz9G6p5+Z2dldCO8=
+Authentication-Results: ffwll.ch; dkim=none (message not signed)
+ header.d=none;ffwll.ch; dmarc=none action=none header.from=mellanox.com;
+Received: from VI1PR05MB4141.eurprd05.prod.outlook.com (2603:10a6:803:44::15)
+ by VI1PR05MB5533.eurprd05.prod.outlook.com (2603:10a6:803:96::29) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3000.27; Tue, 19 May
+ 2020 23:26:41 +0000
+Received: from VI1PR05MB4141.eurprd05.prod.outlook.com
+ ([fe80::848b:fcd0:efe3:189e]) by VI1PR05MB4141.eurprd05.prod.outlook.com
+ ([fe80::848b:fcd0:efe3:189e%7]) with mapi id 15.20.3000.034; Tue, 19 May 2020
+ 23:26:41 +0000
+Date:   Tue, 19 May 2020 20:26:36 -0300
+From:   Jason Gunthorpe <jgg@mellanox.com>
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Olof Johansson <olof.johansson@gmail.com>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Dave Airlie <airlied@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        wufan@codeaurora.org, pratanan@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH 0/8] Qualcomm Cloud AI 100 driver
+Message-ID: <20200519232636.GA24561@mellanox.com>
+References: <CAKMK7uG-oP-tcOcNz-ZzTmGondEo-17BCN1kpFBPwb7F8QcM5w@mail.gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200519102256.GB8114@Mani-XPS-13-9360>
+In-Reply-To: <CAKMK7uG-oP-tcOcNz-ZzTmGondEo-17BCN1kpFBPwb7F8QcM5w@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: MN2PR11CA0024.namprd11.prod.outlook.com
+ (2603:10b6:208:23b::29) To VI1PR05MB4141.eurprd05.prod.outlook.com
+ (2603:10a6:803:44::15)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from mlx.ziepe.ca (156.34.48.30) by MN2PR11CA0024.namprd11.prod.outlook.com (2603:10b6:208:23b::29) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3000.24 via Frontend Transport; Tue, 19 May 2020 23:26:40 +0000
+Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)     (envelope-from <jgg@mellanox.com>)      id 1jbBd6-00037I-5O; Tue, 19 May 2020 20:26:36 -0300
+X-Originating-IP: [156.34.48.30]
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: 3e0c6265-8af2-4196-789b-08d7fc4c1559
+X-MS-TrafficTypeDiagnostic: VI1PR05MB5533:
+X-Microsoft-Antispam-PRVS: <VI1PR05MB5533A7AD7EC2297299F8CBE7CFB90@VI1PR05MB5533.eurprd05.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-Forefront-PRVS: 040866B734
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: ZJDZs4rETzrF9QviuUN8FPsVKL1NqJDBmWlHo1xeRlkLD5+ZlQ+ghO2j8D/D/X5wsrU23h/C3Hbq3ZsHn0JUTZa9AX7ZdNjfCY7weVnPRV6tRF1fy/G90MVoztede8gQqkO7MkMgN+YUQogZQr0yOIOZB6KCLenIiNrF0LuhkZCeUbFWlgAnAW00+rpNGJjYstvyyb2iVePtic8DjONWjXMzq3fNKTh0MUMTJ445IZ9Oz0BynRp8DNNo6aDdLg63s016cGD1h14N13N/Y+CV2CeFx14Gfo9co39vuTctrNR0fGDThwnATU93xgst9paQIe7EIBIpaaQQQke/WsZZrwrtv1tAYUHqidQ66AsFwh5AU93MsNVlQWpTvPWu/dvJMqngmZCvIp3t9FLENRt4OUVyfK8eIBQGDbuFLBAuEIUj4fZex+a/fDW49DSU9O8bFZKZAI4kZIcuotRwBRnA2LFTirz5yCjaggStmGGJz1rdLhTklBvza7ajoXhhGXwu
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR05MB4141.eurprd05.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(39860400002)(366004)(396003)(136003)(346002)(376002)(26005)(4326008)(9786002)(52116002)(33656002)(9746002)(2616005)(186003)(66476007)(66946007)(66556008)(2906002)(478600001)(316002)(36756003)(8676002)(6916009)(54906003)(86362001)(5660300002)(7416002)(8936002)(1076003)(24400500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: sjfbhFGgYpXl1eyHC0WgZrRACwq/2ZQ5YEde8RJVqXZc3Rgk2ncgPjNXxFcBeo76oKrU6jFfAgJYfCCv7yBVMQVBL5C8GE3L+dEQitB1SaOIz/BM9CTvDBcPox0Tzi9eDWuNZoTOKlfv6Q72jCB2WEh1UUhE0NS/uWk0/WaRc+DOhwDN3U2GuJa6A2HmpfcQy4+SROFiWr1R//TUwS0mQtXxlRdrS3MJ+Ap5AGZlxDGXB1MgeE3Hev7OK2ZyQrXv1NLLpM2tdSGtDWFqeUeCMnl97LTnWmUUdcRcYpj5Zg6A7hAznv4EvxPcpvm1ubr2QrPUcjhRC2+qbT+w69c3vDyCUrh6sISmLjgip+Fsy7HjW1t6gN0RMzzNeY/pXbpOxIk7VPmH0g3vGyoNPuddGxXrWw2MzFBFAs3WT8R1wa6eYqJHKpZ8CRff4OwhidD/l1WkYVq1mgmwTjEUjhvq4KBdvMgV0OVPgvB8aMsiEVQ=
+X-OriginatorOrg: Mellanox.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e0c6265-8af2-4196-789b-08d7fc4c1559
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2020 23:26:40.9829
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: a652971c-7d2e-4d9b-a6a4-d149256f461b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: cDWI9cIlSLy4pc7Gjtg6Kpg8IigaDSMeul28xIUBHbmDuaLBz21cn6yqLk/rdljw0S2aHpySVEZhHfFI8HAWlg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR05MB5533
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 19 May 03:22 PDT 2020, Manivannan Sadhasivam wrote:
+On Tue, May 19, 2020 at 10:41:15PM +0200, Daniel Vetter wrote:
 
-> Hi Robert,
-> 
-> On Mon, May 18, 2020 at 10:21:29AM +0200, Robert Foss wrote:
-> > Add device treee support for the Qualcomm APQ8016 SBC, otherwise known as
-> > the Dragonboard 410c with the D3Camera mezzanine expansion board.
-> > 
-> > The D3Camera mezzanine ships in a kit with a OmniVision 5640 sensor module,
-> > which is what this DT targets.
-> > 
-> 
-> What is the motivation behind adding this new dts? We have been using the
-> userspace tool [1] for applying this as an overlay for some time. But if we
-> start adding dts for mezzanines then for sure we'll end up with some good
-> numbers which will flood arch/{..}/qcom directory.
-> 
-> I could understand that one of the motivation is to provide nice user experience
-> to users but that's also taken care by the dt-update tool IMO.
-> 
+> Get some consistency into your decision making as maintainer. And don't
+> tell me or anyone else that this is complicated, gpu and rdma driver folks
+> very much told you and Olof last year that this is what you're getting
+> yourself into.
 
-The motivation for posting this was to provoke a response like yours.
+It is complicated!
 
-I knew about [1], but not that it included the overlays. I'm okay with
-using overlays and the dt-update tool. But I would have preferred that
-the dts files didn't live out of tree, given that this approach breaks
-if I change the name of a node you depend on upstream.
+One of the big mistakes we learned from in RDMA is that we must have a
+cannonical open userspace, that is at least the user side of the uABI
+from the kernel. It doesn't have to do a lot but it does have to be
+there and everyone must use it.
 
-Thanks,
-Bjorn
+Some time ago it was all a fragmented mess where every HW had its own
+library project with no community and that spilled into the kernel
+where it became impossible to be sure everyone was playing nicely and
+keeping their parts up to date. We are still digging out where I find
+stuff in the kernel that just never seemed to make it into any
+userspace..
 
-> Thanks,
-> Mani
-> 
-> [1] https://github.com/96boards/dt-update
-> 
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> > 
-> > Changes since v2:
-> >  - Vinod: Change copyright assignment to Linaro
-> > 
-> > Changes since v1:
-> >  - Vinod: Changed license to GPL+BSD
-> >  - Vinod: Changed copyright year to 2020
-> >  - Nico: Changed name of mezzanine to d3camera
-> > 
-> >  arch/arm64/boot/dts/qcom/Makefile             |  1 +
-> >  .../boot/dts/qcom/apq8016-sbc-d3camera.dts    | 45 +++++++++++++++++++
-> >  2 files changed, 46 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index cc103f7020fd..3f95b522694e 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -1,5 +1,6 @@
-> >  # SPDX-License-Identifier: GPL-2.0
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3camera.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM) += apq8096-ifc6640.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts
-> > new file mode 100644
-> > index 000000000000..752e5ec47499
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-d3camera.dts
-> > @@ -0,0 +1,45 @@
-> > +// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> > + */
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include "apq8016-sbc.dtsi"
-> > +
-> > +/ {
-> > +	model = "Qualcomm Technologies, Inc. APQ 8016 SBC w/ D3Camera Mezzanine";
-> > +	compatible = "qcom,apq8016-sbc", "qcom,apq8016", "qcom,sbc";
-> > +};
-> > +
-> > +&cci_i2c0 {
-> > +	/delete-node/ camera_rear@3b;
-> > +
-> > +	camera_rear@76 {
-> > +		compatible = "ovti,ov5640";
-> > +		reg = <0x76>;
-> > +
-> > +		enable-gpios = <&msmgpio 34 GPIO_ACTIVE_HIGH>;
-> > +		reset-gpios = <&msmgpio 35 GPIO_ACTIVE_LOW>;
-> > +		pinctrl-names = "default";
-> > +		pinctrl-0 = <&camera_rear_default>;
-> > +
-> > +		clocks = <&gcc GCC_CAMSS_MCLK0_CLK>;
-> > +		clock-names = "xclk";
-> > +		clock-frequency = <23880000>;
-> > +
-> > +		vdddo-supply = <&camera_vdddo_1v8>;
-> > +		vdda-supply = <&camera_vdda_2v8>;
-> > +		vddd-supply = <&camera_vddd_1v5>;
-> > +
-> > +		status = "ok";
-> > +
-> > +		port {
-> > +			ov5640_ep: endpoint {
-> > +				clock-lanes = <1>;
-> > +				data-lanes = <0 2>;
-> > +				remote-endpoint = <&csiphy0_ep>;
-> > +			};
-> > +		};
-> > +	};
-> > +};
-> > -- 
-> > 2.25.1
-> > 
+I feel this is an essential ingredient, and I think I gave this advice
+at LPC as well - it is important to start as a proper subsystem with a
+proper standard user space. IMHO a random collection of opaque misc
+drivers for incredibly complex HW is not going to magically gel into a
+subsystem.
+
+Given the state of the industry the userspace doesn't have to do
+alot, and maybe that library exposes unique APIs for each HW, but it
+is at least a rallying point to handle all these questions like: 'is
+the proposed userspace enough?', give some consistency, and be ready
+to add in those things that are common (like, say IOMMU PASID setup)
+
+The uacce stuff is sort of interesting here as it does seem to take
+some of that approach, it is really simplistic, but the basic idea of
+creating a generic DMA work ring is in there, and probably applies
+just as well to several of these 'totally-not-a-GPU' drivers.
+
+The other key is that the uABI from the kernel does need to be very
+flexible as really any new HW can appear with any new strange need all
+the time, and there will not be detailed commonality between HWs. RDMA
+has made this mistake a lot in the past too.
+
+The newer RDMA netlink like API is actually turning out not bad for
+this purpose.. (again something a subsystem could provide)
+
+Also the approach in this driver to directly connect the device to
+userspace for control commands has worked for RDMA in the past few
+years.
+
+Jason
