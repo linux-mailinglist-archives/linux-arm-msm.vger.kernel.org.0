@@ -2,121 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 685451D8F19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 07:17:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 959021D8F2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 07:26:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726862AbgESFR1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 01:17:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
+        id S1726323AbgESF0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 01:26:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbgESFR0 (ORCPT
+        with ESMTP id S1726272AbgESF0Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 01:17:26 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFFD1C061A0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 22:17:25 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id q8so4183687pfu.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 22:17:25 -0700 (PDT)
+        Tue, 19 May 2020 01:26:24 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ECB4C061A0C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 22:26:24 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id n15so848049pjt.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2020 22:26:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wyZN/R6qpcX7fc4AdyQ10EM48vce1r3i4Gy4ZEWGZyo=;
-        b=VG11DQ32nYPFoMQMwo0hmRhLveHx94x4UB3EV11E279byHVSl+SwEDY3t6lYUdIBqb
-         tSqc0GtMXZszHzQ9mmVMShWmPSH/k97kXZotCai/uoBwW3dEtIvSJM+Op7EQrwWWnCtD
-         Az9VmmRwkQGt+3ZS/vBB+5tKdzAJv497Qz80D8SxlcNJ4fHCdMHpPNBW6OfnlDqHAEQ8
-         JttQ/5qUcjnoeDK9mN+e4lcqvIZHNTGicdEJeAV47NgwHIBmQKXmO9MaigTmZXPyKeSn
-         xwkwD5YHHMVzTsXnEs74G8HAEDDqUlnKrT295laldHRhhVwBaxYPsF6MgvuM7jJ2cBDT
-         B+/A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TQLTjFaHeHCtwJ90T40u9GJZ4EPCgGpPiHhC/OFX8TA=;
+        b=R6pm4GXJTMMMY373PRSkQG8D4DwPQqGx7gkgp7evfK2GysjnKx55h80ucmWzRZahYc
+         pINugt/U+FRyboicAskf87byfkkuhs6FuubeZML2IBojIsPl9DhKoX2VN+Q2xiZF5jPE
+         h+OaRAnlkhKFP9NWBST3+iE4y9T2ngZWz3Kpav1e0j1MmH2eW4kM2Xjb/7ZO+OXFvznP
+         mCG9Qin7nXV8uf36YL1DqWwyJ+bSkR6otaMH9Ohk+heujTKcqflwUSvT2WKGVdRjYd/C
+         VVoWbRzbuqQtK5k9cvsxwpFFdHtSM3mW2YBBTlTA+Aqy6hHcm6KMNtD/pnT1NUoR71Al
+         QsXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wyZN/R6qpcX7fc4AdyQ10EM48vce1r3i4Gy4ZEWGZyo=;
-        b=TRIhG1OoI9DnkY0ufh3Pa9bF99WiARCZmLM7cmvvvXTB0riu755ovHLkrqJ5Ip30nm
-         S2SomKJyJo/4NP5b2COS++Xe/bqEDyGqK2C6aV7jj8dVbOyueWAMzi4NAbvgTeKGV2GB
-         uBkObye6mnNocvYngr264tj9va4ZUQ7kHeguB68N5vqHHJue2UkKFaHEUeuFUw/WtgOH
-         Obi9AS28F0ASGDqn9+o/CnWzT6DxflNyUf7CzX2oDCVzX5LFXBv2AzKVliJNmlUabXMH
-         jazqvb36SJOW0XMoNHTihFur0XTYyUTrMZlOT5E//pwmPAPNoFF+cHMmCogKvf+8B5Sc
-         JDzA==
-X-Gm-Message-State: AOAM530yQQYQZx7F/Ix5Lsi53HEWuJTjJ6Ato1pblBN+Y6T5nmKM9yxj
-        qvAMXKSDIIP1EU3k5OSDT4GHzg==
-X-Google-Smtp-Source: ABdhPJxnR3xVyoVXFCEFVT/fGHPOoUzzPxhKZnInZ4LxZVIfny/f/6lMiBq0X4YT2pattoSJDrNXAg==
-X-Received: by 2002:a63:e70b:: with SMTP id b11mr5062941pgi.88.1589865444874;
-        Mon, 18 May 2020 22:17:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TQLTjFaHeHCtwJ90T40u9GJZ4EPCgGpPiHhC/OFX8TA=;
+        b=NejSQmKjWnCg1tk6imT0Ro12XqVeJfIv4tNs9eGnml5TrwyXEC/cK/KH0nNw0L4bGl
+         +9Yq5aKtRWbgGgVnt9JBL+1aLdCGoGaT4wWiBtC/sYPKSqskCy3qmgH0UCFucUNJNjuh
+         YngjkaHvyDiKUh+EShEVOROR+wrYMJuaEjHnVhyfSvmMJBkOPeNhTAlb7Oy9gU6klxU4
+         CTZg+jdKTGaR7HdjmO6udVvBX2FW3Frkwv5MW8nzwZu0s39E0442RF/jkw8T80J5Zxet
+         cH5cEBxD9wseQygyo4zjsVsPumuQVJgOHBR26oH8VilmTUioPXJOVE9F0CtjpdQuNezN
+         qMsg==
+X-Gm-Message-State: AOAM531bIo+viU/wVO6SM235CYLSRm2Gm71q7oAgyo+vMSOj6Q2FrU/o
+        cjJz2hKXps6h5ehfCWAX6dr8zwla1h8=
+X-Google-Smtp-Source: ABdhPJyeCl5NFJNw/zwS7zHiNN+lAe/tMkiC2BicVCQdQPF/qoZgNRkInWg5NJNF1XETXKHAW5GS7A==
+X-Received: by 2002:a17:90a:a111:: with SMTP id s17mr3124143pjp.39.1589865983783;
+        Mon, 18 May 2020 22:26:23 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id gv4sm1027617pjb.6.2020.05.18.22.17.23
+        by smtp.gmail.com with ESMTPSA id v127sm10211683pfb.91.2020.05.18.22.26.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 22:17:24 -0700 (PDT)
-Date:   Mon, 18 May 2020 22:16:02 -0700
+        Mon, 18 May 2020 22:26:23 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH] usb: xhci: fix USB_XHCI_PCI depends
-Message-ID: <20200519051602.GY2165@builder.lan>
-References: <20200519050622.994908-1-vkoul@kernel.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Alex Elder <elder@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [GIT PULL] Qualcomm ARM64 defconfig updates for v5.8
+Date:   Mon, 18 May 2020 22:25:02 -0700
+Message-Id: <20200519052502.1249888-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200519050622.994908-1-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 18 May 22:06 PDT 2020, Vinod Koul wrote:
+The following changes since commit 8f3d9f354286745c751374f5f1fcafee6b3f3136:
 
-> The xhci-pci-renesas module exports symbols for xhci-pci to load the
-> RAM/ROM on renesas xhci controllers. We had dependency which works
-> when both the modules are builtin or modules.
-> 
-> But if xhci-pci is inbuilt and xhci-pci-renesas in module, we get below
-> linker error:
-> drivers/usb/host/xhci-pci.o: In function `xhci_pci_remove':
-> drivers/usb/host/xhci-pci.c:411: undefined reference to `renesas_xhci_pci_exit'
-> drivers/usb/host/xhci-pci.o: In function `xhci_pci_probe':
-> drivers/usb/host/xhci-pci.c:345: undefined reference to `renesas_xhci_check_request_fw'
-> 
-> Fix this by adding USB_XHCI_PCI having depends on USB_XHCI_PCI_RENESAS
-> || !USB_XHCI_PCI_RENESAS so that both can be either inbuilt or modules.
-> 
+  Linux 5.7-rc1 (2020-04-12 12:35:55 -0700)
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+are available in the Git repository at:
 
-Regards,
-Bjorn
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.8
 
-> Reported-by: Anders Roxell <anders.roxell@linaro.org>
-> Fixes: a66d21d7dba8 ("usb: xhci: Add support for Renesas controller with memory")
-> Tested-by: Anders Roxell <anders.roxell@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/usb/host/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
-> index b5c542d6a1c5..92783d175b3f 100644
-> --- a/drivers/usb/host/Kconfig
-> +++ b/drivers/usb/host/Kconfig
-> @@ -40,11 +40,11 @@ config USB_XHCI_DBGCAP
->  config USB_XHCI_PCI
->  	tristate
->  	depends on USB_PCI
-> +	depends on USB_XHCI_PCI_RENESAS || !USB_XHCI_PCI_RENESAS
->  	default y
->  
->  config USB_XHCI_PCI_RENESAS
->  	tristate "Support for additional Renesas xHCI controller with firwmare"
-> -	depends on USB_XHCI_PCI
->  	---help---
->  	  Say 'Y' to enable the support for the Renesas xHCI controller with
->  	  firwmare. Make sure you have the firwmare for the device and
-> -- 
-> 2.25.4
-> 
+for you to fetch changes up to 5ef3c35809ec74ab41a5cf93a5b6d60167661113:
+
+  arm64: defconfig: enable Qualcomm IPA and RMNet modules (2020-05-18 16:36:30 -0700)
+
+----------------------------------------------------------------
+Qualcomm ARM64 defconfig updates for v5.8
+
+This enables SM8250 GCC clock driver, SC7180 GCC clock driver and SC7180
+TLMM pinctrl driver, the IPA and RMNET drivers, CCI, camera subsystem
+and camera clock drivers and removes the now depricated GLINK_SSR entry.
+
+----------------------------------------------------------------
+Alex Elder (1):
+      arm64: defconfig: enable Qualcomm IPA and RMNet modules
+
+Bjorn Andersson (2):
+      arm64: defconfig: Remove QCOM_GLINK_SSR
+      arm64: defconfig: Enable Qualcomm SC7180 pinctrl and gcc
+
+Robert Foss (1):
+      arm64: defconfig: Enable Qualcomm CAMCC, CAMSS and CCI drivers
+
+Vinod Koul (1):
+      arm64: defconfig: Enable SM8250 GCC driver
+
+ arch/arm64/configs/defconfig | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
