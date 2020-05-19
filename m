@@ -2,85 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBCA21D9525
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 13:20:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A3F51D9550
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 13:31:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727077AbgESLUy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 07:20:54 -0400
-Received: from h4.fbrelay.privateemail.com ([131.153.2.45]:48531 "EHLO
-        h4.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726157AbgESLUy (ORCPT
+        id S1728286AbgESLbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 07:31:24 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:16648 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726595AbgESLbY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 07:20:54 -0400
-Received: from MTA-06-4.privateemail.com (mta-06.privateemail.com [68.65.122.16])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 19 May 2020 07:31:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589887883; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=jtGFv/rOwWa36h/UoB6hocUCfUy1WbaEeaCMlK5Ky5A=; b=dvrEXhquBnVfTj1AFo5+uUO17zZ2/C8RTZI7hGRXW4PNgn6NxpgR3dDamX4kcGuj90BXOS+e
+ SQj1mP9FZzk79U7ZLudqVultZ5WNdjaJKniDk5ddh6LYCnCGdtq89Hg41JSWtShJ8e45/VjW
+ zDH04M/TnQi99kjXVj7PPVABPl0=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec3c383.7fa0e76c3570-smtp-out-n03;
+ Tue, 19 May 2020 11:31:15 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 58CC5C433D2; Tue, 19 May 2020 11:31:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id B10E281395;
-        Tue, 19 May 2020 07:20:53 -0400 (EDT)
-Received: from MTA-06.privateemail.com (localhost [127.0.0.1])
-        by MTA-06.privateemail.com (Postfix) with ESMTP id 949ED6003F;
-        Tue, 19 May 2020 07:20:51 -0400 (EDT)
-Received: from casper (unknown [10.20.151.219])
-        by MTA-06.privateemail.com (Postfix) with ESMTPA id 1453F6004D;
-        Tue, 19 May 2020 11:20:50 +0000 (UTC)
-Date:   Tue, 19 May 2020 04:20:50 -0700
-From:   Eli Riggs <eli@rje.li>
+        (Authenticated sender: groverm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D3B3C433F2;
+        Tue, 19 May 2020 11:31:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D3B3C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=groverm@codeaurora.org
+Date:   Tue, 19 May 2020 17:01:02 +0530
+From:   Mayank Grover <groverm@codeaurora.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add initial support for Xiaomi
- Redmi Note 8T
-Message-ID: <20200519042050.7efd4b0c@casper>
-In-Reply-To: <20200519061114.GC2165@builder.lan>
-References: <20200517115410.3374-1-eli@rje.li>
- <20200517115410.3374-3-eli@rje.li>
- <20200519061114.GC2165@builder.lan>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Cc:     linus.walleij@linaro.org, agross@kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, neeraju@codeaurora.org
+Subject: Re: [PATCH] pinctrl: msm: Add check for pinctrl group is valid
+Message-ID: <20200519113102.GA5076@codeaurora.org>
+References: <1589817025-21886-1-git-send-email-groverm@codeaurora.org>
+ <20200519013813.GU2165@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200519013813.GU2165@builder.lan>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 18 May 2020 23:11:14 -0700
-Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
-
-> On Sun 17 May 04:54 PDT 2020, Eli Riggs wrote:
+O Mon, May 18, 2020 at 06:38:13PM -0700, Bjorn Andersson wrote:
+> On Mon 18 May 08:50 PDT 2020, Mayank Grover wrote:
 > 
-> > Adds initial device tree for Xiaomi Redmi Note 8T, codename
-> > xiaomi-willow. It uses the sm6125 SoC. Currently only boots into
-> > initrd shell over UART. Requires appended DTB with qcom,board-id =
-> > <0x22 0x0> and qcom,msm-id = <0x18a 0x10000> to actually boot.
+> > The list of reserved gpio pins for platform are populated
+> > in gpiochip valid_mask.
+> > 
+> > Here on MSM common driver introduce ability to check if
+> > pingroup is valid, by parsing pins in pingroup against
+> > reserved pins for gpios. This does not handle non-gpio
+> > pingroups.
 > > 
 > 
-> If I read this correctly you need to supply board-id and msm-id in
-> order to be able to get this booting?
-> 
-> Even though we don't like them, I would prefer if you just add them in
-> the dts file, in this patch.
+> Thanks Mayank, I can confirm that this is a problem, but don't we need
+> this on some of the pinmux_ops as well?
+>
 
-Yes, AFAICT the bootloader iterates over the appended DTBs and will
-only boot if it finds one with those matching properties.
+Thanks Bjorn, for quick reply.
 
-> > dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
-> > dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb diff --git
-> > a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
-> > b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts new file mode
-> > 100644 index 0000000000000..444b32ccb9d48 --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
-> > @@ -0,0 +1,19 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> 
-> Please make this GPL/BSD dual license.
-> 
-> Apart from these few remarks your patches looks good, looking forward
-> to see more of this platform!
+For pinmux ops, we already have check for validity in msm_pinmux_request
+function hook.
+
+request is getting called by core to check availabity of pin before acquiring
+the pin.
+
+Hence, I think we don't need this check there.
+
+Regards,
+Mayank
+
+ 
+> @Linus, we started off with something similar for GPIOs and ended up
+> with the logic in the core code. Should we somehow try to do the same
+> for pinctrl?
 > 
 > Regards,
 > Bjorn
-
-OK, thanks!
+> 
+> > Signed-off-by: Mayank Grover <groverm@codeaurora.org>
+> > ---
+> >  drivers/pinctrl/qcom/pinctrl-msm.c | 26 ++++++++++++++++++++++++++
+> >  1 file changed, 26 insertions(+)
+> > 
+> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > index 85858c1..b6ebe26 100644
+> > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > @@ -261,6 +261,24 @@ static unsigned msm_regval_to_drive(u32 val)
+> >  	return (val + 1) * 2;
+> >  }
+> >  
+> > +static bool msm_pingroup_is_valid(struct msm_pinctrl *pctrl,
+> > +				  const struct msm_pingroup *g)
+> > +{
+> > +	const unsigned int *pins = g->pins;
+> > +	unsigned int num_pins = g->npins;
+> > +	struct gpio_chip *chip = &pctrl->chip;
+> > +	unsigned int max_gpios = chip->ngpio;
+> > +	unsigned int i;
+> > +
+> > +	for (i = 0; i < num_pins; i++) {
+> > +		/* Doesn't handle non-gpio pingroups */
+> > +		if (pins[i] < max_gpios &&
+> > +		    !gpiochip_line_is_valid(chip, pins[i]))
+> > +			return false;
+> > +	}
+> > +	return true;
+> > +}
+> > +
+> >  static int msm_config_group_get(struct pinctrl_dev *pctldev,
+> >  				unsigned int group,
+> >  				unsigned long *config)
+> > @@ -276,6 +294,10 @@ static int msm_config_group_get(struct pinctrl_dev *pctldev,
+> >  
+> >  	g = &pctrl->soc->groups[group];
+> >  
+> > +	/* Check if group has all valid pins */
+> > +	if (!msm_pingroup_is_valid(pctrl, g))
+> > +		return -EINVAL;
+> > +
+> >  	ret = msm_config_reg(pctrl, g, param, &mask, &bit);
+> >  	if (ret < 0)
+> >  		return ret;
+> > @@ -355,6 +377,10 @@ static int msm_config_group_set(struct pinctrl_dev *pctldev,
+> >  
+> >  	g = &pctrl->soc->groups[group];
+> >  
+> > +	/* Check if group has all valid pins */
+> > +	if (!msm_pingroup_is_valid(pctrl, g))
+> > +		return -EINVAL;
+> > +
+> >  	for (i = 0; i < num_configs; i++) {
+> >  		param = pinconf_to_config_param(configs[i]);
+> >  		arg = pinconf_to_config_argument(configs[i]);
+> > -- 
+> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> > member of the Code Aurora Forum, hosted by The Linux Foundation
