@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFB851D9AD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 17:11:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2A791D9DE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 19:28:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729160AbgESPLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 11:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35064 "EHLO
+        id S1729258AbgESR2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 13:28:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729152AbgESPLo (ORCPT
+        with ESMTP id S1729230AbgESR2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 11:11:44 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB90C08C5C0;
-        Tue, 19 May 2020 08:11:44 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id a2so2579361ejb.10;
-        Tue, 19 May 2020 08:11:44 -0700 (PDT)
+        Tue, 19 May 2020 13:28:53 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F020EC08C5C2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 10:28:52 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id u15so629539ljd.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 10:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=qFmnDDUmU7bAXUCXAiIOCZYqhy9KJ7cJu0vEwn4yYb0=;
-        b=G66bJ6dC8bOeKCV1WGYuwjLa+qKy7Y0+n3uWze8Gn1ZAszBOTqKWQ62WTUjzafwL9U
-         +GTPdcyHtNf5XKqMcGlQmJUpD97lSXKgCjwnFB4vjmiLtm75QmbmYTM3DtiB9XBAXubk
-         8oSegy8cxFNV3j8wgjPmI1EI4FQZ05wphJXLMEfxZ7N/L87ptMxbQDNAdetxkOFNUMkL
-         HpE+J0BbniB9iXMsBbBOr2cxGGu68R8o5msor4h3OyP4WEVKPSwrF4l3Kxol9Kvm0vUG
-         oiXtOGlLJLyzkc5iFPnvHSCYntlakDIurYnTYtiSq9/gpPVc72+0QTJLIip+97mGYOYs
-         4eDA==
+        bh=2UU2uDfoQ0XDU5KpKT4RRKwHm6V5OiKc9FhAQ/MpRZE=;
+        b=AlU1mY950tCF9utrFQJlkpHmR4B291Dm6iDtNg/pIX2GtWDmyyj5nBCfZdHnxlIZBo
+         x8d58nILrz8M4S83m3rVZ34JaujF1PMsA2JJq7UjB/1bl30tz/Tzgvfcjf0g6OMPbQwW
+         OeCiSlziacIOl3984F0dNQIh887yHOmDn6RUo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=qFmnDDUmU7bAXUCXAiIOCZYqhy9KJ7cJu0vEwn4yYb0=;
-        b=RimmHQYVrejnmcibK7f0A1RQkVPgJbR4B/6YOUtJQXQfZCVFFpmJNvR4xpZm/bRUTp
-         mC0N2exf8/Fyix29oNpwuhzqj4ukbhe1/aNn49AsldGTAOHjjf326OckpRBm5BTCv06E
-         JykaJOs11MXERtDzre/T5+eTAGmXwGu3XK9M/0iDmUQmqTH7dZwBiqJJn8eW3YFnBLt1
-         oCmlWk5HGUPoCT7pfLOmaSkUvulGPTJfwJwlkJQwKm52LcoK88aViEqVlEppja6HNGfP
-         lEDiHU93J0AIlWZ5OjnuFSRKgxXF9+GUVleuGUsqrHTo9NaS0fRmBWZ6yJCdkuqLc9xI
-         LSng==
-X-Gm-Message-State: AOAM5325HF8+NR1HKBhdnVsTb8CRd8BfmGZANTSKe8HBMYzuQD6ZTSrx
-        Etg096xpmMhzthyt2XmfyCTXr31QYPgWNZAvvgk=
-X-Google-Smtp-Source: ABdhPJzO3neINwRRzJbIjXOIJwQTkTwZpvqUbx/rpVcTcaX7VHke7n+JUXqMuZyVp2d+kaG3FsnjsThgVhsZPoFWTDE=
-X-Received: by 2002:a17:906:1088:: with SMTP id u8mr1110995eju.428.1589901102998;
- Tue, 19 May 2020 08:11:42 -0700 (PDT)
+        bh=2UU2uDfoQ0XDU5KpKT4RRKwHm6V5OiKc9FhAQ/MpRZE=;
+        b=eANo3P8CjdHgTsBrzke6yS8Az86OwXnIH7Kzv8N9gcjZnYCFhREKIcKMo07GDQXP4x
+         qmAw3rJkjJPKzTVkqEQqwvNg5ZEZHu/+OoAHQHcw0AUf5UQh6w3G67NgYK0iXxt0qHSs
+         GlSG2/7zx9z4FF1zY7lCA91/rlzdBuRewQ8RlRic9F/dqX0wSt+nNOXWHLhjhqyC6BIB
+         SDFxs6pytmWIRACGEitbDOOWwm67U1g6GEWF6N9/x83YmnZD3bmPKCH1WlehVOGN2pub
+         UwGkA6h1atZ+aBQHeEiDxbHpEl6FJGEF0inxKUvXnAVGP25JbsVhWeHdy1EL2cX9cIGD
+         cJzA==
+X-Gm-Message-State: AOAM531/xQgEEKcxrQhQQW0MBnsLs2Ijg8ylgH2WQ56OdIgY5MlfX/p5
+        jsE9whGtgB8H5Z0s4pmGQxGPUJJtU8w=
+X-Google-Smtp-Source: ABdhPJxVF1Kh9kfkNa34Dc1eteOYeotTZcFf+kRWfUYAYP2E+rl3ejUsX3dsOdyTTyiHJ+uEhSLKMA==
+X-Received: by 2002:a2e:a48d:: with SMTP id h13mr295505lji.120.1589909330908;
+        Tue, 19 May 2020 10:28:50 -0700 (PDT)
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com. [209.85.167.42])
+        by smtp.gmail.com with ESMTPSA id i11sm155325ljg.9.2020.05.19.10.28.50
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 May 2020 10:28:50 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 82so232277lfh.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 10:28:50 -0700 (PDT)
+X-Received: by 2002:a19:b06:: with SMTP id 6mr12546467lfl.104.1589909329254;
+ Tue, 19 May 2020 10:28:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200421202004.11686-1-saiprakash.ranjan@codeaurora.org>
- <b491e02ad790a437115fdeab6b21bc48@codeaurora.org> <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
- <20200507125357.GA31783@willie-the-truck> <CAF6AEGuLU+_qP8HNO1s9PTPHqJnCMHzehmcT8NiJhiAwrfSH6w@mail.gmail.com>
- <CAF6AEGvuHKObTR97XdSXjmjKB+qjQ8N1_wxM=ZU8bEkF=cXp-A@mail.gmail.com>
- <20200511173008.GA24282@jcrouse1-lnx.qualcomm.com> <20200518154522.GN32394@willie-the-truck>
- <5a0ad639e272026c8be57393937cda22@codeaurora.org>
-In-Reply-To: <5a0ad639e272026c8be57393937cda22@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 19 May 2020 08:11:59 -0700
-Message-ID: <CAF6AEGuzBtj+srindmOvhaom5BdS2adLaOF=v_MtguMja14V2w@mail.gmail.com>
-Subject: Re: [PATCH] iomm/arm-smmu: Add stall implementation hook
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
-        <iommu@lists.linux-foundation.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+References: <1589712411-26718-1-git-send-email-pillair@codeaurora.org>
+In-Reply-To: <1589712411-26718-1-git-send-email-pillair@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Tue, 19 May 2020 10:28:12 -0700
+X-Gmail-Original-Message-ID: <CAE=gft577zxP5F6OdFXt6taLuLyye+tdRqZa63mPSRtPXO3Lcw@mail.gmail.com>
+Message-ID: <CAE=gft577zxP5F6OdFXt6taLuLyye+tdRqZa63mPSRtPXO3Lcw@mail.gmail.com>
+Subject: Re: [PATCH v9] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+To:     Rakesh Pillai <pillair@codeaurora.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -71,126 +71,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 19, 2020 at 2:26 AM Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
+On Sun, May 17, 2020 at 3:47 AM Rakesh Pillai <pillair@codeaurora.org> wrote:
 >
-> Hi Will,
+> Add device node for the ath10k SNOC platform driver probe
+> and add resources required for WCN3990 on sc7180 soc.
 >
-> On 2020-05-18 21:15, Will Deacon wrote:
-> > On Mon, May 11, 2020 at 11:30:08AM -0600, Jordan Crouse wrote:
-> >> On Fri, May 08, 2020 at 08:40:40AM -0700, Rob Clark wrote:
-> >> > On Fri, May 8, 2020 at 8:32 AM Rob Clark <robdclark@gmail.com> wrote:
-> >> > >
-> >> > > On Thu, May 7, 2020 at 5:54 AM Will Deacon <will@kernel.org> wrote:
-> >> > > >
-> >> > > > On Thu, May 07, 2020 at 11:55:54AM +0100, Robin Murphy wrote:
-> >> > > > > On 2020-05-07 11:14 am, Sai Prakash Ranjan wrote:
-> >> > > > > > On 2020-04-22 01:50, Sai Prakash Ranjan wrote:
-> >> > > > > > > Add stall implementation hook to enable stalling
-> >> > > > > > > faults on QCOM platforms which supports it without
-> >> > > > > > > causing any kind of hardware mishaps. Without this
-> >> > > > > > > on QCOM platforms, GPU faults can cause unrelated
-> >> > > > > > > GPU memory accesses to return zeroes. This has the
-> >> > > > > > > unfortunate result of command-stream reads from CP
-> >> > > > > > > getting invalid data, causing a cascade of fail.
-> >> > > > >
-> >> > > > > I think this came up before, but something about this rationale doesn't add
-> >> > > > > up - we're not *using* stalls at all, we're still terminating faulting
-> >> > > > > transactions unconditionally; we're just using CFCFG to terminate them with
-> >> > > > > a slight delay, rather than immediately. It's really not clear how or why
-> >> > > > > that makes a difference. Is it a GPU bug? Or an SMMU bug? Is this reliable
-> >> > > > > (or even a documented workaround for something), or might things start
-> >> > > > > blowing up again if any other behaviour subtly changes? I'm not dead set
-> >> > > > > against adding this, but I'd *really* like to have a lot more confidence in
-> >> > > > > it.
-> >> > > >
-> >> > > > Rob mentioned something about the "bus returning zeroes" before, but I agree
-> >> > > > that we need more information so that we can reason about this and maintain
-> >> > > > the code as the driver continues to change. That needs to be a comment in
-> >> > > > the driver, and I don't think "but android seems to work" is a good enough
-> >> > > > justification. There was some interaction with HUPCF as well.
-> >> > >
-> >> > > The issue is that there are multiple parallel memory accesses
-> >> > > happening at the same time, for example CP (the cmdstream processor)
-> >> > > will be reading ahead and setting things up for the next draw or
-> >> > > compute grid, in parallel with some memory accesses from the shader
-> >> > > which could trigger a fault.  (And with faults triggered by something
-> >> > > in the shader, there are *many* shader threads running in parallel so
-> >> > > those tend to generate a big number of faults at the same time.)
-> >> > >
-> >> > > We need either CFCFG or HUPCF, otherwise what I have observed is that
-> >> > > while the fault happens, CP's memory access will start returning
-> >> > > zero's instead of valid cmdstream data, which triggers a GPU hang.  I
-> >> > > can't say whether this is something unique to qcom's implementation of
-> >> > > the smmu spec or not.
-> >> > >
-> >> > > *Often* a fault is the result of the usermode gl/vk/cl driver bug,
-> >> > > although I don't think that is an argument against fixing this in the
-> >> > > smmu driver.. I've been carrying around a local patch to set HUPCF for
-> >> > > *years* because debugging usermode driver issues is so much harder
-> >> > > without.  But there are some APIs where faults can be caused by the
-> >> > > user's app on top of the usermode driver.
-> >> > >
-> >> >
-> >> > Also, I'll add to that, a big wish of mine is to have stall with the
-> >> > ability to resume later from a wq context.  That would enable me to
-> >> > hook in the gpu crash dump handling for faults, which would make
-> >> > debugging these sorts of issues much easier.  I think I posted a
-> >> > prototype of this quite some time back, which would schedule a worker
-> >> > on the first fault (since there are cases where you see 1000's of
-> >> > faults at once), which grabbed some information about the currently
-> >> > executing submit and some gpu registers to indicate *where* in the
-> >> > submit (a single submit could have 100's or 1000's of draws), and then
-> >> > resumed the iommu cb.
-> >> >
-> >> > (This would ofc eventually be useful for svm type things.. I expect
-> >> > we'll eventually care about that too.)
-> >>
-> >> Rob is right about HUPCF. Due to the parallel nature of the command
-> >> processor
-> >> there is always a very good chance that a CP access is somewhere in
-> >> the bus so
-> >> any pagefault is usually a death sentence. The GPU context bank would
-> >> always
-> >> want HUPCF set to 1.
-> >
-> > So this sounds like an erratum to me, and I'm happy to set HUPCF if we
-> > detect the broken implementation. However, it will need an entry in
-> > Documentation/arm64/silicon-errata.rst and a decent comment in the
-> > driver
-> > to explain what we're doing and why.
-> >
+> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> ---
+> Changes from v8:
+> - Removed the qcom,msa-fixed-perm
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  7 +++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
+>  2 files changed, 34 insertions(+)
 >
-> AFAIK there is no erratum documented internally for this behaviour and
-> this
-> exists from MSM8996 SoC time and errata usually don't survive this long
-> across generation of SoCs and there is no point for us in disguising it.
-
-possibly longer, qcom_iommu sets CFCFG..
-
-> Is it OK if we clearly mention it as the "design limitation" or some
-> other
-> term which we can agree upon along with the description which Rob and
-> Jordan
-> provided for setting HUPCF in the driver when we add the set_hupcf
-> callback?
-
-I'm not too picky on what we call it, but afaict it has been this way
-since the beginning of time, rather than specific to a certain SoC or
-generation of SoCs.  So it doesn't seem like the hw designers consider
-it a bug.
-
-(I'm not sure what the expected behavior is.. nor if any other SMMU
-implementation encounters this sort of situation..)
-
-BR,
--R
-
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 4e9149d..38b102e 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -389,6 +389,13 @@
+>         };
+>  };
 >
-> Thanks,
-> Sai
+> +&wifi {
+> +       status = "okay";
+> +       wifi-firmware {
+> +               iommus = <&apps_smmu 0xc2 0x1>;
+> +       };
+> +};
+> +
+>  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
 >
+>  &qspi_clk {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index f1280e0..dd4e095 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -63,6 +63,11 @@
+>                         clock-frequency = <32764>;
+>                         #clock-cells = <0>;
+>                 };
+> +
+> +               wlan_fw_mem: memory@94100000 {
+> +                       reg = <0 0x94100000 0 0x200000>;
+> +                       no-map;
+> +               };
+
+This node is not in the right place. Up through v8, this lived inside
+reserved-memory. Here it seems to apply into the clocks {} node, which
+is not the right spot.
+
+
+>         };
+>
+>         reserved_memory: reserved-memory {
+> @@ -944,6 +949,28 @@
+>                         };
+>                 };
+>
+> +               wifi: wifi@18800000 {
+> +                       compatible = "qcom,wcn3990-wifi";
+> +                       reg = <0 0x18800000 0 0x800000>;
+> +                       reg-names = "membase";
+> +                       iommus = <&apps_smmu 0xc0 0x1>;
+> +                       interrupts =
+> +                               <GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
+> +                               <GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
+> +                               <GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
+> +                               <GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
+> +                               <GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
+> +                               <GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
+> +                               <GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
+> +                               <GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
+> +                               <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
+> +                               <GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
+> +                               <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
+> +                               <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
+> +                       memory-region = <&wlan_fw_mem>;
+
+Should any of the *-supply regulators be specified? Or are they all
+board specific? Or just not needed? The example has these:
+vdd-0.8-cx-mx-supply = <&pm8998_l5>;
+vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
+vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
+vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
+
+
+
+> +                       status = "disabled";
+> +               };
+> +
+>                 config_noc: interconnect@1500000 {
+>                         compatible = "qcom,sc7180-config-noc";
+>                         reg = <0 0x01500000 0 0x28000>;
 > --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-> member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> 2.7.4
