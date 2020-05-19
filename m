@@ -2,152 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD9551DA2ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 22:41:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7F9F1DA461
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 00:20:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbgESUl1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 16:41:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58788 "EHLO
+        id S1726447AbgESWUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 18:20:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726447AbgESUl0 (ORCPT
+        with ESMTP id S1726283AbgESWUj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 16:41:26 -0400
-Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0753C08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 13:41:26 -0700 (PDT)
-Received: by mail-oo1-xc43.google.com with SMTP id z6so265918ooz.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 13:41:26 -0700 (PDT)
+        Tue, 19 May 2020 18:20:39 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B5C1C08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 15:20:39 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id l73so1605159pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 15:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=KqlY0HTT+IOHyYqsNVke69dYQGA7KHepidrczDemEV0=;
-        b=QGdyhJkp1DdKBLPoQNQnIKYhC6fJq0diB6e3HUnQosmcbIHkLgsPCnpZZi9nhFUBFR
-         ufALg9+CDJQTkIQruWIWbMiIcF8x8D/WIXcptC6CfuaVQF9VEhxW1ob6ud8UhpSGeqgZ
-         0jEzm47h0mp5kRVqaZC50bC3SLA3QwhfruNp0=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=qqjzSh1ztmtDYwc/MYnPY/dYSfE16wab49lYkM1PfBQ=;
+        b=Fsh2DrJuOBDMLbA4apQRID0KeanRhQiSAbTpdakI/ENJh94XscmLkvjLVV6+XZOkW3
+         eucUVxtVvrsavK61NAUg8AzSih+MeDqP2lDhozqB/PsV3iU7jq4IVUPvAnXx/WYB1AEu
+         rCvWOaUxyLDiXamwU/LAWr+51cWsMbudGo/hqlk7XmEi5gIQli+lynuVkVgMAYARLkxi
+         dj5VS7LHFE3sAYoY0FhUG5QqivxzJamv7Fvb2w2QqKPIUtuC5iUCxSzz4iwr5EtDW0cO
+         hI8W9R5cvtjBzJOjHU2iWFxrI30srcJL+vNlj076HVH/Iy78HnA3CZhU//XRojnIn9Ni
+         cjaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=KqlY0HTT+IOHyYqsNVke69dYQGA7KHepidrczDemEV0=;
-        b=rpVLTu41ynI8fSrFsSW4sQu+9p8qU0QKqSPvqbZ2ow/YJ4MurWvNHJa+8K7atgTC+i
-         /BBofw8ijIbPeAGsMtiOQAARSZDq9sCmEU37No68LwksWintakpGcEFwfuiWKJrRvdV3
-         LHXSE+3dHwUxkFdZ70D8D0VHzFc5HsRrseXqy2XhFf8+1nV7MzgLSIfDdrzVezEFhWhy
-         3czw9A5e1Q9rwzJn5PaZvdjeVAunPzLWBTgz9XAhnPtuPn4q8L3AoAlt2/JjKiSb0Kaq
-         rdRNQQo9MI7c0oRvw4I9VsWXOm8Mze+/qfFD1s5hfXVDt691+F809qUx26bKBXbuC7Iz
-         uRvA==
-X-Gm-Message-State: AOAM532+Nl7wjeprpEFVsk0GMJTf+OrEbL47Z1ZEXrDjIDYFgBhPldEM
-        Lbr1eo4MD8rPyh/VcDLrIEEzNx29SQTbfaPnuouJQA==
-X-Google-Smtp-Source: ABdhPJy+sQPtCXPvRCO/dG83ZBie1tD9S+4htYq0udq/GYRMDdPlJYAdylJ2iilHdgbiPgeFjf/3wmKXl3/gjVPYxwo=
-X-Received: by 2002:a4a:d136:: with SMTP id n22mr785994oor.85.1589920886046;
- Tue, 19 May 2020 13:41:26 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qqjzSh1ztmtDYwc/MYnPY/dYSfE16wab49lYkM1PfBQ=;
+        b=qOM3ozF/TReRcUS8GMh7F3rN21ALzPL/VUP2iZ8VB17Tnn5B4bs7+KIdPkl8kYzDZ2
+         6MQG0rCo6xp4/1l/J1pZzgLfeOLBwCw0+e+HcJJRRYA5SIKBf4AGaJPM+YXHx8u29RSv
+         3fTywrEy1SfgmX5x6ma3AzMsGKd0NW3M0VBHd7lKXSQYbK42+pwtoBUR5Cagq9jz+sYU
+         NnybGhIoSmW0FWui9K60o+85WhRvuXYGdVSFXbxS6/fCVUfelLDbsmHX1uWNTRc7v+SI
+         b1q3R2aAzOv5DN0xmitQLcfg+uPcajZivaOMNLVemiBNRFYNdl3yQsU6lvFs8pHtHR2+
+         pyGg==
+X-Gm-Message-State: AOAM533YfcvUMeocuycwlqIvZJFGL9GW9MGOixpG4uc0ifQAY8WkDmfz
+        0Z+PNETlexESLW68ttxMLKcGxQ==
+X-Google-Smtp-Source: ABdhPJy2qeKYVGFiaiYmSSm3TzYMf3o3nRHsvHjU3Vrs44XNoMU4nBKRIIfLUZrvaNoGCn4Gi6Emlw==
+X-Received: by 2002:a17:90b:503:: with SMTP id r3mr1752652pjz.69.1589926838459;
+        Tue, 19 May 2020 15:20:38 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id w19sm393729pfc.95.2020.05.19.15.20.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2020 15:20:37 -0700 (PDT)
+Date:   Tue, 19 May 2020 16:20:35 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Arun Kumar Neelakantam <aneela@codeaurora.org>
+Cc:     ohad@wizery.com, bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sricharan@codeaurora.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH V4 2/4] rpmsg: glink: Add support to handle signals
+ command
+Message-ID: <20200519222035.GB26832@xps15>
+References: <1589346671-15226-1-git-send-email-aneela@codeaurora.org>
+ <1589346671-15226-3-git-send-email-aneela@codeaurora.org>
 MIME-Version: 1.0
-From:   Daniel Vetter <daniel@ffwll.ch>
-Date:   Tue, 19 May 2020 22:41:15 +0200
-Message-ID: <CAKMK7uG-oP-tcOcNz-ZzTmGondEo-17BCN1kpFBPwb7F8QcM5w@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/8] Qualcomm Cloud AI 100 driver
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Olof Johansson <olof.johansson@gmail.com>,
-        Jason Gunthorpe <jgg@mellanox.com>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Dave Airlie <airlied@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        wufan@codeaurora.org, pratanan@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1589346671-15226-3-git-send-email-aneela@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 19, 2020 at 07:41:20PM +0200, Greg Kroah-Hartman wrote:
-> On Tue, May 19, 2020 at 08:57:38AM -0600, Jeffrey Hugo wrote:
-> > On 5/18/2020 11:08 PM, Dave Airlie wrote:
-> > > On Fri, 15 May 2020 at 00:12, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
-> > > >
-> > > > Introduction:
-> > > > Qualcomm Cloud AI 100 is a PCIe adapter card which contains a dedicated
-> > > > SoC ASIC for the purpose of efficently running Deep Learning inference
-> > > > workloads in a data center environment.
-> > > >
-> > > > The offical press release can be found at -
-> > > > https://www.qualcomm.com/news/releases/2019/04/09/qualcomm-brings-power-efficient-artificial-intelligence-inference
-> > > >
-> > > > The offical product website is -
-> > > > https://www.qualcomm.com/products/datacenter-artificial-intelligence
-> > > >
-> > > > At the time of the offical press release, numerious technology news sites
-> > > > also covered the product.  Doing a search of your favorite site is likely
-> > > > to find their coverage of it.
-> > > >
-> > > > It is our goal to have the kernel driver for the product fully upstream.
-> > > > The purpose of this RFC is to start that process.  We are still doing
-> > > > development (see below), and thus not quite looking to gain acceptance quite
-> > > > yet, but now that we have a working driver we beleive we are at the stage
-> > > > where meaningful conversation with the community can occur.
-> > >
-> > >
-> > > Hi Jeffery,
-> > >
-> > > Just wondering what the userspace/testing plans for this driver.
-> > >
-> > > This introduces a new user facing API for a device without pointers to
-> > > users or tests for that API.
-> >
-> > We have daily internal testing, although I don't expect you to take my word
-> > for that.
-> >
-> > I would like to get one of these devices into the hands of Linaro, so that
-> > it can be put into KernelCI.  Similar to other Qualcomm products. I'm trying
-> > to convince the powers that be to make this happen.
-> >
-> > Regarding what the community could do on its own, everything but the Linux
-> > driver is considered proprietary - that includes the on device firmware and
-> > the entire userspace stack.  This is a decision above my pay grade.
->
-> Ok, that's a decision you are going to have to push upward on, as we
-> really can't take this without a working, open, userspace.
+On Wed, May 13, 2020 at 10:41:09AM +0530, Arun Kumar Neelakantam wrote:
+> Remote peripherals send signal notifications over glink with commandID 15.
+> 
+> Add support to send and receive the signal command and convert the signals
+> from NATIVE to TIOCM while receiving and vice versa while sending.
+> 
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+> ---
+>  drivers/rpmsg/qcom_glink_native.c | 126 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 126 insertions(+)
+> 
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index fc8ef66..68e039a 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -1,5 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+> + * Copyright (c) 2018, The Linux Foundation.
 
-Uh wut.
+Again, not sure what this is for.
 
-So the merge criteria for drivers/accel (atm still drivers/misc but I
-thought that was interim until more drivers showed up) isn't actually
-"totally-not-a-gpu accel driver without open source userspace".
+>   * Copyright (c) 2016-2017, Linaro Ltd
+>   */
+>  
+> @@ -17,6 +18,7 @@
+>  #include <linux/rpmsg.h>
+>  #include <linux/sizes.h>
+>  #include <linux/slab.h>
+> +#include <linux/termios.h>
+>  #include <linux/workqueue.h>
+>  #include <linux/mailbox_client.h>
+>  
+> @@ -150,6 +152,8 @@ enum {
+>   * @intent_req_lock: Synchronises multiple intent requests
+>   * @intent_req_result: Result of intent request
+>   * @intent_req_comp: Completion for intent_req signalling
+> + * @lsigs:	local side signals
+> + * @rsigs:	remote side signals
+>   */
+>  struct glink_channel {
+>  	struct rpmsg_endpoint ept;
+> @@ -181,6 +185,10 @@ struct glink_channel {
+>  	struct mutex intent_req_lock;
+>  	bool intent_req_result;
+>  	struct completion intent_req_comp;
+> +
+> +	unsigned int lsigs;
+> +	unsigned int rsigs;
+> +
+>  };
+>  
+>  #define to_glink_channel(_ept) container_of(_ept, struct glink_channel, ept)
+> @@ -201,9 +209,15 @@ static const struct rpmsg_endpoint_ops glink_endpoint_ops;
+>  #define RPM_CMD_TX_DATA_CONT		12
+>  #define RPM_CMD_READ_NOTIF		13
+>  #define RPM_CMD_RX_DONE_W_REUSE		14
+> +#define RPM_CMD_SIGNALS			15
+>  
+>  #define GLINK_FEATURE_INTENTLESS	BIT(1)
+>  
+> +#define NATIVE_DTR_SIG	BIT(31)
+> +#define NATIVE_CTS_SIG	BIT(30)
+> +#define NATIVE_CD_SIG	BIT(29)
+> +#define NATIVE_RI_SIG	BIT(28)
 
-Instead it's "totally-not-a-gpu accel driver without open source
-userspace" _and_ you have to be best buddies with Greg. Or at least
-not be on the naughty company list. Since for habanalabs all you
-wanted is a few test cases to exercise the ioctls. Not the entire
-userspace.
+Please align theres with the BIT(1) of _INTENTLESS.
 
-The most bonkers part here is that drivers/gpu actually does have a bunch
-of active contributors from codeaurora ...
+> +
+>  static void qcom_glink_rx_done_work(struct work_struct *work);
+>  
+>  static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
+> @@ -975,6 +989,76 @@ static int qcom_glink_rx_open_ack(struct qcom_glink *glink, unsigned int lcid)
+>  	return 0;
+>  }
+>  
+> +/**
+> + * qcom_glink_send_signals() - convert a signal  cmd to wire format and transmit
 
-> Especially given the copyright owner of this code, that would be just
-> crazy and foolish to not have open userspace code as well.  Firmware
-> would also be wonderful as well, go poke your lawyers about derivative
-> work issues and the like for fun conversations :)
->
-> So without that changed, I'm not going to take this, and push to object
-> that anyone else take this.
->
-> I'm not going to be able to review any of this code anymore until that
-> changes, sorry.
+s/signal  cmd/signal cmd
 
-So you couldn't review the habanalabs driver either?
+> + * @glink:	The transport to transmit on.
+> + * @channel:	The glink channel
+> + * @sigs:	The signals to encode.
+> + *
+> + * Return: 0 on success or standard Linux error code.
+> + */
+> +static int qcom_glink_send_signals(struct qcom_glink *glink,
+> +				   struct glink_channel *channel,
+> +				   u32 sigs)
+> +{
+> +	struct glink_msg msg;
+> +
+> +	/* convert signals from TIOCM to NATIVE */
+> +	sigs &= 0x0fff;
+> +	if (sigs & TIOCM_DTR)
+> +		sigs |= NATIVE_DTR_SIG;
+> +	if (sigs & TIOCM_RTS)
+> +		sigs |= NATIVE_CTS_SIG;
+> +	if (sigs & TIOCM_CD)
+> +		sigs |= NATIVE_CD_SIG;
+> +	if (sigs & TIOCM_RI)
+> +		sigs |= NATIVE_RI_SIG;
+> +
+> +	msg.cmd = cpu_to_le16(RPM_CMD_SIGNALS);
+> +	msg.param1 = cpu_to_le16(channel->lcid);
+> +	msg.param2 = cpu_to_le32(sigs);
+> +
+> +	return qcom_glink_tx(glink, &msg, sizeof(msg), NULL, 0, true);
+> +}
+> +
+> +static int qcom_glink_handle_signals(struct qcom_glink *glink,
+> +				     unsigned int rcid, unsigned int signals)
+> +{
+> +	struct glink_channel *channel;
+> +	unsigned long flags;
+> +	u32 old;
+> +
+> +	spin_lock_irqsave(&glink->idr_lock, flags);
+> +	channel = idr_find(&glink->rcids, rcid);
+> +	spin_unlock_irqrestore(&glink->idr_lock, flags);
+> +	if (!channel) {
+> +		dev_err(glink->dev, "signal for non-existing channel\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	old = channel->rsigs;
+> +
+> +	/* convert signals from NATIVE to TIOCM */
+> +	if (signals & NATIVE_DTR_SIG)
+> +		signals |= TIOCM_DSR;
 
-Get some consistency into your decision making as maintainer. And don't
-tell me or anyone else that this is complicated, gpu and rdma driver folks
-very much told you and Olof last year that this is what you're getting
-yourself into.
+In qcom_glink_send_signals(), TIOCM_DTR (and not TIOCM_DSR) converts to
+NATIVE_DTR_SIG.  
 
-Cheers, Daniel
+> +	if (signals & NATIVE_CTS_SIG)
+> +		signals |= TIOCM_CTS;
 
-PS: I guess congrats for figuring out you can't write a totally-not-a-gpu
-accel driver without making kernel and userspace parts derivatives works
-of each another. We told you that last year.
---
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Similarly, NATIVE_CTS_SIG converts to TIOCM_RTS.  I would have expected to have
+a match between what gets sent and what comes back up.  If this is intentional
+please at some comments to justify your choices.
+
+> +	if (signals & NATIVE_CD_SIG)
+> +		signals |= TIOCM_CD;
+> +	if (signals & NATIVE_RI_SIG)
+> +		signals |= TIOCM_RI;
+> +	signals &= 0x0fff;
+> +
+> +	channel->rsigs = signals;
+> +
+> +	if (channel->ept.sig_cb) {
+> +		channel->ept.sig_cb(channel->ept.rpdev, channel->ept.priv,
+> +				    old, channel->rsigs);
+
+What is the relevance of old and channel->rsigs?  They are certainly not used in
+patch 4.
+
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static irqreturn_t qcom_glink_native_intr(int irq, void *data)
+>  {
+>  	struct qcom_glink *glink = data;
+> @@ -1036,6 +1120,10 @@ static irqreturn_t qcom_glink_native_intr(int irq, void *data)
+>  			qcom_glink_handle_intent_req_ack(glink, param1, param2);
+>  			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
+>  			break;
+> +		case RPM_CMD_SIGNALS:
+> +			qcom_glink_handle_signals(glink, param1, param2);
+> +			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
+> +			break;
+>  		default:
+>  			dev_err(glink->dev, "unhandled rx cmd: %d\n", cmd);
+>  			ret = -EINVAL;
+> @@ -1340,6 +1428,42 @@ static int qcom_glink_trysend(struct rpmsg_endpoint *ept, void *data, int len)
+>  	return __qcom_glink_send(channel, data, len, false);
+>  }
+>  
+> +static int qcom_glink_get_sigs(struct rpmsg_endpoint *ept)
+> +{
+> +	struct glink_channel *channel = to_glink_channel(ept);
+> +
+> +	return channel->rsigs;
+> +}
+> +
+> +static int qcom_glink_set_sigs(struct rpmsg_endpoint *ept, u32 set, u32 clear)
+> +{
+> +	struct glink_channel *channel = to_glink_channel(ept);
+> +	struct qcom_glink *glink = channel->glink;
+> +	u32 sigs = channel->lsigs;
+> +
+> +	if (set & TIOCM_DTR)
+> +		sigs |= TIOCM_DTR;
+> +	if (set & TIOCM_RTS)
+> +		sigs |= TIOCM_RTS;
+> +	if (set & TIOCM_CD)
+> +		sigs |= TIOCM_CD;
+> +	if (set & TIOCM_RI)
+> +		sigs |= TIOCM_RI;
+> +
+> +	if (clear & TIOCM_DTR)
+> +		sigs &= ~TIOCM_DTR;
+> +	if (clear & TIOCM_RTS)
+> +		sigs &= ~TIOCM_RTS;
+> +	if (clear & TIOCM_CD)
+> +		sigs &= ~TIOCM_CD;
+> +	if (clear & TIOCM_RI)
+> +		sigs &= ~TIOCM_RI;
+> +
+> +	channel->lsigs = sigs;
+> +
+> +	return qcom_glink_send_signals(glink, channel, sigs);
+> +}
+> +
+>  /*
+>   * Finds the device_node for the glink child interested in this channel.
+>   */
+> @@ -1373,6 +1497,8 @@ static const struct rpmsg_endpoint_ops glink_endpoint_ops = {
+>  	.destroy_ept = qcom_glink_destroy_ept,
+>  	.send = qcom_glink_send,
+>  	.trysend = qcom_glink_trysend,
+> +	.get_signals = qcom_glink_get_sigs,
+> +	.set_signals = qcom_glink_set_sigs,
+>  };
+>  
+>  static void qcom_glink_rpdev_release(struct device *dev)
+> -- 
+> 2.7.4
