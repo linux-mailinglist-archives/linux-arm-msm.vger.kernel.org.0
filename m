@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3466A1D92E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 11:04:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FEF41D934A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 11:26:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726818AbgESJEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 05:04:09 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:56099 "EHLO
+        id S1726333AbgESJ0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 05:26:41 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:51456 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726333AbgESJEJ (ORCPT
+        by vger.kernel.org with ESMTP id S1726508AbgESJ0k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 05:04:09 -0400
+        Tue, 19 May 2020 05:26:40 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589879048; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1589880398; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=krynLA3PVnStDQ90BA4lcITyrT/iSvbyv+EPo/hP2Ao=;
- b=ZuY008IWz0uBCFmAIT24lDUqYiBQbnRE6IM3yESvGEiNm9M8sa0uGIQiXYlpMp30wf0rBYeG
- vIzAmLGbHgyvKdgaSqTKgAX5H0QFuRCHcIT24sBsQ6zKQfnf/noEy6oFglnlFbUbYDt6Sof0
- OZYnZgoWiwnuTR9hPSr0rCetaJA=
+ MIME-Version: Sender; bh=aJ2iFgde8rnDCoyGqYJM6cG8pZxDm5e8UHUvHqksFTA=;
+ b=SpxNeA5zzdECFGMSmCTYwTVA/ndJBO1gDBycSOXm7AtG1NI4y8YEV6hRBCrbFrDOcf8zwATB
+ VXYO6SuGmtTjCIgHg3TNz63k42BjC3clW9EXB63s+iMj3UY50iEDXJMLzoCNnqRR5VNOeyhK
+ C5b1PRgrTB2Tr6yQ84V8fiA1/Rg=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec3a104.7f793d152148-smtp-out-n03;
- Tue, 19 May 2020 09:04:04 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ec3a64a.7f7a0e9e4d50-smtp-out-n03;
+ Tue, 19 May 2020 09:26:34 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BBFCAC433F2; Tue, 19 May 2020 09:04:04 +0000 (UTC)
+        id A2489C4478C; Tue, 19 May 2020 09:26:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -35,49 +35,35 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14B85C433D2;
-        Tue, 19 May 2020 09:04:03 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9F34BC433F2;
+        Tue, 19 May 2020 09:26:33 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 19 May 2020 14:34:03 +0530
+Date:   Tue, 19 May 2020 14:56:33 +0530
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mike Leach <mike.leach@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
+To:     Will Deacon <will@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
+        <iommu@lists.linux-foundation.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Russell King <linux@armlinux.org.uk>
-Subject: Re: [PATCH] coresight: dynamic-replicator: Fix handling of multiple
- connections
-In-Reply-To: <4bd741e342f8e2743197ed6105dacffa@codeaurora.org>
-References: <20200426143725.18116-1-saiprakash.ranjan@codeaurora.org>
- <cf5852e9-c3c1-3d31-46f0-0370719947ab@arm.com>
- <CAJ9a7VgF3-Hdc7KSw9gVBeXSDHNguhqVhp60oK2XhCtr3DhDqg@mail.gmail.com>
- <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
- <668ea1283a6dd6b34e701972f6f71034@codeaurora.org>
- <5b0f5d77c4eec22d8048bb0ffa078345@codeaurora.org>
- <759d47de-2101-39cf-2f1c-cfefebebd548@arm.com>
- <7d343e96cf0701d91152fd14c2fdec42@codeaurora.org>
- <CAJ9a7VgEiX19ukjwakNHBHDeZJ05f5Z7pAYG9iEnpXCuuDfBqg@mail.gmail.com>
- <a4bba03d41a2b0145b3c6c19d48698eb@codeaurora.org>
- <CAJ9a7Vj4eyv1n=RxuqfV=pdBN3SDG+ShYS5J4s40KJtqOnR7vw@mail.gmail.com>
- <ae0fe2050be01cc1403c7d53a0da8cb8@codeaurora.org>
- <b8c1cc35846d425a1677c73fddf5874d@codeaurora.org>
- <eee1b9a90266eed9a9c75401f0679777@codeaurora.org>
- <CAJ9a7Vjd0XG+rAvHptAAjGtE6xRhYsPaOSC_Bf9B-w-FZFu_Qw@mail.gmail.com>
- <47f6d51bfad0a0bf1553e101e6a2c8c9@codeaurora.org>
- <37b3749e-2363-0877-c318-9c334a5d1881@arm.com>
- <d47271ee6a2a6f0f30da7e140b6f196c@codeaurora.org>
- <CAJ9a7Vg95tcgMXgQKLAZc=TpV6FnPZ7wdF=Kwbuy7d2kRCjYQw@mail.gmail.com>
- <364049a30dc9d242ec611bf27a16a6c9@codeaurora.org>
- <CAJ9a7VjAoUmMG9pLEzE_rMSpOjwVOi-ZCinF87n9H0JgfMDsiQ@mail.gmail.com>
- <5a76926a6532d3f91cca169d474ba98e@codeaurora.org>
- <4bd741e342f8e2743197ed6105dacffa@codeaurora.org>
-Message-ID: <825b922dab9821fa46f321d600648e10@codeaurora.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] iomm/arm-smmu: Add stall implementation hook
+In-Reply-To: <20200518154522.GN32394@willie-the-truck>
+References: <20200421202004.11686-1-saiprakash.ranjan@codeaurora.org>
+ <b491e02ad790a437115fdeab6b21bc48@codeaurora.org>
+ <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
+ <20200507125357.GA31783@willie-the-truck>
+ <CAF6AEGuLU+_qP8HNO1s9PTPHqJnCMHzehmcT8NiJhiAwrfSH6w@mail.gmail.com>
+ <CAF6AEGvuHKObTR97XdSXjmjKB+qjQ8N1_wxM=ZU8bEkF=cXp-A@mail.gmail.com>
+ <20200511173008.GA24282@jcrouse1-lnx.qualcomm.com>
+ <20200518154522.GN32394@willie-the-truck>
+Message-ID: <5a0ad639e272026c8be57393937cda22@codeaurora.org>
 X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -85,43 +71,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mike, Suzuki,
+Hi Will,
 
-On 2020-05-16 15:34, Sai Prakash Ranjan wrote:
-> Hi Mike, Suzuki
-> 
-> [...]
-> 
->>> 
->>> Please look at the CoreSight components specification 3.0 (ARM IHI
->>> 0029E) Section B2.1.2 which describes the Unique Component Identifier
->>> (UCI).
->>> As mentioned above this consists of a combination of bits from
->>> multiple registers, including PIDR4.
->>> 
+On 2020-05-18 21:15, Will Deacon wrote:
+> On Mon, May 11, 2020 at 11:30:08AM -0600, Jordan Crouse wrote:
+>> On Fri, May 08, 2020 at 08:40:40AM -0700, Rob Clark wrote:
+>> > On Fri, May 8, 2020 at 8:32 AM Rob Clark <robdclark@gmail.com> wrote:
+>> > >
+>> > > On Thu, May 7, 2020 at 5:54 AM Will Deacon <will@kernel.org> wrote:
+>> > > >
+>> > > > On Thu, May 07, 2020 at 11:55:54AM +0100, Robin Murphy wrote:
+>> > > > > On 2020-05-07 11:14 am, Sai Prakash Ranjan wrote:
+>> > > > > > On 2020-04-22 01:50, Sai Prakash Ranjan wrote:
+>> > > > > > > Add stall implementation hook to enable stalling
+>> > > > > > > faults on QCOM platforms which supports it without
+>> > > > > > > causing any kind of hardware mishaps. Without this
+>> > > > > > > on QCOM platforms, GPU faults can cause unrelated
+>> > > > > > > GPU memory accesses to return zeroes. This has the
+>> > > > > > > unfortunate result of command-stream reads from CP
+>> > > > > > > getting invalid data, causing a cascade of fail.
+>> > > > >
+>> > > > > I think this came up before, but something about this rationale doesn't add
+>> > > > > up - we're not *using* stalls at all, we're still terminating faulting
+>> > > > > transactions unconditionally; we're just using CFCFG to terminate them with
+>> > > > > a slight delay, rather than immediately. It's really not clear how or why
+>> > > > > that makes a difference. Is it a GPU bug? Or an SMMU bug? Is this reliable
+>> > > > > (or even a documented workaround for something), or might things start
+>> > > > > blowing up again if any other behaviour subtly changes? I'm not dead set
+>> > > > > against adding this, but I'd *really* like to have a lot more confidence in
+>> > > > > it.
+>> > > >
+>> > > > Rob mentioned something about the "bus returning zeroes" before, but I agree
+>> > > > that we need more information so that we can reason about this and maintain
+>> > > > the code as the driver continues to change. That needs to be a comment in
+>> > > > the driver, and I don't think "but android seems to work" is a good enough
+>> > > > justification. There was some interaction with HUPCF as well.
+>> > >
+>> > > The issue is that there are multiple parallel memory accesses
+>> > > happening at the same time, for example CP (the cmdstream processor)
+>> > > will be reading ahead and setting things up for the next draw or
+>> > > compute grid, in parallel with some memory accesses from the shader
+>> > > which could trigger a fault.  (And with faults triggered by something
+>> > > in the shader, there are *many* shader threads running in parallel so
+>> > > those tend to generate a big number of faults at the same time.)
+>> > >
+>> > > We need either CFCFG or HUPCF, otherwise what I have observed is that
+>> > > while the fault happens, CP's memory access will start returning
+>> > > zero's instead of valid cmdstream data, which triggers a GPU hang.  I
+>> > > can't say whether this is something unique to qcom's implementation of
+>> > > the smmu spec or not.
+>> > >
+>> > > *Often* a fault is the result of the usermode gl/vk/cl driver bug,
+>> > > although I don't think that is an argument against fixing this in the
+>> > > smmu driver.. I've been carrying around a local patch to set HUPCF for
+>> > > *years* because debugging usermode driver issues is so much harder
+>> > > without.  But there are some APIs where faults can be caused by the
+>> > > user's app on top of the usermode driver.
+>> > >
+>> >
+>> > Also, I'll add to that, a big wish of mine is to have stall with the
+>> > ability to resume later from a wq context.  That would enable me to
+>> > hook in the gpu crash dump handling for faults, which would make
+>> > debugging these sorts of issues much easier.  I think I posted a
+>> > prototype of this quite some time back, which would schedule a worker
+>> > on the first fault (since there are cases where you see 1000's of
+>> > faults at once), which grabbed some information about the currently
+>> > executing submit and some gpu registers to indicate *where* in the
+>> > submit (a single submit could have 100's or 1000's of draws), and then
+>> > resumed the iommu cb.
+>> >
+>> > (This would ofc eventually be useful for svm type things.. I expect
+>> > we'll eventually care about that too.)
 >> 
->> Ok got it now, thanks for clearing the doubt. I will go ahead with
->> this method to identify QCOM impl and post a patch.
->> 
+>> Rob is right about HUPCF. Due to the parallel nature of the command 
+>> processor
+>> there is always a very good chance that a CP access is somewhere in 
+>> the bus so
+>> any pagefault is usually a death sentence. The GPU context bank would 
+>> always
+>> want HUPCF set to 1.
 > 
-> Looking some more into this, since we have this limitation only on
-> specific replicator on very few QCOM SoCs, rather than having a blanket
-> workaround for all QCOM, we were thinking it would be better to have
-> this workaround based on a firmware property something like
-> "qcom,replicator-loses-context" for those replicators with this
-> limitation and then set the drvdata->check_idfilter_val based on
-> this property.
+> So this sounds like an erratum to me, and I'm happy to set HUPCF if we
+> detect the broken implementation. However, it will need an entry in
+> Documentation/arm64/silicon-errata.rst and a decent comment in the 
+> driver
+> to explain what we're doing and why.
 > 
 
-Sorry for going back and forth on this one, but I think having a 
-firmware
-property will clearly help us identify the issue on specific SoCs rather 
-than
-wholesale workaround for all QCOM SoCs. For now, I will post a patch 
-based on
-the property "qcom,replicator-loses-context", please feel free to yell 
-at me
-if this is completely wrong and we can discuss it further in that patch.
+AFAIK there is no erratum documented internally for this behaviour and 
+this
+exists from MSM8996 SoC time and errata usually don't survive this long
+across generation of SoCs and there is no point for us in disguising it.
+
+Is it OK if we clearly mention it as the "design limitation" or some 
+other
+term which we can agree upon along with the description which Rob and 
+Jordan
+provided for setting HUPCF in the driver when we add the set_hupcf 
+callback?
 
 Thanks,
 Sai
