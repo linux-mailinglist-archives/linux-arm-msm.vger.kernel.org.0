@@ -2,127 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BB621DA23D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 22:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEECC1DA269
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 22:19:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726494AbgESUHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 16:07:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53518 "EHLO
+        id S1726333AbgESUTQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 16:19:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726455AbgESUHs (ORCPT
+        with ESMTP id S1726203AbgESUTQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 16:07:48 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D24DFC08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 13:07:46 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id v26so409667vsa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 13:07:46 -0700 (PDT)
+        Tue, 19 May 2020 16:19:16 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE20C08C5C0;
+        Tue, 19 May 2020 13:19:16 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id l6so904670oic.9;
+        Tue, 19 May 2020 13:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=UXbwGQX7NBj93macBQks6TpgCaCAqI85y6U/Eho5NaA=;
-        b=iMBY+L1k7S2P7A4yIvSJy4MuZVOr4X+yr4pt1EqaJLCp6UcTm+kmuYjI5XDEe9FOP2
-         SumGBT1xC3NYhOGo+zSCsVuJcjHpynQ2q6oJ45AVzmudv6qxVEOkF4nnIgDJqe8LeQwJ
-         yB5S7v/Ar4tfTj9fY0v9m2ouNF1hwJw9OzKyk=
+        bh=k9wGkUcX8mpQpH0xT7svm0mysTXkndwHirc7LDkmIVs=;
+        b=eaOTiOYGy7RGzDrE84ODOO4mkvp8w+Ti3n5zOCs2MzLSxzwRD0Mnt4wQ97IkJRivtX
+         zWbO7w8mEpIm0zoGTWMU7LLb515tER+6WW9JJIiGtPO079HzCh8fEgS12Igy/N/5eD8O
+         q1jMT5GGO6KS/gr3PifQQywcPiulG5aykfKC3KMge+rjXJtkbQsKkxCOyYieA3KiSprb
+         BkyqbX1rTF1rysO8HS6x14Ok1R5aRfFJr/sHFfYKVvEW7mn/j3D1Bb9tWwMpiWBEcqWp
+         XNdostXg+QFFN+cykYdZfnvmKR0DXLvMFUb7S51d36qvYUHbPufYd18ejnn0a2RIm2di
+         41rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=UXbwGQX7NBj93macBQks6TpgCaCAqI85y6U/Eho5NaA=;
-        b=PlkJJveS8WHsb7HGrAEhi6Ziux3jSi6we2spYUf8ZtR1EsegQ9v6qk7zV78615/shg
-         81PE0XXiqid8ksHuB9fcmBwZVCjlQcz+YlaOo+zkKnVZglzNVeZh0ml8vVsIPzLu3qmo
-         /l/x2LpWOBrJlJNHjIvxGkz/jxFWE+FOhax7DIOzpWX4sGj+4NbibgE0fjd4+8Ez15V8
-         PkAZipCxYoygAJBiU27dGzTwjuFWu5V+T+WehfKK+24ePEWKCu8t+n0RJn+Da0tKCbrv
-         wwFcVw610Ng5B+9K4sVpbcui3HuOzGnEWn0ZQETG67OzjcBZwGX7wFmZrZiwUQeT1M9j
-         O/Yw==
-X-Gm-Message-State: AOAM5313nwjC/rsqsTe3GT6uDHCZvW4ItW0X+UC78TgjsTzjYyDPYMKP
-        1F/MRtJw1aXoXoa11dHwhsCidjlZxOU=
-X-Google-Smtp-Source: ABdhPJwQqha3OEb+7ckLl4WDUfn0rQCYNdE1RDrORvNJhauLSXLQlF1kYvNiaj8/xbIRjLVJrEeSqw==
-X-Received: by 2002:a67:e998:: with SMTP id b24mr817636vso.222.1589918865746;
-        Tue, 19 May 2020 13:07:45 -0700 (PDT)
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
-        by smtp.gmail.com with ESMTPSA id w195sm176536vkw.35.2020.05.19.13.07.44
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 May 2020 13:07:45 -0700 (PDT)
-Received: by mail-ua1-f49.google.com with SMTP id a11so394503uah.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2020 13:07:44 -0700 (PDT)
-X-Received: by 2002:ab0:b13:: with SMTP id b19mr945772uak.91.1589918864128;
- Tue, 19 May 2020 13:07:44 -0700 (PDT)
+        bh=k9wGkUcX8mpQpH0xT7svm0mysTXkndwHirc7LDkmIVs=;
+        b=sPZCpz/HJ49Tic1lgiAe163lL9roLMOYFjOBhv6ihuMjJzrHD/ee1vCxTQt0l7imPv
+         29l2Fg8v6e6d7FousatyAI+m3rjg7BbnEQD4xnScTcNpirNTRno2kVizCJT6R00Fc0zP
+         //CiR9f5MaRVtuqtZHo4ZMZ4KdejR37MuSVmblmd2HbNgpj01cNfK115JpJiomANaH/O
+         N5ffMraF855MnVg4FYIZb+vqM5Gonzxt5NdW8FgwUxH5JRMHkE8CZR6aBuF+dAhrghnb
+         GlmsSktitwTKdNb5Huqo6gyiuDYQC3ct29HaKj39Lrk5cwteJy3goz7CaO/hBZfe6Hnm
+         fS2w==
+X-Gm-Message-State: AOAM531QlPMAN6pCkZ6OffOBvBZpH2GG2h2GuBe/hUEOa+gGYqeeHP0e
+        UyfD35EvjlnJWzuo7sdzRzJuHOZm6OXP3EueXHc=
+X-Google-Smtp-Source: ABdhPJwpptg0g/2Fuqr75TcXz0TmtAi6ivq8xFaPLg5vusReOtbpkYwZQMxwK3sgeD/rniBZQ0FaeWVLtK50KUScI5w=
+X-Received: by 2002:a05:6808:a1b:: with SMTP id n27mr825430oij.171.1589919555708;
+ Tue, 19 May 2020 13:19:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <1589914405-6674-1-git-send-email-pillair@codeaurora.org>
-In-Reply-To: <1589914405-6674-1-git-send-email-pillair@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 19 May 2020 13:07:32 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XXRhh-1cWH5rMPq4W_Dh4yE=++sga_aJ8cwFkKkrAXbg@mail.gmail.com>
-Message-ID: <CAD=FV=XXRhh-1cWH5rMPq4W_Dh4yE=++sga_aJ8cwFkKkrAXbg@mail.gmail.com>
-Subject: Re: [PATCH v10] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
- device node
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
+References: <20200506060025.1535960-1-vkoul@kernel.org> <20200506060025.1535960-3-vkoul@kernel.org>
+ <20200519114528.GC1298122@kuha.fi.intel.com>
+In-Reply-To: <20200519114528.GC1298122@kuha.fi.intel.com>
+From:   Christian Lamparter <chunkeey@gmail.com>
+Date:   Tue, 19 May 2020 22:19:03 +0200
+Message-ID: <CAAd0S9AEOsOLrnry4xNRVOi5fXwm3KXYzQsUMCm9tVxHr2sr1w@mail.gmail.com>
+Subject: Re: [PATCH v13 2/5] usb: renesas-xhci: Add the renesas xhci driver
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        =?UTF-8?Q?Andreas_B=C3=B6hler?= <dev@aboehler.at>,
+        USB list <linux-usb@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hello,
 
-On Tue, May 19, 2020 at 11:53 AM Rakesh Pillai <pillair@codeaurora.org> wrote:
+On Tue, May 19, 2020 at 1:45 PM Heikki Krogerus
+<heikki.krogerus@linux.intel.com> wrote:
+> On Wed, May 06, 2020 at 11:30:22AM +0530, Vinod Koul wrote:
+> > From: Christian Lamparter <chunkeey@googlemail.com>
+> >
+> > This add a new driver for renesas xhci which is basically a firmware
+> > loader for uPD720201 and uPD720202 w/o ROM. The xhci-pci driver will
+> > invoke this driver for loading/unloading on relevant devices.
+> >
+> > This patch adds a firmware loader for the uPD720201K8-711-BAC-A
+> > and uPD720202K8-711-BAA-A variant. Both of these chips are listed
+> > in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
+> > devices which need the firmware loader on page 2 in order to
+> > work as they "do not support the External ROM".
+> >
+> > The "Firmware Download Sequence" is describe in chapter
+> > "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
+> >
+> > The firmware "K2013080.mem" is available from a USB3.0 Host to
+> > PCIe Adapter (PP2U-E card) "Firmware download" archive. An
+> > alternative version can be sourced from Netgear's WNDR4700 GPL
+> > archives.
+> >
+> > The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
+> > (2012-06-15) state that the firmware is for the following devices:
+> >  - uPD720201 ES 2.0 sample whose revision ID is 2.
+> >  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
+> >  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
 >
-> Add device node for the ath10k SNOC platform driver probe
-> and add resources required for WCN3990 on sc7180 soc.
+> You wouldn't happen to have access to the documentation of the
+> "original" uPD720200 USB 3.0 controller?
 >
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> ---
-> Changes from v9:
-> - Place the wlan_fw_mem under reserved-memory node
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  7 +++++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
->  2 files changed, 34 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 4e9149d..38b102e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -389,6 +389,13 @@
->         };
->  };
->
-> +&wifi {
-> +       status = "okay";
-> +       wifi-firmware {
-> +               iommus = <&apps_smmu 0xc2 0x1>;
-> +       };
-> +};
-> +
->  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
->
->  &qspi_clk {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index f1280e0..19bd7d0 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -106,6 +106,11 @@
->                         no-map;
->                 };
->
-> +               wlan_fw_mem: memory@94100000 {
-> +                       reg = <0 0x94100000 0 0x200000>;
-> +                       no-map;
-> +               };
-> +
->                 rmtfs_mem: memory@84400000 {
->                         compatible = "qcom,rmtfs-mem";
->                         reg = <0x0 0x84400000 0x0 0x200000>;
+> It would be cool if we could support that too with this driver.
 
-This is less wrong than v9, but still a little wrong.  You should be
-keeping these ordered by unit address.  94100000 comes after 84400000.
+???. I have one of those "original" uPD720200(A) working "just fine"
+in my Laptop currently.
+It's an really old HP dv6-6003eg from around 2011 that came with two
+USB 3.0 Ports, which
+are driven by a "NEC Corporation uPD720200 USB 3.0 Host Controller"
+1033:0194 (Rev 04).
 
--Doug
+As for supporting the uPD720200 (flasher) with this serises.... There
+are some bad news:
+
+"In addition, the programming interface for the uPD720200 and uPD720200A
+is different from the uPD720202, needs different programming tools, and relies
+on proprietary chip features that cannot be disclosed outside of Renesas."
+<https://mail.coreboot.org/pipermail/flashrom/2013-February/010498.html> :-(
+
+Regards,
+Christian
