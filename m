@@ -2,303 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC92C1D9EFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 20:15:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 239411D9F66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 20:26:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729466AbgESSPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 14:15:04 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:60461 "EHLO
+        id S1727004AbgESS0N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 14:26:13 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:12620 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726747AbgESSPE (ORCPT
+        by vger.kernel.org with ESMTP id S1726161AbgESS0M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 14:15:04 -0400
+        Tue, 19 May 2020 14:26:12 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589912102; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=WbWK+XDpZ1EpeB30moGdfoWRLNL/z7wIz2LDeq0cfpU=;
- b=cALJeUigOd2UtDDodMFaIJ+TSsIRq45IyvTW9qPBt4YcxdSvUGHm5dg8Reu/iAp/RH2icsBt
- GYBexS6EhIV3ZMKqoVM5w1NHYnPj/vuYS1m8jvngXGD5t3Dfp1hFXvP6ma99Gnr4YeioOHlw
- DIWIN7MwwZCSsceDTQExShNVmqo=
+ s=smtp; t=1589912771; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=RVBObs0w625lBxLJpgvWLEnfr4zVz+nwAqtMdd7Tb/A=; b=wyHT1IoDG7KrO8MfCalfUCZIu+b+wCNBcmZCqwNgn7cJSOkMFTGbzvW6204ePQyJkaFKOspo
+ D6YltIcrylo0OqNbXxzQl/DOZKRrh/AittEJygtvyIbzlhMTIUvCEhtrDq5VXBmZGvxwP1OF
+ 2LuDkraHzfg+V08R1NlBsgxfcf4=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec4220d.7fa2b94590a0-smtp-out-n05;
- Tue, 19 May 2020 18:14:37 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5ec424bc.7fd9ddefc110-smtp-out-n01;
+ Tue, 19 May 2020 18:26:04 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CF575C43636; Tue, 19 May 2020 18:14:36 +0000 (UTC)
+        id 1BEDFC44788; Tue, 19 May 2020 18:26:04 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3E60BC433D2;
-        Tue, 19 May 2020 18:14:36 +0000 (UTC)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6FFA8C433F2;
+        Tue, 19 May 2020 18:26:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6FFA8C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [RFC PATCH 0/8] Qualcomm Cloud AI 100 driver
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Dave Airlie <airlied@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
+        manivannan.sadhasivam@linaro.org, bjorn.andersson@linaro.org,
+        wufan@codeaurora.org, pratanan@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <1589465266-20056-1-git-send-email-jhugo@codeaurora.org>
+ <CAPM=9txXskVu_yD3DNuR0HgSUsE2v1Pv98dm=AHGvv_z2XKTAQ@mail.gmail.com>
+ <93238096-5861-c140-b94f-6137977c3d65@codeaurora.org>
+ <20200519174120.GC1158284@kroah.com>
+ <ce0e69ef-116c-df95-c136-d4714e02e96e@codeaurora.org>
+ <20200519181256.GA1215993@kroah.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <f7ea166b-7ccb-22e2-7db0-bfd255ba0134@codeaurora.org>
+Date:   Tue, 19 May 2020 12:26:01 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200519181256.GA1215993@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 19 May 2020 11:14:36 -0700
-From:   rishabhb@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc-owner@vger.kernel.org
-Subject: Re: [PATCH v5 3/5] remoteproc: qcom: Update PIL relocation info on
- load
-In-Reply-To: <20200513055641.1413100-4-bjorn.andersson@linaro.org>
-References: <20200513055641.1413100-1-bjorn.andersson@linaro.org>
- <20200513055641.1413100-4-bjorn.andersson@linaro.org>
-Message-ID: <3ff29ccc94d3097fb39b7df377754af6@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-12 22:56, Bjorn Andersson wrote:
-> Update the PIL relocation information in IMEM with information about
-> where the firmware for various remoteprocs are loaded.
+On 5/19/2020 12:12 PM, Greg Kroah-Hartman wrote:
+> On Tue, May 19, 2020 at 12:07:03PM -0600, Jeffrey Hugo wrote:
+>> On 5/19/2020 11:41 AM, Greg Kroah-Hartman wrote:
+>>> On Tue, May 19, 2020 at 08:57:38AM -0600, Jeffrey Hugo wrote:
+>>>> On 5/18/2020 11:08 PM, Dave Airlie wrote:
+>>>>> On Fri, 15 May 2020 at 00:12, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>>>>>>
+>>>>>> Introduction:
+>>>>>> Qualcomm Cloud AI 100 is a PCIe adapter card which contains a dedicated
+>>>>>> SoC ASIC for the purpose of efficently running Deep Learning inference
+>>>>>> workloads in a data center environment.
+>>>>>>
+>>>>>> The offical press release can be found at -
+>>>>>> https://www.qualcomm.com/news/releases/2019/04/09/qualcomm-brings-power-efficient-artificial-intelligence-inference
+>>>>>>
+>>>>>> The offical product website is -
+>>>>>> https://www.qualcomm.com/products/datacenter-artificial-intelligence
+>>>>>>
+>>>>>> At the time of the offical press release, numerious technology news sites
+>>>>>> also covered the product.  Doing a search of your favorite site is likely
+>>>>>> to find their coverage of it.
+>>>>>>
+>>>>>> It is our goal to have the kernel driver for the product fully upstream.
+>>>>>> The purpose of this RFC is to start that process.  We are still doing
+>>>>>> development (see below), and thus not quite looking to gain acceptance quite
+>>>>>> yet, but now that we have a working driver we beleive we are at the stage
+>>>>>> where meaningful conversation with the community can occur.
+>>>>>
+>>>>>
+>>>>> Hi Jeffery,
+>>>>>
+>>>>> Just wondering what the userspace/testing plans for this driver.
+>>>>>
+>>>>> This introduces a new user facing API for a device without pointers to
+>>>>> users or tests for that API.
+>>>>
+>>>> We have daily internal testing, although I don't expect you to take my word
+>>>> for that.
+>>>>
+>>>> I would like to get one of these devices into the hands of Linaro, so that
+>>>> it can be put into KernelCI.  Similar to other Qualcomm products. I'm trying
+>>>> to convince the powers that be to make this happen.
+>>>>
+>>>> Regarding what the community could do on its own, everything but the Linux
+>>>> driver is considered proprietary - that includes the on device firmware and
+>>>> the entire userspace stack.  This is a decision above my pay grade.
+>>>
+>>> Ok, that's a decision you are going to have to push upward on, as we
+>>> really can't take this without a working, open, userspace.
+>>
+>> Fair enough.  I hope that your position may have made things easier for me.
+>>
+>> I hope this doesn't widen the rift as it were, but what is the "bar" for
+>> this userspace?
+>>
+>> Is a simple test application that adds two numbers on the hardware
+>> acceptable?
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+> Make it the real library that you use for your applications that anyone
+> can then also use as well if they have the hardware.  Why would you want
+> something "crippled"?
+
+It makes it easier to dance around real or perceived IP issues, and thus 
+I can likely more successfully "push upward" as you put it.
+
 > 
-> Changes since v4:
-> - Dropped unnecessary comment about ignoring return value.
+>> What is the bar "working"?  I intend to satisfy this request in good faith,
+>> but I wonder, if no one has the hardware besides our customers, and possibly
+>> KernelCI, can you really say that I've provided a working userspace?
 > 
->  drivers/remoteproc/Kconfig          |  3 +++
->  drivers/remoteproc/qcom_q6v5_adsp.c | 16 +++++++++++++---
->  drivers/remoteproc/qcom_q6v5_mss.c  |  3 +++
->  drivers/remoteproc/qcom_q6v5_pas.c  | 15 ++++++++++++---
->  drivers/remoteproc/qcom_q6v5_wcss.c | 14 +++++++++++---
->  drivers/remoteproc/qcom_wcnss.c     | 14 +++++++++++---
->  6 files changed, 53 insertions(+), 12 deletions(-)
+> How do you know who your customers really are, or who they sell the
+> chips to?  I could end up with one of these... :)
+
+At this time, I don't think that is going to happen, but I would like to 
+see it regardless.
+
+>>> Especially given the copyright owner of this code, that would be just
+>>> crazy and foolish to not have open userspace code as well.  Firmware
+>>> would also be wonderful as well, go poke your lawyers about derivative
+>>> work issues and the like for fun conversations :)
+>>
+>> Those are the kind of conversations I try to avoid  :)
 > 
-> diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-> index 8088ca4dd6dc..6bd42a411ca8 100644
-> --- a/drivers/remoteproc/Kconfig
-> +++ b/drivers/remoteproc/Kconfig
-> @@ -126,6 +126,7 @@ config QCOM_Q6V5_ADSP
->  	depends on RPMSG_QCOM_GLINK_SMEM || RPMSG_QCOM_GLINK_SMEM=n
->  	depends on QCOM_SYSMON || QCOM_SYSMON=n
->  	select MFD_SYSCON
-> +	select QCOM_PIL_INFO
->  	select QCOM_MDT_LOADER
->  	select QCOM_Q6V5_COMMON
->  	select QCOM_RPROC_COMMON
-> @@ -158,6 +159,7 @@ config QCOM_Q6V5_PAS
->  	depends on RPMSG_QCOM_GLINK_SMEM || RPMSG_QCOM_GLINK_SMEM=n
->  	depends on QCOM_SYSMON || QCOM_SYSMON=n
->  	select MFD_SYSCON
-> +	select QCOM_PIL_INFO
->  	select QCOM_MDT_LOADER
->  	select QCOM_Q6V5_COMMON
->  	select QCOM_RPROC_COMMON
-> @@ -209,6 +211,7 @@ config QCOM_WCNSS_PIL
->  	depends on QCOM_SMEM
->  	depends on QCOM_SYSMON || QCOM_SYSMON=n
->  	select QCOM_MDT_LOADER
-> +	select QCOM_PIL_INFO
->  	select QCOM_RPROC_COMMON
->  	select QCOM_SCM
->  	help
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c
-> b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index d2a2574dcf35..c539e89664cb 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -26,6 +26,7 @@
->  #include <linux/soc/qcom/smem_state.h>
-> 
->  #include "qcom_common.h"
-> +#include "qcom_pil_info.h"
->  #include "qcom_q6v5.h"
->  #include "remoteproc_internal.h"
-> 
-> @@ -82,6 +83,7 @@ struct qcom_adsp {
->  	unsigned int halt_lpass;
-> 
->  	int crash_reason_smem;
-> +	const char *info_name;
-> 
->  	struct completion start_done;
->  	struct completion stop_done;
-> @@ -164,10 +166,17 @@ static int qcom_adsp_shutdown(struct qcom_adsp 
-> *adsp)
->  static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->  {
->  	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-> +	int ret;
-> +
-> +	ret = qcom_mdt_load_no_init(adsp->dev, fw, rproc->firmware, 0,
-> +				    adsp->mem_region, adsp->mem_phys,
-> +				    adsp->mem_size, &adsp->mem_reloc);
-> +	if (ret)
-> +		return ret;
-> +
-> +	qcom_pil_info_store(adsp->info_name, adsp->mem_reloc, 
-> adsp->mem_size);
-> 
-> -	return qcom_mdt_load_no_init(adsp->dev, fw, rproc->firmware, 0,
-> -			     adsp->mem_region, adsp->mem_phys, adsp->mem_size,
-> -			     &adsp->mem_reloc);
-> +	return 0;
->  }
-> 
->  static int adsp_start(struct rproc *rproc)
-> @@ -436,6 +445,7 @@ static int adsp_probe(struct platform_device *pdev)
->  	adsp = (struct qcom_adsp *)rproc->priv;
->  	adsp->dev = &pdev->dev;
->  	adsp->rproc = rproc;
-> +	adsp->info_name = desc->sysmon_name;
->  	platform_set_drvdata(pdev, adsp);
-> 
->  	ret = adsp_alloc_memory_region(adsp);
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c
-> b/drivers/remoteproc/qcom_q6v5_mss.c
-> index c4936f4d1e80..fdbcae11ae64 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -29,6 +29,7 @@
-> 
->  #include "remoteproc_internal.h"
->  #include "qcom_common.h"
-> +#include "qcom_pil_info.h"
->  #include "qcom_q6v5.h"
-> 
->  #include <linux/qcom_scm.h>
-> @@ -1221,6 +1222,8 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->  	else if (ret < 0)
->  		dev_err(qproc->dev, "MPSS authentication failed: %d\n", ret);
-> 
-> +	qcom_pil_info_store("modem", mpss_reloc, qproc->mpss_size);
-> +
->  release_firmware:
->  	release_firmware(fw);
->  out:
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c
-> b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 3bb69f58e086..84cb19231c35 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -25,6 +25,7 @@
->  #include <linux/soc/qcom/smem_state.h>
-> 
->  #include "qcom_common.h"
-> +#include "qcom_pil_info.h"
->  #include "qcom_q6v5.h"
->  #include "remoteproc_internal.h"
-> 
-> @@ -64,6 +65,7 @@ struct qcom_adsp {
->  	int pas_id;
->  	int crash_reason_smem;
->  	bool has_aggre2_clk;
-> +	const char *info_name;
-> 
->  	struct completion start_done;
->  	struct completion stop_done;
-> @@ -117,11 +119,17 @@ static void adsp_pds_disable(struct qcom_adsp
-> *adsp, struct device **pds,
->  static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->  {
->  	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-> +	int ret;
-> 
-> -	return qcom_mdt_load(adsp->dev, fw, rproc->firmware, adsp->pas_id,
-> -			     adsp->mem_region, adsp->mem_phys, adsp->mem_size,
-> -			     &adsp->mem_reloc);
-> +	ret = qcom_mdt_load(adsp->dev, fw, rproc->firmware, adsp->pas_id,
-> +			    adsp->mem_region, adsp->mem_phys, adsp->mem_size,
-> +			    &adsp->mem_reloc);
-> +	if (ret)
-> +		return ret;
-> 
-> +	qcom_pil_info_store(adsp->info_name, adsp->mem_reloc, 
-> adsp->mem_size);
-mem_reloc is used to calculate  offset and then we again add that offset 
-to the
-ioremapped region base. So we should pass adsp->mem_phys as start here?
-> +
-> +	return 0;
->  }
-> 
->  static int adsp_start(struct rproc *rproc)
-> @@ -405,6 +413,7 @@ static int adsp_probe(struct platform_device *pdev)
->  	adsp->rproc = rproc;
->  	adsp->pas_id = desc->pas_id;
->  	adsp->has_aggre2_clk = desc->has_aggre2_clk;
-> +	adsp->info_name = desc->sysmon_name;
->  	platform_set_drvdata(pdev, adsp);
-> 
->  	ret = adsp_alloc_memory_region(adsp);
-> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c
-> b/drivers/remoteproc/qcom_q6v5_wcss.c
-> index f1924b740a10..962e37a86b8b 100644
-> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-> @@ -421,10 +421,18 @@ static void *q6v5_wcss_da_to_va(struct rproc
-> *rproc, u64 da, size_t len)
->  static int q6v5_wcss_load(struct rproc *rproc, const struct firmware 
-> *fw)
->  {
->  	struct q6v5_wcss *wcss = rproc->priv;
-> +	int ret;
-> +
-> +	ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
-> +				    0, wcss->mem_region, wcss->mem_phys,
-> +				    wcss->mem_size, &wcss->mem_reloc);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Failures only affect post mortem debugging, so ignore return value 
-> */
-> +	qcom_pil_info_store("wcnss", wcss->mem_reloc, wcss->mem_size);
-> 
-> -	return qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
-> -				     0, wcss->mem_region, wcss->mem_phys,
-> -				     wcss->mem_size, &wcss->mem_reloc);
-> +	return ret;
->  }
-> 
->  static const struct rproc_ops q6v5_wcss_ops = {
-> diff --git a/drivers/remoteproc/qcom_wcnss.c 
-> b/drivers/remoteproc/qcom_wcnss.c
-> index 5d65e1a9329a..229482b3231f 100644
-> --- a/drivers/remoteproc/qcom_wcnss.c
-> +++ b/drivers/remoteproc/qcom_wcnss.c
-> @@ -27,6 +27,7 @@
-> 
->  #include "qcom_common.h"
->  #include "remoteproc_internal.h"
-> +#include "qcom_pil_info.h"
->  #include "qcom_wcnss.h"
-> 
->  #define WCNSS_CRASH_REASON_SMEM		422
-> @@ -145,10 +146,17 @@ void qcom_wcnss_assign_iris(struct qcom_wcnss 
-> *wcnss,
->  static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
->  {
->  	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
-> +	int ret;
-> +
-> +	ret = qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
-> +			    wcnss->mem_region, wcnss->mem_phys,
-> +			    wcnss->mem_size, &wcnss->mem_reloc);
-> +	if (ret)
-> +		return ret;
-> +
-> +	qcom_pil_info_store("wcnss", wcnss->mem_reloc, wcnss->mem_size);
-> 
-> -	return qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
-> -			     wcnss->mem_region, wcnss->mem_phys,
-> -			     wcnss->mem_size, &wcnss->mem_reloc);
-> +	return 0;
->  }
-> 
->  static void wcnss_indicate_nv_download(struct qcom_wcnss *wcnss)
+> Sounds like you are going to now have to have them, have fun!
+
+Honestly, I fail to see where you think there is a derivative work, so, 
+I'm not really sure what discussions I need to revisit with our lawyers.
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
