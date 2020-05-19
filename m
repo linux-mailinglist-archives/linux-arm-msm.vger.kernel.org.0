@@ -2,130 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 37CF81DA008
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 20:53:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB1411DA011
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 20:57:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726059AbgESSxr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 14:53:47 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:55822 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726447AbgESSxq (ORCPT
+        id S1726632AbgESS56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 14:57:58 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:35588 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726567AbgESS56 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 14:53:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589914425; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=KKCpnxXLzPxp1KojJPrkQ/Sg31DhvRlvGeBFEWQ/EGs=; b=IMguJzktaRyEhSKr5cDbX2C41khuXFrEdnvspll0z0WLFcUbhUNop0tGBPr4Pyu6jbKVgOWd
- m49nBobp68GMMc3yFvpqMJEipzDXS5sJTtpHShU3Akln/78ibf4pKRXQB7cK1YHaFu7kJZxz
- ooOIU1omuIa7g6sCjaGI/UZxxJQ=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec42b2e.7f6d1a141298-smtp-out-n03;
- Tue, 19 May 2020 18:53:34 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 47663C433D2; Tue, 19 May 2020 18:53:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pillair-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1A3CC432C2;
-        Tue, 19 May 2020 18:53:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1A3CC432C2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v10] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Wed, 20 May 2020 00:23:25 +0530
-Message-Id: <1589914405-6674-1-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 19 May 2020 14:57:58 -0400
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 May 2020 11:57:57 -0700
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg02-sd.qualcomm.com with ESMTP; 19 May 2020 11:57:57 -0700
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id A91324CCD; Tue, 19 May 2020 11:57:57 -0700 (PDT)
+Date:   Tue, 19 May 2020 11:57:57 -0700
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     devicetree@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 2/2] mfd: Introduce QTI I2C PMIC controller
+Message-ID: <20200519185757.GA13992@codeaurora.org>
+Mail-Followup-To: Lee Jones <lee.jones@linaro.org>,
+        devicetree@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+References: <cover.1588115326.git.gurus@codeaurora.org>
+ <5644dea146f8b49a5b827c56392ff916bfb343e9.1588115326.git.gurus@codeaurora.org>
+ <20200429075010.GX3559@dell>
+ <20200501011319.GA28441@codeaurora.org>
+ <20200515104520.GK271301@dell>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200515104520.GK271301@dell>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for the ath10k SNOC platform driver probe
-and add resources required for WCN3990 on sc7180 soc.
+On Fri, May 15, 2020 at 11:45:20AM +0100, Lee Jones wrote:
+> On Thu, 30 Apr 2020, Guru Das Srinagesh wrote:
+> 
+> > On Wed, Apr 29, 2020 at 08:50:10AM +0100, Lee Jones wrote:
+> > > On Tue, 28 Apr 2020, Guru Das Srinagesh wrote:
+> > > 
+> > > > The Qualcomm Technologies, Inc. I2C PMIC Controller is used by
+> > > > multi-function PMIC devices which communicate over the I2C bus.  The
+> > > > controller enumerates all child nodes as platform devices, and
+> > > > instantiates a regmap interface for them to communicate over the I2C
+> > > > bus.
+> > > > 
+> > > > The controller also controls interrupts for all of the children platform
+> > > > devices.  The controller handles the summary interrupt by deciphering
+> > > > which peripheral triggered the interrupt, and which of the peripheral
+> > > > interrupts were triggered.  Finally, it calls the interrupt handlers for
+> > > > each of the virtual interrupts that were registered.
+> > > > 
+> > > > Nicholas Troast is the original author of this driver.
+> > > > 
+> > > > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> > > > ---
+> > > >  drivers/mfd/Kconfig         |  11 +
+> > > >  drivers/mfd/Makefile        |   1 +
+> > > >  drivers/mfd/qcom-i2c-pmic.c | 737 ++++++++++++++++++++++++++++++++++++++++++++
+> > > 
+> > > The vast majority of this driver deals with IRQ handling.  Why can't
+> > > this be split out into its own IRQ Chip driver and moved to
+> > > drivers/irqchip?
+> > 
+> > There appear to be quite a few in-tree MFD drivers that register IRQ
+> > controllers, like this driver does:
+> > 
+> > $ grep --exclude-dir=.git -rnE "irq_domain_(add|create).+\(" drivers/mfd | wc -l
+> > 23
+> > 
+> > As a further example, drivers/mfd/stpmic1.c closely resembles this
+> > driver in that it uses both devm_regmap_add_irq_chip() as well as
+> > devm_of_platform_populate().
+> > 
+> > As such, it seems like this driver is in line with some of the
+> > architectural choices that have been accepted in already-merged drivers.
+> > Could you please elaborate on your concerns?
+> 
+> It is true that *basic* IRQ domain support has been added to these
+> drivers in the past.  However, IMHO the support added to this driver
+> goes beyond those realms such that it would justify a driver of its
+> own.
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
----
-Changes from v9:
-- Place the wlan_fw_mem under reserved-memory node
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  7 +++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+I am exploring an option to see if the regmap-irq APIs may be used in
+this driver, similar to stpmic1.c. Just to let you know, it might be a
+few days before I am able to post my next patchset as I'll have to make
+the necessary changes and test them out first.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 4e9149d..38b102e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -389,6 +389,13 @@
- 	};
- };
- 
-+&wifi {
-+	status = "okay";
-+	wifi-firmware {
-+		iommus = <&apps_smmu 0xc2 0x1>;
-+	};
-+};
-+
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
- &qspi_clk {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index f1280e0..19bd7d0 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -106,6 +106,11 @@
- 			no-map;
- 		};
- 
-+		wlan_fw_mem: memory@94100000 {
-+			reg = <0 0x94100000 0 0x200000>;
-+			no-map;
-+		};
-+
- 		rmtfs_mem: memory@84400000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0x0 0x84400000 0x0 0x200000>;
-@@ -944,6 +949,28 @@
- 			};
- 		};
- 
-+		wifi: wifi@18800000 {
-+			compatible = "qcom,wcn3990-wifi";
-+			reg = <0 0x18800000 0 0x800000>;
-+			reg-names = "membase";
-+			iommus = <&apps_smmu 0xc0 0x1>;
-+			interrupts =
-+				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-+				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-+				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-+				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-+				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-+				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-+				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-+				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-+				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-+				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-+				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-+				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-+			memory-region = <&wlan_fw_mem>;
-+			status = "disabled";
-+		};
-+
- 		config_noc: interconnect@1500000 {
- 			compatible = "qcom,sc7180-config-noc";
- 			reg = <0 0x01500000 0 0x28000>;
--- 
-2.7.4
+Thank you.
+
+Guru Das.
