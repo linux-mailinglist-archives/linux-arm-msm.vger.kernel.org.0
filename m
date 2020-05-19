@@ -2,143 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC4741D913E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 09:44:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3466A1D92E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2020 11:04:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728303AbgESHog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 May 2020 03:44:36 -0400
-Received: from mout.kundenserver.de ([217.72.192.73]:59159 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbgESHof (ORCPT
+        id S1726818AbgESJEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 May 2020 05:04:09 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:56099 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726333AbgESJEJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 May 2020 03:44:35 -0400
-Received: from mail-qv1-f49.google.com ([209.85.219.49]) by
- mrelayeu.kundenserver.de (mreue109 [212.227.15.145]) with ESMTPSA (Nemesis)
- id 1MxUfn-1iqQ1I28BV-00xpvI; Tue, 19 May 2020 09:44:33 +0200
-Received: by mail-qv1-f49.google.com with SMTP id ee19so6026496qvb.11;
-        Tue, 19 May 2020 00:44:33 -0700 (PDT)
-X-Gm-Message-State: AOAM5305roy0Im1kbKAcS3unXyHZyJjp2IEZtTDOA+JJId05teJPiZMH
-        8FCzBJLnkMeimGWzbpT+fnMiwvFqPzXygRa+QE8=
-X-Google-Smtp-Source: ABdhPJyz5mXdtib6QAE28t5pFaGbx82ytbNPSngTpPa/9FO90GbqJW3zKmrtW+AkEiHWKR5n9g/tllAzh+eT59Lestw=
-X-Received: by 2002:a05:6214:905:: with SMTP id dj5mr19849870qvb.222.1589874272193;
- Tue, 19 May 2020 00:44:32 -0700 (PDT)
+        Tue, 19 May 2020 05:04:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589879048; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=krynLA3PVnStDQ90BA4lcITyrT/iSvbyv+EPo/hP2Ao=;
+ b=ZuY008IWz0uBCFmAIT24lDUqYiBQbnRE6IM3yESvGEiNm9M8sa0uGIQiXYlpMp30wf0rBYeG
+ vIzAmLGbHgyvKdgaSqTKgAX5H0QFuRCHcIT24sBsQ6zKQfnf/noEy6oFglnlFbUbYDt6Sof0
+ OZYnZgoWiwnuTR9hPSr0rCetaJA=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec3a104.7f793d152148-smtp-out-n03;
+ Tue, 19 May 2020 09:04:04 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BBFCAC433F2; Tue, 19 May 2020 09:04:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14B85C433D2;
+        Tue, 19 May 2020 09:04:03 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200506060025.1535960-1-vkoul@kernel.org> <20200506060025.1535960-4-vkoul@kernel.org>
- <CADYN=9JLeWHODRWDEcTE_6iZ3TX-E4yyx3OwqzK-H-ytLAmQUg@mail.gmail.com>
- <20200518195719.GG374218@vkoul-mobl.Dlink> <CADYN=9+VuTwVk32hQXAAeDyErMn7D4Y+Gzdehy_=c8fBeU23jA@mail.gmail.com>
- <20200519045336.GH374218@vkoul-mobl.Dlink>
-In-Reply-To: <20200519045336.GH374218@vkoul-mobl.Dlink>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Tue, 19 May 2020 09:44:15 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2CCwfXz8_p6zscuq21tCRZ_aHRZUa_9ov1b4sSqvL_aw@mail.gmail.com>
-Message-ID: <CAK8P3a2CCwfXz8_p6zscuq21tCRZ_aHRZUa_9ov1b4sSqvL_aw@mail.gmail.com>
-Subject: Re: [PATCH v13 3/5] usb: xhci: Add support for Renesas controller
- with memory
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Anders Roxell <anders.roxell@linaro.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        =?UTF-8?Q?Andreas_B=C3=B6hler?= <dev@aboehler.at>,
-        USB list <linux-usb@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:zg0WXCVgxaVauGkuk7NHqfGuaMZjVr8VtN21yfQvU6wlcgxAYoU
- IrDb3X/O+40U3VdeTv3sh7aqhR/5eWFkq2zhVJ4NSQubgHOU76OW+J5SV/CNu/YozRYh5/y
- 3XFgY019wLB8saSTq91MFpaaFcdUvm6658zHcNkJ9MxNszyv9yQj8EKm2xmUlc5ZOO1Ul33
- f+/FGSLwOZPT1ikA50j3g==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gGlDoxcaACU=:hlVk4p4DmAe196w/U7j8KH
- yks9CwDyLD9LbQpwylQYN3/whOLiuI5lvXI1DphTcuSFrxYcRVxcdOpnFUCxT/6sgxVazQiI+
- YraDuYxXyc8Dsd0dsp3SBNsOkGM/tjpuvRsNjbRCQZHyfo5snf+P5Jp/6lcJsu5+jQy9/9v9x
- DX4c5UV/YIN1SgoymEid8FT9SZ62ibc9jfeaBh9LguqXhgeUVToxxGH6dXMwnAm7OwtwcS7Wf
- GitnTL9yNlluAlDCUktIUbIyEQfYO2sggqj6YOhtDUpK0/I1F06BO6piSn7IJXm+NCxrSegmE
- oOmebHMlLpJ0anf8vflLehi8zriBTrcpzchxUjItULzZeeRcIVZb/BV/m3VQmpX8CmQ2TfNxN
- Z8GS30iCbwk5c3VjMKZlPSH1nSaHug7Vk+X88ce3UL1A7jKNZJJFWDQJwc6atvxf6W5SUN0Ee
- EiBTriOYGWPhJN1lLCt6qJRR3DXxoANu2r/WUVwjIp887GcKyBHAVLkk2V75CDfofFC/OTUgS
- cUGgRTkpGXdiX6yeN83nu1lRsNGQLyQRihDFjglaes3Fw159feulBWO77+xDTQqmEKlZTvNw+
- 5lJ/FA4bhQT/hJ1gS5/sy+W1KCnOTJU/kweEDGvmdsmrWxkT901R7D1+rxLs9KB5yBD3MGY3h
- QTMWjg4+6q/nxD0cbP0N9RL5ZQ80CZ3YXITeuoWDr+IVpQnIw/fVimagkfw93xEpsUL/V3MKV
- 5yTt2k/qZwAfVNwVR37u1fiP2Dv49hI7DfHuOLUZUrt/L/3nAsYV7rHnysHTmX8I0/8tVm9zq
- ahxGreNWNEmY13jCSA5V5KSy001DCw4xx23EAQKnF1C6PuZSwU=
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 19 May 2020 14:34:03 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mike Leach <mike.leach@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Russell King <linux@armlinux.org.uk>
+Subject: Re: [PATCH] coresight: dynamic-replicator: Fix handling of multiple
+ connections
+In-Reply-To: <4bd741e342f8e2743197ed6105dacffa@codeaurora.org>
+References: <20200426143725.18116-1-saiprakash.ranjan@codeaurora.org>
+ <cf5852e9-c3c1-3d31-46f0-0370719947ab@arm.com>
+ <CAJ9a7VgF3-Hdc7KSw9gVBeXSDHNguhqVhp60oK2XhCtr3DhDqg@mail.gmail.com>
+ <84918e7d-c933-3fa1-a61e-0615d4b3cf2c@arm.com>
+ <668ea1283a6dd6b34e701972f6f71034@codeaurora.org>
+ <5b0f5d77c4eec22d8048bb0ffa078345@codeaurora.org>
+ <759d47de-2101-39cf-2f1c-cfefebebd548@arm.com>
+ <7d343e96cf0701d91152fd14c2fdec42@codeaurora.org>
+ <CAJ9a7VgEiX19ukjwakNHBHDeZJ05f5Z7pAYG9iEnpXCuuDfBqg@mail.gmail.com>
+ <a4bba03d41a2b0145b3c6c19d48698eb@codeaurora.org>
+ <CAJ9a7Vj4eyv1n=RxuqfV=pdBN3SDG+ShYS5J4s40KJtqOnR7vw@mail.gmail.com>
+ <ae0fe2050be01cc1403c7d53a0da8cb8@codeaurora.org>
+ <b8c1cc35846d425a1677c73fddf5874d@codeaurora.org>
+ <eee1b9a90266eed9a9c75401f0679777@codeaurora.org>
+ <CAJ9a7Vjd0XG+rAvHptAAjGtE6xRhYsPaOSC_Bf9B-w-FZFu_Qw@mail.gmail.com>
+ <47f6d51bfad0a0bf1553e101e6a2c8c9@codeaurora.org>
+ <37b3749e-2363-0877-c318-9c334a5d1881@arm.com>
+ <d47271ee6a2a6f0f30da7e140b6f196c@codeaurora.org>
+ <CAJ9a7Vg95tcgMXgQKLAZc=TpV6FnPZ7wdF=Kwbuy7d2kRCjYQw@mail.gmail.com>
+ <364049a30dc9d242ec611bf27a16a6c9@codeaurora.org>
+ <CAJ9a7VjAoUmMG9pLEzE_rMSpOjwVOi-ZCinF87n9H0JgfMDsiQ@mail.gmail.com>
+ <5a76926a6532d3f91cca169d474ba98e@codeaurora.org>
+ <4bd741e342f8e2743197ed6105dacffa@codeaurora.org>
+Message-ID: <825b922dab9821fa46f321d600648e10@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 19, 2020 at 6:53 AM Vinod Koul <vkoul@kernel.org> wrote:
-> On 19-05-20, 00:37, Anders Roxell wrote:
-> > On Mon, 18 May 2020 at 21:57, Vinod Koul <vkoul@kernel.org> wrote:
-> > > On 18-05-20, 19:53, Anders Roxell wrote:
-> > > > On Wed, 6 May 2020 at 08:01, Vinod Koul <vkoul@kernel.org> wrote:
-> > > > >
-> > > > > Some rensas controller like uPD720201 and uPD720202 need firmware to be
-> > > > > loaded. Add these devices in pci table and invoke renesas firmware loader
-> > > > > functions to check and load the firmware into device memory when
-> > > > > required.
-> > > > >
-> > > > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > >
-> > > > Hi, I got a build error when I built an arm64 allmodconfig kernel.
-> > >
-> > > Thanks for this. This is happening as we have default y for USB_XHCI_PCI
-> > > and then we make USB_XHCI_PCI_RENESAS=m. That should be not allowed as
-> > > we export as symbol so both can be inbuilt or modules but USB_XHCI_PCI=y
-> > > and USB_XHCI_PCI_RENESAS=m cant. While it is valid that USB_XHCI_PCI=y|m
-> > > and USB_XHCI_PCI_RENESAS=n
-> > >
-> > > So this seems to get fixed by below for me. I have tested with
-> > >  - both y and m (easy)
-> > >  - make USB_XHCI_PCI_RENESAS=n, USB_XHCI_PCI=y|m works
-> > >  - try making USB_XHCI_PCI=y and USB_XHCI_PCI_RENESAS=m, then
-> > >    USB_XHCI_PCI=m by kbuild :)
-> > >  - try making USB_XHCI_PCI=m and USB_XHCI_PCI_RENESAS=y, kbuild gives
-> > >    error prompt that it will be m due to depends
-> > >
-> > > Thanks to all the fixes done by Arnd which pointed me to this. Pls
-> > > verify
-> >
-> > I was able to build an arm64 allmodconfig kernel with this change.
->
-> I will send the formal patch and add your name in reported and
-> tested. Thanks for the quick verification
+Hi Mike, Suzuki,
 
-I just checked the patch and I think this will work correctly in all cases,
-but it still seems a bit backwards:
+On 2020-05-16 15:34, Sai Prakash Ranjan wrote:
+> Hi Mike, Suzuki
+> 
+> [...]
+> 
+>>> 
+>>> Please look at the CoreSight components specification 3.0 (ARM IHI
+>>> 0029E) Section B2.1.2 which describes the Unique Component Identifier
+>>> (UCI).
+>>> As mentioned above this consists of a combination of bits from
+>>> multiple registers, including PIDR4.
+>>> 
+>> 
+>> Ok got it now, thanks for clearing the doubt. I will go ahead with
+>> this method to identify QCOM impl and post a patch.
+>> 
+> 
+> Looking some more into this, since we have this limitation only on
+> specific replicator on very few QCOM SoCs, rather than having a blanket
+> workaround for all QCOM, we were thinking it would be better to have
+> this workaround based on a firmware property something like
+> "qcom,replicator-loses-context" for those replicators with this
+> limitation and then set the drvdata->check_idfilter_val based on
+> this property.
+> 
 
-> > > diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
-> > > index b5c542d6a1c5..92783d175b3f 100644
-> > > --- a/drivers/usb/host/Kconfig
-> > > +++ b/drivers/usb/host/Kconfig
-> > > @@ -40,11 +40,11 @@ config USB_XHCI_DBGCAP
-> > >  config USB_XHCI_PCI
-> > >         tristate
-> > >         depends on USB_PCI
-> > > +       depends on USB_XHCI_PCI_RENESAS || !USB_XHCI_PCI_RENESAS
-> > >         default y
-> > >
-> > >  config USB_XHCI_PCI_RENESAS
-> > >         tristate "Support for additional Renesas xHCI controller with firwmare"
-> > > -       depends on USB_XHCI_PCI
-> > >         ---help---
-> > >           Say 'Y' to enable the support for the Renesas xHCI controller with
-> > >           firwmare. Make sure you have the firwmare for the device and
-> > >
+Sorry for going back and forth on this one, but I think having a 
+firmware
+property will clearly help us identify the issue on specific SoCs rather 
+than
+wholesale workaround for all QCOM SoCs. For now, I will post a patch 
+based on
+the property "qcom,replicator-loses-context", please feel free to yell 
+at me
+if this is completely wrong and we can discuss it further in that patch.
 
-I think it would have been better to follow the normal driver abstraction here
-and make the renesas xhci a specialized version of the xhci driver with
-its own platform_driver instance that calls into the generic xhci_pci module,
-rather than having the generic code treat it as a quirk.
+Thanks,
+Sai
 
-That would be more like how we handle all the ehci and ohci variants, though
-I'm not sure how exactly it would work with two drivers having pci_device_id
-tables with non-exclusive members. Presumably the generic driver would
-still have to know that it needs to fail its probe() function on devices that
-need the firmware.
-
-        Arnd
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
