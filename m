@@ -2,138 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84F641DBBED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 19:50:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FC061DBC01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 19:53:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726560AbgETRus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 13:50:48 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:30056 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726747AbgETRur (ORCPT
+        id S1726958AbgETRxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 13:53:42 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:3932 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726729AbgETRxj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 13:50:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589997046; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MuJ6OyHDNvTOOsmTlh/Zlq7+mR2mQh3vcMAegcKB7GI=;
- b=B2+Ji2FF+K2YW9rJnjq6hm3sOET90vEH8rWF8vHbrNMMcWP3j2BUjrLZPNoFzrIMpuDFitlv
- jdW/A0cx07wf9L5LoeQ46nUr3IuVjquYbFULtI4tGnObRGlhZV8HqDDzHf7Oo5I4XcnxViAF
- 2+Yqt77yL+Guq2UezB/f3ZoVfc8=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ec56de47171b6d7e444b844 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 20 May 2020 17:50:28
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B6C92C433C6; Wed, 20 May 2020 17:50:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C1FCC433C8;
-        Wed, 20 May 2020 17:50:27 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 20 May 2020 23:20:27 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH v11] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
- device node
-In-Reply-To: <1589946996-31264-1-git-send-email-pillair@codeaurora.org>
-References: <1589946996-31264-1-git-send-email-pillair@codeaurora.org>
-Message-ID: <2174d6b5ab066cf6fd080b5d3c27609f@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Wed, 20 May 2020 13:53:39 -0400
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 May 2020 10:53:39 -0700
+Received: from asutoshd-linux1.qualcomm.com ([10.46.160.39])
+  by ironmsg05-sd.qualcomm.com with ESMTP; 20 May 2020 10:53:38 -0700
+Received: by asutoshd-linux1.qualcomm.com (Postfix, from userid 92687)
+        id 6325420B91; Wed, 20 May 2020 10:53:38 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        PedroM.Sousa@synopsys.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v4 1/2] scsi: ufs: export hibern8 entry
+Date:   Wed, 20 May 2020 10:53:16 -0700
+Message-Id: <186237103353b5a79c3496e619fca894dbc78600.1589997078.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-20 09:26, Rakesh Pillai wrote:
-> Add device node for the ath10k SNOC platform driver probe
-> and add resources required for WCN3990 on sc7180 soc.
-> 
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> ---
-> Changes from v10:
-> - Corrected the position of wifi node, as per address
-> - Removed the wlan_fw_mem from reserved memory, since
->   its already added as reserved memory in board DT file.
+Qualcomm controllers need to be in hibern8 before scaling up
+or down the clocks. Hence, export the hibern8 entry function.
 
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+---
+ drivers/scsi/ufs/ufshcd.c | 4 ++--
+ drivers/scsi/ufs/ufshcd.h | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  7 +++++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 22 ++++++++++++++++++++++
->  2 files changed, 29 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 4e9149d..38b102e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -389,6 +389,13 @@
->  	};
->  };
-> 
-> +&wifi {
-> +	status = "okay";
-> +	wifi-firmware {
-> +		iommus = <&apps_smmu 0xc2 0x1>;
-> +	};
-> +};
-> +
->  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
-> 
->  &qspi_clk {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 6b12c60..da79f8f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -2811,6 +2811,28 @@
-> 
->  			#freq-domain-cells = <1>;
->  		};
-> +
-> +		wifi: wifi@18800000 {
-> +			compatible = "qcom,wcn3990-wifi";
-> +			reg = <0 0x18800000 0 0x800000>;
-> +			reg-names = "membase";
-> +			iommus = <&apps_smmu 0xc0 0x1>;
-> +			interrupts =
-> +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-> +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-> +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-> +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-> +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-> +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-> +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-> +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-> +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-> +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-> +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-> +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-> +			memory-region = <&wlan_mem>;
-> +			status = "disabled";
-> +		};
->  	};
-> 
->  	thermal-zones {
-
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index c3389c9..aaf4adf 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -243,7 +243,6 @@ static int ufshcd_probe_hba(struct ufs_hba *hba, bool async);
+ static int __ufshcd_setup_clocks(struct ufs_hba *hba, bool on,
+ 				 bool skip_ref_clk);
+ static int ufshcd_setup_clocks(struct ufs_hba *hba, bool on);
+-static int ufshcd_uic_hibern8_enter(struct ufs_hba *hba);
+ static inline void ufshcd_add_delay_before_dme_cmd(struct ufs_hba *hba);
+ static int ufshcd_host_reset_and_restore(struct ufs_hba *hba);
+ static void ufshcd_resume_clkscaling(struct ufs_hba *hba);
+@@ -3877,7 +3876,7 @@ static int __ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
+ 	return ret;
+ }
+ 
+-static int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
++int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
+ {
+ 	int ret = 0, retries;
+ 
+@@ -3889,6 +3888,7 @@ static int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
+ out:
+ 	return ret;
+ }
++EXPORT_SYMBOL_GPL(ufshcd_uic_hibern8_enter);
+ 
+ int ufshcd_uic_hibern8_exit(struct ufs_hba *hba)
+ {
+diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
+index 88d4202..defc12c 100644
+--- a/drivers/scsi/ufs/ufshcd.h
++++ b/drivers/scsi/ufs/ufshcd.h
+@@ -835,6 +835,7 @@ int ufshcd_wait_for_register(struct ufs_hba *hba, u32 reg, u32 mask,
+ void ufshcd_parse_dev_ref_clk_freq(struct ufs_hba *hba, struct clk *refclk);
+ void ufshcd_update_reg_hist(struct ufs_err_reg_hist *reg_hist,
+ 			    u32 reg);
++int ufshcd_uic_hibern8_enter(struct ufs_hba *hba);
+ 
+ static inline void check_upiu_size(void)
+ {
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
