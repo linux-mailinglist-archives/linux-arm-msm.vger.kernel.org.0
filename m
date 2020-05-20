@@ -2,113 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 929ED1DB457
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 14:59:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7ECFF1DB4F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 15:27:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726747AbgETM7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 08:59:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48504 "EHLO mail.kernel.org"
+        id S1726560AbgETN1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 09:27:45 -0400
+Received: from mga17.intel.com ([192.55.52.151]:30752 "EHLO mga17.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726439AbgETM7X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 08:59:23 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 428642070A;
-        Wed, 20 May 2020 12:59:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589979561;
-        bh=UY6bhyA1qIT24OzeirfJ2m2V4bIa7vSuhBxipVcxHSg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PQv/vo1vuOh5BN49oSfeBhlvcbtDT/i2W10QY5VDIAdRGhoXfpN3/Z/QUeozn5SD+
-         rzEi1mftpME8HSrsWYMdBHtO+ywFV0pA1oQallMrYtkq4UKSLTdC9feue1eJt4ywVs
-         qENI/Bjv+xJ6dqkzZxsfk4v9OQqOwLRmWnay1Niw=
-Date:   Wed, 20 May 2020 13:59:17 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
-        <iommu@lists.linux-foundation.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] iomm/arm-smmu: Add stall implementation hook
-Message-ID: <20200520125916.GE25815@willie-the-truck>
-References: <b491e02ad790a437115fdeab6b21bc48@codeaurora.org>
- <1ced023b-157c-21a0-ac75-1adef7f029f0@arm.com>
- <20200507125357.GA31783@willie-the-truck>
- <CAF6AEGuLU+_qP8HNO1s9PTPHqJnCMHzehmcT8NiJhiAwrfSH6w@mail.gmail.com>
- <CAF6AEGvuHKObTR97XdSXjmjKB+qjQ8N1_wxM=ZU8bEkF=cXp-A@mail.gmail.com>
- <20200511173008.GA24282@jcrouse1-lnx.qualcomm.com>
- <20200518154522.GN32394@willie-the-truck>
- <5a0ad639e272026c8be57393937cda22@codeaurora.org>
- <CAF6AEGuzBtj+srindmOvhaom5BdS2adLaOF=v_MtguMja14V2w@mail.gmail.com>
- <a801e79a0a75092c28a6646ae7fa5e36@codeaurora.org>
+        id S1726439AbgETN1o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 May 2020 09:27:44 -0400
+IronPort-SDR: 702/lacGYT8hEPHthzihBeB2yJ9dkfjg1nfQg9IsQlKRyPXgrr85FqypyGRboij5atShrUyeO8
+ imGaGil/tWeg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2020 06:27:43 -0700
+IronPort-SDR: cv4BF2+S190M0BuNw9T1f7pRHZsNf3Jgigha8gssDa5mRFFCBDNOv9/HheNr1f1HNkSwuvWqyx
+ X2TPB5wzr11w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,414,1583222400"; 
+   d="scan'208";a="374076597"
+Received: from kuha.fi.intel.com ([10.237.72.162])
+  by fmsmga001.fm.intel.com with SMTP; 20 May 2020 06:27:40 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Wed, 20 May 2020 16:27:39 +0300
+Date:   Wed, 20 May 2020 16:27:39 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Christian Lamparter <chunkeey@gmail.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Andreas =?iso-8859-1?Q?B=F6hler?= <dev@aboehler.at>,
+        USB list <linux-usb@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v13 2/5] usb: renesas-xhci: Add the renesas xhci driver
+Message-ID: <20200520132739.GK1298122@kuha.fi.intel.com>
+References: <20200506060025.1535960-1-vkoul@kernel.org>
+ <20200506060025.1535960-3-vkoul@kernel.org>
+ <20200519114528.GC1298122@kuha.fi.intel.com>
+ <CAAd0S9AEOsOLrnry4xNRVOi5fXwm3KXYzQsUMCm9tVxHr2sr1w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a801e79a0a75092c28a6646ae7fa5e36@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAAd0S9AEOsOLrnry4xNRVOi5fXwm3KXYzQsUMCm9tVxHr2sr1w@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 20, 2020 at 03:02:45PM +0530, Sai Prakash Ranjan wrote:
-> On 2020-05-19 20:41, Rob Clark wrote:
-> > On Tue, May 19, 2020 at 2:26 AM Sai Prakash Ranjan
-> > <saiprakash.ranjan@codeaurora.org> wrote:
-> > > On 2020-05-18 21:15, Will Deacon wrote:
-> > > > So this sounds like an erratum to me, and I'm happy to set HUPCF if we
-> > > > detect the broken implementation. However, it will need an entry in
-> > > > Documentation/arm64/silicon-errata.rst and a decent comment in the
-> > > > driver
-> > > > to explain what we're doing and why.
-> > > >
-> > > 
-> > > AFAIK there is no erratum documented internally for this behaviour and
-> > > this
-> > > exists from MSM8996 SoC time and errata usually don't survive this
-> > > long
-> > > across generation of SoCs and there is no point for us in disguising
-> > > it.
-> > 
-> > possibly longer, qcom_iommu sets CFCFG..
-> > 
+On Tue, May 19, 2020 at 10:19:03PM +0200, Christian Lamparter wrote:
+> Hello,
 > 
-> Oh right, I was still in college when those SoCs were released ;)
+> On Tue, May 19, 2020 at 1:45 PM Heikki Krogerus
+> <heikki.krogerus@linux.intel.com> wrote:
+> > On Wed, May 06, 2020 at 11:30:22AM +0530, Vinod Koul wrote:
+> > > From: Christian Lamparter <chunkeey@googlemail.com>
+> > >
+> > > This add a new driver for renesas xhci which is basically a firmware
+> > > loader for uPD720201 and uPD720202 w/o ROM. The xhci-pci driver will
+> > > invoke this driver for loading/unloading on relevant devices.
+> > >
+> > > This patch adds a firmware loader for the uPD720201K8-711-BAC-A
+> > > and uPD720202K8-711-BAA-A variant. Both of these chips are listed
+> > > in Renesas' R19UH0078EJ0500 Rev.5.00 "User's Manual: Hardware" as
+> > > devices which need the firmware loader on page 2 in order to
+> > > work as they "do not support the External ROM".
+> > >
+> > > The "Firmware Download Sequence" is describe in chapter
+> > > "7.1 FW Download Interface" R19UH0078EJ0500 Rev.5.00 page 131.
+> > >
+> > > The firmware "K2013080.mem" is available from a USB3.0 Host to
+> > > PCIe Adapter (PP2U-E card) "Firmware download" archive. An
+> > > alternative version can be sourced from Netgear's WNDR4700 GPL
+> > > archives.
+> > >
+> > > The release notes of the PP2U-E's "Firmware Download" ver 2.0.1.3
+> > > (2012-06-15) state that the firmware is for the following devices:
+> > >  - uPD720201 ES 2.0 sample whose revision ID is 2.
+> > >  - uPD720201 ES 2.1 sample & CS sample & Mass product, ID is 3.
+> > >  - uPD720202 ES 2.0 sample & CS sample & Mass product, ID is 2.
+> >
+> > You wouldn't happen to have access to the documentation of the
+> > "original" uPD720200 USB 3.0 controller?
+> >
+> > It would be cool if we could support that too with this driver.
 > 
-> > > Is it OK if we clearly mention it as the "design limitation" or some
-> > > other
-> > > term which we can agree upon along with the description which Rob and
-> > > Jordan
-> > > provided for setting HUPCF in the driver when we add the set_hupcf
-> > > callback?
-> > 
-> > I'm not too picky on what we call it, but afaict it has been this way
-> > since the beginning of time, rather than specific to a certain SoC or
-> > generation of SoCs.  So it doesn't seem like the hw designers consider
-> > it a bug.
-> > 
-> > (I'm not sure what the expected behavior is.. nor if any other SMMU
-> > implementation encounters this sort of situation..)
+> ???. I have one of those "original" uPD720200(A) working "just fine"
+> in my Laptop currently.
+> It's an really old HP dv6-6003eg from around 2011 that came with two
+> USB 3.0 Ports, which
+> are driven by a "NEC Corporation uPD720200 USB 3.0 Host Controller"
+> 1033:0194 (Rev 04).
 > 
-> Yes, that was my point as well that its probably not counted as a bug
-> by the hw designers. So I'm going to post setting HUPCF on QCOM
-> implementation with clear comments based on yours and Jordan's description
-> of this problem, but I wanted to have a way to set this only for GPU context
-> bank and not GMU as Jordan mentioned earlier that GMU doesnt need HUPCF set.
-> I was checking as to how do we map cb to device, if it was possible then we
-> can have
-> a compatibility thing like we did for identity mapping. Any ideas Robin?
+> As for supporting the uPD720200 (flasher) with this serises.... There
+> are some bad news:
+> 
+> "In addition, the programming interface for the uPD720200 and uPD720200A
+> is different from the uPD720202, needs different programming tools, and relies
+> on proprietary chip features that cannot be disclosed outside of Renesas."
+> <https://mail.coreboot.org/pipermail/flashrom/2013-February/010498.html> :-(
 
-Right, see my reply over at:
+Too bad. That's what I was hoping to do with this driver. There are
+still boards out there equipped with uPD720200/uPD720200A that have
+older firmware. If you don't have the latest firmware (which is also
+from 2012), then PME and a few other things will not work (so resume
+from D3 does not work for example).
 
-https://lore.kernel.org/r/20200520125700.GD25815@willie-the-truck
+thanks,
 
-Hopefully something like that can be made to work.
-
-Will
+-- 
+heikki
