@@ -2,162 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 642EB1DB332
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 14:29:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C194A1DB444
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 14:57:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726827AbgETM3z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 08:29:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33570 "EHLO mail.kernel.org"
+        id S1726443AbgETM5G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 08:57:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46704 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726439AbgETM3y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 08:29:54 -0400
+        id S1726439AbgETM5G (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 May 2020 08:57:06 -0400
 Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0ED9220756;
-        Wed, 20 May 2020 12:29:52 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 836572070A;
+        Wed, 20 May 2020 12:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1589977794;
-        bh=VGu6dnFTVCKwpzDnxKnQRdLF/W/wyJaAlcUliCdCrVI=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=CS7PL+Rv9R79fZvV9gVfqHsdFTW+yiv6vBsmUCaPQwLsKoCYHz1X0yfF/9Kr3meYs
-         XZE7O/O1PL8P7RYyCqt3nWMznsAp679ACj9891L9JLhyVUBlLdmdQ5zeRG3Aw7QEDm
-         UaZMBvb7sEpwGADI/np+Sj49wPgdwWhHqDDEcTNA=
-Date:   Wed, 20 May 2020 13:29:49 +0100
+        s=default; t=1589979425;
+        bh=1P2e+BY8TZ0h6Yd53TbsOZuyfQmxWpY2o80nVEhI8us=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=zkn/FJDugptcSPb2TlufybwUBXf+t2GBlQWkTf8jsh05woVtd9F2NBuNpIkwAhcPq
+         vQSKaQkD8Olh0FxCizpxzW306pp2xZjyRQvbrVj7U6ggrIu87F74GQujz5nVriZfa9
+         Y8Z2V42UPxkqE/DkdjVUyWIuT6YtAHiFOH8Vodt0=
+Date:   Wed, 20 May 2020 13:57:01 +0100
 From:   Will Deacon <will@kernel.org>
-To:     iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        robin.murphy@arm.com, linux-arm-kernel@lists.infradead.org,
-        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/5] iommu/arm-smmu: Add support for TTBR1
-Message-ID: <20200520122949.GC25815@willie-the-truck>
-References: <20200409233350.6343-1-jcrouse@codeaurora.org>
- <20200409233350.6343-3-jcrouse@codeaurora.org>
- <20200518145959.GK32394@willie-the-truck>
- <20200520015326.GA31730@jcrouse1-lnx.qualcomm.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v1 2/6] arm/smmu: Add auxiliary domain support for
+ arm-smmuv2
+Message-ID: <20200520125700.GD25815@willie-the-truck>
+References: <1580249770-1088-1-git-send-email-jcrouse@codeaurora.org>
+ <1580249770-1088-3-git-send-email-jcrouse@codeaurora.org>
+ <20200318224840.GA10796@willie-the-truck>
+ <CAF6AEGu-hj6=3rsCe5XeBq_ffoq9VFmL+ycrQ8N=iv89DZf=8Q@mail.gmail.com>
+ <20200518151838.GL32394@willie-the-truck>
+ <CAF6AEGswv3ZaJyy_kYv6FKAjO5=_juDwEtK+VE9TcVMLGvrdwA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200520015326.GA31730@jcrouse1-lnx.qualcomm.com>
+In-Reply-To: <CAF6AEGswv3ZaJyy_kYv6FKAjO5=_juDwEtK+VE9TcVMLGvrdwA@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 19, 2020 at 07:53:26PM -0600, Jordan Crouse wrote:
-> On Mon, May 18, 2020 at 03:59:59PM +0100, Will Deacon wrote:
-> > On Thu, Apr 09, 2020 at 05:33:47PM -0600, Jordan Crouse wrote:
-> > > Add support to enable TTBR1 if the domain requests it via the
-> > > DOMAIN_ATTR_SPLIT_TABLES attribute. If enabled by the hardware
-> > > and pagetable configuration the driver will configure the TTBR1 region
-> > > and program the domain pagetable on TTBR1. TTBR0 will be disabled.
-> > > 
-> > > After attaching the device the value of he domain attribute can
-> > > be queried to see if the split pagetables were successfully programmed.
-> > > The domain geometry will be updated as well so that the caller can
-> > > determine the active region for the pagetable that was programmed.
-> > > 
-> > > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > > ---
-> > > 
-> > >  drivers/iommu/arm-smmu.c | 48 ++++++++++++++++++++++++++++++++++------
-> > >  drivers/iommu/arm-smmu.h | 24 +++++++++++++++-----
-> > >  2 files changed, 59 insertions(+), 13 deletions(-)
-> > > 
-> > > diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> > > index a6a5796e9c41..db6d503c1673 100644
-> > > --- a/drivers/iommu/arm-smmu.c
-> > > +++ b/drivers/iommu/arm-smmu.c
-> > > @@ -555,11 +555,16 @@ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
-> > >  			cb->ttbr[0] = pgtbl_cfg->arm_v7s_cfg.ttbr;
-> > >  			cb->ttbr[1] = 0;
-> > >  		} else {
-> > > -			cb->ttbr[0] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> > > -			cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> > > -						  cfg->asid);
-> > > -			cb->ttbr[1] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> > > -						 cfg->asid);
-> > > +			cb->ttbr[0] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> > > +				cfg->asid);
-> > > +
-> > > +			if (pgtbl_cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1) {
-> > > +				cb->ttbr[1] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> > > +			} else {
-> > > +				cb->ttbr[0] |= pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> > > +				cb->ttbr[1] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> > > +							 cfg->asid);
-> > > +			}
-> > 
-> > This looks odd to me. As I mentioned before, the SMMU driver absolutely has
-> > to manage the ASID space, so we should be setting it in both TTBRs here.
+On Mon, May 18, 2020 at 08:50:27AM -0700, Rob Clark wrote:
+> On Mon, May 18, 2020 at 8:18 AM Will Deacon <will@kernel.org> wrote:
+> > On Wed, Mar 18, 2020 at 04:43:07PM -0700, Rob Clark wrote:
+> > > We do in fact need live domain switching, that is really the whole
+> > > point.  The GPU CP (command processor/parser) is directly updating
+> > > TTBR0 and triggering TLB flush, asynchronously from the CPU.
+> > >
+> > > And I think the answer about ASID is easy (on current hw).. it must be zero[*].
+> >
+> > Using ASID zero is really bad, because it means that you will end up sharing
+> > TLB entries with whichever device is using context bank 0.
+> >
+> > Is the SMMU only used by the GPU in your SoC?
+> >
 > 
-> Somebody had suggested a while back to only do TTBR0 but I agree that it makes
-> more sense for it to be on both.
+> yes, the snapdragon SoCs have two SMMU instances, one used by the GPU,
+> where ASID0/cb0 is the gpu itself, and another cb is the GMU
+> (basically power control for the gpu), and the second SMMU is
+> everything else.
 
-Sorry if it was me, I've been having a hard time piecing together how this
-works with the GPU.
+Right, in which case I'm starting to think that we should treat this GPU
+SMMU instance specially. Give it its own compatible string (looks like you
+need this for HUPCFG anyway) and hook in via arm_smmu_impl_init(). You can
+then set IO_PGTABLE_QUIRK_ARM_TTBR1 when talking to the io-pgtable code
+without having to add a domain attribute.
 
-> > > diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> > > index 8d1cd54d82a6..5f6d0af7c8c8 100644
-> > > --- a/drivers/iommu/arm-smmu.h
-> > > +++ b/drivers/iommu/arm-smmu.h
-> > > @@ -172,6 +172,7 @@ enum arm_smmu_cbar_type {
-> > >  #define ARM_SMMU_TCR_SH0		GENMASK(13, 12)
-> > >  #define ARM_SMMU_TCR_ORGN0		GENMASK(11, 10)
-> > >  #define ARM_SMMU_TCR_IRGN0		GENMASK(9, 8)
-> > > +#define ARM_SMMU_TCR_EPD0		BIT(7)
-> > >  #define ARM_SMMU_TCR_T0SZ		GENMASK(5, 0)
-> > >  
-> > >  #define ARM_SMMU_VTCR_RES1		BIT(31)
-> > > @@ -343,16 +344,27 @@ struct arm_smmu_domain {
-> > >  	struct mutex			init_mutex; /* Protects smmu pointer */
-> > >  	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
-> > >  	struct iommu_domain		domain;
-> > > +	bool				split_pagetables;
-> > >  };
-> > >  
-> > >  static inline u32 arm_smmu_lpae_tcr(struct io_pgtable_cfg *cfg)
-> > >  {
-> > > -	return ARM_SMMU_TCR_EPD1 |
-> > > -	       FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
-> > > -	       FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
-> > > -	       FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
-> > > -	       FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
-> > > -	       FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
-> > > +	u32 tcr = FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
-> > > +		FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
-> > > +		FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
-> > > +		FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
-> > > +		FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
-> > > +
-> > > +       /*
-> > > +	* When TTBR1 is selected shift the TCR fields by 16 bits and disable
-> > > +	* translation in TTBR0
-> > > +	*/
-> > > +	if (cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1)
-> > > +		tcr = (tcr << 16) | ARM_SMMU_TCR_EPD0;
-> > 
-> > This looks reasonably dodgy to me, as you copy a RESERVED bit into the A1
-> > field. Furthermore, for 32-bit context banks you've got the EAE bit to
-> > contend with as well.
-> 
-> I can swizzle it more if we need to. I think Robin's main objection was that we
-> didn't want to construct the whole half of the TCR twice and have a bunch of
-> field definitions for the T1 space that are only used in this special case. 
-> 
-> > Perhaps we shouldn't expose DOMAIN_ATTR_SPLIT_TABLES for anything other than
-> > the 64-bit page table format.
-> 
-> We kind of enforce that in arm_smmu_init_domain_context [1] by only allowing the
-> quirk to be set when cfg->fmt == ARM_SMMU_CTX_FMT_AARCH64 and stage 1. I'm not
-> sure if that is formal enough or if we should bake something in to
-> io-pgtable-arm to warn against it too.
+With that. you'll need to find a way to allow the GPU driver to call into
+your own hooks for getting at the TTBR0 tables -- given that you're
+programming these in the hardware, I don't think it makes sense to expose
+that in the IOMMU API, since most devices won't be able to do anything with
+that data. Perhaps you could install a couple of function pointers
+(subdomain_alloc/subdomain_free) in the GPU device when you see it appear
+from the SMMU driver? Alternatively, you could make an io_pgtable_cfg
+available so that the GPU driver can interface with io-pgtable directly.
 
-Sorry again, I missed that this was predicated on
+Yes, it's ugly, but I don't think it's worth trying to abstract this.
 
-	'cfg->fmt == ARM_SMMU_CTX_FMT_AARCH64'
-
-Please can you add that to the comment above the code shifting the TCR
-around? I think you should also say that this clears A1.
+Thoughts? It's taken me a long time to figure out what's going on here,
+so sorry if it feels like I'm leading you round the houses.
 
 Will
