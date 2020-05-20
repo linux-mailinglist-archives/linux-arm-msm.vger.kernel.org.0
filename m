@@ -2,129 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F0D11DAF8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 12:02:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BD211DB073
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 12:44:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726818AbgETKCA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 06:02:00 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:47008 "EHLO extserv.mm-sol.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726224AbgETKCA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 06:02:00 -0400
-Received: from [192.168.1.4] (212-5-158-12.ip.btc-net.bg [212.5.158.12])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id 90A62CFEB;
-        Wed, 20 May 2020 13:01:57 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1589968918; bh=DzcUAhFL6G6Vzz7vTvgr6Z/dAJBJLJKn2F3Wqs3Pvzo=;
-        h=Subject:To:Cc:From:Date:From;
-        b=E0onSRN5ou33/t/JrfYkn/kTvcKP3EdES429TX7TYKkOGaqg/2jk0NJFlz6/t9qIe
-         +8l2DqFT36DdjVm0Zm0te3gQh4cZCUTgMra5XppOYwsnwQQi4qykoQtZXAQvj/97c6
-         AA9lGia5yEOlDUBqZOfPgL1uSOuiWtt4Brq1vMgHK5wzAQGkdErBX6QrQzN9hdYt0R
-         JbBwp0Fa/No29c1jstjT4fyRTKVt6QUktBYsBoFHdfBLd/3XpCgCf+71q8to4XcIuo
-         +Jvy4Geib5IGjUkmou+R8LjWvUM2d8LjMicd9Cm3QnkUBK0BffKZ46vuyoJsNNtgmu
-         2hXlM0KaDbkiQ==
-Subject: Re: R: R: [PATCH v3 08/11] devicetree: bindings: pci: document PARF
- params bindings
-To:     ansuelsmth@gmail.com, 'Rob Herring' <robh@kernel.org>
-Cc:     'Bjorn Andersson' <bjorn.andersson@linaro.org>,
-        'Andy Gross' <agross@kernel.org>,
-        'Bjorn Helgaas' <bhelgaas@google.com>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        'Lorenzo Pieralisi' <lorenzo.pieralisi@arm.com>,
-        'Andrew Murray' <amurray@thegoodpenguin.co.uk>,
-        'Philipp Zabel' <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200430220619.3169-1-ansuelsmth@gmail.com>
- <20200430220619.3169-9-ansuelsmth@gmail.com> <20200507181044.GA15159@bogus>
- <062301d624a6$8be610d0$a3b23270$@gmail.com> <20200512154544.GA823@bogus>
- <99f42001-0f41-5e63-f6ad-2e744ec86d36@mm-sol.com>
- <02e001d62925$dca9e9a0$95fdbce0$@gmail.com>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <72c588ec-5dd3-6c8a-5ebf-1e01bf2fa96a@mm-sol.com>
-Date:   Wed, 20 May 2020 13:01:54 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726443AbgETKon (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 06:44:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49226 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726436AbgETKon (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 May 2020 06:44:43 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC73EC061A0E;
+        Wed, 20 May 2020 03:44:42 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id u2so1501233vsi.13;
+        Wed, 20 May 2020 03:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Z8Ed4esVyLwxGK/ed6iQzqE+rcqzfGB1NnWxeSSQtK0=;
+        b=LMo7BXsekhXmrXHuaiP1G2MkQ1j914Wla5i0ywG6W9XT0iquGvIPV3BliE8K0E5xc7
+         NObMTM0aP22cwtd5HNWPz44lIo1j0IKbRsKmQqMAAiBhyugOEVfLTeZriyknUuhst1Ib
+         fx9nFEbo1NA1tz0ATqqVuLzPfI2ztMG3B0zGQgLtsW1xw+goXzOjiE4TPiP88S/wPoi9
+         gRb+vlVisdLUGuRyE3URXw+fgu0YrgTPd0KSBTSmjBbpy1M8ii1Shg86dpUc2T3qAL4F
+         upyAOzqhccKkVDERI8W7zS4G9haYdfwLAPfz0WvsIT2UJbhwrfv4Zl3Y5PB6Iobxa2OM
+         B/PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z8Ed4esVyLwxGK/ed6iQzqE+rcqzfGB1NnWxeSSQtK0=;
+        b=eU7vD3ttGPDqs0X4LZhagqWZD2KjRu7i9Vl5Y1CEOjTRdoPb0kbGOdgtUuMf7HPIsf
+         4ubk7LU3gnIB1AooIMs8l92+QSWti8GNGd5+4M2wAAOT2Dd3Lju1BtAwci2E0HcYq0SS
+         5EuXunTZQaJgqPg0GuPVSsLJX6gLF3eRDTykehztEH1ieRA23HK7n3kr5AUQ5aYJTHLO
+         A+GUiFukmHM4QfdcDqY4uaKckypzIVAQ6AhnZ+95s0SgmXOkPY75GOstcI58TTbNg/UE
+         eDqcYGIWEtzccOLtM8KbBwz9UR5Cfuq6P6nIq7sakUJK/RPXoMo4jb3ULa2VD0LGNXOf
+         kImA==
+X-Gm-Message-State: AOAM533jXsjHzTBO3Yw9T5e8LtsuijBcVAxpPaq2a06drj0Bpd94A1hR
+        gjg06hLoEg4nxMTOAWC6G27oYSaBBbKHLR+A5kA=
+X-Google-Smtp-Source: ABdhPJyuWRsi6C3bfq5M4MOyQ9byWY9bxWsctP/KplOAKui4DADof0x9My3MNA1jStEseX1SLxjQp7LPJ3e6/IGtfGI=
+X-Received: by 2002:a67:ff14:: with SMTP id v20mr2696940vsp.118.1589971481760;
+ Wed, 20 May 2020 03:44:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <02e001d62925$dca9e9a0$95fdbce0$@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200517190139.740249-1-sam@ravnborg.org> <20200517190139.740249-3-sam@ravnborg.org>
+In-Reply-To: <20200517190139.740249-3-sam@ravnborg.org>
+From:   Emil Velikov <emil.l.velikov@gmail.com>
+Date:   Wed, 20 May 2020 11:41:46 +0100
+Message-ID: <CACvgo50p6M59C-cdwCUFYNE7pWBA-oTwa9EN90yrkOkW2S-BKA@mail.gmail.com>
+Subject: Re: [PATCH v2 02/16] backlight: refactor fb_notifier_callback()
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     ML dri-devel <dri-devel@lists.freedesktop.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        linux-pwm@vger.kernel.org,
+        Support Opensource <support.opensource@diasemi.com>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        patches@opensource.cirrus.com,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Sam,
 
-On 5/13/20 3:56 PM, ansuelsmth@gmail.com wrote:
->> On 5/12/20 6:45 PM, Rob Herring wrote:
->>> On Thu, May 07, 2020 at 09:34:35PM +0200, ansuelsmth@gmail.com
->> wrote:
->>>>> On Fri, May 01, 2020 at 12:06:15AM +0200, Ansuel Smith wrote:
->>>>>> It is now supported the editing of Tx De-Emphasis, Tx Swing and
->>>>>> Rx equalization params on ipq8064. Document this new optional
->> params.
->>>>>>
->>>>>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->>>>>> ---
->>>>>>  .../devicetree/bindings/pci/qcom,pcie.txt     | 36
->> +++++++++++++++++++
->>>>>>  1 file changed, 36 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>>>> b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>>>>> index 6efcef040741..8cc5aea8a1da 100644
->>>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
->>>>>> @@ -254,6 +254,42 @@
->>>>>>  			- "perst-gpios"	PCIe endpoint reset signal line
->>>>>>  			- "wake-gpios"	PCIe endpoint wake signal line
->>>>>>
->>>>>> +- qcom,tx-deemph-gen1:
->>>>>> +	Usage: optional (available for ipq/apq8064)
->>>>>> +	Value type: <u32>
->>>>>> +	Definition: Gen1 De-emphasis value.
->>>>>> +		    For ipq806x should be set to 24.
->>>>>
->>>>> Unless these need to be tuned per board, then the compatible string
->> for
->>>>> ipq806x should imply all these settings.
->>>>>
->>>>
->>>> It was requested by v2 to make this settings tunable. These don't change
->> are
->>>> all the same for every ipq806x SoC. The original implementation had this
->>>> value hardcoded for ipq806x. Should I restore this and drop this patch?
->>>
->>> Yes, please.
->>
->> I still think that the values for tx deemph and tx swing should be
->> tunable. But I can live with them in the driver if they not break
->> support for apq8064.
->>
->> The default values in the registers for apq8064 and ipq806x are:
->>
->> 			default		your change
->> TX_DEEMPH_GEN1		21		24
->> TX_DEEMPH_GEN2_3_5DB	21		24
->> TX_DEEMPH_GEN2_6DB	32		34
->>
->> TX_SWING_FULL		121		120
->> TX_SWING_LOW		121		120
->>
->> So until now (without your change) apq8064 worked with default values.
->>
-> 
-> I will limit this to ipq8064(-v2) if this could be a problem.
+On Sun, 17 May 2020 at 20:02, Sam Ravnborg <sam@ravnborg.org> wrote:
+>
+> Increase readability of fb_notifier_callback() by removing
+> a few indent levels.
+> No functional change.
+>
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> Cc: Jingoo Han <jingoohan1@gmail.com>
+> ---
+>  drivers/video/backlight/backlight.c | 43 +++++++++++++++--------------
+>  1 file changed, 22 insertions(+), 21 deletions(-)
+>
+> diff --git a/drivers/video/backlight/backlight.c b/drivers/video/backlight/backlight.c
+> index cac3e35d7630..17f04cff50ab 100644
+> --- a/drivers/video/backlight/backlight.c
+> +++ b/drivers/video/backlight/backlight.c
+> @@ -58,28 +58,29 @@ static int fb_notifier_callback(struct notifier_block *self,
+>
+>         bd = container_of(self, struct backlight_device, fb_notif);
+>         mutex_lock(&bd->ops_lock);
+> -       if (bd->ops)
+> -               if (!bd->ops->check_fb ||
+> -                   bd->ops->check_fb(bd, evdata->info)) {
+> -                       fb_blank = *(int *)evdata->data;
+> -                       if (fb_blank == FB_BLANK_UNBLANK &&
+> -                           !bd->fb_bl_on[node]) {
+> -                               bd->fb_bl_on[node] = true;
+> -                               if (!bd->use_count++) {
+> -                                       bd->props.state &= ~BL_CORE_FBBLANK;
+> -                                       bd->props.fb_blank = FB_BLANK_UNBLANK;
+> -                                       backlight_update_status(bd);
+> -                               }
+> -                       } else if (fb_blank != FB_BLANK_UNBLANK &&
+> -                                  bd->fb_bl_on[node]) {
+> -                               bd->fb_bl_on[node] = false;
+> -                               if (!(--bd->use_count)) {
+> -                                       bd->props.state |= BL_CORE_FBBLANK;
+> -                                       bd->props.fb_blank = fb_blank;
+> -                                       backlight_update_status(bd);
+> -                               }
+> -                       }
+> +
+> +       if (!bd->ops)
+> +               goto out;
+> +       if (bd->ops->check_fb && !bd->ops->check_fb(bd, evdata->info))
+Mildly related: Would be a nice to define which ops are mandatory and
+which aren't.
+That plus enforcement in backlight_device_register.
 
-I guess you can do it that way, but if new board appear in the future
-with slightly different parameters (for example deemph_gen1 = 23 and so
-on) do we need to add another compatible for that? At the end we will
-have compatibles per board but not per SoC. :(
+But that's for another patchset.
 
--- 
-regards,
-Stan
+> +               goto out;
+> +
+> +       fb_blank = *(int *)evdata->data;
+> +       if (fb_blank == FB_BLANK_UNBLANK && !bd->fb_bl_on[node]) {
+> +               bd->fb_bl_on[node] = true;
+> +               if (!bd->use_count++) {
+> +                       bd->props.state &= ~BL_CORE_FBBLANK;
+> +                       bd->props.fb_blank = FB_BLANK_UNBLANK;
+> +                       backlight_update_status(bd);
+> +               }
+> +       } else if (fb_blank != FB_BLANK_UNBLANK && bd->fb_bl_on[node]) {
+> +               bd->fb_bl_on[node] = false;
+> +               if (!(--bd->use_count)) {
+> +                       bd->props.state |= BL_CORE_FBBLANK;
+> +                       bd->props.fb_blank = fb_blank;
+> +                       backlight_update_status(bd);
+>                 }
+Something like the following reads better, plus one could simplify it
+with follow-on patch.
+
+if (fb_blank == FB_BLANK_UNBLANK)
+    if (!bd->fb_bl_on[node] && !bd->use_count++) {
+        bd->props.state &= ~BL_CORE_FBBLANK;
+        bd->props.fb_blank = FB_BLANK_UNBLANK;
+        backlight_update_status(bd);
+        // above is backlight_enable()
+    }
+    bd->fb_bl_on[node] = true;
+} else {
+    if (bd->fb_bl_on[node] && !(--bd->use_count)) {
+        bd->props.state |= BL_CORE_FBBLANK;
+        bd->props.fb_blank = fb_blank;
+        backlight_update_status(bd);
+        // above is backlight_disable()
+   }
+    bd->fb_bl_on[node] = false;
+}
+
+As-is, one cannot use the backlight helpers indicated, since it
+touches .power. First one should ensure the drivers honour .power - by
+using the helper introduced later.
+
+-Emil
