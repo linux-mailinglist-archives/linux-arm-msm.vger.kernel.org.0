@@ -2,97 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EE3B1DADF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 10:49:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20B6D1DAE7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 11:16:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbgETItU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 04:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59414 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726862AbgETItR (ORCPT
+        id S1726818AbgETJQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 05:16:38 -0400
+Received: from aliyun-cloud.icoremail.net ([47.90.88.95]:64798 "HELO
+        aliyun-sdnproxy-1.icoremail.net" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with SMTP id S1726691AbgETJQi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 04:49:17 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D35EC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 01:49:17 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id f6so1131343pgm.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 01:49:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5/GPOSvzOGmCtBHrtawLleBNjihEJLwhFje0r/gyBuU=;
-        b=UgV20lxE+m+5SQqLGTghEUwbTUIM9gsx3aohb5041IPILli+i+DueRkw4rs3CjRGxL
-         LZS5e2UCfwkwAMonLsL3niejayYElFI+pPozSt58oS1qocOOL7IlVKiYeT/toB8tkEjV
-         wMz+aKUDq8VAhC0/BzUvqi272zqkPk5rMwZdJKtMR2GOI5HKU8bvFYTTAp/GDmaxI2YO
-         BlQkxKE+5rSWht00tp+BRAjus+zrmgdOja0SNtIMKGtKvCDLJlZOGld8f9lntRvNW1RJ
-         ya2kpYX94mnL0y2m1esWiPualqY7/k5Rqdyh8hlEUOET73J2UFTjSHqL6Yq1vd5DMDWx
-         PtMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5/GPOSvzOGmCtBHrtawLleBNjihEJLwhFje0r/gyBuU=;
-        b=FJ6d+w2GTTUS9CX1XpzXR1iOUxz9uFnT4l08bZBqWl4KEmNSfi9HfzedCjI80jK8tp
-         xJcHduPbc8A+E5bmlHHKUw+Pevmszm+waZi5O6g6QPpR50qoRdW4RBJp02UupYVgJZcz
-         dQF70BmvT8jYPiFYe0Auqj+Ec3GMu3uPZPMVNNmZ1j8z5ptxMq6xmyIUg3tn35IZy3zQ
-         GIWiEaXLMFSvqqsv4nNtc4eJaL7kFXCFkxJ4x0+QYOtVmSvGPXzQ6AeFFSEQQM8LeGcl
-         cLJRVLzbgndMRvQUftIfcm67mjyT1ak2PeljTGASUJjDx/LdbU2rlIJukBwaQ+EzgKGc
-         ZzoQ==
-X-Gm-Message-State: AOAM532LOHNR2FYoZmOgUSojM++u08XH1xeFZN5IN2xKMIkTzsVo51IA
-        Xo28dLBk68RT3IDZbZrRFAyZ
-X-Google-Smtp-Source: ABdhPJzj9bk9hZCRxZo8oW53zgCLOrVhCvadLVA3ohiWT2uJcdRzK8qBIb25Ia1yGDIjiBKPe55flw==
-X-Received: by 2002:a63:4b0c:: with SMTP id y12mr3054903pga.56.1589964556662;
-        Wed, 20 May 2020 01:49:16 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:91e:dd0a:7c30:1f7e:ebdb:aa2a])
-        by smtp.gmail.com with ESMTPSA id a5sm1629332pfk.210.2020.05.20.01.49.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2020 01:49:16 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     jassisinghbrar@gmail.com, robh+dt@kernel.org
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 3/3] MAINTAINERS: Add entry for Qualcomm IPCC driver
-Date:   Wed, 20 May 2020 14:18:54 +0530
-Message-Id: <20200520084854.19729-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.26.GIT
-In-Reply-To: <20200520084854.19729-1-manivannan.sadhasivam@linaro.org>
-References: <20200520084854.19729-1-manivannan.sadhasivam@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 20 May 2020 05:16:38 -0400
+X-Greylist: delayed 722 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 May 2020 05:16:37 EDT
+Received: from localhost.localdomain (unknown [222.205.77.158])
+        by mail-app4 (Coremail) with SMTP id cS_KCgBncD0+8cRe5XDXAQ--.24513S4;
+        Wed, 20 May 2020 16:58:43 +0800 (CST)
+From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
+To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] PCI: qcom: fix runtime pm imbalance on error
+Date:   Wed, 20 May 2020 16:58:37 +0800
+Message-Id: <20200520085837.1399-1-dinghao.liu@zju.edu.cn>
+X-Mailer: git-send-email 2.17.1
+X-CM-TRANSID: cS_KCgBncD0+8cRe5XDXAQ--.24513S4
+X-Coremail-Antispam: 1UD129KBjvdXoWrKrW5ZF15Jr17CrWrKFy7trb_yoWfGFgE9r
+        Z8ZFsrArs8Kr9Fqr1qya13Zr9ava47X3W8Kw1FyF4avFWIvrn8JryDZrZ8Zws8Gr45AF1k
+        t34qvF1fCFWUCjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUb-kFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
+        wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
+        vE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4UJVW0owA2z4x0Y4vEx4A2
+        jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52
+        x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWU
+        AwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI4
+        8JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kIc2xKxwCY02Avz4vE
+        14v_GFyl42xK82IYc2Ij64vIr41l42xK82IY6x8ErcxFaVAv8VW8uw4UJr1UMxC20s026x
+        CaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_
+        JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r
+        1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_
+        Wr1j6rW3Jr1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JV
+        W8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUj3CztUUUUU==
+X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add MAINTAINERS entry for Qualcomm IPCC driver and its binding.
+pm_runtime_get_sync() increments the runtime PM usage counter even
+it returns an error code. Thus a pairing decrement is needed on
+the error handling path to keep the counter balanced.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
 ---
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e64e5db31497..cc2fb991cc0d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14013,6 +14013,14 @@ L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
- F:	drivers/iommu/qcom_iommu.c
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 138e1a2d21cc..35686930df1d 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1340,8 +1340,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(dev);
+ 	ret = pm_runtime_get_sync(dev);
+ 	if (ret < 0) {
+-		pm_runtime_disable(dev);
+-		return ret;
++		goto err_pm_runtime_put;
+ 	}
  
-+QUALCOMM IPCC MAILBOX DRIVER
-+M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-+F:	drivers/mailbox/qcom-ipcc.c
-+F:	include/dt-bindings/mailbox/qcom-ipcc.h
-+
- QUALCOMM RMNET DRIVER
- M:	Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
- M:	Sean Tranchetti <stranche@codeaurora.org>
+ 	pci->dev = dev;
 -- 
-2.26.GIT
+2.17.1
 
