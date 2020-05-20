@@ -2,80 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20B6D1DAE7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 11:16:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00D211DAEB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 11:29:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726818AbgETJQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 05:16:38 -0400
-Received: from aliyun-cloud.icoremail.net ([47.90.88.95]:64798 "HELO
-        aliyun-sdnproxy-1.icoremail.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with SMTP id S1726691AbgETJQi (ORCPT
+        id S1726436AbgETJ3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 05:29:09 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:24492 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726403AbgETJ3I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 05:16:38 -0400
-X-Greylist: delayed 722 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 May 2020 05:16:37 EDT
-Received: from localhost.localdomain (unknown [222.205.77.158])
-        by mail-app4 (Coremail) with SMTP id cS_KCgBncD0+8cRe5XDXAQ--.24513S4;
-        Wed, 20 May 2020 16:58:43 +0800 (CST)
-From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
-To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] PCI: qcom: fix runtime pm imbalance on error
-Date:   Wed, 20 May 2020 16:58:37 +0800
-Message-Id: <20200520085837.1399-1-dinghao.liu@zju.edu.cn>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: cS_KCgBncD0+8cRe5XDXAQ--.24513S4
-X-Coremail-Antispam: 1UD129KBjvdXoWrKrW5ZF15Jr17CrWrKFy7trb_yoWfGFgE9r
-        Z8ZFsrArs8Kr9Fqr1qya13Zr9ava47X3W8Kw1FyF4avFWIvrn8JryDZrZ8Zws8Gr45AF1k
-        t34qvF1fCFWUCjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUb-kFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
-        wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
-        vE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4UJVW0owA2z4x0Y4vEx4A2
-        jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52
-        x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWU
-        AwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI4
-        8JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kIc2xKxwCY02Avz4vE
-        14v_GFyl42xK82IYc2Ij64vIr41l42xK82IY6x8ErcxFaVAv8VW8uw4UJr1UMxC20s026x
-        CaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_
-        JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r
-        1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_
-        Wr1j6rW3Jr1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JV
-        W8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUj3CztUUUUU==
-X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/
+        Wed, 20 May 2020 05:29:08 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1589966948; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=AH8NpsIZ428sBqJkkR7gT3RuauuE+SCfT6aV1XgGu6Q=; b=FGM3xjY2nhfobWXvyDI53bOr3fRszn9AchT4eZvgZW+0UxICyUuHZ/udnJn5tGqlW+LpLdaw
+ BkzzFzWOGHpDRe9V0KTV1z3T/sVKqRAvhlA639jylWe/qWGfbrY8A7lUfb4vWhJke423eDHJ
+ YPsRNoMTQePE3QiDIQgX5AM4Jp8=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec4f863.7f71746852d0-smtp-out-n04;
+ Wed, 20 May 2020 09:29:07 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E6650C433CB; Wed, 20 May 2020 09:29:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.10] (unknown [183.83.147.160])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: aneela)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2CA65C433C8;
+        Wed, 20 May 2020 09:29:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2CA65C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=aneela@codeaurora.org
+Subject: Re: [PATCH V5 1/5] rpmsg: glink: Use complete_all for open states
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     ohad@wizery.com, bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sricharan@codeaurora.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+References: <1589346606-15046-1-git-send-email-aneela@codeaurora.org>
+ <1589346606-15046-2-git-send-email-aneela@codeaurora.org>
+ <20200513205915.GA8328@xps15>
+From:   Arun Kumar Neelakantam <aneela@codeaurora.org>
+Message-ID: <0381f314-e833-e1dd-6931-3fb884dddd34@codeaurora.org>
+Date:   Wed, 20 May 2020 14:58:59 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+MIME-Version: 1.0
+In-Reply-To: <20200513205915.GA8328@xps15>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-pm_runtime_get_sync() increments the runtime PM usage counter even
-it returns an error code. Thus a pairing decrement is needed on
-the error handling path to keep the counter balanced.
 
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 138e1a2d21cc..35686930df1d 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1340,8 +1340,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	ret = pm_runtime_get_sync(dev);
- 	if (ret < 0) {
--		pm_runtime_disable(dev);
--		return ret;
-+		goto err_pm_runtime_put;
- 	}
- 
- 	pci->dev = dev;
--- 
-2.17.1
-
+On 5/14/2020 2:29 AM, Mathieu Poirier wrote:
+> Hi Arun,
+>
+> On Wed, May 13, 2020 at 10:40:02AM +0530, Arun Kumar Neelakantam wrote:
+>> From: Chris Lew <clew@codeaurora.org>
+>>
+>> The open_req and open_ack completion variables are the state variables
+>> to represet a remote channel as open. Use complete_all so there are no
+> s/represet/represent
+done added in patch set 6
+>
+>> races with waiters and using completion_done.
+>>
+>> Signed-off-by: Chris Lew <clew@codeaurora.org>
+>> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+>> ---
+>>   drivers/rpmsg/qcom_glink_native.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+>> index 1995f5b..604f11f 100644
+>> --- a/drivers/rpmsg/qcom_glink_native.c
+>> +++ b/drivers/rpmsg/qcom_glink_native.c
+>> @@ -970,7 +970,7 @@ static int qcom_glink_rx_open_ack(struct qcom_glink *glink, unsigned int lcid)
+>>   		return -EINVAL;
+>>   	}
+>>   
+>> -	complete(&channel->open_ack);
+>> +	complete_all(&channel->open_ack);
+> If you do this and as per the note in the comment section above
+> completion_done(), there shouldn't be a need to call completion_done() in
+> qcom_glink_announce_create().
+>
+> Thanks,
+> Mathieu
+the completion_done() check still required to avoid sending intent 
+request on channel which only opened by remote.
+>   
+>
+>>   
+>>   	return 0;
+>>   }
+>> @@ -1413,7 +1413,7 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
+>>   	channel->rcid = ret;
+>>   	spin_unlock_irqrestore(&glink->idr_lock, flags);
+>>   
+>> -	complete(&channel->open_req);
+>> +	complete_all(&channel->open_req);
+>>   
+>>   	if (create_device) {
+>>   		rpdev = kzalloc(sizeof(*rpdev), GFP_KERNEL);
+>> -- 
+>> 2.7.4
