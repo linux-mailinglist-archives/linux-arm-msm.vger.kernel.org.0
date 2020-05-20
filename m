@@ -2,55 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3A11DB8CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 17:56:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC3471DB8E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 17:59:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726857AbgETP4g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 11:56:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41590 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726747AbgETP4g (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 11:56:36 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B106C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 08:56:34 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id w64so3426907wmg.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 08:56:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3DUjkUudWUma8eVVc+3k66CY1qVHbplZFH3HiAs22PM=;
-        b=dgQcgB/jsiNL+KTJ/ognXuY5PS6xaSXJ6xPP9stTlAR++RzPLcjVHzhAVN/2ltCUzD
-         t4b7oqaM9641nFZxnSRPCkivd2m1eMcd5ncdX+bGVQJ/OLNxTLByGFk/Vxap6V0N1j+e
-         u7xSS4UAzqpY2FZPT5Yt4V+dT5DJGYxINnhA0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=3DUjkUudWUma8eVVc+3k66CY1qVHbplZFH3HiAs22PM=;
-        b=CLROWXIDx3GP3b178brn7zGQCONlBSyHMrh1NiepZfgKC/BHG7CMnI3dfeTkeM+tlF
-         5W7mMLc7AlpfA7fzLJsBPiO8/CBUw/0lKZ1GM9t9hgvBxIvVhjNr/5wBMjT2vD+MLJgR
-         U4hP8n4AYKBIASjDqRylJoOaISTNzD2wyCyKO7gJ+XaOklDx+fEwYooUxA8oO0jCmK00
-         OWGBFoLVBNaAk7RqHF8HB//ig3ZY1PvOzx5C5vBQcTHNICtSz6RM9E6dSzV4LMMvlz8g
-         M2UFzY0VG7HcZKMcO32X62whefhpRRrEedYqKzc7pEXfT70r04YQU1nNQICelj+7obVd
-         8gzw==
-X-Gm-Message-State: AOAM532eWPvIPv52sSyuhWIDsvrasrreBrqlyOLRInDnOr+odr83zPSa
-        60gVrbF1kyNBlgPS3oHOrQnchc6K5Jg=
-X-Google-Smtp-Source: ABdhPJwlB3wdEB+iw8FeHqykqYSYcAPQ7TELIxhBm9FKron7pIEHkpVCJsFtj1zdPaHRLKc5n9zc2w==
-X-Received: by 2002:a05:600c:2c07:: with SMTP id q7mr5007786wmg.131.1589990193205;
-        Wed, 20 May 2020 08:56:33 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id k13sm3323046wmj.40.2020.05.20.08.56.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2020 08:56:32 -0700 (PDT)
-Date:   Wed, 20 May 2020 17:56:30 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
+        id S1726858AbgETP7r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 11:59:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43760 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726560AbgETP7r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 May 2020 11:59:47 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A856220671;
+        Wed, 20 May 2020 15:59:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1589990385;
+        bh=KQlZWM4EgGUJxks+dgScQlJpcc0Bs+aRHvmSSBZvdrY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=1vfFff/pXGLpXhQkukVAcB48aUGthYHL2F9aeu0iQI6ykEgTHfLuVnDHXivhoNOdk
+         w1K1lnDOHSsXweq7ZC+zbwh0jQN0T94hLA+0dNQly/CX9pOcEp2Y6vhtevV69jSSu4
+         r5ZNrsj3OAZqxPcoevtKXDP7kTwtuLFB3Vnp2yww=
+Date:   Wed, 20 May 2020 17:59:43 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     Jeffrey Hugo <jhugo@codeaurora.org>
 Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         Olof Johansson <olof.johansson@gmail.com>,
         Jason Gunthorpe <jgg@mellanox.com>,
@@ -61,18 +37,7 @@ Cc:     Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [RFC PATCH 0/8] Qualcomm Cloud AI 100 driver
-Message-ID: <20200520155630.GA206103@phenom.ffwll.local>
-Mail-Followup-To: Jeffrey Hugo <jhugo@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Olof Johansson <olof.johansson@gmail.com>,
-        Jason Gunthorpe <jgg@mellanox.com>, Dave Airlie <airlied@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, wufan@codeaurora.org,
-        pratanan@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+Message-ID: <20200520155943.GB3916378@kroah.com>
 References: <CAKMK7uG-oP-tcOcNz-ZzTmGondEo-17BCN1kpFBPwb7F8QcM5w@mail.gmail.com>
  <20200520051536.GA2141566@kroah.com>
  <CAKMK7uEbwTK68sxhf452fPHzAreQqRbRc7=RLGX-9SesXnJnLQ@mail.gmail.com>
@@ -81,7 +46,6 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <5701b299-7800-1584-4b3a-6147e7ad3fca@codeaurora.org>
-X-Operating-System: Linux phenom 5.6.0-1-amd64 
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -190,34 +154,10 @@ On Wed, May 20, 2020 at 08:48:13AM -0600, Jeffrey Hugo wrote:
 > Mesa that was a/the standard for these sorts of accelerators.  Its somewhat
 > the wild west, and we've struggled with it.
 
-Yeah there's currently 0 standard api for ML accelerators that aren't
-gpus. So not only don't we have mesa, we don't even have an api.
+Put a first cut at such a thing out there and see how it goes!  Nothing
+is preventing you from starting such a project, and it would be most
+welcome as you have seen.
 
-I do personally think that for anything that's somewhat programmable and
-not just fixed-function matrix multiply accelerator for neural networks, a
-slimmed down mesa vk or compute driver might be the most reasonable
-starting point for an open source ecosystem for these things. Still a ton
-of work, and if you're unlucky you might have bet on the wrong standard to
-adapt for ML needs, atm no one can predict whether it's going to be vk, or
-opencl or maybe something else entirely that will serve as the low-level
-driver fabric underneath stuff like tenserflow and other ML libraries.
+good luck,
 
-> I don't work on the compiler end of things, but based on what I've seen in
-> my project, I think the vendors are going to be highly resistant to opening
-> that up.  There is more than just the raw instruction set that goes on in
-> the device, and its viewed as "secret sauce" even though I agree with your
-> previous statements on that viewpoint.
-
-Well it's the same with gpus. Sometimes you can get companies to open up
-their runtimes. Almost never their compiler. A big problem seems to be
-licensing troubles that prevent them from opening up the compiler - it's
-often much cheaper and easier to just write a new open compiler than
-trying to get the legal review for the existing one done. I don't think
-there's a single case where a company succeeded in opening a gpu/accel
-compiler that didn't start out with at least open source as an eventual
-goal.
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+greg k-h
