@@ -2,156 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20D4D1DBA57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 18:55:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84F641DBBED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2020 19:50:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726436AbgETQz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 12:55:56 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:30983 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726566AbgETQz4 (ORCPT
+        id S1726560AbgETRus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 13:50:48 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:30056 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726747AbgETRur (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 12:55:56 -0400
+        Wed, 20 May 2020 13:50:47 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1589993755; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=fPU9FrcmOGKQPbx+xpLCEeVLHsVWTWvsU+CO+NzO6BM=; b=iS75Jwd/Gi6/fkg2xgecLo2hO7Z2pWuzaq12M0jhh5WdXXLNutyazruLoWgSOnqRSXAN8q5G
- XPdmHxb53KJAMWIBYz0SntGIL+XIObfamb5b6jNxK6q0ciE2SwUjyQtIz8zPLNS/eoqyctMf
- XFBF+goVe/cnQCtFfe9rcaR+X/w=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1589997046; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=MuJ6OyHDNvTOOsmTlh/Zlq7+mR2mQh3vcMAegcKB7GI=;
+ b=B2+Ji2FF+K2YW9rJnjq6hm3sOET90vEH8rWF8vHbrNMMcWP3j2BUjrLZPNoFzrIMpuDFitlv
+ jdW/A0cx07wf9L5LoeQ46nUr3IuVjquYbFULtI4tGnObRGlhZV8HqDDzHf7Oo5I4XcnxViAF
+ 2+Yqt77yL+Guq2UezB/f3ZoVfc8=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec56112.7f64ed020f48-smtp-out-n02;
- Wed, 20 May 2020 16:55:46 -0000 (UTC)
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5ec56de47171b6d7e444b844 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 20 May 2020 17:50:28
+ GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6C3C7C43391; Wed, 20 May 2020 16:55:46 +0000 (UTC)
+        id B6C92C433C6; Wed, 20 May 2020 17:50:27 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.8.176] (cpe-70-95-149-85.san.res.rr.com [70.95.149.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5BE96C433C6;
-        Wed, 20 May 2020 16:55:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5BE96C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=asutoshd@codeaurora.org
-Subject: Re: [PATCH v3 2/2] scsi: ufs-qcom: enter and exit hibern8 during
- clock scaling
-To:     Pedro Sousa <PedroM.Sousa@synopsys.com>,
-        "cang@codeaurora.org" <cang@codeaurora.org>,
-        "rnayak@codeaurora.org" <rnayak@codeaurora.org>,
-        "vinholikatti@gmail.com" <vinholikatti@gmail.com>,
-        "jejb@linux.vnet.ibm.com" <jejb@linux.vnet.ibm.com>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>
-Cc:     "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        "kernel-team@android.com" <kernel-team@android.com>,
-        "saravanak@google.com" <saravanak@google.com>,
-        "salyzyn@google.com" <salyzyn@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1571849351-819-1-git-send-email-asutoshd@codeaurora.org>
- <1571849351-819-2-git-send-email-asutoshd@codeaurora.org>
- <MN2PR12MB31675521623C9AFEA87B6076CC740@MN2PR12MB3167.namprd12.prod.outlook.com>
-From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
-Message-ID: <06fbd425-3815-690a-22bc-a362c5deca6d@codeaurora.org>
-Date:   Wed, 20 May 2020 09:55:43 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C1FCC433C8;
+        Wed, 20 May 2020 17:50:27 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <MN2PR12MB31675521623C9AFEA87B6076CC740@MN2PR12MB3167.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Wed, 20 May 2020 23:20:27 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Rakesh Pillai <pillair@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH v11] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+In-Reply-To: <1589946996-31264-1-git-send-email-pillair@codeaurora.org>
+References: <1589946996-31264-1-git-send-email-pillair@codeaurora.org>
+Message-ID: <2174d6b5ab066cf6fd080b5d3c27609f@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pedro,
-
-On 11/11/2019 7:54 AM, Pedro Sousa wrote:
-> Hi Asutosh,
+On 2020-05-20 09:26, Rakesh Pillai wrote:
+> Add device node for the ath10k SNOC platform driver probe
+> and add resources required for WCN3990 on sc7180 soc.
 > 
-> Please check comments.
-Sorry for missing out on this and thanks for your review.
-
-> 
-> -----Original Message-----
-> From: Asutosh Das <asutoshd@codeaurora.org>
-> Sent: Wednesday, October 23, 2019 5:49 PM
-> To: cang@codeaurora.org; rnayak@codeaurora.org; vinholikatti@gmail.com; jejb@linux.vnet.ibm.com; martin.petersen@oracle.com
-> Cc: linux-scsi@vger.kernel.org; kernel-team@android.com; saravanak@google.com; salyzyn@google.com; Asutosh Das <asutoshd@codeaurora.org>; Andy Gross <agross@kernel.org>; Alim Akhtar <alim.akhtar@samsung.com>; Avri Altman <avri.altman@wdc.com>; Pedro Sousa <pedrom.sousa@synopsys.com>; James E.J. Bottomley <jejb@linux.ibm.com>; open list:ARM/QUALCOMM SUPPORT <linux-arm-msm@vger.kernel.org>; open list <linux-kernel@vger.kernel.org>
-> Subject: [PATCH v3 2/2] scsi: ufs-qcom: enter and exit hibern8 during clock scaling
-> 
-> Qualcomm controller needs to be in hibern8 before scaling clocks.
-> This change puts the controller in hibern8 state before scaling
-> and brings it out after scaling of clocks.
-> 
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
 > ---
->   drivers/scsi/ufs/ufs-qcom.c | 12 +++++++++++-
->   1 file changed, 11 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index a5b7148..55b1de5 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1305,18 +1305,27 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
->   	int err = 0;
->   
->   	if (status == PRE_CHANGE) {
-> +		err = ufshcd_uic_hibern8_enter(hba);
-> +		if (err)
-> +			return err;
->   		if (scale_up)
->   			err = ufs_qcom_clk_scale_up_pre_change(hba);
->   		else
->   			err = ufs_qcom_clk_scale_down_pre_change(hba);
-> +		if (err)
-> +			ufshcd_uic_hibern8_exit(hba);
-> +
->   	} else {
->   		if (scale_up)
->   			err = ufs_qcom_clk_scale_up_post_change(hba);
->   		else
->   			err = ufs_qcom_clk_scale_down_post_change(hba);
->   
-> -		if (err || !dev_req_params)
-> +
-> +		if (err || !dev_req_params) {
-> +			ufshcd_uic_hibern8_exit(hba);
->   			goto out;
-> +		}
->   
->   		ufs_qcom_cfg_timers(hba,
->   				    dev_req_params->gear_rx,
-> @@ -1324,6 +1333,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
->   				    dev_req_params->hs_rate,
->   				    false);
->   		ufs_qcom_update_bus_bw_vote(host);
-> +		ufshcd_uic_hibern8_exit(hba);
-> 
-> Here you are creating the possibility of returning a success even if hibern8 exit fails.
-> If hibern8 exit fails the ufs recovery will be triggered and "err" variable will not get updated
-> in this function, how is this handled? Did you tested this possibility?
-> 
->   	}
->   
->   out:
-> 
+> Changes from v10:
+> - Corrected the position of wifi node, as per address
+> - Removed the wlan_fw_mem from reserved memory, since
+>   its already added as reserved memory in board DT file.
 
+Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
 
-Yes - I agree with your comment. The error should be propagated from 
-this function correctly to the caller. I'll push another version.
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  7 +++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 22 ++++++++++++++++++++++
+>  2 files changed, 29 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 4e9149d..38b102e 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -389,6 +389,13 @@
+>  	};
+>  };
+> 
+> +&wifi {
+> +	status = "okay";
+> +	wifi-firmware {
+> +		iommus = <&apps_smmu 0xc2 0x1>;
+> +	};
+> +};
+> +
+>  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+> 
+>  &qspi_clk {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 6b12c60..da79f8f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -2811,6 +2811,28 @@
+> 
+>  			#freq-domain-cells = <1>;
+>  		};
+> +
+> +		wifi: wifi@18800000 {
+> +			compatible = "qcom,wcn3990-wifi";
+> +			reg = <0 0x18800000 0 0x800000>;
+> +			reg-names = "membase";
+> +			iommus = <&apps_smmu 0xc0 0x1>;
+> +			interrupts =
+> +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
+> +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
+> +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
+> +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
+> +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
+> +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
+> +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
+> +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
+> +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
+> +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
+> +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
+> +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
+> +			memory-region = <&wlan_mem>;
+> +			status = "disabled";
+> +		};
+>  	};
+> 
+>  	thermal-zones {
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-Linux Foundation Collaborative Project
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
