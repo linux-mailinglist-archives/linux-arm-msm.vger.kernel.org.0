@@ -2,149 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C18B31DD74E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 21:34:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CDA21DD7EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 22:06:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729024AbgEUTd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 15:33:59 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:64704 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728635AbgEUTd7 (ORCPT
+        id S1728365AbgEUUGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 16:06:14 -0400
+Received: from smtprelay0152.hostedemail.com ([216.40.44.152]:59316 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728368AbgEUUGO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 15:33:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590089638; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=NK6Lwcs33f8tf3oVUGyUK6ySY5a1mf64P1hjJfnC22c=;
- b=STK8r5GGgomRXwFCERvPexPjEGpW1MOgKyGggcgyosfh1vnQYw1tvvmpiEnZojDh9xvJB7Ju
- vAIl8nANyioVXCuQBCkjpv3jP9jBW5mNxjEgd2lU6WfzTG5ZE89fksNei6rZWtKP49T/DY9x
- dYgWtt21g8PKKp3J3lo33H5sioM=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ec6d79c40528fe394910f96 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 May 2020 19:33:48
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F1814C433C9; Thu, 21 May 2020 19:33:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3D2CDC433C8;
-        Thu, 21 May 2020 19:33:46 +0000 (UTC)
+        Thu, 21 May 2020 16:06:14 -0400
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay03.hostedemail.com (Postfix) with ESMTP id 08A8E837F24C;
+        Thu, 21 May 2020 20:06:13 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 50,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:146:355:379:960:967:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1541:1593:1594:1711:1719:1730:1747:1777:1792:1981:2194:2199:2282:2393:2525:2560:2563:2682:2685:2691:2693:2828:2859:2933:2937:2939:2942:2945:2947:2951:2954:3022:3138:3139:3140:3141:3142:3353:3622:3865:3866:3867:3868:3870:3871:3872:3873:3934:3936:3938:3941:3944:3947:3950:3953:3956:3959:4250:4321:5007:7903:8784:8957:9025:10004:10400:10848:11026:11218:11232:11473:11658:11914:12043:12296:12297:12438:12555:12740:12760:12895:12986:13069:13311:13357:13439:14096:14097:14180:14181:14659:14721:21080:21451:21627:30012:30034:30054:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:9,LUA_SUMMARY:none
+X-HE-Tag: steel94_4f05fa326d21
+X-Filterd-Recvd-Size: 2688
+Received: from XPS-9350.home (unknown [47.151.136.130])
+        (Authenticated sender: joe@perches.com)
+        by omf07.hostedemail.com (Postfix) with ESMTPA;
+        Thu, 21 May 2020 20:06:11 +0000 (UTC)
+Message-ID: <5bb4b918aec3c77038122588ee642ae4aa2a09b0.camel@perches.com>
+Subject: [RFC] Make dynamic debug infrastructure more flexible
+From:   Joe Perches <joe@perches.com>
+To:     Jason Baron <jbaron@akamai.com>
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Thu, 21 May 2020 13:06:10 -0700
+In-Reply-To: <c4cad4f243988d214208a4903aa311a64f9b4531.camel@perches.com>
+References: <20200521132816.31111-1-stanimir.varbanov@linaro.org>
+         <20200521132816.31111-3-stanimir.varbanov@linaro.org>
+         <c4cad4f243988d214208a4903aa311a64f9b4531.camel@perches.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.36.1-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 21 May 2020 12:33:46 -0700
-From:   bbhatt@codeaurora.org
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH v3 0/7] Introduce features and debugfs/sysfs entries for
- MHI
-In-Reply-To: <20200521132318.GA3797@Mani-XPS-13-9360>
-References: <1589832241-13867-1-git-send-email-bbhatt@codeaurora.org>
- <20200521132318.GA3797@Mani-XPS-13-9360>
-Message-ID: <dd9e53f10b2bcf5e022c4eb5d7dca824@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-21 06:23, Manivannan Sadhasivam wrote:
-> Hi,
+On Thu, 2020-05-21 at 09:08 -0700, Joe Perches wrote:
+> On Thu, 2020-05-21 at 16:28 +0300, Stanimir Varbanov wrote:
+> > Here we introduce few debug macros with levels (low, medium and
+> > high) and debug macro for firmware. Enabling the particular level
+> > will be done by dynamic debug.
 > 
-> On Mon, May 18, 2020 at 01:03:54PM -0700, Bhaumik Bhatt wrote:
->> Introduce independent bus and device voting mechanism for clients and 
->> save
->> hardware information from BHI.
->> Allow reading and modifying some MHI variables for debug, test, and
->> informational purposes using debugfs.
->> Read values for device specific hardware information to be used by 
->> OEMs in
->> factory testing such as serial number and PK hash using sysfs.
->> 
+> I'd rather make the logging level facility generic in
+> dynamic debug than prefix all formats with what could
+> be non-specific content.
 > 
-> I think this series is not yet ready. So will not merge any patches in 
-> this
-> series for 5.8.
+> From a long time ago:
 > 
-> Or let me know if there are any independent patches which should get 
-> merged.
-> I'm planning to send the final 5.8 series to Greg by Friday.
-> 
-> Thanks,
-> Mani
-> 
->> This set of patches was tested on arm64 and x86.
->> 
->> v3:
->> -Add patch to check for pending packets in suspend as a dependency for 
->> the
->> independent voting mechanism introduction
->> -Include register dump entry for debugfs to dump MHI, BHI, and BHIe 
->> registers
->> -Update commit message for the debugfs patch
->> -Updated Documentation/ABI with the required info for sysfs
->> -Updated debugfs patch to include a new KConfig entry and dependencies
->> -Updated reviewed-by for some patches
->> 
->> v2:
->> -Added a new debugfs.c file for specific debugfs entries and code
->> -Updated commit text and addressed some comments for voting change
->> -Made sure sysfs is only used for serial number and OEM PK hash usage
->> 
->> Bhaumik Bhatt (7):
->>   bus: mhi: core: Abort suspends due to outgoing pending packets
->>   bus: mhi: core: Introduce independent voting mechanism
->>   bus: mhi: core: Use generic name field for an MHI device
->>   bus: mhi: core: Introduce helper function to check device state
->>   bus: mhi: core: Introduce debugfs entries and counters for MHI
->>   bus: mhi: core: Read and save device hardware information from BHI
->>   bus: mhi: core: Introduce sysfs entries for MHI
->> 
->>  Documentation/ABI/stable/sysfs-bus-mhi |  25 ++
->>  MAINTAINERS                            |   1 +
->>  drivers/bus/mhi/Kconfig                |   8 +
->>  drivers/bus/mhi/core/Makefile          |   5 +-
->>  drivers/bus/mhi/core/boot.c            |  17 +-
->>  drivers/bus/mhi/core/debugfs.c         | 501 
->> +++++++++++++++++++++++++++++++++
->>  drivers/bus/mhi/core/init.c            |  80 +++++-
->>  drivers/bus/mhi/core/internal.h        |  29 ++
->>  drivers/bus/mhi/core/main.c            |   6 +-
->>  drivers/bus/mhi/core/pm.c              |  79 ++++--
->>  include/linux/mhi.h                    |  39 ++-
->>  11 files changed, 745 insertions(+), 45 deletions(-)
->>  create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
->>  create mode 100644 drivers/bus/mhi/core/debugfs.c
->> 
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
-Hi Mani,
+> https://groups.google.com/forum/#!msg/linux.kernel/VlWbno-ZAFw/k_fFadhNHXcJ
 
-These are patches already reviewed, small and important and good to go:
+Hey Jason.
 
-bus: mhi: core: Abort suspends due to outgoing pending packets
-bus: mhi: core: Use generic name field for an MHI device
-bus: mhi: core: Introduce helper function to check device state
-bus: mhi: core: Read and save device hardware information from BHI
+I believe there are 6 bits left in the unsigned int
+use for the line number and flags in struct _ddebug
 
-Please let us know if you have any concerns.
+Assuming the use of a mechanism like
 
-Thanks,
-Bhaumik
+	pr_debug_level(level, fmt, ...)
+
+would you be OK with something like this to enable a
+level or bitmask test of dynamic debug logging output?
+
+where the output is controlled by something like
+
+echo 'file <filename> level <n> +p' > <debugfs>/dynamic_debug/control
+
+to enable dynamic debug output only at level <n> or higher
+or maybe match a bitmap of <n>
+
+(modulo all the rest of the code necessary to use it?)
+---
+ include/linux/dynamic_debug.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/linux/dynamic_debug.h b/include/linux/dynamic_debug.h
+index abcd5fde30eb..616dbb2b5921 100644
+--- a/include/linux/dynamic_debug.h
++++ b/include/linux/dynamic_debug.h
+@@ -38,6 +38,8 @@ struct _ddebug {
+ #define _DPRINTK_FLAGS_DEFAULT 0
+ #endif
+ 	unsigned int flags:8;
++	unsigned int level:5;
++	unsigned int level_is_bitmask:1;
+ #ifdef CONFIG_JUMP_LABEL
+ 	union {
+ 		struct static_key_true dd_key_true;
+
+
