@@ -2,98 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDF111DCC65
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 13:49:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 985E21DCC77
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 13:56:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729134AbgEULtk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 07:49:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58188 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729002AbgEULtj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 07:49:39 -0400
-Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7350DC061A0E;
-        Thu, 21 May 2020 04:49:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
-         s=the; h=Content-Type:MIME-Version:Message-ID:Subject:Cc:To:From:Date:Sender
-        :Reply-To:Content-Transfer-Encoding:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=pZRZ5ai+2OEtzq7iw7AMDtLjRGWBjulfH6RpHnKhK00=; b=r3GMoD4mo5KpZ3a33cPalZhIJ6
-        NqskAuHX1uJmSveg1HMePMVCrybMUeAV+DoH/9HWxOhqbAOBilM3CUIAnePVHdyqaBJ1O9aJGs/Va
-        I+5dUzHGR0BzAu4AKhkQa5780w/72ufkhS9MjcioIj1oijRp8GRO2GZKxk4erk8uNzZJkHyQa3qTA
-        m6e7pG9hQ8gS6L8bl1qz3slRcRdLJDZbjIgpNcOCRYI/rWrs1016CCORlIcHnvvQGIsQTVZPZ0R2z
-        tuNRZxYTWiaL5964qrZNzbCfTCWWN6aoP2X09/GBo6fQcQG6lP6WXhvwSHUNKuNgKKDQ9iDc/FPKY
-        HOW6GVSA==;
-Received: from noodles by the.earth.li with local (Exim 4.92)
-        (envelope-from <noodles@earth.li>)
-        id 1jbjhe-0007rJ-UX; Thu, 21 May 2020 12:49:34 +0100
-Date:   Thu, 21 May 2020 12:49:34 +0100
-From:   Jonathan McDowell <noodles@earth.li>
-To:     Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sergey Sergeev <adron@yapic.net>,
-        Marcel Ziswiler <marcel@ziswiler.com>
-Subject: [PATCH] net: ethernet: stmmac: Enable interface clocks on probe for
- IPQ806x
-Message-ID: <20200521114934.GY311@earth.li>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1729205AbgEUL42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 07:56:28 -0400
+Received: from mail.zju.edu.cn ([61.164.42.155]:11258 "EHLO zju.edu.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729002AbgEUL42 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 May 2020 07:56:28 -0400
+Received: from localhost.localdomain (unknown [222.205.77.158])
+        by mail-app4 (Coremail) with SMTP id cS_KCgA3jwlYbMZeX4LtAQ--.44757S4;
+        Thu, 21 May 2020 19:56:13 +0800 (CST)
+From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
+To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] media: camss: vfe: Fix runtime PM imbalance on error
+Date:   Thu, 21 May 2020 19:56:07 +0800
+Message-Id: <20200521115607.32733-1-dinghao.liu@zju.edu.cn>
+X-Mailer: git-send-email 2.17.1
+X-CM-TRANSID: cS_KCgA3jwlYbMZeX4LtAQ--.44757S4
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZrWkur1fury5tFWrJFWUJwb_yoW8Xw4rpr
+        40q3s3Cr1xXrWjqw1Utr1Duas5G393tasrKrWYk3WfAws5CF97GF48KFyFqFWjkrWIy3W7
+        Ja17Xa43ZF1Y9FJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDU0xBIdaVrnRJUUUvS1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+        w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+        IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
+        z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcV
+        Aq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r10
+        6r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64
+        vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8KwCF04k20xvY0x0EwIxG
+        rwCF04k20xvE74AGY7Cv6cx26r4fKr1UJr1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxV
+        Aqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q
+        6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6x
+        kF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWrJr0_WFyUJwCI42IY6I8E87Iv
+        67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43
+        ZEXa7VUbjYLPUUUUU==
+X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAg0HBlZdtOPdcwACs+
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The ipq806x_gmac_probe() function enables the PTP clock but not the
-appropriate interface clocks. This means that if the bootloader hasn't
-done so attempting to bring up the interface will fail with an error
-like:
+pm_runtime_get_sync() increments the runtime PM usage counter even
+when it returns an error code. Thus a pairing decrement is needed on
+the error handling path to keep the counter balanced.
 
-[   59.028131] ipq806x-gmac-dwmac 37600000.ethernet: Failed to reset the dma
-[   59.028196] ipq806x-gmac-dwmac 37600000.ethernet eth1: stmmac_hw_setup: DMA engine initialization failed
-[   59.034056] ipq806x-gmac-dwmac 37600000.ethernet eth1: stmmac_open: Hw setup failed
-
-This patch, a slightly cleaned up version of one posted by Sergey
-Sergeev in:
-
-https://forum.openwrt.org/t/support-for-mikrotik-rb3011uias-rm/4064/257
-
-correctly enables the clock; we have already configured the source just
-before this.
-
-Tested on a MikroTik RB3011.
-
-Signed-off-by: Jonathan McDowell <noodles@earth.li>
-
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
 ---
+ drivers/media/platform/qcom/camss/camss-vfe.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
-index 6ae13dc19510..02102c781a8c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
-@@ -319,6 +319,19 @@ static int ipq806x_gmac_probe(struct platform_device *pdev)
- 	/* Enable PTP clock */
- 	regmap_read(gmac->nss_common, NSS_COMMON_CLK_GATE, &val);
- 	val |= NSS_COMMON_CLK_GATE_PTP_EN(gmac->id);
-+	switch (gmac->phy_mode) {
-+	case PHY_INTERFACE_MODE_RGMII:
-+		val |= NSS_COMMON_CLK_GATE_RGMII_RX_EN(gmac->id) |
-+			NSS_COMMON_CLK_GATE_RGMII_TX_EN(gmac->id);
-+		break;
-+	case PHY_INTERFACE_MODE_SGMII:
-+		val |= NSS_COMMON_CLK_GATE_GMII_RX_EN(gmac->id) |
-+				NSS_COMMON_CLK_GATE_GMII_TX_EN(gmac->id);
-+		break;
-+	default:
-+		/* We don't get here; the switch above will have errored out */
-+		unreachable();
-+	}
- 	regmap_write(gmac->nss_common, NSS_COMMON_CLK_GATE, val);
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index a8c542fa647d..fc31c2c169cd 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -1265,12 +1265,12 @@ static int vfe_get(struct vfe_device *vfe)
  
- 	if (gmac->phy_mode == PHY_INTERFACE_MODE_SGMII) {
+ 		ret = vfe_set_clock_rates(vfe);
+ 		if (ret < 0)
+-			goto error_clocks;
++			goto error_pm_runtime_get;
+ 
+ 		ret = camss_enable_clocks(vfe->nclocks, vfe->clock,
+ 					  vfe->camss->dev);
+ 		if (ret < 0)
+-			goto error_clocks;
++			goto error_pm_runtime_get;
+ 
+ 		ret = vfe_reset(vfe);
+ 		if (ret < 0)
+@@ -1282,7 +1282,7 @@ static int vfe_get(struct vfe_device *vfe)
+ 	} else {
+ 		ret = vfe_check_clock_rates(vfe);
+ 		if (ret < 0)
+-			goto error_clocks;
++			goto error_pm_runtime_get;
+ 	}
+ 	vfe->power_count++;
+ 
+@@ -1293,10 +1293,8 @@ static int vfe_get(struct vfe_device *vfe)
+ error_reset:
+ 	camss_disable_clocks(vfe->nclocks, vfe->clock);
+ 
+-error_clocks:
+-	pm_runtime_put_sync(vfe->camss->dev);
+-
+ error_pm_runtime_get:
++	pm_runtime_put_sync(vfe->camss->dev);
+ 	camss_pm_domain_off(vfe->camss, vfe->id);
+ 
+ error_pm_domain:
+-- 
+2.17.1
+
