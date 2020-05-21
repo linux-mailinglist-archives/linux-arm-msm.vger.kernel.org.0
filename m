@@ -2,66 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 258D71DC6E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 08:11:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9BD11DC761
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 09:11:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726966AbgEUGLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 02:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33904 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726869AbgEUGLG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 02:11:06 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3E24C061A0E;
-        Wed, 20 May 2020 23:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
-        Subject:Sender:Reply-To:Content-ID:Content-Description;
-        bh=YCf31mHTKJUJ2rSc/ZizMDYsKG3sbmur+UHa6QauDLI=; b=QLyZNTE5PxTd11WCRmaFk54LrB
-        RzY1mNlVeKOym0TeUpg0HGD9x76M46fqKYA6ALsJH1Q3BPoalikEQhyA6jEaymUrCMp2OlYt+4nuK
-        hzd6baas9b47MCANI1eNhSMSAS/DqT9d8+3f0fdCCxaYBo86m+BycfJe6irWAO+P21i9KTIKQB5zf
-        Pr7RaKlx8OqAm2F6pjHgKspyV1jhnRHvJF+gcMfE0zoqCEJZ3S47OKucgpS5IJTqTa9jiJA3/tiZN
-        LcTfrMKEB6m1BOXNCjdmTlrLnRsacRgWL2geqA8er0d8H5K6gXijIuYjw/H07bnCZgvND62lB9pDb
-        Ks2iaLww==;
-Received: from [2601:1c0:6280:3f0::19c2]
-        by bombadil.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jbeQ2-0004hA-PA; Thu, 21 May 2020 06:11:02 +0000
-Subject: Re: [PATCH v3/RESEND 0/3] Even moar rpmh cleanups
-To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-References: <20200521060425.24285-1-swboyd@chromium.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <ad95dcb2-28da-ee31-e635-3c115608f75f@infradead.org>
-Date:   Wed, 20 May 2020 23:11:00 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1727900AbgEUHLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 03:11:55 -0400
+Received: from mga01.intel.com ([192.55.52.88]:34644 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727857AbgEUHLz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 May 2020 03:11:55 -0400
+IronPort-SDR: KTZlZJrQeNdQKshFjTCIOCvySHzQgB58sIlvwwE9Tz2K1t3lKnH9tAkeZXVOOzBhjuOlhaULXH
+ zmQwjE9jHvsw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2020 00:11:53 -0700
+IronPort-SDR: z7c0s6E/XsKg6S11eV0hFFqcwljSpul7VUxWd+FplJFBN88A21CKiBuf6ns6T90R9x0GcCoDe/
+ ZgBKGsJO3syg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,417,1583222400"; 
+   d="scan'208";a="412297601"
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 21 May 2020 00:11:50 -0700
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+        (envelope-from <lkp@intel.com>)
+        id 1jbfMp-0003QD-8G; Thu, 21 May 2020 15:11:47 +0800
+Date:   Thu, 21 May 2020 15:11:13 +0800
+From:   kbuild test robot <lkp@intel.com>
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     kbuild-all@lists.01.org, Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [RFC PATCH linux-next] drm/msm/dpu: dpu_setup_dspp_pcc() can be
+ static
+Message-ID: <20200521071112.GA92825@f61f8b3f25ca>
+References: <202005211507.nm5LmztD%lkp@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <20200521060425.24285-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202005211507.nm5LmztD%lkp@intel.com>
+X-Patchwork-Hint: ignore
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/20/20 11:04 PM, Stephen Boyd wrote:
-> (Resent with more Ccs and To lines)
-> 
-> We remove the tcs_is_free() API and then do super micro optimizations on
-> the irq handler. I haven't tested anything here so most likely there's a
-> bug (again again)!
-> 
 
+Fixes: 4259ff7ae509 ("drm/msm/dpu: add support for pcc color block in dpu driver")
+Signed-off-by: kbuild test robot <lkp@intel.com>
+---
+ dpu_hw_dspp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Subject: s/moar/more/
-
-
--- 
-~Randy
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+index b5189cece3c66..a7a24539921f3 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+@@ -22,7 +22,7 @@
+ #define PCC_BLUE_G_OFF 0x24
+ #define PCC_BLUE_B_OFF 0x30
+ 
+-void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
++static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
+ 		struct dpu_hw_pcc_cfg *cfg)
+ {
+ 
