@@ -2,70 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA54B1DD210
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 17:39:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 394E61DD24E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 17:50:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729633AbgEUPi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 11:38:56 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:54240 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728266AbgEUPi4 (ORCPT
+        id S1728266AbgEUPuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 11:50:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39358 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726814AbgEUPuO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 11:38:56 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 May 2020 21:08:52 +0530
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 21 May 2020 21:08:31 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id C2D712A34; Thu, 21 May 2020 21:08:29 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v7 2/2] dt-bindings: usb: qcom,dwc3: Add compatible for SC7180
-Date:   Thu, 21 May 2020 21:08:19 +0530
-Message-Id: <1590075499-21350-3-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1590075499-21350-1-git-send-email-sanm@codeaurora.org>
-References: <1590075499-21350-1-git-send-email-sanm@codeaurora.org>
+        Thu, 21 May 2020 11:50:14 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E814C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 08:50:14 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id j21so3348710pgb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 08:50:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sA0g0lvUpDIAD2lv16TTki6eZ5ObFWThT5hUTpKEaZM=;
+        b=SxHSttAbNR9u1pBK/vE9U0EvP6k3sUDZ9euViRsxBhKQwtZZDJ+9Slcp75EnC7zjV5
+         3QlU+9wjPe1kXPzohm590bPeD+ilHSPRnU3z+uxzqm9U8JGHzSUzIAXM/O6kuQ2PDsOe
+         dD74tuoLkEfq0G1fPZmGd+xbLTMEkayphxpyE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sA0g0lvUpDIAD2lv16TTki6eZ5ObFWThT5hUTpKEaZM=;
+        b=gtHim6ZWVtZLHXwouFWjRlRM6Bk3gZpwVX33+qPIkfXMrXKrmPlI6BuK0JfROz99e7
+         thLNaqDdtKeTYN0GjpJOuiUMgK28FTUgd7IYVLZopbz1YysiNNOSWhCvdMCxA3oxplok
+         hsMJo9jCD2XuqHyWSM+HUljfO29qw1jqJc8Y5JGEI/8W8dhkpjiZg9UqgWpjBesI25ne
+         FQMefZpFOy9DAUA66/dsGysPsY+TLjVuUzwZRE8+g1IxyRQ81N1b5g6J+WIUDtz/L1FR
+         kBxDzTgssP+BXBLD1kyGeCkxR6Wg3cDpVPJMParhwMUcnkmtSjE6fzHvjhPQY4/0Kh8o
+         Q7bQ==
+X-Gm-Message-State: AOAM531NtmuAS9GQUcU9WtNhFTdnQcdGbxkRW3xDbycnAFHV2LSw3FLa
+        HCtZJhyULo3Aq1qR66rYNqkIlg==
+X-Google-Smtp-Source: ABdhPJxkbbtArxWaeGThhTrUz55mXsi5ObGXQZbuxg7+tuo7TBShdw6VKuYjcKrRM+3WbVWaoAbFxQ==
+X-Received: by 2002:a62:3642:: with SMTP id d63mr2097232pfa.8.1590076213954;
+        Thu, 21 May 2020 08:50:13 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id s94sm4983713pjb.20.2020.05.21.08.50.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 May 2020 08:50:12 -0700 (PDT)
+Date:   Thu, 21 May 2020 08:50:09 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, dianders@chromium.org,
+        msavaliy@codeaurora.org, evgreen@chromium.org
+Subject: Re: [PATCH V6 1/7] soc: qcom: geni: Support for ICC voting
+Message-ID: <20200521155009.GA4525@google.com>
+References: <1590049764-20912-1-git-send-email-akashast@codeaurora.org>
+ <1590049764-20912-2-git-send-email-akashast@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1590049764-20912-2-git-send-email-akashast@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible for SC7180 in usb dwc3 bindings.
+Hi Akash,
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
- 1 file changed, 1 insertion(+)
+On Thu, May 21, 2020 at 01:59:18PM +0530, Akash Asthana wrote:
+> Add necessary macros and structure variables to support ICC BW
+> voting from individual SE drivers.
+> 
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> Changes in V2:
+>  - As per Bjorn's comment dropped enums for ICC paths, given the three
+>    paths individual members
+> 
+> Changes in V3:
+>  - Add geni_icc_get, geni_icc_vote_on and geni_icc_vote_off as helper API.
+>  - Add geni_icc_path structure in common header
+> 
+> Changes in V4:
+>  - As per Bjorn's comment print error message in geni_icc_get if return
+>    value is not -EPROBE_DEFER.
+>  - As per Bjorn's comment remove NULL on path before calling icc_set_bw
+>    API.
+>  - As per Bjorn's comment drop __func__ print.
+>  - As per Matthias's comment, make ICC path a array instead of individual
+>    member entry in geni_se struct.
+> 
+> Changes in V5:
+>  - As per Matthias's comment defined enums for ICC paths.
+>  - Integrate icc_enable/disable with power on/off call for driver.
+>  - As per Matthias's comment added icc_path_names array to print icc path name
+>    in failure case.
+>  - As per Georgi's suggestion assume peak_bw = avg_bw if not mentioned.
+> 
+> Changes in V6:
+>  - Addressed nitpicks from Matthias.
+> 
+> Note: I have ignored below check patch suggestion because it was throwing
+>       compilation error as 'icc_ddr' is not compile time comstant.
+> 
+> WARNING: char * array declaration might be better as static const
+>  - FILE: drivers/soc/qcom/qcom-geni-se.c:726:
+>  - const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
+> 
+>  drivers/soc/qcom/qcom-geni-se.c | 92 +++++++++++++++++++++++++++++++++++++++++
+>  include/linux/qcom-geni-se.h    | 42 +++++++++++++++++++
+>  2 files changed, 134 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index 7d622ea..0b2526d 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -92,6 +92,9 @@ struct geni_wrapper {
+>  	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
+>  };
+>  
+> +static const char * const icc_path_names[] = {"qup-core", "qup-config",
+> +						"qup-memory"};
+> +
+>  #define QUP_HW_VER_REG			0x4
+>  
+>  /* Common SE registers */
+> @@ -720,6 +723,95 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
+>  }
+>  EXPORT_SYMBOL(geni_se_rx_dma_unprep);
+>  
+> +int geni_icc_get(struct geni_se *se, const char *icc_ddr)
+> +{
+> +	int i, err;
+> +	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
+> +
+> +	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+> +		if (!icc_names[i])
+> +			continue;
+> +
+> +		se->icc_paths[i].path = devm_of_icc_get(se->dev, icc_names[i]);
+> +		if (IS_ERR(se->icc_paths[i].path))
+> +			goto err;
+> +	}
+> +
+> +	return 0;
+> +
+> +err:
+> +	err = PTR_ERR(se->icc_paths[i].path);
+> +	if (err != -EPROBE_DEFER)
+> +		dev_err_ratelimited(se->dev, "Failed to get ICC path:%s :%d\n",
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 6be384c..052d85e 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -16,6 +16,7 @@ properties:
-       - enum:
-           - qcom,msm8996-dwc3
-           - qcom,msm8998-dwc3
-+          - qcom,sc7180-dwc3
-           - qcom,sdm845-dwc3
-       - const: qcom,dwc3
- 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+That's still an odd format, especially the colon before the error code. My
+suggestion was "... path 'qup-core': 42" i.e. "... path '%s': %d".
+
+I don't want to stall the series on nits though, if there is no need for
+a respin for other reasons this can be also fixed with a patch after this
+has landed.
+
+I'm still not overly convinced about having two bandwidth values for what
+might happen in the future (or not). Typically unused functions or struct
+members that are added just in case tend to be rejected, since they can be
+added when the need actually arises. Anyway, as long as maintainers are
+happy with it I won't object.
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+
+
+
 
