@@ -2,175 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAA0E1DD193
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 17:27:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A156A1DD1B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 17:27:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730347AbgEUPY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 11:24:27 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:31952 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730341AbgEUPYZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 11:24:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590074664; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=JzqbmnEE661B7Lr5dD4p9+wQF60SRux+eXF7ny38bSs=; b=cKMteLRM44QvxYhPbjZZhz9yFlwa+0UCB+BIAlLinkmKjlEUlsFDnoU0PSc0QD1CrU9l6eii
- ebt4h0TRmjxf2njxC5g57H7ZMexpYU6AIhik8hmhGayWgTstlJFkXs5ghEUgKcJU6KZgryup
- t74KDDDTwvqr5mGXNKA7WEHwJbE=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5ec69d268075f6e58c8e33f2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 May 2020 15:24:22
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C3046C433AF; Thu, 21 May 2020 15:24:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1730073AbgEUPZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 11:25:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34074 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730047AbgEUPZ6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 May 2020 11:25:58 -0400
+Received: from localhost.localdomain (unknown [157.51.235.56])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51234C433CA;
-        Thu, 21 May 2020 15:24:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 51234C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vijay Viswanath <vviswana@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Subject: [PATCH V2 3/3] mmc: sdhci: Allow platform controlled voltage switching
-Date:   Thu, 21 May 2020 20:53:35 +0530
-Message-Id: <1590074615-10787-4-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1590074615-10787-1-git-send-email-vbadigan@codeaurora.org>
-References: <1589541535-8523-1-git-send-email-vbadigan@codeaurora.org>
- <1590074615-10787-1-git-send-email-vbadigan@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 3C8EA204EA;
+        Thu, 21 May 2020 15:25:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1590074757;
+        bh=qRG8lbmluipgAY768NW15223dzdqeUdbfiaiiG1Jky4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=eEX+c8ULA4bklVxe9vhjkTy5tOkb54z2mq6pGaSGbzm0CPyi7J5Xm5msCsQVevR3I
+         EFu4VN+F2Ueurx/NoMfscmXa/vcmpQcwtfvVReafAQJaoMtA9FPECsnHEsaZ8kal0E
+         35keX7e1F6FQ38oJahsO3HVWUvI3L4GT9F5d8FOs=
+From:   mani@kernel.org
+To:     gregkh@linuxfoundation.org
+Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 00/14] MHI patches for v5.8
+Date:   Thu, 21 May 2020 20:55:26 +0530
+Message-Id: <20200521152540.17335-1-mani@kernel.org>
+X-Mailer: git-send-email 2.26.GIT
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vijay Viswanath <vviswana@codeaurora.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-If vendor platform drivers are controlling whole logic of voltage
-switching, then sdhci driver no need control vqmmc regulator.
-So skip enabling/disable vqmmc from SDHC driver.
+Hi Greg,
 
-Signed-off-by: Vijay Viswanath <vviswana@codeaurora.org>
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
----
- drivers/mmc/host/sdhci.c | 32 +++++++++++++++++++-------------
- drivers/mmc/host/sdhci.h |  1 +
- 2 files changed, 20 insertions(+), 13 deletions(-)
+Here is the set of MHI patches for v5.8. Most of the patches are cleanup and
+refactoring ones. All of them are reviewed by myself and Jeff and also
+verified on x86 and ARM64 architectures for functionality.
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 1bb6b67..88e5312 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4098,6 +4098,7 @@ int sdhci_setup_host(struct sdhci_host *host)
- 	unsigned int override_timeout_clk;
- 	u32 max_clk;
- 	int ret;
-+	bool enable_vqmmc = false;
- 
- 	WARN_ON(host == NULL);
- 	if (host == NULL)
-@@ -4111,9 +4112,12 @@ int sdhci_setup_host(struct sdhci_host *host)
- 	 * the host can take the appropriate action if regulators are not
- 	 * available.
- 	 */
--	ret = mmc_regulator_get_supply(mmc);
--	if (ret)
--		return ret;
-+	if (!mmc->supply.vqmmc) {
-+		ret = mmc_regulator_get_supply(mmc);
-+		if (ret)
-+			return ret;
-+		enable_vqmmc  = true;
-+	}
- 
- 	DBG("Version:   0x%08x | Present:  0x%08x\n",
- 	    sdhci_readw(host, SDHCI_HOST_VERSION),
-@@ -4373,7 +4377,15 @@ int sdhci_setup_host(struct sdhci_host *host)
- 		mmc->caps |= MMC_CAP_NEEDS_POLL;
- 
- 	if (!IS_ERR(mmc->supply.vqmmc)) {
--		ret = regulator_enable(mmc->supply.vqmmc);
-+		if (enable_vqmmc) {
-+			ret = regulator_enable(mmc->supply.vqmmc);
-+			if (ret) {
-+				pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
-+					mmc_hostname(mmc), ret);
-+				mmc->supply.vqmmc = ERR_PTR(-EINVAL);
-+			}
-+			host->sdhci_core_to_disable_vqmmc = !ret;
-+		}
- 
- 		/* If vqmmc provides no 1.8V signalling, then there's no UHS */
- 		if (!regulator_is_supported_voltage(mmc->supply.vqmmc, 1700000,
-@@ -4386,12 +4398,6 @@ int sdhci_setup_host(struct sdhci_host *host)
- 		if (!regulator_is_supported_voltage(mmc->supply.vqmmc, 2700000,
- 						    3600000))
- 			host->flags &= ~SDHCI_SIGNALING_330;
--
--		if (ret) {
--			pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
--				mmc_hostname(mmc), ret);
--			mmc->supply.vqmmc = ERR_PTR(-EINVAL);
--		}
- 	}
- 
- 	if (host->quirks2 & SDHCI_QUIRK2_NO_1_8_V) {
-@@ -4625,7 +4631,7 @@ int sdhci_setup_host(struct sdhci_host *host)
- 	return 0;
- 
- unreg:
--	if (!IS_ERR(mmc->supply.vqmmc))
-+	if (host->sdhci_core_to_disable_vqmmc)
- 		regulator_disable(mmc->supply.vqmmc);
- undma:
- 	if (host->align_buffer)
-@@ -4643,7 +4649,7 @@ void sdhci_cleanup_host(struct sdhci_host *host)
- {
- 	struct mmc_host *mmc = host->mmc;
- 
--	if (!IS_ERR(mmc->supply.vqmmc))
-+	if (host->sdhci_core_to_disable_vqmmc)
- 		regulator_disable(mmc->supply.vqmmc);
- 
- 	if (host->align_buffer)
-@@ -4780,7 +4786,7 @@ void sdhci_remove_host(struct sdhci_host *host, int dead)
- 
- 	destroy_workqueue(host->complete_wq);
- 
--	if (!IS_ERR(mmc->supply.vqmmc))
-+	if (host->sdhci_core_to_disable_vqmmc)
- 		regulator_disable(mmc->supply.vqmmc);
- 
- 	if (host->align_buffer)
-diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index 8d2a096..c7dbc68 100644
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -570,6 +570,7 @@ struct sdhci_host {
- 	u32 caps1;		/* CAPABILITY_1 */
- 	bool read_caps;		/* Capability flags have been read */
- 
-+	bool sdhci_core_to_disable_vqmmc;  /* sdhci core can disable vqmmc */
- 	unsigned int            ocr_avail_sdio;	/* OCR bit masks */
- 	unsigned int            ocr_avail_sd;
- 	unsigned int            ocr_avail_mmc;
+Here is the short summary:
+-------------------------------------------------------------
+
+- The firmware download was handled by a worker thread which gets scheduled
+when the device powers up. But this thread waits until the device gets into
+PBL state (notified using PM state worker). Sometimes, there might be delay for
+the device to enter PBL state and due to that the firmware worker thread will
+timeout. So in order to handle this situation effectively, the firmware load
+is now directly called by PM state worker instead of scheduling the thread.
+
+- Return proper error codes incase of error while loading the AMSS firmware
+through BHIE protocol
+
+- The MHI register space of the device accepts only non-zero values for the
+sequence identifier. But there is a possibility that the host might write zero
+(due to the use of prandom_u32() API). Hence, a macro is introduced which
+provides non-zero sequence identifiers and used them in all places.
+
+- Moved all common TRE generation code to mhi_gen_tre() function
+
+- The MHI host reads channel ID from the event ring element of the client
+device. This ID can be of any value between 0 to 255 but the host may not
+support all those IDs. So reject the event ring elements whose channel IDs
+are not within the limits of the controller.
+
+- Limit the transfer length read from the client device. This value should
+be within the size of the MHI host buffer but there are chances this can
+be larger.
+
+- Remove the system worker thread for processing the SYS_ERR condition and
+instead call the function directly from EE worker. This is done to avoid
+any possible race while MHI shutting down.
+
+- Handle MHI power off in the state worker thread as like MISSION_MODE. This
+helps in preventing a possible race condition where a power off is issued by
+the controller while processing mission mode.
+
+- Skip the handling of BHI interrupt when the register access is not allowed
+due to the device in wrong PM state.
+
+- The write_lock of 'mhi_chan->lock' should only protect 'db_mode'. Hence, use
+it properly in places where it is protecting other unwanted regions.
+
+- Reset the client device if it is in SYS_ERR state during power up.
+
+-------------------------------------------------------------
+
+Please consider merging!
+
+Thanks,
+Mani
+
+Bhaumik Bhatt (4):
+  bus: mhi: core: Handle firmware load using state worker
+  bus: mhi: core: Return appropriate error codes for AMSS load failure
+  bus: mhi: core: Improve debug logs for loading firmware
+  bus: mhi: core: Ensure non-zero session or sequence ID values are used
+
+Hemant Kumar (9):
+  bus: mhi: core: Refactor mhi queue APIs
+  bus: mhi: core: Cache intmod from mhi event to mhi channel
+  bus: mhi: core: Add range check for channel id received in event ring
+  bus: mhi: core: Read transfer length from an event properly
+  bus: mhi: core: Remove the system error worker thread
+  bus: mhi: core: Handle disable transitions in state worker
+  bus: mhi: core: Skip handling BHI irq if MHI reg access is not allowed
+  bus: mhi: core: Do not process SYS_ERROR if RDDM is supported
+  bus: mhi: core: Handle write lock properly in mhi_pm_m0_transition
+
+Jeffrey Hugo (1):
+  bus: mhi: core: Handle syserr during power_up
+
+ drivers/bus/mhi/core/boot.c     |  75 ++++++------
+ drivers/bus/mhi/core/init.c     |   8 +-
+ drivers/bus/mhi/core/internal.h |   9 +-
+ drivers/bus/mhi/core/main.c     | 194 ++++++++++++++++++--------------
+ drivers/bus/mhi/core/pm.c       |  86 +++++++++-----
+ include/linux/mhi.h             |   4 -
+ 6 files changed, 217 insertions(+), 159 deletions(-)
+
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+2.26.GIT
 
