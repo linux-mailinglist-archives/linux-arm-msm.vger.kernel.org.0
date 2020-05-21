@@ -2,213 +2,508 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 835971DD29A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 18:00:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 899851DD2C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 18:08:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728472AbgEUQAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 12:00:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728117AbgEUQAP (ORCPT
+        id S1728774AbgEUQIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 12:08:07 -0400
+Received: from smtprelay0161.hostedemail.com ([216.40.44.161]:47196 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726282AbgEUQIH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 12:00:15 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21BF0C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 09:00:14 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id x15so3533973pfa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 09:00:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=jHirFrfUhrscDiyY19yFy1eojdIlJFYNDT0L5VP6NdE=;
-        b=iyB4ngXROy5qTSwcL5Cvl5LAnn2U16sn3BZvQyGAClC2S6/xy2nQLtKiG2/8kwRklF
-         WNVdSOimsudJuNLU7K5eiIGS5eRF8urxcHf9Ijf9Y2FlUwywDIWA9biynBY3D08eqBC4
-         kFPQ845JNwI3HI41jDcvAJEOoi1G3+mRda/sQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=jHirFrfUhrscDiyY19yFy1eojdIlJFYNDT0L5VP6NdE=;
-        b=QNtOj6kwajyO7BW88JwmGHuh2A3qCjVO5ueD7m+sSycQoCAl9gSwaSYhg/sivHZBxR
-         A+XHUOTMp4KAxnAj4zuLgs+ztD7y8z3EVVNz8kaXiYCgdVe5k+/5FJQGwVIdbJpxgmk4
-         /MReShA1tN7iOcOe55vQkJSFbPjht/9oSTt4k6B4dmeeI6MaU42Vbr5fM95dP/CkVoiJ
-         ODrkVFKXKSBUsf+o7okTN47bKDABnkzrpGKhRLg8jOmjZL/KnRs1/W78xBJ0NKPPb2wW
-         O1eDMNAIQ/3HdIE0OvtP7PGANXlNru6OK/zT9UJC4lxitkv641G1F2pQGu6RWakPWKR9
-         lDyg==
-X-Gm-Message-State: AOAM530K+PJPgE17jScK+7ZXHoDR3X5hUB+9EYTeVjjqJK8R/tGujHjp
-        8hS9t1DVMVcrahQn4qg/sCyPrQ==
-X-Google-Smtp-Source: ABdhPJyeSnrDAQNZVdUzm0V1yaYpL16GQlLMa/0trXnLiqwcmnp6adE8lFYQRNmL1AUSQvEq0E9O+Q==
-X-Received: by 2002:a62:b402:: with SMTP id h2mr10334883pfn.221.1590076813529;
-        Thu, 21 May 2020 09:00:13 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id w12sm3948439pjn.21.2020.05.21.09.00.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2020 09:00:12 -0700 (PDT)
-Date:   Thu, 21 May 2020 09:00:10 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        msavaliy@codeaurora.org, evgreen@chromium.org
-Subject: Re: [PATCH V6 2/7] soc: qcom-geni-se: Add interconnect support to
- fix earlycon crash
-Message-ID: <20200521160010.GB4525@google.com>
-References: <1590049764-20912-1-git-send-email-akashast@codeaurora.org>
- <1590049764-20912-3-git-send-email-akashast@codeaurora.org>
+        Thu, 21 May 2020 12:08:07 -0400
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay04.hostedemail.com (Postfix) with ESMTP id ABABE180A8450;
+        Thu, 21 May 2020 16:08:04 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 50,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:4:41:355:379:599:800:960:966:967:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1593:1594:1605:1719:1730:1747:1777:1792:1981:2194:2196:2199:2200:2393:2525:2553:2560:2563:2682:2685:2693:2828:2859:2933:2937:2939:2942:2945:2947:2951:2954:3022:3138:3139:3140:3141:3142:3622:3865:3867:3868:3870:3873:3934:3936:3938:3941:3944:3947:3950:3953:3956:3959:4250:4321:4385:4605:5007:6119:7903:8957:9025:9036:10004:10848:11026:11218:11232:11473:11657:11658:11914:12043:12048:12294:12296:12297:12438:12555:12679:12740:12760:12895:12986:13439:13845:13972:14659:21080:21433:21451:21611:21627:21773:21987:21990:30045:30054:30080:30090:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:14,LUA_SUMMARY:none
+X-HE-Tag: van66_2d0a8fb26d1f
+X-Filterd-Recvd-Size: 17421
+Received: from XPS-9350.home (unknown [47.151.136.130])
+        (Authenticated sender: joe@perches.com)
+        by omf19.hostedemail.com (Postfix) with ESMTPA;
+        Thu, 21 May 2020 16:08:03 +0000 (UTC)
+Message-ID: <c4cad4f243988d214208a4903aa311a64f9b4531.camel@perches.com>
+Subject: Re: [PATCH v2 2/3] venus: Make debug infrastructure more flexible
+From:   Joe Perches <joe@perches.com>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jason Baron <jbaron@akamai.com>
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>
+Date:   Thu, 21 May 2020 09:08:01 -0700
+In-Reply-To: <20200521132816.31111-3-stanimir.varbanov@linaro.org>
+References: <20200521132816.31111-1-stanimir.varbanov@linaro.org>
+         <20200521132816.31111-3-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.36.1-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1590049764-20912-3-git-send-email-akashast@codeaurora.org>
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
+On Thu, 2020-05-21 at 16:28 +0300, Stanimir Varbanov wrote:
+> Here we introduce few debug macros with levels (low, medium and
+> high) and debug macro for firmware. Enabling the particular level
+> will be done by dynamic debug.
 
-On Thu, May 21, 2020 at 01:59:19PM +0530, Akash Asthana wrote:
-> QUP core clock is shared among all the SE drivers present on particular
-> QUP wrapper, the system will reset(unclocked access) if earlycon used after
-> QUP core clock is put to 0 from other SE drivers before real console comes
-> up.
+I'd rather make the logging level facility generic in
+dynamic debug than prefix all formats with what could
+be non-specific content.
+
+From a long time ago:
+
+https://groups.google.com/forum/#!msg/linux.kernel/VlWbno-ZAFw/k_fFadhNHXcJ
+
+> For example to enable debug messages with low level:
+> echo 'format "VENUSL" +p' > debugfs/dynamic_debug/control
 > 
-> As earlycon can't vote for it's QUP core need, to fix this add ICC
-> support to common/QUP wrapper driver and put vote for QUP core from
-> probe on behalf of earlycon and remove vote during earlycon exit call.
+> If you want to enable all levels:
+> echo 'format "VENUS" +p' > debugfs/dynamic_debug/control
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> Reported-by: Matthias Kaehlcke <mka@chromium.org>
+> All the features which dynamic debugging provide are preserved.
+> 
+> And finaly all dev_dbg are translated to VDBGX with appropriate
+> debug levels.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
-> Change in V3:
->  - Add geni_remove_earlycon_icc_vote API that will be used by earlycon
->    exit function to remove ICC vote for earlyconsole.
->  - Remove suspend/resume hook for geni-se driver as we are no longer
->    removing earlyconsole ICC vote from system suspend, we are removing
->    from earlycon exit.
+>  drivers/media/platform/qcom/venus/core.h      |  5 ++
+>  drivers/media/platform/qcom/venus/helpers.c   |  2 +-
+>  drivers/media/platform/qcom/venus/hfi_msgs.c  | 30 ++++-----
+>  drivers/media/platform/qcom/venus/hfi_venus.c | 20 ++++--
+>  .../media/platform/qcom/venus/pm_helpers.c    |  3 +-
+>  drivers/media/platform/qcom/venus/vdec.c      | 63 +++++++++++++++++--
+>  drivers/media/platform/qcom/venus/venc.c      |  4 ++
+>  7 files changed, 96 insertions(+), 31 deletions(-)
 > 
-> Change in V4:
->  - As per Matthias comment make 'earlycon_wrapper' as static structure.
-> 
-> Changes in V5:
->  - Vote for core path only after checking whether "qcom_geni" earlycon is
->    actually present or not by traversing over structure "console_drivers".
-> 
-> Changes in V6:
->  - As per Matthias's comment removed NULL check for console_drivers global
->    struct, added NULL check for earlycon_wrapper in _remove_earlycon_icc_vote
->    API
->  - Addressed nitpicks from Andy.
-> 
->  drivers/soc/qcom/qcom-geni-se.c       | 68 +++++++++++++++++++++++++++++++++++
->  drivers/tty/serial/qcom_geni_serial.c |  7 ++++
->  include/linux/qcom-geni-se.h          |  2 ++
->  3 files changed, 77 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 0b2526d..ac16bb1 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -3,6 +3,7 @@
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index b48782f9aa95..82438f19afba 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -15,6 +15,11 @@
+>  #include "dbgfs.h"
+>  #include "hfi.h"
 >  
->  #include <linux/acpi.h>
->  #include <linux/clk.h>
-> +#include <linux/console.h>
->  #include <linux/slab.h>
->  #include <linux/dma-mapping.h>
->  #include <linux/io.h>
-> @@ -90,11 +91,14 @@ struct geni_wrapper {
->  	struct device *dev;
->  	void __iomem *base;
->  	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
-> +	struct geni_icc_path to_core;
->  };
->  
->  static const char * const icc_path_names[] = {"qup-core", "qup-config",
->  						"qup-memory"};
->  
-> +static struct geni_wrapper *earlycon_wrapper;
+> +#define VDBGL(fmt, args...)	pr_debug("VENUSL: " fmt, ##args)
+> +#define VDBGM(fmt, args...)	pr_debug("VENUSM: " fmt, ##args)
+> +#define VDBGH(fmt, args...)	pr_debug("VENUSH: " fmt, ##args)
+> +#define VDBGFW(fmt, args...)	pr_debug("VENUSFW: " fmt, ##args)
 > +
->  #define QUP_HW_VER_REG			0x4
->  
->  /* Common SE registers */
-> @@ -812,11 +816,38 @@ int geni_icc_disable(struct geni_se *se)
->  }
->  EXPORT_SYMBOL(geni_icc_disable);
->  
-> +void geni_remove_earlycon_icc_vote(void)
-> +{
-> +	struct geni_wrapper *wrapper;
-> +	struct device_node *parent;
-> +	struct device_node *child;
-> +
-> +	if (!earlycon_wrapper)
-> +		return;
-> +
-> +	wrapper = earlycon_wrapper;
-> +	parent = of_get_next_parent(wrapper->dev->of_node);
-> +	for_each_child_of_node(parent, child) {
-> +		if (!of_device_is_compatible(child, "qcom,geni-se-qup"))
-> +			continue;
-> +		wrapper = platform_get_drvdata(of_find_device_by_node(child));
-> +		icc_put(wrapper->to_core.path);
-> +		wrapper->to_core.path = NULL;
-> +
-> +	}
-> +	of_node_put(parent);
-> +
-> +	earlycon_wrapper = NULL;
-> +}
-> +EXPORT_SYMBOL(geni_remove_earlycon_icc_vote);
-> +
->  static int geni_se_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
->  	struct resource *res;
->  	struct geni_wrapper *wrapper;
-> +	struct console __maybe_unused *bcon;
-> +	bool __maybe_unused has_earlycon = false;
->  	int ret;
->  
->  	wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
-> @@ -839,6 +870,43 @@ static int geni_se_probe(struct platform_device *pdev)
->  		}
+>  #define VIDC_CLKS_NUM_MAX		4
+>  #define VIDC_VCODEC_CLKS_NUM_MAX	2
+>  #define VIDC_PMDOMAINS_NUM_MAX		3
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index 0143af7822b2..115a9a2af1d6 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -396,7 +396,7 @@ put_ts_metadata(struct venus_inst *inst, struct vb2_v4l2_buffer *vbuf)
 >  	}
 >  
-> +#ifdef CONFIG_SERIAL_EARLYCON
-> +	for_each_console(bcon) {
-> +		if (!strcmp(bcon->name, "qcom_geni")) {
-> +			has_earlycon = true;
-> +			break;
-> +		}
-> +	}
-> +	if (!has_earlycon)
-> +		goto exit;
+>  	if (slot == -1) {
+> -		dev_dbg(inst->core->dev, "%s: no free slot\n", __func__);
+> +		VDBGH("no free slot for timestamp\n");
+>  		return;
+>  	}
+>  
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> index 279a9d6fe737..36986d402c96 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> @@ -138,10 +138,9 @@ static void event_sys_error(struct venus_core *core, u32 event,
+>  			    struct hfi_msg_event_notify_pkt *pkt)
+>  {
+>  	if (pkt)
+> -		dev_dbg(core->dev,
+> -			"sys error (session id:%x, data1:%x, data2:%x)\n",
+> -			pkt->shdr.session_id, pkt->event_data1,
+> -			pkt->event_data2);
+> +		VDBGH("sys error (session id: %x, data1: %x, data2: %x)\n",
+> +		      pkt->shdr.session_id, pkt->event_data1,
+> +		      pkt->event_data2);
+>  
+>  	core->core_ops->event_notify(core, event);
+>  }
+> @@ -152,8 +151,8 @@ event_session_error(struct venus_core *core, struct venus_inst *inst,
+>  {
+>  	struct device *dev = core->dev;
+>  
+> -	dev_dbg(dev, "session error: event id:%x, session id:%x\n",
+> -		pkt->event_data1, pkt->shdr.session_id);
+> +	VDBGH("session error: event id: %x, session id: %x\n",
+> +	      pkt->event_data1, pkt->shdr.session_id);
+>  
+>  	if (!inst)
+>  		return;
+> @@ -236,8 +235,7 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
+>  }
+>  
+>  static void
+> -sys_get_prop_image_version(struct device *dev,
+> -			   struct hfi_msg_sys_property_info_pkt *pkt)
+> +sys_get_prop_image_version(struct hfi_msg_sys_property_info_pkt *pkt)
+>  {
+>  	int req_bytes;
+>  
+> @@ -247,26 +245,25 @@ sys_get_prop_image_version(struct device *dev,
+>  		/* bad packet */
+>  		return;
+>  
+> -	dev_dbg(dev, "F/W version: %s\n", (u8 *)&pkt->data[1]);
+> +	VDBGL("F/W version: %s\n", (u8 *)&pkt->data[1]);
+>  }
+>  
+>  static void hfi_sys_property_info(struct venus_core *core,
+>  				  struct venus_inst *inst, void *packet)
+>  {
+>  	struct hfi_msg_sys_property_info_pkt *pkt = packet;
+> -	struct device *dev = core->dev;
+>  
+>  	if (!pkt->num_properties) {
+> -		dev_dbg(dev, "%s: no properties\n", __func__);
+> +		VDBGM("no properties\n");
+>  		return;
+>  	}
+>  
+>  	switch (pkt->data[0]) {
+>  	case HFI_PROPERTY_SYS_IMAGE_VERSION:
+> -		sys_get_prop_image_version(dev, pkt);
+> +		sys_get_prop_image_version(pkt);
+>  		break;
+>  	default:
+> -		dev_dbg(dev, "%s: unknown property data\n", __func__);
+> +		VDBGM("unknown property data\n");
+>  		break;
+>  	}
+>  }
+> @@ -297,7 +294,7 @@ static void hfi_sys_ping_done(struct venus_core *core, struct venus_inst *inst,
+>  static void hfi_sys_idle_done(struct venus_core *core, struct venus_inst *inst,
+>  			      void *packet)
+>  {
+> -	dev_dbg(core->dev, "sys idle\n");
+> +	VDBGL("sys idle\n");
+>  }
+>  
+>  static void hfi_sys_pc_prepare_done(struct venus_core *core,
+> @@ -305,7 +302,7 @@ static void hfi_sys_pc_prepare_done(struct venus_core *core,
+>  {
+>  	struct hfi_msg_sys_pc_prep_done_pkt *pkt = packet;
+>  
+> -	dev_dbg(core->dev, "pc prepare done (error %x)\n", pkt->error_type);
+> +	VDBGL("pc prepare done (error %x)\n", pkt->error_type);
+>  }
+>  
+>  static unsigned int
+> @@ -387,8 +384,7 @@ static void hfi_session_prop_info(struct venus_core *core,
+>  	case HFI_PROPERTY_CONFIG_VDEC_ENTROPY:
+>  		break;
+>  	default:
+> -		dev_dbg(dev, "%s: unknown property id:%x\n", __func__,
+> -			pkt->data[0]);
+> +		VDBGH("unknown property id: %x\n", pkt->data[0]);
+>  		return;
+>  	}
+>  
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index 3a04b08ab85a..9aef62f9b59a 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -467,7 +467,6 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
+>  
+>  static u32 venus_hwversion(struct venus_hfi_device *hdev)
+>  {
+> -	struct device *dev = hdev->core->dev;
+>  	u32 ver = venus_readl(hdev, WRAPPER_HW_VERSION);
+>  	u32 major, minor, step;
+>  
+> @@ -477,7 +476,7 @@ static u32 venus_hwversion(struct venus_hfi_device *hdev)
+>  	minor = minor >> WRAPPER_HW_VERSION_MINOR_VERSION_SHIFT;
+>  	step = ver & WRAPPER_HW_VERSION_STEP_VERSION_MASK;
+>  
+> -	dev_dbg(dev, "venus hw version %x.%x.%x\n", major, minor, step);
+> +	VDBGL("venus hw version %x.%x.%x\n", major, minor, step);
+>  
+>  	return major;
+>  }
+> @@ -897,7 +896,6 @@ static int venus_session_cmd(struct venus_inst *inst, u32 pkt_type)
+>  
+>  static void venus_flush_debug_queue(struct venus_hfi_device *hdev)
+>  {
+> -	struct device *dev = hdev->core->dev;
+>  	void *packet = hdev->dbg_buf;
+>  
+>  	while (!venus_iface_dbgq_read(hdev, packet)) {
+> @@ -906,7 +904,7 @@ static void venus_flush_debug_queue(struct venus_hfi_device *hdev)
+>  		if (pkt->hdr.pkt_type != HFI_MSG_SYS_COV) {
+>  			struct hfi_msg_sys_debug_pkt *pkt = packet;
+>  
+> -			dev_dbg(dev, "%s", pkt->msg_data);
+> +			VDBGFW("%s", pkt->msg_data);
+>  		}
+>  	}
+>  }
+> @@ -1230,6 +1228,11 @@ static int venus_session_etb(struct venus_inst *inst,
+>  		ret = -EINVAL;
+>  	}
+>  
+> +	VDBGM("etb: %s: itag: %u, flen: %u, addr: %x\n",
+> +	      session_type == VIDC_SESSION_TYPE_DEC ? "dec" : "enc",
+> +	      in_frame->clnt_data, in_frame->filled_len,
+> +	      in_frame->device_addr);
 > +
-> +	wrapper->to_core.path = devm_of_icc_get(dev, "qup-core");
-> +	if (IS_ERR(wrapper->to_core.path))
-> +		return PTR_ERR(wrapper->to_core.path);
-> +	/*
-> +	 * Put minmal BW request on core clocks on behalf of early console.
-> +	 * The vote will be removed earlycon exit function.
-> +	 *
-> +	 * Note: We are putting vote on each QUP wrapper instead only to which
-> +	 * earlycon is connected because QUP core clock of different wrapper
-> +	 * share same voltage domain. If core1 is put to 0, then core2 will
-> +	 * also run at 0, if not voted. Default ICC vote will be removed ASA
-> +	 * we touch any of the core clock.
-> +	 * core1 = core2 = max(core1, core2)
-> +	 */
-> +	ret = icc_set_bw(wrapper->to_core.path, GENI_DEFAULT_BW,
-> +				GENI_DEFAULT_BW);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "%s: ICC BW voting failed for core :%d\n",
+>  	return ret;
+>  }
+>  
+> @@ -1244,7 +1247,14 @@ static int venus_session_ftb(struct venus_inst *inst,
+>  	if (ret)
+>  		return ret;
+>  
+> -	return venus_iface_cmdq_write(hdev, &pkt);
+> +	ret = venus_iface_cmdq_write(hdev, &pkt);
+> +
+> +	VDBGM("ftb: %s: otag: %u, flen: %u, addr: %x\n",
+> +	      inst->session_type == VIDC_SESSION_TYPE_DEC ? "dec" : "enc",
+> +	      out_frame->clnt_data, out_frame->filled_len,
+> +	      out_frame->device_addr);
+> +
+> +	return ret;
+>  }
+>  
+>  static int venus_session_set_buffers(struct venus_inst *inst,
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index abf93158857b..ec7394615ef8 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -212,8 +212,7 @@ static int load_scale_bw(struct venus_core *core)
+>  	}
+>  	mutex_unlock(&core->lock);
+>  
+> -	dev_dbg(core->dev, "total: avg_bw: %u, peak_bw: %u\n",
+> -		total_avg, total_peak);
+> +	VDBGL("total: avg_bw: %u, peak_bw: %u\n", total_avg, total_peak);
+>  
+>  	return icc_set_bw(core->video_path, total_avg, total_peak);
+>  }
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 7c4c483d5438..7959e452fbf3 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -225,7 +225,7 @@ static int vdec_check_src_change(struct venus_inst *inst)
+>  
+>  	if (!(inst->codec_state == VENUS_DEC_STATE_CAPTURE_SETUP) ||
+>  	    !inst->reconfig)
+> -		dev_dbg(inst->core->dev, "%s: wrong state\n", __func__);
+> +		VDBGM("wrong codec state %u\n", inst->codec_state);
+>  
+>  done:
+>  	return 0;
+> @@ -790,6 +790,10 @@ static int vdec_queue_setup(struct vb2_queue *q,
+>  	unsigned int in_num, out_num;
+>  	int ret = 0;
+>  
+> +	VDBGM("vb2: queue_setup: %s: begin (codec_state: %u)\n",
+> +	      V4L2_TYPE_IS_OUTPUT(q->type) ? "out" : "cap",
+> +	      inst->codec_state);
+> +
+>  	if (*num_planes) {
+>  		unsigned int output_buf_size = venus_helper_get_opb_size(inst);
+>  
+> @@ -859,6 +863,10 @@ static int vdec_queue_setup(struct vb2_queue *q,
+>  		break;
+>  	}
+>  
+> +	VDBGM("vb2: queue_setup: %s: end (codec_state: %u, ret: %d)\n",
+> +	      V4L2_TYPE_IS_OUTPUT(q->type) ? "out" : "cap",
+> +	      inst->codec_state, ret);
+> +
+>  	return ret;
+>  
+>  put_power:
+> @@ -897,6 +905,8 @@ static int vdec_start_capture(struct venus_inst *inst)
+>  {
+>  	int ret;
+>  
+> +	VDBGM("on: cap: begin (codec_state: %u)\n", inst->codec_state);
+> +
+>  	if (!inst->streamon_out)
+>  		return 0;
+>  
+> @@ -955,11 +965,16 @@ static int vdec_start_capture(struct venus_inst *inst)
+>  	inst->sequence_cap = 0;
+>  	inst->reconfig = false;
+>  
+> +	VDBGM("on: cap: end (codec_state: %u)\n", inst->codec_state);
+> +
+>  	return 0;
+>  
+>  free_dpb_bufs:
+>  	venus_helper_free_dpb_bufs(inst);
+>  err:
+> +	VDBGM("on: cap: end (codec_state: %u, ret: %d)\n",
+> +	      inst->codec_state, ret);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -967,6 +982,8 @@ static int vdec_start_output(struct venus_inst *inst)
+>  {
+>  	int ret;
+>  
+> +	VDBGM("on: out: begin (codec_state: %u)\n", inst->codec_state);
+> +
+>  	if (inst->codec_state == VENUS_DEC_STATE_SEEK) {
+>  		ret = venus_helper_process_initial_out_bufs(inst);
+>  		inst->codec_state = VENUS_DEC_STATE_DECODING;
+> @@ -1015,6 +1032,10 @@ static int vdec_start_output(struct venus_inst *inst)
+>  
+>  done:
+>  	inst->streamon_out = 1;
+> +
+> +	VDBGM("on: out: end (codec_state: %u, ret: %d)\n",
+> +	      inst->codec_state, ret);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -1069,6 +1090,8 @@ static int vdec_stop_capture(struct venus_inst *inst)
+>  {
+>  	int ret = 0;
+>  
+> +	VDBGM("off: cap: begin (codec_state: %u)\n", inst->codec_state);
+> +
+>  	switch (inst->codec_state) {
+>  	case VENUS_DEC_STATE_DECODING:
+>  		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+> @@ -1090,6 +1113,9 @@ static int vdec_stop_capture(struct venus_inst *inst)
+>  
+>  	INIT_LIST_HEAD(&inst->registeredbufs);
+>  
+> +	VDBGM("off: cap: end (codec_state: %u, ret: %d)\n",
+> +	      inst->codec_state, ret);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -1097,6 +1123,8 @@ static int vdec_stop_output(struct venus_inst *inst)
+>  {
+>  	int ret = 0;
+>  
+> +	VDBGM("off: out: begin (codec_state: %u)\n", inst->codec_state);
+> +
+>  	switch (inst->codec_state) {
+>  	case VENUS_DEC_STATE_DECODING:
+>  	case VENUS_DEC_STATE_DRAIN:
+> @@ -1112,6 +1140,9 @@ static int vdec_stop_output(struct venus_inst *inst)
+>  		break;
+>  	}
+>  
+> +	VDBGM("off: out: end (codec_state: %u, ret %d)\n",
+> +	      inst->codec_state, ret);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -1146,6 +1177,8 @@ static void vdec_session_release(struct venus_inst *inst)
+>  	struct venus_core *core = inst->core;
+>  	int ret, abort = 0;
+>  
+> +	VDBGM("rel: begin (codec_state: %u)\n", inst->codec_state);
+> +
+>  	vdec_pm_get(inst);
+>  
+>  	mutex_lock(&inst->lock);
+> @@ -1175,15 +1208,23 @@ static void vdec_session_release(struct venus_inst *inst)
+>  
+>  	venus_pm_release_core(inst);
+>  	vdec_pm_put(inst, false);
+> +
+> +	VDBGM("rel: end (codec_state: %u)\n", inst->codec_state);
+>  }
+>  
+>  static int vdec_buf_init(struct vb2_buffer *vb)
+>  {
+>  	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+> +	int ret;
+>  
+>  	inst->buf_count++;
+>  
+> -	return venus_helper_vb2_buf_init(vb);
+> +	ret = venus_helper_vb2_buf_init(vb);
+> +
+> +	VDBGM("vb2: buf_init: %s: done (codec_state: %u)\n",
+> +	      V4L2_TYPE_IS_OUTPUT(vb->type) ? "out" : "cap", inst->codec_state);
+> +
+> +	return ret;
+>  }
+>  
+>  static void vdec_buf_cleanup(struct vb2_buffer *vb)
+> @@ -1193,6 +1234,9 @@ static void vdec_buf_cleanup(struct vb2_buffer *vb)
+>  	inst->buf_count--;
+>  	if (!inst->buf_count)
+>  		vdec_session_release(inst);
+> +
+> +	VDBGM("vb2: buf_cleanup: %s: done (codec_state: %u)\n",
+> +	      V4L2_TYPE_IS_OUTPUT(vb->type) ? "out" : "cap", inst->codec_state);
+>  }
+>  
+>  static void vdec_vb2_buf_queue(struct vb2_buffer *vb)
+> @@ -1281,6 +1325,10 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+>  	}
+>  
+>  	v4l2_m2m_buf_done(vbuf, state);
+> +
+> +	VDBGH("done: %s, idx: %02u, flen: %08u, flags: hfi: %08x, v4l2: %08x\n",
+> +	      V4L2_TYPE_IS_OUTPUT(type) ? "out" : "cap",
+> +	      vbuf->vb2_buf.index, bytesused, hfi_flags, vbuf->flags);
+>  }
+>  
+>  static void vdec_event_change(struct venus_inst *inst,
+> @@ -1289,7 +1337,6 @@ static void vdec_event_change(struct venus_inst *inst,
+>  	static const struct v4l2_event ev = {
+>  		.type = V4L2_EVENT_SOURCE_CHANGE,
+>  		.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION };
+> -	struct device *dev = inst->core->dev_dec;
+>  	struct v4l2_format format = {};
+>  
+>  	mutex_lock(&inst->lock);
+> @@ -1310,8 +1357,12 @@ static void vdec_event_change(struct venus_inst *inst,
+>  	if (inst->bit_depth != ev_data->bit_depth)
+>  		inst->bit_depth = ev_data->bit_depth;
+>  
+> -	dev_dbg(dev, "event %s sufficient resources (%ux%u)\n",
+> -		sufficient ? "" : "not", ev_data->width, ev_data->height);
+> +	VDBGH("event: %s sufficient resources (%ux%u)\n",
+> +	      sufficient ? "" : "not", ev_data->width, ev_data->height);
+> +
+> +	if (ev_data->buf_count)
+> +		VDBGH("event: buf_count: %u, old: %u\n",
+> +		      ev_data->buf_count, inst->num_output_bufs);
+>  
+>  	if (sufficient) {
+>  		hfi_session_continue(inst);
+> @@ -1344,7 +1395,7 @@ static void vdec_event_change(struct venus_inst *inst,
+>  
+>  		ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, false);
+>  		if (ret)
+> -			dev_dbg(dev, "flush output error %d\n", ret);
+> +			VDBGH("flush output error (%d)\n", ret);
+>  	}
+>  
+>  	inst->reconfig = true;
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index feed648550d1..c591d00ee0a7 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -1074,6 +1074,10 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
+>  	}
+>  
+>  	v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
+> +
+> +	VDBGH("done: %s, idx: %02u, flen: %08u, flags: hfi: %08x, v4l2: %08x\n",
+> +	      V4L2_TYPE_IS_OUTPUT(type) ? "out" : "cap",
+> +	      vbuf->vb2_buf.index, bytesused, hfi_flags, vbuf->flags);
+>  }
+>  
+>  static void venc_event_notify(struct venus_inst *inst, u32 event,
 
-nit: " ... core: %d\n".
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
