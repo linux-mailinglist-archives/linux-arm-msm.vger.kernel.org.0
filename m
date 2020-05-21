@@ -2,18 +2,18 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 985E21DCC77
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 13:56:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 257EC1DCC9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 14:06:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729205AbgEUL42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 07:56:28 -0400
-Received: from mail.zju.edu.cn ([61.164.42.155]:11258 "EHLO zju.edu.cn"
+        id S1727987AbgEUMGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 08:06:41 -0400
+Received: from spam.zju.edu.cn ([61.164.42.155]:12008 "EHLO zju.edu.cn"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729002AbgEUL42 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 07:56:28 -0400
+        id S1727905AbgEUMGl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 May 2020 08:06:41 -0400
 Received: from localhost.localdomain (unknown [222.205.77.158])
-        by mail-app4 (Coremail) with SMTP id cS_KCgA3jwlYbMZeX4LtAQ--.44757S4;
-        Thu, 21 May 2020 19:56:13 +0800 (CST)
+        by mail-app2 (Coremail) with SMTP id by_KCgCXlTC9bsZeH1KdAQ--.33787S4;
+        Thu, 21 May 2020 20:06:25 +0800 (CST)
 From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
 To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
 Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
@@ -21,28 +21,28 @@ Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
         Mauro Carvalho Chehab <mchehab@kernel.org>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] media: camss: vfe: Fix runtime PM imbalance on error
-Date:   Thu, 21 May 2020 19:56:07 +0800
-Message-Id: <20200521115607.32733-1-dinghao.liu@zju.edu.cn>
+Subject: [PATCH] media: camss: ispif: Fix runtime PM imbalance on error
+Date:   Thu, 21 May 2020 20:06:21 +0800
+Message-Id: <20200521120621.2658-1-dinghao.liu@zju.edu.cn>
 X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: cS_KCgA3jwlYbMZeX4LtAQ--.44757S4
-X-Coremail-Antispam: 1UD129KBjvJXoW7ZrWkur1fury5tFWrJFWUJwb_yoW8Xw4rpr
-        40q3s3Cr1xXrWjqw1Utr1Duas5G393tasrKrWYk3WfAws5CF97GF48KFyFqFWjkrWIy3W7
-        Ja17Xa43ZF1Y9FJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUUvS1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
-        w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
-        IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
-        z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcV
-        Aq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r10
-        6r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64
-        vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8KwCF04k20xvY0x0EwIxG
-        rwCF04k20xvE74AGY7Cv6cx26r4fKr1UJr1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxV
-        Aqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q
-        6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6x
-        kF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWrJr0_WFyUJwCI42IY6I8E87Iv
-        67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43
-        ZEXa7VUbjYLPUUUUU==
-X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAg0HBlZdtOPdcwACs+
+X-CM-TRANSID: by_KCgCXlTC9bsZeH1KdAQ--.33787S4
+X-Coremail-Antispam: 1UD129KBjvdXoWrKrW7ZFW3Gr18JF1xWF4UArb_yoWftFb_ur
+        s5XrWfXF4Ygr1vvr4Utw43urWIqaykZw18u3WftFWay3yjyFykGrykZr98ZrnxZw1jyF17
+        GFZ8ZFyfCr97ujkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUbIAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
+        wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
+        vE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK6I8E
+        87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c
+        8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_
+        JrylYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwI
+        xGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc2xSY4AK67AK6ryUMxAIw28IcxkI7VAKI48J
+        MxAIw28IcVCjz48v1sIEY20_GFWkJr1UJwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c
+        02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_
+        GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7
+        CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6rWUJVWrZr1UMIIF0xvEx4A2jsIE
+        14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyT
+        uYvjfUeWlkDUUUU
+X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAg0HBlZdtOPdcwAEs4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -54,49 +54,25 @@ the error handling path to keep the counter balanced.
 
 Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/media/platform/qcom/camss/camss-ispif.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index a8c542fa647d..fc31c2c169cd 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1265,12 +1265,12 @@ static int vfe_get(struct vfe_device *vfe)
+diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+index 1f33b4eb198c..5722e971b184 100644
+--- a/drivers/media/platform/qcom/camss/camss-ispif.c
++++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+@@ -344,8 +344,10 @@ static int ispif_set_power(struct v4l2_subdev *sd, int on)
+ 		}
  
- 		ret = vfe_set_clock_rates(vfe);
- 		if (ret < 0)
--			goto error_clocks;
-+			goto error_pm_runtime_get;
+ 		ret = pm_runtime_get_sync(dev);
+-		if (ret < 0)
++		if (ret < 0) {
++			pm_runtime_put_sync(dev);
+ 			goto exit;
++		}
  
- 		ret = camss_enable_clocks(vfe->nclocks, vfe->clock,
- 					  vfe->camss->dev);
- 		if (ret < 0)
--			goto error_clocks;
-+			goto error_pm_runtime_get;
- 
- 		ret = vfe_reset(vfe);
- 		if (ret < 0)
-@@ -1282,7 +1282,7 @@ static int vfe_get(struct vfe_device *vfe)
- 	} else {
- 		ret = vfe_check_clock_rates(vfe);
- 		if (ret < 0)
--			goto error_clocks;
-+			goto error_pm_runtime_get;
- 	}
- 	vfe->power_count++;
- 
-@@ -1293,10 +1293,8 @@ static int vfe_get(struct vfe_device *vfe)
- error_reset:
- 	camss_disable_clocks(vfe->nclocks, vfe->clock);
- 
--error_clocks:
--	pm_runtime_put_sync(vfe->camss->dev);
--
- error_pm_runtime_get:
-+	pm_runtime_put_sync(vfe->camss->dev);
- 	camss_pm_domain_off(vfe->camss, vfe->id);
- 
- error_pm_domain:
+ 		ret = camss_enable_clocks(ispif->nclocks, ispif->clock, dev);
+ 		if (ret < 0) {
 -- 
 2.17.1
 
