@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 208C41DD3BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 19:03:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 083201DD3BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 19:03:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730061AbgEURDO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 13:03:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50800 "EHLO
+        id S1730082AbgEURDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 13:03:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730049AbgEURDM (ORCPT
+        with ESMTP id S1730060AbgEURDR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 13:03:12 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FBC0C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 10:03:12 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id b190so3596381pfg.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 10:03:12 -0700 (PDT)
+        Thu, 21 May 2020 13:03:17 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31320C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 10:03:17 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id m7so3070269plt.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 10:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FEuwJaG5URTzBfiAVO5fSIfxwEDeBWH52Z0wn/F3cVs=;
-        b=TF2Wb0P9dB5k+fhF6P65+UQvmORyfP9rOufC9P/2WEG7sPx6WCXu9bsDaRjQ4qFnmO
-         EdamoyzbDbSzXI54S67q9pi/ucP9/+5AT55FOeA42S5aSUxm86Tp3Pzqq8UVN2GXtkcl
-         6UR4VSjLkE03uDnzUz+Gi+xlOf8qycwp7OyP4dZiODklUyxssipb1Ucwbfd09AGZlq4a
-         tjFsFnF2W+4ar6qc7kldH5u0mmQ1RiuvXEptaAKSzXhTbQcUHyCi3Np7oGKidCk2v8lr
-         YbcQKeKzxLfil4cCiG8AzS78L1D4AaC1Vgf2dmgAaR/QaNH0ISS1OwVsaZn5FdtHBae3
-         pB8A==
+        bh=1JC31ww1q7sQ26rx5mXgh+sPUgUYnNfccjrjhPmuhCg=;
+        b=OAowRAhWFjiS6YrTzw28NNLGeVvOl/ZjlR5oJAehHba785tAHq1EXuLtb5AuDBibZr
+         B4kNZ53Kh6r4SAZalglyEdqRHL5Rc3iThE/q2UO/zHXFIDsIdVIJhBVvbl9wtnlI5OlI
+         ZXXsio7/Y4hLeJu5VfRKdogekJjwcBMtZBHANDvWl+QUZtrNMmqUj1hlkP5MSALUaSC7
+         ImhMqGgRjQhTa//CQ/vXBVezoc62wBSs/f37vQHNuaFFfrA0DZQQO7mvPx027UXDu7Tk
+         D39DOT5hK++uhW6XWJx2V3GAhzN9TP1RUX1CXtNg3Sc4XY+gFeKFyvoZtt+xDDfyEyB8
+         8xkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FEuwJaG5URTzBfiAVO5fSIfxwEDeBWH52Z0wn/F3cVs=;
-        b=Sx0ihndV2IUyzvKZN854kQ4uC81oljnjaLTDkB+FgaRvK6IqIXQq1i4ERD/rLWEviv
-         tsqA63D7Aw+j7FKozLmL/Uo4C7U4RB+zpp0Rvjl6kQYHkUapkNnsVZ7S9nr16OkmW+Up
-         +mboC0IHYnpdiPRvFD02+fUb0JwqNbiXiaDhFnEGtaSy3aMErM8IFvnSex4vBON0aDau
-         a+LxT4dnd4oIUj9LyXbxVb8FA7gcbe+rhUbegGzHuzcpEDaCsR7DRsFLtU6YRZ6YF8cy
-         EsyOkbaXknPiGtQpyxo7VGOoTeHKuIuyb2PX+rbRT/jPTnPmOqzyEUdwUYMDjK7aqRjR
-         HdRg==
-X-Gm-Message-State: AOAM532+obY54NKtRLmVHmpN9AgDF62QjlA2C6LxiID1q2OZNQsThWVA
-        ho/R6xoN0mR5IRmCaPvhNrSD
-X-Google-Smtp-Source: ABdhPJw976XEqcaoNcNO2Qd4Ey91jgV7mf72EdF1jB2q52ZSWDtELN6mzl6VCYezmPm4r1xqD5qdyw==
-X-Received: by 2002:a63:cf03:: with SMTP id j3mr9623786pgg.24.1590080591971;
-        Thu, 21 May 2020 10:03:11 -0700 (PDT)
+        bh=1JC31ww1q7sQ26rx5mXgh+sPUgUYnNfccjrjhPmuhCg=;
+        b=f/QWsF5Z9srxAti2DBGJB/uqdNj+TAdksGN8QvqvTC16XI/d5w6Tl/opiX91ZxUd6v
+         ZDBDLmoQlIj12jNOznZQCYCf5LUXTG60CiotzsfMlKkycmy9lv/8TwsTcKoB8cyoM4P9
+         XlAsue7rk51d4pz/Y2DHU6yMdtUlI1yU2MuDAup0zJ9gSFIr2k1Z4m2PNjjtn+1tVl/w
+         fRSF9kChEZXzuCHtyl5jGl7SopHU+1mOnRN6kXKiKVmJMqzhFplVQhA6OnoHqeRgwgXU
+         lS51Zc9dlqokH9hmPoFMEcjq3kNokmF7QREPSwstMsnOKdZhV7VqamZ2tm3yAzvjPLC0
+         7xng==
+X-Gm-Message-State: AOAM5333/kB0FiDoxbe9ldgb0ZsBR5qjIp8PedC68FceTOsp48iut27U
+        neM7tbaCiwKmg0LvkQ14gS1b
+X-Google-Smtp-Source: ABdhPJzEw5nI3aeBZju1p5rockRFgVKs95aj+pu2mEXhUoCr0FV04xEum23zRx01eia8+R/KJ1Ypxw==
+X-Received: by 2002:a17:90b:3745:: with SMTP id ne5mr12430237pjb.68.1590080596586;
+        Thu, 21 May 2020 10:03:16 -0700 (PDT)
 Received: from localhost.localdomain ([2409:4072:69f:45f2:3d8d:3719:f568:7ee9])
-        by smtp.gmail.com with ESMTPSA id e26sm4874693pff.137.2020.05.21.10.03.07
+        by smtp.gmail.com with ESMTPSA id e26sm4874693pff.137.2020.05.21.10.03.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2020 10:03:11 -0700 (PDT)
+        Thu, 21 May 2020 10:03:15 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [RESEND PATCH 03/14] bus: mhi: core: Add range check for channel id received in event ring
-Date:   Thu, 21 May 2020 22:32:38 +0530
-Message-Id: <20200521170249.21795-4-manivannan.sadhasivam@linaro.org>
+Subject: [RESEND PATCH 04/14] bus: mhi: core: Read transfer length from an event properly
+Date:   Thu, 21 May 2020 22:32:39 +0530
+Message-Id: <20200521170249.21795-5-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200521170249.21795-1-manivannan.sadhasivam@linaro.org>
 References: <20200521170249.21795-1-manivannan.sadhasivam@linaro.org>
@@ -66,11 +66,13 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Hemant Kumar <hemantk@codeaurora.org>
 
-MHI data completion handler function reads channel id from event
-ring element. Value is under the control of MHI devices and can be
-any value between 0 and 255. In order to prevent out of bound access
-add a bound check against the max channel supported by controller
-and skip processing of that event ring element.
+When MHI Driver receives an EOT event, it reads xfer_len from the
+event in the last TRE. The value is under control of the MHI device
+and never validated by Host MHI driver. The value should never be
+larger than the real size of the buffer but a malicious device can
+set the value 0xFFFF as maximum. This causes driver to memory
+overflow (both read or write). Fix this issue by reading minimum of
+transfer length from event and the buffer length provided.
 
 Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -78,67 +80,36 @@ Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/core/main.c | 40 +++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ drivers/bus/mhi/core/main.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index beac8d33d1cb..64022865cb75 100644
+index 64022865cb75..a394691d9383 100644
 --- a/drivers/bus/mhi/core/main.c
 +++ b/drivers/bus/mhi/core/main.c
-@@ -774,9 +774,18 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 		}
- 		case MHI_PKT_TYPE_TX_EVENT:
- 			chan = MHI_TRE_GET_EV_CHID(local_rp);
--			mhi_chan = &mhi_cntrl->mhi_chan[chan];
--			parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
--			event_quota--;
-+
-+			WARN_ON(chan >= mhi_cntrl->max_chan);
-+
-+			/*
-+			 * Only process the event ring elements whose channel
-+			 * ID is within the maximum supported range.
-+			 */
-+			if (chan < mhi_cntrl->max_chan) {
-+				mhi_chan = &mhi_cntrl->mhi_chan[chan];
-+				parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
-+				event_quota--;
-+			}
- 			break;
- 		default:
- 			dev_err(dev, "Unhandled event type: %d\n", type);
-@@ -819,14 +828,23 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
+@@ -513,7 +513,10 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 				mhi_cntrl->unmap_single(mhi_cntrl, buf_info);
  
- 		chan = MHI_TRE_GET_EV_CHID(local_rp);
--		mhi_chan = &mhi_cntrl->mhi_chan[chan];
--
--		if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
--			parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
--			event_quota--;
--		} else if (type == MHI_PKT_TYPE_RSC_TX_EVENT) {
--			parse_rsc_event(mhi_cntrl, local_rp, mhi_chan);
--			event_quota--;
+ 			result.buf_addr = buf_info->cb_buf;
+-			result.bytes_xferd = xfer_len;
 +
-+		WARN_ON(chan >= mhi_cntrl->max_chan);
-+
-+		/*
-+		 * Only process the event ring elements whose channel
-+		 * ID is within the maximum supported range.
-+		 */
-+		if (chan < mhi_cntrl->max_chan) {
-+			mhi_chan = &mhi_cntrl->mhi_chan[chan];
-+
-+			if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
-+				parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
-+				event_quota--;
-+			} else if (type == MHI_PKT_TYPE_RSC_TX_EVENT) {
-+				parse_rsc_event(mhi_cntrl, local_rp, mhi_chan);
-+				event_quota--;
-+			}
- 		}
++			/* truncate to buf len if xfer_len is larger */
++			result.bytes_xferd =
++				min_t(u16, xfer_len, buf_info->len);
+ 			mhi_del_ring_element(mhi_cntrl, buf_ring);
+ 			mhi_del_ring_element(mhi_cntrl, tre_ring);
+ 			local_rp = tre_ring->rp;
+@@ -597,7 +600,9 @@ static int parse_rsc_event(struct mhi_controller *mhi_cntrl,
  
- 		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
+ 	result.transaction_status = (ev_code == MHI_EV_CC_OVERFLOW) ?
+ 		-EOVERFLOW : 0;
+-	result.bytes_xferd = xfer_len;
++
++	/* truncate to buf len if xfer_len is larger */
++	result.bytes_xferd = min_t(u16, xfer_len, buf_info->len);
+ 	result.buf_addr = buf_info->cb_buf;
+ 	result.dir = mhi_chan->dir;
+ 
 -- 
 2.17.1
 
