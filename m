@@ -2,94 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E3441DC48A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 03:21:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 758261DC573
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 05:07:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727013AbgEUBVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 May 2020 21:21:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45418 "EHLO
+        id S1727957AbgEUDHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 May 2020 23:07:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726861AbgEUBVV (ORCPT
+        with ESMTP id S1726861AbgEUDHj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 May 2020 21:21:21 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABF07C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 18:21:21 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id f4so2311495pgi.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 18:21:21 -0700 (PDT)
+        Wed, 20 May 2020 23:07:39 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13711C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 20:07:39 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id cx22so2272723pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2020 20:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rg9l5ozOZpLTZwGJd6lPleCwU4Ff0Q749YYJ3OhvIuw=;
-        b=VIK4ZnT7t+sq+aV1O/eTvjikSgDISFIaNBCXJziHC+LUQoNCV4t5SIS+jNrXt5Fgvt
-         UudQbH2K4iK3Svax6ypVeHa6TLwfFqZiHgUVNFIpmHbb6WqgjWkHLI0CUcDYh3upaDSZ
-         l74yHDPBasgCiKeZK3lnhe54IrWh+BqWOGlZg=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ccibA7LDXIbckabc89mZhjSjYh9Yh1XsB9j1urjankk=;
+        b=QJKj5hLEAVaHWmPMeYCFgAtB2gTVZ7CmhjXdaGUbfgs7I6L0MCJI2kUWQLLaQDSNmw
+         RAH2Y5zLLVU+R6V0wpcbS26hiO8TnDZ5lfONDKSZvJHL1jX4mFXHKbokR+vLmelNPUSq
+         6kgyvz796KDhYSGs9GSTVyxgbJ2IntR+Jr6lgx7YeBQ+eoRLsAuZsuNcOs6nBVy4HV6Y
+         avN9skUdNqsAa/h+ruWdM0XXmo5wA8MGqcTLS6dbDG33Ibka4LHqby7hnoKZQu2f1ezH
+         tCIvBh8Gjtr6APay2OrzsOVTLX2arxVjsYHKtniFOj8z6JOX70xe5EJQ8i5OaAXGHrgn
+         UenA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rg9l5ozOZpLTZwGJd6lPleCwU4Ff0Q749YYJ3OhvIuw=;
-        b=g2Fm6YMRbfea3JOGJGskH8FeFOcuYQ+VNTjE8dzcll4FV1M6sMnl2Rw1aR1lkntx2o
-         taHbpuBcJ6GwX0MUeyGZ2cgFQsQX/2GUCag2jVGnnTu9CwlSdskgrjL6m/KSKkIgm9CP
-         VAXoZ/oZAtAjh3Z1qmqNJzBpc6i+svDS1q+hCD2VaSuHZHACVyUzp91OGH/i17UM0pq7
-         3uzubtQiASQhBQV7j+8I3uJjptPXA0zja05Us++4kIqTv8CGOFijr5iWpjYBUhiMpQo6
-         fdCAfy0ulM4yM1p5OZhCOuC7coGWMKQys96VVb2ss3jR2kJrlv61e6q+cwqZRkQqe5Q7
-         07Ow==
-X-Gm-Message-State: AOAM531d3ayXx3M9ToPpbwChU/1kRa0HCqUJmXyd3nwD+XOCTso2zVz1
-        Fys5lZu63IvPW0HYDxQHBFqBAw==
-X-Google-Smtp-Source: ABdhPJxw6z0ZnPz6Owai2RQzOlIuxErIPT4YFmd2gs4euqe51xYtt2JqEKYALVjvUJlG6brVWjUhVg==
-X-Received: by 2002:a62:6d03:: with SMTP id i3mr6711085pfc.249.1590024081026;
-        Wed, 20 May 2020 18:21:21 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id a6sm3081020pfa.111.2020.05.20.18.21.20
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ccibA7LDXIbckabc89mZhjSjYh9Yh1XsB9j1urjankk=;
+        b=aeLNO6/QWlZH5ZRpyISpM/bCbOKXXtykl5HIFGoLTlwi7sGjT297+rHZLnKe6pS7cU
+         VR1jkWMP2oOwTTB2Fito979TKaeJfOH97Ec7R5ggTrfVCUmFbvZrvmXQmzyPkgL6l/LA
+         pDQgvFXO/Ur4EmlfJ02hjLDeX9V7aii+thwP5Wcsm0JXXLV9Xq5CoIZ17Z/QLgHB69Qu
+         PHb2zS6x2uJ3P3tpJpGbR3FRBQ/YtPq5i90G+sGiS/bD+vNr7qtfQqDErCjNA6N+Nge+
+         MQuKH26wQRANlawdB85IJgOv1Wn2oTeEgTMS8l+Vm1zYbpl+jAImGM1XzYWv0B9zVZFH
+         8UYQ==
+X-Gm-Message-State: AOAM532fPUuqFidiZaQVSssZMlHSuR+QQV7HGVDwFciFRbmglQuLWNDN
+        RMq5G4iuJHPyNc6AltEFZnV4ZQ==
+X-Google-Smtp-Source: ABdhPJyQiQ3aNvL+wpFR3LQOzxPoIr/jqJaJJQPX1TlU7vAAbOPwC86YzPcUurVOWQ6QT0EHm7spYQ==
+X-Received: by 2002:a17:90a:bf08:: with SMTP id c8mr8846242pjs.13.1590030458274;
+        Wed, 20 May 2020 20:07:38 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id go1sm2967314pjb.26.2020.05.20.20.07.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2020 18:21:20 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Maulik Shah <mkshah@codeaurora.org>,
+        Wed, 20 May 2020 20:07:37 -0700 (PDT)
+Date:   Wed, 20 May 2020 20:07:34 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH v3 0/3] Even moar rpmh cleanups
-Date:   Wed, 20 May 2020 18:21:16 -0700
-Message-Id: <20200521012119.238270-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be-goog
+Subject: Re: [PATCH v3 0/3] Even moar rpmh cleanups
+Message-ID: <20200521030734.GD11847@yoga>
+References: <20200521012119.238270-1-swboyd@chromium.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200521012119.238270-1-swboyd@chromium.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We remove the tcs_is_free() API and then do super micro optimizations on
-the irq handler. I haven't tested anything here so most likely there's a
-bug (again again)!
+On Wed 20 May 18:21 PDT 2020, Stephen Boyd wrote:
 
-Changes from v2:
- * Went back in time and used the v1 patch for the first patch with
-   the fixes to make it not so complicated
+> We remove the tcs_is_free() API and then do super micro optimizations on
+> the irq handler. I haven't tested anything here so most likely there's a
+> bug (again again)!
+> 
+> Changes from v2:
+>  * Went back in time and used the v1 patch for the first patch with
+>    the fixes to make it not so complicated
+> 
+> Changes from v1:
+>  * First patch became even moar complicated because it combines
+>    find_free_tcs() with the check for a request in flight
+>  * Fixed subject in patch 2
+>  * Put back unsigned long for bitmap operation to silence compiler
+>    warning
+>  * Picked up review tags
+> 
 
-Changes from v1:
- * First patch became even moar complicated because it combines
-   find_free_tcs() with the check for a request in flight
- * Fixed subject in patch 2
- * Put back unsigned long for bitmap operation to silence compiler
-   warning
- * Picked up review tags
+Can you please resend this series with both linux-arm-msm and myself on
+Cc for all three patches?
 
-Stephen Boyd (3):
-  soc: qcom: rpmh-rsc: Remove tcs_is_free() API
-  soc: qcom: rpmh-rsc: Loop over fewer bits in irq handler
-  soc: qcom: rpmh-rsc: Fold WARN_ON() into if condition
+Thanks,
+Bjorn
 
- drivers/soc/qcom/rpmh-rsc.c | 65 +++++++++++++------------------------
- 1 file changed, 22 insertions(+), 43 deletions(-)
-
-Cc: Maulik Shah <mkshah@codeaurora.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-
-base-commit: 1f7a3eb785e4a4e196729cd3d5ec97bd5f9f2940
--- 
-Sent by a computer, using git, on the internet
-
+> Stephen Boyd (3):
+>   soc: qcom: rpmh-rsc: Remove tcs_is_free() API
+>   soc: qcom: rpmh-rsc: Loop over fewer bits in irq handler
+>   soc: qcom: rpmh-rsc: Fold WARN_ON() into if condition
+> 
+>  drivers/soc/qcom/rpmh-rsc.c | 65 +++++++++++++------------------------
+>  1 file changed, 22 insertions(+), 43 deletions(-)
+> 
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> 
+> base-commit: 1f7a3eb785e4a4e196729cd3d5ec97bd5f9f2940
+> -- 
+> Sent by a computer, using git, on the internet
+> 
