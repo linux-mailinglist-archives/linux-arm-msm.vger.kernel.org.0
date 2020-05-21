@@ -2,126 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BCEAC1DD3D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 19:04:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75E921DD3BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 19:03:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729899AbgEUREF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 13:04:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50980 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729720AbgEUREF (ORCPT
+        id S1730089AbgEURDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 13:03:18 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:43169 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730079AbgEURDR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 13:04:05 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3D9C061A0F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 10:04:05 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id m7so3071103plt.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 10:04:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GT1QJQok2ZeWgDDmOKZP3KFdZvLbU1iojOHos6Kus1g=;
-        b=XoeXj/bWn5fPEBxKO2XN5CzZqMLSQshY7INmoMZdM8p1jF4+92iZmL62JDkX1sHS1Z
-         7VMUfjeh/RQvbvaZ/N73t1h4qh5/TMlBqqCo2CeEJU6JHU3EcuYZCcapkZIPFM/VopUR
-         W11PEJlAHJdAZ5COVAjIUxZWtq4nXzLbVkMvfgg76OvtIWvtsaZMqbcFaZ+doiLepxuJ
-         jWMRA/4Jc0LPKQcJH/8ytikkjoRdpQPIvkVJ1Btp8+XbC95vo+4VdYQkIkpj0shFUh1R
-         OerfF+4PdM8XOAqen1ijatw6E+Aif1wzkt0tpALDeSjdesVbpwFSPl2W79Kv2Rw1xuo6
-         1kig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=GT1QJQok2ZeWgDDmOKZP3KFdZvLbU1iojOHos6Kus1g=;
-        b=BsGNg4AB6zCx5PcFLKCys9PeV47brPLiEFAFhK+Bg7eeYWMxRG+9/dM704fHLdDqoH
-         wlRh/TI7lGeWkmpaXCUSJZvNfkHSlAF6jRMgU+SnHThb+fP9Wz/iVj7Ul8uE6ieAA53V
-         93QoxdLeK/8YgrfTVbCfIxETMaE09y/p8NIuiKAr5Wc23TwTSS1ymBNI9/BsqYq31ENM
-         w8Ym2W+X9m6CqQm5vo7LEGXAt/lSJI+JtnHUd6ZzjwFLjG7ySIeLuahmJiOvBdFIjmNg
-         7ALmfSRHooIDASWsQ3BZ2Sq5aITwTN3CbQHGc2hARfJ9OIaGT2fDzjuW+rj5Kjpzc6li
-         TLGQ==
-X-Gm-Message-State: AOAM531u4RRcLDU4O/VZkGH8gvXdE5oVSvcNO9etHGpkvON8DPqddDA/
-        jtDTxZKNqfkRQaD2i8Iadta8
-X-Google-Smtp-Source: ABdhPJy775tEb44MI4qz4lpz8v1vm1S79IFoYTkGMUHkJZU93PA35NHmYPJ+3qZf5imUpcQTRLXdow==
-X-Received: by 2002:a17:902:bd47:: with SMTP id b7mr10908666plx.79.1590080644717;
-        Thu, 21 May 2020 10:04:04 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:69f:45f2:3d8d:3719:f568:7ee9])
-        by smtp.gmail.com with ESMTPSA id e26sm4874693pff.137.2020.05.21.10.04.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2020 10:04:03 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [RESEND PATCH 14/14] bus: mhi: core: Handle syserr during power_up
-Date:   Thu, 21 May 2020 22:32:49 +0530
-Message-Id: <20200521170249.21795-15-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200521170249.21795-1-manivannan.sadhasivam@linaro.org>
-References: <20200521170249.21795-1-manivannan.sadhasivam@linaro.org>
+        Thu, 21 May 2020 13:03:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590080597; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=jszy9teC+sVSx6DPFN+KKjWdwRQJ/ERwIDCVkAF6fYw=;
+ b=HEO5Fiqj/4IeortTSR1Ezpp9ojnPyQXmCF1upl/pd0d6xny4Jb+r9wfIQpSISkrst5Ritvlm
+ YT18NFVBPOuc/gTdjIeN1JD5EjJKjMFyukfJhAlbuDLs6T1jvLkWEQJRoA2XEfiF5EllcUcj
+ 55WW6Wc2UuWec6N/7qPcvIxwoNg=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5ec6b454569a62550d499836 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 May 2020 17:03:16
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 74BDDC433AD; Thu, 21 May 2020 17:03:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE56BC433AD;
+        Thu, 21 May 2020 17:03:13 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 21 May 2020 22:33:13 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mike Leach <mike.leach@linaro.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>
+Subject: Re: [PATCHv2 3/4] coresight: replicator: Reset replicator if context
+ is lost
+In-Reply-To: <CAJ9a7ViRLzicR3tu8q4X5dEnYUCo-Tz6fi=baU0CVQTofvMV+w@mail.gmail.com>
+References: <cover.1589894597.git.saiprakash.ranjan@codeaurora.org>
+ <c2e02d0c92b081c05b91d07ec17e648c40af3897.1589894597.git.saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7ViRLzicR3tu8q4X5dEnYUCo-Tz6fi=baU0CVQTofvMV+w@mail.gmail.com>
+Message-ID: <e91e046fdbac129ef27ac0e665589a7f@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeffrey Hugo <jhugo@codeaurora.org>
+Hi Mike,
 
-The MHI device may be in the syserr state when we attempt to init it in
-power_up().  Since we have no local state, the handling is simple -
-reset the device and wait for it to transition out of the reset state.
+On 2020-05-21 21:38, Mike Leach wrote:
+> Hi Sai,
+> 
+> On Tue, 19 May 2020 at 14:36, Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> On some QCOM SoCs, replicators in Always-On domain loses its
+>> context as soon as the clock is disabled. Currently as a part
+>> of pm_runtime workqueue, clock is disabled after the replicator
+>> is initialized by amba_pm_runtime_suspend assuming that context
+>> is not lost which is not true for replicators with such
+>> limitations. So add a new property "qcom,replicator-loses-context"
+>> to identify such replicators and reset them.
+>> 
+>> Suggested-by: Mike Leach <mike.leach@linaro.org>
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>> 
+>> Added Mike's suggested by for parts other than the DT property.
+>> Perhaps I should add Co-developed-by Mike since the full skeletal
+>> was given by Mike. I can add that if required on the next version.
+>> 
 
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/core/pm.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+[...]
 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index e6236a3ca39d..1bd61a64d7bb 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -763,6 +763,7 @@ static void mhi_deassert_dev_wake(struct mhi_controller *mhi_cntrl,
- 
- int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- {
-+	enum mhi_state state;
- 	enum mhi_ee_type current_ee;
- 	enum dev_st_transition next_state;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-@@ -832,6 +833,32 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 		goto error_bhi_offset;
- 	}
- 
-+	state = mhi_get_mhi_state(mhi_cntrl);
-+	if (state == MHI_STATE_SYS_ERR) {
-+		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
-+		ret = wait_event_timeout(mhi_cntrl->state_event,
-+				MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
-+					mhi_read_reg_field(mhi_cntrl,
-+							   mhi_cntrl->regs,
-+							   MHICTRL,
-+							   MHICTRL_RESET_MASK,
-+							   MHICTRL_RESET_SHIFT,
-+							   &val) ||
-+					!val,
-+				msecs_to_jiffies(mhi_cntrl->timeout_ms));
-+		if (ret) {
-+			ret = -EIO;
-+			dev_info(dev, "Failed to reset MHI due to syserr state\n");
-+			goto error_bhi_offset;
-+		}
-+
-+		/*
-+		 * device cleares INTVEC as part of RESET processing,
-+		 * re-program it
-+		 */
-+		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-+	}
-+
- 	/* Transition to next state */
- 	next_state = MHI_IN_PBL(current_ee) ?
- 		DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
+> 
+> Suggested-by is just fine - I didn't actually try out my suggested
+> code after all!
+> 
+> Reviewed-by Mike Leach <mike.leach@linaro.org>
+
+Sure, thanks for the review.
+
+Thanks,
+Sai
+
 -- 
-2.17.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
