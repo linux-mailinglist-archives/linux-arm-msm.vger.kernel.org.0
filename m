@@ -2,174 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 394E61DD24E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 17:50:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B67A21DD266
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2020 17:54:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728266AbgEUPuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 May 2020 11:50:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39358 "EHLO
+        id S1728774AbgEUPyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 May 2020 11:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726814AbgEUPuO (ORCPT
+        with ESMTP id S1728295AbgEUPyF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 May 2020 11:50:14 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E814C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 08:50:14 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id j21so3348710pgb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 08:50:14 -0700 (PDT)
+        Thu, 21 May 2020 11:54:05 -0400
+Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1D8C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 08:54:05 -0700 (PDT)
+Received: by mail-il1-x144.google.com with SMTP id a14so7579712ilk.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2020 08:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sA0g0lvUpDIAD2lv16TTki6eZ5ObFWThT5hUTpKEaZM=;
-        b=SxHSttAbNR9u1pBK/vE9U0EvP6k3sUDZ9euViRsxBhKQwtZZDJ+9Slcp75EnC7zjV5
-         3QlU+9wjPe1kXPzohm590bPeD+ilHSPRnU3z+uxzqm9U8JGHzSUzIAXM/O6kuQ2PDsOe
-         dD74tuoLkEfq0G1fPZmGd+xbLTMEkayphxpyE=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BfWoobLVAKfzMCiMZcNvEFreCxWJpDiylD9YHTs2DM8=;
+        b=hkPi3G6+ffqyy54W13omYGNYelo1z8fPDbEUIslyzE6p6/MRNAcoFKAll6dV0rPZz/
+         PLNHi8p7h/L1GdxnH8/vwJ7NSNrlNRk7ApAZoyU/lC1q6V+dfUtYlfBOp933NFKHP+Fb
+         0atY4zRCNh71xBRkXSsNFrl6eb2bihQL9IuAT2tgeLH6NTGE4gsYD/e5f82DT3SCKUM3
+         F574RYdrLYgihpu0nk9vJ1yksIcajeqrWo4Tev1/KKpd9LEIXu+ZVbTukPwYHjYqIoCV
+         j2TWKcnqMoSgTNTpRO/+kxvWzZI4fsioPJ2IjGzsk96RppbCTPeLa07Og0UZY2vZcj78
+         f2Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sA0g0lvUpDIAD2lv16TTki6eZ5ObFWThT5hUTpKEaZM=;
-        b=gtHim6ZWVtZLHXwouFWjRlRM6Bk3gZpwVX33+qPIkfXMrXKrmPlI6BuK0JfROz99e7
-         thLNaqDdtKeTYN0GjpJOuiUMgK28FTUgd7IYVLZopbz1YysiNNOSWhCvdMCxA3oxplok
-         hsMJo9jCD2XuqHyWSM+HUljfO29qw1jqJc8Y5JGEI/8W8dhkpjiZg9UqgWpjBesI25ne
-         FQMefZpFOy9DAUA66/dsGysPsY+TLjVuUzwZRE8+g1IxyRQ81N1b5g6J+WIUDtz/L1FR
-         kBxDzTgssP+BXBLD1kyGeCkxR6Wg3cDpVPJMParhwMUcnkmtSjE6fzHvjhPQY4/0Kh8o
-         Q7bQ==
-X-Gm-Message-State: AOAM531NtmuAS9GQUcU9WtNhFTdnQcdGbxkRW3xDbycnAFHV2LSw3FLa
-        HCtZJhyULo3Aq1qR66rYNqkIlg==
-X-Google-Smtp-Source: ABdhPJxkbbtArxWaeGThhTrUz55mXsi5ObGXQZbuxg7+tuo7TBShdw6VKuYjcKrRM+3WbVWaoAbFxQ==
-X-Received: by 2002:a62:3642:: with SMTP id d63mr2097232pfa.8.1590076213954;
-        Thu, 21 May 2020 08:50:13 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id s94sm4983713pjb.20.2020.05.21.08.50.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2020 08:50:12 -0700 (PDT)
-Date:   Thu, 21 May 2020 08:50:09 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        msavaliy@codeaurora.org, evgreen@chromium.org
-Subject: Re: [PATCH V6 1/7] soc: qcom: geni: Support for ICC voting
-Message-ID: <20200521155009.GA4525@google.com>
-References: <1590049764-20912-1-git-send-email-akashast@codeaurora.org>
- <1590049764-20912-2-git-send-email-akashast@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BfWoobLVAKfzMCiMZcNvEFreCxWJpDiylD9YHTs2DM8=;
+        b=nx7VrslmJ6NryJP59YehiTLZnTLET3p5G4p4ltGWyK8s7BIakEGQMx3LLcPEHOMUDC
+         5g/ScVs08mbD0wR1Wb3gHEvgVbOZq+o6XwrWU0qJ6VvJfL8v2zUiY8g6tu51nOb2H2Bs
+         5D7Di01MMxhlo6haTgIS3ugWbDJHzCwiFFR6g6pLQstDnTzjFT8RuHdgmaNcZ2zDzymo
+         1aRkuB4+w1Kh+6zEz9DEsYc7+qHlm4LADFOuls2ZGMGEahro96gQtXt8Jr1ZrKtsPn5C
+         WWXJCM/wE4kKKvU/e5Jk/zSWjKeJSCcdGSsbNKxCq/7BdpG2PLUh7qwqYrGMLS87Mval
+         NJOg==
+X-Gm-Message-State: AOAM531yTeo+PIqwmckMWyqpYit3PREdieTDPztd1CELNpKWHSpGrLip
+        /199g6/H8CrCYdVrt+l2mVx+jJQkxm6jWhsRNK0Dsw==
+X-Google-Smtp-Source: ABdhPJxSeqc9p+cZk7hCXVAfU51UL+rEUcfznzd6rZk0t9zdDUQgpdG5YvcK8wwCvzBe2YCoqfVICx4SnejEqjj53MI=
+X-Received: by 2002:a92:89cf:: with SMTP id w76mr8990688ilk.57.1590076444041;
+ Thu, 21 May 2020 08:54:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1590049764-20912-2-git-send-email-akashast@codeaurora.org>
+References: <cover.1589558615.git.saiprakash.ranjan@codeaurora.org> <7b69c9752713ce22f04688e83ec78f8aa67c63dc.1589558615.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <7b69c9752713ce22f04688e83ec78f8aa67c63dc.1589558615.git.saiprakash.ranjan@codeaurora.org>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Thu, 21 May 2020 09:53:53 -0600
+Message-ID: <CANLsYkx9FsCXPYPzXhR5C6rFKEvBrYr5A6Reu=zAnLG_HVk7AQ@mail.gmail.com>
+Subject: Re: [PATCHv3 2/2] dt-bindings: arm: coresight: Add support to skip
+ trace unit power up
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tingwei Zhang <tingwei@codeaurora.org>,
+        Coresight ML <coresight@lists.linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
-
-On Thu, May 21, 2020 at 01:59:18PM +0530, Akash Asthana wrote:
-> Add necessary macros and structure variables to support ICC BW
-> voting from individual SE drivers.
-> 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+On Fri, 15 May 2020 at 10:23, Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> From: Tingwei Zhang <tingwei@codeaurora.org>
+>
+> Add "qcom,skip-power-up" property to identify systems which can
+> skip powering up of trace unit since they share the same power
+> domain as their CPU core. This is required to identify such
+> systems with hardware errata which stops the CPU watchdog counter
+> when the power up bit is set (TRCPDCR.PU).
+>
+> Signed-off-by: Tingwei Zhang <tingwei@codeaurora.org>
+> Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
-> Changes in V2:
->  - As per Bjorn's comment dropped enums for ICC paths, given the three
->    paths individual members
-> 
-> Changes in V3:
->  - Add geni_icc_get, geni_icc_vote_on and geni_icc_vote_off as helper API.
->  - Add geni_icc_path structure in common header
-> 
-> Changes in V4:
->  - As per Bjorn's comment print error message in geni_icc_get if return
->    value is not -EPROBE_DEFER.
->  - As per Bjorn's comment remove NULL on path before calling icc_set_bw
->    API.
->  - As per Bjorn's comment drop __func__ print.
->  - As per Matthias's comment, make ICC path a array instead of individual
->    member entry in geni_se struct.
-> 
-> Changes in V5:
->  - As per Matthias's comment defined enums for ICC paths.
->  - Integrate icc_enable/disable with power on/off call for driver.
->  - As per Matthias's comment added icc_path_names array to print icc path name
->    in failure case.
->  - As per Georgi's suggestion assume peak_bw = avg_bw if not mentioned.
-> 
-> Changes in V6:
->  - Addressed nitpicks from Matthias.
-> 
-> Note: I have ignored below check patch suggestion because it was throwing
->       compilation error as 'icc_ddr' is not compile time comstant.
-> 
-> WARNING: char * array declaration might be better as static const
->  - FILE: drivers/soc/qcom/qcom-geni-se.c:726:
->  - const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
-> 
->  drivers/soc/qcom/qcom-geni-se.c | 92 +++++++++++++++++++++++++++++++++++++++++
->  include/linux/qcom-geni-se.h    | 42 +++++++++++++++++++
->  2 files changed, 134 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 7d622ea..0b2526d 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -92,6 +92,9 @@ struct geni_wrapper {
->  	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
->  };
->  
-> +static const char * const icc_path_names[] = {"qup-core", "qup-config",
-> +						"qup-memory"};
+>  Documentation/devicetree/bindings/arm/coresight.txt | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
+> index 846f6daae71b..e4b2eda0b53b 100644
+> --- a/Documentation/devicetree/bindings/arm/coresight.txt
+> +++ b/Documentation/devicetree/bindings/arm/coresight.txt
+> @@ -108,6 +108,13 @@ its hardware characteristcs.
+>         * arm,cp14: must be present if the system accesses ETM/PTM management
+>           registers via co-processor 14.
+>
+> +       * qcom,skip-power-up: boolean. Indicates that an implementation can
+> +         skip powering up the trace unit. TRCPDCR.PU does not have to be set
+> +         on Qualcomm Technologies Inc. systems since ETMs are in the same power
+> +         domain as their CPU cores. This property is required to identify such
+> +         systems with hardware errata where the CPU watchdog counter is stopped
+> +         when TRCPDCR.PU is set.
 > +
->  #define QUP_HW_VER_REG			0x4
->  
->  /* Common SE registers */
-> @@ -720,6 +723,95 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
->  }
->  EXPORT_SYMBOL(geni_se_rx_dma_unprep);
->  
-> +int geni_icc_get(struct geni_se *se, const char *icc_ddr)
-> +{
-> +	int i, err;
-> +	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
-> +
-> +	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
-> +		if (!icc_names[i])
-> +			continue;
-> +
-> +		se->icc_paths[i].path = devm_of_icc_get(se->dev, icc_names[i]);
-> +		if (IS_ERR(se->icc_paths[i].path))
-> +			goto err;
-> +	}
-> +
-> +	return 0;
-> +
-> +err:
-> +	err = PTR_ERR(se->icc_paths[i].path);
-> +	if (err != -EPROBE_DEFER)
-> +		dev_err_ratelimited(se->dev, "Failed to get ICC path:%s :%d\n",
+>  * Optional property for TMC:
 
-That's still an odd format, especially the colon before the error code. My
-suggestion was "... path 'qup-core': 42" i.e. "... path '%s': %d".
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-I don't want to stall the series on nits though, if there is no need for
-a respin for other reasons this can be also fixed with a patch after this
-has landed.
-
-I'm still not overly convinced about having two bandwidth values for what
-might happen in the future (or not). Typically unused functions or struct
-members that are added just in case tend to be rejected, since they can be
-added when the need actually arises. Anyway, as long as maintainers are
-happy with it I won't object.
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-
-
-
-
+>
+>         * arm,buffer-size: size of contiguous buffer space for TMC ETR
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
