@@ -2,160 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C91F1DE78B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 15:02:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A59241DE7E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 15:20:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729344AbgEVNCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 09:02:09 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:47069 "EHLO
+        id S1729046AbgEVNUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 09:20:34 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:49676 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729334AbgEVNCI (ORCPT
+        by vger.kernel.org with ESMTP id S1729751AbgEVNUd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 09:02:08 -0400
+        Fri, 22 May 2020 09:20:33 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590152527; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=aZcjMzyQhmF408KAg+aRhNzpY4xzo8oNxhr6p1nbQUY=; b=xV1/xTIpd6GiytgwzC3Ns1UZXI6nMlrP67slC4FHVvZ2pUz5Aa7195kowF1wM0CEcw0xJRAB
- 0zh85nb15ZMDIRK9PVyDQdFtK3//v+VSL0/88nMEUTbzHitQ2wCM3DVr7O2Ig16TnZ6S2+o0
- l1RG/sY2E7DGLx9amJHdB0uTEdg=
+ s=smtp; t=1590153633; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Wf+Ft3GAXv6Hn11ap7JENTyHYvhs9XYIKDP7SgyDCBk=; b=qJRAXDsphGbjekTPuoYxBUlxuzhuV38KbzUKu2Z2BocLGBh3sXz1GsrR9FznMZbxGFROi+4B
+ QG4cS7VL6gkdGImrHgtEJJwl/oj+rmXEvKsf/lhll1GGx8VytRZW9/PTh0gKLyUn+rrpxluT
+ qZxPR6TqmQtdiDa9fT+egAN8vQg=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec7cd47.7f12840a2c38-smtp-out-n05;
- Fri, 22 May 2020 13:01:59 -0000 (UTC)
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5ec7d1872a41f3ed006fdfe3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 22 May 2020 13:20:07
+ GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1EAC6C433CB; Fri, 22 May 2020 13:01:59 +0000 (UTC)
+        id 221C1C43391; Fri, 22 May 2020 13:20:07 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 29C5BC433C6;
-        Fri, 22 May 2020 13:01:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 29C5BC433C6
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68FF4C433C8;
+        Fri, 22 May 2020 13:19:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 68FF4C433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Joerg Roedel <jroedel@suse.de>
-Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Evan Green <evgreen@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] iommu: Fix group refcount in iommu_alloc_default_domain()
-Date:   Fri, 22 May 2020 18:31:45 +0530
-Message-Id: <20200522130145.30067-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     bjorn.andersson@linaro.org, maz@kernel.org,
+        linus.walleij@linaro.org, swboyd@chromium.org,
+        evgreen@chromium.org, mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH 0/4] irqchip: qcom: pdc: Introduce irq_set_wake call
+Date:   Fri, 22 May 2020 18:49:25 +0530
+Message-Id: <1590153569-21706-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since the change to move default domain allocation to probe,
-there is a refcount decrement missing for the group in
-iommu_alloc_default_domain(). Because of this missing
-refcount decrement, the device is never released from the
-group as the devices_kobj refcount never reaches 0 in
-iommu_group_remove_device() leading to a lot of issues.
-One such case is that this will lead to a different group
-allocation on every reload of the module which configures
-iommu such as the ath10k module which then finally fails
-to attach this device to the SMMU with -ENOSPC error in
-__arm_smmu_alloc_bitmap() once the count of module reload
-crosses the number of context banks. This will then lead
-to NULL pointer deference in the next reload of the module.
-Add the missing refcount decrement(iommu_group_put()) in
-iommu_alloc_default_domain() to fix this issue.
+This series adds support to lazy disable pdc interrupt.
 
-Call trace:
+Some drivers using gpio interrupts want to configure gpio for wakeup using
+enable_irq_wake() but during suspend entry disables irq and expects system
+to resume when interrupt occurs. In the driver resume call interrupt is
+re-enabled and removes wakeup capability using disable_irq_wake() one such
+example is cros ec driver.
 
-<snip>...
-  platform wifi-firmware.0: Adding to iommu group 82
-  ath10k_snoc 18800000.wifi: could not attach device: -28
-  platform wifi-firmware.0: Removing from iommu group 82
-  ath10k_snoc 18800000.wifi: failed to initialize firmware: -28
-  ath10k_snoc: probe of 18800000.wifi failed with error -28
-  platform wifi-firmware.0: Adding to iommu group 83
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  Mem abort info:
-    ESR = 0x96000006
-    EC = 0x25: DABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-  Data abort info:
-    ISV = 0, ISS = 0x00000006
-    CM = 0, WnR = 0
-  user pgtable: 4k pages, 39-bit VAs, pgdp=0000000177a53000
-  [0000000000000000] pgd=00000001e74f5003, pud=00000001e74f5003, pmd=0000000000000000
-  Internal error: Oops: 96000006 [#1] PREEMPT SMP
-  pstate: 60400009 (nZCv daif +PAN -UAO)
-  arm_smmu_flush_iotlb_all+0x20/0x6c
-  iommu_create_device_direct_mappings+0x17c/0x1d8
-  iommu_probe_device+0xc0/0x100
-  of_iommu_configure+0x108/0x240
-  of_dma_configure+0x130/0x1d0
-  ath10k_fw_init+0xc4/0x1c4 [ath10k_snoc]
-  ath10k_snoc_probe+0x5cc/0x678 [ath10k_snoc]
-  platform_drv_probe+0x90/0xb0
-  really_probe+0x134/0x2ec
-  driver_probe_device+0x64/0xfc
-  device_driver_attach+0x4c/0x6c
-  __driver_attach+0xac/0xc0
-  bus_for_each_dev+0x8c/0xd4
-  driver_attach+0x2c/0x38
-  bus_add_driver+0xfc/0x1d0
-  driver_register+0x64/0xf8
-  __platform_driver_register+0x4c/0x58
-  init_module+0x20/0x1000 [ath10k_snoc]
-  do_one_initcall+0x13c/0x2d0
-  do_init_module+0x58/0x1dc
-  load_module+0xde0/0xf10
-  __arm64_sys_finit_module+0xb0/0xe0
-  el0_svc_common+0xa4/0x154
-  el0_svc_compat_handler+0x2c/0x38
-  el0_svc_compat+0x8/0x10
- Code: d503201f f85b8268 b4000248 f8560e74 (f9400280)
- ---[ end trace e5c1470a584952a0 ]---
- Kernel panic - not syncing: Fatal exception
+With [1] in documentation saying "An irq can be disabled with disable_irq()
+and still wake the system as long as the irq has wake enabled".
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/iommu/iommu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+The PDC IRQs are currently "unlazy disabled" (disable here means that it
+will be masked in PDC & GIC HW GICD_ISENABLER, the moment driver invokes
+disable_irq()) such IRQs can not wakeup from low power modes like suspend
+to RAM since the driver chosen to disable this.
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index a4c2f122eb8b..05f7b77c432f 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -1491,6 +1491,7 @@ static int iommu_alloc_default_domain(struct device *dev)
- {
- 	struct iommu_group *group;
- 	unsigned int type;
-+	int ret;
- 
- 	group = iommu_group_get(dev);
- 	if (!group)
-@@ -1501,7 +1502,11 @@ static int iommu_alloc_default_domain(struct device *dev)
- 
- 	type = iommu_get_def_domain_type(dev);
- 
--	return iommu_group_alloc_default_domain(dev->bus, group, type);
-+	ret = iommu_group_alloc_default_domain(dev->bus, group, type);
-+
-+	iommu_group_put(group);
-+
-+	return ret;
- }
- 
- /**
+During suspend entry, no one re-enable/unmask in HW, even if its marked for
+wakeup.
+
+One solutions thought to address this problem was...During suspend entry at
+last point, irq chip driver re-enable/unmask IRQs in HW that are marked for
+wakeup. This was attemped in [2].
+
+This series adds alternate solution to [2] by "lazy disable" IRQs in HW.
+The genirq takes care of lazy disable in case if irqchip did not implement
+irq_disable callback. Below is high level steps on how this works out..
+
+a. During driver's disable_irq() call, IRQ will be marked disabled in SW
+b. IRQ will still be enabled(read unmasked in HW)
+c. The device then enters low power mode like suspend to RAM
+d. The HW detects unmasked IRQs and wakesup the CPU
+e. During resume after local_irq_enable() CPU goes to handle the wake IRQ
+f. Generic handler comes to know that IRQ is disabled in SW
+g. Generic handler marks IRQ as pending and now invokes mask callback
+h. IRQ gets disabled/masked in HW now
+i. When driver invokes enable_irq() the SW pending IRQ leads IRQ's handler
+j. enable_irq() will again enable/unmask in HW
+
+[1] https://www.spinics.net/lists/kernel/msg3398294.html
+[2] https://patchwork.kernel.org/patch/11466021/
+
+Maulik Shah (4):
+  gpio: gpiolib: Allow GPIO IRQs to lazy disable
+  pinctrl: qcom: Remove irq_disable callback from msmgpio irqchip
+  pinctrl: qcom: Add msmgpio irqchip flags
+  irqchip: qcom-pdc: Introduce irq_set_wake call
+
+ drivers/gpio/gpiolib.c             | 59 ++++++++++++++++++++++++--------------
+ drivers/irqchip/qcom-pdc.c         | 33 ++++++++++-----------
+ drivers/pinctrl/qcom/pinctrl-msm.c | 15 ++--------
+ include/linux/gpio/driver.h        | 13 +++++++++
+ 4 files changed, 70 insertions(+), 50 deletions(-)
+
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
+
