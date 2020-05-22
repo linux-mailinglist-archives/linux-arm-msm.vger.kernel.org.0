@@ -2,95 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B45A81DEF53
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 20:37:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0FAF1DF16A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 23:46:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730928AbgEVSh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 14:37:28 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:52774 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730808AbgEVSh2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 14:37:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590172647; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=hoh7aohjgxNO08x2ph6xRcPYw3ZiNFlZvv3h/lEWQjQ=; b=W3veOSgNklBPUEvWU1cZXVRpNRQSesPoQ0asdYmQJWewWP5zaCV1Esvkn7g1Hugp2knmHKqO
- if55Ej2jBK16vdeGqwOSz0nXApVXhMYLei9KyC56XSWxvNFK83t+pHBkUCOqCyf+1/gE2gka
- 9EjDJhdNP4e+ZajGtmRz2QGlIUA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5ec81bdc8cd231c40343c1c0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 22 May 2020 18:37:16
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5B6E2C433CB; Fri, 22 May 2020 18:37:15 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA825C433C6;
-        Fri, 22 May 2020 18:37:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA825C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv3 2/2] dt-bindings: arm: coresight: Add optional property to replicators
-Date:   Sat, 23 May 2020 00:06:52 +0530
-Message-Id: <ccfe8a5ede0523436508e31085322ccdab8f972a.1590171891.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <cover.1590171891.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1590171891.git.saiprakash.ranjan@codeaurora.org>
+        id S1731062AbgEVVq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 17:46:28 -0400
+Received: from mout.gmx.net ([212.227.15.15]:45573 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731036AbgEVVq2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 May 2020 17:46:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1590183983;
+        bh=0cAvgvTzadxNHdo+0ax5F3HOYfmkZV6eBKXEHJdz5to=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Dn7/hw11+duCRug99FO2L6eEWjPMLUYMIUfENznRtaVlIU8tplGWywpaFTsmLJ9Lz
+         5zr3VxDIncdwL0xXYXJLGmZYd3j1Xo9ByFCn8pvL0PES+ERyRW2PmMiKjUVOH0Zqtw
+         QTJtoX4VNjf+Ai5yXRYL9LkflsmbFr1shKmaQ5LE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.16.252.102] ([78.48.61.116]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJmGZ-1jIeJC2i6r-00K7x2; Fri, 22
+ May 2020 23:46:23 +0200
+Subject: Re: [PATCH v7 3/3] arm64: dts: msm8916: Add CCI node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, robert.foss@linaro.org,
+        vkoul@kernel.org, wsa@the-dreams.de
+References: <1586248382-9058-3-git-send-email-loic.poulain@linaro.org>
+ <f127d7f3-d69e-1137-4366-5fa77abc5c3d@gmx.net> <20200522165758.GH11847@yoga>
+From:   Carl-Daniel Hailfinger <c-d.hailfinger.devel.2006@gmx.net>
+Message-ID: <763d1526-7949-1f7f-db0c-1558b91a8f24@gmx.net>
+Date:   Fri, 22 May 2020 23:46:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200522165758.GH11847@yoga>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Provags-ID: V03:K1:cOBLooysdq4tC/MePe1bx7EnIFJbepvYMneiS4UAb0IqbCARZO0
+ yDJbU9HvRcMyvl9yPagYqjb/sJsJpWP4j/Sp6tz6/HQlxzbtO0Oh14SVllKYxk/K82+nQx7
+ jCXNkuV2l+yqQd6+rkSeqOxu4OsNey9paaRC7iiYwjh2v9KEmcah5dluUNBAGP2bJzAliBU
+ MsvSTyZzhM9QqiCcKz2/Q==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DSdKpXIu7t0=:gbPME5TsY058lgEVAKGw6i
+ EfRl1RYAl56hpDey/WjAWtbQAhTusctTjSPIl7M0+mS0fmJdqX1LRQVQ8VkN60SOdRRGOfvWL
+ uh2EXutu7rsiTRSh7M9W4FgXO8FrkHuN3ZvjX6EZucBI53cuQJjYWny7JQAf1homCQtdO3BVu
+ dPwrXZsZ5zI56IQ2m12fnq3JGGsNxNcNoD8PJl3veF6XBPwKXI7Jn3UZycpf0wtlzLDBIspZ2
+ u/BWuaTs9OHfQe9BIgZG6ldabGRkJuJSFplhLv4auC1C6YSpefn37eHSqE8vJq12TfjHrsf2g
+ GlicdJ7erO4WRr0USk4Y3I+BCVmbNJ0NgBO6b6uWjs/aTzV/aAa5VL0LzDzp+5A8YK3BGsmX3
+ ZTq6cgqGMLLUtRkGYhkmaWM9VvduC/VN5lpQ9zH0Vh52R+vM25UaCB8z1wSUzD3cM1d3eqjaF
+ wiIQRJqXaJpZUjixhxrStRsf0o6JCJBbJ+YR6NT5RXPOv6F8X6VVk3Ek96u8tUE3hU0XDw0UD
+ 89zleqRlfeywlV79CVJIEwJ64CotCgxZd0eeWbZmVYocDD7mw/rGxdIzQa19HXLFwpdgkaBEb
+ 6a293wwehCCOkccpVlVK721WA/k7P5ZbxOgRZBUXQmsZDm0H6gwaNU1uOzCXNiHxeypEFfWRm
+ cUWmDTur0AlBIYMKg43LFm1iSrdWxljS4Gs/wBHTS2viL9PRV+egX5pbeQ5nJJ0U9Azcec/9f
+ NS2ELvHvsdVdP4DCyMaaKUoeOReyDCbcF+CEJHx8Z6WoUzC2ZYuB2WbRFr5YXCbCZ+MCEDaAS
+ S5Rrb5muIM75QkL4vPNSTnZcC5g6H2+W1tng8LVSALG7vhefb1YiBJTX75NGrD46tmSkfhITO
+ P/zXMnB+NeC9r1xbHPG/60Ba0CmF3UQqn4HDqqS1lenuPghsnYigbkbfNEhVmI3kS4836z7yq
+ HtBp1tJveXBkxRbUffQ7kAZOZhXpPeWRxSgtzbpeAO/9OCsaB+t+Np9/3TKxHYmSTpVM4uTSG
+ 97QpFCTh/+EfW39xwyKZpCu5r96bfGSU/VHUnSTWIlt/6m9GMNkY8GJwb7s1qOudr18y+3Uu8
+ uMLfiz0ap7w0vLlmTizWroP0yFp/6i1cJmmO8tmB09hQywIsef1PpeU8oht+2aB4h66y9TblT
+ oTNmByFJz2H1Bz3pYohdmDk6MSmqiACV8MQdxWDZuFplAk1GUSdfRS8x8qsxG2pAEmDnbXI85
+ UxzblXo4FI8tYtkF/fI/z7yBYSPYREaxUgrZFAA==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add an optional boolean property "qcom,replicator-loses-context" to
-identify replicators which loses context when AMBA clocks are removed
-in certain configurable replicator designs.
+On 22.05.20 18:57, Bjorn Andersson wrote:
+> On Fri 22 May 09:10 PDT 2020, Carl-Daniel Hailfinger wrote:
+>
+>> Hi Loic,
+>>
+>> it seems that this patch was not picked up in any tree. Do you think
+>> sending it to linux-devicetree would help?
+>>
+> Afaict it's part of [1] and as such is part of the qcom pull request for
+> v5.8-rc1.
+>
+> Please let me know if I'm mistaken and I'll pick it up.
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=arm64-for-5.8
 
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- Documentation/devicetree/bindings/arm/coresight.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+Indeed, you're right. My apologies.
 
-diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
-index 846f6daae71b..b598a5f0037d 100644
---- a/Documentation/devicetree/bindings/arm/coresight.txt
-+++ b/Documentation/devicetree/bindings/arm/coresight.txt
-@@ -121,6 +121,12 @@ its hardware characteristcs.
- 	* interrupts : Exactly one SPI may be listed for reporting the address
- 	  error
- 
-+* Optional property for configurable replicators:
-+
-+	* qcom,replicator-loses-context: boolean. Indicates that the replicator
-+	  will lose register context when AMBA clock is removed which is observed
-+	  in some replicator designs.
-+
- Graph bindings for Coresight
- -------------------------------
- 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Regards,
+Carl-Daniel
+
+>
+> Regards,
+> Bjorn
+>
+>> Regards,
+>> Carl-Daniel
+>>
+>>> The msm8916 CCI controller provides one CCI/I2C bus.
+>>>
+>>> Signed-off-by: Loic Poulain <loic.poulain@xxxxxxxxxx>
+>>> Reviewed-by: Robert Foss <robert.foss@xxxxxxxxxx>
+>>> Reviewed-by: Bjorn Andersson <bjorn.andersson@xxxxxxxxxx>
+>>> ---
+>>>  v2: add this patch in the series
+>>>  v3: add only cci node for now
+>>>  v4: no change
+>>>  v5: add cci label
+>>>  v6: no change
+>>>  v7: no change
+>>>
+>>>  arch/arm64/boot/dts/qcom/msm8916.dtsi | 27 +++++++++++++++++++++++++++
+>>>  1 file changed, 27 insertions(+)
 
