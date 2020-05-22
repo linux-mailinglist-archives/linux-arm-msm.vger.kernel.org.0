@@ -2,57 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E19C31DEBDF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 17:31:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60FFD1DEC1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 17:38:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730535AbgEVPbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 11:31:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35196 "EHLO
+        id S1730496AbgEVPiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 11:38:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729851AbgEVPbR (ORCPT
+        with ESMTP id S1728433AbgEVPiH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 11:31:17 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBDCCC061A0E;
-        Fri, 22 May 2020 08:31:17 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id z26so5338891pfk.12;
-        Fri, 22 May 2020 08:31:17 -0700 (PDT)
+        Fri, 22 May 2020 11:38:07 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3155C061A0E;
+        Fri, 22 May 2020 08:38:06 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id v2so276529pfv.7;
+        Fri, 22 May 2020 08:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=SSLvHrUrUmnP+J7EUaDe7T1ErKWhhTBSuFxFKbP5p2U=;
-        b=BDzT50X4coOikh70Rqyz4HIZVxhBJy6tMg7dg9A0Bg1ifgpbm0V3hjmHvn1rMK3PEd
-         /qMrIu8iNjKTKRWpT8Jbk7dtDxRjGFKboNsPH2O9H11NdshCEZZL4n5czFNxzuorYO2V
-         QGgZuCQpICm2KGwKaoKHbPprG9wGuf+R/XU1p0tLI7QRX9YNCGCfu2gByZRBzIAB1N41
-         avM2FWs/qBUEqeJ+NOhEMOcmPJU1XIy2/Bm5fOOZX2U3qrt+1Q6HyZV9z1Ze6gsaPPDi
-         7CMey5aUjddyc3RXjMykO0TzXs+CznhwuR+9h/sRwVNqGpFkPJzuiucwbiEfeUc9hyYD
-         pslQ==
+        bh=7d6Zc97NBhItvRjzjZUUc48PU79OtYvfEiPWCQjEB6k=;
+        b=XIUzpkXUgXN4ekr2pr/QNKfYS+PLoKi359Ap1UqdXIlLp2VLZLP+DChRBbloXHl0qO
+         7pNz+EDhJdaOAG3SBQX5U3/dN+YB1sQa0HdCt5J2s1B0HrHYpKVp2tLLJq48Iht761yU
+         NA/IisBLdmx2Il5HfI+POLJpXfBwCWybjm6VBBYXLc6VDccfvTEQoO7SYWnwjeoTtrMj
+         XYTaU5NnSpXZvafqavsy+bqAVU2O2at+nFSf9Rw8i/DpnOX2jdcm2t9SAKeRZ1OkZV0C
+         pATE1NvYIirBQtPJX5wmj7xsloZD+ypOl8NbhFDzBv5KvlUJzhiC4qt0v2Vw+YGVcnSL
+         o0jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=SSLvHrUrUmnP+J7EUaDe7T1ErKWhhTBSuFxFKbP5p2U=;
-        b=WEM+d2qKcQTKiVHLg2BwkV+am5RZaOY0sKaV5Os3v6GiSFQH1T1QEN7VURPuEaV1Jl
-         Nc/Y4g2+giZsag72adS/7YJqRpro3bEDuvrhiDXZWy01gbJ1KgcGnozwcXbLx8k7wAw8
-         kn0/l9R+ONNGfIq/0NssVF+LZiP2rzdGSjb/FEQUNOUpSOKp/r86w22JhydbfE18bJGC
-         aV25wdEbEasxTrSE/lZkbDNkHk+ezilreLNfCJUEHdw3YghVl7YOOUZLD8bhPKhX/qbK
-         tAlsIEMZlpTo/uiOYWif1X1WE5v9mdvUCLuucHihriG4JEQyV/jGxfMuXgHBksUrFrus
-         VxzA==
-X-Gm-Message-State: AOAM533qzoAySc+O+q1j6zqeUjMprx8zwctYjjAax7WMwuYXDrpIIR8E
-        l1qIjK+i2bPnvdHFImLW6xZhr7EfxDJAWg108rs=
-X-Google-Smtp-Source: ABdhPJzHqqj8fLHqrPYt8036814ISRqAPyzCPwkwOwKw/jPrnn09boo9l3HZ9RshYZIyO8CwzN4XLER+NW+Ss0UGdtY=
-X-Received: by 2002:a62:2f43:: with SMTP id v64mr4328523pfv.170.1590161476980;
- Fri, 22 May 2020 08:31:16 -0700 (PDT)
+        bh=7d6Zc97NBhItvRjzjZUUc48PU79OtYvfEiPWCQjEB6k=;
+        b=uddXLMzVsi2o/QpvfGI31LgPkHQ7bwfxVqZot09Y4mwDXJtN9RYzNbpcj+aW63q99m
+         rZDbTPMGqTlMuJ8kzQ89Id9Z9gYKhtXvWLRPL0cdOTLgqhkEp3ZXurkN8ahgchyXBA9j
+         2aJ/l6jmmF8OY+5bO9Tf86E+6V4V+ZvTnx8yDJ6Za0hx9fItgoBUJ10MnDRi4fzttyWc
+         zLNomW4+nbRX+1NnRzCRYyZB3d4nAbSdhM47GHO+jHVP7dgSnerZ01Ja7HH02fQuhmqf
+         2OiaxuTdWITBXA2ApxTLxGh3eddC9ZAMl9I3qt/JetSAj4yoONGsp7dSSvBZcL078nvm
+         o83g==
+X-Gm-Message-State: AOAM532DIhcOBHtF0FHyFoC6h9bDzRebjQRMhN0vsO0HdkaY48t+SiiK
+        qbU6hxPtKksL9duZSPvwlRnMHSRGnQ81RWoCCso=
+X-Google-Smtp-Source: ABdhPJwO/L4Ya2h25wEeCWkhoA3A5fiVzMxVAIXSecKUCGMRueGRPQ/S/bLQTN0mYfvxRnBjkDvp1YOcgWg9UMIA/lo=
+X-Received: by 2002:a63:1c1:: with SMTP id 184mr14554351pgb.203.1590161886488;
+ Fri, 22 May 2020 08:38:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <1589361736-816-1-git-send-email-jprakash@codeaurora.org>
- <1589361736-816-4-git-send-email-jprakash@codeaurora.org> <CAHp75VedM+=+m8WF=zPpUcizgCGareYuBzUfjKwesozVSY_gKg@mail.gmail.com>
- <50ad0f74-22cc-c74f-afa4-df654e29bebb@codeaurora.org>
-In-Reply-To: <50ad0f74-22cc-c74f-afa4-df654e29bebb@codeaurora.org>
+References: <1590157452-27179-1-git-send-email-jprakash@codeaurora.org> <1590157452-27179-4-git-send-email-jprakash@codeaurora.org>
+In-Reply-To: <1590157452-27179-4-git-send-email-jprakash@codeaurora.org>
 From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 22 May 2020 18:31:05 +0300
-Message-ID: <CAHp75Vf0srsT6yonxiA1Lc8uP4=17u5E19iWfW7XGivfgJjFNg@mail.gmail.com>
-Subject: Re: [PATCH V4 3/5] iio: adc: Add support for PMIC7 ADC
+Date:   Fri, 22 May 2020 18:37:55 +0300
+Message-ID: <CAHp75Vfgk0-Rye2We1A6_WTWMCK3D-WW4_T3CGPHc=-tB=6M9g@mail.gmail.com>
+Subject: Re: [PATCH V5 3/5] iio: adc: Add support for PMIC7 ADC
 To:     Jishnu Prakash <jprakash@codeaurora.org>
 Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
         devicetree <devicetree@vger.kernel.org>,
@@ -75,66 +73,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 22, 2020 at 2:58 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
-> On 5/13/2020 3:18 PM, Andy Shevchenko wrote:
-> > On Wed, May 13, 2020 at 12:23 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+On Fri, May 22, 2020 at 5:25 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+>
+> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
+> major change from PMIC5 is that all SW communication to ADC goes through
+> PMK8350, which communicates with other PMICs through PBS when the ADC
+> on PMK8350 works in master mode. The SID register is used to identify the
+> PMICs with which the PBS needs to communicate. Add support for the same.
+
+Below should be in a separate patch, but it's a bikeshedding. So, I
+left it to maintainers to decide.
+Fine with me
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 
 ...
 
-> >> +static int qcom_vadc7_scale_hw_calib_die_temp(
-> >> +                               const struct vadc_prescale_ratio *prescale,
-> >> +                               const struct adc5_data *data,
-> >> +                               u16 adc_code, int *result_mdec)
-> >> +{
-> >> +
-> >> +       int voltage, vtemp0, temp, i = ARRAY_SIZE(adcmap7_die_temp) - 1;
-> > How assignment to i is useful?
+> @@ -285,7 +304,7 @@ static int adc5_configure(struct adc5_chip *adc,
 >
+>         /* Read registers 0x42 through 0x46 */
+>         ret = adc5_read(adc, ADC5_USR_DIG_PARAM, buf, sizeof(buf));
+> -       if (ret < 0)
+> +       if (ret)
+>                 return ret;
 >
-> I'm using it in adcmap7_die_temp[i] below, to keep it within the
-> character limit per line. I think it's more readable that way.
+>         /* Digital param selection */
+
+...
+
+> @@ -331,7 +391,7 @@ static int adc5_do_conversion(struct adc5_chip *adc,
 >
-> >
-> >> +       voltage = qcom_vadc_scale_code_voltage_factor(adc_code,
-> >> +                               prescale, data, 1);
-> >> +
-> >> +       if (adcmap7_die_temp[0].x > voltage) {
-> >> +               *result_mdec = DIE_TEMP_ADC7_SCALE_1;
-> >> +               return 0;
-> >> +       } else if (adcmap7_die_temp[i].x <= voltage) {
+>         if (adc->poll_eoc) {
+>                 ret = adc5_poll_wait_eoc(adc);
+> -               if (ret < 0) {
+> +               if (ret) {
+>                         pr_err("EOC bit not set\n");
+>                         goto unlock;
+>                 }
+> @@ -341,7 +401,7 @@ static int adc5_do_conversion(struct adc5_chip *adc,
+>                 if (!ret) {
+>                         pr_debug("Did not get completion timeout.\n");
+>                         ret = adc5_poll_wait_eoc(adc);
+> -                       if (ret < 0) {
+> +                       if (ret) {
+>                                 pr_err("EOC bit not set\n");
+>                                 goto unlock;
+>                         }
 
-I see now i in use, please, replace with direct meaning.
+...
 
-> > Redundant 'else'.
-> The expression is different, it's adcmap7_die_temp[i] here, not
-> adcmap7_die_temp[0].
+> @@ -406,8 +519,38 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
+>         default:
+>                 return -EINVAL;
+>         }
+> +}
+>
+> -       return 0;
 
-if (a) {
- ...
- return;
-} else if (b) {
- ...
-}
+(this one looks like standalone change from above)
 
-'else' is redundant due to 'return'. Same when it's 'goto'.
+...
 
-> >> +               *result_mdec = DIE_TEMP_ADC7_MAX;
-> >> +               return 0;
-> >> +       }
-> >> +
-> >> +       for (i = 0; i < ARRAY_SIZE(adcmap7_die_temp); i++)
-> >> +               if (adcmap7_die_temp[i].x > voltage)
-> >> +                       break;
-> >> +
-> >> +       vtemp0 = adcmap7_die_temp[i - 1].x;
-> >> +       voltage = voltage - vtemp0;
-> >> +       temp = div64_s64(voltage * DIE_TEMP_ADC7_SCALE_FACTOR,
-> >> +               adcmap7_die_temp[i - 1].y);
-> >> +       temp += DIE_TEMP_ADC7_SCALE_1 + (DIE_TEMP_ADC7_SCALE_2 * (i - 1));
-> >> +       *result_mdec = temp;
-> >> +
-> >> +       return 0;
-> >> +}
+> @@ -570,7 +762,7 @@ static int adc5_get_dt_channel_data(struct adc5_chip *adc,
+>
+>                 ret = adc5_read(adc, ADC5_USR_REVISION1, dig_version,
+>                                                         sizeof(dig_version));
+> -               if (ret < 0) {
+> +               if (ret) {
+>                         dev_err(dev, "Invalid dig version read %d\n", ret);
+>                         return ret;
+>                 }
+
+...
+
+> +       if (of_device_is_compatible(node, "qcom,spmi-adc7"))
+> +               indio_dev->info = &adc7_info;
+> +       else
+> +               indio_dev->info = &adc5_info;
+
+Can we use driver_data?
+
+...
+
+> +       if (adcmap7_die_temp[0].x > voltage) {
+> +               *result_mdec = DIE_TEMP_ADC7_SCALE_1;
+> +               return 0;
+
+> +       } else if (adcmap7_die_temp[i].x <= voltage) {
+
+As per previous comment, redundant 'else' and please use value of i
+directly here.
+
 
 -- 
 With Best Regards,
