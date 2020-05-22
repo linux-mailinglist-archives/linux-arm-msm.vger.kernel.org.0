@@ -2,102 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3B5D1DE353
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 11:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73EF81DE38C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 11:54:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729992AbgEVJiL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 05:38:11 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:8679 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729580AbgEVJiK (ORCPT
+        id S1728267AbgEVJyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 05:54:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39262 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728249AbgEVJyv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 05:38:10 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 22 May 2020 15:08:08 +0530
-Received: from minint-dvc2thc.qualcomm.com (HELO sartgarg-linux.qualcomm.com) ([10.206.24.245])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 22 May 2020 15:08:08 +0530
-Received: by sartgarg-linux.qualcomm.com (Postfix, from userid 2339771)
-        id 35FD9179E; Fri, 22 May 2020 15:08:07 +0530 (IST)
-From:   Sarthak Garg <sartgarg@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     vbadigan@codeaurora.org, stummala@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sarthak Garg <sartgarg@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH V2 8/8] mmc: sdhci-msm: dump vendor specific registers during error
-Date:   Fri, 22 May 2020 15:02:30 +0530
-Message-Id: <1590139950-7288-9-git-send-email-sartgarg@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1590139950-7288-1-git-send-email-sartgarg@codeaurora.org>
-References: <1588838535-6050-1-git-send-email-sartgarg@codeaurora.org>
- <1590139950-7288-1-git-send-email-sartgarg@codeaurora.org>
+        Fri, 22 May 2020 05:54:51 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1FFDC061A0E;
+        Fri, 22 May 2020 02:54:50 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id v16so11913291ljc.8;
+        Fri, 22 May 2020 02:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=XzN7vQSAeKD/eMd3BXZFqaFdo1S/tdrEDVtMr2FGnLU=;
+        b=Og7+X8GsBOfeJA3VJxO9QrF+eNA1WImqglo1OAStxYRp8TU5PGXrQmNtGmN0qlyp34
+         RaxDZmB5YkfLP3SlmIT6TNWFSnle76nSJBo4/fwN8LgyJXBjkfPFCieho97KHlfsf1iM
+         mdbPjltolPJBj6iROxZsLe7NtGT37gpt6jsIgbGVYgonW2hN1Wy3V9EuZaU2iQ61t0lo
+         OAvVy7v3ekVESgM1gcZZ/fglsARr2nC4a5Qni0+5BI467TUO23O0cxWPCNgOWO0VBEH+
+         uOzLY+dAnO5mKK8l2wQ32FuDjQrLZXbLh9J311jODurfsqOzjMrSQ3yWJxZzRW38uoP2
+         5+gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :date:message-id:mime-version;
+        bh=XzN7vQSAeKD/eMd3BXZFqaFdo1S/tdrEDVtMr2FGnLU=;
+        b=O0C/8HTIl5JXNT4S5KnIgKZafH3qzuFh4Yw8+2VJ5h9TUmnF/czN8zQfIWtKBfNpF2
+         H3Dk3AU8PXgGj7daazYcbyIFkmnCiRL2LySj15FyK9qYbvuvO9E463GKS6WTYy+Wrb8l
+         G2yiuoCYzDEgt/JWEJPorbVzOrnxotgMVtQ+m6CuoXqxApW1E4wQ+wTfEW8ChHkiNbyb
+         wdOcUOT5ujAg3mn+8Yj3Zm3vtfqkqerDrCAVWNhpIKPDg4wNxIgpgOb17W9yp8XdWWb5
+         +Oms7UTD2eYIEwucn22qlfDY0sO1unqPGf4IgBNSrnijQvUd1vqlWwt86iJsgVgg9SQ/
+         NhwQ==
+X-Gm-Message-State: AOAM530OO+KeFxgd0dXHumim5mLGsEBbIRe1GFRB9x4jvCjgOmsdTWbZ
+        6N0zbo8Mwyt4g7LPP6zvuOs=
+X-Google-Smtp-Source: ABdhPJxls6sqBFx9as0rTD7ea7wRBsOpMahmM8dx899ivTV953sT8LrHdqpRnsVfBCHXJSWevqBg9Q==
+X-Received: by 2002:a2e:980d:: with SMTP id a13mr7372013ljj.277.1590141288728;
+        Fri, 22 May 2020 02:54:48 -0700 (PDT)
+Received: from saruman (91-155-214-58.elisa-laajakaista.fi. [91.155.214.58])
+        by smtp.gmail.com with ESMTPSA id o23sm2655294lfg.0.2020.05.22.02.54.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 22 May 2020 02:54:47 -0700 (PDT)
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        jackp@codeaurora.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: Re: [PATCH v2 0/3] Re-introduce TX FIFO resize for larger EP bursting
+In-Reply-To: <1590050169-30747-1-git-send-email-wcheng@codeaurora.org>
+References: <1590050169-30747-1-git-send-email-wcheng@codeaurora.org>
+Date:   Fri, 22 May 2020 12:54:25 +0300
+Message-ID: <87o8qgwazy.fsf@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement dump_vendor_registers host operation to print the
-vendor specific registers in addition to standard SDHC
-register during error conditions.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
-Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
----
- drivers/mmc/host/sdhci-msm.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+Wesley Cheng <wcheng@codeaurora.org> writes:
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 61cf0f1..95cd973 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1874,6 +1874,36 @@ static void sdhci_msm_reset(struct sdhci_host *host, u8 mask)
- 	sdhci_reset(host, mask);
- }
- 
-+#define DRIVER_NAME "sdhci_msm"
-+#define SDHCI_MSM_DUMP(f, x...) \
-+	pr_err("%s: " DRIVER_NAME ": " f, mmc_hostname(host->mmc), ## x)
-+
-+void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
-+
-+	SDHCI_MSM_DUMP("----------- VENDOR REGISTER DUMP -----------\n");
-+
-+	SDHCI_MSM_DUMP(
-+			"DLL sts: 0x%08x | DLL cfg:  0x%08x | DLL cfg2: 0x%08x\n",
-+		readl_relaxed(host->ioaddr + msm_offset->core_dll_status),
-+		readl_relaxed(host->ioaddr + msm_offset->core_dll_config),
-+		readl_relaxed(host->ioaddr + msm_offset->core_dll_config_2));
-+	SDHCI_MSM_DUMP(
-+			"DLL cfg3: 0x%08x | DLL usr ctl:  0x%08x | DDR cfg: 0x%08x\n",
-+		readl_relaxed(host->ioaddr + msm_offset->core_dll_config_3),
-+		readl_relaxed(host->ioaddr + msm_offset->core_dll_usr_ctl),
-+		readl_relaxed(host->ioaddr + msm_offset->core_ddr_config));
-+	SDHCI_MSM_DUMP(
-+			"Vndr func: 0x%08x | Vndr func2 : 0x%08x Vndr func3: 0x%08x\n",
-+		readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec),
-+		readl_relaxed(host->ioaddr +
-+			msm_offset->core_vendor_spec_func2),
-+		readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec3));
-+}
-+
- static const struct sdhci_msm_variant_ops mci_var_ops = {
- 	.msm_readl_relaxed = sdhci_msm_mci_variant_readl_relaxed,
- 	.msm_writel_relaxed = sdhci_msm_mci_variant_writel_relaxed,
-@@ -1929,6 +1959,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
- 	.write_w = sdhci_msm_writew,
- 	.write_b = sdhci_msm_writeb,
- 	.irq	= sdhci_msm_cqe_irq,
-+	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
- };
- 
- static const struct sdhci_pltfm_data sdhci_msm_pdata = {
--- 
-2.7.4
+> Changes in V2:
+>  - Modified TXFIFO resizing logic to ensure that each EP is reserved a
+>    FIFO.
+>  - Removed dev_dbg() prints and fixed typos from patches
+>  - Added some more description on the dt-bindings commit message
+>
+> Reviewed-by: Felipe Balbi <balbi@kernel.org>
 
+I don't remember giving you a Reviewed-by, did I?
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl7HoVEACgkQzL64meEa
+mQZY/hAAobcsEW4IFsU2bxTrcCRnV6RQNz20bIfxZRKcyKquzoBrV66YyGxsyE+t
+egAiLviJmCxwGdOzOSdHETrrG6HequyOGzwoux/HrGre/OCJqmrh6WnJPunPIqg3
+hzYN9Jos3yFDZUUi8KPoYeS88Ke//VKXXKEwKdAyKFrB1BO2+elWtfMexyDluxlk
+oZggbGmDVlenHL2/IUrxs6EvkL1ry1ogAa5U97hwwAJApJhjqKDTswoJJvvnm+e5
+01pkLPgvD+GWOHKV+zMQ5CnjVc+cVtpTqcQJ3FY+7cbkHgzOcnb2ANgn0gygK68w
+ljUf0kopym3Y3uAuEnRzIUdrLZMjwiDepXQb2Q1hoC6sS0ptO3Qso1SFRwGsCiNR
+9ocFjCios7dA8obaELDLXMwS3B0dfMW7HR2SFgeVQ9btB00ZYNMyAqE0yMcnhdHv
+Er+5fCcHy9ObwYoXbhI30eA64rn1+KBpyJo1UMh1XLoo3Z3ON/nuI/ozaBs7xexb
+4OPsf5E4CnkPSSqBpHG1ukGU7uHyEla/lwKCIBteb0iuX2LO+kn5G3tkcd0vBrua
+ceZmOk7UDMcYFN8jGNpitKqtrCuhiMn1UpGqdEySJYh40hI92lkAv3/brvouU8Pz
+C5R4GNwFrHqYHozr+39cQAX7BKDKoJ7hvzAjIllw4t2Lzum6OEc=
+=pWoV
+-----END PGP SIGNATURE-----
+--=-=-=--
