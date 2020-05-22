@@ -2,135 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09D701DF1DC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 00:30:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FCC21DF23C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 00:45:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731159AbgEVWaq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 18:30:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44038 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731029AbgEVWap (ORCPT
+        id S1731122AbgEVWpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 18:45:13 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:40279 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731029AbgEVWpM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 18:30:45 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF48EC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 15:30:44 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id v79so2230269qkb.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 15:30:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+SSfZ9IdBClHLXK3pfg1yXkNX5wz/8jpNFyfhF/pEsw=;
-        b=MtLePMPE37iKUqsdbm0WI0hZpMobQwNowF1YqzxZnkYGg8jCoFbmpzz0//yIRCnLGN
-         w46JzPzlw6YLUbAFhFo3jYibwkOrEugtULj1tlH7wBQjj/NoLByH3rRDMOhpf4QCu2OC
-         7vZXitKqyXM/mbgU713y0LHxjS4tP93m47sM+O6mfGxVs/2uyN9A2Ag1pVMtPZjy+lXY
-         jJ/z2rxdpJI7w0vjRkHx03Qav8Pi1+S2eNs84TeqOaWV90KpnNUapsPnmu7bsV++CVgR
-         bWGaiVyay3ePM2ReDShlAmJb6wnY5Og1MZXP0CKM0vAoYvJDIG5AYA7ZS7UfkSu/uhCf
-         ppqg==
+        Fri, 22 May 2020 18:45:12 -0400
+Received: by mail-pl1-f193.google.com with SMTP id t16so4993484plo.7;
+        Fri, 22 May 2020 15:45:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+SSfZ9IdBClHLXK3pfg1yXkNX5wz/8jpNFyfhF/pEsw=;
-        b=Wgqv77NS/zrGoO5VVsMFKbWQbTVJDxrI0ZWY/etgwuIPBddt+ujfqc9O8RXr9L5OI1
-         VwIdUU/N+fKMGDdXN9HT/vdaqUXUKjPXJLvt4qj06C+gx0Aow6pyURM8jAPL1cw8OauC
-         bU9VgmrD8a1Go9NbNpyBe94IM4r4vymsFPuEhPooQMja7HWmxDhpRhC/MG8RhmR1a0pd
-         XL7vnoURX/1ObJa+3M1TpCgHnKMyS62aKxc0H8GUceKXplaAKgwPdZLHMoJycvzWlxRT
-         vVn+mPAOHda7osyZ1GEUm+h3s97iiu8n5/3DZNqrmRy4GzpyB7ecMpc9ttFFMPTn58G3
-         6cqg==
-X-Gm-Message-State: AOAM533o1GY0yOHULKlJhLpW+tjTr/rAsZT7m0x6yCc2Bm39I8Q1GS+g
-        RsO/t9pvdLdM84vP0lry866Tnw==
-X-Google-Smtp-Source: ABdhPJzAnLLFpegQtoCoMHFW91a6ZzaBMIso6a0e2wpumt9qbPxo0WGAnu7uCpmn8mWsPKd33gg68Q==
-X-Received: by 2002:a37:b3c7:: with SMTP id c190mr16615709qkf.466.1590186644182;
-        Fri, 22 May 2020 15:30:44 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id l184sm8416876qkf.84.2020.05.22.15.30.43
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8g5iMWxUv50Vq/9o6YUA17pf5mu6Tfr8Vt6J3G1KMjw=;
+        b=A48DfZACU6Vqs1oq6gaNH3JqB6pRStANuGrdXRKhBDkbSBJhSuLYH8vI7q5hxayJj7
+         FpiFv8kWpoDnDVCSR4SF3SW0+meGSh90Wucd9F75eB/+8Wydmj8VOVUtAxTYy1PAzW+c
+         ue8Eepi5aqdat7ZhoNX+BCWeYjiepKmPYVT721x1Z9W4HRKe5MnGTWf+tIvdT7lHH9k/
+         aLcZB+8JZyP+sMe88ZKeda6uu5tqGziKTdX/fXfqvuDHf8iO+4rj+8EIG/a3xyYOwIeA
+         OkPPcUgXO29I1GWi8kn8YuQe/9TzbSSGiKNvp9rmGitCuJasK3HWHaK5YnzqR9vi5xC9
+         3Ezg==
+X-Gm-Message-State: AOAM530pric/CTYV5GTprqRUXmuvadwZiEySlABAPm4TVRdrAibeblrh
+        M/JIynqAvydEeibOgcG40+s=
+X-Google-Smtp-Source: ABdhPJxPnLaXKZi6piF1gumOCdvZvC04BxRzx6RSexsCidM2Ze9jl64zKzSemvH8XBSCIcZQgl3Jng==
+X-Received: by 2002:a17:90a:4f42:: with SMTP id w2mr7268999pjl.74.1590187510516;
+        Fri, 22 May 2020 15:45:10 -0700 (PDT)
+Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
+        by smtp.gmail.com with ESMTPSA id x191sm3798942pfd.37.2020.05.22.15.45.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2020 15:30:43 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     freedreno@lists.freedreno.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2] drm/msm/a6xx: skip HFI set freq if GMU is powered down
-Date:   Fri, 22 May 2020 18:29:08 -0400
-Message-Id: <20200522222909.27260-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20200522221159.GA20960@jcrouse1-lnx.qualcomm.com>
-References: <20200522221159.GA20960@jcrouse1-lnx.qualcomm.com>
+        Fri, 22 May 2020 15:45:09 -0700 (PDT)
+Received: by 42.do-not-panic.com (Postfix, from userid 1000)
+        id 4908B40321; Fri, 22 May 2020 22:45:08 +0000 (UTC)
+Date:   Fri, 22 May 2020 22:45:08 +0000
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH] firmware_loader: change enum fw_opt to u32
+Message-ID: <20200522224508.GE11244@42.do-not-panic.com>
+References: <20200522214658.12722-1-scott.branden@broadcom.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200522214658.12722-1-scott.branden@broadcom.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Also skip the newly added HFI set freq path if the GMU is powered down,
-which was missing because of patches crossing paths.
+On Fri, May 22, 2020 at 02:46:58PM -0700, Scott Branden wrote:
+>  
+>  /**
+> - * enum fw_opt - options to control firmware loading behaviour
+> + * fw_opt - options to control firmware loading behaviour
+>   *
+>   * @FW_OPT_UEVENT: Enables the fallback mechanism to send a kobject uevent
+>   *	when the firmware is not found. Userspace is in charge to load the
+> @@ -33,15 +33,13 @@
+>   *	the platform's main firmware. If both this fallback and the sysfs
+>   *      fallback are enabled, then this fallback will be tried first.
+>   */
+> -enum fw_opt {
+> -	FW_OPT_UEVENT			= BIT(0),
+> -	FW_OPT_NOWAIT			= BIT(1),
+> -	FW_OPT_USERHELPER		= BIT(2),
+> -	FW_OPT_NO_WARN			= BIT(3),
+> -	FW_OPT_NOCACHE			= BIT(4),
+> -	FW_OPT_NOFALLBACK_SYSFS		= BIT(5),
+> -	FW_OPT_FALLBACK_PLATFORM	= BIT(6),
+> -};
+> +#define FW_OPT_UEVENT			BIT(0)
+> +#define FW_OPT_NOWAIT			BIT(1)
+> +#define FW_OPT_USERHELPER		BIT(2)
+> +#define FW_OPT_NO_WARN			BIT(3)
+> +#define FW_OPT_NOCACHE			BIT(4)
+> +#define FW_OPT_NOFALLBACK_SYSFS		BIT(5)
+> +#define FW_OPT_FALLBACK_PLATFORM	BIT(6)
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Everything looked good up to here. The enum defines each flag.
+We just want to use an enum for *one* flag represetnation, not
+a bundle.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 67c58345b26a..9851367a88cd 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -110,13 +110,6 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
- 	struct msm_gpu *gpu = &adreno_gpu->base;
- 	int ret;
- 
--	/*
--	 * This can get called from devfreq while the hardware is idle. Don't
--	 * bring up the power if it isn't already active
--	 */
--	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
--		return;
--
- 	gmu_write(gmu, REG_A6XX_GMU_DCVS_ACK_OPTION, 0);
- 
- 	gmu_write(gmu, REG_A6XX_GMU_DCVS_PERF_SETTING,
-@@ -141,7 +134,6 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
- 	 * for now leave it at max so that the performance is nominal.
- 	 */
- 	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
--	pm_runtime_put(gmu->dev);
- }
- 
- void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
-@@ -159,13 +151,21 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
- 			break;
- 
- 	gmu->current_perf_index = perf_index;
-+	gmu->freq = gmu->gpu_freqs[perf_index];
-+
-+	/*
-+	 * This can get called from devfreq while the hardware is idle. Don't
-+	 * bring up the power if it isn't already active
-+	 */
-+	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
-+		return;
- 
- 	if (gmu->legacy)
- 		__a6xx_gmu_set_freq(gmu, perf_index);
- 	else
- 		a6xx_hfi_set_freq(gmu, perf_index);
- 
--	gmu->freq = gmu->gpu_freqs[perf_index];
-+	pm_runtime_put(gmu->dev);
- }
- 
- unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
--- 
-2.26.1
-
+  Luis
