@@ -2,115 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB1C81DE782
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 15:01:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C91F1DE78B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 15:02:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729377AbgEVNBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 09:01:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729030AbgEVNBa (ORCPT
+        id S1729344AbgEVNCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 09:02:09 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:47069 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729334AbgEVNCI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 09:01:30 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E22CEC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 06:01:29 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e1so10082038wrt.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 06:01:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9X+6V5jDmeXTe6rS8P4JClAQNJrn6NvnpP1JB3UFEbw=;
-        b=YWkUKysrh6+PMjjUTe5ooMNLZS4Sp7v0UQTdOOQNicRmgEf860gCAhKd4iWSHOF72e
-         jm3ChkOUgSK4DLya4RvXq8yUfIpCze+gLJDZFCO4LZ3UF/6GkygmGMt2PA714u9D6mxZ
-         rWMr4jB3CzL7zvC1iQ67OD0PiS4Qu7V+BO2Suu5KcIIwI72DwK5uQcICLhezjVyMk5Vn
-         sIZQAuSUVqZwsHPeppZrpH7ECdE5lXD/W9xgY1CaKVzQYHaQwovjjZBDCk8UtXE0kNyo
-         6bgxeerdor9S2W1uLBNNwIUeZ3h5a3GyNaxo0wFD7IkwRsetuaB/AmgtPSqlAIsttUIn
-         1xfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9X+6V5jDmeXTe6rS8P4JClAQNJrn6NvnpP1JB3UFEbw=;
-        b=V1mNdCHue2ZxeYemfVEBuBcO69aVV3GnY9ysk0L7A785WP+93S6Oj2gKZaRwLW1brT
-         QK6H65wKBLXrDRyWMRE/7lpcIMK1Ty4XAI6Ccl2hPwodfdUzTAshV0s8VKsKRe4+9Nos
-         +dgR3WwHjWHdlHkCmAs9AERJZpEoUH6UFxvWbV6nX1EN6n01ZoK9ZiH0gSoqFG3DC5fo
-         jyuRsph3ZYZOjVQnz0E5d6tHGgvr6UEmkZirJP9LymG52zurQ30FNo3EZ2Q7195769nM
-         xtSrsByortjWl9kKpDGijTC46XqAS/ZtbJYc7+mZp6G/lqg70QTDWQWaka7Kfn3njcvd
-         +eew==
-X-Gm-Message-State: AOAM532iskdfzWnGmERKaZrf2ebBRrgK4Yj36dpNcCP27eFvSp39ccVI
-        vb72Xj/VZXPl9FrRyMGdCRShhg==
-X-Google-Smtp-Source: ABdhPJxJ8KBrYk08oALRCUqYyvoY0fMNZPijmmysUh2NVhGB194Z3PpAkmAZwdK1JrZCQ2rLDVlmOQ==
-X-Received: by 2002:a5d:4ed0:: with SMTP id s16mr3605467wrv.166.1590152488310;
-        Fri, 22 May 2020 06:01:28 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:a82f:eaec:3c49:875a? ([2a01:e34:ed2f:f020:a82f:eaec:3c49:875a])
-        by smtp.googlemail.com with ESMTPSA id 62sm8518652wrm.1.2020.05.22.06.01.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 May 2020 06:01:27 -0700 (PDT)
-Subject: Re: [PATCH v7 00/15] Add support for devices in the Energy Model
-To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200511111912.3001-1-lukasz.luba@arm.com>
- <abff69b6-b033-18e2-f380-ceccb42c6b01@linaro.org>
- <3f6652a5-ad9b-15cb-08a8-160becd3f912@arm.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <ef4b039d-b445-6ef1-8f62-00dab112e37b@linaro.org>
-Date:   Fri, 22 May 2020 15:01:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Fri, 22 May 2020 09:02:08 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590152527; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=aZcjMzyQhmF408KAg+aRhNzpY4xzo8oNxhr6p1nbQUY=; b=xV1/xTIpd6GiytgwzC3Ns1UZXI6nMlrP67slC4FHVvZ2pUz5Aa7195kowF1wM0CEcw0xJRAB
+ 0zh85nb15ZMDIRK9PVyDQdFtK3//v+VSL0/88nMEUTbzHitQ2wCM3DVr7O2Ig16TnZ6S2+o0
+ l1RG/sY2E7DGLx9amJHdB0uTEdg=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5ec7cd47.7f12840a2c38-smtp-out-n05;
+ Fri, 22 May 2020 13:01:59 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1EAC6C433CB; Fri, 22 May 2020 13:01:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-311.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 29C5BC433C6;
+        Fri, 22 May 2020 13:01:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 29C5BC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Joerg Roedel <jroedel@suse.de>
+Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Evan Green <evgreen@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] iommu: Fix group refcount in iommu_alloc_default_domain()
+Date:   Fri, 22 May 2020 18:31:45 +0530
+Message-Id: <20200522130145.30067-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <3f6652a5-ad9b-15cb-08a8-160becd3f912@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2020 14:58, Lukasz Luba wrote:
+Since the change to move default domain allocation to probe,
+there is a refcount decrement missing for the group in
+iommu_alloc_default_domain(). Because of this missing
+refcount decrement, the device is never released from the
+group as the devices_kobj refcount never reaches 0 in
+iommu_group_remove_device() leading to a lot of issues.
+One such case is that this will lead to a different group
+allocation on every reload of the module which configures
+iommu such as the ath10k module which then finally fails
+to attach this device to the SMMU with -ENOSPC error in
+__arm_smmu_alloc_bitmap() once the count of module reload
+crosses the number of context banks. This will then lead
+to NULL pointer deference in the next reload of the module.
+Add the missing refcount decrement(iommu_group_put()) in
+iommu_alloc_default_domain() to fix this issue.
 
-[ ... ]
+Call trace:
 
->>>
->>> The patch set is based on linux-next tag next-20200508.
->>
->> Do you think it is possible to respin against linux-pm next ?
-> 
-> Yes, I will do it and send the v8.
-> 
->>
->> I wanted to try the series but I'm getting non trivial conflicts with
->> the devfreq_cooling changes
->>
->>
-> 
-> Let me take care of this.
+<snip>...
+  platform wifi-firmware.0: Adding to iommu group 82
+  ath10k_snoc 18800000.wifi: could not attach device: -28
+  platform wifi-firmware.0: Removing from iommu group 82
+  ath10k_snoc 18800000.wifi: failed to initialize firmware: -28
+  ath10k_snoc: probe of 18800000.wifi failed with error -28
+  platform wifi-firmware.0: Adding to iommu group 83
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Mem abort info:
+    ESR = 0x96000006
+    EC = 0x25: DABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+  Data abort info:
+    ISV = 0, ISS = 0x00000006
+    CM = 0, WnR = 0
+  user pgtable: 4k pages, 39-bit VAs, pgdp=0000000177a53000
+  [0000000000000000] pgd=00000001e74f5003, pud=00000001e74f5003, pmd=0000000000000000
+  Internal error: Oops: 96000006 [#1] PREEMPT SMP
+  pstate: 60400009 (nZCv daif +PAN -UAO)
+  arm_smmu_flush_iotlb_all+0x20/0x6c
+  iommu_create_device_direct_mappings+0x17c/0x1d8
+  iommu_probe_device+0xc0/0x100
+  of_iommu_configure+0x108/0x240
+  of_dma_configure+0x130/0x1d0
+  ath10k_fw_init+0xc4/0x1c4 [ath10k_snoc]
+  ath10k_snoc_probe+0x5cc/0x678 [ath10k_snoc]
+  platform_drv_probe+0x90/0xb0
+  really_probe+0x134/0x2ec
+  driver_probe_device+0x64/0xfc
+  device_driver_attach+0x4c/0x6c
+  __driver_attach+0xac/0xc0
+  bus_for_each_dev+0x8c/0xd4
+  driver_attach+0x2c/0x38
+  bus_add_driver+0xfc/0x1d0
+  driver_register+0x64/0xf8
+  __platform_driver_register+0x4c/0x58
+  init_module+0x20/0x1000 [ath10k_snoc]
+  do_one_initcall+0x13c/0x2d0
+  do_init_module+0x58/0x1dc
+  load_module+0xde0/0xf10
+  __arm64_sys_finit_module+0xb0/0xe0
+  el0_svc_common+0xa4/0x154
+  el0_svc_compat_handler+0x2c/0x38
+  el0_svc_compat+0x8/0x10
+ Code: d503201f f85b8268 b4000248 f8560e74 (f9400280)
+ ---[ end trace e5c1470a584952a0 ]---
+ Kernel panic - not syncing: Fatal exception
 
-Thanks Lukasz !
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/iommu/iommu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index a4c2f122eb8b..05f7b77c432f 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1491,6 +1491,7 @@ static int iommu_alloc_default_domain(struct device *dev)
+ {
+ 	struct iommu_group *group;
+ 	unsigned int type;
++	int ret;
+ 
+ 	group = iommu_group_get(dev);
+ 	if (!group)
+@@ -1501,7 +1502,11 @@ static int iommu_alloc_default_domain(struct device *dev)
+ 
+ 	type = iommu_get_def_domain_type(dev);
+ 
+-	return iommu_group_alloc_default_domain(dev->bus, group, type);
++	ret = iommu_group_alloc_default_domain(dev->bus, group, type);
++
++	iommu_group_put(group);
++
++	return ret;
+ }
+ 
+ /**
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
