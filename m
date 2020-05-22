@@ -2,107 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F1641DE607
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 13:59:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FBEF1DE76B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 14:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729253AbgEVL7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 07:59:25 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:16478 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729204AbgEVL7Z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 07:59:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590148764; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=qGzkd9q/kRUvHdHEx2YNsWgNzPbVwMgN6G1JnaxM+Dw=; b=fs1eckSUDYaigj5WNLtbj3j1wZsEXjgqvq+MPjnNEXGb78PTLDg/bN1EVJTVVH8FjO+7SU/G
- BlFTvf8b4PstDo1GsiuyyHId7BIz17xDpboD6mDEDZdMgOWWnx3ue1F3/T29KXisG0plCoqb
- pmzdG7pfscdlJljxNPyg3RaBEJY=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ec7be9b40528fe39497defc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 22 May 2020 11:59:23
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2D845C433CB; Fri, 22 May 2020 11:59:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.102] (unknown [157.44.159.251])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jprakash)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3D0DCC433C8;
-        Fri, 22 May 2020 11:59:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3D0DCC433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
-Subject: Re: [PATCH V4 5/5] iio: adc: Clean up ADC code common to PMIC5 and
- PMIC7
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        smohanad@codeaurora.org, kgunda@codeaurora.org,
-        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org,
-        linux-iio <linux-iio@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
-References: <1589361736-816-1-git-send-email-jprakash@codeaurora.org>
- <1589361736-816-6-git-send-email-jprakash@codeaurora.org>
- <CAHp75Vf-bFfrZ7uCOnXuzT+p+itkcmkE61=ezZzN8yDFQHABdw@mail.gmail.com>
-From:   Jishnu Prakash <jprakash@codeaurora.org>
-Message-ID: <ab1d038c-5ad0-4c3b-0537-6e6512432de3@codeaurora.org>
-Date:   Fri, 22 May 2020 17:29:13 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1729047AbgEVM61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 08:58:27 -0400
+Received: from foss.arm.com ([217.140.110.172]:35140 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728898AbgEVM61 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 May 2020 08:58:27 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 07F76D6E;
+        Fri, 22 May 2020 05:58:26 -0700 (PDT)
+Received: from [10.37.12.7] (unknown [10.37.12.7])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1D8533F68F;
+        Fri, 22 May 2020 05:58:13 -0700 (PDT)
+Subject: Re: [PATCH v7 00/15] Add support for devices in the Energy Model
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200511111912.3001-1-lukasz.luba@arm.com>
+ <abff69b6-b033-18e2-f380-ceccb42c6b01@linaro.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <3f6652a5-ad9b-15cb-08a8-160becd3f912@arm.com>
+Date:   Fri, 22 May 2020 13:58:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <CAHp75Vf-bFfrZ7uCOnXuzT+p+itkcmkE61=ezZzN8yDFQHABdw@mail.gmail.com>
+In-Reply-To: <abff69b6-b033-18e2-f380-ceccb42c6b01@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Andy,
+Hi Daniel,
 
-On 5/13/2020 3:21 PM, Andy Shevchenko wrote:
-> On Wed, May 13, 2020 at 12:24 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
->> This commit includes the following changes:
->> Add a common function used for read_raw callback for
->> both PMIC5 and PMIC7 ADCs.
->> Add exit function for ADC.
->> Add info_property under adc_data to more efficiently
->> distinguish PMIC5 and PMIC7 ADCs.
-> Something happened to the editor settings. We have lines up to 72
-> (recommended) characters.
-In this case, I just meant to put each change on a different line. I'll 
-fix it in the next post.
->
-> ...
->
->> @@ -512,6 +518,7 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
->>                          &adc5_prescale_ratios[prop->prescale],
->>                          adc->data,
->>                          adc_code_volt, val);
->> +
->>                  if (ret)
->>                          return ret;
+On 5/22/20 11:43 AM, Daniel Lezcano wrote:
+> 
+> Hi Lukasz,
+> 
+> On 11/05/2020 13:18, Lukasz Luba wrote:
+>> Hi all,
 >>
-> Unrelated.
-I'll remove it in the next post.
->
+>> This patch set introduces support for devices in the Energy Model (EM)
+>> framework. It will unify the power model for thermal subsystem. It will
+>> make simpler to add support for new devices willing to use more
+>> advanced features (like Intelligent Power Allocation). Now it should
+>> require less knowledge and effort for driver developer to add e.g.
+>> GPU driver with simple energy model. A more sophisticated energy model
+>> in the thermal framework is also possible, driver needs to provide
+>> a dedicated callback function. More information can be found in the
+>> updated documentation file.
+>>
+>> First 7 patches are refactoring Energy Model framework to add support
+>> of other devices that CPUs. They change:
+>> - naming convention from 'capacity' to 'performance' state,
+>> - API arguments adding device pointer and not rely only on cpumask,
+>> - change naming when 'cpu' was used, now it's a 'device'
+>> - internal structure to maintain registered devices
+>> - update users to the new API
+>> Patch 8 updates OPP framework helper function to be more generic, not
+>> CPU specific.
+>> Patches 9-14 change devfreq cooling, dropping part of old power model and
+>> adding registration with Energy Model via exported GPL function.
+>> The last path is a simple change for Panfrost GPU driver.
+>>
+>> The patch set is based on linux-next tag next-20200508.
+> 
+> Do you think it is possible to respin against linux-pm next ?
+
+Yes, I will do it and send the v8.
+
+> 
+> I wanted to try the series but I'm getting non trivial conflicts with
+> the devfreq_cooling changes
+> 
+> 
+
+Let me take care of this.
+
+Regards,
+Lukasz
