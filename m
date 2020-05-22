@@ -2,98 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 389BC1DEC4D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 17:42:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82C1F1DECA0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 17:59:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730597AbgEVPmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 11:42:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36928 "EHLO
+        id S1730362AbgEVP71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 11:59:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729040AbgEVPmL (ORCPT
+        with ESMTP id S1730284AbgEVP7Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 11:42:11 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 197ADC061A0E;
-        Fri, 22 May 2020 08:42:11 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id w20so140963pga.6;
-        Fri, 22 May 2020 08:42:11 -0700 (PDT)
+        Fri, 22 May 2020 11:59:24 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B8ADC08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 08:59:24 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id n5so10316292wmd.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 08:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Sv9pvfwqBcoNP+skkNSWNXJEe0eEqSbnxl5w+lZkjdQ=;
-        b=CJJ/rQAmyH5meit7+76N2Fxm9Keswf6rHFRTDvyuMbB/TXK86HDjZqaA/a3t657MxK
-         fK82vSBrD/bS+kKEeE8kLng+spPeEqmL7ZYgP0Kw8sPOD9txTjhSXs+WxAgxDg0b/XB4
-         ghfRrCFCfXI/+a05B4LVXB/LruDVNfhrcBgzC1cAEfSKceA/cG2PT/L7g338We+R2lUp
-         9/ekq9tSCRdQMHWpUY+Vd0/rI6/+mJjIJuQvKDfWw8SFqPiqx+DI0zysTc0MJtNyP+nG
-         QWKbY0+S+mG5liXwUo/lPIk76easwGgn1bssO+OXAzs4Td/FP4i1IiW1Lp8RERlO/TlG
-         4LJQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=C725PFMtDiHrRc3i2SLPg6w+bs7updZxKNMHmijN1VQ=;
+        b=hFLurQd8lALxKvkgjhmKgmiDeylXFlmrAVzw0aGcvJ88fP7bTPbTzWTQ3K6czv1fjr
+         mZTlMBoViX8+tUUHcUmS3ZQTluV4WPazB50TzwBu51BomWzL4NUqzRVs0mpia3ZjaEUx
+         P/uHroqByZsgKCvV8IMoGwbwnFB89v9jmhzwTR87d87N+rh1Vqe5vR5Lx0jp4gGUpa77
+         Kl1Y0Z/z32WEcWrfUy2XIM1c1tY42XvcWReyMKitDdkEZX69gu1DPSh4bE3QyUVpvOGM
+         KkNyXcYSChYkxnI3yCnE1t0PFE00D6EMZkPwp4b7u8vOIFD/rhFkLfIeDj/JskbZOALV
+         RFKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Sv9pvfwqBcoNP+skkNSWNXJEe0eEqSbnxl5w+lZkjdQ=;
-        b=Oye84nLFuSCgzG3vvOS74VW2Oi/62JysmNiOrJpS8K7S2iC0E3aMfzbVwPvPKu4yEh
-         pOw6sdFWYlMqxvRKJ7dig4e3EqSumbFgTtBO74BJUq9dQUZTKKmS8Ua5AvJu9rPjJUKm
-         sJdUXJCJsvsN66r6X6p+jCmSyL55zod3xO2lF5IM0GH0b6ILnU55uaAw9IP6eF7zf7+3
-         G+UslFw+yB8dM8w/fNzcekkVH3W9vVJsaLYxYBomyOBd9QTleMjtXCTcWz6zP+5UOS+w
-         a6amlg3kcCudn6ogufzLQvKkfuXYGkFi+yZcA6jKLjo64ehgyFWDNalA/UZ1IF7g/q7y
-         gNxg==
-X-Gm-Message-State: AOAM533XDpe0Q90bIQ1je6oykaLm+0jsYzpvKG9bDC1rI3rHkhHXcf2j
-        VCBbprvCqsaImecGiSuf47S3eIrLuAZ+povWzWw=
-X-Google-Smtp-Source: ABdhPJyP3SHIJcjXhymTa/izkoVLtzQWvpcKPRnmcp/2hlYw/Kzosnk76+L+Mq2CZkqLOs+/GYZNzzrG4kobRmJ31/o=
-X-Received: by 2002:a63:1d4:: with SMTP id 203mr13730040pgb.74.1590162130668;
- Fri, 22 May 2020 08:42:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <1590157452-27179-1-git-send-email-jprakash@codeaurora.org>
- <1590157452-27179-4-git-send-email-jprakash@codeaurora.org> <CAHp75Vfgk0-Rye2We1A6_WTWMCK3D-WW4_T3CGPHc=-tB=6M9g@mail.gmail.com>
-In-Reply-To: <CAHp75Vfgk0-Rye2We1A6_WTWMCK3D-WW4_T3CGPHc=-tB=6M9g@mail.gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 22 May 2020 18:41:59 +0300
-Message-ID: <CAHp75VcyUtPz5GVPw16i8Jn5tGYwVnwVt-uBTMD0NuJ=TZvXjg@mail.gmail.com>
-Subject: Re: [PATCH V5 3/5] iio: adc: Add support for PMIC7 ADC
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=C725PFMtDiHrRc3i2SLPg6w+bs7updZxKNMHmijN1VQ=;
+        b=dbioXrXquWTKuMEV+iyLrQwXCcXZLj18iEHHHDTC30sRKZWY/H3U7h+uZO+9yE0Dcx
+         hcFHHe6P7Mtw9EhfSRNgsqBSP3Wyji/qI3Cbmv4Iv89jPQLxaRm/dVb7J5kOFnOn2RIs
+         OM/4FXn9mK81pJjSfwg7WJTK12roNrB4/Oc5bfHxKY/96PphL9KN/CejHPlm7mAPpqtl
+         8wIlIfiYHdSiVS5QYrJ5Naw6EknTXGERIeR1Z/3xuYt+9dJVlC5YSHozRZdKIboiGLF1
+         /p4fgjSPS7f6KAeDn97XZB6ATrePn9lE2XvRjKbNTSkRTJNd/KoOZHftzbNYSAEDyCoH
+         4d7g==
+X-Gm-Message-State: AOAM53382JgO2kVIlTVLSwJIXJXS43aGDQu6sJa+OvkCo/GGivuaLmRP
+        kGQTtE8o62/I9++zPq3ZJ3HNUg==
+X-Google-Smtp-Source: ABdhPJwd2mBNn/vXnBKaIvdZ54WGZWYcXW5tacq0foXZjFC8cUslwy55aAQDWRcbmut0Qpqx/rmVNw==
+X-Received: by 2002:a1c:64c1:: with SMTP id y184mr12491271wmb.175.1590163163023;
+        Fri, 22 May 2020 08:59:23 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:a82f:eaec:3c49:875a? ([2a01:e34:ed2f:f020:a82f:eaec:3c49:875a])
+        by smtp.googlemail.com with ESMTPSA id h196sm2065476wme.22.2020.05.22.08.59.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2020 08:59:22 -0700 (PDT)
+Subject: Re: [PATCH v5 0/3] Convert thermal bindings to yaml
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, lukasz.luba@arm.com, mka@chromium.org,
         Amit Kucheria <amit.kucheria@verdurent.com>,
-        smohanad@codeaurora.org, kgunda@codeaurora.org,
-        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org,
-        linux-iio <linux-iio@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+References: <cover.1585748882.git.amit.kucheria@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <92749181-d7a1-ce54-a685-344b0d1a3dcc@linaro.org>
+Date:   Fri, 22 May 2020 17:59:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <cover.1585748882.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 22, 2020 at 6:37 PM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> On Fri, May 22, 2020 at 5:25 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
-> >
-> > The ADC architecture on PMIC7 is changed as compared to PMIC5. The
-> > major change from PMIC5 is that all SW communication to ADC goes through
-> > PMK8350, which communicates with other PMICs through PBS when the ADC
-> > on PMK8350 works in master mode. The SID register is used to identify the
-> > PMICs with which the PBS needs to communicate. Add support for the same.
->
-> Below should be in a separate patch, but it's a bikeshedding. So, I
-> left it to maintainers to decide.
 
-> Fine with me
+Hi Amit,
 
-Fine with me *after* addressing some issues below (besides ' < 0' part).
+On 03/04/2020 09:01, Amit Kucheria wrote:
+> Hi all,
+> 
+> Here is a series splitting up the thermal bindings into 3 separate bindings
+> in YAML, one each of the sensor, cooling-device and the thermal zones.
+> 
+> A series to remove thermal.txt and change over all references to it will
+> follow shortly. Another series to fixup problems found by enforcing this
+> yaml definition across dts files will also follow.
 
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Applied. Thanks for taking the time to convert it to the yaml schema.
+
+Thanks Rob and Lukasz for the review.
+
+  -- Daniel
+
 
 -- 
-With Best Regards,
-Andy Shevchenko
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
