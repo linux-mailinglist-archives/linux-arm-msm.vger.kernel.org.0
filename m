@@ -2,145 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4149E1DE5D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 13:47:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E36821DE5FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2020 13:58:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729828AbgEVLq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 May 2020 07:46:57 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:32360 "EHLO
+        id S1728587AbgEVL6k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 May 2020 07:58:40 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:16478 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729760AbgEVLqz (ORCPT
+        by vger.kernel.org with ESMTP id S1728629AbgEVL6i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 May 2020 07:46:55 -0400
+        Fri, 22 May 2020 07:58:38 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590148015; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=ioG91ONt67Thh3+++IhEIy7PrY5ruyU1b97zWmsYRzM=; b=p6CH+vCKg2F7wQe5ICgrpKKcWyCSEMjdlQOJFegJGDh1lMLqiJnMBcRwdAO3J5UWnytnJfgr
- ZF9q9hLfSc3Lk7Zyc1lEaBn51RxGlgkpd9bQVAk6umhkNqRwos646CcQ0FbJ88ZlfUAPqQK2
- Ne5TOFaK28eOYW8NVWCP0O071p0=
+ s=smtp; t=1590148716; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=2bSS0nFqBz4iySfZO6bq+1InBVAHc8QrH0Hb9FnE1kw=; b=shEw072Gdfjk7bHamUo93HWAA0rtPN1WUGDEysnLcowKf9FtdxXwLkkK3V57fXw2xOh2uCHc
+ KnG7wa9SQozLW5xdXnGiyYwlbH4s+NSmDXsuYXkGWflkSg6cRRFKZ57qvj+ABCTsRL4mvhpx
+ AADuJKwx1+ckmdfpwQu0L4g4srg=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec7bbae.7f14944eb570-smtp-out-n01;
- Fri, 22 May 2020 11:46:54 -0000 (UTC)
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5ec7be5d7171b6d7e4df89f2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 22 May 2020 11:58:21
+ GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 96367C43395; Fri, 22 May 2020 11:46:54 +0000 (UTC)
+        id 32A51C43387; Fri, 22 May 2020 11:58:21 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
         URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from [192.168.1.102] (unknown [157.44.159.251])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: manafm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9DD86C433C6;
-        Fri, 22 May 2020 11:46:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9DD86C433C6
+        (Authenticated sender: jprakash)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C8B9C433C6;
+        Fri, 22 May 2020 11:58:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4C8B9C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=manafm@codeaurora.org
-From:   Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
-Subject: [PATCH v3 2/2] dt-bindings: thermal: tsens: Add cold interrupt support in yaml
-Date:   Fri, 22 May 2020 17:16:26 +0530
-Message-Id: <20200522114626.28834-3-manafm@codeaurora.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200522114626.28834-1-manafm@codeaurora.org>
-References: <20200522114626.28834-1-manafm@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
+Subject: Re: [PATCH V4 3/5] iio: adc: Add support for PMIC7 ADC
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        smohanad@codeaurora.org, kgunda@codeaurora.org,
+        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org,
+        linux-iio <linux-iio@vger.kernel.org>,
+        linux-arm-msm-owner@vger.kernel.org
+References: <1589361736-816-1-git-send-email-jprakash@codeaurora.org>
+ <1589361736-816-4-git-send-email-jprakash@codeaurora.org>
+ <CAHp75VedM+=+m8WF=zPpUcizgCGareYuBzUfjKwesozVSY_gKg@mail.gmail.com>
+From:   Jishnu Prakash <jprakash@codeaurora.org>
+Message-ID: <50ad0f74-22cc-c74f-afa4-df654e29bebb@codeaurora.org>
+Date:   Fri, 22 May 2020 17:28:09 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHp75VedM+=+m8WF=zPpUcizgCGareYuBzUfjKwesozVSY_gKg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add cold interrupt support for tsens in yaml.
+Hi Andy,
 
-Signed-off-by: Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
----
- .../bindings/thermal/qcom-tsens.yaml          | 42 +++++++++++++++++++
- 1 file changed, 42 insertions(+)
+On 5/13/2020 3:18 PM, Andy Shevchenko wrote:
+> On Wed, May 13, 2020 at 12:23 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+>> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
+>> major change from PMIC5 is that all SW communication to ADC goes through
+>> PMK8350, which communicates with other PMICs through PBS when the ADC
+>> on PMK8350 works in master mode. The SID register is used to identify the
+>> PMICs with which the PBS needs to communicate. Add support for the same.
+>> +#define ADC7_CONV_TIMEOUT                      msecs_to_jiffies(10)
+> ...
+>
+>> +       ret = adc5_read(adc, ADC5_USR_DIG_PARAM, buf, sizeof(buf));
+>> +       if (ret < 0)
+> Is ' < 0' part necessary?
+> Ditto for same cases in other places in the code.
+I'll fix this at all required locations in this patch in the next post.
+>
+>> +               return ret;
+> ...
+>
+>> +       switch (mask) {
+>> +       case IIO_CHAN_INFO_PROCESSED:
+>> +               ret = adc7_do_conversion(adc, prop, chan,
+>> +                                       &adc_code_volt, &adc_code_cur);
+>> +               if (ret)
+>> +                       return ret;
+>> +
+>> +               ret = qcom_adc5_hw_scale(prop->scale_fn_type,
+>> +                       &adc5_prescale_ratios[prop->prescale],
+>> +                       adc->data,
+>> +                       adc_code_volt, val);
+>> +
+>> +               if (ret)
+>> +                       return ret;
+>> +
+>> +               return IIO_VAL_INT;
+>> +       default:
+>> +               return -EINVAL;
+>> +       }
+>> +
+>> +       return 0;
+> Dead code?
+Right, I'll remove it in the next post.
+>
+> ...
+>
+>> +static int qcom_vadc7_scale_hw_calib_die_temp(
+>> +                               const struct vadc_prescale_ratio *prescale,
+>> +                               const struct adc5_data *data,
+>> +                               u16 adc_code, int *result_mdec)
+>> +{
+>> +
+>> +       int voltage, vtemp0, temp, i = ARRAY_SIZE(adcmap7_die_temp) - 1;
+> How assignment to i is useful?
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 2ddd39d96766..3592322fe172 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -52,12 +52,14 @@ properties:
-     items:
-       - description: Combined interrupt if upper or lower threshold crossed
-       - description: Interrupt if critical threshold crossed
-+      - description: Interrupt if cold threshold is crossed
- 
-   interrupt-names:
-     minItems: 1
-     items:
-       - const: uplow
-       - const: critical
-+      - const: cold
- 
-   nvmem-cells:
-     minItems: 1
-@@ -109,8 +111,10 @@ allOf:
-       properties:
-         interrupts:
-           minItems: 2
-+          maxItems: 3
-         interrupt-names:
-           minItems: 2
-+          maxItems: 3
- 
- required:
-   - compatible
-@@ -174,4 +178,42 @@ examples:
-            #qcom,sensors = <13>;
-            #thermal-sensor-cells = <1>;
-     };
-+
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example 4 (for any platform containing v2.6+ of the TSENS IP)
-+    //           (with thermal-zone):
-+    tsens4: thermal-sensor@c265000 {
-+           compatible = "qcom,sc7180-tsens", "qcom,tsens-v2";
-+           reg = <0xc265000 0x1ff>,
-+                 <0xc223000 0x1ff>;
-+
-+           interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-+                        <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>,
-+                        <GIC_SPI 501 IRQ_TYPE_EDGE_RISING>;
-+           interrupt-names = "uplow", "critical", "cold";
-+
-+           #qcom,sensors = <15>;
-+           #thermal-sensor-cells = <1>;
-+    };
-+
-+    thermal-zones {
-+            cold_thermal: cold-thermal {
-+                    polling-delay-passive = <0>;
-+                    polling-delay = <0>;
-+
-+                    thermal-sensors = <&tsens4 128>;
-+
-+                    trips {
-+                            cold-trip {
-+                                    temperature = <1>;
-+                                    hysteresis = <1>;
-+                                    type = "passive";
-+                            };
-+                    };
-+
-+                    cooling-maps {
-+                    };
-+            };
-+    };
- ...
--- 
-2.26.2
+
+I'm using it in adcmap7_die_temp[i] below, to keep it within the 
+character limit per line. I think it's more readable that way.
+
+>
+>> +       voltage = qcom_vadc_scale_code_voltage_factor(adc_code,
+>> +                               prescale, data, 1);
+>> +
+>> +       if (adcmap7_die_temp[0].x > voltage) {
+>> +               *result_mdec = DIE_TEMP_ADC7_SCALE_1;
+>> +               return 0;
+>> +       } else if (adcmap7_die_temp[i].x <= voltage) {
+> Redundant 'else'.
+The expression is different, it's adcmap7_die_temp[i] here, not 
+adcmap7_die_temp[0].
+
+>
+>> +               *result_mdec = DIE_TEMP_ADC7_MAX;
+>> +               return 0;
+>> +       }
+>> +
+>> +       for (i = 0; i < ARRAY_SIZE(adcmap7_die_temp); i++)
+>> +               if (adcmap7_die_temp[i].x > voltage)
+>> +                       break;
+>> +
+>> +       vtemp0 = adcmap7_die_temp[i - 1].x;
+>> +       voltage = voltage - vtemp0;
+>> +       temp = div64_s64(voltage * DIE_TEMP_ADC7_SCALE_FACTOR,
+>> +               adcmap7_die_temp[i - 1].y);
+>> +       temp += DIE_TEMP_ADC7_SCALE_1 + (DIE_TEMP_ADC7_SCALE_2 * (i - 1));
+>> +       *result_mdec = temp;
+>> +
+>> +       return 0;
+>> +}
+> ...
+>
+>> +#define RATIO_MAX_ADC7         0x4000
+> Hmm... Why the last is in hex? Is it related to amount of bits in the
+> hardware? Then probably better to use BIT().
+It is the upper limit reading for a ratiometric calibration measurement, 
+which is reported as a 14 bit reading. I'll change this in the next post.
+>
