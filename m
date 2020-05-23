@@ -2,155 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D32AB1DF89A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 19:13:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F6EC1DF9C4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 19:52:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388037AbgEWRMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 May 2020 13:12:01 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:18631 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387585AbgEWRL7 (ORCPT
+        id S1727123AbgEWRwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 May 2020 13:52:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54506 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726984AbgEWRwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 May 2020 13:11:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590253918; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=Xa/qM4zqWRu1/eInpOYfgqH291JWzSNfqUyeAVg2f5M=; b=s3kg3wh7Mu1EVXLdjUbnvKgQx3crZ1wBF9zAX9FE+57XsCQ0cheV8NPcgFrcfWwFkbDDDzgq
- bTAATpCN5+mHCYZDzb+oIskl+O081CdVL3+vohNMeGvPAWOqZbhRDVIzFtylZMqWg7eM/JsD
- FOnmgbAOrYKtR8H0qKuYlH3J0f0=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5ec95955.7fbc61f829d0-smtp-out-n05;
- Sat, 23 May 2020 17:11:49 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 42AB3C43391; Sat, 23 May 2020 17:11:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A9FA1C433CB;
-        Sat, 23 May 2020 17:11:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A9FA1C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     bjorn.andersson@linaro.org, maz@kernel.org,
-        linus.walleij@linaro.org, swboyd@chromium.org,
-        evgreen@chromium.org, mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v2 4/4] irqchip: qcom-pdc: Introduce irq_set_wake call
-Date:   Sat, 23 May 2020 22:41:13 +0530
-Message-Id: <1590253873-11556-5-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
+        Sat, 23 May 2020 13:52:33 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6D9C08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2020 10:52:32 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id p4so6246026qvr.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2020 10:52:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xbNXqEdiNXrvhkFc9AbifeBSEF3iF1+uuqL2sVkcP4U=;
+        b=1w5qJPmr6SeJcD+EI09b+e0KZxTY6kXeh0o6ir7Ezxu89PCZzfjKtL14HoktpHAFCo
+         UhtBSzENcfXb1t0Sreg6T2isFy2hXsjHS5R0/qtyqB8N/VbsYrnBf7Cqv8P90vLBqI7R
+         EcXjOICNe631HRNct5wKlocR0GM507aB5pFr6o8hxHDQx0LqPof0JAGa0GsIQBwRw0af
+         xdmK4Vvxq3zB+8HQQ2RjDy8YCFRlJpVOW+BvUXnnV2bFHxaoHQ0ogIVu/w2I3aDrXU4d
+         aIsCVlTtZx5F5azA7igNSp7ZThBcdtbPdZJjHhyX8CYsiUBg2oZQDyMEsToeQyXHME/t
+         ntLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xbNXqEdiNXrvhkFc9AbifeBSEF3iF1+uuqL2sVkcP4U=;
+        b=YJEAhAiRlHYHqlHqx/CvtBn321yWW85J/lVIYYXw+JIFgrVje+46BUj2zoyfxKWxTg
+         bdAYK5nQ68vYLPkkJP3x4u75DEI1GTkt862jmco8R8vwZpAtsSmJIFjLo3MY2o7f3mhC
+         hEN2GnbhmfIda7IFL3qDgdKBxQ5EHfKlYnPC9EI0YZpO/SoSYJkeQxEkBNQw6owG8tDz
+         OYRYS3sVXyT/TeJvtVqdY3loRNJ4dXr6O0F56uNJ8CQYmCk74+5+s/4JqRnLgEpz6a64
+         pbMhaomM7r4hW1p3IfSLScupZ5LSDZcDMKn0Cr6yvvpNgWgPeiAJ3xlNY797RwZiQtKu
+         o0pQ==
+X-Gm-Message-State: AOAM5314YPdXqFO6Z0chpSab/0kd9lsontyN9JEwxvxJwGGPiCdXu8g/
+        dO5EwC9bIfbaE5+4/2suEQiowRdAgz4=
+X-Google-Smtp-Source: ABdhPJxJqNc3s0k1S710OBgGWFWnNh/JFkMpuvIAPC7eSNS1lKSR6qsxIP7BSRmmL3JZAD5Irz+gIw==
+X-Received: by 2002:ad4:5282:: with SMTP id v2mr8777819qvr.167.1590256351873;
+        Sat, 23 May 2020 10:52:31 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id 80sm5147784qkl.116.2020.05.23.10.52.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 May 2020 10:52:31 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] arm64: dts: qcom: sm8250: change ufs node name to ufshc
+Date:   Sat, 23 May 2020 13:52:32 -0400
+Message-Id: <20200523175232.13721-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove irq_disable callback to allow lazy disable for pdc interrupts.
+The ufs-qcom driver checks that the name matches the androidboot.bootdevice
+parameter provided by the bootloader, which uses the name ufshc. Without
+this change UFS fails to probe.
 
-Add irq_set_wake callback that unmask interrupt in HW when drivers
-mark interrupt for wakeup. Interrupt will be cleared in HW during
-lazy disable if its not marked for wakeup.
+I think this is broken behavior from the ufs-qcom driver, but using the
+name ufshc is consistent with dts for sdm845/sm8150/etc.
 
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/irqchip/qcom-pdc.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 6ae9e1f..f7c0662 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -36,6 +36,7 @@ struct pdc_pin_region {
- 	u32 cnt;
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index e0344d3ba159..3bdce658c08a 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -309,7 +309,7 @@ uart2: serial@a90000 {
+ 			};
+ 		};
  
-+DECLARE_BITMAP(pdc_wake_irqs, PDC_MAX_IRQS);
- static DEFINE_RAW_SPINLOCK(pdc_lock);
- static void __iomem *pdc_base;
- static struct pdc_pin_region *pdc_region;
-@@ -87,22 +88,20 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
- 	raw_spin_unlock(&pdc_lock);
- }
- 
--static void qcom_pdc_gic_disable(struct irq_data *d)
-+static int qcom_pdc_gic_set_wake(struct irq_data *d, unsigned int on)
- {
- 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
--	pdc_enable_intr(d, false);
--	irq_chip_disable_parent(d);
--}
-+		return 0;
- 
--static void qcom_pdc_gic_enable(struct irq_data *d)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
-+	if (on) {
-+		pdc_enable_intr(d, true);
-+		irq_chip_enable_parent(d);
-+		set_bit(d->hwirq, pdc_wake_irqs);
-+	} else {
-+		clear_bit(d->hwirq, pdc_wake_irqs);
-+	}
- 
--	pdc_enable_intr(d, true);
--	irq_chip_enable_parent(d);
-+	return irq_chip_set_wake_parent(d, on);
- }
- 
- static void qcom_pdc_gic_mask(struct irq_data *d)
-@@ -110,6 +109,9 @@ static void qcom_pdc_gic_mask(struct irq_data *d)
- 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
- 		return;
- 
-+	if (!test_bit(d->hwirq, pdc_wake_irqs))
-+		pdc_enable_intr(d, false);
-+
- 	irq_chip_mask_parent(d);
- }
- 
-@@ -118,6 +120,7 @@ static void qcom_pdc_gic_unmask(struct irq_data *d)
- 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
- 		return;
- 
-+	pdc_enable_intr(d, true);
- 	irq_chip_unmask_parent(d);
- }
- 
-@@ -197,15 +200,13 @@ static struct irq_chip qcom_pdc_gic_chip = {
- 	.irq_eoi		= irq_chip_eoi_parent,
- 	.irq_mask		= qcom_pdc_gic_mask,
- 	.irq_unmask		= qcom_pdc_gic_unmask,
--	.irq_disable		= qcom_pdc_gic_disable,
--	.irq_enable		= qcom_pdc_gic_enable,
- 	.irq_get_irqchip_state	= qcom_pdc_gic_get_irqchip_state,
- 	.irq_set_irqchip_state	= qcom_pdc_gic_set_irqchip_state,
- 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
- 	.irq_set_type		= qcom_pdc_gic_set_type,
-+	.irq_set_wake		= qcom_pdc_gic_set_wake,
- 	.flags			= IRQCHIP_MASK_ON_SUSPEND |
--				  IRQCHIP_SET_TYPE_MASKED |
--				  IRQCHIP_SKIP_SET_WAKE,
-+				  IRQCHIP_SET_TYPE_MASKED,
- 	.irq_set_vcpu_affinity	= irq_chip_set_vcpu_affinity_parent,
- 	.irq_set_affinity	= irq_chip_set_affinity_parent,
- };
+-		ufs_mem_hc: ufs@1d84000 {
++		ufs_mem_hc: ufshc@1d84000 {
+ 			compatible = "qcom,sm8250-ufshc", "qcom,ufshc",
+ 				     "jedec,ufs-2.0";
+ 			reg = <0 0x01d84000 0 0x3000>;
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.1
+
