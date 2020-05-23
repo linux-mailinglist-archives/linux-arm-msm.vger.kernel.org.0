@@ -2,100 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84AE41DF505
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 07:40:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98B9B1DF511
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 08:05:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387590AbgEWFka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 May 2020 01:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53914 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387626AbgEWFka (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 May 2020 01:40:30 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1368C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 22:40:28 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id d3so5273489pln.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 22:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Jxqs63Z1KDKQGpOdOeQMTViZZkGnReSqlh+zqFpbleQ=;
-        b=NpzpEoKHZnmldpoPMkE+bzHJ8AFM3iTtY/iE5mkL1vDY50VUOrfKjd5gNaVtnOTlYl
-         sMm3Lsly+RCq/jcCZIgneJXFg3cxvGAMX9Fuw3b/sfc0jgJoEQw7ZUNcuBEGAWuTKV9y
-         W6t//DvWTOky7bm6ofj60Me4iszhpqG7zHs0PputqOWVYAZq4Eh910LHpYktU7aMDH5R
-         P4Pjsl7KGL7evuGTo+s3GFfOvp4R9aTBAuuncQd7yo1GTkayDyAmZU05qET54wygA2K2
-         jqjx+Hpx2nfdM85Ga85d6wO/WJRWE7KylRwZS56KjtsnffzSDaWPhtUEVXKG28naajR+
-         9iYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Jxqs63Z1KDKQGpOdOeQMTViZZkGnReSqlh+zqFpbleQ=;
-        b=dQVzXnat+tIKBuf5jdOdUBwxZxx0h5B2gIq1inZySFe3/fMDrFG1qzBug0ihPBUCCT
-         CKWqhf3slQWwtq2xOQUnM2BAsYON2CLgBr7JSG6vF6Mrs6I5HteMhOW2NcoW5lYt1Yus
-         H/AvAnVXPUfK3BbTYRXUWNMQkx52i5UjTEV80/IeaZKg9xYbtlvcpevyvtGWJMyq5rqz
-         i2yr0U5lBz0kTv5AFkEHnlHoWj58WObQ802U3gzrOVC35tLVQOhuRwFeBcCPw11DTG3S
-         jjkbe8/wvlMuqbiPaKqM0XLdR80HnwZ09IAfZfOTQZ7MMEyyiUGlGS3UiNGYQEdOy5EK
-         inbA==
-X-Gm-Message-State: AOAM531aFsd9L7AMInTvtL7KIAfvn43oJVDtYl6cTmJfLW00oYlYstBI
-        0UQt1JNxbV9vqaCy+REITEGxlw==
-X-Google-Smtp-Source: ABdhPJzrIIxev5YLq7j06KRiNYHqrMaVzvotEBa13813oXSRwPO34UqHwh/8/IsfG3JFW0nxQhyE8Q==
-X-Received: by 2002:a17:90a:8c85:: with SMTP id b5mr8201260pjo.187.1590212428371;
-        Fri, 22 May 2020 22:40:28 -0700 (PDT)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l3sm8426994pjb.39.2020.05.22.22.40.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2020 22:40:27 -0700 (PDT)
-Date:   Fri, 22 May 2020 22:40:25 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: enable pm8150 rtc
-Message-ID: <20200523054025.GL11847@yoga>
-References: <20200523041201.32065-1-jonathan@marek.ca>
+        id S2387466AbgEWGFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 May 2020 02:05:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39240 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387446AbgEWGFx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 23 May 2020 02:05:53 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CACD42072C;
+        Sat, 23 May 2020 06:05:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1590213952;
+        bh=C1Z/ykijQkXEDxKuat87W9+yNZvMZvP4bUwTmC+spjs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XjXxc9dw7SZ93/g6KObshDL9/6CkEB6mKSTSZ0Ay1pyfblZRRPVDdr5XCf3rvjT4J
+         gv58zQ1jkBmwl7eR3xCk35Sw0+etCsWgN0yMuhc3uZ3/Ipa0tfg+XZB7B15nB2PsQQ
+         8pwI3oHK1JDr5D4U8WMzN86Uiy8HFHwtVoTws6jQ=
+Date:   Sat, 23 May 2020 08:05:48 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Luis Chamberlain <mcgrof@kernel.org>
+Cc:     Scott Branden <scott.branden@broadcom.com>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH] firmware_loader: change enum fw_opt to u32
+Message-ID: <20200523060548.GA3124611@kroah.com>
+References: <20200522214658.12722-1-scott.branden@broadcom.com>
+ <20200522224508.GE11244@42.do-not-panic.com>
+ <d87aabd0-1195-64ae-d871-b0771be832a8@broadcom.com>
+ <20200522230025.GG11244@42.do-not-panic.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20200523041201.32065-1-jonathan@marek.ca>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200522230025.GG11244@42.do-not-panic.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 22 May 21:12 PDT 2020, Jonathan Marek wrote:
-
-> I don't see any reason for it to be disabled by default.
+On Fri, May 22, 2020 at 11:00:25PM +0000, Luis Chamberlain wrote:
+> On Fri, May 22, 2020 at 03:49:05PM -0700, Scott Branden wrote:
+> > Hi Luis,
+> > 
+> > On 2020-05-22 3:45 p.m., Luis Chamberlain wrote:
+> > > On Fri, May 22, 2020 at 02:46:58PM -0700, Scott Branden wrote:
+> > > >   /**
+> > > > - * enum fw_opt - options to control firmware loading behaviour
+> > > > + * fw_opt - options to control firmware loading behaviour
+> > > >    *
+> > > >    * @FW_OPT_UEVENT: Enables the fallback mechanism to send a kobject uevent
+> > > >    *	when the firmware is not found. Userspace is in charge to load the
+> > > > @@ -33,15 +33,13 @@
+> > > >    *	the platform's main firmware. If both this fallback and the sysfs
+> > > >    *      fallback are enabled, then this fallback will be tried first.
+> > > >    */
+> > > > -enum fw_opt {
+> > > > -	FW_OPT_UEVENT			= BIT(0),
+> > > > -	FW_OPT_NOWAIT			= BIT(1),
+> > > > -	FW_OPT_USERHELPER		= BIT(2),
+> > > > -	FW_OPT_NO_WARN			= BIT(3),
+> > > > -	FW_OPT_NOCACHE			= BIT(4),
+> > > > -	FW_OPT_NOFALLBACK_SYSFS		= BIT(5),
+> > > > -	FW_OPT_FALLBACK_PLATFORM	= BIT(6),
+> > > > -};
+> > > > +#define FW_OPT_UEVENT			BIT(0)
+> > > > +#define FW_OPT_NOWAIT			BIT(1)
+> > > > +#define FW_OPT_USERHELPER		BIT(2)
+> > > > +#define FW_OPT_NO_WARN			BIT(3)
+> > > > +#define FW_OPT_NOCACHE			BIT(4)
+> > > > +#define FW_OPT_NOFALLBACK_SYSFS		BIT(5)
+> > > > +#define FW_OPT_FALLBACK_PLATFORM	BIT(6)
+> > > Everything looked good up to here. The enum defines each flag.
+> > > We just want to use an enum for *one* flag represetnation, not
+> > > a bundle.
+> >
+> > I do not know exactly what you are looking for then.  The FW_OPT_*
+> > values are OR'd together in the code.  You still want the fw_opt enum
+> > above left in place entirely and then the values used in OR'd
+> > together?
 > 
+> Yes, exactly. If they are combined then we just use a u32 to represent
+> these are then flags combined. An enum represents just *one* flag, not
+> a set which are OR'd together. Let me know if this is still not clear.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+If this is the case, why have an enum at all?  What difference is it
+from a #define like was done here?
 
-Regards,
-Bjorn
+thanks,
 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  arch/arm64/boot/dts/qcom/pm8150.dtsi | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> index c0b197458665..b738c263f9d1 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> @@ -64,8 +64,6 @@ rtc@6000 {
->  			reg = <0x6000>;
->  			reg-names = "rtc", "alarm";
->  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-> -
-> -			status = "disabled";
->  		};
->  
->  		pm8150_gpios: gpio@c000 {
-> -- 
-> 2.26.1
-> 
+greg k-h
