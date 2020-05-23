@@ -2,132 +2,365 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A781DF671
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 11:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F87A1DF71A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 14:08:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387704AbgEWJnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 May 2020 05:43:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46598 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725268AbgEWJnA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 May 2020 05:43:00 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DBC35206DD;
-        Sat, 23 May 2020 09:42:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590226980;
-        bh=hj2/MZNt9a5rifdy8Xt84AYjhMeZP/OYOP04fmwQbhg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ARG81cTbzmoJuaL93XUXGM6BmTzp9SKNDIDONRvPP+bcfpwZE3IwH9YwFQN7JVUXE
-         cGS7MoKD2fLp5M/WZPz2mHh2JxvFEzqpAXfhUdws/vFEzbGa4WSFYCCm4XqU60wir5
-         b7ZQlQUbsc3O9F1R8weu+eVZ7D90i0nsT8BcEsWY=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1jcQgE-00EiXE-9o; Sat, 23 May 2020 10:42:58 +0100
+        id S1731236AbgEWMIV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 May 2020 08:08:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57304 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728749AbgEWMIU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 23 May 2020 08:08:20 -0400
+Received: from mo6-p00-ob.smtp.rzone.de (mo6-p00-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5300::7])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40A0EC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2020 05:08:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590235697;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=s+DDeN7Fa3RElZaggWeORknZybThelFqBOZQPDuPOHM=;
+        b=rteVZ3dY/Ksk7urNYZmcK6ZvwqaRvPbXS7R1zR/XCyMoJbk+VwhQv0SGYoWeWpP7uF
+        tJA6gV7SCakIcL+iTlW0uCTFE80r16HnGjBZKiaozFmuogJ8kZaTshlRzos9fAoGyn83
+        Em8N45MdjNyz6HMzY0Wm8nYOUKul8JBXUMpUbrCqcS0RSJX9vh6fwy1xlWGAIWIfPRHz
+        sW+e7+lPBK55kOCmFWcULzs8HKAF4J1iaAel5irPyZxQx7uXO+i//K0TVq+fgmmj+IhM
+        s/cja1iYqWkKOY5UodY1YT4BSGiKeqxpwI6fpROEHtTfIs1koZxpiC05q+X9NoCQMWjY
+        AcTA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j6IczFaoo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.7.0 DYNA|AUTH)
+        with ESMTPSA id C07db0w4NC8GLGw
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Sat, 23 May 2020 14:08:16 +0200 (CEST)
+Date:   Sat, 23 May 2020 14:08:10 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200523120810.GA166540@gerhold.net>
+References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+ <20200402081349.GA932@gerhold.net>
+ <20200403013119.GB20625@builder.lan>
+ <20200403100923.GB2652@gerhold.net>
+ <20200403175934.GA96064@gerhold.net>
+ <20200423045506.GJ987656@yoga>
+ <20200426123140.GA190483@gerhold.net>
+ <20200506211801.GA165066@gerhold.net>
+ <20200507104603.GA581328@gerhold.net>
+ <20200521191809.GA253181@gerhold.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Sat, 23 May 2020 10:42:58 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, linus.walleij@linaro.org,
-        swboyd@chromium.org, evgreen@chromium.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-Subject: Re: [PATCH 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
-In-Reply-To: <1590153569-21706-2-git-send-email-mkshah@codeaurora.org>
-References: <1590153569-21706-1-git-send-email-mkshah@codeaurora.org>
- <1590153569-21706-2-git-send-email-mkshah@codeaurora.org>
-User-Agent: Roundcube Webmail/1.4.4
-Message-ID: <5888fc645d26b4780e9d9c6fd582374f@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: mkshah@codeaurora.org, bjorn.andersson@linaro.org, linus.walleij@linaro.org, swboyd@chromium.org, evgreen@chromium.org, mka@chromium.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de, jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200521191809.GA253181@gerhold.net>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-22 14:19, Maulik Shah wrote:
-> With 'commit 461c1a7d4733 ("gpiolib: override irq_enable/disable")' 
-> gpiolib
-> overrides irqchip's irq_enable and irq_disable callbacks. If 
-> irq_disable
-> callback is implemented then genirq takes unlazy path to disable irq.
-> 
-> Underlying irqchip may not want to implement irq_disable callback to 
-> lazy
-> disable irq when client drivers invokes disable_irq(). By overriding
-> irq_disable callback, gpiolib ends up always unlazy disabling IRQ.
-> 
-> Allow gpiolib to lazy disable IRQs by overriding irq_disable callback 
-> only
-> if irqchip implemented irq_disable. In cases where irq_disable is not
-> implemented irq_mask is overridden. Similarly override irq_enable 
-> callback
-> only if irqchip implemented irq_enable otherwise irq_unmask is 
-> overridden.
-> 
-> Fixes: 461c1a7d47 (gpiolib: override irq_enable/disable)
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> ---
->  drivers/gpio/gpiolib.c      | 59 
-> +++++++++++++++++++++++++++++----------------
->  include/linux/gpio/driver.h | 13 ++++++++++
->  2 files changed, 51 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> index eaa0e20..a8fdc74 100644
-> --- a/drivers/gpio/gpiolib.c
-> +++ b/drivers/gpio/gpiolib.c
-> @@ -2465,33 +2465,38 @@ static void gpiochip_irq_relres(struct irq_data 
-> *d)
->  	gpiochip_relres_irq(gc, d->hwirq);
->  }
-> 
-> +static void gpiochip_irq_mask(struct irq_data *d)
-> +{
-> +	struct gpio_chip *chip = irq_data_get_irq_chip_data(d);
-> +
-> +	if (chip->irq.irq_mask)
-> +		chip->irq.irq_mask(d);
-> +	gpiochip_disable_irq(chip, d->hwirq);
-> +}
-> +
-> +static void gpiochip_irq_unmask(struct irq_data *d)
-> +{
-> +	struct gpio_chip *chip = irq_data_get_irq_chip_data(d);
-> +
-> +	gpiochip_enable_irq(chip, d->hwirq);
-> +	if (chip->irq.irq_unmask)
-> +		chip->irq.irq_unmask(d);
-> +}
-> +
->  static void gpiochip_irq_enable(struct irq_data *d)
->  {
->  	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-> 
-> -	gpiochip_enable_irq(gc, d->hwirq);
-> -	if (gc->irq.irq_enable)
-> -		gc->irq.irq_enable(d);
-> -	else
-> -		gc->irq.chip->irq_unmask(d);
-> +	gpiochip_enable_irq(chip, d->hwirq);
++Cc Stephen Boyd, Georgi Djakov
 
-You really never compiled this, did you?
+On Thu, May 21, 2020 at 09:18:14PM +0200, Stephan Gerhold wrote:
+> On Thu, May 07, 2020 at 12:46:08PM +0200, Stephan Gerhold wrote:
+> > On Wed, May 06, 2020 at 11:18:07PM +0200, Stephan Gerhold wrote:
+> > > Hi,
+> > > 
+> > > On Sun, Apr 26, 2020 at 02:31:48PM +0200, Stephan Gerhold wrote:
+> > > > On Wed, Apr 22, 2020 at 09:55:06PM -0700, Bjorn Andersson wrote:
+> > > > > On Fri 03 Apr 11:00 PDT 2020, Stephan Gerhold wrote:
+> > > > > 
+> > > > > > On Fri, Apr 03, 2020 at 12:09:25PM +0200, Stephan Gerhold wrote:
+> > > > > > > On Thu, Apr 02, 2020 at 06:31:19PM -0700, Bjorn Andersson wrote:
+> > > > > > > > On Thu 02 Apr 01:13 PDT 2020, Stephan Gerhold wrote:
+> > > > > > > > 
+> > > > > > > > > Hi,
+> > > > > > > > > 
+> > > > > > > > > On Wed, Apr 01, 2020 at 07:50:59PM +0200, Loic Poulain wrote:
+> > > > > > > > > > The highest cpu frequency opps have been dropped because CPR is not
+> > > > > > > > > > supported. However, we can simply specify operating voltage so that
+> > > > > > > > > > they match the max corner voltages for each freq. With that, we can
+> > > > > > > > > > support up to 1.36Ghz. Ideally, msm8916 CPR should be implemented to
+> > > > > > > > > > fine tune operating voltages and optimize power consumption.
+> > > > > > > > > 
+> > > > > > > > > Thanks for the patch! I was wondering how to enable the higher CPU
+> > > > > > > > > frequencies for a while now...
+> > > > > > > > > 
+> > > > > > > > > I was actually quite excited to see CPR being mainlined for QCS404.
+> > > > > > > > > If we are trying to add such a workaround (rather than CPR) for MSM8916
+> > > > > > > > > now, does that mean it's unlikely to see CPR working for MSM8916
+> > > > > > > > > anytime soon?
+> > > > > > > > > 
+> > > > > > > > > AFAICT, there is a WIP branch from Niklas Cassel here:
+> > > > > > > > > https://git.linaro.org/people/nicolas.dechesne/niklas.cassel/kernel.git/log/?h=cpr-msm8916-mainline
+> > > > > > > > > but it hasn't been updated for a while. (Not sure if it was working
+> > > > > > > > > already...)
+> > > > > > > > > 
+> > > > > > > > > Can someone explain what is missing to make CPR work for MSM8916?
+> > > > > > > > > 
+> > > > > > > > 
+> > > > > > > > CPR needs to control 3 things; VDD_APC, VDD_MX and MEMACC. On QCS404 it
+> > > > > > > > seems we don't have to adjust VDD_MX, so the code for this is missing
+> > > > > > > > from the driver.
+> > > > > > > > 
+> > > > > > > > So, afaict, what's missing is that rpmpd.c needs to gain support for
+> > > > > > > > 8916, then the CPR driver needs to gain a cpr_acc_desc and compatible
+> > > > > > > > for 8916, it needs to reference the VDDMX power domain and before/after
+> > > > > > > > we're adjusting the corner of the CPR we need to adjust the MX according
+> > > > > > > > to the mapping specified in the downstream kernel (i.e.  1->4, 2->5 and
+> > > > > > > > 3->7).
+> > > > > > > > 
+> > > > > > > > 
+> > > > > > > > Unfortunately, the requirement that VDDMX (VDD_MEM I presume) must be
+> > > > > > > > higher than VDD_APC most likely needs to be taken into consideration for
+> > > > > > > > Loic's proposed static voltage scaling as well. Unless VDD_MEM is left
+> > > > > > > > in Turbo mode from the boot loader I think we need to take VDDMX to
+> > > > > > > > corner 7 for speeds 998MHz and above (i.e. where we pull VDD_APC to
+> > > > > > > > 1.35V).
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > I see! I wonder how hard it would be to add MSM8916 to rpmpd,
+> > > > > > > looking at previous commits it's mainly setting up a few defines?
+> > > > > > > 
+> > > > > > > If I understand it correctly, the OPPs from rpmpd could then be
+> > > > > > > referenced as "required-opps" in the CPU OPP table so that VDD_MX is
+> > > > > > > scaled together with the CPU frequency, and doesn't need to stay at
+> > > > > > > turbo mode (like in v3 from Loic) the whole time.
+> > > > > > > 
+> > > > > > 
+> > > > > > I have been thinking about this some more and I think I came up with
+> > > > > > some changes that make sense (but not entirely sure).
+> > > > > > 
+> > > > > > Based on the available downstream sources I guessed the defines to add
+> > > > > > for MSM8916 to the rpmpd driver. Then I added the VDD_MX OPPs as
+> > > > > > "required-opps" to the CPU OPP table so it would vote for the appopriate
+> > > > > > corners (with the mapping you mentioned above).
+> > > > > > 
+> > > > > 
+> > > > > I was not aware it was possible to describe the dependency between the
+> > > > > CPU opp table and MX in this fashion. If that's the case then this looks
+> > > > > really good and it should be straight forward to add MSM8916 support to
+> > > > > the CPR driver as well.
+> > > > > 
+> > > > 
+> > > > Indeed!
+> > > > 
+> > > > > > I haven't tested it yet, maybe I can get some feedback first if the code
+> > > > > > seems reasonable or if I'm missing something obvious? :)
+> > > > > > 
+> > > > > 
+> > > > > Have you tested this yet?
+> > > > > 
+> > > > 
+> > > > I just did. It does not fully work, yet:
+> > > > 
+> > > > rpmpd_set_performance() is indeed called as necessary when switching the
+> > > > CPU frequency. When I set 200 MHz it sets corner 3, with 533 MHz corner 4
+> > > > and starting with 998 MHz corner 6. So far so good :)
+> > > > 
+> > > > However, there is never actually anything sent to the RPM. :(
+> > > > It bails out in rpmpd_set_performance() before calling rpmpd_aggregate_corner():
+> > > > 
+> > > > 	/* Always send updates for vfc and vfl */
+> > > > 	if (!pd->enabled && pd->key != KEY_FLOOR_CORNER &&
+> > > > 	    pd->key != KEY_FLOOR_LEVEL)
+> > > > 		goto out;
+> > > > 
+> > > > Seems like we just try to set performance states, but never actually
+> > > > enable (rpmpd_power_on()) the power domain (pd->enabled == false).
+> > > > 
+> > > > I'm not sure which of the components involved here should handle that.
+> > > > The OPP core when setting required OPPs, the genpd core etc.
+> > > >
+> > > > Any ideas?
+> > > > 
+> > > > Thanks,
+> > > > Stephan
+> > > > 
+> > > 
+> > > For now I have added something to qcom-cpufreq-nvmem.c to power on/enable
+> > > the power domain (not really sure if it belongs there...):
+> > > 
+> > > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > > index a1b8238872a2..ed352ead037e 100644
+> > > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > > @@ -26,6 +26,7 @@
+> > >  #include <linux/platform_device.h>
+> > >  #include <linux/pm_domain.h>
+> > >  #include <linux/pm_opp.h>
+> > > +#include <linux/pm_runtime.h>
+> > >  #include <linux/slab.h>
+> > >  #include <linux/soc/qcom/smem.h>
+> > >  
+> > > @@ -370,10 +371,13 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> > >  		}
+> > >  
+> > >  		if (drv->data->genpd_names) {
+> > > +			struct device **pd_dev;
+> > > +			const char **name = drv->data->genpd_names;
+> > > +
+> > >  			drv->genpd_opp_tables[cpu] =
+> > >  				dev_pm_opp_attach_genpd(cpu_dev,
+> > >  							drv->data->genpd_names,
+> > > -							NULL);
+> > > +							&pd_dev);
+> > >  			if (IS_ERR(drv->genpd_opp_tables[cpu])) {
+> > >  				ret = PTR_ERR(drv->genpd_opp_tables[cpu]);
+> > >  				if (ret != -EPROBE_DEFER)
+> > > @@ -382,6 +386,12 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> > >  						ret);
+> > >  				goto free_genpd_opp;
+> > >  			}
+> > > +
+> > > +			while (*name) {
+> > > +				pm_runtime_get_sync(*pd_dev);
+> > > +				name++;
+> > > +				pd_dev++;
+> > > +			}
+> > >  		}
+> > >  	}
+> > > 
+> > > I really wonder why this doesn't affect CPR (or does it?).
+> > > So far I was not able to find anything that would power on/enable
+> > > the "cpr" power domain either. But I don't have a qcs404 to verify.
+> > >  
+> > > As far as I can tell from the log, the corner votes are correctly sent
+> > > to the RPM now when the CPU frequency is changed.
+> > > 
+> > > However...
+> > > 
+> > > > > > Also: Is there a good way to validate these changes?
+> > > > > > I suppose I could check the genpd state but that wouldn't tell me if the
+> > > > > > corner was applied correctly. Maybe I can check the actual voltage
+> > > > > > through the SPMI interface, hm...
+> > > > > > 
+> > > > > 
+> > > > > Validating that S2 and VDD_MX changes appropriately in Linux would be a
+> > > > > pretty good test.
+> > > > > 
+> > > 
+> > > Unfortunately I was not able to see any change in the voltage of L3 yet.
+> > > On samsung-a5u, /sys/class/regulator/<l3 spmi regulator>/microvolts
+> > > permanently reports 1300000 uV, even after a few different corner votes.
+> > > 
+> > > I'm not sure if:
+> > > 
+> > >   - This is normal (maybe some other remoteproc has a higher vote?)
+> > >     - I tried to disable wcnss, venus and hexagon without difference
+> > > 
+> > >   - I'm just missing something in the code
+> > > 
+> > >   - This is some peculiarity of the RPM firmware on samsung-a5u.
+> > >     (Although that seems quite unlikely to me...)
+> > > 
+> > > Any ideas? :/
+> > > 
+> > 
+> > I just tried the same on the downstream kernel for samsung-a5u.
+> > There the L3 voltage doesn't change either, it stays on 1300000 uV
+> > permanently. So more likely would be either "this is normal" or
+> > "This is some peculiarity of the RPM firmware on samsung-a5u".
+> > 
+> > I don't have a DB410c available for testing, but I'm curious if it would
+> > work correctly there. So far I have been unable to find any obvious
+> > mistake in my changes.
+> > 
+> > I'm attaching the full diff (including Loic's changes) in case someone
+> > wants to test this on the DB410c (or some other MSM8916 device).
+> > Basically you need to:
+> > 
+> >   1. CONFIG_QCOM_RPMPD=y
+> >      CONFIG_ARM_QCOM_CPUFREQ_NVMEM=y
+> >   2. Run it and change CPU frequencies a bit
+> >      (either with an automatic CPU governor, or by setting speeds
+> >       manually with powersave/performance/userspace)
+> >   3. There should be "set performance state" messages in dmesg
+> >      for the VDD_MX corner votes
+> >   4. Identify the spmi l3 regulator using /sys/class/regulator/*/name
+> >   5. Check the reported voltage in /sys/class/regulator/.../microvolts
+> > 
+> > For me it stays on 1300000 uV, permanently. :(
+> > 
+> 
+> I recently bought another device that does not have signature checks
+> enabled. For now I have tested with the original firmware there:
+> 
+> With or without my changes it stays at 1287500 uV permanently.
+> At least this seems somewhat more realistic since this is the
+> "super turbo" voltage.
+> 
+> I tried disabling various things in case they affect this somehow:
+> WCNSS in particular sets 1287500 uV for pm8916_l3.
+> But even with WCNSS disabled, even with the regulator constraints
+> removed for pm8916_l3 and all changes reverted - it keeps reporting
+> 1287500 uV through the SPMI interface, no matter which CPU frequency
+> is selected.
+> 
+> This is even more confusing because l3 is still at nominal voltage
+> (1150000 uV) in the lk bootloader. (I ported a part of the mainline
+> spmi_regulator driver to lk so I can dump the voltages from there...)
+> Somehow it gets changed when Linux is booted. Very confusing.
+> 
+> Unlike on my previous test device, testing on downstream was successful:
+> 
+>   - CPU frequency 200MHz - 800MHz results into 1150000 uV
+>     reported as voltage for l3 through the SPMI interface (corner 4/5)
+>   - Higher CPU frequencies result into 1287500 uV (corner 7)
+> 
+> Again I ported the spmi_regulator driver from mainline to downstream,
+> so the way the voltage is read should be the same.
+> 
+> Clearly something must be different/missing in my changes,
+> but I still have no idea what exactly.
+> Any suggestions would be highly appreciated :)
+> 
 
-I've stopped looking at this. Please send something that you will have 
-actually tested.
+After several hours of debugging I finally figured out what's wrong:
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
+I guess there are various dependencies on the VDD_CX/VDD_MX
+voltage rails in the RPM: VDD_MX will be always higher than VDD_CX,
+and VDD_CX is also influenced by some of the clocks.
+
+If I disable the rpmcc/clk-smd-rpm entirely in the device tree,
+suddenly the VDD_MX voltage scales correctly with my changes.
+
+This seems to happen because the clk-smd-rpm forces all clocks to
+maximum state in the clk_smd_rpm_handoff() function. In my case,
+the clocks used for interconnect cause VDD_CX to scale to "super turbo",
+which in turn keeps VDD_MX on "super turbo" as well.
+
+I imagine this will be solved properly once we enable the interconnect
+driver and all the necessary consumers.
+
+But in general, I think this "handoff" behavior clk-smd-rpm is a bit
+weird: As far as I understand, the clock framework normally disables
+unused clocks shortly after the boot is complete.
+
+The clk-smd-rpm driver does the opposite: it forces all clocks to on,
+to maximum rate and does not seem to report that to the clock framework.
+If there is no consumer for the clock it seems to stay on and on maximum
+frequency forever.
+
+For example, in order to avoid other remoteprocs influencing the
+VDD_CX/VDD_MX voting I have disabled all additional remoteprocs in the
+device tree (e.g. WCNSS, venus, ...)
+
+Before Linux is booted (dumped from the PMIC registers in the lk
+bootloader), the rf_clk1/2 (modem/wcnss) is off. With clk-smd-rpm
+disabled it stays off too. However, when clk-smd-rpm is loaded that
+"handoff" function forces them on, and they're never turned off again.
+
+This is invisible to the clock framework - according to the clock
+debugfs they are off. But reading the PMIC registers reveals they are on.
+
+I suppose that behavior makes sense for the interconnect clocks,
+disabling those without an interconnect driver wouldn't do much good.
+But for the other clocks that doesn't seem quite right to me.
+
+What do you think?
+
+Thanks,
+Stephan
