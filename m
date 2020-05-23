@@ -2,90 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC5031DF489
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 06:12:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93F8B1DF502
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 07:38:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387603AbgEWEMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 May 2020 00:12:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
+        id S2387456AbgEWFiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 May 2020 01:38:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726568AbgEWEMS (ORCPT
+        with ESMTP id S2387583AbgEWFiu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 May 2020 00:12:18 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA1BC08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 21:12:18 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id w3so7300044qkb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 21:12:18 -0700 (PDT)
+        Sat, 23 May 2020 01:38:50 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5C3C05BD43
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 22:38:50 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id t7so5269075plr.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2020 22:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M5sFOrNXglw9u9oFYHMskJ7NcnM7eaQiBeIqzNjN18A=;
-        b=G8S2SApaGaeOZYDOZa/usofyB38IwdN5arOsw90EdNv9M91atUz8HoIeWxnaEavt4k
-         lkFN9p2LOH3h5m3Xs2l+BFRL6h+bttLmhu4g6layqGy0qQH/vvmt0xuRgA9+tUBubB5n
-         BgyY2K1bBuOVhVgpBcwNx+kAOt75PR3vFAjzILzquIyTRDdkpVzIQyVbEiaV7UaCinVx
-         aK/QxWxCdiLGKJZIEKY6FvwbNPrceLumTCs8MeCtVXVfukWKsmCffr1IpGxE8KoSBrVE
-         cPds8tntUfOy2kPKViDmFxLcMSFGB16JkJRJ8XVQflrJX2Sfm1vcyCAdUaN+77UQrKon
-         4auw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gJrwsD95GiFyT9n16FxHRlHH8sHrHYZ+3946h1aQ09I=;
+        b=iQINVmOxAeLpDr0E2yIaMv28SPQnhgwEcX6Ju+vtadM9q9M2OLH6zrPh9QTPhnEPwr
+         3Fy7npvDe622nCK7raQJLFckR6yT7RiQnbSkq2Gzy4QZRUI5SmNsKENY1mhRoyZvneXh
+         QOtsKY6GxHaKwwxhc96ESAsE7obcP4zECHUfaFaUby39ploQCnD/ifATvlyCyAKMUl0P
+         pHmk651ADaXZKZoDt05z5BCxter4y7ZizKmkVEIDIWH4Pk90aGydVUgJZW2T3rjqRSuW
+         l4UyrR5YCwhPkzLEU4JmlIKi7UCxBUmF6Fx9At6x3hCKzrNVIwDCCBYqRRwFiZQ56n2V
+         PNpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M5sFOrNXglw9u9oFYHMskJ7NcnM7eaQiBeIqzNjN18A=;
-        b=qwCvxI45vdfppvdPnoGmvOM1Nhm4SpOI+CUq/2RYQ8rjedN2OcWQ06zgqvxEQf4ti2
-         MrUOV9bFa7TsGLlz2nyLstBgrTYAdp27Z+aFipv2oBXVAVf0IDCRmI4HD/xXmi7Zf9uG
-         E/Yrcfqk3ssWgsSbq1gWZ7ufqJ7HDs4W7rCPBestLLpHDRqNbUFwuphFa/k+dYzBiD6V
-         COZlAg/3qTVh+t3vAj7KunTJLlHI3PuAcFU9izfqG8oNsVrM9+d+sUWbEDKduQQG4S+l
-         wISZ5FrIC3cYG3SaPWckkUEh+qV8rIRU+FClUFW/9uLuKVmfc1rkrpy15pBZ2nmCMxR2
-         ECew==
-X-Gm-Message-State: AOAM533rLP4G9gyUQT2Kgao86AAvVsVBkarTu2E39+l2n8Ey/0AVwf9N
-        jh6+4pMeVfGeCgFVuOziGw8b8h//sPY=
-X-Google-Smtp-Source: ABdhPJxRnAIPgMXBVIgY29ESU3hRJT/Hualiru5J/jkGjg0GRLMcQ7/pPTunfbRWCCCveIzowiD7RA==
-X-Received: by 2002:ae9:e50d:: with SMTP id w13mr12486140qkf.315.1590207137323;
-        Fri, 22 May 2020 21:12:17 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id w21sm10077978qtj.78.2020.05.22.21.12.16
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gJrwsD95GiFyT9n16FxHRlHH8sHrHYZ+3946h1aQ09I=;
+        b=qf5N3KIBzLr9XQI3axB1SbYFXWGq5ORCEOuRAJm61Q2Z5/YTGwhCfvn+/Q8U7FoQT4
+         w/VRrMN622I0zkaJ1Q8PJtF0jXeA5B1K4iiiN7qbrS1VIwqwHU6J2tjjrT7Syvc4iZkT
+         xj/qRxEw5p9ojZ48F/l5Grg7nzoiSz00sEBRWuvdF7Z9A/JMM76v7iFremHxBrmCVswZ
+         s5aZyU5TXXHBS8yGzCa3zsvh3O2cmUJWAz7L5/jkbTpLkO3Os6qtg9DmXuaYA4me7TBf
+         QGtjLsO7gUJHFuNwHoPqiWD9Itvo33mk0foe8d29Hm86IAPdW8T9cK+ONVmniTAZ2n6F
+         llQA==
+X-Gm-Message-State: AOAM531CFqt7WmAF9rLYeAiwQycAacJOQE3Ay9IAJjaLu4cGMVT081Jm
+        RktEErLphcCuMbV8GpPvBPrLZA==
+X-Google-Smtp-Source: ABdhPJxhB1oBCneZ4xttQlsT2ySF2h6h3vamdFZz6sY9F6P4TuGI1WmzH/wlo8Z9uZQy0WBWdQraUw==
+X-Received: by 2002:a17:902:7e41:: with SMTP id a1mr3846943pln.72.1590212330089;
+        Fri, 22 May 2020 22:38:50 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a71sm8638439pje.0.2020.05.22.22.38.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2020 21:12:16 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] arm64: dts: qcom: enable pm8150 rtc
-Date:   Sat, 23 May 2020 00:12:01 -0400
-Message-Id: <20200523041201.32065-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
+        Fri, 22 May 2020 22:38:49 -0700 (PDT)
+Date:   Fri, 22 May 2020 22:38:46 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] clk: qcom: sm8250 gcc depends on QCOM_GDSC
+Message-ID: <20200523053846.GK11847@yoga>
+References: <20200523040947.31946-1-jonathan@marek.ca>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200523040947.31946-1-jonathan@marek.ca>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I don't see any reason for it to be disabled by default.
+On Fri 22 May 21:09 PDT 2020, Jonathan Marek wrote:
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- arch/arm64/boot/dts/qcom/pm8150.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+> The driver will always fail to probe without QCOM_GDSC, so select it.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-index c0b197458665..b738c263f9d1 100644
---- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-@@ -64,8 +64,6 @@ rtc@6000 {
- 			reg = <0x6000>;
- 			reg-names = "rtc", "alarm";
- 			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
--
--			status = "disabled";
- 		};
- 
- 		pm8150_gpios: gpio@c000 {
--- 
-2.26.1
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  drivers/clk/qcom/Kconfig | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 5df110be52c1..59dc0bdafad4 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -378,6 +378,7 @@ config SM_GCC_8150
+>  
+>  config SM_GCC_8250
+>  	tristate "SM8250 Global Clock Controller"
+> +	select QCOM_GDSC
+>  	help
+>  	  Support for the global clock controller on SM8250 devices.
+>  	  Say Y if you want to use peripheral devices such as UART,
+> -- 
+> 2.26.1
+> 
