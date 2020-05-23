@@ -2,95 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F6EC1DF9C4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 19:52:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D66791DF9D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2020 20:00:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727123AbgEWRwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 May 2020 13:52:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54506 "EHLO
+        id S2387665AbgEWSAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 May 2020 14:00:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbgEWRwd (ORCPT
+        with ESMTP id S1726948AbgEWSAT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 May 2020 13:52:33 -0400
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6D9C08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2020 10:52:32 -0700 (PDT)
-Received: by mail-qv1-xf43.google.com with SMTP id p4so6246026qvr.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2020 10:52:32 -0700 (PDT)
+        Sat, 23 May 2020 14:00:19 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A09C8C05BD43
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2020 11:00:19 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id r3so6297577qve.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2020 11:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xbNXqEdiNXrvhkFc9AbifeBSEF3iF1+uuqL2sVkcP4U=;
-        b=1w5qJPmr6SeJcD+EI09b+e0KZxTY6kXeh0o6ir7Ezxu89PCZzfjKtL14HoktpHAFCo
-         UhtBSzENcfXb1t0Sreg6T2isFy2hXsjHS5R0/qtyqB8N/VbsYrnBf7Cqv8P90vLBqI7R
-         EcXjOICNe631HRNct5wKlocR0GM507aB5pFr6o8hxHDQx0LqPof0JAGa0GsIQBwRw0af
-         xdmK4Vvxq3zB+8HQQ2RjDy8YCFRlJpVOW+BvUXnnV2bFHxaoHQ0ogIVu/w2I3aDrXU4d
-         aIsCVlTtZx5F5azA7igNSp7ZThBcdtbPdZJjHhyX8CYsiUBg2oZQDyMEsToeQyXHME/t
-         ntLQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=F3NMDrR9dummcUXdRfruEEfbIS6yB2vx68nB8Asq/5Q=;
+        b=DLUdlLdqK1bsV3DbEuTTyBWxouo7TOwyxri4APWQD3NqiMSIjirU+KuWgkxjC+SPXd
+         U5bKcUrFxXkujPWjXtLFF/k/nfilKzP5EjBajrS/8510fneO07cpMqdcHCxwrpi40/q7
+         /O0e1HoJlTbh5NB1junI0CHT5u7OlL96wLc3EVtoU1jy6h6mu/94Ij3+HmmWjDrdLWVh
+         jTwO4Rc/jE6wel14tPJDJsn6k0/UDkI9Or/XCFS691xyvyogoxyI2h7yK06Suh6ePv/U
+         +lZz7VywgsFgSxYL/B5mLPOXcZ0fktkIkUnyPxHg9tbmvqat4Bb8GZAodniIxvBVB3XB
+         mJxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xbNXqEdiNXrvhkFc9AbifeBSEF3iF1+uuqL2sVkcP4U=;
-        b=YJEAhAiRlHYHqlHqx/CvtBn321yWW85J/lVIYYXw+JIFgrVje+46BUj2zoyfxKWxTg
-         bdAYK5nQ68vYLPkkJP3x4u75DEI1GTkt862jmco8R8vwZpAtsSmJIFjLo3MY2o7f3mhC
-         hEN2GnbhmfIda7IFL3qDgdKBxQ5EHfKlYnPC9EI0YZpO/SoSYJkeQxEkBNQw6owG8tDz
-         OYRYS3sVXyT/TeJvtVqdY3loRNJ4dXr6O0F56uNJ8CQYmCk74+5+s/4JqRnLgEpz6a64
-         pbMhaomM7r4hW1p3IfSLScupZ5LSDZcDMKn0Cr6yvvpNgWgPeiAJ3xlNY797RwZiQtKu
-         o0pQ==
-X-Gm-Message-State: AOAM5314YPdXqFO6Z0chpSab/0kd9lsontyN9JEwxvxJwGGPiCdXu8g/
-        dO5EwC9bIfbaE5+4/2suEQiowRdAgz4=
-X-Google-Smtp-Source: ABdhPJxJqNc3s0k1S710OBgGWFWnNh/JFkMpuvIAPC7eSNS1lKSR6qsxIP7BSRmmL3JZAD5Irz+gIw==
-X-Received: by 2002:ad4:5282:: with SMTP id v2mr8777819qvr.167.1590256351873;
-        Sat, 23 May 2020 10:52:31 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id 80sm5147784qkl.116.2020.05.23.10.52.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 May 2020 10:52:31 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] arm64: dts: qcom: sm8250: change ufs node name to ufshc
-Date:   Sat, 23 May 2020 13:52:32 -0400
-Message-Id: <20200523175232.13721-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=F3NMDrR9dummcUXdRfruEEfbIS6yB2vx68nB8Asq/5Q=;
+        b=hWnuSpG4De+xssEUjBZs4R82RhnWy/rpwLm9TjZHn56XBiFb+9BE/j6YFzxXIZ6AxK
+         xcNbzAVAtUteTw2zMAtBAmB/cImuwA9fG+XTgePT9cNHI3ufkOLhouBujh7V3o+FKh/X
+         S25bwGSqHnt0y9ETqTi6yffSHtdnKCTWv2dPHbwI9wsKWi0sk9mR3aC5vnhFzLA1r6yK
+         8zBpHkBnSTgKHuOIL04UGBH7zum49UrcGL7Etyz07u7O8gw+4xWWMAygQTseL/HZ+HOB
+         gjv0s5yYedY4G1kpf0cT4MZ+yxZqNoChSmuREXg1L5jes+23oHkfTyuJ2TXCon7HDMA5
+         VlsQ==
+X-Gm-Message-State: AOAM5311r3nzlcTqwfMhipvb6ePw8KU7KYZq3q3oUohvwbo/2m0j0LY3
+        be9HElvzyrZh7sDXGDOSGpzDvi6ngxtL+lVwbvA=
+X-Google-Smtp-Source: ABdhPJxI0GNvtYFRzubiNKehFnBmeNa8IdxO7hQ3TxAldsg7mTxyy0v9X6v2Fayhxp/lnxt7tCbB9QFJVJ60H98MgEQ=
+X-Received: by 2002:a0c:ed4b:: with SMTP id v11mr9120627qvq.179.1590256818769;
+ Sat, 23 May 2020 11:00:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:aed:3ac5:0:0:0:0:0 with HTTP; Sat, 23 May 2020 11:00:18
+ -0700 (PDT)
+Reply-To: mrs.chantala2055@gmail.com
+From:   mrs chantal <mrs.chantaltwo@gmail.com>
+Date:   Sat, 23 May 2020 18:00:18 +0000
+Message-ID: <CAGVwK0UnqGdMqCxvjeR06i5Ca=SScOHB3E1kfQEUa4_tgZN-cQ@mail.gmail.com>
+Subject: jjCompliment
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The ufs-qcom driver checks that the name matches the androidboot.bootdevice
-parameter provided by the bootloader, which uses the name ufshc. Without
-this change UFS fails to probe.
-
-I think this is broken behavior from the ufs-qcom driver, but using the
-name ufshc is consistent with dts for sdm845/sm8150/etc.
-
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index e0344d3ba159..3bdce658c08a 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -309,7 +309,7 @@ uart2: serial@a90000 {
- 			};
- 		};
- 
--		ufs_mem_hc: ufs@1d84000 {
-+		ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sm8250-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x3000>;
--- 
-2.26.1
-
+     Compliment of the day to you. I am Mrs.CHANTAL I am sending this brief
+    letter to solicit your partnership to transfer $13.5 Million US
+    Dollars.I shall send you more information and procedures when I receive
+    positive response From you. Please send me a message in My private
+    email address is ( mrschantal066@gmail.com  )
+    Best Regards
+    MrS.Chantal
