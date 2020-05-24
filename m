@@ -2,67 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F5E1E02CF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2020 23:06:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D3D11E02DA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2020 23:07:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387874AbgEXVGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 May 2020 17:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53144 "EHLO
+        id S2388075AbgEXVGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 May 2020 17:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387830AbgEXVGW (ORCPT
+        with ESMTP id S2387848AbgEXVGX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 May 2020 17:06:22 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA90C05BD43
+        Sun, 24 May 2020 17:06:23 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B96C08C5C4
         for <linux-arm-msm@vger.kernel.org>; Sun, 24 May 2020 14:06:21 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id x12so12528043qts.9
+Received: by mail-qk1-x741.google.com with SMTP id s1so15951418qkf.9
         for <linux-arm-msm@vger.kernel.org>; Sun, 24 May 2020 14:06:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=33GqBqRR2Gx5o9WCKvD5zP6xFK/J0f9ce+9hLTx+wyU=;
-        b=dYUpyeZ88WeTWem/FswXsS44lrLQiybUFroMePC5CksOBACVAc+AP08HWM0w7Pb7Ac
-         F0NoPLjN8bl8FC/TOlPXgTDCHIwz9ScxlWhB+CCPJnvHPGin2bMTIy4i0dFKet5Uea+I
-         Ftpgtp3RfC4VlgKd07iaGfRxJQlavPnhVAETIyqC3PDPlQa3J/cWM70oWOXfKfWWjQrd
-         8mzF01SO6Lcs9PufgS4krp4OOJtNL/Etl+uokDY8imEP8PtmHaBekkQ6nLyEuIbpSq4u
-         /BM8C6gDx+6Mh7POr+o8fX9mWZ9Z+Hj0udzDuFnmZmicTN8UQx/A2Gy1I2bhd0IlZmk9
-         ZA4A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SMexMeVTm63rHWx/JVuuK6vnjusS2CuBaYCJ1ubsUHs=;
+        b=1JKePdYirIa/xYzsH6LsSwNwjA8gJbjzNc7twg6f8DPN18cwtCA0vArVBxSyKrzwOC
+         XthO7qIO9vA3RRN3+tojwHCBG3t4z91tLS3NrsK5lpW8vBxOxJzGilyhdUhBY0t71RJU
+         3pexLHsPLP4NpTXHLh/ubZgFq9a2lOEsA/TWToMLuIz4OJvJ7PWqmkmMaAY5IcOUnhRE
+         0RqhdMSxjwtOhO3MvBo+sWzrl+zpdaU2cwGm3NYWWifV37GcJmcwWSREd0fK73/9hd++
+         AshtWVMEBdZ/VNo2ubWltFpFL7Tc0M0ARizZIR/YVghoNsF8IRHTZmsl4oBQk2piKgSW
+         ohbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=33GqBqRR2Gx5o9WCKvD5zP6xFK/J0f9ce+9hLTx+wyU=;
-        b=a0ARKK4xnPxeeR/c4Ef7zoubI47gjaldMMQBT8jT8zoifNQeFhY3d6waYwLXLvccyk
-         WdEVvIxdmEn3RTy4cS3aCgDAbmUB9Y+wWANrgtyG1YuI/VzBO+bRoTW1YbDAhenoW11W
-         iV3VH0L+5FqugVPeKbTaEpghd0ZrI/w3xrouquGphLg+QsR0fn+3HYaFpixYgZXfJ/iH
-         sXo6EjKUyjkJbdGQ+sMd9iL3czEvQwMz2+c+Jtvvvxo4CW3ufzRKoTx7CQronV0EHzQv
-         /PZH4cETOMIiGiHZM/BAELVeqVam4x9c1Y5aC9scENLnXiYYoaUnE8V/QcIiTz2DQ7cS
-         XLEg==
-X-Gm-Message-State: AOAM530FmtxULq861Hpy3OOhhjpb8QfMjvNpyIj2KzNILRIEa+/wpgAS
-        qCfbjLGneoxGZn5iX311Cuqc7FO+CO47oA==
-X-Google-Smtp-Source: ABdhPJwI1QyBwhsjxuoHpJ6tCXkyyAyYdQsPyhYI0RaCc5ILD7mHRyhYvqVq1nEthHB/cp/9qysgug==
-X-Received: by 2002:aed:2452:: with SMTP id s18mr11569062qtc.137.1590354379884;
-        Sun, 24 May 2020 14:06:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SMexMeVTm63rHWx/JVuuK6vnjusS2CuBaYCJ1ubsUHs=;
+        b=LkxkR3Bd/82s35M08/oa0DOiJkbw/cfqK6O/qztqHj2O4IS/P+1/qMHWaSnkzlcOnR
+         Cj00V2rnYKhIrdLruX3NDO+Ndj+YdlHvwl25L6rQhXf0TySjoBIJIz2mEh64cw6Eu4of
+         NxryT+P/VaqeOXYoHFOKt8kqLUrnJBy2QAhsjng2aXWsOuYx0yiTMKIJwIdn/3JImbgl
+         AY8LYcVBp+OCILtejp6dwBKD0KXZ7HTWsTX+WrXisKSEuxygmfRGt0Ud7kAYBaV0hZ3G
+         OrqsvgIJVJI2I8Tl/abS1CguClK3xxlalR3t1hwMEhfRkcBTKE0f4ZUyEtWM7nkvvD6k
+         X26Q==
+X-Gm-Message-State: AOAM532Nu3np3b/MB1taJyJI1dvCmKgTlWwQ+r+t4Pu7ai3KMyxWqHWC
+        5DusF7PuS4YCQ9fcQdhNSsxvbKqbETg=
+X-Google-Smtp-Source: ABdhPJwi1NS9dgh+AnJIWhS0n3NdreA/ALo8O17bbkZnccp0vKqKC9yFbnoRSvMemCoMX3c5YyruMA==
+X-Received: by 2002:a05:620a:a53:: with SMTP id j19mr24845844qka.183.1590354380991;
+        Sun, 24 May 2020 14:06:20 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id g51sm4401769qtb.69.2020.05.24.14.06.18
+        by smtp.gmail.com with ESMTPSA id g51sm4401769qtb.69.2020.05.24.14.06.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 May 2020 14:06:19 -0700 (PDT)
+        Sun, 24 May 2020 14:06:20 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS),
-        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
-        linux-kernel@vger.kernel.org (open list),
         Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 00/10] Enable GPU for SM8150 and SM8250
-Date:   Sun, 24 May 2020 17:06:01 -0400
-Message-Id: <20200524210615.17035-1-jonathan@marek.ca>
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 01/10] clk: qcom: clk-alpha-pll: remove unused/incorrect PLL_CAL_VAL
+Date:   Sun, 24 May 2020 17:06:02 -0400
+Message-Id: <20200524210615.17035-2-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20200524210615.17035-1-jonathan@marek.ca>
+References: <20200524210615.17035-1-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -70,44 +69,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds the missing clock drivers and dts nodes to enable
-the GPU on both SM8150 and SM8250.
+0x44 isn't a register offset, it is the value that goes into CAL_L_VAL.
 
-Adreno 640/650 support was recently added to drm/msm [1], but an
-extra patch [2] is still required for GPU to actually work on SM8250.
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/clk/qcom/clk-alpha-pll.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-[1] https://patchwork.freedesktop.org/series/76198/
-[2] https://gist.github.com/flto/784f1aca761ebf2fe6c105719a4a04ca
-
-Jonathan Marek (10):
-  clk: qcom: clk-alpha-pll: remove unused/incorrect PLL_CAL_VAL
-  clk: qcom: clk-alpha-pll: same regs and ops for trion and lucid
-  clk: qcom: clk-alpha-pll: use the right PCAL_DONE value for lucid pll
-  clk: qcom: gcc: remove unnecessary vco_table from SM8150
-  dt-bindings: clock: Introduce SM8150 QCOM Graphics clock bindings
-  dt-bindings: clock: Introduce SM8250 QCOM Graphics clock bindings
-  clk: qcom: Add graphics clock controller driver for SM8150
-  clk: qcom: Add graphics clock controller driver for SM8250
-  arm64: dts: qcom: add sm8150 GPU nodes
-  arm64: dts: qcom: add sm8250 GPU nodes
-
- arch/arm64/boot/dts/qcom/sm8150.dtsi          | 132 +++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi          | 139 ++++++
- drivers/clk/qcom/Kconfig                      |  16 +
- drivers/clk/qcom/Makefile                     |   2 +
- drivers/clk/qcom/clk-alpha-pll.c              |  70 ++-
- drivers/clk/qcom/clk-alpha-pll.h              |  15 +-
- drivers/clk/qcom/gcc-sm8150.c                 |  18 +-
- drivers/clk/qcom/gpucc-sm8150.c               | 429 ++++++++++++++++
- drivers/clk/qcom/gpucc-sm8250.c               | 458 ++++++++++++++++++
- include/dt-bindings/clock/qcom,gpucc-sm8150.h |  40 ++
- include/dt-bindings/clock/qcom,gpucc-sm8250.h |  40 ++
- 11 files changed, 1304 insertions(+), 55 deletions(-)
- create mode 100644 drivers/clk/qcom/gpucc-sm8150.c
- create mode 100644 drivers/clk/qcom/gpucc-sm8250.c
- create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8150.h
- create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8250.h
-
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 9b2dfa08acb2..1325139173c9 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -56,7 +56,6 @@
+ #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
+ #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
+ #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
+-#define PLL_CAL_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_CAL_VAL])
+ 
+ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 	[CLK_ALPHA_PLL_TYPE_DEFAULT] =  {
+@@ -115,7 +114,6 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_STATUS] = 0x30,
+ 		[PLL_OFF_OPMODE] = 0x38,
+ 		[PLL_OFF_ALPHA_VAL] = 0x40,
+-		[PLL_OFF_CAL_VAL] = 0x44,
+ 	},
+ 	[CLK_ALPHA_PLL_TYPE_LUCID] =  {
+ 		[PLL_OFF_L_VAL] = 0x04,
 -- 
 2.26.1
 
