@@ -2,120 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC1531E0923
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 10:42:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 894D01E094E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 10:48:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389114AbgEYImj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 04:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
+        id S2389288AbgEYIs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 04:48:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388867AbgEYImj (ORCPT
+        with ESMTP id S2388657AbgEYIs3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 04:42:39 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D990C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:42:38 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id z206so6437036lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:42:38 -0700 (PDT)
+        Mon, 25 May 2020 04:48:29 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8F7C05BD43
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:48:28 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id 14so5851938uaq.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=fufxDxITtQnE6s70Vl4sAmvROZfNgK/lnJ+q52QoA08=;
-        b=B4NCIL9eH5VkJg+3BOtXsB/4FvA300STIxScRIIPS4HVgfErSzfBb7j+bUOrdxj8bP
-         8KvOprIyUKavWNZiHVVB7BNqECV1CUm2jxENHlrIS5rBTRoytQxzt6v6UGy4y7kEQ51a
-         rymSWHXsqX5Ly7N0hxtUmPl0M2QH2KjVQH/2PTmnnnCKbCzBcQz9sqPlJJs70HxVa/UA
-         YRqt6ZK/sluabIIsP2rLfJOWRpCetX89d3YyA1DaejdK78CciWO/NA0abs61968wwdst
-         XzafG+S/tVSMcZWx37PpTjM+8XlWGHD54l58JaY91vRq0pjKTrMLgo+5TX828LU+6rnm
-         sNGg==
+        bh=8bQhRpovnI1HzxA3RnCUyYp1wNF/naeL/4Ai5nPC8gQ=;
+        b=DbTArHGBvYzYTec6ziZjmrTFpe6aYhI+pcxRwpmCO6Or3WkyytcJTCORpEY6eEIrc1
+         h70QUccD228mfZzZ9OnjeQ2HNHcEuVbiFNsKiUSlzfKjDlVmJyBp0ki4+rUaJwHalIhS
+         SKxlEpmfGQqcpXvsA1+4RfbqWQvWfdVAnt5Wei23TyCZZpxCt2QODn5eXb8fp3KroBXD
+         1Q4bJINZ2BQo/uJOdAnd59RoDWN8kH6XJomKUDJPUL/1tKy2RhkO05SrgwOYGbP6T7q5
+         dvy2dL1+89m6+GRKLn7o+9G/Eb4MaRQ9gxmgu/WcbhcjBWohOIk+0HFZpyBih29UtqeR
+         vP0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=fufxDxITtQnE6s70Vl4sAmvROZfNgK/lnJ+q52QoA08=;
-        b=le4/dNJGzc8p0oWUEomBFG0rbhwxXpS7jDoT23N2L+BQMChYMbgxIaAdZJD+xgu+an
-         rWknEQ89HoatB+ZIoxPiwv29z4G6XjKw4lBWDegeOR7i9a1k4MzrOULdJFAG5AZkLLIm
-         3lZtbu5Bm0UFrQ7D6B1MfJi+ziycZb6YxhfdwuqqU5j6R7WVkYiSpAK+TMHTTlaBEuSY
-         pZID1da5H/ns8CL4j/ewr1ndCyrP0/KhmYaiQQnaiNZR6aIemhurAe1J3YRUIiTJSKlO
-         5gR9te5QpKcAZn9euaXItyTBcvwCRRqxWzgrxoCcUjz3RPxKmzwbpDFNrHBEYhNld7/o
-         79nw==
-X-Gm-Message-State: AOAM530vS6Qeo98ceUtQw/aue33QbsikYdajF+KDzXeTRcXAcLusB98z
-        F/Tm7qqmyfvC3mEavUtFlFwaB9T1/k/6aZjillaoeQ==
-X-Google-Smtp-Source: ABdhPJzsphYazIbu7mz6UJN+2f7Cmj8mlM7rqS2oT8+3v5YRHwjakHAMdNfDoBlqNzR4RXRuZLynv8GOpP/54ZD+Bjw=
-X-Received: by 2002:ac2:414c:: with SMTP id c12mr13977881lfi.47.1590396157054;
- Mon, 25 May 2020 01:42:37 -0700 (PDT)
+        bh=8bQhRpovnI1HzxA3RnCUyYp1wNF/naeL/4Ai5nPC8gQ=;
+        b=NPhHt6hSYeszj2ziVR+5iCMlO+K4xBrdCogm/OerCbp8pCJJ9gYrt8+0/BVY7GHCxA
+         LVzTz0y4ZO4/PqKznvYxHsz7HNv2nj5iBrs6TRdx/bVVTMgSJZ4d01xgN473AmfqjgWZ
+         SKWadlOqohhGd4W/x7wwVWkG54TbxSvuLaapIJ8ULPAT7B0yKavgV27XC+bbDke85XFV
+         Tp2RuM/IQEa8YSKbRmHsaY+mqIvjPXGlsmm/f4dOE+QjAUIGaKAfseRoNp7toN51eTM+
+         i6xEO5o0Is76D5eKOSyfXaC7I8zpgP3GLo+fxWF9Wuzmj/mB8GAqoTXa6ZNKzlxMVQ1N
+         UQMQ==
+X-Gm-Message-State: AOAM530b2CBRulWXLEjpeGpcgvz4TnpwXw1EROql1mcvE3wX148iSTZD
+        1zMVSW0Dh1ezjsTAG81cFsF5GHz76Q/ZV6nwAnFWoQ==
+X-Google-Smtp-Source: ABdhPJzaBYQscuG49zQyyECCXDLU5ZXD2rJlN26+ZR+WzP067eVMWQEhmuDuBjc6B9HyjIvj4ta+JfMi5w0vDffFbGU=
+X-Received: by 2002:a9f:3701:: with SMTP id z1mr8215995uad.100.1590396507967;
+ Mon, 25 May 2020 01:48:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200517190139.740249-1-sam@ravnborg.org> <20200517190139.740249-2-sam@ravnborg.org>
- <CACRpkdbogVA=12Xzh6jC0AaE7DrH8Z7iVuG3s_gS4MQBYF61Dw@mail.gmail.com> <20200518101609.GA759699@ravnborg.org>
-In-Reply-To: <20200518101609.GA759699@ravnborg.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 25 May 2020 10:42:26 +0200
-Message-ID: <CACRpkdY=ROLjHb70=tckOPUDBoinT4XtcUvZSaNxND7HZD5H+g@mail.gmail.com>
-Subject: Re: [PATCH v2 01/16] video: amba-clcd: use devm_of_find_backlight
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Russell King <linux@armlinux.org.uk>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+References: <1588838535-6050-1-git-send-email-sartgarg@codeaurora.org> <1590139950-7288-1-git-send-email-sartgarg@codeaurora.org>
+In-Reply-To: <1590139950-7288-1-git-send-email-sartgarg@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 25 May 2020 10:47:51 +0200
+Message-ID: <CAPDyKFqKZbmzpcFJxvD5R4qOc4cKghU7f2pffjFw86bnCN+vaA@mail.gmail.com>
+Subject: Re: [PATCH V2 0/8] Board specific DLL configuration for qcom SDHC
+To:     Sarthak Garg <sartgarg@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 18, 2020 at 12:16 PM Sam Ravnborg <sam@ravnborg.org> wrote:
-> Hi Linus.
+On Fri, 22 May 2020 at 11:33, Sarthak Garg <sartgarg@codeaurora.org> wrote:
 >
-> On Mon, May 18, 2020 at 10:10:12AM +0200, Linus Walleij wrote:
-> > On Sun, May 17, 2020 at 9:01 PM Sam Ravnborg <sam@ravnborg.org> wrote:
-> >
-> > > Look up backlight device using devm_of_find_backlight().
-> > > This simplifies the code and prevents us from hardcoding
-> > > the node name in the driver.
-> > >
-> > > v2:
-> > >   - Added Cc: Peter Ujfalusi
-> > >
-> > > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> > > Cc: Russell King <linux@armlinux.org.uk>
-> > > Cc: Sam Ravnborg <sam@ravnborg.org>
-> > > Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-> > > Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
-> > > Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> > > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > > Cc: Jani Nikula <jani.nikula@intel.com>
-> > > Cc: Douglas Anderson <dianders@chromium.org>
-> >
-> > Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> Thanks. I went ahead and applied this now, so we could kill
-> the last user of of_find_backlight_by_node().
+> Changes since V1:
+>         -Splitting documentation change into two patches to
+>                 avoid confusion
+>         -For the rest of patches retaining Andrians Ack.
 >
-> I hope we can make of_find_backlight_by_node() static after the merge window
-> so no new users appears.
+> Sarthak Garg (7):
+>   dt-bindings: mmc: Add new compatible string for sm8250 target
+>   dt-bindings: mmc: Add information for DLL register properties
+>   mmc: sdhci-msm: Update dll_config_3 as per HSR
+>   mmc: sdhci-msm: Update DDR_CONFIG as per device tree file
+>   mmc: sdhci-msm: Read and use DLL Config property from device tree file
+>   mmc: sdhci-msm: Introduce new ops to dump vendor specific registers
+>   mmc: sdhci-msm: dump vendor specific registers during error
+>
+> Veerabhadrarao Badiganti (1):
+>   mmc: host: sdhci-msm: Configure dll-user-control in dll init sequence
+>
+>  .../devicetree/bindings/mmc/sdhci-msm.txt          |  14 +++
+>  drivers/mmc/host/sdhci-msm.c                       | 103 ++++++++++++++++++++-
+>  drivers/mmc/host/sdhci.c                           |   3 +
+>  drivers/mmc/host/sdhci.h                           |   1 +
+>  4 files changed, 118 insertions(+), 3 deletions(-)
+>
+> --
+> 2.7.4
+>
 
-For this driver (drivers/video/fbdev/amba-clcd.c) there are zero
-users after the merge window (all users moved over to DRM) so
-I plan to retire it completely.
+Applied for next, thanks!
 
-Yours,
-Linus Walleij
+Kind regards
+Uffe
