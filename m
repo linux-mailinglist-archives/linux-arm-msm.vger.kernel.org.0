@@ -2,104 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BABC11E1549
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 22:41:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BC251E17D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 00:20:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390538AbgEYUlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 16:41:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48866 "EHLO
+        id S2389491AbgEYWUD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 18:20:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390437AbgEYUla (ORCPT
+        with ESMTP id S2387629AbgEYWUD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 16:41:30 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EA6DC061A0E;
-        Mon, 25 May 2020 13:41:30 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id m1so2792740pgk.1;
-        Mon, 25 May 2020 13:41:30 -0700 (PDT)
+        Mon, 25 May 2020 18:20:03 -0400
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFC0C061A0E;
+        Mon, 25 May 2020 15:20:03 -0700 (PDT)
+Received: by mail-il1-x143.google.com with SMTP id r2so7375094ila.4;
+        Mon, 25 May 2020 15:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=RkZMhQLldIOys7nQpzJNFew5Ei3EG4rJ9hOJdxzbwfk=;
-        b=krPQWD30ZCtO95s7MF8vMdQ5C1OlfmYMp3uv9JE2P3gqz+WkE/Hbqek1HDoCGzgJ6j
-         of2+bh9iipH3npWs6AxtnHUYMK15Rl6mQfvW0I2GlbLBGz/0WWcKz2OkQpHaAjw+k0NM
-         FFxi0fyinbgIdGgaAhPkfvSkkoYb1z8HBbHCJEdmvYkgZyQRjbo1n2AWYyeqISe7746T
-         upgkB1/bvDOBPcAbVmegmYlKs6nZ/+OGxe2GskW3ihEddLjlv1buOzHSchSrwbivLv72
-         qaALbI9W9/uOH8mZO5mj1SfnN5lLr47j77idBRYkx+uC2UW4fQCGTY/kSh3zGB+TUi8b
-         wV+g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cL1utEGO6TQa6zJAZV4J0dPoFxlZ5b4/euTKZrTC+g4=;
+        b=rt6RhOd/SDXRzSNsrB6Ud4tpKlEEY1XuOMro77Xg33MDvOcuc7dgLi7D5PdEuZccDd
+         bim1E8TXGrv9s5VjOpsoqt0AsxTKgRg0hnbmONKrPjcai2G05Hz43x5cgDEY0Hhgpy/F
+         aUcMmZDZWtTpof99/fZi1OMnG3qwnfm3YKjMMhGgeHNfKm0uNYjU10uBnLjr7hAF7JuI
+         f3PvdNBaTO0IzuRdqH8jQnrXKuSDl+Pbw4v+pPQmmtTgU5EK7kGPuPDnyahcUs6y5jkQ
+         E+MK80vbYAiBrvYja0TBWAYmTzyUj7+ld+jfRbI5XSwQrcy1yC//ozPVtKbwgfJd1SAh
+         2oSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=RkZMhQLldIOys7nQpzJNFew5Ei3EG4rJ9hOJdxzbwfk=;
-        b=SitZCAyF+RKclLN9zwBCqUr2LIZ68fquQyCfXNpibwKIRDqzXn1DRreZuEu2TVm+yN
-         pdb/i+PUOwWmMRVESlRMJqxgwA8QCfT1VTJb0yrAK0Odyhd/ZVyi6MUYdVzQPLZQTGto
-         XwhNTtkXiryq1cAKVjaeZiQfzW0+3/56wm1KVJAf4TdS7UG2B7zw9x2pD9orBSw9kooh
-         L428kziYJIhklkvxAkxyzk4ysw1FxFM35zg+/oBkNALvnqCjijCZJ6j56UzcQUFsYSkP
-         BcOsD7mJOv4X60iUXwbxZnEC/E4uokvKKh0BEzblqPZp54sGfjpoPM1XmMPj4jKnoIsf
-         pegw==
-X-Gm-Message-State: AOAM533H5bQcwya7TKnQZDgSESQZFYfm1FdxLSUMVHwu7Il+AVqP9gVz
-        J24bkHh6QfK4liD1l5g8fYx+mLv3
-X-Google-Smtp-Source: ABdhPJy18biZE6cpZtxmd7gPtm4MkApYXoZPl+nTvYgRXICZkwMwsscr+L+DR42ER3/ctduP0LdmeA==
-X-Received: by 2002:a05:6a00:1490:: with SMTP id v16mr18061272pfu.173.1590439290104;
-        Mon, 25 May 2020 13:41:30 -0700 (PDT)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d2sm13632095pfc.7.2020.05.25.13.41.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2020 13:41:29 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cL1utEGO6TQa6zJAZV4J0dPoFxlZ5b4/euTKZrTC+g4=;
+        b=af4ohXNjJyzLAhEjocxDeH6ZwXsqfBCtCWUR+FaDCEsKtZKjJsOEZ2QwBh3saiQ+ly
+         MHyEaT+mp+s3qZY5DsxfFuGEo1JnuEEhX+iR7gvJbW3XRUsz19OT7D11FgIPXB2tUFgz
+         3x9o+UcmzObcs+rl83AQYXtD1V81Gu/ICiTnQc2QLQQ2rWIYDFngp9NdBJlUOt4gOuIx
+         c6gQGJVUV0wm9qt3Y/1YCQ9TvwhG3hsDprZWYy3PWl4cluZdjJUscKQdVZqdXvsdS8Id
+         2L2HQPBBEQHHkBfPM2I7TsE6kfifBlBv6fzC7HRgtF4PmlRVEzMDlujGqsR+WOFwzxf3
+         zRXQ==
+X-Gm-Message-State: AOAM530JLM+dw8aD0a9WYS5kh7DPmFTHtyT0NB8UAm9mFtzb0fCrhd9q
+        oT2VEBEIHaiMl2f2nMY/YKTDzzchkkQ72hAFQGQ=
+X-Google-Smtp-Source: ABdhPJx/aS7mMnbY1KXcIxjKicYNceCG0o520JIMG+fgCY9vP5hfYtUtot/XSc/gWOTd4tUE3HobyVw+/t+HWNS5Vso=
+X-Received: by 2002:a92:d449:: with SMTP id r9mr1331555ilm.166.1590445202782;
+ Mon, 25 May 2020 15:20:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1585160616.git.asutoshd@codeaurora.org> <d0c6c22455811e9f0eda01f9bc70d1398b51b2bd.1585160616.git.asutoshd@codeaurora.org>
+In-Reply-To: <d0c6c22455811e9f0eda01f9bc70d1398b51b2bd.1585160616.git.asutoshd@codeaurora.org>
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        alim.akhtar@samsung.com, avri.altman@wdc.com, jejb@linux.ibm.com,
-        martin.petersen@oracle.com, subhashj@codeaurora.org,
-        venkatg@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] scsi: ufs-qcom: Fix scheduling while atomic issue
-Date:   Mon, 25 May 2020 13:41:25 -0700
-Message-Id: <20200525204125.46171-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+Date:   Mon, 25 May 2020 16:19:51 -0600
+Message-ID: <CAOCk7NrrBoO2k1M7XX0W6L2+efBbo-s6WVaKZx4EtSqNpCaUyA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] scsi: ufshcd: Update the set frequency to devfreq
+To:     Asutosh Das <asutoshd@codeaurora.org>
+Cc:     Avri Altman <Avri.Altman@wdc.com>, Can Guo <cang@codeaurora.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-scsi@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Venkat Gopalakrishnan <venkatg@codeaurora.org>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ufs_qcom_dump_dbg_regs() uses usleep_range, a sleeping function, but can
-be called from atomic context in the following flow:
+On Wed, Mar 25, 2020 at 12:29 PM Asutosh Das <asutoshd@codeaurora.org> wrote:
+>
+> Currently, the frequency that devfreq provides the
+> driver to set always leads the clocks to be scaled up.
+> Hence, round the clock-rate to the nearest frequency
+> before deciding to scale.
+>
+> Also update the devfreq statistics of current frequency.
+>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
 
-ufshcd_intr -> ufshcd_sl_intr -> ufshcd_check_errors ->
-ufshcd_print_host_regs -> ufshcd_vops_dbg_register_dump ->
-ufs_qcom_dump_dbg_regs
+This change appears to cause issues for the Lenovo Miix 630, as
+identified by git bisect.
 
-This causes a boot crash on the Lenovo Miix 630 when the interrupt is
-handled on the idle thread.
+On 5.6-final, My boot log looks normal.  On 5.7-rc7, the Lenovo Miix
+630 rarely boots, usually stuck in some kind of infinite printk loop.
 
-Fix the issue by switching to udelay().
+If I disable some of the UFS logging, I can capture this from the
+logs, as soon as UFS inits -
 
-Fixes: 9c46b8676271 ("scsi: ufs-qcom: dump additional testbus registers")
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- drivers/scsi/ufs/ufs-qcom.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+[    4.353860] ufshcd-qcom 1da4000.ufshc: ufshcd_intr: Unhandled
+interrupt 0x00000000
+[    4.359605] ufshcd-qcom 1da4000.ufshc: ufshcd_intr: Unhandled
+interrupt 0x00000000
+[    4.365412] ufshcd-qcom 1da4000.ufshc: ufshcd_check_errors:
+saved_err 0x4 saved_uic_err 0x2
+[    4.371121] ufshcd-qcom 1da4000.ufshc: hba->ufs_version = 0x210,
+hba->capabilities = 0x1587001f
+[    4.376846] ufshcd-qcom 1da4000.ufshc: hba->outstanding_reqs =
+0x100000, hba->outstanding_tasks = 0x0
+[    4.382636] ufshcd-qcom 1da4000.ufshc: last_hibern8_exit_tstamp at
+0 us, hibern8_exit_cnt = 0
+[    4.388368] ufshcd-qcom 1da4000.ufshc: No record of pa_err
+[    4.394001] ufshcd-qcom 1da4000.ufshc: dl_err[0] = 0x80000001 at 3873626 us
+[    4.399577] ufshcd-qcom 1da4000.ufshc: No record of nl_err
+[    4.405053] ufshcd-qcom 1da4000.ufshc: No record of tl_err
+[    4.410464] ufshcd-qcom 1da4000.ufshc: No record of dme_err
+[    4.415747] ufshcd-qcom 1da4000.ufshc: No record of auto_hibern8_err
+[    4.420950] ufshcd-qcom 1da4000.ufshc: No record of fatal_err
+[    4.426013] ufshcd-qcom 1da4000.ufshc: No record of link_startup_fail
+[    4.430950] ufshcd-qcom 1da4000.ufshc: No record of resume_fail
+[    4.435786] ufshcd-qcom 1da4000.ufshc: No record of suspend_fail
+[    4.440538] ufshcd-qcom 1da4000.ufshc: dev_reset[0] = 0x0 at 3031009 us
+[    4.445199] ufshcd-qcom 1da4000.ufshc: No record of host_reset
+[    4.449750] ufshcd-qcom 1da4000.ufshc: No record of task_abort
+[    4.454214] ufshcd-qcom 1da4000.ufshc: clk: core_clk, rate: 50000000
+[    4.458590] ufshcd-qcom 1da4000.ufshc: clk: core_clk_unipro, rate: 37500000
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 19aa5c44e0da..f938867301a0 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1658,11 +1658,11 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
- 
- 	/* sleep a bit intermittently as we are dumping too much data */
- 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
--	usleep_range(1000, 1100);
-+	udelay(1000);
- 	ufs_qcom_testbus_read(hba);
--	usleep_range(1000, 1100);
-+	udelay(1000);
- 	ufs_qcom_print_unipro_testbus(hba);
--	usleep_range(1000, 1100);
-+	udelay(1000);
- }
- 
- /**
--- 
-2.17.1
+I don't understand how this change is breaking things, but it clearly is for me.
 
+What kind of additional data would be useful to get to the bottom of this?
