@@ -2,181 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 96A341E14F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 21:53:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAE4A1E1529
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 22:20:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390330AbgEYTxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 15:53:15 -0400
-Received: from pio-pvt-msa3.bahnhof.se ([79.136.2.42]:43584 "EHLO
-        pio-pvt-msa3.bahnhof.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388757AbgEYTxO (ORCPT
+        id S2388994AbgEYUUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 16:20:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389978AbgEYUUQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 15:53:14 -0400
-X-Greylist: delayed 506 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 May 2020 15:53:13 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTP id D9DA53FED7;
-        Mon, 25 May 2020 21:44:45 +0200 (CEST)
-Authentication-Results: pio-pvt-msa3.bahnhof.se;
-        dkim=pass (1024-bit key; unprotected) header.d=flawful.org header.i=@flawful.org header.b=QDjmeXEV;
-        dkim-atps=neutral
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.099
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.099 tagged_above=-999 required=6.31
-        tests=[BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
-        DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, URIBL_BLOCKED=0.001]
-        autolearn=ham autolearn_force=no
-Received: from pio-pvt-msa3.bahnhof.se ([127.0.0.1])
-        by localhost (pio-pvt-msa3.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id OmX5e2RY_eTK; Mon, 25 May 2020 21:44:44 +0200 (CEST)
-Received: from flawful.org (c-96c8e055.011-101-6d6c6d3.bbcust.telenor.se [85.224.200.150])
-        (Authenticated sender: mb274189)
-        by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTPA id 58DD23FECE;
-        Mon, 25 May 2020 21:44:44 +0200 (CEST)
-Received: by flawful.org (Postfix, from userid 1001)
-        id 77A402144; Mon, 25 May 2020 21:44:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flawful.org; s=mail;
-        t=1590435883; bh=FuA3RmRIxtFufzjmsrWISKWLXALVI1vHqwr8TKNm7K4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QDjmeXEVe/u1tDiLcFfj1kSTpzsNs/pYdbkrsgnZ1LGQSE3c2mHzY+pOydVlhitOL
-         AZyDFtm6/7YDiS9X3W2FFNb850Jno7XAi92g+hARmmZW5miuJWjZRIYEwcw1RANe26
-         81SjG2+t6cXE2aPvGsAU7WCER9xbEFP04P3HcN9Q=
-Date:   Mon, 25 May 2020 21:44:43 +0200
-From:   Niklas Cassel <nks@flawful.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Message-ID: <20200525194443.GA11851@flawful.org>
-References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
- <20200402081349.GA932@gerhold.net>
- <20200403013119.GB20625@builder.lan>
- <20200403100923.GB2652@gerhold.net>
- <20200403175934.GA96064@gerhold.net>
- <20200423045506.GJ987656@yoga>
- <20200525153246.GA9224@flawful.org>
- <20200525163638.GA41001@gerhold.net>
+        Mon, 25 May 2020 16:20:16 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926EFC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 13:20:15 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id h21so21597360ejq.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 13:20:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=PoIaK/pV9OVJlJWu+gk2RvaOMk7FYxWYIk7W+GWUZIc=;
+        b=BlG1u/53E0k/cxphrEAEQh0jv/4wUw0rI7aAQNCNBebgaqk3MrjPRWLFP9lwzuti9w
+         Y6lDJCz9LgYXAMXh6Ep9cpUsIGOflEQmYJHurd7xrwX7Fj8aiIpWAdsjXcYO5cA0O8i3
+         TI/zsA0kdTtFXiLUZLkmLdPuMG/F0zfYwevXcyuF3hmrnLCiRPV/Q8D++vsltvRRjEb6
+         AISfw9OPo3BQqf9izNvJo5e9E2hLRPvgNPyGXK7ZPkMeH/QRwHTmMk/PcrOGqZpWS3ig
+         I0pQphUtnyIEwduqcTyOKT/MbQwnT9ub65zoIKHy1mmKTb0fJxZ9BK2fcU4LhiGnn1rM
+         dCwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=PoIaK/pV9OVJlJWu+gk2RvaOMk7FYxWYIk7W+GWUZIc=;
+        b=HBD4Bv89844ST2uj50OmWePKf4eCs0uCfZayZ1dl9OV+xcGnivM/t8M1kHyfs5OS4H
+         bsuvWJt1sYxjPgc7GQ4RGIj1QIcy94xlZJLvVbcWlUobZqRoPLqHyOSpwVhJvs/T2hss
+         wQCpDHBxEqTS9gDdfkT619HRLfaXlTz0CQGp9+baUxXB1l8eaXQrysF6AZr8x3HOI2/3
+         oIH4G/BHbgjclWAuiY2HqPilKu5mQt/VLFN/+UD12e+gAkllaTMs3fE/qmdPLJwvBd/d
+         53Nu0+IPJbAVqXbJ+wwp6/dEnD6MFvckDMmNuPKaqP8uOuBtsiGKqlkfbaOUqeE8lydP
+         Zevg==
+X-Gm-Message-State: AOAM5320C/630Q1bQWyM34zxP+vspK6d+vEHfjk4YtHpRVXC77oFoy4y
+        q1as1c+yYAp6gEHVD3FbtxvY3uyHquSEjgnQivk=
+X-Google-Smtp-Source: ABdhPJzGBBplhgkLgweqOx2JdMhGzZRkrpe9//0ny+sPB1V0GdFyUBsf7L+dELYRTCsUuX8afEdERCn9Oq85bxMBWk8=
+X-Received: by 2002:a17:906:3a11:: with SMTP id z17mr20807986eje.460.1590438013845;
+ Mon, 25 May 2020 13:20:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200525163638.GA41001@gerhold.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 25 May 2020 13:20:36 -0700
+Message-ID: <CAF6AEGuBodxXBcEZOU+bSBmxRmVx+JHVkFnt+R8sNn3dGafnpg@mail.gmail.com>
+Subject: [pull] drm/msm: msm-next for 5.8
+To:     Dave Airlie <airlied@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 25, 2020 at 06:36:38PM +0200, Stephan Gerhold wrote:
-> On Mon, May 25, 2020 at 05:32:47PM +0200, Niklas Cassel wrote:
-> > On Wed, Apr 22, 2020 at 09:55:06PM -0700, Bjorn Andersson wrote:
-> > > > Based on the available downstream sources I guessed the defines to add
-> > > > for MSM8916 to the rpmpd driver. Then I added the VDD_MX OPPs as
-> > > > "required-opps" to the CPU OPP table so it would vote for the appopriate
-> > > > corners (with the mapping you mentioned above).
-> > > > 
-> > > 
-> > > I was not aware it was possible to describe the dependency between the
-> > > CPU opp table and MX in this fashion. If that's the case then this looks
-> > > really good and it should be straight forward to add MSM8916 support to
-> > > the CPR driver as well.
-> > > 
-> > > > I haven't tested it yet, maybe I can get some feedback first if the code
-> > > > seems reasonable or if I'm missing something obvious? :)
-> > > > 
-> > > 
-> > > Have you tested this yet?
-> > > 
-> > > > Also: Is there a good way to validate these changes?
-> > > > I suppose I could check the genpd state but that wouldn't tell me if the
-> > > > corner was applied correctly. Maybe I can check the actual voltage
-> > > > through the SPMI interface, hm...
-> > > > 
-> > > 
-> > > Validating that S2 and VDD_MX changes appropriately in Linux would be a
-> > > pretty good test.
-> > 
-> > Like Bjorn says,
-> > 
-> > Downstream CPR on MSM8916 controls 3 things; VDD_APC, VDD_MX and MEMACC.
-> > 
-> > On QCS404 we don't have to adjust VDD_MX, therefore this is no code for
-> > this in the upstream CPR driver. It just scales VPP_APC and MEMACC.
-> > 
-> > I like Stephan's idea of scaling VDD_APC and VDD_MEM to the maximum
-> > necessary for the selected CPU frequency, until there is full CPR
-> > support for MSM8916 (if ever).
-> > 
-> > 
-> > The patch suggested so far looks good, however, I'm slightly worried
-> > that this might lead to unstable boards, since MEMACC is never scaled
-> > in the suggested patch.
-> > 
-> 
-> Yeah, I was recently looking at that. I have no idea if it's needed.
-> 
-> If I understand this correctly, on downstream this is implemented
-> separately as "mem-acc-regulator", although it is controlled by the
-> "cpr-regulator" driver.
-> 
-> The mapping seems to be fairly static:
-> Essentially it is just set to Nominal (1), SVS (2) or Turbo (3),
-> depending on the CPU frequency. (On downstream this is specified in the
-> device tree as qcom,cpr-corner-map = <1 1 2 2 3 3 3 3 3>; where each
-> value is one CPU frequency.)
-> 
-> Additionally there seem to be some fuses to eventually override
-> that behavior slightly (qcom,override-corner-acc-map).
-> See: https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm/boot/dts/qcom/msm8916-regulator.dtsi?h=LA.BR.1.2.9.1-02310-8x16.0#n29
-> 
-> On mainline this is currently entirely handled by the CPR driver,
-> and the register sequence for QCS404 actually looks a bit more
-> complicated... Hmm.
+Hi Dave,
 
-I agree:
-https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/arch/arm64/boot/dts/qcom/qcs405-regulator.dtsi?h=msm-4.14#n294
+Not too huge this time around, but a bunch of interesting new
+stuff:
 
-> 
-> The reason I mention all this: At least as I understand it,
-> this isn't much different from the VDD_MX scaling. Essentially it
-> doesn't strictly have something to do with the voltage scaling
-> we do for CPR (VDD_APC), but rather it seems to be just another
-> requirement when scaling the CPU frequency.
+ * new gpu support: a405, a640, a650
+ * dpu: clock and bandwidth scaling
+ * dpu: color processing support
+ * mdp5: support for msm8x36 (the thing with a405)
+ * some prep work for per-context pagetables (ie the part that
+   does not depend on in-flight iommu patches)
+ * last but not least, UABI update for submit ioctl to support
+   syncobj (from Bas)
 
-I agree.
+The UABI change has been on-list and reviewed for a while now.
+The only reason I didn't pull it in last cycle was that I ran
+out of time to review it myself at the time.  But I'm happy
+with it.  The MR for mesa (vulkan/turnip) support is here:
 
-> 
-> In other words, I wonder if we should separate this into yet another
-> power domain driver, and then reference it independently from CPR
-> as additional required-opps for both MSM8916 and QCS404.
-
-While this sounds very nice, by simply referencing these as
-required-opps, I don't see how the OPP library will be able
-to set APC, MX and MEMACC in the correct order:
-
-https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/regulator/cpr-regulator.c?h=msm-4.14#n774
-
-If scaling down, first MEMACC is set, then APC is set, then MX is set.
-
-If scaling up, first MX is set, then APC is set, then MEMACC is set.
+https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/2769
 
 
+The following changes since commit 2ef96a5bb12be62ef75b5828c0aab838ebb29cb8:
 
-Perhaps the easiest way is to write a minimalistic cpufreq driver,
-very similar to drivers/cpufreq/omap-cpufreq.c, that implements
-the .target_index callback, and just like omap_target(), simply
-gets the OPP using dev_pm_opp_find_freq_ceil(), and then calls
-regulator_set_voltage() (APC), clk_set_rate() (to change the clock
-frequency), dev_pm_genpd_set_performance_state() (to set MX),
-and then do that little code that needs to be done for memacc.
+  Linux 5.7-rc5 (2020-05-10 15:16:58 -0700)
 
-Considering that CPR is not an actual power domain, CPR gives
-adjustments to VDD_APC, but I don't know of any other device
-connected to VDD_APC, other than the CPU, so in hindsight the CPR
-driver probably should have been implemented using .target_index(),
-rather than as a power domain provider using performance states.
+are available in the Git repository at:
 
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2020-05-25
 
-Kind regards,
-Niklas
+for you to fetch changes up to d9e19d7966a31ae70edfe0cb7cb044e20343a0c9:
+
+  drm/msm/a6xx: skip HFI set freq if GMU is powered down (2020-05-23
+13:38:16 -0700)
+
+----------------------------------------------------------------
+Bas Nieuwenhuizen (1):
+      drm/msm: Add syncobj support.
+
+Bjorn Andersson (1):
+      drm/msm: Fix undefined "rd_full" link error
+
+Christophe JAILLET (2):
+      drm/msm/a6xx: Fix a typo in an error message
+      drm/msm: Fix typo
+
+Hongbo Yao (1):
+      drm/msm/dpu: Fix compile warnings
+
+Jonathan Marek (10):
+      drm/msm: add msm_gem_get_and_pin_iova_range
+      drm/msm: add internal MSM_BO_MAP_PRIV flag
+      drm/msm/a6xx: use msm_gem for GMU memory objects
+      drm/msm/a6xx: add A640/A650 to gpulist
+      drm/msm/a6xx: HFI v2 for A640 and A650
+      drm/msm/a6xx: A640/A650 GMU firmware path
+      drm/msm/a6xx: update pdc/rscc GMU registers for A640/A650
+      drm/msm/a6xx: enable GMU log
+      drm/msm/a6xx: update a6xx_hw_init for A640 and A650
+      drm/msm/a6xx: skip HFI set freq if GMU is powered down
+
+Jordan Crouse (4):
+      drm/msm: Check for powered down HW in the devfreq callbacks
+      drm/msm: Attach the IOMMU device during initialization
+      drm/msm: Refactor address space initialization
+      drm/msm: Update the MMU helper function APIs
+
+Kalyan Thota (3):
+      drm/msm/dpu: add support for color processing blocks in dpu driver
+      drm/msm/dpu: add support for pcc color block in dpu driver
+      drm/msm/dpu: add support for clk and bw scaling for display
+
+Konrad Dybcio (1):
+      drm/msm/mdp5: Add MDP5 configuration for MSM8x36.
+
+Krishna Manikandan (1):
+      drm/msm/dpu: update bandwidth threshold check
+
+Roy Spliet (1):
+      drm/msm/mdp5: Fix mdp5_init error path for failed mdp5_kms allocation
+
+Shawn Guo (2):
+      drm/msm/a4xx: add adreno a405 support
+      drm/msm/a4xx: add a405_registers for a405 device
+
+kbuild test robot (2):
+      drm/msm/a6xx: a6xx_hfi_send_start() can be static
+      drm/msm/dpu: dpu_setup_dspp_pcc() can be static
+
+ drivers/gpu/drm/msm/Makefile                   |   1 +
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c          |  16 +
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c          |   1 +
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c          |  83 ++++-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c          |   7 +
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h          |  14 +
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c          | 418 +++++++++++++++++++------
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h          |  37 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h      |  48 +--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c          |  70 ++++-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c          | 123 +++++++-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.h          |  50 ++-
+ drivers/gpu/drm/msm/adreno/adreno_device.c     |  35 +++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c        |  27 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h        |  23 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  | 125 +++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  95 ++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h       |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c    |  12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  53 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  43 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     |  26 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |   3 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c    | 129 ++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h    | 100 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h    |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |  55 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |   5 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c       |   9 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  82 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |   4 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c         |  58 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h         |   2 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c       |  18 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c       |  80 ++++-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c      |   4 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c       |  21 +-
+ drivers/gpu/drm/msm/msm_drv.c                  |   6 +-
+ drivers/gpu/drm/msm/msm_drv.h                  |  15 +-
+ drivers/gpu/drm/msm/msm_gem.c                  |  31 +-
+ drivers/gpu/drm/msm/msm_gem.h                  |   1 +
+ drivers/gpu/drm/msm/msm_gem_submit.c           | 232 +++++++++++++-
+ drivers/gpu/drm/msm/msm_gem_vma.c              |  42 +--
+ drivers/gpu/drm/msm/msm_gpu.c                  |  49 +--
+ drivers/gpu/drm/msm/msm_gpu.h                  |   4 +-
+ drivers/gpu/drm/msm/msm_gpummu.c               |  10 +-
+ drivers/gpu/drm/msm/msm_iommu.c                |  22 +-
+ drivers/gpu/drm/msm/msm_mmu.h                  |   5 +-
+ drivers/gpu/drm/msm/msm_rd.c                   |   4 +-
+ include/uapi/drm/msm_drm.h                     |  24 +-
+ 50 files changed, 1923 insertions(+), 403 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
