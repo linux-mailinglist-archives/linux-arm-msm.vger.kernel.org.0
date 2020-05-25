@@ -2,78 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F60F1E0988
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 11:02:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13C191E0A98
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 11:31:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389080AbgEYJC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 05:02:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51412 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388680AbgEYJC0 (ORCPT
+        id S2389477AbgEYJbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 05:31:47 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:20929 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389328AbgEYJbr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 05:02:26 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A89CC05BD43
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 02:02:26 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id w10so19982762ljo.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 02:02:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2hg/OH74DORU9tQYyoK6Bqm4fFp4PsuIpQ1XLjl+5O0=;
-        b=nJgmdmXKEcK518FOp+NQL3H6U+rX+6T2vs7v/hbMr9J7mT+2oqY5KESoJrLLAjOUG9
-         uZQP1RTQZ59BZRCli+A8sOYo+oCK7EjHGwWIJD7hMZeI49fs0lVC7oMvLSsrEaCdeYd7
-         D9ftD2zAvSNkl8FFKRMqVMuY2uWNqV+eUM+Ubhy8lyZ4Oan76ifF3HzMV80DsH0eWWwe
-         z/RYZU/PENhp4FyyFK+yA0dUh5joa/UuWAWxgcBchUTn1H5kvYWb/pD1B55BLWpj9Rb9
-         Q12oVhjQlXXxI49ZU5keD+FfG/wX4BZr6dj+DxxLXS2e8op5jpfTGZw4yAuPM+OtzzYX
-         mPBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2hg/OH74DORU9tQYyoK6Bqm4fFp4PsuIpQ1XLjl+5O0=;
-        b=V2tAg86uvOqCjlNEN2UFKhtPaOZQMUbz75QaZN/UKM2NMGJ9Nw/Uh2JhLzSMhBzSEN
-         ggdd3y9kkdTBMbNo+s3q7HC4AqcP1p/k3yH74yjB2eJ2eiQUPwTruOBouaB7H5BbjO3a
-         z789PYyqsYR3GAYgsY1qmnmOvNRFaUCJTIHMpv8WDWzi8iqA3nTQ3j58KWNPsMHV/5d3
-         1sChJRt/JaSyOOMSFdoFwOOi7n2oSRMIS8U1UBbaasnNTGqdJ/7Ts0e3EkCeum6oV447
-         aS2f8VqIZ22K69dQEOZUhTFz3yaIB2mnxHVEtiQzYX0EaoIQG6Lx4rwZj/ExG+flSuzv
-         f+EA==
-X-Gm-Message-State: AOAM5337CicNIzTjyVzEHNdfJ0opWoOLzeRbZ0hH27qc4aMRRR21lKxS
-        1nsyCRHqf91QogEbdZzzHRA2Op8PxeJnIGex763D8A==
-X-Google-Smtp-Source: ABdhPJwWFwfymHIMrEwH+BYN7cjY1SJ5pJ5xBRDS9aLWhYF4MaLelR7tHM5Ct+bMfDm+2aOeyWd13ahqyngusi6HRaY=
-X-Received: by 2002:a2e:9716:: with SMTP id r22mr13965648lji.293.1590397344884;
- Mon, 25 May 2020 02:02:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <1589817025-21886-1-git-send-email-groverm@codeaurora.org> <20200519013813.GU2165@builder.lan>
-In-Reply-To: <20200519013813.GU2165@builder.lan>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 25 May 2020 11:02:14 +0200
-Message-ID: <CACRpkdbSsVcy=6Bo42SnPqgKoa+jNanmBEXix_yv6aNK8VcreQ@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: msm: Add check for pinctrl group is valid
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Mayank Grover <groverm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 25 May 2020 05:31:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590399106; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=rcy53dhh00j/cAlkf1xHyg4tWgvBbT8cJ1wghUEPwrA=; b=DwtyaKIS9GfLiN0L9M+mb0+KwuI28CeYg/fKyIwtIHFP+tzYQZGZ3qikOE+v0cDM36RiQooU
+ 6GUhRmg9c9+jIlKmTtmv+A+rSqV8qFOgigI67BX0gu8UMyJY2zkpVA40CyBs1wRc5sMsM27G
+ bnIfxvRCygMG9CbmQ/Mz+RAeEw0=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ecb907c7171b6d7e4bc3080 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 25 May 2020 09:31:40
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 13391C433CA; Mon, 25 May 2020 09:31:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1767EC433C9;
+        Mon, 25 May 2020 09:31:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1767EC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org
+Subject: [PATCH v1] bluetooth: hci_qca: Fix qca6390 enable failure after warm reboot
+Date:   Mon, 25 May 2020 17:31:12 +0800
+Message-Id: <1590399072-32407-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 19, 2020 at 3:39 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+Warm reboot can not restore qca6390 controller baudrate
+to default due to lack of controllable BT_EN pin or power
+supply, so fails to download firmware after warm reboot.
 
-> @Linus, we started off with something similar for GPIOs and ended up
-> with the logic in the core code. Should we somehow try to do the same
-> for pinctrl?
+Fixed by sending EDL_SOC_RESET VSC to reset controller
+within added device shutdown implementation.
 
-msm_pingroup_is_valid() looks very reusable but I'm afraid I do not
-understand the implicit assumptions around it, but I guess yes,
-if it can be properly documented etc.
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+---
+ drivers/bluetooth/btqca.c   |  8 ++++----
+ drivers/bluetooth/hci_qca.c | 27 +++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 4 deletions(-)
 
-Yours,
-Linus Walleij
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 3ea866d..7bbdf4d 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -74,10 +74,10 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+ 
+ 	ver = (struct qca_btsoc_version *)(edl->data);
+ 
+-	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
+-	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
+-	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
+-	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
++	BT_INFO("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
++	BT_INFO("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
++	BT_INFO("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
++	BT_INFO("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
+ 
+ 	/* QCA chipset version can be decided by patch and SoC
+ 	 * version, combination with upper 2 bytes from SoC
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index e4a6823..a4f86e4 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1975,6 +1975,32 @@ static void qca_serdev_remove(struct serdev_device *serdev)
+ 	hci_uart_unregister_device(&qcadev->serdev_hu);
+ }
+ 
++static void qca_serdev_shutdown(struct device *dev)
++{
++	int res;
++	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
++	struct serdev_device *serdev = to_serdev_device(dev);
++	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
++	u8 ibs_wake_cmd[] = {0xfd};
++	u8 edl_reset_soc_cmd[] = {0x01, 0x00, 0xfc, 0x01, 0x05};
++
++	if (qcadev->btsoc_type == QCA_QCA6390) {
++		serdev_device_write_flush(serdev);
++		res = serdev_device_write_buf(serdev,
++				ibs_wake_cmd, sizeof(ibs_wake_cmd));
++		BT_INFO("%s: send ibs_wake_cmd res = %d", __func__, res);
++		serdev_device_wait_until_sent(serdev, timeout);
++		usleep_range(8000, 10000);
++
++		serdev_device_write_flush(serdev);
++		res = serdev_device_write_buf(serdev,
++				edl_reset_soc_cmd, sizeof(edl_reset_soc_cmd));
++		BT_INFO("%s: send edl_reset_soc_cmd res = %d", __func__, res);
++		serdev_device_wait_until_sent(serdev, timeout);
++		usleep_range(8000, 10000);
++	}
++}
++
+ static int __maybe_unused qca_suspend(struct device *dev)
+ {
+ 	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+@@ -2100,6 +2126,7 @@ static struct serdev_device_driver qca_serdev_driver = {
+ 		.name = "hci_uart_qca",
+ 		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
+ 		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
++		.shutdown = qca_serdev_shutdown,
+ 		.pm = &qca_pm_ops,
+ 	},
+ };
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
