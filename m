@@ -2,106 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FC001E1275
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 18:16:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA5361E12CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 18:36:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728617AbgEYQP5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 12:15:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34932 "EHLO
+        id S1729660AbgEYQgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 12:36:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728101AbgEYQP4 (ORCPT
+        with ESMTP id S1726308AbgEYQgs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 12:15:56 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B45C08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 09:15:56 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id e11so8030679pfn.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 09:15:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gq7KDxytrwBv3Ee6LFih9/KTjS7vsScQxcda5nNQ+Ms=;
-        b=Ojfn8JqqBQKNdvSd4HpjRqRwRnE62A/rHtJxs74MU9uf7cmH1r7hohAX2tdclJ7BXj
-         xdPhMSF97utN4AWhwYJAIpwX9YaKuJdWNsEv0OirKVrVWS3gPlLxyPMZVHAOm9v+AoJv
-         FBEmR2ClctF/sTe6tSDkzC2LLnoEfpxFHgPPWbNkwE83qPdcPmgPVms84DR+Co1Yw+Wt
-         gvvS1hjOfSjAfWC+s7njQ625zkmNisqy0UZ23ceVy0bH0WJioV8r1Dngn17Kgk7dFX0n
-         fS9b3YYpaHIUB4RxhdPqtfkW6C8kE/aZGNbXl+3A129MLcAtqpUu0H7HMWC2Q0cqFJNN
-         bokQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gq7KDxytrwBv3Ee6LFih9/KTjS7vsScQxcda5nNQ+Ms=;
-        b=Px+MfiIVZ8ZVbQho1k4Mrvf9Lw6sJiWiN1SAeqdl7O6bfEakv95D5+Dy3iTBqfymiJ
-         1seiv0YK7BrRTmxFxR1cy2Zok+/E5f9QnlBz6ZNwSoDbPQsiPL7cwd/GTgl3DteKwZ0a
-         R/AHDC4l2IuDmO81yp/lGPivD+xnfA+RFKagwZohg0UP6cEmOkeANCDSfkafkPc9rmfF
-         kQ2WJ0N1+g3DEQCDbgA2yEiCG8zwFDejccgbfNdcjW2NZazfxmL47P/e/yVZ0UHmcjDL
-         f6X2ROFD3EQqDQt59ACp+Keu0Ck2X/DRltxEbBzThHq70SNr3/Zq3gleBvc1142PkFbC
-         baLw==
-X-Gm-Message-State: AOAM533qiNvAxGUKWvvFJev2Ri5Wqx9w0+p4ODVf/XTqFieibuO9VYuF
-        CjCnbTm6outlzKU2tPnwNInBug==
-X-Google-Smtp-Source: ABdhPJx5O26DBjPbD+W02Sji+TfR+vDgK84YFsKmX7EKqaRnHafICtceif3e2vp0vgA6JP89sQ1Zrg==
-X-Received: by 2002:a63:e549:: with SMTP id z9mr13461127pgj.213.1590423356161;
-        Mon, 25 May 2020 09:15:56 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id i10sm3040188pgq.36.2020.05.25.09.15.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2020 09:15:55 -0700 (PDT)
-Date:   Mon, 25 May 2020 10:15:53 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCHv3 0/2] Add support for replicators which loses context on
- clock removal
-Message-ID: <20200525161553.GA31527@xps15>
-References: <cover.1590171891.git.saiprakash.ranjan@codeaurora.org>
+        Mon, 25 May 2020 12:36:48 -0400
+Received: from mo6-p00-ob.smtp.rzone.de (mo6-p00-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5300::8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D942FC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 09:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590424604;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=lLqRSb6lU5rcEts+Wmt6wgBPFte3gpw0kUegKZRKRJs=;
+        b=WmBfWTtCwgXIPF4/3b3BIanqPiSRnL9X9EKbsUnGQDeGwcL0Sw7U86UYMGu92Ovx6Z
+        zeH6f/4v2cEQBWTCl73hE/SJr952OP2KypFXIQlTqwTWMJoe2Yh3zqsgM41DDK9o6Kee
+        7eeEG90zvDLrlb9Qb0/JAxHO3NHyZ4wTpJWaxej7la1KCjkN+UTqDQA3NUCbKX24TAxH
+        QrjhVcxCmgl92BkCflRevqJj5uy1wjsroQNdZjMaRDkw/UlzfBoMSGreyztO9A34x81y
+        r+UjUNXKFOQESuhRmFerAy9XphCT63t1chS5lv2O9BT/A81PBowW8kVli0S5g6YSoJZU
+        0Ecw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Ic/Fboo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.7.0 DYNA|AUTH)
+        with ESMTPSA id C07db0w4PGahYoH
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Mon, 25 May 2020 18:36:43 +0200 (CEST)
+Date:   Mon, 25 May 2020 18:36:38 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Niklas Cassel <nks@flawful.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200525163638.GA41001@gerhold.net>
+References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+ <20200402081349.GA932@gerhold.net>
+ <20200403013119.GB20625@builder.lan>
+ <20200403100923.GB2652@gerhold.net>
+ <20200403175934.GA96064@gerhold.net>
+ <20200423045506.GJ987656@yoga>
+ <20200525153246.GA9224@flawful.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1590171891.git.saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200525153246.GA9224@flawful.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
-
-On Sat, May 23, 2020 at 12:06:50AM +0530, Sai Prakash Ranjan wrote:
-> This series is mainly to add support for replicators
-> which lose context on removing AMBA clock like on SC7180
-> SoC where replicator in AOSS domain loses context.
+On Mon, May 25, 2020 at 05:32:47PM +0200, Niklas Cassel wrote:
+> On Wed, Apr 22, 2020 at 09:55:06PM -0700, Bjorn Andersson wrote:
+> > > Based on the available downstream sources I guessed the defines to add
+> > > for MSM8916 to the rpmpd driver. Then I added the VDD_MX OPPs as
+> > > "required-opps" to the CPU OPP table so it would vote for the appopriate
+> > > corners (with the mapping you mentioned above).
+> > > 
+> > 
+> > I was not aware it was possible to describe the dependency between the
+> > CPU opp table and MX in this fashion. If that's the case then this looks
+> > really good and it should be straight forward to add MSM8916 support to
+> > the CPR driver as well.
+> > 
+> > > I haven't tested it yet, maybe I can get some feedback first if the code
+> > > seems reasonable or if I'm missing something obvious? :)
+> > > 
+> > 
+> > Have you tested this yet?
+> > 
+> > > Also: Is there a good way to validate these changes?
+> > > I suppose I could check the genpd state but that wouldn't tell me if the
+> > > corner was applied correctly. Maybe I can check the actual voltage
+> > > through the SPMI interface, hm...
+> > > 
+> > 
+> > Validating that S2 and VDD_MX changes appropriately in Linux would be a
+> > pretty good test.
+> 
+> Like Bjorn says,
+> 
+> Downstream CPR on MSM8916 controls 3 things; VDD_APC, VDD_MX and MEMACC.
+> 
+> On QCS404 we don't have to adjust VDD_MX, therefore this is no code for
+> this in the upstream CPR driver. It just scales VPP_APC and MEMACC.
+> 
+> I like Stephan's idea of scaling VDD_APC and VDD_MEM to the maximum
+> necessary for the selected CPU frequency, until there is full CPR
+> support for MSM8916 (if ever).
+> 
+> 
+> The patch suggested so far looks good, however, I'm slightly worried
+> that this might lead to unstable boards, since MEMACC is never scaled
+> in the suggested patch.
 > 
 
-I am good with this set but need a reviewed-by on the DT binding before I can
-add it to my tree.  The same goes for your other set[1].
+Yeah, I was recently looking at that. I have no idea if it's needed.
+
+If I understand this correctly, on downstream this is implemented
+separately as "mem-acc-regulator", although it is controlled by the
+"cpr-regulator" driver.
+
+The mapping seems to be fairly static:
+Essentially it is just set to Nominal (1), SVS (2) or Turbo (3),
+depending on the CPU frequency. (On downstream this is specified in the
+device tree as qcom,cpr-corner-map = <1 1 2 2 3 3 3 3 3>; where each
+value is one CPU frequency.)
+
+Additionally there seem to be some fuses to eventually override
+that behavior slightly (qcom,override-corner-acc-map).
+See: https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm/boot/dts/qcom/msm8916-regulator.dtsi?h=LA.BR.1.2.9.1-02310-8x16.0#n29
+
+On mainline this is currently entirely handled by the CPR driver,
+and the register sequence for QCS404 actually looks a bit more
+complicated... Hmm.
+
+The reason I mention all this: At least as I understand it,
+this isn't much different from the VDD_MX scaling. Essentially it
+doesn't strictly have something to do with the voltage scaling
+we do for CPR (VDD_APC), but rather it seems to be just another
+requirement when scaling the CPU frequency.
+
+In other words, I wonder if we should separate this into yet another
+power domain driver, and then reference it independently from CPR
+as additional required-opps for both MSM8916 and QCS404.
+
+CPR would then be only responsible for the actual adaptive voltage
+scaling of VDD_APC.
+
+Does that make sense?
 
 Thanks,
-Mathieu
-
-[1]. "coresight: etm4x: Add support to skip trace unit power up"
-
-> v2 - https://lore.kernel.org/patchwork/cover/1244340/
-> More discussion is found here - https://lore.kernel.org/patchwork/patch/1231182/
-> 
-> Changes since v2:
->  * Added DT maintainers which I missed in v2
->  * Added proper kernel-doc and header as per Mathieu
-> 
-> Sai Prakash Ranjan (2):
->   coresight: replicator: Reset replicator if context is lost
->   dt-bindings: arm: coresight: Add optional property to replicators
-> 
->  .../devicetree/bindings/arm/coresight.txt     |  6 ++
->  .../coresight/coresight-replicator.c          | 55 +++++++++++++------
->  2 files changed, 44 insertions(+), 17 deletions(-)
-> 
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+Stephan
