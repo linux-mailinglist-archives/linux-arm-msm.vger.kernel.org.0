@@ -2,137 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13C191E0A98
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 11:31:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4456F1E0ABE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 11:38:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389477AbgEYJbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 05:31:47 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:20929 "EHLO
+        id S2389373AbgEYJh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 05:37:59 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:41238 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389328AbgEYJbr (ORCPT
+        by vger.kernel.org with ESMTP id S2389251AbgEYJh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 05:31:47 -0400
+        Mon, 25 May 2020 05:37:59 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590399106; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=rcy53dhh00j/cAlkf1xHyg4tWgvBbT8cJ1wghUEPwrA=; b=DwtyaKIS9GfLiN0L9M+mb0+KwuI28CeYg/fKyIwtIHFP+tzYQZGZ3qikOE+v0cDM36RiQooU
- 6GUhRmg9c9+jIlKmTtmv+A+rSqV8qFOgigI67BX0gu8UMyJY2zkpVA40CyBs1wRc5sMsM27G
- bnIfxvRCygMG9CbmQ/Mz+RAeEw0=
+ s=smtp; t=1590399478; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=8yygGiBP0D9AqMlE/nAxVZXV3Mc/D/TZO0KkO47wiAo=;
+ b=KtehAe3niBOvLcsYn5d6F/JZfmiiuRv7BchMNdB6/HnGJfu4DxtxasTIc2dw21Z7PxiAxUHm
+ A75xwR0m3b4r9MzLCZnz61s+munLSon3bqPomEDCcMOCafkzpLVBiSV6KXf2XLhGRNwbLVzN
+ b+gW12ELlx0pYY9yPlkbX5VmZJ8=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5ecb907c7171b6d7e4bc3080 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 25 May 2020 09:31:40
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5ecb91e48cd231c403df1323 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 25 May 2020 09:37:40
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 13391C433CA; Mon, 25 May 2020 09:31:40 +0000 (UTC)
+        id 33CD5C433CA; Mon, 25 May 2020 09:37:39 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1767EC433C9;
-        Mon, 25 May 2020 09:31:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1767EC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: [PATCH v1] bluetooth: hci_qca: Fix qca6390 enable failure after warm reboot
-Date:   Mon, 25 May 2020 17:31:12 +0800
-Message-Id: <1590399072-32407-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCF53C433C9;
+        Mon, 25 May 2020 09:37:38 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 25 May 2020 15:07:38 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree-owner@vger.kernel.org
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8150: add apps_smmu node
+In-Reply-To: <20200524023815.21789-2-jonathan@marek.ca>
+References: <20200524023815.21789-1-jonathan@marek.ca>
+ <20200524023815.21789-2-jonathan@marek.ca>
+Message-ID: <d35d2d1b64622ae83ffd9a963aadcad4@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Warm reboot can not restore qca6390 controller baudrate
-to default due to lack of controllable BT_EN pin or power
-supply, so fails to download firmware after warm reboot.
+Hi Jonathan,
 
-Fixed by sending EDL_SOC_RESET VSC to reset controller
-within added device shutdown implementation.
+On 2020-05-24 08:08, Jonathan Marek wrote:
+> Add the apps_smmu node for sm8150. Note that adding the iommus field 
+> for
+> UFS is required because initializing the iommu removes the bypass 
+> mapping
+> that created by the bootloader.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 91 ++++++++++++++++++++++++++++
+>  1 file changed, 91 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index a36512d1f6a1..acb839427b12 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -442,6 +442,8 @@ ufs_mem_hc: ufshc@1d84000 {
+>  			resets = <&gcc GCC_UFS_PHY_BCR>;
+>  			reset-names = "rst";
+> 
+> +			iommus = <&apps_smmu 0x300 0>;
+> +
+>  			clock-names =
+>  				"core_clk",
+>  				"bus_aggr_clk",
+> @@ -706,6 +708,7 @@ usb_1_dwc3: dwc3@a600000 {
+>  				compatible = "snps,dwc3";
+>  				reg = <0 0x0a600000 0 0xcd00>;
+>  				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> +				iommus = <&apps_smmu 0x140 0>;
+>  				snps,dis_u2_susphy_quirk;
+>  				snps,dis_enblslpm_quirk;
+>  				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+> @@ -742,6 +745,94 @@ spmi_bus: spmi@c440000 {
+>  			cell-index = <0>;
+>  		};
+> 
+> +		apps_smmu: iommu@15000000 {
+> +			compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
 
-Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
----
- drivers/bluetooth/btqca.c   |  8 ++++----
- drivers/bluetooth/hci_qca.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 4 deletions(-)
+This should be qcom,sm8150-smmu-500 and also you need to update the 
+arm-smmu
+binding with this compatible in a separate patch.
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 3ea866d..7bbdf4d 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -74,10 +74,10 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
- 
- 	ver = (struct qca_btsoc_version *)(edl->data);
- 
--	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
--	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
--	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
--	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
-+	BT_INFO("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
-+	BT_INFO("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
-+	BT_INFO("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
-+	BT_INFO("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
- 
- 	/* QCA chipset version can be decided by patch and SoC
- 	 * version, combination with upper 2 bytes from SoC
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index e4a6823..a4f86e4 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1975,6 +1975,32 @@ static void qca_serdev_remove(struct serdev_device *serdev)
- 	hci_uart_unregister_device(&qcadev->serdev_hu);
- }
- 
-+static void qca_serdev_shutdown(struct device *dev)
-+{
-+	int res;
-+	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-+	struct serdev_device *serdev = to_serdev_device(dev);
-+	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-+	u8 ibs_wake_cmd[] = {0xfd};
-+	u8 edl_reset_soc_cmd[] = {0x01, 0x00, 0xfc, 0x01, 0x05};
-+
-+	if (qcadev->btsoc_type == QCA_QCA6390) {
-+		serdev_device_write_flush(serdev);
-+		res = serdev_device_write_buf(serdev,
-+				ibs_wake_cmd, sizeof(ibs_wake_cmd));
-+		BT_INFO("%s: send ibs_wake_cmd res = %d", __func__, res);
-+		serdev_device_wait_until_sent(serdev, timeout);
-+		usleep_range(8000, 10000);
-+
-+		serdev_device_write_flush(serdev);
-+		res = serdev_device_write_buf(serdev,
-+				edl_reset_soc_cmd, sizeof(edl_reset_soc_cmd));
-+		BT_INFO("%s: send edl_reset_soc_cmd res = %d", __func__, res);
-+		serdev_device_wait_until_sent(serdev, timeout);
-+		usleep_range(8000, 10000);
-+	}
-+}
-+
- static int __maybe_unused qca_suspend(struct device *dev)
- {
- 	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
-@@ -2100,6 +2126,7 @@ static struct serdev_device_driver qca_serdev_driver = {
- 		.name = "hci_uart_qca",
- 		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
- 		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
-+		.shutdown = qca_serdev_shutdown,
- 		.pm = &qca_pm_ops,
- 	},
- };
+-Sai
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
