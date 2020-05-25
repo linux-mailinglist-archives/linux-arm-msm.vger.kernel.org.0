@@ -2,112 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8681B1E08EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 10:36:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC1531E0923
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 10:42:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729513AbgEYIgH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 04:36:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47230 "EHLO
+        id S2389114AbgEYImj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 04:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727894AbgEYIgD (ORCPT
+        with ESMTP id S2388867AbgEYImj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 04:36:03 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D07B2C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:36:01 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id z9so10582312oid.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:36:01 -0700 (PDT)
+        Mon, 25 May 2020 04:42:39 -0400
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D990C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:42:38 -0700 (PDT)
+Received: by mail-lf1-x141.google.com with SMTP id z206so6437036lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 01:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=NRyvkXRye4iYanmLJM9esEpVEWDZpWUJeI38gHuM/d4=;
-        b=D69DgVjlpmos8d57BUoJiWBpsjXn3XSt1iSRkr+MkDgZDWE5try1xRKerx9simqzAF
-         6QMf+j8OVCNnVLGtBeTGYwPOGjATY/XS70Y1LO3yvCCFxE1gJSWZXgDeHU277tgQ9Yqe
-         T5ylTRD/FbgCXV3yBDwHEITJ29FuG6AvFblhn+33/ZrnWAzvb5HJPz2HwaKjaq6Lr9lV
-         qq1AIV9VSuqOLLrhXErp5vg2bFLaenpIAb71fAxU2da0qs0a5DRSywo3gmKAEpN5jJMl
-         dSROMusTv0v3AFNCIUeyL/WudiYqfwQ3h7GnjW2u3qAONGrOJTve0zSUi8g5tWeMPKhi
-         iI6w==
+        bh=fufxDxITtQnE6s70Vl4sAmvROZfNgK/lnJ+q52QoA08=;
+        b=B4NCIL9eH5VkJg+3BOtXsB/4FvA300STIxScRIIPS4HVgfErSzfBb7j+bUOrdxj8bP
+         8KvOprIyUKavWNZiHVVB7BNqECV1CUm2jxENHlrIS5rBTRoytQxzt6v6UGy4y7kEQ51a
+         rymSWHXsqX5Ly7N0hxtUmPl0M2QH2KjVQH/2PTmnnnCKbCzBcQz9sqPlJJs70HxVa/UA
+         YRqt6ZK/sluabIIsP2rLfJOWRpCetX89d3YyA1DaejdK78CciWO/NA0abs61968wwdst
+         XzafG+S/tVSMcZWx37PpTjM+8XlWGHD54l58JaY91vRq0pjKTrMLgo+5TX828LU+6rnm
+         sNGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=NRyvkXRye4iYanmLJM9esEpVEWDZpWUJeI38gHuM/d4=;
-        b=eicLInQM3+/I+4Ffwbh2Cmltc7CrAAqS3lXxZOWWtk3npHP4DXOVwjDRLj0QVHrptT
-         J0j6Jc3IrwJdjFDIe+prlPThhRK7mZ4tQIt7uJQjoLveIwdy+hIhgpuRw8V8fxZq0leJ
-         LMZqMSfaNW8IY3JP0hTOg5pBW4ORemde4gLtcmP6s9ZtUyJ1mzcMoitaQofkjYTYMvyM
-         99AFUDKqAdEzJjCy52ERshB7rm0hpb5JGqxtBGX5A2MEmG8LKO3YiQez7znpUYzi5kFH
-         sfpvptr8ArAoGvnahMv8O8cpxf9VVKO+WjShN0py7EQnSeUHeogqUnih1XEAxuETDgXG
-         lJxA==
-X-Gm-Message-State: AOAM53161Bxo+BOHpdjvaUFrOmQYbo8VXAUZuI+2irj6htmak7xPoSya
-        kxE0PVusEuP/C8r8RU3mflxuNH7jKOR6Vyo+ND1O7g==
-X-Google-Smtp-Source: ABdhPJxIrQuW5N7Il7y0ZdJ5sA7xOTsYPnibkCKplJ1Fr7FxMg6AgD+RBAREa2r3PHYpGN46pbDyNDGJWwX9BuuN0dE=
-X-Received: by 2002:aca:4ad6:: with SMTP id x205mr11033941oia.56.1590395761206;
- Mon, 25 May 2020 01:36:01 -0700 (PDT)
+        bh=fufxDxITtQnE6s70Vl4sAmvROZfNgK/lnJ+q52QoA08=;
+        b=le4/dNJGzc8p0oWUEomBFG0rbhwxXpS7jDoT23N2L+BQMChYMbgxIaAdZJD+xgu+an
+         rWknEQ89HoatB+ZIoxPiwv29z4G6XjKw4lBWDegeOR7i9a1k4MzrOULdJFAG5AZkLLIm
+         3lZtbu5Bm0UFrQ7D6B1MfJi+ziycZb6YxhfdwuqqU5j6R7WVkYiSpAK+TMHTTlaBEuSY
+         pZID1da5H/ns8CL4j/ewr1ndCyrP0/KhmYaiQQnaiNZR6aIemhurAe1J3YRUIiTJSKlO
+         5gR9te5QpKcAZn9euaXItyTBcvwCRRqxWzgrxoCcUjz3RPxKmzwbpDFNrHBEYhNld7/o
+         79nw==
+X-Gm-Message-State: AOAM530vS6Qeo98ceUtQw/aue33QbsikYdajF+KDzXeTRcXAcLusB98z
+        F/Tm7qqmyfvC3mEavUtFlFwaB9T1/k/6aZjillaoeQ==
+X-Google-Smtp-Source: ABdhPJzsphYazIbu7mz6UJN+2f7Cmj8mlM7rqS2oT8+3v5YRHwjakHAMdNfDoBlqNzR4RXRuZLynv8GOpP/54ZD+Bjw=
+X-Received: by 2002:ac2:414c:: with SMTP id c12mr13977881lfi.47.1590396157054;
+ Mon, 25 May 2020 01:42:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200518082129.2103683-1-robert.foss@linaro.org>
- <20200519102256.GB8114@Mani-XPS-13-9360> <20200519232442.GE2165@builder.lan>
-In-Reply-To: <20200519232442.GE2165@builder.lan>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 25 May 2020 10:35:50 +0200
-Message-ID: <CAG3jFytUvfwFKvysKpRhrRRAotMv-epQZA3zq8DG0QdrQMpfyg@mail.gmail.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: apq8016-sbc-d3: Add Qualcomm APQ8016
- SBC + D3Camera mezzanine
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>
+References: <20200517190139.740249-1-sam@ravnborg.org> <20200517190139.740249-2-sam@ravnborg.org>
+ <CACRpkdbogVA=12Xzh6jC0AaE7DrH8Z7iVuG3s_gS4MQBYF61Dw@mail.gmail.com> <20200518101609.GA759699@ravnborg.org>
+In-Reply-To: <20200518101609.GA759699@ravnborg.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 25 May 2020 10:42:26 +0200
+Message-ID: <CACRpkdY=ROLjHb70=tckOPUDBoinT4XtcUvZSaNxND7HZD5H+g@mail.gmail.com>
+Subject: Re: [PATCH v2 01/16] video: amba-clcd: use devm_of_find_backlight
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Russell King <linux@armlinux.org.uk>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-Thanks for the review. I'll incorporate the changes if we decide to
-that this DT should live upstream.
-
-On Wed, 20 May 2020 at 01:26, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Mon, May 18, 2020 at 12:16 PM Sam Ravnborg <sam@ravnborg.org> wrote:
+> Hi Linus.
 >
-> On Tue 19 May 03:22 PDT 2020, Manivannan Sadhasivam wrote:
->
-> > Hi Robert,
+> On Mon, May 18, 2020 at 10:10:12AM +0200, Linus Walleij wrote:
+> > On Sun, May 17, 2020 at 9:01 PM Sam Ravnborg <sam@ravnborg.org> wrote:
 > >
-> > On Mon, May 18, 2020 at 10:21:29AM +0200, Robert Foss wrote:
-> > > Add device treee support for the Qualcomm APQ8016 SBC, otherwise known as
-> > > the Dragonboard 410c with the D3Camera mezzanine expansion board.
+> > > Look up backlight device using devm_of_find_backlight().
+> > > This simplifies the code and prevents us from hardcoding
+> > > the node name in the driver.
 > > >
-> > > The D3Camera mezzanine ships in a kit with a OmniVision 5640 sensor module,
-> > > which is what this DT targets.
+> > > v2:
+> > >   - Added Cc: Peter Ujfalusi
 > > >
+> > > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> > > Cc: Russell King <linux@armlinux.org.uk>
+> > > Cc: Sam Ravnborg <sam@ravnborg.org>
+> > > Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+> > > Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
+> > > Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> > > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > > Cc: Jani Nikula <jani.nikula@intel.com>
+> > > Cc: Douglas Anderson <dianders@chromium.org>
 > >
-> > What is the motivation behind adding this new dts? We have been using the
-> > userspace tool [1] for applying this as an overlay for some time. But if we
-> > start adding dts for mezzanines then for sure we'll end up with some good
-> > numbers which will flood arch/{..}/qcom directory.
-> >
-> > I could understand that one of the motivation is to provide nice user experience
-> > to users but that's also taken care by the dt-update tool IMO.
-> >
+> > Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> Thanks. I went ahead and applied this now, so we could kill
+> the last user of of_find_backlight_by_node().
 >
-> The motivation for posting this was to provoke a response like yours.
->
-> I knew about [1], but not that it included the overlays. I'm okay with
-> using overlays and the dt-update tool. But I would have preferred that
-> the dts files didn't live out of tree, given that this approach breaks
-> if I change the name of a node you depend on upstream.
+> I hope we can make of_find_backlight_by_node() static after the merge window
+> so no new users appears.
 
-I wasn't aware of the dt-update tool, and it seems pretty neat.
-However, a thought I had is that using it to enable a dt-node or a
-board variant is not very different from applying a patch the the
-upstream tree. The work it takes to do it is about the same, and the
-maintenance burden of using a patch is about the same as using
-dt-tool.
+For this driver (drivers/video/fbdev/amba-clcd.c) there are zero
+users after the merge window (all users moved over to DRM) so
+I plan to retire it completely.
 
-> > [1] https://github.com/96boards/dt-update
+Yours,
+Linus Walleij
