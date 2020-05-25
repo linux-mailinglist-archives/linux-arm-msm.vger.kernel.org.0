@@ -2,204 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAE4A1E1529
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 22:20:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BABC11E1549
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 22:41:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388994AbgEYUUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 16:20:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
+        id S2390538AbgEYUlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 16:41:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389978AbgEYUUQ (ORCPT
+        with ESMTP id S2390437AbgEYUla (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 16:20:16 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926EFC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 13:20:15 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id h21so21597360ejq.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 13:20:15 -0700 (PDT)
+        Mon, 25 May 2020 16:41:30 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EA6DC061A0E;
+        Mon, 25 May 2020 13:41:30 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id m1so2792740pgk.1;
+        Mon, 25 May 2020 13:41:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=PoIaK/pV9OVJlJWu+gk2RvaOMk7FYxWYIk7W+GWUZIc=;
-        b=BlG1u/53E0k/cxphrEAEQh0jv/4wUw0rI7aAQNCNBebgaqk3MrjPRWLFP9lwzuti9w
-         Y6lDJCz9LgYXAMXh6Ep9cpUsIGOflEQmYJHurd7xrwX7Fj8aiIpWAdsjXcYO5cA0O8i3
-         TI/zsA0kdTtFXiLUZLkmLdPuMG/F0zfYwevXcyuF3hmrnLCiRPV/Q8D++vsltvRRjEb6
-         AISfw9OPo3BQqf9izNvJo5e9E2hLRPvgNPyGXK7ZPkMeH/QRwHTmMk/PcrOGqZpWS3ig
-         I0pQphUtnyIEwduqcTyOKT/MbQwnT9ub65zoIKHy1mmKTb0fJxZ9BK2fcU4LhiGnn1rM
-         dCwA==
+        h=from:to:cc:subject:date:message-id;
+        bh=RkZMhQLldIOys7nQpzJNFew5Ei3EG4rJ9hOJdxzbwfk=;
+        b=krPQWD30ZCtO95s7MF8vMdQ5C1OlfmYMp3uv9JE2P3gqz+WkE/Hbqek1HDoCGzgJ6j
+         of2+bh9iipH3npWs6AxtnHUYMK15Rl6mQfvW0I2GlbLBGz/0WWcKz2OkQpHaAjw+k0NM
+         FFxi0fyinbgIdGgaAhPkfvSkkoYb1z8HBbHCJEdmvYkgZyQRjbo1n2AWYyeqISe7746T
+         upgkB1/bvDOBPcAbVmegmYlKs6nZ/+OGxe2GskW3ihEddLjlv1buOzHSchSrwbivLv72
+         qaALbI9W9/uOH8mZO5mj1SfnN5lLr47j77idBRYkx+uC2UW4fQCGTY/kSh3zGB+TUi8b
+         wV+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=PoIaK/pV9OVJlJWu+gk2RvaOMk7FYxWYIk7W+GWUZIc=;
-        b=HBD4Bv89844ST2uj50OmWePKf4eCs0uCfZayZ1dl9OV+xcGnivM/t8M1kHyfs5OS4H
-         bsuvWJt1sYxjPgc7GQ4RGIj1QIcy94xlZJLvVbcWlUobZqRoPLqHyOSpwVhJvs/T2hss
-         wQCpDHBxEqTS9gDdfkT619HRLfaXlTz0CQGp9+baUxXB1l8eaXQrysF6AZr8x3HOI2/3
-         oIH4G/BHbgjclWAuiY2HqPilKu5mQt/VLFN/+UD12e+gAkllaTMs3fE/qmdPLJwvBd/d
-         53Nu0+IPJbAVqXbJ+wwp6/dEnD6MFvckDMmNuPKaqP8uOuBtsiGKqlkfbaOUqeE8lydP
-         Zevg==
-X-Gm-Message-State: AOAM5320C/630Q1bQWyM34zxP+vspK6d+vEHfjk4YtHpRVXC77oFoy4y
-        q1as1c+yYAp6gEHVD3FbtxvY3uyHquSEjgnQivk=
-X-Google-Smtp-Source: ABdhPJzGBBplhgkLgweqOx2JdMhGzZRkrpe9//0ny+sPB1V0GdFyUBsf7L+dELYRTCsUuX8afEdERCn9Oq85bxMBWk8=
-X-Received: by 2002:a17:906:3a11:: with SMTP id z17mr20807986eje.460.1590438013845;
- Mon, 25 May 2020 13:20:13 -0700 (PDT)
-MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 25 May 2020 13:20:36 -0700
-Message-ID: <CAF6AEGuBodxXBcEZOU+bSBmxRmVx+JHVkFnt+R8sNn3dGafnpg@mail.gmail.com>
-Subject: [pull] drm/msm: msm-next for 5.8
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=RkZMhQLldIOys7nQpzJNFew5Ei3EG4rJ9hOJdxzbwfk=;
+        b=SitZCAyF+RKclLN9zwBCqUr2LIZ68fquQyCfXNpibwKIRDqzXn1DRreZuEu2TVm+yN
+         pdb/i+PUOwWmMRVESlRMJqxgwA8QCfT1VTJb0yrAK0Odyhd/ZVyi6MUYdVzQPLZQTGto
+         XwhNTtkXiryq1cAKVjaeZiQfzW0+3/56wm1KVJAf4TdS7UG2B7zw9x2pD9orBSw9kooh
+         L428kziYJIhklkvxAkxyzk4ysw1FxFM35zg+/oBkNALvnqCjijCZJ6j56UzcQUFsYSkP
+         BcOsD7mJOv4X60iUXwbxZnEC/E4uokvKKh0BEzblqPZp54sGfjpoPM1XmMPj4jKnoIsf
+         pegw==
+X-Gm-Message-State: AOAM533H5bQcwya7TKnQZDgSESQZFYfm1FdxLSUMVHwu7Il+AVqP9gVz
+        J24bkHh6QfK4liD1l5g8fYx+mLv3
+X-Google-Smtp-Source: ABdhPJy18biZE6cpZtxmd7gPtm4MkApYXoZPl+nTvYgRXICZkwMwsscr+L+DR42ER3/ctduP0LdmeA==
+X-Received: by 2002:a05:6a00:1490:: with SMTP id v16mr18061272pfu.173.1590439290104;
+        Mon, 25 May 2020 13:41:30 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d2sm13632095pfc.7.2020.05.25.13.41.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 May 2020 13:41:29 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, jejb@linux.ibm.com,
+        martin.petersen@oracle.com, subhashj@codeaurora.org,
+        venkatg@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] scsi: ufs-qcom: Fix scheduling while atomic issue
+Date:   Mon, 25 May 2020 13:41:25 -0700
+Message-Id: <20200525204125.46171-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+ufs_qcom_dump_dbg_regs() uses usleep_range, a sleeping function, but can
+be called from atomic context in the following flow:
 
-Not too huge this time around, but a bunch of interesting new
-stuff:
+ufshcd_intr -> ufshcd_sl_intr -> ufshcd_check_errors ->
+ufshcd_print_host_regs -> ufshcd_vops_dbg_register_dump ->
+ufs_qcom_dump_dbg_regs
 
- * new gpu support: a405, a640, a650
- * dpu: clock and bandwidth scaling
- * dpu: color processing support
- * mdp5: support for msm8x36 (the thing with a405)
- * some prep work for per-context pagetables (ie the part that
-   does not depend on in-flight iommu patches)
- * last but not least, UABI update for submit ioctl to support
-   syncobj (from Bas)
+This causes a boot crash on the Lenovo Miix 630 when the interrupt is
+handled on the idle thread.
 
-The UABI change has been on-list and reviewed for a while now.
-The only reason I didn't pull it in last cycle was that I ran
-out of time to review it myself at the time.  But I'm happy
-with it.  The MR for mesa (vulkan/turnip) support is here:
+Fix the issue by switching to udelay().
 
-https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/2769
+Fixes: 9c46b8676271 ("scsi: ufs-qcom: dump additional testbus registers")
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/scsi/ufs/ufs-qcom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 19aa5c44e0da..f938867301a0 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1658,11 +1658,11 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
+ 
+ 	/* sleep a bit intermittently as we are dumping too much data */
+ 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ 	ufs_qcom_testbus_read(hba);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ 	ufs_qcom_print_unipro_testbus(hba);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ }
+ 
+ /**
+-- 
+2.17.1
 
-The following changes since commit 2ef96a5bb12be62ef75b5828c0aab838ebb29cb8:
-
-  Linux 5.7-rc5 (2020-05-10 15:16:58 -0700)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2020-05-25
-
-for you to fetch changes up to d9e19d7966a31ae70edfe0cb7cb044e20343a0c9:
-
-  drm/msm/a6xx: skip HFI set freq if GMU is powered down (2020-05-23
-13:38:16 -0700)
-
-----------------------------------------------------------------
-Bas Nieuwenhuizen (1):
-      drm/msm: Add syncobj support.
-
-Bjorn Andersson (1):
-      drm/msm: Fix undefined "rd_full" link error
-
-Christophe JAILLET (2):
-      drm/msm/a6xx: Fix a typo in an error message
-      drm/msm: Fix typo
-
-Hongbo Yao (1):
-      drm/msm/dpu: Fix compile warnings
-
-Jonathan Marek (10):
-      drm/msm: add msm_gem_get_and_pin_iova_range
-      drm/msm: add internal MSM_BO_MAP_PRIV flag
-      drm/msm/a6xx: use msm_gem for GMU memory objects
-      drm/msm/a6xx: add A640/A650 to gpulist
-      drm/msm/a6xx: HFI v2 for A640 and A650
-      drm/msm/a6xx: A640/A650 GMU firmware path
-      drm/msm/a6xx: update pdc/rscc GMU registers for A640/A650
-      drm/msm/a6xx: enable GMU log
-      drm/msm/a6xx: update a6xx_hw_init for A640 and A650
-      drm/msm/a6xx: skip HFI set freq if GMU is powered down
-
-Jordan Crouse (4):
-      drm/msm: Check for powered down HW in the devfreq callbacks
-      drm/msm: Attach the IOMMU device during initialization
-      drm/msm: Refactor address space initialization
-      drm/msm: Update the MMU helper function APIs
-
-Kalyan Thota (3):
-      drm/msm/dpu: add support for color processing blocks in dpu driver
-      drm/msm/dpu: add support for pcc color block in dpu driver
-      drm/msm/dpu: add support for clk and bw scaling for display
-
-Konrad Dybcio (1):
-      drm/msm/mdp5: Add MDP5 configuration for MSM8x36.
-
-Krishna Manikandan (1):
-      drm/msm/dpu: update bandwidth threshold check
-
-Roy Spliet (1):
-      drm/msm/mdp5: Fix mdp5_init error path for failed mdp5_kms allocation
-
-Shawn Guo (2):
-      drm/msm/a4xx: add adreno a405 support
-      drm/msm/a4xx: add a405_registers for a405 device
-
-kbuild test robot (2):
-      drm/msm/a6xx: a6xx_hfi_send_start() can be static
-      drm/msm/dpu: dpu_setup_dspp_pcc() can be static
-
- drivers/gpu/drm/msm/Makefile                   |   1 +
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c          |  16 +
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c          |   1 +
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c          |  83 ++++-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c          |   7 +
- drivers/gpu/drm/msm/adreno/a6xx.xml.h          |  14 +
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c          | 418 +++++++++++++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h          |  37 ++-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h      |  48 +--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c          |  70 ++++-
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c          | 123 +++++++-
- drivers/gpu/drm/msm/adreno/a6xx_hfi.h          |  50 ++-
- drivers/gpu/drm/msm/adreno/adreno_device.c     |  35 +++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c        |  27 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h        |  23 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  | 125 +++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  95 ++++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h       |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c    |  12 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  53 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  43 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     |  26 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |   3 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c    | 129 ++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h    | 100 ++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h    |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |  55 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |   5 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c       |   9 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  82 +++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |   4 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c         |  58 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h         |   2 +
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c       |  18 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c       |  80 ++++-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c      |   4 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c       |  21 +-
- drivers/gpu/drm/msm/msm_drv.c                  |   6 +-
- drivers/gpu/drm/msm/msm_drv.h                  |  15 +-
- drivers/gpu/drm/msm/msm_gem.c                  |  31 +-
- drivers/gpu/drm/msm/msm_gem.h                  |   1 +
- drivers/gpu/drm/msm/msm_gem_submit.c           | 232 +++++++++++++-
- drivers/gpu/drm/msm/msm_gem_vma.c              |  42 +--
- drivers/gpu/drm/msm/msm_gpu.c                  |  49 +--
- drivers/gpu/drm/msm/msm_gpu.h                  |   4 +-
- drivers/gpu/drm/msm/msm_gpummu.c               |  10 +-
- drivers/gpu/drm/msm/msm_iommu.c                |  22 +-
- drivers/gpu/drm/msm/msm_mmu.h                  |   5 +-
- drivers/gpu/drm/msm/msm_rd.c                   |   4 +-
- include/uapi/drm/msm_drm.h                     |  24 +-
- 50 files changed, 1923 insertions(+), 403 deletions(-)
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
