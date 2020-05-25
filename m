@@ -2,141 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA5361E12CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 18:36:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C59F01E12FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2020 18:48:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729660AbgEYQgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 12:36:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38150 "EHLO
+        id S2389160AbgEYQsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 12:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbgEYQgs (ORCPT
+        with ESMTP id S2389087AbgEYQsV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 12:36:48 -0400
-Received: from mo6-p00-ob.smtp.rzone.de (mo6-p00-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5300::8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D942FC061A0E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 09:36:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590424604;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=lLqRSb6lU5rcEts+Wmt6wgBPFte3gpw0kUegKZRKRJs=;
-        b=WmBfWTtCwgXIPF4/3b3BIanqPiSRnL9X9EKbsUnGQDeGwcL0Sw7U86UYMGu92Ovx6Z
-        zeH6f/4v2cEQBWTCl73hE/SJr952OP2KypFXIQlTqwTWMJoe2Yh3zqsgM41DDK9o6Kee
-        7eeEG90zvDLrlb9Qb0/JAxHO3NHyZ4wTpJWaxej7la1KCjkN+UTqDQA3NUCbKX24TAxH
-        QrjhVcxCmgl92BkCflRevqJj5uy1wjsroQNdZjMaRDkw/UlzfBoMSGreyztO9A34x81y
-        r+UjUNXKFOQESuhRmFerAy9XphCT63t1chS5lv2O9BT/A81PBowW8kVli0S5g6YSoJZU
-        0Ecw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Ic/Fboo="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.7.0 DYNA|AUTH)
-        with ESMTPSA id C07db0w4PGahYoH
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Mon, 25 May 2020 18:36:43 +0200 (CEST)
-Date:   Mon, 25 May 2020 18:36:38 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Niklas Cassel <nks@flawful.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Message-ID: <20200525163638.GA41001@gerhold.net>
-References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
- <20200402081349.GA932@gerhold.net>
- <20200403013119.GB20625@builder.lan>
- <20200403100923.GB2652@gerhold.net>
- <20200403175934.GA96064@gerhold.net>
- <20200423045506.GJ987656@yoga>
- <20200525153246.GA9224@flawful.org>
+        Mon, 25 May 2020 12:48:21 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03CCFC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 09:48:21 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id a25so9770967ljp.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 09:48:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qFuxiaLQtj25y9sBPvZbzcmOPRrE2+OoU7mnXmLdh80=;
+        b=AAkQHu34gVqwD+D2io1X/xsVdIEw5/KTRUNCC/awsiMQ7KbAutU7D0Y6s7rtgmWObv
+         Zi//1vNOknwT67jcp752ncHZHZmVuzUv8CaK3P1lHjNrxZUqfhhQv2YiCzPT4+PMXxHt
+         fEE+b0SIKZS66MDiQCMKoJehuSg/kotgyd/+oUhBS0Sqq5dblAiVlGJ67aejHulH7PKD
+         4ZpllbZtsuxUOjvq8z+ubrFYZEUa+Zyq3cmG6ReT1nMbqxDsQujN1wfqUO2VUCsO4r3I
+         GOlwv7hIA3RVr2E1QGWDGfZ5wVhl1zebLP6Yoqe8sN75tXTR0z69yj4SgO0/ZTbylcM3
+         khhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qFuxiaLQtj25y9sBPvZbzcmOPRrE2+OoU7mnXmLdh80=;
+        b=V6qITQ2wFceUTAYk2LzgM7sYIZhdTjhrD6gSztPojBs2tYHmDKB8Z6Q77x401ACA2X
+         +lkkJaA+z2y9mpqELM++ZuYuivAvIW3r9j5tqHGc/OMhl6+kSDQE9I80rjp+ZYlFGHyN
+         XxcIxrYoOzpX62OkOXbLWyckVQLJYoljP9eY79lZaLxlBQLE/pwl8w5ia3FuErEtssbl
+         jYPRJU4kUIpiVzUXigWVEyH7ithRb5rdBjixXljakB25ISxfY6+7ff7bDPyNI2YkQpiF
+         1j+tH3/Ieiglo5Xa8D3fjdv/E2q/T8k9oqsxaLViKKXS7UP2swO6ORCOR4kfr8betyAm
+         msEg==
+X-Gm-Message-State: AOAM531ngb3crPAMo6XFFzyV9Eni0eemMCPWu+MUHk6t2xO3Z66dYcQt
+        pMfc+n4vyLnfCstBeZ8oZs9FqpA7J68=
+X-Google-Smtp-Source: ABdhPJyeiI7t9sxbcbWgBBAvyIrby0YcjkJfjSkpCvcX492Za8Xf13NcKAnKE4AknK9Swn5an8h1MA==
+X-Received: by 2002:a2e:8018:: with SMTP id j24mr13760743ljg.99.1590425299065;
+        Mon, 25 May 2020 09:48:19 -0700 (PDT)
+Received: from lothlann.lan ([188.162.64.24])
+        by smtp.gmail.com with ESMTPSA id y21sm2914337ljg.48.2020.05.25.09.48.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 May 2020 09:48:18 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        patches@linaro.org, linaro-kernel@lists.linaro.org
+Subject: [PATCH 1/4] soc: qcom: socinfo: add support for newer socinfo data
+Date:   Mon, 25 May 2020 19:48:14 +0300
+Message-Id: <20200525164817.2938638-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200525153246.GA9224@flawful.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 25, 2020 at 05:32:47PM +0200, Niklas Cassel wrote:
-> On Wed, Apr 22, 2020 at 09:55:06PM -0700, Bjorn Andersson wrote:
-> > > Based on the available downstream sources I guessed the defines to add
-> > > for MSM8916 to the rpmpd driver. Then I added the VDD_MX OPPs as
-> > > "required-opps" to the CPU OPP table so it would vote for the appopriate
-> > > corners (with the mapping you mentioned above).
-> > > 
-> > 
-> > I was not aware it was possible to describe the dependency between the
-> > CPU opp table and MX in this fashion. If that's the case then this looks
-> > really good and it should be straight forward to add MSM8916 support to
-> > the CPR driver as well.
-> > 
-> > > I haven't tested it yet, maybe I can get some feedback first if the code
-> > > seems reasonable or if I'm missing something obvious? :)
-> > > 
-> > 
-> > Have you tested this yet?
-> > 
-> > > Also: Is there a good way to validate these changes?
-> > > I suppose I could check the genpd state but that wouldn't tell me if the
-> > > corner was applied correctly. Maybe I can check the actual voltage
-> > > through the SPMI interface, hm...
-> > > 
-> > 
-> > Validating that S2 and VDD_MX changes appropriately in Linux would be a
-> > pretty good test.
-> 
-> Like Bjorn says,
-> 
-> Downstream CPR on MSM8916 controls 3 things; VDD_APC, VDD_MX and MEMACC.
-> 
-> On QCS404 we don't have to adjust VDD_MX, therefore this is no code for
-> this in the upstream CPR driver. It just scales VPP_APC and MEMACC.
-> 
-> I like Stephan's idea of scaling VDD_APC and VDD_MEM to the maximum
-> necessary for the selected CPU frequency, until there is full CPR
-> support for MSM8916 (if ever).
-> 
-> 
-> The patch suggested so far looks good, however, I'm slightly worried
-> that this might lead to unstable boards, since MEMACC is never scaled
-> in the suggested patch.
-> 
+Add support for newer Qualcomm SoC info structures (up to version 0.15).
 
-Yeah, I was recently looking at that. I have no idea if it's needed.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/soc/qcom/socinfo.c | 55 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-If I understand this correctly, on downstream this is implemented
-separately as "mem-acc-regulator", although it is controlled by the
-"cpr-regulator" driver.
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index ebb49aee179b..0e6adf1161c0 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -24,6 +24,7 @@
+ #define SOCINFO_VERSION(maj, min)  ((((maj) & 0xffff) << 16)|((min) & 0xffff))
+ 
+ #define SMEM_SOCINFO_BUILD_ID_LENGTH           32
++#define SMEM_SOCINFO_CHIP_ID_LENGTH            32
+ 
+ /*
+  * SMEM item id, used to acquire handles to respective
+@@ -121,6 +122,16 @@ struct socinfo {
+ 	__le32 chip_family;
+ 	__le32 raw_device_family;
+ 	__le32 raw_device_num;
++	/* Version 13 */
++	__le32 nproduct_id;
++	char chip_id[SMEM_SOCINFO_CHIP_ID_LENGTH];
++	/* Version 14 */
++	__le32 num_clusters;
++	__le32 ncluster_array_offset;
++	__le32 num_defective_parts;
++	__le32 ndefective_parts_array_offset;
++	/* Version 15 */
++	__le32 nmodem_supported;
+ };
+ 
+ #ifdef CONFIG_DEBUG_FS
+@@ -135,6 +146,12 @@ struct socinfo_params {
+ 	u32 raw_ver;
+ 	u32 hw_plat;
+ 	u32 fmt;
++	u32 nproduct_id;
++	u32 num_clusters;
++	u32 ncluster_array_offset;
++	u32 num_defective_parts;
++	u32 ndefective_parts_array_offset;
++	u32 nmodem_supported;
+ };
+ 
+ struct smem_image_version {
+@@ -268,9 +285,19 @@ static int qcom_show_pmic_die_revision(struct seq_file *seq, void *p)
+ 	return 0;
+ }
+ 
++static int qcom_show_chip_id(struct seq_file *seq, void *p)
++{
++	struct socinfo *socinfo = seq->private;
++
++	seq_printf(seq, "%s\n", socinfo->chip_id);
++
++	return 0;
++}
++
+ QCOM_OPEN(build_id, qcom_show_build_id);
+ QCOM_OPEN(pmic_model, qcom_show_pmic_model);
+ QCOM_OPEN(pmic_die_rev, qcom_show_pmic_die_revision);
++QCOM_OPEN(chip_id, qcom_show_chip_id);
+ 
+ #define DEFINE_IMAGE_OPS(type)					\
+ static int show_image_##type(struct seq_file *seq, void *p)		  \
+@@ -309,6 +336,34 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
+ 	qcom_socinfo->info.fmt = __le32_to_cpu(info->fmt);
+ 
+ 	switch (qcom_socinfo->info.fmt) {
++	case SOCINFO_VERSION(0, 15):
++		qcom_socinfo->info.nmodem_supported = __le32_to_cpu(info->nmodem_supported);
++
++		debugfs_create_u32("nmodem_supported", 0400, qcom_socinfo->dbg_root,
++				   &qcom_socinfo->info.nmodem_supported);
++		/* Fall through */
++	case SOCINFO_VERSION(0, 14):
++		qcom_socinfo->info.num_clusters = __le32_to_cpu(info->num_clusters);
++		qcom_socinfo->info.ncluster_array_offset = __le32_to_cpu(info->ncluster_array_offset);
++		qcom_socinfo->info.num_defective_parts = __le32_to_cpu(info->num_defective_parts);
++		qcom_socinfo->info.ndefective_parts_array_offset = __le32_to_cpu(info->ndefective_parts_array_offset);
++
++		debugfs_create_u32("num_clusters", 0400, qcom_socinfo->dbg_root,
++				   &qcom_socinfo->info.num_clusters);
++		debugfs_create_u32("ncluster_array_offset", 0400, qcom_socinfo->dbg_root,
++				   &qcom_socinfo->info.ncluster_array_offset);
++		debugfs_create_u32("num_defective_parts", 0400, qcom_socinfo->dbg_root,
++				   &qcom_socinfo->info.num_defective_parts);
++		debugfs_create_u32("ndefective_parts_array_offset", 0400, qcom_socinfo->dbg_root,
++				   &qcom_socinfo->info.ndefective_parts_array_offset);
++		/* Fall through */
++	case SOCINFO_VERSION(0, 13):
++		qcom_socinfo->info.nproduct_id = __le32_to_cpu(info->nproduct_id);
++
++		debugfs_create_u32("nproduct_id", 0400, qcom_socinfo->dbg_root,
++				   &qcom_socinfo->info.nproduct_id);
++		DEBUGFS_ADD(info, chip_id);
++		/* Fall through */
+ 	case SOCINFO_VERSION(0, 12):
+ 		qcom_socinfo->info.chip_family =
+ 			__le32_to_cpu(info->chip_family);
+-- 
+2.26.2
 
-The mapping seems to be fairly static:
-Essentially it is just set to Nominal (1), SVS (2) or Turbo (3),
-depending on the CPU frequency. (On downstream this is specified in the
-device tree as qcom,cpr-corner-map = <1 1 2 2 3 3 3 3 3>; where each
-value is one CPU frequency.)
-
-Additionally there seem to be some fuses to eventually override
-that behavior slightly (qcom,override-corner-acc-map).
-See: https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm/boot/dts/qcom/msm8916-regulator.dtsi?h=LA.BR.1.2.9.1-02310-8x16.0#n29
-
-On mainline this is currently entirely handled by the CPR driver,
-and the register sequence for QCS404 actually looks a bit more
-complicated... Hmm.
-
-The reason I mention all this: At least as I understand it,
-this isn't much different from the VDD_MX scaling. Essentially it
-doesn't strictly have something to do with the voltage scaling
-we do for CPR (VDD_APC), but rather it seems to be just another
-requirement when scaling the CPU frequency.
-
-In other words, I wonder if we should separate this into yet another
-power domain driver, and then reference it independently from CPR
-as additional required-opps for both MSM8916 and QCS404.
-
-CPR would then be only responsible for the actual adaptive voltage
-scaling of VDD_APC.
-
-Does that make sense?
-
-Thanks,
-Stephan
