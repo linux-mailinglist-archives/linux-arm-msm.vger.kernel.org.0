@@ -2,151 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89A7D1E25F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 17:50:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A10821E2616
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 17:54:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728337AbgEZPuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 11:50:00 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:60031 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727061AbgEZPuA (ORCPT
+        id S1728301AbgEZPyZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 11:54:25 -0400
+Received: from ste-pvt-msa2.bahnhof.se ([213.80.101.71]:37150 "EHLO
+        ste-pvt-msa2.bahnhof.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727862AbgEZPyZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 11:50:00 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590508199; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=l9+v5KTbmJ9FO+vcSKCZmMPOM+Wqw2LiKpZkkRVxaYY=; b=glnr2zFNra16hb42iLUhShrTlzIN0c8hqJYbE0HwGnNhhRsb1dAV7wA1aPUNxVWWpTqdcZpt
- z/pMHPj120Di3Xj+fYf3vNkOYYgQyvuu/xwZImLvgrWwPr6+Zl1cpyfhfuhvnwrXc6Q2lHo6
- y6+ixBYTuIY9VrHvvDqF9oCx9bc=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5ecd3a8bc28b2cdd985bdf31 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 15:49:31
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 88F0EC433A0; Tue, 26 May 2020 15:49:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
+        Tue, 26 May 2020 11:54:25 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 94ABC3F9F2;
+        Tue, 26 May 2020 17:54:22 +0200 (CEST)
+Authentication-Results: ste-pvt-msa2.bahnhof.se;
+        dkim=pass (1024-bit key; unprotected) header.d=flawful.org header.i=@flawful.org header.b=Px7jTzX1;
+        dkim-atps=neutral
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.099
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA2E0C433C9;
-        Tue, 26 May 2020 15:49:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA2E0C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 26 May 2020 09:49:27 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno@lists.freedreno.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] drm/msm/a6xx: skip HFI set freq if GMU is powered down
-Message-ID: <20200526154927.GB20960@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
-        freedreno@lists.freedreno.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20200522221159.GA20960@jcrouse1-lnx.qualcomm.com>
- <20200522222909.27260-1-jonathan@marek.ca>
+X-Spam-Status: No, score=-2.099 tagged_above=-999 required=6.31
+        tests=[BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+        DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, URIBL_BLOCKED=0.001]
+        autolearn=ham autolearn_force=no
+Authentication-Results: ste-ftg-msa2.bahnhof.se (amavisd-new);
+        dkim=pass (1024-bit key) header.d=flawful.org
+Received: from ste-pvt-msa2.bahnhof.se ([127.0.0.1])
+        by localhost (ste-ftg-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 7kXxTb9uT6oN; Tue, 26 May 2020 17:54:21 +0200 (CEST)
+Received: from flawful.org (c-96c8e055.011-101-6d6c6d3.bbcust.telenor.se [85.224.200.150])
+        (Authenticated sender: mb274189)
+        by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id 88B503F59B;
+        Tue, 26 May 2020 17:54:21 +0200 (CEST)
+Received: by flawful.org (Postfix, from userid 1001)
+        id 9D00B35E; Tue, 26 May 2020 17:54:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flawful.org; s=mail;
+        t=1590508460; bh=lcyKmclJP5KC81fgfTEw5+UBikn03GMwHGl4vGoDQgs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Px7jTzX1TvEsSOszS9arv5Hgfl7S+P3cUEFIkJUCN4YxUBVHQGmqsthmaswWeXFt0
+         8CI/TDFxvm/N/3sYY1/UNo91Q2ci5KWSRyYjabG8vFA197Pr6zi9gpqndgZC/shX/8
+         rv1IPKtOP+bQOHPYdojFIgKIa2ReTDszA4/CLKwM=
+Date:   Tue, 26 May 2020 17:54:20 +0200
+From:   Niklas Cassel <nks@flawful.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200526155419.GA9977@flawful.org>
+References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
+ <20200402081349.GA932@gerhold.net>
+ <20200403013119.GB20625@builder.lan>
+ <20200403100923.GB2652@gerhold.net>
+ <20200403175934.GA96064@gerhold.net>
+ <20200423045506.GJ987656@yoga>
+ <20200525153246.GA9224@flawful.org>
+ <20200525163638.GA41001@gerhold.net>
+ <20200525194443.GA11851@flawful.org>
+ <20200526085948.GA1329@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200522222909.27260-1-jonathan@marek.ca>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20200526085948.GA1329@gerhold.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 22, 2020 at 06:29:08PM -0400, Jonathan Marek wrote:
-> Also skip the newly added HFI set freq path if the GMU is powered down,
-> which was missing because of patches crossing paths.
-
-I saw the 5.8 pull later in my inbox so I'm not sure if this made it or not but
-it qualifies as a -fix if it didn't.
-
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
-
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
+On Tue, May 26, 2020 at 10:59:48AM +0200, Stephan Gerhold wrote:
+> > Considering that CPR is not an actual power domain, CPR gives
+> > adjustments to VDD_APC, but I don't know of any other device
+> > connected to VDD_APC, other than the CPU, so in hindsight the CPR
+> > driver probably should have been implemented using .target_index(),
+> > rather than as a power domain provider using performance states.
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 67c58345b26a..9851367a88cd 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -110,13 +110,6 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
->  	struct msm_gpu *gpu = &adreno_gpu->base;
->  	int ret;
->  
-> -	/*
-> -	 * This can get called from devfreq while the hardware is idle. Don't
-> -	 * bring up the power if it isn't already active
-> -	 */
-> -	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
-> -		return;
-> -
->  	gmu_write(gmu, REG_A6XX_GMU_DCVS_ACK_OPTION, 0);
->  
->  	gmu_write(gmu, REG_A6XX_GMU_DCVS_PERF_SETTING,
-> @@ -141,7 +134,6 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
->  	 * for now leave it at max so that the performance is nominal.
->  	 */
->  	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
-> -	pm_runtime_put(gmu->dev);
->  }
->  
->  void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
-> @@ -159,13 +151,21 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
->  			break;
->  
->  	gmu->current_perf_index = perf_index;
-> +	gmu->freq = gmu->gpu_freqs[perf_index];
-> +
-> +	/*
-> +	 * This can get called from devfreq while the hardware is idle. Don't
-> +	 * bring up the power if it isn't already active
-> +	 */
-> +	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
-> +		return;
->  
->  	if (gmu->legacy)
->  		__a6xx_gmu_set_freq(gmu, perf_index);
->  	else
->  		a6xx_hfi_set_freq(gmu, perf_index);
->  
-> -	gmu->freq = gmu->gpu_freqs[perf_index];
-> +	pm_runtime_put(gmu->dev);
->  }
->  
->  unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
-> -- 
-> 2.26.1
+> I suppose having CPR, MEMACC etc as power domain providers is a bit
+> overkill, given there is just one consumer. However, at least the
+> "performance state" part fits quite well in my opinion. At the end
+> all these requirements represent some performance state that must be
+> set when the CPU frequency is changed.
 > 
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+For MX, it makes sense to model it as a power domain provider, and for
+it to have its own OPP table, since this actually is a power domain.
+
+For CPR, I think that the target_index() model of just giving an index
+in a frequency table is much better, the OPP library can still be used
+to get the frequencies/frequency_table.
+Since at least for Qualcom CPU's, the corner (opp-level) is defined as
+an increasing number 1,2,3,4, without skips.
+
+Even if it wasn't always without skips, we could just put opp-level in
+the CPU opp table, and get it from there.
+
+The only thing that the corner is used for really, is to use it as an
+index the local drv->corner array, which is where the (current) VDD_APC
+voltage is stored for each index/corner.
+
+For CPR, the .target_index() in cpufreq-dt.c gets called, which is
+supplied with an index, but the index gets converted to a frequency.
+This frequency is then sent to the OPP library, and is then converted
+back to an index of the same value (just increased by one), before
+cpr_set_performance_state() is called (which then has to subtract one).
+In this case, all the extra overhead of going via genpd is totally
+unnecessary.
+
+This is totally correct when setting a performance state on a power
+domain like MX, since for an actual power domain you might have
+multiple consumers, so you need to go via genpd.
+
+Considering that CPR is not a power domain, I wish the driver wasn't
+designed around performance states, which, _for the CPR case_,
+is misleading, unnecessary, and adds extra overhead for no reason.
+
+I realize the irony of me criticizing my own code.
+I simply know better now, and wish I had designed it differently :)
+
+
+Kind regards,
+Niklas
