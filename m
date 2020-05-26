@@ -2,135 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B08B1E1A77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 06:45:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FFFA1E1A9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 07:14:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725774AbgEZEpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 00:45:47 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:59702 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725294AbgEZEpq (ORCPT
+        id S1725771AbgEZFOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 01:14:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45244 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725875AbgEZFN7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 00:45:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590468346; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=pOqLTEYmcv/1WZ4CUindBKPntxB4V+2joT4aCQzD+kc=; b=bh4WBNHCUaFV1nP7s7LvZzNw525+shifY2LGvCGmkSA7DP4unc8PAQ/FXSahrb+beFfvF2qa
- GRIBuDh8xVMTJWKd7D4jaMpwENjg+0+llJNj51BACIQnG2jzALTAxJRy2Jcn1Ve4BOTNr9ni
- 4V0seQlqLb2vx067T5Xel7yyHCk=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5ecc9eedb4f0a9ae22756c49 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 04:45:33
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 14837C43395; Tue, 26 May 2020 04:45:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.129] (unknown [157.32.229.212])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 56C60C433C9;
-        Tue, 26 May 2020 04:45:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 56C60C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
-To:     Hans Verkuil <hverkuil@xs4all.nl>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
- <1590253873-11556-2-git-send-email-mkshah@codeaurora.org>
- <CACRpkdba9j4EdCkD5OeL=3A4Zeb57vO78FAXA9fo0SOgBE57ag@mail.gmail.com>
- <e4ebd476-1c34-0c58-bba0-14dfd4d31941@xs4all.nl>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <8bae16f8-2f03-0d44-fe29-ee9451c4be23@codeaurora.org>
-Date:   Tue, 26 May 2020 10:15:20 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Tue, 26 May 2020 01:13:59 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F27C03E97E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 22:13:58 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id a13so8190411pls.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 22:13:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4VaJbqmoVs3kDuOV3hXkyeC/R0SlSKpA5bywa/qymjU=;
+        b=Pe7iiJlfYaBthFYuPgYlsz4js7ZWiC+r3tQx/ZOWc52ffKkHYtL1RmTwQe4u0aRZmO
+         5w9qjfCF79uHcDBBk/J5R4iOKY5335vnRwjQGdkznOpJIrGKAfMvBPscq/JRLaCZg+wI
+         FZY+wlQPugQ3vm0GMW/omwGEDc5Vk1lRzDDeEjW3AUyGHoFOomfwN9MzPKDWEXUMSdh5
+         zJ0MbD96TNPVOKUcufQqIxX3m85Ml8ED7rYHI4/xmmiTzipoPQlDTOQLE0k0JgR/pubK
+         49dLZjMCMKKR69p6FzrNl1tJ6zHmOxcpQXmplbGxVf+Y0Z8FUT95nVGwCCWDJ9Y+5X0V
+         71gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4VaJbqmoVs3kDuOV3hXkyeC/R0SlSKpA5bywa/qymjU=;
+        b=QYVlgt2LFtFYXeF430S9uzR0/D7q9N/Px/UzgsE4oxuZaYmoSCDI0pTZh6lqsiNf7r
+         KBZ4kaBzdklqB2ug+oHwBpWKaoLp34DQXIw+vHcrQ9dgEfU2F0CrgS0PyXcyglbtQGor
+         3HmXNgKpw3DN7wjUDsQ70EYrjbzYAPNuWda888VgTKB6+AHkr+RPYZR+hkIr92k2V/Bl
+         aYVQtGG31duzsXiCH9DQDsXQ+b5yv6lFJAZneeRTa/7ntndzSM9skg/Z+z3FkM6JfYQn
+         q9UhtFep9ZBHsjNSvp8WEMInjBrQFuohgzXpJ+t1T1iqlPwjFm+A2oqon68pfH4xpbnT
+         ej9Q==
+X-Gm-Message-State: AOAM533G6Q6MJ5/CuYTs2H5SZPTlcjV5+lCVAOwKN8A1pWmCF67SMFly
+        4o/uM5GqFdTD90dDH9VMes5d
+X-Google-Smtp-Source: ABdhPJyyMIty4jsOfOOrU0Ey9Jkv8FD2LtJiWhFTz7CiCSeSOhSjti+s/rvDzqQMkSYvVQK/V/usvQ==
+X-Received: by 2002:a17:90b:f0a:: with SMTP id br10mr23781612pjb.145.1590470037786;
+        Mon, 25 May 2020 22:13:57 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:206:d4db:a08d:52b0:cfbb:a01f])
+        by smtp.gmail.com with ESMTPSA id 84sm14041092pfv.157.2020.05.25.22.13.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 May 2020 22:13:57 -0700 (PDT)
+Date:   Tue, 26 May 2020 10:43:50 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     jassisinghbrar@gmail.com
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org
+Subject: Re: [PATCH v3 0/3] Add Qualcomm IPCC driver support
+Message-ID: <20200526051350.GA8131@Mani-XPS-13-9360>
+References: <20200520084854.19729-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <e4ebd476-1c34-0c58-bba0-14dfd4d31941@xs4all.nl>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200520084854.19729-1-manivannan.sadhasivam@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Jassi,
 
-On 5/25/2020 5:52 PM, Hans Verkuil wrote:
-> On 25/05/2020 13:55, Linus Walleij wrote:
->> On Sat, May 23, 2020 at 7:11 PM Maulik Shah <mkshah@codeaurora.org> wrote:
->>
->>> With 'commit 461c1a7d4733 ("gpiolib: override irq_enable/disable")' gpiolib
->>> overrides irqchip's irq_enable and irq_disable callbacks. If irq_disable
->>> callback is implemented then genirq takes unlazy path to disable irq.
->>>
->>> Underlying irqchip may not want to implement irq_disable callback to lazy
->>> disable irq when client drivers invokes disable_irq(). By overriding
->>> irq_disable callback, gpiolib ends up always unlazy disabling IRQ.
->>>
->>> Allow gpiolib to lazy disable IRQs by overriding irq_disable callback only
->>> if irqchip implemented irq_disable. In cases where irq_disable is not
->>> implemented irq_mask is overridden. Similarly override irq_enable callback
->>> only if irqchip implemented irq_enable otherwise irq_unmask is overridden.
->>>
->>> Fixes: 461c1a7d47 (gpiolib: override irq_enable/disable)
->>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> I definitely want Hans Verkuils test and review on this, since it
->> is a usecase that he is really dependent on.
-> Maulik, since I am no longer subscribed to linux-gpio, can you mail the
-> series to me?
->
-> I have two use-cases, but I can only test one (I don't have access to the
-> SBC I need to test the other use-case for the next few months).
->
-> Once I have the whole series I'll try to test the first use-case and at
-> least look into the code if this series could affect the second use-case.
->
-> Regards,
->
-> 	Hans
+On Wed, May 20, 2020 at 02:18:51PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
+> 
+> This series adds mailbox driver support for Qualcomm Inter Processor
+> Communications Controller (IPCC) block found in MSM chipsets. This block
+> is used to route interrupts between modems, DSPs and APSS (Application
+> Processor Subsystem).
+> 
+> The driver is modeled as a mailbox+irqchip driver. The irqchip part helps
+> in receiving the interrupts from the IPCC clients such as modems, DSPs,
+> PCI-E etc... and forwards them to respective entities in APSS.
+>     
+> On the other hand, the mailbox part is used to send interrupts to the IPCC
+> clients from the entities of APSS.
+> 
+> This series is tested on SM8250-MTP board.
+> 
 
-Hi Hans,
-
-Mailed you the entire series.
+Any update on this series?
 
 Thanks,
-Maulik
->
->> Also the irqchip people preferredly.
->>
->> But it does seem to mop up my mistakes and fix this up properly!
->>
->> So with some testing I'll be happy to merge it, even this one
->> patch separately if Hans can verify that it works.
->>
->> Yours,
->> Linus Walleij
->>
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+Mani
 
+> Thanks,
+> Mani
+> 
+> Changes in v3:
+> 
+> * Added Bjorn's review tags
+> * Few changes to DT binding as suggested by Rob
+> 
+> Changes in v2:
+> 
+> * Moved from soc/ to mailbox/
+> * Switched to static mbox channels
+> * Some misc cleanups
+> 
+> Manivannan Sadhasivam (3):
+>   dt-bindings: mailbox: Add devicetree binding for Qcom IPCC
+>   mailbox: Add support for Qualcomm IPCC
+>   MAINTAINERS: Add entry for Qualcomm IPCC driver
+> 
+>  .../bindings/mailbox/qcom-ipcc.yaml           |  80 +++++
+>  MAINTAINERS                                   |   8 +
+>  drivers/mailbox/Kconfig                       |  10 +
+>  drivers/mailbox/Makefile                      |   2 +
+>  drivers/mailbox/qcom-ipcc.c                   | 286 ++++++++++++++++++
+>  include/dt-bindings/mailbox/qcom-ipcc.h       |  33 ++
+>  6 files changed, 419 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+>  create mode 100644 drivers/mailbox/qcom-ipcc.c
+>  create mode 100644 include/dt-bindings/mailbox/qcom-ipcc.h
+> 
+> -- 
+> 2.26.GIT
+> 
