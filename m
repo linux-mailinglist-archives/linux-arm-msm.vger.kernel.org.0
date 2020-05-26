@@ -2,157 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21DD71E203C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 12:57:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AE7D1E207B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 13:05:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388622AbgEZK5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 06:57:40 -0400
-Received: from lb2-smtp-cloud7.xs4all.net ([194.109.24.28]:55673 "EHLO
-        lb2-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388501AbgEZK5k (ORCPT
+        id S2389032AbgEZLEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 07:04:50 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:57094 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388852AbgEZLEt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 06:57:40 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud7.xs4all.net with ESMTPA
-        id dXH3jUV2pDazBdXH7jedKB; Tue, 26 May 2020 12:57:37 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1590490657; bh=BEnD5x3xB5pJSyKvH1XnWppcjRqrzc5QQ4+zSWB6AkU=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=dJTpzIFFcCQYRFWASY+Rr1JBZGV9VR+n+qYfCVI6lsB3ay8zpo22UKNwimtGCLiP6
-         IrIShwzIWozo4uqNm+r7WWhSUriXTUfgZ//23rTLT+Yxfg+J20PHddwvuKxTVfy4f4
-         xNyIGQziBF+3Y6PTPcMkNHFTYeoF1b2OhHwbneLfHyXyzgTYB8T7Be5Ix+N4+73Y1E
-         +9/ntFN4Ivk93RGgouHXQFFIjYGJhAZN5UVY1AXJLNZxGOATMpP5Hdbco1/b9CXJUo
-         Q7Cc+m8wROVwJ8l8WWux1hLFmIoG436+MgSBKpxvUnqhkC2yN0OH2UJnSlQ9YOGBby
-         Zp4R/oYyNx4zw==
-Subject: Re: [RFC] METADATA design using V4l2 Request API
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org, jdas@codeaurora.org
-References: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
-From:   Hans Verkuil <hverkuil@xs4all.nl>
-Message-ID: <d1179bc1-662b-615f-0f9b-67693fe8c906@xs4all.nl>
-Date:   Tue, 26 May 2020 12:57:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Tue, 26 May 2020 07:04:49 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590491088; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=SKBdhs63Zp2CNDzdiohqN/c3xb5urkHJTxlo1SdluWA=; b=tNKcf05haMJhPC8Xtyzqm79IGTx5jxJM14twhEBPexPPi30xhRAEi+03G9t9vvWD/WwEXr9U
+ 84AP5ry3xGPfMcpgLu2nf3p5g9FRGxr1f749zMzn47DT+g/s3ynhSmyqkaN2UJOSNBhfa1bQ
+ 3/7e7j6YgC4LOI+8OkfRBJSOTnM=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5eccf7b03131442d95951719 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 11:04:16
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7D019C43395; Tue, 26 May 2020 11:04:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.24.160] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9663FC433C6;
+        Tue, 26 May 2020 11:04:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9663FC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sanm@codeaurora.org
+Subject: Re: [PATCH v7 2/4] usb: dwc3: qcom: Add interconnect support in dwc3
+ driver
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
+ <1585718145-29537-3-git-send-email-sanm@codeaurora.org>
+ <878shu4uwk.fsf@kernel.org> <875zcy4uuj.fsf@kernel.org>
+ <20200514171352.GP4525@google.com>
+ <abbc3f8c-c8c9-c189-735e-f8058dab3e40@linaro.org> <87tv0h3fpv.fsf@kernel.org>
+ <090e48d7-7988-eea1-bf39-f6820578d354@linaro.org> <87r1vl3e42.fsf@kernel.org>
+ <20200518183512.GE2165@builder.lan>
+From:   "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Message-ID: <b20775ba-7870-b0ca-7c65-d72a08fdacb2@codeaurora.org>
+Date:   Tue, 26 May 2020 16:34:06 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200518183512.GE2165@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfBRzDLzNYPz6xVRXX8MhgbHye9OlKdNwwZUTO2Zbx3O6JjMPx89rJ6u6ZFesv5twpIHRTgMIazU1pgbortxJFjvZbS5CHxKDaju+rW3aLylccvBI1/Lx
- PvZEl7r3Eo5Kje8ziphSs5rruVhf8jGZJFNWGAItE77YjbCgETWq3oFvd/NQsAMxe76ZY9+Te62rdj2KUTdw1GShVFw9jYwdULAhCOpRafWMzslxxmMlQaZp
- 5D44hKTF2Q+JSWXPDqzOfwxOvoG3Cr/vU+2tLVwxbS1iL4qeYV7+rfCRUSxtXj4iXKAR1i9BEfiWzD3tAdo0xLGg0UukiybKuylLFLhfLXCeNb2k+0rmj7tj
- qaAArHQHD8yN5/Am+FV9VtXI7jWQdJ54xtXMmxV3YS2F20hZNrBY+qC984l7v8zM9KtKzOQEESLVPziRw7Zv7s5TUIUsqQ==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
+Hi Felipe,
 
-My apologies for the delay, this was (mostly) due to various vacation days.
+Please let me know how to go forward with this patch
 
-On 08/05/2020 08:21, Dikshita Agarwal wrote:
-> There are many commercialized video use cases which needs metadata info
-> to be circulated between v4l2 client and v4l2 driver.
-> 
-> METADATA has following requirements associated:
-> •Metadata is an optional info available for a buffer. It is not mandatorily for every buffer.
->  For ex. consider metadata ROI (Region Of Interest). ROI is specified by clients to indicate
->  the region where enhanced quality is desired. This metadata is given as an input information
->  to encoder output plane. Client may or may not specify the ROI for a frame during encode as
->  an input metadata. Also if the client has not provided ROI metadata for a given frame,
->  it would be incorrect to take the metadata from previous frame. If the data and
->  metadata is asynchronous, it would be difficult for hardware to decide if it
->  needs to wait for metadata buffer or not before processing the input frame for encoding.
-> •Synchronize the buffer requirement across both the video node/session
->  (incase metadata is being processed as a separate v4l2 video node/session).
->  This is to avoid buffer starvation.
-> •Associate the metadata buffer with the data buffer without adding any pipeline delay
->  in waiting for each other. This is applicable both at the hardware side (the processing end)
->  and client side (the receiving end).
-> •Low latency usecases like WFD/split rendering/game streaming/IMS have sub-50ms e2e latency
->  requirements, and it is not practical to stall the pipeline due to inherent framework latencies.
->  High performance usecase like high-frame rate playback/record can lead to frame loss during any pipeline latency.
->  
-> To address all above requirements, we used v4l2 Request API as interlace.
-> 
-> As an experiment, We have introduced new control V4L2_CID_MPEG_VIDEO_VENUS_METADATA
-> to contain the METADATA info. Exact controls can be finalized once the interface is discussed.
-> 
-> For setting metadata from userspace to kernel, let say on encode output plane,
-> following code sequence was followed
-> 1. Video driver is registering for media device and creating a media node in /dev
-> 2. Request fd is allocated by calling MEDIA_IOC_REQUEST_ALLOC IOCTL on media fd.
-> 3. METADATA configuration is being applied on request fd using VIDIOC_S_EXT_CTRLS IOCTL
->    and the same request fd is added to buf structure structure before calling VIDIOC_QBUF on video fd.
-> 4. The same request is queued through MEDIA_REQUEST_IOC_QUEUE IOCTL to driver then, as a result
->    to which METADATA control will be applied to buffer through S_CTRL.
-> 5. Once control is applied and request is completed, MEDIA_REQUEST_IOC_REINIT IOCTL is called
->    to re-initialize the request.
+Regards
 
-This is fine and should work well. It's what the Request API is for, so no problems here.
+Sandeep
 
-> 
-> We could achieve the same on capture plane as well by removing few checks present currently
-> in v4l2 core which restrict the implementation to only output plane.
+On 5/19/2020 12:05 AM, Bjorn Andersson wrote:
+> On Thu 14 May 23:29 PDT 2020, Felipe Balbi wrote:
+>
+>> Hi,
+>>
+>> Georgi Djakov <georgi.djakov@linaro.org> writes:
+>>>>>>>> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+>>>>>>>>> +static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+>>>>>>>>> +{
+>>>>>>>>> +	struct device *dev = qcom->dev;
+>>>>>>>>> +	int ret;
+>>>>>>>>> +
+>>>>>>>>> +	if (!device_is_bound(&qcom->dwc3->dev))
+>>>>>>>>> +		return -EPROBE_DEFER;
+>>>>>>>> this breaks allmodconfig. I'm dropping this series from my queue for
+>>>>>>>> this merge window.
+>>>>>>> Sorry, I meant this patch ;-)
+>>>>>> I guess that's due to INTERCONNECT being a module. There is currently a
+>>>>> I believe it's because of this:
+>>>>> ERROR: modpost: "device_is_bound" [drivers/usb/dwc3/dwc3-qcom.ko] undefined!
+>>>>>
+>>>>>> discussion about this  with Viresh and Georgi in response to another
+>>>>>> automated build failure. Viresh suggests changing CONFIG_INTERCONNECT
+>>>>>> from tristate to bool, which seems sensible to me given that interconnect
+>>>>>> is a core subsystem.
+>>>>> The problem you are talking about would arise when INTERCONNECT=m and
+>>>>> USB_DWC3_QCOM=y and it definitely exists here and could be triggered with
+>>>>> randconfig build. So i suggest to squash also the diff below.
+>>>>>
+>>>>> Thanks,
+>>>>> Georgi
+>>>>>
+>>>>> ---8<---
+>>>>> diff --git a/drivers/usb/dwc3/Kconfig b/drivers/usb/dwc3/Kconfig
+>>>>> index 206caa0ea1c6..6661788b1a76 100644
+>>>>> --- a/drivers/usb/dwc3/Kconfig
+>>>>> +++ b/drivers/usb/dwc3/Kconfig
+>>>>> @@ -129,6 +129,7 @@ config USB_DWC3_QCOM
+>>>>>   	tristate "Qualcomm Platform"
+>>>>>   	depends on ARCH_QCOM || COMPILE_TEST
+>>>>>   	depends on EXTCON || !EXTCON
+>>>>> +	depends on INTERCONNECT || !INTERCONNECT
+>>>> I would prefer to see a patch adding EXPORT_SYMBOL_GPL() to device_is_bound()
+>>> Agree, but just to clarify, that these are two separate issues that need to
+>>> be fixed. The device_is_bound() is the first one and USB_DWC3_QCOM=y combined
+>>> with INTERCONNECT=m is the second one.
+>> If INTERCONNECT=m, QCOM3 shouldn't be y. I think the following is
+>> enough:
+>>
+>> 	depends on INTERCONNECT=y || INTERCONNECT=USB_DWC3_QCOM
+>>
+> This misses the case where INTERCONNECT=n and USB_DWC3_QCOM=[ym] which
+> I don't see a reason for breaking.
+>
+> But if only INTERCONNECT where a bool, then we don't need to specify a
+> depends on, because it will either be there, or the stubs will.
+> We've come to this conclusion in a lot of different frameworks and I
+> don't see why we should do this differently with INTERCONNECT.
+>
+> Regards,
+> Bjorn
 
-Why do you need the Request API for the capture side in a memory-to-memory driver? It is not
-clear from this patch series what the use-case is. There are reasons why this is currently
-not allowed. So I need to know more about this.
-
-Regards,
-
-	Hans
-
-> 
-> We profiled below data with this implementation :
-> 1. Total time taken ( round trip ) for setting up control data on video driver
->    with VIDIOC_S_EXT_CTRLS, QBUF and Queue Request: 737us
-> 2. Time taken for first QBUF on Output plane to reach driver with REQUEST API enabled (One way): 723us
-> 3. Time taken for first QBUF on Output plane to reach driver without REQUEST API (One way) : 250us
-> 4. Time taken by each IOCTL to complete ( round trip ) with REQUEST API enabled :
->     a. VIDIOC_S_EXT_CTRLS : 201us
->     b. VIDIOC_QBUF : 92us
->     c. MEDIA_REQUEST_IOC_QUEUE: 386us
-> 
-> Kindly share your feedback/comments on the design/call sequence.
-> Also as we experimented and enabled the metadata on capture plane as well, please comment if any issue in
-> allowing the metadata exchange on capture plane as well.
-> 
-> Reference for client side implementation can be found at [1].
-> 
-> Thanks,
-> Dikshita
-> 
-> [1] https://git.linaro.org/people/stanimir.varbanov/v4l2-encode.git/log/?h=dikshita/request-api
-> 
-> Dikshita Agarwal (3):
->   Register for media device     
->     - Initialize and register for media device     
->     - define venus_m2m_media_ops     
->     - Implement APIs to register/unregister media controller.
->   Enable Request API for output buffers     
->     - Add dependency on MEDIA_CONTROLLER_REQUEST_API in Kconfig.     
->     - Initialize vb2 ops buf_out_validate and buf_request_complete.     
->     - Add support for custom Metadata control V4L2_CID_MPEG_VIDEO_VENUS_METADATA     
->     - Implemeted/Integrated APIs for Request setup/complete.
->   Enable Request API for Capture Buffers
-> 
->  drivers/media/common/videobuf2/videobuf2-v4l2.c |   4 +-
->  drivers/media/platform/Kconfig                  |   2 +-
->  drivers/media/platform/qcom/venus/core.h        |  36 ++++
->  drivers/media/platform/qcom/venus/helpers.c     | 247 +++++++++++++++++++++++-
->  drivers/media/platform/qcom/venus/helpers.h     |  15 ++
->  drivers/media/platform/qcom/venus/venc.c        |  63 +++++-
->  drivers/media/platform/qcom/venus/venc_ctrls.c  |  61 +++++-
->  drivers/media/v4l2-core/v4l2-ctrls.c            |  10 +
->  drivers/media/v4l2-core/v4l2-mem2mem.c          |  17 +-
->  include/media/v4l2-ctrls.h                      |   1 +
->  include/media/venus-ctrls.h                     |  22 +++
->  11 files changed, 465 insertions(+), 13 deletions(-)
->  create mode 100644 include/media/venus-ctrls.h
-> 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
