@@ -2,106 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CA711E3015
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 22:35:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82F461E308A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 22:54:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389339AbgEZUe6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 16:34:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47174 "EHLO
+        id S2404394AbgEZUyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 16:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390913AbgEZUe6 (ORCPT
+        with ESMTP id S2404383AbgEZUyN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 16:34:58 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20172C03E96D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 13:34:57 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id b18so17469888oti.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 13:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Xlg1WEt/1KpzYv+/vA9j7Mf3YWi1IPnXCFcohcpUSKM=;
-        b=vqBfuJzMnCts3H+g3tzxBLb3DHdb9u8YAPd1Lr4hpr9zPYnd/hQ9htQE4e+QzEUmjl
-         7ZrK+oEdm0wLIE7MuIMmiI71OhNKS8oqoG5svb2EehG6CFlmnhdeq9cw6Vf2tq/axJ2H
-         ssZdHqJcXZVSLkR/cPGAeFiJSasA4lSnrLDZRpKXHynba/SmCOYCvHWd2hPTm3NCdn4r
-         BNzmOO0gWoq0pD+6uFTBvcgyL6jgx7zvs2rGaMsCKa11K7bwAsrXJaOHz3GnLa3znOG5
-         YZJKlEQz0ZUmv6xTUjr2n7E5cvEvNuf9zyblA43KWchCM+klzpd5j7n4bXULce1BXFzm
-         8BLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Xlg1WEt/1KpzYv+/vA9j7Mf3YWi1IPnXCFcohcpUSKM=;
-        b=kvshN0G03Strqhfcaor/ZpDyftiVIAXxBHxEfLgqd2ynnKcuJ0isLRKIqu6L2+xwBP
-         4z5wFvTLuPx3C1SwSNfe1ODT//BaUpFGmg4Q0dmJkib3rKb88v5Sp2RZvKAdnvPwsmVz
-         VnpAeCmV1CEv0ly+B1wrB/wlbBHo7oF9nQ0ZaItBPZ16xIw/G/TcZXADzjfaTehwiscS
-         gG9aUxQa0723YW9Hu8UHgXyMlAyOdNEMEhDljWc27hgxlomo4D2wT8+Ddunz42jRWgr1
-         MF9eVR+3SiXTvINekXfxY/MCTnNxFK+5SMKjBk+T8y+Sf0AL20jl/7RAW1aw/nwmnxKV
-         LvWA==
-X-Gm-Message-State: AOAM530HRilbdhspb2J3gkfkRr+wABrb/WwNKP9Rsd9QeWwC6gXdOKfj
-        khpB90zQsJ6KQq4vYOfjvVb6jYPhYPxN9q9+QfFE0w==
-X-Google-Smtp-Source: ABdhPJwRnLRczAXOAB9YCm7o1K0N3H8lb7+2jzEf7cyls1IaN/ZEhrkFXvBSwAYhJHpTTYYnVbUBS2F8yL7vvHUmhEs=
-X-Received: by 2002:a9d:b82:: with SMTP id 2mr2072353oth.221.1590525296383;
- Tue, 26 May 2020 13:34:56 -0700 (PDT)
+        Tue, 26 May 2020 16:54:13 -0400
+Received: from mo6-p00-ob.smtp.rzone.de (mo6-p00-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5300::3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31525C061A0F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 13:54:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590526450;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=n/xXewTn5ODlt8wXGuujR6xFKz4yabxamt0S0V5X5nA=;
+        b=jCTwNVmvGpPDg6z+k0uRgb/vaqK+7I0kEL9KITO+wPaG87S8oHHezch3fFtJCdIf1q
+        8Aoo9itqSboQ8UUuYlJd/jylmYAj1aAFKqBuEFNb0ZTvGw7QhisnMRu8U6xJ25IrnIsf
+        CfSIcHBrrTWmcLBfmMTiirNg5XT2boO1xdfBAllTBW0lJVrd3RfrgI/9pdKht0H9J+5l
+        yg5sIX90xXGZwNVB4Zz9vez7pr6Zos9jYvl6oR1kPOApb2OEFWm9sQTMxJGJgGAWEQIq
+        ZQFJVv8s6faWCyJcJ9j7QmGKPnMyWpuwHCgtc1Si7yXQeGKlvkSJjrZ7Z7xcruHeGTpC
+        Qf4w==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/HYoo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.7.0 DYNA|AUTH)
+        with ESMTPSA id C07db0w4QKs9hnH
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Tue, 26 May 2020 22:54:09 +0200 (CEST)
+Date:   Tue, 26 May 2020 22:54:03 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Niklas Cassel <nks@flawful.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200526205403.GA7256@gerhold.net>
+References: <20200402081349.GA932@gerhold.net>
+ <20200403013119.GB20625@builder.lan>
+ <20200403100923.GB2652@gerhold.net>
+ <20200403175934.GA96064@gerhold.net>
+ <20200423045506.GJ987656@yoga>
+ <20200525153246.GA9224@flawful.org>
+ <20200525163638.GA41001@gerhold.net>
+ <20200525194443.GA11851@flawful.org>
+ <20200526085948.GA1329@gerhold.net>
+ <20200526155419.GA9977@flawful.org>
 MIME-Version: 1.0
-References: <20191209150748.2471814-1-thierry.reding@gmail.com>
- <20200228025700.GA856087@builder> <20200514193249.GE279327@builder.lan>
-In-Reply-To: <20200514193249.GE279327@builder.lan>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Tue, 26 May 2020 13:34:45 -0700
-Message-ID: <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
-Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>, linux-tegra@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200526155419.GA9977@flawful.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 14, 2020 at 12:34 PM <bjorn.andersson@linaro.org> wrote:
->
-> On Thu 27 Feb 18:57 PST 2020, Bjorn Andersson wrote:
->
-> Rob, Will, we're reaching the point where upstream has enough
-> functionality that this is becoming a critical issue for us.
->
-> E.g. Lenovo Yoga C630 is lacking this and a single dts patch to boot
-> mainline with display, GPU, WiFi and audio working and the story is
-> similar on several devboards.
->
-> As previously described, the only thing I want is the stream mapping
-> related to the display controller in place, either with the CB with
-> translation disabled or possibly with a way to specify the framebuffer
-> region (although this turns out to mess things up in the display
-> driver...)
->
-> I did pick this up again recently and concluded that by omitting the
-> streams for the USB controllers causes an instability issue seen on one
-> of the controller to disappear. So I would prefer if we somehow could
-> have a mechanism to only pick the display streams and the context
-> allocation for this.
->
->
-> Can you please share some pointers/insights/wishes for how we can
-> conclude on this subject?
+On Tue, May 26, 2020 at 05:54:20PM +0200, Niklas Cassel wrote:
+> On Tue, May 26, 2020 at 10:59:48AM +0200, Stephan Gerhold wrote:
+> > > Considering that CPR is not an actual power domain, CPR gives
+> > > adjustments to VDD_APC, but I don't know of any other device
+> > > connected to VDD_APC, other than the CPU, so in hindsight the CPR
+> > > driver probably should have been implemented using .target_index(),
+> > > rather than as a power domain provider using performance states.
+> > 
+> > I suppose having CPR, MEMACC etc as power domain providers is a bit
+> > overkill, given there is just one consumer. However, at least the
+> > "performance state" part fits quite well in my opinion. At the end
+> > all these requirements represent some performance state that must be
+> > set when the CPU frequency is changed.
+> > 
+> 
+> For MX, it makes sense to model it as a power domain provider, and for
+> it to have its own OPP table, since this actually is a power domain.
+> 
+> For CPR, I think that the target_index() model of just giving an index
+> in a frequency table is much better, the OPP library can still be used
+> to get the frequencies/frequency_table.
+> Since at least for Qualcom CPU's, the corner (opp-level) is defined as
+> an increasing number 1,2,3,4, without skips.
+> 
+> Even if it wasn't always without skips, we could just put opp-level in
+> the CPU opp table, and get it from there.
+> 
+> The only thing that the corner is used for really, is to use it as an
+> index the local drv->corner array, which is where the (current) VDD_APC
+> voltage is stored for each index/corner.
+> 
+> For CPR, the .target_index() in cpufreq-dt.c gets called, which is
+> supplied with an index, but the index gets converted to a frequency.
+> This frequency is then sent to the OPP library, and is then converted
+> back to an index of the same value (just increased by one), before
+> cpr_set_performance_state() is called (which then has to subtract one).
+> In this case, all the extra overhead of going via genpd is totally
+> unnecessary.
+> 
+> This is totally correct when setting a performance state on a power
+> domain like MX, since for an actual power domain you might have
+> multiple consumers, so you need to go via genpd.
+> 
+> Considering that CPR is not a power domain, I wish the driver wasn't
+> designed around performance states, which, _for the CPR case_,
+> is misleading, unnecessary, and adds extra overhead for no reason.
+> 
+> I realize the irony of me criticizing my own code.
+> I simply know better now, and wish I had designed it differently :)
+> 
 
-Ping? I just wanted to follow up on this discussion as this small
-series is crucial for booting mainline on the Dragonboard 845c
-devboard. It would be really valuable to be able to get some solution
-upstream so we can test mainline w/o adding additional patches.
+I see what you mean. I'm not sure how much of a problem the "genpd
+overhead" really is in practice (although I assume it's called quite
+frequently with a dynamic CPU frequency governor). There is also the
+argument of it being slightly misleading (because CPR is not actually
+a real power domain).
 
-The rest of the db845c series has been moving forward smoothly, but
-this set seems to be very stuck with no visible progress since Dec.
+Speaking of the current solution, I also have to say that (IMO) the
+device tree binding for "required-opps" is rather confusing
+and potentially misleading.
 
-Are there any pointers for what folks would prefer to see?
+e.g. for VDD_MX scaling I use
 
-thanks
--john
+	required-opps = <&rpmpd_opp_nom>;
+
+but looking at just the OPP table absolutely nothing tells me this is
+supposed to apply to VDD_MX. You actually need to go search for the cpu@
+device tree node and then know that some of the power domains there
+(in some order) are eventually going to be used for the required-opps
+there. The order is only defined by the qcom-nvmem-cpufreq driver.
+
+It took me a few hours to get that right... :)
+
+Nevertheless I guess we need a solution for scaling MEMACC without CPR
+for now. :) I'm not sure if rewriting all this is very realistic
+(if even possible). So I guess we might be stuck with the genpd approach?
+
+Thanks,
+Stephan
