@@ -2,117 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8E6D1E19AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 04:57:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65EC91E19CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 05:22:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388460AbgEZC56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 22:57:58 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:15819 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388417AbgEZC56 (ORCPT
+        id S2388497AbgEZDWm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 May 2020 23:22:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56404 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388571AbgEZDWl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 22:57:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590461878; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=2lSQnTFuuDSH2tOGPsTeclalbej5l5YcEl5RqjPT5w4=; b=Omtfl/4Cnvr+lckWcLF2eJWWMQeGM7LWpy2O15Zhdq5sRh1mj/ZuC2GZiv1b7GpuSqO/jzeU
- MgOHEuGfqNMtxaZ9OU87kZkeCQLbNuLySyaJu1EY6E+J3xi0RU95ZKxUpd7FlObvCG9ktFli
- nY0oIub5nQI40E7rsm3ml7qkxjw=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5ecc85a344a25e0052e20db4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 02:57:39
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 39C55C433CA; Tue, 26 May 2020 02:57:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C385C433C6;
-        Tue, 26 May 2020 02:57:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4C385C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: [PATCH v2] bluetooth: hci_qca: Fix qca6390 enable failure after warm reboot
-Date:   Tue, 26 May 2020 10:57:30 +0800
-Message-Id: <1590461850-9908-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 25 May 2020 23:22:41 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC1F3C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 20:22:41 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id f189so19246452qkd.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2020 20:22:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=irxvBr3fhjh3o4PcQX5WrXrjZ+soB6XClWrdckT/PEg=;
+        b=wmMfYz4Q49KJhfEacTGOCEZGd7yE3D0nE8Xn5qM/BcmKBnqiZ6B7luz3x8cSBRfwTC
+         3/UZNtYoswmTXLHvaHCPwGjCMMI/nfBNbClpHanLQhJ6coFId0GsNjsICZAyGj6Ca7hY
+         0aQ9bcBvpbtTHKFmKmHY6lkFfbQT8C+DVZNLH7skIdJysABoMm84FnF6WUs+yYJjlBF6
+         5OoMApXdGII3qUGOhb6uIvuiifELzRRIun4gCUSA5CqkgUu2yiRCnb6dkPc2f6U7ZiyR
+         T3W7w3AdU5w406o6jibD13vYtURGesBheFcXiu9WWa7YzsAB8hEJ8ZlswFmN9E2eUJe7
+         nDgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=irxvBr3fhjh3o4PcQX5WrXrjZ+soB6XClWrdckT/PEg=;
+        b=p35hvaVoTh1Pu5/Zj+34qWoQ2JhiHBd23SnglbmgBuTELQPrSapKMOukIg5iEylXmh
+         Tltat8hwcB1k8RkI20IhVN3zBIzALlBBC7DlVIjzDSCjkjj6s358btm+byP39GcVoSvG
+         4REMvE5BoaChv7ssrp0QGqG9j/8FawefEz74EU1d0QMHq1wj63Qx0spnVQOeW0Dgmpsy
+         FIkVZlB3Tq/uJ3dWsYd7EYOmRGta6yR0XhbGNvspVkhY0UIZVtBuF0KuyMuPaA+Ovfhq
+         gzaYl7u+j7zpzJxJS6WU0XWzQunsGykGGVkB/wj+8xaljaw5kYcV63aclMxNGmoOoXrQ
+         K0Hg==
+X-Gm-Message-State: AOAM533pHeX8wblUXDjLJJd2NW82XIdHPZAUi2gKqEtE7w/0ASpUzGll
+        1W3ido9WkmEIZFniqsyz1ve7QQ==
+X-Google-Smtp-Source: ABdhPJwcJbeZ44TzgeR1njybd+DRRmfS48J8wtcs0R4IFp7dHY9QeqGiP5i6eANoJ24H0JQXZ7BQZg==
+X-Received: by 2002:a37:db11:: with SMTP id e17mr28833862qki.336.1590463360740;
+        Mon, 25 May 2020 20:22:40 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id k20sm2530796qtu.16.2020.05.25.20.22.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 May 2020 20:22:40 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     freedreno@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Allison Randal <allison@lohutok.net>,
+        Brian Masney <masneyb@onstation.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Drew Davenport <ddavenport@chromium.org>,
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jayant Shekhar <jshekhar@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Shubhashree Dhar <dhar@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        zhengbin <zhengbin13@huawei.com>
+Subject: [PATCH 0/8] Initial SM8150 and SM8250 DPU bringup
+Date:   Mon, 25 May 2020 23:22:07 -0400
+Message-Id: <20200526032235.21930-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Warm reboot can not restore qca6390 controller baudrate
-to default due to lack of controllable BT_EN pin or power
-supply, so fails to download firmware after warm reboot.
+These patches bring up SM8150 and SM8250 with basic functionality.
 
-Fixed by sending EDL_SOC_RESET VSC to reset controller
-within added device shutdown implementation.
+Tested with displayport output (single mixer, video mode case).
 
-Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+I will send patches later to add support for merge3d and dual DSI
+configurations, and possibly also patches to fix command mode on
+these SoCs (note it is also currently broken for SC7180).
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index e4a6823..b479e51 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1975,6 +1975,32 @@ static void qca_serdev_remove(struct serdev_device *serdev)
- 	hci_uart_unregister_device(&qcadev->serdev_hu);
- }
- 
-+static void qca_serdev_shutdown(struct device *dev)
-+{
-+	int res;
-+	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-+	struct serdev_device *serdev = to_serdev_device(dev);
-+	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-+	const u8 ibs_wake_cmd[] = { 0xFD };
-+	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
-+
-+	if (qcadev->btsoc_type == QCA_QCA6390) {
-+		serdev_device_write_flush(serdev);
-+		res = serdev_device_write_buf(serdev,
-+				ibs_wake_cmd, sizeof(ibs_wake_cmd));
-+		BT_DBG("%s: send ibs_wake_cmd res = %d", __func__, res);
-+		serdev_device_wait_until_sent(serdev, timeout);
-+		usleep_range(8000, 10000);
-+
-+		serdev_device_write_flush(serdev);
-+		res = serdev_device_write_buf(serdev,
-+				edl_reset_soc_cmd, sizeof(edl_reset_soc_cmd));
-+		BT_DBG("%s: send edl_reset_soc_cmd res = %d", __func__, res);
-+		serdev_device_wait_until_sent(serdev, timeout);
-+		usleep_range(8000, 10000);
-+	}
-+}
-+
- static int __maybe_unused qca_suspend(struct device *dev)
- {
- 	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
-@@ -2100,6 +2126,7 @@ static struct serdev_device_driver qca_serdev_driver = {
- 		.name = "hci_uart_qca",
- 		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
- 		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
-+		.shutdown = qca_serdev_shutdown,
- 		.pm = &qca_pm_ops,
- 	},
- };
+Jonathan Marek (8):
+  drm/msm/dpu: use right setup_blend_config for sm8150 and sm8250
+  drm/msm/dpu: update UBWC config for sm8150 and sm8250
+  drm/msm/dpu: move some sspp caps to dpu_caps
+  drm/msm/dpu: don't use INTF_INPUT_CTRL feature on sdm845
+  drm/msm/dpu: set missing flush bits for INTF_2 and INTF_3
+  drm/msm/dpu: intf timing path for displayport
+  drm/msm/dpu: add SM8150 to hw catalog
+  drm/msm/dpu: add SM8250 to hw catalog
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |   6 -
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 287 +++++++++++++++++-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  48 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  20 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   |  29 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c     |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |  16 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    |  18 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |   7 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      |  75 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |   6 +-
+ 12 files changed, 363 insertions(+), 156 deletions(-)
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+2.26.1
 
