@@ -2,107 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A64071E295B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 19:48:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CA711E3015
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 22:35:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389134AbgEZRs0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 13:48:26 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:54510 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388999AbgEZRsY (ORCPT
+        id S2389339AbgEZUe6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 16:34:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47174 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390913AbgEZUe6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 13:48:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590515303; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=7keFiYQqaL3DuPDgQ1CTQxclwRsZANwrQiftoCTSuPc=;
- b=wqeCS4Fo89xkLbREIf3CQM9saoPbjiLfdWl7YnycJgQEbioB0EzbzPMIr3haXYu39eQhz4Ce
- ofRfFh/EIjrjZlFMi4BLlon5cgYXqD9gTyqW04Mx7CDn2g6V8P51/DEXu6KJ6RGccJ/RqBn3
- 8sbqWuIAcO3203UFSy40z90sZts=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5ecd5665cb04586933a7b975 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 17:48:21
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6262DC433AD; Tue, 26 May 2020 17:48:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73091C433C6;
-        Tue, 26 May 2020 17:48:19 +0000 (UTC)
+        Tue, 26 May 2020 16:34:58 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20172C03E96D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 13:34:57 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id b18so17469888oti.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 13:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Xlg1WEt/1KpzYv+/vA9j7Mf3YWi1IPnXCFcohcpUSKM=;
+        b=vqBfuJzMnCts3H+g3tzxBLb3DHdb9u8YAPd1Lr4hpr9zPYnd/hQ9htQE4e+QzEUmjl
+         7ZrK+oEdm0wLIE7MuIMmiI71OhNKS8oqoG5svb2EehG6CFlmnhdeq9cw6Vf2tq/axJ2H
+         ssZdHqJcXZVSLkR/cPGAeFiJSasA4lSnrLDZRpKXHynba/SmCOYCvHWd2hPTm3NCdn4r
+         BNzmOO0gWoq0pD+6uFTBvcgyL6jgx7zvs2rGaMsCKa11K7bwAsrXJaOHz3GnLa3znOG5
+         YZJKlEQz0ZUmv6xTUjr2n7E5cvEvNuf9zyblA43KWchCM+klzpd5j7n4bXULce1BXFzm
+         8BLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Xlg1WEt/1KpzYv+/vA9j7Mf3YWi1IPnXCFcohcpUSKM=;
+        b=kvshN0G03Strqhfcaor/ZpDyftiVIAXxBHxEfLgqd2ynnKcuJ0isLRKIqu6L2+xwBP
+         4z5wFvTLuPx3C1SwSNfe1ODT//BaUpFGmg4Q0dmJkib3rKb88v5Sp2RZvKAdnvPwsmVz
+         VnpAeCmV1CEv0ly+B1wrB/wlbBHo7oF9nQ0ZaItBPZ16xIw/G/TcZXADzjfaTehwiscS
+         gG9aUxQa0723YW9Hu8UHgXyMlAyOdNEMEhDljWc27hgxlomo4D2wT8+Ddunz42jRWgr1
+         MF9eVR+3SiXTvINekXfxY/MCTnNxFK+5SMKjBk+T8y+Sf0AL20jl/7RAW1aw/nwmnxKV
+         LvWA==
+X-Gm-Message-State: AOAM530HRilbdhspb2J3gkfkRr+wABrb/WwNKP9Rsd9QeWwC6gXdOKfj
+        khpB90zQsJ6KQq4vYOfjvVb6jYPhYPxN9q9+QfFE0w==
+X-Google-Smtp-Source: ABdhPJwRnLRczAXOAB9YCm7o1K0N3H8lb7+2jzEf7cyls1IaN/ZEhrkFXvBSwAYhJHpTTYYnVbUBS2F8yL7vvHUmhEs=
+X-Received: by 2002:a9d:b82:: with SMTP id 2mr2072353oth.221.1590525296383;
+ Tue, 26 May 2020 13:34:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 26 May 2020 23:18:19 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     sboyd@kernel.org, georgi.djakov@linaro.org,
-        bjorn.andersson@linaro.org, saravanak@google.com, mka@chromium.org,
-        nm@ti.com, agross@kernel.org, david.brown@linaro.org,
-        robh+dt@kernel.org, mark.rutland@arm.com, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        dianders@chromium.org, vincent.guittot@linaro.org,
-        amit.kucheria@linaro.org, ulf.hansson@linaro.org,
-        lukasz.luba@arm.com, sudeep.holla@arm.com
-Subject: Re: [PATCH v4 06/12] cpufreq: qcom: Update the bandwidth levels on
- frequency change
-In-Reply-To: <8fc5b72c9af6fd6a707a280cfc678677@codeaurora.org>
-References: <20200504202243.5476-1-sibis@codeaurora.org>
- <20200504202243.5476-7-sibis@codeaurora.org>
- <20200505045012.zfx2e6chqo5f3e4n@vireshk-i7>
- <8fc5b72c9af6fd6a707a280cfc678677@codeaurora.org>
-Message-ID: <b7e184b2da5b780a4e7e6ee47963f9b4@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+ <20200228025700.GA856087@builder> <20200514193249.GE279327@builder.lan>
+In-Reply-To: <20200514193249.GE279327@builder.lan>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Tue, 26 May 2020 13:34:45 -0700
+Message-ID: <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
+Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>, linux-tegra@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-05 12:49, Sibi Sankar wrote:
-> On 2020-05-05 10:20, Viresh Kumar wrote:
->> On 05-05-20, 01:52, Sibi Sankar wrote:
->>> Add support to parse optional OPP table attached to the cpu node when
->>> the OPP bandwidth values are populated. This allows for scaling of
->>> DDR/L3 bandwidth levels with frequency change.
->>> 
->>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> 
->> What about using opp_set_rate instead ?
-> 
-> I can't use opp_set_rate since
-> the cpu dev does not have a
-> clock associated with it and the
-> scaling is done through writing
-> on perf state register.
+On Thu, May 14, 2020 at 12:34 PM <bjorn.andersson@linaro.org> wrote:
+>
+> On Thu 27 Feb 18:57 PST 2020, Bjorn Andersson wrote:
+>
+> Rob, Will, we're reaching the point where upstream has enough
+> functionality that this is becoming a critical issue for us.
+>
+> E.g. Lenovo Yoga C630 is lacking this and a single dts patch to boot
+> mainline with display, GPU, WiFi and audio working and the story is
+> similar on several devboards.
+>
+> As previously described, the only thing I want is the stream mapping
+> related to the display controller in place, either with the CB with
+> translation disabled or possibly with a way to specify the framebuffer
+> region (although this turns out to mess things up in the display
+> driver...)
+>
+> I did pick this up again recently and concluded that by omitting the
+> streams for the USB controllers causes an instability issue seen on one
+> of the controller to disappear. So I would prefer if we somehow could
+> have a mechanism to only pick the display streams and the context
+> allocation for this.
+>
+>
+> Can you please share some pointers/insights/wishes for how we can
+> conclude on this subject?
 
-Viresh,
+Ping? I just wanted to follow up on this discussion as this small
+series is crucial for booting mainline on the Dragonboard 845c
+devboard. It would be really valuable to be able to get some solution
+upstream so we can test mainline w/o adding additional patches.
 
-https://patchwork.kernel.org/cover/11548479/
-GPU driver uses Georgi's series
-for scaling and will need a way to
-remove the icc votes in the suspend
-path, (this looks like a pattern
-that might be used by other clients
-as well) I could probably update
-opp_set_bw to support removing bw
-when NULL opp is specified. Similarly
-opp_set_rate will need to support
-set bw to 0 when set_rate is passed
-0 as target freq for the same use case.
+The rest of the db845c series has been moving forward smoothly, but
+this set seems to be very stuck with no visible progress since Dec.
 
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Are there any pointers for what folks would prefer to see?
+
+thanks
+-john
