@@ -2,75 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81F811E1F07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 11:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E4A21E1FE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 12:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731745AbgEZJrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 05:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59204 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728686AbgEZJrA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 05:47:00 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3479C08C5C1;
-        Tue, 26 May 2020 02:46:59 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id k8so1040841edq.4;
-        Tue, 26 May 2020 02:46:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KA+bHp9rxExZP+OmYeJADOO2BQciqNprrH+ZtH7Ib5w=;
-        b=oItybm9+cVLjWxgJ+rDptOHtBHE6kr6yNWQsIox7nSinLI3JpxSaoqxAx920NjXfUi
-         Q2fSayYCnjKvr80kS/31ypg0JBNbsSO9kjdfk1K9BCA6PdaoF0vMDYRja0ZrUjGt9+G8
-         j7zT8z6juG9No67gRinhMFcUUzuVOLp4hEH4qkGVBKFM3YyrY3p0ghCzcaYsygfzGfs8
-         R62UadC3lGwAK123fEkCYcKbJGGCx7qavkYhKLq28co7nIYKlDTMl/53xkTv1k8xwR9o
-         PydReAVu6HK6OC6F2RAv7FIhUbPlDEomtieLPwvJRrmIwr5wtvxZ+apafRc2dDpEOX+X
-         +LCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KA+bHp9rxExZP+OmYeJADOO2BQciqNprrH+ZtH7Ib5w=;
-        b=K4gQ7Fknk7UdQbpP8yr3tzM2fooP4hlG1cy96a9uleLg2hVldYRq/Il6+VjRZtEhtj
-         7LBSzxtr0hvL/+mh0V9uwK4V56k/otkav9ea98MfPBoQanA9fACO76s+VNInJPC0evm+
-         At/JgIHU/LgJ31xJYz3KY/8WkuBUpvUn6kAFYR2zBsqfR3cYOs2+tvZpldFqm2xBf3kV
-         oVLwr1QfHV9DvjNQoeqqhtFJzWt4h4wpZtqUsbKO/wJatBdE+NIRFuFLk+MLQZ6eqe1w
-         ZGaf9WNOB1Ps6BxWdespoyQR/aUTMufh97tjTZmBbyOHUD5QCH8kqM/WC61ia8/Iyhtp
-         gSJQ==
-X-Gm-Message-State: AOAM5310+hX5e2qi8I73XADKXEkcUPzNS+sL9uPtD3EcXOFg/rmQHJg4
-        qEVIPLhJP+sDML6VeTA7vb4u5bDU3Bot75y8Sdw=
-X-Google-Smtp-Source: ABdhPJz0ztayBlOshX2YgK2JYPAQqnJVAvCGzcRKxvIz1xNVZXJJ5SZZwaSyxwob8ClcShJxauvUdAHXGkGkvwLOURI=
-X-Received: by 2002:aa7:cd4e:: with SMTP id v14mr2135151edw.297.1590486417763;
- Tue, 26 May 2020 02:46:57 -0700 (PDT)
+        id S1731947AbgEZKjX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 06:39:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52468 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727890AbgEZKjW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 May 2020 06:39:22 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 095D8207CB;
+        Tue, 26 May 2020 10:39:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1590489562;
+        bh=mixvD35IMO/Rax98V2E/ba8PwGROnQxp9SkSn8T/kTc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Str6dfmPduJDJXafCVdmwQqKiJ/g+CwTRg2EU02IYz5WFCVKbX188v6VTXmjxnCO/
+         E0nyCRmnGtx5tRCE/WHvoVd2A7dEsFQ7+bw1KgjT4NdlDOS1Pbd1T/gQEyOBNOlPvY
+         cf67M5T16DMfjhGo1RYru5FiMmVlkq2Gi6i+xoIE=
+Date:   Tue, 26 May 2020 11:39:20 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Alok Chauhan <alokc@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-spi@vger.kernel.org
+Subject: Re: [PATCH v5 2/6] spi: spi-geni-qcom: Use OPP API to set clk/perf
+ state
+Message-ID: <20200526103920.GB4607@sirena.org.uk>
+References: <1589368382-19607-1-git-send-email-rnayak@codeaurora.org>
+ <1589368382-19607-3-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-References: <20200517131348.688405-1-bryan.odonoghue@linaro.org>
- <20200517131348.688405-3-bryan.odonoghue@linaro.org> <af35d732-08bf-fe95-3c98-063b32fe992a@nexus-software.ie>
-In-Reply-To: <af35d732-08bf-fe95-3c98-063b32fe992a@nexus-software.ie>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Tue, 26 May 2020 11:46:21 +0200
-Message-ID: <CAMS8qEWUBDy684UU1eLYcB5QFZtRcJEweG_9VO+9LxSKCF29iQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock Controller
-To:     "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
-Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>, p.zabel@pengutronix.de,
-        Vincent Knecht <vincent.knecht@mailoo.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="FkmkrVfFsRoUs1wW"
+Content-Disposition: inline
+In-Reply-To: <1589368382-19607-3-git-send-email-rnayak@codeaurora.org>
+X-Cookie: Hailing frequencies open, Captain.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Just adding my few cents, working fine on Asus Zenfone 2 Z00T, MSM8939.
 
-Tested-by: Konrad Dybcio <konradybcio@gmail.com>
+--FkmkrVfFsRoUs1wW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Wed, May 13, 2020 at 04:42:58PM +0530, Rajendra Nayak wrote:
+> geni spi needs to express a perforamnce state requirement on CX
+> depending on the frequency of the clock rates. Use OPP table from
+> DT to register with OPP framework and use dev_pm_opp_set_rate() to
+> set the clk/perf state.
+
+Acked-by: Mark Brown <broonie@kernel.org>
+
+--FkmkrVfFsRoUs1wW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7M8dcACgkQJNaLcl1U
+h9AA7Af/eQFdEMfj/wjfDByXeXLMghZROs9DaeBA+hnwGHWeWlAMxKXoWgr/ThqN
+/oYU3Ra27+X5oBe8Ip7E6rOu4/QmFtrpvGfHFpIevuDamu+pQ5/UptGhE9s10qwn
+EI2F34O1rQn6jqUYEUoj5Uj/+gGkj+vFR1FHCxGIcoe5/BO1PzzcQ0j5TZSr5bxu
+x79QGRhAGnaa0whEKKkZrvLJ1GPDoS2DQfrrWZNYN/LP50WRf29ECvfs1VOQYXJB
+W+hlimqN7f1IMU8wmKafkqB0A+Jhmw1WCfcHq58+45D3yBC7Yo7yZACIbMGG3R1w
+nNeB9mDiPm2lSgIam/HrciOVpURVsw==
+=5vEv
+-----END PGP SIGNATURE-----
+
+--FkmkrVfFsRoUs1wW--
