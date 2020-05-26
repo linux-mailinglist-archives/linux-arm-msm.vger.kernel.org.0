@@ -2,110 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA02A1E2672
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 18:06:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 856F31E274A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 18:41:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729496AbgEZQGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 12:06:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33442 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728661AbgEZQGF (ORCPT
+        id S2388591AbgEZQlE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 12:41:04 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:36163 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729286AbgEZQlD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 12:06:05 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D202C03E96F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 09:06:05 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id s69so22874pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 09:06:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3lKumICFqyFYrifsebtGoakO5VK89B9abdeZRmwK6ew=;
-        b=HOv5KvfbMqTD/xQ/ROlpU3bcOVjFptEwe2f/EQw/HAma8s4kRySgfWHZ9e8m+4QrgE
-         HW1GWv4ZRcMmEpC83PhRkRwJEk2/0BkcTX3OrzQrJ/iQNGfaYnUeJEApneVQniuqAowy
-         2D0Djf5m/KmGOZMjkbPEKneQ/xhUdS9YyEz9Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3lKumICFqyFYrifsebtGoakO5VK89B9abdeZRmwK6ew=;
-        b=uZ+YVU9Jq3nsyboIdZ3YFjAnvkNDQP161es/jnnZAdt/4BcK9qjR9wgcB6z102YVU+
-         X0XJrisE+YuZQtPb0737wd8aNymyLDGfc0Si95MCMAlAVuAJQdcK54ZhoFLFap3hFSRD
-         h1O5SNM8+kPaz7jx1R8qCnxujN+vLKUcqPZpSMZA7LofKZ/Nb1eTERLK2F15FftDWDkW
-         AEenhYJF9bF3Bcej+TuUzEeIAltnnmMltTqmG8TI8eNkOHQE5+vrz49QVXhjifjRfatd
-         97+dmcxxsb+vT8iSJfoSlm9L7wRBiJaM62NtDKuxTFFoBjfo1pgxQFAe1cj47I/4/NNQ
-         LkJQ==
-X-Gm-Message-State: AOAM5318by7gU9QaRhDYc7s1Ls7ucZjHDdbYX2VAb/528dqWGiOGEnJ1
-        YHCFT2Q0MXMsA7EPPcMxBm3FSA==
-X-Google-Smtp-Source: ABdhPJyPU/803MdN1gbwFuM5w5uPEtmyalLAnfyY5sqqxosrq91XftBIrLkRGJKuctZsiaK1FtyNrA==
-X-Received: by 2002:a17:902:868d:: with SMTP id g13mr1703283plo.246.1590509164803;
-        Tue, 26 May 2020 09:06:04 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id 128sm23369pfd.114.2020.05.26.09.06.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 May 2020 09:06:03 -0700 (PDT)
-Date:   Tue, 26 May 2020 09:06:02 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: Improve controller ID info log
- level
-Message-ID: <20200526160602.GE4525@google.com>
-References: <1590464108-1333-1-git-send-email-zijuhu@codeaurora.org>
+        Tue, 26 May 2020 12:41:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590511262; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=bxNy9OVVcbUGXRZMeRrO1nMkFefTO00pUgSxEDv45l8=; b=akkKBc5PPLF9QcXbHZ1BxG0xBhGHrAG3DkCHHCcCt1anPlauNvia0q11vTs8Nymaa6oKPtBs
+ UlpIm/iUHkJSEa9BIyNJJ0rMsnyJoYPnIC+r7vkf7i8bQERUbngrQi+79QASit7+x5+qyElr
+ yCPYkLUbInMpQaXpTtIwFVw+0B4=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5ecd469db4f0a9ae220deb45 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 16:41:01
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9DB0FC4339C; Tue, 26 May 2020 16:41:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C44A4C433C9;
+        Tue, 26 May 2020 16:40:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C44A4C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Tue, 26 May 2020 10:40:57 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm/a6xx: set ubwc config for A640 and A650
+Message-ID: <20200526164057.GC20960@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200526032514.22198-1-jonathan@marek.ca>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1590464108-1333-1-git-send-email-zijuhu@codeaurora.org>
+In-Reply-To: <20200526032514.22198-1-jonathan@marek.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 26, 2020 at 11:35:08AM +0800, Zijun Hu wrote:
-> Controller ID info got by VSC EDL_PATCH_GETVER is very
-> important, so improve its log level from DEBUG to INFO.
-> 
-> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+On Mon, May 25, 2020 at 11:25:13PM -0400, Jonathan Marek wrote:
+> This is required for A640 and A650 to be able to share UBWC-compressed
+> images with other HW such as display, which expect this configuration.
+
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  drivers/bluetooth/btqca.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 38 ++++++++++++++++++++++-----
+>  1 file changed, 32 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index 3ea866d..49e5aeb 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -74,10 +74,10 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 6f335ae179c8..aa004a261277 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -289,6 +289,37 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
+>  	gpu_write(gpu, REG_A6XX_RBBM_CLOCK_CNTL, state ? 0x8aa8aa02 : 0);
+>  }
 >  
->  	ver = (struct qca_btsoc_version *)(edl->data);
+> +static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	u32 lower_bit = 2;
+> +	u32 amsbc = 0;
+> +	u32 rgb565_predicator = 0;
+> +	u32 uavflagprd_inv = 0;
+> +
+
+This hardware design has the amazing ability to make me sad every time I see it.
+
+> +	/* a618 is using the hw default values */
+> +	if (adreno_is_a618(adreno_gpu))
+> +		return;
+> +
+I've been a recent convert to the cult of <linux/bitfields.h> and FIELD_PREP()
+could help, maybe?
+
+if (adreno_is_a640(adreno_gpu)) {
+	rb_ncmode = FIELD_PREP(REG_A6XX_RB_NC_MODE_CNTL_AMSBC, 1);
+	rb_ncmode |= FIELD_PREP(REG_A6XX_RB_NC_MODE_CNTL_HBB, 2);
+
+	tpl1_ncmode  = FIELD_PREP(REG_A6XX_TPL1_NC_MODE_HBB, 2);
+
+	sp_ncmode  = FIELD_PREP(REG_A6XX_TPL1_NC_MODE_HBB, 2);
+
+	uchemode  = FIELD_PREP(REG_A6XX_UCHE_MODE_CNTL_HBB, 2);
+} else if adreno_is_a650(adreno_gpu)) {
+	rb_ncmode = FIELD_PREP(REG_A6XX_RB_NC_MODE_CNTL_AMSBC, 1);
+	rb_ncmode |= FIELD_PREP(REG_A6XX_RB_NC_MODE_CNTL_HBB, 3);
+	rb_ncmode |= FIELD_PREP(REG_A6XX_RB_NC_MODE_CNTL_RGB565, 1);
+
+	tpl1_ncmode  = FIELD_PREP(REG_A6XX_TPL1_NC_MODE_HBB, 3);
+
+	sp_ncmode  = FIELD_PREP(REG_A6XX_TPL1_NC_MODE_HBB, 3);
+	sp_ncmode  |= FIELD_PREP(REG_A6XX_TPL1_NC_MODE_UAVFLAGPRD_INV, 2);
+
+	uchemode  = FIELD_PREP(REG_A6XX_UCHE_MODE_CNTL_HBB, 2);
+}
+
+I'm not sure if that is any clearer or not. Perhaps this is a problem for the
+next person to add a new target. Regardless the code is programming the
+hardware correctly so...
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+
+> +	if (adreno_is_a640(adreno_gpu))
+> +		amsbc = 1;
+> +
+> +	if (adreno_is_a650(adreno_gpu)) {
+> +		/* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
+> +		lower_bit = 3;
+> +		amsbc = 1;
+> +		rgb565_predicator = 1;
+> +		uavflagprd_inv = 2;
+> +	}
+> +
+> +	gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
+> +		rgb565_predicator << 11 | amsbc << 4 | lower_bit << 1);
+> +	gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, lower_bit << 1);
+> +	gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL,
+> +		uavflagprd_inv >> 4 | lower_bit << 1);
+> +	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, lower_bit << 21);
+> +}
+> +
+>  static int a6xx_cp_init(struct msm_gpu *gpu)
+>  {
+>  	struct msm_ringbuffer *ring = gpu->rb[0];
+> @@ -478,12 +509,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+>  	/* Select CP0 to always count cycles */
+>  	gpu_write(gpu, REG_A6XX_CP_PERFCTR_CP_SEL_0, PERF_CP_ALWAYS_COUNT);
 >  
-> -	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
-> -	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
-> -	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
-> -	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
-> +	bt_dev_info(hdev, "QCA Product:0x%08x", le32_to_cpu(ver->product_id));
-> +	bt_dev_info(hdev, "QCA Patch  :0x%08x", le16_to_cpu(ver->patch_ver));
-> +	bt_dev_info(hdev, "QCA ROM    :0x%08x", le16_to_cpu(ver->rom_ver));
-> +	bt_dev_info(hdev, "QCA SOC    :0x%08x", le32_to_cpu(ver->soc_id));
+> -	if (adreno_is_a630(adreno_gpu)) {
+> -		gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL, 2 << 1);
+> -		gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, 2 << 1);
+> -		gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, 2 << 1);
+> -		gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, 2 << 21);
+> -	}
+> +	a6xx_set_ubwc_config(gpu);
+>  
+>  	/* Enable fault detection */
+>  	gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL,
+> -- 
+> 2.26.1
+> 
 
-nit: Now that these messages become more visible you could consider making the
-order a bit more consistent/hierarchical. Not sure what is the product ID vs.
-the SoC ID (product is a variant of the SoC?). IMO it would make sense to
-start with HW information, going from more generic to more specific, then do
-the same for firmware.
-
-  SoC ID
-  Product ID	  // assuming this is a variant of the SoC
-  ROM version
-  Patch version	  // assuming this is a patch of the ROM firmware (?)
-
-Sorry if I got any of the concepts wrong, from the names they are not entirely
-clear to me.
-
-In any case it's just a suggestion, feel free to ignore.
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
