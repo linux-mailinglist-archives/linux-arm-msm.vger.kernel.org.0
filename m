@@ -2,100 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C2391E1EE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 11:42:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81F811E1F07
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 11:47:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731735AbgEZJmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 05:42:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58436 "EHLO
+        id S1731745AbgEZJrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 05:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728568AbgEZJmE (ORCPT
+        with ESMTP id S1728686AbgEZJrA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 05:42:04 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 016CFC03E97E;
-        Tue, 26 May 2020 02:42:03 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id j16so7284484wrb.7;
-        Tue, 26 May 2020 02:42:02 -0700 (PDT)
+        Tue, 26 May 2020 05:47:00 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3479C08C5C1;
+        Tue, 26 May 2020 02:46:59 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id k8so1040841edq.4;
+        Tue, 26 May 2020 02:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8UhW5rzzft+OEaSoE2TBO2iHGY9SJECQYAYg9UffWAk=;
-        b=ZvFKYRsOzogk0YA/7ew8KXxjxofyeoeLY0htM4L2q0VMu4ZItrbjE1eWiMTRkfeW2l
-         WmvM7xcfE1bCEMak8arcSBV1GrNz1dxoSAAlk2DfgCn6v2MTVQpvlSCWd3soLqwlwvRe
-         7sLp0prQThsEJTXp8SkOxqqhg1VK7upxdyWcKSEuXPUZFn2k0a0ozy5Ndk786cMKBCPN
-         Halmn96kPbJzf1i4zu2r03tmAdYQZOVPF+SWIQPIr18jLSLz0IDlqG9MG85lieKgNwIV
-         cPYtac9Z/wr/JLJE03F6o/tEotPCW46DYcUFKI2OtA50s8r5INYggUIelrymdJcnk3cf
-         6iyQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KA+bHp9rxExZP+OmYeJADOO2BQciqNprrH+ZtH7Ib5w=;
+        b=oItybm9+cVLjWxgJ+rDptOHtBHE6kr6yNWQsIox7nSinLI3JpxSaoqxAx920NjXfUi
+         Q2fSayYCnjKvr80kS/31ypg0JBNbsSO9kjdfk1K9BCA6PdaoF0vMDYRja0ZrUjGt9+G8
+         j7zT8z6juG9No67gRinhMFcUUzuVOLp4hEH4qkGVBKFM3YyrY3p0ghCzcaYsygfzGfs8
+         R62UadC3lGwAK123fEkCYcKbJGGCx7qavkYhKLq28co7nIYKlDTMl/53xkTv1k8xwR9o
+         PydReAVu6HK6OC6F2RAv7FIhUbPlDEomtieLPwvJRrmIwr5wtvxZ+apafRc2dDpEOX+X
+         +LCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8UhW5rzzft+OEaSoE2TBO2iHGY9SJECQYAYg9UffWAk=;
-        b=JBmmLLBGNe2Z4K4ebCbj59Z8+ZbCQdyGsSRE3tXghywwwcIG8go9AQzKHQA/m/Olze
-         dVqWY87MXsogE0e4cRN7mbXdPqORY0RipE4gOLW9zDumXTjEs9zAxNE3mmVffeX1AbDu
-         mjH0ajQyFpYNw+xfqGhAnpTfnYh7w+TVyBmo/wflXb7U85NGXVskrfcRRn93T3K3e8yM
-         pdRUNxYUsfBMTcXS1rTx3Wt+fxZCx+PzVMsUajwcGnCi+OhwaHdY5GfHyx9szkIV3pJ+
-         0s+nQsKc1mfsMFrb5uThJVRsoJx6NqCBs0Su2mLUfkQ3gbJFqwtBmwifqhrrNA6FbOtG
-         RbzQ==
-X-Gm-Message-State: AOAM531FjbF00NTJoZUbjY5UzWb3l13s3Q0rTjJEddp6dxWfUxie76pE
-        vHflCf+MVHZDZJw8lSM7tRc=
-X-Google-Smtp-Source: ABdhPJxf7l1rVuIyVqBW1rJlGcbIOpVb4aw2XaHf6b66cVMjhtwY35OTm3FyzL/jWhfRlEgz2h74Tg==
-X-Received: by 2002:adf:ecc5:: with SMTP id s5mr18517057wro.240.1590486121738;
-        Tue, 26 May 2020 02:42:01 -0700 (PDT)
-Received: from ubuntu-g3.micron.com ([165.225.203.62])
-        by smtp.googlemail.com with ESMTPSA id b9sm1708039wrt.39.2020.05.26.02.41.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 May 2020 02:42:01 -0700 (PDT)
-Message-ID: <229fb4b001341c536f5996151ec6d78e925ecda4.camel@gmail.com>
-Subject: Re: [PATCH] scsi: ufs-qcom: Fix scheduling while atomic issue
-From:   Bean Huo <huobean@gmail.com>
-To:     Avri Altman <Avri.Altman@wdc.com>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
-        "jejb@linux.ibm.com" <jejb@linux.ibm.com>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        "subhashj@codeaurora.org" <subhashj@codeaurora.org>,
-        "venkatg@codeaurora.org" <venkatg@codeaurora.org>
-Cc:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Date:   Tue, 26 May 2020 11:41:52 +0200
-In-Reply-To: <SN6PR04MB4640A91499223A26A7460738FCB00@SN6PR04MB4640.namprd04.prod.outlook.com>
-References: <20200525204125.46171-1-jeffrey.l.hugo@gmail.com>
-         <SN6PR04MB4640A91499223A26A7460738FCB00@SN6PR04MB4640.namprd04.prod.outlook.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KA+bHp9rxExZP+OmYeJADOO2BQciqNprrH+ZtH7Ib5w=;
+        b=K4gQ7Fknk7UdQbpP8yr3tzM2fooP4hlG1cy96a9uleLg2hVldYRq/Il6+VjRZtEhtj
+         7LBSzxtr0hvL/+mh0V9uwK4V56k/otkav9ea98MfPBoQanA9fACO76s+VNInJPC0evm+
+         At/JgIHU/LgJ31xJYz3KY/8WkuBUpvUn6kAFYR2zBsqfR3cYOs2+tvZpldFqm2xBf3kV
+         oVLwr1QfHV9DvjNQoeqqhtFJzWt4h4wpZtqUsbKO/wJatBdE+NIRFuFLk+MLQZ6eqe1w
+         ZGaf9WNOB1Ps6BxWdespoyQR/aUTMufh97tjTZmBbyOHUD5QCH8kqM/WC61ia8/Iyhtp
+         gSJQ==
+X-Gm-Message-State: AOAM5310+hX5e2qi8I73XADKXEkcUPzNS+sL9uPtD3EcXOFg/rmQHJg4
+        qEVIPLhJP+sDML6VeTA7vb4u5bDU3Bot75y8Sdw=
+X-Google-Smtp-Source: ABdhPJz0ztayBlOshX2YgK2JYPAQqnJVAvCGzcRKxvIz1xNVZXJJ5SZZwaSyxwob8ClcShJxauvUdAHXGkGkvwLOURI=
+X-Received: by 2002:aa7:cd4e:: with SMTP id v14mr2135151edw.297.1590486417763;
+ Tue, 26 May 2020 02:46:57 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200517131348.688405-1-bryan.odonoghue@linaro.org>
+ <20200517131348.688405-3-bryan.odonoghue@linaro.org> <af35d732-08bf-fe95-3c98-063b32fe992a@nexus-software.ie>
+In-Reply-To: <af35d732-08bf-fe95-3c98-063b32fe992a@nexus-software.ie>
+From:   Konrad Dybcio <konradybcio@gmail.com>
+Date:   Tue, 26 May 2020 11:46:21 +0200
+Message-ID: <CAMS8qEWUBDy684UU1eLYcB5QFZtRcJEweG_9VO+9LxSKCF29iQ@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock Controller
+To:     "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
+Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>, p.zabel@pengutronix.de,
+        Vincent Knecht <vincent.knecht@mailoo.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2020-05-26 at 06:25 +0000, Avri Altman wrote:
->  
-> > ufs_qcom_dump_dbg_regs() uses usleep_range, a sleeping function,
-> > but can
-> > be called from atomic context in the following flow:
-> > 
-> > ufshcd_intr -> ufshcd_sl_intr -> ufshcd_check_errors ->
-> > ufshcd_print_host_regs -> ufshcd_vops_dbg_register_dump ->
-> > ufs_qcom_dump_dbg_regs
-> > 
-> > This causes a boot crash on the Lenovo Miix 630 when the interrupt
-> > is
-> > handled on the idle thread.
-> > 
-> > Fix the issue by switching to udelay().
-> > 
-> > Fixes: 9c46b8676271 ("scsi: ufs-qcom: dump additional testbus
-> > registers")
-> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> 
-> Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+Just adding my few cents, working fine on Asus Zenfone 2 Z00T, MSM8939.
 
+Tested-by: Konrad Dybcio <konradybcio@gmail.com>
