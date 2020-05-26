@@ -2,132 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 201C91E1B31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 08:25:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 251A41E1B4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 08:31:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726900AbgEZGZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 02:25:51 -0400
-Received: from esa6.hgst.iphmx.com ([216.71.154.45]:14433 "EHLO
-        esa6.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726746AbgEZGZu (ORCPT
+        id S1728815AbgEZGbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 02:31:23 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:42783 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727774AbgEZGbW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 02:25:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1590474350; x=1622010350;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=ZjTYbJhaz7ZrIxBSk0QPR2g0UfImYCc7hDMvFahCcaQ=;
-  b=BeE/6/S6Mc3ZbqlZpW1nNyJQg9sML6V1TTxIBiu/QuMoMopMbz1pcVYI
-   sjqJvjLgQDX7Ap7Gnf+OTmWXQ7txFnfwog7Gmnar8itQwaSks3+05Hf18
-   JM3UKJGfYx1v/WOFDGrC26ZMWEwyNFKrVGyZAiKxPmH8Og9r/5o0mps+u
-   wDshZX5Z9Ky8BP0Q5r8Vk3n3MjZZCNeIDsxk9IEc1mJkV4TIHcL3n3eJv
-   Ga/Mya6xc3LAQCluomG8afka/vkmwpQ9BUKJhJFaAoHy1985VUgumg02F
-   8CL04MnD5kqCSdLSr0jJs/mZkbnPPHvYVdHAT3rrCBCIE5RqlE1iMpgan
-   A==;
-IronPort-SDR: JcchQwdWs8GOtSSjcnqZI28ruHVDB15FUk8FjAli1OCU4YPy3XXaYrCRmV13Oo08d4p3cshNme
- RJ0nV/QcQTXC/Wj+Ud4OQdE/KZW/vkpj+OzRtvRDHpZn4FC7ZYvPNsZL47P+uMjiOjPDGw9Naz
- O4vy4W6UMH9xdpreCUFEZCZbWCEnuaHjOKu1sSWp/tl2lqFjKnUSjC+UOWhCIP6Ot13yZa5gs6
- HstRvL9qiklVv65zQ5k2sTSb61IOAYzwkDIkFd38mp+N3ASl1Sjw9WPKAbAbEATD9VCFEXi0Gd
- dG0=
-X-IronPort-AV: E=Sophos;i="5.73,436,1583164800"; 
-   d="scan'208";a="139937394"
-Received: from mail-dm6nam12lp2177.outbound.protection.outlook.com (HELO NAM12-DM6-obe.outbound.protection.outlook.com) ([104.47.59.177])
-  by ob1.hgst.iphmx.com with ESMTP; 26 May 2020 14:25:48 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b9oPeWqtYxH98i7a++P+CRs/a95ciBT2kkxLrtAPdqOje2agDviLxVWw3J0JjkY41hT49hF38DjG/7XGXZcnpMd2vaie2dyBbOsD3YVBT/1Z+JqvipbRdStWy3jFd6Y2C3ebPXdFUywKfdOKa/+OAOlsvgFN1bOnFqnv/XLtaf9IPd0dewkOqire1JM3K2jyvHEQFNq8FxI0GL7wIKSia+fawv6iBpVLFeVc5U1dVg1forVM5GGVH8fkWmLK5z21bac3oeViXoncN+ceWS8kMR+DncPnNHBYCo3TgW9Zw4NPiIZ2G9ey0GmG0JgQ8aQknQmPV+LwoGIq4qnh0KsMOQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZjTYbJhaz7ZrIxBSk0QPR2g0UfImYCc7hDMvFahCcaQ=;
- b=hq/X1c/NrHGl4BnKX8uphikLsM83ylYbZOuYgI9pmGLZb419SWdX1jfiJXq8oh7XkjMpr++6d6D9h7c9COMEPs40kIeIXtz3GvnHB+n7En0vpHl2oDwaYS6p6R/U4Io4WyGBnPy+ixjAORLA8HN591YL1uBXWGI1kIxLOXzEbGI1kCssLSQQ9ncH0x4fE97LPoWBKJJ2cSL6gxgjfBp0Xw4GSZ9vr+zcTyUS8aYnZCWO5RhZFgISRvjNwMi/pIdW3lEIckA+pRzvJdZhAxqFgv/aEAE/RxIvXJIo184ziW90CXxKP53puY0uByYgHRYvtnh6pnzOG+xuHjua21H3pQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZjTYbJhaz7ZrIxBSk0QPR2g0UfImYCc7hDMvFahCcaQ=;
- b=xrV6ecI6nJTusFOejZHSVA/NDaLEr5632Du0Wuk1LNN0W1bfe8ZCkNlkFhPYtcrCUYnQ86Oa+VtLYnbuIrdyb05m3JMbgqSSwJ4CseiLyE3J0BGDj6Y+tTlpBcXCH8qe5ESggxVWiEJWbfFKaZKKhMZkaPK31xtQl3gYzwNbR3Y=
-Received: from SN6PR04MB4640.namprd04.prod.outlook.com (2603:10b6:805:a4::19)
- by SN6PR04MB5183.namprd04.prod.outlook.com (2603:10b6:805:100::26) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3021.23; Tue, 26 May
- 2020 06:25:47 +0000
-Received: from SN6PR04MB4640.namprd04.prod.outlook.com
- ([fe80::9cbe:995f:c25f:d288]) by SN6PR04MB4640.namprd04.prod.outlook.com
- ([fe80::9cbe:995f:c25f:d288%6]) with mapi id 15.20.3021.029; Tue, 26 May 2020
- 06:25:47 +0000
-From:   Avri Altman <Avri.Altman@wdc.com>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
-        "jejb@linux.ibm.com" <jejb@linux.ibm.com>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        "subhashj@codeaurora.org" <subhashj@codeaurora.org>,
-        "venkatg@codeaurora.org" <venkatg@codeaurora.org>
-CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH] scsi: ufs-qcom: Fix scheduling while atomic issue
-Thread-Topic: [PATCH] scsi: ufs-qcom: Fix scheduling while atomic issue
-Thread-Index: AQHWMtThdTzSVukCQkS54I37yLAKy6i55qqQ
-Date:   Tue, 26 May 2020 06:25:47 +0000
-Message-ID: <SN6PR04MB4640A91499223A26A7460738FCB00@SN6PR04MB4640.namprd04.prod.outlook.com>
-References: <20200525204125.46171-1-jeffrey.l.hugo@gmail.com>
-In-Reply-To: <20200525204125.46171-1-jeffrey.l.hugo@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=wdc.com;
-x-originating-ip: [212.25.79.133]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 8fbe3162-81fd-428f-7bfd-08d8013da0bc
-x-ms-traffictypediagnostic: SN6PR04MB5183:
-x-microsoft-antispam-prvs: <SN6PR04MB5183DE4E94726D8189F26285FCB00@SN6PR04MB5183.namprd04.prod.outlook.com>
-wdcipoutbound: EOP-TRUE
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-forefront-prvs: 041517DFAB
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: PHuArq7FNPUWogPwRn+KF6cgRiLee3i5/qbM4O+Xn0w1RMn5KvcZYN9H/v/iokyUEdtMIaUJVvgVJS8BrsjbqmLPj78e0hgZW14M4EWrPtIbVO2ulXHnqpf2LEHyU+6IYZAmTk0DlvseXw9yXQRL5HQwjw1CFB7EGomJ0s63kJFO5a1mEGzhkFbxyhUIjkD8Ti/2GMqYdKgxree/P/YjSjrDWnqNrQG1S2vC5fsXSCOUJ1Z1K7aFvtnRtaHnKU+KHUUa2cdVE++0FvRwwHU+nrz8JHU1StJgtrdObn71a1eQyfztfmc5VhYq6Ssi0G7FAZuVBJZfCZSbjN7hZVwlHQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR04MB4640.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(136003)(376002)(346002)(396003)(366004)(39860400002)(64756008)(66946007)(54906003)(478600001)(66556008)(66476007)(9686003)(8936002)(55016002)(76116006)(4326008)(8676002)(66446008)(110136005)(316002)(7416002)(86362001)(2906002)(71200400001)(186003)(33656002)(4744005)(6506007)(5660300002)(26005)(7696005)(52536014);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: /ZJqbGAf7Y/xPGiVSPKprGCptJBwtZ+aS2uFDVhudYyq9aoLHJyDb0qxbL3u+WDxBTTduDghDxpdVrTt1sv0OKz83hc74TCuBSwa0WFSgvcN1BN6NzCE74dk9qkI41NVEQZzo0disBHcF8QrOwHmA3MTi2aBOFr93sjrf1NJuE4CrUxkC/ZPUvAgojc0AtYLl+FGUSWERXroexwc/r3obqc9akvvdXlIZ3rzS2rIB6bgUZcKrgI0LXhnszC1Sbfj+HJTHphKWRcX5vPKY14wM3WmSLDeptvs73H7zbBJSGnIkyKAvIszb3wJIWpkHCtnRsUuLfZq/88vkUtLF2JOLO3vZxHHhghHXqrEbp/RCPuBLBwuHyGs7GuENUNczFn7F3a5XZ6l7dRYZlOlVrnlFgLK8FpZlz+62DIU2Mg07nngErEPCTIkhvkcCq7yKahu5PX6+voO3DLfg1CXU3VV4BMbuEOxGNqffRs0GUsGSls=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        Tue, 26 May 2020 02:31:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590474681; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Z3frdJL/Om4AQkZCuaqLndOFOJJ7lNBDzBIioM+V9gs=;
+ b=k6zLAtugZ2c2epg0NID/kbmNF0OzJRz5oMN+c2Lfrsre2x+ddnq9QU3TZExryzQ6gG+vJRu/
+ 9Ra8trumNxKTYiyvbvCpeihjpgEuCdGowOnV5bDXE+lzJLhWlMq+aDHnQMs/pi+1EyrINO0F
+ AoFOvqyI2cWgQtDSWzk+4POR5aM=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5eccb7af.7f93aff7bab0-smtp-out-n04;
+ Tue, 26 May 2020 06:31:11 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A510AC433CA; Tue, 26 May 2020 06:31:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0DEFC433C6;
+        Tue, 26 May 2020 06:31:10 +0000 (UTC)
 MIME-Version: 1.0
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8fbe3162-81fd-428f-7bfd-08d8013da0bc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2020 06:25:47.2757
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: BBkX5KvKMdJWuM+QAPqyDR/1r1/ouGgp/chsr6mNtC5K+sRtZ6ok25qKgr+EVC++YCaoCAdzDsVvSLX3QeuWBw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB5183
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Tue, 26 May 2020 12:01:10 +0530
+From:   dikshita@codeaurora.org
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
+        Hans Verkuil <hverkuil@xs4all.nl>, sakari.ailus@linux.intel.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, majja@codeaurora.org, jdas@codeaurora.org,
+        linux-media-owner@vger.kernel.org
+Subject: Re: [RFC PATCH 0/3] METADATA design using V4l2 Request API
+In-Reply-To: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
+References: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
+Message-ID: <66208196d7668fe184f6c9d8c6c69c8b@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-=20
-> ufs_qcom_dump_dbg_regs() uses usleep_range, a sleeping function, but can
-> be called from atomic context in the following flow:
->=20
-> ufshcd_intr -> ufshcd_sl_intr -> ufshcd_check_errors ->
-> ufshcd_print_host_regs -> ufshcd_vops_dbg_register_dump ->
-> ufs_qcom_dump_dbg_regs
->=20
-> This causes a boot crash on the Lenovo Miix 630 when the interrupt is
-> handled on the idle thread.
->=20
-> Fix the issue by switching to udelay().
->=20
-> Fixes: 9c46b8676271 ("scsi: ufs-qcom: dump additional testbus registers")
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Hi,
+
+A gentle reminder for the review.
+
+On 2020-05-08 11:51, Dikshita Agarwal wrote:
+> There are many commercialized video use cases which needs metadata info
+> to be circulated between v4l2 client and v4l2 driver.
+> 
+> METADATA has following requirements associated:
+> •Metadata is an optional info available for a buffer. It is not
+> mandatorily for every buffer.
+>  For ex. consider metadata ROI (Region Of Interest). ROI is specified
+> by clients to indicate
+>  the region where enhanced quality is desired. This metadata is given
+> as an input information
+>  to encoder output plane. Client may or may not specify the ROI for a
+> frame during encode as
+>  an input metadata. Also if the client has not provided ROI metadata
+> for a given frame,
+>  it would be incorrect to take the metadata from previous frame. If the 
+> data and
+>  metadata is asynchronous, it would be difficult for hardware to decide 
+> if it
+>  needs to wait for metadata buffer or not before processing the input
+> frame for encoding.
+> •Synchronize the buffer requirement across both the video node/session
+>  (incase metadata is being processed as a separate v4l2 video 
+> node/session).
+>  This is to avoid buffer starvation.
+> •Associate the metadata buffer with the data buffer without adding any
+> pipeline delay
+>  in waiting for each other. This is applicable both at the hardware
+> side (the processing end)
+>  and client side (the receiving end).
+> •Low latency usecases like WFD/split rendering/game streaming/IMS have
+> sub-50ms e2e latency
+>  requirements, and it is not practical to stall the pipeline due to
+> inherent framework latencies.
+>  High performance usecase like high-frame rate playback/record can
+> lead to frame loss during any pipeline latency.
+> 
+> To address all above requirements, we used v4l2 Request API as 
+> interlace.
+> 
+> As an experiment, We have introduced new control
+> V4L2_CID_MPEG_VIDEO_VENUS_METADATA
+> to contain the METADATA info. Exact controls can be finalized once the
+> interface is discussed.
+> 
+> For setting metadata from userspace to kernel, let say on encode output 
+> plane,
+> following code sequence was followed
+> 1. Video driver is registering for media device and creating a media
+> node in /dev
+> 2. Request fd is allocated by calling MEDIA_IOC_REQUEST_ALLOC IOCTL on 
+> media fd.
+> 3. METADATA configuration is being applied on request fd using
+> VIDIOC_S_EXT_CTRLS IOCTL
+>    and the same request fd is added to buf structure structure before
+> calling VIDIOC_QBUF on video fd.
+> 4. The same request is queued through MEDIA_REQUEST_IOC_QUEUE IOCTL to
+> driver then, as a result
+>    to which METADATA control will be applied to buffer through S_CTRL.
+> 5. Once control is applied and request is completed,
+> MEDIA_REQUEST_IOC_REINIT IOCTL is called
+>    to re-initialize the request.
+> 
+> We could achieve the same on capture plane as well by removing few
+> checks present currently
+> in v4l2 core which restrict the implementation to only output plane.
+> 
+> We profiled below data with this implementation :
+> 1. Total time taken ( round trip ) for setting up control data on video 
+> driver
+>    with VIDIOC_S_EXT_CTRLS, QBUF and Queue Request: 737us
+> 2. Time taken for first QBUF on Output plane to reach driver with
+> REQUEST API enabled (One way): 723us
+> 3. Time taken for first QBUF on Output plane to reach driver without
+> REQUEST API (One way) : 250us
+> 4. Time taken by each IOCTL to complete ( round trip ) with REQUEST
+> API enabled :
+>     a. VIDIOC_S_EXT_CTRLS : 201us
+>     b. VIDIOC_QBUF : 92us
+>     c. MEDIA_REQUEST_IOC_QUEUE: 386us
+> 
+> Kindly share your feedback/comments on the design/call sequence.
+> Also as we experimented and enabled the metadata on capture plane as
+> well, please comment if any issue in
+> allowing the metadata exchange on capture plane as well.
+> 
+> Reference for client side implementation can be found at [1].
+> 
+> Thanks,
+> Dikshita
+> 
+> [1]
+> https://git.linaro.org/people/stanimir.varbanov/v4l2-encode.git/log/?h=dikshita/request-api
+> 
+> Dikshita Agarwal (3):
+>   Register for media device
+>     - Initialize and register for media device
+>     - define venus_m2m_media_ops
+>     - Implement APIs to register/unregister media controller.
+>   Enable Request API for output buffers
+>     - Add dependency on MEDIA_CONTROLLER_REQUEST_API in Kconfig.
+>     - Initialize vb2 ops buf_out_validate and buf_request_complete.
+>     - Add support for custom Metadata control
+> V4L2_CID_MPEG_VIDEO_VENUS_METADATA
+>     - Implemeted/Integrated APIs for Request setup/complete.
+>   Enable Request API for Capture Buffers
+> 
+>  drivers/media/common/videobuf2/videobuf2-v4l2.c |   4 +-
+>  drivers/media/platform/Kconfig                  |   2 +-
+>  drivers/media/platform/qcom/venus/core.h        |  36 ++++
+>  drivers/media/platform/qcom/venus/helpers.c     | 247 
+> +++++++++++++++++++++++-
+>  drivers/media/platform/qcom/venus/helpers.h     |  15 ++
+>  drivers/media/platform/qcom/venus/venc.c        |  63 +++++-
+>  drivers/media/platform/qcom/venus/venc_ctrls.c  |  61 +++++-
+>  drivers/media/v4l2-core/v4l2-ctrls.c            |  10 +
+>  drivers/media/v4l2-core/v4l2-mem2mem.c          |  17 +-
+>  include/media/v4l2-ctrls.h                      |   1 +
+>  include/media/venus-ctrls.h                     |  22 +++
+>  11 files changed, 465 insertions(+), 13 deletions(-)
+>  create mode 100644 include/media/venus-ctrls.h
