@@ -2,139 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA2721E2415
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 16:30:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67AAA1E2483
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 16:51:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727875AbgEZOav (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 10:30:51 -0400
-Received: from mout.web.de ([212.227.17.11]:39821 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727007AbgEZOau (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 10:30:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1590503436;
-        bh=LTvGnCvacsKhwxG6no99uP2zREPyYqAbT4gjHDTiCDo=;
-        h=X-UI-Sender-Class:Cc:Subject:To:From:Date;
-        b=tCp+jYFErCwPgpLGF9Ud2wj8r1st88pHYAMt51IEeCs+UnEuEBzYuazUgww7IDB0b
-         BIsJQhb0xe9A+eFfuh6VnyPSG24saZO+JJ+wBXvTlz9dKFhm3vXxiYZLCb4tnUuCK8
-         GcjYRI4M8QTJ2joGgoXTVUApWbFy0CTCBlRqYDSc=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.2] ([93.131.141.233]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LudP2-1ivlUK2WIK-00zntr; Tue, 26
- May 2020 16:30:36 +0200
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, Kangjie Lu <kjlu@umn.edu>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Herring <robh@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom: Improve exception handling in
- qcom_pcie_probe()
-To:     Qiushi Wu <wu000273@umn.edu>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org
-From:   Markus Elfring <Markus.Elfring@web.de>
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- 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 FEE=
-Message-ID: <c0e71850-a67b-2aac-7ddc-186f3850c087@web.de>
-Date:   Tue, 26 May 2020 16:30:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:uaAnp8RQwNdE+0ja7LvKxcJVKXYXo10dhh+a2vXz/p29Rlpefbb
- nJAc4jU2thbXbeSaZ61S4c+XrWPiR4iJCf9W+0LHjawrvKUqS9IXjuR6W2OkiRoS0cug3nd
- kYTYRsMedZ+EKtPJmMHTmBV5S+y/KQxrKoOuc7kHeEaBZA5KsZbu0dTtWK0sP5kC3siWYLB
- rdLQWb3B7AwMLnCrSLPcQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GVR6XjNU5JY=:eFsWbXRGNZKCp4dJ2y/Dh5
- L8XVV2KggePAQVTFbTF3twzxOk/nu1z+tADBUr78zK/dxQRKQC/qlnZFwyr/abR4WaVtcWgcb
- uw6Z1g66QMqufV30ODUTISRxzukG7EGgiNGV4gL+uejUT4hJKCsIrijWjva1K3xTa0xzvoCKQ
- VXFCQOJJwZFOqzaVRqbCxTHNl++PGrx0xrbkwxrZfrJzHIDYpm+q/owJYT+/iE14wgRlbJOae
- /tSUXtnYs5bdJAhkdYNEvY4ZmjNxjMLofHA4Q8+8L1uOwRanALYRtwBy/j4QyY5ZjbQfBaaSE
- Ej0dCl0Lve4qPw9+kvSvCobGGyxo1IqjSOMQQnJBAudvlEwIHz64w2keJqvuy8Dv8Q2auRnse
- OTHQ+GN3ZNRt+H8DV/qElbTIdGXvsez+PhkU+HMpxjkOR4D7Qvl7xTu0chue5yFxUG31rVtu6
- sYPTILckkLd7pt6FXiYL69fn5nXjTY2rnlwL+mgbQA/Bqvn7SjHjhonjI96VNMszxu8e6zn0Z
- JNdfWCFHIvoFjWi6Ly9oipOdq9gIwFy0k386/4on7KAh1Hu+Q3C23OQMRZrkNfyP2jbtXMNvT
- 39aXfVLXaanBBcMe71TpvVmlMuhK/hJfEjloiI7Wr5QZ/xjrqfviyb9Tmo34NKsQthtRNv+7l
- ArCZePXZ35k0LI0YSrQG0IH19ZttAy9P19x5Zto9x9T62/T+X3Kt19VRsf9pSGq+ZrgWwW9Zf
- HAqFByAPPWffxJ11ozekmkJCc8wyPZfd0y7wgkceTEUjjhePfu2p+kllknvTfKtfbp9vmq23p
- 32yIDA3d0Zpo8BSM/d9DL2f2Vm7I+RBS/SnVspGfQChOQ4GlJwwBQunoVFiCqL3sgNrQf5drV
- OAEC2I5+43cDoIcFs/z4nWvLTJjO/7l9ZfDP4LtO+nBOP7ek2PKQeNOCqzGEb9wgk3/AytXT3
- reEVd74w+yg94Cz4W1YtRFmCAcOHTvOXem8vzyZbYT3z22fimUXaaXrRLrIgivE628mJpd74x
- djDR0acTZkshIt6FCSy5IBvg0/W4DC9LPv+31w/6bmZt/TEycG3gWvXIIGT6y0CFga6DFbHsc
- MGcmqwfK/anUj7Nr0pVnG7+DcMfYFAhAoP4whKNI2oa53malzrMvsKH7dQYzADaKtdxzjsQgU
- GofmS9N+ac1Fm3oWH9gJ1WK201jrN13/v6fT/bkTAlaLDrc0vNCW80WEKsIhhbO5AZBGwpoqI
- lebkxjVVz4Pb+hY+W
+        id S1729386AbgEZOvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 10:51:32 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:54723 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726856AbgEZOvc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 May 2020 10:51:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590504691; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=c8RXii6pifQBdUf4+jgUL7EdFr2F1OlKXX/MPLtY3BE=; b=TK4FemrF0tArihT8pLlsvVKMC5D8kGttY+CCYAZmZeT809/vASziQehHAthFXOmVwfH9eBHT
+ kDl/ir3sn8eqByBpp2qoekLX5n96XpDGNygiIox07SaoX2NC/m5NkEdXSwnJaOS5xOmmRonQ
+ Z2q23BgEnR31mFgsaVIKHygSMc0=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ecd2cf227386861261101df (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 14:51:30
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7AC6FC433CB; Tue, 26 May 2020 14:51:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9701BC433C6;
+        Tue, 26 May 2020 14:51:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9701BC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org
+Subject: [PATCH v1] bluetooth: hci_qca: Fix QCA6390 memdump failure
+Date:   Tue, 26 May 2020 22:51:21 +0800
+Message-Id: <1590504681-6284-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Please avoid a typo in the patch subject (by a possible alternative?).
+QCA6390 memdump VSE sometimes come to bluetooth driver
+with wrong sequence number as illustrated as follows:
+frame # in DEC: frame data in HEX
+1396: ff fd 01 08 74 05 00 37 8f 14
+1397: ff fd 01 08 75 05 00 ff bf 38
+1414: ff fd 01 08 86 05 00 fb 5e 4b
+1399: ff fd 01 08 77 05 00 f3 44 0a
+1400: ff fd 01 08 78 05 00 ca f7 41
+it is mistook for controller missing packets, so results
+in page fault after overwriting memdump buffer allocated.
 
+it is fixed by ignoring QCA6390 sequence number error
+and checking buffer space before writing.
 
-> In function qcom_pcie_probe(), there are several error-handling problem.
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 45 ++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 38 insertions(+), 7 deletions(-)
 
-Wording adjustments:
-This function contained improvable implementation details according to
-exception handling.
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index e4a6823..ab90af6 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -114,6 +114,7 @@ struct qca_memdump_data {
+ 	char *memdump_buf_tail;
+ 	u32 current_seq_no;
+ 	u32 received_dump;
++	u32 ram_dump_size;
+ };
+ 
+ struct qca_memdump_event_hdr {
+@@ -976,6 +977,8 @@ static void qca_controller_memdump(struct work_struct *work)
+ 	char nullBuff[QCA_DUMP_PACKET_SIZE] = { 0 };
+ 	u16 seq_no;
+ 	u32 dump_size;
++	u32 temp;
++	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+ 
+ 	while ((skb = skb_dequeue(&qca->rx_memdump_q))) {
+ 
+@@ -1029,6 +1032,7 @@ static void qca_controller_memdump(struct work_struct *work)
+ 
+ 			skb_pull(skb, sizeof(dump_size));
+ 			memdump_buf = vmalloc(dump_size);
++			qca_memdump->ram_dump_size = dump_size;
+ 			qca_memdump->memdump_buf_head = memdump_buf;
+ 			qca_memdump->memdump_buf_tail = memdump_buf;
+ 		}
+@@ -1052,25 +1056,52 @@ static void qca_controller_memdump(struct work_struct *work)
+ 		 * packets in the buffer.
+ 		 */
+ 		while ((seq_no > qca_memdump->current_seq_no + 1) &&
++			(soc_type != QCA_QCA6390) &&
+ 			seq_no != QCA_LAST_SEQUENCE_NUM) {
+ 			bt_dev_err(hu->hdev, "QCA controller missed packet:%d",
+ 				   qca_memdump->current_seq_no);
++			temp = qca_memdump->received_dump;
++			temp += QCA_DUMP_PACKET_SIZE;
++			if (temp > qca_memdump->ram_dump_size) {
++				bt_dev_err(hu->hdev,
++						"QCA memdump received %d, no space for missed packet",
++						qca_memdump->received_dump);
++				break;
++			}
+ 			memcpy(memdump_buf, nullBuff, QCA_DUMP_PACKET_SIZE);
+ 			memdump_buf = memdump_buf + QCA_DUMP_PACKET_SIZE;
+ 			qca_memdump->received_dump += QCA_DUMP_PACKET_SIZE;
+ 			qca_memdump->current_seq_no++;
+ 		}
+ 
+-		memcpy(memdump_buf, (unsigned char *) skb->data, skb->len);
+-		memdump_buf = memdump_buf + skb->len;
+-		qca_memdump->memdump_buf_tail = memdump_buf;
+-		qca_memdump->current_seq_no = seq_no + 1;
+-		qca_memdump->received_dump += skb->len;
++		temp = qca_memdump->received_dump + skb->len;
++		if (temp <= qca_memdump->ram_dump_size) {
++			if ((seq_no != QCA_LAST_SEQUENCE_NUM) &&
++					(seq_no != qca_memdump->current_seq_no))
++				bt_dev_err(hu->hdev,
++						"QCA memdump unexpected packet %d",
++						seq_no);
++			bt_dev_dbg(hu->hdev,
++					"QCA memdump packet %d with length %d",
++					seq_no, skb->len);
++			memcpy(memdump_buf, (unsigned char *)skb->data,
++					skb->len);
++			memdump_buf = memdump_buf + skb->len;
++			qca_memdump->memdump_buf_tail = memdump_buf;
++			qca_memdump->current_seq_no = seq_no + 1;
++			qca_memdump->received_dump += skb->len;
++		} else {
++			bt_dev_err(hu->hdev,
++					"QCA memdump received %d, no space for packet %d",
++					qca_memdump->received_dump, seq_no);
++		}
+ 		qca->qca_memdump = qca_memdump;
+ 		kfree_skb(skb);
+ 		if (seq_no == QCA_LAST_SEQUENCE_NUM) {
+-			bt_dev_info(hu->hdev, "QCA writing crash dump of size %d bytes",
+-				   qca_memdump->received_dump);
++			bt_dev_info(hu->hdev,
++					"QCA memdump Done, received %d, total %d",
++					qca_memdump->received_dump,
++					qca_memdump->ram_dump_size);
+ 			memdump_buf = qca_memdump->memdump_buf_head;
+ 			dev_coredumpv(&hu->serdev->dev, memdump_buf,
+ 				      qca_memdump->received_dump, GFP_KERNEL);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
-
-> because refcount will be increased even pm_runtime_get_sync() returns
-> an error.
-
-because the reference count will be increased despite of the failure.
-Thus add the missed function call.
-
-
-> 2. pm_runtime_disable() are called twice, =E2=80=A6
-=E2=80=A6
-Thus remove redundant function calls.
-
-Regards,
-Markus
