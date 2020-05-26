@@ -2,87 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD0031E1A04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 05:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B08B1E1A77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 06:45:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388636AbgEZDfR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 May 2020 23:35:17 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:48549 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388579AbgEZDfQ (ORCPT
+        id S1725774AbgEZEpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 00:45:47 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:59702 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725294AbgEZEpq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 May 2020 23:35:16 -0400
+        Tue, 26 May 2020 00:45:46 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590464116; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=PVVBvwC+Tvjc3HogjrsgVETQLb6LhmmPRAVYzJBvsRw=; b=O3HjhkoFV0HEJtkMpqGrE/m991oqWullCIDlq07mlmYVSc37BbLiq1+fcj8rNSqAjR2PY+lE
- 3NupZ6ni9G0u4lb9xIaQHAB1g/wF2TUeP50CtAlLyX3Ex0uIztk8X022MrNj2ALMK87ETDC9
- d2ZK2mrV42N5S/ABjfSGlfWuWLs=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1590468346; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=pOqLTEYmcv/1WZ4CUindBKPntxB4V+2joT4aCQzD+kc=; b=bh4WBNHCUaFV1nP7s7LvZzNw525+shifY2LGvCGmkSA7DP4unc8PAQ/FXSahrb+beFfvF2qa
+ GRIBuDh8xVMTJWKd7D4jaMpwENjg+0+llJNj51BACIQnG2jzALTAxJRy2Jcn1Ve4BOTNr9ni
+ 4V0seQlqLb2vx067T5Xel7yyHCk=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5ecc8e7342288e951f8ae6a3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 03:35:15
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5ecc9eedb4f0a9ae22756c49 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 04:45:33
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 61296C433C9; Tue, 26 May 2020 03:35:15 +0000 (UTC)
+        id 14837C43395; Tue, 26 May 2020 04:45:33 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
         URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from [192.168.43.129] (unknown [157.32.229.212])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CD196C433C6;
-        Tue, 26 May 2020 03:35:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CD196C433C6
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 56C60C433C9;
+        Tue, 26 May 2020 04:45:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 56C60C433C9
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: [PATCH v1] Bluetooth: hci_qca: Improve controller ID info log level
-Date:   Tue, 26 May 2020 11:35:08 +0800
-Message-Id: <1590464108-1333-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v2 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
+To:     Hans Verkuil <hverkuil@xs4all.nl>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
+ <1590253873-11556-2-git-send-email-mkshah@codeaurora.org>
+ <CACRpkdba9j4EdCkD5OeL=3A4Zeb57vO78FAXA9fo0SOgBE57ag@mail.gmail.com>
+ <e4ebd476-1c34-0c58-bba0-14dfd4d31941@xs4all.nl>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <8bae16f8-2f03-0d44-fe29-ee9451c4be23@codeaurora.org>
+Date:   Tue, 26 May 2020 10:15:20 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+MIME-Version: 1.0
+In-Reply-To: <e4ebd476-1c34-0c58-bba0-14dfd4d31941@xs4all.nl>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Controller ID info got by VSC EDL_PATCH_GETVER is very
-important, so improve its log level from DEBUG to INFO.
+Hi,
 
-Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
----
- drivers/bluetooth/btqca.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+On 5/25/2020 5:52 PM, Hans Verkuil wrote:
+> On 25/05/2020 13:55, Linus Walleij wrote:
+>> On Sat, May 23, 2020 at 7:11 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+>>
+>>> With 'commit 461c1a7d4733 ("gpiolib: override irq_enable/disable")' gpiolib
+>>> overrides irqchip's irq_enable and irq_disable callbacks. If irq_disable
+>>> callback is implemented then genirq takes unlazy path to disable irq.
+>>>
+>>> Underlying irqchip may not want to implement irq_disable callback to lazy
+>>> disable irq when client drivers invokes disable_irq(). By overriding
+>>> irq_disable callback, gpiolib ends up always unlazy disabling IRQ.
+>>>
+>>> Allow gpiolib to lazy disable IRQs by overriding irq_disable callback only
+>>> if irqchip implemented irq_disable. In cases where irq_disable is not
+>>> implemented irq_mask is overridden. Similarly override irq_enable callback
+>>> only if irqchip implemented irq_enable otherwise irq_unmask is overridden.
+>>>
+>>> Fixes: 461c1a7d47 (gpiolib: override irq_enable/disable)
+>>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> I definitely want Hans Verkuils test and review on this, since it
+>> is a usecase that he is really dependent on.
+> Maulik, since I am no longer subscribed to linux-gpio, can you mail the
+> series to me?
+>
+> I have two use-cases, but I can only test one (I don't have access to the
+> SBC I need to test the other use-case for the next few months).
+>
+> Once I have the whole series I'll try to test the first use-case and at
+> least look into the code if this series could affect the second use-case.
+>
+> Regards,
+>
+> 	Hans
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 3ea866d..49e5aeb 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -74,10 +74,10 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
- 
- 	ver = (struct qca_btsoc_version *)(edl->data);
- 
--	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
--	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
--	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
--	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
-+	bt_dev_info(hdev, "QCA Product:0x%08x", le32_to_cpu(ver->product_id));
-+	bt_dev_info(hdev, "QCA Patch  :0x%08x", le16_to_cpu(ver->patch_ver));
-+	bt_dev_info(hdev, "QCA ROM    :0x%08x", le16_to_cpu(ver->rom_ver));
-+	bt_dev_info(hdev, "QCA SOC    :0x%08x", le32_to_cpu(ver->soc_id));
- 
- 	/* QCA chipset version can be decided by patch and SoC
- 	 * version, combination with upper 2 bytes from SoC
+Hi Hans,
+
+Mailed you the entire series.
+
+Thanks,
+Maulik
+>
+>> Also the irqchip people preferredly.
+>>
+>> But it does seem to mop up my mistakes and fix this up properly!
+>>
+>> So with some testing I'll be happy to merge it, even this one
+>> patch separately if Hans can verify that it works.
+>>
+>> Yours,
+>> Linus Walleij
+>>
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
