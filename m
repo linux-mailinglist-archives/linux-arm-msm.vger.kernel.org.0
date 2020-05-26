@@ -2,124 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A10821E2616
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 17:54:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA02A1E2672
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 18:06:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728301AbgEZPyZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 11:54:25 -0400
-Received: from ste-pvt-msa2.bahnhof.se ([213.80.101.71]:37150 "EHLO
-        ste-pvt-msa2.bahnhof.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727862AbgEZPyZ (ORCPT
+        id S1729496AbgEZQGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 12:06:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33442 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728661AbgEZQGF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 11:54:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 94ABC3F9F2;
-        Tue, 26 May 2020 17:54:22 +0200 (CEST)
-Authentication-Results: ste-pvt-msa2.bahnhof.se;
-        dkim=pass (1024-bit key; unprotected) header.d=flawful.org header.i=@flawful.org header.b=Px7jTzX1;
-        dkim-atps=neutral
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.099
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.099 tagged_above=-999 required=6.31
-        tests=[BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
-        DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, URIBL_BLOCKED=0.001]
-        autolearn=ham autolearn_force=no
-Authentication-Results: ste-ftg-msa2.bahnhof.se (amavisd-new);
-        dkim=pass (1024-bit key) header.d=flawful.org
-Received: from ste-pvt-msa2.bahnhof.se ([127.0.0.1])
-        by localhost (ste-ftg-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 7kXxTb9uT6oN; Tue, 26 May 2020 17:54:21 +0200 (CEST)
-Received: from flawful.org (c-96c8e055.011-101-6d6c6d3.bbcust.telenor.se [85.224.200.150])
-        (Authenticated sender: mb274189)
-        by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id 88B503F59B;
-        Tue, 26 May 2020 17:54:21 +0200 (CEST)
-Received: by flawful.org (Postfix, from userid 1001)
-        id 9D00B35E; Tue, 26 May 2020 17:54:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flawful.org; s=mail;
-        t=1590508460; bh=lcyKmclJP5KC81fgfTEw5+UBikn03GMwHGl4vGoDQgs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Px7jTzX1TvEsSOszS9arv5Hgfl7S+P3cUEFIkJUCN4YxUBVHQGmqsthmaswWeXFt0
-         8CI/TDFxvm/N/3sYY1/UNo91Q2ci5KWSRyYjabG8vFA197Pr6zi9gpqndgZC/shX/8
-         rv1IPKtOP+bQOHPYdojFIgKIa2ReTDszA4/CLKwM=
-Date:   Tue, 26 May 2020 17:54:20 +0200
-From:   Niklas Cassel <nks@flawful.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Message-ID: <20200526155419.GA9977@flawful.org>
-References: <1585763459-21484-1-git-send-email-loic.poulain@linaro.org>
- <20200402081349.GA932@gerhold.net>
- <20200403013119.GB20625@builder.lan>
- <20200403100923.GB2652@gerhold.net>
- <20200403175934.GA96064@gerhold.net>
- <20200423045506.GJ987656@yoga>
- <20200525153246.GA9224@flawful.org>
- <20200525163638.GA41001@gerhold.net>
- <20200525194443.GA11851@flawful.org>
- <20200526085948.GA1329@gerhold.net>
+        Tue, 26 May 2020 12:06:05 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D202C03E96F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 09:06:05 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id s69so22874pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 09:06:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=3lKumICFqyFYrifsebtGoakO5VK89B9abdeZRmwK6ew=;
+        b=HOv5KvfbMqTD/xQ/ROlpU3bcOVjFptEwe2f/EQw/HAma8s4kRySgfWHZ9e8m+4QrgE
+         HW1GWv4ZRcMmEpC83PhRkRwJEk2/0BkcTX3OrzQrJ/iQNGfaYnUeJEApneVQniuqAowy
+         2D0Djf5m/KmGOZMjkbPEKneQ/xhUdS9YyEz9Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=3lKumICFqyFYrifsebtGoakO5VK89B9abdeZRmwK6ew=;
+        b=uZ+YVU9Jq3nsyboIdZ3YFjAnvkNDQP161es/jnnZAdt/4BcK9qjR9wgcB6z102YVU+
+         X0XJrisE+YuZQtPb0737wd8aNymyLDGfc0Si95MCMAlAVuAJQdcK54ZhoFLFap3hFSRD
+         h1O5SNM8+kPaz7jx1R8qCnxujN+vLKUcqPZpSMZA7LofKZ/Nb1eTERLK2F15FftDWDkW
+         AEenhYJF9bF3Bcej+TuUzEeIAltnnmMltTqmG8TI8eNkOHQE5+vrz49QVXhjifjRfatd
+         97+dmcxxsb+vT8iSJfoSlm9L7wRBiJaM62NtDKuxTFFoBjfo1pgxQFAe1cj47I/4/NNQ
+         LkJQ==
+X-Gm-Message-State: AOAM5318by7gU9QaRhDYc7s1Ls7ucZjHDdbYX2VAb/528dqWGiOGEnJ1
+        YHCFT2Q0MXMsA7EPPcMxBm3FSA==
+X-Google-Smtp-Source: ABdhPJyPU/803MdN1gbwFuM5w5uPEtmyalLAnfyY5sqqxosrq91XftBIrLkRGJKuctZsiaK1FtyNrA==
+X-Received: by 2002:a17:902:868d:: with SMTP id g13mr1703283plo.246.1590509164803;
+        Tue, 26 May 2020 09:06:04 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 128sm23369pfd.114.2020.05.26.09.06.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 May 2020 09:06:03 -0700 (PDT)
+Date:   Tue, 26 May 2020 09:06:02 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
+        rjliao@codeaurora.org
+Subject: Re: [PATCH v1] Bluetooth: hci_qca: Improve controller ID info log
+ level
+Message-ID: <20200526160602.GE4525@google.com>
+References: <1590464108-1333-1-git-send-email-zijuhu@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200526085948.GA1329@gerhold.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1590464108-1333-1-git-send-email-zijuhu@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 26, 2020 at 10:59:48AM +0200, Stephan Gerhold wrote:
-> > Considering that CPR is not an actual power domain, CPR gives
-> > adjustments to VDD_APC, but I don't know of any other device
-> > connected to VDD_APC, other than the CPU, so in hindsight the CPR
-> > driver probably should have been implemented using .target_index(),
-> > rather than as a power domain provider using performance states.
+On Tue, May 26, 2020 at 11:35:08AM +0800, Zijun Hu wrote:
+> Controller ID info got by VSC EDL_PATCH_GETVER is very
+> important, so improve its log level from DEBUG to INFO.
 > 
-> I suppose having CPR, MEMACC etc as power domain providers is a bit
-> overkill, given there is just one consumer. However, at least the
-> "performance state" part fits quite well in my opinion. At the end
-> all these requirements represent some performance state that must be
-> set when the CPU frequency is changed.
+> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+> ---
+>  drivers/bluetooth/btqca.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index 3ea866d..49e5aeb 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -74,10 +74,10 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+>  
+>  	ver = (struct qca_btsoc_version *)(edl->data);
+>  
+> -	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
+> -	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
+> -	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
+> -	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
+> +	bt_dev_info(hdev, "QCA Product:0x%08x", le32_to_cpu(ver->product_id));
+> +	bt_dev_info(hdev, "QCA Patch  :0x%08x", le16_to_cpu(ver->patch_ver));
+> +	bt_dev_info(hdev, "QCA ROM    :0x%08x", le16_to_cpu(ver->rom_ver));
+> +	bt_dev_info(hdev, "QCA SOC    :0x%08x", le32_to_cpu(ver->soc_id));
 
-For MX, it makes sense to model it as a power domain provider, and for
-it to have its own OPP table, since this actually is a power domain.
+nit: Now that these messages become more visible you could consider making the
+order a bit more consistent/hierarchical. Not sure what is the product ID vs.
+the SoC ID (product is a variant of the SoC?). IMO it would make sense to
+start with HW information, going from more generic to more specific, then do
+the same for firmware.
 
-For CPR, I think that the target_index() model of just giving an index
-in a frequency table is much better, the OPP library can still be used
-to get the frequencies/frequency_table.
-Since at least for Qualcom CPU's, the corner (opp-level) is defined as
-an increasing number 1,2,3,4, without skips.
+  SoC ID
+  Product ID	  // assuming this is a variant of the SoC
+  ROM version
+  Patch version	  // assuming this is a patch of the ROM firmware (?)
 
-Even if it wasn't always without skips, we could just put opp-level in
-the CPU opp table, and get it from there.
+Sorry if I got any of the concepts wrong, from the names they are not entirely
+clear to me.
 
-The only thing that the corner is used for really, is to use it as an
-index the local drv->corner array, which is where the (current) VDD_APC
-voltage is stored for each index/corner.
+In any case it's just a suggestion, feel free to ignore.
 
-For CPR, the .target_index() in cpufreq-dt.c gets called, which is
-supplied with an index, but the index gets converted to a frequency.
-This frequency is then sent to the OPP library, and is then converted
-back to an index of the same value (just increased by one), before
-cpr_set_performance_state() is called (which then has to subtract one).
-In this case, all the extra overhead of going via genpd is totally
-unnecessary.
-
-This is totally correct when setting a performance state on a power
-domain like MX, since for an actual power domain you might have
-multiple consumers, so you need to go via genpd.
-
-Considering that CPR is not a power domain, I wish the driver wasn't
-designed around performance states, which, _for the CPR case_,
-is misleading, unnecessary, and adds extra overhead for no reason.
-
-I realize the irony of me criticizing my own code.
-I simply know better now, and wish I had designed it differently :)
-
-
-Kind regards,
-Niklas
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
