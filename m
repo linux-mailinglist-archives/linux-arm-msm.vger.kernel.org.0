@@ -2,134 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 96BB81E2925
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 19:38:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A64071E295B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 19:48:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389457AbgEZRgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 13:36:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47670 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389442AbgEZRgQ (ORCPT
+        id S2389134AbgEZRs0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 13:48:26 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:54510 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388999AbgEZRsY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 13:36:16 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B26C03E96E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 10:36:16 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id a13so8961288pls.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 10:36:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Bl//2pYHj3csa8N7S/mTuxuIBaa/b+phWcHwiPQzkOw=;
-        b=BkNpRVV/r0N3GqR1VZDQH7oKI+aSLYpW+DUKMWD8EO9crlNX+d6/gzNWbQUMRCUbrv
-         SvhMa7XoTvfvnOIdJqBGdbQSnBg0Vb2yOi4erDEQqgCj3ifVWq6VHG5GY/0MN1h8Fj7j
-         M3qZRyHRctXoZITEL6GOVvZs5fmtLKWtZikc4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Bl//2pYHj3csa8N7S/mTuxuIBaa/b+phWcHwiPQzkOw=;
-        b=Y224FOKUyU2YMXzYNitCJJLIVjQUjLangxWfKTprYlbpySWqrIwen5bhvaFKwPLjz3
-         PMbfOe44YMm/vE23DvssroJUXi1GTzK0/HcaEQ0nFqFRS4upG02uPswMKMfpOfF8lKDZ
-         kUOXRiICVb5L9aLDam7HbYZsio1ZpKgJTuA4gFjjElKqstAGcHdV/fTNEQ02daiLr7pK
-         AN7abRVP0+wOYSqXygo5x0wIHamZXC3EPzJnt6POlAD6lxl8WzaACSwYj9xR0ZLcJjlX
-         MYpsMMbs09UwKD3rgf8aePS9RXBg7eoKqV+D8NrKxHUBpDwHRavHCazR9tf4nszeGJZU
-         a9sg==
-X-Gm-Message-State: AOAM532iAS1Gx4WcXoBo/Mc2PlTqG3EBTLNl53k2s3lPh35xftj8zkUw
-        qN1VliCxDpnu/NfvExaUvYvQjw==
-X-Google-Smtp-Source: ABdhPJyzUgvTne5XzQDrFY8l1KASpKHwXP04J+NhScYWwbDrv+H8LoktzSM90MIjDWKJ7/+vEh9tmg==
-X-Received: by 2002:a17:90a:c78f:: with SMTP id gn15mr335118pjb.103.1590514576158;
-        Tue, 26 May 2020 10:36:16 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id u45sm112166pjb.7.2020.05.26.10.36.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 May 2020 10:36:15 -0700 (PDT)
-Date:   Tue, 26 May 2020 10:36:13 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        msavaliy@codeaurora.org, evgreen@chromium.org
-Subject: Re: [PATCH V7 6/7] spi: spi-qcom-qspi: Add interconnect support
-Message-ID: <20200526173613.GF4525@google.com>
-References: <1590497690-29035-1-git-send-email-akashast@codeaurora.org>
- <1590497690-29035-7-git-send-email-akashast@codeaurora.org>
+        Tue, 26 May 2020 13:48:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590515303; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=7keFiYQqaL3DuPDgQ1CTQxclwRsZANwrQiftoCTSuPc=;
+ b=wqeCS4Fo89xkLbREIf3CQM9saoPbjiLfdWl7YnycJgQEbioB0EzbzPMIr3haXYu39eQhz4Ce
+ ofRfFh/EIjrjZlFMi4BLlon5cgYXqD9gTyqW04Mx7CDn2g6V8P51/DEXu6KJ6RGccJ/RqBn3
+ 8sbqWuIAcO3203UFSy40z90sZts=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ecd5665cb04586933a7b975 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 17:48:21
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6262DC433AD; Tue, 26 May 2020 17:48:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73091C433C6;
+        Tue, 26 May 2020 17:48:19 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1590497690-29035-7-git-send-email-akashast@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 26 May 2020 23:18:19 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     sboyd@kernel.org, georgi.djakov@linaro.org,
+        bjorn.andersson@linaro.org, saravanak@google.com, mka@chromium.org,
+        nm@ti.com, agross@kernel.org, david.brown@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, vincent.guittot@linaro.org,
+        amit.kucheria@linaro.org, ulf.hansson@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com
+Subject: Re: [PATCH v4 06/12] cpufreq: qcom: Update the bandwidth levels on
+ frequency change
+In-Reply-To: <8fc5b72c9af6fd6a707a280cfc678677@codeaurora.org>
+References: <20200504202243.5476-1-sibis@codeaurora.org>
+ <20200504202243.5476-7-sibis@codeaurora.org>
+ <20200505045012.zfx2e6chqo5f3e4n@vireshk-i7>
+ <8fc5b72c9af6fd6a707a280cfc678677@codeaurora.org>
+Message-ID: <b7e184b2da5b780a4e7e6ee47963f9b4@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 26, 2020 at 06:24:49PM +0530, Akash Asthana wrote:
-> Get the interconnect paths for QSPI device and vote according to the
-> current bus speed of the driver.
+On 2020-05-05 12:49, Sibi Sankar wrote:
+> On 2020-05-05 10:20, Viresh Kumar wrote:
+>> On 05-05-20, 01:52, Sibi Sankar wrote:
+>>> Add support to parse optional OPP table attached to the cpu node when
+>>> the OPP bandwidth values are populated. This allows for scaling of
+>>> DDR/L3 bandwidth levels with frequency change.
+>>> 
+>>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> 
+>> What about using opp_set_rate instead ?
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> ---
-> Changes in V2:
->  - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
->    path handle
->  - As per Matthias comment, added error handling for icc_set_bw call
-> 
-> Changes in V3:
->  - No Change.
-> 
-> Changes in V4:
->  - As per Mark's comment move peak_bw guess as twice of avg_bw if
->    nothing mentioned explicitly to ICC core.
-> 
-> Changes in V5:
->  - Add icc_enable/disable to power on/off call.
->  - Save some non-zero avg/peak value to ICC core by calling geni_icc_set_bw
->    from probe so that when resume/icc_enable is called NOC are running at
->    some non-zero value.
-> 
-> Changes in V6:
->  - As per Matthias's comment made print statement consistent across driver
-> 
-> Changes in V7:
->  - As per Matthias's comment removed usage of peak_bw variable because we don't
->    have explicit peak requirement, we were voting peak = avg and this can be
->    tracked using single variable for avg bw.
->  - As per Matthias's comment improved print log.
-> 
->  drivers/spi/spi-qcom-qspi.c | 57 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 56 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
-> index 3c4f83b..092ac27 100644
-> --- a/drivers/spi/spi-qcom-qspi.c
-> +++ b/drivers/spi/spi-qcom-qspi.c
-> @@ -2,6 +2,7 @@
->  // Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
->  
->  #include <linux/clk.h>
-> +#include <linux/interconnect.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/module.h>
-> @@ -139,7 +140,9 @@ struct qcom_qspi {
->  	struct device *dev;
->  	struct clk_bulk_data *clks;
->  	struct qspi_xfer xfer;
-> -	/* Lock to protect xfer and IRQ accessed registers */
-> +	struct icc_path *icc_path_cpu_to_qspi;
-> +	unsigned int avg_bw_cpu;
+> I can't use opp_set_rate since
+> the cpu dev does not have a
+> clock associated with it and the
+> scaling is done through writing
+> on perf state register.
 
-I should have noticed this earlier, but the field isn't needed now that
-we have icc_enable/disable(). The bandwidth is set in
-qcom_qspi_transfer_one() and that's it.
+Viresh,
 
-From my side it would be fine to remove the field in a follow up patch,
-to avoid respinning the series yet another time just for this.
+https://patchwork.kernel.org/cover/11548479/
+GPU driver uses Georgi's series
+for scaling and will need a way to
+remove the icc votes in the suspend
+path, (this looks like a pattern
+that might be used by other clients
+as well) I could probably update
+opp_set_bw to support removing bw
+when NULL opp is specified. Similarly
+opp_set_rate will need to support
+set bw to 0 when set_rate is passed
+0 as target freq for the same use case.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
