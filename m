@@ -2,139 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 637F11E258A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 17:34:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89A7D1E25F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 17:50:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729854AbgEZPe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 11:34:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56646 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729818AbgEZPe3 (ORCPT
+        id S1728337AbgEZPuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 11:50:00 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:60031 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727061AbgEZPuA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 11:34:29 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1809EC03E96F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 08:34:29 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id s10so10239956pgm.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 08:34:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8W11mCFaZlqqgwjd6pr/5BoHKN+oaQPu3yE26VkZIxk=;
-        b=kgFR34KBsx0oI1+MKKstfa5lW1H5kQ16Y3jO42RlsqGTyZe7QT5tmf1xmKgWNZI6ub
-         XyrEvbKspvwFeI1YqvY+nWDW2SVEsc2mJiHS0OKG0sbHzL+pYMGEGFTVbP8Y9eVmH9Wc
-         o65pnCp6nWc1vf1fxko35nOU3W0XLc3OwdzFU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8W11mCFaZlqqgwjd6pr/5BoHKN+oaQPu3yE26VkZIxk=;
-        b=GAdarZp+P6Ws/t/x4gAK9UfjTvE5PMwPgG325atNlcKlYiBkGbFJxWryrk6AM39PsP
-         nkvBmj8N26dQFxoAJjQTEwyt2xrN0bvCKrVvOoHLcUsKD/Iu+EilPEv9ftUHOhETO9wz
-         Fs2/zWd7f8b8tXkUafWg3lEQuiuxobRnJ1U9xjm0tRcDdWkjMWWUzk93CkUBbVUKnBLO
-         OM1s2miJDP/Xknwy46vQ18qhPqiX0eaW2QSeqyFZlNXqWKxzx/+0GoVuZU9VghITrAei
-         u6ysoZCF7CQtnUfvosPC0pWSb4aCSNlhIXz/styCWkNbCExzvVpHFuHDtZBPhvJw9RzQ
-         8DWg==
-X-Gm-Message-State: AOAM533EfRB4bHYZW5Z+ZexPI4W1z/EGrOD1xLyBPrklFLZEAfYgS+bg
-        YGaQa7bQMSzWxWh8xBPL3aVKZg==
-X-Google-Smtp-Source: ABdhPJwvQUuJk+3JmCR8WIBdZSU/GvEbA9MR1r4bCTHrtiDU0sJOoFq1RbVUiRntAYHcL1SgZGUWCA==
-X-Received: by 2002:a63:c34a:: with SMTP id e10mr1608669pgd.412.1590507268516;
-        Tue, 26 May 2020 08:34:28 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id r1sm83636pgb.37.2020.05.26.08.34.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 May 2020 08:34:27 -0700 (PDT)
-Date:   Tue, 26 May 2020 08:34:25 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org
-Subject: Re: [PATCH v2] bluetooth: hci_qca: Fix qca6390 enable failure after
- warm reboot
-Message-ID: <20200526153425.GD4525@google.com>
-References: <1590461850-9908-1-git-send-email-zijuhu@codeaurora.org>
+        Tue, 26 May 2020 11:50:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590508199; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=l9+v5KTbmJ9FO+vcSKCZmMPOM+Wqw2LiKpZkkRVxaYY=; b=glnr2zFNra16hb42iLUhShrTlzIN0c8hqJYbE0HwGnNhhRsb1dAV7wA1aPUNxVWWpTqdcZpt
+ z/pMHPj120Di3Xj+fYf3vNkOYYgQyvuu/xwZImLvgrWwPr6+Zl1cpyfhfuhvnwrXc6Q2lHo6
+ y6+ixBYTuIY9VrHvvDqF9oCx9bc=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5ecd3a8bc28b2cdd985bdf31 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 15:49:31
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 88F0EC433A0; Tue, 26 May 2020 15:49:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA2E0C433C9;
+        Tue, 26 May 2020 15:49:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA2E0C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Tue, 26 May 2020 09:49:27 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     freedreno@lists.freedreno.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] drm/msm/a6xx: skip HFI set freq if GMU is powered down
+Message-ID: <20200526154927.GB20960@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
+        freedreno@lists.freedreno.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200522221159.GA20960@jcrouse1-lnx.qualcomm.com>
+ <20200522222909.27260-1-jonathan@marek.ca>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1590461850-9908-1-git-send-email-zijuhu@codeaurora.org>
+In-Reply-To: <20200522222909.27260-1-jonathan@marek.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 26, 2020 at 10:57:30AM +0800, Zijun Hu wrote:
-> Warm reboot can not restore qca6390 controller baudrate
-> to default due to lack of controllable BT_EN pin or power
-> supply, so fails to download firmware after warm reboot.
-> 
-> Fixed by sending EDL_SOC_RESET VSC to reset controller
-> within added device shutdown implementation.
-> 
-> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+On Fri, May 22, 2020 at 06:29:08PM -0400, Jonathan Marek wrote:
+> Also skip the newly added HFI set freq path if the GMU is powered down,
+> which was missing because of patches crossing paths.
+
+I saw the 5.8 pull later in my inbox so I'm not sure if this made it or not but
+it qualifies as a -fix if it didn't.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  drivers/bluetooth/hci_qca.c | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index e4a6823..b479e51 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1975,6 +1975,32 @@ static void qca_serdev_remove(struct serdev_device *serdev)
->  	hci_uart_unregister_device(&qcadev->serdev_hu);
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 67c58345b26a..9851367a88cd 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -110,13 +110,6 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
+>  	struct msm_gpu *gpu = &adreno_gpu->base;
+>  	int ret;
+>  
+> -	/*
+> -	 * This can get called from devfreq while the hardware is idle. Don't
+> -	 * bring up the power if it isn't already active
+> -	 */
+> -	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
+> -		return;
+> -
+>  	gmu_write(gmu, REG_A6XX_GMU_DCVS_ACK_OPTION, 0);
+>  
+>  	gmu_write(gmu, REG_A6XX_GMU_DCVS_PERF_SETTING,
+> @@ -141,7 +134,6 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
+>  	 * for now leave it at max so that the performance is nominal.
+>  	 */
+>  	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
+> -	pm_runtime_put(gmu->dev);
 >  }
 >  
-> +static void qca_serdev_shutdown(struct device *dev)
-> +{
-> +	int res;
-
-nit: 'ret' would be a more standard name
-
-> +	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-> +	struct serdev_device *serdev = to_serdev_device(dev);
-> +	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-> +	const u8 ibs_wake_cmd[] = { 0xFD };
-> +	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
+>  void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
+> @@ -159,13 +151,21 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
+>  			break;
+>  
+>  	gmu->current_perf_index = perf_index;
+> +	gmu->freq = gmu->gpu_freqs[perf_index];
 > +
-> +	if (qcadev->btsoc_type == QCA_QCA6390) {
-> +		serdev_device_write_flush(serdev);
-> +		res = serdev_device_write_buf(serdev,
-> +				ibs_wake_cmd, sizeof(ibs_wake_cmd));
-> +		BT_DBG("%s: send ibs_wake_cmd res = %d", __func__, res);
-
-Why use BT_DBG regardless of the result, instead of using BT_ERR/WARN only
-in the failure case? And does it actually make sense to continue in case of
-an error?
-
-> +		serdev_device_wait_until_sent(serdev, timeout);
-> +		usleep_range(8000, 10000);
-> +
-> +		serdev_device_write_flush(serdev);
-> +		res = serdev_device_write_buf(serdev,
-> +				edl_reset_soc_cmd, sizeof(edl_reset_soc_cmd));
-> +		BT_DBG("%s: send edl_reset_soc_cmd res = %d", __func__, res);
-
-ditto
-
-> +		serdev_device_wait_until_sent(serdev, timeout);
-> +		usleep_range(8000, 10000);
-> +	}
-> +}
-> +
->  static int __maybe_unused qca_suspend(struct device *dev)
->  {
->  	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
-> @@ -2100,6 +2126,7 @@ static struct serdev_device_driver qca_serdev_driver = {
->  		.name = "hci_uart_qca",
->  		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
->  		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
-> +		.shutdown = qca_serdev_shutdown,
->  		.pm = &qca_pm_ops,
->  	},
->  };
+> +	/*
+> +	 * This can get called from devfreq while the hardware is idle. Don't
+> +	 * bring up the power if it isn't already active
+> +	 */
+> +	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
+> +		return;
+>  
+>  	if (gmu->legacy)
+>  		__a6xx_gmu_set_freq(gmu, perf_index);
+>  	else
+>  		a6xx_hfi_set_freq(gmu, perf_index);
+>  
+> -	gmu->freq = gmu->gpu_freqs[perf_index];
+> +	pm_runtime_put(gmu->dev);
+>  }
+>  
+>  unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+> 2.26.1
 > 
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
