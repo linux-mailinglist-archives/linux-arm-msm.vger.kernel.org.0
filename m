@@ -2,189 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF9A61E1BD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 09:05:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B9431E1BEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2020 09:07:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728148AbgEZHDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 03:03:52 -0400
-Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:53131 "EHLO
-        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731436AbgEZHDv (ORCPT
+        id S1731406AbgEZHHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 03:07:16 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:21723 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728172AbgEZHHP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 03:03:51 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id dTclj6RswFjnUdTcpjebLd; Tue, 26 May 2020 09:03:48 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1590476628; bh=0kXAkIhbXptFYgFRJWtoCtz7iA4IcdHi+f8YJW692hk=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=B5QkVLst8+j5DVXFsTIEir01KJ1/NMcSTAnSbdbSgUABvWnS5E4sq0A6MjSsKRMPH
-         Zr0ahpmWBNwylX+FAIVnMi2uvVEdLNrfPc+F0my4c4Bpr3XMlqBWg+75gnNTufA22u
-         wgp9578mdHMurl2aQympWa3GGh3qqssHjTr7/OWHb5D+/aJO2dzlpZXiSWyNWIulu8
-         8jQGSCT3hsptPz2vUX2WakqMzQ3O9xv9O7jiXOVNmRCbZng6T8D28/Y4G4io4ddb/c
-         aYzP6peDbZ57rIYB0nn1zB8nSdt3PabZbjhRpMRrjzbnI+JYvyup7fhuXXs4hQtuqh
-         DQs8giybdwzqw==
-Subject: Re: [RFC PATCH 0/3] METADATA design using V4l2 Request API
-To:     dikshita@codeaurora.org, linux-media@vger.kernel.org,
-        stanimir.varbanov@linaro.org, sakari.ailus@linux.intel.com
+        Tue, 26 May 2020 03:07:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590476834; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=O6QvaVi3YfaFHLoCHa9DEncvz1BtpP9wyBrbMVGNqGk=; b=G6AZHxhG4U1eP0BDrH4AXwoVG07QAKvjEU82FO3++aG/X0t2hFZZiB05J6k+7rJRmU65e9N2
+ AVPqiXslMcU4FaTBHQfG+/U53AcnfZje0hajjvJTYGPAP2V3GUdAW2Jkse4+DncXZTdot/wy
+ 3b7GgdsAY6mAGsBww0ZTCrjTk8c=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5eccc0212dd9e15ae3969aa1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 May 2020 07:07:13
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B48AEC433C6; Tue, 26 May 2020 07:07:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.137] (unknown [106.213.171.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 89482C433C9;
+        Tue, 26 May 2020 07:07:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 89482C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCHv3/RESEND 1/3] soc: qcom: rpmh-rsc: Remove tcs_is_free()
+ API
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org, jdas@codeaurora.org,
-        linux-media-owner@vger.kernel.org
-References: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
- <66208196d7668fe184f6c9d8c6c69c8b@codeaurora.org>
-From:   Hans Verkuil <hverkuil@xs4all.nl>
-Message-ID: <7d11d3ba-7a76-1b18-c7c6-d9efc5de1500@xs4all.nl>
-Date:   Tue, 26 May 2020 09:03:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Douglas Anderson <dianders@chromium.org>
+References: <20200521060425.24285-1-swboyd@chromium.org>
+ <20200521060425.24285-2-swboyd@chromium.org>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <aa0d22f3-1885-4937-7410-c6c467008c7a@codeaurora.org>
+Date:   Tue, 26 May 2020 12:37:06 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <66208196d7668fe184f6c9d8c6c69c8b@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfBueupDa55MQv2WHpZ1p8Yac3h6A33f9Y6tcGYTDATu2d4lKuHE0607/uuLPD0ezKFIf8I3VGm0xF/xvRR+K/EoSEkPJ5cBMwiM9+7++tE04himiCy+D
- x70CMv4f/klWlsF32vtxbwPuqyrZOTt1kyiZUdYsYlLSaiUOVVZ57mrsjnAQc4DtU5zOfztJ+Uu6cU0ayLngkUCTF+Bb6qc+Ja6Eu3+O5tX09gDfKsWNPXsu
- 3fdM5ZnILePcM2nT6q39xgxLgia9N31dqIsXDxxFfaxuz88aAmezNv6PV2U0st9tEr7mBNVl/PJLGYtMKQ/cGfKsAXHjHKy8KVRqhGdlvt4SoqGY8fUyrhOL
- xcltwyWD15rQ2i5bIQEllXo8HSifhKhkcjob07HTtweh/E7rryQW4JDbDP3Q1Le23dH2ctAxozD/pOQx4pXKFhcfBv/qRx+8AMzlf24N0sM7EInK4xCYgq+V
- XcNwmZhL58DNI1dzp5P3de4vuUqkAdVIj6rouOsPAM6KNzkXpJJLbgjHuhk=
+In-Reply-To: <20200521060425.24285-2-swboyd@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/05/2020 08:31, dikshita@codeaurora.org wrote:
-> Hi,
-> 
-> A gentle reminder for the review.
+Hi,
 
-It's on my TODO list. I hope to get to it this week or next week at the
-latest.
+Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
 
-Regards,
+Thanks,
+Maulik
 
-	Hans
+On 5/21/2020 11:34 AM, Stephen Boyd wrote:
+> This API does very little. Let's replace all the callsites with the
+> normal operations that would be done on top of the bitmap that
+> tcs_in_use is. This simplifies and reduces the code size.
+>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>   drivers/soc/qcom/rpmh-rsc.c | 59 +++++++++++++------------------------
+>   1 file changed, 20 insertions(+), 39 deletions(-)
+>
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index 076fd27f3081..60fc56987659 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -184,22 +184,6 @@ static void write_tcs_reg_sync(const struct rsc_drv *drv, int reg, int tcs_id,
+>   		       data, tcs_id, reg);
+>   }
+>   
+> -/**
+> - * tcs_is_free() - Return if a TCS is totally free.
+> - * @drv:    The RSC controller.
+> - * @tcs_id: The global ID of this TCS.
+> - *
+> - * Returns true if nobody has claimed this TCS (by setting tcs_in_use).
+> - *
+> - * Context: Must be called with the drv->lock held.
+> - *
+> - * Return: true if the given TCS is free.
+> - */
+> -static bool tcs_is_free(struct rsc_drv *drv, int tcs_id)
+> -{
+> -	return !test_bit(tcs_id, drv->tcs_in_use);
+> -}
+> -
+>   /**
+>    * tcs_invalidate() - Invalidate all TCSes of the given type (sleep or wake).
+>    * @drv:  The RSC controller.
+> @@ -512,7 +496,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+>    *
+>    * Return: 0 if nothing in flight or -EBUSY if we should try again later.
+>    *         The caller must re-enable interrupts between tries since that's
+> - *         the only way tcs_is_free() will ever return true and the only way
+> + *         the only way tcs_in_use will ever be updated and the only way
+>    *         RSC_DRV_CMD_ENABLE will ever be cleared.
+>    */
+>   static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+> @@ -520,17 +504,14 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+>   {
+>   	unsigned long curr_enabled;
+>   	u32 addr;
+> -	int i, j, k;
+> -	int tcs_id = tcs->offset;
+> +	int j, k;
+> +	int i = tcs->offset;
+>   
+> -	for (i = 0; i < tcs->num_tcs; i++, tcs_id++) {
+> -		if (tcs_is_free(drv, tcs_id))
+> -			continue;
+> -
+> -		curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
+> +	for_each_set_bit_from(i, drv->tcs_in_use, tcs->offset + tcs->num_tcs) {
+> +		curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i);
+>   
+>   		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
+> -			addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j);
+> +			addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, i, j);
+>   			for (k = 0; k < msg->num_cmds; k++) {
+>   				if (addr == msg->cmds[k].addr)
+>   					return -EBUSY;
+> @@ -548,18 +529,19 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+>    *
+>    * Must be called with the drv->lock held since that protects tcs_in_use.
+>    *
+> - * Return: The first tcs that's free.
+> + * Return: The first tcs that's free or -EBUSY if all in use.
+>    */
+>   static int find_free_tcs(struct tcs_group *tcs)
+>   {
+> -	int i;
+> +	const struct rsc_drv *drv = tcs->drv;
+> +	unsigned long i;
+> +	unsigned long max = tcs->offset + tcs->num_tcs;
+>   
+> -	for (i = 0; i < tcs->num_tcs; i++) {
+> -		if (tcs_is_free(tcs->drv, tcs->offset + i))
+> -			return tcs->offset + i;
+> -	}
+> +	i = find_next_zero_bit(drv->tcs_in_use, max, tcs->offset);
+> +	if (i >= max)
+> +		return -EBUSY;
+>   
+> -	return -EBUSY;
+> +	return i;
+>   }
+>   
+>   /**
+> @@ -757,8 +739,9 @@ int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv, const struct tcs_request *msg)
+>    */
+>   static bool rpmh_rsc_ctrlr_is_busy(struct rsc_drv *drv)
+>   {
+> -	int m;
+> -	struct tcs_group *tcs = &drv->tcs[ACTIVE_TCS];
+> +	unsigned long set;
+> +	const struct tcs_group *tcs = &drv->tcs[ACTIVE_TCS];
+> +	unsigned long max;
+>   
+>   	/*
+>   	 * If we made an active request on a RSC that does not have a
+> @@ -769,12 +752,10 @@ static bool rpmh_rsc_ctrlr_is_busy(struct rsc_drv *drv)
+>   	if (!tcs->num_tcs)
+>   		tcs = &drv->tcs[WAKE_TCS];
+>   
+> -	for (m = tcs->offset; m < tcs->offset + tcs->num_tcs; m++) {
+> -		if (!tcs_is_free(drv, m))
+> -			return true;
+> -	}
+> +	max = tcs->offset + tcs->num_tcs;
+> +	set = find_next_bit(drv->tcs_in_use, max, tcs->offset);
+>   
+> -	return false;
+> +	return set < max;
+>   }
+>   
+>   /**
 
-> 
-> On 2020-05-08 11:51, Dikshita Agarwal wrote:
->> There are many commercialized video use cases which needs metadata info
->> to be circulated between v4l2 client and v4l2 driver.
->>
->> METADATA has following requirements associated:
->> •Metadata is an optional info available for a buffer. It is not
->> mandatorily for every buffer.
->>  For ex. consider metadata ROI (Region Of Interest). ROI is specified
->> by clients to indicate
->>  the region where enhanced quality is desired. This metadata is given
->> as an input information
->>  to encoder output plane. Client may or may not specify the ROI for a
->> frame during encode as
->>  an input metadata. Also if the client has not provided ROI metadata
->> for a given frame,
->>  it would be incorrect to take the metadata from previous frame. If the 
->> data and
->>  metadata is asynchronous, it would be difficult for hardware to decide 
->> if it
->>  needs to wait for metadata buffer or not before processing the input
->> frame for encoding.
->> •Synchronize the buffer requirement across both the video node/session
->>  (incase metadata is being processed as a separate v4l2 video 
->> node/session).
->>  This is to avoid buffer starvation.
->> •Associate the metadata buffer with the data buffer without adding any
->> pipeline delay
->>  in waiting for each other. This is applicable both at the hardware
->> side (the processing end)
->>  and client side (the receiving end).
->> •Low latency usecases like WFD/split rendering/game streaming/IMS have
->> sub-50ms e2e latency
->>  requirements, and it is not practical to stall the pipeline due to
->> inherent framework latencies.
->>  High performance usecase like high-frame rate playback/record can
->> lead to frame loss during any pipeline latency.
->>
->> To address all above requirements, we used v4l2 Request API as 
->> interlace.
->>
->> As an experiment, We have introduced new control
->> V4L2_CID_MPEG_VIDEO_VENUS_METADATA
->> to contain the METADATA info. Exact controls can be finalized once the
->> interface is discussed.
->>
->> For setting metadata from userspace to kernel, let say on encode output 
->> plane,
->> following code sequence was followed
->> 1. Video driver is registering for media device and creating a media
->> node in /dev
->> 2. Request fd is allocated by calling MEDIA_IOC_REQUEST_ALLOC IOCTL on 
->> media fd.
->> 3. METADATA configuration is being applied on request fd using
->> VIDIOC_S_EXT_CTRLS IOCTL
->>    and the same request fd is added to buf structure structure before
->> calling VIDIOC_QBUF on video fd.
->> 4. The same request is queued through MEDIA_REQUEST_IOC_QUEUE IOCTL to
->> driver then, as a result
->>    to which METADATA control will be applied to buffer through S_CTRL.
->> 5. Once control is applied and request is completed,
->> MEDIA_REQUEST_IOC_REINIT IOCTL is called
->>    to re-initialize the request.
->>
->> We could achieve the same on capture plane as well by removing few
->> checks present currently
->> in v4l2 core which restrict the implementation to only output plane.
->>
->> We profiled below data with this implementation :
->> 1. Total time taken ( round trip ) for setting up control data on video 
->> driver
->>    with VIDIOC_S_EXT_CTRLS, QBUF and Queue Request: 737us
->> 2. Time taken for first QBUF on Output plane to reach driver with
->> REQUEST API enabled (One way): 723us
->> 3. Time taken for first QBUF on Output plane to reach driver without
->> REQUEST API (One way) : 250us
->> 4. Time taken by each IOCTL to complete ( round trip ) with REQUEST
->> API enabled :
->>     a. VIDIOC_S_EXT_CTRLS : 201us
->>     b. VIDIOC_QBUF : 92us
->>     c. MEDIA_REQUEST_IOC_QUEUE: 386us
->>
->> Kindly share your feedback/comments on the design/call sequence.
->> Also as we experimented and enabled the metadata on capture plane as
->> well, please comment if any issue in
->> allowing the metadata exchange on capture plane as well.
->>
->> Reference for client side implementation can be found at [1].
->>
->> Thanks,
->> Dikshita
->>
->> [1]
->> https://git.linaro.org/people/stanimir.varbanov/v4l2-encode.git/log/?h=dikshita/request-api
->>
->> Dikshita Agarwal (3):
->>   Register for media device
->>     - Initialize and register for media device
->>     - define venus_m2m_media_ops
->>     - Implement APIs to register/unregister media controller.
->>   Enable Request API for output buffers
->>     - Add dependency on MEDIA_CONTROLLER_REQUEST_API in Kconfig.
->>     - Initialize vb2 ops buf_out_validate and buf_request_complete.
->>     - Add support for custom Metadata control
->> V4L2_CID_MPEG_VIDEO_VENUS_METADATA
->>     - Implemeted/Integrated APIs for Request setup/complete.
->>   Enable Request API for Capture Buffers
->>
->>  drivers/media/common/videobuf2/videobuf2-v4l2.c |   4 +-
->>  drivers/media/platform/Kconfig                  |   2 +-
->>  drivers/media/platform/qcom/venus/core.h        |  36 ++++
->>  drivers/media/platform/qcom/venus/helpers.c     | 247 
->> +++++++++++++++++++++++-
->>  drivers/media/platform/qcom/venus/helpers.h     |  15 ++
->>  drivers/media/platform/qcom/venus/venc.c        |  63 +++++-
->>  drivers/media/platform/qcom/venus/venc_ctrls.c  |  61 +++++-
->>  drivers/media/v4l2-core/v4l2-ctrls.c            |  10 +
->>  drivers/media/v4l2-core/v4l2-mem2mem.c          |  17 +-
->>  include/media/v4l2-ctrls.h                      |   1 +
->>  include/media/venus-ctrls.h                     |  22 +++
->>  11 files changed, 465 insertions(+), 13 deletions(-)
->>  create mode 100644 include/media/venus-ctrls.h
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
