@@ -2,77 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 157C11E31FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 00:06:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBEF51E320A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 00:08:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391812AbgEZWEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 18:04:50 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:38005 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389342AbgEZWEu (ORCPT
+        id S2390709AbgEZWIN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 18:08:13 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:35962 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389342AbgEZWIN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 18:04:50 -0400
-Received: by mail-il1-f194.google.com with SMTP id q18so963007ilm.5;
-        Tue, 26 May 2020 15:04:49 -0700 (PDT)
+        Tue, 26 May 2020 18:08:13 -0400
+Received: by mail-io1-f68.google.com with SMTP id y18so3370683iow.3;
+        Tue, 26 May 2020 15:08:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=4+Nqzubi5qDcEFVMZS+DoVAaOhv2OcfcUjqNZ5zEgxk=;
-        b=ApQ484SjAVTbtkk3xEGy0H8dXWY2tucMnYvAZz0ZcICl+D2nyEAsX4TW8ZrhKNH1P0
-         N+iBaVTuJmz0vTeWIOktTDvQ4wzreGRilOLx8AqYxX/gbJgycjLJBJkGrfenn6nkwiqM
-         UQJOo87EjOy/hhoN3yqAnEPnzieXLe7KIWskbzkoraAFgEjtNlwG04E+p6Qh7Jgy7JMh
-         g611Y0Q7qHhqoNDen8WicQScOmc/xtSdiC99F+oe7sIJUtmrcaIw3OPGPu5Yyxw1v4Ch
-         1Ff4hsgte8OlEgYGjaq6jbdMPY1XJyrSYP5CKYc33CrDcWKOC58g6C2p9cU17uAzjj76
-         TD5w==
-X-Gm-Message-State: AOAM531lKTsed/Ao0XoNq2bf2uZrTR/TFZwmMw2Fjsa6rBu7ygx6zWx/
-        fuMhG9n+IldFiMW5ncLDWA==
-X-Google-Smtp-Source: ABdhPJyiuvVFoCmUphZsk18kZQgyM8mMz45CmBlDHyye6pc29KhRfabK1MRa6/KBIPfc4+r0IKwvCA==
-X-Received: by 2002:a05:6e02:801:: with SMTP id u1mr3249749ilm.295.1590530689080;
-        Tue, 26 May 2020 15:04:49 -0700 (PDT)
+        bh=mXe3eMhOfw8Yi0mzveU2UUdf9WbJiPX68762lf2f3m8=;
+        b=lnGpxnl4Ptsii9Oal3CfKvRrQ6E70G0Es5XwkC6aYwMTShppiSQ48V2buS2xEMJp6n
+         n4foNO7lb0Uc7qLZ0usrc3jicmeTmeeP4PTChZbNlACtK+7zrJiwMYFYL0JaVhRd0yLe
+         R3iA1MagoO3zpwnt2OJrlbNjN0e0Q+9HxnTAN0VCylBabiegqtd7QLTd+zxeAkKByrjE
+         wYmryKC5xRhvPvJBes4T5RW2v2bK9R0hsvC+YNiJR6N88MqISKcW/bWDggbIqV+KXb7Q
+         skAnadg8HoE/Z/iRTVZM+jw1Jqp4vo+7yY5czD10RjY+T9ZXeohDV9kbqS8Bwc0fjGlm
+         52Dg==
+X-Gm-Message-State: AOAM532IsBhhZ2JVWIK7JNQXwfKh0tOtgAKH9tZxtA/80Aacwiz3OXgt
+        zSqSIkDytsg8jsDa/D51nw==
+X-Google-Smtp-Source: ABdhPJxua5/2ASeh+JDi3H6ENvlO5duKzfxD0bd/FxftWvnUVDU7fZZVP6RJWTWfF7tnoEbMyFvyDA==
+X-Received: by 2002:a02:b782:: with SMTP id f2mr3009396jam.91.1590530891856;
+        Tue, 26 May 2020 15:08:11 -0700 (PDT)
 Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id p1sm578883ilq.67.2020.05.26.15.04.47
+        by smtp.gmail.com with ESMTPSA id o70sm677282ild.3.2020.05.26.15.08.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2020 15:04:48 -0700 (PDT)
-Received: (nullmailer pid 461819 invoked by uid 1000);
-        Tue, 26 May 2020 22:04:47 -0000
-Date:   Tue, 26 May 2020 16:04:47 -0600
+        Tue, 26 May 2020 15:08:10 -0700 (PDT)
+Received: (nullmailer pid 467130 invoked by uid 1000);
+        Tue, 26 May 2020 22:08:08 -0000
+Date:   Tue, 26 May 2020 16:08:08 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v7 2/2] dt-bindings: usb: qcom,dwc3: Add compatible for
- SC7180
-Message-ID: <20200526220447.GA461055@bogus>
-References: <1590075499-21350-1-git-send-email-sanm@codeaurora.org>
- <1590075499-21350-3-git-send-email-sanm@codeaurora.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     daniel@ffwll.ch, linux-arm-msm@vger.kernel.org, jonas@kwiboo.se,
+        linus.walleij@linaro.org, devicetree@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robh+dt@kernel.org,
+        Paul Walmsley <paul.walmsley@sifive.com>, a.hajda@samsung.com,
+        narmstrong@baylibre.com,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        linux-gpio@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+        robdclark@chromium.org, jeffrey.l.hugo@gmail.com,
+        jernej.skrabec@siol.net, airlied@linux.ie, spanda@codeaurora.org,
+        Laurent.pinchart@ideasonboard.com, swboyd@chromium.org,
+        bgolaszewski@baylibre.com, bjorn.andersson@linaro.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 2/3] dt-bindings: drm/bridge: ti-sn65dsi86: Convert to
+ yaml
+Message-ID: <20200526220808.GA467074@bogus>
+References: <20200513215902.261547-1-dianders@chromium.org>
+ <20200513145807.v6.2.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1590075499-21350-3-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <20200513145807.v6.2.Ifcdc4ecb12742a27862744ee1e8753cb95a38a7f@changeid>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 21, 2020 at 09:08:19PM +0530, Sandeep Maheswaram wrote:
-> Add compatible for SC7180 in usb dwc3 bindings.
+On Wed, 13 May 2020 14:59:01 -0700, Douglas Anderson wrote:
+> This moves the bindings over, based a lot on toshiba,tc358768.yaml.
+> Unless there's someone known to be better, I've set the maintainer in
+> the yaml as the first person to submit bindings.
 > 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> I removed Stephen's review tag on v5 since I squashed in a bunch of
+> other stuff.
+> 
+> Changes in v6: None
+> Changes in v5:
+> - Squash https://lore.kernel.org/r/20200506140208.v2.2.I0a2bca02b09c1fcb6b09479b489736d600b3e57f@changeid/
+> 
+> Changes in v4: None
+> Changes in v3: None
+> Changes in v2:
+> - specification => specifier.
+> - power up => power.
+> - Added back missing suspend-gpios.
+> - data-lanes and lane-polarities are are the right place now.
+> - endpoints don't need to be patternProperties.
+> - Specified more details for data-lanes and lane-polarities.
+> - Added old example back in, fixing bugs in it.
+> - Example i2c bus is just called "i2c", not "i2c1" now.
+> 
+>  .../bindings/display/bridge/ti,sn65dsi86.txt  |  87 ------
+>  .../bindings/display/bridge/ti,sn65dsi86.yaml | 285 ++++++++++++++++++
+>  2 files changed, 285 insertions(+), 87 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.txt
+>  create mode 100644 Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> 
 
-Applied, thanks!
+Reviewed-by: Rob Herring <robh@kernel.org>
