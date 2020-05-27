@@ -2,60 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1559A1E35D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 04:42:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1D601E35F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 04:56:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbgE0CmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 22:42:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45358 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726746AbgE0CmN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 22:42:13 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1728259AbgE0Czq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 22:55:46 -0400
+Received: from mta-p7.oit.umn.edu ([134.84.196.207]:41690 "EHLO
+        mta-p7.oit.umn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725893AbgE0Czq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 May 2020 22:55:46 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by mta-p7.oit.umn.edu (Postfix) with ESMTP id 49WwSK2f8jz9vJs1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 02:55:45 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at umn.edu
+Received: from mta-p7.oit.umn.edu ([127.0.0.1])
+        by localhost (mta-p7.oit.umn.edu [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id ACZmYrvWI722 for <linux-arm-msm@vger.kernel.org>;
+        Tue, 26 May 2020 21:55:45 -0500 (CDT)
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com [209.85.166.198])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A9F6020787;
-        Wed, 27 May 2020 02:42:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590547332;
-        bh=SuLUW/+t5hK/JiJ8DiytO9PLWmKU9EkLXaGPAU49CWY=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=hnigH+duwn3RVQm6TGBXWN6Qs5gYBgPsdGMmDTjsAyB/jgmcSmpvTWIjmwMhpb3pl
-         zow6T/92FP0Yp0kc+Y7zFaQmBk/pu2kppPnXBzRzU92GWDjTK5G1dkPAr82ALsxtzv
-         436FAKSdss1QzvxjGW/I90lmCb/2FZ080JyCmMkQ=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <86a7c49f-44ea-11d3-2983-8443ad7ec309@marek.ca>
-References: <20200524210615.17035-1-jonathan@marek.ca> <20200524210615.17035-2-jonathan@marek.ca> <159053527806.88029.14584721858766224777@swboyd.mtv.corp.google.com> <86a7c49f-44ea-11d3-2983-8443ad7ec309@marek.ca>
-Subject: Re: [PATCH 01/10] clk: qcom: clk-alpha-pll: remove unused/incorrect PLL_CAL_VAL
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Date:   Tue, 26 May 2020 19:42:11 -0700
-Message-ID: <159054733196.88029.15629810054630863245@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        by mta-p7.oit.umn.edu (Postfix) with ESMTPS id 49WwSK0wL1z9vJrd
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 21:55:45 -0500 (CDT)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mta-p7.oit.umn.edu 49WwSK0wL1z9vJrd
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-p7.oit.umn.edu 49WwSK0wL1z9vJrd
+Received: by mail-il1-f198.google.com with SMTP id v87so19224511ill.23
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 19:55:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umn.edu; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=dd9TczXeKWbVN5d9i1e4JepiH139Y9rdVzxnRRWNp88=;
+        b=I1PT9sPm4WcUrEiIQ1S3ZUiObaUysFl97PlWe/VAhRNCrhzJQYyNP6Hn0V7cnJgFFt
+         lsV96KMIvxM54AHjO3cYchqFRc+FKWUXtW/OM1RC1akTgSX7tD/7TkU3W81P7/msPPl/
+         nlIxYzM+L8dZIibGy9mPKMpz2UxflLKrBL88CD4TvyNFY/83OKQGL9PJvsc03Ms6QcFz
+         +w4T7/sIuDVeyKCUjaquACx5V6x+btMUYqqgecYnuA4tTutQaa+oixCHaLBzpcCrM+DN
+         nw42UaBY6C8vSUU1etu/J4ha6ajphVS13rLf0kyDr8t+GWLCdageKidRCvz/MxxgX2Su
+         /DrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=dd9TczXeKWbVN5d9i1e4JepiH139Y9rdVzxnRRWNp88=;
+        b=eXugIRjTmCeyaf5vpTpGxDv46j0YGcYEdeXrschlgmTb9C+3Zq39F+DsTF9r+9Ekcc
+         9dQagUKa+VqfrCqkikxxyDDCzphh7LdbkQWwVYw+wy6fB+0ALDSIbIL6ohnWJ9+FMlsJ
+         URkW3ipTuGbQudzWmGfQfib/EdtlUSPXBD7aJ+UwdZX6uq+yjVHiGos3QVb/WT8uQLxX
+         lFQ7CasaH8Zc8QLCFX5VwaehsSbYoCuK7WenapvThoBx1WcsAnrMuucoYCfJDNGcY9xo
+         YnputUVu1YGZAbCZ3jHVhF2UjMLv+LlIElTOi3ln3BrSRo68q4Cia9QstohZNcKBzUOD
+         MRoA==
+X-Gm-Message-State: AOAM533UY6OtkmFxgX5u5h9131hagBs321LQR8lriOkcHBUfywpzJqDq
+        bR2QTyutyQlIeaZpElbGdhL8keSF1/sdaUWGX1ioAiQwxbkj3Z6+5Hi9n7Hw7nvNCwjhRFgej6S
+        M/KBuxArP40NMBuk2HtQF/b+Qi+dO4A==
+X-Received: by 2002:a92:58d6:: with SMTP id z83mr3895932ilf.129.1590548144631;
+        Tue, 26 May 2020 19:55:44 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzHYUY+uSNCCON7fyGW5rBDCaOJIjvP0uCMCJ/fAmp1UOgXVlUABz74vZTjaLO5+Tbkt+YNig==
+X-Received: by 2002:a92:58d6:: with SMTP id z83mr3895912ilf.129.1590548144188;
+        Tue, 26 May 2020 19:55:44 -0700 (PDT)
+Received: from qiushi.dtc.umn.edu (cs-kh5248-02-umh.cs.umn.edu. [128.101.106.4])
+        by smtp.gmail.com with ESMTPSA id j17sm882047ilq.79.2020.05.26.19.55.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 May 2020 19:55:43 -0700 (PDT)
+From:   wu000273@umn.edu
+To:     svarbanov@mm-sol.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, helgaas@google.com,
+        p.zabel@pengutronix.de, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Markus.Elfring@web.de, kjlu@umn.edu, wu000273@umn.edu
+Subject: [PATCH V2] PCI: qcom: Improve exception handling in qcom_pcie_probe().
+Date:   Tue, 26 May 2020 21:55:31 -0500
+Message-Id: <20200527025531.32357-1-wu000273@umn.edu>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2020-05-26 16:30:38)
-> On 5/26/20 7:21 PM, Stephen Boyd wrote:
-> > Quoting Jonathan Marek (2020-05-24 14:06:02)
-> >> 0x44 isn't a register offset, it is the value that goes into CAL_L_VAL.
-> >>
-> >> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> >> ---
-> >=20
-> > Any fixes tag?
-> >=20
->=20
-> This doesn't fix anything (its unused as the commit message says), does=20
-> that still qualify for a fixes tag?
+From: Qiushi Wu <wu000273@umn.edu>
 
-Sure. Even if it's unused it could be used by someone who backported the
-patch somewhere.
+This function contained improvable implementation details according to
+exception handling.
+1. pm_runtime_put() should be called after pm_runtime_get_sync() failed,
+because the reference count will be increased despite of the failure.
+Thus add the missed function call.
+2. pm_runtime_disable() are called twice, after the call of phy_init() and
+dw_pcie_host_init() failed. Thus remove redundant function calls.
+
+
+Fixes: 6e5da6f7d824 ("PCI: qcom: Fix error handling in runtime PM support")
+Co-developed-by: Markus Elfring <Markus.Elfring@web.de>
+Signed-off-by: Markus Elfring <Markus.Elfring@web.de>
+Signed-off-by: Qiushi Wu <wu000273@umn.edu>
+---
+ V2: words adjustments and fix some typos 
+ drivers/pci/controller/dwc/pcie-qcom.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 138e1a2d21cc..10393ab607bf 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1340,8 +1340,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(dev);
+ 	ret = pm_runtime_get_sync(dev);
+ 	if (ret < 0) {
+-		pm_runtime_disable(dev);
+-		return ret;
++		goto err_pm_runtime_put;
+ 	}
+ 
+ 	pci->dev = dev;
+@@ -1401,7 +1400,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 
+ 	ret = phy_init(pcie->phy);
+ 	if (ret) {
+-		pm_runtime_disable(&pdev->dev);
+ 		goto err_pm_runtime_put;
+ 	}
+ 
+@@ -1410,7 +1408,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	ret = dw_pcie_host_init(pp);
+ 	if (ret) {
+ 		dev_err(dev, "cannot initialize host\n");
+-		pm_runtime_disable(&pdev->dev);
+ 		goto err_pm_runtime_put;
+ 	}
+ 
+-- 
+2.17.1
+
