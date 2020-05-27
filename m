@@ -2,92 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 108321E4E4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 21:36:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B40D91E4F16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 22:22:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726938AbgE0Tgn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 15:36:43 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:38226 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725872AbgE0Tgm (ORCPT
+        id S1727922AbgE0UWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 16:22:21 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:39007 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727090AbgE0UWV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 15:36:42 -0400
-Received: by mail-io1-f67.google.com with SMTP id d7so27457174ioq.5;
-        Wed, 27 May 2020 12:36:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=io7JL+6QWqwr5UMM9NElEX66dtm9kKXNvmpsHXQSLm8=;
-        b=l2gERoQnmyqHY8g+/VuMbG3/10li/MIaPvO/8px7BVVZWCEVDOBlMF2pEVD74TODpG
-         qGbW+IvIXcikiqr39TrQOrpGpBPF2BTBYp07rnWDuDG99Q1ufjf4A7OyR9slT68I6zb+
-         92HFVPP6kBot1Uh9xVuyLy7HGra6HpUv7XD2Dw9O0rLPSU71GCS4BuFUMQ0YAl0Db6LM
-         6QDC4M7sZFaMueMEJVVLWxIBHKrkhmQR2SHLAq4Lj+2jGNh7qazKcApN65MtgO6vKQlB
-         fjemnw+Cg/f4NJD9Cx0qqkxvSydyRYkWN2VdikOX+HnQNQ4yyhvOklcenbYwdFztUfbL
-         nDTw==
-X-Gm-Message-State: AOAM530JNaydLIhkgzGt6ELdQTT8Pj7SuB0/7sItLIo9XSuv+Aa4yzXS
-        x9e5SozDSSIDaKTr2X4kWA==
-X-Google-Smtp-Source: ABdhPJzja/44mLPDsRi9Us+9wAPvOQ/J+0Wdpj6Prbtm0EAoaesENU75sSr4Wx7bmnNEdQs7rA6GEg==
-X-Received: by 2002:a02:740d:: with SMTP id o13mr606075jac.42.1590608200163;
-        Wed, 27 May 2020 12:36:40 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id o70sm2146812ild.3.2020.05.27.12.36.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2020 12:36:39 -0700 (PDT)
-Received: (nullmailer pid 2608242 invoked by uid 1000);
-        Wed, 27 May 2020 19:36:38 -0000
-Date:   Wed, 27 May 2020 13:36:38 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org
-Subject: Re: [PATCH v2] dt-bindings: media: venus: Add an optional power
- domain for perf voting
-Message-ID: <20200527193638.GA2604206@bogus>
-References: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
+        Wed, 27 May 2020 16:22:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590610940; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=G4owDA73rya93Iq5Ppovobk5IRWHk7KpXDDQCNQdgSI=; b=jI00MpJNIo0uLWmXVm5+4PmzNN2y2YzBN06o5LuY9m9/A7E6MjFiNv0xF+ft67rs+u7IbTfH
+ OT/lCK90JSn2OqTGqcCf777CrExBNgFPXQFQk02R7+NCF8K2HX+AZUbinrxYDp1cNCb7w1B8
+ bzOv0T9iEEkAdEAlV5UdM8zg2Nk=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5ececbfc76fccbb4c8d4a63b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 20:22:20
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5590AC4339C; Wed, 27 May 2020 20:22:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C2E6C433C9;
+        Wed, 27 May 2020 20:22:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C2E6C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com, mka@chromium.org
+Cc:     nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, vincent.guittot@linaro.org,
+        amit.kucheria@linaro.org, lukasz.luba@arm.com,
+        sudeep.holla@arm.com, smasetty@codeaurora.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v5 0/5] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+Date:   Thu, 28 May 2020 01:51:48 +0530
+Message-Id: <20200527202153.11659-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 13, 2020 at 11:33:27AM +0530, Rajendra Nayak wrote:
-> Add an optional power domain which when specified can be used for
-> setting the performance state of Venus.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
->  Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
->  2 files changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-> index 764affa..ac1ed64 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-> @@ -25,12 +25,16 @@ properties:
->      maxItems: 1
->  
->    power-domains:
-> -    maxItems: 2
-> +    minItems: 2
-> +    maxItems: 3
->  
->    power-domain-names:
-> +    minItems: 2
-> +    maxItems: 3
->      items:
->        - const: venus
->        - const: vcodec0
-> +      - const: opp-pd
+This patch series aims to extend cpu based scaling support to L3/DDR on
+SDM845 and SC7180 SoCs.
 
-Humm, looks suspicious. This is a phyical power island in this block? 
-Because that's what 'power-domains' are supposed to represent. Not $os 
-pm-domain construct.
+Patches [1-2] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
+Patches [3-5] - Update bw levels based on cpu frequency change
 
-Rob
+Based on the following series:
+https://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git/log/?h=opp/linux-next
+
+V5:
+ * Pick up R-bs from Amit
+ * Drop icc tag support/dt changes till the a consensus is achieved
+ * Use dev_pm_opp_adjust_voltage instead [Viresh]
+ * Drop dev_pm_opp_get_path_count [Saravana]
+ * Rework dev_pm_opp_set_bw
+
+V4:
+ * Migrate to using Georgi's new bindings
+ * Misc fixups based on Matthias comments
+ * API fixups based on Bjorn's comments on v2
+ * Picked up a few R-bs from Matthias
+
+v3:
+ * Migrated to using Saravana's opp-kBps bindings [1]
+ * Fixed some misc comments from Rajendra
+ * Added support for SC7180
+
+v2:
+ * Incorporated Viresh's comments from:
+ https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
+ https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+ * Dropped cpufreq-map passive governor
+
+Sibi Sankar (5):
+  cpufreq: blacklist SDM845 in cpufreq-dt-platdev
+  cpufreq: blacklist SC7180 in cpufreq-dt-platdev
+  OPP: Add and export helper to set bandwidth
+  cpufreq: qcom: Update the bandwidth levels on frequency change
+  cpufreq: qcom: Disable fast switch when scaling DDR/L3
+
+ drivers/cpufreq/cpufreq-dt-platdev.c |  2 +
+ drivers/cpufreq/qcom-cpufreq-hw.c    | 81 ++++++++++++++++++++++++++--
+ drivers/opp/core.c                   | 31 +++++++++++
+ include/linux/pm_opp.h               |  6 +++
+ 4 files changed, 116 insertions(+), 4 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
