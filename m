@@ -2,77 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 203BE1E35AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 04:31:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DB3A1E35B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 04:33:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727119AbgE0CaO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 22:30:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40624 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725267AbgE0CaO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 22:30:14 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727883AbgE0CdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 22:33:06 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:15153 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725267AbgE0CdF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 May 2020 22:33:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590546785; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=8BrMrQ0WHpE6sJzBsEoUZuHRlDMDeWrAghmgXNEp9HY=; b=bT5Xb43FueDQkg30J2tRizeUGYOMxPCCHwubEIFMxpz8I4RTplGb5qH+8nT2xQ13WdePfD/S
+ 9YMcplP/6s75jsaCMuaBq2jKtsBxv2CFmlWkyz08aIBwGs9iPGfqqRTc4tRlTGBj+P5v3IR3
+ 2akwFaZ6gdTOAW93hhpZHQoOBGo=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5ecdd14fc28b2cdd986e96a5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 02:32:47
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7E13DC433C9; Wed, 27 May 2020 02:32:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E6324207CB;
-        Wed, 27 May 2020 02:30:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590546614;
-        bh=a/3K3G+F2KEbekWTjK3Q4wJsBRNJHvwitw+VbA3Qjyw=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=i4F/6991OhNBRbSdPhbG/BMLIRj9vbZkPwnsrQLVvnjUnAMZYnvD+9cVHTJm5ZntH
-         C97Q+6Zkz+pY2+/ui0FIHMaRr9sm/zXbbfbaCuTBJ+NC0OtUCFs9dg2EdS+f0hREPa
-         nfAF7g9Q4fTxjZcBmfxCqTrp72TRtCcK8A4r87Xs=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1590314686-11749-5-git-send-email-sivaprak@codeaurora.org>
-References: <1590314686-11749-1-git-send-email-sivaprak@codeaurora.org> <1590314686-11749-5-git-send-email-sivaprak@codeaurora.org>
-Subject: Re: [PATCH V5 4/8] clk: qcom: Add DT bindings for ipq6018 apss clock controller
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mturquette@baylibre.com, robh+dt@kernel.org
-Date:   Tue, 26 May 2020 19:30:13 -0700
-Message-ID: <159054661322.88029.16916819048155217664@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7C1F4C433C6;
+        Wed, 27 May 2020 02:32:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7C1F4C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org
+Subject: [PATCH v3] bluetooth: hci_qca: Fix qca6390 enable failure after warm reboot
+Date:   Wed, 27 May 2020 10:32:39 +0800
+Message-Id: <1590546759-27387-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sivaprakash Murugesan (2020-05-24 03:04:42)
-> add dt-binding for ipq6018 apss clock controller
+Warm reboot can not restore qca6390 controller baudrate
+to default due to lack of controllable BT_EN pin or power
+supply, so fails to download firmware after warm reboot.
 
-Capitalize 'add' because it starts the sentence.
+Fixed by sending EDL_SOC_RESET VSC to reset controller
+within added device shutdown implementation.
 
->=20
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> ---
->  include/dt-bindings/clock/qcom,apss-ipq.h | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->  create mode 100644 include/dt-bindings/clock/qcom,apss-ipq.h
->=20
-> diff --git a/include/dt-bindings/clock/qcom,apss-ipq.h b/include/dt-bindi=
-ngs/clock/qcom,apss-ipq.h
-> new file mode 100644
-> index 0000000..77b6e05
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,apss-ipq.h
-> @@ -0,0 +1,12 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLOCK_QCA_APSS_IPQ6018_H
-> +#define _DT_BINDINGS_CLOCK_QCA_APSS_IPQ6018_H
-> +
-> +#define APCS_ALIAS0_CLK_SRC                    0
-> +#define APCS_ALIAS0_CORE_CLK                   1
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-Will this be extended in the future? I hope that this is the only two
-clks we expect to see in this file.
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index e4a6823..4b6f8b6 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1975,6 +1975,34 @@ static void qca_serdev_remove(struct serdev_device *serdev)
+ 	hci_uart_unregister_device(&qcadev->serdev_hu);
+ }
+ 
++static void qca_serdev_shutdown(struct device *dev)
++{
++	int ret;
++	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
++	struct serdev_device *serdev = to_serdev_device(dev);
++	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
++	const u8 ibs_wake_cmd[] = { 0xFD };
++	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
++
++	if (qcadev->btsoc_type == QCA_QCA6390) {
++		serdev_device_write_flush(serdev);
++		serdev_device_write_buf(serdev,
++				ibs_wake_cmd, sizeof(ibs_wake_cmd));
++		serdev_device_wait_until_sent(serdev, timeout);
++		usleep_range(8000, 10000);
++
++		serdev_device_write_flush(serdev);
++		ret = serdev_device_write_buf(serdev,
++				edl_reset_soc_cmd, sizeof(edl_reset_soc_cmd));
++		if (ret < 0) {
++			BT_ERR("QCA send EDL_RESET_REQ error: %d", ret);
++			return;
++		}
++		serdev_device_wait_until_sent(serdev, timeout);
++		usleep_range(8000, 10000);
++	}
++}
++
+ static int __maybe_unused qca_suspend(struct device *dev)
+ {
+ 	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+@@ -2100,6 +2128,7 @@ static struct serdev_device_driver qca_serdev_driver = {
+ 		.name = "hci_uart_qca",
+ 		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
+ 		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
++		.shutdown = qca_serdev_shutdown,
+ 		.pm = &qca_pm_ops,
+ 	},
+ };
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
