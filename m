@@ -2,154 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D9E11E3FF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 13:26:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D32F61E4137
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 14:05:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725820AbgE0L0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 07:26:33 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:50175 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730000AbgE0L0c (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 07:26:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590578791; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=P25q6ipZ3riPqbhrRJ+PtUgnCNFkPSplK5OpM68AuG8=; b=HNG5uEkg+kSlBg6UuwArUwYgzDXXGC9SfQZ0cwqQ4PbC/fc9ggZ2+wH9dEWxIsrV/mrRJlA/
- cL45QIn8BjKZAytAatjIZjivveAvAYDcqHsdNGy2JtyomVQQIpcZkEB0xjqlHLRtie07JeqZ
- bw/45WADn3xycSiQXRw4bekCl8Q=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5ece4e6037a454afcbcfe36e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 11:26:24
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A0AF8C433B1; Wed, 27 May 2020 11:26:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.129] (unknown [106.222.1.206])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8AFE3C433C9;
-        Wed, 27 May 2020 11:26:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8AFE3C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
- <1590253873-11556-2-git-send-email-mkshah@codeaurora.org>
- <159057264232.88029.4708934729701385486@swboyd.mtv.corp.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <4e070cda-8c22-c554-610e-172320045840@codeaurora.org>
-Date:   Wed, 27 May 2020 16:56:14 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1726693AbgE0MFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 08:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50190 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725801AbgE0MFI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 May 2020 08:05:08 -0400
+Received: from mo6-p00-ob.smtp.rzone.de (mo6-p00-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5300::5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D8FCC05BD1E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 05:05:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590581105;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=p67yzbFdbZRdoO5Poqs6dMO4MA5JS9StMeCLjDdfvrg=;
+        b=WfeERJTFnoDpmwJGsRG1uHxP4yN8XyDhpxpfPh14crjd8YtUL6MIOlnlYU37bWoQbE
+        4DtjV7+R4XC14jzBmbhYlNDiGBxlfjaRONbMz9n7mOEuULESs30LljSV9ZtNw2Vsk4nk
+        1z1oGRx29xBAEAXHQu3S7cP/iOA77PCO08yDDNDalWZeMpw/d+ucdZAGs9nvRmzVHICx
+        AZJur98ZH0vogXUWQXEf3A1R43uO0UBuXDtQN4kRxplv7r9CUAL9JHPG+//KZ6uGNb0f
+        KhpflEwdIwLYHKody7e/xFCNkKTYNAPx4uSmzg+nTbR34s520WX5/r2UcHMwHWmlnBAP
+        bpJA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/NBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.7.0 DYNA|AUTH)
+        with ESMTPSA id C07db0w4RC54lkS
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Wed, 27 May 2020 14:05:04 +0200 (CEST)
+Date:   Wed, 27 May 2020 14:04:52 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Niklas Cassel <nks@flawful.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200527120441.GA4166@gerhold.net>
+References: <20200403100923.GB2652@gerhold.net>
+ <20200403175934.GA96064@gerhold.net>
+ <20200423045506.GJ987656@yoga>
+ <20200525153246.GA9224@flawful.org>
+ <20200525163638.GA41001@gerhold.net>
+ <20200525194443.GA11851@flawful.org>
+ <20200526085948.GA1329@gerhold.net>
+ <20200526155419.GA9977@flawful.org>
+ <20200526205403.GA7256@gerhold.net>
+ <20200527103921.GB9977@flawful.org>
 MIME-Version: 1.0
-In-Reply-To: <159057264232.88029.4708934729701385486@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200527103921.GB9977@flawful.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
++Cc Viresh (should have already done this earlier :) )
 
-On 5/27/2020 3:14 PM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2020-05-23 10:11:10)
->> With 'commit 461c1a7d4733 ("gpiolib: override irq_enable/disable")' gpiolib
->> overrides irqchip's irq_enable and irq_disable callbacks. If irq_disable
->> callback is implemented then genirq takes unlazy path to disable irq.
->>
->> Underlying irqchip may not want to implement irq_disable callback to lazy
->> disable irq when client drivers invokes disable_irq(). By overriding
->> irq_disable callback, gpiolib ends up always unlazy disabling IRQ.
->>
->> Allow gpiolib to lazy disable IRQs by overriding irq_disable callback only
->> if irqchip implemented irq_disable. In cases where irq_disable is not
->> implemented irq_mask is overridden. Similarly override irq_enable callback
->> only if irqchip implemented irq_enable otherwise irq_unmask is overridden.
->>
->> Fixes: 461c1a7d47 (gpiolib: override irq_enable/disable)
-> This isn't a proper Fixes line. Should have quotes
->
-> Fixes: 461c1a7d4733 ("gpiolib: override irq_enable/disable")
-Thanks for pointing this, i will address in next revision.
->
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> ---
->>   drivers/gpio/gpiolib.c      | 55 +++++++++++++++++++++++++++++----------------
->>   include/linux/gpio/driver.h | 13 +++++++++++
->>   2 files changed, 49 insertions(+), 19 deletions(-)
->>
->> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
->> index eaa0e20..3810cd0 100644
->> --- a/drivers/gpio/gpiolib.c
->> +++ b/drivers/gpio/gpiolib.c
->> @@ -2465,32 +2465,37 @@ static void gpiochip_irq_relres(struct irq_data *d)
->>          gpiochip_relres_irq(gc, d->hwirq);
->>   }
->>   
->> +static void gpiochip_irq_mask(struct irq_data *d)
->> +{
->> +       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->> +
->> +       if (gc->irq.irq_mask)
->> +               gc->irq.irq_mask(d);
->> +       gpiochip_disable_irq(gc, d->hwirq);
-> How does this work in the lazy case when I want to drive the GPIO? Say I
-> have a GPIO that is also an interrupt. The code would look like
->
->   struct gpio_desc *gpio = gpiod_get(...)
->   unsigned int girq = gpiod_to_irq(gpio)
->
->   request_irq(girq, ...);
->
->   disable_irq(girq);
->   gpiod_direction_output(gpio, 1);
->
-> In the lazy case genirq wouldn't call the mask function until the first
-> interrupt arrived on the GPIO line. If that never happened then wouldn't
-> we be blocked in gpiod_direction_output() when the test_bit() sees
-> FLAG_USED_AS_IRQ? Or do we need irqs to be released before driving
-> gpios?
+On Wed, May 27, 2020 at 12:39:21PM +0200, Niklas Cassel wrote:
+> On Tue, May 26, 2020 at 10:54:03PM +0200, Stephan Gerhold wrote:
+> > Speaking of the current solution, I also have to say that (IMO) the
+> > device tree binding for "required-opps" is rather confusing
+> > and potentially misleading.
+> > 
+> > e.g. for VDD_MX scaling I use
+> > 
+> > 	required-opps = <&rpmpd_opp_nom>;
+> > 
+> > but looking at just the OPP table absolutely nothing tells me this is
+> > supposed to apply to VDD_MX. You actually need to go search for the cpu@
+> > device tree node and then know that some of the power domains there
+> > (in some order) are eventually going to be used for the required-opps
+> > there. The order is only defined by the qcom-nvmem-cpufreq driver.
+> > 
+> > It took me a few hours to get that right... :)
+> > 
+> > Nevertheless I guess we need a solution for scaling MEMACC without CPR
+> > for now. :) I'm not sure if rewriting all this is very realistic
+> > (if even possible). So I guess we might be stuck with the genpd approach?
+> 
+> I agree, the CPR driver will most likely not be changed now, since we
+> need to be compatible with the existing device tree.
+> 
+> 
+> For DVFS without CPR:
+> 
+> You need to scale APC, MX, MEMACC.
+> 
+> If we don't care about MEMACC, then the existing code in the OPP library
+> satisfies all our needs.
+> The problem here is if we need to do MEMACC as well.
+> 
+> I don't think it is proper to implement MEMACC as a power domain
+> (because it is not). Thus, we can't add it as a required-opp.
+> 
+> Another problem is that MEMACC should be done after regulator_set_voltage()
+> when scaling up, and before regulator_set_voltage() when scaling down.
+> 
+> So even if MEMACC was a power domain, currently the OPP library does
+> the _set_required_opps() call in the wrong order needed for MEMACC.
+> 
+> Like you said, the OPP library almost does everything already,
+> so it probably makes most sense to extend it to your needs,
+> rather than duplicating most of the code inside dev_pm_opp_set_rate().
+> 
+> 
+> I guess what you really want is two new optional callbacks in
+> dev_pm_opp_set_rate(), one before _generic_set_opp_regulator() and one
+> after, where you could do the MEMACC thing.
+> 
+> The callbacks need to have a parameter that tells if we are scaling down
+> or up.
+> 
+> Or, if Viresh doesn't like new function pointers, create a new
+> OPP_EVENT_* that you can register for, and in that callback you do what
+> you need.
+> 
+> Or, maybe you can even use the existing CPUFREQ_TRANSITION_NOTIFIER,
+> with CPUFREQ_PRECHANGE / CPUFREQ_POSTCHANGE, however, I'm not sure
+> how nicely they play when you are using the OPP library.
+> 
 
-The client driver can decide to unlazy disable IRQ with below API...
+I'm not sure. Overall all of this doesn't really sound like it is going
+to make all this easier to understand (from looking at the device tree).
+We then have required-opps for VDD_MX, and CPR (which isn't really a
+power domain), and something entirely different for MEMACC (which like
+CPR, isn't really a power domain).
 
-  irq_set_status_flags(girq, IRQ_DISABLE_UNLAZY);
+I don't know, right now this mixture of different approaches sounds
+rather complicated (and confusing) to me...
 
-This will immediatly invoke mask function (unlazy disable) from genirq, 
-even though irq_disable is not implemented.
+Just to throw another idea in the room: there seems to be a set_opp()
+callback already in the OPP table, which bypasses the code that
+updates clock and regulators (see ti-opp-supply.c). Actually if I'm
+reading this correctly ti-opp-supply seems to implement adaptive voltage
+scaling similar to CPR with it. Seemingly we have two different solutions
+for the same concept now:
+
+  - CPR implements a power domain provider (even though it's not really
+    a power domain since it has only one consumer)
+  - ti-opp-supply implements this with the set_opp() callback
+
+In general I think this looks pretty nice - we don't duplicate the full
+cpufreq driver, but have control about the order
+regulators/clocks/power domains etc are changed.
+
+I think something like this would fit quite well for my case
+(scaling MX, APC and MEMACC without CPR). However, not sure how it would
+integrate with the existing CPR driver at some point.
+
+Adding Viresh to Cc in case he has some opinion for all this.
 
 Thanks,
-Maulik
->
->> +}
->> +
->> +static void gpiochip_irq_unmask(struct irq_data *d)
->> +{
->> +       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->> +
->> +       gpiochip_enable_irq(gc, d->hwirq);
->> +       if (gc->irq.irq_unmask)
->> +               gc->irq.irq_unmask(d);
->> +}
->> +
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+Stephan
