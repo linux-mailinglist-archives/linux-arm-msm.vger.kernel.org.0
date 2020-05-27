@@ -2,67 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D91F1E4225
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 14:25:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E3B21E4252
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 14:31:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729950AbgE0MZS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 08:25:18 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:15050 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729937AbgE0MZR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 08:25:17 -0400
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 May 2020 05:25:16 -0700
-Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 27 May 2020 05:25:03 -0700
-Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id 99BDB2180C; Wed, 27 May 2020 17:54:56 +0530 (IST)
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Subject: [PATCH V6 5/5] arm64: dts: ipq6018: Add support for apss pll
-Date:   Wed, 27 May 2020 17:54:52 +0530
-Message-Id: <1590582292-13314-6-git-send-email-sivaprak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1590582292-13314-1-git-send-email-sivaprak@codeaurora.org>
-References: <1590582292-13314-1-git-send-email-sivaprak@codeaurora.org>
+        id S1729978AbgE0MbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 08:31:19 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:38577 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728513AbgE0MbS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 May 2020 08:31:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590582677; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=a0pH7dQyq4r9sJKjE/07Ll+1aMct4+PM140OnxeMnLs=; b=LsT2QGYRGQf2/tYD1vPjffHs0xgNum+sPDU5+HXxjG9tIvy40Vc9gNQvnLa9oG+iHcA+xCWI
+ AYLG/k0zNoj/g1VEeIzkJDYrEwZ3nmhCuLZOAzSeyg+vvv6TvkNpPzPFmSIdIC95cKdTvdZX
+ EowQH018DyqhT8w2XNVSH4WndK4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ece5d8d2738686126ff3b53 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 12:31:09
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A6182C43391; Wed, 27 May 2020 12:31:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.129] (unknown [106.222.1.206])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 85F4BC433C6;
+        Wed, 27 May 2020 12:31:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 85F4BC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v2 3/4] pinctrl: qcom: Add msmgpio irqchip flags
+To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
+        mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org
+References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
+ <1590253873-11556-4-git-send-email-mkshah@codeaurora.org>
+ <159057285160.88029.12486371130122290394@swboyd.mtv.corp.google.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <65c86165-5956-5340-1f40-6426c6aec743@codeaurora.org>
+Date:   Wed, 27 May 2020 18:00:57 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+MIME-Version: 1.0
+In-Reply-To: <159057285160.88029.12486371130122290394@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable apss pll support.
+Hi,
 
-Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
----
-[V6]
- * split the mailbox driver from this patch
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 5/27/2020 3:17 PM, Stephen Boyd wrote:
+> Quoting Maulik Shah (2020-05-23 10:11:12)
+>> Add irqchip specific flags for msmgpio irqchip to mask non wakeirqs
+>> during suspend and mask before setting irq type.
+> Why do we need to mask before setting irq type? Does something go wrong?
+> Can you explain in the commit text?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 1aa8d85..3956e44 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -300,6 +300,14 @@
- 			#mbox-cells = <1>;
- 		};
- 
-+		apsspll: clock@b116000 {
-+			compatible = "qcom,ipq6018-a53pll";
-+			reg = <0x0b116000 0x40>;
-+			#clock-cells = <0>;
-+			clocks = <&xo>;
-+			clock-names = "xo";
-+		};
-+
- 		timer {
- 			compatible = "arm,armv8-timer";
- 			interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+i don't think anything goes wrong but there might be a case where some 
+driver changing type at runtime,
+
+masking before changing type should make sure any spurious interrupt is 
+not detected during this operation.
+
+>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Does this need a Fixes tag?
+Thanks i will add.
+>
+>> ---
+>>   drivers/pinctrl/qcom/pinctrl-msm.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> index 2419023..b909ffe 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> @@ -1143,6 +1143,8 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+>>          pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
+>>          pctrl->irq_chip.irq_set_affinity = msm_gpio_irq_set_affinity;
+>>          pctrl->irq_chip.irq_set_vcpu_affinity = msm_gpio_irq_set_vcpu_affinity;
+>> +       pctrl->irq_chip.flags = IRQCHIP_MASK_ON_SUSPEND
+> This is sort of sad. We have to set the IRQCHIP_MASK_ON_SUSPEND flag
+> here so that genirq can call the mask op during suspend for the parent
+> irqchip (pdc)?
+During suspend, suspend_device_irq() will check this flag in msmgpio 
+irqchip and then call it to mask if its not marked for wakeup.
+
+in this case, setting this flag will call first invoke gpiolib's 
+callback  (we override in first patch of this series), then it goes to 
+msmgpio chip's mask callback,
+
+this call will then get forwarded to its parent PDC and then to PDC's 
+parent GIC.
+
+This seems the way hierarchical irqchip works. i don't see any issue 
+with this.
+> Is there some way to not need to do that and instead let
+> genirq do mask on suspend at the chip level instead of the irq level?
+>
+>> +                               | IRQCHIP_SET_TYPE_MASKED;
+>>   
+>>          np = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
+>>          if (np) {
+
 -- 
-2.7.4
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
