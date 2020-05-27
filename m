@@ -2,329 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 197AB1E3E6A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 12:01:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6BCD1E3E82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 12:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726007AbgE0KBx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 06:01:53 -0400
-Received: from foss.arm.com ([217.140.110.172]:35372 "EHLO foss.arm.com"
+        id S1726638AbgE0KEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 06:04:13 -0400
+Received: from sauhun.de ([88.99.104.3]:54822 "EHLO pokefinder.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726351AbgE0KBm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 06:01:42 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 44B0C55D;
-        Wed, 27 May 2020 03:01:41 -0700 (PDT)
-Received: from e123648.arm.com (unknown [10.37.12.61])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 218023F6C4;
-        Wed, 27 May 2020 03:01:30 -0700 (PDT)
-From:   Lukasz Luba <lukasz.luba@arm.com>
-To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        rostedt@goodmis.org, qperret@google.com, bsegall@google.com,
-        mgorman@suse.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        festevam@gmail.com, kernel@pengutronix.de, khilman@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, lukasz.luba@arm.com,
-        patrick.bellasi@matbug.net, orjan.eide@arm.com,
-        rdunlap@infradead.org, mka@chromium.org
-Subject: [PATCH v8 8/8] OPP: refactor dev_pm_opp_of_register_em() and update related drivers
-Date:   Wed, 27 May 2020 10:58:54 +0100
-Message-Id: <20200527095854.21714-9-lukasz.luba@arm.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200527095854.21714-1-lukasz.luba@arm.com>
-References: <20200527095854.21714-1-lukasz.luba@arm.com>
+        id S1726603AbgE0KEN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 May 2020 06:04:13 -0400
+Received: from localhost (p54b33011.dip0.t-ipconnect.de [84.179.48.17])
+        by pokefinder.org (Postfix) with ESMTPSA id D00ED2C2037;
+        Wed, 27 May 2020 12:04:09 +0200 (CEST)
+Date:   Wed, 27 May 2020 12:04:03 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, msavaliy@codeaurora.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V7 3/7] i2c: i2c-qcom-geni: Add interconnect support
+Message-ID: <20200527100403.GA1161@ninjato>
+References: <1590497690-29035-1-git-send-email-akashast@codeaurora.org>
+ <1590497690-29035-4-git-send-email-akashast@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+HP7ph2BbKc20aGI"
+Content-Disposition: inline
+In-Reply-To: <1590497690-29035-4-git-send-email-akashast@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Energy Model framework supports not only CPU devices. Drop the CPU
-specific interface with cpumask and add struct device. Add also a return
-value, user might use it. This new interface provides easy way to create
-a simple Energy Model, which then might be used by e.g. thermal subsystem.
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
----
- drivers/cpufreq/cpufreq-dt.c           |  2 +-
- drivers/cpufreq/imx6q-cpufreq.c        |  2 +-
- drivers/cpufreq/mediatek-cpufreq.c     |  2 +-
- drivers/cpufreq/omap-cpufreq.c         |  2 +-
- drivers/cpufreq/qcom-cpufreq-hw.c      |  2 +-
- drivers/cpufreq/scpi-cpufreq.c         |  2 +-
- drivers/cpufreq/vexpress-spc-cpufreq.c |  2 +-
- drivers/opp/of.c                       | 71 ++++++++++++++++----------
- include/linux/pm_opp.h                 | 15 +++++-
- 9 files changed, 65 insertions(+), 35 deletions(-)
+--+HP7ph2BbKc20aGI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
-index 26fe8dfb9ce6..f9f03fd49b83 100644
---- a/drivers/cpufreq/cpufreq-dt.c
-+++ b/drivers/cpufreq/cpufreq-dt.c
-@@ -275,7 +275,7 @@ static int cpufreq_init(struct cpufreq_policy *policy)
- 	policy->cpuinfo.transition_latency = transition_latency;
- 	policy->dvfs_possible_from_any_cpu = true;
- 
--	dev_pm_opp_of_register_em(policy->cpus);
-+	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
- 
- 	return 0;
- 
-diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
-index fdb2ffffbd15..ef7b34c1fd2b 100644
---- a/drivers/cpufreq/imx6q-cpufreq.c
-+++ b/drivers/cpufreq/imx6q-cpufreq.c
-@@ -193,7 +193,7 @@ static int imx6q_cpufreq_init(struct cpufreq_policy *policy)
- 	policy->clk = clks[ARM].clk;
- 	cpufreq_generic_init(policy, freq_table, transition_latency);
- 	policy->suspend_freq = max_freq;
--	dev_pm_opp_of_register_em(policy->cpus);
-+	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
- 
- 	return 0;
- }
-diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
-index 0c98dd08273d..7d1212c9b7c8 100644
---- a/drivers/cpufreq/mediatek-cpufreq.c
-+++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -448,7 +448,7 @@ static int mtk_cpufreq_init(struct cpufreq_policy *policy)
- 	policy->driver_data = info;
- 	policy->clk = info->cpu_clk;
- 
--	dev_pm_opp_of_register_em(policy->cpus);
-+	dev_pm_opp_of_register_em(info->cpu_dev, policy->cpus);
- 
- 	return 0;
- }
-diff --git a/drivers/cpufreq/omap-cpufreq.c b/drivers/cpufreq/omap-cpufreq.c
-index 8d14b42a8c6f..3694bb030df3 100644
---- a/drivers/cpufreq/omap-cpufreq.c
-+++ b/drivers/cpufreq/omap-cpufreq.c
-@@ -131,7 +131,7 @@ static int omap_cpu_init(struct cpufreq_policy *policy)
- 
- 	/* FIXME: what's the actual transition time? */
- 	cpufreq_generic_init(policy, freq_table, 300 * 1000);
--	dev_pm_opp_of_register_em(policy->cpus);
-+	dev_pm_opp_of_register_em(mpu_dev, policy->cpus);
- 
- 	return 0;
- }
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index fc92a8842e25..0a04b6f03b9a 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -238,7 +238,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 		goto error;
- 	}
- 
--	dev_pm_opp_of_register_em(policy->cpus);
-+	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
- 
- 	policy->fast_switch_possible = true;
- 
-diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
-index 20d1f85d5f5a..b0f5388b8854 100644
---- a/drivers/cpufreq/scpi-cpufreq.c
-+++ b/drivers/cpufreq/scpi-cpufreq.c
-@@ -167,7 +167,7 @@ static int scpi_cpufreq_init(struct cpufreq_policy *policy)
- 
- 	policy->fast_switch_possible = false;
- 
--	dev_pm_opp_of_register_em(policy->cpus);
-+	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
- 
- 	return 0;
- 
-diff --git a/drivers/cpufreq/vexpress-spc-cpufreq.c b/drivers/cpufreq/vexpress-spc-cpufreq.c
-index 83c85d3d67e3..4e8b1dee7c9a 100644
---- a/drivers/cpufreq/vexpress-spc-cpufreq.c
-+++ b/drivers/cpufreq/vexpress-spc-cpufreq.c
-@@ -450,7 +450,7 @@ static int ve_spc_cpufreq_init(struct cpufreq_policy *policy)
- 	policy->freq_table = freq_table[cur_cluster];
- 	policy->cpuinfo.transition_latency = 1000000; /* 1 ms */
- 
--	dev_pm_opp_of_register_em(policy->cpus);
-+	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
- 
- 	if (is_bL_switching_enabled())
- 		per_cpu(cpu_last_req_freq, policy->cpu) =
-diff --git a/drivers/opp/of.c b/drivers/opp/of.c
-index 5b75829a915d..4500ce46d476 100644
---- a/drivers/opp/of.c
-+++ b/drivers/opp/of.c
-@@ -1036,18 +1036,18 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_get_of_node);
- 
- /*
-  * Callback function provided to the Energy Model framework upon registration.
-- * This computes the power estimated by @CPU at @kHz if it is the frequency
-+ * This computes the power estimated by @dev at @kHz if it is the frequency
-  * of an existing OPP, or at the frequency of the first OPP above @kHz otherwise
-  * (see dev_pm_opp_find_freq_ceil()). This function updates @kHz to the ceiled
-  * frequency and @mW to the associated power. The power is estimated as
-- * P = C * V^2 * f with C being the CPU's capacitance and V and f respectively
-- * the voltage and frequency of the OPP.
-+ * P = C * V^2 * f with C being the device's capacitance and V and f
-+ * respectively the voltage and frequency of the OPP.
-  *
-- * Returns -ENODEV if the CPU device cannot be found, -EINVAL if the power
-- * calculation failed because of missing parameters, 0 otherwise.
-+ * Returns -EINVAL if the power calculation failed because of missing
-+ * parameters, 0 otherwise.
-  */
--static int __maybe_unused _get_cpu_power(unsigned long *mW, unsigned long *kHz,
--					 struct device *cpu_dev)
-+static int __maybe_unused _get_power(unsigned long *mW, unsigned long *kHz,
-+				     struct device *dev)
- {
- 	struct dev_pm_opp *opp;
- 	struct device_node *np;
-@@ -1056,7 +1056,7 @@ static int __maybe_unused _get_cpu_power(unsigned long *mW, unsigned long *kHz,
- 	u64 tmp;
- 	int ret;
- 
--	np = of_node_get(cpu_dev->of_node);
-+	np = of_node_get(dev->of_node);
- 	if (!np)
- 		return -EINVAL;
- 
-@@ -1066,7 +1066,7 @@ static int __maybe_unused _get_cpu_power(unsigned long *mW, unsigned long *kHz,
- 		return -EINVAL;
- 
- 	Hz = *kHz * 1000;
--	opp = dev_pm_opp_find_freq_ceil(cpu_dev, &Hz);
-+	opp = dev_pm_opp_find_freq_ceil(dev, &Hz);
- 	if (IS_ERR(opp))
- 		return -EINVAL;
- 
-@@ -1086,30 +1086,38 @@ static int __maybe_unused _get_cpu_power(unsigned long *mW, unsigned long *kHz,
- 
- /**
-  * dev_pm_opp_of_register_em() - Attempt to register an Energy Model
-- * @cpus	: CPUs for which an Energy Model has to be registered
-+ * @dev		: Device for which an Energy Model has to be registered
-+ * @cpus	: CPUs for which an Energy Model has to be registered. For
-+ *		other type of devices it should be set to NULL.
-  *
-  * This checks whether the "dynamic-power-coefficient" devicetree property has
-  * been specified, and tries to register an Energy Model with it if it has.
-+ * Having this property means the voltages are known for OPPs and the EM
-+ * might be calculated.
-  */
--void dev_pm_opp_of_register_em(struct cpumask *cpus)
-+int dev_pm_opp_of_register_em(struct device *dev, struct cpumask *cpus)
- {
--	struct em_data_callback em_cb = EM_DATA_CB(_get_cpu_power);
--	int ret, nr_opp, cpu = cpumask_first(cpus);
--	struct device *cpu_dev;
-+	struct em_data_callback em_cb = EM_DATA_CB(_get_power);
- 	struct device_node *np;
-+	int ret, nr_opp;
- 	u32 cap;
- 
--	cpu_dev = get_cpu_device(cpu);
--	if (!cpu_dev)
--		return;
-+	if (IS_ERR_OR_NULL(dev)) {
-+		ret = -EINVAL;
-+		goto failed;
-+	}
- 
--	nr_opp = dev_pm_opp_get_opp_count(cpu_dev);
--	if (nr_opp <= 0)
--		return;
-+	nr_opp = dev_pm_opp_get_opp_count(dev);
-+	if (nr_opp <= 0) {
-+		ret = -EINVAL;
-+		goto failed;
-+	}
- 
--	np = of_node_get(cpu_dev->of_node);
--	if (!np)
--		return;
-+	np = of_node_get(dev->of_node);
-+	if (!np) {
-+		ret = -EINVAL;
-+		goto failed;
-+	}
- 
- 	/*
- 	 * Register an EM only if the 'dynamic-power-coefficient' property is
-@@ -1120,9 +1128,20 @@ void dev_pm_opp_of_register_em(struct cpumask *cpus)
- 	 */
- 	ret = of_property_read_u32(np, "dynamic-power-coefficient", &cap);
- 	of_node_put(np);
--	if (ret || !cap)
--		return;
-+	if (ret || !cap) {
-+		dev_dbg(dev, "Couldn't find proper 'dynamic-power-coefficient' in DT\n");
-+		ret = -EINVAL;
-+		goto failed;
-+	}
- 
--	em_dev_register_perf_domain(cpu_dev, nr_opp, &em_cb, cpus);
-+	ret = em_dev_register_perf_domain(dev, nr_opp, &em_cb, cpus);
-+	if (ret)
-+		goto failed;
-+
-+	return 0;
-+
-+failed:
-+	dev_dbg(dev, "Couldn't register Energy Model %d\n", ret);
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(dev_pm_opp_of_register_em);
-diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
-index 747861816f4f..8df8b82054e5 100644
---- a/include/linux/pm_opp.h
-+++ b/include/linux/pm_opp.h
-@@ -11,6 +11,7 @@
- #ifndef __LINUX_OPP_H__
- #define __LINUX_OPP_H__
- 
-+#include <linux/energy_model.h>
- #include <linux/err.h>
- #include <linux/notifier.h>
- 
-@@ -360,7 +361,11 @@ int dev_pm_opp_of_get_sharing_cpus(struct device *cpu_dev, struct cpumask *cpuma
- struct device_node *dev_pm_opp_of_get_opp_desc_node(struct device *dev);
- struct device_node *dev_pm_opp_get_of_node(struct dev_pm_opp *opp);
- int of_get_required_opp_performance_state(struct device_node *np, int index);
--void dev_pm_opp_of_register_em(struct cpumask *cpus);
-+int dev_pm_opp_of_register_em(struct device *dev, struct cpumask *cpus);
-+static inline void dev_pm_opp_of_unregister_em(struct device *dev)
-+{
-+	em_dev_unregister_perf_domain(dev);
-+}
- #else
- static inline int dev_pm_opp_of_add_table(struct device *dev)
- {
-@@ -400,7 +405,13 @@ static inline struct device_node *dev_pm_opp_get_of_node(struct dev_pm_opp *opp)
- 	return NULL;
- }
- 
--static inline void dev_pm_opp_of_register_em(struct cpumask *cpus)
-+static inline int dev_pm_opp_of_register_em(struct device *dev,
-+					    struct cpumask *cpus)
-+{
-+	return -ENOTSUPP;
-+}
-+
-+static inline void dev_pm_opp_of_unregister_em(struct device *dev)
- {
- }
- 
--- 
-2.17.1
+On Tue, May 26, 2020 at 06:24:46PM +0530, Akash Asthana wrote:
+> Get the interconnect paths for I2C based Serial Engine device
+> and vote according to the bus speed of the driver.
+>=20
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
+Acked-by: Wolfram Sang <wsa@kernel.org>
+
+
+--+HP7ph2BbKc20aGI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl7OOxAACgkQFA3kzBSg
+KbZevQ/+NcEUgwnmhUa8aEnp2UoVMX6Wlv05FuCrQxi0nZIjygKPEPZk37yJnfyV
+PoMmuHleWfVuj38hY6Uk4MTpqgXGk73gNVBQdl0rMCnVX3lfBZTkITpg/afYnO2w
+/xDD20Au2+yGZlax34Q0Ux1GMGmz5AgZTnz2BwM7T7BmnpEPRUNaibtUApL6gR4f
+2IT7IDmDcuQrt7yl5zjN4PJOQlzYX8k/ltAclkeySaJgs6Txo5qYHY/RK0VxTg/5
+VKyjrdpf6YC5/RoUJqEQaNxBFBSstgzqdTmqhjBkgR1cl0h42bywtcRYgH+2sFPs
+xAldHIfYLHIjJGYE67YLUAhUBpeZ9Q5oIvRd/e7d18OeKoKNOUES2GZIB5SUE3hZ
+p97DyqZPeDns/xwecSDimx6y7QlW82IFYgqprVV8DAE3psOhzjAm2qbe5POKIS70
+jb5sa4LX741rzItM9tW6krBVN3YZk76P5nOYfAb1dX55RwzfKR0nTIUNt/QzwMhh
+6ta1ZxHItJYB2BBNkOxle4KjIKlA2ic2lUBmBzoImL3UdZ7TYk9ggzvtIEN2DUyP
+YAzz9pwwIV7O52gv/WVqM/Lz69qS+Mflog/pGKVi0QrLg2swLvPHohRc4Li+mjWv
+YXd/cuH/u1lIbyEr0/8Al+HCHt8lsTKtUqGk4WZlOkbUxl43jqw=
+=POQo
+-----END PGP SIGNATURE-----
+
+--+HP7ph2BbKc20aGI--
