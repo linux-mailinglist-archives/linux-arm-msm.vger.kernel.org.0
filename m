@@ -2,144 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A24CD1E4AE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 18:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B1B31E4BED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 19:32:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729100AbgE0Qsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 12:48:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37968 "EHLO
+        id S2387923AbgE0Rce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 13:32:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728384AbgE0Qsf (ORCPT
+        with ESMTP id S2388004AbgE0Rce (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 12:48:35 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4A2C03E97D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 09:48:34 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id z64so7529027pfb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 09:48:34 -0700 (PDT)
+        Wed, 27 May 2020 13:32:34 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BE3C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 10:32:33 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id b11so1144833qtt.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 10:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=za6ARY0VBuGDTK0WGdeuye4DkGA3nwoOEXEfB7D03/A=;
-        b=U7zKVOK36CSiGIkWO9PzuTCRy3IC1iPrjzBXceo3rq9D0YjiV93Th1i4HieKoxcWZS
-         tdxcvaUXzWo49AqA6c4q1oDWyoipxbfpigrbdigyosMsvBQPLdEjWMY3txVgeQOumcRa
-         npP3tepagkRWOw7OcG7SENeSHoFY5soxlHR6k=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=G2BXWCTTNBns33NDU0HybwyfZx0pKtO1nI+1NJmXgJE=;
+        b=pzODA/cBQXw/CEtKpRqf9bB5Am/l0I4597dz6MLmQeN2ifmLqZSlDgaAtCARJDivD6
+         9Kw418h/RetRSvPvlL+x1EYvHZCt7sD4zm0d+hDZx69Tfhz0qgQ11EsKjvSEYaOBzTgp
+         b5DZHfScEflBLAaKm+uce0alcIP4cqrff/9d1LxSimEuSPCTi+XHIizQkk/F06h9VE6S
+         6DN9TecBtt8FayDYBd3oNgyeUAZTz0aJYB/hXdCXK0Z5zIkG2cdLLzw7lx9I2VrvchJf
+         EIe/6mDvet+14KdS1N0+L3YEdhjUBQSpsBmrCwEzjmfgZ8SIWs7uAYXrJ1EmpEsx4G5t
+         8uRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=za6ARY0VBuGDTK0WGdeuye4DkGA3nwoOEXEfB7D03/A=;
-        b=JwqAxN74CDoZFh/VAmP6Lw8W1LZ0leKIl6fxLZTuI8Ku96NTNeIPtiA+qOIJHvD7/c
-         b5B2rRiYbbDKZuFETXBd9Q9enZApToWSOt2JBrYf63FXaLWQnZUcRa/L5lVpcFGzj0sS
-         SRp2URw15plfOeCVtx1YypEv7vnqrQlp7JEpkvhDP4Ar99CfXs1AVoOisuNSZUA0fBV+
-         2hmCV4mlaDCxGOYMth5BV+egn4GVdCwNTVb3VQA+kZQyi7zsVKLBrcDgzNGa2FDVYeNq
-         BheeaTbRti46NIJaXMXtCtCbsb+mMH3l3RFuGQrtVQDbxJZtrjLT2kp2CxIMVQr7whWd
-         m3tA==
-X-Gm-Message-State: AOAM532vt9TMqhZ87GmpyjjXlEINsUTzG5O0fH04y0w01HX33RZm3/lB
-        oF2u/ltTlhgg6A0GW7gM2J8WdPEqt58=
-X-Google-Smtp-Source: ABdhPJyqb0q4qiRLqAqHn23udCo2/NxZz9dVgFjpoD6PNAsO0erwwoT8gSf22MZnl67Bn4/BWzWBvA==
-X-Received: by 2002:a63:4d5a:: with SMTP id n26mr4999360pgl.85.1590598114452;
-        Wed, 27 May 2020 09:48:34 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id y65sm2502124pfb.76.2020.05.27.09.48.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 May 2020 09:48:33 -0700 (PDT)
-Date:   Wed, 27 May 2020 09:48:32 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org
-Subject: Re: [PATCH v3] bluetooth: hci_qca: Fix qca6390 enable failure after
- warm reboot
-Message-ID: <20200527164832.GH4525@google.com>
-References: <1590546759-27387-1-git-send-email-zijuhu@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=G2BXWCTTNBns33NDU0HybwyfZx0pKtO1nI+1NJmXgJE=;
+        b=ajPB9edrasI+fssqG7hB4lQd8VVV4wMaF28OhEHWjJmISgccLof7q9iiCK6gohGs6V
+         eh5d20tPW3FFY0QHxTqZq2P7OdrRas4RgwERphnQgaFPyDrN1HdsZaFpw5uRzWO7kb2k
+         vuW0SQVcQKxWTUyCU7/JPfy8zEhyXHEJOGFp6X0zLnI5bUvfcNALhJf/Rla9RfWR30Tw
+         hoJ7kYZReSx3OA95+jf97HziIsqwKpDfGKGW4WP/AUSwd4hyE1vxHoSqlwkkf542zPPh
+         wTjHXf1Yz7G3Zy/ZDBY6rHDxgNM/5O4re2/o1KAmK7FRZHnEgUHntcZUiFLFt+18y/uA
+         Gkjg==
+X-Gm-Message-State: AOAM530FnI7wfsJeqR54kGYF/v33tn/Om1DKYFxqBVofg6KXmgVwgdn1
+        AmkqlYEZQZjX0skFohYOWpeD1axgvFLQFEvqmgY4vw==
+X-Google-Smtp-Source: ABdhPJwXpn5szmnzOAoismmK3gW+NO2iRmAMAWoX2x9kLxI2DQOfwiJkkj58xfMAJP5sIq8ExwuoK929yeVdXcjTQns=
+X-Received: by 2002:aed:312a:: with SMTP id 39mr5473720qtg.6.1590600752651;
+ Wed, 27 May 2020 10:32:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1590546759-27387-1-git-send-email-zijuhu@codeaurora.org>
+References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
+ <1589453659-27581-6-git-send-email-smasetty@codeaurora.org>
+ <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com> <CAF6AEGtoNwUGX-r7QytGn5hSU-VD4RJZyhcb3WdgAgAFR5BK4A@mail.gmail.com>
+ <c8a514c9-5e48-b561-4b45-47cde3bdfb34@codeaurora.org> <CAF6AEGvOtgpHMuiw01QgRYGEBB2rp5QOdVMpkTMsi0c-QSSv1Q@mail.gmail.com>
+In-Reply-To: <CAF6AEGvOtgpHMuiw01QgRYGEBB2rp5QOdVMpkTMsi0c-QSSv1Q@mail.gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Wed, 27 May 2020 10:31:55 -0700
+Message-ID: <CAGETcx_fuS8cmTwCbZ024gqWOmeAc_ytZZ2P6yReBi7Y9O+qMQ@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 5/6] drm: msm: a6xx: use dev_pm_opp_set_bw to
+ set DDR bandwidth
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Sharat Masetty <smasetty@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
+On Wed, May 27, 2020 at 8:38 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Wed, May 27, 2020 at 1:47 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
+> >
+> > + more folks
+> >
+> > On 5/18/2020 9:55 PM, Rob Clark wrote:
+> > > On Mon, May 18, 2020 at 7:23 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+> > >> On Thu, May 14, 2020 at 04:24:18PM +0530, Sharat Masetty wrote:
+> > >>> This patches replaces the previously used static DDR vote and uses
+> > >>> dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
+> > >>> GPU frequency.
+> > >>>
+> > >>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> > >>> ---
+> > >>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +-----
+> > >>>   1 file changed, 1 insertion(+), 5 deletions(-)
+> > >>>
+> > >>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > >>> index 2d8124b..79433d3 100644
+> > >>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > >>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > >>> @@ -141,11 +141,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+> > >>>
+> > >>>        gmu->freq = gmu->gpu_freqs[perf_index];
+> > >>>
+> > >>> -     /*
+> > >>> -      * Eventually we will want to scale the path vote with the frequency but
+> > >>> -      * for now leave it at max so that the performance is nominal.
+> > >>> -      */
+> > >>> -     icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
+> > >>> +     dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
+> > >>>   }
+> > >> This adds an implicit requirement that all targets need bandwidth settings
+> > >> defined in the OPP or they won't get a bus vote at all. I would prefer that
+> > >> there be an default escape valve but if not you'll need to add
+> > >> bandwidth values for the sdm845 OPP that target doesn't regress.
+> > >>
+> > > it looks like we could maybe do something like:
+> > >
+> > >    ret = dev_pm_opp_set_bw(...);
+> > >    if (ret) {
+> > >        dev_warn_once(dev, "no bandwidth settings");
+> > >        icc_set_bw(...);
+> > >    }
+> > >
+> > > ?
+> > >
+> > > BR,
+> > > -R
+> >
+> > There is a bit of an issue here - Looks like its not possible to two icc
+> > handles to the same path.  Its causing double enumeration of the paths
+> > in the icc core and messing up path votes. With [1] Since opp/core
+> > already gets a handle to the icc path as part of table add,  drm/msm
+> > could do either
 
-On Wed, May 27, 2020 at 10:32:39AM +0800, Zijun Hu wrote:
-> Warm reboot can not restore qca6390 controller baudrate
-> to default due to lack of controllable BT_EN pin or power
-> supply, so fails to download firmware after warm reboot.
-> 
-> Fixed by sending EDL_SOC_RESET VSC to reset controller
-> within added device shutdown implementation.
-> 
-> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
-> ---
->  drivers/bluetooth/hci_qca.c | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index e4a6823..4b6f8b6 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1975,6 +1975,34 @@ static void qca_serdev_remove(struct serdev_device *serdev)
->  	hci_uart_unregister_device(&qcadev->serdev_hu);
->  }
->  
-> +static void qca_serdev_shutdown(struct device *dev)
-> +{
-> +	int ret;
-> +	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-> +	struct serdev_device *serdev = to_serdev_device(dev);
-> +	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-> +	const u8 ibs_wake_cmd[] = { 0xFD };
-> +	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
-> +
-> +	if (qcadev->btsoc_type == QCA_QCA6390) {
-> +		serdev_device_write_flush(serdev);
-> +		serdev_device_write_buf(serdev,
-> +				ibs_wake_cmd, sizeof(ibs_wake_cmd));
-> +		serdev_device_wait_until_sent(serdev, timeout);
+Are you sure this is the real issue? I'd be surprised if this is a
+real limitation. And if it is, it either needs to be fixed in the ICC
+framework or OPP shouldn't be getting path handles by default (and
+maybe let the driver set the handles before using OPP APIs to change
+BW). I'd lean towards the former.
 
-Why no check of the return value of serdev_device_write_buf() here,
-does it make sense to continue if sending the wakeup command failed?
+> > a) Conditionally enumerate gpu->icc_path handle only when pm/opp core
+> > has not got the icc path handle. I could use something like [2] to
+> > determine if should initialize gpu->icc_path*
 
-Couldn't serdev_device_write() be used instead of the _write_buf() +
-_wait_until_sent() combo?
+This seems like a bandaid. Let's fix it correctly in ICC framework or
+OPP framework.
 
-> +		usleep_range(8000, 10000);
-> +
-> +		serdev_device_write_flush(serdev);
+> > b) Add peak-opp-configs in 845 dt and mandate all future versions to use
+> > this bindings. With this, I can remove gpu->icc_path from msm/drm
+> > completely and only rely on opp/core for bw voting.
 
-I suppose the flush is done because _wait_until_sent() could have timed out.
-Another reason to use _device_write() (if suitable), since it returns
--ETIMEDOUT in that case?
+I don't know what you mean by "peak-opp-configs" but I guess you are
+referring to some kind of DT flag to say if you should vote for BW
+directly or use the OPP framework? If so, I'm pretty sure that won't
+fly. That's an OS implementation specific flag.
 
-> +		ret = serdev_device_write_buf(serdev,
-> +				edl_reset_soc_cmd, sizeof(edl_reset_soc_cmd));
-> +		if (ret < 0) {
-> +			BT_ERR("QCA send EDL_RESET_REQ error: %d", ret);
-> +			return;
-> +		}
-> +		serdev_device_wait_until_sent(serdev, timeout);
-> +		usleep_range(8000, 10000);
-> +	}
-> +}
-> +
->  static int __maybe_unused qca_suspend(struct device *dev)
->  {
->  	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
-> @@ -2100,6 +2128,7 @@ static struct serdev_device_driver qca_serdev_driver = {
->  		.name = "hci_uart_qca",
->  		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
->  		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
-> +		.shutdown = qca_serdev_shutdown,
->  		.pm = &qca_pm_ops,
->  	},
->  };
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-> 
+-Saravana
