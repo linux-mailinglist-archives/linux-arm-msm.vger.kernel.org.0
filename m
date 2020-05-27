@@ -2,131 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 05C2B1E4E2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 21:31:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 108321E4E4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 21:36:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725320AbgE0TbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 15:31:12 -0400
-Received: from mail-il1-f193.google.com ([209.85.166.193]:46193 "EHLO
-        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725306AbgE0TbL (ORCPT
+        id S1726938AbgE0Tgn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 15:36:43 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:38226 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725872AbgE0Tgm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 15:31:11 -0400
-Received: by mail-il1-f193.google.com with SMTP id h3so2750540ilh.13;
-        Wed, 27 May 2020 12:31:10 -0700 (PDT)
+        Wed, 27 May 2020 15:36:42 -0400
+Received: by mail-io1-f67.google.com with SMTP id d7so27457174ioq.5;
+        Wed, 27 May 2020 12:36:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=sAgRZEOkeo465WXLSSAxn5bIub6KkhXGVZu40dWUrNY=;
-        b=YsdwlX1SRlOdBIcTFUinNLMlHsDSxLUyYko+1yxh2jWcnm6Rh5fxesKYY++SBUuXcn
-         LyckZyBgPkdSFOE7IGQ+RXE2AXLj2Er1gWzGmudzdya6TTUXaiZfVBy7tOXCAmNSqn8l
-         SyoF+v3W5/zC7H/PX0ZBgT1IW2VLvlFfoEXL/2p8M0h27zQprINOdjwIekjq0HQbDVJS
-         PNja+8RUZYhP8rrTyRAWbDoOHpOIObuT7ja3ufzPJwoFQfL9Me6NJBgeYZt7OGnj2He/
-         GJ6M4zDdwxn1LkFpgm8nicDhyTXcnDCPe5G/h8v3CbGYABb3vPKFC1wi8jkUAC8cfscr
-         AxnA==
-X-Gm-Message-State: AOAM531ylw7R0tqnr/cEHc9jmeOtmlIMMQiSWj+Rp38pajAd+GSETtTw
-        m3YsgPYl+apy5y7CRFyc+w==
-X-Google-Smtp-Source: ABdhPJx/5Sz7NHPGLgt5sw/lt8hHsq2px9eDP7QopDynfCqhw3zJ0ye1bD3gS7CWWHQCIoXwZYDsKg==
-X-Received: by 2002:a92:8d03:: with SMTP id s3mr7285926ild.256.1590607870279;
-        Wed, 27 May 2020 12:31:10 -0700 (PDT)
+        bh=io7JL+6QWqwr5UMM9NElEX66dtm9kKXNvmpsHXQSLm8=;
+        b=l2gERoQnmyqHY8g+/VuMbG3/10li/MIaPvO/8px7BVVZWCEVDOBlMF2pEVD74TODpG
+         qGbW+IvIXcikiqr39TrQOrpGpBPF2BTBYp07rnWDuDG99Q1ufjf4A7OyR9slT68I6zb+
+         92HFVPP6kBot1Uh9xVuyLy7HGra6HpUv7XD2Dw9O0rLPSU71GCS4BuFUMQ0YAl0Db6LM
+         6QDC4M7sZFaMueMEJVVLWxIBHKrkhmQR2SHLAq4Lj+2jGNh7qazKcApN65MtgO6vKQlB
+         fjemnw+Cg/f4NJD9Cx0qqkxvSydyRYkWN2VdikOX+HnQNQ4yyhvOklcenbYwdFztUfbL
+         nDTw==
+X-Gm-Message-State: AOAM530JNaydLIhkgzGt6ELdQTT8Pj7SuB0/7sItLIo9XSuv+Aa4yzXS
+        x9e5SozDSSIDaKTr2X4kWA==
+X-Google-Smtp-Source: ABdhPJzja/44mLPDsRi9Us+9wAPvOQ/J+0Wdpj6Prbtm0EAoaesENU75sSr4Wx7bmnNEdQs7rA6GEg==
+X-Received: by 2002:a02:740d:: with SMTP id o13mr606075jac.42.1590608200163;
+        Wed, 27 May 2020 12:36:40 -0700 (PDT)
 Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id y11sm1976877ily.22.2020.05.27.12.31.09
+        by smtp.gmail.com with ESMTPSA id o70sm2146812ild.3.2020.05.27.12.36.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2020 12:31:09 -0700 (PDT)
-Received: (nullmailer pid 2600923 invoked by uid 1000);
-        Wed, 27 May 2020 19:31:08 -0000
-Date:   Wed, 27 May 2020 13:31:08 -0600
+        Wed, 27 May 2020 12:36:39 -0700 (PDT)
+Received: (nullmailer pid 2608242 invoked by uid 1000);
+        Wed, 27 May 2020 19:36:38 -0000
+Date:   Wed, 27 May 2020 13:36:38 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: hwlock: qcom: Migrate binding to YAML
-Message-ID: <20200527193108.GA2597510@bogus>
-References: <20200513005441.1102586-1-bjorn.andersson@linaro.org>
- <20200513005441.1102586-2-bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org
+Subject: Re: [PATCH v2] dt-bindings: media: venus: Add an optional power
+ domain for perf voting
+Message-ID: <20200527193638.GA2604206@bogus>
+References: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200513005441.1102586-2-bjorn.andersson@linaro.org>
+In-Reply-To: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 12, 2020 at 05:54:38PM -0700, Bjorn Andersson wrote:
-> Migrate the Qualcomm TCSR mutex binding to YAML to allow validation.
-
-Where's the deletion of the old text file?
-
-Looks fine if this is existing. Lots of comments if this is a new 
-binding...
-
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Wed, May 13, 2020 at 11:33:27AM +0530, Rajendra Nayak wrote:
+> Add an optional power domain which when specified can be used for
+> setting the performance state of Venus.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 > ---
->  .../bindings/hwlock/qcom-hwspinlock.yaml      | 51 +++++++++++++++++++
->  1 file changed, 51 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
+>  Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
+>  Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
+>  2 files changed, 10 insertions(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> new file mode 100644
-> index 000000000000..71e63b52edd5
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> @@ -0,0 +1,51 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/hwlock/qcom-hwspinlock.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Hardware Mutex Block
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description:
-> +  The hardware block provides mutexes utilized between different processors on
-> +  the SoC as part of the communication protocol used by these processors.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sfpb-mutex
-> +      - qcom,tcsr-mutex
-> +
-> +  '#hwlock-cells':
-> +    const: 1
-> +
-> +  syscon:
-> +    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    description:
-> +      Should be a triple of phandle referencing the TCSR mutex syscon, offset
-> +      of first mutex within the syscon and stride between each mutex.
-> +
-> +required:
-> +  - compatible
-> +  - '#hwlock-cells'
-> +  - syscon
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        tcsr_mutex_block: syscon@fd484000 {
-> +                compatible = "syscon";
-> +                reg = <0xfd484000 0x2000>;
-> +        };
-> +
-> +        hwlock {
-> +                compatible = "qcom,tcsr-mutex";
-> +                syscon = <&tcsr_mutex_block 0 0x80>;
-> +
-> +                #hwlock-cells = <1>;
-> +        };
-> +...
-> -- 
-> 2.26.2
-> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> index 764affa..ac1ed64 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> @@ -25,12 +25,16 @@ properties:
+>      maxItems: 1
+>  
+>    power-domains:
+> -    maxItems: 2
+> +    minItems: 2
+> +    maxItems: 3
+>  
+>    power-domain-names:
+> +    minItems: 2
+> +    maxItems: 3
+>      items:
+>        - const: venus
+>        - const: vcodec0
+> +      - const: opp-pd
+
+Humm, looks suspicious. This is a phyical power island in this block? 
+Because that's what 'power-domains' are supposed to represent. Not $os 
+pm-domain construct.
+
+Rob
