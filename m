@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F33271E4222
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 14:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CA8A1E422C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 14:25:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729834AbgE0MZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 08:25:07 -0400
+        id S1729622AbgE0MZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 08:25:02 -0400
 Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:38005 "EHLO
         alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729709AbgE0MZH (ORCPT
+        by vger.kernel.org with ESMTP id S1729471AbgE0MZC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 08:25:07 -0400
+        Wed, 27 May 2020 08:25:02 -0400
 Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 May 2020 05:25:03 -0700
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 May 2020 05:25:01 -0700
 Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
   by ironmsg01-sd.qualcomm.com with ESMTP; 27 May 2020 05:24:57 -0700
 Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id 47F7721805; Wed, 27 May 2020 17:54:56 +0530 (IST)
+        id 68ACC21807; Wed, 27 May 2020 17:54:56 +0530 (IST)
 From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
         mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Subject: [PATCH V6 2/5] clk: qcom: Add ipq apss pll driver
-Date:   Wed, 27 May 2020 17:54:49 +0530
-Message-Id: <1590582292-13314-3-git-send-email-sivaprak@codeaurora.org>
+Subject: [PATCH V6 3/5] clk: qcom: Add DT bindings for ipq6018 apss clock controller
+Date:   Wed, 27 May 2020 17:54:50 +0530
+Message-Id: <1590582292-13314-4-git-send-email-sivaprak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1590582292-13314-1-git-send-email-sivaprak@codeaurora.org>
 References: <1590582292-13314-1-git-send-email-sivaprak@codeaurora.org>
@@ -35,152 +35,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The CPUs on Qualcomm ipq based devices are clocked by an alpha PLL.
-Add support for the apss pll found on ipq based devices which can
-support CPU frequencies above 1Ghz.
+Add dt-binding for ipq6018 apss clock controller
 
 Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
 ---
 [V6]
- * Addressed review comments from Stephen
- drivers/clk/qcom/Kconfig        |  8 ++++
- drivers/clk/qcom/Makefile       |  1 +
- drivers/clk/qcom/apss-ipq-pll.c | 95 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 104 insertions(+)
- create mode 100644 drivers/clk/qcom/apss-ipq-pll.c
+ * Addressed review comment from Stephen
+ include/dt-bindings/clock/qcom,apss-ipq.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+ create mode 100644 include/dt-bindings/clock/qcom,apss-ipq.h
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 11ec6f4..e70aa01 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -89,6 +89,14 @@ config APQ_MMCC_8084
- 	  Say Y if you want to support multimedia devices such as display,
- 	  graphics, video encode/decode, camera, etc.
- 
-+config IPQ_APSS_PLL
-+	tristate "IPQ APSS PLL"
-+	help
-+	  Support for APSS PLL on ipq devices. The APSS PLL is the main
-+	  clock that feeds the CPUs on ipq based devices.
-+	  Say Y if you want to support CPU frequency scaling on ipq based
-+	  devices.
-+
- config IPQ_GCC_4019
- 	tristate "IPQ4019 Global Clock Controller"
- 	help
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 691efbf..b4a6ba1 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -19,6 +19,7 @@ clk-qcom-$(CONFIG_QCOM_GDSC) += gdsc.o
- # Keep alphabetically sorted by config
- obj-$(CONFIG_APQ_GCC_8084) += gcc-apq8084.o
- obj-$(CONFIG_APQ_MMCC_8084) += mmcc-apq8084.o
-+obj-$(CONFIG_IPQ_APSS_PLL) += apss-ipq-pll.o
- obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
- obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
- obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
-diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+diff --git a/include/dt-bindings/clock/qcom,apss-ipq.h b/include/dt-bindings/clock/qcom,apss-ipq.h
 new file mode 100644
-index 0000000..e34f4cd
+index 0000000..77b6e05
 --- /dev/null
-+++ b/drivers/clk/qcom/apss-ipq-pll.c
-@@ -0,0 +1,95 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+#include <linux/clk-provider.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
++++ b/include/dt-bindings/clock/qcom,apss-ipq.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
++ */
 +
-+#include "clk-alpha-pll.h"
++#ifndef _DT_BINDINGS_CLOCK_QCA_APSS_IPQ6018_H
++#define _DT_BINDINGS_CLOCK_QCA_APSS_IPQ6018_H
 +
-+static const u8 ipq_pll_offsets[] = {
-+	[PLL_OFF_L_VAL] = 0x08,
-+	[PLL_OFF_ALPHA_VAL] = 0x10,
-+	[PLL_OFF_USER_CTL] = 0x18,
-+	[PLL_OFF_CONFIG_CTL] = 0x20,
-+	[PLL_OFF_CONFIG_CTL_U] = 0x24,
-+	[PLL_OFF_STATUS] = 0x28,
-+	[PLL_OFF_TEST_CTL] = 0x30,
-+	[PLL_OFF_TEST_CTL_U] = 0x34,
-+};
++#define APCS_ALIAS0_CLK_SRC			0
++#define APCS_ALIAS0_CORE_CLK			1
 +
-+static struct clk_alpha_pll ipq_pll = {
-+	.offset = 0x0,
-+	.regs = ipq_pll_offsets,
-+	.flags = SUPPORTS_DYNAMIC_UPDATE,
-+	.clkr = {
-+		.enable_reg = 0x0,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "a53pll",
-+			.parent_data = &(const struct clk_parent_data) {
-+				.fw_name = "xo",
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_huayra_ops,
-+		},
-+	},
-+};
-+
-+static const struct alpha_pll_config ipq_pll_config = {
-+	.l = 0x37,
-+	.config_ctl_val = 0x04141200,
-+	.config_ctl_hi_val = 0x0,
-+	.early_output_mask = BIT(3),
-+	.main_output_mask = BIT(0),
-+};
-+
-+static const struct regmap_config ipq_pll_regmap_config = {
-+	.reg_bits		= 32,
-+	.reg_stride		= 4,
-+	.val_bits		= 32,
-+	.max_register		= 0x40,
-+	.fast_io		= true,
-+};
-+
-+static int apss_ipq_pll_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct regmap *regmap;
-+	void __iomem *base;
-+	int ret;
-+
-+	base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
-+
-+	regmap = devm_regmap_init_mmio(dev, base, &ipq_pll_regmap_config);
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
-+
-+	clk_alpha_pll_configure(&ipq_pll, regmap, &ipq_pll_config);
-+
-+	ret = devm_clk_register_regmap(dev, &ipq_pll.clkr);
-+	if (ret)
-+		return ret;
-+
-+	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
-+							&ipq_pll.clkr.hw);
-+}
-+
-+static const struct of_device_id apss_ipq_pll_match_table[] = {
-+	{ .compatible = "qcom,ipq6018-a53pll" },
-+	{ }
-+};
-+
-+static struct platform_driver apss_ipq_pll_driver = {
-+	.probe = apss_ipq_pll_probe,
-+	.driver = {
-+		.name = "qcom-ipq-apss-pll",
-+		.of_match_table = apss_ipq_pll_match_table,
-+	},
-+};
-+module_platform_driver(apss_ipq_pll_driver);
-+
-+MODULE_DESCRIPTION("Qualcomm technology Inc APSS ALPHA PLL Driver");
-+MODULE_LICENSE("GPL v2");
++#endif
 -- 
 2.7.4
 
