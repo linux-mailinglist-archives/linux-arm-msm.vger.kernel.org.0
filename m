@@ -2,167 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F3821E36A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 05:37:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A49D41E36BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 05:53:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728516AbgE0Dhi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 23:37:38 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:55150 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728293AbgE0Dhh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 23:37:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590550657; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=iWRNhIYBBE9IoX+U4tY2OhxZqhbMj+cDW6tCU3auSsc=; b=IWC2iatvTwsoDwVn+p+ncuCJCkU1XI+PqVghjtsgrtyEAf1lWpXOC4Hxb1Sq45LNH69m+Sjr
- LkXQtl/6d6K1HNoQJgOhMeGr6Hh6EmUtxn7nNhoty8cYxcvuyxmFOZ3OY8xRminHuTjMYVr6
- D5W6+wjULKC8ugYwFgvof6n5VA0=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5ecde06a2dd9e15ae3e0fa43 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 03:37:14
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1AC60C43387; Wed, 27 May 2020 03:37:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03C4CC433C9;
-        Wed, 27 May 2020 03:37:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03C4CC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: [PATCH v2] bluetooth: hci_qca: Fix QCA6390 memdump failure
-Date:   Wed, 27 May 2020 11:37:07 +0800
-Message-Id: <1590550627-24618-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S2387523AbgE0Dxy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 23:53:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387519AbgE0Dxy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 May 2020 23:53:54 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025A2C03E97B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 20:53:53 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id a13so9627955pls.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 20:53:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IYMd1AnUAPkMGM+mZJ4SXD6TMuAQaYu5keXEtUSwigU=;
+        b=OYBybCvA4Wk60gJ0QRkPpb+8kKDOtMgLg5Msuhx1IAMH/EuJPHEk2+5QswUX2XkbTA
+         uIpNhFkyGJYuBSY+mdFa7w4sPg95usp/ddDeC/CnTYEaGXfwJxVvbNMfWmKCxsKQ9vBc
+         1hA0YB7FkWB+E9fKuxbpHcnilnJ9Nxu4RF9fiINeKd35PwKPeOG0Z3+ZB+ytOaSX5MfI
+         88jDa/DMvYvA+X8ibB8/Szk5bJCCRBs0vqECD6/c9BaQfXmZdUkGbXVBWtcX0vmKaZrX
+         8vPO+yp3unIffWr4l0TtD82PTyoZO+HZSA0bCgLxchBRcspuibBMv1bpSgjor49AL4sv
+         cF6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IYMd1AnUAPkMGM+mZJ4SXD6TMuAQaYu5keXEtUSwigU=;
+        b=IwevQd7x1Xp9rv4WABOXDn+KfttCRNdHd3oSMjeWtP+ftOoLJaXPGc9TiFg4QrA679
+         9kGxhzrtuREpw2qA9btArcXYvW4GWRHyPLcrqYWJXx2Oru8PvMAo6RqCBUdfFvlHYa+a
+         hs2RJhMY9/RpURThB7GfDYTe/39HS0pB5eD6JJrrQRtzRpXYD0XY+xljJK2737jTB9xO
+         SI0KlSL5b9QS6rYOB/rJ7AAfA05Jvb87Gx+53eJzSlUq6IGwSK0pZBsaAByDn9jK3ckH
+         y0AsZ2PuAMFwfME/MmjM+ttaYwoMKqoFrf8C0TuXDb0JvlQyir4SFPVmZ1tBVuo5KKBd
+         Mdfw==
+X-Gm-Message-State: AOAM531Q9IfFoRCgXv3O8ErupvFkDsOSgshttVsunGKVlydB6pB2t7Ym
+        ssJvnY+uVWLdzgprvXoRzmMaOw==
+X-Google-Smtp-Source: ABdhPJzneh3TIZ4iWzcoexcyoNh9amW0JOGqNov81CSCdr8FsV5jm5LYXnkl+oudXPsIFda/4RQstQ==
+X-Received: by 2002:a17:90a:e38f:: with SMTP id b15mr2842638pjz.206.1590551633445;
+        Tue, 26 May 2020 20:53:53 -0700 (PDT)
+Received: from localhost ([122.172.60.59])
+        by smtp.gmail.com with ESMTPSA id w186sm819760pff.83.2020.05.26.20.53.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 May 2020 20:53:51 -0700 (PDT)
+Date:   Wed, 27 May 2020 09:23:49 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     sboyd@kernel.org, georgi.djakov@linaro.org,
+        bjorn.andersson@linaro.org, saravanak@google.com, mka@chromium.org,
+        nm@ti.com, agross@kernel.org, david.brown@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, vincent.guittot@linaro.org,
+        amit.kucheria@linaro.org, ulf.hansson@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com
+Subject: Re: [PATCH v4 06/12] cpufreq: qcom: Update the bandwidth levels on
+ frequency change
+Message-ID: <20200527035349.mrvvxeg3lqv53jm2@vireshk-i7>
+References: <20200504202243.5476-1-sibis@codeaurora.org>
+ <20200504202243.5476-7-sibis@codeaurora.org>
+ <20200505045012.zfx2e6chqo5f3e4n@vireshk-i7>
+ <8fc5b72c9af6fd6a707a280cfc678677@codeaurora.org>
+ <b7e184b2da5b780a4e7e6ee47963f9b4@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b7e184b2da5b780a4e7e6ee47963f9b4@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCA6390 memdump VSE sometimes come to bluetooth driver
-with wrong sequence number as illustrated as follows:
-frame # in DEC: frame data in HEX
-1396: ff fd 01 08 74 05 00 37 8f 14
-1397: ff fd 01 08 75 05 00 ff bf 38
-1414: ff fd 01 08 86 05 00 fb 5e 4b
-1399: ff fd 01 08 77 05 00 f3 44 0a
-1400: ff fd 01 08 78 05 00 ca f7 41
-it is mistook for controller missing packets, so results
-in page fault after overwriting memdump buffer allocated.
+On 26-05-20, 23:18, Sibi Sankar wrote:
+> https://patchwork.kernel.org/cover/11548479/
+> GPU driver uses Georgi's series
+> for scaling and will need a way to
+> remove the icc votes in the suspend
+> path, (this looks like a pattern
+> that might be used by other clients
+> as well) I could probably update
+> opp_set_bw to support removing bw
+> when NULL opp is specified. Similarly
+> opp_set_rate will need to support
+> set bw to 0 when set_rate is passed
+> 0 as target freq for the same use case.
 
-it is fixed by ignoring QCA6390 sequence number error
-and checking buffer space before writing.
+Sure, please send a patch for that.
 
-Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 45 ++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index e4a6823..388fe01b 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -114,6 +114,7 @@ struct qca_memdump_data {
- 	char *memdump_buf_tail;
- 	u32 current_seq_no;
- 	u32 received_dump;
-+	u32 ram_dump_size;
- };
- 
- struct qca_memdump_event_hdr {
-@@ -976,6 +977,8 @@ static void qca_controller_memdump(struct work_struct *work)
- 	char nullBuff[QCA_DUMP_PACKET_SIZE] = { 0 };
- 	u16 seq_no;
- 	u32 dump_size;
-+	u32 rx_size;
-+	enum qca_btsoc_type soc_type = qca_soc_type(hu);
- 
- 	while ((skb = skb_dequeue(&qca->rx_memdump_q))) {
- 
-@@ -1029,6 +1032,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 
- 			skb_pull(skb, sizeof(dump_size));
- 			memdump_buf = vmalloc(dump_size);
-+			qca_memdump->ram_dump_size = dump_size;
- 			qca_memdump->memdump_buf_head = memdump_buf;
- 			qca_memdump->memdump_buf_tail = memdump_buf;
- 		}
-@@ -1052,25 +1056,52 @@ static void qca_controller_memdump(struct work_struct *work)
- 		 * packets in the buffer.
- 		 */
- 		while ((seq_no > qca_memdump->current_seq_no + 1) &&
-+			(soc_type != QCA_QCA6390) &&
- 			seq_no != QCA_LAST_SEQUENCE_NUM) {
- 			bt_dev_err(hu->hdev, "QCA controller missed packet:%d",
- 				   qca_memdump->current_seq_no);
-+			rx_size = qca_memdump->received_dump;
-+			rx_size += QCA_DUMP_PACKET_SIZE;
-+			if (rx_size > qca_memdump->ram_dump_size) {
-+				bt_dev_err(hu->hdev,
-+						"QCA memdump received %d, no space for missed packet",
-+						qca_memdump->received_dump);
-+				break;
-+			}
- 			memcpy(memdump_buf, nullBuff, QCA_DUMP_PACKET_SIZE);
- 			memdump_buf = memdump_buf + QCA_DUMP_PACKET_SIZE;
- 			qca_memdump->received_dump += QCA_DUMP_PACKET_SIZE;
- 			qca_memdump->current_seq_no++;
- 		}
- 
--		memcpy(memdump_buf, (unsigned char *) skb->data, skb->len);
--		memdump_buf = memdump_buf + skb->len;
--		qca_memdump->memdump_buf_tail = memdump_buf;
--		qca_memdump->current_seq_no = seq_no + 1;
--		qca_memdump->received_dump += skb->len;
-+		rx_size = qca_memdump->received_dump + skb->len;
-+		if (rx_size <= qca_memdump->ram_dump_size) {
-+			if ((seq_no != QCA_LAST_SEQUENCE_NUM) &&
-+					(seq_no != qca_memdump->current_seq_no))
-+				bt_dev_err(hu->hdev,
-+						"QCA memdump unexpected packet %d",
-+						seq_no);
-+			bt_dev_dbg(hu->hdev,
-+					"QCA memdump packet %d with length %d",
-+					seq_no, skb->len);
-+			memcpy(memdump_buf, (unsigned char *)skb->data,
-+					skb->len);
-+			memdump_buf = memdump_buf + skb->len;
-+			qca_memdump->memdump_buf_tail = memdump_buf;
-+			qca_memdump->current_seq_no = seq_no + 1;
-+			qca_memdump->received_dump += skb->len;
-+		} else {
-+			bt_dev_err(hu->hdev,
-+					"QCA memdump received %d, no space for packet %d",
-+					qca_memdump->received_dump, seq_no);
-+		}
- 		qca->qca_memdump = qca_memdump;
- 		kfree_skb(skb);
- 		if (seq_no == QCA_LAST_SEQUENCE_NUM) {
--			bt_dev_info(hu->hdev, "QCA writing crash dump of size %d bytes",
--				   qca_memdump->received_dump);
-+			bt_dev_info(hu->hdev,
-+					"QCA memdump Done, received %d, total %d",
-+					qca_memdump->received_dump,
-+					qca_memdump->ram_dump_size);
- 			memdump_buf = qca_memdump->memdump_buf_head;
- 			dev_coredumpv(&hu->serdev->dev, memdump_buf,
- 				      qca_memdump->received_dump, GFP_KERNEL);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-
+viresh
