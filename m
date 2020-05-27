@@ -2,170 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7A6F1E4FB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 22:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49B4B1E50FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 00:11:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727004AbgE0U4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 16:56:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48392 "EHLO
+        id S1726350AbgE0WLQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 18:11:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbgE0U4R (ORCPT
+        with ESMTP id S1725267AbgE0WLQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 16:56:17 -0400
-Received: from mo6-p00-ob.smtp.rzone.de (mo6-p00-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5300::7])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 194E5C05BD1E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 13:56:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590612974;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=NrTOSXu4SOQ1gOKsg7PYryvgB0102LBe+CTBKjN5pqs=;
-        b=jrcopy1I151lntQIb/25d/p/7LqjzkBi+A4B9hFC97tnE5qfe//bmyrEJR8n+wG3ER
-        oXbkTBlJA14j5pNGhf0X9b+Sy4dSSKCSmXWd2oV/w5D2Z0W9uYAK9/piJfaNo4hjHNcr
-        bf8MoUvNp+1F340WIUTg3P2Qp/Vz7Ol+2gbVgUqd3jbHJ/SwdxArpqcsvmD7V/9x0VDA
-        EkD6NDroJh8leVE+hqh4ObPJVARcS4eMbn1YjifkAhpu4z0iCUkaCWlgPEpVCYc7uXBv
-        zlFi/qOo61nFNAYoHUpA/7L2zo56gU85fCvq4Fi1RdGy7mGsO4lrYNeUwlAlQ1AbWrys
-        rXTQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/NBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.7.0 DYNA|AUTH)
-        with ESMTPSA id C07db0w4RKuDpYc
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Wed, 27 May 2020 22:56:13 +0200 (CEST)
-Date:   Wed, 27 May 2020 22:56:07 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Niklas Cassel <nks@flawful.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Message-ID: <20200527205518.GA8254@gerhold.net>
-References: <20200423045506.GJ987656@yoga>
- <20200525153246.GA9224@flawful.org>
- <20200525163638.GA41001@gerhold.net>
- <20200525194443.GA11851@flawful.org>
- <20200526085948.GA1329@gerhold.net>
- <20200526155419.GA9977@flawful.org>
- <20200526205403.GA7256@gerhold.net>
- <20200527103921.GB9977@flawful.org>
- <20200527120441.GA4166@gerhold.net>
- <20200527125919.GA16363@flawful.org>
+        Wed, 27 May 2020 18:11:16 -0400
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE24C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 15:11:15 -0700 (PDT)
+Received: by mail-ua1-x942.google.com with SMTP id c15so2208801uar.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 15:11:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ib++0cCLLitVx1shV2jGQa+ni4nOQcBF64cPLDTrgCc=;
+        b=NcXYcKIVwG0ueKs966DI5d737p2jqNpsHmdvqJgR5Ck2iSd69RDowe2cbDvVSielEW
+         4f4lDTsaueLXnEUlskfiQPVLfIGMNLtm+QHarALLKVNc2VVcQWaft+Ihz6qri+7/WBZj
+         pqaDs2RMNbRSOwWWEDWMuRuS01IjqvQlxSczM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ib++0cCLLitVx1shV2jGQa+ni4nOQcBF64cPLDTrgCc=;
+        b=UBaRxBubiHKj46hL3qTNiLjbXiDRqcyYtUQApM/fngMB+GyfP77DnhyDfEMPskn8Vz
+         nhJLahuQsjpWRzulqu4VkpiAH+8vaNli6OUerPfPz/WnEKXm9/dGpyh1JlWwTNYjpcrN
+         lIhzyvvX5xBNLs0Le1HLzoVBbmPpUwaB6LatOuDHe7TVIQ0kXYqgNN3iurLOyDs6dZre
+         Gycar5LRaEtF9Txrqum4T4fu5aSBOeOB3OxV9N1dFLVA7indBCn+luGg+E/p/5ndYq5a
+         InNA/Mvq6LxOVNr+og8ZgLnHxmer17x/FL2Y9FT7cNz20bQslo5xqZgPfJfqIwnTr5Nk
+         ADxA==
+X-Gm-Message-State: AOAM532GWTqeOlR07IxzihF34FlKPwKiO+1+xsXJxjxyJq9rmp+44Qz2
+        KMy/gzeTMxxm8neJNd/ZpU5C5ceKiVE=
+X-Google-Smtp-Source: ABdhPJwJNatYAmupampHokU8EsI4mCeBuhCI5RPAQ9QAIzDz4I/bIkuiekZidXsxSq/V0KsuVT+m0Q==
+X-Received: by 2002:a9f:2823:: with SMTP id c32mr6785188uac.99.1590617474098;
+        Wed, 27 May 2020 15:11:14 -0700 (PDT)
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com. [209.85.217.42])
+        by smtp.gmail.com with ESMTPSA id m25sm306500vsr.7.2020.05.27.15.11.12
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 May 2020 15:11:13 -0700 (PDT)
+Received: by mail-vs1-f42.google.com with SMTP id z13so2163425vsn.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 15:11:12 -0700 (PDT)
+X-Received: by 2002:a67:e884:: with SMTP id x4mr6706217vsn.106.1590617472047;
+ Wed, 27 May 2020 15:11:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200527125919.GA16363@flawful.org>
+References: <1588339863-1322-1-git-send-email-kalyan_t@codeaurora.org>
+ <CAD=FV=UJGivCyp=t0J++1DbSFDVf+5zSCcXgh83VZtssBmavjg@mail.gmail.com>
+ <32c01e9a5277bdbdbab868eb71688184@codeaurora.org> <CAD=FV=VVi6oUDx_2Yf543ZphS1oQJiQU8St0XNUHs7HyPkoTeg@mail.gmail.com>
+In-Reply-To: <CAD=FV=VVi6oUDx_2Yf543ZphS1oQJiQU8St0XNUHs7HyPkoTeg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 27 May 2020 15:11:00 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XphGpmBwZdL0jZ5HEFdxY3L7nH+s9_A0Kjamtg7j3R9w@mail.gmail.com>
+Message-ID: <CAD=FV=XphGpmBwZdL0jZ5HEFdxY3L7nH+s9_A0Kjamtg7j3R9w@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: ensure device suspend happens
+ during PM sleep
+To:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, mkrishn@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        travitej@codeaurora.org, LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>, nganji@codeaurora.org,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 27, 2020 at 02:59:19PM +0200, Niklas Cassel wrote:
-> On Wed, May 27, 2020 at 02:04:52PM +0200, Stephan Gerhold wrote:
-> > > I guess what you really want is two new optional callbacks in
-> > > dev_pm_opp_set_rate(), one before _generic_set_opp_regulator() and one
-> > > after, where you could do the MEMACC thing.
-> > > 
-> > > The callbacks need to have a parameter that tells if we are scaling down
-> > > or up.
-> > > 
-> > > Or, if Viresh doesn't like new function pointers, create a new
-> > > OPP_EVENT_* that you can register for, and in that callback you do what
-> > > you need.
-> > > 
-> > > Or, maybe you can even use the existing CPUFREQ_TRANSITION_NOTIFIER,
-> > > with CPUFREQ_PRECHANGE / CPUFREQ_POSTCHANGE, however, I'm not sure
-> > > how nicely they play when you are using the OPP library.
-> > > 
-> > 
-> > I'm not sure. Overall all of this doesn't really sound like it is going
-> > to make all this easier to understand (from looking at the device tree).
-> > We then have required-opps for VDD_MX, and CPR (which isn't really a
-> > power domain), and something entirely different for MEMACC (which like
-> > CPR, isn't really a power domain).
-> > 
-> > I don't know, right now this mixture of different approaches sounds
-> > rather complicated (and confusing) to me...
-> 
-> You are going to need performance states where it is needed,
-> e.g. for controlling MX (as it is a power domain).
-> For performance states, you using the required-opps DT property.
-> 
-> My 50 cents is just to not use it for something that is not
-> a power domain, e.g. MEMACC.
-> 
+Hi,
 
-I agree.
+On Fri, May 15, 2020 at 9:37 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Fri, May 15, 2020 at 5:06 AM <kalyan_t@codeaurora.org> wrote:
+> >
+> > On 2020-05-14 21:47, Doug Anderson wrote:
+> > > Hi,
+> > >
+> > > On Fri, May 1, 2020 at 6:31 AM Kalyan Thota <kalyan_t@codeaurora.org>
+> > > wrote:
+> > >>
+> > >> "The PM core always increments the runtime usage counter
+> > >> before calling the ->suspend() callback and decrements it
+> > >> after calling the ->resume() callback"
+> > >>
+> > >> DPU and DSI are managed as runtime devices. When
+> > >> suspend is triggered, PM core adds a refcount on all the
+> > >> devices and calls device suspend, since usage count is
+> > >> already incremented, runtime suspend was not getting called
+> > >> and it kept the clocks on which resulted in target not
+> > >> entering into XO shutdown.
+> > >>
+> > >> Add changes to force suspend on runtime devices during pm sleep.
+> > >>
+> > >> Changes in v1:
+> > >>  - Remove unnecessary checks in the function
+> > >>     _dpu_kms_disable_dpu (Rob Clark).
+> > >>
+> > >> Changes in v2:
+> > >>  - Avoid using suspend_late to reset the usagecount
+> > >>    as suspend_late might not be called during suspend
+> > >>    call failures (Doug).
+> > >>
+> > >> Changes in v3:
+> > >>  - Use force suspend instead of managing device usage_count
+> > >>    via runtime put and get API's to trigger callbacks (Doug).
+> > >>
+> > >> Changes in v4:
+> > >>  - Check the return values of pm_runtime_force_suspend and
+> > >>    pm_runtime_force_resume API's and pass appropriately (Doug).
+> > >>
+> > >> Changes in v5:
+> > >
+> > > Can you please put the version number properly in your subject?  It's
+> > > really hard to tell one version of your patch from another.
+> > >
+> > >
+> > >>  - With v4 patch, test cycle has uncovered issues in device resume.
+> > >>
+> > >>    On bubs: cmd tx failures were seen as SW is sending panel off
+> > >>    commands when the dsi resources are turned off.
+> > >>
+> > >>    Upon suspend, DRM driver will issue a NULL composition to the
+> > >>    dpu, followed by turning off all the HW blocks.
+> > >>
+> > >>    v5 changes will serialize the NULL commit and resource unwinding
+> > >>    by handling them under PM prepare and PM complete phases there by
+> > >>    ensuring that clks are on when panel off commands are being
+> > >>    processed.
+> > >
+> > > I'm still most definitely not an expert in how all the DRM pieces all
+> > > hook up together, but the solution you have in this patch seems wrong
+> > > to me.  As far as I can tell the "prepare" state isn't supposed to be
+> > > actually doing the suspend work and here that's exactly what you're
+> > > doing.  I think you should find a different solution to ensure
+> > > ordering is correct.
+> > >
+> > > -Doug
+> > >
+> >
+> > Hi,
+>
+> Quite honestly I'm probably not the right person to be reviewing this
+> code.  I mostly just noticed one of your early patches and it looked
+> strange to me.  Hopefully someone with actual experience in how all
+> the DRM components work together can actually review and see if this
+> makes sense.  Maybe Sean would know better?
+>
+> That being said, let me at least look at what you're saying...
+>
+>
+> > Prepare and Complete are callbacks defined as part of Sleep and Resume
+> > sequence
+> >
+> > Entering PM SUSPEND the phases are : prepare --> suspend -->
+> > suspend_late --> suspend_noirq.
+> > While leaving PM SUSPEND the phases are: resume_noirq --> resume_early
+> > --> resume --> complete.
+>
+> Sure, it's part of the sequence.  It's also documented in pm.h as:
+>
+>  * The principal role of this callback is to prevent new children of
+>  * the device from being registered after it has returned (the driver's
+>  * subsystem and generally the rest of the kernel is supposed to prevent
+>  * new calls to the probe method from being made too once @prepare() has
+>  * succeeded).
+>
+> It does not feel like that matches your usage of this call.
+>
+>
+> > The reason to push drm suspend handling to PM prepare phase is that
+> > parent here will trigger a modeset to turn off the timing and
+> > subsequently the panel.
+> > the child devices should not turn of their clocks before parent unwinds
+> > the composition. Hence they are serialized as per the sequence mentioned
+> > above.
+>
+> So the general model in Linux is that children suspend before their
+> parents, right?  So you're saying that, in this case, the parent needs
+> to act on the child before the child suspends.  Is that correct?
+>
+> Rather than hijacking the prepare/complete, I'd be at least slightly
+> inclined to move the other driver to turn off its clocks in
+> suspend_late and to turn them back on in resume_early?  That seems to
+> be what was done in "analogix_dp-rockchip.c" to solve a similar
+> problem.
+>
+>
+> > A similar approach is taken by other driver that use drm framework. In
+> > this driver, the device registers for prepare and complete callbacks to
+> > handle drm_suspend and drm_resume.
+> > https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/exynos/exynos_drm_drv.c#L163
+>
+> OK, if there is another driver in DRM then I guess I won't object too
+> strongly.  Note that when searching for other drivers I noticed this
+> bit in todo.rst:
+>
+> * Most drivers (except i915 and nouveau) that use
+> * drm_atomic_helper_suspend/resume() can probably be converted to use
+> * drm_mode_config_helper_suspend/resume(). Also there's still open-coded version
+> * of the atomic suspend/resume code in older atomic modeset drivers.
+>
+> Does anything get fixed if you do that?  It seems like it'd cleanup
+> your code a bit so maybe worth doing anyway...
+>
+> ---
+>
+> I guess the last question I'd want resolved is why you have this asymmetry:
+>
+> SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, msm_pm_resume)
+>
+> Why couldn't you use pm_runtime_force_resume()?
 
-> > 
-> > Just to throw another idea in the room: there seems to be a set_opp()
-> > callback already in the OPP table, which bypasses the code that
-> > updates clock and regulators (see ti-opp-supply.c). Actually if I'm
-> > reading this correctly ti-opp-supply seems to implement adaptive voltage
-> > scaling similar to CPR with it. Seemingly we have two different solutions
-> > for the same concept now:
-> > 
-> >   - CPR implements a power domain provider (even though it's not really
-> >     a power domain since it has only one consumer)
-> >   - ti-opp-supply implements this with the set_opp() callback
-> 
-> Yes, and there are more ways to implement AVS, see e.g.
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=25cb20a212a1f989385dfe23230817e69c62bee5
-> 
-> Which probably would have been a better fit for CPR,
-> if it were to be designed today.
-> 
+I'm curious if you had answers to any of the questions I posed in my review.
 
-Would this actually work if you update the voltage of the current OPP?
-Looking at the qcom-cpr code the voltage is dynamically changed when
-receiving IRQs. I would say with that function you can only change the
-voltage when switching to that OPP the next time. Maybe I'm wrong though.
-
-Otherwise that's pretty nice, because the setup is very similar with or
-without CPR (since the regulator is still managed by the OPP core).
-
-> > 
-> > In general I think this looks pretty nice - we don't duplicate the full
-> > cpufreq driver, but have control about the order
-> > regulators/clocks/power domains etc are changed.
-> > 
-> > I think something like this would fit quite well for my case
-> > (scaling MX, APC and MEMACC without CPR). However, not sure how it would
-> > integrate with the existing CPR driver at some point.
-> 
-> You care about how to do DVFS without AVS (CPR).
-> 
-> Why do you worry about how it will look when, if ever,
-> you transition to full AVS (CPR)?
-> 
-
-I mean, CPR is arguably the better solution on long term.
-I doubt it will be me who will enable it for MSM8916 (mainly for lack of
-understanding of the whole scaling formulas etc), but IMO it would be
-worth to at least consider how to switch in the future.
-
-> If the CPR driver is not changed, which I doubt, you will simply change
-> the device tree to remove the cpu-supply regulator and move it into the
-> new CPR DT node.
-> 
-> Old device trees will still use your DVFS solution, new device
-> trees will use the CPR DT node and will use the AVS solution.
-> 
-
-I think my concern is essentially that I would duplicate the MEMACC code
-into a new driver utilizing .set_opp() - and to keep backwards
-compatibility we would need to keep that duplication forever.
-
-The MEMACC scaling isn't all that complicated, but overall I would
-prefer to avoid introducing duplication in the first place.
-
-Also: If full CPR ever happens we would be basically back
-to one part of the current discussion: specifying two "required-opps"
-MX and CPR (= APC + MEMACC) would result in the wrong order
-when scaling up/down.
-
-But maybe I just worry too much?
-
-Thanks,
-Stephan
+-Doug
