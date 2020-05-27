@@ -2,131 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1D601E35F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 04:56:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF9DB1E3619
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 05:02:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728259AbgE0Czq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 22:55:46 -0400
-Received: from mta-p7.oit.umn.edu ([134.84.196.207]:41690 "EHLO
-        mta-p7.oit.umn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbgE0Czq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 22:55:46 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by mta-p7.oit.umn.edu (Postfix) with ESMTP id 49WwSK2f8jz9vJs1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 02:55:45 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at umn.edu
-Received: from mta-p7.oit.umn.edu ([127.0.0.1])
-        by localhost (mta-p7.oit.umn.edu [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id ACZmYrvWI722 for <linux-arm-msm@vger.kernel.org>;
-        Tue, 26 May 2020 21:55:45 -0500 (CDT)
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com [209.85.166.198])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1728066AbgE0DCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 23:02:17 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:28792 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725893AbgE0DCR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 May 2020 23:02:17 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 May 2020 23:02:16 EDT
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590548536; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=6Ift2CZ2f8hYhU8lvSz1kq7TxcCrUamQ2r8BuaLxoas=; b=Z5Ct8mZkp+4X3w0tcw4XazDDZLGDfZDAkFMbUsnXxH/fUTzJDyHC6+aL2Scn6SqzYWUhId7m
+ KDNEXEr1jwnxnW3XHTiVeGrt6HgXSRmafLCjefegIChPDODxxU0BYNYsG2L84r6lwauR0D+x
+ kzZoALjhpx11FNHftAK1Ow7JMuI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5ecdd70b2dd9e15ae3d5383d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 02:57:15
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 81085C433C6; Wed, 27 May 2020 02:57:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mta-p7.oit.umn.edu (Postfix) with ESMTPS id 49WwSK0wL1z9vJrd
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 21:55:45 -0500 (CDT)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mta-p7.oit.umn.edu 49WwSK0wL1z9vJrd
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-p7.oit.umn.edu 49WwSK0wL1z9vJrd
-Received: by mail-il1-f198.google.com with SMTP id v87so19224511ill.23
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2020 19:55:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umn.edu; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=dd9TczXeKWbVN5d9i1e4JepiH139Y9rdVzxnRRWNp88=;
-        b=I1PT9sPm4WcUrEiIQ1S3ZUiObaUysFl97PlWe/VAhRNCrhzJQYyNP6Hn0V7cnJgFFt
-         lsV96KMIvxM54AHjO3cYchqFRc+FKWUXtW/OM1RC1akTgSX7tD/7TkU3W81P7/msPPl/
-         nlIxYzM+L8dZIibGy9mPKMpz2UxflLKrBL88CD4TvyNFY/83OKQGL9PJvsc03Ms6QcFz
-         +w4T7/sIuDVeyKCUjaquACx5V6x+btMUYqqgecYnuA4tTutQaa+oixCHaLBzpcCrM+DN
-         nw42UaBY6C8vSUU1etu/J4ha6ajphVS13rLf0kyDr8t+GWLCdageKidRCvz/MxxgX2Su
-         /DrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=dd9TczXeKWbVN5d9i1e4JepiH139Y9rdVzxnRRWNp88=;
-        b=eXugIRjTmCeyaf5vpTpGxDv46j0YGcYEdeXrschlgmTb9C+3Zq39F+DsTF9r+9Ekcc
-         9dQagUKa+VqfrCqkikxxyDDCzphh7LdbkQWwVYw+wy6fB+0ALDSIbIL6ohnWJ9+FMlsJ
-         URkW3ipTuGbQudzWmGfQfib/EdtlUSPXBD7aJ+UwdZX6uq+yjVHiGos3QVb/WT8uQLxX
-         lFQ7CasaH8Zc8QLCFX5VwaehsSbYoCuK7WenapvThoBx1WcsAnrMuucoYCfJDNGcY9xo
-         YnputUVu1YGZAbCZ3jHVhF2UjMLv+LlIElTOi3ln3BrSRo68q4Cia9QstohZNcKBzUOD
-         MRoA==
-X-Gm-Message-State: AOAM533UY6OtkmFxgX5u5h9131hagBs321LQR8lriOkcHBUfywpzJqDq
-        bR2QTyutyQlIeaZpElbGdhL8keSF1/sdaUWGX1ioAiQwxbkj3Z6+5Hi9n7Hw7nvNCwjhRFgej6S
-        M/KBuxArP40NMBuk2HtQF/b+Qi+dO4A==
-X-Received: by 2002:a92:58d6:: with SMTP id z83mr3895932ilf.129.1590548144631;
-        Tue, 26 May 2020 19:55:44 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzHYUY+uSNCCON7fyGW5rBDCaOJIjvP0uCMCJ/fAmp1UOgXVlUABz74vZTjaLO5+Tbkt+YNig==
-X-Received: by 2002:a92:58d6:: with SMTP id z83mr3895912ilf.129.1590548144188;
-        Tue, 26 May 2020 19:55:44 -0700 (PDT)
-Received: from qiushi.dtc.umn.edu (cs-kh5248-02-umh.cs.umn.edu. [128.101.106.4])
-        by smtp.gmail.com with ESMTPSA id j17sm882047ilq.79.2020.05.26.19.55.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2020 19:55:43 -0700 (PDT)
-From:   wu000273@umn.edu
-To:     svarbanov@mm-sol.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, helgaas@google.com,
-        p.zabel@pengutronix.de, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Markus.Elfring@web.de, kjlu@umn.edu, wu000273@umn.edu
-Subject: [PATCH V2] PCI: qcom: Improve exception handling in qcom_pcie_probe().
-Date:   Tue, 26 May 2020 21:55:31 -0500
-Message-Id: <20200527025531.32357-1-wu000273@umn.edu>
-X-Mailer: git-send-email 2.17.1
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E50E7C433C9;
+        Wed, 27 May 2020 02:57:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E50E7C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org
+Subject: [PATCH v2] Bluetooth: hci_qca: Improve controller ID info log level
+Date:   Wed, 27 May 2020 10:57:09 +0800
+Message-Id: <1590548229-17812-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Qiushi Wu <wu000273@umn.edu>
+Controller ID info got by VSC EDL_PATCH_GETVER is very
+important, so improve its log level from DEBUG to INFO.
 
-This function contained improvable implementation details according to
-exception handling.
-1. pm_runtime_put() should be called after pm_runtime_get_sync() failed,
-because the reference count will be increased despite of the failure.
-Thus add the missed function call.
-2. pm_runtime_disable() are called twice, after the call of phy_init() and
-dw_pcie_host_init() failed. Thus remove redundant function calls.
-
-
-Fixes: 6e5da6f7d824 ("PCI: qcom: Fix error handling in runtime PM support")
-Co-developed-by: Markus Elfring <Markus.Elfring@web.de>
-Signed-off-by: Markus Elfring <Markus.Elfring@web.de>
-Signed-off-by: Qiushi Wu <wu000273@umn.edu>
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
 ---
- V2: words adjustments and fix some typos 
- drivers/pci/controller/dwc/pcie-qcom.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/bluetooth/btqca.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 138e1a2d21cc..10393ab607bf 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1340,8 +1340,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	ret = pm_runtime_get_sync(dev);
- 	if (ret < 0) {
--		pm_runtime_disable(dev);
--		return ret;
-+		goto err_pm_runtime_put;
- 	}
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 3ea866d..94d8e15 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -74,10 +74,14 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
  
- 	pci->dev = dev;
-@@ -1401,7 +1400,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	ver = (struct qca_btsoc_version *)(edl->data);
  
- 	ret = phy_init(pcie->phy);
- 	if (ret) {
--		pm_runtime_disable(&pdev->dev);
- 		goto err_pm_runtime_put;
- 	}
+-	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
+-	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
+-	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
+-	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
++	bt_dev_info(hdev, "QCA Product ID   :0x%08x",
++			le32_to_cpu(ver->product_id));
++	bt_dev_info(hdev, "QCA SOC Version  :0x%08x",
++			le32_to_cpu(ver->soc_id));
++	bt_dev_info(hdev, "QCA ROM Version  :0x%08x",
++			le16_to_cpu(ver->rom_ver));
++	bt_dev_info(hdev, "QCA Patch Version:0x%08x",
++			le16_to_cpu(ver->patch_ver));
  
-@@ -1410,7 +1408,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
- 		dev_err(dev, "cannot initialize host\n");
--		pm_runtime_disable(&pdev->dev);
- 		goto err_pm_runtime_put;
- 	}
- 
+ 	/* QCA chipset version can be decided by patch and SoC
+ 	 * version, combination with upper 2 bytes from SoC
 -- 
-2.17.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
