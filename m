@@ -2,156 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 612831E3C8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 10:49:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 904121E3D44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 11:07:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388169AbgE0Ir6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 04:47:58 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13839 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388166AbgE0Ir6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 04:47:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590569276; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: Cc: References: To:
- Subject: Sender; bh=uae7yIbf7LkvKzwAx7OZgJqnIs4z8A3JvYEC3/kjvas=; b=Gi0/PIZaQh8MPUmZEhBBVda8zuNvIavnGHtA/ydJcNEyX2up7dxvbcGe/HL0mAgjyUguEVZa
- QaH5rysuByJ3Db/zv9a3/SwQKaw43QxYKh+oCHUjzrhs1k7x0cnnK7c5SAiAVlvM9YbokV3t
- labQGGIHYGBL2NAhUQQ/+3shTlU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ece292d44a25e0052c0c368 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 08:47:41
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 79D87C433C9; Wed, 27 May 2020 08:47:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from [192.168.1.227] (unknown [49.204.179.34])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D6D3AC433C6;
-        Wed, 27 May 2020 08:47:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D6D3AC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-Subject: Re: [Freedreno] [PATCH 5/6] drm: msm: a6xx: use dev_pm_opp_set_bw to
- set DDR bandwidth
-To:     Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, dri-devel@freedesktop.org,
+        id S2388423AbgE0JHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 05:07:12 -0400
+Received: from mail-db8eur05on2072.outbound.protection.outlook.com ([40.107.20.72]:34401
+        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2388112AbgE0JHL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 May 2020 05:07:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OBPJdPvbFiwsnaQTW1E7CXPR6BAqmYSTA2G0xLXufSDt2xVZxIQqsQHd9JCdlol5GpUjmbleybiE+OnQzat2G/ehEVO5T+O32mU8I2N6jruH/COFWhn3Di5xTMxPFiYEVQYjeeYs+M6xa+Fs3K+cgmnd1bpgiJxMSZaIrGfHcIood3U+2ZnFh5FObaHiVXdGy8gH9VMrkX6V3hrXTlptP18uUnH+bcMMCc+QawEds58/fVgHAIhDETzVY1ZSK70Y45mlC1xy4wt5ohjvqKg/YQjqz/AUSLE7+hpKomgzrqeEQplnl/ePJPVlgZi7wxOkSGEGjyjQGXKCEa2hY/UK7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TsMWYnkF0zsSzwaUEJUm9Mm0xl8ixJsagcGv1mF6n7o=;
+ b=ksnJLgTgzX2mxuq2wU+9ceNOScYhgrDki17DtAPUUDI9K04C9KVGS7kUr5BpmsvCpQlE3zbov8+cy18TRWKr5XpTQ19Y02jBOWgZoWVVydP2kbFkzjYZm3y7ROmLi4ELrcbKb1JjMzjABctF7EDvSGwpMQDDJwVZ/4G2hA/QwEFYW2NXmTjdF48dO5xpY6EOOn2cxF2yCQlRckjW7RvqN6srrMdeYy4d2golTzECQcDPHqkubBi/xzM8xFbzGuAlp9Hd6WNbiamKLczTi6xFz+6SNzpI+8VGXfEwMWJB+cvLDMLy+Y+NkBQauB/z5F+dkKnf3g3whcIg/Fn1pds33w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TsMWYnkF0zsSzwaUEJUm9Mm0xl8ixJsagcGv1mF6n7o=;
+ b=kT4fPR08VTTKCuV9aM5DcYiQ+tjye9/SGxsVrKjeAvPZMOMZNa4dKP8jXPZyPwQSiC/UjeKRlh8g7VLydYZ5AFTqjVDD7hPGbk4W6usX+ElzbMma49V1Zz3jiCAxTXzqmhPunxUhdIomqicehhGK09lXnyrZruc50B0eoel1IWk=
+Authentication-Results: lists.infradead.org; dkim=none (message not signed)
+ header.d=none;lists.infradead.org; dmarc=none action=none
+ header.from=nxp.com;
+Received: from VI1PR0402MB3405.eurprd04.prod.outlook.com (2603:10a6:803:3::26)
+ by VI1PR0402MB3502.eurprd04.prod.outlook.com (2603:10a6:803:c::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3021.27; Wed, 27 May
+ 2020 09:07:08 +0000
+Received: from VI1PR0402MB3405.eurprd04.prod.outlook.com
+ ([fe80::b97a:64f0:3ab5:d7fa]) by VI1PR0402MB3405.eurprd04.prod.outlook.com
+ ([fe80::b97a:64f0:3ab5:d7fa%5]) with mapi id 15.20.3045.018; Wed, 27 May 2020
+ 09:07:08 +0000
+Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
+To:     John Stultz <john.stultz@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        iommu@lists.linux-foundation.org,
+        Thierry Reding <thierry.reding@gmail.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
- <1589453659-27581-6-git-send-email-smasetty@codeaurora.org>
- <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com>
- <CAF6AEGtoNwUGX-r7QytGn5hSU-VD4RJZyhcb3WdgAgAFR5BK4A@mail.gmail.com>
-Cc:     viresh.kumar@linaro.org, saravanak@google.com,
-        sibis@codeaurora.org, rnayak@codeaurora.org
-From:   Sharat Masetty <smasetty@codeaurora.org>
-Message-ID: <c8a514c9-5e48-b561-4b45-47cde3bdfb34@codeaurora.org>
-Date:   Wed, 27 May 2020 14:17:32 +0530
+        linux-tegra@vger.kernel.org, Will Deacon <will@kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+ <20200228025700.GA856087@builder> <20200514193249.GE279327@builder.lan>
+ <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
+From:   Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Message-ID: <f1208f83-d261-74e7-10d0-45ad9bf6c0a0@nxp.com>
+Date:   Wed, 27 May 2020 12:06:51 +0300
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAF6AEGtoNwUGX-r7QytGn5hSU-VD4RJZyhcb3WdgAgAFR5BK4A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ Thunderbird/68.8.0
+In-Reply-To: <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR07CA0184.eurprd07.prod.outlook.com
+ (2603:10a6:802:3e::32) To VI1PR0402MB3405.eurprd04.prod.outlook.com
+ (2603:10a6:803:3::26)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [192.168.1.107] (86.123.58.2) by VI1PR07CA0184.eurprd07.prod.outlook.com (2603:10a6:802:3e::32) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3045.9 via Frontend Transport; Wed, 27 May 2020 09:07:08 +0000
+X-Originating-IP: [86.123.58.2]
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: 84310272-c450-4ac8-8b04-08d8021d557a
+X-MS-TrafficTypeDiagnostic: VI1PR0402MB3502:
+X-Microsoft-Antispam-PRVS: <VI1PR0402MB35020528A771E00460B04966ECB10@VI1PR0402MB3502.eurprd04.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-Forefront-PRVS: 04163EF38A
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: EvxwkUN+KfviIDkMOEc1RsODCW8G1yTj2Dvtu2txLSIEI3UsiAuo7pVbPlFvlQNaSdb1ZN+n/oWnH5dat29Tx06u/87v/HbRftNL19zpwyH+4pTDTe3DAXwLmeQgZA0DIRRdZG6bTXjiaoUunGhr2DUTN86jvMVbi33JfD+oDMsQNC+HKd4d+6Rw5bxXpCbn8gPSSY0+/OWBjUsHEXH0SdiLdaETV9F6TyYaljzmr8ujIJrCsouHvJBtV8UHSVUZhCvdHino9+V8QPctOcxeEtlkeTM1PP3b2m/PHHpt7VL+i9XkP0jNvpGvxbiMjO9HGitzR71IuMiwWvuBL2XGlCfb1DX2Oyyhhdc1NfXPYXoLsbCAaQn8LTFarMOc/S7KFnsbx7w71xz0xvBm7itlYLy8HX7vzzkfGHEnhGxKiI9+CTD/MWWh5yasKOCFOwP7eRfP1IZSTV/zM19vJK+w4w==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR0402MB3405.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(39860400002)(376002)(396003)(346002)(136003)(366004)(6486002)(36756003)(966005)(83380400001)(5660300002)(16576012)(26005)(16526019)(186003)(53546011)(66946007)(66556008)(66476007)(8936002)(31686004)(4326008)(8676002)(316002)(110136005)(478600001)(6666004)(54906003)(86362001)(2616005)(956004)(2906002)(44832011)(52116002)(31696002)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: I/kb9tkTwQAWp7qp7swICUHAX83oN2BRw/6pzbM6bNYdLf9I/ICiXAFHhE2JzmsSykMnKtdj0SD0CCyhMF+s5EHhxvPA+8UWGNKqjzH8lVv382b0L0uY6j/dFuVSOJ1yYePPqbZ3UPohlU6atKg9HPzP98edAm8c7bKrlPTOAOkBL+x8XQct/4LO436ZYfdQfLREG7n5Jw7vDmiE4+FxHay2A2ABFflHvquLgxDfMHCBGkVPKlmaomByFNwSdEwAThLPpleAi8TsmSReO9+xesePip+6ZhJgTuab7y7QZfqk5p/xyXR5gDaUY1qMvztx+KtsxXBTzcL2jnbA7RndNitghtZ9j7ybzzIMxJ96muC6CfckgpgOskd/+LZiGEOE68jvUGQff40qupwUsocxLrnBeiCl0HQglUt1gOHLO36ulDHSgu5TkK3Xvlg/uq/xwpIAl0YfPunP+XDvjxxtT1wcFUMxROWOiRh1RGaNfVE=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 84310272-c450-4ac8-8b04-08d8021d557a
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2020 09:07:08.7314
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5+vQwa1bdTV1Ml4zkcWOUc25pTO/jQG4xP09F5O5bBluVgbSkq2TGoAKzsCbQeuJIBu/wPYvE5PPVx+Q3lg3aw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR0402MB3502
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ more folks
 
-On 5/18/2020 9:55 PM, Rob Clark wrote:
-> On Mon, May 18, 2020 at 7:23 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->> On Thu, May 14, 2020 at 04:24:18PM +0530, Sharat Masetty wrote:
->>> This patches replaces the previously used static DDR vote and uses
->>> dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
->>> GPU frequency.
->>>
->>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
->>> ---
->>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +-----
->>>   1 file changed, 1 insertion(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>> index 2d8124b..79433d3 100644
->>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>> @@ -141,11 +141,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
->>>
->>>        gmu->freq = gmu->gpu_freqs[perf_index];
->>>
->>> -     /*
->>> -      * Eventually we will want to scale the path vote with the frequency but
->>> -      * for now leave it at max so that the performance is nominal.
->>> -      */
->>> -     icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
->>> +     dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
->>>   }
->> This adds an implicit requirement that all targets need bandwidth settings
->> defined in the OPP or they won't get a bus vote at all. I would prefer that
->> there be an default escape valve but if not you'll need to add
->> bandwidth values for the sdm845 OPP that target doesn't regress.
+On 5/26/2020 11:34 PM, John Stultz wrote:
+> On Thu, May 14, 2020 at 12:34 PM <bjorn.andersson@linaro.org> wrote:
 >>
-> it looks like we could maybe do something like:
->
->    ret = dev_pm_opp_set_bw(...);
->    if (ret) {
->        dev_warn_once(dev, "no bandwidth settings");
->        icc_set_bw(...);
->    }
->
-> ?
->
-> BR,
-> -R
-
-There is a bit of an issue here - Looks like its not possible to two icc 
-handles to the same path.  Its causing double enumeration of the paths 
-in the icc core and messing up path votes. With [1] Since opp/core 
-already gets a handle to the icc path as part of table add,  drm/msm 
-could do either
-
-a) Conditionally enumerate gpu->icc_path handle only when pm/opp core 
-has not got the icc path handle. I could use something like [2] to 
-determine if should initialize gpu->icc_path*
-
-b) Add peak-opp-configs in 845 dt and mandate all future versions to use 
-this bindings. With this, I can remove gpu->icc_path from msm/drm 
-completely and only rely on opp/core for bw voting.
-
-[1] - https://lore.kernel.org/patchwork/cover/1240687/
-
-[2] - https://patchwork.kernel.org/patch/11527573/
-
-Let me know your thoughts
-
-Sharat
-
->
->> Jordan
+>> On Thu 27 Feb 18:57 PST 2020, Bjorn Andersson wrote:
 >>
->>>   unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
->>> --
->>> 2.7.4
->>>
->> --
->> The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->> _______________________________________________
->> Freedreno mailing list
->> Freedreno@lists.freedesktop.org
->> https://lists.freedesktop.org/mailman/listinfo/freedreno
+>> Rob, Will, we're reaching the point where upstream has enough
+>> functionality that this is becoming a critical issue for us.
+>>
+>> E.g. Lenovo Yoga C630 is lacking this and a single dts patch to boot
+>> mainline with display, GPU, WiFi and audio working and the story is
+>> similar on several devboards.
+>>
+>> As previously described, the only thing I want is the stream mapping
+>> related to the display controller in place, either with the CB with
+>> translation disabled or possibly with a way to specify the framebuffer
+>> region (although this turns out to mess things up in the display
+>> driver...)
+>>
+>> I did pick this up again recently and concluded that by omitting the
+>> streams for the USB controllers causes an instability issue seen on one
+>> of the controller to disappear. So I would prefer if we somehow could
+>> have a mechanism to only pick the display streams and the context
+>> allocation for this.
+>>
+>>
+>> Can you please share some pointers/insights/wishes for how we can
+>> conclude on this subject?
+> 
+> Ping? I just wanted to follow up on this discussion as this small
+> series is crucial for booting mainline on the Dragonboard 845c
+> devboard. It would be really valuable to be able to get some solution
+> upstream so we can test mainline w/o adding additional patches.
+
++1
+
+There are also some NXP chips that depend on this. Also, I've submitted
+a v2 [1] a while back that tries to address the feedback on the initial
+implementation.
+
+[1] https://patchwork.ozlabs.org/project/linux-tegra/list/?series=164853
+
+---
+Best Regards, Laurentiu
