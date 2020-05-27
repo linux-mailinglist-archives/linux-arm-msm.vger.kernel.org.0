@@ -2,134 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D0B41E3C59
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 10:44:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 725C11E3C7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 10:47:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388019AbgE0IoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 04:44:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45112 "EHLO mail.kernel.org"
+        id S2388276AbgE0Iqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 04:46:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48430 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387811AbgE0IoC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 04:44:02 -0400
-Received: from kernel.org (unknown [104.132.0.74])
+        id S2388107AbgE0Iqw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 May 2020 04:46:52 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8EF3620723;
-        Wed, 27 May 2020 08:44:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 29FBB206F1;
+        Wed, 27 May 2020 08:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590569041;
-        bh=+/NGB2sSlT/fbXh2DrGQlclwzqoCcKODEoqXcgZ+w/I=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=PBDJ/cQ710tqqqopy/zdRKfSSpzslqeR99wc57R/ID4DryWQmX7cxpspThsdX4XZK
-         hmoouoE/6tUeVhGUfUfw/uSJiAWN7Oev/I1Uc4o3DG9nQ1JWwh52KdTqbOai547N8y
-         PrHOEfwmsenKZ4XMgP5kh0cZoOi5E5TCsUZsf1bw=
-Content-Type: text/plain; charset="utf-8"
+        s=default; t=1590569211;
+        bh=2P/iFP0J1Z8FTALnk4pEhSuziKCtu7sPf7Qz1B/J4f8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=S9BG8lqat+vffXT8uHIaTo94/pT6Z83+gHIjB1CBWUaRi+h21fNoDoFRR4xE5PBc9
+         IvPYTYD4kc8d/QbLsMEmVL9PcVZjrgS3p16wEXmSq/Q853iDNJA96icvD82d+xMnq3
+         lRMjEASAU6ka38Qb+0SPKq4FwaptSUdFriCigzcE=
+Date:   Wed, 27 May 2020 10:46:49 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        broonie@kernel.org, mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, msavaliy@codeaurora.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH V7 5/7] tty: serial: qcom_geni_serial: Add interconnect
+ support
+Message-ID: <20200527084649.GA167630@kroah.com>
+References: <1590497690-29035-1-git-send-email-akashast@codeaurora.org>
+ <1590497690-29035-6-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200524210615.17035-8-jonathan@marek.ca>
-References: <20200524210615.17035-1-jonathan@marek.ca> <20200524210615.17035-8-jonathan@marek.ca>
-Subject: Re: [PATCH 07/10] clk: qcom: Add graphics clock controller driver for SM8150
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Date:   Wed, 27 May 2020 01:44:00 -0700
-Message-ID: <159056904079.88029.16161248455546031414@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1590497690-29035-6-git-send-email-akashast@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2020-05-24 14:06:08)
-> diff --git a/drivers/clk/qcom/gpucc-sm8150.c b/drivers/clk/qcom/gpucc-sm8=
-150.c
-> new file mode 100644
-> index 000000000000..6e1fff0cde75
-> --- /dev/null
-> +++ b/drivers/clk/qcom/gpucc-sm8150.c
-> @@ -0,0 +1,429 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/clk-provider.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +
-> +#include <dt-bindings/clock/qcom,gpucc-sm8150.h>
-[..]
-> +
-> +static struct clk_rcg2 gpu_cc_gmu_clk_src =3D {
-> +       .cmd_rcgr =3D 0x1120,
-> +       .mnd_width =3D 0,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D gpu_cc_parent_map_0,
-> +       .freq_tbl =3D ftbl_gpu_cc_gmu_clk_src,
-> +       .clkr.hw.init =3D &(struct clk_init_data){
-> +               .name =3D "gpu_cc_gmu_clk_src",
-> +               .parent_names =3D gpu_cc_parent_names_0,
-> +               .num_parents =3D 6,
-> +               .flags =3D CLK_SET_RATE_PARENT,
-> +               .ops =3D &clk_rcg2_ops,
-> +       },
-> +};
-> +
-> +static struct clk_branch gpu_cc_ahb_clk =3D {
-> +       .halt_reg =3D 0x1078,
-> +       .halt_check =3D BRANCH_HALT_DELAY,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x1078,
-> +               .enable_mask =3D BIT(0),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gpu_cc_ahb_clk",
-> +                       .flags =3D CLK_IS_CRITICAL,
+On Tue, May 26, 2020 at 06:24:48PM +0530, Akash Asthana wrote:
+> Get the interconnect paths for Uart based Serial Engine device
+> and vote according to the baud rate requirement of the driver.
+> 
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
-Why is this CLK_IS_CRITICAL? Why not just enable the clk manually with
-a register write in probe and then remove this clk from the system? We
-can save some memory that way.
-
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
-[...]
-> +
-> +static struct gdsc gpu_cx_gdsc =3D {
-> +       .gdscr =3D 0x106c,
-> +       .gds_hw_ctrl =3D 0x1540,
-> +       .pd =3D {
-> +               .name =3D "gpu_cx_gdsc",
-> +       },
-> +       .pwrsts =3D PWRSTS_OFF_ON,
-> +       .flags =3D VOTABLE,
-> +};
-> +
-> +/* see comment in gpucc-sdm845 about this */
-> +static int gx_gdsc_enable(struct generic_pm_domain *domain)
-> +{
-> +       /* Do nothing but give genpd the impression that we were successf=
-ul */
-> +       return 0;
-> +}
-
-Maybe we should export a helper from gdsc.c for this with the comment
-and it named something obvious? gx_gdsc_do_nothing_enable()?
-
-> +
-> +static struct gdsc gpu_gx_gdsc =3D {
-> +       .gdscr =3D 0x100c,
-> +       .clamp_io_ctrl =3D 0x1508,
-> +       .pd =3D {
-> +               .name =3D "gpu_gx_gdsc",
-> +               .power_on =3D gx_gdsc_enable,
-> +       },
-> +       .pwrsts =3D PWRSTS_OFF_ON,
-> +       .flags =3D CLAMP_IO | AON_RESET | POLL_CFG_GDSCR,
-> +};
-> +
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
