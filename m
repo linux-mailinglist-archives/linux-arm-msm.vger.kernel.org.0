@@ -2,55 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6CD31E3580
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 04:22:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D5631E358E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 04:25:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbgE0CW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 May 2020 22:22:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37530 "EHLO mail.kernel.org"
+        id S1725914AbgE0CZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 May 2020 22:25:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38838 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726915AbgE0CW2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 May 2020 22:22:28 -0400
+        id S1725905AbgE0CZi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 May 2020 22:25:38 -0400
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 79E6020873;
-        Wed, 27 May 2020 02:22:27 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id E13CF206F1;
+        Wed, 27 May 2020 02:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590546147;
-        bh=XFj2FYxJwpMCpHcymXaEBTI70gtbDqiofK8eitG2gNw=;
+        s=default; t=1590546338;
+        bh=UoTVgoKDles63nN4sclEP7UwYYpFYa+JCCtVXHygpEA=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=PGbEws5OwOS5k0QgQGgs3bh3zZlurDDYLlzy9kvrOZ76JDBOae61Cbt0jaiDdJ9t2
-         zuD+qR9fBbBiTxTJRNnlRF/1/y+nALxNTfvvhB3vqhzl4J7AUd7iAAg3aXxE4uqKTB
-         YByfvkDuPOoN93Go3CtoaobhJQzoITP2Vz9kMHQw=
+        b=tCpKqzm1yRwoBOisZybfeOeNRw+BDSCDpDBpnRRUbvohhWBLDA3IvHf+7vYxJ8ojV
+         WOtZaLfipIyY0qMpEbQB9r+TORX73c9a5QHxkDNH4rdOOsEkzI1XgidoicxdDagrMJ
+         F+HlD8z2ktYeAqMCQCce6GaQr4ua4HcLBrFwtjd4=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1589709861-27580-4-git-send-email-tdas@codeaurora.org>
-References: <1589709861-27580-1-git-send-email-tdas@codeaurora.org> <1589709861-27580-4-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v2 3/3] clk: qcom: gcc: Add support for Secure control source clock
+In-Reply-To: <1590314686-11749-1-git-send-email-sivaprak@codeaurora.org>
+References: <1590314686-11749-1-git-send-email-sivaprak@codeaurora.org>
+Subject: Re: [PATCH V5 0/8] Add APSS clock controller support for IPQ6018
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Tue, 26 May 2020 19:22:26 -0700
-Message-ID: <159054614686.88029.846996129102829207@swboyd.mtv.corp.google.com>
+        mturquette@baylibre.com, robh+dt@kernel.org
+Date:   Tue, 26 May 2020 19:25:37 -0700
+Message-ID: <159054633712.88029.2188316950952149370@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2020-05-17 03:04:21)
-> The secure controller driver requires to request for various frequencies
-> on the source clock, thus add support for the same.
+Quoting Sivaprakash Murugesan (2020-05-24 03:04:38)
+> The CPU on Qualcomm's IPQ6018 devices are primarily fed by APSS PLL and X=
+O,
+> these are connected to a clock mux and enable block.
 >=20
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
+> This patch series adds support for these clocks and inturn enables clocks
+> required for CPU freq.
 
-Applied to clk-next
+What is your intended merge path? You sent this to qcom SoC maintainers,
+mailbox maintainers, and clk maintainers. Who is supposed to apply the
+series? Should it be split up and taken through various trees? Are there
+dependencies? Please add more details to help us.
