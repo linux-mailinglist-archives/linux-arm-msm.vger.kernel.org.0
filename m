@@ -2,155 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B1B31E4BED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 19:32:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFA241E4E16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 21:24:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387923AbgE0Rce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 13:32:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44844 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388004AbgE0Rce (ORCPT
+        id S1725306AbgE0TYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 15:24:51 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:55706 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725768AbgE0TYv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 13:32:34 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BE3C08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 10:32:33 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id b11so1144833qtt.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 10:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G2BXWCTTNBns33NDU0HybwyfZx0pKtO1nI+1NJmXgJE=;
-        b=pzODA/cBQXw/CEtKpRqf9bB5Am/l0I4597dz6MLmQeN2ifmLqZSlDgaAtCARJDivD6
-         9Kw418h/RetRSvPvlL+x1EYvHZCt7sD4zm0d+hDZx69Tfhz0qgQ11EsKjvSEYaOBzTgp
-         b5DZHfScEflBLAaKm+uce0alcIP4cqrff/9d1LxSimEuSPCTi+XHIizQkk/F06h9VE6S
-         6DN9TecBtt8FayDYBd3oNgyeUAZTz0aJYB/hXdCXK0Z5zIkG2cdLLzw7lx9I2VrvchJf
-         EIe/6mDvet+14KdS1N0+L3YEdhjUBQSpsBmrCwEzjmfgZ8SIWs7uAYXrJ1EmpEsx4G5t
-         8uRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G2BXWCTTNBns33NDU0HybwyfZx0pKtO1nI+1NJmXgJE=;
-        b=ajPB9edrasI+fssqG7hB4lQd8VVV4wMaF28OhEHWjJmISgccLof7q9iiCK6gohGs6V
-         eh5d20tPW3FFY0QHxTqZq2P7OdrRas4RgwERphnQgaFPyDrN1HdsZaFpw5uRzWO7kb2k
-         vuW0SQVcQKxWTUyCU7/JPfy8zEhyXHEJOGFp6X0zLnI5bUvfcNALhJf/Rla9RfWR30Tw
-         hoJ7kYZReSx3OA95+jf97HziIsqwKpDfGKGW4WP/AUSwd4hyE1vxHoSqlwkkf542zPPh
-         wTjHXf1Yz7G3Zy/ZDBY6rHDxgNM/5O4re2/o1KAmK7FRZHnEgUHntcZUiFLFt+18y/uA
-         Gkjg==
-X-Gm-Message-State: AOAM530FnI7wfsJeqR54kGYF/v33tn/Om1DKYFxqBVofg6KXmgVwgdn1
-        AmkqlYEZQZjX0skFohYOWpeD1axgvFLQFEvqmgY4vw==
-X-Google-Smtp-Source: ABdhPJwXpn5szmnzOAoismmK3gW+NO2iRmAMAWoX2x9kLxI2DQOfwiJkkj58xfMAJP5sIq8ExwuoK929yeVdXcjTQns=
-X-Received: by 2002:aed:312a:: with SMTP id 39mr5473720qtg.6.1590600752651;
- Wed, 27 May 2020 10:32:32 -0700 (PDT)
+        Wed, 27 May 2020 15:24:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590607490; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=sez9DLoTCLoV1yeYXeZwwXSuXPX1bIuNFVUeJPl9HsA=; b=FmAKVJ7CXunDFe6g2KApj6U9BAud3IThSFX5nCM4YIhbfmU6S0kMtsk5O1PM8Xxmj34xtmXx
+ bNy1sAwPisGq2+zwujwHjgkNpf35sKhAmgMxlCOMdj40e0QDUO3Bnm+J1knDP9SPaVa5/NKu
+ /9RcahCaupfkIVAjpjT0kqZFiMg=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ecebe71cb045869336ec11a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 May 2020 19:24:33
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2EA7FC433A0; Wed, 27 May 2020 19:24:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 34819C433C9;
+        Wed, 27 May 2020 19:24:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 34819C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org, georgi.djakov@linaro.org
+Cc:     nm@ti.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        saravanak@google.com, mka@chromium.org, smasetty@codeaurora.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH] OPP: Check for bandwidth values before creating icc paths
+Date:   Thu, 28 May 2020 00:54:18 +0530
+Message-Id: <20200527192418.20169-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
- <1589453659-27581-6-git-send-email-smasetty@codeaurora.org>
- <20200518142333.GA10796@jcrouse1-lnx.qualcomm.com> <CAF6AEGtoNwUGX-r7QytGn5hSU-VD4RJZyhcb3WdgAgAFR5BK4A@mail.gmail.com>
- <c8a514c9-5e48-b561-4b45-47cde3bdfb34@codeaurora.org> <CAF6AEGvOtgpHMuiw01QgRYGEBB2rp5QOdVMpkTMsi0c-QSSv1Q@mail.gmail.com>
-In-Reply-To: <CAF6AEGvOtgpHMuiw01QgRYGEBB2rp5QOdVMpkTMsi0c-QSSv1Q@mail.gmail.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Wed, 27 May 2020 10:31:55 -0700
-Message-ID: <CAGETcx_fuS8cmTwCbZ024gqWOmeAc_ytZZ2P6yReBi7Y9O+qMQ@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 5/6] drm: msm: a6xx: use dev_pm_opp_set_bw to
- set DDR bandwidth
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sharat Masetty <smasetty@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 27, 2020 at 8:38 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Wed, May 27, 2020 at 1:47 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
-> >
-> > + more folks
-> >
-> > On 5/18/2020 9:55 PM, Rob Clark wrote:
-> > > On Mon, May 18, 2020 at 7:23 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
-> > >> On Thu, May 14, 2020 at 04:24:18PM +0530, Sharat Masetty wrote:
-> > >>> This patches replaces the previously used static DDR vote and uses
-> > >>> dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
-> > >>> GPU frequency.
-> > >>>
-> > >>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> > >>> ---
-> > >>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +-----
-> > >>>   1 file changed, 1 insertion(+), 5 deletions(-)
-> > >>>
-> > >>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > >>> index 2d8124b..79433d3 100644
-> > >>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > >>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > >>> @@ -141,11 +141,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
-> > >>>
-> > >>>        gmu->freq = gmu->gpu_freqs[perf_index];
-> > >>>
-> > >>> -     /*
-> > >>> -      * Eventually we will want to scale the path vote with the frequency but
-> > >>> -      * for now leave it at max so that the performance is nominal.
-> > >>> -      */
-> > >>> -     icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
-> > >>> +     dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
-> > >>>   }
-> > >> This adds an implicit requirement that all targets need bandwidth settings
-> > >> defined in the OPP or they won't get a bus vote at all. I would prefer that
-> > >> there be an default escape valve but if not you'll need to add
-> > >> bandwidth values for the sdm845 OPP that target doesn't regress.
-> > >>
-> > > it looks like we could maybe do something like:
-> > >
-> > >    ret = dev_pm_opp_set_bw(...);
-> > >    if (ret) {
-> > >        dev_warn_once(dev, "no bandwidth settings");
-> > >        icc_set_bw(...);
-> > >    }
-> > >
-> > > ?
-> > >
-> > > BR,
-> > > -R
-> >
-> > There is a bit of an issue here - Looks like its not possible to two icc
-> > handles to the same path.  Its causing double enumeration of the paths
-> > in the icc core and messing up path votes. With [1] Since opp/core
-> > already gets a handle to the icc path as part of table add,  drm/msm
-> > could do either
+Prevent the core from creating and voting on icc paths when the
+opp-table does not have the bandwidth values populated. Currently
+this check is performed on the first OPP node.
 
-Are you sure this is the real issue? I'd be surprised if this is a
-real limitation. And if it is, it either needs to be fixed in the ICC
-framework or OPP shouldn't be getting path handles by default (and
-maybe let the driver set the handles before using OPP APIs to change
-BW). I'd lean towards the former.
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+---
+ drivers/opp/of.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-> > a) Conditionally enumerate gpu->icc_path handle only when pm/opp core
-> > has not got the icc path handle. I could use something like [2] to
-> > determine if should initialize gpu->icc_path*
+diff --git a/drivers/opp/of.c b/drivers/opp/of.c
+index 61fce1284f012..95cf6f1312765 100644
+--- a/drivers/opp/of.c
++++ b/drivers/opp/of.c
+@@ -338,6 +338,21 @@ int dev_pm_opp_of_find_icc_paths(struct device *dev,
+ 	struct device_node *np;
+ 	int ret = 0, i, count, num_paths;
+ 	struct icc_path **paths;
++	struct property *prop;
++
++	/* Check for bandwidth values on the first OPP node */
++	if (opp_table && opp_table->np) {
++		np = of_get_next_available_child(opp_table->np, NULL);
++		if (!np) {
++			dev_err(dev, "Empty OPP table\n");
++			return 0;
++		}
++
++		prop = of_find_property(np, "opp-peak-kBps", NULL);
++		of_node_put(np);
++		if (!prop || !prop->length)
++			return 0;
++	}
+ 
+ 	np = of_node_get(dev->of_node);
+ 	if (!np)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-This seems like a bandaid. Let's fix it correctly in ICC framework or
-OPP framework.
-
-> > b) Add peak-opp-configs in 845 dt and mandate all future versions to use
-> > this bindings. With this, I can remove gpu->icc_path from msm/drm
-> > completely and only rely on opp/core for bw voting.
-
-I don't know what you mean by "peak-opp-configs" but I guess you are
-referring to some kind of DT flag to say if you should vote for BW
-directly or use the OPP framework? If so, I'm pretty sure that won't
-fly. That's an OS implementation specific flag.
-
--Saravana
