@@ -2,101 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8896D1E49E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 18:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D40991E4A35
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2020 18:31:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390490AbgE0QX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 12:23:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34058 "EHLO
+        id S2391191AbgE0Qbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 May 2020 12:31:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391022AbgE0QX5 (ORCPT
+        with ESMTP id S2387775AbgE0Qbj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 12:23:57 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CFCFC05BD1E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 09:23:57 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id q16so10301230plr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 09:23:57 -0700 (PDT)
+        Wed, 27 May 2020 12:31:39 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A60C05BD1E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 09:31:39 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id i9so5114363ool.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 09:31:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XZ5uOqXyVXycGXVAAgCgn38z+gYbg3o20gbO6GOtv1M=;
-        b=F0ZS/3paUKZ2S+N/oD7CL1NsyxysZEsjL/PolDB300xaGPVujsGLK0IMW9DueeYS6T
-         jbmflghQBj/BbaTKCvB9hR2gBDeHhjGYS0coxyovWAHu9bjXYVih5Xwfe+ag96Xsm87o
-         ArKg5clL8GUpl1+lTibxjUMgikyciqFi2xXRo=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NxBsCG/ZBuR/tyqaxmR6a/8NFdkSmWg7ajuut4LGUfA=;
+        b=b+lMbZsTfHmILZwHDEtj1yw5O5x4XX8s8XDpQgw6wNybE3W4LYHAhyCF7+ColEcDPP
+         EMpWb/iriXb6UFyDBun0GZHcOX9dj5oZtlk/x3CfmrrFxUpUR4gQInaul157f1p0VAM2
+         ZzoG4NNhcOx5vebpK+p2ZCWLGrl2Zs/ikcDCyFgPdAkUUa1IizKTJZsCnFEZoeORqFRH
+         B1aJWppTBUxeJ30/7H+ilLGyRJ28SZxnH5gmxBTTsvU5ftLm1x6fxWn9snpQoLnQGlxD
+         AJiGz37SjZeKPKmZp2pZ9bepEp6aYhor5u8bWUeCmh6WRmlbdLuU+hV87tRQ3iDcywh0
+         zSXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XZ5uOqXyVXycGXVAAgCgn38z+gYbg3o20gbO6GOtv1M=;
-        b=FTM2H+KVHzvLMSwuHf/rlBrcrK08byXvyKVdOmDYU5QReY0S79ss0D/eXQgfHMz7sH
-         2SGrnEEyWHeZ3QlBo8RmybaXyyKGXLiPqXzdKqZCqMG65WIRqxRyL6UNHY0Jzh/C3NRH
-         +zzyXj1GZ+DShQVFk2jHQCIpMMGGR2bKFKTpPnFcqM7HHko6A6NbSGSeHZfEbAzgqq4f
-         KEOVcyr5DNnCtM3eHHOB3r/ToFtJ6uetGYYGLPwVRkXD4jr835pjdFRFZxXXI0dW1XbT
-         bBW6D/74igHE4MuDFYgcu5nEvVAKAuVQmewhr8bOkMbdFiomSK25u3IlechpaGRllXlC
-         a0KQ==
-X-Gm-Message-State: AOAM530P0ceddOJBDcVkeeIW4UU9S2c+RzSf1vjNw+z1iChr32kntDBF
-        AZX5LUxrMIVFnhVNdYFW7WgRPQ==
-X-Google-Smtp-Source: ABdhPJynzniNYj9eCfx/pxIRIBDyJ1ubE3Hoi6fUeIRvXUQGBcqJ5Fhsb9/gwkzxC+/t+WEUu62JKA==
-X-Received: by 2002:a17:90a:d506:: with SMTP id t6mr5426147pju.134.1590596636292;
-        Wed, 27 May 2020 09:23:56 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id x22sm2363680pfn.26.2020.05.27.09.23.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 May 2020 09:23:55 -0700 (PDT)
-Date:   Wed, 27 May 2020 09:23:53 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org
-Subject: Re: [PATCH v2] Bluetooth: hci_qca: Improve controller ID info log
- level
-Message-ID: <20200527162353.GG4525@google.com>
-References: <1590548229-17812-1-git-send-email-zijuhu@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NxBsCG/ZBuR/tyqaxmR6a/8NFdkSmWg7ajuut4LGUfA=;
+        b=td9CbrcDHrM53OqwHuFAw8eKrLJMNvVHhYr3rhrJk9C/DD+ip892eN0SwzdJ+vHf8k
+         /ldKU8uAPOq7bgd4El09JP7PXEBsQuwBy/zHPZhjLqZbPlJ/0EBNKkKFxBN+UYE1Xt0m
+         Lf2QXkeyWbbkAtIelC883Cbag1LVw79Tvwa7V4+lIDeW+e8QHR9yuWuVfZ1qgvp+QRxR
+         AEHq8d5g+Uo6rkP81FeXW+uVgwsNs5FAr58pGihAiULWGeE5npTBZJUaTFKBl9AAgbNO
+         7YXmgHGeJOkMh2ZadqF7AkwYQb9Q/A74ZhTFMUCSWBQKwscyeavtEUrarrcr6rD9FMpx
+         5zJg==
+X-Gm-Message-State: AOAM533YMHwZqIF7kclDgGUeNI65p37ImNtll7j0ZvLEh+SSzhBFejf7
+        DEAmYrUM8X2/ZxRo+LsvK/KVLSGxRn4WJPe4zTnFUA==
+X-Google-Smtp-Source: ABdhPJxBq8QeDQCR39v9fZ3sYUGIbMy8dJJlxs9vQSgoBRg+s9wGSUND1yy0xbmGrnb1KxTaR3HXasfqVFSVK/OIfYQ=
+X-Received: by 2002:a4a:909a:: with SMTP id j26mr3710376oog.21.1590597098962;
+ Wed, 27 May 2020 09:31:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1590548229-17812-1-git-send-email-zijuhu@codeaurora.org>
+References: <20200508204200.13481-1-sumit.semwal@linaro.org>
+ <20200508204200.13481-4-sumit.semwal@linaro.org> <20200511103937.GC8216@sirena.org.uk>
+ <CAO_48GFGpHeu_xb9XT9CFMOSUOJgRrb-z_KZ3-r3X78s-2ddjw@mail.gmail.com>
+In-Reply-To: <CAO_48GFGpHeu_xb9XT9CFMOSUOJgRrb-z_KZ3-r3X78s-2ddjw@mail.gmail.com>
+From:   Sumit Semwal <sumit.semwal@linaro.org>
+Date:   Wed, 27 May 2020 22:01:27 +0530
+Message-ID: <CAO_48GF0tjZDmTS+Fa4fv+cfH4skFZP_a9A=P7D0b_si4AFj5A@mail.gmail.com>
+Subject: Re: [v2 3/4] regulator: qcom: Add labibb driver
+To:     Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        lgirdwood@gmail.com, robh+dt@kernel.org,
+        Nisha Kumari <nishakumari@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 27, 2020 at 10:57:09AM +0800, Zijun Hu wrote:
-> Controller ID info got by VSC EDL_PATCH_GETVER is very
-> important, so improve its log level from DEBUG to INFO.
-> 
-> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
-> ---
->  drivers/bluetooth/btqca.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index 3ea866d..94d8e15 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -74,10 +74,14 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
->  
->  	ver = (struct qca_btsoc_version *)(edl->data);
->  
-> -	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
-> -	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
-> -	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
-> -	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
-> +	bt_dev_info(hdev, "QCA Product ID   :0x%08x",
-> +			le32_to_cpu(ver->product_id));
-> +	bt_dev_info(hdev, "QCA SOC Version  :0x%08x",
-> +			le32_to_cpu(ver->soc_id));
-> +	bt_dev_info(hdev, "QCA ROM Version  :0x%08x",
-> +			le16_to_cpu(ver->rom_ver));
-> +	bt_dev_info(hdev, "QCA Patch Version:0x%08x",
-> +			le16_to_cpu(ver->patch_ver));
->  
->  	/* QCA chipset version can be decided by patch and SoC
->  	 * version, combination with upper 2 bytes from SoC
+Hello Mark,
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+On Thu, 14 May 2020 at 16:57, Sumit Semwal <sumit.semwal@linaro.org> wrote:
+>
+> Hello Mark,
+>
+> Thank you for your review comments!
+> On Mon, 11 May 2020 at 16:09, Mark Brown <broonie@kernel.org> wrote:
+> >
+> > On Sat, May 09, 2020 at 02:11:59AM +0530, Sumit Semwal wrote:
+> >
+> > > +     ret = regmap_bulk_read(reg->regmap, reg->base +
+> > > +                            REG_LABIBB_STATUS1, &val, 1);
+> > > +     if (ret < 0) {
+> > > +             dev_err(reg->dev, "Read register failed ret = %d\n", ret);
+> > > +             return ret;
+> > > +     }
+> >
+> > Why a bulk read of a single register?
+> Right, will change.
+> >
+> > > +static int _check_enabled_with_retries(struct regulator_dev *rdev,
+> > > +                     int retries, int enabled)
+> > > +{
+> >
+> > This is not retrying, this is polling to see if the regulator actually
+> > enabled.
+> Yes, will update accordingly.
+>
+> >
+> > > +static int qcom_labibb_regulator_enable(struct regulator_dev *rdev)
+> > > +{
+> >
+> > > +     ret = _check_enabled_with_retries(rdev, retries, 1);
+> > > +     if (ret < 0) {
+> > > +             dev_err(reg->dev, "retries exhausted: enable %s regulator\n",
+> > > +                     reg->desc.name);
+> > > +             return ret;
+> > > +     }
+> >
+> > If this is useful factor it out into a helper or the core, other devices
+> > also have status bits saying if the regulator is enabled.  It looks like
+> > this may be mainly trying to open code something like enable_time, with
+> > possibly some issues where the time taken to enable varies a lot.
+> >
+> Makes sense; I am not terribly familiar with the regulator core and
+> helpers, so let me look and refactor accordingly.
+Does something like this make sense, or did I misunderstand your
+suggestion completely? I'll send the updated patches accordingly.
+
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -2353,6 +2353,7 @@ static int _regulator_do_enable(struct
+regulator_dev *rdev)
++       /* If max_time_poll_enabled is set for the regulator,
++        * Poll upto max_time_poll_enabled time to see if the regulator
++        * actually got enabled.
++        * For each iteration, wait for the enable_time delay calculated
++        * above already.
++        * If the regulator isn't enabled after max_time_poll_enabled has
++        * expired, return -REG_ENABLED_CHECK_FAILED.
++        */
++       if (rdev->desc->max_time_poll_enabled) {
++               unsigned int remaining_time_to_poll =
+rdev->desc->max_time_poll_enabled;
++
++               while (remaining_time_to_poll > 0) {
++                       /* We've already waited for enable_time above;
++                        * so we can start with immediate check of the
++                        * status of the regulator.
++                        */
++                       if (rdev->desc->ops->is_enabled(rdev))
++                               break;
++
++                       _regulator_enable_delay(delay);
++                       remaining_time_to_poll -= delay;
++               }
++
++               if (remaining_time_to_poll <= 0) {
++                       rdev_err(rdev, "Enabled check failed.\n");
++                       return -REG_ENABLED_CHECK_FAILED;
++               }
++       }
++
+
+Since atleast in my use case, the delay is really enable_time (time
+before we could check the status register), we could reuse the
+already-calculated 'delay' based on enable_time?
+>
+<snip>
+
+Best,
+Sumit.
