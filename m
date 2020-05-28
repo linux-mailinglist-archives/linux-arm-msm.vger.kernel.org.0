@@ -2,188 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8FBC1E54C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 05:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19BB31E552C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 06:44:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726827AbgE1DnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 May 2020 23:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54714 "EHLO
+        id S1725764AbgE1Eo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 00:44:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726770AbgE1DnA (ORCPT
+        with ESMTP id S1725308AbgE1Eo4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 May 2020 23:43:00 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3046DC08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 20:43:00 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id t4so13081941vsq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 20:43:00 -0700 (PDT)
+        Thu, 28 May 2020 00:44:56 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DCA7C05BD1E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 21:44:56 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id y18so12858200pfl.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 21:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bPaEtIz9pymnQ3zlLT7ky3GdzrpI5LZJGnrujJgXsc0=;
-        b=c9KdapEUJSPKNZeQyNnqiFrr6KubgXJeNvxUNO3s2hHeydiVxTVWyJmV7sGy63xdHL
-         5u8E+yrHjREHQPMLEuL2E3UkkkAQbONyrSQsVq8l/EpwP4xCYD2wzPXrZia+25uAnH0U
-         iBmmbZYYjcBr0vV5SVG54wPyyE8aX9epXx750=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tJwb6NgXaAMt+UTbPVtGDaiNmTuQFn3dNgXFWvKRvnw=;
+        b=dcnLymxvZW/qdTM/djO9j1r93X/5ToAZPefwVc43lAiKeOf+EN0TRtx7bLeyPGI2vj
+         W0Cer5JcbUuVbc9CfnoxtDikDX5KVkVQ+LPQkMQXutg0w4zZQJrXA+7QsUi75NotJyg1
+         V1Q+JcXeXei0X0lv89xaK8JYxedz7lxsMSgIyCMsb1+eHcmfpzZkxdW7E9XB10V7ZwPf
+         8INhUkL9TvQjjgsjJcPZOnWeIduLUi3y4vPkwageKUKVIlvw4QOQn/9rawXwYmzfXt43
+         hwqK0FWKsKl6/dMy0JqXTodDxESIyp9MjMoCmUhaorQ0ZAdWjKAobgFoYdiKDLwTxepd
+         XPOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bPaEtIz9pymnQ3zlLT7ky3GdzrpI5LZJGnrujJgXsc0=;
-        b=EgswR0y5aj/m+WAmx0nDlB3ks/wbMnojVoKLPjWdwYHR6SPlfBaFXvTtMiY940XbQm
-         Ey21YlgvTfIZAZqHPfY0pcruVMJjzrTGKzCwZJCLgsN5/ObpVgE+n2TU8AXMKhav3ndV
-         l8p+jMrxHLx4XCsP14JJ5gq0sKgNiBi7g+AyFB57gTx6ebF0eq4KMrtgBxt/qWZ0Zl0w
-         h1dXo5nU0NvrSDLwOcUoEqZk/gkPcdbhyBWsUTlGTENYbz/bOI9Uj1iLx+cA1rW+i5/M
-         OQia+SFpusovznozuCux2BaGkbi9js2YvoTCqPfokeOjg69lBbZxDJXpJNe+FX2qfC/V
-         z0QQ==
-X-Gm-Message-State: AOAM5302BefOUJC9JKhNOpabyw6daJfwdP8ig9ejIEaCVhfNSmmW6E++
-        8ucW+sTQql4V/I/Xeav5kdYf3CK8UH4XUky7Oy588Ntli+1OVA==
-X-Google-Smtp-Source: ABdhPJyeD7CvriJPtSeRzw8WUSVDYFhVUzo6FlAFfBfHtHPhZb+maNEaAfevvGRTkmo+hfxiYZ5Kvr4W1jIDx7B+XcA=
-X-Received: by 2002:a67:8d48:: with SMTP id p69mr617029vsd.86.1590637379005;
- Wed, 27 May 2020 20:42:59 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tJwb6NgXaAMt+UTbPVtGDaiNmTuQFn3dNgXFWvKRvnw=;
+        b=M/Q3m+4H9wfb49VWMjslE1H+8pwSsOzZNNysYFaw0XvAq6ICnl8Y8fM/rAFp+WVZSP
+         gMLGTRiPuexLqTS7TS9DKgdI9TB4g2UvJWiKNdH32Kbc64Lf1p9iMdgT7KFGx3f53RkU
+         JPtZmZykmiQCg5wRN3CAxsXfDVs1UUV7WfED645hVVmtWugiqn2PPGHFidYQi+LxmvDo
+         m+veslZOjJ5dPq/lUxGTn2FEDaN0z0OcLzZTc1nqOLZOdEUyj8nxM3yUMnayjvttKIqA
+         3UluZTEYBtz0zvXTt36mvKZzOrSZTpai2a0w9+84Le8TJYcALXKNKGZJUrUJrvAKZUZL
+         xCiw==
+X-Gm-Message-State: AOAM530BZbRFKLZPZNR9rh8WCWLCOe+nCQjcSV9BBjs77rOl+xo9Z1Rm
+        i82MX9X6zNHcN9dFhDO5o5xdjQ==
+X-Google-Smtp-Source: ABdhPJyKYx7TMXMeRkv/hPTfDi5DXyY3mVe1z0hiFNdH9r0D6Dwi5YhrO7UUuL9Ahtc3FtAuMB52Bw==
+X-Received: by 2002:a63:4b0c:: with SMTP id y12mr1142604pga.56.1590641095251;
+        Wed, 27 May 2020 21:44:55 -0700 (PDT)
+Received: from localhost ([122.172.60.59])
+        by smtp.gmail.com with ESMTPSA id nl8sm4278365pjb.13.2020.05.27.21.44.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 May 2020 21:44:54 -0700 (PDT)
+Date:   Thu, 28 May 2020 10:14:51 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Niklas Cassel <nks@flawful.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200528044451.5kegaw2icvnjl4up@vireshk-i7>
+References: <20200403175934.GA96064@gerhold.net>
+ <20200423045506.GJ987656@yoga>
+ <20200525153246.GA9224@flawful.org>
+ <20200525163638.GA41001@gerhold.net>
+ <20200525194443.GA11851@flawful.org>
+ <20200526085948.GA1329@gerhold.net>
+ <20200526155419.GA9977@flawful.org>
+ <20200526205403.GA7256@gerhold.net>
+ <20200527103921.GB9977@flawful.org>
+ <20200527120441.GA4166@gerhold.net>
 MIME-Version: 1.0
-References: <1590550627-24618-1-git-send-email-zijuhu@codeaurora.org>
-In-Reply-To: <1590550627-24618-1-git-send-email-zijuhu@codeaurora.org>
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Wed, 27 May 2020 20:42:46 -0700
-Message-ID: <CANFp7mXMiYKY-33xZX2MaHd5RyicbRb2fZHo8mk4-VM_Jf47UQ@mail.gmail.com>
-Subject: Re: [PATCH v2] bluetooth: hci_qca: Fix QCA6390 memdump failure
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        Matthias Kaehlcke <mka@chromium.org>, rjliao@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200527120441.GA4166@gerhold.net>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
+On 27-05-20, 14:04, Stephan Gerhold wrote:
+> +Cc Viresh (should have already done this earlier :) )
+> 
+> On Wed, May 27, 2020 at 12:39:21PM +0200, Niklas Cassel wrote:
+> > On Tue, May 26, 2020 at 10:54:03PM +0200, Stephan Gerhold wrote:
+> > > Speaking of the current solution, I also have to say that (IMO) the
+> > > device tree binding for "required-opps" is rather confusing
+> > > and potentially misleading.
+> > > 
+> > > e.g. for VDD_MX scaling I use
+> > > 
+> > > 	required-opps = <&rpmpd_opp_nom>;
+> > > 
+> > > but looking at just the OPP table absolutely nothing tells me this is
+> > > supposed to apply to VDD_MX. You actually need to go search for the cpu@
+> > > device tree node and then know that some of the power domains there
+> > > (in some order) are eventually going to be used for the required-opps
+> > > there. The order is only defined by the qcom-nvmem-cpufreq driver.
+> > > 
+> > > It took me a few hours to get that right... :)
 
-On Tue, May 26, 2020 at 8:37 PM Zijun Hu <zijuhu@codeaurora.org> wrote:
->
-> QCA6390 memdump VSE sometimes come to bluetooth driver
-> with wrong sequence number as illustrated as follows:
-> frame # in DEC: frame data in HEX
-> 1396: ff fd 01 08 74 05 00 37 8f 14
-> 1397: ff fd 01 08 75 05 00 ff bf 38
-> 1414: ff fd 01 08 86 05 00 fb 5e 4b
-> 1399: ff fd 01 08 77 05 00 f3 44 0a
-> 1400: ff fd 01 08 78 05 00 ca f7 41
-> it is mistook for controller missing packets, so results
-> in page fault after overwriting memdump buffer allocated.
->
-> it is fixed by ignoring QCA6390 sequence number error
-> and checking buffer space before writing.
->
-> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
-> ---
->  drivers/bluetooth/hci_qca.c | 45 ++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 38 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index e4a6823..388fe01b 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -114,6 +114,7 @@ struct qca_memdump_data {
->         char *memdump_buf_tail;
->         u32 current_seq_no;
->         u32 received_dump;
-> +       u32 ram_dump_size;
->  };
->
->  struct qca_memdump_event_hdr {
-> @@ -976,6 +977,8 @@ static void qca_controller_memdump(struct work_struct *work)
->         char nullBuff[QCA_DUMP_PACKET_SIZE] = { 0 };
->         u16 seq_no;
->         u32 dump_size;
-> +       u32 rx_size;
-> +       enum qca_btsoc_type soc_type = qca_soc_type(hu);
->
->         while ((skb = skb_dequeue(&qca->rx_memdump_q))) {
->
-> @@ -1029,6 +1032,7 @@ static void qca_controller_memdump(struct work_struct *work)
->
->                         skb_pull(skb, sizeof(dump_size));
->                         memdump_buf = vmalloc(dump_size);
-> +                       qca_memdump->ram_dump_size = dump_size;
->                         qca_memdump->memdump_buf_head = memdump_buf;
->                         qca_memdump->memdump_buf_tail = memdump_buf;
->                 }
-> @@ -1052,25 +1056,52 @@ static void qca_controller_memdump(struct work_struct *work)
->                  * packets in the buffer.
->                  */
->                 while ((seq_no > qca_memdump->current_seq_no + 1) &&
-> +                       (soc_type != QCA_QCA6390) &&
+I agree, we need a way to figure out devices as well for which the
+required-opp works. And yes that's missing.
 
-This probably shouldn't be SOC specific.
+> > > Nevertheless I guess we need a solution for scaling MEMACC without CPR
+> > > for now. :) I'm not sure if rewriting all this is very realistic
+> > > (if even possible). So I guess we might be stuck with the genpd approach?
+> > 
+> > I agree, the CPR driver will most likely not be changed now, since we
+> > need to be compatible with the existing device tree.
 
->                         seq_no != QCA_LAST_SEQUENCE_NUM) {
->                         bt_dev_err(hu->hdev, "QCA controller missed packet:%d",
->                                    qca_memdump->current_seq_no);
-> +                       rx_size = qca_memdump->received_dump;
-> +                       rx_size += QCA_DUMP_PACKET_SIZE;
-> +                       if (rx_size > qca_memdump->ram_dump_size) {
-> +                               bt_dev_err(hu->hdev,
-> +                                               "QCA memdump received %d, no space for missed packet",
-> +                                               qca_memdump->received_dump);
-> +                               break;
-> +                       }
->                         memcpy(memdump_buf, nullBuff, QCA_DUMP_PACKET_SIZE);
->                         memdump_buf = memdump_buf + QCA_DUMP_PACKET_SIZE;
->                         qca_memdump->received_dump += QCA_DUMP_PACKET_SIZE;
->                         qca_memdump->current_seq_no++;
->                 }
+A driver can be changed as much as you want, just that you need to
+honor both new and old DTs.
 
-You can replace this loop with a memset(memdump_buf, 0, (seq_no -
-qca_memdump->current_seq_no) * QCA_DUMP_PACKET_SIZE). This simplifies
-the ram_dump_size check as well because it won't zero fill until the
-end anymore (meaning a single bad seq_no doesn't make the rest of the
-dump incorrect).
+> > 
+> > For DVFS without CPR:
+> > 
+> > You need to scale APC, MX, MEMACC.
+> > 
+> > If we don't care about MEMACC, then the existing code in the OPP library
+> > satisfies all our needs.
+> > The problem here is if we need to do MEMACC as well.
+> > 
+> > I don't think it is proper to implement MEMACC as a power domain
+> > (because it is not). Thus, we can't add it as a required-opp.
 
->
-> -               memcpy(memdump_buf, (unsigned char *) skb->data, skb->len);
-> -               memdump_buf = memdump_buf + skb->len;
-> -               qca_memdump->memdump_buf_tail = memdump_buf;
-> -               qca_memdump->current_seq_no = seq_no + 1;
-> -               qca_memdump->received_dump += skb->len;
-> +               rx_size = qca_memdump->received_dump + skb->len;
-> +               if (rx_size <= qca_memdump->ram_dump_size) {
-> +                       if ((seq_no != QCA_LAST_SEQUENCE_NUM) &&
-> +                                       (seq_no != qca_memdump->current_seq_no))
-> +                               bt_dev_err(hu->hdev,
-> +                                               "QCA memdump unexpected packet %d",
-> +                                               seq_no);
-> +                       bt_dev_dbg(hu->hdev,
-> +                                       "QCA memdump packet %d with length %d",
-> +                                       seq_no, skb->len);
-> +                       memcpy(memdump_buf, (unsigned char *)skb->data,
-> +                                       skb->len);
-> +                       memdump_buf = memdump_buf + skb->len;
-> +                       qca_memdump->memdump_buf_tail = memdump_buf;
-> +                       qca_memdump->current_seq_no = seq_no + 1;
-> +                       qca_memdump->received_dump += skb->len;
-> +               } else {
-> +                       bt_dev_err(hu->hdev,
-> +                                       "QCA memdump received %d, no space for packet %d",
-> +                                       qca_memdump->received_dump, seq_no);
-> +               }
->                 qca->qca_memdump = qca_memdump;
->                 kfree_skb(skb);
->                 if (seq_no == QCA_LAST_SEQUENCE_NUM) {
-> -                       bt_dev_info(hu->hdev, "QCA writing crash dump of size %d bytes",
-> -                                  qca_memdump->received_dump);
-> +                       bt_dev_info(hu->hdev,
-> +                                       "QCA memdump Done, received %d, total %d",
-> +                                       qca_memdump->received_dump,
-> +                                       qca_memdump->ram_dump_size);
->                         memdump_buf = qca_memdump->memdump_buf_head;
->                         dev_coredumpv(&hu->serdev->dev, memdump_buf,
->                                       qca_memdump->received_dump, GFP_KERNEL);
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
->
+Required-opps can be extended if there is a real need. It isn't just
+about power domains.
+
+> > Another problem is that MEMACC should be done after regulator_set_voltage()
+> > when scaling up, and before regulator_set_voltage() when scaling down.
+> > 
+> > So even if MEMACC was a power domain, currently the OPP library does
+> > the _set_required_opps() call in the wrong order needed for MEMACC.
+> > 
+> > Like you said, the OPP library almost does everything already,
+> > so it probably makes most sense to extend it to your needs,
+> > rather than duplicating most of the code inside dev_pm_opp_set_rate().
+> > 
+> > 
+> > I guess what you really want is two new optional callbacks in
+> > dev_pm_opp_set_rate(), one before _generic_set_opp_regulator() and one
+> > after, where you could do the MEMACC thing.
+> > 
+> > The callbacks need to have a parameter that tells if we are scaling down
+> > or up.
+
+NAK :)
+
+> > Or, if Viresh doesn't like new function pointers, create a new
+> > OPP_EVENT_* that you can register for, and in that callback you do what
+> > you need.
+
+NAK :)
+
+> > Or, maybe you can even use the existing CPUFREQ_TRANSITION_NOTIFIER,
+> > with CPUFREQ_PRECHANGE / CPUFREQ_POSTCHANGE, however, I'm not sure
+> > how nicely they play when you are using the OPP library.
+> > 
+> 
+> I'm not sure. Overall all of this doesn't really sound like it is going
+> to make all this easier to understand (from looking at the device tree).
+> We then have required-opps for VDD_MX, and CPR (which isn't really a
+> power domain), and something entirely different for MEMACC (which like
+> CPR, isn't really a power domain).
+> 
+> I don't know, right now this mixture of different approaches sounds
+> rather complicated (and confusing) to me...
+> 
+> Just to throw another idea in the room: there seems to be a set_opp()
+> callback already in the OPP table, which bypasses the code that
+> updates clock and regulators (see ti-opp-supply.c). Actually if I'm
+> reading this correctly ti-opp-supply seems to implement adaptive voltage
+> scaling similar to CPR with it. Seemingly we have two different solutions
+> for the same concept now:
+> 
+>   - CPR implements a power domain provider (even though it's not really
+>     a power domain since it has only one consumer)
+>   - ti-opp-supply implements this with the set_opp() callback
+> 
+> In general I think this looks pretty nice - we don't duplicate the full
+> cpufreq driver, but have control about the order
+> regulators/clocks/power domains etc are changed.
+> 
+> I think something like this would fit quite well for my case
+> (scaling MX, APC and MEMACC without CPR). However, not sure how it would
+> integrate with the existing CPR driver at some point.
+> 
+> Adding Viresh to Cc in case he has some opinion for all this.
+
+OPP core broadly is a place where we store/parse some data from the DT
+and keep, so others can use it. opp_set_rate() was added to it to
+avoid duplicating the same thing across drivers. As you have figured
+out, the right way for you to solve it is by using your set_opp()
+callback along with required-opps thing.
+
+-- 
+viresh
