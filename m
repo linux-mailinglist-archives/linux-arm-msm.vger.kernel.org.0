@@ -2,69 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E6BA1E6C7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 22:28:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DF711E6C93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 22:31:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407106AbgE1U2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 16:28:40 -0400
-Received: from mail-il1-f196.google.com ([209.85.166.196]:44664 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407026AbgE1U2i (ORCPT
+        id S2407281AbgE1Ubb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 16:31:31 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:52178 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2407143AbgE1Uba (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 16:28:38 -0400
-Received: by mail-il1-f196.google.com with SMTP id j3so212921ilk.11;
-        Thu, 28 May 2020 13:28:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tlbZ6Mr9e5Ay55YAAkLD4ho81QLBhLTS/l66ro00bxg=;
-        b=BLR1Ezm+R2JuJet16gNZabgkN0qpG+viYI+QrF+LPmf/l5pVNZmsIRh7MGYKPC21gd
-         4B4GqclljbK7VSK1hR2AKWEBwOkNCh63kY/Gy3OqUsbxfAuap348L3noR8tGmKJOy5Ii
-         2p7tRi2M4XM6pn4VMBTPzhNdvkbe6CS877swO2SGRDuNBFoaP7JQHTY1ek9r16K39pvq
-         ooDb7PfDvpgMKYD2tAM/cUSVqtQey42yCYnWA4dQeXr/hDFJkCRKm9jEKrcst2RDQiok
-         D61lKGrgOmVgoFGudgt9P+9RlMAQkJyhpPruWZWk9Q8ghhtmSl2E/S8xQjENKrW8AsRQ
-         XhEg==
-X-Gm-Message-State: AOAM531ZjKExgD655XWAmzs0g91B2mokev0iKf/sq7/8qbFWKEuBHOZj
-        XTDrJyuHODSnpvdW4WSZiBumWAo=
-X-Google-Smtp-Source: ABdhPJyIrUUeCDXweziG8G0La28ky8xA33nLZOXZqRvWjgUI1JNY4RRki5w34no1B/2hanqz4tn0rg==
-X-Received: by 2002:a92:4015:: with SMTP id n21mr4586732ila.137.1590697716290;
-        Thu, 28 May 2020 13:28:36 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id f9sm3123464iow.47.2020.05.28.13.28.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 13:28:35 -0700 (PDT)
-Received: (nullmailer pid 623579 invoked by uid 1000);
-        Thu, 28 May 2020 20:28:33 -0000
-Date:   Thu, 28 May 2020 14:28:33 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Eli Riggs <eli@rje.li>
-Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sm6125 SoC and
- xiaomi,willow
-Message-ID: <20200528202833.GA623550@bogus>
-References: <20200517115410.3374-1-eli@rje.li>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200517115410.3374-1-eli@rje.li>
+        Thu, 28 May 2020 16:31:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590697890; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=UQh3+K1vHOMTfx8eoXl36wopXtjJpVYLPWyxt6j7a1M=; b=iwe4+JlqWBvrVO5t2QO6sSxu/NVGW9feH0Dgp41jBwsZ12WKjg09Kk1sjR+w5sg0Oc2d3GHS
+ 5pdYM1l11J6QuBXyqxKwXhazi47yxJoE8CQWgC18pO5t/WHguKI1G4ayP9hwYwZ7KfZ9Yen1
+ hPg15uZvSJAd5EWaMEIl92lcuTI=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5ed01f96c28b2cdd98298d3c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 May 2020 20:31:18
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8BC3AC43395; Thu, 28 May 2020 20:31:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 26E1AC433C9;
+        Thu, 28 May 2020 20:31:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 26E1AC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, stable@kernel.org,
+        tientzu@chromium.org
+Subject: [PATCH v2] bluetooth: hci_qca: Fix suspend/resume functionality failure
+Date:   Fri, 29 May 2020 04:31:07 +0800
+Message-Id: <1590697867-7618-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 17 May 2020 04:54:06 -0700, Eli Riggs wrote:
-> Add compatibles for SM6125 aka SDM665 aka Snapdragon 665, as well
-> as xiaomi,willow aka Xiaomi Redmi Note 8T, the international
-> edition of the Note 8.
-> 
-> Signed-off-by: Eli Riggs <eli@rje.li>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
+@dev parameter of qca_suspend()/qca_resume() represents
+serdev_device, but it is mistook for hci_dev and causes
+succedent unexpected memory access.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Fix by taking @dev as serdev_device.
+
+Fixes: 41d5b25fed0 ("Bluetooth: hci_qca: add PM support")
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+---
+Changes in v2:
+- remove unused variable @hdev
+
+ drivers/bluetooth/hci_qca.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index e4a6823..adcbe00 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1977,8 +1977,9 @@ static void qca_serdev_remove(struct serdev_device *serdev)
+ 
+ static int __maybe_unused qca_suspend(struct device *dev)
+ {
+-	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+-	struct hci_uart *hu = hci_get_drvdata(hdev);
++	struct serdev_device *serdev = to_serdev_device(dev);
++	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
++	struct hci_uart *hu = &qcadev->serdev_hu;
+ 	struct qca_data *qca = hu->priv;
+ 	unsigned long flags;
+ 	int ret = 0;
+@@ -2057,8 +2058,9 @@ static int __maybe_unused qca_suspend(struct device *dev)
+ 
+ static int __maybe_unused qca_resume(struct device *dev)
+ {
+-	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+-	struct hci_uart *hu = hci_get_drvdata(hdev);
++	struct serdev_device *serdev = to_serdev_device(dev);
++	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
++	struct hci_uart *hu = &qcadev->serdev_hu;
+ 	struct qca_data *qca = hu->priv;
+ 
+ 	clear_bit(QCA_SUSPENDING, &qca->flags);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
