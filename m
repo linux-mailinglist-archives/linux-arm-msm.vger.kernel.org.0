@@ -2,196 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19BB31E552C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 06:44:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 350D71E554E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 07:04:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725764AbgE1Eo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 00:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36008 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725308AbgE1Eo4 (ORCPT
+        id S1727032AbgE1FEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 01:04:42 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:40197 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727022AbgE1FEl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 00:44:56 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DCA7C05BD1E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 21:44:56 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id y18so12858200pfl.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2020 21:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tJwb6NgXaAMt+UTbPVtGDaiNmTuQFn3dNgXFWvKRvnw=;
-        b=dcnLymxvZW/qdTM/djO9j1r93X/5ToAZPefwVc43lAiKeOf+EN0TRtx7bLeyPGI2vj
-         W0Cer5JcbUuVbc9CfnoxtDikDX5KVkVQ+LPQkMQXutg0w4zZQJrXA+7QsUi75NotJyg1
-         V1Q+JcXeXei0X0lv89xaK8JYxedz7lxsMSgIyCMsb1+eHcmfpzZkxdW7E9XB10V7ZwPf
-         8INhUkL9TvQjjgsjJcPZOnWeIduLUi3y4vPkwageKUKVIlvw4QOQn/9rawXwYmzfXt43
-         hwqK0FWKsKl6/dMy0JqXTodDxESIyp9MjMoCmUhaorQ0ZAdWjKAobgFoYdiKDLwTxepd
-         XPOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tJwb6NgXaAMt+UTbPVtGDaiNmTuQFn3dNgXFWvKRvnw=;
-        b=M/Q3m+4H9wfb49VWMjslE1H+8pwSsOzZNNysYFaw0XvAq6ICnl8Y8fM/rAFp+WVZSP
-         gMLGTRiPuexLqTS7TS9DKgdI9TB4g2UvJWiKNdH32Kbc64Lf1p9iMdgT7KFGx3f53RkU
-         JPtZmZykmiQCg5wRN3CAxsXfDVs1UUV7WfED645hVVmtWugiqn2PPGHFidYQi+LxmvDo
-         m+veslZOjJ5dPq/lUxGTn2FEDaN0z0OcLzZTc1nqOLZOdEUyj8nxM3yUMnayjvttKIqA
-         3UluZTEYBtz0zvXTt36mvKZzOrSZTpai2a0w9+84Le8TJYcALXKNKGZJUrUJrvAKZUZL
-         xCiw==
-X-Gm-Message-State: AOAM530BZbRFKLZPZNR9rh8WCWLCOe+nCQjcSV9BBjs77rOl+xo9Z1Rm
-        i82MX9X6zNHcN9dFhDO5o5xdjQ==
-X-Google-Smtp-Source: ABdhPJyKYx7TMXMeRkv/hPTfDi5DXyY3mVe1z0hiFNdH9r0D6Dwi5YhrO7UUuL9Ahtc3FtAuMB52Bw==
-X-Received: by 2002:a63:4b0c:: with SMTP id y12mr1142604pga.56.1590641095251;
-        Wed, 27 May 2020 21:44:55 -0700 (PDT)
-Received: from localhost ([122.172.60.59])
-        by smtp.gmail.com with ESMTPSA id nl8sm4278365pjb.13.2020.05.27.21.44.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 May 2020 21:44:54 -0700 (PDT)
-Date:   Thu, 28 May 2020 10:14:51 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Niklas Cassel <nks@flawful.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>
-Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
-Message-ID: <20200528044451.5kegaw2icvnjl4up@vireshk-i7>
-References: <20200403175934.GA96064@gerhold.net>
- <20200423045506.GJ987656@yoga>
- <20200525153246.GA9224@flawful.org>
- <20200525163638.GA41001@gerhold.net>
- <20200525194443.GA11851@flawful.org>
- <20200526085948.GA1329@gerhold.net>
- <20200526155419.GA9977@flawful.org>
- <20200526205403.GA7256@gerhold.net>
- <20200527103921.GB9977@flawful.org>
- <20200527120441.GA4166@gerhold.net>
+        Thu, 28 May 2020 01:04:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590642281; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=F/YkHIoGTRVe20hlMQi6nd837QqDHegA5W6Ur6tUtDU=; b=LcGOHsKAYLm9xnjo07PODs+ZBpnmdmrgERnsKKBNAZJ38IZws/TPIo+cEF7kmuyWDcAFKxnI
+ qgMZQ9/I2p0Ba8KWxFL8ob6LR+gPBqHyLM1pKy3zO7lWxPJxwNNP9BEeKOe+nfjdpvZEHPGY
+ 3VJuQH6SP8X12aD1lRgBwj27+qk=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5ecf465ebf0e32d254f19f83 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 May 2020 05:04:30
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8DC82C433C9; Thu, 28 May 2020 05:04:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from [10.253.38.28] (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 37DA9C433C6;
+        Thu, 28 May 2020 05:04:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 37DA9C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+Subject: Re: [PATCH v3] bluetooth: hci_qca: Fix qca6390 enable failure after
+ warm reboot
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
+        rjliao@codeaurora.org
+References: <1590546759-27387-1-git-send-email-zijuhu@codeaurora.org>
+ <20200527164832.GH4525@google.com>
+From:   Zijun Hu <zijuhu@codeaurora.org>
+Message-ID: <4c5c9fd8-e90c-c7e2-8f21-edad3c3ca7ff@codeaurora.org>
+Date:   Thu, 28 May 2020 13:04:25 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200527120441.GA4166@gerhold.net>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20200527164832.GH4525@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27-05-20, 14:04, Stephan Gerhold wrote:
-> +Cc Viresh (should have already done this earlier :) )
+
+
+On 5/28/2020 12:48 AM, Matthias Kaehlcke wrote:
+> Hi Zijun,
 > 
-> On Wed, May 27, 2020 at 12:39:21PM +0200, Niklas Cassel wrote:
-> > On Tue, May 26, 2020 at 10:54:03PM +0200, Stephan Gerhold wrote:
-> > > Speaking of the current solution, I also have to say that (IMO) the
-> > > device tree binding for "required-opps" is rather confusing
-> > > and potentially misleading.
-> > > 
-> > > e.g. for VDD_MX scaling I use
-> > > 
-> > > 	required-opps = <&rpmpd_opp_nom>;
-> > > 
-> > > but looking at just the OPP table absolutely nothing tells me this is
-> > > supposed to apply to VDD_MX. You actually need to go search for the cpu@
-> > > device tree node and then know that some of the power domains there
-> > > (in some order) are eventually going to be used for the required-opps
-> > > there. The order is only defined by the qcom-nvmem-cpufreq driver.
-> > > 
-> > > It took me a few hours to get that right... :)
-
-I agree, we need a way to figure out devices as well for which the
-required-opp works. And yes that's missing.
-
-> > > Nevertheless I guess we need a solution for scaling MEMACC without CPR
-> > > for now. :) I'm not sure if rewriting all this is very realistic
-> > > (if even possible). So I guess we might be stuck with the genpd approach?
-> > 
-> > I agree, the CPR driver will most likely not be changed now, since we
-> > need to be compatible with the existing device tree.
-
-A driver can be changed as much as you want, just that you need to
-honor both new and old DTs.
-
-> > 
-> > For DVFS without CPR:
-> > 
-> > You need to scale APC, MX, MEMACC.
-> > 
-> > If we don't care about MEMACC, then the existing code in the OPP library
-> > satisfies all our needs.
-> > The problem here is if we need to do MEMACC as well.
-> > 
-> > I don't think it is proper to implement MEMACC as a power domain
-> > (because it is not). Thus, we can't add it as a required-opp.
-
-Required-opps can be extended if there is a real need. It isn't just
-about power domains.
-
-> > Another problem is that MEMACC should be done after regulator_set_voltage()
-> > when scaling up, and before regulator_set_voltage() when scaling down.
-> > 
-> > So even if MEMACC was a power domain, currently the OPP library does
-> > the _set_required_opps() call in the wrong order needed for MEMACC.
-> > 
-> > Like you said, the OPP library almost does everything already,
-> > so it probably makes most sense to extend it to your needs,
-> > rather than duplicating most of the code inside dev_pm_opp_set_rate().
-> > 
-> > 
-> > I guess what you really want is two new optional callbacks in
-> > dev_pm_opp_set_rate(), one before _generic_set_opp_regulator() and one
-> > after, where you could do the MEMACC thing.
-> > 
-> > The callbacks need to have a parameter that tells if we are scaling down
-> > or up.
-
-NAK :)
-
-> > Or, if Viresh doesn't like new function pointers, create a new
-> > OPP_EVENT_* that you can register for, and in that callback you do what
-> > you need.
-
-NAK :)
-
-> > Or, maybe you can even use the existing CPUFREQ_TRANSITION_NOTIFIER,
-> > with CPUFREQ_PRECHANGE / CPUFREQ_POSTCHANGE, however, I'm not sure
-> > how nicely they play when you are using the OPP library.
-> > 
+> On Wed, May 27, 2020 at 10:32:39AM +0800, Zijun Hu wrote:
+>> Warm reboot can not restore qca6390 controller baudrate
+>> to default due to lack of controllable BT_EN pin or power
+>> supply, so fails to download firmware after warm reboot.
+>>
+>> Fixed by sending EDL_SOC_RESET VSC to reset controller
+>> within added device shutdown implementation.
+>>
+>> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+>> ---
+>>  drivers/bluetooth/hci_qca.c | 29 +++++++++++++++++++++++++++++
+>>  1 file changed, 29 insertions(+)
+>>
+>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>> index e4a6823..4b6f8b6 100644
+>> --- a/drivers/bluetooth/hci_qca.c
+>> +++ b/drivers/bluetooth/hci_qca.c
+>> @@ -1975,6 +1975,34 @@ static void qca_serdev_remove(struct serdev_device *serdev)
+>>  	hci_uart_unregister_device(&qcadev->serdev_hu);
+>>  }
+>>  
+>> +static void qca_serdev_shutdown(struct device *dev)
+>> +{
+>> +	int ret;
+>> +	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
+>> +	struct serdev_device *serdev = to_serdev_device(dev);
+>> +	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
+>> +	const u8 ibs_wake_cmd[] = { 0xFD };
+>> +	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
+>> +
+>> +	if (qcadev->btsoc_type == QCA_QCA6390) {
+>> +		serdev_device_write_flush(serdev);
+>> +		serdev_device_write_buf(serdev,
+>> +				ibs_wake_cmd, sizeof(ibs_wake_cmd));
+>> +		serdev_device_wait_until_sent(serdev, timeout);
 > 
-> I'm not sure. Overall all of this doesn't really sound like it is going
-> to make all this easier to understand (from looking at the device tree).
-> We then have required-opps for VDD_MX, and CPR (which isn't really a
-> power domain), and something entirely different for MEMACC (which like
-> CPR, isn't really a power domain).
+> Why no check of the return value of serdev_device_write_buf() here,
+> does it make sense to continue if sending the wakeup command failed?
 > 
-> I don't know, right now this mixture of different approaches sounds
-> rather complicated (and confusing) to me...
+i will correct it at v4 patch
+> Couldn't serdev_device_write() be used instead of the _write_buf() +
+> _wait_until_sent() combo?
 > 
-> Just to throw another idea in the room: there seems to be a set_opp()
-> callback already in the OPP table, which bypasses the code that
-> updates clock and regulators (see ti-opp-supply.c). Actually if I'm
-> reading this correctly ti-opp-supply seems to implement adaptive voltage
-> scaling similar to CPR with it. Seemingly we have two different solutions
-> for the same concept now:
-> 
->   - CPR implements a power domain provider (even though it's not really
->     a power domain since it has only one consumer)
->   - ti-opp-supply implements this with the set_opp() callback
-> 
-> In general I think this looks pretty nice - we don't duplicate the full
-> cpufreq driver, but have control about the order
-> regulators/clocks/power domains etc are changed.
-> 
-> I think something like this would fit quite well for my case
-> (scaling MX, APC and MEMACC without CPR). However, not sure how it would
-> integrate with the existing CPR driver at some point.
-> 
-> Adding Viresh to Cc in case he has some opinion for all this.
+i don't think so, serdev_device_write() is not appropriate at here.
+serdev_device_write_wakeup() should be used to release completion hold
+by serdev_device_write(), however @hci_serdev_client_ops doesn't use
+serdev_device_write_wakeup() to implement its write_wakeup operation.
+we don't want to touch common hci_serdev.c code.
 
-OPP core broadly is a place where we store/parse some data from the DT
-and keep, so others can use it. opp_set_rate() was added to it to
-avoid duplicating the same thing across drivers. As you have figured
-out, the right way for you to solve it is by using your set_opp()
-callback along with required-opps thing.
+>> +		usleep_range(8000, 10000);
+>> +
+>> +		serdev_device_write_flush(serdev);
+> 
+> I suppose the flush is done because _wait_until_sent() could have timed out.
+> Another reason to use _device_write() (if suitable), since it returns
+> -ETIMEDOUT in that case?
+>
+flush is prefixed at write operation to speed up
+shutdown procedure in case of unexpected data injected
+during waiting for controller wakeup.
+the combo have been used and i just follow it>> +		ret = serdev_device_write_buf(serdev,
+>> +				edl_reset_soc_cmd, sizeof(edl_reset_soc_cmd));
+>> +		if (ret < 0) {
+>> +			BT_ERR("QCA send EDL_RESET_REQ error: %d", ret);
+>> +			return;
+>> +		}
+>> +		serdev_device_wait_until_sent(serdev, timeout);
+>> +		usleep_range(8000, 10000);
+>> +	}
+>> +}
+>> +
+>>  static int __maybe_unused qca_suspend(struct device *dev)
+>>  {
+>>  	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+>> @@ -2100,6 +2128,7 @@ static struct serdev_device_driver qca_serdev_driver = {
+>>  		.name = "hci_uart_qca",
+>>  		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
+>>  		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
+>> +		.shutdown = qca_serdev_shutdown,
+>>  		.pm = &qca_pm_ops,
+>>  	},
+>>  };
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+>>
 
 -- 
-viresh
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
