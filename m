@@ -2,638 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F8771E6282
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 15:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D68C71E62EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 15:53:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390503AbgE1Nm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 09:42:58 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:57134 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390497AbgE1Nm6 (ORCPT
+        id S2390605AbgE1Nxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 09:53:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36450 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390556AbgE1Nxu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 09:42:58 -0400
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 04SDgPjj088823;
-        Thu, 28 May 2020 08:42:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1590673346;
-        bh=ULyFmlrEGmPGrXR2bHss3F7PNNJPRh+eCFfoxis47/w=;
-        h=Subject:From:To:CC:References:Date:In-Reply-To;
-        b=bveh5kgy4OD7QMZtOHiRIgBDCLESq53RfAJ4ko0Yg+UgdydlS0lGBHp3buBq2I0tW
-         hMIBjB6RSF3hBON+1ZFpMFp4a+aQS75DHjReTw56fZq1qQTq4sqmqt+Ael2OUcf4QV
-         VjEBD9qn20weAwL76NkVd+e7UyoV7paBDrIHf0OM=
-Received: from DLEE104.ent.ti.com (dlee104.ent.ti.com [157.170.170.34])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04SDgPuT121817;
-        Thu, 28 May 2020 08:42:25 -0500
-Received: from DLEE111.ent.ti.com (157.170.170.22) by DLEE104.ent.ti.com
- (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Thu, 28
- May 2020 08:42:25 -0500
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE111.ent.ti.com
- (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Thu, 28 May 2020 08:42:25 -0500
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 04SDgJCp014188;
-        Thu, 28 May 2020 08:42:20 -0500
-Subject: Re: [PATCH v2 16/16] backlight: use backlight_is_blank() in all
- backlight drivers
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     Sam Ravnborg <sam@ravnborg.org>, <dri-devel@lists.freedesktop.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        <patches@opensource.cirrus.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
-References: <20200517190139.740249-1-sam@ravnborg.org>
- <20200517190139.740249-17-sam@ravnborg.org>
- <58537a62-1188-d846-75de-165ee3dcf389@ti.com>
-X-Pep-Version: 2.0
-Message-ID: <c2eb20b2-d301-73d1-4f5a-e6e9f3ec4d96@ti.com>
-Date:   Thu, 28 May 2020 16:43:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+        Thu, 28 May 2020 09:53:50 -0400
+Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6545EC05BD1E;
+        Thu, 28 May 2020 06:53:50 -0700 (PDT)
+Received: by mail-il1-x144.google.com with SMTP id a18so171687ilp.7;
+        Thu, 28 May 2020 06:53:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PLslgLPnR8Y3hUCC1IVbsxu7nCYCKRf2I9pQNybG4iw=;
+        b=ZI4OG95s12fs6duy/N6GO+aP1nLDrDpPTqcEI+BBaZ/62gH07ZCHspb5o346ycdUB9
+         rkQTQ5trZ258WzyAYipr54oCSuyqWkdyHJh+DY2uqA1R9hA8gklEXgpEMCHT0GBBNOlG
+         OlwmXGnemC8O3/n8u3wDiYZG0+im3X7sky2Q6J10n3UttfoO2KRN9BYumCweKV8/4d79
+         nUiRIOUJYRtpX/F5u3P3NXh9/FZ4+NUzNeDmuzzzznK54ZeNTp9DLIn8AhmoGd9uZlLB
+         EXjCl9eLG6vLHOGZa3nPxMC1igEKQaDvv1NImtywFk4HPv3kPjqmqyt+RZwNDhT1OXkt
+         RzQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PLslgLPnR8Y3hUCC1IVbsxu7nCYCKRf2I9pQNybG4iw=;
+        b=J3tNDZUF8ThhcZynqxZLu4DsdWX5QtmlE4sizv4Dve0xvMPpErMfwUkYV2fIvN+4OK
+         ibP6VShH4fD/TBEP+M8tBciPb3cfavCET5BEV0nDoiBgFXf1AG4GNskRsPXQp7Bz2z8Z
+         /Ya6S+rdG454N0dLchtnvL8DAFSfoRsPWN+TvETqx6gwWkn1BOIxef7vf0x541qamLfp
+         BBGKS9/0yqxGTeBC//RKkM++wIaruLQrGALlyBD/iWAM6pzmrVuWleA9vEHMfiedDsx5
+         JfnuxK99iE+3h/07APyMswNSvLknO78dxPZMlbccheWmzGu3XJpp95Wsw5Op8Jlcw2TS
+         VGqA==
+X-Gm-Message-State: AOAM530u8zAQdu2EaNV1Bmp/JP4MLK2O5Ru3LzcNuPoY/LMGvf/BgWOL
+        /HyEU6tc1x08ppOuhVS8OvfR6fUuvZEi5mqbfHI=
+X-Google-Smtp-Source: ABdhPJz3pvsvF3vDZQHDZZARSic+cjjWuwrrrczg7rXeFCBhcYnxfSVnTCNBGgfPQxBCstbjZmlY6QUq4VyklDrFv/Y=
+X-Received: by 2002:a92:5b99:: with SMTP id c25mr2977848ilg.42.1590674029756;
+ Thu, 28 May 2020 06:53:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <58537a62-1188-d846-75de-165ee3dcf389@ti.com>
-Content-Type: multipart/mixed;
-        boundary="------------EF1F99172B7014968494A37D"
-Content-Language: en-US
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+References: <cover.1585160616.git.asutoshd@codeaurora.org> <d0c6c22455811e9f0eda01f9bc70d1398b51b2bd.1585160616.git.asutoshd@codeaurora.org>
+ <CAOCk7NrrBoO2k1M7XX0W6L2+efBbo-s6WVaKZx4EtSqNpCaUyA@mail.gmail.com> <f52a59df-5697-9e82-d12d-292ee9653f45@codeaurora.org>
+In-Reply-To: <f52a59df-5697-9e82-d12d-292ee9653f45@codeaurora.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Thu, 28 May 2020 07:53:38 -0600
+Message-ID: <CAOCk7NrR1dhr47audXYQr4gBQAYNqEP9-N9-1rPNWwApqib3vQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] scsi: ufshcd: Update the set frequency to devfreq
+To:     "Asutosh Das (asd)" <asutoshd@codeaurora.org>
+Cc:     c_vkoul@quicinc.com, hongwus@codeaurora.org,
+        Avri Altman <Avri.Altman@wdc.com>,
+        Can Guo <cang@codeaurora.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-scsi@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Venkat Gopalakrishnan <venkatg@codeaurora.org>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---------------EF1F99172B7014968494A37D
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, May 26, 2020 at 11:17 AM Asutosh Das (asd)
+<asutoshd@codeaurora.org> wrote:
+>
+> Hi Jeffrey
+> On 5/25/2020 3:19 PM, Jeffrey Hugo wrote:
+> > On Wed, Mar 25, 2020 at 12:29 PM Asutosh Das <asutoshd@codeaurora.org> wrote:
+> >>
+> >> Currently, the frequency that devfreq provides the
+> >> driver to set always leads the clocks to be scaled up.
+> >> Hence, round the clock-rate to the nearest frequency
+> >> before deciding to scale.
+> >>
+> >> Also update the devfreq statistics of current frequency.
+> >>
+> >> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> >
+> > This change appears to cause issues for the Lenovo Miix 630, as
+> > identified by git bisect.
+> >
+>
+> Thanks for reporting this.
+>
+> > On 5.6-final, My boot log looks normal.  On 5.7-rc7, the Lenovo Miix
+> > 630 rarely boots, usually stuck in some kind of infinite printk loop.
+> >
+> > If I disable some of the UFS logging, I can capture this from the
+> > logs, as soon as UFS inits -
+> >
+> > [    4.353860] ufshcd-qcom 1da4000.ufshc: ufshcd_intr: Unhandled
+> > interrupt 0x00000000
+> > [    4.359605] ufshcd-qcom 1da4000.ufshc: ufshcd_intr: Unhandled
+> > interrupt 0x00000000
+> > [    4.365412] ufshcd-qcom 1da4000.ufshc: ufshcd_check_errors:
+> > saved_err 0x4 saved_uic_err 0x2
+> > [    4.371121] ufshcd-qcom 1da4000.ufshc: hba->ufs_version = 0x210,
+> > hba->capabilities = 0x1587001f
+> > [    4.376846] ufshcd-qcom 1da4000.ufshc: hba->outstanding_reqs =
+> > 0x100000, hba->outstanding_tasks = 0x0
+> > [    4.382636] ufshcd-qcom 1da4000.ufshc: last_hibern8_exit_tstamp at
+> > 0 us, hibern8_exit_cnt = 0
+> > [    4.388368] ufshcd-qcom 1da4000.ufshc: No record of pa_err
+> > [    4.394001] ufshcd-qcom 1da4000.ufshc: dl_err[0] = 0x80000001 at 3873626 us
+> > [    4.399577] ufshcd-qcom 1da4000.ufshc: No record of nl_err
+> > [    4.405053] ufshcd-qcom 1da4000.ufshc: No record of tl_err
+> > [    4.410464] ufshcd-qcom 1da4000.ufshc: No record of dme_err
+> > [    4.415747] ufshcd-qcom 1da4000.ufshc: No record of auto_hibern8_err
+> > [    4.420950] ufshcd-qcom 1da4000.ufshc: No record of fatal_err
+> > [    4.426013] ufshcd-qcom 1da4000.ufshc: No record of link_startup_fail
+> > [    4.430950] ufshcd-qcom 1da4000.ufshc: No record of resume_fail
+> > [    4.435786] ufshcd-qcom 1da4000.ufshc: No record of suspend_fail
+> > [    4.440538] ufshcd-qcom 1da4000.ufshc: dev_reset[0] = 0x0 at 3031009 us
+> > [    4.445199] ufshcd-qcom 1da4000.ufshc: No record of host_reset
+> > [    4.449750] ufshcd-qcom 1da4000.ufshc: No record of task_abort
+> > [    4.454214] ufshcd-qcom 1da4000.ufshc: clk: core_clk, rate: 50000000
+> > [    4.458590] ufshcd-qcom 1da4000.ufshc: clk: core_clk_unipro, rate: 37500000
+> >
+> > I don't understand how this change is breaking things, but it clearly is for me.
+> >
+> > What kind of additional data would be useful to get to the bottom of this?
+> >
 
-
-
-On 28/05/2020 16.39, Peter Ujfalusi wrote:
-> Hi Sam,
->=20
-> On 17/05/2020 22.01, Sam Ravnborg wrote:
->> Replaces the open-coded checks of the state etc.,
->> with the backlight_is_blank() helper.
->> This increases readability of the code and align
->> the functionality across the drivers.
->=20
-> Thanks for the cleanup in with the series!
->=20
-> Checked gpio/pwm/led backlight drivers mostly:
-> Reviewed-by: Peter Ujfalusi <peter.ujflausi@ti.com>
-
-Interesting, I had a typo in my e-mail address :o
-Let's try again:
-Reviewed-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-
->=20
->> v2:
->>   - Fixed so changelog is readable
->>
->> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
->> Cc: Lee Jones <lee.jones@linaro.org>
->> Cc: Daniel Thompson <daniel.thompson@linaro.org>
->> Cc: Jingoo Han <jingoohan1@gmail.com>
->> Cc: Michael Hennerich <michael.hennerich@analog.com>
->> Cc: Support Opensource <support.opensource@diasemi.com>
->> Cc: Thierry Reding <thierry.reding@gmail.com>
->> Cc: "Uwe Kleine-K=C3=B6nig" <u.kleine-koenig@pengutronix.de>
->> Cc: Andy Gross <agross@kernel.org>
->> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Cc: linux-pwm@vger.kernel.org
->> Cc: linux-arm-msm@vger.kernel.org
->> Cc: patches@opensource.cirrus.com
->> ---
->>  drivers/video/backlight/88pm860x_bl.c    |  8 +-------
->>  drivers/video/backlight/adp5520_bl.c     |  5 +----
->>  drivers/video/backlight/adp8860_bl.c     |  5 +----
->>  drivers/video/backlight/adp8870_bl.c     |  5 +----
->>  drivers/video/backlight/as3711_bl.c      |  8 +++-----
->>  drivers/video/backlight/bd6107.c         |  4 +---
->>  drivers/video/backlight/corgi_lcd.c      |  5 +----
->>  drivers/video/backlight/cr_bllcd.c       | 22 +++++++---------------
->>  drivers/video/backlight/da903x_bl.c      |  8 +-------
->>  drivers/video/backlight/ep93xx_bl.c      |  3 +--
->>  drivers/video/backlight/gpio_backlight.c |  4 +---
->>  drivers/video/backlight/hp680_bl.c       |  4 +---
->>  drivers/video/backlight/jornada720_bl.c  |  2 +-
->>  drivers/video/backlight/kb3886_bl.c      |  4 +---
->>  drivers/video/backlight/led_bl.c         |  4 +---
->>  drivers/video/backlight/lm3533_bl.c      |  4 +---
->>  drivers/video/backlight/locomolcd.c      |  4 +---
->>  drivers/video/backlight/lv5207lp.c       |  4 +---
->>  drivers/video/backlight/max8925_bl.c     |  8 +-------
->>  drivers/video/backlight/pwm_bl.c         |  4 +---
->>  drivers/video/backlight/qcom-wled.c      |  4 +---
->>  drivers/video/backlight/tps65217_bl.c    |  4 +---
->>  drivers/video/backlight/wm831x_bl.c      |  8 +-------
->>  23 files changed, 31 insertions(+), 100 deletions(-)
->>
->> diff --git a/drivers/video/backlight/88pm860x_bl.c b/drivers/video/bac=
-klight/88pm860x_bl.c
->> index 20d96a5ac384..162c83ab0f5a 100644
->> --- a/drivers/video/backlight/88pm860x_bl.c
->> +++ b/drivers/video/backlight/88pm860x_bl.c
->> @@ -123,13 +123,7 @@ static int pm860x_backlight_update_status(struct =
-backlight_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.state & BL_CORE_SUSPENDED)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return pm860x_backlight_set(bl, brightness);
->> diff --git a/drivers/video/backlight/adp5520_bl.c b/drivers/video/back=
-light/adp5520_bl.c
->> index 0f63f76723a5..d817b0d95c9d 100644
->> --- a/drivers/video/backlight/adp5520_bl.c
->> +++ b/drivers/video/backlight/adp5520_bl.c
->> @@ -67,10 +67,7 @@ static int adp5520_bl_update_status(struct backligh=
-t_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return adp5520_bl_set(bl, brightness);
->> diff --git a/drivers/video/backlight/adp8860_bl.c b/drivers/video/back=
-light/adp8860_bl.c
->> index 19968104fc47..a0ce2a3701fa 100644
->> --- a/drivers/video/backlight/adp8860_bl.c
->> +++ b/drivers/video/backlight/adp8860_bl.c
->> @@ -363,10 +363,7 @@ static int adp8860_bl_update_status(struct backli=
-ght_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return adp8860_bl_set(bl, brightness);
->> diff --git a/drivers/video/backlight/adp8870_bl.c b/drivers/video/back=
-light/adp8870_bl.c
->> index 4c0032010cfe..ae4269fdb189 100644
->> --- a/drivers/video/backlight/adp8870_bl.c
->> +++ b/drivers/video/backlight/adp8870_bl.c
->> @@ -401,10 +401,7 @@ static int adp8870_bl_update_status(struct backli=
-ght_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return adp8870_bl_set(bl, brightness);
->> diff --git a/drivers/video/backlight/as3711_bl.c b/drivers/video/backl=
-ight/as3711_bl.c
->> index 33f0f0f2e8b3..7fa76008c7bf 100644
->> --- a/drivers/video/backlight/as3711_bl.c
->> +++ b/drivers/video/backlight/as3711_bl.c
->> @@ -107,13 +107,11 @@ static int as3711_bl_update_status(struct backli=
-ght_device *bl)
->>  	int brightness =3D bl->props.brightness;
->>  	int ret =3D 0;
->> =20
->> -	dev_dbg(&bl->dev, "%s(): brightness %u, pwr %x, blank %x, state %x\n=
-",
->> +	dev_dbg(&bl->dev, "%s(): brightness %u, pwr %x, state %x\n",
->>  		__func__, bl->props.brightness, bl->props.power,
->> -		bl->props.fb_blank, bl->props.state);
->> +		bl->props.state);
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.fb_blank !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	if (data->type =3D=3D AS3711_BL_SU1) {
->> diff --git a/drivers/video/backlight/bd6107.c b/drivers/video/backligh=
-t/bd6107.c
->> index d5d5fb457e78..f6a5c1dba3bc 100644
->> --- a/drivers/video/backlight/bd6107.c
->> +++ b/drivers/video/backlight/bd6107.c
->> @@ -84,9 +84,7 @@ static int bd6107_backlight_update_status(struct bac=
-klight_device *backlight)
->>  	struct bd6107 *bd =3D bl_get_data(backlight);
->>  	int brightness =3D backlight->props.brightness;
->> =20
->> -	if (backlight->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    backlight->props.fb_blank !=3D FB_BLANK_UNBLANK ||
->> -	    backlight->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
->> +	if (backlight_is_blank(backlight))
->>  		brightness =3D 0;
->> =20
->>  	if (brightness) {
->> diff --git a/drivers/video/backlight/corgi_lcd.c b/drivers/video/backl=
-ight/corgi_lcd.c
->> index 25ef0cbd7583..c9adf4e26355 100644
->> --- a/drivers/video/backlight/corgi_lcd.c
->> +++ b/drivers/video/backlight/corgi_lcd.c
->> @@ -422,10 +422,7 @@ static int corgi_bl_update_status(struct backligh=
-t_device *bd)
->>  	struct corgi_lcd *lcd =3D bl_get_data(bd);
->>  	int intensity =3D bd->props.brightness;
->> =20
->> -	if (bd->props.power !=3D FB_BLANK_UNBLANK)
->> -		intensity =3D 0;
->> -
->> -	if (bd->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bd))
->>  		intensity =3D 0;
->> =20
->>  	if (corgibl_flags & CORGIBL_SUSPENDED)
->> diff --git a/drivers/video/backlight/cr_bllcd.c b/drivers/video/backli=
-ght/cr_bllcd.c
->> index 4624b7b7c6a6..d5ab7675f55c 100644
->> --- a/drivers/video/backlight/cr_bllcd.c
->> +++ b/drivers/video/backlight/cr_bllcd.c
->> @@ -59,26 +59,18 @@ struct cr_panel {
->> =20
->>  static int cr_backlight_set_intensity(struct backlight_device *bd)
->>  {
->> -	int intensity =3D bd->props.brightness;
->>  	u32 addr =3D gpio_bar + CRVML_PANEL_PORT;
->>  	u32 cur =3D inl(addr);
->> =20
->> -	if (bd->props.power =3D=3D FB_BLANK_UNBLANK)
->> -		intensity =3D FB_BLANK_UNBLANK;
->> -	if (bd->props.fb_blank =3D=3D FB_BLANK_UNBLANK)
->> -		intensity =3D FB_BLANK_UNBLANK;
->> -	if (bd->props.power =3D=3D FB_BLANK_POWERDOWN)
->> -		intensity =3D FB_BLANK_POWERDOWN;
->> -	if (bd->props.fb_blank =3D=3D FB_BLANK_POWERDOWN)
->> -		intensity =3D FB_BLANK_POWERDOWN;
->> -
->> -	if (intensity =3D=3D FB_BLANK_UNBLANK) { /* FULL ON */
->> -		cur &=3D ~CRVML_BACKLIGHT_OFF;
->> -		outl(cur, addr);
->> -	} else if (intensity =3D=3D FB_BLANK_POWERDOWN) { /* OFF */
->> +	if (backlight_is_blank(bd)) {
->> +		/* OFF */
->>  		cur |=3D CRVML_BACKLIGHT_OFF;
->>  		outl(cur, addr);
->> -	} /* anything else, don't bother */
->> +	} else {
->> +		/* FULL ON */
->> +		cur &=3D ~CRVML_BACKLIGHT_OFF;
->> +		outl(cur, addr);
->> +	}
->> =20
->>  	return 0;
->>  }
->> diff --git a/drivers/video/backlight/da903x_bl.c b/drivers/video/backl=
-ight/da903x_bl.c
->> index 62540e4bdedb..ca351badfdcf 100644
->> --- a/drivers/video/backlight/da903x_bl.c
->> +++ b/drivers/video/backlight/da903x_bl.c
->> @@ -79,13 +79,7 @@ static int da903x_backlight_update_status(struct ba=
-cklight_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.state & BL_CORE_SUSPENDED)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return da903x_backlight_set(bl, brightness);
->> diff --git a/drivers/video/backlight/ep93xx_bl.c b/drivers/video/backl=
-ight/ep93xx_bl.c
->> index 4149e0b2f83c..491185df1411 100644
->> --- a/drivers/video/backlight/ep93xx_bl.c
->> +++ b/drivers/video/backlight/ep93xx_bl.c
->> @@ -38,8 +38,7 @@ static int ep93xxbl_update_status(struct backlight_d=
-evice *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return ep93xxbl_set(bl, brightness);
->> diff --git a/drivers/video/backlight/gpio_backlight.c b/drivers/video/=
-backlight/gpio_backlight.c
->> index 75409ddfba3e..94b65e4d2aa0 100644
->> --- a/drivers/video/backlight/gpio_backlight.c
->> +++ b/drivers/video/backlight/gpio_backlight.c
->> @@ -25,9 +25,7 @@ static int gpio_backlight_get_next_brightness(struct=
- backlight_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.fb_blank !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return brightness;
->> diff --git a/drivers/video/backlight/hp680_bl.c b/drivers/video/backli=
-ght/hp680_bl.c
->> index 8ea42b8d9bc8..01d805ca8415 100644
->> --- a/drivers/video/backlight/hp680_bl.c
->> +++ b/drivers/video/backlight/hp680_bl.c
->> @@ -35,9 +35,7 @@ static void hp680bl_send_intensity(struct backlight_=
-device *bd)
->>  	u16 v;
->>  	int intensity =3D bd->props.brightness;
->> =20
->> -	if (bd->props.power !=3D FB_BLANK_UNBLANK)
->> -		intensity =3D 0;
->> -	if (bd->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bd))
->>  		intensity =3D 0;
->>  	if (hp680bl_suspended)
->>  		intensity =3D 0;
->> diff --git a/drivers/video/backlight/jornada720_bl.c b/drivers/video/b=
-acklight/jornada720_bl.c
->> index f0385f9cf9da..996f7ba3b373 100644
->> --- a/drivers/video/backlight/jornada720_bl.c
->> +++ b/drivers/video/backlight/jornada720_bl.c
->> @@ -54,7 +54,7 @@ static int jornada_bl_update_status(struct backlight=
-_device *bd)
->>  	jornada_ssp_start();
->> =20
->>  	/* If backlight is off then really turn it off */
->> -	if ((bd->props.power !=3D FB_BLANK_UNBLANK) || (bd->props.fb_blank !=
-=3D FB_BLANK_UNBLANK)) {
->> +	if (backlight_is_blank(bd)) {
->>  		ret =3D jornada_ssp_byte(BRIGHTNESSOFF);
->>  		if (ret !=3D TXDUMMY) {
->>  			dev_info(&bd->dev, "brightness off timeout\n");
->> diff --git a/drivers/video/backlight/kb3886_bl.c b/drivers/video/backl=
-ight/kb3886_bl.c
->> index 1dfe13c18925..a0fd5d3d82f5 100644
->> --- a/drivers/video/backlight/kb3886_bl.c
->> +++ b/drivers/video/backlight/kb3886_bl.c
->> @@ -89,9 +89,7 @@ static int kb3886bl_send_intensity(struct backlight_=
-device *bd)
->>  {
->>  	int intensity =3D bd->props.brightness;
->> =20
->> -	if (bd->props.power !=3D FB_BLANK_UNBLANK)
->> -		intensity =3D 0;
->> -	if (bd->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bd))
->>  		intensity =3D 0;
->>  	if (kb3886bl_flags & KB3886BL_SUSPENDED)
->>  		intensity =3D 0;
->> diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backligh=
-t/led_bl.c
->> index 3f66549997c8..c655ddd99cfb 100644
->> --- a/drivers/video/backlight/led_bl.c
->> +++ b/drivers/video/backlight/led_bl.c
->> @@ -56,9 +56,7 @@ static int led_bl_update_status(struct backlight_dev=
-ice *bl)
->>  	struct led_bl_data *priv =3D bl_get_data(bl);
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.fb_blank !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.state & BL_CORE_FBBLANK)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	if (brightness > 0)
->> diff --git a/drivers/video/backlight/lm3533_bl.c b/drivers/video/backl=
-ight/lm3533_bl.c
->> index ee09d1bd02b9..476146b62c4e 100644
->> --- a/drivers/video/backlight/lm3533_bl.c
->> +++ b/drivers/video/backlight/lm3533_bl.c
->> @@ -41,9 +41,7 @@ static int lm3533_bl_update_status(struct backlight_=
-device *bd)
->>  	struct lm3533_bl *bl =3D bl_get_data(bd);
->>  	int brightness =3D bd->props.brightness;
->> =20
->> -	if (bd->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -	if (bd->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bd))
->>  		brightness =3D 0;
->> =20
->>  	return lm3533_ctrlbank_set_brightness(&bl->cb, (u8)brightness);
->> diff --git a/drivers/video/backlight/locomolcd.c b/drivers/video/backl=
-ight/locomolcd.c
->> index cdc02e04f89d..8064cad8d683 100644
->> --- a/drivers/video/backlight/locomolcd.c
->> +++ b/drivers/video/backlight/locomolcd.c
->> @@ -113,9 +113,7 @@ static int locomolcd_set_intensity(struct backligh=
-t_device *bd)
->>  {
->>  	int intensity =3D bd->props.brightness;
->> =20
->> -	if (bd->props.power !=3D FB_BLANK_UNBLANK)
->> -		intensity =3D 0;
->> -	if (bd->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> +	if (backlight_is_blank(bd))
->>  		intensity =3D 0;
->>  	if (locomolcd_flags & LOCOMOLCD_SUSPENDED)
->>  		intensity =3D 0;
->> diff --git a/drivers/video/backlight/lv5207lp.c b/drivers/video/backli=
-ght/lv5207lp.c
->> index c6ad73a784e2..ef8aa9803577 100644
->> --- a/drivers/video/backlight/lv5207lp.c
->> +++ b/drivers/video/backlight/lv5207lp.c
->> @@ -48,9 +48,7 @@ static int lv5207lp_backlight_update_status(struct b=
-acklight_device *backlight)
->>  	struct lv5207lp *lv =3D bl_get_data(backlight);
->>  	int brightness =3D backlight->props.brightness;
->> =20
->> -	if (backlight->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    backlight->props.fb_blank !=3D FB_BLANK_UNBLANK ||
->> -	    backlight->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
->> +	if (backlight_is_blank(backlight))
->>  		brightness =3D 0;
->> =20
->>  	if (brightness) {
->> diff --git a/drivers/video/backlight/max8925_bl.c b/drivers/video/back=
-light/max8925_bl.c
->> index 97cc260ff9d1..b8af2c6407d3 100644
->> --- a/drivers/video/backlight/max8925_bl.c
->> +++ b/drivers/video/backlight/max8925_bl.c
->> @@ -66,13 +66,7 @@ static int max8925_backlight_update_status(struct b=
-acklight_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.state & BL_CORE_SUSPENDED)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return max8925_backlight_set(bl, brightness);
->> diff --git a/drivers/video/backlight/pwm_bl.c b/drivers/video/backligh=
-t/pwm_bl.c
->> index 82b8d7594701..7d0ffcd37f07 100644
->> --- a/drivers/video/backlight/pwm_bl.c
->> +++ b/drivers/video/backlight/pwm_bl.c
->> @@ -111,9 +111,7 @@ static int pwm_backlight_update_status(struct back=
-light_device *bl)
->>  	int brightness =3D bl->props.brightness;
->>  	struct pwm_state state;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.fb_blank !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.state & BL_CORE_FBBLANK)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	if (pb->notify)
->> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backl=
-ight/qcom-wled.c
->> index 3d276b30a78c..9600f5d58ece 100644
->> --- a/drivers/video/backlight/qcom-wled.c
->> +++ b/drivers/video/backlight/qcom-wled.c
->> @@ -261,9 +261,7 @@ static int wled_update_status(struct backlight_dev=
-ice *bl)
->>  	u16 brightness =3D bl->props.brightness;
->>  	int rc =3D 0;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.fb_blank !=3D FB_BLANK_UNBLANK ||
->> -	    bl->props.state & BL_CORE_FBBLANK)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	mutex_lock(&wled->lock);
->> diff --git a/drivers/video/backlight/tps65217_bl.c b/drivers/video/bac=
-klight/tps65217_bl.c
->> index 762e3feed097..1041e5e62ee3 100644
->> --- a/drivers/video/backlight/tps65217_bl.c
->> +++ b/drivers/video/backlight/tps65217_bl.c
->> @@ -82,9 +82,7 @@ static int tps65217_bl_update_status(struct backligh=
-t_device *bl)
->>  	if (bl->props.state & BL_CORE_SUSPENDED)
->>  		brightness =3D 0;
->> =20
->> -	if ((bl->props.power !=3D FB_BLANK_UNBLANK) ||
->> -		(bl->props.fb_blank !=3D FB_BLANK_UNBLANK))
->> -		/* framebuffer in low power mode or blanking active */
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	if (brightness > 0) {
->> diff --git a/drivers/video/backlight/wm831x_bl.c b/drivers/video/backl=
-ight/wm831x_bl.c
->> index e55977d54c15..dc2ab6c8b7f9 100644
->> --- a/drivers/video/backlight/wm831x_bl.c
->> +++ b/drivers/video/backlight/wm831x_bl.c
->> @@ -93,13 +93,7 @@ static int wm831x_backlight_update_status(struct ba=
-cklight_device *bl)
->>  {
->>  	int brightness =3D bl->props.brightness;
->> =20
->> -	if (bl->props.power !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.fb_blank !=3D FB_BLANK_UNBLANK)
->> -		brightness =3D 0;
->> -
->> -	if (bl->props.state & BL_CORE_SUSPENDED)
->> +	if (backlight_is_blank(bl))
->>  		brightness =3D 0;
->> =20
->>  	return wm831x_backlight_set(bl, brightness);
->>
->=20
-> - P=C3=A9ter
->=20
-> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
->=20
-
-- P=C3=A9ter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
---------------EF1F99172B7014968494A37D
-Content-Type: application/pgp-keys; name="pEpkey.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment; filename="pEpkey.asc"
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-mQENBFki4nsBCAD3BM+Ogt951JlaDloruEjoZk/Z+/37CjP0fY2mqLhBOzkpx95u
-X1Fquf0KfVk+ZzCd25XGOZEtpZNlXfbxRr2iRWPS5RW2FeLYGvg2TTJCpSr+ugKu
-OOec6KECCUotGbGhpYwBrbarJNEwDcAzPK7UJYa1rhWOmkpZJ1hXF1hUghB84q35
-8DmN4sGLcsIbVdRFZ1tWFh4vGBFV9LsoDZIrnnANb6/XMX78s+tr3RG3GZBaFPl8
-jO5IIv0UIGNUKaYlNVFYthjGCzOqtstHchWuK9eQkR7m1+Vc+ezh1qK0VJydIcjn
-OtoMZZL7RAz13LB9vmcJjbQPnI7dJojz/M7zABEBAAG0JlBldGVyIFVqZmFsdXNp
-IDxwZXRlci51amZhbHVzaUB0aS5jb20+iQFOBBMBCAA4FiEE+dBcpRFvJjZw+uta
-LCayis85LN4FAlki4nsCGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQLCay
-is85LN4QjggAzxxxXqiWpA3vuj9yrlGLft3BeGKWqF8+RzdeRvshtNdpGeIFf+r5
-AJVR71R1w89Qeb4DGXus7qsKiafdFGG7yxbuhw8a5wUm+ZncBXA+ETn3OyVtl8g8
-r/ZcPX420jClBNTVuL0sSnyqDFDrt5f+uAFOIwsnHdpns174Zu9QhgYxdvdZ+jMh
-Psb745O9EVeNvdfUIRdrVjb4IhJKNIzkb0Tulsz5xeCJReUYpxZU1jzEq3YZqIou
-+fi+oS4wlJuSoxKKTmIXtSeEy/weStF1XHMo6vLYqzaK4FyIuclqeuYUYSVy2425
-7TMXugaI+O85AEI6KW8MCcu1NucSfAWUabkBDQRZIuJ7AQgAypKq8iIugpHxWA2c
-Ck6MQdPBT6cOEVK0tjeHaHAVOUPiw9Pq+ssMifdIkDdqXNZ3RLH/X2svYvd8c81C
-egqshfB8nkJ5EKmQc9d7s0EwnYT8OwsoVb3c2WXnsdcKEyu2nHgyeJEUpPpMPyLc
-+PWhoREifttab4sOPktepdnUbvrDK/gkjHmiG6+L2owSn637N+Apo3/eQuDajfEu
-kybxK19ReRcp6dbqWSBGSeNB32c/zv1ka37bTMNVUY39Rl+/8lA/utLfrMeACHRO
-FGO1BexMASKUdmlB0v9n4BaJFGrAJYAFJBNHLCDemqkU7gjaiimuHSjwuP0Wk7Ct
-KQJfVQARAQABiQE2BBgBCAAgFiEE+dBcpRFvJjZw+utaLCayis85LN4FAlki4nsC
-GwwACgkQLCayis85LN7kCwgAoy9r3ZQfJNOXO1q/YQfpEELHn0p8LpwliSDUS1xL
-sswyxtZS8LlW8PjlTXuBLu38Vfr0vGav7oyV7TkhnKT3oBOLXanyZqwgyZSKNEGB
-PB4v3Fo7YTzpfSofiwuz03uyfjTxiMGjonxSb+YxM7HBHfzjrOKKlg02fK+lWNZo
-m5lXugeWD7U6JJguNdYfr+U4zYIblelUImcIE+wnR0oLzUEVDIWSpVrl/OqS3Rzo
-mw8wBsHksTHrbgUnKL0SCzYc90BTeKbyjEBnVDr+dlfbxRxkB8h9RMPMdjodvXzS
-Gfsa9V/k4XAsh7iX9EUVBbnmjA61ySxU/w98h96jMuteTg=3D=3D
-=3DeQmw
------END PGP PUBLIC KEY BLOCK-----
-
---------------EF1F99172B7014968494A37D--
+It turns out that the unipro_core clock had no parent, and thus no
+ability to scale.  Fixing that in GCC seems to have resolved this.  I
+suspect the UFS clock scaling code attempted to scale the core clock,
+didn't check that the clock could change rates, and went along
+assuming the new rate was effective, thus putting the hardware into a
+bad state.
