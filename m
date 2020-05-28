@@ -2,157 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 091511E61D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 15:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 723211E626A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 15:38:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390130AbgE1NLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 09:11:49 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:63371 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389949AbgE1NLs (ORCPT
+        id S2390428AbgE1Nil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 09:38:41 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.218]:30631 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390421AbgE1Nik (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 09:11:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590671507; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=5KCsj0GEfP6+olt7t0wTZsy18p2KiqTY5awAccURH8k=; b=k1VE4NvrXed/soOwoSLlXXaq9iAZpdHMIpC0BjH18aMdMbwgeLDYzJ+2tLJDGI9gxNsrXQYm
- wrfeWXvM7W/uCpEzu+bQz+FLLTQUk86YfJaYOsq1oD+zA2dCPoI1iG4yNvRjsWDxfeEgQGe8
- xrzK1l/6AoNuNCW86xLdc6V8hng=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5ecfb885c6d4683243305c54 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 May 2020 13:11:33
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 06B27C433C6; Thu, 28 May 2020 13:11:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.129] (unknown [106.222.4.139])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CBE80C433C9;
-        Thu, 28 May 2020 13:11:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CBE80C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
- <1590253873-11556-2-git-send-email-mkshah@codeaurora.org>
- <159057264232.88029.4708934729701385486@swboyd.mtv.corp.google.com>
- <4e070cda-8c22-c554-610e-172320045840@codeaurora.org>
- <159062812628.69627.2153485337510882984@swboyd.mtv.corp.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <948defc1-5ea0-adbb-185b-5f5a81f2e28a@codeaurora.org>
-Date:   Thu, 28 May 2020 18:41:23 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+        Thu, 28 May 2020 09:38:40 -0400
+X-Greylist: delayed 359 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2020 09:38:39 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590673118;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=kjl9BWwNBG2CmtZy+2hvbWWFjQWeDns8CFs3ho2SONA=;
+        b=PvwVGibIR+l0vySOZoMU+iBSlh/cSaRQtu9V5hYuutjaInezTI07mN98/+HtuWj8sq
+        JHN4dy1GwTQvFo4iNPF5qEQkPfR5FjlsYWrM9D6qwsGrUbDHOQLGjTYXmve+DIykkp2H
+        wqjo1ioj5l9bUanxFQciAsEAab1izvnWwZnvtiixZeK41IS8p7IVyJo49/5eBr6YBEw+
+        YpuqFTFJE5PjhHF04lsK5kp4gYnKgLZEIsppwYPr8cO5tpbDQVQuqGp1b6VIi/naY0KW
+        SdHXa+vrc0kkH93Hx5cS6R5bMHK/fnhlbibcnj1wk8gn2y5SGXXgWRbaUufBXwOBxhm/
+        1p9g==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9IcjDBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.9.0 DYNA|AUTH)
+        with ESMTPSA id w0afa6w4SDWa2nI
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Thu, 28 May 2020 15:32:36 +0200 (CEST)
+Date:   Thu, 28 May 2020 15:32:30 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Niklas Cassel <nks@flawful.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, Viresh Kumar <vireshk@kernel.org>
+Subject: Re: [PATCH] arch: arm64: dts: apq8016-dbc: Add missing cpu opps
+Message-ID: <20200528133230.GA1469@gerhold.net>
+References: <20200525163638.GA41001@gerhold.net>
+ <20200525194443.GA11851@flawful.org>
+ <20200526085948.GA1329@gerhold.net>
+ <20200526155419.GA9977@flawful.org>
+ <20200526205403.GA7256@gerhold.net>
+ <20200527103921.GB9977@flawful.org>
+ <20200527120441.GA4166@gerhold.net>
+ <20200527125919.GA16363@flawful.org>
+ <20200527205518.GA8254@gerhold.net>
+ <20200527231025.GA32707@flawful.org>
 MIME-Version: 1.0
-In-Reply-To: <159062812628.69627.2153485337510882984@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200527231025.GA32707@flawful.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, May 28, 2020 at 01:10:25AM +0200, Niklas Cassel wrote:
+> On Wed, May 27, 2020 at 10:56:07PM +0200, Stephan Gerhold wrote:
+> > > If the CPR driver is not changed, which I doubt, you will simply change
+> > > the device tree to remove the cpu-supply regulator and move it into the
+> > > new CPR DT node.
+> > > 
+> > > Old device trees will still use your DVFS solution, new device
+> > > trees will use the CPR DT node and will use the AVS solution.
+> > > 
+> > 
+> > I think my concern is essentially that I would duplicate the MEMACC code
+> > into a new driver utilizing .set_opp() - and to keep backwards
+> > compatibility we would need to keep that duplication forever.
+> 
+> The cleanest solution is probably to create a new memacc platform device
+> driver, and make the new code use that, and refactor CPR to use the same.
+> 
 
-On 5/28/2020 6:38 AM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2020-05-27 04:26:14)
->> On 5/27/2020 3:14 PM, Stephen Boyd wrote:
->>> Quoting Maulik Shah (2020-05-23 10:11:10)
->>>> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
->>>> index eaa0e20..3810cd0 100644
->>>> --- a/drivers/gpio/gpiolib.c
->>>> +++ b/drivers/gpio/gpiolib.c
->>>> @@ -2465,32 +2465,37 @@ static void gpiochip_irq_relres(struct irq_data *d)
->>>>           gpiochip_relres_irq(gc, d->hwirq);
->>>>    }
->>>>    
->>>> +static void gpiochip_irq_mask(struct irq_data *d)
->>>> +{
->>>> +       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->>>> +
->>>> +       if (gc->irq.irq_mask)
->>>> +               gc->irq.irq_mask(d);
->>>> +       gpiochip_disable_irq(gc, d->hwirq);
->>> How does this work in the lazy case when I want to drive the GPIO? Say I
->>> have a GPIO that is also an interrupt. The code would look like
->>>
->>>    struct gpio_desc *gpio = gpiod_get(...)
->>>    unsigned int girq = gpiod_to_irq(gpio)
->>>
->>>    request_irq(girq, ...);
->>>
->>>    disable_irq(girq);
->>>    gpiod_direction_output(gpio, 1);
->>>
->>> In the lazy case genirq wouldn't call the mask function until the first
->>> interrupt arrived on the GPIO line. If that never happened then wouldn't
->>> we be blocked in gpiod_direction_output() when the test_bit() sees
->>> FLAG_USED_AS_IRQ? Or do we need irqs to be released before driving
->>> gpios?
->> The client driver can decide to unlazy disable IRQ with below API...
->>
->>    irq_set_status_flags(girq, IRQ_DISABLE_UNLAZY);
->>
->> This will immediatly invoke mask function (unlazy disable) from genirq,
->> even though irq_disable is not implemented.
->>
-> Sure a consumer can disable the lazy feature, but that shouldn't be
-> required to make this work. The flag was introduced in commit
-> e9849777d0e2 ("genirq: Add flag to force mask in
-> disable_irq[_nosync]()") specifically to help devices that can't disable
-> the interrupt in their own device avoid a double interrupt.
-i don't think this will be a problem.
+I will try to come up with something like that, thank you!
 
-Case 1) Client driver have locked gpio to be used as IRQ using 
-gpiochip_lock_as_irq()
+> > 
+> > The MEMACC scaling isn't all that complicated, but overall I would
+> > prefer to avoid introducing duplication in the first place.
+> > 
+> > Also: If full CPR ever happens we would be basically back
+> > to one part of the current discussion: specifying two "required-opps"
+> > MX and CPR (= APC + MEMACC) would result in the wrong order
+> > when scaling up/down.
+> > 
+> > But maybe I just worry too much?
+> 
+> I guess that whoever implements CPR on msm8916 will either call
+> dev_pm_genpd_set_performance_state() on MX directly from cpr_scale_voltage()
+> or perhaps change OPP core so that it runs the required-opps in reverse
+> order when scaling down, like you previously suggested.
+> 
+> Please don't take my suggestions as the only way forward though.
+> Hopefully I provided more clarity than confusion.
+> Will step back so that someone else has a chance to chime in :)
 
-In this case, When client driver want to change the direction for a 
-gpio, they will invoke gpiod_direction_output().
-I see it checks for two flags (pasted below), if GPIO is used as IRQ and 
-whether its enabled IRQ or not.
+I'm a bit confused at the moment, but it's mainly because we discussed
+so many different options. I will need some time to properly look
+at all of them and come up with a potential solution.
 
-        /* GPIOs used for enabled IRQs shall not be set as output */
-         if (test_bit(FLAG_USED_AS_IRQ, &desc->flags) &&
-             test_bit(FLAG_IRQ_IS_ENABLED, &desc->flags)) {
-
-The first one (FLAG_USED_AS_IRQ) is set only if client driver in past 
-have locked gpio to use as IRQ with a call to gpiochip_lock_as_irq()
-then it never gets unlocked until clients invoke gpiochip_unlock_as_irq().
-
-So i presume the client driver which in past locked gpio to be used as 
-IRQ, now wants to change direction then it will
-a. first unlock to use as IRQ
-b. then change the direction.
-
-Once it unlocks in step (a), both these flags will be cleared and there 
-won't be any error in changing direction in step (b).
-
-Case 2) Client driver did not lock gpio to be used as IRQ.
-
-In this case, it will be straight forward to change the direction, as 
-FLAG_USED_AS_IRQ is never set.
-
-Thanks,
-Maulik
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+Thanks for taking the time to answer all my questions! :)
+Stephan
