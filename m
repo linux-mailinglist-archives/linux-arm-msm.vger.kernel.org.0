@@ -2,98 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4E301E6F5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 00:44:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8ADD1E7001
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 01:06:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437304AbgE1Wox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 18:44:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437302AbgE1Wov (ORCPT
+        id S2391537AbgE1XGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 19:06:05 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:15284 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2391479AbgE1XGD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 18:44:51 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00CEC08C5C7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 15:44:50 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id z26so150818pfk.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 15:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=CzlwaQBhB6X7vtfLTVD7DA58u/rA562/f1SXevkBPwc=;
-        b=VmAFHRbfcJExWJg8IgA6FKmejubQ9aKrIMIpPgpBFIhi+OMjmGfyYIhaTxzH6Poy/w
-         jdvuOtq2cPl5F0semT5ERouwcWiYv5TlPYJ933Xqr+/eboqx/JeNEHqXDYbWa6RA3L5u
-         gvsCSQ26kDVhEfH0T0/kDNwzv32S1XZYOCkFs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=CzlwaQBhB6X7vtfLTVD7DA58u/rA562/f1SXevkBPwc=;
-        b=nsRdkMsfcesw6ROf1iogTurJ28d506cLoi0qA6eHbOQy2s+08/mB3fP+SZxjRrAk0J
-         850GlG7BQ2vVnZGTynkHSxhXLaN/lUprB66htWpOEylMRJx/MvEtYNZtQwDaa4PU9bHM
-         Pf1GY+egJ+D8byRamn4iJ7Cys2mVPUPJsAU7sZHzof6d/mMo3NG57phm8+Rr/PF6zDah
-         R/YzgfzYUd93VGPoG4TmjOPTub+ZuZ+cEha+e6ZdUidKl5FyCUPtKuPkyQvhp4qyONjD
-         ZTC95iZO88PVVQVesEdbDYbdn8ZHifGdqXTWXmvVzUaCnUt7+QgrE1u2WcaES4dtcDWC
-         l9QA==
-X-Gm-Message-State: AOAM5313wjTEDvsZKL5DImiJATum7hBENZqVY/mVyhtI9OVbkVsDA6pq
-        gpFpk7wgK4/i06/Zq+/1eVVfjg==
-X-Google-Smtp-Source: ABdhPJydC1Uuong0oSvH9QsEwRg5vR0vIvCmTEg9LwzUV3nx+omAdHyv2zklrA8Igo05zSZkK9WQYQ==
-X-Received: by 2002:a05:6a00:1486:: with SMTP id v6mr5324082pfu.83.1590705890029;
-        Thu, 28 May 2020 15:44:50 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id z18sm5600812pfj.148.2020.05.28.15.44.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 15:44:49 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
-References: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Don't use ktime for timeout in write_tcs_reg_sync()
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Date:   Thu, 28 May 2020 15:44:48 -0700
-Message-ID: <159070588846.69627.5268638209383373410@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Thu, 28 May 2020 19:06:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590707162; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=OFnRFdGdwOdlT6++yGr8Uhb6YcmrXqckJ/J0OHf9bY4=; b=PdBXg5WeHzgqPr87/xXT8sKYwLnbfbIAIjnjNRB1el3OLxwgzZAgPHCt2zFZC1sro5KtDTlZ
+ 4f90MV9+4wEZWL8kH/7Mi7CZeeKOtr66slGxSCt/XbJuIlxzJw6yZtG2eRLQJM938bL2n3zX
+ zdGqzjHh2yUaoL/TRtGGbJ5rP4U=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5ed043d150867324810c4e4b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 May 2020 23:05:53
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 261DEC433C6; Thu, 28 May 2020 23:05:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from clew-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: clew)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4D20DC433C9;
+        Thu, 28 May 2020 23:05:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4D20DC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=clew@codeaurora.org
+From:   Chris Lew <clew@codeaurora.org>
+To:     davem@davemloft.net, bjorn.andersson@linaro.org
+Cc:     manivannan.sadhasivam@linaro.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        clew@codeaurora.org
+Subject: [PATCH] net: qrtr: Allocate workqueue before kernel_bind
+Date:   Thu, 28 May 2020 16:05:26 -0700
+Message-Id: <1590707126-16957-1-git-send-email-clew@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-05-28 07:48:34)
-> The write_tcs_reg_sync() may be called after timekeeping is suspended
-> so it's not OK to use ktime.  The readl_poll_timeout_atomic() macro
-> implicitly uses ktime.  This was causing a warning at suspend time.
->=20
-> Change to just loop 1000000 times with a delay of 1 us between loops.
-> This may give a timeout of more than 1 second but never less and is
-> safe even if timekeeping is suspended.
->=20
-> NOTE: I don't have any actual evidence that we need to loop here.
-> It's possibly that all we really need to do is just read the value
-> back to ensure that the pipes are cleaned and the looping/comparing is
-> totally not needed.  I never saw the loop being needed in my tests.
-> However, the loop shouldn't hurt.
->=20
-> Fixes: 91160150aba0 ("soc: qcom: rpmh-rsc: Timeout after 1 second in writ=
-e_tcs_reg_sync()")
-> Reported-by: Maulik Shah <mkshah@codeaurora.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+A null pointer dereference in qrtr_ns_data_ready() is seen if a client
+opens a qrtr socket before qrtr_ns_init() can bind to the control port.
+When the control port is bound, the ENETRESET error will be broadcasted
+and clients will close their sockets. This results in DEL_CLIENT
+packets being sent to the ns and qrtr_ns_data_ready() being called
+without the workqueue being allocated.
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Allocate the workqueue before setting sk_data_ready and binding to the
+control port. This ensures that the work and workqueue structs are
+allocated and initialized before qrtr_ns_data_ready can be called.
 
-Although I don't think ktime_get() inside of readl_poll_timeout_atomic()
-is correct. The timekeeping base won't be able to update when a loop is
-spinning in an irq disabled region. We need the tick interrupt to come
-in and update the base. Spinning for a second with irqs disabled is also
-insane for realtime so there's that problem too. Maybe we should try to
-kick timekeeping forward from these loops manually. Anyway, not problems
-with this patch so not important to fix immediately.
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Signed-off-by: Chris Lew <clew@codeaurora.org>
+---
+ net/qrtr/ns.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index e7d0fe3f4330..c5b3202a14ca 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -712,6 +712,10 @@ void qrtr_ns_init(void)
+ 		goto err_sock;
+ 	}
+ 
++	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
++	if (!qrtr_ns.workqueue)
++		goto err_sock;
++
+ 	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns_data_ready;
+ 
+ 	sq.sq_port = QRTR_PORT_CTRL;
+@@ -720,17 +724,13 @@ void qrtr_ns_init(void)
+ 	ret = kernel_bind(qrtr_ns.sock, (struct sockaddr *)&sq, sizeof(sq));
+ 	if (ret < 0) {
+ 		pr_err("failed to bind to socket\n");
+-		goto err_sock;
++		goto err_wq;
+ 	}
+ 
+ 	qrtr_ns.bcast_sq.sq_family = AF_QIPCRTR;
+ 	qrtr_ns.bcast_sq.sq_node = QRTR_NODE_BCAST;
+ 	qrtr_ns.bcast_sq.sq_port = QRTR_PORT_CTRL;
+ 
+-	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
+-	if (!qrtr_ns.workqueue)
+-		goto err_sock;
+-
+ 	ret = say_hello(&qrtr_ns.bcast_sq);
+ 	if (ret < 0)
+ 		goto err_wq;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
