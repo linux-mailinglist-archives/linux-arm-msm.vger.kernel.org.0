@@ -2,113 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C93511E6490
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 16:51:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2A551E6497
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 16:51:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728623AbgE1OvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 10:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
+        id S1728659AbgE1Ovp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 10:51:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728637AbgE1OvS (ORCPT
+        with ESMTP id S1728622AbgE1Ovo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 10:51:18 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3809DC05BD1E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 07:51:18 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id t4so14000518vsq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 07:51:18 -0700 (PDT)
+        Thu, 28 May 2020 10:51:44 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F14C2C05BD1E;
+        Thu, 28 May 2020 07:51:39 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id bh7so4730510plb.11;
+        Thu, 28 May 2020 07:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ps973uR8lunIoKwykKoQXnDQqkoCFXXUfBJCCsrchr0=;
-        b=gObEdTFtoIohbbXUidGmBxpcoxQBs9V4kLQLJAksfxwwA0CbdEe0Ya72vYFDJCixuf
-         IPhL1NfiNcTN8UJIQCCYYsGiOzI6fyqWDhKhEeymcBNr4I/lMAV/BIGuqnrvpMZUE8vQ
-         cMHgj7hlNOCvxI9lsii91xDWgAzQDQsv2pBCQ=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=74h2HADeox42a/JRXdpKzvx6226fj+iEDouk51yK4Zw=;
+        b=BfvcFZXO3pxXhRrqV87YWooMNbNK5/bGRn+0Socvr71I+oBrh3QfxkShQ9PXw75j2c
+         H1KItUiqCtzLO2WBaBo7A/7HMQlZ903RkWMCpTssjYyQigHOzm3s0dmXTFCkJCUpt0z4
+         Pg3qon96GcbUGEE5t0ivBfavVfJNcHSoaP6jiW8S9THqzxMY2k8dNy3pHu97MuKS78Xi
+         HMU5gR8RG7OY4sFJzsV+JOSvSgYrX+iO/SSM+SbxllV7zHgS8ivOIQhnv75ykIgDZM2h
+         1Z9UIGKZWQQZcV1r8h7AbW4Q8AmJE8LmzcT4LndOyjZoMndbH4UgAPnNhzt4RfdoUOUg
+         52nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ps973uR8lunIoKwykKoQXnDQqkoCFXXUfBJCCsrchr0=;
-        b=ejN3/X8dmHs9U6yPf+IGzCRF8xBnfM04+YLAYAXL5bINFrS7onkr0alTtgpaudL/Su
-         SUqcvZE6hp5M04S8075nxXBUKfsaU4XABxrySOztZlolFwdnQCskPJvKwq54aDPGYKzx
-         U7TLWGAJX8svIxQ2fhB2K34wc9HXfcVtIMTuLsO9cNI/qlpG4ghVvuJOeK/QebUvbCMv
-         WxivyDw7m1dPBFf0O1Qouml0yPOTtIuPXG8JoScMCKIaQfEJ/mB8uEuZelGUrdf7fF0/
-         1SY2z+QUuLt6RAV92f2hfuYuFfBoFepA7ZnL68NafH3/lJILD/9IczpXq7BanHCG7m7D
-         7izA==
-X-Gm-Message-State: AOAM532dO9RGL+vRmJDC7eRZQpAiBBlAsXYsCozqEwCEJs8YRdDK3FJr
-        EWsjH36+BI8t32rkWYWbFJABZkht1gU=
-X-Google-Smtp-Source: ABdhPJzclUBs0yC8C642dT2Ds1bJp5St298ZnlsL3m9hyMVmXNJoozl7ftLu4UfLYiwcKCPLZ/Y+fA==
-X-Received: by 2002:a67:efce:: with SMTP id s14mr2370057vsp.61.1590677476984;
-        Thu, 28 May 2020 07:51:16 -0700 (PDT)
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
-        by smtp.gmail.com with ESMTPSA id 107sm422515uac.10.2020.05.28.07.51.15
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 May 2020 07:51:16 -0700 (PDT)
-Received: by mail-ua1-f50.google.com with SMTP id c17so9745632uaq.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 07:51:15 -0700 (PDT)
-X-Received: by 2002:ab0:1684:: with SMTP id e4mr2129380uaf.22.1590677475235;
- Thu, 28 May 2020 07:51:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200415095953.v3.1.Ic70288f256ff0be65cac6a600367212dfe39f6c9@changeid>
- <20200415095953.v3.2.I8550512081c89ec7a545018a7d2d9418a27c1a7a@changeid> <ff140959-98f9-7a67-e3de-f543e4ff3ac0@codeaurora.org>
-In-Reply-To: <ff140959-98f9-7a67-e3de-f543e4ff3ac0@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 28 May 2020 07:51:03 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WwMggCMntyjOcms68Jm223_sHjBHUoc8qfG7D_QcAjxA@mail.gmail.com>
-Message-ID: <CAD=FV=WwMggCMntyjOcms68Jm223_sHjBHUoc8qfG7D_QcAjxA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Joe Perches <joe@perches.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=74h2HADeox42a/JRXdpKzvx6226fj+iEDouk51yK4Zw=;
+        b=skVAG3jPh9KmUMFtamz3xr2dvfahP9W/1sXTHT6yHuPO/i45ipjLk2n0vNjecyubSH
+         5SH69aAfnKLuTEwnSRtqv69V7E0Vp9/zX3RW9t5etwI9MaOr7EPrNZiNTcQAnLCKqbfY
+         WQGT726OG4HlY2xKEMHzdUAjKreGDGaXbN2gnaCkI6OQ+4mBURax+cnhnf9A6UKgI3yo
+         jYL/mbLaOa88jnfnDc3LzvV+1JvbgljfrEDSgMBhFYG7mX/rs18+5Gv/jc16Q4d9xol5
+         kQhfzOj5PSmrv2DpAOKUABLfqU+x2Hea/BDBTDpTJjzZMZM/H3jtFCps7MTs0NPNPwE9
+         j1Mg==
+X-Gm-Message-State: AOAM532J3rOyTfwbOKOwZj/SkpfGlfiUTfBvoTJb3LOAZSxDPqbz/4w8
+        iSmYbAX26+sKiOgx1MEUYQc=
+X-Google-Smtp-Source: ABdhPJxAzIJNYdDxzwqp2FPM8CV6Ya9LNh7ZNMxD2jt2z6LCZ0mcp80TxEthXSxjQHYGvlg1BbE3wA==
+X-Received: by 2002:a17:90b:1897:: with SMTP id mn23mr4217541pjb.84.1590677499598;
+        Thu, 28 May 2020 07:51:39 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id x18sm294496pfr.106.2020.05.28.07.51.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 07:51:39 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] arm64: dts: qcom: msm8998-clamshell: Fix label on l15 regulator
+Date:   Thu, 28 May 2020 07:51:35 -0700
+Message-Id: <20200528145135.44269-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The label on the l15 regulator node does not follow the style of the
+rest of the regulator nodes.  Luckily, no one has used the label yet,
+so lets fix it.
 
-On Thu, May 28, 2020 at 4:44 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> Hi Doug,
->
-> During suspend-resume with this change on sc7180 using latest
-> linux-next, below warning was reported.
->
-> WARNING: CPU: 0 PID: 5324 at kernel/time/timekeeping.c:754
-> ktime_get+0x94/0x9c
->   ktime_get+0x94/0x9c
->   write_tcs_reg_sync+0x4c/0x130
->   tcs_invalidate+0x64/0xa4
->   rpmh_rsc_invalidate+0x20/0x38
->   rpmh_flush+0x58/0x1ec
->   rpmh_rsc_cpu_pm_callback+0xe4/0x144
->   notifier_call_chain+0x58/0x90
->   __atomic_notifier_call_chain+0x48/
->   cpu_pm_notify+0x40/0x6c
->   cpu_pm_enter+0x34/0x7c
->   cpu_pm_suspend+0x10/0x20
->   syscore_suspend+0x128/0x2a4
->   suspend_devices_and_enter+0x5e0/0x8a0
->
-> This seems to be because timekeeping is already suspend by this time.
+Fixes: 2c6d2d3a580a ("arm64: dts: qcom: Add Lenovo Miix 630")
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks for the report.  I posted:
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+index 6ab830d01867..00d84fb21798 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+@@ -202,7 +202,7 @@
+ 			regulator-min-microvolt = <1880000>;
+ 			regulator-max-microvolt = <1880000>;
+ 		};
+-		vreg_15a_1p8: l15 {
++		vreg_l15a_1p8: l15 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
+-- 
+2.17.1
 
-https://lore.kernel.org/r/20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid
-
-I think there are still a bunch of not-yet-landed patches needed for
-suspend-resume so I only confirmed that the code still works OK for
-the idle case.  Hopefully you can confirm s2r is good, though I'd
-believe it should be exactly the same.  I'm 99% sure that udelay()
-still works fine even when timekeeping is suspended.
-
--Doug
