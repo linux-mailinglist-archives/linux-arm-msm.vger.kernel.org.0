@@ -2,127 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57D3E1E6738
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 18:16:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F83C1E67B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 18:47:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404913AbgE1QQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 12:16:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404872AbgE1QQa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 12:16:30 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16AB7C08C5C6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 09:16:30 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id 5so3302292pjd.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 09:16:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=S76ddrdGq/cBbQZ5tUQB2unFDdKjzHHbrT8hpYe9YzM=;
-        b=JiWpVhyw1smRR696kDsmG/PvNo7sZu5e24qbl+VPXErlBMim+HjZG2Z2tGTg+EQ3c6
-         5K/pnLuPLxYJWoQDn9cFgvvzrAYr2oaWTol8ilzpzHKI9n+DCLhZPLSDfA/RFV9JAUDD
-         dNZ7x5M2uU8VqhhdK5Om372FdLpWT3N2o341M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=S76ddrdGq/cBbQZ5tUQB2unFDdKjzHHbrT8hpYe9YzM=;
-        b=G0LgSv3L+5UKIimT7/5WNnFs0lWbWMStUckEo9tkLTXlnrfl3P8mvpulov9HoAgy0b
-         eq2qV/8o0K5eJOYZGhwmoiEq2wtX52Mp4y+tiqBwbjn+EvElJHtjtTxu6IHdvIANxkXG
-         R+OjX5IKpNvN9ZUGIJw/FIoMFf4SC7K8IjangvJCztnk6V1zLTMJ/+wA1LEIiqAZb8nx
-         5Ka6hY+K8do0+wmZyqGvh+vvBU/KVDDvkZRDEUmjTSUN0CzN7l3eVpFfX4tbZy/2KGFq
-         WK4l8cUzW2ocf3If8Jy2QlI7tzfgGd4G9uET2FP3gW8gil1DVwWTgPsU8Fg9rmiU66UG
-         qK9Q==
-X-Gm-Message-State: AOAM532wLhriGk7bkdcGRvc9d7PTTIPdO0lW47nA7FqZlJgOzh0OQps9
-        lKkc1ADhyFwWj7pwCopx5qynfw==
-X-Google-Smtp-Source: ABdhPJx8NV9kadMCeflkmPi1yiAesNMW3uLpAf3Uo3Djp1f3fesJ94fSB9RULJ/7tXTLkUaRNCdO2A==
-X-Received: by 2002:a17:902:b289:: with SMTP id u9mr4327057plr.138.1590682589611;
-        Thu, 28 May 2020 09:16:29 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id lj12sm5932279pjb.21.2020.05.28.09.16.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 May 2020 09:16:28 -0700 (PDT)
-Date:   Thu, 28 May 2020 09:16:27 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org
-Subject: Re: [PATCH v1] bluetooth: hci_qca: Fix suspend/resume functionality
- failure
-Message-ID: <20200528161627.GK4525@google.com>
-References: <1590662302-10102-1-git-send-email-zijuhu@codeaurora.org>
+        id S2405182AbgE1QrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 12:47:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:19804 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405179AbgE1QrW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 May 2020 12:47:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590684441; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=T4tupt5NAgmORde5nrj9W65EYS8aJc0xInYBse0Y2do=; b=QkZc78caVcfCiFm86N00BjrGcxtISVGLd2Uf3cVmncyhmBTJgeOs+tEgDyY8IRbSi4EHo3oP
+ vQkyFPoMxoSckA4oZB9aA1nDu/Pjo5blrtwmgfPTopQgW+eH1zsC7/8QYyhXO4NvYnzc8Q71
+ WBZ4fz7uhM6xhNBuclrT0ot/oio=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5ecfeb173ac6f4f603eb2b86 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 May 2020 16:47:19
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 21FA2C433CA; Thu, 28 May 2020 16:47:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.102] (unknown [157.47.99.82])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jprakash)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9B2C2C43391;
+        Thu, 28 May 2020 16:47:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9B2C2C43391
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
+Subject: Re: [PATCH V5 3/5] iio: adc: Add support for PMIC7 ADC
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        smohanad@codeaurora.org, kgunda@codeaurora.org,
+        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org,
+        linux-iio <linux-iio@vger.kernel.org>,
+        linux-arm-msm-owner@vger.kernel.org
+References: <1590157452-27179-1-git-send-email-jprakash@codeaurora.org>
+ <1590157452-27179-4-git-send-email-jprakash@codeaurora.org>
+ <CAHp75Vfgk0-Rye2We1A6_WTWMCK3D-WW4_T3CGPHc=-tB=6M9g@mail.gmail.com>
+From:   Jishnu Prakash <jprakash@codeaurora.org>
+Message-ID: <81ef429e-48d5-48b3-b344-3a48c2287907@codeaurora.org>
+Date:   Thu, 28 May 2020 22:17:08 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1590662302-10102-1-git-send-email-zijuhu@codeaurora.org>
+In-Reply-To: <CAHp75Vfgk0-Rye2We1A6_WTWMCK3D-WW4_T3CGPHc=-tB=6M9g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
+Hi Andy,
 
-On Thu, May 28, 2020 at 06:38:22PM +0800, Zijun Hu wrote:
-> @dev parameter of qca_suspend()/qca_resume() represents
-> serdev_device, but it is mistook for hci_dev and causes
-> succedent unexpected memory access.
-> 
-> Fix by taking @dev as serdev_device.
-> 
-> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+On 5/22/2020 9:07 PM, Andy Shevchenko wrote:
+> On Fri, May 22, 2020 at 5:25 PM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+>> The ADC architecture on PMIC7 is changed as compared to PMIC5. The
+>> major change from PMIC5 is that all SW communication to ADC goes through
+>> PMK8350, which communicates with other PMICs through PBS when the ADC
+>> on PMK8350 works in master mode. The SID register is used to identify the
+>> PMICs with which the PBS needs to communicate. Add support for the same.
+> Below should be in a separate patch, but it's a bikeshedding. So, I
+> left it to maintainers to decide.
+> Fine with me
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+>
+> ...
+>
+>> @@ -285,7 +304,7 @@ static int adc5_configure(struct adc5_chip *adc,
+>>
+>>          /* Read registers 0x42 through 0x46 */
+>>          ret = adc5_read(adc, ADC5_USR_DIG_PARAM, buf, sizeof(buf));
+>> -       if (ret < 0)
+>> +       if (ret)
+>>                  return ret;
+>>
+>>          /* Digital param selection */
+> ...
+>
+>> @@ -331,7 +391,7 @@ static int adc5_do_conversion(struct adc5_chip *adc,
+>>
+>>          if (adc->poll_eoc) {
+>>                  ret = adc5_poll_wait_eoc(adc);
+>> -               if (ret < 0) {
+>> +               if (ret) {
+>>                          pr_err("EOC bit not set\n");
+>>                          goto unlock;
+>>                  }
+>> @@ -341,7 +401,7 @@ static int adc5_do_conversion(struct adc5_chip *adc,
+>>                  if (!ret) {
+>>                          pr_debug("Did not get completion timeout.\n");
+>>                          ret = adc5_poll_wait_eoc(adc);
+>> -                       if (ret < 0) {
+>> +                       if (ret) {
+>>                                  pr_err("EOC bit not set\n");
+>>                                  goto unlock;
+>>                          }
+> ...
+>
+>> @@ -406,8 +519,38 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
+>>          default:
+>>                  return -EINVAL;
+>>          }
+>> +}
+>>
+>> -       return 0;
+> (this one looks like standalone change from above)
+>
+> ...
+>
+>> @@ -570,7 +762,7 @@ static int adc5_get_dt_channel_data(struct adc5_chip *adc,
+>>
+>>                  ret = adc5_read(adc, ADC5_USR_REVISION1, dig_version,
+>>                                                          sizeof(dig_version));
+>> -               if (ret < 0) {
+>> +               if (ret) {
+>>                          dev_err(dev, "Invalid dig version read %d\n", ret);
+>>                          return ret;
+>>                  }
+> ...
+>
+>> +       if (of_device_is_compatible(node, "qcom,spmi-adc7"))
+>> +               indio_dev->info = &adc7_info;
+>> +       else
+>> +               indio_dev->info = &adc5_info;
+> Can we use driver_data?
+I'll make the change in a patch before this one in the next post.
+>
+> ...
+>
+>> +       if (adcmap7_die_temp[0].x > voltage) {
+>> +               *result_mdec = DIE_TEMP_ADC7_SCALE_1;
+>> +               return 0;
+>> +       } else if (adcmap7_die_temp[i].x <= voltage) {
+> As per previous comment, redundant 'else' and please use value of i
+> directly here.
+I'll add the change in the next post.
 
-Please add:
-
-Fixes: 41d5b25fed0 ("Bluetooth: hci_qca: add PM support")
-
-and add stable@kernel.org to cc:
-
-> ---
->  drivers/bluetooth/hci_qca.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index e4a6823..c159161 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1977,8 +1977,10 @@ static void qca_serdev_remove(struct serdev_device *serdev)
->  
->  static int __maybe_unused qca_suspend(struct device *dev)
->  {
-> -	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
-> -	struct hci_uart *hu = hci_get_drvdata(hdev);
-> +	struct serdev_device *serdev = to_serdev_device(dev);
-> +	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-> +	struct hci_uart *hu = &qcadev->serdev_hu;
-> +	struct hci_dev *hdev __maybe_unused = hu->hdev;
-
-hdev is not used, please remove
-
->  	struct qca_data *qca = hu->priv;
->  	unsigned long flags;
->  	int ret = 0;
-> @@ -2057,8 +2059,10 @@ static int __maybe_unused qca_suspend(struct device *dev)
->  
->  static int __maybe_unused qca_resume(struct device *dev)
->  {
-> -	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
-> -	struct hci_uart *hu = hci_get_drvdata(hdev);
-> +	struct serdev_device *serdev = to_serdev_device(dev);
-> +	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-> +	struct hci_uart *hu = &qcadev->serdev_hu;
-> +	struct hci_dev *hdev __maybe_unused = hu->hdev;
-
-hdev is not used, please remove
-
->  	struct qca_data *qca = hu->priv;
->  
->  	clear_bit(QCA_SUSPENDING, &qca->flags);
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-> 
+>
+>
