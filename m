@@ -2,171 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9F631E67F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 18:56:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95ABB1E68C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 19:40:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405312AbgE1Q43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 12:56:29 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:10299 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405311AbgE1Q4Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 12:56:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590684984; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=AIpbCmMCznCXVtiVrbRFoTwG+u7mFH1W+SY+3jGOkts=; b=RmscZzcL2gdWRd4V7tHrqgkl+Ul9y3tJECdQSWpZOWPnhKc0j6vx1hpxjfekeMaV9A+aE7XJ
- jC/ohpFUHMk5eeFzjKSOKvKW6YHrvGDi+gTGxuWXjH3aLLs95cHhEt40gzJOU1qy9YXbK3a3
- nrVudhH0qojfKh9a/Pkl1RLf/ss=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5ecfed382dd9e15ae3105ba0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 May 2020 16:56:24
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CA669C433A0; Thu, 28 May 2020 16:56:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jprakash-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jprakash)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4E6B3C433AD;
-        Thu, 28 May 2020 16:56:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4E6B3C433AD
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
-From:   Jishnu Prakash <jprakash@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, linus.walleij@linaro.org,
-        Jonathan.Cameron@huawei.com, andy.shevchenko@gmail.com,
-        amit.kucheria@verdurent.com, smohanad@codeaurora.org,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org
-Cc:     linux-arm-msm-owner@vger.kernel.org,
-        Jishnu Prakash <jprakash@codeaurora.org>
-Subject: [PATCH V6 7/7] iio: adc: Add a common read function for PMIC5 and PMIC7
-Date:   Thu, 28 May 2020 22:24:29 +0530
-Message-Id: <1590684869-15400-8-git-send-email-jprakash@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1590684869-15400-1-git-send-email-jprakash@codeaurora.org>
-References: <1590684869-15400-1-git-send-email-jprakash@codeaurora.org>
+        id S2405620AbgE1Rkv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 13:40:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405342AbgE1Rkt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 May 2020 13:40:49 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9946CC08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 10:40:49 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id x10so11900437plr.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 10:40:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=g7RTdEHDP9ZxhdJtmUAz3+YuWy4V9Urh/wbShjIVBQw=;
+        b=lOvtkAjJErBV9hxiZrbpl1VhnWTX21zU0sD6T9SdiHj050/LjXLjpELafzpPZK3D9G
+         QuCot0wSxFGSFkGsOa5J9qfKOWZKxlzir26JfPOBj1v3JyoZF5NEYKzwA4C7cHN8QH4M
+         BQRxfhElrl6IwXrffCSNLZZh5RwaU0R7MLmX+xSUENGlZktnmPkgTNXHbRp329VgNOUK
+         qxKs1wq3Wv+PSIFFTAhvI2HHBGxzL2dRABB0gMdNgct8TK5FMMeaKj0/+3zlFP/KpwqJ
+         ZdtZSuJTg6iSDXxhbHoeP5aYLjCYfTDAGX1NclG8PUjvpquNFyB3fPCN4001CX/YJLuK
+         Yc1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g7RTdEHDP9ZxhdJtmUAz3+YuWy4V9Urh/wbShjIVBQw=;
+        b=EsX8h8ZkZUWUFSsvrJdstU6OUjEBoVwl7cleJyLkue5sQJJ3TEESnqr0k+WXnbMm9W
+         QFpEBJkXhxRo+4e4nnPNwUwdNtrHqgnDbfygfXSJTHrvBMe+wC1JP+L2OK3v1mimLgZs
+         X3y72fsR7kXyozaHNecJLEuewevdogSdGMrsUIaGx8uza151ni6vvn04+xpRX9y8+rV/
+         Sov+pSmhBjIQqR+LW+LthyEu2ZhoAU9Ywq4+w3Wg9ymDZujXSkaaLhsntiUMO2h2K4vK
+         w7UHCP65PxAVu9+E9EDxK/a/NlddTiOzAyizIwZ3CokgOP4lAcRvhh+orWyyCkP4VDYA
+         6ffA==
+X-Gm-Message-State: AOAM530aGXNL1Twx81YjrbrZZbdPLYh/Mgaza7LmhjezKYTVd9aRt+/X
+        TjmhRIE75ijrZvPZrncfIUiR5A==
+X-Google-Smtp-Source: ABdhPJynO8BCn5H2WUjwIh/uB1cHKEqZ4BrjVdrxDGghjcKxVp3bh3SmfbOuqLDJycCRWXayY+wclg==
+X-Received: by 2002:a17:902:ba8e:: with SMTP id k14mr4558181pls.85.1590687649056;
+        Thu, 28 May 2020 10:40:49 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id v3sm5465547pja.8.2020.05.28.10.40.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 10:40:48 -0700 (PDT)
+Date:   Thu, 28 May 2020 11:40:46 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCHv3 0/2] Add support for replicators which loses context on
+ clock removal
+Message-ID: <20200528174046.GA26008@xps15>
+References: <cover.1590171891.git.saiprakash.ranjan@codeaurora.org>
+ <20200525161553.GA31527@xps15>
+ <20200528144803.GA36440@bogus>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200528144803.GA36440@bogus>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a common function used for read_raw callback for both PMIC5
-and PMIC7 ADCs.
+On Thu, May 28, 2020 at 08:48:03AM -0600, Rob Herring wrote:
+> On Mon, May 25, 2020 at 10:15:53AM -0600, Mathieu Poirier wrote:
+> > Hi Sai,
+> > 
+> > On Sat, May 23, 2020 at 12:06:50AM +0530, Sai Prakash Ranjan wrote:
+> > > This series is mainly to add support for replicators
+> > > which lose context on removing AMBA clock like on SC7180
+> > > SoC where replicator in AOSS domain loses context.
+> > > 
+> > 
+> > I am good with this set but need a reviewed-by on the DT binding before I can
+> > add it to my tree.  The same goes for your other set[1].
+> 
+> Then why is it already in linux-next?
 
-Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
----
- drivers/iio/adc/qcom-spmi-adc5.c | 53 +++++++++++++++++++---------------------
- 1 file changed, 25 insertions(+), 28 deletions(-)
+I wanted the patches to get exposure to linux-next before sending them on to
+Greg for inclusion in the next merge window.  Rest assured that I would not have
+moved forward without your consent.
 
-diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-index 0f9af66..fe49741 100644
---- a/drivers/iio/adc/qcom-spmi-adc5.c
-+++ b/drivers/iio/adc/qcom-spmi-adc5.c
-@@ -449,6 +449,13 @@ static int adc7_do_conversion(struct adc5_chip *adc,
- 	return ret;
- }
- 
-+struct adc_do_conversion {
-+	int (*adc_do_conversion)(struct adc5_chip *adc,
-+			struct adc5_channel_prop *prop,
-+			struct iio_chan_spec const *chan,
-+			u16 *data_volt, u16 *data_cur);
-+};
-+
- static irqreturn_t adc5_isr(int irq, void *dev_id)
- {
- 	struct adc5_chip *adc = dev_id;
-@@ -487,9 +494,9 @@ static int adc7_of_xlate(struct iio_dev *indio_dev,
- 	return -EINVAL;
- }
- 
--static int adc5_read_raw(struct iio_dev *indio_dev,
-+static int adc_read_raw_common(struct iio_dev *indio_dev,
- 			 struct iio_chan_spec const *chan, int *val, int *val2,
--			 long mask)
-+			 long mask, struct adc_do_conversion do_conv)
- {
- 	struct adc5_chip *adc = iio_priv(indio_dev);
- 	struct adc5_channel_prop *prop;
-@@ -500,8 +507,8 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
- 
- 	switch (mask) {
- 	case IIO_CHAN_INFO_PROCESSED:
--		ret = adc5_do_conversion(adc, prop, chan,
--				&adc_code_volt, &adc_code_cur);
-+		ret = do_conv.adc_do_conversion(adc, prop, chan,
-+					&adc_code_volt, &adc_code_cur);
- 		if (ret)
- 			return ret;
- 
-@@ -518,36 +525,26 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
- 	}
- }
- 
--static int adc7_read_raw(struct iio_dev *indio_dev,
-+static int adc5_read_raw(struct iio_dev *indio_dev,
- 			 struct iio_chan_spec const *chan, int *val, int *val2,
- 			 long mask)
- {
--	struct adc5_chip *adc = iio_priv(indio_dev);
--	struct adc5_channel_prop *prop;
--	u16 adc_code_volt, adc_code_cur;
--	int ret;
--
--	prop = &adc->chan_props[chan->address];
--
--	switch (mask) {
--	case IIO_CHAN_INFO_PROCESSED:
--		ret = adc7_do_conversion(adc, prop, chan,
--					&adc_code_volt, &adc_code_cur);
--		if (ret)
--			return ret;
-+	struct adc_do_conversion do_conv;
- 
--		ret = qcom_adc5_hw_scale(prop->scale_fn_type,
--			&adc5_prescale_ratios[prop->prescale],
--			adc->data,
--			adc_code_volt, val);
-+	do_conv.adc_do_conversion = adc5_do_conversion;
-+	return adc_read_raw_common(indio_dev, chan, val, val2,
-+				mask, do_conv);
-+}
- 
--		if (ret)
--			return ret;
-+static int adc7_read_raw(struct iio_dev *indio_dev,
-+			 struct iio_chan_spec const *chan, int *val, int *val2,
-+			 long mask)
-+{
-+	struct adc_do_conversion do_conv;
- 
--		return IIO_VAL_INT;
--	default:
--		return -EINVAL;
--	}
-+	do_conv.adc_do_conversion = adc7_do_conversion;
-+	return adc_read_raw_common(indio_dev, chan, val, val2,
-+				mask, do_conv);
- }
- 
- static const struct iio_info adc5_info = {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> 
+> In any case,
+> 
+> Acked-by: Rob Herring <robh@kernel.org>
 
+Thank you for that.
+
+Mathieu
