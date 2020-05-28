@@ -2,68 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39F2F1E65AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 17:15:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5A2E1E65BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 17:17:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404283AbgE1POx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 11:14:53 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:41155 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404282AbgE1POx (ORCPT
+        id S2404343AbgE1PRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 11:17:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49534 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404333AbgE1PRD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 11:14:53 -0400
-Received: by mail-il1-f194.google.com with SMTP id d1so461852ila.8;
-        Thu, 28 May 2020 08:14:52 -0700 (PDT)
+        Thu, 28 May 2020 11:17:03 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6777C08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:17:03 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id p30so13589683pgl.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:17:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=oxRd34Wxun9nW+kBKYd8ek/TIpwGvvJGkUBghSmTo/M=;
+        b=E7b1Bkhhlu107mfUeAd/DeHi/NlpmNrFcQyzK/ljKSgNsYZFSAIIGxiM/pZUnGnWPV
+         37n89LF/8CdNzNEPy06WjDQuEZHXPfLUIcfgOq2cPgiUd2QhuRyZnfnLM84XCU7TAqbn
+         a3y3CZBzDxfqeUUt5zIVIPhhjECLPjEu7A5iE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=yIDw/uV1HgHlRds6XnPkvv3A35C2qOGXIu1RjiUeb9Y=;
-        b=U9+U87MKo8R/lXKKTeFNzcqdA8/irehaAGSR0PJP7+mNjO/m6WTqJ29/iBl4UomE5K
-         1eX5dcLfz4/86tk0IoxrT4JVf3SgGQxiY4g2v1Sn8Z89PrTTRDmr2SrIxr1AkJCN2NG2
-         /Z8EF/iwkVdPxW/5aOr4GAed7tXoOdS+GcbKNukFYRDD6Zvyl457j1b+mkLtj0zszm0G
-         JTZ36WMVb9juCgLvpd/blMCj09aFM6jgDhqd7po6tcCgZUYxJm9XXmGMc3jcDWf8COld
-         vpSV0YKkenoNntdaB7R/rjveGHMrYYpzy5c5ReIoBqga7fK8OP2JGJIGf18Wc9mUY2+H
-         ZMew==
-X-Gm-Message-State: AOAM5300OgFr9OZ9ClxIeuTl9pZzPc02uejd1AWSqip+DbjY6AyTkmFU
-        0t/YyVH775pQwJqWyqZy5w==
-X-Google-Smtp-Source: ABdhPJxAz1lpeRppgpo6BunFloCZvsPY8jFkCiVKE8KLqTvD/f0TRuU3AhQ7Ssf3Kpzq9YR+oZzPRQ==
-X-Received: by 2002:a92:d151:: with SMTP id t17mr3335382ilg.101.1590678892145;
-        Thu, 28 May 2020 08:14:52 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id i13sm3442788ill.65.2020.05.28.08.14.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 08:14:51 -0700 (PDT)
-Received: (nullmailer pid 82662 invoked by uid 1000);
-        Thu, 28 May 2020 15:14:50 -0000
-Date:   Thu, 28 May 2020 09:14:50 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        georgi.djakov@linaro.org, dri-devel@freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 6/6] dt-bindings: drm/msm/gpu: Document gpu opp table
-Message-ID: <20200528151450.GA82632@bogus>
-References: <1589453659-27581-1-git-send-email-smasetty@codeaurora.org>
- <1589453659-27581-7-git-send-email-smasetty@codeaurora.org>
+        bh=oxRd34Wxun9nW+kBKYd8ek/TIpwGvvJGkUBghSmTo/M=;
+        b=MaQld4AMkmLTaPXJ3RGs7AV7yxjSRFJARv2slgJ06kUsPS05/T53j8XR2YECYBjgIf
+         1tUX+tnoJWLu038fd1uJtAlDkiTbHpx6BG7gfJ5W9/jpYh3OXcFHJfl106KPThyq5qki
+         346u0X8TfBfcUAtT7ia3MdoeqRTpV1Dl47ZdyRnVFmOowmYhHG7Jc703g29ZcjL3lCn1
+         hS7ClpGGdY9uKUlerNwR4kqei/BtLdl3C/LFbWEcuLByqu8SNx5LspAohMBb9tFOfhwU
+         8o6sryBQGpIDSaSvg0Q4M4oBoo4cXcOnXm+ibl8Hg4NVa2Ge9qq6racf+C8XYfiM/GvD
+         tOuQ==
+X-Gm-Message-State: AOAM530Vms1xryyTKKjRxbRNvUjttQWtWqhBUh0d48z6+NvkVvTk5rnk
+        8JXP1KbTnWJhZt+DblWI8DvvuA==
+X-Google-Smtp-Source: ABdhPJyxzHAYaJd5Z6GbAf+TezrPlzuSkqSImxvxt7Ed9e478gZdxwkkDr6qOku13suW+nr9oaU/lA==
+X-Received: by 2002:aa7:9298:: with SMTP id j24mr3695218pfa.209.1590679023291;
+        Thu, 28 May 2020 08:17:03 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id h7sm4642562pgn.60.2020.05.28.08.17.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 May 2020 08:17:02 -0700 (PDT)
+Date:   Thu, 28 May 2020 08:17:00 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
+        rjliao@codeaurora.org
+Subject: Re: [PATCH v3] Bluetooth: hci_qca: Improve controller ID info log
+ level
+Message-ID: <20200528151700.GI4525@google.com>
+References: <1590663797-16531-1-git-send-email-zijuhu@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1589453659-27581-7-git-send-email-smasetty@codeaurora.org>
+In-Reply-To: <1590663797-16531-1-git-send-email-zijuhu@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 14 May 2020 16:24:19 +0530, Sharat Masetty wrote:
-> Update documentation to list the gpu opp table bindings including the
-> newly added "opp-peak-kBps" needed for GPU-DDR bandwidth scaling.
+On Thu, May 28, 2020 at 07:03:17PM +0800, Zijun Hu wrote:
+> Controller ID info got by VSC EDL_PATCH_GETVER is very
+> important, so improve its log level from DEBUG to INFO.
 > 
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> ---
->  .../devicetree/bindings/display/msm/gpu.txt        | 28 ++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
-> 
+> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
 
-Acked-by: Rob Herring <robh@kernel.org>
+Please add the tags from earlier version unless the new patch has
+substantial changes.
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
