@@ -2,97 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A5ED1E6E84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 00:20:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB6C01E6E91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 00:22:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436955AbgE1WUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 18:20:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59148 "EHLO
+        id S2436940AbgE1WWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 18:22:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436951AbgE1WUV (ORCPT
+        with ESMTP id S2436933AbgE1WWC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 18:20:21 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA337C08C5C6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 15:20:20 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id n15so209264pjt.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 15:20:20 -0700 (PDT)
+        Thu, 28 May 2020 18:22:02 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F719C08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 15:22:02 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id i17so143700pli.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 15:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=NIrmsov8fCmRXlFvg/QT7vVocTnt+ne2gI6KC0HBK0s=;
-        b=afY0mSX4ecEhor/wnhCdYO9il2Qtq7+n+SMWBVmU+POSzCk+3OpQZWwmv7EVvRA818
-         1/xOb28Rt8SImGKI/oRgohVUXOtsGfffbAFwMcGZYFHDW8aYoSNHechWOLGk5al4qV7z
-         vSI8HsqGIo6mCTOjm919fK1nnMI69ZuEw3k30=
+        bh=zR2fG0eW95HQgLEHmYKc0XBvdKWrxCRz+Y0bsh4hA5c=;
+        b=nK14RNmJZ+2gzteD6OHGX1MsDlbcZFSoVjcGLb6DDkXBtr/EOxLM6pULUZUdxS5yV+
+         4Mo7UpXVv2tWJfWx+pG8Nn0kl9qVhmmZZs8TIWzNOD92AiPtn6TwASimgJ0ii5Kpu+vC
+         M1EvCxJzXdr4qiAxtlgEIlzJ5/Uec7chgJUDw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=NIrmsov8fCmRXlFvg/QT7vVocTnt+ne2gI6KC0HBK0s=;
-        b=NxjZXgwfvWJSvK3pILWr5fEirHQgkrU690aJELC/2bu0s/cMcQycN9k94YfBnY12Wq
-         3Ht05oL/jGvv7D+E64x0lniNvTsD827IjcreZ1CPCewbJIy5iUBdgjLc19aie75GWw+F
-         N7JfdJcloilX46IlTnndToKnE3p1zLLCgUvi1uJ5+/xRhKrjKIOkekIgv3P3KRZDf+Bm
-         fDcTLpySV5SeYpujGQAInkA/ev865CQ/fjAiMZu8JjN7uvr7W46Ev49upmldZNfdOm/J
-         AAS9JQ8n2gwgDdg+gR1leNgKDkMo8zubZ/lFQxw9iXEGZuO8Im4Y402nxKhWb6Xkyuqi
-         b4JA==
-X-Gm-Message-State: AOAM532FYQPdA4TU5MWP+MGV8YcqPLowhrzb2U/xA8HYgzRVG+vGSUEC
-        MJvMRigXmd+QvrEbb/IJpnPZZQ==
-X-Google-Smtp-Source: ABdhPJzUwecS9O4N+0Q5MiuUxbCuwmR873e50Cqr3EvQobTbxJBzbn00SvqWBzMofBCP1ZKG8DsPNQ==
-X-Received: by 2002:a17:902:a604:: with SMTP id u4mr5665326plq.196.1590704420073;
-        Thu, 28 May 2020 15:20:20 -0700 (PDT)
+        bh=zR2fG0eW95HQgLEHmYKc0XBvdKWrxCRz+Y0bsh4hA5c=;
+        b=UHqWUgocWg18FFRWERPXqdUIBMP244TMKtCa24I9kQwDKNHBammrCW4/OcANofaa6u
+         PanYWaOKihqXAyYw7R5jrSL5PLOwFuAJ8xGyiZDINOdNn1nMoi/PyJ64bknkDIH5Tl66
+         0vd262MpqnPQf9EWkhCFXSX83CKofq4iVSNMqzeJ3eoem9piq2g5Rf7yzrCVpMglp0Av
+         2WDWEPFLc5hN1n+NyBNbQYt+fH6ujB0ffEDYU7b3usfFQPKMxKQv7YHk6sjMu+ZOvvWR
+         SJSQ79H/g4ZLTavzjE1W0cOcvEdrCjMzQQBasRnrWfSz9zU6i3UmwRES3yDf9PZJmKvz
+         itlg==
+X-Gm-Message-State: AOAM530Cmiv4yiblsEVQU7+xphJjY0acOiv23/5YmGP5Clmv+apN+6OP
+        UbK50Yc14KbmxfujnF6PB9heaw==
+X-Google-Smtp-Source: ABdhPJx0JT5kNpcMVzTUkxPDxiL6FXGYJtLfzLVV1TUbRyTY4BJPE9G4vAd0jIZf3PrHIpeE8pmfCg==
+X-Received: by 2002:a17:902:8e87:: with SMTP id bg7mr5682983plb.91.1590704521839;
+        Thu, 28 May 2020 15:22:01 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id v1sm6539323pjn.9.2020.05.28.15.20.19
+        by smtp.gmail.com with ESMTPSA id a85sm5470786pfd.181.2020.05.28.15.22.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 15:20:19 -0700 (PDT)
+        Thu, 28 May 2020 15:22:01 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1590655103-21568-1-git-send-email-mkrishn@codeaurora.org>
-References: <1590655103-21568-1-git-send-email-mkrishn@codeaurora.org>
-Subject: Re: [v1] drm/msm: add shutdown support for display platform_driver
+In-Reply-To: <948defc1-5ea0-adbb-185b-5f5a81f2e28a@codeaurora.org>
+References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org> <1590253873-11556-2-git-send-email-mkshah@codeaurora.org> <159057264232.88029.4708934729701385486@swboyd.mtv.corp.google.com> <4e070cda-8c22-c554-610e-172320045840@codeaurora.org> <159062812628.69627.2153485337510882984@swboyd.mtv.corp.google.com> <948defc1-5ea0-adbb-185b-5f5a81f2e28a@codeaurora.org>
+Subject: Re: [PATCH v2 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org, mka@chromium.org
-To:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Date:   Thu, 28 May 2020 15:20:18 -0700
-Message-ID: <159070441846.69627.1650074507855844615@swboyd.mtv.corp.google.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
+        mka@chromium.org
+Date:   Thu, 28 May 2020 15:22:00 -0700
+Message-ID: <159070452036.69627.17850758520477366824@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krishna Manikandan (2020-05-28 01:38:23)
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index e4b750b..7a8953f 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -1322,6 +1322,18 @@ static int msm_pdev_remove(struct platform_device =
-*pdev)
->         return 0;
->  }
-> =20
-> +static void msm_pdev_shutdown(struct platform_device *pdev)
-> +{
-> +       struct drm_device *drm =3D platform_get_drvdata(pdev);
-> +
-> +       if (!drm) {
-> +               DRM_ERROR("Invalid drm device node\n");
-> +               return;
-> +       }
+Quoting Maulik Shah (2020-05-28 06:11:23)
+> Hi,
+>=20
+> On 5/28/2020 6:38 AM, Stephen Boyd wrote:
+> > Quoting Maulik Shah (2020-05-27 04:26:14)
+> >> On 5/27/2020 3:14 PM, Stephen Boyd wrote:
+> >>> Quoting Maulik Shah (2020-05-23 10:11:10)
+> >>>> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> >>>> index eaa0e20..3810cd0 100644
+> >>>> --- a/drivers/gpio/gpiolib.c
+> >>>> +++ b/drivers/gpio/gpiolib.c
+> >>>> @@ -2465,32 +2465,37 @@ static void gpiochip_irq_relres(struct irq_d=
+ata *d)
+> >>>>           gpiochip_relres_irq(gc, d->hwirq);
+> >>>>    }
+> >>>>   =20
+> >>>> +static void gpiochip_irq_mask(struct irq_data *d)
+> >>>> +{
+> >>>> +       struct gpio_chip *gc =3D irq_data_get_irq_chip_data(d);
+> >>>> +
+> >>>> +       if (gc->irq.irq_mask)
+> >>>> +               gc->irq.irq_mask(d);
+> >>>> +       gpiochip_disable_irq(gc, d->hwirq);
+> >>> How does this work in the lazy case when I want to drive the GPIO? Sa=
+y I
+> >>> have a GPIO that is also an interrupt. The code would look like
+> >>>
+> >>>    struct gpio_desc *gpio =3D gpiod_get(...)
+> >>>    unsigned int girq =3D gpiod_to_irq(gpio)
+> >>>
+> >>>    request_irq(girq, ...);
+> >>>
+> >>>    disable_irq(girq);
+> >>>    gpiod_direction_output(gpio, 1);
+> >>>
+> >>> In the lazy case genirq wouldn't call the mask function until the fir=
+st
+> >>> interrupt arrived on the GPIO line. If that never happened then would=
+n't
+> >>> we be blocked in gpiod_direction_output() when the test_bit() sees
+> >>> FLAG_USED_AS_IRQ? Or do we need irqs to be released before driving
+> >>> gpios?
+> >> The client driver can decide to unlazy disable IRQ with below API...
+> >>
+> >>   =C2=A0irq_set_status_flags(girq, IRQ_DISABLE_UNLAZY);
+> >>
+> >> This will immediatly invoke mask function (unlazy disable) from genirq,
+> >> even though irq_disable is not implemented.
+> >>
+> > Sure a consumer can disable the lazy feature, but that shouldn't be
+> > required to make this work. The flag was introduced in commit
+> > e9849777d0e2 ("genirq: Add flag to force mask in
+> > disable_irq[_nosync]()") specifically to help devices that can't disable
+> > the interrupt in their own device avoid a double interrupt.
+> i don't think this will be a problem.
+>=20
+> Case 1) Client driver have locked gpio to be used as IRQ using=20
+> gpiochip_lock_as_irq()
+>=20
+> In this case, When client driver want to change the direction for a=20
+> gpio, they will invoke gpiod_direction_output().
+> I see it checks for two flags (pasted below), if GPIO is used as IRQ and =
 
-When would this ever happen? Please drop this useless check.
+> whether its enabled IRQ or not.
+>=20
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* GPIOs used for enabled IRQs shal=
+l not be set as output */
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (test_bit(FLAG_USED_AS_IRQ=
+, &desc->flags) &&
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 test_=
+bit(FLAG_IRQ_IS_ENABLED, &desc->flags)) {
+>=20
+> The first one (FLAG_USED_AS_IRQ) is set only if client driver in past=20
+> have locked gpio to use as IRQ with a call to gpiochip_lock_as_irq()
+> then it never gets unlocked until clients invoke gpiochip_unlock_as_irq().
+>=20
+> So i presume the client driver which in past locked gpio to be used as=20
+> IRQ, now wants to change direction then it will
+> a. first unlock to use as IRQ
+> b. then change the direction.
 
-> +
-> +       drm_atomic_helper_shutdown(drm);
-> +}
-> +
->  static const struct of_device_id dt_match[] =3D {
->         { .compatible =3D "qcom,mdp4", .data =3D (void *)KMS_MDP4 },
->         { .compatible =3D "qcom,mdss", .data =3D (void *)KMS_MDP5 },
+How does a client driver unlock to use as an IRQ though? I don't
+understand how that is done. gpiochip_lock_as_irq() isn't a gpio
+consumer API, it's a gpiochip/gpio provider API.
+
+>=20
+> Once it unlocks in step (a), both these flags will be cleared and there=20
+> won't be any error in changing direction in step (b).
