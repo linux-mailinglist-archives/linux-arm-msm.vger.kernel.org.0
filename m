@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 615AF1E669D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 17:47:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E8291E66B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 17:47:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404672AbgE1PrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 11:47:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54232 "EHLO
+        id S2404733AbgE1Pro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 11:47:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404511AbgE1PrA (ORCPT
+        with ESMTP id S2404676AbgE1PrE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 11:47:00 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E0BC08C5C8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:47:00 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id e11so12744555pfn.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:47:00 -0700 (PDT)
+        Thu, 28 May 2020 11:47:04 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E4CCC08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:47:04 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id t7so11694039plr.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8bzFkEpeMiuczNpVrGeVDfJTOaYxKHg+WzWEH40XhWE=;
-        b=HLcs+9vbHgcJOleOjvkmnddOoWOENq1ApNFuKlsvL7Fhqhv+BZzqph1mjN9eSJWnvs
-         D9SThGRtoBtovGAknlmhY5N0KECznIyDjSsgIH1TapbLnIs40D69D6HewwtcKGLDcRJc
-         E6gj14FTp3OUmF8uVng6h30QlcDJtl6e1+qzUlSLtma1s5D/3Qs/fDfOYvH96k2/kJJy
-         5eRkjrMUmRJWuPb7EwTPnrR/tvxjgtNvlir084wxB+aIncgTYgfIeuBT7J94B8ut56JZ
-         32PEY6R6IJhjvOe79CHMLjx/B/soPDWjGp5C+xWPmwpU0VncfaIhreWCoipx7QKZQxXF
-         u80w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KyQEzGyzaYw5IWn5g/75UMLFSkhlAAtyUxzYzVWL1hI=;
+        b=B6fZFOPXlINNumfwCvb4M1+Lbl67pHh2jE6GhmJTySjRkf+DhDhRtqbsCH3uHuPArI
+         NNdypH3hqwOSn3+AgnW7EdJU6gonFzCjQQeoDNGHRN8Y5zL9d+bjfozfI83PBjSIEiFh
+         wcKk/G9OyoVmTtdVNO25Uyn5Ve2jHzU65xddhYSZT/ctnl72a3e3/mEhasjWD9Uj4yWa
+         aBxGFqdpDceEnDm4mCrxmEQ3a1j2St1E6gQGtbVNT+RlXnU97aWAlEl0DGVosRGrImiZ
+         du8WVebIRNthoE/I9ytP4vciOfDB/VyXzom+emikQzgl5LIk2rO9RRLh6Gy9o3N7fCGC
+         js8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8bzFkEpeMiuczNpVrGeVDfJTOaYxKHg+WzWEH40XhWE=;
-        b=teT1gt+NNfL1ENlJZcaU44feRNmINoA9fXlOYStVtrlsxAI3QzelDqosQyAvCFCJjf
-         NpHd1Pav7IOJQHdbapSyLTTNuMroAc/lyXJEZ/FvjrPQE4VfNWOp9tochi4DS6Rstc66
-         2odlw1AcUvfwR4yxsYaHFiTTiZKxN1CdPYnCy59ZzIliwfw6KtVAYBDKOK9VG5ityPbV
-         0RRFixOBwMvnUbsWKhK/dIZ1B+a9H+Vgu0/eQezm++vt+Nk0e3dZYd+OPOPQ6L3qJNzT
-         xxKeAro4mdNzoi7ze9jpVtjcLUwbcfS60aC9HTz7zUUBol979xjFMJFF4ZI7OjzmTDye
-         QwLw==
-X-Gm-Message-State: AOAM530bddMbYaqy9A73RnozOVWAtdMYLwrEd+FA6r91Ce3rr3pegexs
-        OtYR2ET/6fc4d8lBPOpGyOT2NA==
-X-Google-Smtp-Source: ABdhPJzqKkm7zM1Q9nJmBlgmD27dvX4y5zG//O+pRAV+bthX0R54UHNlVgcsDY/Rc/HWan7HktwORw==
-X-Received: by 2002:a63:c846:: with SMTP id l6mr3474336pgi.197.1590680819568;
-        Thu, 28 May 2020 08:46:59 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KyQEzGyzaYw5IWn5g/75UMLFSkhlAAtyUxzYzVWL1hI=;
+        b=CgLhnqbqhkQJ7ZdWmpwMg4rJ3jfW9WAMFpOBxLKstCMVEWQWGx5QmDxWLd4p7Qo5Jb
+         Kl8xHa5a9MbbyUPrk9cdNFxX8MbfG9qywQ6/13khNfJ6KKAwZMeEiB+iMe3GPJeGva8n
+         rrFt8XFEYlSay/AixwqejEMUuELT1rolZKUyRb774+F/uwddKOUi5pqu6OuVYNnB0Dcj
+         D3Rnz27TElznB47J4HgUeEkdI3hQQIvb2wE20ibwQKStXpeuIl45pkC8eBoCBXlU/vKH
+         P9+XaCybqFeEyZDXSU09D2cT/wwgDx2c24yXomWnJFPeBPgEKjMjjCr4fS1nAMz7O8tk
+         Bqqw==
+X-Gm-Message-State: AOAM532yYzeszntNksib8F8Hht+GTf4LJxOtvXysAC5VBCIDT6efdX0Q
+        /JyLytEZCA4t5En6xeJEJX0qtw==
+X-Google-Smtp-Source: ABdhPJwuG1bZv/tBfujMCsmSXvQMl1Vfa8akWgxhHGSKy4wVvRhdiY4eDH3JPL7Kki/GZrRRFeyvyQ==
+X-Received: by 2002:a17:90b:1482:: with SMTP id js2mr4611348pjb.54.1590680823540;
+        Thu, 28 May 2020 08:47:03 -0700 (PDT)
 Received: from nagraj.local ([49.206.21.239])
-        by smtp.gmail.com with ESMTPSA id y22sm5212551pfc.132.2020.05.28.08.46.55
+        by smtp.gmail.com with ESMTPSA id y22sm5212551pfc.132.2020.05.28.08.46.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 08:46:58 -0700 (PDT)
+        Thu, 28 May 2020 08:47:02 -0700 (PDT)
 From:   Sumit Semwal <sumit.semwal@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         broonie@kernel.org, robh+dt@kernel.org
@@ -55,10 +55,12 @@ Cc:     nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         kgunda@codeaurora.org, rnayak@codeaurora.org,
         Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH v3 0/5] Qualcomm labibb regulator driver
-Date:   Thu, 28 May 2020 21:16:20 +0530
-Message-Id: <20200528154625.17742-1-sumit.semwal@linaro.org>
+Subject: [PATCH v3 1/5] regulator: Allow regulators to verify enabled during enable()
+Date:   Thu, 28 May 2020 21:16:21 +0530
+Message-Id: <20200528154625.17742-2-sumit.semwal@linaro.org>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200528154625.17742-1-sumit.semwal@linaro.org>
+References: <20200528154625.17742-1-sumit.semwal@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,49 +68,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds a driver for LAB/IBB regulators found on some Qualcomm SoCs.
-These regulators provide positive and/or negative boost power supplies
-for LCD/LED display panels connected to the SoC.
+Some regulators might need to verify that they have indeed been enabled
+after the enable() call is made and enable_time delay has passed.
 
-This series adds the support for pmi8998 PMIC found in SDM845 family of SoCs.
+This is implemented by repeatedly checking is_enabled() upto
+poll_enabled_time, waiting for the already calculated enable delay in
+each iteration.
 
-Changes from v2:
-- Review comments from v2
-- Moved the poll-to-check-enabled functionality to regulator core.
-- Used more core features to simplify enable/disable functions.
-- Moved the devicetree binding to yaml.
-- Updated interrupt-names and simplified handling.
+Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+---
+ drivers/regulator/core.c         | 28 ++++++++++++++++++++++++++++
+ include/linux/regulator/driver.h |  5 +++++
+ 2 files changed, 33 insertions(+)
 
-Changes from v1:
-- Incorporated review comments from v1
-- Changed from virtual-regulator based handling to individual regulator based
-  handling.
-- Reworked the core to merge most of enable/disable functions, combine the
-  regulator_ops into one and allow for future variations.
-- is_enabled() is now _really_ is_enabled()
-- Simplified the SC interrupt handling - use regmap_read_poll_timeout,
-  REGULATOR_EVENT_OVER_CURRENT handling and notification to clients.
-
-Nisha Kumari (4):
-  dt-bindings: regulator: Add labibb regulator
-  arm64: dts: qcom: pmi8998: Add nodes for LAB and IBB regulators
-  regulator: qcom: Add labibb driver
-  regulator: qcom: labibb: Add SC interrupt handling
-
-Sumit Semwal (1):
-  regulator: Allow regulators to verify enabled during enable()
-
- .../regulator/qcom-labibb-regulator.yaml      |  63 ++++
- arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  14 +
- drivers/regulator/Kconfig                     |  10 +
- drivers/regulator/Makefile                    |   1 +
- drivers/regulator/core.c                      |  28 ++
- drivers/regulator/qcom-labibb-regulator.c     | 316 ++++++++++++++++++
- include/linux/regulator/driver.h              |   5 +
- 7 files changed, 437 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
- create mode 100644 drivers/regulator/qcom-labibb-regulator.c
-
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 7486f6e4e613..06199f182114 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -2409,6 +2409,34 @@ static int _regulator_do_enable(struct regulator_dev *rdev)
+ 
+ 	_regulator_enable_delay(delay);
+ 
++	/* If set, poll upto poll_enabled_time uS to see if the regulator
++	 * actually got enabled.
++	 * For each iteration, wait for the enable_time delay calculated
++	 * above already.
++	 * If the regulator isn't enabled after poll_enabled_time has
++	 * expired, return -ETIMEDOUT.
++	 */
++	if (rdev->desc->poll_enabled_time) {
++		unsigned int time_remaining = rdev->desc->poll_enabled_time;
++
++		while (time_remaining > 0) {
++			/* We've already waited for enable_time above;
++			 * so we can start with immediate check of the
++			 * status of the regulator.
++			 */
++			if (rdev->desc->ops->is_enabled(rdev))
++				break;
++
++			_regulator_enable_delay(delay);
++			time_remaining -= delay;
++		}
++
++		if (time_remaining <= 0) {
++			rdev_err(rdev, "Enabled check failed.\n");
++			return -ETIMEDOUT;
++		}
++	}
++
+ 	trace_regulator_enable_complete(rdev_get_name(rdev));
+ 
+ 	return 0;
+diff --git a/include/linux/regulator/driver.h b/include/linux/regulator/driver.h
+index 29d920516e0b..bb50e943010f 100644
+--- a/include/linux/regulator/driver.h
++++ b/include/linux/regulator/driver.h
+@@ -322,6 +322,9 @@ enum regulator_type {
+  * @enable_time: Time taken for initial enable of regulator (in uS).
+  * @off_on_delay: guard time (in uS), before re-enabling a regulator
+  *
++ * @poll_enabled_time: Maximum time (in uS) to poll if the regulator is
++ *                          actually enabled, after enable() call
++ *
+  * @of_map_mode: Maps a hardware mode defined in a DeviceTree to a standard mode
+  */
+ struct regulator_desc {
+@@ -389,6 +392,8 @@ struct regulator_desc {
+ 
+ 	unsigned int off_on_delay;
+ 
++	unsigned int poll_enabled_time;
++
+ 	unsigned int (*of_map_mode)(unsigned int mode);
+ };
+ 
 -- 
 2.26.2
 
