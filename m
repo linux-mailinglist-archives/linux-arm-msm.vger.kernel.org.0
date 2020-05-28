@@ -2,254 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A155E1E66AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 17:47:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57D3E1E6738
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 18:16:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404710AbgE1PrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 11:47:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54308 "EHLO
+        id S2404913AbgE1QQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 12:16:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404705AbgE1PrT (ORCPT
+        with ESMTP id S2404872AbgE1QQa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 11:47:19 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98718C08C5C7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:47:19 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id nu7so3346387pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 08:47:19 -0700 (PDT)
+        Thu, 28 May 2020 12:16:30 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16AB7C08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 09:16:30 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id 5so3302292pjd.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 09:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LsQCDM2neDPMHnH/0t80dBq+lQkYA0nzb5LOU64sDRo=;
-        b=UmyhKM4Jpks9J00t8FKaJjhwAp3CWXCfbjL0jeNN7H8h731llMvtFA/1uul7nDsSW2
-         r8lXAjZppv+TRe5sk5OVwRVS6NZpwNufyz7lViBxNmscU7XlWTvv/lpCQa1JA/1yofpT
-         FJ+u7puB6jtYSEkZSTzF//xkcIvATOriQAypxMkieuU+topZgBCiB11v3kPtuO8XpZam
-         6DiqgMRySkj6CFgQJbEwT2VaI+MUYJv4HL9RQ5JcTsPn1z8ysZeOlNZXZorE/M6c8DgK
-         0nQv9rse0TS88b5U/AjkWMPuzVM0WTMRWkAqLP1rBt2Szu7f3FBLcBq4flH0YlSO2vj1
-         pphA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=S76ddrdGq/cBbQZ5tUQB2unFDdKjzHHbrT8hpYe9YzM=;
+        b=JiWpVhyw1smRR696kDsmG/PvNo7sZu5e24qbl+VPXErlBMim+HjZG2Z2tGTg+EQ3c6
+         5K/pnLuPLxYJWoQDn9cFgvvzrAYr2oaWTol8ilzpzHKI9n+DCLhZPLSDfA/RFV9JAUDD
+         dNZ7x5M2uU8VqhhdK5Om372FdLpWT3N2o341M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LsQCDM2neDPMHnH/0t80dBq+lQkYA0nzb5LOU64sDRo=;
-        b=Dg80FrSp+rK4NINCSemIpHZ46pGvGoEhpCbHmm2JoQDhzpzUKOAg0fLR0clpv/n/bj
-         JaJG/JXBBGZPjmLIod1qKyglnRYuDnPpsST51P4b6lZT7hCmqD0+7jhO21V9omAhkbiE
-         IJ5xvxVF+BMgSy8W7UnNZ778hyAj0KGeZBQpJqQ8JS4tt10HTX76FWgbBja9BaliEriT
-         EHxxO7E9Ygsb885j/DQjplLDXxCbWm8upsdW3CGsum53nH8S8MYFajK2eug+L6NudlV6
-         RpCgCjt9sXwwLoYNLY2t0yLjJhEWZU5aDZVyJtton0lbGUHvH4hbGxD0vqFPi0M2jdxs
-         5qkw==
-X-Gm-Message-State: AOAM532Y/MUpAo4SxL+Kr+9VGs8FrH7qp+G6s8GPX7delpUHaqF6gcRu
-        AV253RupFd9IW6nzjQstoLQ9DADZg8yH1Q==
-X-Google-Smtp-Source: ABdhPJwrGVxnRHPAj6hGG65lrdgZ7wwXriSr+ERPGBBU3/A2TNUzw23m8eel0A7JJcN7JnWbDwY3XA==
-X-Received: by 2002:a17:90a:c788:: with SMTP id gn8mr4431712pjb.230.1590680838985;
-        Thu, 28 May 2020 08:47:18 -0700 (PDT)
-Received: from nagraj.local ([49.206.21.239])
-        by smtp.gmail.com with ESMTPSA id y22sm5212551pfc.132.2020.05.28.08.47.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 08:47:18 -0700 (PDT)
-From:   Sumit Semwal <sumit.semwal@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org
-Cc:     nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        kgunda@codeaurora.org, rnayak@codeaurora.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH v3 5/5] regulator: qcom: labibb: Add SC interrupt handling
-Date:   Thu, 28 May 2020 21:16:25 +0530
-Message-Id: <20200528154625.17742-6-sumit.semwal@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200528154625.17742-1-sumit.semwal@linaro.org>
-References: <20200528154625.17742-1-sumit.semwal@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=S76ddrdGq/cBbQZ5tUQB2unFDdKjzHHbrT8hpYe9YzM=;
+        b=G0LgSv3L+5UKIimT7/5WNnFs0lWbWMStUckEo9tkLTXlnrfl3P8mvpulov9HoAgy0b
+         eq2qV/8o0K5eJOYZGhwmoiEq2wtX52Mp4y+tiqBwbjn+EvElJHtjtTxu6IHdvIANxkXG
+         R+OjX5IKpNvN9ZUGIJw/FIoMFf4SC7K8IjangvJCztnk6V1zLTMJ/+wA1LEIiqAZb8nx
+         5Ka6hY+K8do0+wmZyqGvh+vvBU/KVDDvkZRDEUmjTSUN0CzN7l3eVpFfX4tbZy/2KGFq
+         WK4l8cUzW2ocf3If8Jy2QlI7tzfgGd4G9uET2FP3gW8gil1DVwWTgPsU8Fg9rmiU66UG
+         qK9Q==
+X-Gm-Message-State: AOAM532wLhriGk7bkdcGRvc9d7PTTIPdO0lW47nA7FqZlJgOzh0OQps9
+        lKkc1ADhyFwWj7pwCopx5qynfw==
+X-Google-Smtp-Source: ABdhPJx8NV9kadMCeflkmPi1yiAesNMW3uLpAf3Uo3Djp1f3fesJ94fSB9RULJ/7tXTLkUaRNCdO2A==
+X-Received: by 2002:a17:902:b289:: with SMTP id u9mr4327057plr.138.1590682589611;
+        Thu, 28 May 2020 09:16:29 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id lj12sm5932279pjb.21.2020.05.28.09.16.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 May 2020 09:16:28 -0700 (PDT)
+Date:   Thu, 28 May 2020 09:16:27 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
+        rjliao@codeaurora.org
+Subject: Re: [PATCH v1] bluetooth: hci_qca: Fix suspend/resume functionality
+ failure
+Message-ID: <20200528161627.GK4525@google.com>
+References: <1590662302-10102-1-git-send-email-zijuhu@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1590662302-10102-1-git-send-email-zijuhu@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Nisha Kumari <nishakumari@codeaurora.org>
+Hi Zijun,
 
-Add Short circuit interrupt handling and recovery for the lab and
-ibb regulators on qcom platforms.
+On Thu, May 28, 2020 at 06:38:22PM +0800, Zijun Hu wrote:
+> @dev parameter of qca_suspend()/qca_resume() represents
+> serdev_device, but it is mistook for hci_dev and causes
+> succedent unexpected memory access.
+> 
+> Fix by taking @dev as serdev_device.
+> 
+> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
 
-The client panel drivers need to register for REGULATOR_EVENT_OVER_CURRENT
-notification which will be triggered on short circuit. They should
-try to enable the regulator once, and if it doesn't get enabled,
-handle shutting down the panel accordingly.
+Please add:
 
-Signed-off-by: Nisha Kumari <nishakumari@codeaurora.org>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+Fixes: 41d5b25fed0 ("Bluetooth: hci_qca: add PM support")
 
---
-v2: sumits: reworked handling to user regmap_read_poll_timeout, and handle it
-     per-regulator instead of clearing both lab and ibb errors on either irq
-     triggering. Also added REGULATOR_EVENT_OVER_CURRENT handling and
-     notification to clients.
-v3: sumits: updated as per review comments of v2: removed spurious check for
-     irq in handler and some unused variables; inlined some of the code,
-     omitted IRQF_TRIGGER_RISING as it's coming from DT.
+and add stable@kernel.org to cc:
 
----
- drivers/regulator/qcom-labibb-regulator.c | 92 +++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+> ---
+>  drivers/bluetooth/hci_qca.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index e4a6823..c159161 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1977,8 +1977,10 @@ static void qca_serdev_remove(struct serdev_device *serdev)
+>  
+>  static int __maybe_unused qca_suspend(struct device *dev)
+>  {
+> -	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+> -	struct hci_uart *hu = hci_get_drvdata(hdev);
+> +	struct serdev_device *serdev = to_serdev_device(dev);
+> +	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
+> +	struct hci_uart *hu = &qcadev->serdev_hu;
+> +	struct hci_dev *hdev __maybe_unused = hu->hdev;
 
-diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
-index 634d08461c6e..695ffac71e81 100644
---- a/drivers/regulator/qcom-labibb-regulator.c
-+++ b/drivers/regulator/qcom-labibb-regulator.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- // Copyright (c) 2020, The Linux Foundation. All rights reserved.
- 
-+#include <linux/interrupt.h>
- #include <linux/module.h>
- #include <linux/of_irq.h>
- #include <linux/of.h>
-@@ -18,6 +19,7 @@
- #define REG_LABIBB_ENABLE_CTL		0x46
- #define LABIBB_STATUS1_VREG_OK_BIT	BIT(7)
- #define LABIBB_CONTROL_ENABLE		BIT(7)
-+#define LABIBB_STATUS1_SC_DETECT_BIT	BIT(6)
- 
- #define LAB_ENABLE_CTL_MASK		BIT(7)
- #define IBB_ENABLE_CTL_MASK		(BIT(7) | BIT(6))
-@@ -27,12 +29,17 @@
- #define IBB_POLL_ENABLED_TIME		(LABIBB_ENABLE_TIME * 10)
- #define LABIBB_OFF_ON_DELAY		(8200)
- 
-+#define POLLING_SCP_DONE_INTERVAL_US	5000
-+#define POLLING_SCP_TIMEOUT		16000
-+
- struct labibb_regulator {
- 	struct regulator_desc		desc;
- 	struct device			*dev;
- 	struct regmap			*regmap;
- 	struct regulator_dev		*rdev;
- 	u16				base;
-+	int				sc_irq;
-+	int				vreg_enabled;
- 	u8				type;
- };
- 
-@@ -65,6 +72,8 @@ static int qcom_labibb_regulator_enable(struct regulator_dev *rdev)
- 	if (ret < 0)
- 		dev_err(reg->dev, "Write failed: enable %s regulator\n",
- 			reg->desc.name);
-+	else
-+		reg->vreg_enabled = 1;
- 
- 	return ret;
- }
-@@ -78,6 +87,8 @@ static int qcom_labibb_regulator_disable(struct regulator_dev *rdev)
- 	if (ret < 0)
- 		dev_err(reg->dev, "Disable failed: disable %s\n",
- 			reg->desc.name);
-+	else
-+		reg->vreg_enabled = 0;
- 
- 	return ret;
- }
-@@ -88,11 +99,70 @@ static struct regulator_ops qcom_labibb_ops = {
- 	.is_enabled		= qcom_labibb_regulator_is_enabled,
- };
- 
-+static irqreturn_t labibb_sc_err_handler(int irq, void *_reg)
-+{
-+	int ret;
-+	u16 reg;
-+	unsigned int val;
-+	struct labibb_regulator *labibb_reg = _reg;
-+	bool in_sc_err, scp_done = false;
-+
-+	ret = regmap_read(labibb_reg->regmap,
-+			  labibb_reg->base + REG_LABIBB_STATUS1, &val);
-+	if (ret < 0) {
-+		dev_err(labibb_reg->dev, "sc_err_irq: Read failed, ret=%d\n",
-+			ret);
-+		return IRQ_HANDLED;
-+	}
-+
-+	dev_dbg(labibb_reg->dev, "%s SC error triggered! STATUS1 = %d\n",
-+		labibb_reg->desc.name, val);
-+
-+	in_sc_err = !!(val & LABIBB_STATUS1_SC_DETECT_BIT);
-+
-+	/*
-+	 * The SC(short circuit) fault would trigger PBS(Portable Batch
-+	 * System) to disable regulators for protection. This would
-+	 * cause the SC_DETECT status being cleared so that it's not
-+	 * able to get the SC fault status.
-+	 * Check if the regulator is enabled in the driver but
-+	 * disabled in hardware, this means a SC fault had happened
-+	 * and SCP handling is completed by PBS.
-+	 */
-+	if (!in_sc_err) {
-+
-+		reg = labibb_reg->base + REG_LABIBB_ENABLE_CTL;
-+
-+		ret = regmap_read_poll_timeout(labibb_reg->regmap,
-+					reg, val,
-+					!(val & LABIBB_CONTROL_ENABLE),
-+					POLLING_SCP_DONE_INTERVAL_US,
-+					POLLING_SCP_TIMEOUT);
-+
-+		if (!ret && labibb_reg->vreg_enabled) {
-+			dev_dbg(labibb_reg->dev,
-+				"%s has been disabled by SCP\n",
-+				labibb_reg->desc.name);
-+			scp_done = true;
-+		}
-+	}
-+
-+	if (in_sc_err || scp_done) {
-+		regulator_lock(labibb_reg->rdev);
-+		regulator_notifier_call_chain(labibb_reg->rdev,
-+						REGULATOR_EVENT_OVER_CURRENT,
-+						NULL);
-+		regulator_unlock(labibb_reg->rdev);
-+	}
-+	return IRQ_HANDLED;
-+}
-+
- static int register_labibb_regulator(struct labibb_regulator *reg,
- 				const struct labibb_regulator_data *reg_data,
- 				struct device_node *of_node)
- {
- 	struct regulator_config cfg = {};
-+	int ret;
- 
- 	reg->base = reg_data->base;
- 	reg->type = reg_data->type;
-@@ -108,6 +178,28 @@ static int register_labibb_regulator(struct labibb_regulator *reg,
- 	reg->desc.poll_enabled_time = reg_data->poll_enabled_time;
- 	reg->desc.off_on_delay = LABIBB_OFF_ON_DELAY;
- 
-+	reg->sc_irq = -EINVAL;
-+	ret = of_irq_get_byname(of_node, "sc-err");
-+	if (ret < 0) {
-+		dev_err(reg->dev, "Unable to get sc-err, ret = %d\n",
-+			ret);
-+		return ret;
-+	} else
-+		reg->sc_irq = ret;
-+
-+	if (reg->sc_irq > 0) {
-+		ret = devm_request_threaded_irq(reg->dev,
-+						reg->sc_irq,
-+						NULL, labibb_sc_err_handler,
-+						IRQF_ONESHOT,
-+						"sc-err", reg);
-+		if (ret) {
-+			dev_err(reg->dev, "Failed to register sc-err irq ret=%d\n",
-+				ret);
-+			return ret;
-+		}
-+	}
-+
- 	cfg.dev = reg->dev;
- 	cfg.driver_data = reg;
- 	cfg.regmap = reg->regmap;
--- 
-2.26.2
+hdev is not used, please remove
 
+>  	struct qca_data *qca = hu->priv;
+>  	unsigned long flags;
+>  	int ret = 0;
+> @@ -2057,8 +2059,10 @@ static int __maybe_unused qca_suspend(struct device *dev)
+>  
+>  static int __maybe_unused qca_resume(struct device *dev)
+>  {
+> -	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
+> -	struct hci_uart *hu = hci_get_drvdata(hdev);
+> +	struct serdev_device *serdev = to_serdev_device(dev);
+> +	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
+> +	struct hci_uart *hu = &qcadev->serdev_hu;
+> +	struct hci_dev *hdev __maybe_unused = hu->hdev;
+
+hdev is not used, please remove
+
+>  	struct qca_data *qca = hu->priv;
+>  
+>  	clear_bit(QCA_SUSPENDING, &qca->flags);
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+> 
