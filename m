@@ -2,96 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 701CC1E6DB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 23:33:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D1D91E6DCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2020 23:38:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436677AbgE1Vdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 17:33:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51902 "EHLO
+        id S2436658AbgE1Vhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 17:37:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436583AbgE1Vdt (ORCPT
+        with ESMTP id S2436623AbgE1Vhv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 17:33:49 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A3AC08C5C8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 14:33:49 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id h188so26730lfd.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 14:33:49 -0700 (PDT)
+        Thu, 28 May 2020 17:37:51 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545D1C08C5C8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 14:37:51 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id t23so158690vkt.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 14:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ldVlqqZ3FDUO39GbWvCw2m+scSFkVJIhpIYkWdVQ4CU=;
-        b=cVMoA007x0WC8P0Eavx6zVMKjLDuUr4glWhnKahRTky7N7NQY5u4NOXaXnObdxzHuT
-         oVdEJBQaFNTsXW3avIkZOOcA4a7MOEgPpG1FTYTJlr3H/A+5MsdKZuYHLALKA1hTsTsz
-         nmdMr1H6K7UXf6Khy7HIzTdpfXrHaDFe20jiAvk9VqkwIjY/N7IUTipZv3UPs8h6qbch
-         Ur20WUC4/3hoEy/O/EmxRehOJOPOYfjdGCp+svegVCMF+BHbcZgQ2peyPhSc/VLi1njQ
-         DIYeC2j9gPhC5m8ns0cRjv0Sc1WhJ4nQ2GJ1Y5fgGOKFL54iW5TzCvQmUv4nwiYgMgrH
-         OdVA==
+        bh=6EBXP08UfA+20wnVaOt/Z0KcauZvdNBVCxlQRkCKiaE=;
+        b=hQE6rkU9ZVc2K3wj2lHCfZ6PCW6mEVrt6pyiaSDGWcBIMcQg9CeU1m6QiV/RMjl/FO
+         QW+xgDshAs1RIO/5kskBlpD5CGQInHMf4OK055PDNSV+BHB9yk9TxBI+8Xml915AGrxN
+         CRVyAjb8Q9DR9q6ppylctJsVaX7mnSK1Ql2rk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ldVlqqZ3FDUO39GbWvCw2m+scSFkVJIhpIYkWdVQ4CU=;
-        b=LlkxdrSaq3DbOYXYaSuErnEezE1BTPggYHbouoe8FzFCn7Mo9bia6c/6J1KtSXOzqz
-         5//1Q1FTCh3hkkt/vnwgDXrWGRes1GQ44p/Z6C8kTYEHNtzHuXQEs454Jd6QD7KRyObE
-         TyEHk4jN6/wIX7LziKtFDki5EUvpRSw6h7oW468UuDbI0i7GCf/HXqPtCa1FJkMr8fq4
-         qtOz6Ci6Wk4txrZXwWcL18P4/fyuMxkUB4IFIzzW2AOA3+L6znFFKwNCltwuUVYERxoH
-         fjbTrJw9LvMgX+hl0a1Vs4eDCsF4nuJs2GO+rd9q8Gyr7IvRKUlGKWmzrVwgBVmuqLMw
-         FuWA==
-X-Gm-Message-State: AOAM532TlQ7iL36j7YwyPzcIzl2JBQYILlPefs8xrWRopVdTalzopPT+
-        CyqeI/zGKGLA96arS45cBy4JHmgQaEbsAQbzdDbhIw==
-X-Google-Smtp-Source: ABdhPJxytp5+z8yLyBf5URWT6WAXg7xT4q74X2N/N/glj43Z+YJ+j8wb6XzV80aoF25inuWQUDvoZnwgps7IqCez6bU=
-X-Received: by 2002:ac2:4823:: with SMTP id 3mr2638792lft.194.1590701627388;
- Thu, 28 May 2020 14:33:47 -0700 (PDT)
+        bh=6EBXP08UfA+20wnVaOt/Z0KcauZvdNBVCxlQRkCKiaE=;
+        b=qYzQV4TSOsBL6boZg0GCfv0LNS/LLoB/XtTqg4is9sZlNhitPEf7FSKc2mktsq48Cw
+         ujaX7O4ZXSPpQQ24YLVPHn4jLGHYpV+k7W3PzCuSIZWQ3Fs3u+pUTgTDxMYdMgp8RpYY
+         ookWO42d9KFkUJ4/B8ZErPBYuZ/+x+DM4xePeovm1K8hUQ+nWNuVHAp4zXUOvGxxGMy/
+         8Sz8ZlHewqrtgZXlMT+TTr4XqX4UNXwM+0V1I474DV1gmKmI9/tloOMa8mVLQq6cvU7q
+         d/RImfq8Dby/Zhof+RNRq+J5/Hgr+k6+or88enNw3ORdzuQ/pdnf2Yo/NvWJ1P1QFaw0
+         g3aA==
+X-Gm-Message-State: AOAM530+P1YSs5pYGwknCBPgRFGh4SW0fmG+GljbHhqA1b0CeYAL1sKb
+        BQ9ncNW4ZAivF8HKFywZZAGcAGsDPMg=
+X-Google-Smtp-Source: ABdhPJwH1FOezp78IdVfE/Xb5s8HTdtGYPF7gl7ZcCRjxPHXZ/sQhEYu0HmbepChAP206OOxcLOvxw==
+X-Received: by 2002:a1f:23d0:: with SMTP id j199mr3732489vkj.85.1590701869938;
+        Thu, 28 May 2020 14:37:49 -0700 (PDT)
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com. [209.85.222.52])
+        by smtp.gmail.com with ESMTPSA id m135sm624016vke.51.2020.05.28.14.37.48
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 May 2020 14:37:48 -0700 (PDT)
+Received: by mail-ua1-f52.google.com with SMTP id g34so71443uah.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 14:37:48 -0700 (PDT)
+X-Received: by 2002:ab0:1684:: with SMTP id e4mr3531314uaf.22.1590701867624;
+ Thu, 28 May 2020 14:37:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org> <1590253873-11556-2-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1590253873-11556-2-git-send-email-mkshah@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 28 May 2020 23:33:36 +0200
-Message-ID: <CACRpkdaMS2G6qLtGp05pZgUCGxdS2xA2a5_ahgrwqgzLmybWcg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+References: <20200422090443.12529-1-harigovi@codeaurora.org> <158931520588.215346.14524550377627605126@swboyd.mtv.corp.google.com>
+In-Reply-To: <158931520588.215346.14524550377627605126@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 28 May 2020 14:37:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VLNuG7ZGN_yRe9zN3fahBKhevjkJDBTh7G4kozKvnDnQ@mail.gmail.com>
+Message-ID: <CAD=FV=VLNuG7ZGN_yRe9zN3fahBKhevjkJDBTh7G4kozKvnDnQ@mail.gmail.com>
+Subject: Re: [v1] drm/bridge: ensure bridge suspend happens during PM sleep
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>, nganji@codeaurora.org,
+        Sam Ravnborg <sam@ravnborg.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, May 23, 2020 at 7:11 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+Hi,
 
-> With 'commit 461c1a7d4733 ("gpiolib: override irq_enable/disable")' gpiolib
-> overrides irqchip's irq_enable and irq_disable callbacks. If irq_disable
-> callback is implemented then genirq takes unlazy path to disable irq.
+On Tue, May 12, 2020 at 1:26 PM Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> Underlying irqchip may not want to implement irq_disable callback to lazy
-> disable irq when client drivers invokes disable_irq(). By overriding
-> irq_disable callback, gpiolib ends up always unlazy disabling IRQ.
+> The subject is not specific enough. I'd expect it to be something like:
 >
-> Allow gpiolib to lazy disable IRQs by overriding irq_disable callback only
-> if irqchip implemented irq_disable. In cases where irq_disable is not
-> implemented irq_mask is overridden. Similarly override irq_enable callback
-> only if irqchip implemented irq_enable otherwise irq_unmask is overridden.
+> drm/bridge: ti-sn65dsi86: ensure bridge suspend happens during PM sleep
 >
-> Fixes: 461c1a7d47 (gpiolib: override irq_enable/disable)
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Quoting Harigovindan P (2020-04-22 02:04:43)
+> > ti-sn65dsi86 bridge is enumerated as a runtime device.
+> >
+> > Adding sleep ops to force runtime_suspend when PM suspend is
+> > requested on the device.
+> >
+> > This change needs to be taken along with the series:
+> > https://patchwork.kernel.org/patch/11494309/
+>
+> Why? It doesn't seem like it should be required to go along with a qcom
+> specific driver patch.
+>
+> >
+> > Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> > ---
+>
+> Besides the subject:
+>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-I applied this patch 1/4 to the GPIO tree since it is nice on its own
-and it is soon merge window.
+Are you planning to re-post with the changes Stephen requested?  Maybe
+CC Sam too who was nice enough to help land some of my recent changes
+to this driver.
 
-Yours,
-Linus Walleij
+-Doug
