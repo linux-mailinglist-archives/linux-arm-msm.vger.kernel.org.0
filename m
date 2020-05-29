@@ -2,268 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7288C1E7BD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 13:31:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA9521E7C19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 13:39:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgE2LbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 07:31:23 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:21677 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725562AbgE2LbW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 07:31:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590751880; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=+b9xQUQFNN4Oe3TcPS9VmSMFWy3mqBpS5ldsN4JGRkk=;
- b=YT5ryF2KpAc+Rg4OcwNh/fc/JUgYg+sRlXDsxoHt8mRWyfvq+VnK3qr+sCgQuauKYDSPs2Km
- +uTvunLKMp/2SRCS0sL3WO0f1QLBQvfrFfKnLTB6vSs1+qFfX7yBjjYIgXkgP9+fZmUxEuA8
- CLlC532FaUlexWQMxGWETzA0pkY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5ed0f272809d904967f05861 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 11:30:58
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 87934C43395; Fri, 29 May 2020 11:30:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 556F1C433C9;
-        Fri, 29 May 2020 11:30:57 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+        id S1725775AbgE2LjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 07:39:07 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:43837 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725562AbgE2LjH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 07:39:07 -0400
+Received: from marcel-macbook.fritz.box (p4fefc5a7.dip0.t-ipconnect.de [79.239.197.167])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 678C0CECD3;
+        Fri, 29 May 2020 13:48:51 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: [PATCH v2] bluetooth: hci_qca: Fix suspend/resume functionality
+ failure
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1590697867-7618-1-git-send-email-zijuhu@codeaurora.org>
+Date:   Fri, 29 May 2020 13:39:03 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Harish Bandi <c-hbandi@codeaurora.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>, stable@kernel.org,
+        tientzu@chromium.org
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 29 May 2020 17:00:57 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
-        mka@chromium.org, nm@ti.com, bjorn.andersson@linaro.org,
-        agross@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH v5 4/5] cpufreq: qcom: Update the bandwidth levels on
- frequency change
-In-Reply-To: <20200529100028.2wz2iqi5vqji2heb@vireshk-i7>
-References: <20200527202153.11659-1-sibis@codeaurora.org>
- <20200527202153.11659-5-sibis@codeaurora.org>
- <20200529100028.2wz2iqi5vqji2heb@vireshk-i7>
-Message-ID: <a90bce2d52f7cdb726e8b799e3512fad@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Message-Id: <EF31B890-1520-460B-B337-46D99DAB999A@holtmann.org>
+References: <1590697867-7618-1-git-send-email-zijuhu@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Viresh,
-Thanks for taking time to review the
-series :)
+Hi Zijun,
 
-On 2020-05-29 15:30, Viresh Kumar wrote:
-> On 28-05-20, 01:51, Sibi Sankar wrote:
->> Add support to parse optional OPP table attached to the cpu node when
->> the OPP bandwidth values are populated. This allows for scaling of
->> DDR/L3 bandwidth levels with frequency change.
->> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->> 
->> V5:
->>  * Use dev_pm_opp_adjust_voltage instead [Viresh]
->>  * Misc cleanup
->> 
->> v4:
->>  * Split fast switch disable into another patch [Lukasz]
->> 
->>  drivers/cpufreq/qcom-cpufreq-hw.c | 77 
->> ++++++++++++++++++++++++++++++-
->>  1 file changed, 75 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c 
->> b/drivers/cpufreq/qcom-cpufreq-hw.c
->> index fc92a8842e252..fbd73d106a3ae 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->> @@ -6,6 +6,7 @@
->>  #include <linux/bitfield.h>
->>  #include <linux/cpufreq.h>
->>  #include <linux/init.h>
->> +#include <linux/interconnect.h>
->>  #include <linux/kernel.h>
->>  #include <linux/module.h>
->>  #include <linux/of_address.h>
->> @@ -31,6 +32,52 @@
->>  static unsigned long cpu_hw_rate, xo_rate;
->>  static struct platform_device *global_pdev;
->> 
->> +static int qcom_cpufreq_set_bw(struct cpufreq_policy *policy,
->> +			       unsigned long freq_khz)
->> +{
->> +	unsigned long freq_hz = freq_khz * 1000;
->> +	struct dev_pm_opp *opp;
->> +	struct device *dev;
->> +	int ret;
->> +
->> +	dev = get_cpu_device(policy->cpu);
->> +	if (!dev)
->> +		return -ENODEV;
->> +
->> +	opp = dev_pm_opp_find_freq_exact(dev, freq_hz, true);
->> +	if (IS_ERR(opp))
->> +		return PTR_ERR(opp);
->> +
->> +	ret = dev_pm_opp_set_bw(dev, opp);
->> +	dev_pm_opp_put(opp);
->> +	return ret;
->> +}
->> +
->> +static int qcom_cpufreq_update_opp(struct device *cpu_dev,
->> +				   unsigned long freq_khz,
->> +				   unsigned long volt)
->> +{
->> +	unsigned long freq_hz = freq_khz * 1000;
->> +
->> +	if (dev_pm_opp_adjust_voltage(cpu_dev, freq_hz, volt, volt, volt))
->> +		return dev_pm_opp_add(cpu_dev, freq_hz, volt);
+> @dev parameter of qca_suspend()/qca_resume() represents
+> serdev_device, but it is mistook for hci_dev and causes
+> succedent unexpected memory access.
 > 
-> What's going on here ? Why add OPP here ?
-
-We update the voltage if opp were
-initially added as part of
-dev_pm_opp_of_add_table. However
-if the cpu node does not have an
-opp table associated with it, we
-do a opp_add_v1 instead.
-
+> Fix by taking @dev as serdev_device.
 > 
->> +
->> +	/* Enable the opp after voltage update */
->> +	return dev_pm_opp_enable(cpu_dev, freq_hz);
->> +}
->> +
->> +/* Check for optional interconnect paths on CPU0 */
->> +static int qcom_cpufreq_find_icc_paths(struct device *dev)
->> +{
->> +	struct device *cpu_dev;
->> +
->> +	cpu_dev = get_cpu_device(0);
->> +	if (!cpu_dev)
->> +		return -EPROBE_DEFER;
->> +
->> +	return dev_pm_opp_of_find_icc_paths(cpu_dev, NULL);
->> +}
->> +
+> Fixes: 41d5b25fed0 ("Bluetooth: hci_qca: add PM support")
+> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+> ---
+> Changes in v2:
+> - remove unused variable @hdev
 > 
-> open code this into the probe routine.
+> drivers/bluetooth/hci_qca.c | 10 ++++++----
+> 1 file changed, 6 insertions(+), 4 deletions(-)
 
-sure
+patch has been applied to bluetooth-next tree.
 
-> 
->>  static int qcom_cpufreq_hw_target_index(struct cpufreq_policy 
->> *policy,
->>  					unsigned int index)
->>  {
->> @@ -39,6 +86,8 @@ static int qcom_cpufreq_hw_target_index(struct 
->> cpufreq_policy *policy,
->> 
->>  	writel_relaxed(index, perf_state_reg);
->> 
->> +	qcom_cpufreq_set_bw(policy, freq);
->> +
->>  	arch_set_freq_scale(policy->related_cpus, freq,
->>  			    policy->cpuinfo.max_freq);
->>  	return 0;
->> @@ -88,12 +137,30 @@ static int qcom_cpufreq_hw_read_lut(struct device 
->> *cpu_dev,
->>  {
->>  	u32 data, src, lval, i, core_count, prev_freq = 0, freq;
->>  	u32 volt;
->> +	u64 rate;
->>  	struct cpufreq_frequency_table	*table;
->> +	struct device_node *opp_table_np, *np;
->> +	int ret;
->> 
->>  	table = kcalloc(LUT_MAX_ENTRIES + 1, sizeof(*table), GFP_KERNEL);
->>  	if (!table)
->>  		return -ENOMEM;
->> 
->> +	ret = dev_pm_opp_of_add_table(cpu_dev);
->> +	if (!ret) {
->> +		/* Disable all opps and cross-validate against LUT */
->> +		opp_table_np = dev_pm_opp_of_get_opp_desc_node(cpu_dev);
->> +		for_each_available_child_of_node(opp_table_np, np) {
->> +			ret = of_property_read_u64(np, "opp-hz", &rate);
-> 
-> No way, please use dev_pm_opp_find_freq_*() here instead to grab OPPs
-> one by one.
+Regards
 
-sure I'll use a dev_pm_opp_find_freq_ceil
-loop to do the same :P
+Marcel
 
-> 
->> +			if (!ret)
->> +				dev_pm_opp_disable(cpu_dev, rate);
->> +		}
->> +		of_node_put(opp_table_np);
->> +	} else if (ret != -ENODEV) {
->> +		dev_err(cpu_dev, "Invalid OPP table in Device tree\n");
->> +		return ret;
->> +	}
-> 
-> Rather put this in the if (ret) block and so the else part doesn't
-> need extra indentation.
-
-https://patchwork.kernel.org/patch/11573905/
-
-I'll need to enable fast_switch
-when the device does not have a
-opp-table associated with it or
-throw a error when an improper
-table is specified. If a table
-with bw values is specified, we
-disable fast switch and enable
-scaling.
-
-> 
->> +
->>  	for (i = 0; i < LUT_MAX_ENTRIES; i++) {
->>  		data = readl_relaxed(base + REG_FREQ_LUT +
->>  				      i * LUT_ROW_SIZE);
->> @@ -112,7 +179,7 @@ static int qcom_cpufreq_hw_read_lut(struct device 
->> *cpu_dev,
->> 
->>  		if (freq != prev_freq && core_count != LUT_TURBO_IND) {
->>  			table[i].frequency = freq;
->> -			dev_pm_opp_add(cpu_dev, freq * 1000, volt);
->> +			qcom_cpufreq_update_opp(cpu_dev, freq, volt);
->>  			dev_dbg(cpu_dev, "index=%d freq=%d, core_count %d\n", i,
->>  				freq, core_count);
->>  		} else if (core_count == LUT_TURBO_IND) {
->> @@ -133,7 +200,8 @@ static int qcom_cpufreq_hw_read_lut(struct device 
->> *cpu_dev,
->>  			if (prev->frequency == CPUFREQ_ENTRY_INVALID) {
->>  				prev->frequency = prev_freq;
->>  				prev->flags = CPUFREQ_BOOST_FREQ;
->> -				dev_pm_opp_add(cpu_dev,	prev_freq * 1000, volt);
->> +				qcom_cpufreq_update_opp(cpu_dev, prev_freq,
->> +							volt);
->>  			}
->> 
->>  			break;
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
