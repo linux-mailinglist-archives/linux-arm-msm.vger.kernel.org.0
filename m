@@ -2,108 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 381701E71F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 03:12:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 614AD1E7204
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 03:20:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438300AbgE2BMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 21:12:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
+        id S2438301AbgE2BUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 21:20:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438291AbgE2BMf (ORCPT
+        with ESMTP id S2438276AbgE2BUK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 21:12:35 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92335C08C5C9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 18:12:34 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id f21so475147pgg.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 18:12:34 -0700 (PDT)
+        Thu, 28 May 2020 21:20:10 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E071EC08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 18:20:09 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a45so1173431pje.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 18:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=kI4zkU+qRTGbgWBmmIaqkd0hMY6ChqTdeDWJXNLS2lY=;
-        b=ZvvmXCR+Jg6K8NJ5TP9zOcwdNhzYRynNjJaxE9BOTaQ4WMT0cuAK53MhuVB57WbOQK
-         DIMMu5xbsbYDtoZBkAXIqsFLAV0S8qVPpSQjVshNcMDxg5EM1F40Sgi9sY/gDyXyTX+f
-         z+gUA6CT2Pu2DiOB6T/chOupLze71KYm9GAMZBXookN3b+bO9a/W+8/PqcryQRI2RcTv
-         gz6Gok+AZtkjRlb20hYQKsgwv1A9E+/wQT/UK0Pn123vnoVOzsGpVQbPv1DOqrQKtSNe
-         Lj/qUb93fp5Lm9yu5G9EFWwrJDmjbfr9iB5WA2FM50ui6VDRlxeD2zCNvARtNlSHhZJx
-         F37Q==
+        bh=CIuZ+Yn1aaMK9WhAfm/hcRWbq+KsBQmrxG2/Liqk9N8=;
+        b=Cl51k3H2PZVUygzELXZlXSlQTCGXIiD5HgsVvP6MpuVGtv44XKH6upwiIIp++EvlxM
+         uQ4i+B/0kD8jBWpqz96G+SIwgfXH7ESHoNTLIdqfrnoVPREVZ9GBKdrGv/lmXoC8QYQb
+         kuMbfgtIru1mbFVe/L/NjhPdzFuugjszhW6uFxp8InMSmc+SlBn/a4ZVjMlbqXnzZedR
+         iNqsQOS6DCRyq/6sDpe1KS2WL0WIl9KWi6VAZnfnKnNUM3R/ujVhvnqWVsgVhHT1zyf8
+         mVughTAOm3oRRaV4d6MLDQQsg3+jVxtbucCNYr/t78DI4br5QpgV8LpE9GoC4G4TJMCE
+         8opg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=kI4zkU+qRTGbgWBmmIaqkd0hMY6ChqTdeDWJXNLS2lY=;
-        b=n1znlPW+B7CG25dmCzPGxGQQ8R8coPAzx766YYvzEvGmVmKJ4KM4a553TKmb24sEOu
-         1xc0g/CjkJR3QRfh+csVhSqVfeJhIZuPHz8CpYIPbKlmrvLvFxhHPGpq4gX/gVutxwdp
-         gr2Ay50VE207Hi9+bl0ED+Z343emyRpl3LAmIelIXZVj9DflpIgYOlrHTH9HLQFFQeUf
-         PalT9xTCAEsEZ0yXxEff8TuolVnY5AM4OQbvhLP4M28VXQxatU0STtkjhk4wPLBOuqkF
-         b47WpVYtwWEg0ZBrR4rYTUPxzIeONfxWgxzvwC5MBADGSaxXpZBSTRQazGio7EpQfE7k
-         hDdA==
-X-Gm-Message-State: AOAM530k4nuOTb/WlpI1C2UW0U7bsDqZsAWN4RX2kFIIYT8ugBAff4vY
-        FJ4BwvvEphKiEy4+LTVuVwENtg==
-X-Google-Smtp-Source: ABdhPJwfjsWrwj+SXPUBxHF2kWpN9zDhmEMPQN5652Q6TkJ5xvT3OmNnv6s97SHc8D/O4uvjVFeMVw==
-X-Received: by 2002:a65:64c1:: with SMTP id t1mr5957407pgv.247.1590714753667;
-        Thu, 28 May 2020 18:12:33 -0700 (PDT)
+        bh=CIuZ+Yn1aaMK9WhAfm/hcRWbq+KsBQmrxG2/Liqk9N8=;
+        b=qum0NohYgkAi8qVN1/i3RTNCacOu616sfzo9wnMi2l5C5AnMtGAW7oIPw3FkoYe1g/
+         zClxuqtC7mfA00So0AkOFw1u+9q8LwgYSI/08Y1JtH1Bp5gRrpgLtAN/ruMcljBXJpr3
+         ELLFzjwHEh69+FimG97sq238+Fk9bIZ7HoSQDbpiyy7rq8HCcp6J7Ej6hR3fT/Tlv5b9
+         k4xfdfhIc43fZ6Of98/1tnFfYp8hjRcbNdXVtb6BqIp5w1azYoOV/YiBqbP+IpAH/8sH
+         qwNnPV5Pz/WmkcjoWcxpio7T+uhJqiFbIj5J7skkyCBHS/2OZdK1jY/GGiYSUVjGqNT1
+         CfHQ==
+X-Gm-Message-State: AOAM531gK3HXFlf8TCBsoy4csKkW+rF+TSb7qFxCnZJGcW1aDkgFyIPU
+        P2jTiCd0OBHJgHJVsGVPLjgI2g==
+X-Google-Smtp-Source: ABdhPJy+feqGwdjtzTkUZpZoR9F4XcE3qsPUfk2ZKabbt6FatNZJhmrSe/ZIeM6IB2C/vxomZdJShA==
+X-Received: by 2002:a17:90a:240c:: with SMTP id h12mr1410281pje.42.1590715209124;
+        Thu, 28 May 2020 18:20:09 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 74sm2353876pfa.87.2020.05.28.18.12.32
+        by smtp.gmail.com with ESMTPSA id gz19sm5968301pjb.33.2020.05.28.18.20.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 18:12:32 -0700 (PDT)
-Date:   Thu, 28 May 2020 18:11:27 -0700
+        Thu, 28 May 2020 18:20:08 -0700 (PDT)
+Date:   Thu, 28 May 2020 18:19:03 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH 08/10] clk: qcom: Add graphics clock controller driver
- for SM8250
-Message-ID: <20200529011127.GJ279327@builder.lan>
-References: <20200524210615.17035-1-jonathan@marek.ca>
- <20200524210615.17035-9-jonathan@marek.ca>
- <c4d43cf01b6d014fdc2258abb94eb2c5@codeaurora.org>
+To:     Chris Lew <clew@codeaurora.org>
+Cc:     davem@davemloft.net, manivannan.sadhasivam@linaro.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] net: qrtr: Allocate workqueue before kernel_bind
+Message-ID: <20200529011903.GK279327@builder.lan>
+References: <1590707126-16957-1-git-send-email-clew@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c4d43cf01b6d014fdc2258abb94eb2c5@codeaurora.org>
+In-Reply-To: <1590707126-16957-1-git-send-email-clew@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 25 May 02:47 PDT 2020, Sai Prakash Ranjan wrote:
+On Thu 28 May 16:05 PDT 2020, Chris Lew wrote:
 
-> Hi Jonathan,
+> A null pointer dereference in qrtr_ns_data_ready() is seen if a client
+> opens a qrtr socket before qrtr_ns_init() can bind to the control port.
+> When the control port is bound, the ENETRESET error will be broadcasted
+> and clients will close their sockets. This results in DEL_CLIENT
+> packets being sent to the ns and qrtr_ns_data_ready() being called
+> without the workqueue being allocated.
 > 
-> On 2020-05-25 02:36, Jonathan Marek wrote:
-> > Add support for the graphics clock controller found on SM8250
-> > based devices. This would allow graphics drivers to probe and
-> > control their clocks.
-> > 
-> > This is copied from the downstream kernel, adapted for upstream.
-> > For example, GDSCs have been added.
-> > 
-> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> 
-> Since this is taken from downstream, maintain the original author's
-> signed-off and add yourself as the co-developer if you have done
-> any modifications. Same applies to all other patches.
+> Allocate the workqueue before setting sk_data_ready and binding to the
+> control port. This ensures that the work and workqueue structs are
+> allocated and initialized before qrtr_ns_data_ready can be called.
 > 
 
-I disagree with this.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-As expressed in the commit message, this patch is based on the
-downstream driver, not the individual patch.  As such, the _patch_ is
-prepared by Jonathan and by his Signed-off-by certifies the origin of
-the contribution per section 11.a or 11.b of submitting-patches.rst.
-
-
-
-Regarding co-developed-by; this should not be used when "forwarding" an
-existing patch. Per section 11.c the contributor should add their
-Signed-off-by to certify the origin of the patch. Any modifications
-should be documented in immediately proceeding the s-o-b, as described
-later in section 11.
-
-Thanks,
+Regards,
 Bjorn
+
+> Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> ---
+>  net/qrtr/ns.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+> index e7d0fe3f4330..c5b3202a14ca 100644
+> --- a/net/qrtr/ns.c
+> +++ b/net/qrtr/ns.c
+> @@ -712,6 +712,10 @@ void qrtr_ns_init(void)
+>  		goto err_sock;
+>  	}
+>  
+> +	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
+> +	if (!qrtr_ns.workqueue)
+> +		goto err_sock;
+> +
+>  	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns_data_ready;
+>  
+>  	sq.sq_port = QRTR_PORT_CTRL;
+> @@ -720,17 +724,13 @@ void qrtr_ns_init(void)
+>  	ret = kernel_bind(qrtr_ns.sock, (struct sockaddr *)&sq, sizeof(sq));
+>  	if (ret < 0) {
+>  		pr_err("failed to bind to socket\n");
+> -		goto err_sock;
+> +		goto err_wq;
+>  	}
+>  
+>  	qrtr_ns.bcast_sq.sq_family = AF_QIPCRTR;
+>  	qrtr_ns.bcast_sq.sq_node = QRTR_NODE_BCAST;
+>  	qrtr_ns.bcast_sq.sq_port = QRTR_PORT_CTRL;
+>  
+> -	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
+> -	if (!qrtr_ns.workqueue)
+> -		goto err_sock;
+> -
+>  	ret = say_hello(&qrtr_ns.bcast_sq);
+>  	if (ret < 0)
+>  		goto err_wq;
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
