@@ -2,122 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 364671E761F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 08:45:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6F111E763A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 08:57:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725308AbgE2Gpi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 02:45:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53016 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725601AbgE2Gpg (ORCPT
+        id S1725855AbgE2G5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 02:57:05 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:50292 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725308AbgE2G5E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 02:45:36 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB49C08C5C8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 23:45:35 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id y11so691809plt.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 23:45:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CsPp/MjEkjxQ7BHxRS1EKI7s+vKwtYlnMgwQX8LCIxA=;
-        b=iWHIz5l7wo+azBnT6siaYYEyfnTszaVhdlMJFQdzGA/yc97aaVwNLlSmd1ZlNwTFEe
-         Rp8utiOEwOFfnFTt40r10ZbKGMbQyYC8/Dbsi0lw8sj+1XNcJhs4dHbl1bMdCSXQF8Un
-         k9unp5AFU+b9mALmIXLk7sRuPkowO+clqVbZeX8SRazPe1W1C7+ig/U0VOb2KoSRq3FE
-         m0x4EW5WMWfdwKzCltow0TkeSnuqQRdMgO5A1LCPS1WUUqYrub5/Hzy0qCgDCPESF+wS
-         JWptVDhoBblJ+Z/HepgKYGJJqWGwv0BiSotsHlcxzVLr34yTPsoJ/s6eKCQHb73hsA68
-         fIHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CsPp/MjEkjxQ7BHxRS1EKI7s+vKwtYlnMgwQX8LCIxA=;
-        b=LltTFrkAmI5vqB+R8Um9sAB4s+If3xDRZhe0rurVaez5GQw2bBpX+Ox3ck/8OXxFJ4
-         GTdh9EqsyLWV+r/mFO/zFoQNytROARvBQtqzQ1z8BsZ9X5kw+nI2nSmxJpE4q7qJBB8I
-         kKJJT/Xpjw8zuLrgD8l9y9Vo6kLiCFLEPd1jhRkzuBiAP2d2A3MBdxBEAEYVutwQuzZm
-         6SF2FVcFz49nUDfFJ+Iw05PSfsapkYTtQERZUW4tw8fD8KfMeka0eHQmWyjyZORsXaEO
-         4RsDFy9SEwtuwGLejap9EEnRYdJ9HHvMRKrXL5AWJOlX4F/rxlgN97CAl4O4WO7eV9O/
-         xEKg==
-X-Gm-Message-State: AOAM530CbsxC6bdJdynkDC9H3dIKaIRINfAwXHaqRyEQUThpbK/RpkAM
-        VKbU3UdE0sfeUw6iRHatnWlT3w==
-X-Google-Smtp-Source: ABdhPJxvuF7AiJF3TGTNL39nVwgiDoJPMPTBtOy2mbkMIOX6o805cq/ssNzqiXtiCFK7kzld6ULmPQ==
-X-Received: by 2002:a17:90a:a2d:: with SMTP id o42mr1019553pjo.101.1590734734583;
-        Thu, 28 May 2020 23:45:34 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id iq13sm7400811pjb.48.2020.05.28.23.45.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 23:45:33 -0700 (PDT)
-Date:   Thu, 28 May 2020 23:44:29 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: smmu/USB nodes and HDK855/HDK865
- dts
-Message-ID: <20200529064429.GA1246811@builder.lan>
-References: <20200524023815.21789-1-jonathan@marek.ca>
- <20200529030505.GY279327@builder.lan>
- <0630ae9c-6ae7-b74e-5dd3-0c569bad74f5@marek.ca>
+        Fri, 29 May 2020 02:57:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590735424; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=5iWcCbiGZvVMQ5YMmDXPCoC0HJ2lp8gKX/3kGxQlqf0=;
+ b=R6lOhRubNTq9yyaIlC18zuepuQG+NzUYR045tbQl09xmsT9kBo/DYT+cG7b4OPMAN2LnWvIj
+ jBGdnQGKA+S1tQmzeIuUbNL1J8C/NCCrra4Gu/phNfJlTmvwic9zSFVyqWGl+YDAjEIVAitN
+ XIIbiJNlMyWifGJQe9hDiip3PEc=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5ed0b233809d90496789b208 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 06:56:51
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 954CAC433CB; Fri, 29 May 2020 06:56:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F38B0C433C9;
+        Fri, 29 May 2020 06:56:50 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0630ae9c-6ae7-b74e-5dd3-0c569bad74f5@marek.ca>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 29 May 2020 12:26:50 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH 08/10] clk: qcom: Add graphics clock controller driver for
+ SM8250
+In-Reply-To: <20200529011127.GJ279327@builder.lan>
+References: <20200524210615.17035-1-jonathan@marek.ca>
+ <20200524210615.17035-9-jonathan@marek.ca>
+ <c4d43cf01b6d014fdc2258abb94eb2c5@codeaurora.org>
+ <20200529011127.GJ279327@builder.lan>
+Message-ID: <dbcb5c24f8888d6b0cfc63a80e310319@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 28 May 20:15 PDT 2020, Jonathan Marek wrote:
+Hi Bjorn,
 
-> On 5/28/20 11:05 PM, Bjorn Andersson wrote:
-> > On Sat 23 May 19:38 PDT 2020, Jonathan Marek wrote:
-> > 
-> > > Add dts nodes for apps_smmu and USB for both sm8150 and sm8250.
-> > > 
-> > > Also add initial dts files for HDK855 and HDK865, based on mtp dts, with a
-> > > few changes. Notably, the HDK865 dts has regulator config changed a bit based
-> > > on downstream (I think sm8250-mtp.dts is wrong and copied too much from sm8150).
-> > 
-> > Can you please elaborate on this discrepancy? I do remember seeing
-> > something odd when looking at this, but it seems like I didn't document
-> > it anywhere...
-> > 
-> > Thanks,
-> > Bjorn
-> > 
+On 2020-05-29 06:41, Bjorn Andersson wrote:
+> On Mon 25 May 02:47 PDT 2020, Sai Prakash Ranjan wrote:
 > 
-> Mainly there's a few regulators with different min/max voltage values. For
-> example with l16a, downstream has min/max 3024000/3304000 but upstream
-> sm8250-mtp has 2704000/2960000. I also added l18a.
+>> Hi Jonathan,
+>> 
+>> On 2020-05-25 02:36, Jonathan Marek wrote:
+>> > Add support for the graphics clock controller found on SM8250
+>> > based devices. This would allow graphics drivers to probe and
+>> > control their clocks.
+>> >
+>> > This is copied from the downstream kernel, adapted for upstream.
+>> > For example, GDSCs have been added.
+>> >
+>> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> 
+>> Since this is taken from downstream, maintain the original author's
+>> signed-off and add yourself as the co-developer if you have done
+>> any modifications. Same applies to all other patches.
+>> 
+> 
+> I disagree with this.
+> 
+> As expressed in the commit message, this patch is based on the
+> downstream driver, not the individual patch.  As such, the _patch_ is
+> prepared by Jonathan and by his Signed-off-by certifies the origin of
+> the contribution per section 11.a or 11.b of submitting-patches.rst.
 > 
 
-Thanks, we'll double check these.
+I lost at the downstream driver vs the individual patch here. So the
+downstream driver is also an individual patch right or did I get
+something completely wrong.
 
-Regards,
-Bjorn
+So if someone prepares a patch and includes a commit description
+saying it is taken from downstream, does it mean he is the author
+of that patch? Shouldn't the author be included in  "From: Author"
+and his signed-off appear first before the submitter's(also a 
+contributor)
+signed-off? Or is it because these clock data is auto generated and it
+doesnt really matter?
 
-> > > 
-> > > Jonathan Marek (6):
-> > >    arm64: dts: qcom: sm8150: add apps_smmu node
-> > >    arm64: dts: qcom: sm8250: add apps_smmu node
-> > >    arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes
-> > >    arm64: dts: qcom: sm8250: Add USB and PHY device nodes
-> > >    arm64: dts: qcom: add sm8150 hdk dts
-> > >    arm64: dts: qcom: add sm8250 hdk dts
-> > > 
-> > >   arch/arm64/boot/dts/qcom/Makefile       |   2 +
-> > >   arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 461 ++++++++++++++++++++++++
-> > >   arch/arm64/boot/dts/qcom/sm8150.dtsi    | 180 +++++++++
-> > >   arch/arm64/boot/dts/qcom/sm8250-hdk.dts | 454 +++++++++++++++++++++++
-> > >   arch/arm64/boot/dts/qcom/sm8250.dtsi    | 287 +++++++++++++++
-> > >   5 files changed, 1384 insertions(+)
-> > >   create mode 100644 arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-> > >   create mode 100644 arch/arm64/boot/dts/qcom/sm8250-hdk.dts
-> > > 
-> > > -- 
-> > > 2.26.1
-> > > 
+> 
+> Regarding co-developed-by; this should not be used when "forwarding" an
+> existing patch. Per section 11.c the contributor should add their
+> Signed-off-by to certify the origin of the patch. Any modifications
+> should be documented in immediately proceeding the s-o-b, as described
+> later in section 11.
+> 
+
+Yes makes sense to not have co-developed-by for forwarding patch.
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
