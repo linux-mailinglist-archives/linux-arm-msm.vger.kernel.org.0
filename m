@@ -2,123 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC0751E7C35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 13:47:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDB191E7D7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 14:45:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726712AbgE2LrU convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 07:47:20 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:56649 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbgE2LrT (ORCPT
+        id S1726886AbgE2Mpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 08:45:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52522 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725901AbgE2Mpa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 07:47:19 -0400
-Received: from marcel-macbook.fritz.box (p4fefc5a7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 163CACECD3;
-        Fri, 29 May 2020 13:57:04 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH v4] bluetooth: hci_qca: Fix QCA6390 memdump failure
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1590722015-3495-1-git-send-email-zijuhu@codeaurora.org>
-Date:   Fri, 29 May 2020 13:47:17 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, tientzu@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <15B9E128-2C96-4DEB-8485-067079DDEF97@holtmann.org>
-References: <1590722015-3495-1-git-send-email-zijuhu@codeaurora.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        Fri, 29 May 2020 08:45:30 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA9D5C03E969;
+        Fri, 29 May 2020 05:45:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Transfer-Encoding
+        :Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
+        Sender:Reply-To:Content-ID:Content-Description;
+        bh=hWDpNSmqqL4jiVuIX8+MfcVSYKD0Sr0CkGGlOnTksS8=; b=Mw3cOcpwT75KMypA7DbQN76n3K
+        LmIujEvwcjqz8mB4DIQNPRDiJKYUham8VvC6rSnD6+3ba6I3VkRz3MaFsFNabdvTOT2j5AatU+Z7I
+        o2P6if4RDFm1y5wwdk2idNMSaFbHSv9nUDIt/4zeeljrafN3UYBqYE+KqfQCvuFK6OcWyAc+raczK
+        RK1oGDElglttDYT91kX4m02qQyIV6yN6hy+hALyRQRMTpe79Bv+Xx23bujAFJtHO/oMRx35Hz3zuD
+        lD4co5ouUY7qPRY4OdLY/2HO+5AIT+8BT8rZU73mdGN5IlVfIzk0ihyFqydTRs7blGIxekQ3JxAc7
+        R7D+WZjw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1jeeO3-00062M-2L; Fri, 29 May 2020 12:45:23 +0000
+Date:   Fri, 29 May 2020 05:45:23 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Logan Gunthorpe <logang@deltatee.com>
+Cc:     Tom Murphy <murphyt7@tcd.ie>, iommu@lists.linux-foundation.org,
+        kvm@vger.kernel.org, David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Julien Grall <julien.grall@arm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Will Deacon <will@kernel.org>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org,
+        Alex Williamson <alex.williamson@redhat.com>,
+        linux-mediatek@lists.infradead.org,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
+        virtualization@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        linux-kernel@vger.kernel.org, Kukjin Kim <kgene@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
+Message-ID: <20200529124523.GA11817@infradead.org>
+References: <20191221150402.13868-1-murphyt7@tcd.ie>
+ <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
+On Thu, May 28, 2020 at 06:00:44PM -0600, Logan Gunthorpe wrote:
+> > This issue is most likely in the i915 driver and is most likely caused by the driver not respecting the return value of the dma_map_ops::map_sg function. You can see the driver ignoring the return value here:
+> > https://github.com/torvalds/linux/blob/7e0165b2f1a912a06e381e91f0f4e495f4ac3736/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c#L51
+> > 
+> > Previously this didn’t cause issues because the intel map_sg always returned the same number of elements as the input scatter gather list but with the change to this dma-iommu api this is no longer the case. I wasn’t able to track the bug down to a specific line of code unfortunately.  
 
-> QCA6390 memdump VSE sometimes come to bluetooth driver
-> with wrong sequence number as illustrated as follows:
-> frame # in dec: frame data in hex
-> 1396: ff fd 01 08 74 05 00 37 8f 14
-> 1397: ff fd 01 08 75 05 00 ff bf 38
-> 1414: ff fd 01 08 86 05 00 fb 5e 4b
-> 1399: ff fd 01 08 77 05 00 f3 44 0a
-> 1400: ff fd 01 08 78 05 00 ca f7 41
-> it is mistook for controller missing packets, so results
-> in page fault after overwriting memdump buffer allocated.
-> 
-> Fixed by ignoring QCA6390 sequence number check and
-> checking buffer space before writing.
-> 
-> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
-> Tested-by: Zijun Hu <zijuhu@codeaurora.org>
-> ---
-> Changes in v4:
-> - add a piece of code comments
-> Changes in v3:
-> - correct coding style
-> Changes in v2:
-> - rename a local variable from @temp to @rx_size
-> 
-> drivers/bluetooth/hci_qca.c | 49 ++++++++++++++++++++++++++++++++++++++-------
-> 1 file changed, 42 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index e4a6823..4acac13 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -114,6 +114,7 @@ struct qca_memdump_data {
-> 	char *memdump_buf_tail;
-> 	u32 current_seq_no;
-> 	u32 received_dump;
-> +	u32 ram_dump_size;
-> };
-> 
-> struct qca_memdump_event_hdr {
-> @@ -976,6 +977,8 @@ static void qca_controller_memdump(struct work_struct *work)
-> 	char nullBuff[QCA_DUMP_PACKET_SIZE] = { 0 };
-> 	u16 seq_no;
-> 	u32 dump_size;
-> +	u32 rx_size;
-> +	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-> 
-> 	while ((skb = skb_dequeue(&qca->rx_memdump_q))) {
-> 
-> @@ -1029,6 +1032,7 @@ static void qca_controller_memdump(struct work_struct *work)
-> 
-> 			skb_pull(skb, sizeof(dump_size));
-> 			memdump_buf = vmalloc(dump_size);
-> +			qca_memdump->ram_dump_size = dump_size;
-> 			qca_memdump->memdump_buf_head = memdump_buf;
-> 			qca_memdump->memdump_buf_tail = memdump_buf;
-> 		}
-> @@ -1051,26 +1055,57 @@ static void qca_controller_memdump(struct work_struct *work)
-> 		 * the controller. In such cases let us store the dummy
-> 		 * packets in the buffer.
-> 		 */
-> +		/* For QCA6390, controller does not lost packets but
-> +		 * sequence number field of packat sometimes has error
-> +		 * bits, so skip this checking for missing packet.
-> +		 */
-> 		while ((seq_no > qca_memdump->current_seq_no + 1) &&
-> +			(soc_type != QCA_QCA6390) &&
-> 			seq_no != QCA_LAST_SEQUENCE_NUM) {
-> 			bt_dev_err(hu->hdev, "QCA controller missed packet:%d",
-> 				   qca_memdump->current_seq_no);
-> +			rx_size = qca_memdump->received_dump;
-> +			rx_size += QCA_DUMP_PACKET_SIZE;
-> +			if (rx_size > qca_memdump->ram_dump_size) {
-> +				bt_dev_err(hu->hdev,
-> +						"QCA memdump received %d, no space for missed packet",
-> +						qca_memdump->received_dump);
+Mark did a big audit into the map_sg API abuse and initially had
+some i915 patches, but then gave up on them with this comment:
 
-please use correct indentation according to the coding style.
+"The biggest TODO is DRM/i915 driver and I don't feel brave enough to fix
+ it fully. The driver creatively uses sg_table->orig_nents to store the
+ size of the allocate scatterlist and ignores the number of the entries
+ returned by dma_map_sg function. In this patchset I only fixed the
+ sg_table objects exported by dmabuf related functions. I hope that I
+ didn't break anything there."
 
-Regards
-
-Marcel
-
+it would be really nice if the i915 maintainers could help with sorting
+that API abuse out.
