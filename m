@@ -2,200 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78E5A1E7FFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 16:17:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD19A1E806C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 16:38:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726593AbgE2OR2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 10:17:28 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:60677 "EHLO
+        id S1726901AbgE2Oil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 10:38:41 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:48005 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726927AbgE2OR2 (ORCPT
+        by vger.kernel.org with ESMTP id S1726849AbgE2Oik (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 10:17:28 -0400
+        Fri, 29 May 2020 10:38:40 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590761847; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=jYeq07K3HGP5zkPkzH4RT8idjqRLLzcKW7iabMhTFgo=;
- b=HQ1KI55j8pqiBN+0bpjmJEtJxXRRTDI0aspVnrer6IdsmYirYsKNZ27F6/9q92lYM1JqXZKV
- Ygi/Qb4njx4BU4R9xKiW/5hfkvDT10Qa6s5lwdmvh58oyUb+enYP9JZF0My65SZ7pocNYdUD
- lh/XVPAyDv61Jge+FgMiyNmA4F8=
+ s=smtp; t=1590763120; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=4aO15bKYiY5zgug0jNPmJYvTPleSaggWN3upFxrffHE=; b=ud/tPjDeLGutm4GODWE38JccwBFBqt7lSle29quk0tQ/VToceN4Y/YWB5dWLO3Z6nM2Lbr6T
+ yuW1StEjdSQz017GPh2CKO228iG5e+FwwdV3Yilh23MEu1gWn9w8zKsaggp7Di4WndV36HSo
+ krJCkgz2pxCtG+j/yB506XeeuuI=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5ed11970b4f0a9ae22d434de (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 14:17:20
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ed11e6fea0dfa490e18c694 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 14:38:39
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4E830C433CA; Fri, 29 May 2020 14:17:20 +0000 (UTC)
+        id 0857EC433CA; Fri, 29 May 2020 14:38:39 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8BA83C433C9;
-        Fri, 29 May 2020 14:17:18 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 29 May 2020 19:47:18 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, nm@ti.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, saravanak@google.com, mka@chromium.org,
-        smasetty@codeaurora.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH] OPP: Check for bandwidth values before creating icc paths
-In-Reply-To: <20200529052031.n2nvzxdsifwmthfv@vireshk-i7>
-References: <20200527192418.20169-1-sibis@codeaurora.org>
- <20200529052031.n2nvzxdsifwmthfv@vireshk-i7>
-Message-ID: <0205034b0ece173a7152a43b016985a7@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 81990C433C9;
+        Fri, 29 May 2020 14:38:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 81990C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org
+Subject: [PATCH v5] bluetooth: hci_qca: Fix QCA6390 memdump failure
+Date:   Fri, 29 May 2020 22:38:31 +0800
+Message-Id: <1590763111-20739-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-05-29 10:50, Viresh Kumar wrote:
-> On 28-05-20, 00:54, Sibi Sankar wrote:
->> Prevent the core from creating and voting on icc paths when the
->> opp-table does not have the bandwidth values populated. Currently
->> this check is performed on the first OPP node.
->> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->>  drivers/opp/of.c | 15 +++++++++++++++
->>  1 file changed, 15 insertions(+)
->> 
->> diff --git a/drivers/opp/of.c b/drivers/opp/of.c
->> index 61fce1284f012..95cf6f1312765 100644
->> --- a/drivers/opp/of.c
->> +++ b/drivers/opp/of.c
->> @@ -338,6 +338,21 @@ int dev_pm_opp_of_find_icc_paths(struct device 
->> *dev,
->>  	struct device_node *np;
->>  	int ret = 0, i, count, num_paths;
->>  	struct icc_path **paths;
->> +	struct property *prop;
->> +
->> +	/* Check for bandwidth values on the first OPP node */
->> +	if (opp_table && opp_table->np) {
->> +		np = of_get_next_available_child(opp_table->np, NULL);
->> +		if (!np) {
->> +			dev_err(dev, "Empty OPP table\n");
->> +			return 0;
->> +		}
->> +
->> +		prop = of_find_property(np, "opp-peak-kBps", NULL);
->> +		of_node_put(np);
->> +		if (!prop || !prop->length)
->> +			return 0;
->> +	}
-> 
-> This doesn't support the call made from cpufreq-dt driver. Pushed
-> this, please give this a try:
+QCA6390 memdump VSE sometimes come to bluetooth driver
+with wrong sequence number as illustrated as follows:
+frame # in dec: frame data in hex
+1396: ff fd 01 08 74 05 00 37 8f 14
+1397: ff fd 01 08 75 05 00 ff bf 38
+1414: ff fd 01 08 86 05 00 fb 5e 4b
+1399: ff fd 01 08 77 05 00 f3 44 0a
+1400: ff fd 01 08 78 05 00 ca f7 41
+it is mistook for controller missing packets, so results
+in page fault after overwriting memdump buffer allocated.
 
-Viresh,
-Thanks for the patch!
+Fixed by ignoring QCA6390 sequence number check and
+checking buffer space before writing.
 
-> 
-> From: Sibi Sankar <sibis@codeaurora.org>
-> Date: Thu, 28 May 2020 00:54:18 +0530
-> Subject: [PATCH] opp: Don't parse icc paths unnecessarily
-> 
-> The DT node of the device may contain interconnect paths while the OPP
-> table doesn't have the bandwidth values. There is no need to parse the
-> paths in such cases.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> [ Viresh: Support the case of !opp_table and massaged changelog ]
-> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-> ---
->  drivers/opp/of.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 44 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/opp/of.c b/drivers/opp/of.c
-> index 61fce1284f01..8c1bf01f0e50 100644
-> --- a/drivers/opp/of.c
-> +++ b/drivers/opp/of.c
-> @@ -332,13 +332,56 @@ static int _of_opp_alloc_required_opps(struct
-> opp_table *opp_table,
->  	return ret;
->  }
-> 
-> +static int _bandwidth_supported(struct device *dev, struct opp_table
-> *opp_table)
-> +{
-> +	struct device_node *np, *opp_np;
-> +	struct property *prop;
-> +
-> +	if (!opp_table) {
-> +		np = of_node_get(dev->of_node);
-> +		if (!np)
-> +			return -ENODEV;
-> +
-> +		opp_np = _opp_of_get_opp_desc_node(np, 0);
-> +		of_node_put(np);
-> +
-> +		/* Lets not fail in case we are parsing opp-v1 bindings */
-> +		if (!opp_np)
-> +			return 0;
-> +	} else {
-> +		opp_np = of_node_get(opp_table->np);
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+Tested-by: Zijun Hu <zijuhu@codeaurora.org>
+---
+Changes in v5:
+- correct coding style of qca_controller_memdump()
 
-opp_np needs to be subjected
-to NULL check as well. Lets
-move "if (!opp_np)" to outside
-the if/else. With the above
-change in place:
+Changes in v4:
+- add a piece of code comments
 
-Tested-by: Sibi Sankar <sibis@codeaurora.org>
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+Changes in v3:
+- correct coding style
 
-> +	}
-> +
-> +	/* Checking only first OPP is sufficient */
-> +	np = of_get_next_available_child(opp_np, NULL);
-> +	if (!np) {
-> +		dev_err(dev, "OPP table empty\n");
-> +		return -EINVAL;
-> +	}
-> +	of_node_put(opp_np);
-> +
-> +	prop = of_find_property(np, "opp-peak-kBps", NULL);
-> +	of_node_put(np);
-> +
-> +	if (!prop || !prop->length)
-> +		return 0;
-> +
-> +	return 1;
-> +}
-> +
->  int dev_pm_opp_of_find_icc_paths(struct device *dev,
->  				 struct opp_table *opp_table)
->  {
->  	struct device_node *np;
-> -	int ret = 0, i, count, num_paths;
-> +	int ret, i, count, num_paths;
->  	struct icc_path **paths;
-> 
-> +	ret = _bandwidth_supported(dev, opp_table);
-> +	if (ret <= 0)
-> +		return ret;
-> +
-> +	ret = 0;
-> +
->  	np = of_node_get(dev->of_node);
->  	if (!np)
->  		return 0;
+Changes in v2:
+- rename a local variable from @temp to @rx_size
 
+ drivers/bluetooth/hci_qca.c | 54 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 45 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index aa957d749d6f..81c3c38baba1 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -114,6 +114,7 @@ struct qca_memdump_data {
+ 	char *memdump_buf_tail;
+ 	u32 current_seq_no;
+ 	u32 received_dump;
++	u32 ram_dump_size;
+ };
+ 
+ struct qca_memdump_event_hdr {
+@@ -976,6 +977,8 @@ static void qca_controller_memdump(struct work_struct *work)
+ 	char nullBuff[QCA_DUMP_PACKET_SIZE] = { 0 };
+ 	u16 seq_no;
+ 	u32 dump_size;
++	u32 rx_size;
++	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+ 
+ 	while ((skb = skb_dequeue(&qca->rx_memdump_q))) {
+ 
+@@ -1025,10 +1028,12 @@ static void qca_controller_memdump(struct work_struct *work)
+ 				    dump_size);
+ 			queue_delayed_work(qca->workqueue,
+ 					   &qca->ctrl_memdump_timeout,
+-					msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
++					   msecs_to_jiffies(MEMDUMP_TIMEOUT_MS)
++					  );
+ 
+ 			skb_pull(skb, sizeof(dump_size));
+ 			memdump_buf = vmalloc(dump_size);
++			qca_memdump->ram_dump_size = dump_size;
+ 			qca_memdump->memdump_buf_head = memdump_buf;
+ 			qca_memdump->memdump_buf_tail = memdump_buf;
+ 		}
+@@ -1051,26 +1056,57 @@ static void qca_controller_memdump(struct work_struct *work)
+ 		 * the controller. In such cases let us store the dummy
+ 		 * packets in the buffer.
+ 		 */
++		/* For QCA6390, controller does not lost packets but
++		 * sequence number field of packat sometimes has error
++		 * bits, so skip this checking for missing packet.
++		 */
+ 		while ((seq_no > qca_memdump->current_seq_no + 1) &&
+-			seq_no != QCA_LAST_SEQUENCE_NUM) {
++		       (soc_type != QCA_QCA6390) &&
++		       seq_no != QCA_LAST_SEQUENCE_NUM) {
+ 			bt_dev_err(hu->hdev, "QCA controller missed packet:%d",
+ 				   qca_memdump->current_seq_no);
++			rx_size = qca_memdump->received_dump;
++			rx_size += QCA_DUMP_PACKET_SIZE;
++			if (rx_size > qca_memdump->ram_dump_size) {
++				bt_dev_err(hu->hdev,
++					   "QCA memdump received %d, no space for missed packet",
++					   qca_memdump->received_dump);
++				break;
++			}
+ 			memcpy(memdump_buf, nullBuff, QCA_DUMP_PACKET_SIZE);
+ 			memdump_buf = memdump_buf + QCA_DUMP_PACKET_SIZE;
+ 			qca_memdump->received_dump += QCA_DUMP_PACKET_SIZE;
+ 			qca_memdump->current_seq_no++;
+ 		}
+ 
+-		memcpy(memdump_buf, (unsigned char *) skb->data, skb->len);
+-		memdump_buf = memdump_buf + skb->len;
+-		qca_memdump->memdump_buf_tail = memdump_buf;
+-		qca_memdump->current_seq_no = seq_no + 1;
+-		qca_memdump->received_dump += skb->len;
++		rx_size = qca_memdump->received_dump + skb->len;
++		if (rx_size <= qca_memdump->ram_dump_size) {
++			if ((seq_no != QCA_LAST_SEQUENCE_NUM) &&
++			    (seq_no != qca_memdump->current_seq_no))
++				bt_dev_err(hu->hdev,
++					   "QCA memdump unexpected packet %d",
++					   seq_no);
++			bt_dev_dbg(hu->hdev,
++				   "QCA memdump packet %d with length %d",
++				   seq_no, skb->len);
++			memcpy(memdump_buf, (unsigned char *)skb->data,
++			       skb->len);
++			memdump_buf = memdump_buf + skb->len;
++			qca_memdump->memdump_buf_tail = memdump_buf;
++			qca_memdump->current_seq_no = seq_no + 1;
++			qca_memdump->received_dump += skb->len;
++		} else {
++			bt_dev_err(hu->hdev,
++				   "QCA memdump received %d, no space for packet %d",
++				   qca_memdump->received_dump, seq_no);
++		}
+ 		qca->qca_memdump = qca_memdump;
+ 		kfree_skb(skb);
+ 		if (seq_no == QCA_LAST_SEQUENCE_NUM) {
+-			bt_dev_info(hu->hdev, "QCA writing crash dump of size %d bytes",
+-				   qca_memdump->received_dump);
++			bt_dev_info(hu->hdev,
++				    "QCA memdump Done, received %d, total %d",
++				    qca_memdump->received_dump,
++				    qca_memdump->ram_dump_size);
+ 			memdump_buf = qca_memdump->memdump_buf_head;
+ 			dev_coredumpv(&hu->serdev->dev, memdump_buf,
+ 				      qca_memdump->received_dump, GFP_KERNEL);
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
