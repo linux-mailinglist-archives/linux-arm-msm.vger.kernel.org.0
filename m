@@ -2,106 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC3C01E7371
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 05:26:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 619CE1E7379
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 05:26:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390183AbgE2DGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 23:06:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47284 "EHLO
+        id S2390168AbgE2DMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 23:12:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391660AbgE2DGL (ORCPT
+        with ESMTP id S2389625AbgE2DMk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 23:06:11 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ABC0C08C5C8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:06:11 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id a13so453697pls.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:06:11 -0700 (PDT)
+        Thu, 28 May 2020 23:12:40 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F359C08C5C8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:12:40 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id m1so672893pgk.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=bRzfSDD2gaLEL9NamArGGrWpz6V8R9/pVHTMUKrxQJE=;
-        b=DHHeolFjNU7cZaU+lwwzEyqj5gapFR2dFMlkMSgH8vHBkxMTM95f1rHu6ULM5nTFUJ
-         tuo1lbyIY7yvtZ2x6xe7DFQdzhxpUaGV75thnsnTfCEyuZcInhpWnN1LRFUWqhRaseWZ
-         zhJUkfvbeNqv1NCXnUTeJf3NzcpVpxIDXBg2BSw7Bg3EvA1Ns+tOrsdGHLnz52gEIrXs
-         HJIx17Z2RgZkqwWTDi02xuJ4iJt2reyD+VVbsmQdi0M4vkjktTzmNCGQiGxIt2Lo3lQb
-         rS+nesSim3GW1TGB8tNmA5zjI1sPuGDRpybmOcTRNAUkrg4YL56/OIqEEmmh1Ex6KeK7
-         8dLg==
+        bh=jVt7Y0VPLTIVWIdqG4Ni/hFAS2PRP6UgxY4YjtcC/uY=;
+        b=UU3f4VlcnLowzuDd0XrgoRLDz0ZyvMeRvHgpTqihqosn6x+6ba6gAwJDjb0yC+hK5g
+         iDPaIjJ+FhRVlN6Cq1Whi0jeU3760rRVCKr/UIzgqaUL4qdE1PUDTDqpsSJFTaJ95KBc
+         uMVZ1bAbHU5QoStDpqrjdoXGVeaTcLuMF4XQivLz9pvM4JPE3GlRw1kAM7hDTi6voC3Q
+         jEtPk09zBcE6PHhBjAOFDCQIO2f4tjCaDpyOQn4AlwnWks8n/qkNpwKCSJj+W4OoeX7j
+         rjxg8Rk58lzkKG1+CygNMbFdBR6a+ilgOYzxJF93Z62KNNvgFsma4+SWo9I8psOdl/9h
+         alfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=bRzfSDD2gaLEL9NamArGGrWpz6V8R9/pVHTMUKrxQJE=;
-        b=R+sh/MEe3x1V49Aodhcp/EjI0s5jyWsAGsAIxFbz9pT1ik58ecWSSjuYCBVh1Z8edd
-         eL9L31OBzrkRTdlSzm8nBT1EIwkiTo4x5CLyVks8xeWbCBeA0IigaNgb5j7AlM7ZE4t/
-         GHeUkBtiWHG/ETBE0xZX7opZ0U7EIW7cMuVEjiSAFb3zMqDzCRUSjCeXNjCVN2uc1Ktw
-         g5fR2hy9kCj91IgDihGfip8fEsh6LUzSuFdQVH8JnXTg70fVL2OoRCcd/sCjymfcOY3z
-         bhCsJjCeC6I1BlcfihB+DNbFcpl2qX/mKm2Cs/oB9PqzbH2CMHZnZxcsCJuJVJnDmlP+
-         vCRQ==
-X-Gm-Message-State: AOAM531VdHIteyHmmv8ripa3scFF6xDUobhy5a2cH1ZUan7MioypkJyp
-        jyKkU/qMR0vLnj/GjYdYQtsdQQ==
-X-Google-Smtp-Source: ABdhPJyJLX0xumL3rRiNlPe2G72WD6ImRxaUkIb2ZjUungccspNLe+5a7wm8x2T/r2NpdM1NjjIbrw==
-X-Received: by 2002:a17:90b:ec4:: with SMTP id gz4mr7444586pjb.36.1590721570961;
-        Thu, 28 May 2020 20:06:10 -0700 (PDT)
+        bh=jVt7Y0VPLTIVWIdqG4Ni/hFAS2PRP6UgxY4YjtcC/uY=;
+        b=ciGVfEE0d/JUdENEYaB7Bpz1bJAGkWa1nku8UbitN4FWkYylon02KVsRqGiJ7qgT84
+         sW08qGJvDMMd7ROqaLabbM4z/ald8LgiGg6tc63CJfUzt8WMDE2sezHhsehWBwLfj9gu
+         yKtv1jcBiZxWiuZrFCZROyHt4TQq82kFc0REgOLjMhUzynjJDLwf5q53WLh156qntdbq
+         WstPq+LCgcinMQKMyLbwibF1MkjfBEnemC8b42Z+NJX2kM8P3+jVP2kTP5jSb48ORBEL
+         Jb9o/5aiUaMOJ/+5CmwGAsGL/CmCOcMgUDpfOeFmB0LMW5qo6O29nU+C22rl8udZnlPu
+         pmrQ==
+X-Gm-Message-State: AOAM533J0s9FwhpgeePE1/8uT96g7NhwQc41jr3j9nMrIWZRMfErNl4L
+        trTocI/GVDkxtp4Uuo0KrdUffQ==
+X-Google-Smtp-Source: ABdhPJz0JZRQDPVL8F5JhyfBvdcaKuoS64GcJjjDz3tvWP1n8Z1cLkyBBblLbGpDfoO81pvqG+0LbQ==
+X-Received: by 2002:aa7:855a:: with SMTP id y26mr6479857pfn.281.1590721959429;
+        Thu, 28 May 2020 20:12:39 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f18sm5241435pga.75.2020.05.28.20.06.09
+        by smtp.gmail.com with ESMTPSA id gq19sm5910531pjb.55.2020.05.28.20.12.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 20:06:10 -0700 (PDT)
-Date:   Thu, 28 May 2020 20:05:05 -0700
+        Thu, 28 May 2020 20:12:38 -0700 (PDT)
+Date:   Thu, 28 May 2020 20:11:33 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: smmu/USB nodes and HDK855/HDK865
- dts
-Message-ID: <20200529030505.GY279327@builder.lan>
-References: <20200524023815.21789-1-jonathan@marek.ca>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] mailbox: qcom: Add ipq6018 apcs compatible
+Message-ID: <20200529031133.GZ279327@builder.lan>
+References: <1590583092-24290-1-git-send-email-sivaprak@codeaurora.org>
+ <1590583092-24290-4-git-send-email-sivaprak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200524023815.21789-1-jonathan@marek.ca>
+In-Reply-To: <1590583092-24290-4-git-send-email-sivaprak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 23 May 19:38 PDT 2020, Jonathan Marek wrote:
+On Wed 27 May 05:38 PDT 2020, Sivaprakash Murugesan wrote:
 
-> Add dts nodes for apps_smmu and USB for both sm8150 and sm8250.
+> The Qualcomm ipq6018 has apcs block, add compatible for the same.
+> Also, the apcs provides a clock controller functionality similar
+> to msm8916 but the clock driver is different.
 > 
-> Also add initial dts files for HDK855 and HDK865, based on mtp dts, with a
-> few changes. Notably, the HDK865 dts has regulator config changed a bit based
-> on downstream (I think sm8250-mtp.dts is wrong and copied too much from sm8150).
+> Create a child platform device based on the apcs compatible for the
+> clock controller functionality.
+> 
+> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> ---
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 23 ++++++++++++++---------
+>  1 file changed, 14 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index eeebafd..db3f9518 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -45,6 +45,13 @@ static const struct mbox_chan_ops qcom_apcs_ipc_ops = {
+>  	.send_data = qcom_apcs_ipc_send_data,
+>  };
+>  
+> +static const struct of_device_id apcs_clk_match_table[] = {
+> +	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = "qcom,apss-ipq6018-clk", },
+> +	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = "qcom-apcs-msm8916-clk", },
+> +	{ .compatible = "qcom,qcs404-apcs-apps-global",  .data = "qcom-apcs-msm8916-clk", },
+> +	{}
+> +};
+> +
+>  static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+>  {
+>  	struct qcom_apcs_ipc *apcs;
+> @@ -54,11 +61,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+>  	void __iomem *base;
+>  	unsigned long i;
+>  	int ret;
+> -	const struct of_device_id apcs_clk_match_table[] = {
+> -		{ .compatible = "qcom,msm8916-apcs-kpss-global", },
+> -		{ .compatible = "qcom,qcs404-apcs-apps-global", },
+> -		{}
+> -	};
+> +	const struct of_device_id *clk_device;
+>  
+>  	apcs = devm_kzalloc(&pdev->dev, sizeof(*apcs), GFP_KERNEL);
+>  	if (!apcs)
+> @@ -93,11 +96,12 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> -	if (of_match_device(apcs_clk_match_table, &pdev->dev)) {
+> +	clk_device = of_match_device(apcs_clk_match_table, &pdev->dev);
 
-Can you please elaborate on this discrepancy? I do remember seeing
-something odd when looking at this, but it seems like I didn't document
-it anywhere...
+I think you should replace the direct integer in qcom_apcs_ipc_of_match
+with a small struct containing offset and the clock device's name -
+allowing the latter to be omitted.
 
-Thanks,
+That avoids the apcs_clk_match_table being unreferenced when this is
+compiled without CONFIG_OF and it removes the need for two of_device_id
+arrays.
+
+Regards,
 Bjorn
 
-> 
-> Jonathan Marek (6):
->   arm64: dts: qcom: sm8150: add apps_smmu node
->   arm64: dts: qcom: sm8250: add apps_smmu node
->   arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes
->   arm64: dts: qcom: sm8250: Add USB and PHY device nodes
->   arm64: dts: qcom: add sm8150 hdk dts
->   arm64: dts: qcom: add sm8250 hdk dts
-> 
->  arch/arm64/boot/dts/qcom/Makefile       |   2 +
->  arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 461 ++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 180 +++++++++
->  arch/arm64/boot/dts/qcom/sm8250-hdk.dts | 454 +++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm8250.dtsi    | 287 +++++++++++++++
->  5 files changed, 1384 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-hdk.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-hdk.dts
-> 
+> +	if (clk_device) {
+>  		apcs->clk = platform_device_register_data(&pdev->dev,
+> -							  "qcom-apcs-msm8916-clk",
+> -							  PLATFORM_DEVID_NONE,
+> -							  NULL, 0);
+> +							clk_device->data,
+> +							PLATFORM_DEVID_NONE,
+> +							NULL, 0);
+>  		if (IS_ERR(apcs->clk))
+>  			dev_err(&pdev->dev, "failed to register APCS clk\n");
+>  	}
+> @@ -126,6 +130,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>  	{ .compatible = "qcom,sc7180-apss-shared", .data = (void *)12 },
+>  	{ .compatible = "qcom,sdm845-apss-shared", .data = (void *)12 },
+>  	{ .compatible = "qcom,sm8150-apss-shared", .data = (void *)12 },
+> +	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = (void *)8 },
+>  	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = (void *)8 },
+>  	{}
+>  };
 > -- 
-> 2.26.1
+> 2.7.4
 > 
