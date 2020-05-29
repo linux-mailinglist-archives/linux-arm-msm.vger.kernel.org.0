@@ -2,107 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 867B41E80BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 16:46:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 438131E8113
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 17:01:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726905AbgE2OqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 10:46:24 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:33518 "EHLO m43-7.mailgun.net"
+        id S1726845AbgE2PBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 11:01:00 -0400
+Received: from foss.arm.com ([217.140.110.172]:37480 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726999AbgE2OqX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 10:46:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590763583; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=5zi+dHY2H+udPHk6hvdgwxKhHZOYwiTIbkrPlGN9DOA=; b=fCrrqSTglm0w8NajSLSgiBNUyFHkQj5aDGUCUn4Bsa+AcZ7yUL3083y8oU2pqoemZxNbhC25
- xeSvnkShODRemp0ILwDvb1RfLXyZ/GzzYxq7EOcNI25sgJvs/QjKH37mt6wTa7T9r685dr3w
- +7xDcRfpwqmhgTwbalh1CBFieNY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5ed1203eb4f0a9ae22e9c774 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 14:46:22
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9E37BC43387; Fri, 29 May 2020 14:46:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA227C433C9;
-        Fri, 29 May 2020 14:46:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EA227C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: [PATCH v4] Bluetooth: hci_qca: Improve controller ID info log level
-Date:   Fri, 29 May 2020 22:46:13 +0800
-Message-Id: <1590763573-8302-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1726849AbgE2PA7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 11:00:59 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D452F1045;
+        Fri, 29 May 2020 08:00:58 -0700 (PDT)
+Received: from [10.37.12.52] (unknown [10.37.12.52])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C41F73F718;
+        Fri, 29 May 2020 08:00:48 -0700 (PDT)
+Subject: Re: [PATCH v8 0/8] Add support for devices in the Energy Model
+To:     rjw@rjwysocki.net
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        rostedt@goodmis.org, qperret@google.com, bsegall@google.com,
+        mgorman@suse.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        festevam@gmail.com, kernel@pengutronix.de, khilman@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200527095854.21714-1-lukasz.luba@arm.com>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <8fca24a1-93f7-f859-bd1f-b7bf484737f4@arm.com>
+Date:   Fri, 29 May 2020 16:00:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20200527095854.21714-1-lukasz.luba@arm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Controller ID info got by VSC EDL_PATCH_GETVER is very
-important, so improve its log level from DEBUG to INFO.
+Hi Rafael,
 
-Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
----
-Changes in v4:
-- correct coding style of qca_read_soc_version()
 
-Changes in v3:
-- correct coding style
+On 5/27/20 10:58 AM, Lukasz Luba wrote:
+> Hi all,
+> 
+> Background of this version:
+> This is the v8 of the patch set and is has smaller scope. I had to split
+> the series into two: EM changes and thermal changes due to devfreq
+> dependencies. The patches from v7 9-14 which change devfreq cooling are
+> going to be sent in separate patch series, just after this set get merged
+> into mainline. These patches related to EM got acks and hopefully can go
+> through linux-pm tree. The later thermal patches will go through thermal
+> tree.
+> 
+> The idea and purpose of the Energy Model framework changes:
+> This patch set introduces support for devices in the Energy Model (EM)
+> framework. It will unify the power model for thermal subsystem. It will
+> make simpler to add support for new devices willing to use more
+> advanced features (like Intelligent Power Allocation). Now it should
+> require less knowledge and effort for driver developer to add e.g.
+> GPU driver with simple energy model. A more sophisticated energy model
+> in the thermal framework is also possible, driver needs to provide
+> a dedicated callback function. More information can be found in the
+> updated documentation file.
+> 
+> First 7 patches are refactoring Energy Model framework to add support
+> of other devices that CPUs. They change:
+> - naming convention from 'capacity' to 'performance' state,
+> - API arguments adding device pointer and not rely only on cpumask,
+> - change naming when 'cpu' was used, now it's a 'device'
+> - internal structure to maintain registered devices
+> - update users to the new API
+> Patch 8 updates OPP framework helper function to be more generic, not
+> CPU specific.
+> 
+> The patch set is based on linux-pm branch linux-next 813946019dfd.
+> 
 
-Changes in v2:
-- adjust controller ID info print order
+Could you take the patch set via your linux-pm?
 
- drivers/bluetooth/btqca.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 3ea866d44568..5629e2c80b97 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -74,17 +74,21 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
- 
- 	ver = (struct qca_btsoc_version *)(edl->data);
- 
--	BT_DBG("%s: Product:0x%08x", hdev->name, le32_to_cpu(ver->product_id));
--	BT_DBG("%s: Patch  :0x%08x", hdev->name, le16_to_cpu(ver->patch_ver));
--	BT_DBG("%s: ROM    :0x%08x", hdev->name, le16_to_cpu(ver->rom_ver));
--	BT_DBG("%s: SOC    :0x%08x", hdev->name, le32_to_cpu(ver->soc_id));
-+	bt_dev_info(hdev, "QCA Product ID   :0x%08x",
-+		    le32_to_cpu(ver->product_id));
-+	bt_dev_info(hdev, "QCA SOC Version  :0x%08x",
-+		    le32_to_cpu(ver->soc_id));
-+	bt_dev_info(hdev, "QCA ROM Version  :0x%08x",
-+		    le16_to_cpu(ver->rom_ver));
-+	bt_dev_info(hdev, "QCA Patch Version:0x%08x",
-+		    le16_to_cpu(ver->patch_ver));
- 
- 	/* QCA chipset version can be decided by patch and SoC
- 	 * version, combination with upper 2 bytes from SoC
- 	 * and lower 2 bytes from patch will be used.
- 	 */
- 	*soc_version = (le32_to_cpu(ver->soc_id) << 16) |
--			(le16_to_cpu(ver->rom_ver) & 0x0000ffff);
-+		(le16_to_cpu(ver->rom_ver) & 0x0000ffff);
- 	if (*soc_version == 0)
- 		err = -EILSEQ;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-
+Regards,
+Lukasz
