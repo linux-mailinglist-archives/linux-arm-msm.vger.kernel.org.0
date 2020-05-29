@@ -2,123 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B26E01E843E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 19:01:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 937BA1E846E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 19:13:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726903AbgE2RBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 13:01:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725839AbgE2RBO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 13:01:14 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBD24C03E969
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:01:12 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id k3so1917696vsg.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:01:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4NakxdxLfiVqwrqYq3ygcYPN3b3c2MjleuUer7TJH2s=;
-        b=hHVUwA/+2FePatIbmmArTLqs4AgISB2ytYBtKxy2MPSOdXgRG0fYZJRtGIUTeKmGPk
-         XPgs9a+KUmIyIDoDK04nN1kdWUxD1KB5j/dw6hOf+28M1mjqoPgFPkenJRAqUvmH4xzu
-         EtcrRVo5X47+iFdX69c+3aYh5lMwwawDD7HpM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4NakxdxLfiVqwrqYq3ygcYPN3b3c2MjleuUer7TJH2s=;
-        b=fH/q03+ssRWrbdjFXnGsbxUXA8uE2k5LdpDmP192zaf92KHfch4CBtLtZ59N8L8iGl
-         BsI/frrC0NMLLGnE+f2lJdDRU9tynIu9cUtOubZxGYZ1UR8aEBXCN+sXI5I9hNmNdjW2
-         neXQbzlo2Qj23U4NtVk/UVxTYOb7fzZboTwAsGMy0jSLQG5F0m/Toh3KMXok95bgPBPi
-         gX1lQ/moqRTmYRh37pFfvX17lCeiC6t3OXy2NCntPH7gshTGHlSWCV2oJLiK1OPHGMW8
-         8VO9E+N8KJEQvMVO4IjAp952ELc9A/HELAY9VGU8rh9mL4rEHTVr3ts65d2h7lUpmHDB
-         M0Lg==
-X-Gm-Message-State: AOAM533qib4xJ+f9gHJi+jRyfF23GkGRTipQJcoN8zuLu5x0JsQbp523
-        VpIGQZQHZOeOUpZUgTMg+OZeM0YSYw0=
-X-Google-Smtp-Source: ABdhPJxMRfPlYdfAyvQ9gr539Zz1WknBDEo3g7j0vSHhCkfYxYHZ1O5JEgrm/hxJbAuumnk+XcGRlg==
-X-Received: by 2002:a67:1a07:: with SMTP id a7mr6744123vsa.26.1590771671788;
-        Fri, 29 May 2020 10:01:11 -0700 (PDT)
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
-        by smtp.gmail.com with ESMTPSA id m4sm1332117vkl.50.2020.05.29.10.01.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 May 2020 10:01:11 -0700 (PDT)
-Received: by mail-vs1-f51.google.com with SMTP id b28so1902657vsa.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:01:11 -0700 (PDT)
-X-Received: by 2002:a67:b14b:: with SMTP id z11mr6575412vsl.109.1590771670806;
- Fri, 29 May 2020 10:01:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
- <159070588846.69627.5268638209383373410@swboyd.mtv.corp.google.com>
-In-Reply-To: <159070588846.69627.5268638209383373410@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 29 May 2020 10:00:59 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WRo42Pt0R3y=+31Wf+_nkERAAqgL+daUxmBaz9Bw+LKQ@mail.gmail.com>
-Message-ID: <CAD=FV=WRo42Pt0R3y=+31Wf+_nkERAAqgL+daUxmBaz9Bw+LKQ@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Don't use ktime for timeout in write_tcs_reg_sync()
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1726751AbgE2RN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 13:13:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33576 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725601AbgE2RN2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 13:13:28 -0400
+Received: from gmail.com (unknown [104.132.1.76])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 82A6D20723;
+        Fri, 29 May 2020 17:13:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1590772408;
+        bh=BbBe82lF+6Tr+noUC4bXnOHTzzVUPB37RrcOhBm7fTU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=O/M+2wKz/pSqjaCIRdl+JuWbLWuiMrolQuDUxLdIuEg059L8ejThnasSmQryOv0Un
+         OVrrBnQkygJAOOWBAGzd6GlsV556VZBuQeArM7S3GtKsF2OBAoHFFZ1GfyBmOZ0psj
+         IjCk52zdCHQk2+i0RFgK79raNAq9Cyj0xRFbx7+E=
+Date:   Fri, 29 May 2020 10:13:26 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>
+Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
+ support
+Message-ID: <20200529171326.GA82398@gmail.com>
+References: <20200501045111.665881-1-ebiggers@kernel.org>
+ <20200501045111.665881-5-ebiggers@kernel.org>
+ <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
+ <20200507180435.GB236103@gmail.com>
+ <20200507180838.GC236103@gmail.com>
+ <40600d42-dfa9-b60c-6ce8-0eda6bdf7ddf@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <40600d42-dfa9-b60c-6ce8-0eda6bdf7ddf@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, May 29, 2020 at 11:54:18AM -0400, Thara Gopinath wrote:
+> On 5/7/20 2:08 PM, Eric Biggers wrote:
+> > On Thu, May 07, 2020 at 11:04:35AM -0700, Eric Biggers wrote:
+> > > Hi Thara,
+> > > 
+> > > On Thu, May 07, 2020 at 08:36:58AM -0400, Thara Gopinath wrote:
+> > > > 
+> > > > 
+> > > > On 5/1/20 12:51 AM, Eric Biggers wrote:
+> > > > > From: Eric Biggers <ebiggers@google.com>
+> > > > > 
+> > > > > Add support for Qualcomm Inline Crypto Engine (ICE) to ufs-qcom.
+> > > > > 
+> > > > > The standards-compliant parts, such as querying the crypto capabilities
+> > > > > and enabling crypto for individual UFS requests, are already handled by
+> > > > > ufshcd-crypto.c, which itself is wired into the blk-crypto framework.
+> > > > > However, ICE requires vendor-specific init, enable, and resume logic,
+> > > > > and it requires that keys be programmed and evicted by vendor-specific
+> > > > > SMC calls.  Make the ufs-qcom driver handle these details.
+> > > > > 
+> > > > > I tested this on Dragonboard 845c, which is a publicly available
+> > > > > development board that uses the Snapdragon 845 SoC and runs the upstream
+> > > > > Linux kernel.  This is the same SoC used in the Pixel 3 and Pixel 3 XL
+> > > > > phones.  This testing included (among other things) verifying that the
+> > > > > expected ciphertext was produced, both manually using ext4 encryption
+> > > > > and automatically using a block layer self-test I've written.
+> > > > Hello Eric,
+> > > > 
+> > > > I am interested in testing out this series on 845, 855 and if possile on 865
+> > > > platforms. Can you give me some more details about your testing please.
+> > > > 
+> > > 
+> > > Great!  You can test this with fscrypt, a.k.a. ext4 or f2fs encryption.
+> > > 
+> > > A basic manual test would be:
+> > > 
+> > > 1. Build a kernel with:
+> > > 
+> > > 	CONFIG_BLK_INLINE_ENCRYPTION=y
+> > > 	CONFIG_FS_ENCRYPTION=y
+> > > 	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+> > 
+> > Sorry, I forgot: 'CONFIG_SCSI_UFS_CRYPTO=y' is needed too.
+> 
+> Hi Eric,
+> 
+> I tested this manually on db845c, sm8150-mtp and sm8250-mtp.(I added the dts
+> file entries for 8150 and 8250).
+> 
+> I also ran OsBench test case createfiles[1] on the above platforms.
+> Following are the results on a non encrypted and encrypted directory on the
+> same file system(lower the number better)
+> 
+> 			8250-MTP	8150-MTP	DB845
+> 
+> nonencrypt_dir(us) 	55.3108954	26.8323124    69.5709552
+> encrypt_dir(us) 	70.0214426	37.5411254    92.3818296
+> 
+> 
+> 
+> 1. https://github.com/mbitsnbites/osbench/blob/master/README.md
+> 
 
-On Thu, May 28, 2020 at 3:44 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Douglas Anderson (2020-05-28 07:48:34)
-> > The write_tcs_reg_sync() may be called after timekeeping is suspended
-> > so it's not OK to use ktime.  The readl_poll_timeout_atomic() macro
-> > implicitly uses ktime.  This was causing a warning at suspend time.
-> >
-> > Change to just loop 1000000 times with a delay of 1 us between loops.
-> > This may give a timeout of more than 1 second but never less and is
-> > safe even if timekeeping is suspended.
-> >
-> > NOTE: I don't have any actual evidence that we need to loop here.
-> > It's possibly that all we really need to do is just read the value
-> > back to ensure that the pipes are cleaned and the looping/comparing is
-> > totally not needed.  I never saw the loop being needed in my tests.
-> > However, the loop shouldn't hurt.
-> >
-> > Fixes: 91160150aba0 ("soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()")
-> > Reported-by: Maulik Shah <mkshah@codeaurora.org>
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
->
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Great, thanks for testing.
 
-Thanks!
+Note that the benchmark you ran (creating many small files, then deleting them)
+mostly tests the performance of filenames encryption and directory operations,
+not file contents encryption.  Inline encryption is only used for file contents.
 
+In fact, since that benchmark doesn't sync the files before deleting them, there
+is no guarantee that any file contents are actually written to disk, and hence
+no guarantee that inline encryption got used at all.
 
-> Although I don't think ktime_get() inside of readl_poll_timeout_atomic()
-> is correct. The timekeeping base won't be able to update when a loop is
-> spinning in an irq disabled region. We need the tick interrupt to come
-> in and update the base.
+It would be more relevant to test the performance of reading/writing file data.
 
-Is this really a problem?  I'm not totally familiar with the
-timekeeping code, but I know I've used ktime to time things while
-interrupts are disabled in the past.  It looks as if things are OK as
-long as the base is updated every once in a while and it just does
-deltas from there...
+Also, did you try doing any correctness tests?  (See what I suggested earlier.)
 
-
-> Spinning for a second with irqs disabled is also
-> insane for realtime so there's that problem too.
-
-Yeah.  I just arbitrarily picked 1 second originally so we didn't loop
-infinitely.  The expectation is that we'd never actually hit this
-timeout.  If we do then there's (presumably) some type of serious
-problem that needs to be debugged.
-
-
--Doug
+- Eric
