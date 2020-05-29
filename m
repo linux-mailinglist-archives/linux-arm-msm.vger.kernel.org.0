@@ -2,111 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E6301E8571
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 19:43:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDE711E8607
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 19:57:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbgE2Rnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 13:43:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42640 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728081AbgE2Rnb (ORCPT
+        id S1728178AbgE2R5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 13:57:39 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:40267 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728044AbgE2R5j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 13:43:31 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92FABC03E969
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:43:31 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id c71so4361100wmd.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gVHswwd0kSAFGKu/imUZP8zXFuR2uDAO/9AxJgTWj2k=;
-        b=vNp+WRPzmVLo1r8+DFAF8gNmZb/28QvNPt/T2VsGiAimd+bWW8HoyDgA44dOUlNzMk
-         fY65A1nqYFgcKpVZcbbW6tYLMtlh1ht+H5UUiLrE4WcIm9kEtdVSx+NatHrZ+lmYrhhC
-         TEkORAF/qRMaBY4K+bWEZXNc34wV8hrH9Sl3bfCSd73vqQudGr/rBOnFlwIQXYpV3J4O
-         YveoFJuluD6cvfUPa7l+Qm9w38CmY64aFpgFFPWvaEWCWqOWPw39DK4zY7+IW5lqL77K
-         De+wvJPgksSh0vXciTQWXdpFVX/+YAGuASngCU8rlZeV4qPQ6T0jq8K2Odu8OOwprjGT
-         T3UQ==
+        Fri, 29 May 2020 13:57:39 -0400
+Received: by mail-io1-f67.google.com with SMTP id q8so261680iow.7;
+        Fri, 29 May 2020 10:57:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gVHswwd0kSAFGKu/imUZP8zXFuR2uDAO/9AxJgTWj2k=;
-        b=KgSVs1JoMKtwCQWrfolsS3wOBC8woTfPoMLj8aVlj4VvpAjJWJve8H16WND7qgJWKN
-         PKIP7MIEz+KIWdEdnIg6Hk4L8ht/sITyZFX1Fz9UnQE+tYYo4QqCMfELqPYo3zpkSEaI
-         e5hIDRPjaKq8/sl75/mkQYFYNYs47VbDY1oMpcHmXrzeyabCRNAUB0M212/nDumeAK5f
-         r5OcFG3S+5iPBW6wwNbM/zqvECfpPqNBb6zZTsA0TxdAvNaNRR9Qm1CADEe6W0KVgUqX
-         RbSnZ0sMYAapOlLFePzqJXEqXyjwC3jZV6nKZVis/v24cxG7K/ABOjG5lSonyn8yyMiE
-         iqTA==
-X-Gm-Message-State: AOAM533sv8rXvI/bUF5R+PZl9XFGRUlQRn2vnYoZQKTlUNoQVAWYLQfY
-        /p5Q6r7UoxFmYxJS5gi43aQmvQ==
-X-Google-Smtp-Source: ABdhPJw5RPN4E4dGorLBaNA+WhTMk21B9a7oGwIJp3X1RT5IwHv1j8KNJcB+UIWbVhdzlIO7TazAAQ==
-X-Received: by 2002:a1c:a403:: with SMTP id n3mr9510567wme.98.1590774210138;
-        Fri, 29 May 2020 10:43:30 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:5568:5913:8a3a:5e4e? ([2a01:e34:ed2f:f020:5568:5913:8a3a:5e4e])
-        by smtp.googlemail.com with ESMTPSA id q13sm10600040wrn.84.2020.05.29.10.43.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 May 2020 10:43:29 -0700 (PDT)
-Subject: Re: [PATCH v8 3/8] PM / EM: update callback structure and add device
- pointer
-To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200527095854.21714-1-lukasz.luba@arm.com>
- <20200527095854.21714-4-lukasz.luba@arm.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <666b2f9e-d7ed-6ddb-80aa-e63ab9909ee6@linaro.org>
-Date:   Fri, 29 May 2020 19:43:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=oxo77FVnjJMwb/NWzd+pP3DPoeFJPCInSHGgQ3nDKkQ=;
+        b=P9NN8s2FEYqWIDbArCJo8nrjGd3nXOyGBEo2Zb3mZ9BDkhsiuR36Z2Q8GrefwT3k2V
+         SnByUjUMkR04B3dKaFdjzITQsUSQkzf7foOA2fx8UojFjjB6kchUW6eWAPZpuR+1MGjn
+         sPirXlOtDckvcgOttURyCvPJgUSWh7GNvNlZofpRgzJMSskM7puXu6P8zTXJDCpAjzJx
+         Ttcic+XY01nuf1uye8mnO3wku94kUcpgotfMzHfhwWK73Re3VnqglAlC9eGq80pZ6ZVs
+         nD2MX6V/m9ovfa0Mqk0uvyuHYD+rVDP84eIywpFW2xIvIbeg8KWPmkY5XEoH32q2BB6p
+         vmEw==
+X-Gm-Message-State: AOAM532bqgLwSmLlR3fKj60kHYOdVFbtz6HrCiJIfUj/xDCo3ape7MUi
+        2w369FdC9K5qFS5eDduIHZystQMJ0Q==
+X-Google-Smtp-Source: ABdhPJwAS9a6V1RYax4Qs1972SoUX60L2+2+nRZH1B7Wmq59b4D8tH3kEPEi6ltkBBEpVGD9VJoaCA==
+X-Received: by 2002:a5d:8155:: with SMTP id f21mr7738265ioo.151.1590775057982;
+        Fri, 29 May 2020 10:57:37 -0700 (PDT)
+Received: from xps15 ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id f15sm5179060ill.58.2020.05.29.10.57.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 May 2020 10:57:37 -0700 (PDT)
+Received: (nullmailer pid 2658044 invoked by uid 1000);
+        Fri, 29 May 2020 17:57:36 -0000
+Date:   Fri, 29 May 2020 11:57:36 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        rojay@codeaurora.org, skakit@codeaurora.org,
+        msavaliy@codeaurora.org
+Subject: Re: [PATCH V7 1/3] dt-bindings: geni-se: Convert QUP geni-se
+ bindings to YAML
+Message-ID: <20200529175736.GA2654622@bogus>
+References: <1590560864-27037-1-git-send-email-akashast@codeaurora.org>
+ <1590560864-27037-2-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200527095854.21714-4-lukasz.luba@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1590560864-27037-2-git-send-email-akashast@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/05/2020 11:58, Lukasz Luba wrote:
-> The Energy Model framework is going to support devices other that CPUs. In
-> order to make this happen change the callback function and add pointer to
-> a device as an argument.
+On Wed, May 27, 2020 at 11:57:42AM +0530, Akash Asthana wrote:
+> Convert QUP geni-se bindings to DT schema format using json-schema.
 > 
-> Update the related users to use new function and new callback from the
-> Energy Model.
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+> Changes in V2:
+>  - As per Stephen's comment corrected defintion of interrupts for UART node.
+>    Any valid UART node must contain atleast 1 interrupts.
 > 
-> Acked-by: Quentin Perret <qperret@google.com>
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+> Changes in V3:
+>  - As per Rob's comment, added number of reg entries for reg property.
+>  - As per Rob's comment, corrected unit address to hex.
+>  - As per Rob's comment, created a pattern which matches everything common
+>    to geni based I2C, SPI and UART controller and then one pattern  for each.
+>  - As per Rob's comment, restored original example.
+> 
+> Changes in V4:
+>  - Resolve below compilation error reported from bot.
+> 
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/
+> qcom,geni-se.yaml: properties:clocks:minItems: False schema does not allow 2
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/
+> qcom,geni-se.yaml: properties:clocks:maxItems: False schema does not allow 2
+> Documentation/devicetree/bindings/Makefile:12: recipe for target
+> 'Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dts' failed
+> make[1]: *** [Documentation/devicetree/bindings/soc/qcom/
+> qcom,geni-se.example.dts] Error 1
+> Makefile:1263: recipe for target 'dt_binding_check' failed
+> make: *** [dt_binding_check] Error 2
+> 
+> Changes in V6:
+>  - Added reg entry for soc@0 example node to address below warning.
+> 
+> Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dts:22.20-60.11
+> : Warning (unit_address_vs_reg): /example-0/soc@0: node has a unit name,
+> but no reg or ranges property
+> 
+> Changes in V7:
+>  - No change.
+> 
+>  .../devicetree/bindings/soc/qcom/qcom,geni-se.txt  |  94 ---------
+>  .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 210 +++++++++++++++++++++
+>  2 files changed, 210 insertions(+), 94 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
 
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Applied, thanks.
 
-[ ... ]
-
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Rob
