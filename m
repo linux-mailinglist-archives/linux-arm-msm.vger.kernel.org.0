@@ -2,228 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56F441E83AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 18:29:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B26E01E843E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 19:01:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727812AbgE2Q3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 12:29:05 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:61265 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725821AbgE2Q3F (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 12:29:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590769744; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=++5XVB1edF20k7ZuQoruhRB+Yzom05jHCSFa/0b0SXY=; b=XeVHfJBcY7I9E9Mm+riVDY20PgJHj46OdwgJZ61zXXTtSJCpo20ZPq92ahMwLr70MoRTrF6L
- YawYyNjTIZS7oPybCm4bJF/Z88HM5ASPqd5U0tg2UdjHtOdAek6mrsY/1Z16HawhMP+11FRD
- FViDxBfeIn2VWgQBFbBgxCYaGfE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ed1384f3131442d952d6354 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 16:29:03
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 113ECC433C6; Fri, 29 May 2020 16:29:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B31CDC433C9;
-        Fri, 29 May 2020 16:29:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B31CDC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jackp@codeaurora.org
-Date:   Fri, 29 May 2020 09:28:56 -0700
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [RFC v3 1/3] usb: dwc3: Resize TX FIFOs to meet EP bursting
- requirements
-Message-ID: <20200529162856.GA10327@jackp-linux.qualcomm.com>
-References: <1590630363-3934-1-git-send-email-wcheng@codeaurora.org>
- <1590630363-3934-2-git-send-email-wcheng@codeaurora.org>
+        id S1726903AbgE2RBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 13:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725839AbgE2RBO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 13:01:14 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBD24C03E969
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:01:12 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id k3so1917696vsg.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:01:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4NakxdxLfiVqwrqYq3ygcYPN3b3c2MjleuUer7TJH2s=;
+        b=hHVUwA/+2FePatIbmmArTLqs4AgISB2ytYBtKxy2MPSOdXgRG0fYZJRtGIUTeKmGPk
+         XPgs9a+KUmIyIDoDK04nN1kdWUxD1KB5j/dw6hOf+28M1mjqoPgFPkenJRAqUvmH4xzu
+         EtcrRVo5X47+iFdX69c+3aYh5lMwwawDD7HpM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4NakxdxLfiVqwrqYq3ygcYPN3b3c2MjleuUer7TJH2s=;
+        b=fH/q03+ssRWrbdjFXnGsbxUXA8uE2k5LdpDmP192zaf92KHfch4CBtLtZ59N8L8iGl
+         BsI/frrC0NMLLGnE+f2lJdDRU9tynIu9cUtOubZxGYZ1UR8aEBXCN+sXI5I9hNmNdjW2
+         neXQbzlo2Qj23U4NtVk/UVxTYOb7fzZboTwAsGMy0jSLQG5F0m/Toh3KMXok95bgPBPi
+         gX1lQ/moqRTmYRh37pFfvX17lCeiC6t3OXy2NCntPH7gshTGHlSWCV2oJLiK1OPHGMW8
+         8VO9E+N8KJEQvMVO4IjAp952ELc9A/HELAY9VGU8rh9mL4rEHTVr3ts65d2h7lUpmHDB
+         M0Lg==
+X-Gm-Message-State: AOAM533qib4xJ+f9gHJi+jRyfF23GkGRTipQJcoN8zuLu5x0JsQbp523
+        VpIGQZQHZOeOUpZUgTMg+OZeM0YSYw0=
+X-Google-Smtp-Source: ABdhPJxMRfPlYdfAyvQ9gr539Zz1WknBDEo3g7j0vSHhCkfYxYHZ1O5JEgrm/hxJbAuumnk+XcGRlg==
+X-Received: by 2002:a67:1a07:: with SMTP id a7mr6744123vsa.26.1590771671788;
+        Fri, 29 May 2020 10:01:11 -0700 (PDT)
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
+        by smtp.gmail.com with ESMTPSA id m4sm1332117vkl.50.2020.05.29.10.01.11
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 May 2020 10:01:11 -0700 (PDT)
+Received: by mail-vs1-f51.google.com with SMTP id b28so1902657vsa.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 10:01:11 -0700 (PDT)
+X-Received: by 2002:a67:b14b:: with SMTP id z11mr6575412vsl.109.1590771670806;
+ Fri, 29 May 2020 10:01:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1590630363-3934-2-git-send-email-wcheng@codeaurora.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+References: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
+ <159070588846.69627.5268638209383373410@swboyd.mtv.corp.google.com>
+In-Reply-To: <159070588846.69627.5268638209383373410@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 29 May 2020 10:00:59 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WRo42Pt0R3y=+31Wf+_nkERAAqgL+daUxmBaz9Bw+LKQ@mail.gmail.com>
+Message-ID: <CAD=FV=WRo42Pt0R3y=+31Wf+_nkERAAqgL+daUxmBaz9Bw+LKQ@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Don't use ktime for timeout in write_tcs_reg_sync()
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Wesley,
+Hi,
 
-On Wed, May 27, 2020 at 06:46:01PM -0700, Wesley Cheng wrote:
-> Some devices have USB compositions which may require multiple endpoints
-> that support EP bursting.  HW defined TX FIFO sizes may not always be
-> sufficient for these compositions.  By utilizing flexible TX FIFO
-> allocation, this allows for endpoints to request the required FIFO depth to
-> achieve higher bandwidth.  With some higher bMaxBurst configurations, using
-> a larger TX FIFO size results in better TX throughput.
-> 
-> Ensure that one TX FIFO is reserved for every IN endpoint.  This allows for
-> the FIFO logic to prevent running out of FIFO space.
-> 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
+On Thu, May 28, 2020 at 3:44 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Douglas Anderson (2020-05-28 07:48:34)
+> > The write_tcs_reg_sync() may be called after timekeeping is suspended
+> > so it's not OK to use ktime.  The readl_poll_timeout_atomic() macro
+> > implicitly uses ktime.  This was causing a warning at suspend time.
+> >
+> > Change to just loop 1000000 times with a delay of 1 us between loops.
+> > This may give a timeout of more than 1 second but never less and is
+> > safe even if timekeeping is suspended.
+> >
+> > NOTE: I don't have any actual evidence that we need to loop here.
+> > It's possibly that all we really need to do is just read the value
+> > back to ensure that the pipes are cleaned and the looping/comparing is
+> > totally not needed.  I never saw the loop being needed in my tests.
+> > However, the loop shouldn't hurt.
+> >
+> > Fixes: 91160150aba0 ("soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()")
+> > Reported-by: Maulik Shah <mkshah@codeaurora.org>
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+>
+> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 
-<snip>
+Thanks!
 
-> diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-> index 00746c2..9b09528 100644
-> --- a/drivers/usb/dwc3/gadget.c
-> +++ b/drivers/usb/dwc3/gadget.c
-> @@ -540,6 +540,117 @@ static int dwc3_gadget_start_config(struct dwc3_ep *dep)
->  	return 0;
->  }
->  
-> +/*
-> + * dwc3_gadget_resize_tx_fifos - reallocate fifo spaces for current use-case
-> + * @dwc: pointer to our context structure
-> + *
-> + * This function will a best effort FIFO allocation in order
-> + * to improve FIFO usage and throughput, while still allowing
-> + * us to enable as many endpoints as possible.
-> + *
-> + * Keep in mind that this operation will be highly dependent
-> + * on the configured size for RAM1 - which contains TxFifo -,
-> + * the amount of endpoints enabled on coreConsultant tool, and
-> + * the width of the Master Bus.
-> + *
-> + * In general, FIFO depths are represented with the following equation:
-> + *
-> + * fifo_size = mult * ((max_packet + mdwidth)/mdwidth + 1) + 1
-> + *
-> + * Conversions can be done to the equation to derive the number of packets that
-> + * will fit to a particular FIFO size value.
-> + */
-> +static int dwc3_gadget_resize_tx_fifos(struct dwc3 *dwc, struct dwc3_ep *dep)
 
-The 'dep' param should be sufficient; we can just get 'dwc' from
-dep->dwc. That will make it more clear this function operates on each
-endpoint that needs resizing.
+> Although I don't think ktime_get() inside of readl_poll_timeout_atomic()
+> is correct. The timekeeping base won't be able to update when a loop is
+> spinning in an irq disabled region. We need the tick interrupt to come
+> in and update the base.
 
-> +{
-> +	int ram1_depth, mdwidth, fifo_0_start, tmp, num_in_ep;
-> +	int min_depth, remaining, fifo_size, mult = 1, fifo, max_packet = 1024;
-> +
-> +	if (!dwc->needs_fifo_resize)
-> +		return 0;
-> +
-> +	/* resize IN endpoints except ep0 */
-> +	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <= 1)
-> +		return 0;
-> +
-> +	/* Don't resize already resized IN endpoint */
-> +	if (dep->fifo_depth)
-> +		return 0;
-> +
-> +	ram1_depth = DWC3_RAM1_DEPTH(dwc->hwparams.hwparams7);
-> +	mdwidth = DWC3_MDWIDTH(dwc->hwparams.hwparams0);
-> +	/* MDWIDTH is represented in bits, we need it in bytes */
-> +	mdwidth >>= 3;
-> +
-> +	if (((dep->endpoint.maxburst > 1) &&
-> +			usb_endpoint_xfer_bulk(dep->endpoint.desc))
-> +			|| usb_endpoint_xfer_isoc(dep->endpoint.desc))
-> +		mult = 3;
-> +
-> +	if ((dep->endpoint.maxburst > 6) &&
-> +			usb_endpoint_xfer_bulk(dep->endpoint.desc)
-> +			&& dwc3_is_usb31(dwc))
-> +		mult = 6;
-> +
-> +	/* FIFO size for a single buffer */
-> +	fifo = (max_packet + mdwidth)/mdwidth;
-> +	fifo++;
-> +
-> +	/* Calculate the number of remaining EPs w/o any FIFO */
-> +	num_in_ep = dwc->num_eps/2;
-> +	num_in_ep -= dwc->num_ep_resized;
-> +	/* Ignore EP0 IN */
-> +	num_in_ep--;
-> +
-> +	/* Reserve at least one FIFO for the number of IN EPs */
-> +	min_depth = num_in_ep * (fifo+1);
-> +	remaining = ram1_depth - min_depth - dwc->last_fifo_depth;
-> +
-> +	/* We've already reserved 1 FIFO per EP, so check what we can fit in
-> +	 * addition to it.  If there is not enough remaining space, allocate
-> +	 * all the remaining space to the EP.
-> +	 */
-> +	fifo_size = (mult-1) * fifo;
-> +	if (remaining < fifo_size) {
-> +		if (remaining > 0)
-> +			fifo_size = remaining;
-> +		else
-> +			fifo_size = 0;
-> +	}
-> +
-> +	fifo_size += fifo;
-> +	fifo_size++;
-> +	dep->fifo_depth = fifo_size;
-> +
-> +	/* Check if TXFIFOs start at non-zero addr */
-> +	tmp = dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(0));
-> +	fifo_0_start = DWC3_GTXFIFOSIZ_TXFSTADDR(tmp);
-> +
-> +	fifo_size |= (fifo_0_start + (dwc->last_fifo_depth << 16));
-> +	if (dwc3_is_usb31(dwc))
-> +		dwc->last_fifo_depth += DWC31_GTXFIFOSIZ_TXFDEP(fifo_size);
-> +	else
-> +		dwc->last_fifo_depth += DWC3_GTXFIFOSIZ_TXFDEP(fifo_size);
-> +
-> +	/* Check fifo size allocation doesn't exceed available RAM size. */
-> +	if (dwc->last_fifo_depth >= ram1_depth) {
-> +		dev_err(dwc->dev, "Fifosize(%d) > RAM size(%d) %s depth:%d\n",
-> +				(dwc->last_fifo_depth * mdwidth), ram1_depth,
-> +				dep->endpoint.name, fifo_size);
+Is this really a problem?  I'm not totally familiar with the
+timekeeping code, but I know I've used ktime to time things while
+interrupts are disabled in the past.  It looks as if things are OK as
+long as the base is updated every once in a while and it just does
+deltas from there...
 
-Use dev_WARN() here and eliminate the WARN_ON(1) below?
 
-> +		if (dwc3_is_usb31(dwc))
-> +			fifo_size = DWC31_GTXFIFOSIZ_TXFDEP(fifo_size);
-> +		else
-> +			fifo_size = DWC3_GTXFIFOSIZ_TXFDEP(fifo_size);
-> +		dwc->last_fifo_depth -= fifo_size;
-> +		dep->fifo_depth = 0;
-> +		WARN_ON(1);
-> +		return -ENOMEM;
-> +	}
-> +
-> +	dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1), fifo_size);
-> +	dwc->num_ep_resized++;
-> +	return 0;
-> +}
-> +
->  static int dwc3_gadget_set_ep_config(struct dwc3_ep *dep, unsigned int action)
->  {
->  	const struct usb_ss_ep_comp_descriptor *comp_desc;
-> @@ -620,6 +731,10 @@ static int __dwc3_gadget_ep_enable(struct dwc3_ep *dep, unsigned int action)
->  	int			ret;
->  
->  	if (!(dep->flags & DWC3_EP_ENABLED)) {
-> +		ret = dwc3_gadget_resize_tx_fifos(dwc, dep);
-> +		if (ret)
-> +			return ret;
-> +
->  		ret = dwc3_gadget_start_config(dep);
->  		if (ret)
->  			return ret;
+> Spinning for a second with irqs disabled is also
+> insane for realtime so there's that problem too.
 
-Jack
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Yeah.  I just arbitrarily picked 1 second originally so we didn't loop
+infinitely.  The expectation is that we'd never actually hit this
+timeout.  If we do then there's (presumably) some type of serious
+problem that needs to be debugged.
+
+
+-Doug
