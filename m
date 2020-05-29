@@ -2,110 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 963DD1E7AB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 12:36:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63B441E7AEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 12:50:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725821AbgE2Kga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 06:36:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60744 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725601AbgE2Kg3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 06:36:29 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44A6EC03E969
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 03:36:29 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id y123so1195800vsb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 03:36:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HmjuhvsPi7i8QqafSrWT+BKWCrvyW72ZyBBet/hxqD0=;
-        b=n6OtqtRiLbTORvfYG6+bQXzcgCH/G6pkw+zSMMdxMxkDlpoVqcIbqFNyv3NrrCz5UM
-         FYu3A0S/YnIkMA6bPm3usBVBl4ZBaVa7R9KMWxUFhoNB1G2oMSEiymI0XafYge8Sf0Vw
-         RE5rWLK+Ax0x/TMsslPBgGo/gJ7BZJ07OXg/tMJlBcLFWiVx5N0oeSsxW8LMHfj2MWbF
-         TrE2E2NBmbZV50QHjMp5wcPnnKffF5IPTYZFS6YILUdLLHlTJ9jvyGuKXuiOblPE7urJ
-         eKL9W0/yjaSHd7EMkRbmYeRpkPUCJZWIWARpOLgbdPj+Lxi4usxtZkAfc6wHgLFUil1t
-         8jGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HmjuhvsPi7i8QqafSrWT+BKWCrvyW72ZyBBet/hxqD0=;
-        b=Qu72U89cbobHFgY0XcZbqFL9dMmbMuPbdBGebhsm8G+fVugJ3GDWLDzYhezCuPSUb0
-         JP7tQGswWqyyeq8k/uYxeKYEeQDFeRJ3GRX5Te2ppEBjMSDU1l98SI69ZSv0UGSulBij
-         lkiGoR2S9+3Rc77zd+7wf/lr79+Cu2Bo7EREB75xsy20HRUzsTBbrX6MasX+J7XcRvFW
-         FfYvPRJKiBBVKeRN4g0RL+Rjs3QuWnNqMTQ2yeA+bkFWtQ/I8GYmXRuJQQsY6Copk7Wj
-         uXpEY2LAUHp4PoatxuI/UuiAQE07LcnAg0Y0kg0PJEZpWAN1Uay7V1/BtUiVPMX2IfQH
-         boOw==
-X-Gm-Message-State: AOAM531Wl6zYok3cWaxYAN4A/kQ1vwnd1I/9DE7S9QJTgmhZ4/1BZzbq
-        7yHSAccMYTbNLapd6h8YtOXURuNGXEJ6XR3Y7J8Erg==
-X-Google-Smtp-Source: ABdhPJzBQ0zlzWRM+H9Ii1EWbIJoP5vdLRB7231T5LWWfcHEbqkYTyRcxm7AJOljOxCsWsLh6iMLrbF8H2nC95j2LAE=
-X-Received: by 2002:a67:1486:: with SMTP id 128mr5150038vsu.191.1590748585116;
- Fri, 29 May 2020 03:36:25 -0700 (PDT)
+        id S1725775AbgE2Kum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 06:50:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58004 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725562AbgE2Kul (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 06:50:41 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 66C4F2075A;
+        Fri, 29 May 2020 10:50:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1590749441;
+        bh=FFlaEDQe1WSVtPriXu9N17aH3gGYEsIxBu9cKHxap5M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rmH+DuB3dCImc3xFqTryLv5euABMMjaeOyqol80TPCdjxzkm+hjnXcsWX8EFCJAaP
+         Hqleu8YdIJoA1Y5yUXcI2p5eRqoOdkqAPUjeCEE5oYP9y7GEog8qI+bjmWNKD0tfUU
+         uFc/TwTCNbV2WA5673egiIhRVXma0wjYrxqxvonY=
+Date:   Fri, 29 May 2020 11:50:37 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sumit Semwal <sumit.semwal@linaro.org>, agross@kernel.org,
+        lgirdwood@gmail.com, robh+dt@kernel.org,
+        nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        kgunda@codeaurora.org, rnayak@codeaurora.org
+Subject: Re: [PATCH v3 1/5] regulator: Allow regulators to verify enabled
+ during enable()
+Message-ID: <20200529105037.GD4610@sirena.org.uk>
+References: <20200528154625.17742-1-sumit.semwal@linaro.org>
+ <20200528154625.17742-2-sumit.semwal@linaro.org>
+ <20200529013743.GL279327@builder.lan>
 MIME-Version: 1.0
-References: <1590678838-18099-1-git-send-email-vbadigan@codeaurora.org>
-In-Reply-To: <1590678838-18099-1-git-send-email-vbadigan@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 29 May 2020 12:35:48 +0200
-Message-ID: <CAPDyKFpC+C32oa4ucNLWeEGJ8PDwzi+X55Lp7UqrHR--Yc47mw@mail.gmail.com>
-Subject: Re: [PATCH V1] mmc: sdhci-msm: Clear tuning done flag while hs400 tuning
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "# 4.0+" <stable@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Venkat Gopalakrishnan <venkatg@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bajzpZikUji1w+G9"
+Content-Disposition: inline
+In-Reply-To: <20200529013743.GL279327@builder.lan>
+X-Cookie: The Killer Ducks are coming!!!
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 28 May 2020 at 17:14, Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
->
-> Clear tuning_done flag while executing tuning to ensure vendor
-> specific HS400 settings are applied properly when the controller
-> is re-initialized in HS400 mode.
->
-> Without this, re-initialization of the qcom SDHC in HS400 mode fails
-> while resuming the driver from runtime-suspend or system-suspend.
->
-> Fixes: ff06ce4 ("mmc: sdhci-msm: Add HS400 platform support")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-Applied for next, thanks!
+--bajzpZikUji1w+G9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Kind regards
-Uffe
+On Thu, May 28, 2020 at 06:37:43PM -0700, Bjorn Andersson wrote:
+> On Thu 28 May 08:46 PDT 2020, Sumit Semwal wrote:
 
-> ---
->  drivers/mmc/host/sdhci-msm.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 95cd973..b277dd7 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -1174,6 +1174,12 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
->         msm_host->use_cdr = true;
->
->         /*
-> +        * Clear tuning_done flag before tuning to ensure proper
-> +        * HS400 settings.
-> +        */
-> +       msm_host->tuning_done = 0;
-> +
-> +       /*
->          * For HS400 tuning in HS200 timing requires:
->          * - select MCLK/2 in VENDOR_SPEC
->          * - program MCLK to 400MHz (or nearest supported) in GCC
-> --
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
->
+> > Some regulators might need to verify that they have indeed been enabled
+> > after the enable() call is made and enable_time delay has passed.
+
+> >  	_regulator_enable_delay(delay);
+
+> My interpretation of "enable_time" (i.e. the value of delay) is that it
+> denotes the maximum time it will take for the regulator to turn on, and
+
+Right.
+
+> the purpose of this patch is to be able to handle cases where we can
+> poll the hardware to see if it completed earlier.
+
+Is that it?  From the changelog it sounded like this was a workaround
+for broken hardware not an attempt at optimization.=20
+
+> So I think you should flip the meaning of your two variables around,
+> making "delay" the total time to sleep and the newly introduced
+> "poll_enabled_time" the interval at which you check if the hardware
+> finished early.
+
+Yes.
+
+--bajzpZikUji1w+G9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7Q6PwACgkQJNaLcl1U
+h9CFNgf/ffXZ6CU+mAKj+pnzwCyLR9dhPs6POLPHWk6mcg5qGtFi40/RrDELzs1H
+bKoPFS0FdQodoa2Eb+KlqZ2NdGYelnSUWaRplqSZDBo6yM5Zr3sWlRJcHISlEOZw
+WpihosfvhQuG/FKP8aYslp+ttBgIgNiKZ6GMgdoXY94ezpsov6l4x2bcytu2iq1+
+sXaHroC7vdf3JSB0OdnsBmKck5+ZoFRdFRTsh+cF6wXDO82mf76H10yUTX+Wco/1
+9GoqW/0i/4r809F1jP+mAVNSqJ1185LESb/PEKOxTnW7CBOY7icIIUI7v5k6lMWY
+8KabKuvGB5jCHVe4obTLIva/6Tpvuw==
+=0lLv
+-----END PGP SIGNATURE-----
+
+--bajzpZikUji1w+G9--
