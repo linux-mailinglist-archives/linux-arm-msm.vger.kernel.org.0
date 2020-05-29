@@ -2,117 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 684A91E7A50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 12:16:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 963DD1E7AB2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 12:36:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726394AbgE2KQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 06:16:20 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:45483 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725601AbgE2KQR (ORCPT
+        id S1725821AbgE2Kga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 06:36:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60744 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725601AbgE2Kg3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 06:16:17 -0400
-Received: by mail-lj1-f196.google.com with SMTP id z18so1881456lji.12;
-        Fri, 29 May 2020 03:16:13 -0700 (PDT)
+        Fri, 29 May 2020 06:36:29 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44A6EC03E969
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 03:36:29 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id y123so1195800vsb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 03:36:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HmjuhvsPi7i8QqafSrWT+BKWCrvyW72ZyBBet/hxqD0=;
+        b=n6OtqtRiLbTORvfYG6+bQXzcgCH/G6pkw+zSMMdxMxkDlpoVqcIbqFNyv3NrrCz5UM
+         FYu3A0S/YnIkMA6bPm3usBVBl4ZBaVa7R9KMWxUFhoNB1G2oMSEiymI0XafYge8Sf0Vw
+         RE5rWLK+Ax0x/TMsslPBgGo/gJ7BZJ07OXg/tMJlBcLFWiVx5N0oeSsxW8LMHfj2MWbF
+         TrE2E2NBmbZV50QHjMp5wcPnnKffF5IPTYZFS6YILUdLLHlTJ9jvyGuKXuiOblPE7urJ
+         eKL9W0/yjaSHd7EMkRbmYeRpkPUCJZWIWARpOLgbdPj+Lxi4usxtZkAfc6wHgLFUil1t
+         8jGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Qb23YrFge2bev6B+pdY5MYpRbBAt1YLbxMOSUywPdHk=;
-        b=cZaH0DKeLwkKayN1g+x2VJNhADXnu4nL0vSdS/b+fM2kg+16H4sXwqx6iK+z8ZyLeF
-         uPY2l26f1BPnMQft2ohw7um4HIFJRpj6OL3aQkyb1cFItrFXrXmSCdT5H7jC+TlyQwDm
-         ZjfpqLk5ryiZaCaBSoSaMAVOEfWBRMg2yP4zNFDPNLx1iDNny2k1ZgNw3mx02BIpRWVV
-         XKCXBojmkFewoirKEDwupB9EKXMiPWwfaXZg7aJUIaIrifa5ohS7rFYYTkMXQGo2J/z0
-         0CVzTu3Gp9kz3GXLKhI4Dir9VBMXpCVOy+TnoQHfJ7wUQFB5TvozI5lpt2meE0lEoBln
-         9m3A==
-X-Gm-Message-State: AOAM531MzDINtCgDtROORRtIEWc36Cnsd2TOl9Tl3yF03DFtuIwvi6f6
-        51KH4BmEL9ijvv2nF/RLdPs=
-X-Google-Smtp-Source: ABdhPJyb49lJcndlDqUtkrSajYOpqC0lpLBM00Du0tW1RABChW4sreguvSnQJV4+HR28+sDilaHYIw==
-X-Received: by 2002:a05:651c:39b:: with SMTP id e27mr3886282ljp.253.1590747373144;
-        Fri, 29 May 2020 03:16:13 -0700 (PDT)
-Received: from xi.terra (c-beaee455.07-184-6d6c6d4.bbcust.telenor.se. [85.228.174.190])
-        by smtp.gmail.com with ESMTPSA id h26sm2236339lja.0.2020.05.29.03.16.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2020 03:16:12 -0700 (PDT)
-Received: from johan by xi.terra with local (Exim 4.93.0.4)
-        (envelope-from <johan@kernel.org>)
-        id 1jec3c-0004TR-D6; Fri, 29 May 2020 12:16:08 +0200
-Date:   Fri, 29 May 2020 12:16:08 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Alexandru Ardelean <alexandru.ardelean@analog.com>
-Cc:     bcm-kernel-feedback-list@broadcom.com, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, linux-input@vger.kernel.org,
-        linux-aspeed@lists.ozlabs.org, linux-samsung-soc@vger.kernel.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-pm@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org, devel@driverdev.osuosl.org,
-        vilhelm.gray@gmail.com, syednwaris@gmail.com,
-        fabrice.gasnier@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, jic23@kernel.org, dan@dlrobertson.com,
-        jikos@kernel.org, srinivas.pandruvada@linux.intel.com,
-        linus.walleij@linaro.org, wens@csie.org, hdegoede@redhat.com,
-        rjui@broadcom.com, sbranden@broadcom.com, peda@axentia.se,
-        kgene@kernel.org, krzk@kernel.org, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, ak@it-klinger.de, paul@crapouillou.net,
-        milo.kim@ti.com, vz@mleia.com, slemieux.tyco@gmail.com,
-        khilman@baylibre.com, matthias.bgg@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, heiko@sntech.de, orsonzhai@gmail.com,
-        baolin.wang7@gmail.com, zhang.lyra@gmail.com, mripard@kernel.org,
-        tduszyns@gmail.com, rmfrfs@gmail.com, lorenzo.bianconi83@gmail.com,
-        ktsai@capellamicro.com, songqiang1304521@gmail.com,
-        tomislav.denis@avl.com, eajames@linux.ibm.com,
-        dmitry.torokhov@gmail.com, coproscefalo@gmail.com
-Subject: Re: [PATCH 4/5] iio: light: lm3533-als: remove explicit parent
- assignment
-Message-ID: <20200529101608.GC19480@localhost>
-References: <20200522082208.383631-1-alexandru.ardelean@analog.com>
- <20200522082208.383631-4-alexandru.ardelean@analog.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HmjuhvsPi7i8QqafSrWT+BKWCrvyW72ZyBBet/hxqD0=;
+        b=Qu72U89cbobHFgY0XcZbqFL9dMmbMuPbdBGebhsm8G+fVugJ3GDWLDzYhezCuPSUb0
+         JP7tQGswWqyyeq8k/uYxeKYEeQDFeRJ3GRX5Te2ppEBjMSDU1l98SI69ZSv0UGSulBij
+         lkiGoR2S9+3Rc77zd+7wf/lr79+Cu2Bo7EREB75xsy20HRUzsTBbrX6MasX+J7XcRvFW
+         FfYvPRJKiBBVKeRN4g0RL+Rjs3QuWnNqMTQ2yeA+bkFWtQ/I8GYmXRuJQQsY6Copk7Wj
+         uXpEY2LAUHp4PoatxuI/UuiAQE07LcnAg0Y0kg0PJEZpWAN1Uay7V1/BtUiVPMX2IfQH
+         boOw==
+X-Gm-Message-State: AOAM531Wl6zYok3cWaxYAN4A/kQ1vwnd1I/9DE7S9QJTgmhZ4/1BZzbq
+        7yHSAccMYTbNLapd6h8YtOXURuNGXEJ6XR3Y7J8Erg==
+X-Google-Smtp-Source: ABdhPJzBQ0zlzWRM+H9Ii1EWbIJoP5vdLRB7231T5LWWfcHEbqkYTyRcxm7AJOljOxCsWsLh6iMLrbF8H2nC95j2LAE=
+X-Received: by 2002:a67:1486:: with SMTP id 128mr5150038vsu.191.1590748585116;
+ Fri, 29 May 2020 03:36:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200522082208.383631-4-alexandru.ardelean@analog.com>
+References: <1590678838-18099-1-git-send-email-vbadigan@codeaurora.org>
+In-Reply-To: <1590678838-18099-1-git-send-email-vbadigan@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 29 May 2020 12:35:48 +0200
+Message-ID: <CAPDyKFpC+C32oa4ucNLWeEGJ8PDwzi+X55Lp7UqrHR--Yc47mw@mail.gmail.com>
+Subject: Re: [PATCH V1] mmc: sdhci-msm: Clear tuning done flag while hs400 tuning
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "# 4.0+" <stable@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Venkat Gopalakrishnan <venkatg@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 22, 2020 at 11:22:07AM +0300, Alexandru Ardelean wrote:
-> This assignment is the more peculiar of the bunch as it assigns the parent
-> of the platform-device's device (i.e. pdev->dev.parent) as the IIO device's
-> parent.
+On Thu, 28 May 2020 at 17:14, Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
 >
-> It's unclear whether this is intentional or not.
-> Hence it is in it's own patch.
+> Clear tuning_done flag while executing tuning to ensure vendor
+> specific HS400 settings are applied properly when the controller
+> is re-initialized in HS400 mode.
+>
+> Without this, re-initialization of the qcom SDHC in HS400 mode fails
+> while resuming the driver from runtime-suspend or system-suspend.
+>
+> Fixes: ff06ce4 ("mmc: sdhci-msm: Add HS400 platform support")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-Yeah, we have a few mfd drivers whose child drivers registers their
-class devices directly under the parent mfd device rather than the
-corresponding child platform device.
+Applied for next, thanks!
 
-Since it's done consistently I think you need to update them all if you
-really want to change this. 
+Kind regards
+Uffe
 
-And it may not be worth it since at least in theory someone could now be
-relying on this topology.
-
-> Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
 > ---
->  drivers/iio/light/lm3533-als.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/iio/light/lm3533-als.c b/drivers/iio/light/lm3533-als.c
-> index bc196c212881..0f380ec8d30c 100644
-> --- a/drivers/iio/light/lm3533-als.c
-> +++ b/drivers/iio/light/lm3533-als.c
-> @@ -852,7 +852,6 @@ static int lm3533_als_probe(struct platform_device *pdev)
->  	indio_dev->channels = lm3533_als_channels;
->  	indio_dev->num_channels = ARRAY_SIZE(lm3533_als_channels);
->  	indio_dev->name = dev_name(&pdev->dev);
-> -	indio_dev->dev.parent = pdev->dev.parent;
->  	indio_dev->modes = INDIO_DIRECT_MODE;
->  
->  	als = iio_priv(indio_dev);
-
-Johan
+>  drivers/mmc/host/sdhci-msm.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 95cd973..b277dd7 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -1174,6 +1174,12 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+>         msm_host->use_cdr = true;
+>
+>         /*
+> +        * Clear tuning_done flag before tuning to ensure proper
+> +        * HS400 settings.
+> +        */
+> +       msm_host->tuning_done = 0;
+> +
+> +       /*
+>          * For HS400 tuning in HS200 timing requires:
+>          * - select MCLK/2 in VENDOR_SPEC
+>          * - program MCLK to 400MHz (or nearest supported) in GCC
+> --
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+>
