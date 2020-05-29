@@ -2,124 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BEB81E7297
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 04:29:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A30F41E729F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 04:34:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405297AbgE2C3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 22:29:33 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:61395 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2405086AbgE2C3a (ORCPT
+        id S2405144AbgE2Cen (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 22:34:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404312AbgE2Cem (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 22:29:30 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590719369; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=6ZkZeLjBfTWlGAiLQK4hHlaxQJ7Mx2KTNta8bDJGGoU=; b=dr2oIDmQ+Hkejf9EZhqrJKUPJyMBeoHLhocvCDWLTIh28IgusNHRPOKc6scLqrcHN/kVySk8
- Gc8DaLyYg3H4L5w5bnQe81+ypoiFnPHQGNdrww4ryKu7AfsF5AQu/hkafmTzXVCoHhW8Bvkf
- sDby7mbXwLB5c00K8/W6BFgXuLI=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5ed073864776d1da6d7d0712 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 02:29:26
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9E3FAC433CA; Fri, 29 May 2020 02:29:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CA4B3C433C6;
-        Fri, 29 May 2020 02:29:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CA4B3C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: [PATCH v1] Bluetooth: hci_qca: Fix qca6390 enable failure after warm reboot
-Date:   Fri, 29 May 2020 10:29:20 +0800
-Message-Id: <1590719360-28257-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 28 May 2020 22:34:42 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C60C08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 19:34:42 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id bg4so424607plb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 19:34:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=e+KZFh3ujHdsBWvwWKGN7nRmTYaLk3nxkrRoIJL6IxE=;
+        b=AKbdZk+PWThhLXUOfG6ps5WyQiKJNO5Zlixyub3IIYDY19VXdLq7gJV6bajW7loVIw
+         JqzI1OKLcUYqigrx2uhxYzaPG74K3eYjcziNXFPOOxdWLCLhK9r1SUuYSyxzJHLWrJv0
+         A2cedtrNIPeRTP1JD1KUoXDiIu+2kF3H4FvhNE9D1uOWayPR5odwSE8XYR+qaCp9taIh
+         DOXCiVshMQHd/ILVvmgGcUq8P0xYoL/4KR3xfFEuNNIwg6E9vN38tJJPbMr21jKmFvhO
+         CYs+Jt0jKw33TKdaqmVQwsyoLUGgD4KqhGbCDi3Ig6beDV235p9+1aCrNSS1Fx5bhIza
+         P9oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=e+KZFh3ujHdsBWvwWKGN7nRmTYaLk3nxkrRoIJL6IxE=;
+        b=L93sTsSuGHedrsd3VDcsQQrSKeeiJYJ/Hubz+N0mDfybAn/7Sfd26R1ALI522/XEeH
+         2IGF1Jsu0Bk29YLFHjmLzbl1SYNGcOVGnB8LbiywVuGFE1Aq38vRHLWzeGu4hqAnUYDp
+         seEAEecem+fwgoSJ6q8ohUwiPKNNLLcs9FMl6lXpDD11KQnEFNKlZYoBexfkI9kj20I6
+         QkFNef9ptsDnDegoU4ApdBoG5pzS6urqOsQwRoSbI9dHROECc0SYxpkmriI6keY2kEVz
+         WXMmrWDse5TC+97rVB7oL/6r2Z5WcYwCqvNOcLz7GYylCWN6SNwVsY/P8p1wT2x34kPq
+         Rguw==
+X-Gm-Message-State: AOAM532nDyKD/6Ueq+yLiBt8kuFEwlqm+y2f+I48ViW8miOR1sM2xGQ9
+        a5B/pbMUK2+jbdWgDgQ8YHJyOQ==
+X-Google-Smtp-Source: ABdhPJzWuXw1Stft7QC2ZScu0Veql2U5xahAs285PQUV4xB49W8fUDlfttKlD8N9VoFa0zSluAiLig==
+X-Received: by 2002:a17:902:9e8d:: with SMTP id e13mr6824688plq.234.1590719681879;
+        Thu, 28 May 2020 19:34:41 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a7sm5968052pfa.187.2020.05.28.19.34.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 19:34:41 -0700 (PDT)
+Date:   Thu, 28 May 2020 19:33:36 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        patches@linaro.org, linaro-kernel@lists.linaro.org
+Subject: Re: [PATCH] defconfig: enable Global Clock Controller for SM8250
+Message-ID: <20200529023336.GP279327@builder.lan>
+References: <20200525164928.2938829-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200525164928.2938829-1-dmitry.baryshkov@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Warm reboot can not reset controller qca6390 due to
-lack of controllable power supply, so causes firmware
-download failure during enable.
+On Mon 25 May 09:49 PDT 2020, Dmitry Baryshkov wrote:
 
-Fixed by sending VSC EDL_SOC_RESET to reset qca6390
-within added device shutdown implementation.
+> Enable GCC by default.
+> 
 
-Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
-Tested-by: Zijun Hu <zijuhu@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+Thanks for the patch Dmitry, this was however already resolved by
+'f7a8bc1cf0b2 ("arm64: defconfig: Enable SM8250 GCC driver")' which
+should show up in v5.8-rc1.
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index e4a6823..f525656 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1975,6 +1975,38 @@ static void qca_serdev_remove(struct serdev_device *serdev)
- 	hci_uart_unregister_device(&qcadev->serdev_hu);
- }
- 
-+static void qca_serdev_shutdown(struct device *dev)
-+{
-+	int ret;
-+	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-+	struct serdev_device *serdev = to_serdev_device(dev);
-+	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-+	const u8 ibs_wake_cmd[] = { 0xFD };
-+	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
-+
-+	if (qcadev->btsoc_type == QCA_QCA6390) {
-+		serdev_device_write_flush(serdev);
-+		ret = serdev_device_write_buf(serdev, ibs_wake_cmd,
-+					      sizeof(ibs_wake_cmd));
-+		if (ret < 0) {
-+			BT_ERR("QCA send IBS_WAKE_IND error: %d", ret);
-+			return;
-+		}
-+		serdev_device_wait_until_sent(serdev, timeout);
-+		usleep_range(8000, 10000);
-+
-+		serdev_device_write_flush(serdev);
-+		ret = serdev_device_write_buf(serdev, edl_reset_soc_cmd,
-+					      sizeof(edl_reset_soc_cmd));
-+		if (ret < 0) {
-+			BT_ERR("QCA send EDL_RESET_REQ error: %d", ret);
-+			return;
-+		}
-+		serdev_device_wait_until_sent(serdev, timeout);
-+		usleep_range(8000, 10000);
-+	}
-+}
-+
- static int __maybe_unused qca_suspend(struct device *dev)
- {
- 	struct hci_dev *hdev = container_of(dev, struct hci_dev, dev);
-@@ -2100,6 +2132,7 @@ static struct serdev_device_driver qca_serdev_driver = {
- 		.name = "hci_uart_qca",
- 		.of_match_table = of_match_ptr(qca_bluetooth_of_match),
- 		.acpi_match_table = ACPI_PTR(qca_bluetooth_acpi_match),
-+		.shutdown = qca_serdev_shutdown,
- 		.pm = &qca_pm_ops,
- 	},
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+Regards,
+Bjorn
 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 24e534d85045..72da59bbecad 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -806,6 +806,7 @@ CONFIG_SDM_GCC_845=y
+>  CONFIG_SDM_GPUCC_845=y
+>  CONFIG_SDM_DISPCC_845=y
+>  CONFIG_SM_GCC_8150=y
+> +CONFIG_SM_GCC_8250=y
+>  CONFIG_QCOM_HFPLL=y
+>  CONFIG_HWSPINLOCK=y
+>  CONFIG_HWSPINLOCK_QCOM=y
+> -- 
+> 2.26.2
+> 
