@@ -2,206 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFA9C1E79F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 11:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA5EC1E79FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 12:00:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726529AbgE2J6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 05:58:24 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:20686 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725821AbgE2J6Y (ORCPT
+        id S1725920AbgE2KAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 06:00:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725795AbgE2KAc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 05:58:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590746302; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=WpevIkTJ1MbRahbSDCiGvaiXrFgelDxdUivkVyI7CxE=; b=KfL3OBQvaDTGdeOxJse8cMiwMSvDTfCNjDKGXmSS/yQ/x2Mjg+MgZ9uNeSTJzcBXJtbyu+Ej
- +KznTGj/ErniLhAhXFDqNm7uZ0QR4DvlL6pHS4AucecLP+X2OA9srfePPhvMUnFMrtcNU76W
- xwUwhng2CdvOt2rGxWf8yrrQQWY=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ed0dcabcb0458693383a807 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 09:58:03
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AA186C43395; Fri, 29 May 2020 09:58:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.129] (unknown [106.222.19.5])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CBEA7C433C9;
-        Fri, 29 May 2020 09:57:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CBEA7C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2 1/4] gpio: gpiolib: Allow GPIO IRQs to lazy disable
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
- <1590253873-11556-2-git-send-email-mkshah@codeaurora.org>
- <159057264232.88029.4708934729701385486@swboyd.mtv.corp.google.com>
- <4e070cda-8c22-c554-610e-172320045840@codeaurora.org>
- <159062812628.69627.2153485337510882984@swboyd.mtv.corp.google.com>
- <948defc1-5ea0-adbb-185b-5f5a81f2e28a@codeaurora.org>
- <159070452036.69627.17850758520477366824@swboyd.mtv.corp.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <513b9bec-2a9e-3306-32d1-6cc500206645@codeaurora.org>
-Date:   Fri, 29 May 2020 15:27:52 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+        Fri, 29 May 2020 06:00:32 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DDFFC08C5C8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 03:00:32 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id a13so931481pls.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 03:00:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3gSuXGOWGraV02Ow0L0i7sd8hsTVt5hmju0us+gXA8o=;
+        b=kyNtSCAtRrsMRC/o10vYfWqp9g05/2+aA61AGbTPKFKMwsBAFXK4iKKDfeXoQzF8hi
+         kbWUjy6oWOTPlmvIobL6xMcZnx1SmBlz/xaR5VQ0GR4e/kNB7slw6ZQi8dat0HwJ/To5
+         xWkqsuXMvdNRBOz4p/whXCxvz/jwKoTC7GMoKE5HZQDkGF4CJjWBRnrNOqM4uDPKWz9t
+         ofSb8YZcQzgUM0S+Y4fLqNIvnVD3EsKVyueAIwPt4kQ+QOaabZy/EbarjIb+SQ8aH+Bl
+         gpOCnh7vo3+YE/QZtQ5lmZyCYIkTCrPAhP1je9U0D71Qs52lM9ML6PZyP+4kx8k4OaCU
+         g1NQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3gSuXGOWGraV02Ow0L0i7sd8hsTVt5hmju0us+gXA8o=;
+        b=PipAEB0Eic5ZNoWzxmT6eaWiSdzbWZIzhajFw8brjaY0lvTPGnrtzhkUtY6uKJtJ03
+         cBlcDUmAo3WWTVppJic1ET0WQGgfs2eZy6s1fwA7a4qnMgnqgNGLmnLwrJYTeeYYEOnM
+         2XAXu4taREljVIQV1AOHCns3bFq8w6i8F67kUj53dvtLGJO2ImQRp0jdAKF/6Zg2RRE/
+         UulXmbhH7Z/aLN/+Kk5mmJ4OqdRgNzWSLoJVQFZxqD4UOgrnDi1VatQEKEfR/oBIbxjG
+         bPwjOYjF1jMhBNthfKlGy9XcAWT8pGkqQdjMKdFqQ3EJSkfkw4BiFqgi4Z53v4WeQnWe
+         exXA==
+X-Gm-Message-State: AOAM5336YxI+mzc351q4z8EiJAnV858TuEKyuH54RUkTSpJPKTd5wlf/
+        lOQfmtNLvEtKCs0MH3gbgucUrg==
+X-Google-Smtp-Source: ABdhPJyrzJMEG4Ks4VvFP/4SNrgVTccSb1hrZ9W7XjPAPMwxSUZP7Lv+DJkHwFxglN70sluDC20+3w==
+X-Received: by 2002:a17:90a:fa0d:: with SMTP id cm13mr8548358pjb.131.1590746431426;
+        Fri, 29 May 2020 03:00:31 -0700 (PDT)
+Received: from localhost ([122.172.60.59])
+        by smtp.gmail.com with ESMTPSA id d21sm6909350pfd.109.2020.05.29.03.00.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 May 2020 03:00:30 -0700 (PDT)
+Date:   Fri, 29 May 2020 15:30:28 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
+        mka@chromium.org, nm@ti.com, bjorn.andersson@linaro.org,
+        agross@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org
+Subject: Re: [PATCH v5 4/5] cpufreq: qcom: Update the bandwidth levels on
+ frequency change
+Message-ID: <20200529100028.2wz2iqi5vqji2heb@vireshk-i7>
+References: <20200527202153.11659-1-sibis@codeaurora.org>
+ <20200527202153.11659-5-sibis@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <159070452036.69627.17850758520477366824@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200527202153.11659-5-sibis@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 28-05-20, 01:51, Sibi Sankar wrote:
+> Add support to parse optional OPP table attached to the cpu node when
+> the OPP bandwidth values are populated. This allows for scaling of
+> DDR/L3 bandwidth levels with frequency change.
+> 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+> 
+> V5:
+>  * Use dev_pm_opp_adjust_voltage instead [Viresh]
+>  * Misc cleanup
+> 
+> v4:
+>  * Split fast switch disable into another patch [Lukasz]
+> 
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 77 ++++++++++++++++++++++++++++++-
+>  1 file changed, 75 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index fc92a8842e252..fbd73d106a3ae 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -6,6 +6,7 @@
+>  #include <linux/bitfield.h>
+>  #include <linux/cpufreq.h>
+>  #include <linux/init.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/of_address.h>
+> @@ -31,6 +32,52 @@
+>  static unsigned long cpu_hw_rate, xo_rate;
+>  static struct platform_device *global_pdev;
+>  
+> +static int qcom_cpufreq_set_bw(struct cpufreq_policy *policy,
+> +			       unsigned long freq_khz)
+> +{
+> +	unsigned long freq_hz = freq_khz * 1000;
+> +	struct dev_pm_opp *opp;
+> +	struct device *dev;
+> +	int ret;
+> +
+> +	dev = get_cpu_device(policy->cpu);
+> +	if (!dev)
+> +		return -ENODEV;
+> +
+> +	opp = dev_pm_opp_find_freq_exact(dev, freq_hz, true);
+> +	if (IS_ERR(opp))
+> +		return PTR_ERR(opp);
+> +
+> +	ret = dev_pm_opp_set_bw(dev, opp);
+> +	dev_pm_opp_put(opp);
+> +	return ret;
+> +}
+> +
+> +static int qcom_cpufreq_update_opp(struct device *cpu_dev,
+> +				   unsigned long freq_khz,
+> +				   unsigned long volt)
+> +{
+> +	unsigned long freq_hz = freq_khz * 1000;
+> +
+> +	if (dev_pm_opp_adjust_voltage(cpu_dev, freq_hz, volt, volt, volt))
+> +		return dev_pm_opp_add(cpu_dev, freq_hz, volt);
 
-On 5/29/2020 3:52 AM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2020-05-28 06:11:23)
->> Hi,
->>
->> On 5/28/2020 6:38 AM, Stephen Boyd wrote:
->>> Quoting Maulik Shah (2020-05-27 04:26:14)
->>>> On 5/27/2020 3:14 PM, Stephen Boyd wrote:
->>>>> Quoting Maulik Shah (2020-05-23 10:11:10)
->>>>>> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
->>>>>> index eaa0e20..3810cd0 100644
->>>>>> --- a/drivers/gpio/gpiolib.c
->>>>>> +++ b/drivers/gpio/gpiolib.c
->>>>>> @@ -2465,32 +2465,37 @@ static void gpiochip_irq_relres(struct irq_data *d)
->>>>>>            gpiochip_relres_irq(gc, d->hwirq);
->>>>>>     }
->>>>>>     
->>>>>> +static void gpiochip_irq_mask(struct irq_data *d)
->>>>>> +{
->>>>>> +       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->>>>>> +
->>>>>> +       if (gc->irq.irq_mask)
->>>>>> +               gc->irq.irq_mask(d);
->>>>>> +       gpiochip_disable_irq(gc, d->hwirq);
->>>>> How does this work in the lazy case when I want to drive the GPIO? Say I
->>>>> have a GPIO that is also an interrupt. The code would look like
->>>>>
->>>>>     struct gpio_desc *gpio = gpiod_get(...)
->>>>>     unsigned int girq = gpiod_to_irq(gpio)
->>>>>
->>>>>     request_irq(girq, ...);
->>>>>
->>>>>     disable_irq(girq);
->>>>>     gpiod_direction_output(gpio, 1);
->>>>>
->>>>> In the lazy case genirq wouldn't call the mask function until the first
->>>>> interrupt arrived on the GPIO line. If that never happened then wouldn't
->>>>> we be blocked in gpiod_direction_output() when the test_bit() sees
->>>>> FLAG_USED_AS_IRQ? Or do we need irqs to be released before driving
->>>>> gpios?
->>>> The client driver can decide to unlazy disable IRQ with below API...
->>>>
->>>>     irq_set_status_flags(girq, IRQ_DISABLE_UNLAZY);
->>>>
->>>> This will immediatly invoke mask function (unlazy disable) from genirq,
->>>> even though irq_disable is not implemented.
->>>>
->>> Sure a consumer can disable the lazy feature, but that shouldn't be
->>> required to make this work. The flag was introduced in commit
->>> e9849777d0e2 ("genirq: Add flag to force mask in
->>> disable_irq[_nosync]()") specifically to help devices that can't disable
->>> the interrupt in their own device avoid a double interrupt.
->> i don't think this will be a problem.
->>
->> Case 1) Client driver have locked gpio to be used as IRQ using
->> gpiochip_lock_as_irq()
->>
->> In this case, When client driver want to change the direction for a
->> gpio, they will invoke gpiod_direction_output().
->> I see it checks for two flags (pasted below), if GPIO is used as IRQ and
->> whether its enabled IRQ or not.
->>
->>          /* GPIOs used for enabled IRQs shall not be set as output */
->>           if (test_bit(FLAG_USED_AS_IRQ, &desc->flags) &&
->>               test_bit(FLAG_IRQ_IS_ENABLED, &desc->flags)) {
->>
->> The first one (FLAG_USED_AS_IRQ) is set only if client driver in past
->> have locked gpio to use as IRQ with a call to gpiochip_lock_as_irq()
->> then it never gets unlocked until clients invoke gpiochip_unlock_as_irq().
->>
->> So i presume the client driver which in past locked gpio to be used as
->> IRQ, now wants to change direction then it will
->> a. first unlock to use as IRQ
->> b. then change the direction.
-> How does a client driver unlock to use as an IRQ though? I don't
-> understand how that is done. gpiochip_lock_as_irq() isn't a gpio
-> consumer API, it's a gpiochip/gpio provider API.
+What's going on here ? Why add OPP here ?
 
->>In the lazy case genirq wouldn't call the mask function until the first
->>interrupt arrived on the GPIO line. If that never happened then wouldn't
->>we be blocked in gpiod_direction_output() when the test_bit() sees
->>FLAG_USED_AS_IRQ?
+> +
+> +	/* Enable the opp after voltage update */
+> +	return dev_pm_opp_enable(cpu_dev, freq_hz);
+> +}
+> +
+> +/* Check for optional interconnect paths on CPU0 */
+> +static int qcom_cpufreq_find_icc_paths(struct device *dev)
+> +{
+> +	struct device *cpu_dev;
+> +
+> +	cpu_dev = get_cpu_device(0);
+> +	if (!cpu_dev)
+> +		return -EPROBE_DEFER;
+> +
+> +	return dev_pm_opp_of_find_icc_paths(cpu_dev, NULL);
+> +}
+> +
 
-What i was trying to explain in above two cases is..
-FLAG_USED_AS_IRQ is set only when client driver locks GPIO to be used as IRQ
-with gpiochip_lock_as_irq() API call.
+open code this into the probe routine.
 
-Coming to query of test_bit() seeing this flag as set won't be a problem.
-Lets take an example...
+>  static int qcom_cpufreq_hw_target_index(struct cpufreq_policy *policy,
+>  					unsigned int index)
+>  {
+> @@ -39,6 +86,8 @@ static int qcom_cpufreq_hw_target_index(struct cpufreq_policy *policy,
+>  
+>  	writel_relaxed(index, perf_state_reg);
+>  
+> +	qcom_cpufreq_set_bw(policy, freq);
+> +
+>  	arch_set_freq_scale(policy->related_cpus, freq,
+>  			    policy->cpuinfo.max_freq);
+>  	return 0;
+> @@ -88,12 +137,30 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
+>  {
+>  	u32 data, src, lval, i, core_count, prev_freq = 0, freq;
+>  	u32 volt;
+> +	u64 rate;
+>  	struct cpufreq_frequency_table	*table;
+> +	struct device_node *opp_table_np, *np;
+> +	int ret;
+>  
+>  	table = kcalloc(LUT_MAX_ENTRIES + 1, sizeof(*table), GFP_KERNEL);
+>  	if (!table)
+>  		return -ENOMEM;
+>  
+> +	ret = dev_pm_opp_of_add_table(cpu_dev);
+> +	if (!ret) {
+> +		/* Disable all opps and cross-validate against LUT */
+> +		opp_table_np = dev_pm_opp_of_get_opp_desc_node(cpu_dev);
+> +		for_each_available_child_of_node(opp_table_np, np) {
+> +			ret = of_property_read_u64(np, "opp-hz", &rate);
 
-1. Client driver locks gpio to be used as IRQ gpiochip_lock_as_irq()
-    This makes gpiolib set two flags..
-    a. FLAG_USED_AS_IRQ
-    b. FLAG_IRQ_IS_ENABLED
-    
-    Note that this is the only API which sets the flag (a) FLAG_USED_AS_IRQ.
-    
-2. During gpiochip_disable_irq() it only clears the flag (b) but the flag (a) is still set.
+No way, please use dev_pm_opp_find_freq_*() here instead to grab OPPs
+one by one.
 
-3. Now client driver does disable_irq()...
-    With this patch, in case the irq_chip did not implement irq_disable callback then irq_mask will be overridden.
-    so during first disable_irq() call, the gpiolib won't come to immediatly know that interrupt is disabled (lazy disable)
-    hence both these flags are still set.
+> +			if (!ret)
+> +				dev_pm_opp_disable(cpu_dev, rate);
+> +		}
+> +		of_node_put(opp_table_np);
+> +	} else if (ret != -ENODEV) {
+> +		dev_err(cpu_dev, "Invalid OPP table in Device tree\n");
+> +		return ret;
+> +	}
 
-4. After disabling irq, client driver want to change the direction, so it wants to now call gpiod_direction_output()
-    But before calling this, client driver knows that in step (1), client driver locked GPIO to be used only as IRQ.
-    So GPIO cannot be used as any other purpose other than IRQ till the point its locked.
-	
-    hence before calling  gpiod_direction_output(), it has to first invoke gpiochip_unlock_as_irq().
-    Calling this will clear both flags and allow GPIO to change the direction.
-	
-    Now client can invoke gpiod_direction_output() and the test_bit() check inside this won't complain.
+Rather put this in the if (ret) block and so the else part doesn't
+need extra indentation.
 
-Case 1) in my previous mail was where in above example client driver did step (1) which locks the gpio as IRQ then
-its expected to do unlock in step (4) before changing direction.
-so no issue in case 1) regarding test_bit complain.
-
-Case 2) is where driver didn't even do step-1, so in step-4, they can directly invoke gpiod_direction_output()
-client didn't lock, so the flag FLAG_USED_AS_IRQ is never set, so test_bit for this flag won't complain.
-    
-So in both cases it looks to be working as expected to me.
-Hope that its answers your query.
-
-Thanks,
-Maulik
-
->> Once it unlocks in step (a), both these flags will be cleared and there
->> won't be any error in changing direction in step (b).
+> +
+>  	for (i = 0; i < LUT_MAX_ENTRIES; i++) {
+>  		data = readl_relaxed(base + REG_FREQ_LUT +
+>  				      i * LUT_ROW_SIZE);
+> @@ -112,7 +179,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
+>  
+>  		if (freq != prev_freq && core_count != LUT_TURBO_IND) {
+>  			table[i].frequency = freq;
+> -			dev_pm_opp_add(cpu_dev, freq * 1000, volt);
+> +			qcom_cpufreq_update_opp(cpu_dev, freq, volt);
+>  			dev_dbg(cpu_dev, "index=%d freq=%d, core_count %d\n", i,
+>  				freq, core_count);
+>  		} else if (core_count == LUT_TURBO_IND) {
+> @@ -133,7 +200,8 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
+>  			if (prev->frequency == CPUFREQ_ENTRY_INVALID) {
+>  				prev->frequency = prev_freq;
+>  				prev->flags = CPUFREQ_BOOST_FREQ;
+> -				dev_pm_opp_add(cpu_dev,	prev_freq * 1000, volt);
+> +				qcom_cpufreq_update_opp(cpu_dev, prev_freq,
+> +							volt);
+>  			}
+>  
+>  			break;
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+viresh
