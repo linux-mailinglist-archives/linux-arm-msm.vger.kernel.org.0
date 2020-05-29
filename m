@@ -2,101 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FC2E1E733E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 05:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75D911E7349
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 05:26:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390206AbgE2DBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 23:01:41 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:39219 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390168AbgE2DBZ (ORCPT
+        id S2390410AbgE2DCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 23:02:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46694 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390351AbgE2DCd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 23:01:25 -0400
-Received: by mail-io1-f65.google.com with SMTP id c8so801511iob.6;
-        Thu, 28 May 2020 20:01:24 -0700 (PDT)
+        Thu, 28 May 2020 23:02:33 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCA55C08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:02:32 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id w20so637592pga.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:02:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dAwCWLS8KNCCm6d/9f1YSwjOl8xYnF9FTA83+5uv/nE=;
+        b=LuqUIHqx0kxzduKBCDkwf2McZn1HVH7hh3mhxIHXmglmbEgJKUtO1ZthgPp0gOkX0m
+         P8nmCqXKi1qeAzsw/3IwQ76dEBnaYtf4XbHQ3+4SsMzk3Qpt1jzu1+h+RmcHGBAyil7B
+         mDE9XApFYMKiQug2hQXbplDdYt9fOvo10FbOWDJ0lzI+owbqFjBvVKkfE3dc3njf2gPe
+         kyrf9lg6eJLCWFM3u5Bj5pvHoPxDFB6HjHh+Vt2ZjO3XPQJ5thy1WioZ+Xjs1iGYg6je
+         WjUA2FVgvPhsEZ/yTmyzI7M3fvKSEMnE6nPTW704c9KyU8DP3CUQCbjHx1kZWd/rovrh
+         CamA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=mCk2KWwnIfBIEmQLrjuIlBW17EAKY/fGWJtKTwA9/g0=;
-        b=D/gcPelBI4rxGYVC6qyhQGDYZnFq9A+HKU7/z5wpLUoQnC8m7dWShR60gIULl049JE
-         a4TBlbA9xrGLAtUz2fTc8LljCkgAN7vdogK1lOZIH1/L8aHibMr8s2WRmyN49M7z8NWw
-         9rlw/NcC13/HXMPKZEBjhdmh8+nSXUGIubPDn3BhmWHw/YIZHwnBdZeb02YuokdfAhvg
-         XbWp6CPoFOF/Ygtozm6x8CkTpUPP0eU55welYVaLVmhkISgArUCyWhm6T2W35bBbUqHD
-         /rggQh2roiCpCDiJmR6lvEWZofYeEkSMYVQd4rE3MqgKZRSO4saFy5P3gMQIGKXrWRpP
-         3QrA==
-X-Gm-Message-State: AOAM532t04Ykb2dIExpInQ1S+cRpgQ/OmOY3L5oMZBvVZF/2zpl0a1gp
-        QrS4s5Ys/v2th9j/iYJsyLihJUVdyQ==
-X-Google-Smtp-Source: ABdhPJxAwggDYZtalBjJo3AvhM496oWJaFC2RV8/EtvTQ4YGZKkavrgup6mDnycN9zFgI8KXCD2rgA==
-X-Received: by 2002:a05:6602:2ac9:: with SMTP id m9mr5010558iov.68.1590721283890;
-        Thu, 28 May 2020 20:01:23 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id c10sm3024045iob.22.2020.05.28.20.01.22
+        bh=dAwCWLS8KNCCm6d/9f1YSwjOl8xYnF9FTA83+5uv/nE=;
+        b=sq8keuAay4pmJybixbUzpa0icrhBJvjFQaso1k7nS2590BtVA7xs2B/znYJMXXmrl9
+         nFLbMD5rfC7rYCdpsuOXQ509kgq1tcKKGiRQ6jS5SA6TQJZ6qGIK4bJtHOY7GXiGoXBW
+         w7SBvV3EP5OYWsOyw+QI3VICl+7bmyxnvOoP4X5WwPEFKBBa/BPiKhaMR7eG31+duu2b
+         HchgCjE22/KFse9L7gWZogYzSDMeoYm68PcyP92V3kih9+2d9WZ8N5M7RVR88lZexYBE
+         DS7hR14U7o+cGB8mSPYnxTSe/ARDC4M+j9OvZLOcHPymUaLFXa5wOpTjiLJrhrgLV8xO
+         6o5A==
+X-Gm-Message-State: AOAM533QGgx2N9XzfjLCU7rWXDrbDrUmm6mSatyuglFMlIX1/V9pQOHk
+        rhZyb0daa8zA74oSrde3oJcHsA==
+X-Google-Smtp-Source: ABdhPJwBhO/+Ty8z7FnOpjylDnlmGng+vNHINF8hhIftqJlHHzIrMLF87ndNsvwwCgzwAU2Ee/BYkQ==
+X-Received: by 2002:a63:ec44:: with SMTP id r4mr6186650pgj.11.1590721352143;
+        Thu, 28 May 2020 20:02:32 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id n10sm5808220pfd.192.2020.05.28.20.02.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 20:01:23 -0700 (PDT)
-Received: (nullmailer pid 1190529 invoked by uid 1000);
-        Fri, 29 May 2020 03:01:22 -0000
-Date:   Thu, 28 May 2020 21:01:22 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     kgunda@codeaurora.org, nishakumari@codeaurora.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, rnayak@codeaurora.org, lgirdwood@gmail.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] dt-bindings: regulator: Add labibb regulator
-Message-ID: <20200529030122.GA1190091@bogus>
-References: <20200528154625.17742-1-sumit.semwal@linaro.org>
- <20200528154625.17742-3-sumit.semwal@linaro.org>
+        Thu, 28 May 2020 20:02:31 -0700 (PDT)
+Date:   Thu, 28 May 2020 20:01:26 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: add sm8150 hdk dts
+Message-ID: <20200529030126.GW279327@builder.lan>
+References: <20200524023815.21789-1-jonathan@marek.ca>
+ <20200524023815.21789-6-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200528154625.17742-3-sumit.semwal@linaro.org>
+In-Reply-To: <20200524023815.21789-6-jonathan@marek.ca>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 28 May 2020 21:16:22 +0530, Sumit Semwal wrote:
-> From: Nisha Kumari <nishakumari@codeaurora.org>
+On Sat 23 May 19:38 PDT 2020, Jonathan Marek wrote:
+
+> Add initial HDK855 dts, based on sm8150-mtp, with a few changes.
 > 
-> Adding the devicetree binding for labibb regulator.
-> 
-> Signed-off-by: Nisha Kumari <nishakumari@codeaurora.org>
-> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-> 
-> --
-> v2: updated for better compatible string and names.
-> v3: moved to yaml
-> 
+
+Happy to see this on the list Jonathan, just some minor things on the
+remoteproc nodes below.
+
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  .../regulator/qcom-labibb-regulator.yaml      | 63 +++++++++++++++++++
->  1 file changed, 63 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+>  arch/arm64/boot/dts/qcom/Makefile       |   1 +
+>  arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 461 ++++++++++++++++++++++++
+>  2 files changed, 462 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-hdk.dts
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index cc103f7020fd..e5dbd8b63951 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -22,6 +22,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
+[..]
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. SM8150 HDK";
+> +	compatible = "qcom,sm8150-hdk";
+> +
+> +	aliases {
+> +		serial0 = &uart2;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +	};
+> +
+> +	/*
+> +	 * Apparently RPMh does not provide support for PM8150 S4 because it
+> +	 * is always-on; model it as a fixed regulator.
+> +	 */
 
+One day we should stop being surprised by this and drop the "Apparently"
+from this comment ;)
 
-My bot found errors running 'make dt_binding_check' on your patch:
+> +	vreg_s4a_1p8: pm8150-s4 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_s4a_1p8";
+> +
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +
+> +		vin-supply = <&vph_pwr>;
+> +	};
+[..]
+> +&remoteproc_adsp {
+> +	status = "okay";
 
-Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml:  while scanning for the next token
-found character that cannot start any token
-  in "<unicode string>", line 48, column 1
-Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.example.dts' failed
-make[1]: *** [Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml: ignoring, error parsing file
-warning: no schema found in file: ./Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml: ignoring, error parsing file
-warning: no schema found in file: ./Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-Makefile:1300: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
+It would be nice to see a
+	firmware-name = "qcom/sm8150/adsp.mbn";
 
-See https://patchwork.ozlabs.org/patch/1299916
+here. Because if we ever end up pushing firmware to linux-firmware this
+DTB would continue to work.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
+Use https://github.com/andersson/pil-squasher to get mbn files out of
+the mdt+bXX files for your testing (or just rename/symlink the mdt to
+mbn for now).
 
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	status = "okay";
 
-Please check and re-submit.
+	firmware-name = "qcom/sm8150/cdsp.mbn";
 
+> +};
+> +
+> +&remoteproc_slpi {
+> +	status = "okay";
+
+	firmware-name = "qcom/sm8150/slpi.mbn";
+
+Regards,
+Bjorn
+
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <126 4>;
+> +};
+> +
+> +&uart2 {
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_hc {
+> +	status = "okay";
+> +
+> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+> +
+> +	vcc-supply = <&vreg_l10a_2p5>;
+> +	vcc-max-microamp = <750000>;
+> +	vccq-supply = <&vreg_l9a_1p2>;
+> +	vccq-max-microamp = <700000>;
+> +	vccq2-supply = <&vreg_s4a_1p8>;
+> +	vccq2-max-microamp = <750000>;
+> +};
+> +
+> +&ufs_mem_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vdda_ufs_2ln_core_1>;
+> +	vdda-max-microamp = <90200>;
+> +	vdda-pll-supply = <&vreg_l3c_1p2>;
+> +	vdda-pll-max-microamp = <19000>;
+> +};
+> +
+> +&usb_1_hsphy {
+> +	status = "okay";
+> +	vdda-pll-supply = <&vdd_usb_hs_core>;
+> +	vdda33-supply = <&vdda_usb_hs_3p1>;
+> +	vdda18-supply = <&vdda_usb_hs_1p8>;
+> +};
+> +
+> +&usb_2_hsphy {
+> +	status = "okay";
+> +	vdda-pll-supply = <&vdd_usb_hs_core>;
+> +	vdda33-supply = <&vdda_usb_hs_3p1>;
+> +	vdda18-supply = <&vdda_usb_hs_1p8>;
+> +};
+> +
+> +&usb_1_qmpphy {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l3c_1p2>;
+> +	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
+> +};
+> +
+> +&usb_2_qmpphy {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l3c_1p2>;
+> +	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
+> +};
+> +
+> +&usb_1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_2 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +	dr_mode = "peripheral";
+> +};
+> +
+> +&usb_2_dwc3 {
+> +	dr_mode = "host";
+> +};
+> -- 
+> 2.26.1
+> 
