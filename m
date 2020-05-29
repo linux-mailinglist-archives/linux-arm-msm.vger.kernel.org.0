@@ -2,126 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A42EA1E7140
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 02:24:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 381701E71F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 03:12:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438037AbgE2AY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 20:24:28 -0400
-Received: from ts18-13.vcr.istar.ca ([204.191.154.188]:45220 "EHLO
-        ale.deltatee.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S2437659AbgE2AY1 (ORCPT
+        id S2438300AbgE2BMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 21:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2438291AbgE2BMf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 20:24:27 -0400
-X-Greylist: delayed 1339 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2020 20:24:25 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=deltatee.com; s=20200525; h=Subject:Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Sender:
-        Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
-        :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=SHO6IGYEd6YDcItDhjnlUPf5s8OIRwKvgFq6kM1/DP0=; b=r/axjxYlIiDMYaBSzOJcmN4D8z
-        5nhVyK5+jkTuLY9r/DkIPGDqA4zBXW2lnj24/75M8PApunP8NH63l8JZKK4zOM+RkgNUjkh8Zu7L0
-        uAWAMjn96WqKiZuaMyo8cBfMY0aRwfiPej4ElwlF0HqAS+905dMVMngwIHFwJNhllq+TXuBP3naK4
-        /r6v4D4I21bAG2X4/zOYuy5cJVYuMqe8ZbDWBeVK1iPsKmEydsM4SFCoqrouhRTbQELtOXUOa1f+x
-        r0Injuuidql/AmLXAXcQzgEff4xFuOZ6W7hJhBwZm1rFF3QVErdj3XcX2phEoDBlDrcVSy7R3MomJ
-        Ro1gd+aA==;
-Received: from s0106602ad0811846.cg.shawcable.net ([68.147.191.165] helo=[192.168.0.12])
-        by ale.deltatee.com with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <logang@deltatee.com>)
-        id 1jeSSD-0001kd-5g; Thu, 28 May 2020 18:00:54 -0600
-To:     Tom Murphy <murphyt7@tcd.ie>, iommu@lists.linux-foundation.org
-Cc:     kvm@vger.kernel.org, David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        Eric Auger <eric.auger@redhat.com>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        virtualization@lists.linux-foundation.org,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Cornelia Huck <cohuck@redhat.com>,
-        linux-kernel@vger.kernel.org, Kukjin Kim <kgene@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>
-References: <20191221150402.13868-1-murphyt7@tcd.ie>
-From:   Logan Gunthorpe <logang@deltatee.com>
-Message-ID: <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
-Date:   Thu, 28 May 2020 18:00:44 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Thu, 28 May 2020 21:12:35 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92335C08C5C9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 18:12:34 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id f21so475147pgg.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 18:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kI4zkU+qRTGbgWBmmIaqkd0hMY6ChqTdeDWJXNLS2lY=;
+        b=ZvvmXCR+Jg6K8NJ5TP9zOcwdNhzYRynNjJaxE9BOTaQ4WMT0cuAK53MhuVB57WbOQK
+         DIMMu5xbsbYDtoZBkAXIqsFLAV0S8qVPpSQjVshNcMDxg5EM1F40Sgi9sY/gDyXyTX+f
+         z+gUA6CT2Pu2DiOB6T/chOupLze71KYm9GAMZBXookN3b+bO9a/W+8/PqcryQRI2RcTv
+         gz6Gok+AZtkjRlb20hYQKsgwv1A9E+/wQT/UK0Pn123vnoVOzsGpVQbPv1DOqrQKtSNe
+         Lj/qUb93fp5Lm9yu5G9EFWwrJDmjbfr9iB5WA2FM50ui6VDRlxeD2zCNvARtNlSHhZJx
+         F37Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=kI4zkU+qRTGbgWBmmIaqkd0hMY6ChqTdeDWJXNLS2lY=;
+        b=n1znlPW+B7CG25dmCzPGxGQQ8R8coPAzx766YYvzEvGmVmKJ4KM4a553TKmb24sEOu
+         1xc0g/CjkJR3QRfh+csVhSqVfeJhIZuPHz8CpYIPbKlmrvLvFxhHPGpq4gX/gVutxwdp
+         gr2Ay50VE207Hi9+bl0ED+Z343emyRpl3LAmIelIXZVj9DflpIgYOlrHTH9HLQFFQeUf
+         PalT9xTCAEsEZ0yXxEff8TuolVnY5AM4OQbvhLP4M28VXQxatU0STtkjhk4wPLBOuqkF
+         b47WpVYtwWEg0ZBrR4rYTUPxzIeONfxWgxzvwC5MBADGSaxXpZBSTRQazGio7EpQfE7k
+         hDdA==
+X-Gm-Message-State: AOAM530k4nuOTb/WlpI1C2UW0U7bsDqZsAWN4RX2kFIIYT8ugBAff4vY
+        FJ4BwvvEphKiEy4+LTVuVwENtg==
+X-Google-Smtp-Source: ABdhPJwfjsWrwj+SXPUBxHF2kWpN9zDhmEMPQN5652Q6TkJ5xvT3OmNnv6s97SHc8D/O4uvjVFeMVw==
+X-Received: by 2002:a65:64c1:: with SMTP id t1mr5957407pgv.247.1590714753667;
+        Thu, 28 May 2020 18:12:33 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 74sm2353876pfa.87.2020.05.28.18.12.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 18:12:32 -0700 (PDT)
+Date:   Thu, 28 May 2020 18:11:27 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH 08/10] clk: qcom: Add graphics clock controller driver
+ for SM8250
+Message-ID: <20200529011127.GJ279327@builder.lan>
+References: <20200524210615.17035-1-jonathan@marek.ca>
+ <20200524210615.17035-9-jonathan@marek.ca>
+ <c4d43cf01b6d014fdc2258abb94eb2c5@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20191221150402.13868-1-murphyt7@tcd.ie>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 68.147.191.165
-X-SA-Exim-Rcpt-To: baolu.lu@linux.intel.com, robin.murphy@arm.com, kgene@kernel.org, linux-kernel@vger.kernel.org, cohuck@redhat.com, dwmw2@infradead.org, gerald.schaefer@de.ibm.com, virtualization@lists.linux-foundation.org, tglx@linutronix.de, matthias.bgg@gmail.com, rodrigo.vivi@intel.com, linux-mediatek@lists.infradead.org, alex.williamson@redhat.com, eric.auger@redhat.com, intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, linux-s390@vger.kernel.org, linux-arm-kernel@lists.infradead.org, agross@kernel.org, linux-rockchip@lists.infradead.org, jonathanh@nvidia.com, krzk@kernel.org, maz@kernel.org, linux-samsung-soc@vger.kernel.org, jean-philippe@linaro.org, m.szyprowski@samsung.com, will@kernel.org, thierry.reding@gmail.com, julien.grall@arm.com, linux-tegra@vger.kernel.org, bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org, airlied@linux.ie, kvm@vger.kernel.org, iommu@lists.linux-foundation.org, murphyt7@tcd.ie
-X-SA-Exim-Mail-From: logang@deltatee.com
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on ale.deltatee.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.2
-Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c4d43cf01b6d014fdc2258abb94eb2c5@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tom,
+On Mon 25 May 02:47 PDT 2020, Sai Prakash Ranjan wrote:
 
-On 2019-12-21 8:03 a.m., Tom Murphy wrote:
-> This patchset converts the intel iommu driver to the dma-iommu api.
-
-Just wanted to note that I've rebased your series on recent kernels and
-have done some testing on my old Sandybridge machine (without the DO NOT
-MERGE patch) and have found no issues. I hope this can make progress
-soon and get merged soon. If you like you can add:
-
-Tested-By: Logan Gunthorpe <logang@deltatee.com>
-
-> While converting the driver I exposed a bug in the intel i915 driver which causes a huge amount of artifacts on the screen of my laptop. You can see a picture of it here:
-> https://github.com/pippy360/kernelPatches/blob/master/IMG_20191219_225922.jpg
+> Hi Jonathan,
 > 
-> This issue is most likely in the i915 driver and is most likely caused by the driver not respecting the return value of the dma_map_ops::map_sg function. You can see the driver ignoring the return value here:
-> https://github.com/torvalds/linux/blob/7e0165b2f1a912a06e381e91f0f4e495f4ac3736/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c#L51
+> On 2020-05-25 02:36, Jonathan Marek wrote:
+> > Add support for the graphics clock controller found on SM8250
+> > based devices. This would allow graphics drivers to probe and
+> > control their clocks.
+> > 
+> > This is copied from the downstream kernel, adapted for upstream.
+> > For example, GDSCs have been added.
+> > 
+> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > 
-> Previously this didn’t cause issues because the intel map_sg always returned the same number of elements as the input scatter gather list but with the change to this dma-iommu api this is no longer the case. I wasn’t able to track the bug down to a specific line of code unfortunately.  
+> Since this is taken from downstream, maintain the original author's
+> signed-off and add yourself as the co-developer if you have done
+> any modifications. Same applies to all other patches.
+> 
 
-I did some digging into this myself and while I don't have full patch, I
-think I traced it closer to the problem.
+I disagree with this.
 
-Sadly, ignoring the number of nents returned by map_sg() is endemic to
-dma-buf users, but AMD's GPU driver seems to do the same thing,
-presumably without issues.
+As expressed in the commit message, this patch is based on the
+downstream driver, not the individual patch.  As such, the _patch_ is
+prepared by Jonathan and by his Signed-off-by certifies the origin of
+the contribution per section 11.a or 11.b of submitting-patches.rst.
 
-Digging a bit further, I found that the i915 has an "innovative" way of
-iterating through SGLs, see [1]. I suspect if __sgt_iter is changed to
-increment with sg_dma_len() and return NULL when there is no length
-left, it may fix the issue.
 
-But, sorry, I don't really have the means or time to fix and test this
-myself.
+
+Regarding co-developed-by; this should not be used when "forwarding" an
+existing patch. Per section 11.c the contributor should add their
+Signed-off-by to certify the origin of the patch. Any modifications
+should be documented in immediately proceeding the s-o-b, as described
+later in section 11.
 
 Thanks,
-
-Logan
-
-[1]
-https://elixir.bootlin.com/linux/v5.7-rc7/source/drivers/gpu/drm/i915/i915_scatterlist.h#L76
+Bjorn
