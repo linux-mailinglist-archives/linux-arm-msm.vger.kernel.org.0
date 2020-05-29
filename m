@@ -2,235 +2,416 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE9731E7383
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 05:26:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 696821E738B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 05:26:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391660AbgE2DQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 May 2020 23:16:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48870 "EHLO
+        id S2391831AbgE2DVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 May 2020 23:21:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390190AbgE2DQ1 (ORCPT
+        with ESMTP id S2391824AbgE2DVI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 May 2020 23:16:27 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C1AC08C5C8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:16:26 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id t16so464401plo.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:16:26 -0700 (PDT)
+        Thu, 28 May 2020 23:21:08 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADC2C08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:21:06 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id a45so1266573pje.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2020 20:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=xBYSOZ99yeQDDwcg84UQj/J2oS6UqYxmljieBL0TXDQ=;
-        b=R/p0GsIG7LAKQvppr80JcPfO0lsLrZ23GICGf/kQTwCTO7sa7RxUTV3pbtf4pk78UQ
-         wL0WnxOJR0MSG3d3XwT2TTYOVjQTfzqS5nAA0FPnvjLrMPs7AAFLOQb/0JlNe385+Yuc
-         aS1rgbzn21sbs1cO6/rbemQzp09pYQEAzUvdHf+V8a//9dbGlpvVUyr6muM84gEl52yE
-         0yGghTv1SWWlKCQJLpUHXbdlGmK2T9TmpE/lDWVivXYv1Ee7j7s03LA/5tRW7Bd3T4Ud
-         BDQpjKMIyi+BxsRg4cQkY8/qnHQKoymyiPtPAHre+tJ2Tup6KQGlXyl19f/znppy8CY9
-         Xi4A==
+        bh=y0JFcp/iPCmu9DU6Nd8gpyzv46xvhokUHqizSgGLqso=;
+        b=GuT2YxhOlqhgMg3ljsVSJE/jRRraorYvYdr//h82N/Ml2GzrjY8kh2Ad0vxYImlesY
+         v6Yvvepqe2iTT73pH+DQQoHcumKdR8QMQhYFo+JaKVH4QZVwzn3fC+lqUx3HEBzajG5v
+         9pXpHQwvP4Uh3Czw9Au18G6OSE+1P2Bw5cXCto64aW0u/acHabc5iDL9TKevIfIu8Ouy
+         QefhVgAqhieenBRZaK3zN7A9zYnkar9rwO/BdPExLUMd6Jd9sddyOchW16u1N+zq2GmY
+         8MUurdjP4DiYbnhUAYJy0NJnfOe4B9rg1Z9NorrrXqzOzc2qL7B5kMWylb5wy+yOSoz+
+         CWxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=xBYSOZ99yeQDDwcg84UQj/J2oS6UqYxmljieBL0TXDQ=;
-        b=cdJFhvV0thj9y7i6AMbwSB6OYe5TPUz5zq2nlWSnD8PzjCsALqv7lP6iUhR0XvK2Fm
-         u+8m2Jnp/yzaSt7F1UP223wXfquSfKc1gdmNczZU7nnNB4f3k1m8uDM80o+hRVmwo+m9
-         5nDhx7rtpn8FKD2UZUzqfBkz69DR9FtksWSvQWPogiA1Uo8I9xVgbQG+vhyJfuLjVUoa
-         w9qujEy4S9TSwdcLOqUijv5S5nIWNzN6Gq6oqQZ+Uvonfnph9hZTaR8sEmBl5qy/gwNS
-         DNyQExEcW3Fv2ao/bsT3BZ+3SYModoQO6JjJGFNFtB51RMKSISU7muIgTI/lwJynGvWK
-         FkfA==
-X-Gm-Message-State: AOAM530ZotejQTjR6wtGDhyvddZG5ZzXxrJTBjdQekltQtaAef/EQ5Vd
-        bVrbgdqt021YA10iNzlxNotAlsMhuts=
-X-Google-Smtp-Source: ABdhPJy16q7kVGr1kuNIRKxaUU7CzK1khrd/ICI5Mfpk53w3KlzidqUW5/X0Tkf/FR6suKS5hAahTg==
-X-Received: by 2002:a17:902:b216:: with SMTP id t22mr7045362plr.36.1590722185946;
-        Thu, 28 May 2020 20:16:25 -0700 (PDT)
+        bh=y0JFcp/iPCmu9DU6Nd8gpyzv46xvhokUHqizSgGLqso=;
+        b=a/sdQWrRn59S2ZYmKFIaMuO50v0P+OV0+Y4kCnxgRScQR5I0qBG5n9aXZwnSXKFkF8
+         F8fBOZbGzi2p09gEgOGja0MCxPErHQE/9AMV+Qb3pN7jxkYpJ0aU21ktWnrSFIiI7hXx
+         cAMmzLfxxgjZqE/YcTUxzn6Ryn7DnxVYVrf0DODDAuVWCovJklOGTg1ahJNcqdKx/dWw
+         FOBmnOtLFemHttKuT2xj9fjwf+EghFbg1r+g4Yj3TtFwuVDWm3aLfgWJ4syQ2go3wfuC
+         A9CiOiRtaDnJFWixcjvIwcDf1mDRboJiEEjj6PEuWYmgkifFjPOAemwaG26MBNREvmbH
+         QFTw==
+X-Gm-Message-State: AOAM5329D4TiSkA5PRZAPaAMp9cI932PPoqDS8nl+UC9Td5YwLfT0Ty5
+        FgDt676rd1RBblsKCzKJDLV9Yw==
+X-Google-Smtp-Source: ABdhPJwBwzFf91owD50w1QB148f3rhNVzApgfnBr+Q2s1uVaSa5eEsXosE5sUCzlX0tcy0oSFOHBWg==
+X-Received: by 2002:a17:90a:20ae:: with SMTP id f43mr7533944pjg.29.1590722466116;
+        Thu, 28 May 2020 20:21:06 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id m2sm5745815pfe.41.2020.05.28.20.16.24
+        by smtp.gmail.com with ESMTPSA id 192sm5578027pfz.198.2020.05.28.20.21.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 20:16:25 -0700 (PDT)
-Date:   Thu, 28 May 2020 20:15:20 -0700
+        Thu, 28 May 2020 20:21:05 -0700 (PDT)
+Date:   Thu, 28 May 2020 20:20:00 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8150: add apps_smmu node
-Message-ID: <20200529031520.GA1799770@builder.lan>
-References: <20200524023815.21789-1-jonathan@marek.ca>
- <20200524023815.21789-2-jonathan@marek.ca>
- <20200529025246.GV279327@builder.lan>
- <d0908f34-a698-3449-35b9-7a98e9641295@marek.ca>
+To:     Jonathan McDowell <noodles@earth.li>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] ARM: dts: qcom: Add MikroTik RB3011
+Message-ID: <20200529032000.GA279327@builder.lan>
+References: <cover.1589824955.git.noodles@earth.li>
+ <75390e66c9e6e36ddd42dc7f54cac28dfd7a24b9.1589824955.git.noodles@earth.li>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d0908f34-a698-3449-35b9-7a98e9641295@marek.ca>
+In-Reply-To: <75390e66c9e6e36ddd42dc7f54cac28dfd7a24b9.1589824955.git.noodles@earth.li>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 28 May 20:02 PDT 2020, Jonathan Marek wrote:
+On Mon 18 May 11:10 PDT 2020, Jonathan McDowell wrote:
 
+> This patch adds a DTS file for the MikroTik RouterBoard 3011, which is a
+> 1U rackmount router based on the IPQ8064, supporting the serial UART,
+> dual QCA8337 Gigabit ethernet switches, boot loader NOR and user LED
+> device.
 > 
-> 
-> On 5/28/20 10:52 PM, Bjorn Andersson wrote:
-> > On Sat 23 May 19:38 PDT 2020, Jonathan Marek wrote:
-> > 
-> > > Add the apps_smmu node for sm8150. Note that adding the iommus field for
-> > > UFS is required because initializing the iommu removes the bypass mapping
-> > > that created by the bootloader.
-> > > 
-> > 
-> > Unrelated to the patch itself; how do you disable the splash screen on
-> > 8150? "fastboot oem select-display-panel none" doesn't seem to work for
-> > me on the MTP - and hence this would prevent my device from booting.
-> > 
-> > Thanks,
-> > Bjorn
-> > 
-> 
-> I don't have a MTP, but on HDK855, "fastboot oem select-display-panel none"
-> combined with setting the physical switch to HDMI mode (which switches off
-> the 1440x2560 panel) gets it to not setup the display at all (just the
-> fastboot command isn't enough).
-> 
+> Signed-off-by: Jonathan McDowell <noodles@earth.li>
 
-Okay, I don't think we have anything equivalent on the MTP, but good to
-know.
-
-> With HDK865 though that doesn't work and I have a hack to work around it
-> (writing 0 to INTF_TIMING_ENGINE_EN early on in boot will stop video mode
-> scanout and it won't crash).
-> 
-
-Then we need to sort this out in the arm-smmu driver before we can
-enable the apps_smmu node on 8250. I did receive some guidance from Will
-on the subject and have started looking into this.
+Patch 2 and 3 picked up for 5.9
 
 Thanks,
 Bjorn
 
-> > > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/sm8150.dtsi | 91 ++++++++++++++++++++++++++++
-> > >   1 file changed, 91 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > > index a36512d1f6a1..acb839427b12 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > > @@ -442,6 +442,8 @@ ufs_mem_hc: ufshc@1d84000 {
-> > >   			resets = <&gcc GCC_UFS_PHY_BCR>;
-> > >   			reset-names = "rst";
-> > > +			iommus = <&apps_smmu 0x300 0>;
-> > > +
-> > >   			clock-names =
-> > >   				"core_clk",
-> > >   				"bus_aggr_clk",
-> > > @@ -706,6 +708,7 @@ usb_1_dwc3: dwc3@a600000 {
-> > >   				compatible = "snps,dwc3";
-> > >   				reg = <0 0x0a600000 0 0xcd00>;
-> > >   				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> > > +				iommus = <&apps_smmu 0x140 0>;
-> > >   				snps,dis_u2_susphy_quirk;
-> > >   				snps,dis_enblslpm_quirk;
-> > >   				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-> > > @@ -742,6 +745,94 @@ spmi_bus: spmi@c440000 {
-> > >   			cell-index = <0>;
-> > >   		};
-> > > +		apps_smmu: iommu@15000000 {
-> > > +			compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
-> > > +			reg = <0 0x15000000 0 0x100000>;
-> > > +			#iommu-cells = <2>;
-> > > +			#global-interrupts = <1>;
-> > > +			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 322 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 323 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 325 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 327 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 332 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 333 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 344 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 345 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 395 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 396 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 397 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 398 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 399 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 400 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 401 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 402 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 406 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 407 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>,
-> > > +				     <GIC_SPI 409 IRQ_TYPE_LEVEL_HIGH>;
-> > > +		};
-> > > +
-> > >   		remoteproc_adsp: remoteproc@17300000 {
-> > >   			compatible = "qcom,sm8150-adsp-pas";
-> > >   			reg = <0x0 0x17300000 0x0 0x4040>;
-> > > -- 
-> > > 2.26.1
-> > > 
+> ---
+>  arch/arm/boot/dts/Makefile                |   1 +
+>  arch/arm/boot/dts/qcom-ipq8064-rb3011.dts | 308 ++++++++++++++++++++++
+>  2 files changed, 309 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
+> 
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index e8dd99201397..e697a4bd7426 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -884,6 +884,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+>  	qcom-ipq4019-ap.dk07.1-c1.dtb \
+>  	qcom-ipq4019-ap.dk07.1-c2.dtb \
+>  	qcom-ipq8064-ap148.dtb \
+> +	qcom-ipq8064-rb3011.dtb \
+>  	qcom-msm8660-surf.dtb \
+>  	qcom-msm8960-cdp.dtb \
+>  	qcom-msm8974-fairphone-fp2.dtb \
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
+> new file mode 100644
+> index 000000000000..282b89ce3d45
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
+> @@ -0,0 +1,308 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +#include "qcom-ipq8064.dtsi"
+> +#include <dt-bindings/input/input.h>
+> +
+> +/ {
+> +	model = "MikroTik RB3011UiAS-RM";
+> +	compatible = "mikrotik,rb3011";
+> +
+> +	aliases {
+> +		serial0 = &gsbi7_serial;
+> +		ethernet0 = &gmac0;
+> +		ethernet1 = &gmac3;
+> +		mdio-gpio0 = &mdio0;
+> +		mdio-gpio1 = &mdio1;
+> +	};
+> +
+> +	chosen {
+> +		bootargs = "loglevel=8 console=ttyMSM0,115200";
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	memory@0 {
+> +		reg = <0x42000000 0x3e000000>;
+> +		device_type = "memory";
+> +	};
+> +
+> +	mdio0: mdio@0 {
+> +		status = "okay";
+> +		compatible = "virtual,mdio-gpio";
+> +		gpios = <&qcom_pinmux 1 GPIO_ACTIVE_HIGH>,
+> +			<&qcom_pinmux 0 GPIO_ACTIVE_HIGH>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pinctrl-0 = <&mdio0_pins>;
+> +		pinctrl-names = "default";
+> +
+> +		switch0: switch@10 {
+> +			compatible = "qca,qca8337";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			dsa,member = <0 0>;
+> +
+> +			pinctrl-0 = <&sw0_reset_pin>;
+> +			pinctrl-names = "default";
+> +
+> +			reset-gpios = <&qcom_pinmux 16 GPIO_ACTIVE_LOW>;
+> +			reg = <0x10>;
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				switch0cpu: port@0 {
+> +					reg = <0>;
+> +					label = "cpu";
+> +					ethernet = <&gmac0>;
+> +					phy-mode = "rgmii-id";
+> +					fixed-link {
+> +						speed = <1000>;
+> +						full-duplex;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +					label = "sw1";
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +					label = "sw2";
+> +				};
+> +
+> +				port@3 {
+> +					reg = <3>;
+> +					label = "sw3";
+> +				};
+> +
+> +				port@4 {
+> +					reg = <4>;
+> +					label = "sw4";
+> +				};
+> +
+> +				port@5 {
+> +					reg = <5>;
+> +					label = "sw5";
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	mdio1: mdio@1 {
+> +		status = "okay";
+> +		compatible = "virtual,mdio-gpio";
+> +		gpios = <&qcom_pinmux 11 GPIO_ACTIVE_HIGH>,
+> +			<&qcom_pinmux 10 GPIO_ACTIVE_HIGH>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pinctrl-0 = <&mdio1_pins>;
+> +		pinctrl-names = "default";
+> +
+> +		switch1: switch@14 {
+> +			compatible = "qca,qca8337";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			dsa,member = <1 0>;
+> +
+> +			pinctrl-0 = <&sw1_reset_pin>;
+> +			pinctrl-names = "default";
+> +
+> +			reset-gpios = <&qcom_pinmux 17 GPIO_ACTIVE_LOW>;
+> +			reg = <0x10>;
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				switch1cpu: port@0 {
+> +					reg = <0>;
+> +					label = "cpu";
+> +					ethernet = <&gmac3>;
+> +					phy-mode = "sgmii";
+> +					fixed-link {
+> +						speed = <1000>;
+> +						full-duplex;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +					label = "sw6";
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +					label = "sw7";
+> +				};
+> +
+> +				port@3 {
+> +					reg = <3>;
+> +					label = "sw8";
+> +				};
+> +
+> +				port@4 {
+> +					reg = <4>;
+> +					label = "sw9";
+> +				};
+> +
+> +				port@5 {
+> +					reg = <5>;
+> +					label = "sw10";
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	soc {
+> +		gsbi5: gsbi@1a200000 {
+> +			qcom,mode = <GSBI_PROT_SPI>;
+> +			status = "okay";
+> +
+> +			spi4: spi@1a280000 {
+> +				status = "okay";
+> +				spi-max-frequency = <50000000>;
+> +
+> +				pinctrl-0 = <&spi_pins>;
+> +				pinctrl-names = "default";
+> +
+> +				cs-gpios = <&qcom_pinmux 20 GPIO_ACTIVE_HIGH>;
+> +
+> +				norflash: s25fl016k@0 {
+> +					compatible = "jedec,spi-nor";
+> +					#address-cells = <1>;
+> +					#size-cells = <1>;
+> +					spi-max-frequency = <50000000>;
+> +					reg = <0>;
+> +
+> +					partition@0 {
+> +						label = "RouterBoot";
+> +						reg = <0x0 0x40000>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		gpio_keys {
+> +			compatible = "gpio-keys";
+> +			pinctrl-0 = <&buttons_pins>;
+> +			pinctrl-names = "default";
+> +
+> +			button@1 {
+> +				label = "reset";
+> +				linux,code = <KEY_RESTART>;
+> +				gpios = <&qcom_pinmux 66 GPIO_ACTIVE_LOW>;
+> +				linux,input-type = <1>;
+> +				debounce-interval = <60>;
+> +			};
+> +		};
+> +
+> +		leds {
+> +			compatible = "gpio-leds";
+> +			pinctrl-0 = <&leds_pins>;
+> +			pinctrl-names = "default";
+> +
+> +			led@7 {
+> +				label = "rb3011:green:user";
+> +				gpios = <&qcom_pinmux 33 GPIO_ACTIVE_HIGH>;
+> +				default-state = "off";
+> +			};
+> +		};
+> +
+> +	};
+> +};
+> +
+> +&gmac0 {
+> +	status = "okay";
+> +
+> +	phy-mode = "rgmii";
+> +	qcom,id = <0>;
+> +	phy-handle = <&switch0cpu>;
+> +
+> +	fixed-link {
+> +		speed = <1000>;
+> +		full-duplex;
+> +	};
+> +};
+> +
+> +&gmac3 {
+> +	status = "okay";
+> +
+> +	phy-mode = "sgmii";
+> +	qcom,id = <3>;
+> +	phy-handle = <&switch1cpu>;
+> +
+> +	fixed-link {
+> +		speed = <1000>;
+> +		full-duplex;
+> +	};
+> +};
+> +
+> +&gsbi7 {
+> +	status = "okay";
+> +	qcom,mode = <GSBI_PROT_I2C_UART>;
+> +};
+> +
+> +&gsbi7_serial {
+> +	status = "okay";
+> +};
+> +
+> +&qcom_pinmux {
+> +	buttons_pins: buttons_pins {
+> +		mux {
+> +			pins = "gpio66";
+> +			drive-strength = <16>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	leds_pins: leds_pins {
+> +		mux {
+> +			pins = "gpio33";
+> +			drive-strength = <16>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	mdio0_pins: mdio0_pins {
+> +		mux {
+> +			pins = "gpio0", "gpio1";
+> +			function = "gpio";
+> +			drive-strength = <8>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	mdio1_pins: mdio1_pins {
+> +		mux {
+> +			pins = "gpio10", "gpio11";
+> +			function = "gpio";
+> +			drive-strength = <8>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	sw0_reset_pin: sw0_reset_pin {
+> +		mux {
+> +			pins = "gpio16";
+> +			drive-strength = <16>;
+> +			function = "gpio";
+> +			bias-disable;
+> +			input-disable;
+> +		};
+> +	};
+> +
+> +	sw1_reset_pin: sw1_reset_pin {
+> +		mux {
+> +			pins = "gpio17";
+> +			drive-strength = <16>;
+> +			function = "gpio";
+> +			bias-disable;
+> +			input-disable;
+> +		};
+> +	};
+> +};
+> -- 
+> 2.20.1
+> 
