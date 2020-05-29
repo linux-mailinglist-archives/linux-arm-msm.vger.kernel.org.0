@@ -2,130 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D1981E78A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 10:46:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 464C11E7932
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 11:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725681AbgE2IqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 04:46:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbgE2IqY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 04:46:24 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0C28C03E969
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 01:46:23 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id q24so929452pjd.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 01:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XiIwcIBaCjacNvQQiGLxskNtGMHCMoH6FbpJtFd+1bk=;
-        b=xeh7YBtNLEg/HSHajEUKqjg00CUU1WpaXmJGLNkGlhAEyBmFt0sUQ+SEm4iiDCg6Ap
-         4hiWdMIri0YvFdptKT236rPnFWAse7EO0mwSgX3dwsi41CIjD5XNM+TpZIXfU0wCkWEa
-         F4/S+lzMYxRF4Uvl31ZjzVoEpXMr4ml7Nyh4EKm/gpF2qlJtdNIfcv3d0zdx/eIm3Wyl
-         95Bh9PElu3SB0xXOKliink64R6ECiTuBIX4geW1ol4dHZyLEhMz8Bbv2EBwuhD886IHu
-         t3+Ovs+G1V6GSYC8sV89Fzj2PGmJ2Uocd19lpFoDNjaHWms+7zgLhy4LtR7JumPEGtTD
-         jWWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XiIwcIBaCjacNvQQiGLxskNtGMHCMoH6FbpJtFd+1bk=;
-        b=bfZLh2Iii88Ze86hO0ITPgzosI93iTBm6GKTEQ83RsysUmhC0fnL47AC59VwM2CCy0
-         QbJ7Kv8qfBhN6y6ZsbWo0prFXMTCJoFvGkbx2AgN5dIW/94Ki1WdQ1VIXlqlyUuWhIC6
-         jODuHAhfkO3nUUkuPsZ7LVanz9Kw7Wmm6RGJeTR36v1IeOXggXA76ir4Al39uQZOiMw4
-         KctrLnUc2/Tu4DLG2Hr98zPnT+ochB70UktXX2KjY1R23+94oqMWS+WIMzQVRW1t1X9G
-         zJCfEuJIoLAw42xntY4xerTHxSggS0ulrMDDpBbm3sD6fHZi3y6vOSfrM6VgLifhK6Lx
-         gHXQ==
-X-Gm-Message-State: AOAM533a92/GtX19Dgq2wbTI7WsZlbJ4WlKvnObaQKBY1OF/fUybrSQj
-        8dC/Qsoxqh84ZkJIqtMujino
-X-Google-Smtp-Source: ABdhPJw2IVsRy1qcylsIEgJDPGvIMlFPrIHQgr9qNQXu3NhWSVtIWrdCs97oISksqqFQyrjbCnIsZw==
-X-Received: by 2002:a17:902:8218:: with SMTP id x24mr7894288pln.150.1590741983196;
-        Fri, 29 May 2020 01:46:23 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6417:1d6e:1408:1e13:b32e:6edf])
-        by smtp.gmail.com with ESMTPSA id i29sm6950738pfk.38.2020.05.29.01.46.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 29 May 2020 01:46:22 -0700 (PDT)
-Date:   Fri, 29 May 2020 14:16:14 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Chris Lew <clew@codeaurora.org>
-Cc:     davem@davemloft.net, bjorn.andersson@linaro.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] net: qrtr: Allocate workqueue before kernel_bind
-Message-ID: <20200529084613.GA23769@Mani-XPS-13-9360>
-References: <1590707126-16957-1-git-send-email-clew@codeaurora.org>
+        id S1725601AbgE2JUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 05:20:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:34576 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725306AbgE2JUr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 05:20:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590744045; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=gtTL96xroM0cMRUy1kb2dBW2tNzxqYj7hRbU9Vw34yY=; b=fVHZwJAzTYzeaex3jcRaPpsLoxkH3Q9V85mfkgq0WC+Pi5zC+ZhqDdvgw9h7DIGRIKFwSYFK
+ RrCIRdA7nicLXcL33q99dnHLEbgW0HLAUrwic2yXuCjC6ggN5uj2M189HLYvM4yp6eKnrVNN
+ MYWHhKH3haVBUB3OjzinDUccPiE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5ed0d3eb44a25e005206a628 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 09:20:43
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 59565C43391; Fri, 29 May 2020 09:20:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.129] (unknown [106.222.19.5])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F2202C433C9;
+        Fri, 29 May 2020 09:20:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F2202C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v2 4/4] irqchip: qcom-pdc: Introduce irq_set_wake call
+To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
+        mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org
+References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
+ <1590253873-11556-5-git-send-email-mkshah@codeaurora.org>
+ <159057454795.88029.5963412495484312088@swboyd.mtv.corp.google.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <e565f798-e62b-7b03-6cd5-6daf9b516262@codeaurora.org>
+Date:   Fri, 29 May 2020 14:50:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1590707126-16957-1-git-send-email-clew@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <159057454795.88029.5963412495484312088@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 28, 2020 at 04:05:26PM -0700, Chris Lew wrote:
-> A null pointer dereference in qrtr_ns_data_ready() is seen if a client
-> opens a qrtr socket before qrtr_ns_init() can bind to the control port.
-> When the control port is bound, the ENETRESET error will be broadcasted
-> and clients will close their sockets. This results in DEL_CLIENT
-> packets being sent to the ns and qrtr_ns_data_ready() being called
-> without the workqueue being allocated.
-> 
-> Allocate the workqueue before setting sk_data_ready and binding to the
-> control port. This ensures that the work and workqueue structs are
-> allocated and initialized before qrtr_ns_data_ready can be called.
-> 
-> Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
+Hi,
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On 5/27/2020 3:45 PM, Stephen Boyd wrote:
+> Quoting Maulik Shah (2020-05-23 10:11:13)
+>> Remove irq_disable callback to allow lazy disable for pdc interrupts.
+>>
+>> Add irq_set_wake callback that unmask interrupt in HW when drivers
+>> mark interrupt for wakeup. Interrupt will be cleared in HW during
+>> lazy disable if its not marked for wakeup.
+>>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> ---
+>>   drivers/irqchip/qcom-pdc.c | 33 +++++++++++++++++----------------
+>>   1 file changed, 17 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+>> index 6ae9e1f..f7c0662 100644
+>> --- a/drivers/irqchip/qcom-pdc.c
+>> +++ b/drivers/irqchip/qcom-pdc.c
+>> @@ -36,6 +36,7 @@ struct pdc_pin_region {
+>>          u32 cnt;
+>>   };
+>>   
+>> +DECLARE_BITMAP(pdc_wake_irqs, PDC_MAX_IRQS);
+> static?
+Thanks i will declare as static in v3.
+>
+>>   static DEFINE_RAW_SPINLOCK(pdc_lock);
+>>   static void __iomem *pdc_base;
+>>   static struct pdc_pin_region *pdc_region;
+>> @@ -87,22 +88,20 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
+>>          raw_spin_unlock(&pdc_lock);
+>>   }
+>>   
+>> -static void qcom_pdc_gic_disable(struct irq_data *d)
+>> +static int qcom_pdc_gic_set_wake(struct irq_data *d, unsigned int on)
+>>   {
+>>          if (d->hwirq == GPIO_NO_WAKE_IRQ)
+>> -               return;
+>> -
+>> -       pdc_enable_intr(d, false);
+>> -       irq_chip_disable_parent(d);
+>> -}
+>> +               return 0;
+> Shouldn't this fail if we can't set for wake?
+
+we return success/failure from parent chip with below call at end of 
+set_wake.
+
+return irq_chip_set_wake_parent(d, on);
+
+>
+>>   
+>> -static void qcom_pdc_gic_enable(struct irq_data *d)
+>> -{
+>> -       if (d->hwirq == GPIO_NO_WAKE_IRQ)
+>> -               return;
+>> +       if (on) {
+>> +               pdc_enable_intr(d, true);
+>> +               irq_chip_enable_parent(d);
+>> +               set_bit(d->hwirq, pdc_wake_irqs);
+>> +       } else {
+>> +               clear_bit(d->hwirq, pdc_wake_irqs);
+>> +       }
+>>   
+>> -       pdc_enable_intr(d, true);
+>> -       irq_chip_enable_parent(d);
+>> +       return irq_chip_set_wake_parent(d, on);
+>>   }
+>>   
+>>   static void qcom_pdc_gic_mask(struct irq_data *d)
+> The diff is really hard to read too. Maybe set_wake can be added first
+> and then the enable/disable functions removed?
+i think should be ok in same patch, if you insist i can split this 
+change in to two.
+>
+>> @@ -110,6 +109,9 @@ static void qcom_pdc_gic_mask(struct irq_data *d)
+>>          if (d->hwirq == GPIO_NO_WAKE_IRQ)
+>>                  return;
+>>   
+>> +       if (!test_bit(d->hwirq, pdc_wake_irqs))
+>> +               pdc_enable_intr(d, false);
+>> +
+>>          irq_chip_mask_parent(d);
+>>   }
+>>   
+>> @@ -118,6 +120,7 @@ static void qcom_pdc_gic_unmask(struct irq_data *d)
+>>          if (d->hwirq == GPIO_NO_WAKE_IRQ)
+>>                  return;
+>>   
+>> +       pdc_enable_intr(d, true);
+>>          irq_chip_unmask_parent(d);
+>>   }
+>>   
+> I find these two hunks deeply confusing. I'm not sure what the
+> maintainers think though. I hope it would be simpler to always enable
+> the hwirqs in the pdc when an irq is requested and only disable it in
+> the pdc when the system goes to suspend and the pdc pin isn't for an irq
+> that's marked for wakeup. Does that break somehow?
+PDC monitors interrupts during CPUidle as well, in cases where deepest 
+low power mode happened from cpuidle where GIC is not active.
+If we keep PDC IRQ always enabled/unmasked during idle and then 
+disable/mask when entering to suspend, it will break cpuidle.
+
+>
+> My understanding of the hardware is that the GPIO controller has lines
+> directly connected to various SPI lines on the GIC and PDC has a way to
+> monitor those direct connections and wakeup the CPUs when they trigger
+> the detection logic in the PDC. The enable/disable bit in PDC gates that
+> logic for each wire between the GPIO controller and the GIC.
+>
+> So isn't it simpler to leave the PDC monitoring pins that we care about
+> all the time and only stop monitoring when we enter and leave suspend?
+
+it can affect idle path as explained above.
+
+> And shouldn't the driver set something sane in qcom_pdc_init() to
+> disable all the pdc pins so that we don't rely on boot state to
+> configure pins for wakeup?
+
+We don't rely on boot state, by default all interrupt will be disabled.
+
+This is same to GIC driver having GICD_ISENABLER register, where all 
+bits (one bit per interrupt) set to 0 (masked irqs) during boot up.
+
+Similarly PDC also have all bits set to 0 in PDC's IRQ_ENABLE_BANK.
 
 Thanks,
-Mani
+Maulik
+>
+>> @@ -197,15 +200,13 @@ static struct irq_chip qcom_pdc_gic_chip = {
+>>          .irq_eoi                = irq_chip_eoi_parent,
+>>          .irq_mask               = qcom_pdc_gic_mask,
+>>          .irq_unmask             = qcom_pdc_gic_unmask,
+>> -       .irq_disable            = qcom_pdc_gic_disable,
+>> -       .irq_enable             = qcom_pdc_gic_enable,
+>>          .irq_get_irqchip_state  = qcom_pdc_gic_get_irqchip_state,
+>>          .irq_set_irqchip_state  = qcom_pdc_gic_set_irqchip_state,
+>>          .irq_retrigger          = irq_chip_retrigger_hierarchy,
+>>          .irq_set_type           = qcom_pdc_gic_set_type,
+>> +       .irq_set_wake           = qcom_pdc_gic_set_wake,
+>>          .flags                  = IRQCHIP_MASK_ON_SUSPEND |
+>> -                                 IRQCHIP_SET_TYPE_MASKED |
+>> -                                 IRQCHIP_SKIP_SET_WAKE,
+>> +                                 IRQCHIP_SET_TYPE_MASKED,
+>>          .irq_set_vcpu_affinity  = irq_chip_set_vcpu_affinity_parent,
+>>          .irq_set_affinity       = irq_chip_set_affinity_parent,
 
-> ---
->  net/qrtr/ns.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-> index e7d0fe3f4330..c5b3202a14ca 100644
-> --- a/net/qrtr/ns.c
-> +++ b/net/qrtr/ns.c
-> @@ -712,6 +712,10 @@ void qrtr_ns_init(void)
->  		goto err_sock;
->  	}
->  
-> +	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
-> +	if (!qrtr_ns.workqueue)
-> +		goto err_sock;
-> +
->  	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns_data_ready;
->  
->  	sq.sq_port = QRTR_PORT_CTRL;
-> @@ -720,17 +724,13 @@ void qrtr_ns_init(void)
->  	ret = kernel_bind(qrtr_ns.sock, (struct sockaddr *)&sq, sizeof(sq));
->  	if (ret < 0) {
->  		pr_err("failed to bind to socket\n");
-> -		goto err_sock;
-> +		goto err_wq;
->  	}
->  
->  	qrtr_ns.bcast_sq.sq_family = AF_QIPCRTR;
->  	qrtr_ns.bcast_sq.sq_node = QRTR_NODE_BCAST;
->  	qrtr_ns.bcast_sq.sq_port = QRTR_PORT_CTRL;
->  
-> -	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
-> -	if (!qrtr_ns.workqueue)
-> -		goto err_sock;
-> -
->  	ret = say_hello(&qrtr_ns.bcast_sq);
->  	if (ret < 0)
->  		goto err_wq;
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+
