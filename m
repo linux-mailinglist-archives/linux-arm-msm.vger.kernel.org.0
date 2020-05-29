@@ -2,50 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 438131E8113
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 17:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C92411E8291
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 17:54:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726845AbgE2PBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 11:01:00 -0400
-Received: from foss.arm.com ([217.140.110.172]:37480 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726849AbgE2PA7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 11:00:59 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D452F1045;
-        Fri, 29 May 2020 08:00:58 -0700 (PDT)
-Received: from [10.37.12.52] (unknown [10.37.12.52])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C41F73F718;
-        Fri, 29 May 2020 08:00:48 -0700 (PDT)
-Subject: Re: [PATCH v8 0/8] Add support for devices in the Energy Model
-To:     rjw@rjwysocki.net
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        rostedt@goodmis.org, qperret@google.com, bsegall@google.com,
-        mgorman@suse.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        festevam@gmail.com, kernel@pengutronix.de, khilman@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200527095854.21714-1-lukasz.luba@arm.com>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <8fca24a1-93f7-f859-bd1f-b7bf484737f4@arm.com>
-Date:   Fri, 29 May 2020 16:00:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727061AbgE2PyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 11:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53876 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726838AbgE2PyV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 11:54:21 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B528C03E969
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 08:54:21 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id w1so2619694qkw.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2020 08:54:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=jAZEmeSRW8ruDxsVIJHiZnQc1uKz6c8cJEE/DAMVmG8=;
+        b=Cvi1doDaVIU1tjJPBprDVj0FVwq7jiOaXC7E/40SnLlLuwTTJhJ1xxcZhLqLzEF+Te
+         jM7uzW0Za5lm5BgNlPCJ1cgguX9WJTwArV78Pk4g7h4cgWbz+vqtIN9sbjbm37yaXW8W
+         dAWgVwE0iTL8Lxn5VsHYbSQnCNvW3nhQ3a/U8Qk+An2Znot/bcO7ZFiygyY6PrjJoxD7
+         5V8gOwpS8aL741k7EbSpAoDy/zYoCKC38p/lwWZgckjm/FZe+nMC8clGusUh39CdaYUd
+         weJBouQ05n7COyckI4NFb5XKi0ozPiQnloFxpPa/8NmYNrPKKeuz3fPm/fwKA4HiDFTG
+         YfPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=jAZEmeSRW8ruDxsVIJHiZnQc1uKz6c8cJEE/DAMVmG8=;
+        b=NBQ5yfF7AFf4Y3Hkp1gG501sZ5ZF/Vj/lyi8J4byc1x5p8rF1JQxUFcgOFFaYmYeAE
+         QnZsDUC4bY+ATyUqTFhJxyvF9ZexsGnPPfqbdLttnyaZmlalE+wnQNGhNC3aqke55oPx
+         j3v1JWICeYgN+2BurOm74UggFurtuKF2RlmDf/g11JsRh9po6Nve5gkdHPCkagdc2Wx9
+         VWrtOkqwoDQnWr0D8qrsaaBXbWEOvdxjNCe6fB5IRPld7I4RhPH5I7Ft7Qi6m/Clvh5V
+         1hmcrbCDFP6lfTeixLTyuSjgzREtSbpQrSwjVFgSkiuXlgxlE7kc5JU1c5RdVPBbyRjO
+         ZROA==
+X-Gm-Message-State: AOAM530bg99OHJ5ePgA02MqC7Gd9Vg5drS5y7nJUx6JyFTVnUOGdDNbs
+        tjOPE8ynXN7/0Z4b46Igp8ZbPA==
+X-Google-Smtp-Source: ABdhPJxMNDaOikkYGBrV6CrZ5Mck0KcFjiHViFDUm7sCtJU3LXHFFao7/bkIR5WhKNCY5/HAeuKUng==
+X-Received: by 2002:a37:b16:: with SMTP id 22mr7584237qkl.181.1590767660554;
+        Fri, 29 May 2020 08:54:20 -0700 (PDT)
+Received: from [192.168.1.92] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.gmail.com with ESMTPSA id x41sm8778389qtb.76.2020.05.29.08.54.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 May 2020 08:54:19 -0700 (PDT)
+Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
+ support
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>
+References: <20200501045111.665881-1-ebiggers@kernel.org>
+ <20200501045111.665881-5-ebiggers@kernel.org>
+ <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
+ <20200507180435.GB236103@gmail.com> <20200507180838.GC236103@gmail.com>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <40600d42-dfa9-b60c-6ce8-0eda6bdf7ddf@linaro.org>
+Date:   Fri, 29 May 2020 11:54:18 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20200527095854.21714-1-lukasz.luba@arm.com>
+In-Reply-To: <20200507180838.GC236103@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -54,46 +82,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafael,
 
 
-On 5/27/20 10:58 AM, Lukasz Luba wrote:
-> Hi all,
+On 5/7/20 2:08 PM, Eric Biggers wrote:
+> On Thu, May 07, 2020 at 11:04:35AM -0700, Eric Biggers wrote:
+>> Hi Thara,
+>>
+>> On Thu, May 07, 2020 at 08:36:58AM -0400, Thara Gopinath wrote:
+>>>
+>>>
+>>> On 5/1/20 12:51 AM, Eric Biggers wrote:
+>>>> From: Eric Biggers <ebiggers@google.com>
+>>>>
+>>>> Add support for Qualcomm Inline Crypto Engine (ICE) to ufs-qcom.
+>>>>
+>>>> The standards-compliant parts, such as querying the crypto capabilities
+>>>> and enabling crypto for individual UFS requests, are already handled by
+>>>> ufshcd-crypto.c, which itself is wired into the blk-crypto framework.
+>>>> However, ICE requires vendor-specific init, enable, and resume logic,
+>>>> and it requires that keys be programmed and evicted by vendor-specific
+>>>> SMC calls.  Make the ufs-qcom driver handle these details.
+>>>>
+>>>> I tested this on Dragonboard 845c, which is a publicly available
+>>>> development board that uses the Snapdragon 845 SoC and runs the upstream
+>>>> Linux kernel.  This is the same SoC used in the Pixel 3 and Pixel 3 XL
+>>>> phones.  This testing included (among other things) verifying that the
+>>>> expected ciphertext was produced, both manually using ext4 encryption
+>>>> and automatically using a block layer self-test I've written.
+>>> Hello Eric,
+>>>
+>>> I am interested in testing out this series on 845, 855 and if possile on 865
+>>> platforms. Can you give me some more details about your testing please.
+>>>
+>>
+>> Great!  You can test this with fscrypt, a.k.a. ext4 or f2fs encryption.
+>>
+>> A basic manual test would be:
+>>
+>> 1. Build a kernel with:
+>>
+>> 	CONFIG_BLK_INLINE_ENCRYPTION=y
+>> 	CONFIG_FS_ENCRYPTION=y
+>> 	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
 > 
-> Background of this version:
-> This is the v8 of the patch set and is has smaller scope. I had to split
-> the series into two: EM changes and thermal changes due to devfreq
-> dependencies. The patches from v7 9-14 which change devfreq cooling are
-> going to be sent in separate patch series, just after this set get merged
-> into mainline. These patches related to EM got acks and hopefully can go
-> through linux-pm tree. The later thermal patches will go through thermal
-> tree.
-> 
-> The idea and purpose of the Energy Model framework changes:
-> This patch set introduces support for devices in the Energy Model (EM)
-> framework. It will unify the power model for thermal subsystem. It will
-> make simpler to add support for new devices willing to use more
-> advanced features (like Intelligent Power Allocation). Now it should
-> require less knowledge and effort for driver developer to add e.g.
-> GPU driver with simple energy model. A more sophisticated energy model
-> in the thermal framework is also possible, driver needs to provide
-> a dedicated callback function. More information can be found in the
-> updated documentation file.
-> 
-> First 7 patches are refactoring Energy Model framework to add support
-> of other devices that CPUs. They change:
-> - naming convention from 'capacity' to 'performance' state,
-> - API arguments adding device pointer and not rely only on cpumask,
-> - change naming when 'cpu' was used, now it's a 'device'
-> - internal structure to maintain registered devices
-> - update users to the new API
-> Patch 8 updates OPP framework helper function to be more generic, not
-> CPU specific.
-> 
-> The patch set is based on linux-pm branch linux-next 813946019dfd.
-> 
+> Sorry, I forgot: 'CONFIG_SCSI_UFS_CRYPTO=y' is needed too.
 
-Could you take the patch set via your linux-pm?
+Hi Eric,
 
-Regards,
-Lukasz
+I tested this manually on db845c, sm8150-mtp and sm8250-mtp.(I added the 
+dts file entries for 8150 and 8250).
+
+I also ran OsBench test case createfiles[1] on the above platforms. 
+Following are the results on a non encrypted and encrypted directory on 
+the same file system(lower the number better)
+
+			8250-MTP	8150-MTP	DB845
+
+nonencrypt_dir(us) 	55.3108954	26.8323124    69.5709552
+encrypt_dir(us) 	70.0214426	37.5411254    92.3818296
+
+
+
+1. https://github.com/mbitsnbites/osbench/blob/master/README.md
+
+-- 
+Warm Regards
+Thara
