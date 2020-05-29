@@ -2,82 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9BB11E7AFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 12:54:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90D371E7B20
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2020 13:02:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725681AbgE2KyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 06:54:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:32910 "EHLO mail.kernel.org"
+        id S1725681AbgE2LCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 May 2020 07:02:50 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:49334 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725562AbgE2KyP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 06:54:15 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725306AbgE2LCt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 May 2020 07:02:49 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590750169; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=pN2fu1wh9sXdsnk7LncKzQzCSiSvZFUxatOkecyYeGI=; b=jjAEGHLiLygDBXpa+LH023m4qkdhbIvbKYZV5rxOt5AyexHR99fdSSg3V8GqjJSyW6ZXpSUv
+ yWl2MyWf6sNFOcSMvnpyMYK1iD8wI1Y7TV8IETQWv5FTDTfd0XolT7zBoR3Wqv+prnLu68t+
+ tJE/kZLC+jve/eAIZl9fI3w0J0U=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5ed0ebd8b4f0a9ae2249eadd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 May 2020 11:02:48
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1BAAFC433CB; Fri, 29 May 2020 11:02:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2E884207F5;
-        Fri, 29 May 2020 10:54:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590749655;
-        bh=iItic/SJFuDHh9NK1YYlCZaWzpJMgEyjk4VirrtCP2A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FNSw5BXXedvJT9Ua90q6xqOYTCbeqPvGFfbiYPL9CTKGdgVAP3Sj+40vOJfOkz1py
-         2rgHIVW9NVEq086q1iMAAVHt+My02HGlXOk5kDMRsVBF8XTnMb4ao4vP7xAAhZDAio
-         IWrksg6Abg+2bWQIjYM8URGmgjigRqwj3BK6/dzE=
-Date:   Fri, 29 May 2020 11:54:11 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, nishakumari@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org,
-        rnayak@codeaurora.org
-Subject: Re: [PATCH v3 1/5] regulator: Allow regulators to verify enabled
- during enable()
-Message-ID: <20200529105411.GF4610@sirena.org.uk>
-References: <20200528154625.17742-1-sumit.semwal@linaro.org>
- <20200528154625.17742-2-sumit.semwal@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="O98KdSgI27dgYlM5"
-Content-Disposition: inline
-In-Reply-To: <20200528154625.17742-2-sumit.semwal@linaro.org>
-X-Cookie: The Killer Ducks are coming!!!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 31609C433C9;
+        Fri, 29 May 2020 11:02:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 31609C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, ilina@codeaurora.org, lsrao@codeaurora.org
+Subject: [PATCH] soc: qcom: rpmh: Allow RPMH on ARM SoC
+Date:   Fri, 29 May 2020 16:32:38 +0530
+Message-Id: <1590750158-20661-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Lina Iyer <ilina@codeaurora.org>
 
---O98KdSgI27dgYlM5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Remove config restriction for RPMH on ARM64 platforms only.
 
-On Thu, May 28, 2020 at 09:16:21PM +0530, Sumit Semwal wrote:
+Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+---
+ drivers/soc/qcom/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +		while (time_remaining > 0) {
-> +			/* We've already waited for enable_time above;
-> +			 * so we can start with immediate check of the
-> +			 * status of the regulator.
-> +			 */
-> +			if (rdev->desc->ops->is_enabled(rdev))
-> +				break;
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 07bb261..899f8c0 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -89,7 +89,7 @@ config QCOM_RMTFS_MEM
+ 
+ config QCOM_RPMH
+ 	bool "Qualcomm RPM-Hardened (RPMH) Communication"
+-	depends on ARCH_QCOM && ARM64 || COMPILE_TEST
++	depends on ARCH_QCOM || COMPILE_TEST
+ 	help
+ 	  Support for communication with the hardened-RPM blocks in
+ 	  Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-I'd expect to prefer to get_status() if it's available.
-
---O98KdSgI27dgYlM5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7Q6dIACgkQJNaLcl1U
-h9DsdQf/XvF7XSA3+wsHApX3Vw3vgnDX0EIbdCj+mAhN4yXaRDNBh9h+nYatUqVI
-4IuubtGTRY0RtBsggRNfd51POUPwItWmPkQNGi50gaYlXCUFTS9DFAxPw+L3HwQS
-8DXWUoESsD+kkk6gnbz7cYxbvojECkeyDERrAYXaXbbYCU037zNhr42FrYI+owAm
-T+3BDj0hsuaDBYbcbzDGntieQ/eedOPfz2XAbm6bGZH95NcT13VYEBXhTxGgtdyP
-6x4Tv7B5/G82rWeWn4+SI6SfWva3ZP81c4JPZnZ6alG+8csxR1qz2nnGCg+x53H3
-JMHXL8TmkGhD5LB7bLIp8whI9v5Yiw==
-=33t3
------END PGP SIGNATURE-----
-
---O98KdSgI27dgYlM5--
