@@ -2,248 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B4B01E8E35
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2020 08:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E0B01E903B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2020 11:44:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728404AbgE3Gmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 May 2020 02:42:49 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:45117 "EHLO m43-7.mailgun.net"
+        id S1728607AbgE3JoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 May 2020 05:44:19 -0400
+Received: from mout.web.de ([212.227.15.3]:34945 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728293AbgE3Gmt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 May 2020 02:42:49 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590820968; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=CVwez3TJzuI5Hz8YJYBg002P52Rbx2o2mf/O9S0LF6g=; b=W95pC1HWRVTVva42azF/u7Qr8JHnWAF+zWjQaqRV8j2wuV8mwAG+wQGbiipWueGHcIg6s146
- NA93HFlTqucv2MArFrfC0twnsru3ui4DvZR1hBN+EnmsHSaAQyGLRMZzpvebzvQInD1JqBls
- YUvdEuQLqSSCP9dR7nCDIK07QHk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5ed2005c50867324814d91dc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 30 May 2020 06:42:36
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 48103C433CA; Sat, 30 May 2020 06:42:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.93.207] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36F48C433C6;
-        Sat, 30 May 2020 06:42:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36F48C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [RFC v3 1/3] usb: dwc3: Resize TX FIFOs to meet EP bursting
- requirements
-To:     Jack Pham <jackp@codeaurora.org>
-Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org
-References: <1590630363-3934-1-git-send-email-wcheng@codeaurora.org>
- <1590630363-3934-2-git-send-email-wcheng@codeaurora.org>
- <20200529162856.GA10327@jackp-linux.qualcomm.com>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <4f4652c2-6fc0-c96d-35dc-ee1235aa4206@codeaurora.org>
-Date:   Fri, 29 May 2020 23:42:33 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1728304AbgE3JoS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 30 May 2020 05:44:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1590831852;
+        bh=8lce7rTiHjzcxzZA7N/zKxrxDvvW1Xkc7bJklLAnNwk=;
+        h=X-UI-Sender-Class:To:Cc:Subject:From:Date;
+        b=OiH8Cn3cGVhZye0pkSZbsM0HiZrh56hUKnlMBZBRCjlhO2WIPudvSvtp43Tk8rTay
+         X/dekR8gy6SCacLrGgCRwWkRfoYkV1Y72BDfBBvfBXtqo9PVl2jOXeHsl3MF/ROS9/
+         YKVt/0FzxLTbj2VYzb/4br7rDMbd+eX+dsuuKfJc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.1.2] ([93.133.149.250]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MN4K8-1jcmB944fw-006hQs; Sat, 30
+ May 2020 11:44:12 +0200
+To:     Jia-Ju Bai <baijiaju1990@gmail.com>, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: Re: [PATCH] media: venus: Fix possible buffer overflow in
+ venus_sfr_print()
+From:   Markus Elfring <Markus.Elfring@web.de>
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
+ +v43YoGpDNyhgA0w9CEhuwfZrE91GocMtjLO67TAc2i2nxMc/FJRDI0OemO4VJ9RwID6ltwt
+ mpVJgXGKkNJ1ey+QOXouzlErVvE2fRh+KXXN1Q7fSmTJlAW9XJYHS3BDHb0uRpymRSX3O+E2
+ lA87C7R8qAigPDZi6Z7UmwIA83ZMKXQ5stA0lhPyYgQcM7fh7V4ZYhnR0I5/qkUoxKpqaYLp
+ YHBczVP+Zx/zHOM0KQphOMbU7X3c1pmMruoe6ti9uZzqZSLsF+NKXFEPBS665tQr66HJvZvY
+ GMDlntZFAZ6xQvCC1r3MGoxEC1tuEa24vPCC9RZ9wk2sY5Csbva0WwYv3WKRZZBv8eIhGMxs
+ rcpeGShRFyZ/0BYO53wZAPV1pEhGLLxd8eLN/nEWjJE0ejakPC1H/mt5F+yQBJAzz9JzbToU
+ 5jKLu0SugNI18MspJut8AiA1M44CIWrNHXvWsQ+nnBKHDHHYZu7MoXlOmB32ndsfPthR3GSv
+ jN7YD4Ad724H8fhRijmC1+RpuSce7w2JLj5cYj4MlccmNb8YUxsE8brY2WkXQYS8Ivse39MX
+ BE66MQN0r5DQ6oqgoJ4gHIVBUv/ZwgcmUNS5gQkNCFA0dWXznQARAQABtCZNYXJrdXMgRWxm
+ cmluZyA8TWFya3VzLkVsZnJpbmdAd2ViLmRlPokCVAQTAQgAPhYhBHDP0hzibeXjwQ/ITuU9
+ Figxg9azBQJYNvsQAhsjBQkJZgGABQsJCAcCBhUICQoLAgQWAgMBAh4BAheAAAoJEOU9Figx
+ g9azcyMP/iVihZkZ4VyH3/wlV3nRiXvSreqg+pGPI3c8J6DjP9zvz7QHN35zWM++1yNek7Ar
+ OVXwuKBo18ASlYzZPTFJZwQQdkZSV+atwIzG3US50ZZ4p7VyUuDuQQVVqFlaf6qZOkwHSnk+
+ CeGxlDz1POSHY17VbJG2CzPuqMfgBtqIU1dODFLpFq4oIAwEOG6fxRa59qbsTLXxyw+PzRaR
+ LIjVOit28raM83Efk07JKow8URb4u1n7k9RGAcnsM5/WMLRbDYjWTx0lJ2WO9zYwPgRykhn2
+ sOyJVXk9xVESGTwEPbTtfHM+4x0n0gC6GzfTMvwvZ9G6xoM0S4/+lgbaaa9t5tT/PrsvJiob
+ kfqDrPbmSwr2G5mHnSM9M7B+w8odjmQFOwAjfcxoVIHxC4Cl/GAAKsX3KNKTspCHR0Yag78w
+ i8duH/eEd4tB8twcqCi3aCgWoIrhjNS0myusmuA89kAWFFW5z26qNCOefovCx8drdMXQfMYv
+ g5lRk821ZCNBosfRUvcMXoY6lTwHLIDrEfkJQtjxfdTlWQdwr0mM5ye7vd83AManSQwutgpI
+ q+wE8CNY2VN9xAlE7OhcmWXlnAw3MJLW863SXdGlnkA3N+U4BoKQSIToGuXARQ14IMNvfeKX
+ NphLPpUUnUNdfxAHu/S3tPTc/E/oePbHo794dnEm57LuuQINBFg2+xABEADZg/T+4o5qj4cw
+ nd0G5pFy7ACxk28mSrLuva9tyzqPgRZ2bdPiwNXJUvBg1es2u81urekeUvGvnERB/TKekp25
+ 4wU3I2lEhIXj5NVdLc6eU5czZQs4YEZbu1U5iqhhZmKhlLrhLlZv2whLOXRlLwi4jAzXIZAu
+ 76mT813jbczl2dwxFxcT8XRzk9+dwzNTdOg75683uinMgskiiul+dzd6sumdOhRZR7YBT+xC
+ wzfykOgBKnzfFscMwKR0iuHNB+VdEnZw80XGZi4N1ku81DHxmo2HG3icg7CwO1ih2jx8ik0r
+ riIyMhJrTXgR1hF6kQnX7p2mXe6K0s8tQFK0ZZmYpZuGYYsV05OvU8yqrRVL/GYvy4Xgplm3
+ DuMuC7/A9/BfmxZVEPAS1gW6QQ8vSO4zf60zREKoSNYeiv+tURM2KOEj8tCMZN3k3sNASfoG
+ fMvTvOjT0yzMbJsI1jwLwy5uA2JVdSLoWzBD8awZ2X/eCU9YDZeGuWmxzIHvkuMj8FfX8cK/
+ 2m437UA877eqmcgiEy/3B7XeHUipOL83gjfq4ETzVmxVswkVvZvR6j2blQVr+MhCZPq83Ota
+ xNB7QptPxJuNRZ49gtT6uQkyGI+2daXqkj/Mot5tKxNKtM1Vbr/3b+AEMA7qLz7QjhgGJcie
+ qp4b0gELjY1Oe9dBAXMiDwARAQABiQI8BBgBCAAmFiEEcM/SHOJt5ePBD8hO5T0WKDGD1rMF
+ Alg2+xACGwwFCQlmAYAACgkQ5T0WKDGD1rOYSw/+P6fYSZjTJDAl9XNfXRjRRyJSfaw6N1pA
+ Ahuu0MIa3djFRuFCrAHUaaFZf5V2iW5xhGnrhDwE1Ksf7tlstSne/G0a+Ef7vhUyeTn6U/0m
+ +/BrsCsBUXhqeNuraGUtaleatQijXfuemUwgB+mE3B0SobE601XLo6MYIhPh8MG32MKO5kOY
+ hB5jzyor7WoN3ETVNQoGgMzPVWIRElwpcXr+yGoTLAOpG7nkAUBBj9n9TPpSdt/npfok9ZfL
+ /Q+ranrxb2Cy4tvOPxeVfR58XveX85ICrW9VHPVq9sJf/a24bMm6+qEg1V/G7u/AM3fM8U2m
+ tdrTqOrfxklZ7beppGKzC1/WLrcr072vrdiN0icyOHQlfWmaPv0pUnW3AwtiMYngT96BevfA
+ qlwaymjPTvH+cTXScnbydfOQW8220JQwykUe+sHRZfAF5TS2YCkQvsyf7vIpSqo/ttDk4+xc
+ Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
+ x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
+ pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
+Message-ID: <30acaf40-3709-d712-892f-c410acd78f63@web.de>
+Date:   Sat, 30 May 2020 11:44:11 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-In-Reply-To: <20200529162856.GA10327@jackp-linux.qualcomm.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:w4LQhRpAH2u6KxUlvZFMcoL2YxKKYkV4A65TshoC7k5UHJbZW3O
+ o9I+dMEHlYI4VMGHBI2ohoiw3n5Ai4fKVu24o0g4B3zRzk0B90X7mL+st/BzbyErDRE5/hG
+ YW8sFqJ5OfHWXkyhBh99UyWCAXOM32Z7nRtw3xF2Nl2ah3ptW6uRZtaEe5yTiKMywSVwQ8S
+ 6RiovG86R4Z5nrob/P8oA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zr5PF4p9/a8=:96ArTDppY8piO18SqD9C0i
+ 0ct6izHPYB73Ey5Opz6febgqyApKy/QvfA3Z3E+Jl1MrcAzOSe0ILJ2211ahsKEmWd48Xq8bK
+ K7MWjnzb+/w8OnWbiiV/RVBthpkVbtpONuLy5qSw3U7N6FYZmOOGtTMeH91J7jxyRMuquvkaG
+ 6Ht2gIDi+982/Piena0GpRuIPorGz/tI069G0Ih9FylOvSt+dpi+otNZ9sAN/0A/GNKwzYPQe
+ x/JHBLAlItnfHHcOsR4ICGQaYbspf/eEPokZLzPJ5M2OAJAsmjP+XPhb0axN7/q1zf0MQ55ET
+ zNWODQBuMVCVMqYQEjl6qiws7uVGK71cEDnrIsi2ucYEIZeF6nt7XjC2Ibcx9Hw/E03aJi8g7
+ YmoyxqvWgvcx2JCycbx+Ci1lmZihmX4YCjK5zkYauCsfCBc4rWBdKeP/GC29ZrOeh4KWdDUfq
+ iuF2h+Q2DjIgg6oaHYIq9IudftDP+Eyg82vXDPnkDYF08UczQopaswXzfxPzFLTiyKXizSO9I
+ NKQzRvnQ9/qWQ4NUHB0EMV/fHPWbkZiTwPnoPs9MynyjkC6b5RObypasyhY8vORPV1RLeHsf0
+ XO908RcW2/CU3BlltKoMIPuR80Ry4+qX9HOcyIA7kZKR+Jw5MLjn/Q9X8WGMHsSC+GtiTml32
+ 1/aoudsKP3h9VEtxNoq59JAYqQPaScHxhPFKfo+7eacGW5I8a20qbc8v1akOHHvWoo1ZgZfVs
+ 9ce60mLEFigLLdNk/oytEnGPXYJOoadCXskApI9jcMpFlYxyfYtjocEeuQaiJ3EsyD0WkZ55a
+ GXnFOnjkPeggu5ArWubqkk0DIyFt/CReZIBZhNsN4+DUDlkus43IuyG6RzawkoDjTZv+jkFXD
+ 449nt4pZ5T5CYtsiDG5p9hkzMU79ozXqk1vdPPtrCq7g8lswbUxyNAFtiSEUfbeW7evfCpbVu
+ s/j2q8i+EqM/9MByenEKMR7lAKvz/Fng6flO0ZnWW7Az/aedHjUGgiqHYN13A3g2FuHQ1PX+Q
+ JzEw9IJybuU0WDyUAV9Y0j7HbPk+MuMNciHWurx6TNomsLN+EaeUn1kmixXGDEXynoDRg/kmb
+ foGTU0gGdb+4X1ORw8tPa5n60LhDRm6CLyVu24U2QspKfz/dDNwnrfVWVqVI86iJ59VWDgeOB
+ d1d2Q1R/72OB4XwGYBZhOe1mC1IR7uqqq4YlQsG1Knvg3IoiVSbQ/BeVfXc0+A/1BAN6oORcG
+ Ct8NjSkkKn9NOLUUO
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Please avoid typos in the patch subject.
 
 
-On 5/29/2020 9:28 AM, Jack Pham wrote:
-> Hi Wesley,
-> 
-> On Wed, May 27, 2020 at 06:46:01PM -0700, Wesley Cheng wrote:
->> Some devices have USB compositions which may require multiple endpoints
->> that support EP bursting.  HW defined TX FIFO sizes may not always be
->> sufficient for these compositions.  By utilizing flexible TX FIFO
->> allocation, this allows for endpoints to request the required FIFO depth to
->> achieve higher bandwidth.  With some higher bMaxBurst configurations, using
->> a larger TX FIFO size results in better TX throughput.
->>
->> Ensure that one TX FIFO is reserved for every IN endpoint.  This allows for
->> the FIFO logic to prevent running out of FIFO space.
->>
->> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
->> ---
-> 
-> <snip>
-> 
->> diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
->> index 00746c2..9b09528 100644
->> --- a/drivers/usb/dwc3/gadget.c
->> +++ b/drivers/usb/dwc3/gadget.c
->> @@ -540,6 +540,117 @@ static int dwc3_gadget_start_config(struct dwc3_ep *dep)
->>  	return 0;
->>  }
->>  
->> +/*
->> + * dwc3_gadget_resize_tx_fifos - reallocate fifo spaces for current use-case
->> + * @dwc: pointer to our context structure
->> + *
->> + * This function will a best effort FIFO allocation in order
->> + * to improve FIFO usage and throughput, while still allowing
->> + * us to enable as many endpoints as possible.
->> + *
->> + * Keep in mind that this operation will be highly dependent
->> + * on the configured size for RAM1 - which contains TxFifo -,
->> + * the amount of endpoints enabled on coreConsultant tool, and
->> + * the width of the Master Bus.
->> + *
->> + * In general, FIFO depths are represented with the following equation:
->> + *
->> + * fifo_size = mult * ((max_packet + mdwidth)/mdwidth + 1) + 1
->> + *
->> + * Conversions can be done to the equation to derive the number of packets that
->> + * will fit to a particular FIFO size value.
->> + */
->> +static int dwc3_gadget_resize_tx_fifos(struct dwc3 *dwc, struct dwc3_ep *dep)
-> 
-> The 'dep' param should be sufficient; we can just get 'dwc' from
-> dep->dwc. That will make it more clear this function operates on each
-> endpoint that needs resizing.
-> 
+> To fix this possible bug, sfr->buf_size is assigned to a local variable,
+> and then this variable is checked before being used.
 
-Hi Jack,
+How do you think about a wording variant like the following?
 
-Thanks for the inputs.  Sure, I agree with that.  Will make the changes
-to pass in only the dep.
-
->> +{
->> +	int ram1_depth, mdwidth, fifo_0_start, tmp, num_in_ep;
->> +	int min_depth, remaining, fifo_size, mult = 1, fifo, max_packet = 1024;
->> +
->> +	if (!dwc->needs_fifo_resize)
->> +		return 0;
->> +
->> +	/* resize IN endpoints except ep0 */
->> +	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <= 1)
->> +		return 0;
->> +
->> +	/* Don't resize already resized IN endpoint */
->> +	if (dep->fifo_depth)
->> +		return 0;
->> +
->> +	ram1_depth = DWC3_RAM1_DEPTH(dwc->hwparams.hwparams7);
->> +	mdwidth = DWC3_MDWIDTH(dwc->hwparams.hwparams0);
->> +	/* MDWIDTH is represented in bits, we need it in bytes */
->> +	mdwidth >>= 3;
->> +
->> +	if (((dep->endpoint.maxburst > 1) &&
->> +			usb_endpoint_xfer_bulk(dep->endpoint.desc))
->> +			|| usb_endpoint_xfer_isoc(dep->endpoint.desc))
->> +		mult = 3;
->> +
->> +	if ((dep->endpoint.maxburst > 6) &&
->> +			usb_endpoint_xfer_bulk(dep->endpoint.desc)
->> +			&& dwc3_is_usb31(dwc))
->> +		mult = 6;
->> +
->> +	/* FIFO size for a single buffer */
->> +	fifo = (max_packet + mdwidth)/mdwidth;
->> +	fifo++;
->> +
->> +	/* Calculate the number of remaining EPs w/o any FIFO */
->> +	num_in_ep = dwc->num_eps/2;
->> +	num_in_ep -= dwc->num_ep_resized;
->> +	/* Ignore EP0 IN */
->> +	num_in_ep--;
->> +
->> +	/* Reserve at least one FIFO for the number of IN EPs */
->> +	min_depth = num_in_ep * (fifo+1);
->> +	remaining = ram1_depth - min_depth - dwc->last_fifo_depth;
->> +
->> +	/* We've already reserved 1 FIFO per EP, so check what we can fit in
->> +	 * addition to it.  If there is not enough remaining space, allocate
->> +	 * all the remaining space to the EP.
->> +	 */
->> +	fifo_size = (mult-1) * fifo;
->> +	if (remaining < fifo_size) {
->> +		if (remaining > 0)
->> +			fifo_size = remaining;
->> +		else
->> +			fifo_size = 0;
->> +	}
->> +
->> +	fifo_size += fifo;
->> +	fifo_size++;
->> +	dep->fifo_depth = fifo_size;
->> +
->> +	/* Check if TXFIFOs start at non-zero addr */
->> +	tmp = dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(0));
->> +	fifo_0_start = DWC3_GTXFIFOSIZ_TXFSTADDR(tmp);
->> +
->> +	fifo_size |= (fifo_0_start + (dwc->last_fifo_depth << 16));
->> +	if (dwc3_is_usb31(dwc))
->> +		dwc->last_fifo_depth += DWC31_GTXFIFOSIZ_TXFDEP(fifo_size);
->> +	else
->> +		dwc->last_fifo_depth += DWC3_GTXFIFOSIZ_TXFDEP(fifo_size);
->> +
->> +	/* Check fifo size allocation doesn't exceed available RAM size. */
->> +	if (dwc->last_fifo_depth >= ram1_depth) {
->> +		dev_err(dwc->dev, "Fifosize(%d) > RAM size(%d) %s depth:%d\n",
->> +				(dwc->last_fifo_depth * mdwidth), ram1_depth,
->> +				dep->endpoint.name, fifo_size);
-> 
-> Use dev_WARN() here and eliminate the WARN_ON(1) below?
-> 
-
-I think we can just remove the WARN_ON() entirely, and keep the
-dev_err().  Printing the callstack might not be really useful in
-general, since this would only be called during the EP enable step.
+  Thus assign the data structure member =E2=80=9Cbuf_size=E2=80=9D to a lo=
+cal variable
+  and check it before further usage.
 
 
->> +		if (dwc3_is_usb31(dwc))
->> +			fifo_size = DWC31_GTXFIFOSIZ_TXFDEP(fifo_size);
->> +		else
->> +			fifo_size = DWC3_GTXFIFOSIZ_TXFDEP(fifo_size);
->> +		dwc->last_fifo_depth -= fifo_size;
->> +		dep->fifo_depth = 0;
->> +		WARN_ON(1);
->> +		return -ENOMEM;
->> +	}
->> +
->> +	dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1), fifo_size);
->> +	dwc->num_ep_resized++;
->> +	return 0;
->> +}
->> +
->>  static int dwc3_gadget_set_ep_config(struct dwc3_ep *dep, unsigned int action)
->>  {
->>  	const struct usb_ss_ep_comp_descriptor *comp_desc;
->> @@ -620,6 +731,10 @@ static int __dwc3_gadget_ep_enable(struct dwc3_ep *dep, unsigned int action)
->>  	int			ret;
->>  
->>  	if (!(dep->flags & DWC3_EP_ENABLED)) {
->> +		ret = dwc3_gadget_resize_tx_fifos(dwc, dep);
->> +		if (ret)
->> +			return ret;
->> +
->>  		ret = dwc3_gadget_start_config(dep);
->>  		if (ret)
->>  			return ret;
-> 
-> Jack
-> 
+Would you like to add the tag =E2=80=9CFixes=E2=80=9D to the commit messag=
+e?
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Regards,
+Markus
