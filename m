@@ -2,107 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 404091E8D33
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2020 04:41:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C5881E8E2E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2020 08:31:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728638AbgE3Clf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 May 2020 22:41:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41904 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728349AbgE3Cle (ORCPT
+        id S1725929AbgE3Gbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 May 2020 02:31:51 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:37789 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728293AbgE3Gbv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 May 2020 22:41:34 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8318DC03E969;
-        Fri, 29 May 2020 19:41:33 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id i17so1926510pli.13;
-        Fri, 29 May 2020 19:41:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=tqT1Z0ZKvBSM+e8jvFBLBJcZZOZwowJYeHajnRMlUKw=;
-        b=SItPDO/hGImCOttd+gN5ppN+DRMAeCNL4jZVy5Z0nr1r8x7igPj7Sm9yzgP6X4cILJ
-         1b8IMbbsWMwHH9jvSN26vyG8t6SUqCuGUz4xtbnTYPUGsnffWvGXEz/ynJnGXvcIonOo
-         bAs5hXz2jMIYUvl6XjDCKFU+0AcN9Mws+ybHm556YV8IxUH97wZX1uWDXqJWLIwXJuvO
-         Tg0QGCAwtHfriMyBvfMaRswvrkH6E+GeIhGdWVlUmlh9ihNG16DyuzlomXwmX1Y0yoI/
-         Ki0RRiS6ly3+IHH4/HwDRTZArC0ngQpDbLR1eDNtOpiIZz2f5J3GVVr/40nvxwv85knr
-         vpEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=tqT1Z0ZKvBSM+e8jvFBLBJcZZOZwowJYeHajnRMlUKw=;
-        b=Cu1t+Du9IASTWL8wsD+28Mo9gfNVRa+cY7LE45GkAl7WivKd+QgNdQJha1Msn5UGl4
-         Qs6P/Pg6Npfe6Bv0pHDOYqGeANP+PWac2Z/DdY0u87R4wruE+72PxEqI6mM1NO2NfauK
-         cAzT4YCCjUew0hlhN34ih6xGkkbTjrPFwKppbGBJF5DBqz06S3jw+zWtY6x4N8L/4lII
-         AVIUpQY0UbVAMv1xrVr2elT4IWJkuZ9VuBoGgjRf958MPsvgtHTrJGrXcRXOYyYtRyvg
-         e0GR+LM4Lx59E34I8yRbJehPjuN8XP4ECv1+ncbbQfNInRqzUlcxYcRg876AVUTBTLZf
-         3e9A==
-X-Gm-Message-State: AOAM532BaGlNW9IYM1eTarWBWpdUQCx2p9h/YgJXSfIAW0DQbBuh3moG
-        i6wWkMojPIBMkKOPQ/xshG0=
-X-Google-Smtp-Source: ABdhPJz02dJbpDs0iY8NEEvJpg4UP56NGkISbLtPY0i+WgHKGbpIcyr8XC2t367IqiNCwGq2m5Vfuw==
-X-Received: by 2002:a17:902:c808:: with SMTP id u8mr11172343plx.135.1590806493090;
-        Fri, 29 May 2020 19:41:33 -0700 (PDT)
-Received: from oslab.tsinghua.edu.cn ([166.111.139.172])
-        by smtp.gmail.com with ESMTPSA id n2sm8291365pfe.161.2020.05.29.19.41.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2020 19:41:32 -0700 (PDT)
-From:   Jia-Ju Bai <baijiaju1990@gmail.com>
-To:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jia-Ju Bai <baijiaju1990@gmail.com>
-Subject: [PATCH] media: venus: fix possible buffer overlow casued bad DMA value in venus_sfr_print()
-Date:   Sat, 30 May 2020 10:41:17 +0800
-Message-Id: <20200530024117.24613-1-baijiaju1990@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Sat, 30 May 2020 02:31:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1590820310; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=GbL0e/7j+u57H6VWh+bFLrd10kAQvlzotWW8nszjMzo=; b=W/apyRPyvHZS9EGeZ1kl2D612rkinXsEXuRVzQdRraw99Ydf/2eZsyW/qjyVmTuvJbcHqF6W
+ Ao9M5FDQlyf9W0TpSxwsggFQtjQzUSYBI5enN8dMNUXI1eHUAO6W6yNT+r9NkLauVCn4hVRW
+ KOLT94vPlgBDQSHfUi0+QTx+QgA=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5ed1fdad44a25e0052306302 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 30 May 2020 06:31:09
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 23025C433CB; Sat, 30 May 2020 06:31:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.93.207] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EB2B9C433C9;
+        Sat, 30 May 2020 06:31:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EB2B9C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [RFC v3 0/3] Re-introduce TX FIFO resize for larger EP bursting
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <1590630363-3934-1-git-send-email-wcheng@codeaurora.org>
+ <20200529101214.GA1321073@kroah.com>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <48776606-518a-77b7-fe44-0bb84df5ce58@codeaurora.org>
+Date:   Fri, 29 May 2020 23:31:06 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <20200529101214.GA1321073@kroah.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The value hdev->sfr.kva is stored in DMA memory, and it is assigned to
-sfr, so sfr->buf_size can be modified at anytime by malicious hardware. 
-In this case, a buffer overflow may happen when the code 
-"sfr->data[sfr->buf_size - 1]" is executed.
 
-To fix this possible bug, sfr->buf_size is assigned to a local variable,
-and then this variable is checked before being used.
 
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+On 5/29/2020 3:12 AM, Greg KH wrote:
+> On Wed, May 27, 2020 at 06:46:00PM -0700, Wesley Cheng wrote:
+>> Changes in V3:
+>>  - Removed "Reviewed-by" tags
+>>  - Renamed series back to RFC
+>>  - Modified logic to ensure that fifo_size is reset if we pass the minimum
+>>    threshold.  Tested with binding multiple FDs requesting 6 FIFOs.
+>>
+>> Changes in V2:
+>>  - Modified TXFIFO resizing logic to ensure that each EP is reserved a
+>>    FIFO.
+>>  - Removed dev_dbg() prints and fixed typos from patches
+>>  - Added some more description on the dt-bindings commit message
+>>
+>> Currently, there is no functionality to allow for resizing the TXFIFOs, and
+>> relying on the HW default setting for the TXFIFO depth.  In most cases, the
+>> HW default is probably sufficient, but for USB compositions that contain
+>> multiple functions that require EP bursting, the default settings
+>> might not be enough.  Also to note, the current SW will assign an EP to a
+>> function driver w/o checking to see if the TXFIFO size for that particular
+>> EP is large enough. (this is a problem if there are multiple HW defined
+>> values for the TXFIFO size)
+>>
+>> It is mentioned in the SNPS databook that a minimum of TX FIFO depth = 3
+>> is required for an EP that supports bursting.  Otherwise, there may be
+>> frequent occurences of bursts ending.  For high bandwidth functions,
+>> such as data tethering (protocols that support data aggregation), mass
+>> storage, and media transfer protocol (over FFS), the bMaxBurst value can be
+>> large, and a bigger TXFIFO depth may prove to be beneficial in terms of USB
+>> throughput. (which can be associated to system access latency, etc...)  It
+>> allows for a more consistent burst of traffic, w/o any interruptions, as
+>> data is readily available in the FIFO.
+>>
+>> With testing done using the mass storage function driver, the results show
+>> that with a larger TXFIFO depth, the bandwidth increased significantly.
+> 
+> Why is this still a "RFC" series?  That implies you don't want this
+> applied...
+> 
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 0d8855014ab3..4251a9e47a1b 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -960,18 +960,23 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
- {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_sfr *sfr = hdev->sfr.kva;
-+	u32 buf_size;
- 	void *p;
- 
- 	if (!sfr)
- 		return;
- 
--	p = memchr(sfr->data, '\0', sfr->buf_size);
-+	buf_size = sfr->buf_size;
-+	if (buf_size > 1)
-+		return;
-+
-+	p = memchr(sfr->data, '\0', buf_size);
- 	/*
- 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
- 	 * that Venus is in the process of crashing.
- 	 */
- 	if (!p)
--		sfr->data[sfr->buf_size - 1] = '\0';
-+		sfr->data[buf_size - 1] = '\0';
- 
- 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
- }
+Hi Greg,
+
+As Felipe mentioned, we need to make sure that this TX FIFO resize logic
+is carefully thought out, since the behavior could be different based
+off the HW configuration as shown in the past.  Eventually, I hope that
+this does get applied, but I think the changes needs more detailed
+reviews, as there may be potential shortfalls I did not consider due to
+my limited knowledge of what happened w/ the previous logic.  That's
+pretty much the reason for tagging it as a RFC, since we still need to
+hash out if this is the right approach.
+
+Thanks!
+
 -- 
-2.17.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
