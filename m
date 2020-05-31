@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 866601E996A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2020 19:29:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40BA01E995F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2020 19:29:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728481AbgEaR3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 May 2020 13:29:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34564 "EHLO
+        id S1728341AbgEaR20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 May 2020 13:28:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728234AbgEaR2V (ORCPT
+        with ESMTP id S1728336AbgEaR2X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 May 2020 13:28:21 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36DC7C05BD43;
-        Sun, 31 May 2020 10:28:21 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id x6so9075179wrm.13;
-        Sun, 31 May 2020 10:28:21 -0700 (PDT)
+        Sun, 31 May 2020 13:28:23 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4817C061A0E;
+        Sun, 31 May 2020 10:28:22 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id j10so9135474wrw.8;
+        Sun, 31 May 2020 10:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zwObqB6A402Y69JUcORVOD9gXxiBIhIVh7/TRDYpLLs=;
-        b=Ij2SUK8biarGvM45OugsvYWU5SrgL+PHlfPtXvQ0rqVeO+7HA79G3U7jIgxKOH2Yik
-         s0U+nSBYOTZEkYVTZ364l403zrqUTwR528eQTAabV7Gw/i8f27XLa8GfzJ7fOHtPuNee
-         lFmH6STWPbYXrI7vYddeSjoc90h4x93v1cfHQvtlhZRMa0uttOOQzYeXHrfLQLVMZoUp
-         9PKiF4MRjAugvpUrgKCA9u3dHocz0yv6R4JoEG/I6YEJ60KJrVdgJurNTyuZ7jnn+wjN
-         1VrZNBetMqT/a/6I6fskJeSJoF0fopJXBa2CyXx9QY9tNw3YDq0exahWEHS4dxHH8g4J
-         D4pA==
+        bh=M99xapCK77TQBGDLImzUxTVYpAgAInEST24y58JcXcA=;
+        b=pTQGe52iccLG7iuo/QdTOa7D+OSDTDHynohwseKgP6zuT5GGjefq/G9YTk3Muh3aLR
+         /06DEM1SdYvuMPLyrfM51goynX8HBbjma+kho1q/OvrIz8AbQK4dNKQPyTAKwuEJU6qB
+         LcNcT7kx8laEIxwIVa6+kJ/D/9KD7b7j7HJStNOGHsjEQ6rUg4M5obdq+7EWHloARsOi
+         3y1H7H/YbrNguxcXb3w2NiKag6RiavOMauR4EISjjjunwVjvBPnm64goiRQ4ecE2Ogyh
+         J8VVX0JmJwLc2Fw1AO3okeTOKJ67Hr/O8QlwzXGh4PMoIogRh9xNO5pMFfqUFijNDulc
+         tLEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zwObqB6A402Y69JUcORVOD9gXxiBIhIVh7/TRDYpLLs=;
-        b=a0zkff4cPTMO9feIsaT2ylEDChtKFqak+ZgHXf652uqtRTUVBP8wqRAViYW5+2nW3O
-         AOUgVDrfdkbEYM+l9t1Im1mvFQrSJqmAEF6vwDLLoL4VdUk+5HN4bY+/i/N5Y80e1H1Z
-         CXtItUg4sXgOdNNQL7/pp+1/vriWlsxG5mdsv9GFC/0fgJpFXLxCnpA0RNN0j4uYq879
-         nFQDFLzxm4pvhmq/WXjhGVo5CwFDlLZPqzrXoGYyNui6XmEmFm/xWxSfkR//y3jZtHD5
-         9q9AquMm1GfiiFkjdrLfNyBbFm0QSsWyvUOFCYuafuqyvyKGe3PYDaoEjzDDaIapKEt8
-         etow==
-X-Gm-Message-State: AOAM532TEWyTdHaKrw1sYXdvu3spPf98bVzDVTOykWd/d55eCRw1LmUQ
-        UCOZbOByBZa9/mTa5eILF3k=
-X-Google-Smtp-Source: ABdhPJzz0EszZ6GWkKmHMtldEJx+Z8Cidj0vVb1Ks0lTDTMCwOEOpgmbnAfg4BiY4/SdwnoutU/Whg==
-X-Received: by 2002:adf:e40c:: with SMTP id g12mr18292981wrm.121.1590946100017;
-        Sun, 31 May 2020 10:28:20 -0700 (PDT)
+        bh=M99xapCK77TQBGDLImzUxTVYpAgAInEST24y58JcXcA=;
+        b=mTvaeH2oXlhwtC6eUymJYFolKMtNERml2eonqdLij7iAQkdH49fDZ+9ARpIaDhs19y
+         nEKilWNH3edFOerdQSiuL8k7yH5vC2BYGFQZS3iF2r1t6LQafvoWfo0NYVDocTDdXIr3
+         vvbvkmI0NDRTgp7vjjZ/A2CsMHWfDluAE8AtkDvvCxJ8LgeTBxAW8/fQ0K4WrCq9URM7
+         eA2GBidjnYbwVUy+v8pfChXR3hlzS+EFewUkrcQBbQE5GjIzaAfVYMBCLkqlvYIzDHp1
+         olP/rkRpkitMtF+kS1Ak4lnP0kjOgk76LiQwO4nVuT8z3bJS2fsJ4zrnSHFhZeytD8LR
+         1/Iw==
+X-Gm-Message-State: AOAM531RUflly5zu+z66n7KMLxRULNK3ZdaJkGYx1ShGBcthGbWkNEBE
+        HMSV+NyJhsMxNclsRdE4dAM=
+X-Google-Smtp-Source: ABdhPJx7uu2tMxuFo0q87vDz7F6CQ24nwBj9mCqRHFhigMvaEAX8XQSlUms2UKLUhU1jSFLfkd88Hw==
+X-Received: by 2002:adf:c98a:: with SMTP id f10mr6677167wrh.329.1590946101663;
+        Sun, 31 May 2020 10:28:21 -0700 (PDT)
 Received: from localhost.localdomain (abad130.neoplus.adsl.tpnet.pl. [83.6.167.130])
-        by smtp.googlemail.com with ESMTPSA id b81sm8922326wmc.5.2020.05.31.10.28.19
+        by smtp.googlemail.com with ESMTPSA id b81sm8922326wmc.5.2020.05.31.10.28.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 May 2020 10:28:19 -0700 (PDT)
+        Sun, 31 May 2020 10:28:21 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -55,9 +55,9 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 06/14] arm64: dts: msm8992: Add a spmi_bus node
-Date:   Sun, 31 May 2020 19:27:56 +0200
-Message-Id: <20200531172804.256335-7-konradybcio@gmail.com>
+Subject: [PATCH 07/14] arm64: dts: msm8992: Add BLSP2 UART2 node
+Date:   Sun, 31 May 2020 19:27:57 +0200
+Message-Id: <20200531172804.256335-8-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200531172804.256335-1-konradybcio@gmail.com>
 References: <20200531172804.256335-1-konradybcio@gmail.com>
@@ -69,41 +69,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change adds a SPMI bus node so as to
-enable PMIC and PMIC peripherals interaction.
+This commit enables the usage of a second
+UART interface.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8992.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8992.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-index 535be60521d8..8f7cdf2b9a1f 100644
+index 8f7cdf2b9a1f..ff745905525c 100644
 --- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-@@ -253,6 +253,22 @@ msmgpio: pinctrl@fd510000 {
- 			#interrupt-cells = <2>;
+@@ -279,6 +279,16 @@ blsp1_uart2: serial@f991e000 {
+ 				<&clock_gcc GCC_BLSP1_AHB_CLK>;
  		};
  
-+		spmi_bus: qcom,spmi@fc4c0000 {
-+			compatible = "qcom,spmi-pmic-arb";
-+			reg = <0xfc4cf000 0x1000>,
-+			      <0xfc4cb000 0x1000>,
-+			      <0xfc4ca000 0x1000>;
-+			reg-names = "core", "intr", "cnfg";
-+			interrupt-names = "periph_irq";
-+			interrupts = <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>;
-+			qcom,ee = <0>;
-+			qcom,channel = <0>;
-+			#address-cells = <2>;
-+			#size-cells = <0>;
-+			interrupt-controller;
-+			#interrupt-cells = <4>;
++		blsp2_uart2: serial@f995e000 {
++			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
++			reg = <0xf995e000 0x1000>;
++			interrupt = <GIC_SPI 146 IRQ_TYPE_LEVEL_LOW>;
++			status = "disabled";
++			clock-names = "core", "iface";
++			clocks = <&gcc GCC_BLSP2_UART2_APPS_CLK>,
++				<&gcc GCC_BLSP2_AHB_CLK>;
 +		};
 +
- 		blsp1_uart2: serial@f991e000 {
- 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
- 			reg = <0xf991e000 0x1000>;
+ 		clock_gcc: clock-controller@fc400000 {
+ 			compatible = "qcom,gcc-msm8994";
+ 			#clock-cells = <1>;
 -- 
 2.26.2
 
