@@ -2,141 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D783A1E9718
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2020 12:53:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58A341E98B2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2020 18:01:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729636AbgEaKxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 May 2020 06:53:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55032 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728288AbgEaKxV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 May 2020 06:53:21 -0400
-Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BEEBE20707;
-        Sun, 31 May 2020 10:53:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1590922400;
-        bh=+sFzQw1Cf+ykmchVYHbwcgQjHpS4r1zdWT6xMleFwbM=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=h7dNerDH3rXqudMHgA+yAsWu0Ea47R+pkG8lDMSqBHOBk6nNEA6vmRrk+cdgw1sZ2
-         2iIl984zGiUOmUTL3iQeQ8pEa6v5dsgWq4wIj4JzA/Y0ShhirdzWXaLdBZy6CbuRqG
-         kDYZbWYhlPjgtXMV2lf2BChgHwvVLZwEpOA+u9XA=
-Date:   Sun, 31 May 2020 11:53:15 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Jishnu Prakash <jprakash@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, linus.walleij@linaro.org,
-        Jonathan.Cameron@huawei.com, andy.shevchenko@gmail.com,
-        amit.kucheria@verdurent.com, smohanad@codeaurora.org,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH V6 6/7] iio: adc: Update debug prints
-Message-ID: <20200531115315.4a173e63@archlinux>
-In-Reply-To: <1590684869-15400-7-git-send-email-jprakash@codeaurora.org>
-References: <1590684869-15400-1-git-send-email-jprakash@codeaurora.org>
-        <1590684869-15400-7-git-send-email-jprakash@codeaurora.org>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        id S1725987AbgEaQBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 May 2020 12:01:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49486 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbgEaQBt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 31 May 2020 12:01:49 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6605DC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2020 09:01:49 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id l27so6919334ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2020 09:01:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=C6Pcc0KCAqq6UnYDDdgdeBt1kbXH4HvttEs94ToLTKU=;
+        b=uH91HHXPEQsuatgZeJhtxIV9ISRL6OUnl1+5+9aeUjbBFVxjp1Qy85TtGShtR0rZ69
+         rQpFZ5wBUCv25a3eoy76VkpKA7c7VFBBO2hNLZST/wBBhxVDkIpo61XYHtC7PAByihCE
+         fhsuM/n2S1qMDnVXwl07QOuqdAW0MAgdkHto4zbnakiO+k4UvF1+FcbXz2Ul7yTEuuuw
+         KjhtsbdNml4E2A9YllFiqJRkHOiKWduSCidFivH1vrjza8tm9rHD0RKL9FeINh5nF/lQ
+         zLRSpe8S355qiC+7ObRyeBdeJprehnd2nTLjydUKb5QPt4VylKmJD5K7x/hkkTz/jcll
+         q1sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=C6Pcc0KCAqq6UnYDDdgdeBt1kbXH4HvttEs94ToLTKU=;
+        b=JA2RQAhUznuL8zeM/7JJjJk9oz3IpSTiUC+02fXRCvSHmGpG9F9cBLOVoOopCZL+iO
+         kH6yjBLOtCZU3ZncBzPWr4gv+3C1QYj5hwEWcPsXppB18LpoBW+F+Ch7/cyiGWJ8iCDP
+         A2pMaC+1l+CYx8HlWsDFSqmPBxQWfXD+6EqRp2r5CyRiaEe2lz2L7NksC9lcbscsajdl
+         1Tf3eD16uK02xJck3zj6fkCwmTTSS/rN3jErnCIP6m5pJKacbEbbVLbuReQBgS042HSB
+         gxMgZRWzHjk2dDkpwGR9Cr7qHqclP3WlZ9Pkae6eIXIPhCN6iGT2ixDDv+TlzWQuVJtg
+         6ftw==
+X-Gm-Message-State: AOAM530eGMJzyZImsSTkKDvSs7rYGeK8chobMzt2zxNaNm50Zh/YKv8Y
+        QQQYrAB0HuldRVhGXU3zC4n6BVWIzhnYvnuUfZqXZwVv
+X-Google-Smtp-Source: ABdhPJygcqGQpE4P+85CCBiCBLzq7mgmdy1ks9XHcNICHXdFdGYVlHXB/cFQV9l/NQncP++0NxMItcE6Qgp8da76C4Q=
+X-Received: by 2002:a17:906:44f:: with SMTP id e15mr15309655eja.161.1590940907872;
+ Sun, 31 May 2020 09:01:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20200511093554.211493-2-daniel.vetter@ffwll.ch> <20200514201117.465146-1-daniel.vetter@ffwll.ch>
+In-Reply-To: <20200514201117.465146-1-daniel.vetter@ffwll.ch>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 31 May 2020 09:02:11 -0700
+Message-ID: <CAF6AEGskgFyDxX+MWF84Z53ATmVd3972py88Og=aLQFV0d7UPQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Don't call dma_buf_vunmap without _vmap
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 28 May 2020 22:24:28 +0530
-Jishnu Prakash <jprakash@codeaurora.org> wrote:
+On Thu, May 14, 2020 at 1:11 PM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+>
+> I honestly don't exactly understand what's going on here, but the
+> current code is wrong for sure: It calls dma_buf_vunmap without ever
+> calling dma_buf_vmap.
+>
+> What I'm not sure about is whether the WARN_ON is correct:
+> - msm imports dma-buf using drm_prime_sg_to_page_addr_arrays. Which is
+>   a pretty neat layering violation of how you shouldn't peek behind
+>   the curtain of the dma-buf exporter, but par for course. Note that
+>   all the nice new helpers don't (and we should probably have a bit a
+>   warning about this in the kerneldoc).
+>
+> - but then in the get_vaddr() in msm_gem.c, we seems to happily wrap a
+>   vmap() around any object with ->pages set (so including imported
+>   dma-buf).
+>
+> - I'm not seeing any guarantees that userspace can't use an imported
+>   dma-buf for e.g. MSM_SUBMIT_CMD_BUF in a5xx_submit_in_rb, so no
+>   guarantees that an imported dma-buf won't end up with a ->vaddr set.
+>
+> But even if that WARN_ON is wrong, cleaning up a vmap() done by msm by
+> calling dma_buf_vunmap is the wrong thing to do.
+>
+> v2: Rob said in review that we do indeed have a gap in get_vaddr() that
+> needs to be plugged. But the users I've found aren't legit users on
+> imported dma-buf, so we can just reject that.
+>
+> Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
 
-> Change pr_err/pr_debug statements to dev_err/dev_dbg for
-> increased clarity.
-> 
-> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-Applied. Thanks, J
 > ---
->  drivers/iio/adc/qcom-spmi-adc5.c | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-> index 3022313..0f9af66 100644
-> --- a/drivers/iio/adc/qcom-spmi-adc5.c
-> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
-> @@ -246,11 +246,11 @@ static int adc5_read_voltage_data(struct adc5_chip *adc, u16 *data)
->  	*data = (rslt_msb << 8) | rslt_lsb;
->  
->  	if (*data == ADC5_USR_DATA_CHECK) {
-> -		pr_err("Invalid data:0x%x\n", *data);
-> +		dev_err(adc->dev, "Invalid data:0x%x\n", *data);
->  		return -EINVAL;
->  	}
->  
-> -	pr_debug("voltage raw code:0x%x\n", *data);
-> +	dev_dbg(adc->dev, "voltage raw code:0x%x\n", *data);
->  
->  	return 0;
->  }
-> @@ -382,24 +382,24 @@ static int adc5_do_conversion(struct adc5_chip *adc,
->  
->  	ret = adc5_configure(adc, prop);
->  	if (ret) {
-> -		pr_err("ADC configure failed with %d\n", ret);
-> +		dev_err(adc->dev, "ADC configure failed with %d\n", ret);
->  		goto unlock;
->  	}
->  
->  	if (adc->poll_eoc) {
->  		ret = adc5_poll_wait_eoc(adc);
->  		if (ret) {
-> -			pr_err("EOC bit not set\n");
-> +			dev_err(adc->dev, "EOC bit not set\n");
->  			goto unlock;
->  		}
->  	} else {
->  		ret = wait_for_completion_timeout(&adc->complete,
->  							ADC5_CONV_TIMEOUT);
->  		if (!ret) {
-> -			pr_debug("Did not get completion timeout.\n");
-> +			dev_dbg(adc->dev, "Did not get completion timeout.\n");
->  			ret = adc5_poll_wait_eoc(adc);
->  			if (ret) {
-> -				pr_err("EOC bit not set\n");
-> +				dev_err(adc->dev, "EOC bit not set\n");
->  				goto unlock;
->  			}
->  		}
-> @@ -721,7 +721,7 @@ static int adc5_get_dt_channel_data(struct adc5_chip *adc,
->  	channel_name = of_get_property(node,
->  				"label", NULL) ? : node->name;
->  	if (!channel_name) {
-> -		pr_err("Invalid channel name\n");
-> +		dev_err(dev, "Invalid channel name\n");
->  		return -EINVAL;
->  	}
->  	prop->datasheet_name = channel_name;
-> @@ -764,7 +764,7 @@ static int adc5_get_dt_channel_data(struct adc5_chip *adc,
->  			return ret;
->  		}
->  
-> -		pr_debug("dig_ver:minor:%d, major:%d\n", dig_version[0],
-> +		dev_dbg(dev, "dig_ver:minor:%d, major:%d\n", dig_version[0],
->  						dig_version[1]);
->  		/* Digital controller >= 5.3 have hw_settle_2 option */
->  		if ((dig_version[0] >= ADC5_HW_SETTLE_DIFF_MINOR &&
-> @@ -966,7 +966,7 @@ static int adc5_probe(struct platform_device *pdev)
->  
->  	ret = adc5_get_dt_data(adc, node);
->  	if (ret) {
-> -		pr_err("adc get dt data failed\n");
-> +		dev_err(dev, "adc get dt data failed\n");
->  		return ret;
->  	}
->  
-
+>  drivers/gpu/drm/msm/msm_gem.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index 5a6a79fbc9d6..e70abd1cde43 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -554,6 +554,9 @@ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
+>         struct msm_gem_object *msm_obj = to_msm_bo(obj);
+>         int ret = 0;
+>
+> +       if (obj->import_attach)
+> +               return ERR_PTR(-ENODEV);
+> +
+>         mutex_lock(&msm_obj->lock);
+>
+>         if (WARN_ON(msm_obj->madv > madv)) {
+> @@ -907,8 +910,7 @@ static void free_object(struct msm_gem_object *msm_obj)
+>         put_iova(obj);
+>
+>         if (obj->import_attach) {
+> -               if (msm_obj->vaddr)
+> -                       dma_buf_vunmap(obj->import_attach->dmabuf, msm_obj->vaddr);
+> +               WARN_ON(msm_obj->vaddr);
+>
+>                 /* Don't drop the pages for imported dmabuf, as they are not
+>                  * ours, just free the array we allocated:
+> --
+> 2.26.2
+>
