@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B74661E9966
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2020 19:29:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B49501E9945
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2020 19:28:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728229AbgEaR2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 May 2020 13:28:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34534 "EHLO
+        id S1728255AbgEaR2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 May 2020 13:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbgEaR2N (ORCPT
+        with ESMTP id S1728234AbgEaR2P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 May 2020 13:28:13 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92CABC061A0E;
-        Sun, 31 May 2020 10:28:12 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id h5so3227651wrc.7;
-        Sun, 31 May 2020 10:28:12 -0700 (PDT)
+        Sun, 31 May 2020 13:28:15 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B25EC061A0E;
+        Sun, 31 May 2020 10:28:14 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id c71so8555659wmd.5;
+        Sun, 31 May 2020 10:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EakNxGoPn3WCF3pfvxOsaJvDNOYIIIi4TF/T6d07zHM=;
-        b=e79bzN9rMWi07UEZ7ZjEjStiqzcQmraODT8etX/3JU2/y4pvhgoJjoXwd9MfdVcYP9
-         874Fei8ZUzMquQxOtsEK6BwY4QQG1daBIWR2G9DqRVSbaU5E5Dz+tcqDH39UcpdNByEN
-         a2Qu73nzoWHrMtFk6Eu3ZmzhZclA9Z+1HcuhckcnY5HgyqAvlWOQtK1dO2B/VZXQ8V0j
-         MUUkZ9pav57DqJm3UoMuP5CbAmqiykt2mXSw272k6eBEkgfVk9NQZHKhsAH37rxupqIg
-         6IVkx29e5qeGAxi5wKrtA2/rbS3Di6RjJRckt4KaqX4nHyx1kW+mESICBIS/YmoaR8F3
-         j63g==
+        bh=2DRiNbK762AXkswj1HhYBzOBmJVVHL34gfc+Pw0XaPM=;
+        b=s35LDCMUvODW0UkBfwN/JSwOhbyq4+PuuZKptsZ8nTZ1CgeiXKxoGK2stHa4QIi709
+         dKCuQ8LohuXOuTGVeXWyFT0VSpFkc/l2kgTA3xT/WYKcIcyYoc9+v9CNxVliXYnExWcd
+         ucf9gzowJ8stBgkcB1yQAKWlKg+5h9yO3WGa6o2uMhFeVO2q1NWLWhwIO5D4aOalL8P6
+         8J7FjA1wpL494qch+1sBD3gmWE+eyc1kPF2GgDw4VPOfUKQq+7+1GOy4mIT7BAf6Sc8M
+         5HTnW8OsBwSTMe8Yn82BtuVO2uMEdpuNp55Re+L3EBRB3dFYJkAScgizru1w7y+vsW0Y
+         QcpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EakNxGoPn3WCF3pfvxOsaJvDNOYIIIi4TF/T6d07zHM=;
-        b=eTHg97So+MpfMgtNBVDTu2l5/FwHxIqUExX+SPMpSRGMWQ1jm0Uqz7SyEh1wSrYUma
-         TYi7Y+9WcVmSsyTkn47SIydsZCc9Mec1Skh/zJtxEuFIgnKXasNj00Dgpru0RfxPKzzJ
-         sf1ChSQjwnkA3zujlO+M29LoLGXjbdEcxK/ASI46Tdn+OS2xc/3AU8KMvXHOWzgtfS/L
-         y9U7EADpxXdwJlQFEug4zfiPWty45W/hz+5bo9Q3a8xRtc2hu0H5+vOoOr3dXusbOWWn
-         /R/pK26r6qPket7V7Nm9bpvS4bKQzlqq1YxO97AAxkk4hIZ+XrBssp3Pfh+1CscKWH7h
-         5dXQ==
-X-Gm-Message-State: AOAM532CwxTEQpthRwFqiYDsbkCE5vzlzWY/JYRSx9P3pJ0te0Ma/NPA
-        mcj5Zz/f+zlAh93J5DS+aeAsUlIk
-X-Google-Smtp-Source: ABdhPJzG22PKzt0SpRXW8hGUi5AQ6fxUGGEAsdV2xistr1rZa4Mw99CMYKMFNW0PsBJ6gYBhWDA6Lw==
-X-Received: by 2002:adf:de84:: with SMTP id w4mr18533311wrl.54.1590946091391;
-        Sun, 31 May 2020 10:28:11 -0700 (PDT)
+        bh=2DRiNbK762AXkswj1HhYBzOBmJVVHL34gfc+Pw0XaPM=;
+        b=a1Yaq5fXJOYG8R7cOTxRlifEj50DxkBJxhJb2icNLaKcXLHX8SogtiX6U4+XfN3bup
+         V9h4j029ht4FngdmRxcK9qu+6E1NenpQJ1f8Tn7Lgk3BLhCaK34GgpYCb9vZySJciwJv
+         5MDKbZs/aAYGNOVMHe6+sYhyo2HGNPxdAV2sdC9b6XFgE8QNcDJwlqJx94lwzUIoNKRY
+         PSMxk7c1SuwwZk81R+iAVcFdaR3Cp2KKaw5MsclP3Ei/afeSjlardGKAJow34xtvqs6N
+         9SRKsN7UX6UlustSD0GXBl7hw3d0UQ9E2BgT6Zpwkn6/CuC7vbnedNC/u1cBXMb5zSV/
+         QAjQ==
+X-Gm-Message-State: AOAM530gYKJZpA/AvywSpVT1/TQ9ptVoIvWpJAH0T/T+DEDgE+0K9Y2/
+        rMzBNXuaD7Watgzp3Px+Yr4=
+X-Google-Smtp-Source: ABdhPJxoFBlhkTS0MO4she4gFi2dgkoNrIxQPCff1ZCyVFEQmxNBry2PQd7HWtP/tO/vGFQ+xHZI6A==
+X-Received: by 2002:a7b:c212:: with SMTP id x18mr8717760wmi.119.1590946093146;
+        Sun, 31 May 2020 10:28:13 -0700 (PDT)
 Received: from localhost.localdomain (abad130.neoplus.adsl.tpnet.pl. [83.6.167.130])
-        by smtp.googlemail.com with ESMTPSA id b81sm8922326wmc.5.2020.05.31.10.28.10
+        by smtp.googlemail.com with ESMTPSA id b81sm8922326wmc.5.2020.05.31.10.28.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 May 2020 10:28:11 -0700 (PDT)
+        Sun, 31 May 2020 10:28:12 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -55,9 +55,9 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 01/14] arm64: dts: Add a proper CPU map for MSM8992
-Date:   Sun, 31 May 2020 19:27:51 +0200
-Message-Id: <20200531172804.256335-2-konradybcio@gmail.com>
+Subject: [PATCH 02/14] arm64: dts: msm8992: Place clock nodes in clocks{}
+Date:   Sun, 31 May 2020 19:27:52 +0200
+Message-Id: <20200531172804.256335-3-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200531172804.256335-1-konradybcio@gmail.com>
 References: <20200531172804.256335-1-konradybcio@gmail.com>
@@ -69,110 +69,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit adds cpu nodes for all 6 cores
-present on this SoC and the cpu-map.
+This commits brings no changes
+functionality-wise, but aligns the DTS
+with the style used in newer ones.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8992.dtsi | 68 +++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8992.dtsi | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-index 2021795c99ad..900c9445e0ba 100644
+index 900c9445e0ba..e255b577af37 100644
 --- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-@@ -20,11 +20,34 @@ / {
- 	cpus {
- 		#address-cells = <2>;
- 		#size-cells = <0>;
-+
- 		cpu-map {
- 			cluster0 {
- 				core0 {
- 					cpu = <&CPU0>;
- 				};
-+
-+				core1 {
-+					cpu = <&CPU1>;
-+				};
-+
-+				core2 {
-+					cpu = <&CPU2>;
-+				};
-+
-+				core3 {
-+					cpu = <&CPU3>;
-+				};
-+			};
-+
-+			cluster1 {
-+				core0 {
-+					cpu = <&CPU4>;
-+				};
-+
-+				core1 {
-+					cpu = <&CPU5>;
-+				};
- 			};
- 		};
+@@ -116,16 +116,18 @@ timer {
+ 			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+ 	};
  
-@@ -33,11 +56,56 @@ CPU0: cpu@0 {
- 			compatible = "arm,cortex-a53";
- 			reg = <0x0 0x0>;
- 			next-level-cache = <&L2_0>;
-+			enable-method = "psci";
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 			};
- 		};
-+
-+		CPU1: cpu@1 {
-+			device_type = "cpu";
-+			compatible = "arm,cortex-a53";
-+			reg = <0x0 0x1>;
-+			next-level-cache = <&L2_0>;
-+			enable-method = "psci";
+-	xo_board: xo_board {
+-		compatible = "fixed-clock";
+-		#clock-cells = <0>;
+-		clock-frequency = <19200000>;
+-	};
++	clocks {
++		xo_board: xo_board {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++			clock-frequency = <19200000>;
 +		};
-+
-+		CPU2: cpu@2 {
-+			device_type = "cpu";
-+			compatible = "arm,cortex-a53";
-+			reg = <0x0 0x2>;
-+			next-level-cache = <&L2_0>;
-+			enable-method = "psci";
-+		};
-+
-+		CPU3: cpu@3 {
-+			device_type = "cpu";
-+			compatible = "arm,cortex-a53";
-+			reg = <0x0 0x3>;
-+			next-level-cache = <&L2_0>;
-+			enable-method = "psci";
-+		};
-+
-+		CPU4: cpu@100 {
-+			device_type = "cpu";
-+			compatible = "arm,cortex-a57";
-+			reg = <0x0 0x100>;
-+			next-level-cache = <&L2_1>;
-+			enable-method = "psci";
-+			L2_1: l2-cache {
-+				compatible = "cache";
-+				cache-level = <2>;
-+			};
-+		};
-+
-+		CPU5: cpu@101 {
-+			device_type = "cpu";
-+			compatible = "arm,cortex-a57";
-+			reg = <0x0 0x101>;
-+			next-level-cache = <&L2_1>;
-+			enable-method = "psci";
+ 
+-	sleep_clk: sleep_clk {
+-		compatible = "fixed-clock";
+-		#clock-cells = <0>;
+-		clock-frequency = <32768>;
++		sleep_clk: sleep_clk {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++			clock-frequency = <32768>;
 +		};
  	};
  
- 	timer {
+ 	vreg_vph_pwr: vreg-vph-pwr {
 -- 
 2.26.2
 
