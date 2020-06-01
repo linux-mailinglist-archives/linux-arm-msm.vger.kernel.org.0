@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 572841E9FB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 10:02:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 687081E9FB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 10:02:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726322AbgFAICl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 04:02:41 -0400
+        id S1728173AbgFAICs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 04:02:48 -0400
 Received: from m43-7.mailgun.net ([69.72.43.7]:63795 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726056AbgFAICl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 04:02:41 -0400
+        id S1726142AbgFAICs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Jun 2020 04:02:48 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590998560; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=QypYSAs8Ta9l+Bx4xqnzKMKsvyZ+pwykAsRMDRfZK+A=; b=j/9UfkfLV/QucgdAlnKBmbENpnxzmk2iCXEagieodD70HW5oGUvD182RdInuzxeJ2cfn7heC
- 6s2t6CVhRvJ0kJjuV7FTDFuL5Fa0oiy/JO+9TTm4w+apaIO9dKq9UXk3KopRGf7sfOoKaUoM
- TZ4lWD9IhLnJxT6afuEOI+2sdtg=
+ s=smtp; t=1590998567; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=RnHgHedV/8C4JpLzp3/H9V+2NzNRYsbXgdMAzrp/Z6I=; b=Opw0Qc8WxH6F/Oldo4/W+NHCQbk/Lw+LIh+Fb2PKzzAcYq5//g9sRHei1fOiH2E9qR4thIEz
+ P+zRqqZAH2Apy5iC/8eJvZPMRm9N+Ov4kFSX6gfSAHbynubPdGU7f2pzJDbrOKA1yxN0+Kh0
+ CSB6baPIVaNAPCgvkCivSFOrNpI=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5ed4b61f2c549984755ee8e8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Jun 2020 08:02:39
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5ed4b62744a25e00520d0206 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Jun 2020 08:02:47
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A51B9C433A1; Mon,  1 Jun 2020 08:02:38 +0000 (UTC)
+        id 24EA5C433B2; Mon,  1 Jun 2020 08:02:46 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,9 +36,9 @@ Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 620CEC43387;
-        Mon,  1 Jun 2020 08:02:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 620CEC43387
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 048F2C43387;
+        Mon,  1 Jun 2020 08:02:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 048F2C43387
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -49,10 +49,12 @@ Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
         Stephen Boyd <swboyd@chromium.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 0/2] coresight: tmc: Add shutdown callback for TMC ETR/ETF
-Date:   Mon,  1 Jun 2020 13:32:24 +0530
-Message-Id: <cover.1590947174.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 1/2] coresight: tmc: Add enable flag to indicate the status of ETR/ETF
+Date:   Mon,  1 Jun 2020 13:32:25 +0530
+Message-Id: <6e62147c36c76b9485d14960dced4f6acda17591.1590947174.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.24.0
+In-Reply-To: <cover.1590947174.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1590947174.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -60,31 +62,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds a shutdown callback to TMC ETR/ETF to ensure that
-it is properly shutdown in reboot/shutdown path. This is required
-for ETR/ETF which has SMMU address translation enabled like on SC7180
-SoC and few others. If the hardware is still accessing memory after
-SMMU translation is disabled as part of SMMU shutdown callback in
-system reboot or shutdown path, then IOVAs(I/O virtual address)
-which it was using will go on the bus as the physical addresses which
-might result in unknown crashes (NoC/interconnect errors). So we make
-sure from this shutdown callback that the ETR/ETF is shutdown before
-SMMU translation is disabled and device_link in SMMU driver will take
-care of ordering of shutdown callbacks such that SMMU shutdown callback
-is not called before any of its consumer shutdown callbacks.
+Add a flag to check whether TMC ETR/ETF is enabled or not.
+This is later used in shutdown callback to determine if
+we require to disable ETR/ETF.
 
-Sai Prakash Ranjan (2):
-  coresight: tmc: Add enable flag to indicate the status of ETR/ETF
-  coresight: tmc: Add shutdown callback for TMC ETR/ETF
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/hwtracing/coresight/coresight-tmc.c | 2 ++
+ drivers/hwtracing/coresight/coresight-tmc.h | 2 ++
+ 2 files changed, 4 insertions(+)
 
- .../hwtracing/coresight/coresight-tmc-etf.c   |  4 +--
- .../hwtracing/coresight/coresight-tmc-etr.c   |  2 +-
- drivers/hwtracing/coresight/coresight-tmc.c   | 31 +++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tmc.h   |  5 +++
- 4 files changed, 39 insertions(+), 3 deletions(-)
-
-
-base-commit: 059e38815950dbec65beafe03757bce9436e89a4
+diff --git a/drivers/hwtracing/coresight/coresight-tmc.c b/drivers/hwtracing/coresight/coresight-tmc.c
+index 39fba1d16e6e..5a271ebc4585 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc.c
++++ b/drivers/hwtracing/coresight/coresight-tmc.c
+@@ -62,11 +62,13 @@ void tmc_flush_and_stop(struct tmc_drvdata *drvdata)
+ 
+ void tmc_enable_hw(struct tmc_drvdata *drvdata)
+ {
++	drvdata->enable = true;
+ 	writel_relaxed(TMC_CTL_CAPT_EN, drvdata->base + TMC_CTL);
+ }
+ 
+ void tmc_disable_hw(struct tmc_drvdata *drvdata)
+ {
++	drvdata->enable = false;
+ 	writel_relaxed(0x0, drvdata->base + TMC_CTL);
+ }
+ 
+diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+index 71de978575f3..d156860495c7 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc.h
++++ b/drivers/hwtracing/coresight/coresight-tmc.h
+@@ -184,6 +184,7 @@ struct etr_buf {
+  * @idr_mutex:	Access serialisation for idr.
+  * @sysfs_buf:	SYSFS buffer for ETR.
+  * @perf_buf:	PERF buffer for ETR.
++ * @enable:	Indicates whether ETR/ETF is enabled.
+  */
+ struct tmc_drvdata {
+ 	void __iomem		*base;
+@@ -207,6 +208,7 @@ struct tmc_drvdata {
+ 	struct mutex		idr_mutex;
+ 	struct etr_buf		*sysfs_buf;
+ 	struct etr_buf		*perf_buf;
++	bool			enable;
+ };
+ 
+ struct etr_buf_operations {
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
