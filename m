@@ -2,80 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B395D1EA0E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 11:21:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC7591EA175
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 12:01:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725967AbgFAJVM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 05:21:12 -0400
-Received: from foss.arm.com ([217.140.110.172]:35324 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725909AbgFAJVM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 05:21:12 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6D6B41FB;
-        Mon,  1 Jun 2020 02:21:11 -0700 (PDT)
-Received: from [10.37.12.87] (unknown [10.37.12.87])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2CF523F305;
-        Mon,  1 Jun 2020 02:21:00 -0700 (PDT)
-Subject: Re: [PATCH v8 3/8] PM / EM: update callback structure and add device
- pointer
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200527095854.21714-1-lukasz.luba@arm.com>
- <20200527095854.21714-4-lukasz.luba@arm.com>
- <666b2f9e-d7ed-6ddb-80aa-e63ab9909ee6@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <3a7d1261-df40-4b3a-14c2-6c6d18b5b5c1@arm.com>
-Date:   Mon, 1 Jun 2020 10:20:58 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1725974AbgFAKBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 06:01:05 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:41111 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725925AbgFAKBF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Jun 2020 06:01:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591005665; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=VZgW0yWmZWnfdGXGSRXAEISoIkntsyNDe6/pKlJFF58=;
+ b=FD3lBGHr4y0lniaw91ng/R1CGe70mZnASstqcdhuPRwNkZI3Usrdlb5dhqraatamdj67m2HK
+ Bhz/y7U5aBrzi13GGU3/AkLLDOu4hddAC/q1TSX2+qwrYmTJGvALm0k5siUfrmnxr57sYhez
+ h50tL4u8eS/bei47Tlkdr+LS5vk=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5ed4d1b8c0031c71c2434c92 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Jun 2020 10:00:24
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BE642C43391; Mon,  1 Jun 2020 10:00:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2CD57C433C6;
+        Mon,  1 Jun 2020 10:00:23 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <666b2f9e-d7ed-6ddb-80aa-e63ab9909ee6@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Mon, 01 Jun 2020 15:30:23 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, nm@ti.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, saravanak@google.com, mka@chromium.org,
+        smasetty@codeaurora.org, linux-arm-msm-owner@vger.kernel.org,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH] OPP: Check for bandwidth values before creating icc paths
+In-Reply-To: <20200601071349.gbuyfaasdu27a3bd@vireshk-i7>
+References: <20200527192418.20169-1-sibis@codeaurora.org>
+ <20200529052031.n2nvzxdsifwmthfv@vireshk-i7>
+ <0205034b0ece173a7152a43b016985a7@codeaurora.org>
+ <20200601040742.3a4cmhrwgh2ueksy@vireshk-i7>
+ <ee51e55bdf518832e4ecb2faf98c6b58@codeaurora.org>
+ <20200601071349.gbuyfaasdu27a3bd@vireshk-i7>
+Message-ID: <4258c6b122fa352a6b5cccb07a9b1203@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/29/20 6:43 PM, Daniel Lezcano wrote:
-> On 27/05/2020 11:58, Lukasz Luba wrote:
->> The Energy Model framework is going to support devices other that CPUs. In
->> order to make this happen change the callback function and add pointer to
->> a device as an argument.
->>
->> Update the related users to use new function and new callback from the
->> Energy Model.
->>
->> Acked-by: Quentin Perret <qperret@google.com>
->> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+On 2020-06-01 12:43, Viresh Kumar wrote:
+> On 01-06-20, 12:09, Sibi Sankar wrote:
+>> On 2020-06-01 09:37, Viresh Kumar wrote:
+>> > On 29-05-20, 19:47, Sibi Sankar wrote:
+>> > > opp_np needs to be subjected
+>> > > to NULL check as well.
+>> >
+>> > No, it isn't. It should already be valid and is set by the OPP core.
+>> > Actually we don't need to do of_node_get(opp_table->np) and just use
+>> > np, I did that to not have a special case while putting the resource.
+>> >
+>> 
+>> I should have phrased it differently.
+>> opp_np needs to be checked to deal
+>> with cases where devices don't have
+>> "operating-points-v2" associated with
+>> it.
+>> 
+>> diff --git a/drivers/opp/of.c b/drivers/opp/of.c
+>> index a5d87ca0ab571..06976d14e6ccb 100644
+>> --- a/drivers/opp/of.c
+>> +++ b/drivers/opp/of.c
+>> @@ -344,14 +344,14 @@ static int _bandwidth_supported(struct device 
+>> *dev,
+>> struct opp_table *opp_table)
+>> 
+>>                 opp_np = _opp_of_get_opp_desc_node(np, 0);
+>>                 of_node_put(np);
+>> -
+>> -               /* Lets not fail in case we are parsing opp-v1 
+>> bindings */
+>> -               if (!opp_np)
+>> -                       return 0;
+>>         } else {
+>>                 opp_np = of_node_get(opp_table->np);
+>>         }
+>> 
+>> +       /* Lets not fail in case we are parsing opp-v1 bindings */
+>> +       if (!opp_np)
+>> +               return 0;
+>> +
+>> 
+>> sdhci_msm 7c4000.sdhci: OPP table empty
+>> sdhci_msm 7c4000.sdhci: _allocate_opp_table: Error finding 
+>> interconnect
+>> paths: -22
+>> 
+>> I see the following errors without
+>> the check.
 > 
-> Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> 
+> My reply unfortunately only considered the case where this routine was
+> called from within the opp table. Are you testing it for the case
+> where you are adding OPPs dynamically from the code ?
 
-Thank you Daniel!
+Yeah dev_pm_opp_add/dev_pm_opp_set_clkname
+or pretty much any api doing a
+dev_pm_opp_get_opp_table without
+a opp_table node associated with
+it will run into this issue.
 
-Regards,
-Lukasz
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
