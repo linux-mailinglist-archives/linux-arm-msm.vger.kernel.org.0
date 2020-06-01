@@ -2,141 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A91921EB140
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 23:44:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9BE31EB17A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 00:04:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728900AbgFAVof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 17:44:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44502 "EHLO
+        id S1728845AbgFAWDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 18:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728360AbgFAVoe (ORCPT
+        with ESMTP id S1728805AbgFAWDr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 17:44:34 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB362C08C5C9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 14:44:32 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id h5so1299887wrc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 14:44:32 -0700 (PDT)
+        Mon, 1 Jun 2020 18:03:47 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56034C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 15:03:47 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id bg4so489908plb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 15:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qqOi9XVkzEqBE1rgTfwzfPJ8XwX72091Extww43XdB0=;
-        b=BLUBXAlsbcW7Id0UV+YkyUmxE0jzUe0/jTCXnNN4S8dLK5/1aj1C/RlHrWFxV1AwyH
-         6GbdjWZyiEzX2SGei8S9rFvzqJyLKzA9Iy1wx2DpNKBEIC7EvyM/NTa3QPflZz7Q+ctF
-         ymXXXQNdt5EUCszEr9mNqRiaL85A+fJwEzmckf2Kn1c5Kj4vkhgcAvTDk3fbqqPaWI6M
-         cirigyYvKk2PguC2yqvcAtCchyS4BOP//JBSjBzcOvPA9eIXC1GzF9l4PAcWwI/C7xU5
-         L3laXdnfYY+55kcVzKEzfzrpIagABRawHXTr1HqGHv8f0SlrtfRQGIBxyD8Oa8lGahS5
-         e7HA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=XFnIQB7ncVF63T1pY2NMmD5MUjtRKH/Cyt/vduuOCr4=;
+        b=fek/fKkwjOdhsv+J8geTqfhekmIfVg31GBFgDaJGfViiSS3F/TsrEDBUE9wVv/9R8E
+         SLECz+XjlLL63WPLyFxiSgONAHsFBoColGWxAzWM9st+Pt4+fuDZvusd10ecebte6xxm
+         cZP+Te8MKz3ySAe3gVd2jr865slvk2yVvi9Hg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qqOi9XVkzEqBE1rgTfwzfPJ8XwX72091Extww43XdB0=;
-        b=HdEhwTtQkwAAjdu2RpfkbhlZGyUXbpZ2toIsaFAj9y7TkPTmUy2tItyV+oiC3fM46W
-         3qj4aWC+HYRf1XGUqY99IbX4kDPV1Z67g3lDC0PJLovZIhvSD61qSrD0z/tN4RhmyGRh
-         SFZKuadi+JbDD70sDaFytqDj1o96a6x+mXwg9y7+rtlQKMf/c2sA+PwofdvWq7BJHQg8
-         oGdFvnieNVMGdfaoDEXO04y3baAKzZ3FfLXEJwiSOZ1bXO2QKe+z5LH3YRmslJJZbPDH
-         HC8RZBxJHdBccxp/YnvensQ1mXJ5eGf0ApIIViXI4mgkCyKbOMQD6jZnrZOBa3RpNcjk
-         b9Nw==
-X-Gm-Message-State: AOAM532d+nfKh2BE+4XADQKt1h8+KwRP867LpSxBa7xNC3KVtM6IXdp2
-        Y6Fj0Qlj8tOgZpq4p1aRwS250g==
-X-Google-Smtp-Source: ABdhPJxAkSTXgDmNloFKRd9lVGwwLE5uAp68LgGpm5gXOB9wVVSaY/AqsZoSHbg0AzWXmkv4CYHlkA==
-X-Received: by 2002:a5d:490f:: with SMTP id x15mr23274786wrq.259.1591047871147;
-        Mon, 01 Jun 2020 14:44:31 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:e125:f600:eb3c:705b? ([2a01:e34:ed2f:f020:e125:f600:eb3c:705b])
-        by smtp.googlemail.com with ESMTPSA id q4sm781499wma.47.2020.06.01.14.44.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2020 14:44:30 -0700 (PDT)
-Subject: Re: [PATCH v8 4/8] PM / EM: add support for other devices than CPUs
- in Energy Model
-To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
-        peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, rostedt@goodmis.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
-        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
-References: <20200527095854.21714-1-lukasz.luba@arm.com>
- <20200527095854.21714-5-lukasz.luba@arm.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <d45e5592-8e11-858b-d3a3-2ec9ce1d1f54@linaro.org>
-Date:   Mon, 1 Jun 2020 23:44:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        bh=XFnIQB7ncVF63T1pY2NMmD5MUjtRKH/Cyt/vduuOCr4=;
+        b=tFjb2DEe1dxPlIJfQatzoKGKI1vIjh0fNz+reJglHOn/H1mQmTsg9ZpE4Ke9t/pt/U
+         GFuIuy3y4wKukXyZtvJEhmmSyOUN98RteJwS/a+DAsdsH1oIuJq1/ln78Az4iiQSCJU2
+         ASyOmkfaZlvt65hu9C7GbYjND3WqKsejFzQCepuKtUBNSL6Qhu16ouy0fgGiNmiZXMsT
+         FXdPRBfxDWG0UqugGGrPt6GX4rFJVMeR7S/hiO1kCOgOA1hDqimwDI8BJ91k5B1DQ17b
+         icOR5ev1wdWwHY21lV0zW8AP27mpEm+p26nzRpeSnvZ77Yk1qTEovKdQ0/ISMPLTVncN
+         id/A==
+X-Gm-Message-State: AOAM5318TK5TxuodA9C3cK/HxklR8RUjJs1piW2XNp3CnACMOCTEMpGU
+        ImMJ7R6t64dwA/Tm4mVkAU7JhQ==
+X-Google-Smtp-Source: ABdhPJweeLR8G4rZkKaY74PZV+ncoWYY84wN8268AueoBMTYcuSWzeDoqapxC9otqNOiOJ4igNbeRg==
+X-Received: by 2002:a17:902:7041:: with SMTP id h1mr22988066plt.169.1591049026875;
+        Mon, 01 Jun 2020 15:03:46 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id 67sm346948pfg.84.2020.06.01.15.03.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2020 15:03:46 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     amasule@codeaurora.org, stanimir.varbanov@linaro.org
+Cc:     swboyd@chromium.org, jkardatzke@google.com, mka@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+Subject: [RFC PATCH] media: venus: Fix NULL pointer dereference in core selection
+Date:   Mon,  1 Jun 2020 15:03:22 -0700
+Message-Id: <20200601150314.RFC.1.I1e40623bbe8fa43ff1415fc273cba66503b9b048@changeid>
+X-Mailer: git-send-email 2.27.0.rc2.251.g90737beb825-goog
 MIME-Version: 1.0
-In-Reply-To: <20200527095854.21714-5-lukasz.luba@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/05/2020 11:58, Lukasz Luba wrote:
-> Add support for other devices than CPUs. The registration function
-> does not require a valid cpumask pointer and is ready to handle new
-> devices. Some of the internal structures has been reorganized in order to
-> keep consistent view (like removing per_cpu pd pointers).
-> 
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-> ---
+The newly-introduced function min_loaded_core() iterates over all of
+the venus instances an tries to figure out how much load each instance
+is putting on each core.  Not all instances, however, might be fully
+initialized.  Specifically the "codec_freq_data" is initialized as
+part of vdec_queue_setup(), but an instance may already be in the list
+of all instances before that time.
 
-[ ... ]
+Let's band-aid this by checking to see if codec_freq_data is NULL
+before dereferencing.
 
->  }
->  EXPORT_SYMBOL_GPL(em_register_perf_domain);
-> +
-> +/**
-> + * em_dev_unregister_perf_domain() - Unregister Energy Model (EM) for a device
-> + * @dev		: Device for which the EM is registered
-> + *
-> + * Try to unregister the EM for the specified device (but not a CPU).
-> + */
-> +void em_dev_unregister_perf_domain(struct device *dev)
-> +{
-> +	if (IS_ERR_OR_NULL(dev) || !dev->em_pd)
-> +		return;
-> +
-> +	if (_is_cpu_device(dev))
-> +		return;
-> +
-> +	mutex_lock(&em_pd_mutex);
+NOTE: without this fix I was running into a crash.  Specifically there
+were two venus instances.  One was doing start_streaming.  The other
+was midway through queue_setup but hadn't yet gotten to initting
+"codec_freq_data".
 
-Is the mutex really needed?
+Fixes: eff82f79c562 ("media: venus: introduce core selection")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+I'm not massively happy about this commit but it's the best I could
+come up with without being much more of an expert in the venus codec.
+If someone has a better patch then please just consider this one to be
+a bug report and feel free to submit a better fix!  :-)
 
-If this function is called that means there is no more user of the
-em_pd, no?
+In general I wonder a little bit about whether it's safe to be peeking
+at all the instances without grabbing the "inst->lock" on each one.  I
+guess it is since we do it both here and in load_scale_v4() but I
+don't know why.
 
-> +	em_debug_remove_pd(dev);
-> +
-> +	kfree(dev->em_pd->table);
-> +	kfree(dev->em_pd);
-> +	dev->em_pd = NULL;
-> +	mutex_unlock(&em_pd_mutex);
-> +}
-> +EXPORT_SYMBOL_GPL(em_dev_unregister_perf_domain);
-> 
+One thought I had was that we could fully avoid accessing the other
+instances, at least in min_loaded_core(), by just keeping track of
+"core1_load" and "core2_load" in "struct venus_core".  Whenever we add
+a new instance we could add to the relevant variables and whenever we
+release an instance we could remove.  Such a change seems cleaner but
+would require someone to test to make sure we didn't miss any case
+(AKA we always properly added/removed our load from the globals).
 
+ drivers/media/platform/qcom/venus/pm_helpers.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index abf93158857b..a1d998f62cf2 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -496,6 +496,8 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
+ 	list_for_each_entry(inst_pos, &core->instances, list) {
+ 		if (inst_pos == inst)
+ 			continue;
++		if (!inst_pos->clk_data.codec_freq_data)
++			continue;
+ 		vpp_freq = inst_pos->clk_data.codec_freq_data->vpp_freq;
+ 		coreid = inst_pos->clk_data.core_id;
+ 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+2.27.0.rc2.251.g90737beb825-goog
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
