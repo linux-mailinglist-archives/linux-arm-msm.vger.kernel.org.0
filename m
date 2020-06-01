@@ -2,132 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC7591EA175
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 12:01:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 790E61EA198
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 12:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725974AbgFAKBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 06:01:05 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:41111 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725925AbgFAKBF (ORCPT
+        id S1725978AbgFAKK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 06:10:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbgFAKKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 06:01:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591005665; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=VZgW0yWmZWnfdGXGSRXAEISoIkntsyNDe6/pKlJFF58=;
- b=FD3lBGHr4y0lniaw91ng/R1CGe70mZnASstqcdhuPRwNkZI3Usrdlb5dhqraatamdj67m2HK
- Bhz/y7U5aBrzi13GGU3/AkLLDOu4hddAC/q1TSX2+qwrYmTJGvALm0k5siUfrmnxr57sYhez
- h50tL4u8eS/bei47Tlkdr+LS5vk=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5ed4d1b8c0031c71c2434c92 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Jun 2020 10:00:24
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BE642C43391; Mon,  1 Jun 2020 10:00:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2CD57C433C6;
-        Mon,  1 Jun 2020 10:00:23 +0000 (UTC)
+        Mon, 1 Jun 2020 06:10:25 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D040C061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 03:10:24 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id x6so10792926wrm.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 03:10:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xOWcQDrTbG4JIa76/bX40XQNxFbdz4UYKFnkkU++44c=;
+        b=EV5iSEKMfaiBukOaUADQEitrdEygtVzIxhZ1SoJdR6S0wloxfuvRdfOUe/+06kSquw
+         V2Zj1CLZecO7PFDY5dUUC7MJEv+xtCq5LUnJM3boydmwwIwshro9AkYKHYn5w2AVMF+q
+         kxaxN5L9zipPHNuIDO5rl5gnpmtvgvcs+uKynScmV3Fhr99O+ZVebn1FZsx1kyPlO5Nb
+         0XNBwrBMjfm14JW+1KZtHPO390lkTXzi/YKByWZYEcrGPiSI9Ss0HfXmHruRz1i8z+uN
+         4GGePJ8xaDcvklthCsMu+UulUOI9+L6rAfbF85jOT54C0JpqA9+1YGoN8qr5Bvxx2oT5
+         x1qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xOWcQDrTbG4JIa76/bX40XQNxFbdz4UYKFnkkU++44c=;
+        b=KhfwKHMXD0eOYrhJF4OLayedQuEcLOwM4BoJXxb2Yxkz7Seg8IL8+XD7akP0B/WG4w
+         s1VfKnW093ISUc+fkt0O7g3g6eIEqNsvx6CIdrDT1c4cn/vTncNjJKdYfbmtnzxXmMPH
+         QvT3bWVi6+V/lRiFtWKr49EDHlJ1ivOy2wBsY0oPvrTMc7r5foLyaB0KbFMXgFXDV8TP
+         Q2EL1o4iQbOpx6DKX8yqvZ6LdGSoI84AhTqrSRMvwVJ9rko2Mi1CoHj/GQNUH5U4DMu0
+         C4x9Sh6lLex1b0SzJPJ+YAEzYf1h0i7WqeWGoO22H9w/aDbqCUf5Vi+RKomSBBmjL4Ec
+         +zgA==
+X-Gm-Message-State: AOAM531B0V7c2Mhre/yIQzSxEiT5rTP69i6szkhigprIpOYEH53N8ZLC
+        YMgt0i1mY6gIn4uIMkSB/cbHK1oEfx4=
+X-Google-Smtp-Source: ABdhPJwgroSD1V5v8edCJRgUHwWE1MYVveR0VLHadkIrqi7NtKZE8H2vdx587WWhBa6aIcJM2RGUwg==
+X-Received: by 2002:a5d:6751:: with SMTP id l17mr22791117wrw.179.1591006222922;
+        Mon, 01 Jun 2020 03:10:22 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id m129sm11106569wmf.2.2020.06.01.03.10.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2020 03:10:21 -0700 (PDT)
+Date:   Mon, 1 Jun 2020 11:10:18 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>
+Subject: Re: [PATCH v3 04/13] backlight: improve backlight_properties
+ documentation
+Message-ID: <20200601101018.w4h6hpt5wackndyb@holly.lan>
+References: <20200601065207.492614-1-sam@ravnborg.org>
+ <20200601065207.492614-5-sam@ravnborg.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Jun 2020 15:30:23 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, nm@ti.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, saravanak@google.com, mka@chromium.org,
-        smasetty@codeaurora.org, linux-arm-msm-owner@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH] OPP: Check for bandwidth values before creating icc paths
-In-Reply-To: <20200601071349.gbuyfaasdu27a3bd@vireshk-i7>
-References: <20200527192418.20169-1-sibis@codeaurora.org>
- <20200529052031.n2nvzxdsifwmthfv@vireshk-i7>
- <0205034b0ece173a7152a43b016985a7@codeaurora.org>
- <20200601040742.3a4cmhrwgh2ueksy@vireshk-i7>
- <ee51e55bdf518832e4ecb2faf98c6b58@codeaurora.org>
- <20200601071349.gbuyfaasdu27a3bd@vireshk-i7>
-Message-ID: <4258c6b122fa352a6b5cccb07a9b1203@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200601065207.492614-5-sam@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-06-01 12:43, Viresh Kumar wrote:
-> On 01-06-20, 12:09, Sibi Sankar wrote:
->> On 2020-06-01 09:37, Viresh Kumar wrote:
->> > On 29-05-20, 19:47, Sibi Sankar wrote:
->> > > opp_np needs to be subjected
->> > > to NULL check as well.
->> >
->> > No, it isn't. It should already be valid and is set by the OPP core.
->> > Actually we don't need to do of_node_get(opp_table->np) and just use
->> > np, I did that to not have a special case while putting the resource.
->> >
->> 
->> I should have phrased it differently.
->> opp_np needs to be checked to deal
->> with cases where devices don't have
->> "operating-points-v2" associated with
->> it.
->> 
->> diff --git a/drivers/opp/of.c b/drivers/opp/of.c
->> index a5d87ca0ab571..06976d14e6ccb 100644
->> --- a/drivers/opp/of.c
->> +++ b/drivers/opp/of.c
->> @@ -344,14 +344,14 @@ static int _bandwidth_supported(struct device 
->> *dev,
->> struct opp_table *opp_table)
->> 
->>                 opp_np = _opp_of_get_opp_desc_node(np, 0);
->>                 of_node_put(np);
->> -
->> -               /* Lets not fail in case we are parsing opp-v1 
->> bindings */
->> -               if (!opp_np)
->> -                       return 0;
->>         } else {
->>                 opp_np = of_node_get(opp_table->np);
->>         }
->> 
->> +       /* Lets not fail in case we are parsing opp-v1 bindings */
->> +       if (!opp_np)
->> +               return 0;
->> +
->> 
->> sdhci_msm 7c4000.sdhci: OPP table empty
->> sdhci_msm 7c4000.sdhci: _allocate_opp_table: Error finding 
->> interconnect
->> paths: -22
->> 
->> I see the following errors without
->> the check.
+On Mon, Jun 01, 2020 at 08:51:58AM +0200, Sam Ravnborg wrote:
+> Improve the documentation for backlight_properties and
+> adapt it to kernel-doc style.
 > 
-> My reply unfortunately only considered the case where this routine was
-> called from within the opp table. Are you testing it for the case
-> where you are adding OPPs dynamically from the code ?
+> v2:
+>   - Added into for each field (Daniel)
+>   - Re-written some parts to explain what to do, rather
+>     than what not to do.
+>     Partly based on suggestions from the review (Daniel)
+> 
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
 
-Yeah dev_pm_opp_add/dev_pm_opp_set_clkname
-or pretty much any api doing a
-dev_pm_opp_get_opp_table without
-a opp_table node associated with
-it will run into this issue.
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> Cc: Jingoo Han <jingoohan1@gmail.com>
+> ---
+>  include/linux/backlight.h | 96 ++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 85 insertions(+), 11 deletions(-)
+> 
+> diff --git a/include/linux/backlight.h b/include/linux/backlight.h
+> index b6c1ab6c922a..69a20da03035 100644
+> --- a/include/linux/backlight.h
+> +++ b/include/linux/backlight.h
+> @@ -117,28 +117,102 @@ struct backlight_ops {
+>  	int (*check_fb)(struct backlight_device *bd, struct fb_info *info);
+>  };
+>  
+> -/* This structure defines all the properties of a backlight */
+> +/**
+> + * struct backlight_properties - backlight properties
+> + *
+> + * This structure defines all the properties of a backlight.
+> + */
+>  struct backlight_properties {
+> -	/* Current User requested brightness (0 - max_brightness) */
+> +	/**
+> +	 * @brightness: The current brightness requested by the user.
+> +	 *
+> +	 * The backlight core makes sure the range is (0 to max_brightness)
+> +	 * when the brightness is set via the sysfs attribute:
+> +	 * /sys/class/backlight/<backlight>/brightness.
+> +	 *
+> +	 * This value can be set in the backlight_properties passed
+> +	 * to devm_backlight_device_register() to set a default brightness
+> +	 * value.
+> +	 */
+>  	int brightness;
+> -	/* Maximal value for brightness (read-only) */
+> +
+> +	/**
+> +	 * @max_brightness: The maximum brightness value.
+> +	 *
+> +	 * This value must be set in the backlight_properties passed to
+> +	 * devm_backlight_device_register() and shall not be modified by the
+> +	 * driver after registration.
+> +	 */
+>  	int max_brightness;
+> -	/* Current FB Power mode (0: full on, 1..3: power saving
+> -	   modes; 4: full off), see FB_BLANK_XXX */
+> +
+> +	/**
+> +	 * @power: The current power mode.
+> +	 *
+> +	 * User space can configure the power mode using the sysfs
+> +	 * attribute: /sys/class/backlight/<backlight>/bl_power
+> +	 * When the power property is updated update_status() is called.
+> +	 *
+> +	 * The possible values are: (0: full on, 1 to 3: power saving
+> +	 * modes; 4: full off), see FB_BLANK_XXX.
+> +	 *
+> +	 * When the backlight device is enabled @power is set
+> +	 * to FB_BLANK_UNBLANK. When the backlight device is disabled
+> +	 * @power is set to FB_BLANK_POWERDOWN.
+> +	 */
+>  	int power;
+> -	/* FB Blanking active? (values as for power) */
+> -	/* Due to be removed, please use (state & BL_CORE_FBBLANK) */
+> +
+> +	/**
+> +	 * @fb_blank: The power state from the FBIOBLANK ioclt.
+> +	 *
+> +	 * When the FBIOBLANK ioctl is called fb_blank is set to the
+> +	 * blank parameter and the update_status() operation is called.
+> +	 *
+> +	 * When the backlight device is enabled @fb_blank is set
+> +	 * to FB_BLANK_UNBLANK. When the backlight device is disabled
+> +	 * @fb_blank is set to FB_BLANK_POWERDOWN.
+> +	 *
+> +	 * Backlight drivers should avoid using this property. It has been
+> +	 * replaced by state & BL_CORE_FBLANK (although most drivers should
+> +	 * use backlight_is_blank() as the preferred means to get the blank
+> +	 * state).
+> +	 *
+> +	 * fb_blank is deprecated and will be removed.
+> +	 */
+>  	int fb_blank;
+> -	/* Backlight type */
+> +
+> +	/**
+> +	 * @type: The type of backlight supported.
+> +	 *
+> +	 * The backlight type allows userspace to make appropriate
+> +	 * policy desicions based on the backlight type.
+> +	 *
+> +	 * This value must be set in the backlight_properties
+> +	 * passed to devm_backlight_device_register().
+> +	 */
+>  	enum backlight_type type;
+> -	/* Flags used to signal drivers of state changes */
+> +
+> +	/**
+> +	 * @state: The state of the backlight core.
+> +	 *
+> +	 * The state is a bitmask. BL_CORE_FBBLANK is set when the display
+> +	 * is expected to be blank. BL_CORE_SUSPENDED is set when the
+> +	 * driver is suspended.
+> +	 *
+> +	 * backlight drivers are excpected to use backlight_is_blank()
+> +	 * in their update_status() operation rather than reading the
+> +	 * state property.
+> +	 *
+> +	 * The state is maintained by the core and drivers may not modify it.
+> +	 */
+>  	unsigned int state;
+> -	/* Type of the brightness scale (linear, non-linear, ...) */
+> -	enum backlight_scale scale;
+>  
+>  #define BL_CORE_SUSPENDED	(1 << 0)	/* backlight is suspended */
+>  #define BL_CORE_FBBLANK		(1 << 1)	/* backlight is under an fb blank event */
+>  
+> +	/**
+> +	 * @scale: The type of the brightness scale.
+> +	 */
+> +	enum backlight_scale scale;
+>  };
+>  
+>  struct backlight_device {
+> -- 
+> 2.25.1
+> 
