@@ -2,115 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB5A51E9D9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 07:56:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 763041E9DD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 08:04:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbgFAF40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 01:56:26 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:17679 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726107AbgFAF40 (ORCPT
+        id S1725999AbgFAGEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 02:04:51 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:39210 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725778AbgFAGEv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 01:56:26 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590990985; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=qxNlodpscBoxykFUAQVlHFmPOZvwy8cggIcifiL/Li0=; b=QQfdgWaSm4t42i4B8kv88dxv+WxgTgVUqS2kKN7nRdrcpgINOmlMM2LZv0NrtN4wKQbCYREe
- Y5fkAPdO/Tmw7M324Rmu/xHFl53vBd6hq2FxOiBKkS8hOsuLZg2XbQdtZnIJbjilYFSfUywU
- fpm9GwVFbkiWiLBzq/EyS/P51Cs=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5ed498832dd9e15ae345e86a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Jun 2020 05:56:18
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 454CEC433CB; Mon,  1 Jun 2020 05:56:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.50.34.11] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51DA3C433C9;
-        Mon,  1 Jun 2020 05:56:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 51DA3C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v2] dt-bindings: media: venus: Add an optional power
- domain for perf voting
-To:     Rob Herring <robh@kernel.org>
-Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org
-References: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
- <20200527193638.GA2604206@bogus>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <448cc4c0-0714-dc62-df19-7fa8fba91758@codeaurora.org>
-Date:   Mon, 1 Jun 2020 11:26:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <20200527193638.GA2604206@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        Mon, 1 Jun 2020 02:04:51 -0400
+Received: from marcel-macbook.fritz.box (p5b3d2638.dip0.t-ipconnect.de [91.61.38.56])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 94D18CED01;
+        Mon,  1 Jun 2020 08:14:36 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: [PATCH v4] Bluetooth: hci_qca: Improve controller ID info log
+ level
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1590763573-8302-1-git-send-email-zijuhu@codeaurora.org>
+Date:   Mon, 1 Jun 2020 08:04:48 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Harish Bandi <c-hbandi@codeaurora.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>, rjliao@codeaurora.org
 Content-Transfer-Encoding: 7bit
+Message-Id: <814821B2-2DFD-4F6C-937A-34F7B369064B@holtmann.org>
+References: <1590763573-8302-1-git-send-email-zijuhu@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Zijun,
 
-On 5/28/2020 1:06 AM, Rob Herring wrote:
-> On Wed, May 13, 2020 at 11:33:27AM +0530, Rajendra Nayak wrote:
->> Add an optional power domain which when specified can be used for
->> setting the performance state of Venus.
->>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> ---
->>   Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
->>   Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
->>   2 files changed, 10 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->> index 764affa..ac1ed64 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->> @@ -25,12 +25,16 @@ properties:
->>       maxItems: 1
->>   
->>     power-domains:
->> -    maxItems: 2
->> +    minItems: 2
->> +    maxItems: 3
->>   
->>     power-domain-names:
->> +    minItems: 2
->> +    maxItems: 3
->>       items:
->>         - const: venus
->>         - const: vcodec0
->> +      - const: opp-pd
+> Controller ID info got by VSC EDL_PATCH_GETVER is very
+> important, so improve its log level from DEBUG to INFO.
 > 
-> Humm, looks suspicious. This is a phyical power island in this block?
-
-yes, this is used to represent the physical 'cx' power island in the SoC
-(Its a shared power island, not a power island specific to this block)
-that can be scaled to different 'performance levels' based on the frequency
-the codec is expected to run at.
-
-> Because that's what 'power-domains' are supposed to represent. Not $os
-> pm-domain construct.
+> Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
+> ---
+> Changes in v4:
+> - correct coding style of qca_read_soc_version()
 > 
-> Rob
+> Changes in v3:
+> - correct coding style
 > 
+> Changes in v2:
+> - adjust controller ID info print order
+> 
+> drivers/bluetooth/btqca.c | 14 +++++++++-----
+> 1 file changed, 9 insertions(+), 5 deletions(-)
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+patch has been applied to bluetooth-next tree.
+
+Regards
+
+Marcel
+
