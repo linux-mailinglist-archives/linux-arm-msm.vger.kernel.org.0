@@ -2,121 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9BE31EB17A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 00:04:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33E2C1EB21E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 01:20:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728845AbgFAWDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 18:03:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47514 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728805AbgFAWDr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 18:03:47 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56034C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 15:03:47 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id bg4so489908plb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 15:03:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XFnIQB7ncVF63T1pY2NMmD5MUjtRKH/Cyt/vduuOCr4=;
-        b=fek/fKkwjOdhsv+J8geTqfhekmIfVg31GBFgDaJGfViiSS3F/TsrEDBUE9wVv/9R8E
-         SLECz+XjlLL63WPLyFxiSgONAHsFBoColGWxAzWM9st+Pt4+fuDZvusd10ecebte6xxm
-         cZP+Te8MKz3ySAe3gVd2jr865slvk2yVvi9Hg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XFnIQB7ncVF63T1pY2NMmD5MUjtRKH/Cyt/vduuOCr4=;
-        b=tFjb2DEe1dxPlIJfQatzoKGKI1vIjh0fNz+reJglHOn/H1mQmTsg9ZpE4Ke9t/pt/U
-         GFuIuy3y4wKukXyZtvJEhmmSyOUN98RteJwS/a+DAsdsH1oIuJq1/ln78Az4iiQSCJU2
-         ASyOmkfaZlvt65hu9C7GbYjND3WqKsejFzQCepuKtUBNSL6Qhu16ouy0fgGiNmiZXMsT
-         FXdPRBfxDWG0UqugGGrPt6GX4rFJVMeR7S/hiO1kCOgOA1hDqimwDI8BJ91k5B1DQ17b
-         icOR5ev1wdWwHY21lV0zW8AP27mpEm+p26nzRpeSnvZ77Yk1qTEovKdQ0/ISMPLTVncN
-         id/A==
-X-Gm-Message-State: AOAM5318TK5TxuodA9C3cK/HxklR8RUjJs1piW2XNp3CnACMOCTEMpGU
-        ImMJ7R6t64dwA/Tm4mVkAU7JhQ==
-X-Google-Smtp-Source: ABdhPJweeLR8G4rZkKaY74PZV+ncoWYY84wN8268AueoBMTYcuSWzeDoqapxC9otqNOiOJ4igNbeRg==
-X-Received: by 2002:a17:902:7041:: with SMTP id h1mr22988066plt.169.1591049026875;
-        Mon, 01 Jun 2020 15:03:46 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id 67sm346948pfg.84.2020.06.01.15.03.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2020 15:03:46 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     amasule@codeaurora.org, stanimir.varbanov@linaro.org
-Cc:     swboyd@chromium.org, jkardatzke@google.com, mka@chromium.org,
-        Douglas Anderson <dianders@chromium.org>,
+        id S1728709AbgFAXUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 19:20:16 -0400
+Received: from mga05.intel.com ([192.55.52.43]:20602 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726181AbgFAXUQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Jun 2020 19:20:16 -0400
+IronPort-SDR: il7mEYymC2psy/qNQk8u/dtN1WPUyQspWQ94PnXbc0teJQNPydOqThwKSnRHvLdCeL0Z3KWsdu
+ 4TdWrYZO11Pg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2020 16:20:15 -0700
+IronPort-SDR: hQbV32JOyjOGeuv1Q2ujjMc5qE5l9DREIL4uxk9IfntVO/uJuHc/R3pmYZg2c3JGkkmIfxg4ig
+ Vk416qdU8nMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,462,1583222400"; 
+   d="scan'208";a="293360328"
+Received: from allen-box.sh.intel.com (HELO [10.239.159.139]) ([10.239.159.139])
+  by fmsmga004.fm.intel.com with ESMTP; 01 Jun 2020 16:20:10 -0700
+Cc:     baolu.lu@linux.intel.com
+Subject: Re: [PATCH v2 00/33] iommu: Move iommu_group setup to IOMMU core code
+To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-Subject: [RFC PATCH] media: venus: Fix NULL pointer dereference in core selection
-Date:   Mon,  1 Jun 2020 15:03:22 -0700
-Message-Id: <20200601150314.RFC.1.I1e40623bbe8fa43ff1415fc273cba66503b9b048@changeid>
-X-Mailer: git-send-email 2.27.0.rc2.251.g90737beb825-goog
+        virtualization@lists.linux-foundation.org,
+        linux-rockchip@lists.infradead.org,
+        iommu@lists.linux-foundation.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org
+References: <20200414131542.25608-1-joro@8bytes.org>
+ <20200529221623.qc6twmpzryh7nkvb@cantor>
+ <20200601104240.7f5xhz7gooqhaq4n@cantor>
+From:   Lu Baolu <baolu.lu@linux.intel.com>
+Message-ID: <47711845-98ee-95b8-aa95-423a36ed9741@linux.intel.com>
+Date:   Tue, 2 Jun 2020 07:16:22 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
+In-Reply-To: <20200601104240.7f5xhz7gooqhaq4n@cantor>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The newly-introduced function min_loaded_core() iterates over all of
-the venus instances an tries to figure out how much load each instance
-is putting on each core.  Not all instances, however, might be fully
-initialized.  Specifically the "codec_freq_data" is initialized as
-part of vdec_queue_setup(), but an instance may already be in the list
-of all instances before that time.
+Hi Jerry,
 
-Let's band-aid this by checking to see if codec_freq_data is NULL
-before dereferencing.
+On 6/1/20 6:42 PM, Jerry Snitselaar wrote:
+>>
+>> Hi Joerg,
+>>
+>> With this patchset, I have an epyc system where if I boot with
+>> iommu=nopt and force a dump I will see some io page faults for a nic
+>> on the system. The vmcore is harvested and the system reboots. I
+>> haven't reproduced it on other systems yet, but without the patchset I
+>> don't see the io page faults during the kdump.
+>>
+>> Regards,
+>> Jerry
+> 
+> I just hit an issue on a separate intel based system (kdump iommu=nopt),
+> where it panics in during intel_iommu_attach_device, in is_aux_domain,
+> due to device_domain_info being DEFER_DEVICE_DOMAIN_INFO. That doesn't
+> get set to a valid address until the domain_add_dev_info call.
+> 
+> Is it as simple as the following?
 
-NOTE: without this fix I was running into a crash.  Specifically there
-were two venus instances.  One was doing start_streaming.  The other
-was midway through queue_setup but hadn't yet gotten to initting
-"codec_freq_data".
+I guess you won't hit this issue if you use iommu/next branch of Joerg's
+tree. We've changed to use a generic helper to retrieve the valid per
+device iommu data or NULL (if there's no).
 
-Fixes: eff82f79c562 ("media: venus: introduce core selection")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-I'm not massively happy about this commit but it's the best I could
-come up with without being much more of an expert in the venus codec.
-If someone has a better patch then please just consider this one to be
-a bug report and feel free to submit a better fix!  :-)
+Best regards,
+baolu
 
-In general I wonder a little bit about whether it's safe to be peeking
-at all the instances without grabbing the "inst->lock" on each one.  I
-guess it is since we do it both here and in load_scale_v4() but I
-don't know why.
-
-One thought I had was that we could fully avoid accessing the other
-instances, at least in min_loaded_core(), by just keeping track of
-"core1_load" and "core2_load" in "struct venus_core".  Whenever we add
-a new instance we could add to the relevant variables and whenever we
-release an instance we could remove.  Such a change seems cleaner but
-would require someone to test to make sure we didn't miss any case
-(AKA we always properly added/removed our load from the globals).
-
- drivers/media/platform/qcom/venus/pm_helpers.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index abf93158857b..a1d998f62cf2 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -496,6 +496,8 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
- 	list_for_each_entry(inst_pos, &core->instances, list) {
- 		if (inst_pos == inst)
- 			continue;
-+		if (!inst_pos->clk_data.codec_freq_data)
-+			continue;
- 		vpp_freq = inst_pos->clk_data.codec_freq_data->vpp_freq;
- 		coreid = inst_pos->clk_data.core_id;
- 
--- 
-2.27.0.rc2.251.g90737beb825-goog
-
+> 
+> diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
+> index 29d3940847d3..f1bbeed46a4c 100644
+> --- a/drivers/iommu/intel-iommu.c
+> +++ b/drivers/iommu/intel-iommu.c
+> @@ -5053,8 +5053,8 @@ is_aux_domain(struct device *dev, struct 
+> iommu_domain *domain)
+>   {
+>          struct device_domain_info *info = dev->archdata.iommu;
+> 
+> -       return info && info->auxd_enabled &&
+> -                       domain->type == IOMMU_DOMAIN_UNMANAGED;
+> +       return info && info != DEFER_DEVICE_DOMAIN_INFO &&
+> +               info->auxd_enabled && domain->type == 
+> IOMMU_DOMAIN_UNMANAGED;
+>   }
+> 
+>   static void auxiliary_link_device(struct dmar_domain *domain,
+> 
+> 
+> Regards,
+> Jerry
