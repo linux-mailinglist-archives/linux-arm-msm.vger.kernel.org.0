@@ -2,249 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D555B1EA210
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 12:43:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 554131EA25C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 13:01:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726125AbgFAKm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 06:42:58 -0400
-Received: from us-smtp-2.mimecast.com ([205.139.110.61]:33832 "EHLO
-        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725886AbgFAKm5 (ORCPT
+        id S1725946AbgFALBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 07:01:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55176 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbgFALBV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 06:42:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1591008174;
-        h=from:from:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:mime-version:mime-version:
-         content-type:content-type:in-reply-to:in-reply-to:  references:references;
-        bh=AeMGc882OThjd+9FTKhf2SV28sW70mLexiTD0o0MA38=;
-        b=KI04iWz479I9e8akC+MS/Xu8J4/D9ljB9BBzXiJggEteA6Qq3CZ1jye4xUVc4RcS5YGtiz
-        QkrjGx+VkIShdvhLNGlVV37+LbsatlJ0Ci+HxdiT4FldK+Okbbs/JxdxD+x2613KP2jp2L
-        cXZvErxaAvDbuB2ysr0uwUq/G79CudI=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-384-Gzw2IJdrPDeK6e0elZPQvA-1; Mon, 01 Jun 2020 06:42:43 -0400
-X-MC-Unique: Gzw2IJdrPDeK6e0elZPQvA-1
-Received: by mail-qv1-f72.google.com with SMTP id t11so8179589qvv.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 03:42:43 -0700 (PDT)
+        Mon, 1 Jun 2020 07:01:21 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2C5BC08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 04:01:19 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id s88so4374642pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 04:01:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vSd1F9IWmylmdRhuAnkzZkcm/vhp0PvuDBF/lEkmWYM=;
+        b=t/Z7/edJ+cZ8JjeZehSfuBXZPJJtj7/nryWGlIAR6tVr3jRy92L52wK2yPqqcJ6hUZ
+         Zw2fDUxXjK4GLKozfv5U2FexgQOI+tiIvUmSfh1QP1fnlNvOPAvorTf8bJW2IhNr031a
+         9mzjkAzrQzmmZI9NTUnAAol0UsJ66onm5nIy/+U9tIly5mu4YgSKOoZ38lPxfHTMsJBp
+         qGTj1qfgCNvY4LEI5xJQ85EIUn522vjEXAjRPHdrhTwnpV5ZUzNoQ1f8+27fU31yAvte
+         fWfrQ7Ne16RjH7nH35WeQs/F3bLDRAj8OeO2Xl3cRiGS9zL1FCTppOHUjx96V4Hywxmc
+         cXfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:reply-to
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=AeMGc882OThjd+9FTKhf2SV28sW70mLexiTD0o0MA38=;
-        b=GIp/0n5mEJxT9hknNRIvxutPldxFkUSd3nDed3z8GxdwhweGAa5FmviI2vhPFeJ96v
-         7iIpCbsXl4BpKMsdlJZKI2TFb/859Ec66PNq/qAivnHu7OhWP7LJwHykqVeXsDkOA11G
-         8FtX0zd1LusdToM3D3nvkAFn7JY6+OvSPQmzSowObK+bR+SUUimz16We94Nze4SxTFAb
-         XZ4X7Dhfd0EjBS9hcVFe9F4KqrBLDPfytuVZvfzMtskcpk3nH97brBXq1MFrjHkvD+QP
-         07U0kXFbBTsM8h23TGzbfhr3WLYxvoN2qc+ptA0am5xjAYxQJRGQg7FnZLkd4WiGZAnm
-         a4lw==
-X-Gm-Message-State: AOAM530kvXeFRDaMkgS0pkT6JBo+JYBP6zoy87B5tK5UNjnY60n3gkJA
-        0xaGi8nwzdm2+rsTu46jqcr4E/ev99ooLp02txaGUYJZT+J5yYqiySGpFg+Qg7lsjLlCrbwYjqD
-        TRS18lwnDC9ZSaegb2E1ytV5OAg==
-X-Received: by 2002:a0c:e4d3:: with SMTP id g19mr19829680qvm.42.1591008163377;
-        Mon, 01 Jun 2020 03:42:43 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJx+BINnTJE9j45H+TvYk5eeeeQO8aLXNnH2+mU7xE+aZ2rhNvGdUvylAKc6cV/RkkqIBE9yOw==
-X-Received: by 2002:a0c:e4d3:: with SMTP id g19mr19829653qvm.42.1591008163033;
-        Mon, 01 Jun 2020 03:42:43 -0700 (PDT)
-Received: from localhost (ip70-163-223-149.ph.ph.cox.net. [70.163.223.149])
-        by smtp.gmail.com with ESMTPSA id m10sm15395899qtg.94.2020.06.01.03.42.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2020 03:42:42 -0700 (PDT)
-Date:   Mon, 1 Jun 2020 03:42:40 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vSd1F9IWmylmdRhuAnkzZkcm/vhp0PvuDBF/lEkmWYM=;
+        b=DleYDf6jUCoDjcfIe3j3QQy83ubuawlIVDhQucQ9bZ7ErW7jJrJ9z8ILCdc7Sq5MCH
+         zcd9uVRelZ8MtU0k9HWpLuuE02WGZlicSMQ37LO3cSd2RmFZUWcW8l56ob9YXLdvzINV
+         Rhn3kW6XJxZU4szseon0f7UoIMqKUA/BSn5vYSZDh+YEv72DEQeDmV0EujxaU3AABihR
+         1w7v3tozqxD/7kzM+6ew06WpY155wSK2YR03F5xFJyB9Kl9WXqI5e6VPLkE9L0Qqk5DO
+         TI3mERokcOrAh4SoaaeCNep7TDaGbwq475dPTExduSFfF7gdx+se5vDeD6X2ApwEWyrR
+         ztMg==
+X-Gm-Message-State: AOAM5309xzi+vhG/wGCd3fk6XD/TTbtuNVTdhX+lqJOOtEHfxmy6wzkT
+        AHd+QhH8zMD3wZ0LZjAnxaNIVg==
+X-Google-Smtp-Source: ABdhPJwAVadiEigs3N3Sh4nG5ncaSZnIPjxqEIMNOmDBbJC05+jH/KHIkzRncLVURZ5nRvvxZzCKTw==
+X-Received: by 2002:a17:90a:f508:: with SMTP id cs8mr5446247pjb.16.1591009278922;
+        Mon, 01 Jun 2020 04:01:18 -0700 (PDT)
+Received: from localhost ([122.172.62.209])
+        by smtp.gmail.com with ESMTPSA id q5sm14121925pfl.199.2020.06.01.04.01.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jun 2020 04:01:17 -0700 (PDT)
+Date:   Mon, 1 Jun 2020 16:31:16 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
+        mka@chromium.org, nm@ti.com, bjorn.andersson@linaro.org,
+        agross@kernel.org, rjw@rjwysocki.net,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-rockchip@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v2 00/33] iommu: Move iommu_group setup to IOMMU core code
-Message-ID: <20200601104240.7f5xhz7gooqhaq4n@cantor>
-Reply-To: Jerry Snitselaar <jsnitsel@redhat.com>
-Mail-Followup-To: Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-rockchip@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org
-References: <20200414131542.25608-1-joro@8bytes.org>
- <20200529221623.qc6twmpzryh7nkvb@cantor>
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v5 4/5] cpufreq: qcom: Update the bandwidth levels on
+ frequency change
+Message-ID: <20200601110116.jteoalg3yjhsbkpw@vireshk-i7>
+References: <20200527202153.11659-1-sibis@codeaurora.org>
+ <20200527202153.11659-5-sibis@codeaurora.org>
+ <20200529100028.2wz2iqi5vqji2heb@vireshk-i7>
+ <a90bce2d52f7cdb726e8b799e3512fad@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200529221623.qc6twmpzryh7nkvb@cantor>
+In-Reply-To: <a90bce2d52f7cdb726e8b799e3512fad@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri May 29 20, Jerry Snitselaar wrote:
->On Tue Apr 14 20, Joerg Roedel wrote:
->>Hi,
->>
->>here is the second version of this patch-set. The first version with
->>some more introductory text can be found here:
->>
->>	https://lore.kernel.org/lkml/20200407183742.4344-1-joro@8bytes.org/
->>
->>Changes v1->v2:
->>
->>	* Rebased to v5.7-rc1
->>
->>	* Re-wrote the arm-smmu changes as suggested by Robin Murphy
->>
->>	* Re-worked the Exynos patches to hopefully not break the
->>	  driver anymore
->>
->>	* Fixed a missing mutex_unlock() reported by Marek Szyprowski,
->>	  thanks for that.
->>
->>There is also a git-branch available with these patches applied:
->>
->>	https://git.kernel.org/pub/scm/linux/kernel/git/joro/linux.git/log/?h=iommu-probe-device-v2
->>
->>Please review.
->>
->>Thanks,
->>
->>	Joerg
->>
->>Joerg Roedel (32):
->> iommu: Move default domain allocation to separate function
->> iommu/amd: Implement iommu_ops->def_domain_type call-back
->> iommu/vt-d: Wire up iommu_ops->def_domain_type
->> iommu/amd: Remove dma_mask check from check_device()
->> iommu/amd: Return -ENODEV in add_device when device is not handled by
->>   IOMMU
->> iommu: Add probe_device() and remove_device() call-backs
->> iommu: Move default domain allocation to iommu_probe_device()
->> iommu: Keep a list of allocated groups in __iommu_probe_device()
->> iommu: Move new probe_device path to separate function
->> iommu: Split off default domain allocation from group assignment
->> iommu: Move iommu_group_create_direct_mappings() out of
->>   iommu_group_add_device()
->> iommu: Export bus_iommu_probe() and make is safe for re-probing
->> iommu/amd: Remove dev_data->passthrough
->> iommu/amd: Convert to probe/release_device() call-backs
->> iommu/vt-d: Convert to probe/release_device() call-backs
->> iommu/arm-smmu: Convert to probe/release_device() call-backs
->> iommu/pamu: Convert to probe/release_device() call-backs
->> iommu/s390: Convert to probe/release_device() call-backs
->> iommu/virtio: Convert to probe/release_device() call-backs
->> iommu/msm: Convert to probe/release_device() call-backs
->> iommu/mediatek: Convert to probe/release_device() call-backs
->> iommu/mediatek-v1 Convert to probe/release_device() call-backs
->> iommu/qcom: Convert to probe/release_device() call-backs
->> iommu/rockchip: Convert to probe/release_device() call-backs
->> iommu/tegra: Convert to probe/release_device() call-backs
->> iommu/renesas: Convert to probe/release_device() call-backs
->> iommu/omap: Remove orphan_dev tracking
->> iommu/omap: Convert to probe/release_device() call-backs
->> iommu/exynos: Use first SYSMMU in controllers list for IOMMU core
->> iommu/exynos: Convert to probe/release_device() call-backs
->> iommu: Remove add_device()/remove_device() code-paths
->> iommu: Unexport iommu_group_get_for_dev()
->>
->>Sai Praneeth Prakhya (1):
->> iommu: Add def_domain_type() callback in iommu_ops
->>
->>drivers/iommu/amd_iommu.c       |  97 ++++----
->>drivers/iommu/amd_iommu_types.h |   1 -
->>drivers/iommu/arm-smmu-v3.c     |  38 +--
->>drivers/iommu/arm-smmu.c        |  39 ++--
->>drivers/iommu/exynos-iommu.c    |  24 +-
->>drivers/iommu/fsl_pamu_domain.c |  22 +-
->>drivers/iommu/intel-iommu.c     |  68 +-----
->>drivers/iommu/iommu.c           | 393 +++++++++++++++++++++++++-------
->>drivers/iommu/ipmmu-vmsa.c      |  60 ++---
->>drivers/iommu/msm_iommu.c       |  34 +--
->>drivers/iommu/mtk_iommu.c       |  24 +-
->>drivers/iommu/mtk_iommu_v1.c    |  50 ++--
->>drivers/iommu/omap-iommu.c      |  99 ++------
->>drivers/iommu/qcom_iommu.c      |  24 +-
->>drivers/iommu/rockchip-iommu.c  |  26 +--
->>drivers/iommu/s390-iommu.c      |  22 +-
->>drivers/iommu/tegra-gart.c      |  24 +-
->>drivers/iommu/tegra-smmu.c      |  31 +--
->>drivers/iommu/virtio-iommu.c    |  41 +---
->>include/linux/iommu.h           |  21 +-
->>20 files changed, 533 insertions(+), 605 deletions(-)
->>
->>-- 
->>2.17.1
->>
->>_______________________________________________
->>iommu mailing list
->>iommu@lists.linux-foundation.org
->>https://lists.linuxfoundation.org/mailman/listinfo/iommu
->>
->
->Hi Joerg,
->
->With this patchset, I have an epyc system where if I boot with
->iommu=nopt and force a dump I will see some io page faults for a nic
->on the system. The vmcore is harvested and the system reboots. I
->haven't reproduced it on other systems yet, but without the patchset I
->don't see the io page faults during the kdump.
->
->Regards,
->Jerry
+On 29-05-20, 17:00, Sibi Sankar wrote:
+> > > +static int qcom_cpufreq_update_opp(struct device *cpu_dev,
+> > > +				   unsigned long freq_khz,
+> > > +				   unsigned long volt)
+> > > +{
+> > > +	unsigned long freq_hz = freq_khz * 1000;
+> > > +
+> > > +	if (dev_pm_opp_adjust_voltage(cpu_dev, freq_hz, volt, volt, volt))
+> > > +		return dev_pm_opp_add(cpu_dev, freq_hz, volt);
+> > 
+> > What's going on here ? Why add OPP here ?
+> 
+> We update the voltage if opp were
+> initially added as part of
+> dev_pm_opp_of_add_table. However
+> if the cpu node does not have an
+> opp table associated with it, we
+> do a opp_add_v1 instead.
 
-I just hit an issue on a separate intel based system (kdump iommu=nopt),
-where it panics in during intel_iommu_attach_device, in is_aux_domain,
-due to device_domain_info being DEFER_DEVICE_DOMAIN_INFO. That doesn't
-get set to a valid address until the domain_add_dev_info call.
+Instead of depending on the failure of dev_pm_opp_adjust_voltage(),
+pass a flag to qcom_cpufreq_update_opp() which will decide if we want
+to adjust voltage or add an opp.
 
-Is it as simple as the following?
-
-diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
-index 29d3940847d3..f1bbeed46a4c 100644
---- a/drivers/iommu/intel-iommu.c
-+++ b/drivers/iommu/intel-iommu.c
-@@ -5053,8 +5053,8 @@ is_aux_domain(struct device *dev, struct iommu_domain *domain)
-  {
-         struct device_domain_info *info = dev->archdata.iommu;
-  
--       return info && info->auxd_enabled &&
--                       domain->type == IOMMU_DOMAIN_UNMANAGED;
-+       return info && info != DEFER_DEVICE_DOMAIN_INFO &&
-+               info->auxd_enabled && domain->type == IOMMU_DOMAIN_UNMANAGED;
-  }
-  
-  static void auxiliary_link_device(struct dmar_domain *domain,
-
-
-Regards,
-Jerry
-
+-- 
+viresh
