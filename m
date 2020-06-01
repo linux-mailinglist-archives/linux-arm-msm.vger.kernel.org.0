@@ -2,122 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C73771E9E5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 08:40:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA7D31E9E76
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2020 08:52:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727772AbgFAGkp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 02:40:45 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:10959 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725972AbgFAGkp (ORCPT
+        id S1725886AbgFAGwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 02:52:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725283AbgFAGwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 02:40:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1590993644; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=YtJ2S+9psNBeqGeDytjznv3JiSw14UxOHqXehmhxIMk=;
- b=r+zSmjmKX//E+5YlAThLP04miqrp1UWxptNUlP7LvJphl1q3dvQ3MhechmBRebyhxPhZcH5i
- QUNgE6mBHSRCMOSrZI9s8yJTlzfkSVM1wGHYTChzdiLSYLun96MgiM5oiTMF12bLQHfpaYLb
- eQ+Nm48R2FQ1Bwl4K0fqeDAoftw=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5ed4a2aecb0458693399d802 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Jun 2020 06:39:42
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 65138C43391; Mon,  1 Jun 2020 06:39:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C6FEEC433C6;
-        Mon,  1 Jun 2020 06:39:40 +0000 (UTC)
+        Mon, 1 Jun 2020 02:52:17 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC18C061A0E;
+        Sun, 31 May 2020 23:52:17 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id j12so569913lfh.0;
+        Sun, 31 May 2020 23:52:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Lcs4UfCjZfwBNFi+8rkSrZ11oxhwX1U+s8m8XO/pfDI=;
+        b=kTEQfOPA4AqYBYajHUGCtoyClG+Bp8MGoxPyjdJm8jSB8Cv0a1Gf6qFlAXPQchzp7F
+         ni3sWO8OzBm68Su+yZ9jDMiOv/rYuX015JMwKNi2VCvT4YIU+q6PuBtyaCM+Q1LPJyFD
+         kJosFcJxmSRV14YcYNsKJ2wr3GUUMvX4L9P4CdUBA65o0RIGDC6arVBe6VA4dIhxArB+
+         SCDdoi86W/e/vAukfCJEME27jt+IM3rr8boU1IKENSwZCIHEnAKA5wCMxpDFiTwtmo7P
+         yyZHMTMxT00WJYwv79ZFjsXTSLS8/DNKtrdyHcE4ovt5TaNVSHSz5a5T6uCQST98wL4t
+         jU4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=Lcs4UfCjZfwBNFi+8rkSrZ11oxhwX1U+s8m8XO/pfDI=;
+        b=EOLJ8sNWtmj54J8WF3qHoDRzIkze7pc4Fibw5qoy1eTs1iXZoabBhtJ4QkE5nDNBTh
+         UUbGVGFelifLcuonz1vDxPpWYd+4qRhioiNJ652hEtq4yns44TRSgloOMynEsUF1Wf2p
+         WR6J9bd6pIK2wYL5jvq0vlHvmXX9hTVF9oDtWP/6FvhwamwIA3eb/eM0FVqTjiRk2iax
+         VqshcyUh3KvY/jlOddw2ouPz0IZK/97WNNr3bNzBiZWZ782lnsPyeyg+JbgVvaIv03+6
+         BLZ8rVV4bz3hUeLCfPdowCKCAP+vkWHtlrGsSu920B0pDqPL/g19PBhlPNNdeMHwJlLc
+         DOag==
+X-Gm-Message-State: AOAM530imOe+x8sYhzkShFP39psGkkQtudPyCcosZOBMFrHlcHijJn7o
+        p9nhHvdjl7cW2S+jtNwaBH8=
+X-Google-Smtp-Source: ABdhPJzjz/NAIyLeXql3zfTZPD5z1MKZ+BU+XLz6PTkE13Afx7zKl2wz/s4PDc86x6D1L7XcDcp2mw==
+X-Received: by 2002:ac2:54b4:: with SMTP id w20mr10547915lfk.48.1590994335553;
+        Sun, 31 May 2020 23:52:15 -0700 (PDT)
+Received: from saturn.lan ([2a00:fd00:805f:db00:281d:a604:434c:a58d])
+        by smtp.gmail.com with ESMTPSA id e13sm2540462ljl.117.2020.05.31.23.52.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 May 2020 23:52:14 -0700 (PDT)
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>
+Subject: [PATCH v3 0/16] backlight updates
+Date:   Mon,  1 Jun 2020 08:51:54 +0200
+Message-Id: <20200601065207.492614-1-sam@ravnborg.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Jun 2020 12:09:40 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, nm@ti.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, saravanak@google.com, mka@chromium.org,
-        smasetty@codeaurora.org, linux-arm-msm-owner@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH] OPP: Check for bandwidth values before creating icc paths
-In-Reply-To: <20200601040742.3a4cmhrwgh2ueksy@vireshk-i7>
-References: <20200527192418.20169-1-sibis@codeaurora.org>
- <20200529052031.n2nvzxdsifwmthfv@vireshk-i7>
- <0205034b0ece173a7152a43b016985a7@codeaurora.org>
- <20200601040742.3a4cmhrwgh2ueksy@vireshk-i7>
-Message-ID: <ee51e55bdf518832e4ecb2faf98c6b58@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-06-01 09:37, Viresh Kumar wrote:
-> On 29-05-20, 19:47, Sibi Sankar wrote:
->> opp_np needs to be subjected
->> to NULL check as well.
-> 
-> No, it isn't. It should already be valid and is set by the OPP core.
-> Actually we don't need to do of_node_get(opp_table->np) and just use
-> np, I did that to not have a special case while putting the resource.
-> 
+v3:
+ - Dropped video patch that was reviewd and thus applied
+ - Updated kernel-doc so all fields now have a short intro
+ - Improved readability in a lot of places, thanks to review
+   feedback from Daniel - thanks!
+ - Added better intro to backlight
+ - Added acks
 
-I should have phrased it differently.
-opp_np needs to be checked to deal
-with cases where devices don't have
-"operating-points-v2" associated with
-it.
+   Several other smaller changes documented in the
+   patches.
+   I left out patches to make functions static as
+   there are dependencies to drm-misc-next for these.
+   When this is landed I have a pile of follow-up patches waiting,
+   mostly introducing backlight_is_blank() all over.
 
-diff --git a/drivers/opp/of.c b/drivers/opp/of.c
-index a5d87ca0ab571..06976d14e6ccb 100644
---- a/drivers/opp/of.c
-+++ b/drivers/opp/of.c
-@@ -344,14 +344,14 @@ static int _bandwidth_supported(struct device 
-*dev, struct opp_table *opp_table)
+v2:
+  - Dropped drm patches that was reviewed and thus applied (Thanks Tomi)
+  - Updated backligth_is_blank() based on Daniel's feedback
+  - Dropped EXPORT_SYMBOL that was no longer relevant
+  - Reordered patches, so patches with no external
+    dependencies comes first
+  - Updated the description that follows.
 
-                 opp_np = _opp_of_get_opp_desc_node(np, 0);
-                 of_node_put(np);
--
--               /* Lets not fail in case we are parsing opp-v1 bindings 
-*/
--               if (!opp_np)
--                       return 0;
-         } else {
-                 opp_np = of_node_get(opp_table->np);
-         }
+This following series touches a lot of backlight things.
 
-+       /* Lets not fail in case we are parsing opp-v1 bindings */
-+       if (!opp_np)
-+               return 0;
-+
+Starts with a small refactoring in backligth.c to remove some indents.
+This increases the readability and no functional changes.
 
-sdhci_msm 7c4000.sdhci: OPP table empty
-sdhci_msm 7c4000.sdhci: _allocate_opp_table: Error finding interconnect 
-paths: -22
+Then a new helper backlight_is_blank() is added.
+This helper will simplify the implementation of update_status()
+in almost all backlight drivers.
 
-I see the following errors without
-the check.
+Then while surfing the code I missed some documentation.
+So I got a bit carried away and updated the documentation
+for the backlight core and added it to kernel-doc.
+The documentation express my current understanding.
+Everything from spelling errors to outright wrong content
+shall be anticipated - so please review!
+We are all best helped if the documentation is correct
+and up-to-date and it is readable.
+
+In this process I identified that the backlight_bl driver
+was no longer in use - so drop it.
+
+Everything builds, but so far no run-time testing.
+
+	Sam
+
+Sam Ravnborg (13):
+      backlight: refactor fb_notifier_callback()
+      backlight: add backlight_is_blank()
+      backlight: improve backlight_ops documentation
+      backlight: improve backlight_properties documentation
+      backlight: improve backlight_device documentation
+      backlight: document inline functions in backlight.h
+      backlight: document enums in backlight.h
+      backlight: remove the unused backlight_bl driver
+      backlight: drop extern from prototypes
+      backlight: add overview and update existing doc
+      backlight: wire up kernel-doc documentation
+      backlight: as3711_bl: introduce backlight_is_blank()
+      backlight: use backlight_is_blank() in all backlight drivers
+
+ Documentation/gpu/backlight.rst          |  12 +
+ Documentation/gpu/index.rst              |   1 +
+ drivers/video/backlight/88pm860x_bl.c    |   8 +-
+ drivers/video/backlight/Kconfig          |   8 -
+ drivers/video/backlight/Makefile         |   1 -
+ drivers/video/backlight/adp5520_bl.c     |   5 +-
+ drivers/video/backlight/adp8860_bl.c     |   5 +-
+ drivers/video/backlight/adp8870_bl.c     |   5 +-
+ drivers/video/backlight/as3711_bl.c      |   8 +-
+ drivers/video/backlight/backlight.c      | 174 +++++++++-----
+ drivers/video/backlight/bd6107.c         |   4 +-
+ drivers/video/backlight/corgi_lcd.c      |   5 +-
+ drivers/video/backlight/cr_bllcd.c       |  22 +-
+ drivers/video/backlight/da903x_bl.c      |   8 +-
+ drivers/video/backlight/ep93xx_bl.c      |   3 +-
+ drivers/video/backlight/generic_bl.c     | 110 ---------
+ drivers/video/backlight/gpio_backlight.c |   4 +-
+ drivers/video/backlight/hp680_bl.c       |   4 +-
+ drivers/video/backlight/jornada720_bl.c  |   2 +-
+ drivers/video/backlight/kb3886_bl.c      |   4 +-
+ drivers/video/backlight/led_bl.c         |   4 +-
+ drivers/video/backlight/lm3533_bl.c      |   4 +-
+ drivers/video/backlight/locomolcd.c      |   4 +-
+ drivers/video/backlight/lv5207lp.c       |   4 +-
+ drivers/video/backlight/max8925_bl.c     |   8 +-
+ drivers/video/backlight/pwm_bl.c         |   4 +-
+ drivers/video/backlight/qcom-wled.c      |   4 +-
+ drivers/video/backlight/tps65217_bl.c    |   4 +-
+ drivers/video/backlight/wm831x_bl.c      |   8 +-
+ include/linux/backlight.h                | 374 +++++++++++++++++++++++++------
+ 30 files changed, 465 insertions(+), 346 deletions(-)
 
 
->> Tested-by: Sibi Sankar <sibis@codeaurora.org>
->> Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
-> 
-> Thanks.
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
