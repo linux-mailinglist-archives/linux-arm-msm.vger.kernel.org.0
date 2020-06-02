@@ -2,566 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1200B1EB402
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 05:58:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FCC61EB5D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 08:32:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725872AbgFBD6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 23:58:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46144 "EHLO
+        id S1726110AbgFBGcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 02:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725793AbgFBD6J (ORCPT
+        with ESMTP id S1725900AbgFBGcO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 23:58:09 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D59C061A0E;
-        Mon,  1 Jun 2020 20:58:09 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id x207so2546378pfc.5;
-        Mon, 01 Jun 2020 20:58:09 -0700 (PDT)
+        Tue, 2 Jun 2020 02:32:14 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7153EC05BD43
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 23:32:14 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id g12so931799pll.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 23:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nOr5FCHSTEgiVocf45/l3ooSGULR0cJognfb4cEKnPU=;
-        b=R1H0NFeL2eZtM5B8fothsEYgC2PdeAg8xkqZwlbaO3QdOeDx86CGQ9C8PTXNij43IJ
-         6Wz5HVuBjKUQqCyAqHtl3qTvHltl62wLzE29d0iQZAQ59Z+60Uza2D9cuxKQSn10GD76
-         un8DWDfY3UWiyES6VZJw+NgGcwlHp6bOJO4rgMI0KD1n//GTXF6jLfgGFsnJoI56Trja
-         PPRnoXjnlUoCM4Jr1KaKxFAg9HGGXg5h9PwbdWVsPXEFeZJs2owpmF6SKHOAC9iUrf4f
-         FkzgpS1tmTh5XWXLuyBdPo56nTVmL8tsHgnWmZ2wA0hZMKdZ1rP4yizU9U26jMapJBXK
-         m4hw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=b+M/coCkFNl7rEB1+V9a1SGv0MbqkwxWHT5JS/FD5kU=;
+        b=KUDscq8WItKoh9ZYSx8jWuci35Nw048l0iXzgRVyQNROloiXf5EDGPMxaYe40ytsfc
+         7tzL55dftrs+QMwkqTdiodq2N8ZWMmLGst4MFycYH/KwplJZf7c1hurZa2MrQVPYUm9Z
+         0u0j0yJqrH/+bHMnGrM4KLjgs4VZxEJLD3+q8rbI9pKCvgLMWyyP6HJnYpWnroAJVTOv
+         caH7/VDudXhENr5UEvSEpFioSFfzRuyXUSN0a8UmQdYPFHFBFZ6DyWsi1G125N8sJhSL
+         3NopBKEm9MvPaBjxc4O8AdWAxCzTs5dU1BSHm/v6l5A94OOISy6xU8k+9nvxuBQKd5MB
+         L92A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nOr5FCHSTEgiVocf45/l3ooSGULR0cJognfb4cEKnPU=;
-        b=E5rK8L+74+0xOFaJKCp6vwaqheAOdKabpSH8JQWYWX89fV4An+9Z/isJRK4EepTTiX
-         9aTjCwVATWsL3nTddNRBJSg8ib0vh3ebWvJBqIv/DlgCMunaBImYtlXbmjPJn3Fsww8V
-         Py2zg0FY+TbK4IZYvPyoxkz83Np8AfLUZVx2rWhWM05J1Ax+OjMJ4OQPPHonHZ/PVZQH
-         GNNN6kuzY1tVUknBBxn7ozQK95+6qpsoLsBPQZQyCumzq4mK2TQJWm0DeSleqn2ve3Hw
-         cnvCfA2WYyzYiuUm0MYZ6gJG8v2jo/l0gaNteH1ZxCtkG7B3FBeBkBr7Lx/TbHF6IWkv
-         X9nQ==
-X-Gm-Message-State: AOAM533+RK6SciMHqxfLOsf+vHjn9YP8P7mLZVpd2HLzjMKyrkZr/SIW
-        6ZYmufYXaqr3o9ptoDUPINo=
-X-Google-Smtp-Source: ABdhPJyBWuRuoeY2+XSuiE0a82uUHaNhSTrDPFN8pluaxjnX/jArvnLv/xn2K8H7N7UjzM8q8diJ2g==
-X-Received: by 2002:a63:c58:: with SMTP id 24mr22634213pgm.246.1591070288587;
-        Mon, 01 Jun 2020 20:58:08 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id r3sm925826pjb.20.2020.06.01.20.58.06
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b+M/coCkFNl7rEB1+V9a1SGv0MbqkwxWHT5JS/FD5kU=;
+        b=j4iQij7NyfHkbXqGUNFJ3yJ1XqeCnZEB2LaREIrljwKRHLvVl08xiYmkVzO2khDMr6
+         e633azDcZYISEMA2NtXTxh2mVedm/De7fCLvQFkvmbsu7Ao0SSnTAiJsCNYGCURrY6qW
+         L1r9twZcOuLbSrEzvg954TQOlMT5/KVeCPOnDAt6/Bi8esmjX8s9VlP/WNbFeG03o+82
+         RkmVKXPJ3mdIOa9AFQZ4Pjnr1Vd9P7oL1gunr8H4m+6K6GLU5Djs6FgZn6J2LQ18Lc6J
+         qiRj3C8VSrb/gHKxRbECr2MUYe8npvNqpEA2O/xrh4sMRXpYOkj+gmVr4JzS5bjmuwo1
+         ikBA==
+X-Gm-Message-State: AOAM531bNWJv0qIr13VdMO/SwA1LLJ13wq/4Ds0xjSBbLR44DmeiZJd0
+        AeLtsA56q9DvGhQgkeynBTJXvw==
+X-Google-Smtp-Source: ABdhPJy5cUvakA8S6grGUMTST0kl4+hlBnKMXzZSlSFWY+9TVWtjdijoQ9DEyc9FF+kCM3nqIrBYGQ==
+X-Received: by 2002:a17:90a:ee82:: with SMTP id i2mr731084pjz.29.1591079533656;
+        Mon, 01 Jun 2020 23:32:13 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id k14sm1228630pgn.94.2020.06.01.23.32.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2020 20:58:07 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        zhengbin <zhengbin13@huawei.com>,
-        Jayant Shekhar <jshekhar@codeaurora.org>,
-        Shubhashree Dhar <dhar@codeaurora.org>,
-        Raviteja Tamatam <travitej@codeaurora.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        tongtiangen <tongtiangen@huawei.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] Revert "drm/msm/dpu: add support for clk and bw scaling for display"
-Date:   Mon,  1 Jun 2020 20:58:32 -0700
-Message-Id: <20200602035842.199711-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.25.4
+        Mon, 01 Jun 2020 23:32:12 -0700 (PDT)
+Date:   Mon, 1 Jun 2020 23:32:10 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-tegra@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
+Message-ID: <20200602063210.GT11847@yoga>
+References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+ <20200228025700.GA856087@builder>
+ <20200514193249.GE279327@builder.lan>
+ <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
+ <20200527110343.GD11111@willie-the-truck>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200527110343.GD11111@willie-the-truck>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed 27 May 04:03 PDT 2020, Will Deacon wrote:
 
-This is causing multiple armv7 missing do_div() errors, so lets drop it
-for now.
+> Hi John, Bjorn,
+> 
+> On Tue, May 26, 2020 at 01:34:45PM -0700, John Stultz wrote:
+> > On Thu, May 14, 2020 at 12:34 PM <bjorn.andersson@linaro.org> wrote:
+> > >
+> > > On Thu 27 Feb 18:57 PST 2020, Bjorn Andersson wrote:
+> > >
+> > > Rob, Will, we're reaching the point where upstream has enough
+> > > functionality that this is becoming a critical issue for us.
+> > >
+> > > E.g. Lenovo Yoga C630 is lacking this and a single dts patch to boot
+> > > mainline with display, GPU, WiFi and audio working and the story is
+> > > similar on several devboards.
+> > >
+> > > As previously described, the only thing I want is the stream mapping
+> > > related to the display controller in place, either with the CB with
+> > > translation disabled or possibly with a way to specify the framebuffer
+> > > region (although this turns out to mess things up in the display
+> > > driver...)
+> > >
+> > > I did pick this up again recently and concluded that by omitting the
+> > > streams for the USB controllers causes an instability issue seen on one
+> > > of the controller to disappear. So I would prefer if we somehow could
+> > > have a mechanism to only pick the display streams and the context
+> > > allocation for this.
+> > >
+> > >
+> > > Can you please share some pointers/insights/wishes for how we can
+> > > conclude on this subject?
+> > 
+> > Ping? I just wanted to follow up on this discussion as this small
+> > series is crucial for booting mainline on the Dragonboard 845c
+> > devboard. It would be really valuable to be able to get some solution
+> > upstream so we can test mainline w/o adding additional patches.
+> 
+> Sorry, it's been insanely busy recently and I haven't had a chance to think
+> about this on top of everything else. We're also carrying a hack in Android
+> for you :)
+> 
 
-This reverts commit 04d9044f6c577948609c03b4e33b8fbc8b87c4b1.
+Thanks for taking the time to get back to us on this!
 
-Cc: Kalyan Thota <kalyan_t@codeaurora.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 106 +++---------------
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   5 +-
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   4 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  37 +-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   4 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      |   9 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  82 --------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |   4 -
- 8 files changed, 23 insertions(+), 228 deletions(-)
+> > The rest of the db845c series has been moving forward smoothly, but
+> > this set seems to be very stuck with no visible progress since Dec.
+> > 
+> > Are there any pointers for what folks would prefer to see?
+> 
+> I've had a chat with Robin about this. Originally, I was hoping that
+> people would all work together towards an idyllic future where firmware
+> would be able to describe arbitrary pre-existing mappings for devices,
+> irrespective of the IOMMU through which they master and Linux could
+> inherit this configuration. However, that hasn't materialised (there was
+> supposed to be an IORT update, but I don't know what happened to that)
+> and, in actual fact, the problem that you have on db845 is /far/ more
+> restricted than the general problem.
+> 
+> Could you please try hacking something along the following lines and see
+> how you get on? You may need my for-joerg/arm-smmu/updates branch for
+> all the pieces:
+> 
+>   1. Use the ->cfg_probe() callback to reserve the SMR/S2CRs you need
+>      "pinning" and configure for bypass.
+> 
+>   2. Use the ->def_domain_type() callback to return IOMMU_DOMAIN_IDENTITY
+>      for the display controller
+> 
+> I /think/ that's sufficient, but note that it differs from the current
+> approach because we don't end up reserving a CB -- bypass is configured
+> in the S2CR instead. Some invalidation might therefore be needed in
+> ->cfg_probe() after unhooking the CB.
+> 
+> Thanks, and please yell if you run into problems with this approach.
+> 
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 9697abcbec3f..7c230f719ad3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -29,73 +29,6 @@ enum dpu_perf_mode {
- 	DPU_PERF_MODE_MAX
- };
- 
--/**
-- * @_dpu_core_perf_calc_bw() - to calculate BW per crtc
-- * @kms -  pointer to the dpu_kms
-- * @crtc - pointer to a crtc
-- * Return: returns aggregated BW for all planes in crtc.
-- */
--static u64 _dpu_core_perf_calc_bw(struct dpu_kms *kms,
--		struct drm_crtc *crtc)
--{
--	struct drm_plane *plane;
--	struct dpu_plane_state *pstate;
--	u64 crtc_plane_bw = 0;
--	u32 bw_factor;
--
--	drm_atomic_crtc_for_each_plane(plane, crtc) {
--		pstate = to_dpu_plane_state(plane->state);
--
--		if (!pstate)
--			continue;
--
--		crtc_plane_bw += pstate->plane_fetch_bw;
--	}
--
--	bw_factor = kms->catalog->perf.bw_inefficiency_factor;
--	if (bw_factor)
--		crtc_plane_bw = mult_frac(crtc_plane_bw, bw_factor, 100);
--
--	return crtc_plane_bw;
--}
--
--/**
-- * _dpu_core_perf_calc_clk() - to calculate clock per crtc
-- * @kms -  pointer to the dpu_kms
-- * @crtc - pointer to a crtc
-- * @state - pointer to a crtc state
-- * Return: returns max clk for all planes in crtc.
-- */
--static u64 _dpu_core_perf_calc_clk(struct dpu_kms *kms,
--		struct drm_crtc *crtc, struct drm_crtc_state *state)
--{
--	struct drm_plane *plane;
--	struct dpu_plane_state *pstate;
--	struct drm_display_mode *mode;
--	u64 crtc_clk;
--	u32 clk_factor;
--
--	mode = &state->adjusted_mode;
--
--	crtc_clk = mode->vtotal * mode->hdisplay * drm_mode_vrefresh(mode);
--
--	drm_atomic_crtc_for_each_plane(plane, crtc) {
--		pstate = to_dpu_plane_state(plane->state);
--
--		if (!pstate)
--			continue;
--
--		crtc_clk = max(pstate->plane_clk, crtc_clk);
--	}
--
--	clk_factor = kms->catalog->perf.clk_inefficiency_factor;
--	if (clk_factor)
--		crtc_clk = mult_frac(crtc_clk, clk_factor, 100);
--
--	return crtc_clk;
--}
--
--
- static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
- {
- 	struct msm_drm_private *priv;
-@@ -118,7 +51,12 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
- 	dpu_cstate = to_dpu_crtc_state(state);
- 	memset(perf, 0, sizeof(struct dpu_core_perf_params));
- 
--	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-+	if (!dpu_cstate->bw_control) {
-+		perf->bw_ctl = kms->catalog->perf.max_bw_high *
-+					1000ULL;
-+		perf->max_per_pipe_ib = perf->bw_ctl;
-+		perf->core_clk_rate = kms->perf.max_core_clk_rate;
-+	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
- 		perf->bw_ctl = 0;
- 		perf->max_per_pipe_ib = 0;
- 		perf->core_clk_rate = 0;
-@@ -126,10 +64,6 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
- 		perf->bw_ctl = kms->perf.fix_core_ab_vote;
- 		perf->max_per_pipe_ib = kms->perf.fix_core_ib_vote;
- 		perf->core_clk_rate = kms->perf.fix_core_clk_rate;
--	} else {
--		perf->bw_ctl = _dpu_core_perf_calc_bw(kms, crtc);
--		perf->max_per_pipe_ib = kms->catalog->perf.min_dram_ib;
--		perf->core_clk_rate = _dpu_core_perf_calc_clk(kms, crtc, state);
- 	}
- 
- 	DPU_DEBUG(
-@@ -181,7 +115,11 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 			DPU_DEBUG("crtc:%d bw:%llu ctrl:%d\n",
- 				tmp_crtc->base.id, tmp_cstate->new_perf.bw_ctl,
- 				tmp_cstate->bw_control);
--
-+			/*
-+			 * For bw check only use the bw if the
-+			 * atomic property has been already set
-+			 */
-+			if (tmp_cstate->bw_control)
- 				bw_sum_of_intfs += tmp_cstate->new_perf.bw_ctl;
- 		}
- 
-@@ -193,7 +131,9 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 
- 		DPU_DEBUG("final threshold bw limit = %d\n", threshold);
- 
--		if (!threshold) {
-+		if (!dpu_cstate->bw_control) {
-+			DPU_DEBUG("bypass bandwidth check\n");
-+		} else if (!threshold) {
- 			DPU_ERROR("no bandwidth limits specified\n");
- 			return -E2BIG;
- 		} else if (bw > threshold) {
-@@ -214,8 +154,7 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
- 					= dpu_crtc_get_client_type(crtc);
- 	struct drm_crtc *tmp_crtc;
- 	struct dpu_crtc_state *dpu_cstate;
--	int i, ret = 0;
--	u64 avg_bw;
-+	int ret = 0;
- 
- 	drm_for_each_crtc(tmp_crtc, crtc->dev) {
- 		if (tmp_crtc->enabled &&
-@@ -226,21 +165,10 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
- 			perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
- 					dpu_cstate->new_perf.max_per_pipe_ib);
- 
--			perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
--
--			DPU_DEBUG("crtc=%d bw=%llu paths:%d\n",
--				  tmp_crtc->base.id,
--				  dpu_cstate->new_perf.bw_ctl, kms->num_paths);
-+			DPU_DEBUG("crtc=%d bw=%llu\n", tmp_crtc->base.id,
-+					dpu_cstate->new_perf.bw_ctl);
- 		}
- 	}
--
--	avg_bw = kms->num_paths ?
--			perf.bw_ctl / kms->num_paths : 0;
--
--	for (i = 0; i < kms->num_paths; i++)
--		icc_set_bw(kms->path[i],
--			Bps_to_icc(avg_bw), (perf.max_per_pipe_ib));
--
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 8f2357d9960a..29d4fde3172b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -541,8 +541,7 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
- 	.max_bw_high = 6800000,
- 	.min_core_ib = 2400000,
- 	.min_llcc_ib = 800000,
--	.min_dram_ib = 1600000,
--	.min_prefill_lines = 24,
-+	.min_dram_ib = 800000,
- 	.danger_lut_tbl = {0xff, 0xffff, 0x0},
- 	.qos_lut_tbl = {
- 		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
-@@ -559,8 +558,6 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
- 		{.rd_enable = 1, .wr_enable = 1},
- 		{.rd_enable = 1, .wr_enable = 0}
- 	},
--	.clk_inefficiency_factor = 105,
--	.bw_inefficiency_factor = 120,
- };
- 
- /*************************************************************
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index f2a5fe2d9d62..f7de43838c69 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -651,8 +651,6 @@ struct dpu_perf_cdp_cfg {
-  * @downscaling_prefill_lines  downscaling latency in lines
-  * @amortizable_theshold minimum y position for traffic shaping prefill
-  * @min_prefill_lines  minimum pipeline latency in lines
-- * @clk_inefficiency_factor DPU src clock inefficiency factor
-- * @bw_inefficiency_factor DPU axi bus bw inefficiency factor
-  * @safe_lut_tbl: LUT tables for safe signals
-  * @danger_lut_tbl: LUT tables for danger signals
-  * @qos_lut_tbl: LUT tables for QoS signals
-@@ -677,8 +675,6 @@ struct dpu_perf_cfg {
- 	u32 downscaling_prefill_lines;
- 	u32 amortizable_threshold;
- 	u32 min_prefill_lines;
--	u32 clk_inefficiency_factor;
--	u32 bw_inefficiency_factor;
- 	u32 safe_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
- 	u32 danger_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
- 	struct dpu_qos_lut_tbl qos_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index a5da7aacddba..b8615d4fe8a3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -303,28 +303,6 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
- 	return 0;
- }
- 
--static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
--{
--	struct icc_path *path0;
--	struct icc_path *path1;
--	struct drm_device *dev = dpu_kms->dev;
--
--	path0 = of_icc_get(dev->dev, "mdp0-mem");
--	path1 = of_icc_get(dev->dev, "mdp1-mem");
--
--	if (IS_ERR_OR_NULL(path0))
--		return PTR_ERR_OR_ZERO(path0);
--
--	dpu_kms->path[0] = path0;
--	dpu_kms->num_paths = 1;
--
--	if (!IS_ERR_OR_NULL(path1)) {
--		dpu_kms->path[1] = path1;
--		dpu_kms->num_paths++;
--	}
--	return 0;
--}
--
- static int dpu_kms_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc)
- {
- 	return dpu_crtc_vblank(crtc, true);
-@@ -994,9 +972,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 
- 	dpu_vbif_init_memtypes(dpu_kms);
- 
--	if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
--		dpu_kms_parse_data_bus_icc_path(dpu_kms);
--
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- 
- 	return 0;
-@@ -1102,7 +1077,7 @@ static int dpu_dev_remove(struct platform_device *pdev)
- 
- static int __maybe_unused dpu_runtime_suspend(struct device *dev)
- {
--	int i, rc = -1;
-+	int rc = -1;
- 	struct platform_device *pdev = to_platform_device(dev);
- 	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
- 	struct dss_module_power *mp = &dpu_kms->mp;
-@@ -1111,9 +1086,6 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
- 	if (rc)
- 		DPU_ERROR("clock disable failed rc:%d\n", rc);
- 
--	for (i = 0; i < dpu_kms->num_paths; i++)
--		icc_set_bw(dpu_kms->path[i], 0, 0);
--
- 	return rc;
- }
- 
-@@ -1125,15 +1097,8 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
- 	struct drm_encoder *encoder;
- 	struct drm_device *ddev;
- 	struct dss_module_power *mp = &dpu_kms->mp;
--	int i;
- 
- 	ddev = dpu_kms->dev;
--
--	/* Min vote of BW is required before turning on AXI clk */
--	for (i = 0; i < dpu_kms->num_paths; i++)
--		icc_set_bw(dpu_kms->path[i], 0,
--			dpu_kms->catalog->perf.min_dram_ib);
--
- 	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
- 	if (rc) {
- 		DPU_ERROR("clock enable failed rc:%d\n", rc);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 94410ca9bd70..4e32d040f1e6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -8,8 +8,6 @@
- #ifndef __DPU_KMS_H__
- #define __DPU_KMS_H__
- 
--#include <linux/interconnect.h>
--
- #include <drm/drm_drv.h>
- 
- #include "msm_drv.h"
-@@ -139,8 +137,6 @@ struct dpu_kms {
- 	 * when disabled.
- 	 */
- 	atomic_t bandwidth_ref;
--	struct icc_path *path[2];
--	u32 num_paths;
- };
- 
- struct vsync_info {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-index df0a9835bfb1..80d3cfc14007 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-@@ -8,6 +8,7 @@
- #include <linux/irqdesc.h>
- #include <linux/irqchip/chained_irq.h>
- #include "dpu_kms.h"
-+#include <linux/interconnect.h>
- 
- #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
- 
-@@ -314,11 +315,9 @@ int dpu_mdss_init(struct drm_device *dev)
- 	}
- 	dpu_mdss->mmio_len = resource_size(res);
- 
--	if (!of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss")) {
--		ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
--		if (ret)
--			return ret;
--	}
-+	ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
-+	if (ret)
-+		return ret;
- 
- 	mp = &dpu_mdss->mp;
- 	ret = msm_dss_parse_clock(pdev, mp);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index c2a6e3dacd68..3b9c33e694bf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -131,84 +131,6 @@ static struct dpu_kms *_dpu_plane_get_kms(struct drm_plane *plane)
- 	return to_dpu_kms(priv->kms);
- }
- 
--/**
-- * _dpu_plane_calc_bw - calculate bandwidth required for a plane
-- * @Plane: Pointer to drm plane.
-- * Result: Updates calculated bandwidth in the plane state.
-- * BW Equation: src_w * src_h * bpp * fps * (v_total / v_dest)
-- * Prefill BW Equation: line src bytes * line_time
-- */
--static void _dpu_plane_calc_bw(struct drm_plane *plane,
--	struct drm_framebuffer *fb)
--{
--	struct dpu_plane *pdpu = to_dpu_plane(plane);
--	struct dpu_plane_state *pstate;
--	struct drm_display_mode *mode;
--	const struct dpu_format *fmt = NULL;
--	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
--	int src_width, src_height, dst_height, fps;
--	u64 plane_prefill_bw;
--	u64 plane_bw;
--	u32 hw_latency_lines;
--	u32 scale_factor;
--	int vbp, vpw;
--
--	pstate = to_dpu_plane_state(plane->state);
--	mode = &plane->state->crtc->mode;
--
--	fmt = dpu_get_dpu_format_ext(fb->format->format, fb->modifier);
--
--	src_width = drm_rect_width(&pdpu->pipe_cfg.src_rect);
--	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
--	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
--	fps = drm_mode_vrefresh(mode);
--	vbp = mode->vtotal - mode->vsync_end;
--	vpw = mode->vsync_end - mode->vsync_start;
--	hw_latency_lines =  dpu_kms->catalog->perf.min_prefill_lines;
--	scale_factor = src_height > dst_height ?
--		mult_frac(src_height, 1, dst_height) : 1;
--
--	plane_bw =
--		src_width * mode->vtotal * fps * fmt->bpp * scale_factor;
--
--	plane_prefill_bw =
--		src_width * hw_latency_lines * fps * fmt->bpp * scale_factor;
--
--	plane_prefill_bw = mult_frac(plane_prefill_bw, mode->vtotal, (vbp+vpw));
--
--	pstate->plane_fetch_bw = max(plane_bw, plane_prefill_bw);
--}
--
--
--/**
-- * _dpu_plane_calc_clk - calculate clock required for a plane
-- * @Plane: Pointer to drm plane.
-- * Result: Updates calculated clock in the plane state.
-- * Clock equation: dst_w * v_total * fps * (src_h / dst_h)
-- */
--static void _dpu_plane_calc_clk(struct drm_plane *plane)
--{
--	struct dpu_plane *pdpu = to_dpu_plane(plane);
--	struct dpu_plane_state *pstate;
--	struct drm_display_mode *mode;
--	int dst_width, src_height, dst_height, fps;
--
--	pstate = to_dpu_plane_state(plane->state);
--	mode = &plane->state->crtc->mode;
--
--	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
--	dst_width = drm_rect_width(&pdpu->pipe_cfg.dst_rect);
--	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
--	fps = drm_mode_vrefresh(mode);
--
--	pstate->plane_clk =
--		dst_width * mode->vtotal * fps;
--
--	if (src_height > dst_height)
--		pstate->plane_clk = mult_frac(pstate->plane_clk,
--					src_height, dst_height);
--}
--
- /**
-  * _dpu_plane_calc_fill_level - calculate fill level of the given source format
-  * @plane:		Pointer to drm plane
-@@ -1180,10 +1102,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 	}
- 
- 	_dpu_plane_set_qos_remap(plane);
--
--	_dpu_plane_calc_bw(plane, fb);
--
--	_dpu_plane_calc_clk(plane);
- }
- 
- static void _dpu_plane_atomic_disable(struct drm_plane *plane)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-index ca83b8753d59..456949713e90 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-@@ -25,8 +25,6 @@
-  * @scaler3_cfg: configuration data for scaler3
-  * @pixel_ext: configuration data for pixel extensions
-  * @cdp_cfg:	CDP configuration
-- * @plane_fetch_bw: calculated BW per plane
-- * @plane_clk: calculated clk per plane
-  */
- struct dpu_plane_state {
- 	struct drm_plane_state base;
-@@ -41,8 +39,6 @@ struct dpu_plane_state {
- 	struct dpu_hw_pixel_ext pixel_ext;
- 
- 	struct dpu_hw_pipe_cdp_cfg cdp_cfg;
--	u64 plane_fetch_bw;
--	u64 plane_clk;
- };
- 
- /**
--- 
-2.25.4
+This sounded straight forward and cleaner, so I implemented it...
 
+Unfortunately the hypervisor is playing tricks on me when writing to
+S2CR registers:
+- TRANS writes lands as requested
+- BYPASS writes ends up in the register as requested, with type FAULT
+- FAULT writes are ignored
+
+In other words, the Qualcomm firmware prevents us from relying on
+marking the relevant streams as BYPASS type.
+
+
+Instead Qualcomm seems to implement "bypass" by setting up stream
+mapping, of TRANS type, pointing to a context bank without
+ARM_SMMU_SCTLR_M set.
+
+Regards,
+Bjorn
