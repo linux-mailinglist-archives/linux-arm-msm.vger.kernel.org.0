@@ -2,123 +2,566 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A71231EB3D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 05:39:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1200B1EB402
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 05:58:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725927AbgFBDjR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 23:39:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
+        id S1725872AbgFBD6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 23:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726337AbgFBDjR (ORCPT
+        with ESMTP id S1725793AbgFBD6J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 23:39:17 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82C8DC03E96E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 20:39:16 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id q10so744922uaj.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 20:39:16 -0700 (PDT)
+        Mon, 1 Jun 2020 23:58:09 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D59C061A0E;
+        Mon,  1 Jun 2020 20:58:09 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id x207so2546378pfc.5;
+        Mon, 01 Jun 2020 20:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GaKVPZjnskLVh/I9ZFHkt/w3pB68YbJ4hPZDHawFfFY=;
-        b=CyOIVpemf/a8X3u+ZWhu079uRuuL/MlcGqATSyGf6PE/uqpIfkt3jfue+NumdY3CzY
-         VlheATY4E0/luCNTVUaTLHkv+fb0WvAC6rQNRPTEHJnG3k7VUCpoGuiPhgjOdRn6pT1K
-         mc7P4kpWhslyGOtJe4k5C4Xp433L2dpelI69Y=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nOr5FCHSTEgiVocf45/l3ooSGULR0cJognfb4cEKnPU=;
+        b=R1H0NFeL2eZtM5B8fothsEYgC2PdeAg8xkqZwlbaO3QdOeDx86CGQ9C8PTXNij43IJ
+         6Wz5HVuBjKUQqCyAqHtl3qTvHltl62wLzE29d0iQZAQ59Z+60Uza2D9cuxKQSn10GD76
+         un8DWDfY3UWiyES6VZJw+NgGcwlHp6bOJO4rgMI0KD1n//GTXF6jLfgGFsnJoI56Trja
+         PPRnoXjnlUoCM4Jr1KaKxFAg9HGGXg5h9PwbdWVsPXEFeZJs2owpmF6SKHOAC9iUrf4f
+         FkzgpS1tmTh5XWXLuyBdPo56nTVmL8tsHgnWmZ2wA0hZMKdZ1rP4yizU9U26jMapJBXK
+         m4hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GaKVPZjnskLVh/I9ZFHkt/w3pB68YbJ4hPZDHawFfFY=;
-        b=dmn/VJ4T6erAVEEw9/Xuk5tyZnOt7JVlsytoKPOow/TPFDoxBWpjUDbkOMR04OiwOi
-         lqsm2idjXcWfOQdHwIZITiNttSMyBY9xUViCh6OeBgSmGPUgOnSy//pgJcxTW8fitcdE
-         RGhL98cb4SECaYxoupAH/izPHzNTJFaR2p0SRsU4qhrbi7iCgxGgevQgQpc6zgcK0Sfh
-         nqYiKWH3sFkOc7xZH6GSdIJg9lVNqP+tFSg9fTRkxGZiV7JmO0GmOa5JMq2s3aYSZT/S
-         0W2i75VZd9B2db5z6vhphIuwteKQZbtcFLcHSVievRI1kcUMuUnHcwDVJQ2SJN5JSOw+
-         2LRA==
-X-Gm-Message-State: AOAM533oLQWiHwyhE2ANwbzPh7URME94JxddMaVd2cR4ApvNJ04Mpwe+
-        uqLdlsqVClPbB7BD/qkXpqwVGLalkZ8=
-X-Google-Smtp-Source: ABdhPJzBulT1KYDcHxL1e9rdpQI1bIyE5jnPHv3aeJHg8XGfarxV/9DRksuFGYEZcAk5sM9hp7aZeg==
-X-Received: by 2002:ab0:5f95:: with SMTP id b21mr7911300uaj.122.1591069155251;
-        Mon, 01 Jun 2020 20:39:15 -0700 (PDT)
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
-        by smtp.gmail.com with ESMTPSA id r139sm250079vkr.24.2020.06.01.20.39.14
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2020 20:39:14 -0700 (PDT)
-Received: by mail-vs1-f50.google.com with SMTP id 1so1210210vsl.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 20:39:14 -0700 (PDT)
-X-Received: by 2002:a05:6102:116e:: with SMTP id k14mr934270vsg.198.1591069153683;
- Mon, 01 Jun 2020 20:39:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nOr5FCHSTEgiVocf45/l3ooSGULR0cJognfb4cEKnPU=;
+        b=E5rK8L+74+0xOFaJKCp6vwaqheAOdKabpSH8JQWYWX89fV4An+9Z/isJRK4EepTTiX
+         9aTjCwVATWsL3nTddNRBJSg8ib0vh3ebWvJBqIv/DlgCMunaBImYtlXbmjPJn3Fsww8V
+         Py2zg0FY+TbK4IZYvPyoxkz83Np8AfLUZVx2rWhWM05J1Ax+OjMJ4OQPPHonHZ/PVZQH
+         GNNN6kuzY1tVUknBBxn7ozQK95+6qpsoLsBPQZQyCumzq4mK2TQJWm0DeSleqn2ve3Hw
+         cnvCfA2WYyzYiuUm0MYZ6gJG8v2jo/l0gaNteH1ZxCtkG7B3FBeBkBr7Lx/TbHF6IWkv
+         X9nQ==
+X-Gm-Message-State: AOAM533+RK6SciMHqxfLOsf+vHjn9YP8P7mLZVpd2HLzjMKyrkZr/SIW
+        6ZYmufYXaqr3o9ptoDUPINo=
+X-Google-Smtp-Source: ABdhPJyBWuRuoeY2+XSuiE0a82uUHaNhSTrDPFN8pluaxjnX/jArvnLv/xn2K8H7N7UjzM8q8diJ2g==
+X-Received: by 2002:a63:c58:: with SMTP id 24mr22634213pgm.246.1591070288587;
+        Mon, 01 Jun 2020 20:58:08 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id r3sm925826pjb.20.2020.06.01.20.58.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2020 20:58:07 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        zhengbin <zhengbin13@huawei.com>,
+        Jayant Shekhar <jshekhar@codeaurora.org>,
+        Shubhashree Dhar <dhar@codeaurora.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        tongtiangen <tongtiangen@huawei.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] Revert "drm/msm/dpu: add support for clk and bw scaling for display"
+Date:   Mon,  1 Jun 2020 20:58:32 -0700
+Message-Id: <20200602035842.199711-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.25.4
 MIME-Version: 1.0
-References: <20200601150314.RFC.1.I1e40623bbe8fa43ff1415fc273cba66503b9b048@changeid>
-In-Reply-To: <20200601150314.RFC.1.I1e40623bbe8fa43ff1415fc273cba66503b9b048@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 1 Jun 2020 20:39:02 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VHGm8EhsLOw_XTNRy6b-AKXgpwwGKE4kAm0-x4XT0ovg@mail.gmail.com>
-Message-ID: <CAD=FV=VHGm8EhsLOw_XTNRy6b-AKXgpwwGKE4kAm0-x4XT0ovg@mail.gmail.com>
-Subject: Re: [RFC PATCH] media: venus: Fix NULL pointer dereference in core selection
-To:     amasule@codeaurora.org, stanimir.varbanov@linaro.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Jeffrey Kardatzke <jkardatzke@google.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        vgarodia@codeaurora.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Rob Clark <robdclark@chromium.org>
 
-On Mon, Jun 1, 2020 at 3:03 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> The newly-introduced function min_loaded_core() iterates over all of
-> the venus instances an tries to figure out how much load each instance
-> is putting on each core.  Not all instances, however, might be fully
-> initialized.  Specifically the "codec_freq_data" is initialized as
-> part of vdec_queue_setup(), but an instance may already be in the list
-> of all instances before that time.
->
-> Let's band-aid this by checking to see if codec_freq_data is NULL
-> before dereferencing.
->
-> NOTE: without this fix I was running into a crash.  Specifically there
-> were two venus instances.  One was doing start_streaming.  The other
-> was midway through queue_setup but hadn't yet gotten to initting
-> "codec_freq_data".
->
-> Fixes: eff82f79c562 ("media: venus: introduce core selection")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> I'm not massively happy about this commit but it's the best I could
-> come up with without being much more of an expert in the venus codec.
-> If someone has a better patch then please just consider this one to be
-> a bug report and feel free to submit a better fix!  :-)
->
-> In general I wonder a little bit about whether it's safe to be peeking
-> at all the instances without grabbing the "inst->lock" on each one.  I
-> guess it is since we do it both here and in load_scale_v4() but I
-> don't know why.
->
-> One thought I had was that we could fully avoid accessing the other
-> instances, at least in min_loaded_core(), by just keeping track of
-> "core1_load" and "core2_load" in "struct venus_core".  Whenever we add
-> a new instance we could add to the relevant variables and whenever we
-> release an instance we could remove.  Such a change seems cleaner but
-> would require someone to test to make sure we didn't miss any case
-> (AKA we always properly added/removed our load from the globals).
->
->  drivers/media/platform/qcom/venus/pm_helpers.c | 2 ++
->  1 file changed, 2 insertions(+)
+This is causing multiple armv7 missing do_div() errors, so lets drop it
+for now.
 
-This fixes the same crash as the patch:
+This reverts commit 04d9044f6c577948609c03b4e33b8fbc8b87c4b1.
 
-https://lore.kernel.org/r/1588314480-22409-1-git-send-email-mansur@codeaurora.org
+Cc: Kalyan Thota <kalyan_t@codeaurora.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 106 +++---------------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   5 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   4 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  37 +-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   4 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      |   9 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  82 --------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |   4 -
+ 8 files changed, 23 insertions(+), 228 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index 9697abcbec3f..7c230f719ad3 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -29,73 +29,6 @@ enum dpu_perf_mode {
+ 	DPU_PERF_MODE_MAX
+ };
+ 
+-/**
+- * @_dpu_core_perf_calc_bw() - to calculate BW per crtc
+- * @kms -  pointer to the dpu_kms
+- * @crtc - pointer to a crtc
+- * Return: returns aggregated BW for all planes in crtc.
+- */
+-static u64 _dpu_core_perf_calc_bw(struct dpu_kms *kms,
+-		struct drm_crtc *crtc)
+-{
+-	struct drm_plane *plane;
+-	struct dpu_plane_state *pstate;
+-	u64 crtc_plane_bw = 0;
+-	u32 bw_factor;
+-
+-	drm_atomic_crtc_for_each_plane(plane, crtc) {
+-		pstate = to_dpu_plane_state(plane->state);
+-
+-		if (!pstate)
+-			continue;
+-
+-		crtc_plane_bw += pstate->plane_fetch_bw;
+-	}
+-
+-	bw_factor = kms->catalog->perf.bw_inefficiency_factor;
+-	if (bw_factor)
+-		crtc_plane_bw = mult_frac(crtc_plane_bw, bw_factor, 100);
+-
+-	return crtc_plane_bw;
+-}
+-
+-/**
+- * _dpu_core_perf_calc_clk() - to calculate clock per crtc
+- * @kms -  pointer to the dpu_kms
+- * @crtc - pointer to a crtc
+- * @state - pointer to a crtc state
+- * Return: returns max clk for all planes in crtc.
+- */
+-static u64 _dpu_core_perf_calc_clk(struct dpu_kms *kms,
+-		struct drm_crtc *crtc, struct drm_crtc_state *state)
+-{
+-	struct drm_plane *plane;
+-	struct dpu_plane_state *pstate;
+-	struct drm_display_mode *mode;
+-	u64 crtc_clk;
+-	u32 clk_factor;
+-
+-	mode = &state->adjusted_mode;
+-
+-	crtc_clk = mode->vtotal * mode->hdisplay * drm_mode_vrefresh(mode);
+-
+-	drm_atomic_crtc_for_each_plane(plane, crtc) {
+-		pstate = to_dpu_plane_state(plane->state);
+-
+-		if (!pstate)
+-			continue;
+-
+-		crtc_clk = max(pstate->plane_clk, crtc_clk);
+-	}
+-
+-	clk_factor = kms->catalog->perf.clk_inefficiency_factor;
+-	if (clk_factor)
+-		crtc_clk = mult_frac(crtc_clk, clk_factor, 100);
+-
+-	return crtc_clk;
+-}
+-
+-
+ static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
+ {
+ 	struct msm_drm_private *priv;
+@@ -118,7 +51,12 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
+ 	dpu_cstate = to_dpu_crtc_state(state);
+ 	memset(perf, 0, sizeof(struct dpu_core_perf_params));
+ 
+-	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
++	if (!dpu_cstate->bw_control) {
++		perf->bw_ctl = kms->catalog->perf.max_bw_high *
++					1000ULL;
++		perf->max_per_pipe_ib = perf->bw_ctl;
++		perf->core_clk_rate = kms->perf.max_core_clk_rate;
++	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
+ 		perf->bw_ctl = 0;
+ 		perf->max_per_pipe_ib = 0;
+ 		perf->core_clk_rate = 0;
+@@ -126,10 +64,6 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
+ 		perf->bw_ctl = kms->perf.fix_core_ab_vote;
+ 		perf->max_per_pipe_ib = kms->perf.fix_core_ib_vote;
+ 		perf->core_clk_rate = kms->perf.fix_core_clk_rate;
+-	} else {
+-		perf->bw_ctl = _dpu_core_perf_calc_bw(kms, crtc);
+-		perf->max_per_pipe_ib = kms->catalog->perf.min_dram_ib;
+-		perf->core_clk_rate = _dpu_core_perf_calc_clk(kms, crtc, state);
+ 	}
+ 
+ 	DPU_DEBUG(
+@@ -181,7 +115,11 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
+ 			DPU_DEBUG("crtc:%d bw:%llu ctrl:%d\n",
+ 				tmp_crtc->base.id, tmp_cstate->new_perf.bw_ctl,
+ 				tmp_cstate->bw_control);
+-
++			/*
++			 * For bw check only use the bw if the
++			 * atomic property has been already set
++			 */
++			if (tmp_cstate->bw_control)
+ 				bw_sum_of_intfs += tmp_cstate->new_perf.bw_ctl;
+ 		}
+ 
+@@ -193,7 +131,9 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
+ 
+ 		DPU_DEBUG("final threshold bw limit = %d\n", threshold);
+ 
+-		if (!threshold) {
++		if (!dpu_cstate->bw_control) {
++			DPU_DEBUG("bypass bandwidth check\n");
++		} else if (!threshold) {
+ 			DPU_ERROR("no bandwidth limits specified\n");
+ 			return -E2BIG;
+ 		} else if (bw > threshold) {
+@@ -214,8 +154,7 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+ 					= dpu_crtc_get_client_type(crtc);
+ 	struct drm_crtc *tmp_crtc;
+ 	struct dpu_crtc_state *dpu_cstate;
+-	int i, ret = 0;
+-	u64 avg_bw;
++	int ret = 0;
+ 
+ 	drm_for_each_crtc(tmp_crtc, crtc->dev) {
+ 		if (tmp_crtc->enabled &&
+@@ -226,21 +165,10 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+ 			perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
+ 					dpu_cstate->new_perf.max_per_pipe_ib);
+ 
+-			perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
+-
+-			DPU_DEBUG("crtc=%d bw=%llu paths:%d\n",
+-				  tmp_crtc->base.id,
+-				  dpu_cstate->new_perf.bw_ctl, kms->num_paths);
++			DPU_DEBUG("crtc=%d bw=%llu\n", tmp_crtc->base.id,
++					dpu_cstate->new_perf.bw_ctl);
+ 		}
+ 	}
+-
+-	avg_bw = kms->num_paths ?
+-			perf.bw_ctl / kms->num_paths : 0;
+-
+-	for (i = 0; i < kms->num_paths; i++)
+-		icc_set_bw(kms->path[i],
+-			Bps_to_icc(avg_bw), (perf.max_per_pipe_ib));
+-
+ 	return ret;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 8f2357d9960a..29d4fde3172b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -541,8 +541,7 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
+ 	.max_bw_high = 6800000,
+ 	.min_core_ib = 2400000,
+ 	.min_llcc_ib = 800000,
+-	.min_dram_ib = 1600000,
+-	.min_prefill_lines = 24,
++	.min_dram_ib = 800000,
+ 	.danger_lut_tbl = {0xff, 0xffff, 0x0},
+ 	.qos_lut_tbl = {
+ 		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
+@@ -559,8 +558,6 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
+ 		{.rd_enable = 1, .wr_enable = 1},
+ 		{.rd_enable = 1, .wr_enable = 0}
+ 	},
+-	.clk_inefficiency_factor = 105,
+-	.bw_inefficiency_factor = 120,
+ };
+ 
+ /*************************************************************
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index f2a5fe2d9d62..f7de43838c69 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -651,8 +651,6 @@ struct dpu_perf_cdp_cfg {
+  * @downscaling_prefill_lines  downscaling latency in lines
+  * @amortizable_theshold minimum y position for traffic shaping prefill
+  * @min_prefill_lines  minimum pipeline latency in lines
+- * @clk_inefficiency_factor DPU src clock inefficiency factor
+- * @bw_inefficiency_factor DPU axi bus bw inefficiency factor
+  * @safe_lut_tbl: LUT tables for safe signals
+  * @danger_lut_tbl: LUT tables for danger signals
+  * @qos_lut_tbl: LUT tables for QoS signals
+@@ -677,8 +675,6 @@ struct dpu_perf_cfg {
+ 	u32 downscaling_prefill_lines;
+ 	u32 amortizable_threshold;
+ 	u32 min_prefill_lines;
+-	u32 clk_inefficiency_factor;
+-	u32 bw_inefficiency_factor;
+ 	u32 safe_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
+ 	u32 danger_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
+ 	struct dpu_qos_lut_tbl qos_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index a5da7aacddba..b8615d4fe8a3 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -303,28 +303,6 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+ 	return 0;
+ }
+ 
+-static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
+-{
+-	struct icc_path *path0;
+-	struct icc_path *path1;
+-	struct drm_device *dev = dpu_kms->dev;
+-
+-	path0 = of_icc_get(dev->dev, "mdp0-mem");
+-	path1 = of_icc_get(dev->dev, "mdp1-mem");
+-
+-	if (IS_ERR_OR_NULL(path0))
+-		return PTR_ERR_OR_ZERO(path0);
+-
+-	dpu_kms->path[0] = path0;
+-	dpu_kms->num_paths = 1;
+-
+-	if (!IS_ERR_OR_NULL(path1)) {
+-		dpu_kms->path[1] = path1;
+-		dpu_kms->num_paths++;
+-	}
+-	return 0;
+-}
+-
+ static int dpu_kms_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc)
+ {
+ 	return dpu_crtc_vblank(crtc, true);
+@@ -994,9 +972,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+ 
+ 	dpu_vbif_init_memtypes(dpu_kms);
+ 
+-	if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
+-		dpu_kms_parse_data_bus_icc_path(dpu_kms);
+-
+ 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+ 
+ 	return 0;
+@@ -1102,7 +1077,7 @@ static int dpu_dev_remove(struct platform_device *pdev)
+ 
+ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+ {
+-	int i, rc = -1;
++	int rc = -1;
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+ 	struct dss_module_power *mp = &dpu_kms->mp;
+@@ -1111,9 +1086,6 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+ 	if (rc)
+ 		DPU_ERROR("clock disable failed rc:%d\n", rc);
+ 
+-	for (i = 0; i < dpu_kms->num_paths; i++)
+-		icc_set_bw(dpu_kms->path[i], 0, 0);
+-
+ 	return rc;
+ }
+ 
+@@ -1125,15 +1097,8 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+ 	struct drm_encoder *encoder;
+ 	struct drm_device *ddev;
+ 	struct dss_module_power *mp = &dpu_kms->mp;
+-	int i;
+ 
+ 	ddev = dpu_kms->dev;
+-
+-	/* Min vote of BW is required before turning on AXI clk */
+-	for (i = 0; i < dpu_kms->num_paths; i++)
+-		icc_set_bw(dpu_kms->path[i], 0,
+-			dpu_kms->catalog->perf.min_dram_ib);
+-
+ 	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
+ 	if (rc) {
+ 		DPU_ERROR("clock enable failed rc:%d\n", rc);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 94410ca9bd70..4e32d040f1e6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -8,8 +8,6 @@
+ #ifndef __DPU_KMS_H__
+ #define __DPU_KMS_H__
+ 
+-#include <linux/interconnect.h>
+-
+ #include <drm/drm_drv.h>
+ 
+ #include "msm_drv.h"
+@@ -139,8 +137,6 @@ struct dpu_kms {
+ 	 * when disabled.
+ 	 */
+ 	atomic_t bandwidth_ref;
+-	struct icc_path *path[2];
+-	u32 num_paths;
+ };
+ 
+ struct vsync_info {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+index df0a9835bfb1..80d3cfc14007 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+@@ -8,6 +8,7 @@
+ #include <linux/irqdesc.h>
+ #include <linux/irqchip/chained_irq.h>
+ #include "dpu_kms.h"
++#include <linux/interconnect.h>
+ 
+ #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
+ 
+@@ -314,11 +315,9 @@ int dpu_mdss_init(struct drm_device *dev)
+ 	}
+ 	dpu_mdss->mmio_len = resource_size(res);
+ 
+-	if (!of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss")) {
+-		ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
+-		if (ret)
+-			return ret;
+-	}
++	ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
++	if (ret)
++		return ret;
+ 
+ 	mp = &dpu_mdss->mp;
+ 	ret = msm_dss_parse_clock(pdev, mp);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index c2a6e3dacd68..3b9c33e694bf 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -131,84 +131,6 @@ static struct dpu_kms *_dpu_plane_get_kms(struct drm_plane *plane)
+ 	return to_dpu_kms(priv->kms);
+ }
+ 
+-/**
+- * _dpu_plane_calc_bw - calculate bandwidth required for a plane
+- * @Plane: Pointer to drm plane.
+- * Result: Updates calculated bandwidth in the plane state.
+- * BW Equation: src_w * src_h * bpp * fps * (v_total / v_dest)
+- * Prefill BW Equation: line src bytes * line_time
+- */
+-static void _dpu_plane_calc_bw(struct drm_plane *plane,
+-	struct drm_framebuffer *fb)
+-{
+-	struct dpu_plane *pdpu = to_dpu_plane(plane);
+-	struct dpu_plane_state *pstate;
+-	struct drm_display_mode *mode;
+-	const struct dpu_format *fmt = NULL;
+-	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+-	int src_width, src_height, dst_height, fps;
+-	u64 plane_prefill_bw;
+-	u64 plane_bw;
+-	u32 hw_latency_lines;
+-	u32 scale_factor;
+-	int vbp, vpw;
+-
+-	pstate = to_dpu_plane_state(plane->state);
+-	mode = &plane->state->crtc->mode;
+-
+-	fmt = dpu_get_dpu_format_ext(fb->format->format, fb->modifier);
+-
+-	src_width = drm_rect_width(&pdpu->pipe_cfg.src_rect);
+-	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
+-	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
+-	fps = drm_mode_vrefresh(mode);
+-	vbp = mode->vtotal - mode->vsync_end;
+-	vpw = mode->vsync_end - mode->vsync_start;
+-	hw_latency_lines =  dpu_kms->catalog->perf.min_prefill_lines;
+-	scale_factor = src_height > dst_height ?
+-		mult_frac(src_height, 1, dst_height) : 1;
+-
+-	plane_bw =
+-		src_width * mode->vtotal * fps * fmt->bpp * scale_factor;
+-
+-	plane_prefill_bw =
+-		src_width * hw_latency_lines * fps * fmt->bpp * scale_factor;
+-
+-	plane_prefill_bw = mult_frac(plane_prefill_bw, mode->vtotal, (vbp+vpw));
+-
+-	pstate->plane_fetch_bw = max(plane_bw, plane_prefill_bw);
+-}
+-
+-
+-/**
+- * _dpu_plane_calc_clk - calculate clock required for a plane
+- * @Plane: Pointer to drm plane.
+- * Result: Updates calculated clock in the plane state.
+- * Clock equation: dst_w * v_total * fps * (src_h / dst_h)
+- */
+-static void _dpu_plane_calc_clk(struct drm_plane *plane)
+-{
+-	struct dpu_plane *pdpu = to_dpu_plane(plane);
+-	struct dpu_plane_state *pstate;
+-	struct drm_display_mode *mode;
+-	int dst_width, src_height, dst_height, fps;
+-
+-	pstate = to_dpu_plane_state(plane->state);
+-	mode = &plane->state->crtc->mode;
+-
+-	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
+-	dst_width = drm_rect_width(&pdpu->pipe_cfg.dst_rect);
+-	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
+-	fps = drm_mode_vrefresh(mode);
+-
+-	pstate->plane_clk =
+-		dst_width * mode->vtotal * fps;
+-
+-	if (src_height > dst_height)
+-		pstate->plane_clk = mult_frac(pstate->plane_clk,
+-					src_height, dst_height);
+-}
+-
+ /**
+  * _dpu_plane_calc_fill_level - calculate fill level of the given source format
+  * @plane:		Pointer to drm plane
+@@ -1180,10 +1102,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 	}
+ 
+ 	_dpu_plane_set_qos_remap(plane);
+-
+-	_dpu_plane_calc_bw(plane, fb);
+-
+-	_dpu_plane_calc_clk(plane);
+ }
+ 
+ static void _dpu_plane_atomic_disable(struct drm_plane *plane)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+index ca83b8753d59..456949713e90 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+@@ -25,8 +25,6 @@
+  * @scaler3_cfg: configuration data for scaler3
+  * @pixel_ext: configuration data for pixel extensions
+  * @cdp_cfg:	CDP configuration
+- * @plane_fetch_bw: calculated BW per plane
+- * @plane_clk: calculated clk per plane
+  */
+ struct dpu_plane_state {
+ 	struct drm_plane_state base;
+@@ -41,8 +39,6 @@ struct dpu_plane_state {
+ 	struct dpu_hw_pixel_ext pixel_ext;
+ 
+ 	struct dpu_hw_pipe_cdp_cfg cdp_cfg;
+-	u64 plane_fetch_bw;
+-	u64 plane_clk;
+ };
+ 
+ /**
+-- 
+2.25.4
+
