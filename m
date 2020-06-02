@@ -2,109 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57B7A1EBDA9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 16:08:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84D411EBDDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 16:17:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726485AbgFBOH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 10:07:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55798 "EHLO
+        id S1728376AbgFBOQc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 10:16:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725957AbgFBOH6 (ORCPT
+        with ESMTP id S1728157AbgFBOQ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 10:07:58 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29E2CC08C5C0;
-        Tue,  2 Jun 2020 07:07:57 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id n22so919146vkm.7;
-        Tue, 02 Jun 2020 07:07:57 -0700 (PDT)
+        Tue, 2 Jun 2020 10:16:29 -0400
+Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608F7C08C5C0;
+        Tue,  2 Jun 2020 07:16:29 -0700 (PDT)
+Received: by mail-vk1-xa43.google.com with SMTP id m23so934740vko.2;
+        Tue, 02 Jun 2020 07:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=J8xPMI/J/UPiXjoWDiiyg6o8zpJPhJIt2b5WwcEF9E0=;
-        b=dS1zX8fJi2B1vGF2Z5dg/Gx4V391ld67f0FTyxNDhlDDuArCZJ7dR/CMWc8nQXlkPJ
-         6QSmlKw9CzGJ22ICtkEjVn0Ti6FQTkYb+6YkuhnObJfvnxPidiFSz+cpvySh6QYh7UWs
-         zv8BeeWiAgBOoeMsb/7vNfOZFhaaPhuoyIOEtu3Fse7SRwZcuXWSa3ebqVjSK+UDEFd7
-         nHU/cEShh0nbPvA3oDTELijVKITZR0hj9aUz458PtQlDSbL6jWcqUCU1ZjvPz8Vsdxqd
-         pCqhM29P4ETdxzVY28IlXgiBOw8ACfNNAnLYFp4kcQ5J8mf/wjJBm7XfDfELRgRJatxk
-         cRug==
+        bh=/6a0t6+7th0CQZpcLX9FSsj+5y1OPdbod01fcXwFCW0=;
+        b=sAAGbc+hD14yma5Er/rT2CCXst65zCjTzv3RNPwbAeZqS0/qsLDQWFjHQjoTuGAeC1
+         +ipXKm1ZoDdcONOTRhvidUfFwpVg9ZsOpg2F9JImpLXgIqY0vPmq3ISAC7ehqsaJyMmq
+         ZIFnQiTa33xomn0HYM9RDwIFwF1icxNzbRDDq6u6o9Q1UGOmrT87cYXWR/pujy6Ekztp
+         2UuzBjskR5IeOYFERkM/ERIzFsjrdlN3XM2XasDzmANJrlRl4hlq3+XNUK4ornQQazI2
+         FWhzgAb1osiFDN4tgCYp2/JcYCQqPDD7ObSfnTlXAS7/7NHk0s+GDr6H2eP6sns6ZMVy
+         FruQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=J8xPMI/J/UPiXjoWDiiyg6o8zpJPhJIt2b5WwcEF9E0=;
-        b=P4MFJ8CtVervWLiC16Sw4kRo4JYz5lwGKATyZ0mymXbfwWnSueihiqjoeRKsAXc0p5
-         sexR4Gmu9Sv703/LJBa4A/fwH//l8D/y4OBN/qfk/gcFsl/yEAcyqwAUe/0W6ZJcurRn
-         9kJX3DXZp7/Jrc7+8oy4bnnP93+/i3powAXcddjFmMZGLZiyq+PA5MXowKWCIphlwPVu
-         AIYU7pRiOHB8Ul4YrWKoyUwl9caeEiQejCOwckTFRyTNmjVka8f8bNjbyxV7af8AIvYs
-         JeXI01adbdAijPN8a0nWui72p4kF4H7JoI/5W6enaOZojchME9BI0oc8seR+cykgBiiR
-         x+ew==
-X-Gm-Message-State: AOAM531N6DEhq4dvVOY1/UbrgktoVrekIWV7AnuI0gOcrfttv4/XxHYk
-        goumw+GyBYQHO33EPkytwcnnmEPU0bW+bG+Iq00=
-X-Google-Smtp-Source: ABdhPJypGS0oJ4fntkWSo49y5zTssL01yfKEkKGKx4k68oGS4ds8TIfxu0kGhHn0bPQ1u5aluLkGq0H7LniVF+rQA2k=
-X-Received: by 2002:a1f:2ac6:: with SMTP id q189mr9323002vkq.28.1591106876436;
- Tue, 02 Jun 2020 07:07:56 -0700 (PDT)
+        bh=/6a0t6+7th0CQZpcLX9FSsj+5y1OPdbod01fcXwFCW0=;
+        b=cw2uiQCQqzGrryIYX+dwc2NbVo70djoCgzqvG8HegzeDDnIQBkkRhg0IdM6KX99qT+
+         lfJmZOrYHF0C5qSc17g/ze2Nu3qAf7Aee4SjP0enOnL9rbZH2UDjkBDh3x6oSyxO83Kx
+         B1G/0Y37WaxjWSj1iood6s/h5uWy4ONX/lfMZeyNbUgD/Xt6hRZdlC7YoQfVqzeH+4zP
+         5RrKDH3l9aKqlmGI2LY7v1y+zqecJnEeV7w4vzCAl2pzlfdGeWDC8PIrKADToCmDzav8
+         iOcVNpUee8DuUiyepIje19/yoqu/tPP3SlxH8W18tjXmu4C0AE5H7wdS90vQoTOIQlqi
+         2i1g==
+X-Gm-Message-State: AOAM532qxK0+R96Txb/8B4c5+VLXuD6eEDsmRfMOnbn+aGbMLgKUdU2g
+        jLbhtSoMWHQYQGeO7KeY6qo4G0MIPDCTIl7b3/cbbqKB
+X-Google-Smtp-Source: ABdhPJwsUlpy33FnIB6m4RAYn6vpQrhwYECjwYK+Cfnuf/EDhnqFeqzbq/cAlJV6cbDMbQlGYt6WBz8NxB2C5SttY3Q=
+X-Received: by 2002:a1f:2ac6:: with SMTP id q189mr9360992vkq.28.1591107388620;
+ Tue, 02 Jun 2020 07:16:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200601065207.492614-1-sam@ravnborg.org>
-In-Reply-To: <20200601065207.492614-1-sam@ravnborg.org>
+References: <1591009402-681-1-git-send-email-mkrishn@codeaurora.org>
+In-Reply-To: <1591009402-681-1-git-send-email-mkrishn@codeaurora.org>
 From:   Emil Velikov <emil.l.velikov@gmail.com>
-Date:   Tue, 2 Jun 2020 15:04:39 +0100
-Message-ID: <CACvgo51z0Vvz9LkfqePmuwx19+NhaMEBHe9r5=uYWqhEdnia_Q@mail.gmail.com>
-Subject: Re: [PATCH v3 0/16] backlight updates
-To:     Sam Ravnborg <sam@ravnborg.org>
+Date:   Tue, 2 Jun 2020 15:13:10 +0100
+Message-ID: <CACvgo50eb5_jp_6B5tkV9cX_X2_y2Xnavu+wvUUhHN5FsV9hiw@mail.gmail.com>
+Subject: Re: [v2] drm/msm: add shutdown support for display platform_driver
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
 Cc:     ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Corbet <corbet@lwn.net>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>
+        freedreno@lists.freedesktop.org,
+        devicetree <devicetree@vger.kernel.org>,
+        "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>, kalyan_t@codeaurora.org,
+        "Kristian H . Kristensen" <hoegsberg@chromium.org>,
+        mka@chromium.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sam,
+Hi Krishna,
 
-On Mon, 1 Jun 2020 at 07:52, Sam Ravnborg <sam@ravnborg.org> wrote:
+On Tue, 2 Jun 2020 at 08:17, Krishna Manikandan <mkrishn@codeaurora.org> wrote:
 >
-> v3:
->  - Dropped video patch that was reviewd and thus applied
->  - Updated kernel-doc so all fields now have a short intro
->  - Improved readability in a lot of places, thanks to review
->    feedback from Daniel - thanks!
->  - Added better intro to backlight
->  - Added acks
+> Define shutdown callback for display drm driver,
+> so as to disable all the CRTCS when shutdown
+> notification is received by the driver.
 >
->    Several other smaller changes documented in the
->    patches.
->    I left out patches to make functions static as
->    there are dependencies to drm-misc-next for these.
->    When this is landed I have a pile of follow-up patches waiting,
->    mostly introducing backlight_is_blank() all over.
+> This change will turn off the timing engine so
+> that no display transactions are requested
+> while mmu translations are getting disabled
+> during reboot sequence.
 >
-What happened with my suggestion to use backlight_is_blank() in fbdev
-core itself?
-It effectively makes 13/13 and the above mentioned follow-up series obsolete.
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+>
+AFAICT atomics is setup in msm_drm_ops::bind and shutdown in
+msm_drm_ops::unbind.
 
-That said, series look spot on. With the documentation fixed (pointer
-by Daniel) patches 1-12 are:
-Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+Are you saying that unbind never triggers? If so, then we should
+really fix that instead, since this patch seems more like a
+workaround.
 
 -Emil
