@@ -2,95 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E78D1EC383
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 22:12:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F57E1EC43C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 23:17:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728202AbgFBUMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 16:12:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56078 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726112AbgFBUMg (ORCPT
+        id S1727046AbgFBVRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 17:17:30 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:52960 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726223AbgFBVR3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 16:12:36 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 546A7C08C5C0;
-        Tue,  2 Jun 2020 13:12:36 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id d128so4435813wmc.1;
-        Tue, 02 Jun 2020 13:12:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YvO7LalvDBKdEIQhWBLkEPXbP+HlcCB2geTzQhd9c2g=;
-        b=FmnQ2xtIXPTSynL3P2/yB1nEvunTdRY+wGUmG4RtqmxfFDWg+t5R22oMD15K8bpkEI
-         lBqjWAlfPSk/VYQJgDzhqNRjQRd4vEbpECr2pmXd4IvEWiY8J1i8mUYIpH47JzSbe+my
-         AcnKivd1apEwTJR294YmOiklAgXPXpLQDYm5DENQ0nmdXrrtI/AG46arhODJpNEB03uE
-         fQ6Uqf+fncZWeRbTalgGrvbpUxy83MPDrBL6RaF9PBbHOp1Vppck/nTNanzQnXdNCPJg
-         qEFqQzfhQhnnBtC8JI+wNs2LYxx6dIWbyFbINoyOJsqlr8kfAixRdOn4ObquSNQu0EDN
-         0lKg==
+        Tue, 2 Jun 2020 17:17:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1591132646;
+        h=from:from:reply-to:reply-to:subject:subject:date:date:
+         message-id:message-id:to:to:cc:mime-version:mime-version:
+         content-type:content-type:in-reply-to:in-reply-to:  references:references;
+        bh=Ylu/HiOGtyIh3U7JFEU/kaSkFMIS4f2I77a/faIj58k=;
+        b=Kha5ZPT9qd30aZRPGuurt2WrcSYCkMFZPufcY6BHoeZ7XUux4APccxEq2JYaBYT43Nkntu
+        OW1DHvd4bljRH+Phw4QJGXQsUSTwUDUxvvC/CzrHNQv6nfU7S4ujBmMSv4rKW/9F6vQa9S
+        Xp1EVPNXFj1yZV+8DZ1EcS3/25DkfeM=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-278-FVoV28zIM7-jWXeI1DS-_A-1; Tue, 02 Jun 2020 17:17:20 -0400
+X-MC-Unique: FVoV28zIM7-jWXeI1DS-_A-1
+Received: by mail-qt1-f199.google.com with SMTP id l26so10429598qtr.14
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2020 14:17:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YvO7LalvDBKdEIQhWBLkEPXbP+HlcCB2geTzQhd9c2g=;
-        b=JrOpxynL57QMLl3pB1HR/ZFF8GC+osqoYyz9gshivJ4rGtQi42jHTSsKcLc5aZWddT
-         8QTUIUcpbQ1rAsoZaNEbGdPDQkx1+Tfbt0UxPnBrFdqFI8GHQYMGPZSc5d3o2sKCaqLt
-         kh5rtiBU1/QTZi/b2xSfgntnzZNam+B6KrD4rO19E+3T4bAQCG/69OLdlyosN6rx9yYN
-         oeI8cNfbgDFFS3RRG/UJF4NJPQLeeeWu9MK8ByCq3li0F6+JJpf5TxO3oxC5RFEoZ1gl
-         xj9juPd0IzvEf4YsuO9uYaOiscLok6Vd3n+sNAvmH9gmJscBB6F+ywj9a2jDARoCZOoN
-         ObXg==
-X-Gm-Message-State: AOAM531ZPqzYYlk5+FICSKvfA8pyL8e7aToDcermvhD6EaBfmCRsCXwi
-        dr8pKhGrCBsv3Wf9Fr4uQ1k=
-X-Google-Smtp-Source: ABdhPJxsRYNpJL8KzrBdYigguSB9eH6qYay/3TrVc3x55kqpk7OQKMbwzj8t9r6I6H9VNyK++jKA6A==
-X-Received: by 2002:a7b:c764:: with SMTP id x4mr5426008wmk.94.1591128755064;
-        Tue, 02 Jun 2020 13:12:35 -0700 (PDT)
-Received: from localhost.localdomain (abad130.neoplus.adsl.tpnet.pl. [83.6.167.130])
-        by smtp.googlemail.com with ESMTPSA id 5sm175112wrr.5.2020.06.02.13.12.33
+        h=x-gm-message-state:date:from:to:subject:message-id:reply-to
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=Ylu/HiOGtyIh3U7JFEU/kaSkFMIS4f2I77a/faIj58k=;
+        b=Piy/mOAOcIghEZGwrKDfbWCExR+CifLEsyvw3sURZDAjPH6rTfWH8WB2f0fzfBXS8Q
+         YVTd9OHxBRZ373cooV9dIcq5V3vsJBWYz2cb2l428lF+qB//Qn7GlNJO30Fh5wVz7TDP
+         +6VteJA7h/CQlN2+A2lYA3qjl2TNk0KvP/VHKuNx0mktqbaANcfKgtz6Kbk1cmCToJtK
+         03liSpJOBtbGaBI80e9xVxiBs9mpjgMpPJhSJcfaNCCR1Yb8z1IorGmGwiwNxuHKpYIs
+         4RIe58fP/7JO871fZXEs2pYtaPQPGdClfrxImDF7VuYdWkN7IVx4L2wI36sqpvQ7/G9d
+         38Tw==
+X-Gm-Message-State: AOAM533YP0eT+FLHqyZC+Eb8EXcN2B+sDCVwH7Ll8eOSk3+zCE9Odp1E
+        pDe7tTmXsfjuoNjWhIvz5DOrLxQRG0ozGrrjiFYBf42i/N/5cQ9/qYBRx0xZivkQVGTDO7X1Vfm
+        1Fi3e5WJq703409BJcyVmE3P4jQ==
+X-Received: by 2002:ad4:4572:: with SMTP id o18mr4280448qvu.228.1591132639423;
+        Tue, 02 Jun 2020 14:17:19 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyjUlzm0vhI6fKGjvvF8hVsaVisMes9o90lVEfQF4r2oAsbB6iugyCZPUzy6UK1t6uFVWKiBA==
+X-Received: by 2002:ad4:4572:: with SMTP id o18mr4280428qvu.228.1591132639109;
+        Tue, 02 Jun 2020 14:17:19 -0700 (PDT)
+Received: from localhost (ip70-163-223-149.ph.ph.cox.net. [70.163.223.149])
+        by smtp.gmail.com with ESMTPSA id l9sm3244877qki.90.2020.06.02.14.17.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2020 13:12:34 -0700 (PDT)
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Tue, 02 Jun 2020 14:17:18 -0700 (PDT)
+Date:   Tue, 2 Jun 2020 14:17:16 -0700
+From:   Jerry Snitselaar <jsnitsel@redhat.com>
+To:     Joerg Roedel <joro@8bytes.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/1] soc: qcom: socinfo: Add msm8992/4 and apq8094 SoC IDs
-Date:   Tue,  2 Jun 2020 22:12:29 +0200
-Message-Id: <20200602201229.322578-1-konradybcio@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-rockchip@lists.infradead.org,
+        iommu@lists.linux-foundation.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 00/33] iommu: Move iommu_group setup to IOMMU core code
+Message-ID: <20200602211716.mcwacflxvh7kycya@cantor>
+Reply-To: Jerry Snitselaar <jsnitsel@redhat.com>
+Mail-Followup-To: Joerg Roedel <joro@8bytes.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-rockchip@lists.infradead.org,
+        iommu@lists.linux-foundation.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org
+References: <20200414131542.25608-1-joro@8bytes.org>
+ <20200529221623.qc6twmpzryh7nkvb@cantor>
+ <20200601104240.7f5xhz7gooqhaq4n@cantor>
+ <47711845-98ee-95b8-aa95-423a36ed9741@linux.intel.com>
+ <20200602000236.j4m3jvluzdhjngdc@cantor>
+ <20200602142312.GJ14598@8bytes.org>
+ <20200602163806.o5dpj2tpemwdzyiw@cantor>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20200602163806.o5dpj2tpemwdzyiw@cantor>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
----
- drivers/soc/qcom/socinfo.c | 3 +++
- 1 file changed, 3 insertions(+)
+On Tue Jun 02 20, Jerry Snitselaar wrote:
+>On Tue Jun 02 20, Joerg Roedel wrote:
+>>Hi Jerry,
+>>
+>>On Mon, Jun 01, 2020 at 05:02:36PM -0700, Jerry Snitselaar wrote:
+>>>
+>>>Yeah, that will solve the panic.
+>>>
+>>
+>>If you still see the kdump faults, can you please try with the attached
+>>diff? I was not able to reproduce them in my setup.
+>>
+>>Regards,
+>>
+>>	Joerg
+>>
+>
+>I have another hp proliant server now, and reproduced. I will have the
+>patch below tested shortly. Minor change, I switched group->domain to
+>domain since group isn't an argument, and *data being passed in comes
+>from group->domain anyways.
+>
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index ebb49aee179b..137f62982223 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -177,6 +177,7 @@ static const struct soc_id soc_id[] = {
- 	{ 186, "MSM8674" },
- 	{ 194, "MSM8974PRO" },
- 	{ 206, "MSM8916" },
-+	{ 207, "MSM8994" },
- 	{ 208, "APQ8074-AA" },
- 	{ 209, "APQ8074-AB" },
- 	{ 210, "APQ8074PRO" },
-@@ -193,6 +194,8 @@ static const struct soc_id soc_id[] = {
- 	{ 248, "MSM8216" },
- 	{ 249, "MSM8116" },
- 	{ 250, "MSM8616" },
-+	{ 251, "MSM8992" },
-+	{ 253, "APQ8094" },
- 	{ 291, "APQ8096" },
- 	{ 305, "MSM8996SG" },
- 	{ 310, "MSM8996AU" },
--- 
-2.26.2
+Looks like it solves problem for both the epyc system, and the hp proliant
+server,
+
+>>diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+>>index b5ea203f6c68..5a6d509f72b6 100644
+>>--- a/drivers/iommu/iommu.c
+>>+++ b/drivers/iommu/iommu.c
+>>@@ -1680,8 +1680,12 @@ static void probe_alloc_default_domain(struct bus_type *bus,
+>>static int iommu_group_do_dma_attach(struct device *dev, void *data)
+>>{
+>>	struct iommu_domain *domain = data;
+>>+	int ret = 0;
+>>
+>>-	return __iommu_attach_device(domain, dev);
+>>+	if (!iommu_is_attach_deferred(group->domain, dev))
+>>+		ret = __iommu_attach_device(group->domain, dev);
+>>+
+>>+	return ret;
+>>}
+>>
+>>static int __iommu_group_dma_attach(struct iommu_group *group)
+>>_______________________________________________
+>>iommu mailing list
+>>iommu@lists.linux-foundation.org
+>>https://lists.linuxfoundation.org/mailman/listinfo/iommu
+>>
 
