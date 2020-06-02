@@ -2,85 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 213C11EBA50
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 13:24:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A696C1EBA66
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 13:31:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726110AbgFBLYR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 07:24:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60224 "EHLO mail.kernel.org"
+        id S1726485AbgFBLbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 07:31:39 -0400
+Received: from foss.arm.com ([217.140.110.172]:49630 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725900AbgFBLYR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 07:24:17 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CC1E420679;
-        Tue,  2 Jun 2020 11:24:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591097057;
-        bh=cT9jBHVPrWMrMhELAyl4RpjRekYb1zN8PMcuA/XN8LQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BVC09q5hW7vcrzboHRjSO9Gf/RhExlMs5DpXWTf317PpNiP7CE1z0YKs3Cz1bie8w
-         G+brqj8LBKrIczOjg9mFXIT+EACM4g0skbUsyb3q+qQZudIYlCjXDLrJKg1S6KR/db
-         rtgiw1i7RRzpRro5d88QhJvKZJPSv6lFx0fAqGjA=
-Date:   Tue, 2 Jun 2020 12:24:15 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, nishakumari@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org,
-        rnayak@codeaurora.org
-Subject: Re: [PATCH v4 1/5] regulator: Allow regulators to verify enabled
- during enable()
-Message-ID: <20200602112415.GD5684@sirena.org.uk>
-References: <20200602100924.26256-1-sumit.semwal@linaro.org>
- <20200602100924.26256-2-sumit.semwal@linaro.org>
+        id S1725900AbgFBLbi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Jun 2020 07:31:38 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B08A931B;
+        Tue,  2 Jun 2020 04:31:37 -0700 (PDT)
+Received: from [10.37.12.87] (unknown [10.37.12.87])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 54B5E3F52E;
+        Tue,  2 Jun 2020 04:31:27 -0700 (PDT)
+Subject: Re: [PATCH v8 4/8] PM / EM: add support for other devices than CPUs
+ in Energy Model
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Dietmar.Eggemann@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com, mingo@redhat.com,
+        peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, rostedt@goodmis.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com, rdunlap@infradead.org, mka@chromium.org
+References: <20200527095854.21714-1-lukasz.luba@arm.com>
+ <20200527095854.21714-5-lukasz.luba@arm.com>
+ <d45e5592-8e11-858b-d3a3-2ec9ce1d1f54@linaro.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <7201e161-6952-6e28-4036-bd0f0353ec30@arm.com>
+Date:   Tue, 2 Jun 2020 12:31:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="u65IjBhB3TIa72Vp"
-Content-Disposition: inline
-In-Reply-To: <20200602100924.26256-2-sumit.semwal@linaro.org>
-X-Cookie: We are not a clone.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <d45e5592-8e11-858b-d3a3-2ec9ce1d1f54@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Daniel,
 
---u65IjBhB3TIa72Vp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 6/1/20 10:44 PM, Daniel Lezcano wrote:
+> On 27/05/2020 11:58, Lukasz Luba wrote:
+>> Add support for other devices than CPUs. The registration function
+>> does not require a valid cpumask pointer and is ready to handle new
+>> devices. Some of the internal structures has been reorganized in order to
+>> keep consistent view (like removing per_cpu pd pointers).
+>>
+>> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+>> ---
+> 
+> [ ... ]
+> 
+>>   }
+>>   EXPORT_SYMBOL_GPL(em_register_perf_domain);
+>> +
+>> +/**
+>> + * em_dev_unregister_perf_domain() - Unregister Energy Model (EM) for a device
+>> + * @dev		: Device for which the EM is registered
+>> + *
+>> + * Try to unregister the EM for the specified device (but not a CPU).
+>> + */
+>> +void em_dev_unregister_perf_domain(struct device *dev)
+>> +{
+>> +	if (IS_ERR_OR_NULL(dev) || !dev->em_pd)
+>> +		return;
+>> +
+>> +	if (_is_cpu_device(dev))
+>> +		return;
+>> +
+>> +	mutex_lock(&em_pd_mutex);
+> 
+> Is the mutex really needed?
 
-On Tue, Jun 02, 2020 at 03:39:20PM +0530, Sumit Semwal wrote:
+I just wanted to align this unregister code with register. Since there
+is debugfs dir lookup and the device's EM existence checks I thought it
+wouldn't harm just to lock for a while and make sure the registration
+path is not used. These two paths shouldn't affect each other, but with
+modules loading/unloading I wanted to play safe.
+I can change it maybe to just dmb() and the end of the function if it's
+a big performance problem in this unloading path. What do you think?
 
-> +
-> +		if (time_remaining <= 0) {
-> +			rdev_err(rdev, "Enabled check failed.\n");
-> +			return -ETIMEDOUT;
+> 
+> If this function is called that means there is no more user of the
+> em_pd, no?
 
-s/failed/timed out/
+True, that EM users should already be unregistered i.e. thermal cooling.
 
-> + * @poll_enabled_time: Maximum time (in uS) to poll if the regulator is
-> + *                          actually enabled, after enable() call
-> + *
+> 
+>> +	em_debug_remove_pd(dev);
+>> +
+>> +	kfree(dev->em_pd->table);
+>> +	kfree(dev->em_pd);
+>> +	dev->em_pd = NULL;
+>> +	mutex_unlock(&em_pd_mutex);
+>> +}
+>> +EXPORT_SYMBOL_GPL(em_dev_unregister_perf_domain);
+>>
+> 
+> 
 
-This comment needs updating to reflect the new implementation.
+Thank you for reviewing this.
 
---u65IjBhB3TIa72Vp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7WNt4ACgkQJNaLcl1U
-h9DiUQf/U/9+5zRl543DKtlEGwWv5y2SJPMULJc6Fx4l4UJyMi2WV76AIJ3kpvhV
-3BK+XKeRUSM/EoHHrf7VTxN4pDu5GRqtKCXVmzN5jfl1LVgKNBNSapHtXt4rETbY
-sBqecGsBHjZIcMFvIMJG1I+ljMFCVBdSZus3/gJO6qnCW4y88HPQU9TEsu5HoO/X
-5PLcUd20oc1xFKeb/NDy3XZyx0KuBmV+8Ws66OspiXl24FaFaQAI+iFcsk+OTcir
-Fgi94kGsHJKCA48iMqy5ffkD3wIpQdPYqlQACMeeKU3G+T0g5KjHiYSBKucWoRum
-WVjSTeqiQwfaw0BGXWsykdtnnxHwEA==
-=sPJI
------END PGP SIGNATURE-----
-
---u65IjBhB3TIa72Vp--
+Regards,
+Lukasz
