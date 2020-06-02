@@ -2,264 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 321281EB92D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 12:12:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 549341EB9CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 12:47:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728066AbgFBKKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 06:10:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47212 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728050AbgFBKJ7 (ORCPT
+        id S1726429AbgFBKr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 06:47:29 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:28327 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726450AbgFBKr2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 06:09:59 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563CAC05BD43
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2020 03:09:58 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id m2so1218445pjv.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2020 03:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wsqa0aiNnjxSKSxZ07dY/8X+UeLS5BJ6SaHqCOj/zLM=;
-        b=lSddc/AvN4z9zX0shlWtxeHp4IJFJCOtqh4MGjrINjiStIZWUQKc3yOAQuFdZJI06k
-         Vgy0UakBX9xert0KE1UF87P6NBRdcXPOptUNsYNpDvrAnNp1csMaFaG6DaxQeLZTBFt1
-         +HoTwMoBRqgd7Kx6DaTJKw9XgING9jXQsWc3DtKEdhn2tKdTbZEB2kkGmk2VBgyPjTh6
-         e9wj6eyF2irxqoUdh51pQk+J/3XrBBgkHPFn5f+2m0+sjSP4g2cq9nT3RbJymdxn+gOv
-         bydoevKbA+rxapu0nSr+tOr1TEEJPW01CMxZe7OMGPr9/LAMY2MvEQy6dcJxQRhCg4AW
-         aGdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wsqa0aiNnjxSKSxZ07dY/8X+UeLS5BJ6SaHqCOj/zLM=;
-        b=otH0ntewH53RXcfajcIsanf54e9ui6MWGhjHlKu31ilZuqPn8lF1tbmFAs0v5/9O8X
-         uRQ4jFFIE2IFn3OG8cKgKLEq96jcbqpeKNc/f4jM0QRVBxGe7Ei6oEpPHT9A2u3i+pgK
-         1RbqDD45Mn9g/bXQPKcRFAIKbTbDZi2Ox7UUxDHZZ4NihPRSe7ouzpY3isp8MXbjbWue
-         iAKAINsg+tU8lM07h+j4o21gtCpeXxOWH3EQYgNjaBfnMQAp6wKpF0HEx7izl2BbzzYX
-         qUWnrIP6oLJGhEkIrS9HMeI6bg4a3+2uQdwa5N0Ukk6HdUhLK831dtrYwc72SqniDBVc
-         VyjQ==
-X-Gm-Message-State: AOAM530eMMdGbrPm8cr8Rk+sU3dD7ai9muwaLTBPIzpWclr8m2xNZ0RC
-        q963XfpGeZMQhyevZ3vSNVTLJw==
-X-Google-Smtp-Source: ABdhPJxBYq+KqFnjJ1UQ+HHg3VFRhBmTfHQTgVlsT9+2hmQTf2hYbGj9JKW5daP2oYzepPi6Pw4uMg==
-X-Received: by 2002:a17:90a:3669:: with SMTP id s96mr4644955pjb.149.1591092597818;
-        Tue, 02 Jun 2020 03:09:57 -0700 (PDT)
-Received: from nagraj.local ([49.206.21.239])
-        by smtp.gmail.com with ESMTPSA id d8sm1931276pgb.42.2020.06.02.03.09.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2020 03:09:57 -0700 (PDT)
-From:   Sumit Semwal <sumit.semwal@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org
-Cc:     nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        kgunda@codeaurora.org, rnayak@codeaurora.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH v4 5/5] regulator: qcom: labibb: Add SC interrupt handling
-Date:   Tue,  2 Jun 2020 15:39:24 +0530
-Message-Id: <20200602100924.26256-6-sumit.semwal@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200602100924.26256-1-sumit.semwal@linaro.org>
-References: <20200602100924.26256-1-sumit.semwal@linaro.org>
+        Tue, 2 Jun 2020 06:47:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591094847; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=KmJ3nT5wP6W5LJoeHmFVqVcNCLtBatXw/8h8arB12JM=; b=RnmLLWR0s4SgPma/1nqjh2aWiVXrE4Y1CqHHLas1qjLdyS3kt13W7yS7By+p/GWUtTrclpd5
+ pIm5RJf0S+pPBGErWq59/rMP4I6ughdPs4ljKyDbpKvT/3XA8H11KgWHpO0nbPNZEaFW3QgE
+ 9HrMbwOCS4cNfgYKq0M/uCcoC+0=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n11.prod.us-west-2.postgun.com with SMTP id
+ 5ed62e3f8e09c0ae0922b755 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Jun 2020 10:47:27
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DEB3EC43387; Tue,  2 Jun 2020 10:47:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.100] (unknown [49.207.141.73])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sivaprak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67E8FC433C9;
+        Tue,  2 Jun 2020 10:47:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67E8FC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
+Subject: Re: [PATCH V6 4/5] clk: qcom: Add ipq6018 apss clock controller
+To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        robh+dt@kernel.org
+References: <1590582292-13314-1-git-send-email-sivaprak@codeaurora.org>
+ <1590582292-13314-5-git-send-email-sivaprak@codeaurora.org>
+ <159063116486.69627.5280506237179820811@swboyd.mtv.corp.google.com>
+ <824cd7bb-0971-d387-4b78-75c36ddf2f66@codeaurora.org>
+ <159104019638.69627.9161269856470136421@swboyd.mtv.corp.google.com>
+From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Message-ID: <4266555a-5e4f-4340-1b3c-487a70805751@codeaurora.org>
+Date:   Tue, 2 Jun 2020 16:17:20 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <159104019638.69627.9161269856470136421@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Nisha Kumari <nishakumari@codeaurora.org>
 
-Add Short circuit interrupt handling and recovery for the lab and ibb
-regulators on qcom platforms.
+On 6/2/2020 1:06 AM, Stephen Boyd wrote:
+> Quoting Sivaprakash Murugesan (2020-06-01 05:41:15)
+>> On 5/28/2020 7:29 AM, Stephen Boyd wrote:
+>>> Quoting Sivaprakash Murugesan (2020-05-27 05:24:51)
+>>>> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
+>>>> new file mode 100644
+>>>> index 0000000..004f7e1
+>>>> --- /dev/null
+>>>> +++ b/drivers/clk/qcom/apss-ipq6018.c
+>>>> @@ -0,0 +1,106 @@
+>>>> +       P_XO,
+>>>> +       P_APSS_PLL_EARLY,
+>>>> +};
+>>>> +
+>>>> +static const struct clk_parent_data parents_apcs_alias0_clk_src[] = {
+>>>> +       { .fw_name = "xo" },
+>>>> +       { .fw_name = "pll" },
+>>> This pll clk is not described in the binding. Please add it there.
+>> Sorry I did not get this, this PLL is not directly defined in this
+>> driver and it comes
+>>
+>> from dts. do you still want to describe it in binding?
+>>
+> Yes, there should be a clock-names property for "pll" and a clocks
+> property in the binding document. I didn't see that.
 
-The client panel drivers need to register for REGULATOR_EVENT_OVER_CURRENT
-notification which will be triggered on short circuit. They should
-try to enable the regulator once, and if it doesn't get enabled,
-handle shutting down the panel accordingly.
+These are defined in
 
-Signed-off-by: Nisha Kumari <nishakumari@codeaurora.org>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-    [sumits: updated to rework to use regmap_read_poll_timeout, handle it per
-             regulator, add REGULATOR_EVENT_OVER_CURRENT handling and
-             notification to clients and other cleanup]
---
-v2: sumits: reworked handling to user regmap_read_poll_timeout, and handle it
-     per-regulator instead of clearing both lab and ibb errors on either irq
-     triggering. Also added REGULATOR_EVENT_OVER_CURRENT handling and
-     notification to clients.
-v3: sumits: updated as per review comments of v2: removed spurious check for
-     irq in handler and some unused variables; inlined some of the code,
-     omitted IRQF_TRIGGER_RISING as it's coming from DT.
-v4: sumits: updated 'int vreg_enabled' to 'boot enabled', made sc_irq a local var
-     and other review comments from v3.
----
- drivers/regulator/qcom-labibb-regulator.c | 102 +++++++++++++++++++++-
- 1 file changed, 99 insertions(+), 3 deletions(-)
+https://lkml.org/lkml/2020/5/27/658and
 
-diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
-index 33b764ac69d1..bca0308b26dd 100644
---- a/drivers/regulator/qcom-labibb-regulator.c
-+++ b/drivers/regulator/qcom-labibb-regulator.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- // Copyright (c) 2020, The Linux Foundation. All rights reserved.
- 
-+#include <linux/interrupt.h>
- #include <linux/module.h>
- #include <linux/of_irq.h>
- #include <linux/of.h>
-@@ -18,6 +19,7 @@
- #define REG_LABIBB_ENABLE_CTL		0x46
- #define LABIBB_STATUS1_VREG_OK_BIT	BIT(7)
- #define LABIBB_CONTROL_ENABLE		BIT(7)
-+#define LABIBB_STATUS1_SC_DETECT_BIT	BIT(6)
- 
- #define LAB_ENABLE_CTL_MASK		BIT(7)
- #define IBB_ENABLE_CTL_MASK		(BIT(7) | BIT(6))
-@@ -27,12 +29,16 @@
- #define IBB_ENABLE_TIME			(LABIBB_OFF_ON_DELAY * 10)
- #define LABIBB_POLL_ENABLED_TIME	1000
- 
-+#define POLLING_SCP_DONE_INTERVAL_US	5000
-+#define POLLING_SCP_TIMEOUT		16000
-+
- struct labibb_regulator {
- 	struct regulator_desc		desc;
- 	struct device			*dev;
- 	struct regmap			*regmap;
- 	struct regulator_dev		*rdev;
- 	u16				base;
-+	bool				enabled;
- 	u8				type;
- };
- 
-@@ -59,12 +65,26 @@ static int qcom_labibb_regulator_is_enabled(struct regulator_dev *rdev)
- 
- static int qcom_labibb_regulator_enable(struct regulator_dev *rdev)
- {
--	return regulator_enable_regmap(rdev);
-+	int ret;
-+	struct labibb_regulator *reg = rdev_get_drvdata(rdev);
-+
-+	ret = regulator_enable_regmap(rdev);
-+	if (ret >= 0)
-+		reg->enabled = true;
-+
-+	return ret;
- }
- 
- static int qcom_labibb_regulator_disable(struct regulator_dev *rdev)
- {
--	return regulator_disable_regmap(rdev);
-+	int ret = 0;
-+	struct labibb_regulator *reg = rdev_get_drvdata(rdev);
-+
-+	ret = regulator_disable_regmap(rdev);
-+	if (ret >= 0)
-+		reg->enabled = false;
-+
-+	return ret;
- }
- 
- static struct regulator_ops qcom_labibb_ops = {
-@@ -73,12 +93,70 @@ static struct regulator_ops qcom_labibb_ops = {
- 	.is_enabled		= qcom_labibb_regulator_is_enabled,
- };
- 
-+static irqreturn_t labibb_sc_err_handler(int irq, void *_reg)
-+{
-+	int ret;
-+	u16 reg;
-+	unsigned int val;
-+	struct labibb_regulator *labibb_reg = _reg;
-+	bool in_sc_err, scp_done = false;
-+
-+	ret = regmap_read(labibb_reg->regmap,
-+			  labibb_reg->base + REG_LABIBB_STATUS1, &val);
-+	if (ret < 0) {
-+		dev_err(labibb_reg->dev, "sc_err_irq: Read failed, ret=%d\n",
-+			ret);
-+		return IRQ_HANDLED;
-+	}
-+
-+	dev_dbg(labibb_reg->dev, "%s SC error triggered! STATUS1 = %d\n",
-+		labibb_reg->desc.name, val);
-+
-+	in_sc_err = !!(val & LABIBB_STATUS1_SC_DETECT_BIT);
-+
-+	/*
-+	 * The SC(short circuit) fault would trigger PBS(Portable Batch
-+	 * System) to disable regulators for protection. This would
-+	 * cause the SC_DETECT status being cleared so that it's not
-+	 * able to get the SC fault status.
-+	 * Check if the regulator is enabled in the driver but
-+	 * disabled in hardware, this means a SC fault had happened
-+	 * and SCP handling is completed by PBS.
-+	 */
-+	if (!in_sc_err) {
-+
-+		reg = labibb_reg->base + REG_LABIBB_ENABLE_CTL;
-+
-+		ret = regmap_read_poll_timeout(labibb_reg->regmap,
-+					reg, val,
-+					!(val & LABIBB_CONTROL_ENABLE),
-+					POLLING_SCP_DONE_INTERVAL_US,
-+					POLLING_SCP_TIMEOUT);
-+
-+		if (!ret && labibb_reg->enabled) {
-+			dev_dbg(labibb_reg->dev,
-+				"%s has been disabled by SCP\n",
-+				labibb_reg->desc.name);
-+			scp_done = true;
-+		}
-+	}
-+
-+	if (in_sc_err || scp_done) {
-+		regulator_lock(labibb_reg->rdev);
-+		regulator_notifier_call_chain(labibb_reg->rdev,
-+						REGULATOR_EVENT_OVER_CURRENT,
-+						NULL);
-+		regulator_unlock(labibb_reg->rdev);
-+	}
-+	return IRQ_HANDLED;
-+}
-+
- static struct regulator_dev *register_labibb_regulator(struct labibb_regulator *reg,
- 				const struct labibb_regulator_data *reg_data,
- 				struct device_node *of_node)
- {
- 	struct regulator_config cfg = {};
--	int ret;
-+	int ret, sc_irq;
- 
- 	reg->base = reg_data->base;
- 	reg->type = reg_data->type;
-@@ -95,6 +173,24 @@ static struct regulator_dev *register_labibb_regulator(struct labibb_regulator *
- 	reg->desc.poll_enabled_time = LABIBB_POLL_ENABLED_TIME;
- 	reg->desc.off_on_delay = LABIBB_OFF_ON_DELAY;
- 
-+	sc_irq = of_irq_get_byname(of_node, "sc-err");
-+	if (sc_irq < 0) {
-+		dev_err(reg->dev, "Unable to get sc-err, ret = %d\n",
-+			sc_irq);
-+		return ERR_PTR(sc_irq);
-+	} else {
-+		ret = devm_request_threaded_irq(reg->dev,
-+						sc_irq,
-+						NULL, labibb_sc_err_handler,
-+						IRQF_ONESHOT,
-+						"sc-err", reg);
-+		if (ret) {
-+			dev_err(reg->dev, "Failed to register sc-err irq ret=%d\n",
-+				ret);
-+			return ERR_PTR(ret);
-+		}
-+	}
-+
- 	cfg.dev = reg->dev;
- 	cfg.driver_data = reg;
- 	cfg.regmap = reg->regmap;
--- 
-2.26.2
+https://lkml.org/lkml/2020/5/27/659
+
+it has been defined as part of mailbox binding, since this driver does
+
+not have a dts node and it is child of apcs mailbox driver.
 
