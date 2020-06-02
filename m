@@ -2,119 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B64B61EBA74
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 13:32:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3412E1EBAE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 13:54:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726007AbgFBLco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 07:32:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34062 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725966AbgFBLco (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 07:32:44 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 35BE72068D;
-        Tue,  2 Jun 2020 11:32:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591097563;
-        bh=8NYIhj0/kKsZqCFmjmwu9q0gjA28YKuqxfadnnfPUkU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=0VBAOeBauhdWe72p5lqDnXQzLU7OUFL026MuZlgPoOtLPQnIQgcuGeX53dwDv6SjH
-         aTP13MEgG4KD3lsuLp7j39azO0Y/tTlYi1qDvlj8StFEz5xgAmFvRph8nNFNsKvi+h
-         y9tobRhav37jJEJ6i95k9H8Ed6Q9wb2sgMzsMYoE=
-Date:   Tue, 2 Jun 2020 12:32:41 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, nishakumari@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org,
-        rnayak@codeaurora.org
-Subject: Re: [PATCH v4 4/5] regulator: qcom: Add labibb driver
-Message-ID: <20200602113241.GE5684@sirena.org.uk>
-References: <20200602100924.26256-1-sumit.semwal@linaro.org>
- <20200602100924.26256-5-sumit.semwal@linaro.org>
+        id S1726817AbgFBLyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 07:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35044 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbgFBLyV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Jun 2020 07:54:21 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26FEC061A0E;
+        Tue,  2 Jun 2020 04:54:21 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id p5so3079889wrw.9;
+        Tue, 02 Jun 2020 04:54:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A4GhpoBoNLBeUpwllImkgBSNzkFnKg8SBMrnjFl2x3Y=;
+        b=hpf7C2gdMUGyiEN0FclcGEeRKBmhCuoe2NnjOc4f6dRVHvUA/RvISJ9QslZE7MbyYt
+         usf6lr0eit4SO8UKx3508BQ527pvuJf4qNyEdggg6KXbgDz1N3JjjCKO3sSMGs/N99Az
+         cIo9Ld0KNHKHTiAzj1eWcJI27gV6nAWnrGdWaHH94DUVDaTMb6BoE4CMpFrBL0mEj1oX
+         1xn4bjyN9eN6IjZsVtw+nty3UQ7aKoW60x35SuoIo+ta68WGmlUNuATWXoTpk2qdDan6
+         qM6DN3xpmplkVhbScVowcazmVDD+saBuIbnlQLgvbS8PnAt3ZGRff009tzkA8seNBkm1
+         QmhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A4GhpoBoNLBeUpwllImkgBSNzkFnKg8SBMrnjFl2x3Y=;
+        b=ETsa5r0loM4SkquwkzZBOwocEMlJTo/QwhHMHfwgAW+AyKtP0N8hrL/Psdm2pVkwUk
+         lTYRI/KdJ7kIwnRbXYret1IAS7sH/HeDuSJnRGXPrL0VkRbV8rF9ulXlcYpOjqm0RU2b
+         DIFKDKoIV5Wdt3Z+ThTK2qM4PlWkzMeGy0Zv5y+sG5eA2ZFIz433zlYhtKY7+nC4brjW
+         OZUqBGGoMaFOvVb1fawqS/ete59hAVvUxw9yMTsJvhot4S+AqAmxCDXKz8jwhlygHhUd
+         Tb85cvwjgwynEilsP4v7/Fg8muSjvIfQuFsMNfP53e5rA1B3e6XrClKCJ6SuawTNmMcK
+         gG2A==
+X-Gm-Message-State: AOAM530NXuGr3nlnw9RVNlJDhLknJToM4lgNFs0s8oiDNX30d/N4PVLN
+        ucOyJA12NhHTR8MaJG0uFKk=
+X-Google-Smtp-Source: ABdhPJxP3FyWsBI9gIlo4+U5p0EScvJkbflfxGVo/M6RK/qEgDIu7WW8t7/9uHd82v/hoOmjoiMgdA==
+X-Received: by 2002:a5d:4009:: with SMTP id n9mr6711027wrp.97.1591098858162;
+        Tue, 02 Jun 2020 04:54:18 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host9-254-dynamic.3-87-r.retail.telecomitalia.it. [87.3.254.9])
+        by smtp.googlemail.com with ESMTPSA id b18sm3273777wrn.88.2020.06.02.04.54.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Jun 2020 04:54:17 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v5 00/11] Multiple fixes in PCIe qcom driver
+Date:   Tue,  2 Jun 2020 13:53:41 +0200
+Message-Id: <20200602115353.20143-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dFWYt1i2NyOo1oI9"
-Content-Disposition: inline
-In-Reply-To: <20200602100924.26256-5-sumit.semwal@linaro.org>
-X-Cookie: We are not a clone.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This contains multiple fix for PCIe qcom driver.
+Some optional reset and clocks were missing.
+Fix a problem with no PARF programming that cause kernel lock on load.
+Add support to force gen 1 speed if needed. (due to hardware limitation)
+Add ipq8064 rev 2 support that use a different tx termination offset.
 
---dFWYt1i2NyOo1oI9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+v5:
+* Split PCI: qcom: Add ipq8064 rev2 variant and set tx term offset
 
-On Tue, Jun 02, 2020 at 03:39:23PM +0530, Sumit Semwal wrote:
+v4:
+* Fix grammar error across all patch subject
+* Use bulk api for clks
+* Program PARF only in ipq8064 SoC
+* Program tx term only in ipq8064 SoC
+* Drop configurable tx-dempth rx-eq
+* Make added clk optional
 
-> +static int qcom_labibb_regulator_is_enabled(struct regulator_dev *rdev)
-> +{
-> +	int ret;
-> +	unsigned int val;
-> +	struct labibb_regulator *reg = rdev_get_drvdata(rdev);
-> +
-> +	ret = regmap_read(reg->regmap, reg->base + REG_LABIBB_STATUS1, &val);
-> +	if (ret < 0) {
-> +		dev_err(reg->dev, "Read register failed ret = %d\n", ret);
-> +		return ret;
-> +	}
-> +	return !!(val & LABIBB_STATUS1_VREG_OK_BIT);
-> +}
+v3:
+* Fix check reported by checkpatch --strict
+* Rename force_gen1 to gen
 
-This should be a get_status() callback...
+v2:
+* Drop iATU programming (already done in pcie init)
+* Use max-link-speed instead of force-gen1 custom definition
+* Drop MRRS to 256B (Can't find a realy reason why this was suggested)
+* Introduce a new variant for different revision of ipq8064
 
-> +static int qcom_labibb_regulator_enable(struct regulator_dev *rdev)
-> +{
-> +	return regulator_enable_regmap(rdev);
-> +}
-> +
-> +static int qcom_labibb_regulator_disable(struct regulator_dev *rdev)
-> +{
-> +	return regulator_disable_regmap(rdev);
-> +}
+Abhishek Sahu (1):
+  PCI: qcom: Change duplicate PCI reset to phy reset
 
-...is_enabled() should just be regulator_is_enabled_regmap() and these
-functions should just be removed entirely, you can use the regmap
-operations directly as the ops without the wrapper.
+Ansuel Smith (9):
+  PCI: qcom: Add missing ipq806x clocks in PCIe driver
+  dt-bindings: PCI: qcom: Add missing clks
+  PCI: qcom: Add missing reset for ipq806x
+  dt-bindings: PCI: qcom: Add ext reset
+  PCI: qcom: Use bulk clk api and assert on error
+  PCI: qcom: Define some PARF params needed for ipq8064 SoC
+  PCI: qcom: Add support for tx term offset for rev 2.1.0
+  PCI: qcom: Add ipq8064 rev2 variant
+  dt-bindings: PCI: qcom: Add ipq8064 rev 2 variant
 
-> +	match = of_match_device(qcom_labibb_match, &pdev->dev);
-> +	if (!match)
-> +		return -ENODEV;
-> +
-> +	for (reg_data = match->data; reg_data->name; reg_data++) {
-> +		child = of_get_child_by_name(pdev->dev.of_node, reg_data->name);
-> +
-> +		if (WARN_ON(child == NULL))
-> +			return -EINVAL;
+Sham Muthayyan (1):
+  PCI: qcom: Add Force GEN1 support
 
-This feels like the DT bindings are confused - why do we need to search
-like this?
+ .../devicetree/bindings/pci/qcom,pcie.txt     |  15 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        | 171 ++++++++++++------
+ 2 files changed, 123 insertions(+), 63 deletions(-)
 
-> +		dev_info(dev, "Registering %s regulator\n", child->full_name);
+-- 
+2.25.1
 
-This is noise, remove it.  The regulator framework will announce new
-regulators anyway.
-
---dFWYt1i2NyOo1oI9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7WONgACgkQJNaLcl1U
-h9BWjwgAgnVxrlieHh9AH/2qQhpxWtvryQlFpO+YrWNrGAC38xh3OCdOu4v3RtHO
-XA5PIkwX6cfQBCmdPO0xPzJNIZ8xXpkF8BTeBA2NwJZuyzjz7QvLnvPz8iwBQBcn
-eQSdw+y0kmRkSQo52S4JLL1q1HEJohebQ5ZvpOGFWVWYFMGm6xiIist03Kgsjav7
-w0d2WQ60HbG4CS+Wu9Eol/DLNeXFQXrdDlL/XGni+L41XbsQ/JwFkod/Pn/B0UnB
-m5ITBspUSfNG+nEGGWHHrQh1sxv1EjVYsOvfe33eleTnmEpXQKFBCLTkoQAnI8z+
-Cdf/O4avA4nPwuxRStgnozgEN4IuCA==
-=kLbo
------END PGP SIGNATURE-----
-
---dFWYt1i2NyOo1oI9--
