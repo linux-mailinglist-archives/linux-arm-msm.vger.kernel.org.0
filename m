@@ -2,192 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 151741EC0ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 19:28:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 084F81EC137
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 19:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726019AbgFBR2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 13:28:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54028 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725969AbgFBR2Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 13:28:24 -0400
-Received: from localhost (mobile-166-175-190-200.mycingular.net [166.175.190.200])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3C49D2068D;
-        Tue,  2 Jun 2020 17:28:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591118903;
-        bh=yGkdrYOWLWdmzVsGczOoFywq0agQlbTTQsSxiiUAia0=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=uLGAssqQ3lodfFxvZFDZNFc3KCcKe/w1tJzGNm7CQoykFcyI6qtognbpDGFQToFOM
-         vTiEjTih17YYcsf3bCbYdxYGBeJzvduB6AnTe+cRcx0BWh4xE1qKk9Nbd6q3pwjIUH
-         HWrw204xfcs7dQuSN+/4/RhRtz/F1KpZu1EWO49o=
-Date:   Tue, 2 Jun 2020 12:28:21 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     ansuelsmth@gmail.com
-Cc:     'Rob Herring' <robh+dt@kernel.org>,
-        'Sham Muthayyan' <smuthayy@codeaurora.org>,
-        'Rob Herring' <robh@kernel.org>,
-        'Andy Gross' <agross@kernel.org>,
-        'Bjorn Andersson' <bjorn.andersson@linaro.org>,
-        'Bjorn Helgaas' <bhelgaas@google.com>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        'Stanimir Varbanov' <svarbanov@mm-sol.com>,
-        'Lorenzo Pieralisi' <lorenzo.pieralisi@arm.com>,
-        'Andrew Murray' <amurray@thegoodpenguin.co.uk>,
-        'Philipp Zabel' <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Varadarajan Narayanan <varada@codeaurora.org>
-Subject: Re: R: [PATCH v5 11/11] PCI: qcom: Add Force GEN1 support
-Message-ID: <20200602172821.GA829015@bjorn-Precision-5520>
+        id S1727813AbgFBRjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 13:39:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60476 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726037AbgFBRjv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Jun 2020 13:39:51 -0400
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD5BC05BD1E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2020 10:39:50 -0700 (PDT)
+Received: by mail-lf1-x141.google.com with SMTP id z206so6687571lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2020 10:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WFiNn0czVB+5Qq9qqdAj5GWmVsqpkK4lAR8rumTBlGI=;
+        b=Ylu6kQeCiib8NSRj21Glov2/3k76t5BUisJNWTzmtl0NInwNiQekUahRsaCY986xQj
+         +i14XNoukMO/gkMjW/DGRgytDn8FdWidix9tjt4lcw/R4hip81CyQ0Hb/OelssRrnFWW
+         shR+LH6YHd83epU1et01q3pe9k1pQQ9wK2D2Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WFiNn0czVB+5Qq9qqdAj5GWmVsqpkK4lAR8rumTBlGI=;
+        b=DeDzjfHSwNZmc0f79ySKC4kOxhrNEqVkPT70o6OH5YiQqcwsRaZa64Dx6SqLNqtt0/
+         BUnv/+9SOF8GYVcXUknVPXYgICnfWIIiMDHvmrrVMoZ0yWcInxhefTWwz3dvdhQrH6QB
+         beBvpLDydEBqk3q6koHshmXjus38ik+VjaCVeRtk18EnmHTg3yKUiNcLCYv0Tmoe3ls8
+         zYr/rksQB9WK5rkGe/PiC1xk+UMSK8VnNyQ0fnA+t8e0M01GVz+fuYAiZKnUqNF2mkYF
+         qTAzmF2HOPL0nfkqGsqZUGwWlw3Qjy5SgOTQ8vq/6drcsar5Gm2Ifzx7eVk8IZ8IFdOU
+         4rrg==
+X-Gm-Message-State: AOAM533/3gbfTVl8w8BCtqNr/TWX7SBgcAxoQpDvtxtusc8R72E52mpY
+        Hc3Q1EhDxVYz4z7wm53u9Orhkf0EUO8=
+X-Google-Smtp-Source: ABdhPJzYBmAP6dHrFGKxXFwJKPF1HEIMdUesAYGt8X4lGdyuAPEunMhm0EFNWkzPdd+UWgbG3p1Tig==
+X-Received: by 2002:a19:4048:: with SMTP id n69mr250355lfa.31.1591119588464;
+        Tue, 02 Jun 2020 10:39:48 -0700 (PDT)
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com. [209.85.167.41])
+        by smtp.gmail.com with ESMTPSA id d22sm843841lfn.84.2020.06.02.10.39.47
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jun 2020 10:39:47 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 82so6692692lfh.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2020 10:39:47 -0700 (PDT)
+X-Received: by 2002:ac2:44bb:: with SMTP id c27mr257871lfm.59.1591119586548;
+ Tue, 02 Jun 2020 10:39:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <001101d63900$4c7aae60$e5700b20$@gmail.com>
+References: <20200602163257.26978-1-sibis@codeaurora.org> <20200602163257.26978-2-sibis@codeaurora.org>
+In-Reply-To: <20200602163257.26978-2-sibis@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Tue, 2 Jun 2020 10:39:10 -0700
+X-Gmail-Original-Message-ID: <CAE=gft5RNxfUwDBrFe=NTXm5P75Bp19SRX-bL8kyy-dnr2P3xg@mail.gmail.com>
+Message-ID: <CAE=gft5RNxfUwDBrFe=NTXm5P75Bp19SRX-bL8kyy-dnr2P3xg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] remoteproc: qcom_q6v5_mss: Remove redundant running state
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Ohad Ben Cohen <ohad@wizery.com>, rohitkr@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+cc Varada]
+On Tue, Jun 2, 2020 at 9:33 AM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Remove the redundant running state, as an equivalent is maintained in
+> the common q6v5 resource handling helpers.
+>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
-On Tue, Jun 02, 2020 at 07:07:27PM +0200, ansuelsmth@gmail.com wrote:
-> > On Tue, Jun 02, 2020 at 01:53:52PM +0200, Ansuel Smith wrote:
-> > > From: Sham Muthayyan <smuthayy@codeaurora.org>
-> > >
-> > > Add Force GEN1 support needed in some ipq8064 board that needs to
-> > limit
-> > > some PCIe line to gen1 for some hardware limitation. This is set by the
-> > > max-link-speed binding and needed by some soc based on ipq8064. (for
-> > > example Netgear R7800 router)
-> > >
-> > > Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > Reviewed-by: Rob Herring <robh@kernel.org>
-> > > ---
-> > >  drivers/pci/controller/dwc/pcie-qcom.c | 13 +++++++++++++
-> > >  1 file changed, 13 insertions(+)
-> > >
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
-> > b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index 259b627bf890..0ce15d53c46e 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > @@ -27,6 +27,7 @@
-> > >  #include <linux/slab.h>
-> > >  #include <linux/types.h>
-> > >
-> > > +#include "../../pci.h"
-> > >  #include "pcie-designware.h"
-> > >
-> > >  #define PCIE20_PARF_SYS_CTRL			0x00
-> > > @@ -99,6 +100,8 @@
-> > >  #define PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE	0x358
-> > >  #define SLV_ADDR_SPACE_SZ			0x10000000
-> > >
-> > > +#define PCIE20_LNK_CONTROL2_LINK_STATUS2	0xa0
-> > > +
-> > >  #define DEVICE_TYPE_RC				0x4
-> > >
-> > >  #define QCOM_PCIE_2_1_0_MAX_SUPPLY	3
-> > > @@ -195,6 +198,7 @@ struct qcom_pcie {
-> > >  	struct phy *phy;
-> > >  	struct gpio_desc *reset;
-> > >  	const struct qcom_pcie_ops *ops;
-> > > +	int gen;
-> > >  };
-> > >
-> > >  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> > > @@ -395,6 +399,11 @@ static int qcom_pcie_init_2_1_0(struct
-> > qcom_pcie *pcie)
-> > >  	/* wait for clock acquisition */
-> > >  	usleep_range(1000, 1500);
-> > >
-> > > +	if (pcie->gen == 1) {
-> > > +		val = readl(pci->dbi_base +
-> > PCIE20_LNK_CONTROL2_LINK_STATUS2);
-> > > +		val |= 1;
-> > 
-> > Is this the same bit that's visible in config space as
-> > PCI_EXP_LNKSTA_CLS_2_5GB?  Why not use that #define?
-> > 
-> > There are a bunch of other #defines in this file that look like
-> > redefinitions of standard things:
-> > 
-> >   #define PCIE20_COMMAND_STATUS                   0x04
-> >     Looks like PCI_COMMAND
-> > 
-> >   #define CMD_BME_VAL                             0x4
-> >     Looks like PCI_COMMAND_MASTER
-> > 
-> >   #define PCIE20_DEVICE_CONTROL2_STATUS2          0x98
-> >     Looks like (PCIE20_CAP + PCI_EXP_DEVCTL2)
-> > 
-> >   #define PCIE_CAP_CPL_TIMEOUT_DISABLE            0x10
-> >     Looks like PCI_EXP_DEVCTL2_COMP_TMOUT_DIS
-> > 
-> >   #define PCIE20_CAP                              0x70
-> >     This one is obviously device-specific
-> > 
-> >   #define PCIE20_CAP_LINK_CAPABILITIES            (PCIE20_CAP + 0xC)
-> >     Looks like (PCIE20_CAP + PCI_EXP_LNKCAP)
-> > 
-> >   #define PCIE20_CAP_ACTIVE_STATE_LINK_PM_SUPPORT (BIT(10) |
-> > BIT(11))
-> >     Looks like PCI_EXP_LNKCAP_ASPMS
-> > 
-> >   #define PCIE20_CAP_LINK_1                       (PCIE20_CAP + 0x14)
-> >   #define PCIE_CAP_LINK1_VAL                      0x2FD7F
-> >     This looks like PCIE20_CAP_LINK_1 should be (PCIE20_CAP +
-> >     PCI_EXP_SLTCAP), but "CAP_LINK_1" doesn't sound like the Slot
-> >     Capabilities register, and I don't know what PCIE_CAP_LINK1_VAL
-> >     means.
-> 
-> The define are used by ipq8074 and I really can't test the changes.
-> Anyway it shouldn't make a difference use the define instead of the
-> custom value so a patch should not harm anything... Problem is the
-> last 2 define that we really don't know what they are about... How
-> should I proceed? Change only the value related to
-> PCI_EXP_LNKSTA_CLS_2_5GB or change all the other except the last 2?
+This variable was written to and never read, sigh. Thanks for cleaning it up.
 
-I personally would change all the ones I mentioned above (in a
-separate patch from the one that adds "max-link-speed" support).
-Testing isn't a big deal because changing the #defines shouldn't
-change the generated code at all.
-
-PCIE20_CAP_LINK_1 / PCIE_CAP_LINK1_VAL looks like a potential bug or
-at least a very misleading name.  I wouldn't touch it unless we can
-figure out what's going on.
-
-Looks like most of this was added by 5d76117f070d ("PCI: qcom: Add
-support for IPQ8074 PCIe controller").  Shame on me for not asking
-these questions at the time.
-
-Sham, Varada, can you shed any light on PCIE20_CAP_LINK_1 and
-PCIE_CAP_LINK1_VAL?
-
-> > > +		writel(val, pci->dbi_base +
-> > PCIE20_LNK_CONTROL2_LINK_STATUS2);
-> > > +	}
-> > >
-> > >  	/* Set the Max TLP size to 2K, instead of using default of 4K */
-> > >  	writel(CFG_REMOTE_RD_REQ_BRIDGE_SIZE_2K,
-> > > @@ -1397,6 +1406,10 @@ static int qcom_pcie_probe(struct
-> > platform_device *pdev)
-> > >  		goto err_pm_runtime_put;
-> > >  	}
-> > >
-> > > +	pcie->gen = of_pci_get_max_link_speed(pdev->dev.of_node);
-> > > +	if (pcie->gen < 0)
-> > > +		pcie->gen = 2;
-> > > +
-> > >  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
-> > "parf");
-> > >  	pcie->parf = devm_ioremap_resource(dev, res);
-> > >  	if (IS_ERR(pcie->parf)) {
-> > > --
-> > > 2.25.1
-> > >
-> 
+Reviewed-by: Evan Green <evgreen@chromium.org>
