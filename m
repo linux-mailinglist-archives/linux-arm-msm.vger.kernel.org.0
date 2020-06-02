@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65D9B1EB60C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 08:57:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18EAF1EB695
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 09:30:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725907AbgFBG50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 02:57:26 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:52550 "EHLO m43-7.mailgun.net"
+        id S1725616AbgFBHac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 03:30:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:13396 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725995AbgFBG5Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 02:57:25 -0400
+        id S1725969AbgFBHac (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Jun 2020 03:30:32 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591081045; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1591083030; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=gLmQdz2bGLYsw+rnxBnJcFNszpdH/RBI0fmfD79V7/k=;
- b=Hcv6fM/4WM0HLk1Nw2NK95fULp8+OCBqIHLv0wqgqfY03Pn60MU1q5GGwD6EsfKx7G9rFSqr
- 5WCIPSRkPSmxBuSmJAU0W+8dFTMtjKiKxe9iFN/o6D+Jbr6DtKxieMUDT2NoiWIVqo67lSvk
- VYO7ISneXaCOte5otIu0DixpwM4=
+ MIME-Version: Sender; bh=t/U+WoycaFN2KK63K1sGkIxDUPZFgqtCuW351y3NGsQ=;
+ b=wVnN1hxx+1gEviDXY1BuisIi6WwdGf3JPkbHDhnGTuqT3LebxF9rlg5QPUW0yzrJR6u/hm6U
+ 5jmtL9E2wJiWcJlA2tyHIXKjmnGzDrvKWSePwbpljS7hkRLXKm194wUyn5Sb9S1niXblVUVX
+ iph3Q6aHjaMt6mkewzGwq07iOpg=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
- 5ed5f8528e09c0ae09d1b3df (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Jun 2020 06:57:22
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5ed5ffffb65440fdba5f0d01 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Jun 2020 07:30:07
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6C1B9C43387; Tue,  2 Jun 2020 06:57:22 +0000 (UTC)
+        id 6AD15C433C6; Tue,  2 Jun 2020 07:30:06 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,68 +36,196 @@ X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 953F6C433C9;
-        Tue,  2 Jun 2020 06:57:20 +0000 (UTC)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C199C433C6;
+        Tue,  2 Jun 2020 07:30:05 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 02 Jun 2020 12:27:20 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
-        mka@chromium.org, nm@ti.com, bjorn.andersson@linaro.org,
-        agross@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org,
-        linux-arm-msm-owner@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH v5 4/5] cpufreq: qcom: Update the bandwidth levels on
- frequency change
-In-Reply-To: <20200601110116.jteoalg3yjhsbkpw@vireshk-i7>
-References: <20200527202153.11659-1-sibis@codeaurora.org>
- <20200527202153.11659-5-sibis@codeaurora.org>
- <20200529100028.2wz2iqi5vqji2heb@vireshk-i7>
- <a90bce2d52f7cdb726e8b799e3512fad@codeaurora.org>
- <20200601110116.jteoalg3yjhsbkpw@vireshk-i7>
-Message-ID: <129d8c6c7099ca49dd465b34a6c5fa34@codeaurora.org>
-X-Sender: sibis@codeaurora.org
+Date:   Tue, 02 Jun 2020 13:00:05 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>, robin.murphy@arm.com
+Subject: Re: [PATCH 2/2] coresight: tmc: Add shutdown callback for TMC ETR/ETF
+In-Reply-To: <20200601212858.GB24287@xps15>
+References: <cover.1590947174.git.saiprakash.ranjan@codeaurora.org>
+ <28123d1e19f235f97555ee36a5ed8b52d20cbdea.1590947174.git.saiprakash.ranjan@codeaurora.org>
+ <20200601212858.GB24287@xps15>
+Message-ID: <6d759cc28628ea72767c1304883630eb@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-06-01 16:31, Viresh Kumar wrote:
-> On 29-05-20, 17:00, Sibi Sankar wrote:
->> > > +static int qcom_cpufreq_update_opp(struct device *cpu_dev,
->> > > +				   unsigned long freq_khz,
->> > > +				   unsigned long volt)
->> > > +{
->> > > +	unsigned long freq_hz = freq_khz * 1000;
->> > > +
->> > > +	if (dev_pm_opp_adjust_voltage(cpu_dev, freq_hz, volt, volt, volt))
->> > > +		return dev_pm_opp_add(cpu_dev, freq_hz, volt);
->> >
->> > What's going on here ? Why add OPP here ?
->> 
->> We update the voltage if opp were
->> initially added as part of
->> dev_pm_opp_of_add_table. However
->> if the cpu node does not have an
->> opp table associated with it, we
->> do a opp_add_v1 instead.
-> 
-> Instead of depending on the failure of dev_pm_opp_adjust_voltage(),
-> pass a flag to qcom_cpufreq_update_opp() which will decide if we want
-> to adjust voltage or add an opp.
+Hi Mathieu,
 
-Sure will add it in the next
-re-spin.
+Thanks for taking your time for review.
+
+On 2020-06-02 02:58, Mathieu Poirier wrote:
+> Hi Sai,
+> 
+> On top of the comments already privided by Mike, I have the following:
+> 
+> On Mon, Jun 01, 2020 at 01:32:26PM +0530, Sai Prakash Ranjan wrote:
+>> Implement a shutdown callback to ensure ETR/ETF hardware is
+>> properly shutdown in reboot/shutdown path. This is required
+>> for ETR/ETF which has SMMU address translation enabled like
+>> on SC7180 SoC and few others. If the hardware is still accessing
+>> memory after SMMU translation is disabled as part of SMMU
+>> shutdown callback in system reboot or shutdown path, then
+>> IOVAs(I/O virtual address) which it was using will go on the bus
+>> as the physical addresses which might result in unknown crashes
+>> (NoC/interconnect errors). So we make sure from this shutdown
+>> callback that the ETR/ETF is shutdown before SMMU translation is
+>> disabled and device_link in SMMU driver will take care of ordering
+>> of shutdown callbacks such that SMMU shutdown callback is not
+>> called before any of its consumer shutdown callbacks.
+>> 
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>>  .../hwtracing/coresight/coresight-tmc-etf.c   |  4 +--
+>>  .../hwtracing/coresight/coresight-tmc-etr.c   |  2 +-
+>>  drivers/hwtracing/coresight/coresight-tmc.c   | 29 
+>> +++++++++++++++++++
+>>  drivers/hwtracing/coresight/coresight-tmc.h   |  3 ++
+>>  4 files changed, 35 insertions(+), 3 deletions(-)
+>> 
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c 
+>> b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> index 36cce2bfb744..cba3e7592820 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> @@ -85,7 +85,7 @@ static void __tmc_etb_disable_hw(struct tmc_drvdata 
+>> *drvdata)
+>>  	CS_LOCK(drvdata->base);
+>>  }
+>> 
+>> -static void tmc_etb_disable_hw(struct tmc_drvdata *drvdata)
+>> +void tmc_etb_disable_hw(struct tmc_drvdata *drvdata)
+>>  {
+>>  	__tmc_etb_disable_hw(drvdata);
+>>  	coresight_disclaim_device(drvdata->base);
+>> @@ -118,7 +118,7 @@ static int tmc_etf_enable_hw(struct tmc_drvdata 
+>> *drvdata)
+>>  	return 0;
+>>  }
+>> 
+>> -static void tmc_etf_disable_hw(struct tmc_drvdata *drvdata)
+>> +void tmc_etf_disable_hw(struct tmc_drvdata *drvdata)
+>>  {
+>>  	CS_UNLOCK(drvdata->base);
+>> 
+> 
+> Why do we care about ETB and ETF when they both use RAM internal to the 
+> device?
+> Moreover, the system RAM they use is not dedicated and as such falls 
+> back to the
+> kernel's memory pool.
+> 
+
+Actually we don't, I added the disable for ETF/ETB for completeness 
+since we are
+adding shutdown callback for TMC devices and not just ETR although this 
+issue applies
+only for ETR and it doesn't hurt to disable these devices in shutdown 
+path.
+
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c 
+>> b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> index 625882bc8b08..b29c2db94d96 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> @@ -1110,7 +1110,7 @@ static void __tmc_etr_disable_hw(struct 
+>> tmc_drvdata *drvdata)
+>> 
+>>  }
+>> 
+>> -static void tmc_etr_disable_hw(struct tmc_drvdata *drvdata)
+>> +void tmc_etr_disable_hw(struct tmc_drvdata *drvdata)
+>>  {
+>>  	__tmc_etr_disable_hw(drvdata);
+>>  	/* Disable CATU device if this ETR is connected to one */
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc.c 
+>> b/drivers/hwtracing/coresight/coresight-tmc.c
+>> index 5a271ebc4585..7e687a356fe0 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc.c
+>> @@ -540,6 +540,34 @@ static int tmc_probe(struct amba_device *adev, 
+>> const struct amba_id *id)
+>>  	return ret;
+>>  }
+>> 
+>> +static void tmc_shutdown(struct amba_device *adev)
+>> +{
+>> +	struct tmc_drvdata *drvdata = amba_get_drvdata(adev);
+>> +
+>> +	if (!drvdata->enable)
+>> +		goto out;
+>> +
+>> +	/*
+>> +	 * We do not care about the active trace sessions here
+>> +	 * since the system is going down unlike remove callback,
+>> +	 * just make sure that the hardware is shutdown.
+>> +	 */
+>> +	switch (drvdata->config_type) {
+>> +	case TMC_CONFIG_TYPE_ETB:
+>> +		tmc_etb_disable_hw(drvdata);
+>> +		break;
+>> +	case TMC_CONFIG_TYPE_ETF:
+>> +		tmc_etf_disable_hw(drvdata);
+>> +		break;
+>> +	case TMC_CONFIG_TYPE_ETR:
+>> +		tmc_etr_disable_hw(drvdata);
+>> +	}
+>> +
+>> +out:
+>> +	misc_deregister(&drvdata->miscdev);
+>> +	coresight_unregister(drvdata->csdev);
+> 
+> If a session is active when tmc_shutdown() is called, unregistering the 
+> ETF/ETR
+> will result in a kernel crash if the session is stopped before the 
+> kernel has
+> had the opportunity to shutdown.  It is the problem as trying to make 
+> coresight
+> drivers modular.
+> 
+> For this to really work the ongoing session would need to be stopped.  
+> That
+> would teardown the path and stop the sink.
+
+I have tested this with and without active trace sessions multiple times 
+on 2 devices
+and did not observe a single crash. The crash should be easily triggered 
+as per
+what you are saying if we have active sessions but I do not see any 
+crash.
+
+> 
+> That being said I'm sure that dependencies on an IOMMU isn't a problem 
+> confined
+> to coresight. I am adding Robin Murphy, who added this commit [1], to 
+> the thread
+> in the hope that he can provide guidance on the right way to do this.
+> 
+
+SMMU/IOMMU won't be able to do much here as it is the client's 
+responsiblity to
+properly shutdown and SMMU device link just makes sure that 
+SMMU(supplier) shutdown is
+called only after its consumers shutdown callbacks are called.
+
+Thanks,
+Sai
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
