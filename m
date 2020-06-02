@@ -2,182 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 031E01EB89C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 11:34:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AA371EB91A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 12:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726012AbgFBJe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 05:34:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41666 "EHLO
+        id S1726371AbgFBKJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 06:09:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725811AbgFBJe0 (ORCPT
+        with ESMTP id S1726110AbgFBKJi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 05:34:26 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F6BC061A0E;
-        Tue,  2 Jun 2020 02:34:25 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x13so2677291wrv.4;
-        Tue, 02 Jun 2020 02:34:25 -0700 (PDT)
+        Tue, 2 Jun 2020 06:09:38 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9FBC05BD43
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2020 03:09:38 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id fs4so1140056pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2020 03:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=B55oe33tQCkzxWimg+ZfOhRx1c98hkXT02+HAEUdowc=;
-        b=oF3yVN69hVB7BGPvNvSU7+yVWpzxpaa4CaieNUPq1YmlNxu/3+AimQrMmbU1QsYyWE
-         W0PBN/N/QaZHwq1DKx11WvNRKAYv7e9u34Vq01U0Ev4q1Oxo3CLNu4PfsPwMFgljCIFA
-         6UHw1SLSbKQQQVI9pbtk7KSoUAXsCu5nRUeZQ037iLOGP0pmU6BROVCEteRi5avoAdIx
-         Q16WSo2ptgsglK+WJ3u7rognfMvOM1kUQf47G/vTgTBpL2XYC9YguRiw0q+5x4l/yTzQ
-         SKWpanjBR/xh6XZQEHplxVkoCSQk1Bp82K8StTeVhL5qG+7ZCdIPyxdnwI19N4NuDl27
-         syQw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9EWmfZNZs76IOluosDfmNrcdSeX3EmBQEAHMvHcf/Vk=;
+        b=uZr9rCwig9hq4NeVRTrP9yee3JCzQwSVErzm2dL4W5KxPlvfZGS28uIBMB94tfdytB
+         iTxIl0AMvr1+HntgrZ8WRFYeGX/i+01pdp6HXa+m3FBywDvc2vX1kT+uTtJQSje+9m2P
+         ca6mm3GoCXIzlz7Gpn7lnZxAhXqrtIUXwcBOcOao8HpciVMj4Z3JGw97UC9JRyMv+WUd
+         cLGFmxaYUhZvOjDx3mnBkn5HFiBvzlrAiHDq+EUoG5Mvr/r94wpggUe/7fl10rlnF0Vf
+         tXIOLk5Jex9citYAJ3yOVmG+KAWmBAbOkdKiAT3HpLlIo8gH4/kThrcvZMPAwOrQK/X8
+         4s9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=B55oe33tQCkzxWimg+ZfOhRx1c98hkXT02+HAEUdowc=;
-        b=mLdVBPSVT2botBmQWgxNNx1dmHp8lJYgXMb6eiqBmZJ+Mf4Fx3GaLmMa6KxJYiYYPF
-         hMAvGOButmsJyaJ4iteD2+o3m6PL5S9BXYsyQqAKNT/J6B728/VQpkSCcMgwk4dwXxLW
-         DM/bN8qEP+TfTsJp9mGs7j3jTK0ybVlqpHRuGHQ7s9BMGosSJ1Sylz0QHWqQtDbhjlFE
-         Inu3LphL4bdrBZ8nQacM5U57pP7r7MBZvMLUOpCk4/oO7QBaBXSs7QtmwvA59V+6QugB
-         SpCKDe1IlIJM6kpBGQg2iNSYKrbZXOlzFycXIJ9EOLQ4at+5xExiFqyODqi5LmKnlINn
-         oYiw==
-X-Gm-Message-State: AOAM532WKjdbH7hHsq/KcHWEcg3ERMa4OPa0e5G7O7B/hRlIuxCo0etF
-        sKWnzObGZ1BPRtvMZLGn5Xg=
-X-Google-Smtp-Source: ABdhPJx+uDpxkJIQlhn1mTzdEM7d7VbDdagj0oOZlAXJItkakG8tdrIUEM/f8IUaNZuQLAiehyi8/A==
-X-Received: by 2002:a5d:4b47:: with SMTP id w7mr24371728wrs.234.1591090463651;
-        Tue, 02 Jun 2020 02:34:23 -0700 (PDT)
-Received: from AnsuelXPS (host9-254-dynamic.3-87-r.retail.telecomitalia.it. [87.3.254.9])
-        by smtp.gmail.com with ESMTPSA id h15sm2708805wrt.73.2020.06.02.02.34.20
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Jun 2020 02:34:21 -0700 (PDT)
-From:   <ansuelsmth@gmail.com>
-To:     "'Rob Herring'" <robh@kernel.org>
-Cc:     "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Sham Muthayyan'" <smuthayy@codeaurora.org>,
-        "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Helgaas'" <bhelgaas@google.com>,
-        "'Mark Rutland'" <mark.rutland@arm.com>,
-        "'Stanimir Varbanov'" <svarbanov@mm-sol.com>,
-        "'Lorenzo Pieralisi'" <lorenzo.pieralisi@arm.com>,
-        "'Andrew Murray'" <amurray@thegoodpenguin.co.uk>,
-        "'Philipp Zabel'" <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20200514200712.12232-1-ansuelsmth@gmail.com> <20200514200712.12232-9-ansuelsmth@gmail.com> <20200601210844.GA1494556@bogus>
-In-Reply-To: <20200601210844.GA1494556@bogus>
-Subject: R: [PATCH v4 08/10] PCI: qcom: Add ipq8064 rev2 variant and set tx term offset
-Date:   Tue, 2 Jun 2020 11:34:17 +0200
-Message-ID: <090401d638c0$fdab0c10$f9012430$@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9EWmfZNZs76IOluosDfmNrcdSeX3EmBQEAHMvHcf/Vk=;
+        b=UvtWLZJw7AVKkO9RWoCgWddgTv2V/BV1FmUY80rRqbadLzC4rx4y9NfaPY3l2/LO51
+         PUhpOLImsrBWMnkXF4QIsTReH7+EI3yZXxc65OEMT7VoiwoJXMVwc1s71TeGvL7cv5Q7
+         Enh4HfbBtqwRves61DKgexu1ecotHaLru7ZIQ00lgbDu07HW0ZGmzUOYJqpIMyAdvt2a
+         LZjJz9AajnEK3myLlUkEy//IuCJLIVijEmCrpsHp/lz7cUpMYrAcu6tman/QqegAa1Ny
+         b8dxbg9YRNM2jatJDARbOQU4WwyFPMvyxagiTIr0KFGETRwCtLvcYqxKycFDDme+ziUy
+         hrNA==
+X-Gm-Message-State: AOAM5311eASCAYkSctxLDxwGBNvu96mDeELfv3JeLKIk13g0/keuammR
+        SzRYDnLEAHIfBv3H4jkMtxGA/hBAkYRx+g==
+X-Google-Smtp-Source: ABdhPJwcz+UPRaGJjz1YGfQ6cG165j/BIiASbSQ2PPFQQAhFhCjtu6LEh3fyjK4bz6/m/UhhPBboDQ==
+X-Received: by 2002:a17:90a:3d49:: with SMTP id o9mr4352805pjf.26.1591092577852;
+        Tue, 02 Jun 2020 03:09:37 -0700 (PDT)
+Received: from nagraj.local ([49.206.21.239])
+        by smtp.gmail.com with ESMTPSA id d8sm1931276pgb.42.2020.06.02.03.09.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Jun 2020 03:09:37 -0700 (PDT)
+From:   Sumit Semwal <sumit.semwal@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org
+Cc:     nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        kgunda@codeaurora.org, rnayak@codeaurora.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: [PATCH v4 0/5] Qualcomm labibb regulator driver
+Date:   Tue,  2 Jun 2020 15:39:19 +0530
+Message-Id: <20200602100924.26256-1-sumit.semwal@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: it
-Thread-Index: AQH3v0d+k9NO1qBgLdGiwEtxppfOxAJRdC88AVZe6H+oZMSG4A==
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds a driver for LAB/IBB regulators found on some Qualcomm SoCs.
+These regulators provide positive and/or negative boost power supplies
+for LCD/LED display panels connected to the SoC.
 
+This series adds the support for pmi8998 PMIC found in SDM845 family of SoCs.
 
-> -----Messaggio originale-----
-> Da: Rob Herring <robh@kernel.org>
-> Inviato: luned=EC 1 giugno 2020 23:09
-> A: Ansuel Smith <ansuelsmth@gmail.com>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>; Sham Muthayyan
-> <smuthayy@codeaurora.org>; Andy Gross <agross@kernel.org>; Bjorn
-> Helgaas <bhelgaas@google.com>; Mark Rutland
-> <mark.rutland@arm.com>; Stanimir Varbanov <svarbanov@mm-sol.com>;
-> Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>; Andrew Murray
-> <amurray@thegoodpenguin.co.uk>; Philipp Zabel
-> <p.zabel@pengutronix.de>; linux-arm-msm@vger.kernel.org; linux-
-> pci@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org
-> Oggetto: Re: [PATCH v4 08/10] PCI: qcom: Add ipq8064 rev2 variant and
-> set tx term offset
->=20
-> On Thu, May 14, 2020 at 10:07:09PM +0200, Ansuel Smith wrote:
-> > Add tx term offset support to pcie qcom driver need in some revision =
-of
-> > the ipq806x SoC. Ipq8064 have tx term offset set to 7. Ipq8064-v2
-> revision
-> > and ipq8065 have the tx term offset set to 0.
->=20
-> Seems like this should be 2 patches or why isn't 'Ipq8064 have tx term
-> offset set to 7' done in the prior patch? One tweak is needed for
-> stable, but this isn't?
->=20
+Changes from v3:
+- Handled review comments from v3
+- In core, swapped the meaning of enable_time and poll_enabled_time; so we
+   wait for total enable_time delay, and poll in-between at poll_enabled_time
+   interval now.
+- fixed dt_bindings_check issues in dt-bindings patch.
+- Cleanup of register_labibb_regulator(), and adapted to updated meaning of
+   poll_enabled_time.
 
-Ok i will split this in 2 patch and set for stable the tx term patch.
+Changes from v2:
+- Review comments from v2
+- Moved the poll-to-check-enabled functionality to regulator core.
+- Used more core features to simplify enable/disable functions.
+- Moved the devicetree binding to yaml.
+- Updated interrupt-names and simplified handling.
 
-> >
-> > Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 18 ++++++++++++++++--
-> >  1 file changed, 16 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
-> b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index f5398b0d270c..ab6f1bdd24c3 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -45,6 +45,9 @@
-> >  #define PCIE_CAP_CPL_TIMEOUT_DISABLE		0x10
-> >
-> >  #define PCIE20_PARF_PHY_CTRL			0x40
-> > +#define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20,
-> 16)
-> > +#define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
-> > +
-> >  #define PCIE20_PARF_PHY_REFCLK			0x4C
-> >  #define PHY_REFCLK_SSP_EN			BIT(16)
-> >  #define PHY_REFCLK_USE_PAD			BIT(12)
-> > @@ -363,7 +366,8 @@ static int qcom_pcie_init_2_1_0(struct
-> qcom_pcie *pcie)
-> >  	val &=3D ~BIT(0);
-> >  	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> >
-> > -	if (of_device_is_compatible(node, "qcom,pcie-ipq8064")) {
-> > +	if (of_device_is_compatible(node, "qcom,pcie-ipq8064") |
-> > +	    of_device_is_compatible(node, "qcom,pcie-ipq8064-v2")) {
-> >  		writel(PCS_DEEMPH_TX_DEEMPH_GEN1(24) |
-> >  			       PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(24) |
-> >  			       PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(34),
-> > @@ -374,9 +378,18 @@ static int qcom_pcie_init_2_1_0(struct
-> qcom_pcie *pcie)
-> >  		writel(PHY_RX0_EQ(4), pcie->parf +
-> PCIE20_PARF_CONFIG_BITS);
-> >  	}
-> >
-> > +	if (of_device_is_compatible(node, "qcom,pcie-ipq8064")) {
-> > +		/* set TX termination offset */
-> > +		val =3D readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +		val &=3D ~PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK;
-> > +		val |=3D PHY_CTRL_PHY_TX0_TERM_OFFSET(7);
-> > +		writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +	}
-> > +
-> >  	/* enable external reference clock */
-> >  	val =3D readl(pcie->parf + PCIE20_PARF_PHY_REFCLK);
-> > -	val |=3D BIT(16);
-> > +	val &=3D ~PHY_REFCLK_USE_PAD;
-> > +	val |=3D PHY_REFCLK_SSP_EN;
-> >  	writel(val, pcie->parf + PCIE20_PARF_PHY_REFCLK);
-> >
-> >  	/* wait for clock acquisition */
-> > @@ -1452,6 +1465,7 @@ static int qcom_pcie_probe(struct
-> platform_device *pdev)
-> >  static const struct of_device_id qcom_pcie_match[] =3D {
-> >  	{ .compatible =3D "qcom,pcie-apq8084", .data =3D &ops_1_0_0 },
-> >  	{ .compatible =3D "qcom,pcie-ipq8064", .data =3D &ops_2_1_0 },
-> > +	{ .compatible =3D "qcom,pcie-ipq8064-v2", .data =3D &ops_2_1_0 },
-> >  	{ .compatible =3D "qcom,pcie-apq8064", .data =3D &ops_2_1_0 },
-> >  	{ .compatible =3D "qcom,pcie-msm8996", .data =3D &ops_2_3_2 },
-> >  	{ .compatible =3D "qcom,pcie-ipq8074", .data =3D &ops_2_3_3 },
-> > --
-> > 2.25.1
-> >
+Changes from v1:
+- Incorporated review comments from v1
+- Changed from virtual-regulator based handling to individual regulator based
+  handling.
+- Reworked the core to merge most of enable/disable functions, combine the
+  regulator_ops into one and allow for future variations.
+- is_enabled() is now _really_ is_enabled()
+- Simplified the SC interrupt handling - use regmap_read_poll_timeout,
+  REGULATOR_EVENT_OVER_CURRENT handling and notification to clients.
+
+Nisha Kumari (4):
+  dt-bindings: regulator: Add labibb regulator
+  arm64: dts: qcom: pmi8998: Add nodes for LAB and IBB regulators
+  regulator: qcom: Add labibb driver
+  regulator: qcom: labibb: Add SC interrupt handling
+
+Sumit Semwal (1):
+  regulator: Allow regulators to verify enabled during enable()
+
+ .../regulator/qcom-labibb-regulator.yaml      |  79 +++++
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  14 +
+ drivers/regulator/Kconfig                     |  10 +
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/core.c                      |  58 +++-
+ drivers/regulator/qcom-labibb-regulator.c     | 289 ++++++++++++++++++
+ include/linux/regulator/driver.h              |   5 +
+ 7 files changed, 455 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+ create mode 100644 drivers/regulator/qcom-labibb-regulator.c
+
+-- 
+2.26.2
 
