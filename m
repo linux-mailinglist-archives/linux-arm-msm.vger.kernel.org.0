@@ -2,142 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F6561EBFA9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 18:10:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 653D91EC00A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 18:33:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726217AbgFBQKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 12:10:23 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:37316 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725940AbgFBQKX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 12:10:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591114222; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=6WkZkPNZYqHtyoOR3WPRpDqJzCSNDoDiaqF/KoiR35c=;
- b=iS9IHuAMxisbY6JcWe1HokTxLce1OzUlLBV4+/CX1taL5a61J0OZBuKS4YLnPVmjVksubsF7
- +Fs2QcvN5RWrkHVfSVCeMT4wh8clI5R2IvdzaRRYEINXERXXq8r0m/sNRA3ihFRO/ATq2Sac
- iFxXF+CCjlZpRxq2mOy8ZN6dSfY=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5ed679ee2738686126788cd1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Jun 2020 16:10:22
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5E079C43395; Tue,  2 Jun 2020 16:10:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1726214AbgFBQc6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 12:32:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60448 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725940AbgFBQc6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Jun 2020 12:32:58 -0400
+Received: from localhost (mobile-166-175-190-200.mycingular.net [166.175.190.200])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 816A8C433CB;
-        Tue,  2 Jun 2020 16:10:20 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4B50A20738;
+        Tue,  2 Jun 2020 16:32:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591115577;
+        bh=KEF/4sEpuXc2S9hUWzC5Rg9NoWrf4iyqBG4+55SorsI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=MinDMEL1xXnxdjvjLnAJ0W14PWa2eGUT44UUqj4dYj6QfLB2UuhGQphHqg9Ueodxb
+         4CZHHTPeUrOli+baLyISlpfKEb9BoWd8aQ8ARjBAJTchbaQjm8xL2PCjORtcnl5qud
+         da8sXHO4WjNhRbchbnTrVBwxEEStlBCI8h2ypBwg=
+Date:   Tue, 2 Jun 2020 11:32:55 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Sham Muthayyan <smuthayy@codeaurora.org>,
+        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 11/11] PCI: qcom: Add Force GEN1 support
+Message-ID: <20200602163255.GA821782@bjorn-Precision-5520>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 02 Jun 2020 21:40:20 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Emil Velikov <emil.l.velikov@gmail.com>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno@lists.freedesktop.org,
-        devicetree <devicetree@vger.kernel.org>,
-        "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>, kalyan_t@codeaurora.org,
-        "Kristian H . Kristensen" <hoegsberg@chromium.org>,
-        mka@chromium.org, devicetree-owner@vger.kernel.org
-Subject: Re: [v2] drm/msm: add shutdown support for display platform_driver
-In-Reply-To: <CACvgo50b+m2+onak=AZfgihkBXEP9POjMR52087v==-puLdkQQ@mail.gmail.com>
-References: <1591009402-681-1-git-send-email-mkrishn@codeaurora.org>
- <CACvgo50eb5_jp_6B5tkV9cX_X2_y2Xnavu+wvUUhHN5FsV9hiw@mail.gmail.com>
- <cd61dd742e73b89794fc1b812d9fdcd9@codeaurora.org>
- <CACvgo50b+m2+onak=AZfgihkBXEP9POjMR52087v==-puLdkQQ@mail.gmail.com>
-Message-ID: <8742ac6fbd498fdc22dcd469c3a2d52a@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200602115353.20143-12-ansuelsmth@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Emil,
-
-On 2020-06-02 21:09, Emil Velikov wrote:
-> On Tue, 2 Jun 2020 at 15:49, Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> Hi Emil,
->> 
->> On 2020-06-02 19:43, Emil Velikov wrote:
->> > Hi Krishna,
->> >
->> > On Tue, 2 Jun 2020 at 08:17, Krishna Manikandan
->> > <mkrishn@codeaurora.org> wrote:
->> >>
->> >> Define shutdown callback for display drm driver,
->> >> so as to disable all the CRTCS when shutdown
->> >> notification is received by the driver.
->> >>
->> >> This change will turn off the timing engine so
->> >> that no display transactions are requested
->> >> while mmu translations are getting disabled
->> >> during reboot sequence.
->> >>
->> >> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
->> >>
->> > AFAICT atomics is setup in msm_drm_ops::bind and shutdown in
->> > msm_drm_ops::unbind.
->> >
->> > Are you saying that unbind never triggers? If so, then we should
->> > really fix that instead, since this patch seems more like a
->> > workaround.
->> >
->> 
->> Which path do you suppose that the unbind should be called from, 
->> remove
->> callback? Here we are talking about the drivers which are builtin, 
->> where
->> remove callbacks are not called from the driver core during
->> reboot/shutdown,
->> instead shutdown callbacks are called which needs to be defined in 
->> order
->> to
->> trigger unbind. So AFAICS there is nothing to be fixed.
->> 
-> Interesting - in drm effectively only drm panels implement .shutdown.
-> So my naive assumption was that .remove was used implicitly by core,
-> as part of the shutdown process. Yet that's not the case, so it seems
-> that many drivers could use some fixes.
+On Tue, Jun 02, 2020 at 01:53:52PM +0200, Ansuel Smith wrote:
+> From: Sham Muthayyan <smuthayy@codeaurora.org>
 > 
-> Then again, that's an existing problem which is irrelevant for msm.
-> -Emil
+> Add Force GEN1 support needed in some ipq8064 board that needs to limit
+> some PCIe line to gen1 for some hardware limitation. This is set by the
+> max-link-speed binding and needed by some soc based on ipq8064. (for
+> example Netgear R7800 router)
+> 
+> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 259b627bf890..0ce15d53c46e 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -27,6 +27,7 @@
+>  #include <linux/slab.h>
+>  #include <linux/types.h>
+>  
+> +#include "../../pci.h"
+>  #include "pcie-designware.h"
+>  
+>  #define PCIE20_PARF_SYS_CTRL			0x00
+> @@ -99,6 +100,8 @@
+>  #define PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE	0x358
+>  #define SLV_ADDR_SPACE_SZ			0x10000000
+>  
+> +#define PCIE20_LNK_CONTROL2_LINK_STATUS2	0xa0
+> +
+>  #define DEVICE_TYPE_RC				0x4
+>  
+>  #define QCOM_PCIE_2_1_0_MAX_SUPPLY	3
+> @@ -195,6 +198,7 @@ struct qcom_pcie {
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+>  	const struct qcom_pcie_ops *ops;
+> +	int gen;
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -395,6 +399,11 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	/* wait for clock acquisition */
+>  	usleep_range(1000, 1500);
+>  
+> +	if (pcie->gen == 1) {
+> +		val = readl(pci->dbi_base + PCIE20_LNK_CONTROL2_LINK_STATUS2);
+> +		val |= 1;
 
-To give more context, we are actually targeting the clients/consumers
-of SMMU/IOMMU here because we have to make sure that before the supplier
-(SMMU) shuts down, its consumers/clients need to be shutdown properly.
-Now the ordering of this is taken care in the SMMU driver via 
-device_link
-which makes sure that consumer shutdown callbacks are called first, but 
-we
-need to define shutdown callbacks for all its consumers to make sure we
-actually shutdown the clients or else it would invite the crashes during 
-reboot
-which in this case was seen for display.
+Is this the same bit that's visible in config space as
+PCI_EXP_LNKSTA_CLS_2_5GB?  Why not use that #define?
 
-Thanks,
-Sai
+There are a bunch of other #defines in this file that look like
+redefinitions of standard things:
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+  #define PCIE20_COMMAND_STATUS                   0x04
+    Looks like PCI_COMMAND
+
+  #define CMD_BME_VAL                             0x4
+    Looks like PCI_COMMAND_MASTER
+
+  #define PCIE20_DEVICE_CONTROL2_STATUS2          0x98
+    Looks like (PCIE20_CAP + PCI_EXP_DEVCTL2)
+
+  #define PCIE_CAP_CPL_TIMEOUT_DISABLE            0x10
+    Looks like PCI_EXP_DEVCTL2_COMP_TMOUT_DIS
+
+  #define PCIE20_CAP                              0x70
+    This one is obviously device-specific
+
+  #define PCIE20_CAP_LINK_CAPABILITIES            (PCIE20_CAP + 0xC)
+    Looks like (PCIE20_CAP + PCI_EXP_LNKCAP)
+
+  #define PCIE20_CAP_ACTIVE_STATE_LINK_PM_SUPPORT (BIT(10) | BIT(11))
+    Looks like PCI_EXP_LNKCAP_ASPMS
+
+  #define PCIE20_CAP_LINK_1                       (PCIE20_CAP + 0x14)
+  #define PCIE_CAP_LINK1_VAL                      0x2FD7F
+    This looks like PCIE20_CAP_LINK_1 should be (PCIE20_CAP +
+    PCI_EXP_SLTCAP), but "CAP_LINK_1" doesn't sound like the Slot
+    Capabilities register, and I don't know what PCIE_CAP_LINK1_VAL
+    means.
+
+> +		writel(val, pci->dbi_base + PCIE20_LNK_CONTROL2_LINK_STATUS2);
+> +	}
+>  
+>  	/* Set the Max TLP size to 2K, instead of using default of 4K */
+>  	writel(CFG_REMOTE_RD_REQ_BRIDGE_SIZE_2K,
+> @@ -1397,6 +1406,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_pm_runtime_put;
+>  	}
+>  
+> +	pcie->gen = of_pci_get_max_link_speed(pdev->dev.of_node);
+> +	if (pcie->gen < 0)
+> +		pcie->gen = 2;
+> +
+>  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "parf");
+>  	pcie->parf = devm_ioremap_resource(dev, res);
+>  	if (IS_ERR(pcie->parf)) {
+> -- 
+> 2.25.1
+> 
