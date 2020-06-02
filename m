@@ -2,176 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A0CF1EB27E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 02:03:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 953851EB3D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 05:38:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728791AbgFBACy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Jun 2020 20:02:54 -0400
-Received: from us-smtp-1.mimecast.com ([205.139.110.61]:51253 "EHLO
-        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726007AbgFBACx (ORCPT
+        id S1725793AbgFBDh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Jun 2020 23:37:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726337AbgFBDh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Jun 2020 20:02:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1591056172;
-        h=from:from:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=WEgguSwsSBQsO87++CE0y1rNffa4jp9PI1ZebsV4DLs=;
-        b=RzifqAMeXIFN5+UkPRnJwsf9pnVdk+RfZjHRmjhEz69/rm5aIhkAZcz2ikBWANR0lSxpDV
-        WGH/VPyPU6GpfTogzMe3CCaBqCEI7cuMiRmzszbaroLkLlJE3aD8sbJgwKzyH/zo2P8ScO
-        gL8GoigSLnIIvHP1oo9P2PMuk1/+QcE=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-404-Wex7tlsMNBK0-W1UkIuhrA-1; Mon, 01 Jun 2020 20:02:39 -0400
-X-MC-Unique: Wex7tlsMNBK0-W1UkIuhrA-1
-Received: by mail-qv1-f70.google.com with SMTP id h4so1741751qvr.21
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 17:02:39 -0700 (PDT)
+        Mon, 1 Jun 2020 23:37:58 -0400
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEDBAC05BD43
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2020 20:37:56 -0700 (PDT)
+Received: by mail-ua1-x942.google.com with SMTP id a10so759860uan.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 20:37:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4Tu35wMUvVaUbJZZGmEqYD6hl6BjE9qoHA2F4LLuwpc=;
+        b=e0nXZ01G9yqKOkxkRH/jBSACUc09CJtCCX4fdvqm/EU8DnLD75VaMN4adRxzPObMIe
+         PFN2dMI9s/CCAjPncFv8ziDpLR5xr/RG+MLjLWinktrMEYX9z/M3kyeOyB/ywBapzCZF
+         8Bk72OHQ+Yyji3hqPHvrZf8pF5YEaM0Runqus=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=WEgguSwsSBQsO87++CE0y1rNffa4jp9PI1ZebsV4DLs=;
-        b=r7JqVW52QnoyxplTfYXwSommYbQrLztP3NaTXUpsM8HHJgbYIsmolDhPGeVkT+lPXs
-         rzbZYiUu8RbvyVV1SZthpJaYNW88t+X+Q0BFu6PYzk4gkaXVgkQfadGgF3Se13Qy6E+O
-         gYYqsxLd/1FJGtD2yi0mvIYLNOF4EvTBmtqEQKmsYkuSRds3Hb0cydepKfD83xdjwrxR
-         u9sKEenWn2e1Og6JHkPut5LgR42TsSdzqteyQ2ZKCQ+BZe4uv+yBT9kyITsQ5JIfvq/6
-         sTJSEnJ3WWd0xRjT21fkBU4205s5d6+Vk5CxnuU99qsPoXajVAg+jhr3qRVRJ6NEnBWh
-         lzMA==
-X-Gm-Message-State: AOAM533sSCLtNQToAxa8sH8grM3QUgvVDKUoSkX4tDeutYNZmmckYUNO
-        uFp2yBbM/v1BpC2nVA7+Z5K/6a9QkfVDpWRd4jiJ0jk9/VQnYdxcJL094B8u5MYvXU11752xkVg
-        ej56e1NWPwrHiLJ7kckGmlq3EPg==
-X-Received: by 2002:ac8:724c:: with SMTP id l12mr23746260qtp.259.1591056159434;
-        Mon, 01 Jun 2020 17:02:39 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwRFkXYMc6X8G+o56RMfYFp5n8699HmlGFcYOLIr9n0Jz/P369Z9v//wIL4kQ8Ioy89XjW8QQ==
-X-Received: by 2002:ac8:724c:: with SMTP id l12mr23746213qtp.259.1591056159140;
-        Mon, 01 Jun 2020 17:02:39 -0700 (PDT)
-Received: from localhost (ip70-163-223-149.ph.ph.cox.net. [70.163.223.149])
-        by smtp.gmail.com with ESMTPSA id t13sm852903qtc.77.2020.06.01.17.02.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2020 17:02:37 -0700 (PDT)
-Date:   Mon, 1 Jun 2020 17:02:36 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Lu Baolu <baolu.lu@linux.intel.com>
-Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-rockchip@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v2 00/33] iommu: Move iommu_group setup to IOMMU core code
-Message-ID: <20200602000236.j4m3jvluzdhjngdc@cantor>
-Reply-To: Jerry Snitselaar <jsnitsel@redhat.com>
-Mail-Followup-To: Lu Baolu <baolu.lu@linux.intel.com>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-rockchip@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org
-References: <20200414131542.25608-1-joro@8bytes.org>
- <20200529221623.qc6twmpzryh7nkvb@cantor>
- <20200601104240.7f5xhz7gooqhaq4n@cantor>
- <47711845-98ee-95b8-aa95-423a36ed9741@linux.intel.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4Tu35wMUvVaUbJZZGmEqYD6hl6BjE9qoHA2F4LLuwpc=;
+        b=pg+wY8Z71tOVtiXMZHegyxgEkqV9EyeRsXewmSGJF/rteZ1S3P7UImIfPRUispicGM
+         Cq9x3vCXekImXgKB2QzHINlA84mBBEJQoZvhQxdEtPsTHNS9ptjFkETgNxc0wZ7eNkje
+         4I+BOhj/Y/9NtGZPHXSnIBZqa47qvMj6XlJGMQAnVyF5io604Wltlktnf5K8hkc62I7a
+         HuclnVF+FVBGzHgYz+xs+0yQYzZG2bTvdT5jw0ILWe/ed1KVKhurIdGOqgO6xoXW7EWa
+         /M+5loxCinKBs6N8IWT8h1xdtLGkjgWb+9Cu3e2HLwzyDOeJX+Rp5cqNmvK88BLYE3p6
+         CHjw==
+X-Gm-Message-State: AOAM5338nW+w4Up79hKZNx3ch/szWMh0x2uOOk739LBmrr8TLDQQY+Hw
+        hwMKNHi9mJjwcsR9YfetFBnI2dSwPzY=
+X-Google-Smtp-Source: ABdhPJyTZMY7rgYFwNy7v85EYmatxlwc4cWNfl1fB7IebHbgh9ElYZZwcGqF42EB/T5AXyHbxb43eA==
+X-Received: by 2002:ab0:61d3:: with SMTP id m19mr17679214uan.23.1591069075407;
+        Mon, 01 Jun 2020 20:37:55 -0700 (PDT)
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com. [209.85.222.44])
+        by smtp.gmail.com with ESMTPSA id f11sm236234vsg.11.2020.06.01.20.37.54
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Jun 2020 20:37:54 -0700 (PDT)
+Received: by mail-ua1-f44.google.com with SMTP id q10so744166uaj.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2020 20:37:54 -0700 (PDT)
+X-Received: by 2002:ab0:1684:: with SMTP id e4mr15730387uaf.22.1591069073999;
+ Mon, 01 Jun 2020 20:37:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <47711845-98ee-95b8-aa95-423a36ed9741@linux.intel.com>
+References: <1588314480-22409-1-git-send-email-mansur@codeaurora.org>
+In-Reply-To: <1588314480-22409-1-git-send-email-mansur@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 1 Jun 2020 20:37:43 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Vt8je1AtT8id-rPC3JToF_7uGKpC-uDuSpzCkwi3e4Sw@mail.gmail.com>
+Message-ID: <CAD=FV=Vt8je1AtT8id-rPC3JToF_7uGKpC-uDuSpzCkwi3e4Sw@mail.gmail.com>
+Subject: Re: [PATCH V2] venus: fix multiple encoder crash
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>
+Cc:     stanimir.varbanov@linaro.org, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        vgarodia@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue Jun 02 20, Lu Baolu wrote:
->Hi Jerry,
->
->On 6/1/20 6:42 PM, Jerry Snitselaar wrote:
->>>
->>>Hi Joerg,
->>>
->>>With this patchset, I have an epyc system where if I boot with
->>>iommu=nopt and force a dump I will see some io page faults for a nic
->>>on the system. The vmcore is harvested and the system reboots. I
->>>haven't reproduced it on other systems yet, but without the patchset I
->>>don't see the io page faults during the kdump.
->>>
->>>Regards,
->>>Jerry
->>
->>I just hit an issue on a separate intel based system (kdump iommu=nopt),
->>where it panics in during intel_iommu_attach_device, in is_aux_domain,
->>due to device_domain_info being DEFER_DEVICE_DOMAIN_INFO. That doesn't
->>get set to a valid address until the domain_add_dev_info call.
->>
->>Is it as simple as the following?
->
->I guess you won't hit this issue if you use iommu/next branch of Joerg's
->tree. We've changed to use a generic helper to retrieve the valid per
->device iommu data or NULL (if there's no).
->
->Best regards,
->baolu
->
+Hi,
 
-Yeah, that will solve the panic. 
+On Thu, Apr 30, 2020 at 11:28 PM Mansur Alisha Shaik
+<mansur@codeaurora.org> wrote:
+>
+> Currently we are considering the instances which are available
+> in core->inst list for load calculation in min_loaded_core()
+> function, but this is incorrect because by the time we call
+> decide_core() for second instance, the third instance not
+> filled yet codec_freq_data pointer.
+>
+> Solve this by considering the instances whose session has started.
+>
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> ---
+> Changes in V2:
+> - As per Alex and Jeffrey comments, elaborated problem
+>   and addressed review comments.
+>
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 
->>
->>diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
->>index 29d3940847d3..f1bbeed46a4c 100644
->>--- a/drivers/iommu/intel-iommu.c
->>+++ b/drivers/iommu/intel-iommu.c
->>@@ -5053,8 +5053,8 @@ is_aux_domain(struct device *dev, struct 
->>iommu_domain *domain)
->>  {
->>         struct device_domain_info *info = dev->archdata.iommu;
->>
->>-       return info && info->auxd_enabled &&
->>-                       domain->type == IOMMU_DOMAIN_UNMANAGED;
->>+       return info && info != DEFER_DEVICE_DOMAIN_INFO &&
->>+               info->auxd_enabled && domain->type == 
->>IOMMU_DOMAIN_UNMANAGED;
->>  }
->>
->>  static void auxiliary_link_device(struct dmar_domain *domain,
->>
->>
->>Regards,
->>Jerry
->_______________________________________________
->iommu mailing list
->iommu@lists.linux-foundation.org
->https://lists.linuxfoundation.org/mailman/listinfo/iommu
+This fixes the same crash I reported here:
 
+https://lore.kernel.org/r/20200601150314.RFC.1.I1e40623bbe8fa43ff1415fc273cba66503b9b048@changeid
+
+Thus:
+
+Fixes: eff82f79c562 ("media: venus: introduce core selection")
+Tested-by: Douglas Anderson <dianders@chromium.org>
+
+I still have the same reservations I expressed in the patch I posed
+about whether this is truly safe from a locking point of view, but
+certainly it puts us in a better state than we are today.
+
+-Doug
