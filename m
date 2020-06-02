@@ -2,155 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 653D91EC00A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 18:33:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3DF11EC012
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2020 18:33:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726214AbgFBQc6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 12:32:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60448 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725940AbgFBQc6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 12:32:58 -0400
-Received: from localhost (mobile-166-175-190-200.mycingular.net [166.175.190.200])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727790AbgFBQdf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Jun 2020 12:33:35 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:13167 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725969AbgFBQdf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Jun 2020 12:33:35 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591115614; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=bML8xYcSHixqGiWlTX8GPg6V0NOqHOANEhjj6IVL0dI=; b=oGjPC2V3K2fSdG4F2v81ME2jz8cJzIBZmo7P0DN53kOmr4QW84Z5VOdSAjonFarcEgQcaa+S
+ lvCww4fFpNLlFCVe+rjzT7vfSTq01YrNNNUwmG9s5e7IggMCu7NyjpHYS8GfacaJ+BlajMQ0
+ 8qYPpuIjicolMdrScCtfXk6iAIk=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5ed67f4b4c2ebead13ebe8b5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Jun 2020 16:33:15
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4A063C433A0; Tue,  2 Jun 2020 16:33:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4B50A20738;
-        Tue,  2 Jun 2020 16:32:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591115577;
-        bh=KEF/4sEpuXc2S9hUWzC5Rg9NoWrf4iyqBG4+55SorsI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=MinDMEL1xXnxdjvjLnAJ0W14PWa2eGUT44UUqj4dYj6QfLB2UuhGQphHqg9Ueodxb
-         4CZHHTPeUrOli+baLyISlpfKEb9BoWd8aQ8ARjBAJTchbaQjm8xL2PCjORtcnl5qud
-         da8sXHO4WjNhRbchbnTrVBwxEEStlBCI8h2ypBwg=
-Date:   Tue, 2 Jun 2020 11:32:55 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Sham Muthayyan <smuthayy@codeaurora.org>,
-        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 11/11] PCI: qcom: Add Force GEN1 support
-Message-ID: <20200602163255.GA821782@bjorn-Precision-5520>
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 493AEC433CA;
+        Tue,  2 Jun 2020 16:33:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 493AEC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        evgreen@chromium.org, ohad@wizery.com, rohitkr@codeaurora.org,
+        Sibi Sankar <sibis@codeaurora.org>, stable@vger.kernel.org
+Subject: [PATCH 1/2] remoteproc: qcom: q6v5: Update running state before requesting stop
+Date:   Tue,  2 Jun 2020 22:02:56 +0530
+Message-Id: <20200602163257.26978-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200602115353.20143-12-ansuelsmth@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 02, 2020 at 01:53:52PM +0200, Ansuel Smith wrote:
-> From: Sham Muthayyan <smuthayy@codeaurora.org>
-> 
-> Add Force GEN1 support needed in some ipq8064 board that needs to limit
-> some PCIe line to gen1 for some hardware limitation. This is set by the
-> max-link-speed binding and needed by some soc based on ipq8064. (for
-> example Netgear R7800 router)
-> 
-> Signed-off-by: Sham Muthayyan <smuthayy@codeaurora.org>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 259b627bf890..0ce15d53c46e 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -27,6 +27,7 @@
->  #include <linux/slab.h>
->  #include <linux/types.h>
->  
-> +#include "../../pci.h"
->  #include "pcie-designware.h"
->  
->  #define PCIE20_PARF_SYS_CTRL			0x00
-> @@ -99,6 +100,8 @@
->  #define PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE	0x358
->  #define SLV_ADDR_SPACE_SZ			0x10000000
->  
-> +#define PCIE20_LNK_CONTROL2_LINK_STATUS2	0xa0
-> +
->  #define DEVICE_TYPE_RC				0x4
->  
->  #define QCOM_PCIE_2_1_0_MAX_SUPPLY	3
-> @@ -195,6 +198,7 @@ struct qcom_pcie {
->  	struct phy *phy;
->  	struct gpio_desc *reset;
->  	const struct qcom_pcie_ops *ops;
-> +	int gen;
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -395,6 +399,11 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
->  	/* wait for clock acquisition */
->  	usleep_range(1000, 1500);
->  
-> +	if (pcie->gen == 1) {
-> +		val = readl(pci->dbi_base + PCIE20_LNK_CONTROL2_LINK_STATUS2);
-> +		val |= 1;
+Sometimes the stop triggers a watchdog rather than a stop-ack. Update
+the running state to false on requesting stop to skip the watchdog
+instead.
 
-Is this the same bit that's visible in config space as
-PCI_EXP_LNKSTA_CLS_2_5GB?  Why not use that #define?
+Error Logs:
+$ echo stop > /sys/class/remoteproc/remoteproc0/state
+ipa 1e40000.ipa: received modem stopping event
+remoteproc-modem: watchdog received: sys_m_smsm_mpss.c:291:APPS force stop
+qcom-q6v5-mss 4080000.remoteproc-modem: port failed halt
+ipa 1e40000.ipa: received modem offline event
+remoteproc0: stopped remote processor 4080000.remoteproc-modem
 
-There are a bunch of other #defines in this file that look like
-redefinitions of standard things:
+Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource handling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+---
+ drivers/remoteproc/qcom_q6v5.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-  #define PCIE20_COMMAND_STATUS                   0x04
-    Looks like PCI_COMMAND
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 111a442c993c4..fd6fd36268d93 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -153,6 +153,8 @@ int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5)
+ {
+ 	int ret;
+ 
++	q6v5->running = false;
++
+ 	qcom_smem_state_update_bits(q6v5->state,
+ 				    BIT(q6v5->stop_bit), BIT(q6v5->stop_bit));
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-  #define CMD_BME_VAL                             0x4
-    Looks like PCI_COMMAND_MASTER
-
-  #define PCIE20_DEVICE_CONTROL2_STATUS2          0x98
-    Looks like (PCIE20_CAP + PCI_EXP_DEVCTL2)
-
-  #define PCIE_CAP_CPL_TIMEOUT_DISABLE            0x10
-    Looks like PCI_EXP_DEVCTL2_COMP_TMOUT_DIS
-
-  #define PCIE20_CAP                              0x70
-    This one is obviously device-specific
-
-  #define PCIE20_CAP_LINK_CAPABILITIES            (PCIE20_CAP + 0xC)
-    Looks like (PCIE20_CAP + PCI_EXP_LNKCAP)
-
-  #define PCIE20_CAP_ACTIVE_STATE_LINK_PM_SUPPORT (BIT(10) | BIT(11))
-    Looks like PCI_EXP_LNKCAP_ASPMS
-
-  #define PCIE20_CAP_LINK_1                       (PCIE20_CAP + 0x14)
-  #define PCIE_CAP_LINK1_VAL                      0x2FD7F
-    This looks like PCIE20_CAP_LINK_1 should be (PCIE20_CAP +
-    PCI_EXP_SLTCAP), but "CAP_LINK_1" doesn't sound like the Slot
-    Capabilities register, and I don't know what PCIE_CAP_LINK1_VAL
-    means.
-
-> +		writel(val, pci->dbi_base + PCIE20_LNK_CONTROL2_LINK_STATUS2);
-> +	}
->  
->  	/* Set the Max TLP size to 2K, instead of using default of 4K */
->  	writel(CFG_REMOTE_RD_REQ_BRIDGE_SIZE_2K,
-> @@ -1397,6 +1406,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  		goto err_pm_runtime_put;
->  	}
->  
-> +	pcie->gen = of_pci_get_max_link_speed(pdev->dev.of_node);
-> +	if (pcie->gen < 0)
-> +		pcie->gen = 2;
-> +
->  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "parf");
->  	pcie->parf = devm_ioremap_resource(dev, res);
->  	if (IS_ERR(pcie->parf)) {
-> -- 
-> 2.25.1
-> 
