@@ -2,211 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B27FD1ED19F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 16:02:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 168D11ED35B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 17:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725944AbgFCOCn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jun 2020 10:02:43 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:43342 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725866AbgFCOCm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jun 2020 10:02:42 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591192961; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=J214EwOvlFydBxA2xNNpRsC3SX8eUgmp6bfcai4+/EE=;
- b=II+p6nEShzZ8M4I++k8nNIGdJ5iphDvk7SeWIFi6fNZMYaRaDe5Kza4C8jwa1H+4odwB2Tal
- ommOgdcOgFEQQvnJ7/o9DU2IDyCPyEBOCrQLCMCT2ZP8lzNuqAdqScq/FTO8Vp5458JM5gqq
- yj3f9wviKmOyb/NjZ75RGZI+KHE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ed7ad5b3131442d9503063a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Jun 2020 14:02:03
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 46E90C43395; Wed,  3 Jun 2020 14:02:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 37166C433CA;
-        Wed,  3 Jun 2020 14:02:01 +0000 (UTC)
+        id S1726061AbgFCPaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jun 2020 11:30:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725954AbgFCPaR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Jun 2020 11:30:17 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F002C08C5C4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2020 08:30:17 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id o6so2012878pgh.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2020 08:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jVeUDdt9eIT/ZF5+h1yiYqekEPn8xtcv2SdMrAGMgrM=;
+        b=ZfhuzLQZ39itOhbSOkMesC0AXIlQ9xFBQJE8ETjpLJ8vsl0evGW6yJS3uNXaSPcc0H
+         eZ7KkUTrz2YyfKYgftyFwJtRscMXz5Z2aTR8Nb2qQZPH9Wp2EGIA29rk9oEZCrkPmz18
+         g+POX82Mwz5TuYKpaG2bii3SxkiN5P9qPMjtY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jVeUDdt9eIT/ZF5+h1yiYqekEPn8xtcv2SdMrAGMgrM=;
+        b=GMBAVXgpsEK47VIV+Ej7uWfqnzEQRofxo6EunBUP5tC5ggjUQ695nDyYBVRsG98Ku8
+         cmOw6Kw8/JYb/nUVud6adLZjwQx6/8eu5mRCFIieFTOYEu/1mWoODk3AfI2cX9f+L8R9
+         eQo+RICxywxJNvrC+mOxAe8n3BvOOd3P7FnNS711oNMZI3WKujpS0H5mV2MTQ39ZOnlr
+         moIYUiilqhBhykNr0ui2hI4xPoq36+weKQQ04K3f/jQ03csq37coO5ZKiBNT+2DrqYLZ
+         wn31a8zVZPLtJfHJ1rUIn79GsHN7fhaTPP6Tw2EKJPRAvvL2nyc0yw0Wq0+SnHTokJ+p
+         L7FA==
+X-Gm-Message-State: AOAM5336NiNgOWdGS+qwVCNe8jmG9Qt9ZSfBfz5KinOnLKZrSLNp26oh
+        WNyxk6CFgANwhGYdi0wiB/iNVA==
+X-Google-Smtp-Source: ABdhPJy3uyFUIfgXfk2WoiTSIJ7bYnel+0P3REYqKw4cbkObOs2pxuVi3H4+zUFWFwhLVq19JiGykw==
+X-Received: by 2002:a17:90a:f011:: with SMTP id bt17mr223527pjb.179.1591198216948;
+        Wed, 03 Jun 2020 08:30:16 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id o13sm1946836pgs.82.2020.06.03.08.30.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2020 08:30:16 -0700 (PDT)
+Date:   Wed, 3 Jun 2020 08:30:13 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Pradeep P V K <ppvk@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, adrian.hunter@intel.com,
+        robh+dt@kernel.org, ulf.hansson@linaro.org,
+        vbadigan@codeaurora.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-mmc-owner@vger.kernel.org,
+        rnayak@codeaurora.org, sibis@codeaurora.org, matthias@chromium.org
+Subject: Re: [PATCH V1 1/2] mmc: sdhci-msm: Add interconnect bandwidth
+ scaling support
+Message-ID: <20200603153013.GO4525@google.com>
+References: <1591175376-2374-1-git-send-email-ppvk@codeaurora.org>
+ <1591175376-2374-2-git-send-email-ppvk@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 03 Jun 2020 19:32:01 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mike Leach <mike.leach@linaro.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-arm-msm@vger.kernel.org,
-        Coresight ML <coresight@lists.linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 2/2] coresight: tmc: Add shutdown callback for TMC ETR/ETF
-In-Reply-To: <CAJ9a7Vj3sL=4O3DU+aJWYLhue1UxQmX4Ba5JdEnmxKDEYo_z4Q@mail.gmail.com>
-References: <cover.1590947174.git.saiprakash.ranjan@codeaurora.org>
- <28123d1e19f235f97555ee36a5ed8b52d20cbdea.1590947174.git.saiprakash.ranjan@codeaurora.org>
- <20200601212858.GB24287@xps15>
- <6d759cc28628ea72767c1304883630eb@codeaurora.org>
- <CAJ9a7VhMbdqVBHxEXGYxFkgPnnQqNnDAz=wkHP3s7Ntw0iLmKA@mail.gmail.com>
- <f0357072de96970b641bbd0da98c1d61@codeaurora.org>
- <CAJ9a7Vj9STJw4jBxWU_9wHftj4Q7+k8o1nTc8tr21KjYi0RkpQ@mail.gmail.com>
- <4a09cd2e054836d85f2e024ca4435e91@codeaurora.org>
- <CAJ9a7VgCFeHNbY_9Gwvu6uT9MFBeY=_GCaN4N1dwmm+iNpfJOw@mail.gmail.com>
- <1a5a6a6d-b86d-df45-cf91-7081e70d88a3@arm.com>
- <CAJ9a7Vj3sL=4O3DU+aJWYLhue1UxQmX4Ba5JdEnmxKDEYo_z4Q@mail.gmail.com>
-Message-ID: <d6efeb9a327ecea615f0f537e0bac616@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1591175376-2374-2-git-send-email-ppvk@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mike,
+Hi Pradeep,
 
-On 2020-06-03 19:21, Mike Leach wrote:
-> Hi,
+On Wed, Jun 03, 2020 at 02:39:35PM +0530, Pradeep P V K wrote:
+> Interconnect bandwidth scaling support is now added as a
+> part of OPP [1]. So, make sure interconnect driver is ready
+> before handling interconnect scaling.
 > 
+> This change is based on
+> [1] [Patch v8] Introduce OPP bandwidth bindings
+> (https://lkml.org/lkml/2020/5/12/493)
 > 
-> On Wed, 3 Jun 2020 at 14:34, Robin Murphy <robin.murphy@arm.com> wrote:
->> 
->> On 2020-06-03 14:22, Mike Leach wrote:
->> > Hi Sai,
->> >
->> > On Wed, 3 Jun 2020 at 13:14, Sai Prakash Ranjan
->> > <saiprakash.ranjan@codeaurora.org> wrote:
->> >>
->> >> Hi Mike,
->> >>
->> >> On 2020-06-03 16:57, Mike Leach wrote:
->> >>> Hi,
->> >>>
->> >>> On Wed, 3 Jun 2020 at 11:24, Sai Prakash Ranjan
->> >>> <saiprakash.ranjan@codeaurora.org> wrote:
->> >>>>
->> >>>> Hi Mike,
->> >>>>
->> >>>> Thanks again for looking at this.
->> >>>>
->> >>>> On 2020-06-03 03:42, Mike Leach wrote:
->> >>>> [...]
->> >>>>
->> >>>>>>
->> >>>>>> SMMU/IOMMU won't be able to do much here as it is the client's
->> >>>>>> responsiblity to
->> >>>>>> properly shutdown and SMMU device link just makes sure that
->> >>>>>> SMMU(supplier) shutdown is
->> >>>>>> called only after its consumers shutdown callbacks are called.
->> >>>>>
->> >>>>> I think this use case can be handled slightly differently than the
->> >>>>> general requirements for modular CoreSight drivers.
->> >>>>>
->> >>>>> What is needed here is a way of stopping the underlying ETR hardware
->> >>>>> from issuing data to the SMMU, until the entire device has been shut
->> >>>>> down, in a way that does not remove the driver, breaking existing
->> >>>>> references and causing a system crash.
->> >>>>>
->> >>>>> We could introduce a new mode to the ETR driver - e.g.
->> >>>>> CS_MODE_SHUTDOWN.
->> >>>>>
->> >>>>> At the end of the block tmc_shutdown(struct amba_device *adev), set
->> >>>>> drvdata->mode to CS_MODE_SHUTDOWN & remove the coresight_unregister().
->> >>>>> This new mode can be used to  prevent the underlying hardware from
->> >>>>> being able to restart until the device is re-powered.
->> >>>>>
->> >>>>> This mode can be detected in the code that enables / disables the ETR
->> >>>>> and handled appropriately (updates to tmc_enable_etr_sink and
->> >>>>> tmc_disable_etr_sink).
->> >>>>> This mode will persist until the device is re-started - but because we
->> >>>>> are on the device shutdown path this is not an issue.
->> >>>>>
->> >>>>> This should leave the CoreSight infrastructure stable until the
->> >>>>> drivers are shut down normally as part of the device power down
->> >>>>> process.
->> >>>>>
->> >>>>
->> >>>> Sounds good to me, but if the coresight_unregister() is the trouble
->> >>>> point
->> >>>> causing these crashes, then can't we just remove that from
->> >>>> tmc_shutdown()
->> >>>> callback? This would be like maintaining the same behaviour as now
->> >>>> where
->> >>>> on reboot/shutdown we basically don't do anything except for disabling
->> >>>> ETR.
->> >>>
->> >>> No - the new mode prevents race conditions where the thread shutting
->> >>> down the SMMU does the ETR shutdown, but then another thread happens
->> >>> to be trying to start trace and restarts the ETR.
->> >>> It also prevents the condition Mathieu discussed where a thread might
->> >>> be attempting to shutdown trace - this could try to disable the
->> >>> hardware again re-releasing resources/ re-flushing and waiting for
->> >>> stop.
->> >>>
->> >>
->> >> I do not think there will a race between SMMU shutdown and ETR shutdown.
->> >> Driver core takes care of calling SMMU shutdown after its consumer
->> >> shutdown callbacks via device link, otherwise there would already be
->> >> bugs in all other client drivers.
->> >>
->> >
->> > I am not saying there could be a race between tmc_shutdowm and
->> > Smmu_shutdown - there may be a case if the coresight_disable_path
->> > sequence is running and gets to the point of disabling the ETR after
->> > the SMMU callback has disabled it.
->> 
->> I'm confused now - there is no "SMMU callback", we're talking about 
->> the
->> system-wide cleanup from kernel_shutdown_prepare() or
->> kernel_restart_prepare(). As far as I'm aware userspace should be long
->> gone by that point, so although trace may have been left running ||
->            ((offset >= TRCCIDCVRn(0)) && (offset <= TRCVMIDCVRn(7)), 
-> the
->> chance of racing against other driver operations seems pretty 
->> unlikely.
->> 
+> [2] [Patch v3] mmc: sdhci-msm: Fix error handling
+> for dev_pm_opp_of_add_table()
+> (https://lkml.org/lkml/2020/5/5/491)
 > 
-> Sorry - bad choice of terminology. I was referring to the SMMU
-> ensuring that it had all its clients shut-down before if shut down. To
-> quote Sai...
+> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
->>>>>> SMMU device link just makes sure that
->> >>>>>> SMMU(supplier) shutdown is
->> >>>>>> called only after its consumers shutdown callbacks are called.
-> 
-> I agree it is unlikely, but if removing the device from the CoreSight
-> infrastructure via coresight_unregister() is a potential source of a
-> crash, it would seem that there is a potential path where some
-> CoreSight driver side work might be possible. therefore a mode to
-> prevent this crash, and ensure that the device hardware remains off
-> and not sending trace to SMMU until such time as shutdown / reboot
-> restart occurs, seemed prudent.
-> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index b277dd7..bf95484 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/slab.h>
+>  #include <linux/iopoll.h>
+>  #include <linux/regulator/consumer.h>
+> +#include <linux/interconnect.h>
+>  
+>  #include "sdhci-pltfm.h"
+>  #include "cqhci.h"
+> @@ -1999,6 +2000,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  	struct sdhci_pltfm_host *pltfm_host;
+>  	struct sdhci_msm_host *msm_host;
+>  	struct clk *clk;
+> +	struct icc_path *sdhc_path;
 
-Actually I did not see any crash with coresight_unregister() during
-reboot/shutdown as I mentioned previously to Mathieu's query on
-this being similar to remove callback. I think the crash with
-coresight_unregister() is only seen when we have coresight as module
-and the userspace is pretty much there to enable/disable trace when
-we try to bind/unbind. But here we only consider the system 
-reboot/shutdown
-where pretty much everything is down by this point.
+nit: The 'sdhc_' prefix doesn't provide any useful information, change it
+to 'icc_path', which makes evident what it is?
 
-Thanks,
-Sai
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+>  	int ret;
+>  	u16 host_version, core_minor;
+>  	u32 core_version, config;
+> @@ -2070,6 +2072,20 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  	}
+>  	msm_host->bulk_clks[0].clk = clk;
+>  
+> +	/* Make sure that ICC driver is ready for interconnect bandwdith
+> +	 * scaling before registering the device for OPP.
+> +	 */
+> +	sdhc_path = of_icc_get(&pdev->dev, NULL);
+> +	ret = PTR_ERR_OR_ZERO(sdhc_path);
+> +	if (ret) {
+
+nit: IMO it would be clearer to do this instead of using PTR_ERR_OR_ZERO()
+(as for the OPP table below):
+
+	if (IS_ERR(sdhc_path)) {
+		ret = PTR_ERR(sdhc_path);
+
+> +		if (ret == -EPROBE_DEFER)
+> +			dev_info(&pdev->dev, "defer icc path: %d\n", ret);
+
+This log seems to add little more than noise, or are there particular reasons
+why it is useful in this driver? Most drivers just return silently in case of
+deferred probing.
+
+> +		else
+> +			dev_err(&pdev->dev, "failed to get icc path:%d\n", ret);
+> +		goto bus_clk_disable;
+> +	}
+> +	icc_put(sdhc_path);
+> +
+>  	msm_host->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
+>  	if (IS_ERR(msm_host->opp_table)) {
+>  		ret = PTR_ERR(msm_host->opp_table);
+> -- 
+> 1.9.1
+> 
