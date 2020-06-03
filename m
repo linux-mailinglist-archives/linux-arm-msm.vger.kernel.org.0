@@ -2,127 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30FA41EC8CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 07:30:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB95B1EC8D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 07:32:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725792AbgFCF37 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jun 2020 01:29:59 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:29327 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725823AbgFCF37 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jun 2020 01:29:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591162199; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=zzTfxHouLE9jM7tdzGJeF4YIRqLBMDbYhT7bqTud5lA=;
- b=HjN+k7NAO6+naM1LLZP9DXtKT2uvWLnLxbbMExhc5GJo7OiXNIfnnDA1TvwPTmK+fTT0pkwz
- maFyoqPylMIRLfsBTLiVmoIf+VBYEcGGaT/jyK7sWRrQ7XgpUPh0TKT5fMh5f8FrI7bnccGQ
- GXpVZ7/UcXvggocVP7bcQOnyGts=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
- 5ed7354746d39fc0a2950d7a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Jun 2020 05:29:43
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EA77CC433CB; Wed,  3 Jun 2020 05:29:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1725855AbgFCFb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jun 2020 01:31:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45768 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725275AbgFCFb6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Jun 2020 01:31:58 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5441DC433C6;
-        Wed,  3 Jun 2020 05:29:42 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id AA8C72065C;
+        Wed,  3 Jun 2020 05:31:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591162317;
+        bh=jcNjRebtGEGF7OHTOpZIQrFoXxBn7By/a9J0O9eUj+Y=;
+        h=In-Reply-To:References:Subject:From:To:Date:From;
+        b=wAMWMMwCHBjbm/o3TC6OfFpQGJsCZZb5Q9kmmX2Jftvzfx2A0ID7ocYrScjo2smV8
+         TWNvBd/0LvLPifoc7OZqyCevCDo/BVuUISmHRDUV7cM/3QtHO9PEGnebkvZiRI44kf
+         875TE2CDZ3ATQ94tpu/lkC2eilbj5HPgA1y0DV2U=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 03 Jun 2020 10:59:42 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>,
-        Ohad Ben Cohen <ohad@wizery.com>, rohitkr@codeaurora.org,
-        stable@vger.kernel.org, linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH 1/2] remoteproc: qcom: q6v5: Update running state before
- requesting stop
-In-Reply-To: <CAE=gft7sbh_S_GiRohtMmdMN9JzQhG0m3bUerwrmzhjmXucGKw@mail.gmail.com>
-References: <20200602163257.26978-1-sibis@codeaurora.org>
- <CAE=gft7sbh_S_GiRohtMmdMN9JzQhG0m3bUerwrmzhjmXucGKw@mail.gmail.com>
-Message-ID: <6392c800b0be1cbabb8a241cf518ab4b@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <4266555a-5e4f-4340-1b3c-487a70805751@codeaurora.org>
+References: <1590582292-13314-1-git-send-email-sivaprak@codeaurora.org> <1590582292-13314-5-git-send-email-sivaprak@codeaurora.org> <159063116486.69627.5280506237179820811@swboyd.mtv.corp.google.com> <824cd7bb-0971-d387-4b78-75c36ddf2f66@codeaurora.org> <159104019638.69627.9161269856470136421@swboyd.mtv.corp.google.com> <4266555a-5e4f-4340-1b3c-487a70805751@codeaurora.org>
+Subject: Re: [PATCH V6 4/5] clk: qcom: Add ipq6018 apss clock controller
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        robh+dt@kernel.org
+Date:   Tue, 02 Jun 2020 22:31:56 -0700
+Message-ID: <159116231690.69627.14045441534011952150@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Evan,
-Thanks for taking time to review
-the series.
+Quoting Sivaprakash Murugesan (2020-06-02 03:47:20)
+>=20
+> On 6/2/2020 1:06 AM, Stephen Boyd wrote:
+> > Quoting Sivaprakash Murugesan (2020-06-01 05:41:15)
+> >> On 5/28/2020 7:29 AM, Stephen Boyd wrote:
+> >>> Quoting Sivaprakash Murugesan (2020-05-27 05:24:51)
+> >>>> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss=
+-ipq6018.c
+> >>>> new file mode 100644
+> >>>> index 0000000..004f7e1
+> >>>> --- /dev/null
+> >>>> +++ b/drivers/clk/qcom/apss-ipq6018.c
+> >>>> @@ -0,0 +1,106 @@
+> >>>> +       P_XO,
+> >>>> +       P_APSS_PLL_EARLY,
+> >>>> +};
+> >>>> +
+> >>>> +static const struct clk_parent_data parents_apcs_alias0_clk_src[] =
+=3D {
+> >>>> +       { .fw_name =3D "xo" },
+> >>>> +       { .fw_name =3D "pll" },
+> >>> This pll clk is not described in the binding. Please add it there.
+> >> Sorry I did not get this, this PLL is not directly defined in this
+> >> driver and it comes
+> >>
+> >> from dts. do you still want to describe it in binding?
+> >>
+> > Yes, there should be a clock-names property for "pll" and a clocks
+> > property in the binding document. I didn't see that.
+>=20
+> These are defined in
+>=20
+> https://lkml.org/lkml/2020/5/27/658and
+>=20
+> https://lkml.org/lkml/2020/5/27/659
+>=20
+> it has been defined as part of mailbox binding, since this driver does
+>=20
+> not have a dts node and it is child of apcs mailbox driver.
+>=20
 
-On 2020-06-02 23:14, Evan Green wrote:
-> On Tue, Jun 2, 2020 at 9:33 AM Sibi Sankar <sibis@codeaurora.org> 
-> wrote:
->> 
->> Sometimes the stop triggers a watchdog rather than a stop-ack. Update
->> the running state to false on requesting stop to skip the watchdog
->> instead.
->> 
->> Error Logs:
->> $ echo stop > /sys/class/remoteproc/remoteproc0/state
->> ipa 1e40000.ipa: received modem stopping event
->> remoteproc-modem: watchdog received: sys_m_smsm_mpss.c:291:APPS force 
->> stop
->> qcom-q6v5-mss 4080000.remoteproc-modem: port failed halt
->> ipa 1e40000.ipa: received modem offline event
->> remoteproc0: stopped remote processor 4080000.remoteproc-modem
->> 
->> Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource 
->> handling")
->> Cc: stable@vger.kernel.org
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
-> 
-> Are you sure you want to tolerate this behavior from MSS? This is a
-> graceful shutdown, modem shouldn't have a problem completing the
-> proper handshake. If they do, isn't that a bug on the modem side?
-
-The graceful shutdown is achieved
-though sysmon (enabled using
-CONFIG_QCOM_SYSMON). When sysmon is
-enabled we get a shutdown-ack when we
-try to stop the modem, post which
-request stop is a basically a nop.
-Request stop is done to force stop
-the modem during failure cases (like
-rmtfs is not running and so on) and
-we do want to mask the wdog that we get
-during this scenario ( The locking
-already prevents the servicing of the
-wdog during shutdown, the check just
-prevents the scheduling of crash handler
-and err messages associated with it).
-Also this check was always present and
-was missed during common q6v5 resource
-helper migration, hence the unused
-running state in mss driver.
-
-> 
-> I just worry this will mask real issues that happen during graceful 
-> shutdown.
-> -Evan
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Ah alright. Sounds good.
