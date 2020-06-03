@@ -2,87 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FB1A1ED7E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 23:15:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 822781ED8AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 00:34:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726393AbgFCVP3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jun 2020 17:15:29 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:22607 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726377AbgFCVP3 (ORCPT
+        id S1726917AbgFCWej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jun 2020 18:34:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46752 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726836AbgFCWei (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jun 2020 17:15:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591218928; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=jzafB20T6C2cr0oApSpYxxZ+yVZaB2ioyr2SdddTzko=; b=ph7P4DBVtBg5enFBtWEm9inzNxZLdWB9Mxt8z1kNvTcNt8F2W6j9QGK9/UkFv+zIXpwvGmFF
- TpEIuRmJCt3OVEBIZDX7DkDkB0NLt3EWLpAwOl2kEaBF7Rhm8dVfDFxYoImMrKCA6iQs36uM
- 4g2O888rHuj49oMLCqqsMRmRJzM=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5ed812e52dd9e15ae3706637 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Jun 2020 21:15:17
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 79BDCC43387; Wed,  3 Jun 2020 21:15:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4228DC433CB;
-        Wed,  3 Jun 2020 21:15:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4228DC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] iommu/arm-smmu: Mark qcom_smmu_client_of_match as possibly unused
-Date:   Wed,  3 Jun 2020 15:15:07 -0600
-Message-Id: <20200603211507.27756-1-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        Wed, 3 Jun 2020 18:34:38 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 303E0C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2020 15:34:37 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id c12so2335597lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2020 15:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Gh37isHiEa0VDwLfX8KuGahT8mC736+W9oMftFOpgb8=;
+        b=NI9BNZsZdQDK5mmCBfvcf4CZuksZNkq/F+BU0OYIGjn/GXd8AdBMnwywGKwiM14KiN
+         GWVeyJoC99OT1ioTuXeoMUNgTP79Fxp2VHsXm7dQjmmSbo+4nLiuCnHHp1TQP/yZuzdq
+         NFblHC6HRzkHEyA/LHmf9UxTwF9isjRLAry8Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Gh37isHiEa0VDwLfX8KuGahT8mC736+W9oMftFOpgb8=;
+        b=tzaPvwcBqIQvo8z1bt9HfBgqEjD/4qgGceFKLFsmEES/jI77H3fwS/DMcMeA48YNvt
+         uJnHHOD18asCEmwtY36YkTWv3kzTDElpi8xFTrOo+hgxWpM6LJW7nKZJzolwUqIx4dbj
+         I9hyIG6bOnhad80EQXeN9yPBo/wNo2GLDFbwwtA4f/epKauEc+NzeEXCULvlarrnwvY3
+         jyWi5KDXqdDtpKeatHFcvrhW5dzm5WeuPixp8niiTv/W2hwMHCHs85fiey80xf7fKjbO
+         6yYb7ha3WoLjDxCxepm0671J2eAmkA4ScWuy4xwQO1DUp9yQ5Cbzzjab4RM6dMCwYuDL
+         BAQQ==
+X-Gm-Message-State: AOAM531i82Zr0OuOHQzHGmrcZ9HBsl9yt7DkP8UQDxtkiCGOLyMCn1d0
+        CTAbLYSojvIsR4xNmt3bX6AmIdEu9eg=
+X-Google-Smtp-Source: ABdhPJwmTQbXWMpqLOq+wXxLCKPIEGGemw9uMP1A6OTDBbNXMCQL/3yIAWE8PR5D+rbPswC91sOeKQ==
+X-Received: by 2002:a19:c311:: with SMTP id t17mr867775lff.58.1591223674484;
+        Wed, 03 Jun 2020 15:34:34 -0700 (PDT)
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com. [209.85.167.53])
+        by smtp.gmail.com with ESMTPSA id o2sm1004749lfc.85.2020.06.03.15.34.32
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2020 15:34:33 -0700 (PDT)
+Received: by mail-lf1-f53.google.com with SMTP id u16so2348331lfl.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2020 15:34:32 -0700 (PDT)
+X-Received: by 2002:a19:103:: with SMTP id 3mr827227lfb.196.1591223672262;
+ Wed, 03 Jun 2020 15:34:32 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200602163257.26978-1-sibis@codeaurora.org> <CAE=gft7sbh_S_GiRohtMmdMN9JzQhG0m3bUerwrmzhjmXucGKw@mail.gmail.com>
+ <6392c800b0be1cbabb8a241cf518ab4b@codeaurora.org>
+In-Reply-To: <6392c800b0be1cbabb8a241cf518ab4b@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Wed, 3 Jun 2020 15:33:55 -0700
+X-Gmail-Original-Message-ID: <CAE=gft4v1iHAPJS13fLBXgjt8ZRhD7q894zF_7JvK9QbiTbwhA@mail.gmail.com>
+Message-ID: <CAE=gft4v1iHAPJS13fLBXgjt8ZRhD7q894zF_7JvK9QbiTbwhA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] remoteproc: qcom: q6v5: Update running state before
+ requesting stop
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Ohad Ben Cohen <ohad@wizery.com>, rohitkr@codeaurora.org,
+        stable@vger.kernel.org, linux-kernel-owner@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When CONFIG_OF=n of_match_device() gets pre-processed out of existence
-leaving qcom-smmu_client_of_match unused. Mark it as possibly unused to
-keep the compiler from warning in that case.
+On Tue, Jun 2, 2020 at 10:29 PM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Evan,
+> Thanks for taking time to review
+> the series.
+>
+> On 2020-06-02 23:14, Evan Green wrote:
+> > On Tue, Jun 2, 2020 at 9:33 AM Sibi Sankar <sibis@codeaurora.org>
+> > wrote:
+> >>
+> >> Sometimes the stop triggers a watchdog rather than a stop-ack. Update
+> >> the running state to false on requesting stop to skip the watchdog
+> >> instead.
+> >>
+> >> Error Logs:
+> >> $ echo stop > /sys/class/remoteproc/remoteproc0/state
+> >> ipa 1e40000.ipa: received modem stopping event
+> >> remoteproc-modem: watchdog received: sys_m_smsm_mpss.c:291:APPS force
+> >> stop
+> >> qcom-q6v5-mss 4080000.remoteproc-modem: port failed halt
+> >> ipa 1e40000.ipa: received modem offline event
+> >> remoteproc0: stopped remote processor 4080000.remoteproc-modem
+> >>
+> >> Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource
+> >> handling")
+> >> Cc: stable@vger.kernel.org
+> >> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> >> ---
+> >
+> > Are you sure you want to tolerate this behavior from MSS? This is a
+> > graceful shutdown, modem shouldn't have a problem completing the
+> > proper handshake. If they do, isn't that a bug on the modem side?
+>
+> The graceful shutdown is achieved
+> though sysmon (enabled using
+> CONFIG_QCOM_SYSMON). When sysmon is
+> enabled we get a shutdown-ack when we
+> try to stop the modem, post which
+> request stop is a basically a nop.
+> Request stop is done to force stop
+> the modem during failure cases (like
+> rmtfs is not running and so on) and
+> we do want to mask the wdog that we get
+> during this scenario ( The locking
+> already prevents the servicing of the
+> wdog during shutdown, the check just
+> prevents the scheduling of crash handler
+> and err messages associated with it).
+> Also this check was always present and
+> was missed during common q6v5 resource
+> helper migration, hence the unused
+> running state in mss driver.
 
-Fixes: 0e764a01015d ("iommu/arm-smmu: Allow client devices to select direct mapping")
-Reported-by: kbuild test robot <lkp@intel.com>
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+So you're saying that the intention of the ->running check already in
+q6v5_wdog_interrupt() was to allow either the stop-ack or wdog
+interrupt to complete the stop. This patch just fixes a regression
+introduced during the refactor.
+This patch seems ok to me then. It still sort of seems like a bug that
+the modem responds arbitrarily in one of two ways, even to a "harsh"
+shutdown request.
 
- drivers/iommu/arm-smmu-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I wasn't aware of QCOM_SYSMON. Reading it now, It seems like kind of a
+lot... do I really need all this? Can I get by with just remoteproc
+stops?
+Anyway, for this patch:
 
-diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-index cf01d0215a39..063b4388b0ff 100644
---- a/drivers/iommu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm-smmu-qcom.c
-@@ -12,7 +12,7 @@ struct qcom_smmu {
- 	struct arm_smmu_device smmu;
- };
- 
--static const struct of_device_id qcom_smmu_client_of_match[] = {
-+static const struct __maybe_unused of_device_id qcom_smmu_client_of_match[] = {
- 	{ .compatible = "qcom,adreno" },
- 	{ .compatible = "qcom,mdp4" },
- 	{ .compatible = "qcom,mdss" },
--- 
-2.17.1
-
+Reviewed-by: Evan Green <evgreen@chromium.org>
