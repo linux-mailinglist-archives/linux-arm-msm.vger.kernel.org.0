@@ -2,240 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAA9E1ED0B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 15:23:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 878731ED0E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 15:34:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726041AbgFCNWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jun 2020 09:22:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726039AbgFCNWy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jun 2020 09:22:54 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8735C08C5C0;
-        Wed,  3 Jun 2020 06:22:53 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id y13so2160308eju.2;
-        Wed, 03 Jun 2020 06:22:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=j7nBUX2AbyeE4VfB2fMjhar+8GJPqk6Hyrot3NHjwPE=;
-        b=oT5JVC7V6e3fRVd7frNu82uXHNq5VwVm9wXoNN2rUv5DZ6SUeBjU808U6R+WOXlaub
-         NyKZmeHiol4ZWVamjzwsfjnv/gmOjr1pGKx6RUW0sx2UaBZgek7QKWconhVLwJxpY+MX
-         RJdRxS+ZIJvcUgK7wi9ej946t2r5DBnGwn4VUUlDaGuaJD8sN7R0+f/FFDgfW3J7b2c0
-         ERnfGLmqUYeSKkyUONaM5B9hhJ9XniJj799MXOVTccxel+PgAjNzW9eIxfentTm/HTSP
-         hsML47LOlSXM6tz9gEcGwdHvYWMe024N6uXPhxXuBZRRjyLx6ANZBWhO9JXSvOw8k+/t
-         riog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=j7nBUX2AbyeE4VfB2fMjhar+8GJPqk6Hyrot3NHjwPE=;
-        b=JZkQei71pvDaVgnz7kZuIdreryucP+QPj3bPCUUl0jF8ZkWKFVvPdikOOQHh1CswZ9
-         b7BWHz/TKnKzYX4U/12pbaq1QnValm8NgmjqjIUSPGmUUri1qihlCEL5DOPVDzEcmzY9
-         kmuBTgYSsWgjx53MEa080Vg6woemHLVr2yX661tXyq784bTo76xw6MHy1PSMuOZFkc+r
-         Tg3RwgTHVPTvku61iaVnld+O0yr+YvcZKjcwDdRHge22BX0Zq2XIuNHOUE6/cTOhJS/j
-         L1k3ELUERdJfIbdx2Qxm4xxUbIDAFjyjwEQEtrcI3rcaGBL9Br+YejJ6YJNyLF7AMtwN
-         +/lg==
-X-Gm-Message-State: AOAM532Yn0F61BmoZutyeyEN7NGpjnnuUl2ipMIdj8S4uK+127pCGLiU
-        KaS1r65BpHB0K+9Qg4MlHB0=
-X-Google-Smtp-Source: ABdhPJz4YiYTo05+bsr3d0i5Rns2lGKyW2+pCMdMn6OshcYga7MfowRfhrpOjZOhTy+OAjd8q6TREA==
-X-Received: by 2002:a17:906:924c:: with SMTP id c12mr2882960ejx.457.1591190572383;
-        Wed, 03 Jun 2020 06:22:52 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host189-12-dynamic.45-213-r.retail.telecomitalia.it. [213.45.12.189])
-        by smtp.googlemail.com with ESMTPSA id h9sm1073859ejc.96.2020.06.03.06.22.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jun 2020 06:22:51 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v6 2/2] devicetree: bindings: phy: Document ipq806x dwc3 qcom phy
-Date:   Wed,  3 Jun 2020 15:22:35 +0200
-Message-Id: <20200603132237.6036-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200603132237.6036-1-ansuelsmth@gmail.com>
-References: <20200603132237.6036-1-ansuelsmth@gmail.com>
+        id S1725917AbgFCNeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jun 2020 09:34:16 -0400
+Received: from foss.arm.com ([217.140.110.172]:33540 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725836AbgFCNeQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Jun 2020 09:34:16 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3E2C355D;
+        Wed,  3 Jun 2020 06:34:15 -0700 (PDT)
+Received: from [10.57.0.45] (unknown [10.57.0.45])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 828073F52E;
+        Wed,  3 Jun 2020 06:34:13 -0700 (PDT)
+Subject: Re: [PATCH 2/2] coresight: tmc: Add shutdown callback for TMC ETR/ETF
+To:     Mike Leach <mike.leach@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+References: <cover.1590947174.git.saiprakash.ranjan@codeaurora.org>
+ <28123d1e19f235f97555ee36a5ed8b52d20cbdea.1590947174.git.saiprakash.ranjan@codeaurora.org>
+ <20200601212858.GB24287@xps15>
+ <6d759cc28628ea72767c1304883630eb@codeaurora.org>
+ <CAJ9a7VhMbdqVBHxEXGYxFkgPnnQqNnDAz=wkHP3s7Ntw0iLmKA@mail.gmail.com>
+ <f0357072de96970b641bbd0da98c1d61@codeaurora.org>
+ <CAJ9a7Vj9STJw4jBxWU_9wHftj4Q7+k8o1nTc8tr21KjYi0RkpQ@mail.gmail.com>
+ <4a09cd2e054836d85f2e024ca4435e91@codeaurora.org>
+ <CAJ9a7VgCFeHNbY_9Gwvu6uT9MFBeY=_GCaN4N1dwmm+iNpfJOw@mail.gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <1a5a6a6d-b86d-df45-cf91-7081e70d88a3@arm.com>
+Date:   Wed, 3 Jun 2020 14:34:10 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ9a7VgCFeHNbY_9Gwvu6uT9MFBeY=_GCaN4N1dwmm+iNpfJOw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document dwc3 qcom phy hs and ss phy bindings needed to correctly
-inizialize and use usb on ipq806x SoC.
+On 2020-06-03 14:22, Mike Leach wrote:
+> Hi Sai,
+> 
+> On Wed, 3 Jun 2020 at 13:14, Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>>
+>> Hi Mike,
+>>
+>> On 2020-06-03 16:57, Mike Leach wrote:
+>>> Hi,
+>>>
+>>> On Wed, 3 Jun 2020 at 11:24, Sai Prakash Ranjan
+>>> <saiprakash.ranjan@codeaurora.org> wrote:
+>>>>
+>>>> Hi Mike,
+>>>>
+>>>> Thanks again for looking at this.
+>>>>
+>>>> On 2020-06-03 03:42, Mike Leach wrote:
+>>>> [...]
+>>>>
+>>>>>>
+>>>>>> SMMU/IOMMU won't be able to do much here as it is the client's
+>>>>>> responsiblity to
+>>>>>> properly shutdown and SMMU device link just makes sure that
+>>>>>> SMMU(supplier) shutdown is
+>>>>>> called only after its consumers shutdown callbacks are called.
+>>>>>
+>>>>> I think this use case can be handled slightly differently than the
+>>>>> general requirements for modular CoreSight drivers.
+>>>>>
+>>>>> What is needed here is a way of stopping the underlying ETR hardware
+>>>>> from issuing data to the SMMU, until the entire device has been shut
+>>>>> down, in a way that does not remove the driver, breaking existing
+>>>>> references and causing a system crash.
+>>>>>
+>>>>> We could introduce a new mode to the ETR driver - e.g.
+>>>>> CS_MODE_SHUTDOWN.
+>>>>>
+>>>>> At the end of the block tmc_shutdown(struct amba_device *adev), set
+>>>>> drvdata->mode to CS_MODE_SHUTDOWN & remove the coresight_unregister().
+>>>>> This new mode can be used to  prevent the underlying hardware from
+>>>>> being able to restart until the device is re-powered.
+>>>>>
+>>>>> This mode can be detected in the code that enables / disables the ETR
+>>>>> and handled appropriately (updates to tmc_enable_etr_sink and
+>>>>> tmc_disable_etr_sink).
+>>>>> This mode will persist until the device is re-started - but because we
+>>>>> are on the device shutdown path this is not an issue.
+>>>>>
+>>>>> This should leave the CoreSight infrastructure stable until the
+>>>>> drivers are shut down normally as part of the device power down
+>>>>> process.
+>>>>>
+>>>>
+>>>> Sounds good to me, but if the coresight_unregister() is the trouble
+>>>> point
+>>>> causing these crashes, then can't we just remove that from
+>>>> tmc_shutdown()
+>>>> callback? This would be like maintaining the same behaviour as now
+>>>> where
+>>>> on reboot/shutdown we basically don't do anything except for disabling
+>>>> ETR.
+>>>
+>>> No - the new mode prevents race conditions where the thread shutting
+>>> down the SMMU does the ETR shutdown, but then another thread happens
+>>> to be trying to start trace and restarts the ETR.
+>>> It also prevents the condition Mathieu discussed where a thread might
+>>> be attempting to shutdown trace - this could try to disable the
+>>> hardware again re-releasing resources/ re-flushing and waiting for
+>>> stop.
+>>>
+>>
+>> I do not think there will a race between SMMU shutdown and ETR shutdown.
+>> Driver core takes care of calling SMMU shutdown after its consumer
+>> shutdown callbacks via device link, otherwise there would already be
+>> bugs in all other client drivers.
+>>
+> 
+> I am not saying there could be a race between tmc_shutdowm and
+> Smmu_shutdown - there may be a case if the coresight_disable_path
+> sequence is running and gets to the point of disabling the ETR after
+> the SMMU callback has disabled it.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
-v6:
-* Add maximum value
-v5:
-* Fix dt_binding_check error
-v4:
-* Add qcom to specific bindings
-v3:
-* Use explicit reg instead of regmap
+I'm confused now - there is no "SMMU callback", we're talking about the 
+system-wide cleanup from kernel_shutdown_prepare() or 
+kernel_restart_prepare(). As far as I'm aware userspace should be long 
+gone by that point, so although trace may have been left running, the 
+chance of racing against other driver operations seems pretty unlikely.
 
- .../bindings/phy/qcom,ipq806x-usb-phy-hs.yaml | 58 ++++++++++++++
- .../bindings/phy/qcom,ipq806x-usb-phy-ss.yaml | 76 +++++++++++++++++++
- 2 files changed, 134 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-
-diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
-new file mode 100644
-index 000000000000..c019de7478e3
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
-@@ -0,0 +1,58 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-hs.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x usb DWC3 HS PHY CONTROLLER
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description:
-+  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
-+  controllers used in ipq806x. Each DWC3 PHY controller should have its
-+  own node.
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq806x-usb-phy-hs
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 2
-+    description: |
-+      - "ref" Is required
-+      - "xo"	Optional external reference clock
-+    items:
-+      - const: ref
-+      - const: xo
-+
-+required:
-+  - compatible
-+  - "#phy-cells"
-+  - reg
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    hs_phy_0: phy@110f8800 {
-+      compatible = "qcom,ipq806x-usb-phy-hs";
-+      reg = <0x110f8800 0x30>;
-+      clocks = <&gcc USB30_0_UTMI_CLK>;
-+      clock-names = "ref";
-+      #phy-cells = <0>;
-+    };
-diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-new file mode 100644
-index 000000000000..3696a8d7a5c7
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-@@ -0,0 +1,76 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-ss.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x usb DWC3 SS PHY CONTROLLER
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description:
-+  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
-+  controllers used in ipq806x. Each DWC3 PHY controller should have its
-+  own node.
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq806x-usb-phy-ss
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 2
-+    items:
-+      - const: ref
-+      - const: xo
-+
-+  qcom,rx-eq:
-+    description: Override value for rx_eq.
-+    default: 4
-+    maximum: 7
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  qcom,tx-deamp-3_5db:
-+    description: Override value for transmit preemphasis.
-+    default: 23
-+    maximum: 63
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  qcom,mpll:
-+    description: Override value for mpll.
-+    default: 0
-+    maximum: 7
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+
-+required:
-+  - compatible
-+  - "#phy-cells"
-+  - reg
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    ss_phy_0: phy@110f8830 {
-+      compatible = "qcom,ipq806x-usb-phy-ss";
-+      reg = <0x110f8830 0x30>;
-+      clocks = <&gcc USB30_0_MASTER_CLK>;
-+      clock-names = "ref";
-+      #phy-cells = <0>;
-+    };
--- 
-2.25.1
-
+Robin.
