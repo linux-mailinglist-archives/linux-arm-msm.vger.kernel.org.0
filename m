@@ -2,207 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BEF271EC658
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 02:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30FA41EC8CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2020 07:30:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbgFCAu3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Jun 2020 20:50:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42434 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726112AbgFCAu3 (ORCPT
+        id S1725792AbgFCF37 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jun 2020 01:29:59 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:29327 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725823AbgFCF37 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Jun 2020 20:50:29 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C234BC08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2020 17:50:28 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id s19so270380edt.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2020 17:50:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=m6qE/X0sOaatSZyv92ajzNnqOVpyDVid2J86Jtgzdus=;
-        b=fizzgpL+7ZpbrTnWlXF+WFHbmvXQkcAuSRnt37aTmmPD+UYlihtyWKfFVBaIsOrbHs
-         uJzn1JPPxXeW8/uw3eBEsn9r96Y8vPDhlpJRJbK1piD0aRBA/rK9sxjqhmEa41TXpwVJ
-         PLMbL5URzU2DcUQFaID2f5AV4kUiexVpiXmWD9fGKAIVRSnTVLS4TDZ2RxdkkqxVz+wS
-         959KFSdy5gp2AnRKJ0n05EAo1JXHVIVCYUUnmLi4C6gkw/pO6sIC2n5CRNXweGXlaPvv
-         qroCwhT/n0+TCwnfonwjkQQ1n0joiPtT7kklesgSaTF1QUGFbNcdk6C4EoPCPjJwdf9J
-         Lahg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=m6qE/X0sOaatSZyv92ajzNnqOVpyDVid2J86Jtgzdus=;
-        b=PRMPRneKufLgWmMjH6cZUYXq01nqnsFwZZY8xs5IHiHw9IxLUOO38J3mzeLsUj5gQi
-         t7tbAjmeEUZpYMTydfNkPh+IpvROJMD/vs4CilyijyoxeJhacMcjiD3e6BacxZi4peYV
-         m/c7zxM9DH99XBFjNPkhWjQXPC/nPtz2P6fC3bAv2UxJ0t47phw5Hdf4g70UWhFy+s7l
-         VsGZuz95oJVBWEPsJRCnUuH82nH7Ll7Q0KiYVfS1z2JkchkV1EcuQPwpASUp6eK3CUZS
-         KrzA9XR1+uf2mCnmDu9wwlGbl0yIWK4Heu7MhhJjUj59rDSYQZtCcdyNPL0w185xWeMe
-         p9kw==
-X-Gm-Message-State: AOAM530dWdmdzh7puLIgF8JTUzISMgLwPUx+n8i7O40YUwEzYdkDy24X
-        Ct2qjB4mkpZbIJHQMhJ0vXjNeA7aFzlO440tgSo=
-X-Google-Smtp-Source: ABdhPJy/d0oai6ufqfyZigpTK+jeE2AGbcT7hzkFeJjfl6h+xNLVbFr/DASFnUoizyYH+pyDz91xkNAiympzIx+Rb54=
-X-Received: by 2002:aa7:d7cc:: with SMTP id e12mr11520184eds.70.1591145425779;
- Tue, 02 Jun 2020 17:50:25 -0700 (PDT)
+        Wed, 3 Jun 2020 01:29:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591162199; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=zzTfxHouLE9jM7tdzGJeF4YIRqLBMDbYhT7bqTud5lA=;
+ b=HjN+k7NAO6+naM1LLZP9DXtKT2uvWLnLxbbMExhc5GJo7OiXNIfnnDA1TvwPTmK+fTT0pkwz
+ maFyoqPylMIRLfsBTLiVmoIf+VBYEcGGaT/jyK7sWRrQ7XgpUPh0TKT5fMh5f8FrI7bnccGQ
+ GXpVZ7/UcXvggocVP7bcQOnyGts=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5ed7354746d39fc0a2950d7a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Jun 2020 05:29:43
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EA77CC433CB; Wed,  3 Jun 2020 05:29:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5441DC433C6;
+        Wed,  3 Jun 2020 05:29:42 +0000 (UTC)
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 2 Jun 2020 17:50:51 -0700
-Message-ID: <CAF6AEGvLMubYPeKZ0rvOp45=+h4HZz-K9XNf0CXYcvPDVbnqLA@mail.gmail.com>
-Subject: [pull v2] drm/msm: msm-next for 5.8
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 03 Jun 2020 10:59:42 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Content-Type: text/plain; charset="UTF-8"
+        linux-remoteproc@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Ohad Ben Cohen <ohad@wizery.com>, rohitkr@codeaurora.org,
+        stable@vger.kernel.org, linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH 1/2] remoteproc: qcom: q6v5: Update running state before
+ requesting stop
+In-Reply-To: <CAE=gft7sbh_S_GiRohtMmdMN9JzQhG0m3bUerwrmzhjmXucGKw@mail.gmail.com>
+References: <20200602163257.26978-1-sibis@codeaurora.org>
+ <CAE=gft7sbh_S_GiRohtMmdMN9JzQhG0m3bUerwrmzhjmXucGKw@mail.gmail.com>
+Message-ID: <6392c800b0be1cbabb8a241cf518ab4b@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+Evan,
+Thanks for taking time to review
+the series.
 
-v2 with the dpu clk and bw scaling patch that had issues on armv7 reverted.
+On 2020-06-02 23:14, Evan Green wrote:
+> On Tue, Jun 2, 2020 at 9:33 AM Sibi Sankar <sibis@codeaurora.org> 
+> wrote:
+>> 
+>> Sometimes the stop triggers a watchdog rather than a stop-ack. Update
+>> the running state to false on requesting stop to skip the watchdog
+>> instead.
+>> 
+>> Error Logs:
+>> $ echo stop > /sys/class/remoteproc/remoteproc0/state
+>> ipa 1e40000.ipa: received modem stopping event
+>> remoteproc-modem: watchdog received: sys_m_smsm_mpss.c:291:APPS force 
+>> stop
+>> qcom-q6v5-mss 4080000.remoteproc-modem: port failed halt
+>> ipa 1e40000.ipa: received modem offline event
+>> remoteproc0: stopped remote processor 4080000.remoteproc-modem
+>> 
+>> Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource 
+>> handling")
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+> 
+> Are you sure you want to tolerate this behavior from MSS? This is a
+> graceful shutdown, modem shouldn't have a problem completing the
+> proper handshake. If they do, isn't that a bug on the modem side?
 
-updated description of original pull req:
+The graceful shutdown is achieved
+though sysmon (enabled using
+CONFIG_QCOM_SYSMON). When sysmon is
+enabled we get a shutdown-ack when we
+try to stop the modem, post which
+request stop is a basically a nop.
+Request stop is done to force stop
+the modem during failure cases (like
+rmtfs is not running and so on) and
+we do want to mask the wdog that we get
+during this scenario ( The locking
+already prevents the servicing of the
+wdog during shutdown, the check just
+prevents the scheduling of crash handler
+and err messages associated with it).
+Also this check was always present and
+was missed during common q6v5 resource
+helper migration, hence the unused
+running state in mss driver.
 
-Not too huge this time around, but a bunch of interesting new
-stuff:
+> 
+> I just worry this will mask real issues that happen during graceful 
+> shutdown.
+> -Evan
 
- * new gpu support: a405, a640, a650
- * dpu: color processing support
- * mdp5: support for msm8x36 (the thing with a405)
- * some prep work for per-context pagetables (ie the part that
-   does not depend on in-flight iommu patches)
- * last but not least, UABI update for submit ioctl to support
-   syncobj (from Bas)
-
-The UABI change has been on-list and reviewed for a while now.
-The only reason I didn't pull it in last cycle was that I ran
-out of time to review it myself at the time.  But I'm happy
-with it.  The MR for mesa (vulkan/turnip) support is here:
-
-https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/2769
-
-
-The following changes since commit 2ef96a5bb12be62ef75b5828c0aab838ebb29cb8:
-
-  Linux 5.7-rc5 (2020-05-10 15:16:58 -0700)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git
-
-for you to fetch changes up to 1cb2c4a2c89b2004a36399860c85a1af9b3fcba7:
-
-  Revert "drm/msm/dpu: add support for clk and bw scaling for display"
-(2020-06-01 20:56:18 -0700)
-
-----------------------------------------------------------------
-Bas Nieuwenhuizen (1):
-      drm/msm: Add syncobj support.
-
-Bjorn Andersson (1):
-      drm/msm: Fix undefined "rd_full" link error
-
-Christophe JAILLET (2):
-      drm/msm/a6xx: Fix a typo in an error message
-      drm/msm: Fix typo
-
-Hongbo Yao (1):
-      drm/msm/dpu: Fix compile warnings
-
-Jonathan Marek (10):
-      drm/msm: add msm_gem_get_and_pin_iova_range
-      drm/msm: add internal MSM_BO_MAP_PRIV flag
-      drm/msm/a6xx: use msm_gem for GMU memory objects
-      drm/msm/a6xx: add A640/A650 to gpulist
-      drm/msm/a6xx: HFI v2 for A640 and A650
-      drm/msm/a6xx: A640/A650 GMU firmware path
-      drm/msm/a6xx: update pdc/rscc GMU registers for A640/A650
-      drm/msm/a6xx: enable GMU log
-      drm/msm/a6xx: update a6xx_hw_init for A640 and A650
-      drm/msm/a6xx: skip HFI set freq if GMU is powered down
-
-Jordan Crouse (4):
-      drm/msm: Check for powered down HW in the devfreq callbacks
-      drm/msm: Attach the IOMMU device during initialization
-      drm/msm: Refactor address space initialization
-      drm/msm: Update the MMU helper function APIs
-
-Kalyan Thota (3):
-      drm/msm/dpu: add support for color processing blocks in dpu driver
-      drm/msm/dpu: add support for pcc color block in dpu driver
-      drm/msm/dpu: add support for clk and bw scaling for display
-
-Konrad Dybcio (1):
-      drm/msm/mdp5: Add MDP5 configuration for MSM8x36.
-
-Krishna Manikandan (1):
-      drm/msm/dpu: update bandwidth threshold check
-
-Rob Clark (1):
-      Revert "drm/msm/dpu: add support for clk and bw scaling for display"
-
-Roy Spliet (1):
-      drm/msm/mdp5: Fix mdp5_init error path for failed mdp5_kms allocation
-
-Shawn Guo (2):
-      drm/msm/a4xx: add adreno a405 support
-      drm/msm/a4xx: add a405_registers for a405 device
-
-kbuild test robot (2):
-      drm/msm/a6xx: a6xx_hfi_send_start() can be static
-      drm/msm/dpu: dpu_setup_dspp_pcc() can be static
-
- drivers/gpu/drm/msm/Makefile                   |   1 +
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c          |  16 +
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c          |   1 +
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c          |  83 ++++-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c          |   7 +
- drivers/gpu/drm/msm/adreno/a6xx.xml.h          |  14 +
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c          | 418 +++++++++++++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h          |  37 ++-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h      |  48 +--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c          |  70 ++++-
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c          | 123 +++++++-
- drivers/gpu/drm/msm/adreno/a6xx_hfi.h          |  50 ++-
- drivers/gpu/drm/msm/adreno/adreno_device.c     |  35 +++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c        |  27 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h        |  23 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  |  23 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  95 ++++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h       |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c    |  12 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  48 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  39 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     |  26 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |   3 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c    | 129 ++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h    | 100 ++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h    |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |  18 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c         |  58 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h         |   2 +
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c       |  18 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c       |  80 ++++-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c      |   4 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c       |  21 +-
- drivers/gpu/drm/msm/msm_drv.c                  |   6 +-
- drivers/gpu/drm/msm/msm_drv.h                  |  15 +-
- drivers/gpu/drm/msm/msm_gem.c                  |  31 +-
- drivers/gpu/drm/msm/msm_gem.h                  |   1 +
- drivers/gpu/drm/msm/msm_gem_submit.c           | 232 +++++++++++++-
- drivers/gpu/drm/msm/msm_gem_vma.c              |  42 +--
- drivers/gpu/drm/msm/msm_gpu.c                  |  49 +--
- drivers/gpu/drm/msm/msm_gpu.h                  |   4 +-
- drivers/gpu/drm/msm/msm_gpummu.c               |  10 +-
- drivers/gpu/drm/msm/msm_iommu.c                |  22 +-
- drivers/gpu/drm/msm/msm_mmu.h                  |   5 +-
- drivers/gpu/drm/msm/msm_rd.c                   |   4 +-
- include/uapi/drm/msm_drm.h                     |  24 +-
- 47 files changed, 1697 insertions(+), 382 deletions(-)
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
