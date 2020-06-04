@@ -2,27 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E2341EDE35
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 09:30:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B198F1EDE9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 09:39:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727921AbgFDHaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jun 2020 03:30:15 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:41348 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727839AbgFDHaO (ORCPT
+        id S1727997AbgFDHim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jun 2020 03:38:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726246AbgFDHim (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jun 2020 03:30:14 -0400
+        Thu, 4 Jun 2020 03:38:42 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42BEEC05BD1E;
+        Thu,  4 Jun 2020 00:38:42 -0700 (PDT)
 Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id E216029B;
-        Thu,  4 Jun 2020 09:30:09 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id B661A29B;
+        Thu,  4 Jun 2020 09:38:37 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1591255810;
-        bh=OeVLMiEC4J9VxlZT612hjSJQ4NpMPCcv03PP57PjMfI=;
+        s=mail; t=1591256317;
+        bh=Ia+q/Q+BfL6tHkvCBFgK10jhset8KFeCNrnvPfoBk6o=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aRJSMZ49P0ne+GgnWEY3QHWJgBfU1y1yTUIO2SjJykuAP4myXsxuT6xnJWkbNZh93
-         ziFph/TUVTEPz4TzPcxE408geh6tky+oIMjtFr631nzHMl02TO9HxADyvLeEW+cEK0
-         SqPz6kQSsGheat7L7K2U45pV3L7+3+NbRsnpe94o=
-Date:   Thu, 4 Jun 2020 10:29:52 +0300
+        b=SIWTnYeZ0/5gCWJqKEDGMMICDb2Q5FP8/+6+lMgm1XppsiWoorRuIQ36s2kiIpWid
+         1UOECcAivjKfGd3yuvYTH3SPR05Vy1k5CuMW3xHQIJxheqaPcTbpSgDblqDEKXHjcQ
+         cGV+uESgypZ58Vn7x77BJYNoHFFSCbr3860AfxBM=
+Date:   Thu, 4 Jun 2020 10:38:20 +0300
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
@@ -34,17 +37,16 @@ Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 2/3] dt-bindings: display: bridge: Add documentation for
- LT9611
-Message-ID: <20200604072952.GA5828@pendragon.ideasonboard.com>
+Subject: Re: [PATCH 3/3] drm/bridge: Introduce LT9611 DSI to HDMI bridge
+Message-ID: <20200604073820.GB5828@pendragon.ideasonboard.com>
 References: <20200513100533.42996-1-vkoul@kernel.org>
- <20200513100533.42996-3-vkoul@kernel.org>
- <20200528014837.GD4670@pendragon.ideasonboard.com>
- <20200604071859.GD3521@vkoul-mobl>
+ <20200513100533.42996-4-vkoul@kernel.org>
+ <20200528015205.GE4670@pendragon.ideasonboard.com>
+ <20200604072548.GE3521@vkoul-mobl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200604071859.GD3521@vkoul-mobl>
+In-Reply-To: <20200604072548.GE3521@vkoul-mobl>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -52,226 +54,67 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Vinod,
 
-On Thu, Jun 04, 2020 at 12:48:59PM +0530, Vinod Koul wrote:
-> Hi Laurent,
+On Thu, Jun 04, 2020 at 12:55:48PM +0530, Vinod Koul wrote:
+> On 28-05-20, 04:52, Laurent Pinchart wrote:
 > 
-> Sorry for late reply, I was out last week.
+> > > +static int lt9611_bridge_attach(struct drm_bridge *bridge,
+> > > +				enum drm_bridge_attach_flags flags)
+> > > +{
+> > > +	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
+> > > +	int ret;
+> > > +
+> > > +	dev_dbg(lt9611->dev, "bridge attach\n");
+> > 
+> > 
+> > Connector creation in bridge drivers is deprecated. Please at least add
+> 
+> Okay what is the right way for connector creation? I can add support for
+> that.
 
-No worries.
+Historically bridge drivers have created connectors. With support for
+bridge chaining, this approach was considered not to scale. For
+instance, I have a board where the SoC has an internal LVDS encoder, and
+the board itself has an LVDS-to-DPI decoder followed by a DPI-to-HDMI
+encoder. All three components are supported by bridge drivers, and only
+the last one should create a connector. Furthermore, different
+operations of the connector may be implemented by different bridges, for
+instance with one bridge connected to the DDC lines to read EDID, and
+another bridge connected to the HPD line to detect hotplug.
 
-> On 28-05-20, 04:48, Laurent Pinchart wrote:
-> > > +
-> > > +  interrupts:
-> > > +    maxItems: 1
-> > > +    description: interrupt line for the chip
-> > 
-> > I think you could drop the descriptions for the reg and interrupt
-> > properties, they don't add much.
-> 
-> Sure, will do
-> 
-> > > +  reset-gpios:
-> > > +    maxItems: 1
-> > > +    description: GPIO connected to active high RESET pin.
-> > > +
-> > > +  vdd-supply:
-> > > +    description: Regulator for 1.8V MIPI phy power.
-> > > +
-> > > +  vcc-supply:
-> > > +    description: Regulator for 3.3V IO power.
-> > > +
-> > > +  ports:
-> > > +    type: object
-> > > +
-> > > +    properties:
-> > > +      "#address-cells":
-> > > +        const: 1
-> > > +
-> > > +      "#size-cells":
-> > > +        const: 0
-> > > +
-> > > +      port@0:
-> > > +        type: object
-> > > +        additionalProperties: false
-> > > +
-> > > +        description: |
-> > > +          HDMI port for HDMI output
-> > 
-> > The usual practice is to have the input ports first, followed by the
-> > output ports. Is there a reason not to follow that rule ?
-> 
-> I was not aware of this rule, is it documented somewhere?
-> Nevertheless will update..
+To support these systems, we have deprecated connector creation in
+bridges, in favour of implementing new bridge callback functions for
+connector-related operations (see .get_modes(), .get_edid() and
+.detect() in struct drm_bridge_funcs). With this new model, each bridge
+implements the operations it supports, and the display controller driver
+binds the bridges together to create a connector that delegates the
+connector operations to the appropriate bridge. A helper function,
+drm_bridge_connector_init(), can be used to automate that.
 
-I don't think it's documented, no. It's just a common practice.
+To transition to this model, we require all new bridge to at least
+optionally support disabling connector creation (as requested by the
+DRM_BRIDGE_ATTACH_NO_CONNECTOR), and implement the drm_bridge_funcs
+functions related to connector operations. Existing bridges are also
+converted to the new model. Once all bridges used by a display
+controller support the new model, the display controller is then
+converted to use DRM_BRIDGE_ATTACH_NO_CONNECTOR and
+drm_bridge_connector_init() (or implement the latter manually if the
+helper doesn't support all the display controller's needs). Once all
+display controllers using a bridge have been converted to the new model,
+support for creating a connector (the !DRM_BRIDGE_ATTACH_NO_CONNECTOR
+case) is removed from the bridge driver. Finally, once everybody will
+use the DRM_BRIDGE_ATTACH_NO_CONNECTOR flag, we will simply drop it.
 
-> > > +
-> > > +        properties:
-> > > +          reg:
-> > > +            const: 0
-> > > +
-> > > +        patternProperties:
-> > > +          endpoint:
-> > 
-> > If you want to use patternProperties, this should be
-> > 
-> >           "^endpoint@[0-9]+$":
-> > 
-> > (including the quotes). Same below.
+> > support for the DRM_BRIDGE_ATTACH_NO_CONNECTOR flag, to make connector
+> > creation optional. Ideally the !DRM_BRIDGE_ATTACH_NO_CONNECTOR case
 > 
-> Ok
+> will add that
 > 
-> > > +            type: object
-> > > +            additionalProperties: false
-> > > +
-> > > +            properties:
-> > > +              remote-endpoint: true
-> > 
-> > How about
-> > 
-> >               remote-endpoint:
-> >                 $ref: /schemas/types.yaml#/definitions/phandle
-> > 
-> > and the same below ?
+> > should not be implemented at all. This will require the display
+> > controller driver to use DRM_BRIDGE_ATTACH_NO_CONNECTOR. Which display
+> > controller(s) do you use this driver with ?
 > 
-> Ok
-> 
-> > You also need a reg property if multiple endpoints are present.
-> 
-> Will update
->
-> > > +
-> > > +        required:
-> > > +          - reg
-> > > +
-> > > +      port@1:
-> > > +        type: object
-> > > +        additionalProperties: false
-> > > +
-> > > +        description: |
-> > > +          MIPI port-1 for MIPI input
-> > > +
-> > > +        properties:
-> > > +          reg:
-> > > +            const: 1
-> > > +
-> > > +        patternProperties:
-> > > +          endpoint:
-> > > +            type: object
-> > > +            additionalProperties: false
-> > > +
-> > > +            properties:
-> > > +              remote-endpoint: true
-> > > +
-> > > +        required:
-> > > +          - reg
-> > > +
-> > > +      port@2:
-> > > +        type: object
-> > > +        additionalProperties: false
-> > > +
-> > > +        description: |
-> > > +          MIPI port-2 for MIPI input
-> > 
-> > A description of how the two MIPI inputs differ would be useful. In
-> > particular, are both mandatory, or is it valid to connect only one of
-> > the two ? If using a single input is supported, can it be either, or
-> > does it have to be the first one ? When using both inputs, what should
-> > be connected to them ?
-> 
-> Sure I will add details. port-1 is mandatory and port-2 optional. port-2
-> is used in combination with port-1 to drive displays for higher
-> resolution like 4k
-> 
-> > > +
-> > > +        properties:
-> > > +          reg:
-> > > +            const: 2
-> > > +
-> > > +        patternProperties:
-> > > +          endpoint:
-> > > +            type: object
-> > > +            additionalProperties: false
-> > > +
-> > > +            properties:
-> > > +              remote-endpoint: true
-> > > +
-> > > +        required:
-> > > +          - reg
-> > > +
-> > > +    required:
-> > > +      - "#address-cells"
-> > > +      - "#size-cells"
-> > > +      - port@0
-> > > +      - port@1
-> > > +
-> > > +required:
-> > > +  - compatible
-> > > +  - reg
-> > > +  - interrupts
-> > > +  - vdd-supply
-> > > +  - vcc-supply
-> > > +  - ports
-> > > +
-> > > +additionalProperties: false
-> > > +
-> > > +examples:
-> > > +  - |
-> > > +    #include <dt-bindings/gpio/gpio.h>
-> > > +    #include <dt-bindings/interrupt-controller/irq.h>
-> > > +
-> > > +    i2c10 {
-> > > +      #address-cells = <1>;
-> > > +      #size-cells = <0>;
-> > > +
-> > > +      lt9611_codec: hdmi-bridge@3b {
-> > 
-> > Please drop unused labels.
-> 
-> ok
-> 
-> > > +        compatible = "lontium,lt9611";
-> > > +        reg = <0x3b>;
-> > > +
-> > > +        reset-gpios = <&tlmm 128 GPIO_ACTIVE_HIGH>;
-> > > +        interrupts-extended = <&tlmm 84 IRQ_TYPE_EDGE_FALLING>;
-> > > +
-> > > +        vdd-supply = <&lt9611_1v8>;
-> > > +        vcc-supply = <&lt9611_3v3>;
-> > > +
-> > > +        ports {
-> > > +          #address-cells = <1>;
-> > > +          #size-cells = <0>;
-> > > +
-> > > +          port@0 {
-> > > +            reg = <0>;
-> > > +            lt9611_out: endpoint {
-> > > +              remote-endpoint = <&hdmi_con>;
-> > > +            };
-> > > +          };
-> > > +
-> > > +          port@1 {
-> > > +            reg = <1>;
-> > > +            lt9611_a: endpoint {
-> > > +              remote-endpoint = <&dsi0_out>;
-> > > +            };
-> > > +          };
-> > > +
-> > > +          port@2 {
-> > > +            reg = <2>;
-> > > +            lt9611_b: endpoint {
-> > > +              remote-endpoint = <&dsi1_out>;
-> > > +            };
-> > > +          };
-> > > +        };
-> > > +      };
-> > > +    };
-> > 
-> > It's customary to end YAML schema files with ... on a separate line.
-> 
-> Will update
-> 
-> Thanks for the review
+> I am using with msm display driver, this was tested on dragon-board
+> db845c board.
 
 -- 
 Regards,
