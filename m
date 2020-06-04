@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E16B41EE650
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 16:06:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E0461EE73B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 17:03:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728788AbgFDOF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jun 2020 10:05:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49784 "EHLO
+        id S1729257AbgFDPDy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jun 2020 11:03:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728673AbgFDOF6 (ORCPT
+        with ESMTP id S1729143AbgFDPDy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jun 2020 10:05:58 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A2D4C08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2020 07:05:58 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id w9so5293077qtv.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2020 07:05:58 -0700 (PDT)
+        Thu, 4 Jun 2020 11:03:54 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C046C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2020 08:03:54 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id a25so7730822ljp.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2020 08:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8sTKDbykwSlqjkc+QQmVX/X4H1PKxc/T5zBXz+JcQBI=;
-        b=0zF8Eb4bzqjSQB/lXrUh6ciNSD06d4VkHxDnGB9I9PRnBTdSdoTaI78MJdidAbYZLN
-         90+rt5zRH779ALPQJJCzVb1Ny+rM83PeeuAuZ8IH7J/90XGQtvpOARZ+bI5yeOr1RnKa
-         xZFGJDxuAqJ3cxi86mTjWpWU8vwM/r+/nlsEzavKea6eJKLh86N3TRI4+2kCwaXnFbBL
-         sf0O3Y+bpgpM94qprDv/uGproOOOzeawK5K/dAu/aR6PV98q/8+XvHX26m/UpIpdxSUs
-         j1D1GxHlaUFtDhts3cHotFF0HTNwxRWgg54CuY1tAjKoxIc4MdX+0yfu+6kjhpjJDTbD
-         iVJA==
+        bh=UF71iF3u1JOe+kOrQShSOyNe1cwY69P05usqFuJCDAw=;
+        b=iAHApN9Xsx7GaAat/S33k20HBenl5jKfuKToU60WffKioHh7r72XTO1rR897L6jzzm
+         bgVX642J80Bh7DLSOEdemcpPaS7UkWhgUu4jWYkHK+dhVOs2rccpxFXGR+PuDO9H3vqc
+         0S9VaKYjrzCU+wRx1s/vZXiq+7VaHCfWP+npZ4LhH7TY+6HUViaTrA8XZg6Q4XemhFdl
+         EIZRhTymEFxYXKPIFl5ZDvuM/dETjWvlw/ns1IgMTaaAkC4nQNV9/6X5ztefETvaIviv
+         AAfnOt5zeupC+E3aiqQECQT+VJAJQ2YTkAN1xQbWT+uLYFpHSsBKLmjG8VT64kLGPg+0
+         YrIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=8sTKDbykwSlqjkc+QQmVX/X4H1PKxc/T5zBXz+JcQBI=;
-        b=CFqbD6WU6xvIpIN0lV132Ym4ikZXlkLUkJUnn4DorYGNLNdJQsXaNojxaOe5qN+7Bs
-         dJNGrhyiJ5k6lwFuVkL+Lyd3Pv/I6OeqT5tZSTEoyjPLnWmS7OVbj2sa/kvom4smL1Z6
-         c7zIgM7oek56SgF7K3tjrTOi+1pkwcgEOtw220oFIOx89eDJ710mBdV6668q2Yj3EJb1
-         GGYkA9vg6vMg9JdJ+Z23kRt913NOJ7WrneZ8fCugMu2RnfXdkOsNMafVj1nRWoQYva8s
-         Fi1urfKxGyIbIDzDmV3zn7apcenbJzc9Pxq+AiFBN99IRem1WA3CNHKCpdWXG1uo3XzX
-         fHGw==
-X-Gm-Message-State: AOAM531X1wNxGdj55//iOMQZ5tMVAZhew9XHGHrCSWpF5BrYM3k+Xl+7
-        LMtb6vXk3lRYJxNNHuxKFmwV6A==
-X-Google-Smtp-Source: ABdhPJzrJDtfNSIRHrOMEPgMIwuC/tuoH7MjyfBdTb+ve5SQxe7mPvfxhLprOToDNg8rbqcLcPQdCw==
-X-Received: by 2002:ac8:518c:: with SMTP id c12mr4646131qtn.108.1591279557400;
-        Thu, 04 Jun 2020 07:05:57 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id c16sm4446863qko.100.2020.06.04.07.05.55
+        bh=UF71iF3u1JOe+kOrQShSOyNe1cwY69P05usqFuJCDAw=;
+        b=XN8pdcF+QFwDrRlm7agfm3mEC2WHOXGc6q385nZd9ESR4UnM2CcP9Abac/nJIvJBiQ
+         CjWUlBua65hYFSnO8zFsc30HKknxz+W75OTvoVLjs8mbQqerZXvwv16AavOWI8F5p4t4
+         wIYBjsuwbxKofLN4Fkj6yY+MlYe/6l7NMvReV4LeM5VwMADGFTIgqpcMnwtj662lGHfZ
+         wCjTBQflIqmONjQRl4wBOEO/jJWSsWBvXIJnFAAYlfCDIx2PfGaWQLZ2ZZz0Nl9ep9U/
+         zeMqevP8bB9OImETRnNDoBrqCMt4BXWTh/28IOJyy/6PoWURgYw4o4m8s3vrMcHgd1Ih
+         2y3g==
+X-Gm-Message-State: AOAM532H7x/h50oTyjupV7wMf/SiLpf5xs+IwyXBeUOA7QnqhaFv4v4Z
+        m93bs4/8mmO/ZQ3zICz1G0mK1A==
+X-Google-Smtp-Source: ABdhPJwiDGJb1z0K+ZKyK2j0xn+T8lAoBDWnXDhCMBp/XGmHB9pF4OxTNL4EFR/dJxY4GgiDkibb1g==
+X-Received: by 2002:a2e:8e28:: with SMTP id r8mr2411588ljk.460.1591283032413;
+        Thu, 04 Jun 2020 08:03:52 -0700 (PDT)
+Received: from [192.168.1.211] ([188.162.64.141])
+        by smtp.gmail.com with ESMTPSA id t7sm1522968lfq.64.2020.06.04.08.03.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jun 2020 07:05:56 -0700 (PDT)
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: smmu/USB nodes and HDK855/HDK865
- dts
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Thu, 04 Jun 2020 08:03:51 -0700 (PDT)
+Subject: Re: [PATCH 5/7] arm64: dts: qcom: pm8150x: add thermal alarms and
+ thermal zones
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-References: <20200524023815.21789-1-jonathan@marek.ca>
- <20200604135221.GH16719@Mani-XPS-13-9360>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <200d1f60-781b-51c7-1a38-c955f59919de@marek.ca>
-Date:   Thu, 4 Jun 2020 10:06:19 -0400
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        patches@linaro.org, linaro-kernel@lists.linaro.org
+References: <20200604004331.669936-1-dmitry.baryshkov@linaro.org>
+ <20200604004331.669936-5-dmitry.baryshkov@linaro.org>
+ <20200604104701.GG3521@vkoul-mobl>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <8df3fe11-867f-b6a3-fe29-5a8ab988e006@linaro.org>
+Date:   Thu, 4 Jun 2020 18:03:49 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-In-Reply-To: <20200604135221.GH16719@Mani-XPS-13-9360>
+In-Reply-To: <20200604104701.GG3521@vkoul-mobl>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,53 +75,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/4/20 9:52 AM, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> On Sat, May 23, 2020 at 10:38:06PM -0400, Jonathan Marek wrote:
->> Add dts nodes for apps_smmu and USB for both sm8150 and sm8250.
+On 04/06/2020 13:47, Vinod Koul wrote:
+> On 04-06-20, 03:43, Dmitry Baryshkov wrote:
+>> Add temperature alarm and thermal zone configuration to all three
+>> pm8150 instances. Configuration is largely based on the msm-4.19 tree.
+>> These alarms use main adc of the pmic. Separate temperature adc is not
+>> supported yet.
 >>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/pm8150.dtsi  | 41 +++++++++++++++++++++++--
+>>   arch/arm64/boot/dts/qcom/pm8150b.dtsi | 43 +++++++++++++++++++++++++--
+>>   arch/arm64/boot/dts/qcom/pm8150l.dtsi | 43 +++++++++++++++++++++++++--
+>>   3 files changed, 119 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
+>> index c0b197458665..fee2db42f4cb 100644
+>> --- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
+>> @@ -30,6 +30,15 @@ pwrkey {
+>>   			};
+>>   		};
+>>   
+>> +		pm8150_temp: temp-alarm@2400 {
+>> +			compatible = "qcom,spmi-temp-alarm";
+>> +			reg = <0x2400>;
+>> +			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
+>> +			io-channels = <&pm8150_adc ADC5_DIE_TEMP>;
+>> +			io-channel-names = "thermal";
+>> +			#thermal-sensor-cells = <0>;
+>> +		};
+>> +
+>>   		pm8150_adc: adc@3100 {
+>>   			compatible = "qcom,spmi-adc5";
+>>   			reg = <0x3100>;
+>> @@ -38,8 +47,6 @@ pm8150_adc: adc@3100 {
+>>   			#io-channel-cells = <1>;
+>>   			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+>>   
+>> -			status = "disabled";
+>> -
 > 
-> I've tested this series on an SM8250 based board and able to get Type C (USB0)
-> working. There are also couple of Type A ports (USB1) on that board behind a
-> USB hub. It is probing fine but I don't see any activity while connecting a
-> USB device. Will continue to debug and once I get them working, I'll add my
-> Tested-by tag.
+> This should not be removed, rather than this please add enabled in you
+> board dts file
 > 
+>>   			ref-gnd@0 {
+>>   				reg = <ADC5_REF_GND>;
+>>   				qcom,pre-scaling = <1 1>;
+>> @@ -85,3 +92,33 @@ pmic@1 {
+>>   		#size-cells = <0>;
+>>   	};
+>>   };
+>> +
+>> +&thermal_zones {
+>> +	pm8150_temp {
+>> +		polling-delay-passive = <0>;
+>> +		polling-delay = <0>;
+>> +
+>> +		thermal-sensors = <&pm8150_temp>;
+>> +
+>> +		trips {
+>> +			trip0 {
+>> +				temperature = <95000>;
+>> +				hysteresis = <0>;
+>> +				type = "passive";
+>> +			};
+>> +
+>> +			trip1 {
+>> +				temperature = <115000>;
+>> +				hysteresis = <0>;
+>> +				type = "passive";
+>> +			};
+>> +
+>> +			trip2 {
+>> +				temperature = <145000>;
+>> +				hysteresis = <0>;
+>> +				type = "passive";
+>> +			};
+>> +		};
+>> +
+>> +	};
+> 
+> Not sure about this, Amit..? Should this also not be in board dts?
+> 
+> Similar comments on similar ones for rest of the patch as well..
 
-HDK865 also has a couple Type A ports, I am using them with devices 
-already plugged in during boot and I haven't hit a problem like that, 
-but I think I've seen the same issue when hotplugging. IIRC the behavior 
-was a bit weird, like plugging a device in the Type A port (USB1) 
-nothing would happen, but unplugging/replugging the type C port (USB0) 
-would cause the Type A port device to start working..
+I'm not so sure. This part of the configuration seems generic to me. 
+Unlike adc-tm config, which definitely goes to the board file.
 
-Have you tried with the devices already plugged in before booting?
+I can split this into a separate pm8150-temp.dtsi file. Does that sound 
+better?
 
-> Thanks,
-> Mani
-> 
->> Also add initial dts files for HDK855 and HDK865, based on mtp dts, with a
->> few changes. Notably, the HDK865 dts has regulator config changed a bit based
->> on downstream (I think sm8250-mtp.dts is wrong and copied too much from sm8150).
->>
->> Jonathan Marek (6):
->>    arm64: dts: qcom: sm8150: add apps_smmu node
->>    arm64: dts: qcom: sm8250: add apps_smmu node
->>    arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes
->>    arm64: dts: qcom: sm8250: Add USB and PHY device nodes
->>    arm64: dts: qcom: add sm8150 hdk dts
->>    arm64: dts: qcom: add sm8250 hdk dts
->>
->>   arch/arm64/boot/dts/qcom/Makefile       |   2 +
->>   arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 461 ++++++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sm8150.dtsi    | 180 +++++++++
->>   arch/arm64/boot/dts/qcom/sm8250-hdk.dts | 454 +++++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sm8250.dtsi    | 287 +++++++++++++++
->>   5 files changed, 1384 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/sm8150-hdk.dts
->>   create mode 100644 arch/arm64/boot/dts/qcom/sm8250-hdk.dts
->>
->> -- 
->> 2.26.1
->>
+
+-- 
+With best wishes
+Dmitry
