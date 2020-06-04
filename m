@@ -2,311 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 843131EE559
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 15:30:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46A9A1EE5EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 15:52:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728587AbgFDNaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jun 2020 09:30:20 -0400
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:53201 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728599AbgFDNaU (ORCPT
+        id S1728884AbgFDNw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jun 2020 09:52:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728816AbgFDNw2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jun 2020 09:30:20 -0400
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 Jun 2020 19:00:13 +0530
-Received: from vbadigan-linux.qualcomm.com ([10.206.24.109])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 04 Jun 2020 18:59:54 +0530
-Received: by vbadigan-linux.qualcomm.com (Postfix, from userid 76677)
-        id 1CBAE4C01; Thu,  4 Jun 2020 18:59:52 +0530 (IST)
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     ulf.hansson@linaro.org, adrian.hunter@intel.com
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Maya Erez <merez@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Ludovic Barre <ludovic.barre@st.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bradley Bolen <bradleybolen@gmail.com>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Thomas Gleixner <tglx@linutronix.de>
-Subject: [RFC V1] mmc: core: Add partial initialization support
-Date:   Thu,  4 Jun 2020 18:59:37 +0530
-Message-Id: <1591277381-7734-1-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Thu, 4 Jun 2020 09:52:28 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5D9C08C5C2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2020 06:52:28 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id x11so2206203plv.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2020 06:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jr8wZhb4pJx8qPThUyDrXbZlabia3tw2g3YFZ6NyZow=;
+        b=jPBIKgZSirOHvo7kMZ0JfAaDehKwnWbELDWidWKWB5maI6NK6rhB2zMh53/7rBREOu
+         s/zaHev2o0vRWlK3IOjAmysDxCqk9E5uFAleswG4QlT9Ue/FYDa1kZYaqMFsl4iMSY0o
+         STdElnXYJmLrmCqd/S7cdFT3vpW5cYGf+/JRB8Ob3TqJ0TMWmU8UnXcQ+CH1C76oHyzG
+         Bbp526YQCO0aen0iL99tdv2LBgB6oK9RALZrPXCSFuFOXzVACHIfFS6vCXAjuepwrTM5
+         4Fci5DqEvzcZCnmBH2bbzzffJkrMjpLJta4pILt5wxPNpwVEKNcRDyPcDd3iIax9lMWS
+         TDOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jr8wZhb4pJx8qPThUyDrXbZlabia3tw2g3YFZ6NyZow=;
+        b=Ez+s+SWxdZAdh3ss8+4RG2zMYC2aAPeA4YGdOx4Pyg2YnVsALRiMVZ115SJ0FC74zB
+         39xRXXsR4n9ZE6qxulXAiG0xPp37dxuLPd9o+0iLy9zVeZiGDXlYJAiX+hpr1K3HF+tq
+         xETf8yDF61rh/GZwm4PgtGV9ih/gtfZXa8Tb6eV8yOb3pJN0cxHS7gsXpg8w+xYVWBAY
+         vaZAaQDhTT3qd3mjLcqN61ubj0vFXP80//w6JVU6FcVM6S9ZvG5ir/GZ1mumAeXTGA5j
+         WtDCvSLGHYGoxy4Fcxbf9HqB3y365gfQdniNJuCAmTNRk+R9+9T4Uv1+8AuVR5ANRmD5
+         mYBA==
+X-Gm-Message-State: AOAM533gyr2WgbJp/Weubt+G9DLS6C8/vv4/5yzlEDGMayxVkKjvbpu2
+        3LDou8IwsXsb2bF2F+jnXMQb
+X-Google-Smtp-Source: ABdhPJx5jGzTevHPTJSqrq4bsJ72Yh4odpGq73L+WtB0R5X8do+vglg5O1igVJiUAcqCO9OuAPuPtA==
+X-Received: by 2002:a17:90a:6344:: with SMTP id v4mr5731999pjs.27.1591278747907;
+        Thu, 04 Jun 2020 06:52:27 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6211:4cea:c404:4d38:8396:d1ee])
+        by smtp.gmail.com with ESMTPSA id b29sm4745683pff.176.2020.06.04.06.52.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Jun 2020 06:52:26 -0700 (PDT)
+Date:   Thu, 4 Jun 2020 19:22:21 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH 0/6] arm64: dts: qcom: smmu/USB nodes and HDK855/HDK865
+ dts
+Message-ID: <20200604135221.GH16719@Mani-XPS-13-9360>
+References: <20200524023815.21789-1-jonathan@marek.ca>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200524023815.21789-1-jonathan@marek.ca>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Maya Erez <merez@codeaurora.org>
+Hi,
 
-This change adds the ability to partially initialize
-the MMC card by using card Sleep/Awake sequence (CMD5).
-Card will be sent to Sleep state during runtime/system suspend
-and will be woken up during runtime/system resume.
-By using this sequence the card doesn't need full initialization
-which gives time reduction in system/runtime resume path.
+On Sat, May 23, 2020 at 10:38:06PM -0400, Jonathan Marek wrote:
+> Add dts nodes for apps_smmu and USB for both sm8150 and sm8250.
+> 
 
-Signed-off-by: Maya Erez <merez@codeaurora.org>
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
----
- drivers/mmc/core/mmc.c   | 146 ++++++++++++++++++++++++++++++++++++++++++++---
- include/linux/mmc/card.h |   4 ++
- include/linux/mmc/host.h |   2 +
- 3 files changed, 143 insertions(+), 9 deletions(-)
+I've tested this series on an SM8250 based board and able to get Type C (USB0)
+working. There are also couple of Type A ports (USB1) on that board behind a
+USB hub. It is probing fine but I don't see any activity while connecting a
+USB device. Will continue to debug and once I get them working, I'll add my
+Tested-by tag.
 
-diff --git a/drivers/mmc/core/mmc.c b/drivers/mmc/core/mmc.c
-index de94fbe629bd..5c6444113c92 100644
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -1892,7 +1892,13 @@ static int mmc_can_sleep(struct mmc_card *card)
- 	return (card && card->ext_csd.rev >= 3);
- }
- 
--static int mmc_sleep(struct mmc_host *host)
-+static int mmc_can_sleepawake(struct mmc_host *host)
-+{
-+	return host && (host->caps2 & MMC_CAP2_SLEEP_AWAKE) && host->card &&
-+		(host->card->ext_csd.rev >= 3);
-+}
-+
-+static int mmc_sleepawake(struct mmc_host *host, bool sleep)
- {
- 	struct mmc_command cmd = {};
- 	struct mmc_card *card = host->card;
-@@ -1902,13 +1908,16 @@ static int mmc_sleep(struct mmc_host *host)
- 	/* Re-tuning can't be done once the card is deselected */
- 	mmc_retune_hold(host);
- 
--	err = mmc_deselect_cards(host);
--	if (err)
--		goto out_release;
-+	if (sleep) {
-+		err = mmc_deselect_cards(host);
-+		if (err)
-+			goto out_release;
-+	}
- 
- 	cmd.opcode = MMC_SLEEP_AWAKE;
- 	cmd.arg = card->rca << 16;
--	cmd.arg |= 1 << 15;
-+	if (sleep)
-+		cmd.arg |= 1 << 15;
- 
- 	/*
- 	 * If the max_busy_timeout of the host is specified, validate it against
-@@ -1939,6 +1948,9 @@ static int mmc_sleep(struct mmc_host *host)
- 	if (!cmd.busy_timeout || !(host->caps & MMC_CAP_WAIT_WHILE_BUSY))
- 		mmc_delay(timeout_ms);
- 
-+	if (!sleep)
-+		err = mmc_select_card(card);
-+
- out_release:
- 	mmc_retune_release(host);
- 	return err;
-@@ -2016,6 +2028,69 @@ static void mmc_detect(struct mmc_host *host)
- 	}
- }
- 
-+static int mmc_cache_card_ext_csd(struct mmc_host *host)
-+{
-+	int err;
-+	u8 *ext_csd;
-+	struct mmc_card *card = host->card;
-+
-+	err = mmc_get_ext_csd(card, &ext_csd);
-+	if (err || !ext_csd) {
-+		pr_err("%s: %s: mmc_get_ext_csd failed (%d)\n",
-+			mmc_hostname(host), __func__, err);
-+		return err;
-+	}
-+
-+	/* only cache read/write fields that the sw changes */
-+	card->ext_csd.raw_ext_csd_cmdq = ext_csd[EXT_CSD_CMDQ_MODE_EN];
-+	card->ext_csd.raw_ext_csd_cache_ctrl = ext_csd[EXT_CSD_CACHE_CTRL];
-+	card->ext_csd.raw_ext_csd_bus_width = ext_csd[EXT_CSD_BUS_WIDTH];
-+	card->ext_csd.raw_ext_csd_hs_timing = ext_csd[EXT_CSD_HS_TIMING];
-+
-+	kfree(ext_csd);
-+
-+	return 0;
-+}
-+
-+static int mmc_test_awake_ext_csd(struct mmc_host *host)
-+{
-+	int err;
-+	u8 *ext_csd;
-+	struct mmc_card *card = host->card;
-+
-+	err = mmc_get_ext_csd(card, &ext_csd);
-+	if (err) {
-+		pr_err("%s: %s: mmc_get_ext_csd failed (%d)\n",
-+			mmc_hostname(host), __func__, err);
-+		return err;
-+	}
-+
-+	/* only compare read/write fields that the sw changes */
-+	pr_debug("%s: %s: type(cached:current) cmdq(%d:%d) cache_ctrl(%d:%d) bus_width (%d:%d) timing(%d:%d)\n",
-+		mmc_hostname(host), __func__,
-+		card->ext_csd.raw_ext_csd_cmdq,
-+		ext_csd[EXT_CSD_CMDQ_MODE_EN],
-+		card->ext_csd.raw_ext_csd_cache_ctrl,
-+		ext_csd[EXT_CSD_CACHE_CTRL],
-+		card->ext_csd.raw_ext_csd_bus_width,
-+		ext_csd[EXT_CSD_BUS_WIDTH],
-+		card->ext_csd.raw_ext_csd_hs_timing,
-+		ext_csd[EXT_CSD_HS_TIMING]);
-+
-+	err = !((card->ext_csd.raw_ext_csd_cmdq ==
-+			ext_csd[EXT_CSD_CMDQ_MODE_EN]) &&
-+		(card->ext_csd.raw_ext_csd_cache_ctrl ==
-+			ext_csd[EXT_CSD_CACHE_CTRL]) &&
-+		(card->ext_csd.raw_ext_csd_bus_width ==
-+			ext_csd[EXT_CSD_BUS_WIDTH]) &&
-+		(card->ext_csd.raw_ext_csd_hs_timing ==
-+			ext_csd[EXT_CSD_HS_TIMING]));
-+
-+	kfree(ext_csd);
-+
-+	return err;
-+}
-+
- static int _mmc_suspend(struct mmc_host *host, bool is_suspend)
- {
- 	int err = 0;
-@@ -2034,8 +2109,12 @@ static int _mmc_suspend(struct mmc_host *host, bool is_suspend)
- 	if (mmc_can_poweroff_notify(host->card) &&
- 		((host->caps2 & MMC_CAP2_FULL_PWR_CYCLE) || !is_suspend))
- 		err = mmc_poweroff_notify(host->card, notify_type);
--	else if (mmc_can_sleep(host->card))
--		err = mmc_sleep(host);
-+	if (mmc_can_sleepawake(host)) {
-+		memcpy(&host->cached_ios, &host->ios, sizeof(host->cached_ios));
-+		mmc_cache_card_ext_csd(host);
-+	}
-+	if (mmc_can_sleep(host->card))
-+		err = mmc_sleepawake(host, true);
- 	else if (!mmc_host_is_spi(host))
- 		err = mmc_deselect_cards(host);
- 
-@@ -2048,6 +2127,43 @@ static int _mmc_suspend(struct mmc_host *host, bool is_suspend)
- 	return err;
- }
- 
-+static int mmc_partial_init(struct mmc_host *host)
-+{
-+	int err = 0;
-+	struct mmc_card *card = host->card;
-+
-+	mmc_set_bus_width(host, host->cached_ios.bus_width);
-+	mmc_set_timing(host, host->cached_ios.timing);
-+	if (host->cached_ios.enhanced_strobe) {
-+		host->ios.enhanced_strobe = true;
-+		if (host->ops->hs400_enhanced_strobe)
-+			host->ops->hs400_enhanced_strobe(host, &host->ios);
-+	}
-+	mmc_set_clock(host, host->cached_ios.clock);
-+	mmc_set_bus_mode(host, host->cached_ios.bus_mode);
-+
-+	if (!mmc_card_hs400es(card) &&
-+			(mmc_card_hs200(card) || mmc_card_hs400(card)))
-+		err = mmc_execute_tuning(card);
-+
-+	/*
-+	 * The ext_csd is read to make sure the card did not went through
-+	 * Power-failure during sleep period.
-+	 * A subset of the W/E_P, W/C_P register will be tested. In case
-+	 * these registers values are different from the values that were
-+	 * cached during suspend, we will conclude that a Power-failure occurred
-+	 * and will do full initialization sequence.
-+	 */
-+	err = mmc_test_awake_ext_csd(host);
-+	if (err) {
-+		pr_debug("%s: %s: fail on ext_csd read (%d)\n",
-+			mmc_hostname(host), __func__, err);
-+		goto out;
-+	}
-+out:
-+	return err;
-+}
-+
- /*
-  * Suspend callback
-  */
-@@ -2070,7 +2186,7 @@ static int mmc_suspend(struct mmc_host *host)
-  */
- static int _mmc_resume(struct mmc_host *host)
- {
--	int err = 0;
-+	int err = -EINVAL;
- 
- 	mmc_claim_host(host);
- 
-@@ -2078,7 +2194,19 @@ static int _mmc_resume(struct mmc_host *host)
- 		goto out;
- 
- 	mmc_power_up(host, host->card->ocr);
--	err = mmc_init_card(host, host->card->ocr, host->card);
-+
-+	if (mmc_can_sleepawake(host)) {
-+		err = mmc_sleepawake(host, false);
-+		if (!err)
-+			err = mmc_partial_init(host);
-+		else
-+			pr_err("%s: %s: awake failed (%d), fallback to full init\n",
-+				mmc_hostname(host), __func__, err);
-+	}
-+
-+	if (err)
-+		err = mmc_init_card(host, host->card->ocr, host->card);
-+
- 	mmc_card_clr_suspended(host->card);
- 
- out:
-diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
-index cf3780a6ccc4..2f4c8d3d5763 100644
---- a/include/linux/mmc/card.h
-+++ b/include/linux/mmc/card.h
-@@ -85,6 +85,8 @@ struct mmc_ext_csd {
- 	unsigned int            data_tag_unit_size;     /* DATA TAG UNIT size */
- 	unsigned int		boot_ro_lock;		/* ro lock support */
- 	bool			boot_ro_lockable;
-+	u8			raw_ext_csd_cmdq;	/* 15 */
-+	u8			raw_ext_csd_cache_ctrl;	/* 33 */
- 	bool			ffu_capable;	/* Firmware upgrade support */
- 	bool			cmdq_en;	/* Command Queue enabled */
- 	bool			cmdq_support;	/* Command Queue supported */
-@@ -95,7 +97,9 @@ struct mmc_ext_csd {
- 	u8			raw_partition_support;	/* 160 */
- 	u8			raw_rpmb_size_mult;	/* 168 */
- 	u8			raw_erased_mem_count;	/* 181 */
-+	u8			raw_ext_csd_bus_width;	/* 183 */
- 	u8			strobe_support;		/* 184 */
-+	u8			raw_ext_csd_hs_timing;	/* 185 */
- 	u8			raw_ext_csd_structure;	/* 194 */
- 	u8			raw_card_type;		/* 196 */
- 	u8			raw_driver_strength;	/* 197 */
-diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-index d4a50e5dc111..a69abe9f032b 100644
---- a/include/linux/mmc/host.h
-+++ b/include/linux/mmc/host.h
-@@ -375,6 +375,7 @@ struct mmc_host {
- #define MMC_CAP2_CQE_DCMD	(1 << 24)	/* CQE can issue a direct command */
- #define MMC_CAP2_AVOID_3_3V	(1 << 25)	/* Host must negotiate down from 3.3V */
- #define MMC_CAP2_MERGE_CAPABLE	(1 << 26)	/* Host can merge a segment over the segment size */
-+#define MMC_CAP2_SLEEP_AWAKE	(1 << 27)	/* Use Sleep/Awake (CMD5) */
- 
- 	int			fixed_drv_type;	/* fixed driver type for non-removable media */
- 
-@@ -393,6 +394,7 @@ struct mmc_host {
- 	spinlock_t		lock;		/* lock for claim and bus ops */
- 
- 	struct mmc_ios		ios;		/* current io bus settings */
-+	struct mmc_ios		cached_ios;
- 
- 	/* group bitfields together to minimize padding */
- 	unsigned int		use_spi_crc:1;
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+Thanks,
+Mani
 
+> Also add initial dts files for HDK855 and HDK865, based on mtp dts, with a
+> few changes. Notably, the HDK865 dts has regulator config changed a bit based
+> on downstream (I think sm8250-mtp.dts is wrong and copied too much from sm8150).
+> 
+> Jonathan Marek (6):
+>   arm64: dts: qcom: sm8150: add apps_smmu node
+>   arm64: dts: qcom: sm8250: add apps_smmu node
+>   arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes
+>   arm64: dts: qcom: sm8250: Add USB and PHY device nodes
+>   arm64: dts: qcom: add sm8150 hdk dts
+>   arm64: dts: qcom: add sm8250 hdk dts
+> 
+>  arch/arm64/boot/dts/qcom/Makefile       |   2 +
+>  arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 461 ++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 180 +++++++++
+>  arch/arm64/boot/dts/qcom/sm8250-hdk.dts | 454 +++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi    | 287 +++++++++++++++
+>  5 files changed, 1384 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-hdk.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-hdk.dts
+> 
+> -- 
+> 2.26.1
+> 
