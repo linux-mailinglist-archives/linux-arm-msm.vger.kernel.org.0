@@ -2,1753 +2,762 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C9921ED8C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 00:45:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0D561ED9ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 02:21:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726644AbgFCWpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Jun 2020 18:45:16 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:38087 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726441AbgFCWpQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Jun 2020 18:45:16 -0400
-Received: by mail-io1-f66.google.com with SMTP id d7so4213706ioq.5;
-        Wed, 03 Jun 2020 15:45:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zsf6i3zC9PKQFZobjrF010AF5GrTki1IJEtvwAw0zpg=;
-        b=bZFtmivOtX+bf1YU/pxDd/AL1KvBAPFGFCq7cVmA8W5VSEAxKVffXuOfxKOJUOP7I/
-         kT+cTR7gUoy+1tFrCGCirA0TfjtzI/z5zQ30rgSBIC/Hvi+OKYnq7st/EP+h8cdKStP+
-         s8tEOX8Dn5ZlXDN7Zy/C6S5PZ0wJ9Bt68by5ZrpBYhGjbdiGj7EKqER3Rd31+PQbT7ZP
-         txVQI6NjAHT8EYWWKzItDTqoChoHrqMP1ju9Z3D9exG63E3zOcQLcBzdQHQH8Y2fanMA
-         K9q4iTsEKrZIsqBcEKR+1s4+zKaE6PkVdCYfkpSYfg2/mAokD743wlPU66g1CR91QnWM
-         b1iA==
-X-Gm-Message-State: AOAM530uE/uj2TqAm3BAD97sF7H6zaR0dWpI4+08GBqZ2Gjrf9kh3jxy
-        nXLD9A7bF2L4YbugEnJK6g==
-X-Google-Smtp-Source: ABdhPJxJE/NTUOmlpUVAjGr2nOTs8nT74gYqp/pIh4Ednl6HtoXJUvhGI+4ojZ5kfJLsk0fWxpfpOg==
-X-Received: by 2002:a05:6602:2e0e:: with SMTP id o14mr1740345iow.164.1591224312230;
-        Wed, 03 Jun 2020 15:45:12 -0700 (PDT)
-Received: from xps15 ([64.188.179.251])
-        by smtp.gmail.com with ESMTPSA id g17sm464578ilc.18.2020.06.03.15.45.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jun 2020 15:45:11 -0700 (PDT)
-Received: (nullmailer pid 2014599 invoked by uid 1000);
-        Wed, 03 Jun 2020 22:45:10 -0000
-Date:   Wed, 3 Jun 2020 16:45:10 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krishna Manikandan <mkrishn@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org, mka@chromium.org
-Subject: Re: [v4] dt-bindings: msm: disp: add yaml schemas for DPU and DSI
- bindings
-Message-ID: <20200603224510.GA1978034@bogus>
-References: <1589868421-30062-1-git-send-email-mkrishn@codeaurora.org>
+        id S1726011AbgFDAVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Jun 2020 20:21:06 -0400
+Received: from mga04.intel.com ([192.55.52.120]:36495 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725946AbgFDAVG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Jun 2020 20:21:06 -0400
+IronPort-SDR: Z2ra0BcF9M9k3znmfcdISZFdMooa7LdLlyALMMS2w3nB/7ngNevdOuNR4/NXVAXB3J4BFJ9jwB
+ DLJXpg6W4WzQ==
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2020 17:20:17 -0700
+IronPort-SDR: b6wNrrtWM0iooDBfo+SavtysAsJvJCprZ5efhDpeLkjlrpNW+ugTgGVQd0SjLVo1gGqFq3zrhK
+ PCSeMbYh9tUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,470,1583222400"; 
+   d="gz'50?scan'50,208,50";a="445305077"
+Received: from lkp-server01.sh.intel.com (HELO 8bb2cd163565) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 03 Jun 2020 17:20:14 -0700
+Received: from kbuild by 8bb2cd163565 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1jgdcD-0000F7-98; Thu, 04 Jun 2020 00:20:13 +0000
+Date:   Thu, 4 Jun 2020 08:19:18 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Subject: Re: [PATCH 4/4] arm64: dts: ipq6018: Add support for apcs clk
+Message-ID: <202006040820.szb8AMJa%lkp@intel.com>
+References: <1590583092-24290-5-git-send-email-sivaprak@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed; boundary="17pEHd4RhPHOinZp"
 Content-Disposition: inline
-In-Reply-To: <1589868421-30062-1-git-send-email-mkrishn@codeaurora.org>
+In-Reply-To: <1590583092-24290-5-git-send-email-sivaprak@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 19, 2020 at 11:37:01AM +0530, Krishna Manikandan wrote:
-> MSM Mobile Display Subsytem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema
-> for the device tree bindings for the same.
-> 
-> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-> 
-> Changes in v2:
-> 	- Changed dpu to DPU (Sam Ravnborg)
-> 	- Fixed indentation issues (Sam Ravnborg)
-> 	- Added empty line between different properties (Sam Ravnborg)
-> 	- Replaced reference txt files with  their corresponding
-> 	  yaml files (Sam Ravnborg)
-> 	- Modified the file to use "|" only when it is
-> 	  necessary (Sam Ravnborg)
-> 
-> Changes in v3:
-> 	- Corrected the license used (Rob Herring)
-> 	- Added maxItems for properties (Rob Herring)
-> 	- Dropped generic descriptions (Rob Herring)
-> 	- Added ranges property (Rob Herring)
-> 	- Corrected the indendation (Rob Herring)
-> 	- Added additionalProperties (Rob Herring)
-> 	- Split dsi file into two, one for dsi controller
-> 	  and another one for dsi phy per target (Rob Herring)
-> 	- Corrected description for pinctrl-names (Rob Herring)
-> 	- Corrected the examples used in yaml file (Rob Herring)
-> 	- Delete dsi.txt and dpu.txt (Rob Herring)
-> 
-> Changes in v4:
-> 	- Move schema up by one level (Rob Herring)
-> 	- Add patternProperties for mdp node (Rob Herring)
-> 	- Corrected description of some properties (Rob Herring)
-> ---
->  .../bindings/display/msm/dpu-sc7180.yaml           | 243 ++++++++++++++++++++
->  .../bindings/display/msm/dpu-sdm845.yaml           | 220 ++++++++++++++++++
->  .../devicetree/bindings/display/msm/dpu.txt        | 141 ------------
->  .../display/msm/dsi-controller-sc7180.yaml         | 123 +++++++++++
->  .../display/msm/dsi-controller-sdm845.yaml         | 120 ++++++++++
->  .../bindings/display/msm/dsi-controller.yaml       | 151 +++++++++++++
->  .../bindings/display/msm/dsi-phy-sc7180.yaml       |  75 +++++++
->  .../bindings/display/msm/dsi-phy-sdm845.yaml       |  76 +++++++
->  .../devicetree/bindings/display/msm/dsi-phy.yaml   |  82 +++++++
->  .../devicetree/bindings/display/msm/dsi.txt        | 246 ---------------------
->  10 files changed, 1090 insertions(+), 387 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy.yaml
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/dsi.txt
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-> new file mode 100644
-> index 0000000..b5607f9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-> @@ -0,0 +1,243 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-sc7180.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DPU dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
-> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
-> +  bindings of MDSS and DPU are mentioned for SC7180 target.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,sc7180-mdss
 
-blank line between properties.
+--17pEHd4RhPHOinZp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-names:
-> +    const: mdss
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    description: |
-> +      Device clock names in the same order as mentioned in clocks property.
-> +      The required clocks are mentioned below.
+Hi Sivaprakash,
 
-Not a useful description. Unless you have something specific about 
-*this* device, drop it.
+Thank you for the patch! Yet something to improve:
 
-> +    items:
-> +      - const: iface
-> +      - const: ahb
-> +      - const: core
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  "#interrupt-cells":
-> +    const: 1
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    const: 2
-> +
-> +  "#size-cells":
-> +    const: 2
-> +
-> +  ranges: true
-> +
-> +  interconnects:
-> +    description: |
-> +      Interconnect path specifier for MDSS according to
-> +      Documentation/devicetree/bindings/interconnect/interconnect.txt.
-> +      An entry should contain 2 paths corresponding to 2 AXI ports representing
-> +      source and destination ports.
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v5.7]
+[if your patch is applied to the wrong git tree, please drop us a note to help
+improve the system. BTW, we also suggest to use '--base' option to specify the
+base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
 
-2 entries or...
+url:    https://github.com/0day-ci/linux/commits/Sivaprakash-Murugesan/Add-ipq6018-apcs-mailbox-driver/20200527-204025
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: arm64-randconfig-r016-20200603 (attached as .config)
+compiler: clang version 11.0.0 (https://github.com/llvm/llvm-project 16437992cac249f6fe1efd392d20e3469b47e39e)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # save the attached .config to linux build tree
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross ARCH=arm64 
 
-> +    maxItems: 1
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-1? 
+All errors (new ones prefixed by >>, old ones prefixed by <<):
 
-> +
-> +  interconnect-names:
-> +    description: |
-> +      MDSS will have 2 port names to differentiate between the
-> +      2 interconnect paths defined with interconnect specifier.
-> +    maxItems: 1
+>> ERROR: Input tree has errors, aborting (use -f to force output)
 
-Need to define the names.
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 
-> +
-> +  assigned-clocks:
-> +    description: |
-> +      Clock specifiers for clocks needing rate assignment (optional).
+--17pEHd4RhPHOinZp
+Content-Type: application/gzip
+Content-Disposition: attachment; filename=".config.gz"
+Content-Transfer-Encoding: base64
 
-That's every 'assigned-clocks'. Think about that for all of your 
-'description' entries and drop them if nothing device specific.
+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
+L38EebG/ymHhfy8P0tRjMgIA
 
-> +    maxItems: 1
-> +
-> +  assigned-clock-rates:
-> +    description: |
-> +      Clock frequencies sorted in the same order as the
-> +      assigned-clocks property (optional).
-> +    maxItems: 1
-> +
-> +patternProperties:
-> +  "^mdp@[0-9a-f]+$":
-> +    type: object
-> +    description: Node containing the properties of DPU.
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,sc7180-dpu
-> +
-> +      reg:
-> +        maxItems: 2
-> +
-> +      reg-names:
-> +        items:
-> +          - const: mdp
-> +          - const: vbif
-> +
-> +      clocks:
-> +        maxItems: 6
-> +
-> +      clock-names:
-> +        description: |
-> +          Device clock names, must be in same order as clocks property.
-> +          The following clocks are required. "bus" is an optional property
-> +          in sc7180 due to architecture change. "rot" and "lut" are optional
-> +          device clocks, needed for accessing LUT blocks.
-
-The schema doesn't match this description. The schema only allows 
-the exact list below. You'll need an if/then schema to define the 
-different combinations. Or a 'oneOf' schema if there's different 
-possibilities for just the sc7180. There shouldn't be though. A given 
-chip either has a clock or it doesn't.
-
-> +        items:
-> +          - const: bus
-> +          - const: iface
-> +          - const: rot
-> +          - const: lut
-> +          - const: core
-> +          - const: vsync
-> +
-> +      interrupts:
-> +        maxItems: 1
-> +
-> +      ports:
-> +        type: object
-> +        description: |
-> +          Contains the list of output ports from DPU device. These ports
-> +          connect to interfaces that are external to the DPU hardware,
-> +          such as DSI, DP etc. Each output port contains an endpoint that
-> +          describes how it is connected to an external interface. These
-> +          are described by the standard properties documented in files
-> +          mentioned below.
-> +
-> +          Documentation/devicetree/bindings/graph.txt
-> +          Documentation/devicetree/bindings/media/video-interfaces.txt
-> +
-> +        properties:
-> +             port@0:
-
-Wrong indentation.
-
-> +               type: object
-> +               description: DPU_INTF1 (DSI1)
-> +             port@1:
-> +               type: object
-> +               description: DPU_INTF2 (DSI2)
-> +
-> +      assigned-clocks:
-> +        description: |
-> +          Clock specifiers for clocks needing rate assignment (optional).
-> +        maxItems: 4
-> +
-> +      assigned-clock-rates:
-> +        description: |
-> +          Clock frequencies sorted in the same order as the
-> +          assigned-clocks property (optional).
-> +        maxItems: 4
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - power-domains
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interrupt-controller
-> +  - iommus
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
-> +    mdss: mdss@ae00000 {
-> +         compatible = "qcom,sc7180-mdss";
-> +         reg = <0 0xae00000 0 0x1000>;
-> +         reg-names = "mdss";
-> +         power-domains = <&dispcc MDSS_GDSC>;
-> +
-> +         clocks = <&gcc GCC_DISP_AHB_CLK>,
-> +                  <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                  <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +
-> +         clock-names = "iface", "ahb", "core";
-> +
-> +         assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +         assigned-clock-rates = <300000000>;
-> +
-> +         interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +         interrupt-controller;
-> +         #interrupt-cells = <1>;
-> +
-> +         interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
-
-interconnects = <&mmss_noc MASTER_MDP0>, <&mc_virt SLAVE_EBI1>;
-
-Which will fail with the above schema.
-
-> +
-> +         interconnect-names = "mdp0-mem";
-> +
-> +         iommus = <&apps_smmu 0x800 0x2>;
-> +
-> +         #address-cells = <2>;
-> +         #size-cells = <2>;
-> +
-> +         mdp: mdp@ae01000 {
-> +                   compatible = "qcom,sc7180-dpu";
-> +                   reg = <0 0x0ae01000 0 0x8f000>,
-> +                         <0 0x0aeb0000 0 0x2008>;
-> +
-> +                   reg-names = "mdp", "vbif";
-> +
-> +                   clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +                   clock-names = "bus", "iface", "rot", "lut", "core",
-> +                                 "vsync";
-> +                   assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                                     <&dispcc DISP_CC_MDSS_VSYNC_CLK>,
-> +                                     <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> +                                     <&dispcc DISP_CC_MDSS_ROT_CLK>;
-> +                   assigned-clock-rates = <300000000>,
-> +                                          <19200000>,
-> +                                          <19200000>,
-> +                                          <19200000>;
-> +
-> +                   interrupt-parent = <&mdss>;
-> +                   interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                   ports {
-> +                           #address-cells = <1>;
-> +                           #size-cells = <0>;
-> +
-> +                           port@0 {
-> +                                   reg = <0>;
-> +                                   dpu_intf1_out: endpoint {
-> +                                                  remote-endpoint = <&dsi0_in>;
-> +                                   };
-> +                           };
-> +                   };
-> +         };
-> +    };
-> +...
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> new file mode 100644
-> index 0000000..ed036fd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> @@ -0,0 +1,220 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-sdm845.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DPU dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
-> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
-> +  bindings of MDSS and DPU are mentioned for SDM845 target.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,sdm845-mdss
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-names:
-> +    const: mdss
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    description: |
-> +      Device clock names in the same order as mentioned in clocks property.
-> +      The required clocks are mentioned below.
-> +    items:
-> +      - const: iface
-> +      - const: bus
-> +      - const: core
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  "#interrupt-cells":
-> +    const: 1
-> +
-> +  iommus:
-> +    maxItems: 2
-
-Need to define what each one is:
-
-items:
-  - description: ...
-  - description: ...
-
-> +
-> +  "#address-cells":
-> +    const: 2
-> +
-> +  "#size-cells":
-> +    const: 2
-> +
-> +  ranges: true
-> +
-> +  assigned-clocks:
-> +    description: |
-> +      Clock specifiers for clocks needing rate assignment (optional).
-> +    maxItems: 1
-> +
-> +  assigned-clock-rates:
-> +    description: |
-> +      Clock frequencies sorted in the same order as the
-> +      assigned-clocks property (optional).
-> +    maxItems: 1
-> +
-> +patternProperties:
-> +  "^mdp@[0-9a-f]+$":
-> +    type: object
-> +    description: Node containing the properties of DPU.
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,sdm845-dpu
-> +      reg:
-> +        maxItems: 2
-> +
-> +      reg-names:
-> +        items:
-> +          - const: mdp
-> +          - const: vbif
-> +
-> +      clocks:
-> +        maxItems: 4
-> +
-> +      clock-names:
-> +        description: |
-> +          Device clock names, must be in same order as clocks property.
-> +          The following clocks are required.
-> +        items:
-> +          - const: iface
-> +          - const: bus
-> +          - const: core
-> +          - const: vsync
-> +
-> +      interrupts:
-> +        maxItems: 1
-> +
-> +      ports:
-> +        type: object
-> +        description: |
-> +          Contains the list of output ports from DPU device. These ports
-> +          connect to interfaces that are external to the DPU hardware,
-> +          such as DSI, DP etc. Each output port contains an endpoint that
-> +          describes how it is connected to an external interface. These
-> +          are described by the standard properties documented in files
-> +          mentioned below.
-> +
-> +          Documentation/devicetree/bindings/graph.txt
-> +          Documentation/devicetree/bindings/media/video-interfaces.txt
-> +
-> +        properties:
-> +          port@0:
-> +            type: object
-> +            description: DPU_INTF1 (DSI1)
-> +          port@1:
-> +            type: object
-> +            description: DPU_INTF2 (DSI2)
-> +
-> +      assigned-clocks:
-> +        description: |
-> +          Clock specifiers for clocks needing rate assignment (optional).
-> +        maxItems: 2
-> +
-> +      assigned-clock-rates:
-> +        description: |
-> +          Clock frequencies sorted in the same order as the
-> +          assigned-clocks property (optional).
-> +        maxItems: 2
-> +
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - power-domains
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interrupt-controller
-> +  - iommus
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +- |
-> +    #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    mdss: mdss@ae00000 {
-> +          compatible = "qcom,sdm845-mdss";
-> +          reg = <0 0x0ae00000 0 0x1000>;
-> +          reg-names = "mdss";
-> +          power-domains = <&dispcc MDSS_GDSC>;
-> +
-> +          clocks = <&gcc GCC_DISP_AHB_CLK>,
-> +                   <&gcc GCC_DISP_AXI_CLK>,
-> +                   <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +          clock-names = "iface", "bus", "core";
-> +
-> +          assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +          assigned-clock-rates = <300000000>;
-> +
-> +          interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +          interrupt-controller;
-> +          #interrupt-cells = <1>;
-> +
-> +          iommus = <&apps_smmu 0x880 0x8>,
-> +                   <&apps_smmu 0xc80 0x8>;
-> +
-> +          #address-cells = <2>;
-> +          #size-cells = <2>;
-> +
-> +          mdss_mdp: mdp@ae01000 {
-> +                    compatible = "qcom,sdm845-dpu";
-> +                    reg = <0 0x0ae01000 0 0x8f000>,
-> +                          <0 0x0aeb0000 0 0x2008>;
-> +                    reg-names = "mdp", "vbif";
-> +
-> +                    clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                             <&dispcc DISP_CC_MDSS_AXI_CLK>,
-> +                             <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                             <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +                    clock-names = "iface", "bus", "core", "vsync";
-> +
-> +                    assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                                      <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +                    assigned-clock-rates = <300000000>,
-> +                                           <19200000>;
-> +
-> +                    interrupt-parent = <&mdss>;
-> +                    interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                    ports {
-> +                           #address-cells = <1>;
-> +                           #size-cells = <0>;
-> +
-> +                           port@0 {
-> +                                   reg = <0>;
-> +                                   dpu_intf1_out: endpoint {
-> +                                                  remote-endpoint = <&dsi0_in>;
-> +                                   };
-> +                           };
-> +
-> +                           port@1 {
-> +                                   reg = <1>;
-> +                                   dpu_intf2_out: endpoint {
-> +                                                  remote-endpoint = <&dsi1_in>;
-> +                                   };
-> +                           };
-> +                    };
-> +          };
-> +    };
-> +...
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
-> deleted file mode 100644
-> index 551ae26..0000000
-> --- a/Documentation/devicetree/bindings/display/msm/dpu.txt
-> +++ /dev/null
-> @@ -1,141 +0,0 @@
-> -Qualcomm Technologies, Inc. DPU KMS
-> -
-> -Description:
-> -
-> -Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
-> -sub-blocks like DPU display controller, DSI and DP interfaces etc.
-> -The DPU display controller is found in SDM845 SoC.
-> -
-> -MDSS:
-> -Required properties:
-> -- compatible:  "qcom,sdm845-mdss", "qcom,sc7180-mdss"
-> -- reg: physical base address and length of contoller's registers.
-> -- reg-names: register region names. The following region is required:
-> -  * "mdss"
-> -- power-domains: a power domain consumer specifier according to
-> -  Documentation/devicetree/bindings/power/power_domain.txt
-> -- clocks: list of clock specifiers for clocks needed by the device.
-> -- clock-names: device clock names, must be in same order as clocks property.
-> -  The following clocks are required:
-> -  * "iface"
-> -  * "bus"
-> -  * "core"
-> -- interrupts: interrupt signal from MDSS.
-> -- interrupt-controller: identifies the node as an interrupt controller.
-> -- #interrupt-cells: specifies the number of cells needed to encode an interrupt
-> -  source, should be 1.
-> -- iommus: phandle of iommu device node.
-> -- #address-cells: number of address cells for the MDSS children. Should be 1.
-> -- #size-cells: Should be 1.
-> -- ranges: parent bus address space is the same as the child bus address space.
-> -- interconnects : interconnect path specifier for MDSS according to
-> -  Documentation/devicetree/bindings/interconnect/interconnect.txt. Should be
-> -  2 paths corresponding to 2 AXI ports.
-> -- interconnect-names : MDSS will have 2 port names to differentiate between the
-> -  2 interconnect paths defined with interconnect specifier.
-> -
-> -Optional properties:
-> -- assigned-clocks: list of clock specifiers for clocks needing rate assignment
-> -- assigned-clock-rates: list of clock frequencies sorted in the same order as
-> -  the assigned-clocks property.
-> -
-> -MDP:
-> -Required properties:
-> -- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu"
-> -- reg: physical base address and length of controller's registers.
-> -- reg-names : register region names. The following region is required:
-> -  * "mdp"
-> -  * "vbif"
-> -- clocks: list of clock specifiers for clocks needed by the device.
-> -- clock-names: device clock names, must be in same order as clocks property.
-> -  The following clocks are required.
-> -  * "bus"
-> -  * "iface"
-> -  * "core"
-> -  * "vsync"
-> -- interrupts: interrupt line from DPU to MDSS.
-> -- ports: contains the list of output ports from DPU device. These ports connect
-> -  to interfaces that are external to the DPU hardware, such as DSI, DP etc.
-> -
-> -  Each output port contains an endpoint that describes how it is connected to an
-> -  external interface. These are described by the standard properties documented
-> -  here:
-> -	Documentation/devicetree/bindings/graph.txt
-> -	Documentation/devicetree/bindings/media/video-interfaces.txt
-> -
-> -	Port 0 -> DPU_INTF1 (DSI1)
-> -	Port 1 -> DPU_INTF2 (DSI2)
-> -
-> -Optional properties:
-> -- assigned-clocks: list of clock specifiers for clocks needing rate assignment
-> -- assigned-clock-rates: list of clock frequencies sorted in the same order as
-> -  the assigned-clocks property.
-> -
-> -Example:
-> -
-> -	mdss: mdss@ae00000 {
-> -		compatible = "qcom,sdm845-mdss";
-> -		reg = <0xae00000 0x1000>;
-> -		reg-names = "mdss";
-> -
-> -		power-domains = <&clock_dispcc 0>;
-> -
-> -		clocks = <&gcc GCC_DISP_AHB_CLK>, <&gcc GCC_DISP_AXI_CLK>,
-> -			 <&clock_dispcc DISP_CC_MDSS_MDP_CLK>;
-> -		clock-names = "iface", "bus", "core";
-> -
-> -		assigned-clocks = <&clock_dispcc DISP_CC_MDSS_MDP_CLK>;
-> -		assigned-clock-rates = <300000000>;
-> -
-> -		interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> -		interrupt-controller;
-> -		#interrupt-cells = <1>;
-> -
-> -		interconnects = <&rsc_hlos MASTER_MDP0 &rsc_hlos SLAVE_EBI1>,
-> -				<&rsc_hlos MASTER_MDP1 &rsc_hlos SLAVE_EBI1>;
-> -
-> -		interconnect-names = "mdp0-mem", "mdp1-mem";
-> -
-> -		iommus = <&apps_iommu 0>;
-> -
-> -		#address-cells = <2>;
-> -		#size-cells = <1>;
-> -		ranges = <0 0 0xae00000 0xb2008>;
-> -
-> -		mdss_mdp: mdp@ae01000 {
-> -			compatible = "qcom,sdm845-dpu";
-> -			reg = <0 0x1000 0x8f000>, <0 0xb0000 0x2008>;
-> -			reg-names = "mdp", "vbif";
-> -
-> -			clocks = <&clock_dispcc DISP_CC_MDSS_AHB_CLK>,
-> -				 <&clock_dispcc DISP_CC_MDSS_AXI_CLK>,
-> -				 <&clock_dispcc DISP_CC_MDSS_MDP_CLK>,
-> -				 <&clock_dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> -			clock-names = "iface", "bus", "core", "vsync";
-> -
-> -			assigned-clocks = <&clock_dispcc DISP_CC_MDSS_MDP_CLK>,
-> -					  <&clock_dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> -			assigned-clock-rates = <0 0 300000000 19200000>;
-> -
-> -			interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> -
-> -			ports {
-> -				#address-cells = <1>;
-> -				#size-cells = <0>;
-> -
-> -				port@0 {
-> -					reg = <0>;
-> -					dpu_intf1_out: endpoint {
-> -						remote-endpoint = <&dsi0_in>;
-> -					};
-> -				};
-> -
-> -				port@1 {
-> -					reg = <1>;
-> -					dpu_intf2_out: endpoint {
-> -						remote-endpoint = <&dsi1_in>;
-> -					};
-> -				};
-> -			};
-> -		};
-> -	};
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.yaml
-> new file mode 100644
-> index 0000000..deb8272
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.yaml
-> @@ -0,0 +1,123 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-controller-sc7180.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DSI controller dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Device tree bindings for DSI controller for SC7180 target.
-> +
-> +allOf:
-> +  - $ref: dsi-controller.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,mdss-dsi-ctrl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-names:
-> +    const: dsi_ctrl
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 6
-> +
-> +  clock-names:
-> +    items:
-> +         - const: byte
-> +         - const: byte_intf
-> +         - const: pixel
-> +         - const: core
-> +         - const: iface
-> +         - const: bus
-> +
-> +  phys:
-> +    maxItems: 1
-> +
-> +  phy-names:
-> +    const: dsi
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-
-These 2 properties aren't needed here.
-
-> +
-> +  ports: true
-
-Need to define what 'port@0' and 'port@1' are.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - interrupt-parent
-> +  - interrupts
-> +  - clocks
-> +  - clock-names
-> +  - phys
-> +  - phy-names
-> +  - ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +     #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +     #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> +     #include <dt-bindings/clock/qcom,gcc-sc7180.h>
-> +
-> +     dsi0: dsi@ae94000 {
-> +           compatible = "qcom,mdss-dsi-ctrl";
-> +           reg = <0 0x0ae94000 0 0x400>;
-> +           reg-names = "dsi_ctrl";
-> +
-> +           interrupt-parent = <&mdss>;
-> +           interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +           clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                    <&gcc GCC_DISP_HF_AXI_CLK>;
-> +
-> +           clock-names = "byte",
-> +                         "byte_intf",
-> +                         "pixel",
-> +                         "core",
-> +                         "iface",
-> +                         "bus";
-> +
-> +           phys = <&dsi_phy>;
-> +           phy-names = "dsi";
-> +
-> +           #address-cells = <1>;
-> +           #size-cells = <0>;
-> +
-> +           ports {
-> +                 #address-cells = <1>;
-> +                 #size-cells = <0>;
-> +                 port@0 {
-> +                         reg = <0>;
-> +                         dsi0_in: endpoint {
-> +                                  remote-endpoint = <&dpu_intf1_out>;
-> +                         };
-> +                };
-> +
-> +                port@1 {
-> +                        reg = <1>;
-> +                        dsi0_out: endpoint {
-> +                        };
-> +               };
-> +          };
-> +     };
-> +...
-> +
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.yaml
-> new file mode 100644
-> index 0000000..264d7c9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.yaml
-> @@ -0,0 +1,120 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-controller-sdm845.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DSI controller dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Device tree bindings for DSI controller for SDM845 target.
-> +
-> +allOf:
-> +  - $ref: dsi-controller.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,mdss-dsi-ctrl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-names:
-> +    const: dsi_ctrl
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 6
-> +
-> +  clock-names:
-> +    items:
-> +         - const: byte
-> +         - const: byte_intf
-> +         - const: pixel
-> +         - const: core
-> +         - const: iface
-> +         - const: bus
-> +
-> +  phys:
-> +    maxItems: 1
-> +
-> +  phy-names:
-> +    const: dsi
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  ports: true
-
-Need to define each port.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - interrupt-parent
-> +  - interrupts
-> +  - clocks
-> +  - clock-names
-> +  - phys
-> +  - phy-names
-> +  - ports
-> +
-> +additionalProperties: false
-
-unevaluatedProperties: false
-
-Because DSI bus child nodes defined in dsi-controller.yaml should be 
-valid too.
-
-> +
-> +examples:
-> +  - |
-> +     #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +     #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
-> +     #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +
-> +     dsi0: dsi@ae94000 {
-> +           compatible = "qcom,mdss-dsi-ctrl";
-> +           reg = <0 0x0ae94000 0 0x400>;
-> +           reg-names = "dsi_ctrl";
-> +
-> +           interrupt-parent = <&mdss>;
-> +           interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +           clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                    <&dispcc DISP_CC_MDSS_AXI_CLK>;
-> +           clock-names = "byte",
-> +                         "byte_intf",
-> +                         "pixel",
-> +                         "core",
-> +                         "iface",
-> +                         "bus";
-> +
-> +           phys = <&dsi0_phy>;
-> +           phy-names = "dsi";
-> +
-> +           ports {
-> +                  #address-cells = <1>;
-> +                  #size-cells = <0>;
-> +
-> +                  port@0 {
-> +                          reg = <0>;
-> +                          dsi0_in: endpoint {
-> +                                   remote-endpoint = <&dpu_intf1_out>;
-> +                          };
-> +                  };
-> +
-> +                  port@1 {
-> +                          reg = <1>;
-> +                          dsi0_out: endpoint {
-> +                          };
-> +                  };
-> +           };
-> +     };
-> +...
-> +
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller.yaml
-> new file mode 100644
-> index 0000000..dbec55e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller.yaml
-> @@ -0,0 +1,151 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-controller.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DSI controller dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Common Device tree bindings for DSI controller.
-
-Not a correct description. We already have a common binding for DSI 
-controllers and should reference it (dsi-controller.yaml).
-
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,mdss-dsi-ctrl
-> +
-> +  clocks:
-> +    maxItems: 6
-> +
-> +  clock-names:
-> +    description: |
-> +      Device clock names in the same order as mentioned in clocks property.
-> +      For DSIv2, we need an additional clock "src" and for DSI6G v2.0
-> +      onwards we need "byte_intf" clock.
-
-Need a schema list.
-
-> +
-> +  assigned-clocks:
-> +    description: Parents of "byte" and "pixel" for the given platform.
-
-How many?
-
-> +
-> +  assigned-clock-parents:
-> +    description: |
-> +      The Byte clock and Pixel clock PLL outputs provided by a DSI PHY block.
-> +      Details on clock bindings are mentioned in
-> +      Documentation/devicetree/bindings/clock/clock-bindings.txt.
-> +
-> +  vdd-supply:
-> +    description: Phandle to vdd regulator device node.
-> +
-> +  vddio-supply:
-> +    description: Phandle to vdd-io regulator device node.
-> +
-> +  vdda-supply:
-> +    description: Phandle to vdda regulator device node.
-> +
-> +  phys:
-> +    description: Phandle to DSI PHY device node.
-> +
-> +  phy-names:
-> +    description: Name of the corresponding PHY device.
-> +
-> +  syscon-sfpb:
-> +    description: A phandle to mmss_sfpb syscon node (only for DSIv2).
-
-Needs a type $ref.
-
-> +
-> +      # Optional Properties for dsi controller
-> +  panel@0:
-> +    description: |
-> +      Node of panel connected to this DSI controller.
-> +      See files in Documentation/devicetree/bindings/display/panel/
-> +      for each supported panel.
-
-Covered by the common binding. Could be a bridge instead BTW.
-
-> +
-> +  qcom,mdss-mdp-transfer-time-us:
-> +    description: |
-> +      Specifies the DSI transfer time for command mode
-> +      panels in microseconds. Driver uses this number to adjust
-> +      the clock rate according to the expected transfer time.
-> +      Increasing this value would slow down the mdp processing
-> +      and can result in slower performance.
-> +      Decreasing this value can speed up the mdp processing,
-> +      but this can also impact power consumption.
-> +      As a rule this time should not be higher than the time
-> +      that would be expected with the processing at the
-> +      DSI link rate since anyways this would be the maximum
-> +      transfer time that could be achieved.
-> +      If ping pong split is enabled, this time should not be higher
-> +      than two times the DSI link rate time.
-> +      If the property is not specified, then the default value is
-> +      14000 us. This is an optional property.
-> +
-> +  qcom,dual-dsi-mode:
-> +    type: boolean
-> +    description: |
-> +      Boolean value indicating if the DSI controller is
-> +      driving a panel which needs 2 DSI links.
-> +
-> +  qcom,master-dsi:
-> +    type: boolean
-> +    description: |
-> +      Boolean value indicating if the DSI controller is driving
-> +      the master link of the 2-DSI panel.
-> +
-> +  qcom,sync-dual-dsi:
-> +    type: boolean
-> +    description: |
-> +      Boolean value indicating if the DSI controller is driving a
-> +      2-DSI panel whose 2 links need receive command simultaneously.
-
-Dependencies between these 3 properties? If so, use dependencies.
-
-> +
-> +  pinctrl-names:
-> +    description: The pin control state names; may be "default" or "sleep".
-
-Sounds like constraints.
-
-> +
-> +  pinctrl-0:
-> +    description: The default pinctrl state (active)
-> +
-> +  pinctrl-1:
-> +    description: The sleep pinctrl state (suspend)
-
-No need to document these 2.
-
-> +
-> +  ports:
-> +    type: object
-> +    description: |
-> +      Contains DSI controller input and output ports as children, each
-> +      containing one endpoint subnode as defined in
-> +      Documentation/devicetree/bindings/graph.txt and
-> +      Documentation/devicetree/bindings/media/video-interfaces.txt.
-> +
-> +    properties:
-> +      remote-endpoint:
-
-Not a property in 'ports'
-
-> +        description: |
-> +          For port@0, set to phandle of the connected panel/bridge's
-> +          input endpoint. For port@1, set to the MDP interface output.
-> +          See Documentation/devicetree/bindings/graph.txt for
-> +          device graph info.
-> +
-> +      data-lanes:
-> +        description: |
-> +          This describes how the physical DSI data lanes are mapped
-> +          to the logical lanes on the given platform. The value contained in
-> +          index n describes what physical lane is mapped to the logical lane n
-> +          (DATAn, where n lies between 0 and 3). The clock lane position is fixed
-> +          and can't be changed. Hence, they aren't a part of the DT bindings. See
-> +          Documentation/devicetree/bindings/media/video-interfaces.txt for
-> +          more info on the data-lanes property.
-> +
-> +          For example:
-> +          data-lanes = <3 0 1 2>;
-> +
-> +          The above mapping describes that the logical data lane DATA0 is mapped
-> +          to the physical data lane DATA3, logical DATA1 to physical DATA0,
-> +          logic DATA2 to phys DATA1 and logic DATA3 to phys DATA2. There are
-> +          only a limited number of physical to logical mappings possible.
-> +          oneOf:
-> +            - const: <0 1 2 3>
-> +            - const: <1 2 3 0>
-> +            - const: <2 3 0 1>
-> +            - const: <3 0 1 2>
-> +            - const: <0 3 2 1>
-> +            - const: <1 0 3 2>
-> +            - const: <2 1 0 3>
-> +            - const: <3 2 1 0>
-> +
-> +...
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.yaml
-> new file mode 100644
-> index 0000000..316b3b7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.yaml
-> @@ -0,0 +1,75 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-sc7180.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DSI PHY dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Device tree bindings for DSI PHY for SC7180 target.
-> +
-> +allOf:
-> +  - $ref: dsi-phy.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,dsi-phy-10nm
-> +
-> +  reg:
-> +    maxItems: 3
-> +
-> +  reg-names:
-> +    maxItems: 3
-> +
-> +  clocks:
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: ref
-> +
-> +  "#clock-cells":
-> +    const: 1
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +     #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +     #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> +     #include <dt-bindings/clock/qcom,gcc-sc7180.h>
-> +     #include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +     dsi_phy: dsi-phy@ae94400 {
-> +              compatible = "qcom,dsi-phy-10nm";
-> +              reg = <0 0x0ae94400 0 0x200>,
-> +                    <0 0x0ae94600 0 0x280>,
-> +                    <0 0x0ae94a00 0 0x1e0>;
-> +              reg-names = "dsi_phy",
-> +                          "dsi_phy_lane",
-> +                          "dsi_pll";
-> +
-> +              #clock-cells = <1>;
-> +              #phy-cells = <0>;
-> +
-> +              clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                       <&rpmhcc RPMH_CXO_CLK>;
-> +              clock-names = "iface", "ref";
-> +     };
-> +...
-> +
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.yaml
-> new file mode 100644
-> index 0000000..0c9d19a
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.yaml
-> @@ -0,0 +1,76 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-sdm845.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DSI PHY dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Device tree bindings for DSI PHY for SDM845 target.
-> +
-> +allOf:
-> +  - $ref: dsi-phy.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,dsi-phy-10nm
-> +
-> +  reg:
-> +    maxItems: 3
-> +
-> +  reg-names:
-> +    maxItems: 3
-> +
-> +  clocks:
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: ref
-> +
-> +  "#clock-cells":
-> +    const: 1
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +     #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +     #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
-> +     #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +     #include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +     dsi0_phy: dsi-phy@ae94400 {
-> +               compatible = "qcom,dsi-phy-10nm";
-> +               reg = <0 0x0ae94400 0 0x200>,
-> +                     <0 0x0ae94600 0 0x280>,
-> +                     <0 0x0ae94a00 0 0x1e0>;
-> +               reg-names = "dsi_phy",
-> +                           "dsi_phy_lane",
-> +                           "dsi_pll";
-> +
-> +               #clock-cells = <1>;
-> +               #phy-cells = <0>;
-> +
-> +               clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                        <&rpmhcc RPMH_CXO_CLK>;
-> +               clock-names = "iface", "ref";
-
-Where's vdds-supply you say is required?
-
-> +
-> +     };
-> +...
-> +
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy.yaml
-> new file mode 100644
-> index 0000000..46ac96f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy.yaml
-> @@ -0,0 +1,82 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display DSI PHY dt properties.
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Common Device tree bindings for DSI PHY.
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - const: qcom,dsi-phy-28nm-hpm
-> +      - const: qcom,dsi-phy-28nm-lp
-> +      - const: qcom,dsi-phy-20nm
-> +      - const: qcom,dsi-phy-28nm-8960
-> +      - const: qcom,dsi-phy-14nm
-> +      - const: qcom,dsi-phy-10nm
-> +      - const: qcom,dsi-phy-10nm-8998
-> +
-> +  reg-names:
-> +    description: Name of register regions.
-> +    oneOf:
-> +      - description: |
-> +          Following regions are required for DSI 28nm HPM/LP/8960 PHYs and
-> +          20nm PHY.
-> +        items:
-> +          - const: dsi_pll
-> +          - const: dsi_phy
-> +          - const: dsi_phy_regulator
-> +
-> +      - description: |
-> +          Following regions are required for DSI 14nm and 10nm PHYs:
-> +        items:
-> +          - const: dsi_phy
-> +          - const: dsi_phy_lane
-> +          - const: dsi_pll
-> +
-> +  clock-cells:
-> +    description: |
-> +      The DSI PHY block acts as a clock provider, creating
-> +      2 clocks: A byte clock (index 0), and a pixel clock (index 1).
-> +    const: 1
-> +
-> +  power-domains:
-> +    description: Should be <&mmcc MDSS_GDSC>.
-
-How many?
-
-> +
-> +  clocks:
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    description: |
-> +      The following clocks are required.
-> +      "iface"
-> +      "ref" (only required for new DTS files/entries)
-
-Sounds like constraints.
-
-> +
-> +  vddio-supply:
-> +    description: |
-> +      Phandle to vdd-io regulator device node. Required for 28nm HPM/LP,
-> +      28nm 8960 PHYs and 20nm PHY.
-
-I'm not sure a common file helps here with all these free form text 
-constraints. We can't validate whether having 'vddio-supply' is correct 
-or not.
-
-> +
-> +  vcca-supply:
-> +    description: |
-> +      Phandle to vcca regulator device node. Required for 20nm PHY and
-> +      10nm PHY.
-> +
-> +  vdds-supply:
-> +    description: |
-> +      Phandle to vdds regulator device node. Required for 10nm PHY.
-> +
-> +  qcom,dsi-phy-regulator-ldo-mode:
-> +    type: boolean
-> +    description: |
-> +      Boolean value indicating if the LDO mode PHY regulator is wanted (optional).
-> +
-> +...
-> +
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> deleted file mode 100644
-> index af95586..0000000
-> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-> +++ /dev/null
-> @@ -1,246 +0,0 @@
-> -Qualcomm Technologies Inc. adreno/snapdragon DSI output
-> -
-> -DSI Controller:
-> -Required properties:
-> -- compatible:
-> -  * "qcom,mdss-dsi-ctrl"
-> -- reg: Physical base address and length of the registers of controller
-> -- reg-names: The names of register regions. The following regions are required:
-> -  * "dsi_ctrl"
-> -- interrupts: The interrupt signal from the DSI block.
-> -- power-domains: Should be <&mmcc MDSS_GDSC>.
-> -- clocks: Phandles to device clocks.
-> -- clock-names: the following clocks are required:
-> -  * "mdp_core"
-> -  * "iface"
-> -  * "bus"
-> -  * "core_mmss"
-> -  * "byte"
-> -  * "pixel"
-> -  * "core"
-> -  For DSIv2, we need an additional clock:
-> -   * "src"
-> -  For DSI6G v2.0 onwards, we need also need the clock:
-> -   * "byte_intf"
-> -- assigned-clocks: Parents of "byte" and "pixel" for the given platform.
-> -- assigned-clock-parents: The Byte clock and Pixel clock PLL outputs provided
-> -  by a DSI PHY block. See [1] for details on clock bindings.
-> -- vdd-supply: phandle to vdd regulator device node
-> -- vddio-supply: phandle to vdd-io regulator device node
-> -- vdda-supply: phandle to vdda regulator device node
-> -- phys: phandle to DSI PHY device node
-> -- phy-names: the name of the corresponding PHY device
-> -- syscon-sfpb: A phandle to mmss_sfpb syscon node (only for DSIv2)
-> -- ports: Contains 2 DSI controller ports as child nodes. Each port contains
-> -  an endpoint subnode as defined in [2] and [3].
-> -
-> -Optional properties:
-> -- panel@0: Node of panel connected to this DSI controller.
-> -  See files in [4] for each supported panel.
-> -- qcom,dual-dsi-mode: Boolean value indicating if the DSI controller is
-> -  driving a panel which needs 2 DSI links.
-> -- qcom,master-dsi: Boolean value indicating if the DSI controller is driving
-> -  the master link of the 2-DSI panel.
-> -- qcom,sync-dual-dsi: Boolean value indicating if the DSI controller is
-> -  driving a 2-DSI panel whose 2 links need receive command simultaneously.
-> -- pinctrl-names: the pin control state names; should contain "default"
-> -- pinctrl-0: the default pinctrl state (active)
-> -- pinctrl-n: the "sleep" pinctrl state
-> -- ports: contains DSI controller input and output ports as children, each
-> -  containing one endpoint subnode.
-> -
-> -  DSI Endpoint properties:
-> -  - remote-endpoint: For port@0, set to phandle of the connected panel/bridge's
-> -    input endpoint. For port@1, set to the MDP interface output. See [2] for
-> -    device graph info.
-> -
-> -  - data-lanes: this describes how the physical DSI data lanes are mapped
-> -    to the logical lanes on the given platform. The value contained in
-> -    index n describes what physical lane is mapped to the logical lane n
-> -    (DATAn, where n lies between 0 and 3). The clock lane position is fixed
-> -    and can't be changed. Hence, they aren't a part of the DT bindings. See
-> -    [3] for more info on the data-lanes property.
-> -
-> -    For example:
-> -
-> -    data-lanes = <3 0 1 2>;
-> -
-> -    The above mapping describes that the logical data lane DATA0 is mapped to
-> -    the physical data lane DATA3, logical DATA1 to physical DATA0, logic DATA2
-> -    to phys DATA1 and logic DATA3 to phys DATA2.
-> -
-> -    There are only a limited number of physical to logical mappings possible:
-> -    <0 1 2 3>
-> -    <1 2 3 0>
-> -    <2 3 0 1>
-> -    <3 0 1 2>
-> -    <0 3 2 1>
-> -    <1 0 3 2>
-> -    <2 1 0 3>
-> -    <3 2 1 0>
-> -
-> -DSI PHY:
-> -Required properties:
-> -- compatible: Could be the following
-> -  * "qcom,dsi-phy-28nm-hpm"
-> -  * "qcom,dsi-phy-28nm-lp"
-> -  * "qcom,dsi-phy-20nm"
-> -  * "qcom,dsi-phy-28nm-8960"
-> -  * "qcom,dsi-phy-14nm"
-> -  * "qcom,dsi-phy-10nm"
-> -  * "qcom,dsi-phy-10nm-8998"
-> -- reg: Physical base address and length of the registers of PLL, PHY. Some
-> -  revisions require the PHY regulator base address, whereas others require the
-> -  PHY lane base address. See below for each PHY revision.
-> -- reg-names: The names of register regions. The following regions are required:
-> -  For DSI 28nm HPM/LP/8960 PHYs and 20nm PHY:
-> -  * "dsi_pll"
-> -  * "dsi_phy"
-> -  * "dsi_phy_regulator"
-> -  For DSI 14nm and 10nm PHYs:
-> -  * "dsi_pll"
-> -  * "dsi_phy"
-> -  * "dsi_phy_lane"
-> -- clock-cells: Must be 1. The DSI PHY block acts as a clock provider, creating
-> -  2 clocks: A byte clock (index 0), and a pixel clock (index 1).
-> -- power-domains: Should be <&mmcc MDSS_GDSC>.
-> -- clocks: Phandles to device clocks. See [1] for details on clock bindings.
-> -- clock-names: the following clocks are required:
-> -  * "iface"
-> -  * "ref" (only required for new DTS files/entries)
-> -  For 28nm HPM/LP, 28nm 8960 PHYs:
-> -- vddio-supply: phandle to vdd-io regulator device node
-> -  For 20nm PHY:
-> -- vddio-supply: phandle to vdd-io regulator device node
-> -- vcca-supply: phandle to vcca regulator device node
-> -  For 14nm PHY:
-> -- vcca-supply: phandle to vcca regulator device node
-> -  For 10nm PHY:
-> -- vdds-supply: phandle to vdds regulator device node
-> -
-> -Optional properties:
-> -- qcom,dsi-phy-regulator-ldo-mode: Boolean value indicating if the LDO mode PHY
-> -  regulator is wanted.
-> -- qcom,mdss-mdp-transfer-time-us:	Specifies the dsi transfer time for command mode
-> -					panels in microseconds. Driver uses this number to adjust
-> -					the clock rate according to the expected transfer time.
-> -					Increasing this value would slow down the mdp processing
-> -					and can result in slower performance.
-> -					Decreasing this value can speed up the mdp processing,
-> -					but this can also impact power consumption.
-> -					As a rule this time should not be higher than the time
-> -					that would be expected with the processing at the
-> -					dsi link rate since anyways this would be the maximum
-> -					transfer time that could be achieved.
-> -					If ping pong split is enabled, this time should not be higher
-> -					than two times the dsi link rate time.
-> -					If the property is not specified, then the default value is 14000 us.
-> -
-> -[1] Documentation/devicetree/bindings/clock/clock-bindings.txt
-> -[2] Documentation/devicetree/bindings/graph.txt
-> -[3] Documentation/devicetree/bindings/media/video-interfaces.txt
-> -[4] Documentation/devicetree/bindings/display/panel/
-> -
-> -Example:
-> -	dsi0: dsi@fd922800 {
-> -		compatible = "qcom,mdss-dsi-ctrl";
-> -		qcom,dsi-host-index = <0>;
-> -		interrupt-parent = <&mdp>;
-> -		interrupts = <4 0>;
-> -		reg-names = "dsi_ctrl";
-> -		reg = <0xfd922800 0x200>;
-> -		power-domains = <&mmcc MDSS_GDSC>;
-> -		clock-names =
-> -			"bus",
-> -			"byte",
-> -			"core",
-> -			"core_mmss",
-> -			"iface",
-> -			"mdp_core",
-> -			"pixel";
-> -		clocks =
-> -			<&mmcc MDSS_AXI_CLK>,
-> -			<&mmcc MDSS_BYTE0_CLK>,
-> -			<&mmcc MDSS_ESC0_CLK>,
-> -			<&mmcc MMSS_MISC_AHB_CLK>,
-> -			<&mmcc MDSS_AHB_CLK>,
-> -			<&mmcc MDSS_MDP_CLK>,
-> -			<&mmcc MDSS_PCLK0_CLK>;
-> -
-> -		assigned-clocks =
-> -				 <&mmcc BYTE0_CLK_SRC>,
-> -				 <&mmcc PCLK0_CLK_SRC>;
-> -		assigned-clock-parents =
-> -				 <&dsi_phy0 0>,
-> -				 <&dsi_phy0 1>;
-> -
-> -		vdda-supply = <&pma8084_l2>;
-> -		vdd-supply = <&pma8084_l22>;
-> -		vddio-supply = <&pma8084_l12>;
-> -
-> -		phys = <&dsi_phy0>;
-> -		phy-names ="dsi-phy";
-> -
-> -		qcom,dual-dsi-mode;
-> -		qcom,master-dsi;
-> -		qcom,sync-dual-dsi;
-> -
-> -		qcom,mdss-mdp-transfer-time-us = <12000>;
-> -
-> -		pinctrl-names = "default", "sleep";
-> -		pinctrl-0 = <&dsi_active>;
-> -		pinctrl-1 = <&dsi_suspend>;
-> -
-> -		ports {
-> -			#address-cells = <1>;
-> -			#size-cells = <0>;
-> -
-> -			port@0 {
-> -				reg = <0>;
-> -				dsi0_in: endpoint {
-> -					remote-endpoint = <&mdp_intf1_out>;
-> -				};
-> -			};
-> -
-> -			port@1 {
-> -				reg = <1>;
-> -				dsi0_out: endpoint {
-> -					remote-endpoint = <&panel_in>;
-> -					data-lanes = <0 1 2 3>;
-> -				};
-> -			};
-> -		};
-> -
-> -		panel: panel@0 {
-> -			compatible = "sharp,lq101r1sx01";
-> -			reg = <0>;
-> -			link2 = <&secondary>;
-> -
-> -			power-supply = <...>;
-> -			backlight = <...>;
-> -
-> -			port {
-> -				panel_in: endpoint {
-> -					remote-endpoint = <&dsi0_out>;
-> -				};
-> -			};
-> -		};
-> -	};
-> -
-> -	dsi_phy0: dsi-phy@fd922a00 {
-> -		compatible = "qcom,dsi-phy-28nm-hpm";
-> -		qcom,dsi-phy-index = <0>;
-> -		reg-names =
-> -			"dsi_pll",
-> -			"dsi_phy",
-> -			"dsi_phy_regulator";
-> -		reg =   <0xfd922a00 0xd4>,
-> -			<0xfd922b00 0x2b0>,
-> -			<0xfd922d80 0x7b>;
-> -		clock-names = "iface";
-> -		clocks = <&mmcc MDSS_AHB_CLK>;
-> -		#clock-cells = <1>;
-> -		vddio-supply = <&pma8084_l12>;
-> -
-> -		qcom,dsi-phy-regulator-ldo-mode;
-> -	};
-> -- 
-> 1.9.1
-> 
+--17pEHd4RhPHOinZp--
