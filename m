@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E7A51EEA55
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 20:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 243C91EEA84
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 20:50:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730472AbgFDSeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jun 2020 14:34:06 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:22128 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730348AbgFDSeG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jun 2020 14:34:06 -0400
+        id S1728835AbgFDSuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jun 2020 14:50:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:63374 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726893AbgFDSuW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Jun 2020 14:50:22 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591295645; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1591296622; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=b+m+f2wIQAOgddiFH2GauZEHY1uboxw/Z1poVAGvYyQ=;
- b=kg/T8Gr6bc7sRACYzJNsvjkGOwJbJfLiLpVWu9GjWaOhtcnTZAOh0SBnjv6EKowPK/ZJtBg6
- GwG77OAa4dO8En0Py9hfVehBQmdJMJERXuSf+kTpUdfzo/nztMtqXdOUXoJULbTryHwoeBmw
- C48iusv97oiOtUGSHUxCuH+ftoU=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ MIME-Version: Sender; bh=l6wlzfSYbJzkeSugvF6FSEks0oM2Zf6QKufmIi2dOJ8=;
+ b=MglHwX8mPoTVrR6AByjV49hXMHl1S9n0yBcrEIZ7Qd7FyO2w3HvH1KvK3y+iN8d8FGYJl5Hj
+ IRskhnqA11l9lWzHESp/OK2imh84FhPc9zXaZBHON5aKOqItxCsuZos/tMfeWQWP48Kl2QO6
+ QfauAy2+n8Ksl+PdyJsf19rYSQ0=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
- 5ed93e9cc0031c71c20ed0f4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Jun 2020 18:34:04
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5ed9426076fccbb4c8f7e002 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 04 Jun 2020 18:50:08
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 00A70C433B2; Thu,  4 Jun 2020 18:34:03 +0000 (UTC)
+        id 3532FC43395; Thu,  4 Jun 2020 18:50:03 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,29 +37,30 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 11E1AC433A1;
-        Thu,  4 Jun 2020 18:34:03 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5E782C433CB;
+        Thu,  4 Jun 2020 18:50:02 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 05 Jun 2020 00:04:02 +0530
+Date:   Fri, 05 Jun 2020 00:20:02 +0530
 From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Pradeep P V K <ppvk@codeaurora.org>, bjorn.andersson@linaro.org,
-        adrian.hunter@intel.com, robh+dt@kernel.org,
-        ulf.hansson@linaro.org, vbadigan@codeaurora.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-mmc-owner@vger.kernel.org,
-        rnayak@codeaurora.org, matthias@chromium.org
-Subject: Re: [PATCH V2 1/2] mmc: sdhci-msm: Add interconnect bandwidth scaling
- support
-In-Reply-To: <20200604170906.GP4525@google.com>
-References: <1591269283-24084-1-git-send-email-ppvk@codeaurora.org>
- <1591269283-24084-2-git-send-email-ppvk@codeaurora.org>
- <20200604170906.GP4525@google.com>
-Message-ID: <23d6da79d604ce5113d90a2adab17483@codeaurora.org>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Ohad Ben Cohen <ohad@wizery.com>, rohitkr@codeaurora.org,
+        stable@vger.kernel.org, linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH 1/2] remoteproc: qcom: q6v5: Update running state before
+ requesting stop
+In-Reply-To: <CAE=gft4v1iHAPJS13fLBXgjt8ZRhD7q894zF_7JvK9QbiTbwhA@mail.gmail.com>
+References: <20200602163257.26978-1-sibis@codeaurora.org>
+ <CAE=gft7sbh_S_GiRohtMmdMN9JzQhG0m3bUerwrmzhjmXucGKw@mail.gmail.com>
+ <6392c800b0be1cbabb8a241cf518ab4b@codeaurora.org>
+ <CAE=gft4v1iHAPJS13fLBXgjt8ZRhD7q894zF_7JvK9QbiTbwhA@mail.gmail.com>
+Message-ID: <ebc56ab0bd61f5b33be976a6643880db@codeaurora.org>
 X-Sender: sibis@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -68,68 +68,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-06-04 22:39, Matthias Kaehlcke wrote:
-> On Thu, Jun 04, 2020 at 04:44:42PM +0530, Pradeep P V K wrote:
->> Interconnect bandwidth scaling support is now added as a
->> part of OPP [1]. So, make sure interconnect driver is ready
->> before handling interconnect scaling.
+On 2020-06-04 04:03, Evan Green wrote:
+> On Tue, Jun 2, 2020 at 10:29 PM Sibi Sankar <sibis@codeaurora.org> 
+> wrote:
 >> 
->> This change is based on
->> [1] [Patch v8] Introduce OPP bandwidth bindings
->> (https://lkml.org/lkml/2020/5/12/493)
+>> Evan,
+>> Thanks for taking time to review
+>> the series.
 >> 
->> [2] [Patch v3] mmc: sdhci-msm: Fix error handling
->> for dev_pm_opp_of_add_table()
->> (https://lkml.org/lkml/2020/5/5/491)
+>> On 2020-06-02 23:14, Evan Green wrote:
+>> > On Tue, Jun 2, 2020 at 9:33 AM Sibi Sankar <sibis@codeaurora.org>
+>> > wrote:
+>> >>
+>> >> Sometimes the stop triggers a watchdog rather than a stop-ack. Update
+>> >> the running state to false on requesting stop to skip the watchdog
+>> >> instead.
+>> >>
+>> >> Error Logs:
+>> >> $ echo stop > /sys/class/remoteproc/remoteproc0/state
+>> >> ipa 1e40000.ipa: received modem stopping event
+>> >> remoteproc-modem: watchdog received: sys_m_smsm_mpss.c:291:APPS force
+>> >> stop
+>> >> qcom-q6v5-mss 4080000.remoteproc-modem: port failed halt
+>> >> ipa 1e40000.ipa: received modem offline event
+>> >> remoteproc0: stopped remote processor 4080000.remoteproc-modem
+>> >>
+>> >> Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource
+>> >> handling")
+>> >> Cc: stable@vger.kernel.org
+>> >> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> >> ---
+>> >
+>> > Are you sure you want to tolerate this behavior from MSS? This is a
+>> > graceful shutdown, modem shouldn't have a problem completing the
+>> > proper handshake. If they do, isn't that a bug on the modem side?
 >> 
->> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
->> ---
->>  drivers/mmc/host/sdhci-msm.c | 13 +++++++++++++
->>  1 file changed, 13 insertions(+)
->> 
->> diff --git a/drivers/mmc/host/sdhci-msm.c 
->> b/drivers/mmc/host/sdhci-msm.c
->> index b277dd7..a13ff1b 100644
->> --- a/drivers/mmc/host/sdhci-msm.c
->> +++ b/drivers/mmc/host/sdhci-msm.c
->> @@ -14,6 +14,7 @@
->>  #include <linux/slab.h>
->>  #include <linux/iopoll.h>
->>  #include <linux/regulator/consumer.h>
->> +#include <linux/interconnect.h>
->> 
->>  #include "sdhci-pltfm.h"
->>  #include "cqhci.h"
->> @@ -2070,6 +2071,18 @@ static int sdhci_msm_probe(struct 
->> platform_device *pdev)
->>  	}
->>  	msm_host->bulk_clks[0].clk = clk;
->> 
->> +	/* Make sure that ICC driver is ready for interconnect bandwdith
->> +	 * scaling before registering the device for OPP.
->> +	 */
->> +	ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
->> +	if (ret) {
->> +		if (ret == -EPROBE_DEFER)
->> +			dev_info(&pdev->dev, "defer icc path: %d\n", ret);
+>> The graceful shutdown is achieved
+>> though sysmon (enabled using
+>> CONFIG_QCOM_SYSMON). When sysmon is
+>> enabled we get a shutdown-ack when we
+>> try to stop the modem, post which
+>> request stop is a basically a nop.
+>> Request stop is done to force stop
+>> the modem during failure cases (like
+>> rmtfs is not running and so on) and
+>> we do want to mask the wdog that we get
+>> during this scenario ( The locking
+>> already prevents the servicing of the
+>> wdog during shutdown, the check just
+>> prevents the scheduling of crash handler
+>> and err messages associated with it).
+>> Also this check was always present and
+>> was missed during common q6v5 resource
+>> helper migration, hence the unused
+>> running state in mss driver.
 > 
-> I already commented on this on v1:
+> So you're saying that the intention of the ->running check already in
+> q6v5_wdog_interrupt() was to allow either the stop-ack or wdog
+> interrupt to complete the stop. This patch just fixes a regression
+> introduced during the refactor.
+> This patch seems ok to me then. It still sort of seems like a bug that
+> the modem responds arbitrarily in one of two ways, even to a "harsh"
+> shutdown request.
 > 
->   This log seems to add little more than noise, or are there particular 
-> reasons
->   why it is useful in this driver? Most drivers just return silently in 
-> case of
->   deferred probing.
-> 
-> If you think the log is really needed please explain why.
+> I wasn't aware of QCOM_SYSMON. Reading it now, It seems like kind of a
 
-Both the err logs seem redundant.
-EPROBE_DEFERS are rather readily
-noticeable through the return val.
-dev_.._find_icc_paths already prints
-err messages when we fail to get icc
-paths.
+TL;DR
+Sysmon when enabled adds a lookup
+for qmi service 43 (Subsystem
+control service). When we shutdown
+the modem, we send a SSCTL_SHUTDOWN_REQ
+to the service and the modem responds
+with a shutdown-ack interrupt. If you
+have rmtfs running with -v turned on
+you can notice pending efs transactions
+being completed followed by a bye I guess.
 
+> lot... do I really need all this? Can I get by with just remoteproc
+> stops?
+> Anyway, for this patch:
+> 
+> Reviewed-by: Evan Green <evgreen@chromium.org>
+
+Thanks for the review!
 
 -- 
 Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
