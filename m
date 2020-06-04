@@ -2,188 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0270C1EE434
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 14:09:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E65F1EE458
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2020 14:23:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728175AbgFDMJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Jun 2020 08:09:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59892 "EHLO
+        id S1727944AbgFDMXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Jun 2020 08:23:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728008AbgFDMJQ (ORCPT
+        with ESMTP id S1725601AbgFDMXH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Jun 2020 08:09:16 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89274C08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2020 05:09:15 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id h5so5814883wrc.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2020 05:09:15 -0700 (PDT)
+        Thu, 4 Jun 2020 08:23:07 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86B24C08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2020 05:23:07 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id d6so1126713pjs.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2020 05:23:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jLOpxtZ/2WYBgqxYGSCuWHrLASkKLBzIuDEydJEL7OQ=;
-        b=1hy7H4awXmXbu3C9rteE5RlVnIe/awJ82GAcp00UQC+yLE20+qTsPA+3g1bgSFIYWh
-         hiX3TH7uC7VutKh3YAl2NTkqE3kDJBlqcNum6m9dMpTFZfono2JA8Lr+itzZ2Idj9ozJ
-         IxJmbLDjjnQC6qJApuWuaO+MQwkeQSPGFxpa0kEBy/4WM6/d6LPeLa+JBGjMLkoUojUC
-         EyasmnhFnJyKB7nUBnCSXFCFMatpM5xK0c59gNSi/F1WdmFLX4YQA0CpmLii/ZOVl5Zc
-         ceVJeVCudX5rmRnjMySUM5HTC7ncJ9XRQ5sDcWXzUMQNaGhh3smCPEZjsQNZlFU0cRuc
-         DAXQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Ml/b7XpbKedJnePc4NDty+yg3XSrTj9avgZ4/HGZobY=;
+        b=tpPWgXumYdkZBL23t2pEn4peGPpQJA+Ba5cmfNySNoOUzp6qoLiGbPhrG07r3frJio
+         h0FjXzji74sSaWB/ykKys33C4EUHjuiFZJztd/aXDlA7zi4tW7qpAKWE5v4qvCxqDjO7
+         vAlJpl06ng5lq6owsElcfhUV7CTcKLHKrtFtT7hC05VTOuZSggbYfHnama6iuGj7pHYU
+         VGyU5ErjYmVhdJYIRFQxC6a8peojHoUeIHE1JjNMrWgWRd/ZZ66FpWuw6QxueV4F0gNl
+         Ejg83+V+oxhqVE+o6WbGHMGPHrUGq2wllWdRudauzQl3vExi38hSgHUW4bff11GO0Ha4
+         U40A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jLOpxtZ/2WYBgqxYGSCuWHrLASkKLBzIuDEydJEL7OQ=;
-        b=Us+1hr8cGYZ1Ey5yQGY/SdYYAH9rdH+G+dOuZORJcaL4ymriCvVmnABGriQFP2FgP6
-         Ys2tOOOrFJ6MUpLJ4cbEJR3B0jQNR4uu0X3A3RCtFdYlWzh2p3o5PFhZlgwfifYw+M1l
-         CTGCmwBT6Yfuvrj5Ox0uvyiVuKYw/tqnF9Cw9lGltTWvhRjMHllrOb6VnN4Hz+tqGukt
-         l+YENGJHx0JyaPmXFLDMLmvTabZqG5ryHslffpjaXDTCUhcY+B88gdXDe5dNpIIhTMVc
-         +0VIUAmljQyEsglYTcH+gzNrDQKA+MfvRu7AibkjDdUvTLZ8Kk1Ckjd0Pa94OGpV/2Gb
-         K3Cg==
-X-Gm-Message-State: AOAM530KhDwi9sFJm4D6LufeZXLAsDHRusqb5eCbI0P1FNutST0gOqsN
-        K8nq88wd35wlehRLayTBEF0elQ==
-X-Google-Smtp-Source: ABdhPJze958wqzKWPLBGHJhB470MblvxDP4tTNXuOJ5ziAVLe3vlHl6olnns0TOcrFMXkjuar1YWUQ==
-X-Received: by 2002:a5d:4a89:: with SMTP id o9mr4016933wrq.267.1591272554144;
-        Thu, 04 Jun 2020 05:09:14 -0700 (PDT)
-Received: from localhost.localdomain (dh207-97-4.xnet.hr. [88.207.97.4])
-        by smtp.googlemail.com with ESMTPSA id s2sm6740549wmh.11.2020.06.04.05.09.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2020 05:09:13 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, absahu@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Christian Lamparter <chunkeey@gmail.com>,
-        John Crispin <john@phrozen.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH] clk: qcom: ipq4019: fix apss cpu overclocking
-Date:   Thu,  4 Jun 2020 14:09:05 +0200
-Message-Id: <20200604120905.1344074-1-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Ml/b7XpbKedJnePc4NDty+yg3XSrTj9avgZ4/HGZobY=;
+        b=liexhfoAfbPyRLKj0bYn9dmOJuvYwkCLoYyJw0IcUgN/YQc8U6wKsX0guwp/ITN8uG
+         q3w+l11JJxPcauGzu+KQKZN9laTZ/A99FpzS0yKPClP9AUretVQWsdgdIFUupuF9sstX
+         60QRfi6a2IQilM8mIBRMSSyv0TJd0VsIBzozgeMqiJOT5mpEPF1B4ACJcvhu+6GsGgTe
+         7sb63R2e8pqISY8wCBO2qSIk65JgQx+9ju0Pa1Gxzr6HhyTAcEJwCJ61Ofg+DNZ71V0e
+         S2MgLTEnRVMd8R3nftGbnENCUVlIigLRWdLliHg38IODdaN6gNWYqOro7ZBgPc/kkZY4
+         DRcg==
+X-Gm-Message-State: AOAM531mivkmB+yS3mSngAUMu1zaS+vf50w3wm0dpkzGRBY4E+F/KQgJ
+        aIBAlijrfw3q/hzOCXH6IX/G
+X-Google-Smtp-Source: ABdhPJyKuPxRf/nzrmTHyIaFY68aLoPdFMOUf07lj8gr4/OfPFX7xJELI5xk2of3Spc24oaT+u0sWw==
+X-Received: by 2002:a17:902:7c81:: with SMTP id y1mr4784792pll.236.1591273386735;
+        Thu, 04 Jun 2020 05:23:06 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6e19:fffb:c404:4d38:8396:d1ee])
+        by smtp.gmail.com with ESMTPSA id 67sm4640821pfg.84.2020.06.04.05.23.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Jun 2020 05:23:05 -0700 (PDT)
+Date:   Thu, 4 Jun 2020 17:52:59 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        patches@linaro.org, linaro-kernel@lists.linaro.org,
+        devicetree-owner@vger.kernel.org
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8250: add watchdog device
+Message-ID: <20200604122259.GG16719@Mani-XPS-13-9360>
+References: <20200604004331.669936-1-dmitry.baryshkov@linaro.org>
+ <20200604004331.669936-7-dmitry.baryshkov@linaro.org>
+ <1a23cf8a6386e8b78c52199bdcde9b5e@codeaurora.org>
+ <20200604113544.GF16719@Mani-XPS-13-9360>
+ <f1cb759c2a70981ba8903dc1141349fe@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f1cb759c2a70981ba8903dc1141349fe@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Christian Lamparter <chunkeey@gmail.com>
+On Thu, Jun 04, 2020 at 05:21:46PM +0530, Sai Prakash Ranjan wrote:
+> On 2020-06-04 17:05, Manivannan Sadhasivam wrote:
+> > On Thu, Jun 04, 2020 at 04:37:01PM +0530, Sai Prakash Ranjan wrote:
+> > > On 2020-06-04 06:13, Dmitry Baryshkov wrote:
+> > > > Add on-SoC watchdog device node.
+> > > >
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 6 ++++++
+> > > >  1 file changed, 6 insertions(+)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > index 972d8e04c8a2..f1641c6fe203 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > @@ -1662,6 +1662,12 @@ config {
+> > > >  			};
+> > > >  		};
+> > > >
+> > > > +		watchdog@17c10000 {
+> > > > +			compatible = "qcom,apss-wdt-sm8250", "qcom,kpss-wdt";
+> > > 
+> > > Need to add this compatible to bindings.
+> > > 
+> > 
+> > I did look into this but the binding says,
+> > "compatible : shall contain only one of the following"
+> > 
+> > So clearly the fallback is not going to work and there is no need to add
+> > a
+> > dedicated compatible in the driver. The binding is not in the YAML
+> > format to
+> > be validated but still... Other option is to convert the binding to YAML
+> > and
+> > make the compatibles listed as 'enum' and 'const' elements
+> > appropriately.
+> > 
+> 
+> I already converted the bindings to YAML and added the missing compatibles
+> for
+> other SoCs[1] .
 
-There's an interaction issue between the clk changes:"
-clk: qcom: ipq4019: Add the apss cpu pll divider clock node
-clk: qcom: ipq4019: remove fixed clocks and add pll clocks
-" and the cpufreq-dt.
+Ah, okay. I didn't find it in linux-next. Anyway, for adding
+"qcom,apss-wdt-sm8250" compatible, we need to group the compatibles wisely
+using 'enum' and 'const'.
 
-cpufreq-dt is now spamming the kernel-log with the following:
+> I thought it was already merged since Rob has already
+> reviewed
+> them, but seems like it was missed. Bjorn, can you please take it?
+> 
 
-[ 1099.190658] cpu cpu0: dev_pm_opp_set_rate: failed to find current OPP
-for freq 761142857 (-34)
+Perhaps for v5.9...
 
-This only happens on certain devices like the Compex WPJ428
-and AVM FritzBox!4040. However, other devices like the Asus
-RT-AC58U and Meraki MR33 work just fine.
+Thanks,
+Mani
 
-The issue stem from the fact that all higher CPU-Clocks
-are achieved by switching the clock-parent to the P_DDRPLLAPSS
-(ddrpllapss). Which is set by Qualcomm's proprietary bootcode
-as part of the DDR calibration.
-
-For example, the FB4040 uses 256 MiB Nanya NT5CC128M16IP clocked
-at round 533 MHz (ddrpllsdcc = 190285714 Hz).
-
-whereas the 128 MiB Nanya NT5CC64M16GP-DI in the ASUS RT-AC58U is
-clocked at a slightly higher 537 MHz ( ddrpllsdcc = 192000000 Hz).
-
-This patch attempts to fix the issue by modifying
-clk_cpu_div_round_rate(), clk_cpu_div_set_rate(), clk_cpu_div_recalc_rate()
-to use a new qcom_find_freq_close() function, which returns the closest
-matching frequency, instead of the next higher. This way, the SoC in
-the FB4040 (with its max clock speed of 710.4 MHz) will no longer
-try to overclock to 761 MHz.
-
-Fixes: d83dcacea18 ("clk: qcom: ipq4019: Add the apss cpu pll divider clock node")
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Signed-off-by: John Crispin <john@phrozen.org>
-Tested-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
----
- drivers/clk/qcom/gcc-ipq4019.c | 34 +++++++++++++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-ipq4019.c b/drivers/clk/qcom/gcc-ipq4019.c
-index ef5137fd50f3..eeed50573752 100644
---- a/drivers/clk/qcom/gcc-ipq4019.c
-+++ b/drivers/clk/qcom/gcc-ipq4019.c
-@@ -1243,6 +1243,29 @@ static const struct clk_fepll_vco gcc_fepll_vco = {
- 	.reg = 0x2f020,
- };
- 
-+
-+const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
-+					     unsigned long rate)
-+{
-+	const struct freq_tbl *last = NULL;
-+
-+	for ( ; f->freq; f++) {
-+		if (rate == f->freq)
-+			return f;
-+
-+		if (f->freq > rate) {
-+			if (!last ||
-+			   (f->freq - rate) < (rate - last->freq))
-+				return f;
-+			else
-+				return last;
-+		}
-+		last = f;
-+	}
-+
-+	return last;
-+}
-+
- /*
-  * Round rate function for APSS CPU PLL Clock divider.
-  * It looks up the frequency table and returns the next higher frequency
-@@ -1255,7 +1278,7 @@ static long clk_cpu_div_round_rate(struct clk_hw *hw, unsigned long rate,
- 	struct clk_hw *p_hw;
- 	const struct freq_tbl *f;
- 
--	f = qcom_find_freq(pll->freq_tbl, rate);
-+	f = qcom_find_freq_close(pll->freq_tbl, rate);
- 	if (!f)
- 		return -EINVAL;
- 
-@@ -1278,7 +1301,7 @@ static int clk_cpu_div_set_rate(struct clk_hw *hw, unsigned long rate,
- 	u32 mask;
- 	int ret;
- 
--	f = qcom_find_freq(pll->freq_tbl, rate);
-+	f = qcom_find_freq_close(pll->freq_tbl, rate);
- 	if (!f)
- 		return -EINVAL;
- 
-@@ -1305,6 +1328,7 @@ static unsigned long
- clk_cpu_div_recalc_rate(struct clk_hw *hw,
- 			unsigned long parent_rate)
- {
-+	const struct freq_tbl *f;
- 	struct clk_fepll *pll = to_clk_fepll(hw);
- 	u32 cdiv, pre_div;
- 	u64 rate;
-@@ -1325,7 +1349,11 @@ clk_cpu_div_recalc_rate(struct clk_hw *hw,
- 	rate = clk_fepll_vco_calc_rate(pll, parent_rate) * 2;
- 	do_div(rate, pre_div);
- 
--	return rate;
-+	f = qcom_find_freq_close(pll->freq_tbl, rate);
-+	if (!f)
-+		return rate;
-+
-+	return f->freq;
- };
- 
- static const struct clk_ops clk_regmap_cpu_div_ops = {
--- 
-2.26.2
-
+> [1] https://lore.kernel.org/patchwork/cover/1192757/
+> 
+> Thanks,
+> Sai
+> 
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
