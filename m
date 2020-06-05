@@ -2,70 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 599D01EFF4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 19:43:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 136791F0022
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 21:00:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726044AbgFERnT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 13:43:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53006 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727080AbgFERnP (ORCPT
+        id S1726959AbgFETAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jun 2020 15:00:00 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217]:28064 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726963AbgFETAA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 13:43:15 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA4FFC08C5C5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2020 10:43:15 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id c12so10507370qkk.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2020 10:43:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=rZzlH3lgJQJ1GMva4U3PZGzXYmKRlX309wcrnr5n+uY=;
-        b=S3kWp7/LuNSWrfUi5frZnfE9rEvEaHJeB8X7ZzkN0AUH7ZRcyj1NK0Xxc3N9O8Nn19
-         51smv5NiVOuB/qrQg8Wrcj3NPeKGiY3mh2zGZNwKRWbQmxIph4oOBW1H7ACKRQQHWnDd
-         fT5JcOe2wkSRH4uXJ/SrTOwC+7+rkshaFAsWQ13d0A6hNEk/JO5VUcAgYEY46gxMy1PA
-         fVer0A34vt37OVh6U4TBBwvqiUyt5KU9rEDMOOj9lKInKC2MH4X6kZIFGIYfgZlAkBTp
-         sHadbRfDtGf4tfanol1uU48dxQtGIf9VhZX83rcnfHYQQ82+WbcipGKl6CVmy2LFfR2R
-         u9hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=rZzlH3lgJQJ1GMva4U3PZGzXYmKRlX309wcrnr5n+uY=;
-        b=BII21kYdnKM0xMv41E3jfGBb/8FoKZObmvEq/KA2cGw7XQ0Hqn55ugIfTl/WKf/8uR
-         a2yiLcoDBsExliLt8NVOYxXZUIrCnYQyattFxXab9NINkzpxl6COYH4CZRoYNryfhViS
-         xK9oyG6bqNetCx4AHc4yr1xcvpeBrFNhOpT8sizCbN6mDFWsTT/I1k2yaSauagLcGhWQ
-         Y1/8K9TAWNH4N2vvhCVk6eQduNZwbVguu92dRrp7DwUIUUzmVjsfgBWeBdpmIsaLzzBW
-         bFHPqvB3aCU9DrTl6M0SFtRT/0ChsfPtT6l2krLJvmP3jHbC20lANaNGMbnn+5d+le+X
-         PIfw==
-X-Gm-Message-State: AOAM531uv8Uv3P8dZWRO5IA0LbT88h60huUSye1RQA9qUAe60s9WUawA
-        YSjQa3RaY+gyqKjebg6plPnU3A==
-X-Google-Smtp-Source: ABdhPJx5VdfTacBdommIKg1RhtvX4MaRuPEPiDdNpolMZqjrE6XJwiukyJJzDa1sR2c1lYGpiAO93g==
-X-Received: by 2002:a37:b847:: with SMTP id i68mr10785437qkf.431.1591378994692;
-        Fri, 05 Jun 2020 10:43:14 -0700 (PDT)
-Received: from skullcanyon ([192.222.193.21])
-        by smtp.gmail.com with ESMTPSA id a1sm332298qkn.87.2020.06.05.10.43.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2020 10:43:14 -0700 (PDT)
-Message-ID: <edbae7a96fb6cc2d017d947fbeedc86a7540302a.camel@ndufresne.ca>
-Subject: Re: [RFC] METADATA design using V4l2 Request API
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     dikshita@codeaurora.org, Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org, jdas@codeaurora.org,
-        linux-media-owner@vger.kernel.org
-Date:   Fri, 05 Jun 2020 13:43:12 -0400
-In-Reply-To: <5356c146a340d951b8d492373f349199@codeaurora.org>
-References: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
-         <d1179bc1-662b-615f-0f9b-67693fe8c906@xs4all.nl>
-         <fb96e2c09346e7831a0af99c0fe9f94c@codeaurora.org>
-         <7be1070ee7aad1f48fc6de63523da8e1bc952dc8.camel@ndufresne.ca>
-         <ad61378b-e279-d161-adaa-17349adf183e@xs4all.nl>
-         <5356c146a340d951b8d492373f349199@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.2 (3.36.2-1.fc32) 
+        Fri, 5 Jun 2020 15:00:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1591383595;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=Message-Id:Date:Subject:Cc:To:From:X-RZG-CLASS-ID:X-RZG-AUTH:From:
+        Subject:Sender;
+        bh=uG+xyzcgFcPs8d4qfzghhlZ8ma9xNU5sLA5RgBUV1Kk=;
+        b=FUuhFf0w0uFYZQIU+9On405Sj5fwfntCYdRYcmcai+QY4rUJN4oANzm6sUK7PS++0H
+        MJY4sD/0KWg+H5rRExlwsvef3Qnb4aIavBX5UtawVg1WjV4S2f9ASPFjxt7MP86Nuf6+
+        PMjbibmLiSxSZSxKXoFZ5q/HAKPp1knkUHR4kjYQFHw+TBsUWXBb14cpOuBt9zo012/N
+        CNXlHAeeLeaT598NHC2sDz8gXrsPtnUlHgUIUoU6wMFDpxsQJ/5L77bUbEfQcPgrrTBI
+        TKTmklWkFghX6a+aZgcsQRBCO9Aej44I8gAiTRt7JNmv6DGzHimXq6iGNvqQkKwe8BaR
+        w/2Q==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB4G6IlKY="
+X-RZG-CLASS-ID: mo00
+Received: from localhost.localdomain
+        by smtp.strato.de (RZmta 46.9.1 DYNA|AUTH)
+        with ESMTPSA id U0b5f2w55IxqKmE
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Fri, 5 Jun 2020 20:59:52 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 1/4] arm64: dts: qcom: msm8916: Set #address-cells for lpass
+Date:   Fri,  5 Jun 2020 20:59:13 +0200
+Message-Id: <20200605185916.318494-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -73,95 +49,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le vendredi 05 juin 2020 à 12:32 +0530, dikshita@codeaurora.org a écrit :
-> Hi Hans, Nicolas,
-> 
-> On 2020-05-29 13:01, Hans Verkuil wrote:
-> > On 29/05/2020 04:18, Nicolas Dufresne wrote:
-> > > Le jeudi 28 mai 2020 à 16:18 +0530, dikshita@codeaurora.org a écrit :
-> > > > > not allowed. So I need to know more about this.
-> > > > > Regards,
-> > > > >        Hans
-> > > > 
-> > > > we need this for use cases like HDR10+ where metadata info is part of
-> > > > the bitstream.
-> > > > 
-> > > > To handle such frame specific data, support for request api on 
-> > > > capture
-> > > > plane would be needed.
-> > > 
-> > > I have a bit of a mixed impression here. Considering how large the 
-> > > ioctl
-> > > interface overhead is, relying on HW parser to extract this medata 
-> > > woud be the
-> > > last thing I would consider.
-> > > 
-> > > Instead, I'm quite convince we can achieve greater and likely 
-> > > zero-copy
-> > > perfromance by locating this header in userspace. So everytime I see 
-> > > this kind
-> > > of API, were the HW is *needed* to parse a trivial bit of bistream, I 
-> > > ended
-> > > thinking that we simply craft this API to expose this because the HW 
-> > > can do it,
-> > > but no further logical thinking or higher level design seems to have 
-> > > been
-> > > applied.
-> > > 
-> > > I'm sorry for this open critic, but are we designing this because the 
-> > > HW
-> > > designer exposed that feature? This is so low complexity to extract in
-> > > userspace, with the bonus that we are not forced into expanding the
-> > > representation to another form immediatly, as maybe the display will 
-> > > be able to
-> > > handle that form directly (where converting to a C structure and then 
-> > > back to
-> > > some binary format to satisfy DRM property seems very sub-optimal).
-> > > 
-> > > Nicolas
-> > > 
-> > 
-> > Nicolas raises good questions: it would help if you can give more
-> > detailed information
-> > about the hardware. We had similar discussions with Xilinx about
-> > HDR10+ (see this
-> > thread: https://www.spinics.net/lists/linux-media/msg163297.html).
-> > 
-> > There is no clear answer at the moment on how to handle dynamic HDR 
-> > metadata.
-> > It will help if we have some more information how different SoCs handle 
-> > this
-> > in hardware.
-> > 
-> > Regards,
-> > 
-> > 	Hans
-> 
-> As per Widevine Level 1 requirement, it needs “Hardware Protected Video 
-> Path”.
-> Hence, in case of secure bitstream decoding, we need decoder metadata 
-> delivered from HW.
-> CPU cannot parse secure bitstream and extract them.
-> Apart from this, there are other metadata like "histogram" which is not 
-> part of the bitstream
-> and generated by hardware
+As of commit 4ff028f6c108 ("ASoC: qcom: lpass-cpu: Make I2S SD lines
+configurable"), lpass now supports children nodes to configure the
+MI2S SD lines to use for one of the I2S ports. For example:
 
-(I'm ignoring the bit about camera data + histogram, this was about
-CODEC, and it also does not make much sense to me)
+lpass@7708000 {
+	dai@3 {
+		reg = <MI2S_QUATERNARY>;
+		qcom,playback-sd-lines = <1>;
+	};
+};
 
-We extract this data from the bitstream, before the decoder. The
-bitstream is not subject to secure buffer, because it's encrypted. Be
-aware that the implementation does not encrypt all NALs, PPS/SPS SEIs,
-are in clear, and NAL headers are most of the time in clear.
+The "reg" property refers to the DAI number in this case,
+so we need to set #address-cells and #size-cells appropriately
+to avoid DTC warnings.
 
-Going with full bitstream encryption would have required rewriting a
-lot more HW, since you would not be able to handle the
-depayload/demuxing in userspace or you'd need all this multimedia stuff
-to be placed on in your secure firmware. Multimedia software these
-days, ffmpeg, gstreamer, chromium internal stack etc. needs a lot of
-information from the bitstream that would be very hard to pass
-properly.
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-regards,
-Nicolas
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 32bd140ac9fd..b0f9cfaba1ed 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -700,6 +700,9 @@ lpass: lpass@7708000 {
+ 			interrupt-names = "lpass-irq-lpaif";
+ 			reg = <0x07708000 0x10000>;
+ 			reg-names = "lpass-lpaif";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
+ 		};
+ 
+                 lpass_codec: codec{
+-- 
+2.26.2
 
