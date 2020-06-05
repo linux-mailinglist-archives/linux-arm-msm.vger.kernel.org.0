@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9D1F1EF438
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 11:32:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 196E41EF42E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 11:31:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbgFEJb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 05:31:29 -0400
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:26201 "EHLO
+        id S1726226AbgFEJbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jun 2020 05:31:06 -0400
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:26194 "EHLO
         alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726217AbgFEJbL (ORCPT
+        by vger.kernel.org with ESMTP id S1726217AbgFEJbG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 05:31:11 -0400
+        Fri, 5 Jun 2020 05:31:06 -0400
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
   by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 05 Jun 2020 15:01:01 +0530
 Received: from c-ppvk-linux.qualcomm.com ([10.206.24.34])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 05 Jun 2020 15:00:33 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 05 Jun 2020 15:00:34 +0530
 Received: by c-ppvk-linux.qualcomm.com (Postfix, from userid 2304101)
-        id 51F1F48DD; Fri,  5 Jun 2020 15:00:32 +0530 (IST)
+        id D7F7E48CC; Fri,  5 Jun 2020 15:00:33 +0530 (IST)
 From:   Pradeep P V K <ppvk@codeaurora.org>
 To:     bjorn.andersson@linaro.org, adrian.hunter@intel.com,
         robh+dt@kernel.org, ulf.hansson@linaro.org,
@@ -28,9 +28,9 @@ Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-mmc-owner@vger.kernel.org, rnayak@codeaurora.org,
         sibis@codeaurora.org, matthias@chromium.org,
         Pradeep P V K <ppvk@codeaurora.org>
-Subject: =?y?q?=5BPATCH=C2=A0V3=201/2=5D=20mmc=3A=20sdhci-msm=3A=20Add=20interconnect=20bandwidth=20scaling=20support?=
-Date:   Fri,  5 Jun 2020 15:00:26 +0530
-Message-Id: <1591349427-27004-2-git-send-email-ppvk@codeaurora.org>
+Subject: =?y?q?=5BPATCH=C2=A0V3=202/2=5D=20dt-bindings=3A=20mmc=3A=20sdhci-msm=3A=20Add=20interconnect=20BW=20scaling=20strings?=
+Date:   Fri,  5 Jun 2020 15:00:27 +0530
+Message-Id: <1591349427-27004-3-git-send-email-ppvk@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1591349427-27004-1-git-send-email-ppvk@codeaurora.org>
 References: <1591269283-24084-1-git-send-email-ppvk@codeaurora.org>
@@ -43,49 +43,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Interconnect bandwidth scaling support is now added as a
-part of OPP [1]. So, make sure interconnect driver is ready
-before handling interconnect scaling.
-
-This change is based on
-[1] [Patch v8] Introduce OPP bandwidth bindings
-(https://lkml.org/lkml/2020/5/12/493)
-
-[2] [Patch v3] mmc: sdhci-msm: Fix error handling
-for dev_pm_opp_of_add_table()
-(https://lkml.org/lkml/2020/5/5/491)
+Add interconnect bandwidth scaling supported strings for qcom-sdhci
+controller.
 
 Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index b277dd7..a945e84 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -14,6 +14,7 @@
- #include <linux/slab.h>
- #include <linux/iopoll.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/interconnect.h>
+diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+index b8e1d2b..3b602fd 100644
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+@@ -54,6 +54,21 @@ Required properties:
+ - qcom,dll-config: Chipset and Platform specific value. Use this field to
+ 	specify the DLL_CONFIG register value as per Hardware Programming Guide.
  
- #include "sdhci-pltfm.h"
- #include "cqhci.h"
-@@ -2070,6 +2071,13 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	}
- 	msm_host->bulk_clks[0].clk = clk;
- 
-+	/* Make sure that ICC driver is ready for interconnect bandwdith
-+	 * scaling before registering the device for OPP.
-+	 */
-+	ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
-+	if (ret)
-+		goto bus_clk_disable;
++Optional Properties:
++* Following bus parameters are required for interconnect bandwidth scaling:
++- interconnects: Pairs of phandles and interconnect provider specifier
++		 to denote the edge source and destination ports of
++		 the interconnect path.
 +
- 	msm_host->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
- 	if (IS_ERR(msm_host->opp_table)) {
- 		ret = PTR_ERR(msm_host->opp_table);
++- interconnect-names: For sdhc, we have two main paths.
++		1. Data path : sdhc to ddr
++		2. Config path : cpu to sdhc
++		For Data interconnect path the name supposed to be
++		is "sdhc-ddr" and for config interconnect path it is
++		"cpu-sdhc".
++		Please refer to Documentation/devicetree/bindings/
++		interconnect/ for more details.
++
+ Example:
+ 
+ 	sdhc_1: sdhci@f9824900 {
+@@ -71,6 +86,9 @@ Example:
+ 
+ 		clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>;
+ 		clock-names = "core", "iface";
++		interconnects = <&qnoc MASTER_SDCC_ID &qnoc SLAVE_DDR_ID>,
++				<&qnoc MASTER_CPU_ID &qnoc SLAVE_SDCC_ID>;
++		interconnect-names = "sdhc-ddr","cpu-sdhc";
+ 
+ 		qcom,dll-config = <0x000f642c>;
+ 		qcom,ddr-config = <0x80040868>;
 -- 
 1.9.1
 
