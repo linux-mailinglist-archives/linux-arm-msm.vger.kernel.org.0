@@ -2,48 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4581C1F002A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 21:02:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F5F21F01C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 23:33:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726846AbgFETCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 15:02:55 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([81.169.146.171]:24108 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726999AbgFETCz (ORCPT
+        id S1728247AbgFEVdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jun 2020 17:33:51 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:49061 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728196AbgFEVdv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 15:02:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1591383772;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=W4bCg1lG4HoFwBxz9czdfoDXzBcdOM4JgKX/4m0N6s0=;
-        b=opMiiUiZ8uwe+7KZ1thprXQWdqR/dAp/Qx6+4AvdFna7J8a1+ItCAnkjjdCxygGKfl
-        vGgF8kK/go9F27974stlcdDtGyuQX3c5nserPtx+U/0dYFmLF6nItlsSGbYp2WKoAsVe
-        AjY3vALJr/Tlb4yl5JMNG5ERbQ9l3xbH863tJ6pJm2m7TuNQdlrcs7QahASvhzjGCmF7
-        FbSuYHEhktv/AVRAs/IltNiJ6PfdxuRzK3zcs38kjbCnLWjRYfRZyaG3OoLfSo4fQMlG
-        T/xHLh+0nP8DZTw1hvORzqj+6mOBbuvvW3F3v91aAv+knA342KuYjalnHoujVGV6NMN4
-        DsbQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB4G6IlKY="
-X-RZG-CLASS-ID: mo00
-Received: from localhost.localdomain
-        by smtp.strato.de (RZmta 46.9.1 DYNA|AUTH)
-        with ESMTPSA id U0b5f2w55IxsKmH
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Fri, 5 Jun 2020 20:59:54 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 4/4] arm64: dts: qcom: apq8016-sbc: Replace spaces with tabs
-Date:   Fri,  5 Jun 2020 20:59:16 +0200
-Message-Id: <20200605185916.318494-4-stephan@gerhold.net>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200605185916.318494-1-stephan@gerhold.net>
-References: <20200605185916.318494-1-stephan@gerhold.net>
+        Fri, 5 Jun 2020 17:33:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591392831; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=IAHtev+drdjHORDurNRZb9RBH0LS4soHB+6HHbpezn4=; b=A511iEaNq16x4SgTIqQT+HM9BizovRYt+WNfPW0xlSccwfYhcjEmVYkQ92XtNuWJN1+uTgTv
+ kuFdZb8DH+B0zDYHZp5D5iVW3fdhjP3O+ghcgA1ORoxAAc/zeUV/M036bzw6936FtFWcj5v7
+ iS/VgSeJK8h9GJUgrMBGc8sIdPQ=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5edaba3d2c549984755f6089 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Jun 2020 21:33:49
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BCB36C43395; Fri,  5 Jun 2020 21:33:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A5F8C433C6;
+        Fri,  5 Jun 2020 21:33:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A5F8C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com, mka@chromium.org
+Cc:     nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, vincent.guittot@linaro.org,
+        amit.kucheria@linaro.org, lukasz.luba@arm.com,
+        sudeep.holla@arm.com, smasetty@codeaurora.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v6 0/5] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+Date:   Sat,  6 Jun 2020 03:03:27 +0530
+Message-Id: <20200605213332.609-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -51,121 +63,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-apq8016-sbc.dtsi uses spaces on some lines instead of tabs.
-Make this consistent by converting them to tabs.
+This patch series aims to extend cpu based scaling support to L3/DDR on
+SDM845 and SC7180 SoCs.
 
-Also remove some redundant comments from the DAI link definitions
-- this is already visible from the comment block before the "sound"
-node or the device node entries itself.
+Patches [1-2] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
+Patches [3-5] - Update bw levels based on cpu frequency change
 
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 75 ++++++++++++-----------
- 1 file changed, 38 insertions(+), 37 deletions(-)
+Based on Viresh's opp-next:
+https://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git/log/?h=opp/linux-next
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-index 8a4b790aa7ff..364014c96632 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-@@ -453,22 +453,23 @@ capture - Quat MI2S
- 
- 		*/
- 
--                sound: sound {
--                        compatible = "qcom,apq8016-sbc-sndcard";
--                        reg = <0x07702000 0x4>, <0x07702004 0x4>;
--                        reg-names = "mic-iomux", "spkr-iomux";
--
--                        status = "okay";
--                        pinctrl-0 = <&cdc_pdm_lines_act &ext_sec_tlmm_lines_act &ext_mclk_tlmm_lines_act>;
--                        pinctrl-1 = <&cdc_pdm_lines_sus &ext_sec_tlmm_lines_sus &ext_mclk_tlmm_lines_sus>;
--                        pinctrl-names = "default", "sleep";
--                        qcom,model = "DB410c";
--                        qcom,audio-routing =
--                                "AMIC2", "MIC BIAS Internal2",
--                                "AMIC3", "MIC BIAS External1";
-+		sound: sound {
-+			compatible = "qcom,apq8016-sbc-sndcard";
-+			reg = <0x07702000 0x4>, <0x07702004 0x4>;
-+			reg-names = "mic-iomux", "spkr-iomux";
-+
-+			status = "okay";
-+			pinctrl-0 = <&cdc_pdm_lines_act &ext_sec_tlmm_lines_act &ext_mclk_tlmm_lines_act>;
-+			pinctrl-1 = <&cdc_pdm_lines_sus &ext_sec_tlmm_lines_sus &ext_mclk_tlmm_lines_sus>;
-+			pinctrl-names = "default", "sleep";
-+			qcom,model = "DB410c";
-+			qcom,audio-routing =
-+				"AMIC2", "MIC BIAS Internal2",
-+				"AMIC3", "MIC BIAS External1";
-+
- 			external-dai-link@0 {
- 				link-name = "ADV7533";
--				cpu { /* QUAT */
-+				cpu {
- 					sound-dai = <&lpass MI2S_QUATERNARY>;
- 				};
- 				codec {
-@@ -476,26 +477,26 @@ codec {
- 				};
- 			};
- 
--                        internal-codec-playback-dai-link@0 {            /* I2S - Internal codec */
--                                link-name = "WCD";
--                                cpu { /* PRIMARY */
--                                        sound-dai = <&lpass MI2S_PRIMARY>;
--                                };
--                                codec {
--                                        sound-dai = <&lpass_codec 0>, <&wcd_codec 0>;
--                                };
--                        };
--
--                        internal-codec-capture-dai-link@0 {             /* I2S - Internal codec */
--                                link-name = "WCD-Capture";
--                                cpu { /* PRIMARY */
--                                        sound-dai = <&lpass MI2S_TERTIARY>;
--                                };
--                                codec {
--                                        sound-dai = <&lpass_codec 1>, <&wcd_codec 1>;
--                                };
--                        };
--                };
-+			internal-codec-playback-dai-link@0 {
-+				link-name = "WCD";
-+				cpu {
-+					sound-dai = <&lpass MI2S_PRIMARY>;
-+				};
-+				codec {
-+					sound-dai = <&lpass_codec 0>, <&wcd_codec 0>;
-+				};
-+			};
-+
-+			internal-codec-capture-dai-link@0 {
-+				link-name = "WCD-Capture";
-+				cpu {
-+					sound-dai = <&lpass MI2S_TERTIARY>;
-+				};
-+				codec {
-+					sound-dai = <&lpass_codec 1>, <&wcd_codec 1>;
-+				};
-+			};
-+		};
- 
- 		spmi@200f000 {
- 			pm8916@0 {
-@@ -650,9 +651,9 @@ resin {
- };
- 
- &wcd_codec {
--        status = "okay";
--        clocks = <&gcc GCC_CODEC_DIGCODEC_CLK>;
--        clock-names = "mclk";
-+	status = "okay";
-+	clocks = <&gcc GCC_CODEC_DIGCODEC_CLK>;
-+	clock-names = "mclk";
- 	qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
- 	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
- };
+V6:
+ * Add global flag to distinguish between voltage update and opp add.
+   Use the same flag before trying to scale ddr/l3 bw [Viresh]
+ * Use dev_pm_opp_find_freq_ceil to grab all opps [Viresh] 
+ * Move dev_pm_opp_of_find_icc_paths into probe [Viresh]
+
+V5:
+ * Pick up R-bs from Amit
+ * Drop icc tag support/dt changes till the a consensus is achieved
+ * Use dev_pm_opp_adjust_voltage instead [Viresh]
+ * Drop dev_pm_opp_get_path_count [Saravana]
+ * Rework dev_pm_opp_set_bw
+
+V4:
+ * Migrate to using Georgi's new bindings
+ * Misc fixups based on Matthias comments
+ * API fixups based on Bjorn's comments on v2
+ * Picked up a few R-bs from Matthias
+
+v3:
+ * Migrated to using Saravana's opp-kBps bindings [1]
+ * Fixed some misc comments from Rajendra
+ * Added support for SC7180
+
+v2:
+ * Incorporated Viresh's comments from:
+ https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
+ https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+ * Dropped cpufreq-map passive governor
+
+Sibi Sankar (5):
+  cpufreq: blacklist SDM845 in cpufreq-dt-platdev
+  cpufreq: blacklist SC7180 in cpufreq-dt-platdev
+  OPP: Add and export helper to set bandwidth
+  cpufreq: qcom: Update the bandwidth levels on frequency change
+  cpufreq: qcom: Disable fast switch when scaling DDR/L3
+
+ drivers/cpufreq/cpufreq-dt-platdev.c |  2 +
+ drivers/cpufreq/qcom-cpufreq-hw.c    | 86 ++++++++++++++++++++++++++--
+ drivers/opp/core.c                   | 31 ++++++++++
+ include/linux/pm_opp.h               |  6 ++
+ 4 files changed, 121 insertions(+), 4 deletions(-)
+
 -- 
-2.26.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
