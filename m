@@ -2,142 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C27C1EF1C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 09:02:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D1BC1EF2B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 10:06:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbgFEHCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 03:02:17 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:60292 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726096AbgFEHCR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 03:02:17 -0400
+        id S1726151AbgFEIGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jun 2020 04:06:34 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:26818 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726144AbgFEIGd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Jun 2020 04:06:33 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591340536; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1591344393; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ZIUioFGqsAGz4kjU7gMFcICmC9eQAnxqAo7nG9yOo60=;
- b=xkdZokXheR53NqaLWPHBFBl09D6t2pl8c2InvZokP8ECkMMdaeFNo/Krb5p72QMjA5fPFkAf
- 2eABW/OfxKaxSLmotGkX9Rxon1hSUU1NqcAgUfrPYfQy2rIWAV+GmHCQFZDDXssVgHHD8TEB
- GA5GqtBjzt2uq7jpXH2Fh4Rlq5I=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ MIME-Version: Sender; bh=049ityVEOxtL3FukO3eAXaJK1CB8e5f03uXhxkkdNhc=;
+ b=DRG34L5G15LqyYTFE/spTW3OG2vOy18WvYXk1yJusl1oNR5wMDJGb/yGg0lCW1Ml2AUY2X4z
+ TrWX38CAh9Ll5iPiPD/svMFmzIdthvH5WWTMHmOpwSeu0p3ZFYdV0AJj2uI49ypY54xdzgn5
+ 62D4T5NSezaBZ0+xqv26ZS6xw4k=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5ed9edf74db551abdef10831 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Jun 2020 07:02:15
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5ed9fd0044a25e0052009121 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Jun 2020 08:06:24
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 30000C433CA; Fri,  5 Jun 2020 07:02:15 +0000 (UTC)
+        id A1B09C43391; Fri,  5 Jun 2020 08:06:22 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
-        autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: dikshita)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BAC1FC433C6;
-        Fri,  5 Jun 2020 07:02:14 +0000 (UTC)
+        (Authenticated sender: ppvk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 27E7CC433CB;
+        Fri,  5 Jun 2020 08:06:21 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
+Content-Type: text/plain; charset=US-ASCII;
  format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Fri, 05 Jun 2020 12:32:14 +0530
-From:   dikshita@codeaurora.org
-To:     Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Nicolas Dufresne <nicolas@ndufresne.ca>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 05 Jun 2020 13:36:21 +0530
+From:   ppvk@codeaurora.org
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>, bjorn.andersson@linaro.org,
+        adrian.hunter@intel.com, robh+dt@kernel.org,
+        ulf.hansson@linaro.org, vbadigan@codeaurora.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, linux-mmc@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org, jdas@codeaurora.org,
-        linux-media-owner@vger.kernel.org
-Subject: Re: [RFC] METADATA design using V4l2 Request API
-In-Reply-To: <ad61378b-e279-d161-adaa-17349adf183e@xs4all.nl>
-References: <1588918890-673-1-git-send-email-dikshita@codeaurora.org>
- <d1179bc1-662b-615f-0f9b-67693fe8c906@xs4all.nl>
- <fb96e2c09346e7831a0af99c0fe9f94c@codeaurora.org>
- <7be1070ee7aad1f48fc6de63523da8e1bc952dc8.camel@ndufresne.ca>
- <ad61378b-e279-d161-adaa-17349adf183e@xs4all.nl>
-Message-ID: <5356c146a340d951b8d492373f349199@codeaurora.org>
-X-Sender: dikshita@codeaurora.org
+        devicetree@vger.kernel.org, linux-mmc-owner@vger.kernel.org,
+        rnayak@codeaurora.org, matthias@chromium.org
+Subject: Re: [PATCH V2 1/2] mmc: sdhci-msm: Add interconnect bandwidth scaling
+ support
+In-Reply-To: <23d6da79d604ce5113d90a2adab17483@codeaurora.org>
+References: <1591269283-24084-1-git-send-email-ppvk@codeaurora.org>
+ <1591269283-24084-2-git-send-email-ppvk@codeaurora.org>
+ <20200604170906.GP4525@google.com>
+ <23d6da79d604ce5113d90a2adab17483@codeaurora.org>
+Message-ID: <dad8aba58bc3828a05da122555a54db8@codeaurora.org>
+X-Sender: ppvk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans, Nicolas,
-
-On 2020-05-29 13:01, Hans Verkuil wrote:
-> On 29/05/2020 04:18, Nicolas Dufresne wrote:
->> Le jeudi 28 mai 2020 à 16:18 +0530, dikshita@codeaurora.org a écrit :
->>>> not allowed. So I need to know more about this.
->>>> Regards,
->>>>        Hans
+On 2020-06-05 00:04, Sibi Sankar wrote:
+> On 2020-06-04 22:39, Matthias Kaehlcke wrote:
+>> On Thu, Jun 04, 2020 at 04:44:42PM +0530, Pradeep P V K wrote:
+>>> Interconnect bandwidth scaling support is now added as a
+>>> part of OPP [1]. So, make sure interconnect driver is ready
+>>> before handling interconnect scaling.
 >>> 
->>> we need this for use cases like HDR10+ where metadata info is part of
->>> the bitstream.
+>>> This change is based on
+>>> [1] [Patch v8] Introduce OPP bandwidth bindings
+>>> (https://lkml.org/lkml/2020/5/12/493)
 >>> 
->>> To handle such frame specific data, support for request api on 
->>> capture
->>> plane would be needed.
+>>> [2] [Patch v3] mmc: sdhci-msm: Fix error handling
+>>> for dev_pm_opp_of_add_table()
+>>> (https://lkml.org/lkml/2020/5/5/491)
+>>> 
+>>> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+>>> ---
+>>>  drivers/mmc/host/sdhci-msm.c | 13 +++++++++++++
+>>>  1 file changed, 13 insertions(+)
+>>> 
+>>> diff --git a/drivers/mmc/host/sdhci-msm.c 
+>>> b/drivers/mmc/host/sdhci-msm.c
+>>> index b277dd7..a13ff1b 100644
+>>> --- a/drivers/mmc/host/sdhci-msm.c
+>>> +++ b/drivers/mmc/host/sdhci-msm.c
+>>> @@ -14,6 +14,7 @@
+>>>  #include <linux/slab.h>
+>>>  #include <linux/iopoll.h>
+>>>  #include <linux/regulator/consumer.h>
+>>> +#include <linux/interconnect.h>
+>>> 
+>>>  #include "sdhci-pltfm.h"
+>>>  #include "cqhci.h"
+>>> @@ -2070,6 +2071,18 @@ static int sdhci_msm_probe(struct 
+>>> platform_device *pdev)
+>>>  	}
+>>>  	msm_host->bulk_clks[0].clk = clk;
+>>> 
+>>> +	/* Make sure that ICC driver is ready for interconnect bandwdith
+>>> +	 * scaling before registering the device for OPP.
+>>> +	 */
+>>> +	ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
+>>> +	if (ret) {
+>>> +		if (ret == -EPROBE_DEFER)
+>>> +			dev_info(&pdev->dev, "defer icc path: %d\n", ret);
 >> 
->> I have a bit of a mixed impression here. Considering how large the 
->> ioctl
->> interface overhead is, relying on HW parser to extract this medata 
->> woud be the
->> last thing I would consider.
+>> I already commented on this on v1:
 >> 
->> Instead, I'm quite convince we can achieve greater and likely 
->> zero-copy
->> perfromance by locating this header in userspace. So everytime I see 
->> this kind
->> of API, were the HW is *needed* to parse a trivial bit of bistream, I 
->> ended
->> thinking that we simply craft this API to expose this because the HW 
->> can do it,
->> but no further logical thinking or higher level design seems to have 
->> been
->> applied.
+>>   This log seems to add little more than noise, or are there 
+>> particular reasons
+>>   why it is useful in this driver? Most drivers just return silently 
+>> in case of
+>>   deferred probing.
 >> 
->> I'm sorry for this open critic, but are we designing this because the 
->> HW
->> designer exposed that feature? This is so low complexity to extract in
->> userspace, with the bonus that we are not forced into expanding the
->> representation to another form immediatly, as maybe the display will 
->> be able to
->> handle that form directly (where converting to a C structure and then 
->> back to
->> some binary format to satisfy DRM property seems very sub-optimal).
->> 
->> Nicolas
->> 
+>> If you think the log is really needed please explain why.
 > 
-> Nicolas raises good questions: it would help if you can give more
-> detailed information
-> about the hardware. We had similar discussions with Xilinx about
-> HDR10+ (see this
-> thread: https://www.spinics.net/lists/linux-media/msg163297.html).
-> 
-> There is no clear answer at the moment on how to handle dynamic HDR 
-> metadata.
-> It will help if we have some more information how different SoCs handle 
-> this
-> in hardware.
-> 
-> Regards,
-> 
-> 	Hans
+Sorry. i forget to remove this print on V2. i will address this in my 
+next patch set.
 
-As per Widevine Level 1 requirement, it needs “Hardware Protected Video 
-Path”.
-Hence, in case of secure bitstream decoding, we need decoder metadata 
-delivered from HW.
-CPU cannot parse secure bitstream and extract them.
-Apart from this, there are other metadata like "histogram" which is not 
-part of the bitstream
-and generated by hardware
+> Both the err logs seem redundant.
+> EPROBE_DEFERS are rather readily
+> noticeable through the return val.
+> dev_.._find_icc_paths already prints
+> err messages when we fail to get icc
+> paths.
 
-Thanks,
-Dikshita
+True. i will remove this too in my next patch set.
+
