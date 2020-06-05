@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D5C11EF690
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 13:41:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14F881EF9E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 16:03:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726314AbgFELlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 07:41:05 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:48710 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726537AbgFELlE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 07:41:04 -0400
+        id S1728028AbgFEODu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jun 2020 10:03:50 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:53502 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727085AbgFEODu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 5 Jun 2020 10:03:50 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591357264; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1591365829; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=lyPYOzLX8Vuo1M7AG9NpLi25wODcB0QLRhTvvaOQYkg=;
- b=jHLkiLybzRrnx0sW09Mm7rY/qe0+X4Y+CPUSWIv4PhHONByb66qE4OXxKUhNZNeA9oOCNz0G
- 21lJz4fmowd42g3Q54n+lexrUXV7zGvYO57wWd9JjYAUNvSsWRVv4+NGIG4pC6I5UQNJK9eo
- wgdeWiDNU1VNP9m5FncFKCYCNdo=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ MIME-Version: Sender; bh=ZPrxxS+20A8R406jZPIf8TWcYL+cMfqMteAA8b140DQ=;
+ b=T6dIS+4VeCJ/PfqvtKbyzZLBHX5Q63O/j9wkgyZkVAFQyHJm0ua1tyAkWff73MnUsI7Nsu4G
+ uM7HCKauMgA5vv3yG/RJIVzDvkI9u8paDFdHxkPg0LOooL0MPMIEccIVfz234C3FErCf3MKm
+ NAxcexQ+xmfLctFs9HVhZm7frWI=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5eda2f4127386861269869b2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Jun 2020 11:40:49
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5eda50a344a25e0052a8d7f8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Jun 2020 14:03:15
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8C5FCC433CA; Fri,  5 Jun 2020 11:40:48 +0000 (UTC)
+        id 1E0D0C433CB; Fri,  5 Jun 2020 14:03:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,110 +36,85 @@ X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E6338C433C6;
-        Fri,  5 Jun 2020 11:40:47 +0000 (UTC)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4031C433C6;
+        Fri,  5 Jun 2020 14:03:13 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 05 Jun 2020 17:10:47 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Pradeep P V K <ppvk@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, adrian.hunter@intel.com,
-        robh+dt@kernel.org, ulf.hansson@linaro.org,
-        vbadigan@codeaurora.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, mka@chromium.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-mmc-owner@vger.kernel.org, rnayak@codeaurora.org,
-        matthias@chromium.org, linux-arm-msm-owner@vger.kernel.org
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH=C2=A0V3_1/2=5D_mmc=3A_sdhci-msm=3A_Add_?=
- =?UTF-8?Q?interconnect_bandwidth_scaling_support?=
-In-Reply-To: <1591349427-27004-2-git-send-email-ppvk@codeaurora.org>
-References: <1591269283-24084-1-git-send-email-ppvk@codeaurora.org>
- <1591349427-27004-1-git-send-email-ppvk@codeaurora.org>
- <1591349427-27004-2-git-send-email-ppvk@codeaurora.org>
-Message-ID: <8b2808215a09871bfccccb72cfa01e60@codeaurora.org>
-X-Sender: sibis@codeaurora.org
+Date:   Fri, 05 Jun 2020 19:33:13 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        devicetree-owner@vger.kernel.org
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8150: add apps_smmu node
+In-Reply-To: <20200529031520.GA1799770@builder.lan>
+References: <20200524023815.21789-1-jonathan@marek.ca>
+ <20200524023815.21789-2-jonathan@marek.ca>
+ <20200529025246.GV279327@builder.lan>
+ <d0908f34-a698-3449-35b9-7a98e9641295@marek.ca>
+ <20200529031520.GA1799770@builder.lan>
+Message-ID: <91eb7ee0e549b10724c724aebfd91996@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Pradeep,
-Thanks for the patch.
-
-On 2020-06-05 15:00, Pradeep P V K wrote:
-> Interconnect bandwidth scaling support is now added as a
-> part of OPP [1]. So, make sure interconnect driver is ready
-
-can you please replace driver with paths
-instead?
-
-> before handling interconnect scaling.
+On 2020-05-29 08:45, Bjorn Andersson wrote:
+> On Thu 28 May 20:02 PDT 2020, Jonathan Marek wrote:
 > 
-> This change is based on
-> [1] [Patch v8] Introduce OPP bandwidth bindings
-> (https://lkml.org/lkml/2020/5/12/493)
+>> 
+>> 
+>> On 5/28/20 10:52 PM, Bjorn Andersson wrote:
+>> > On Sat 23 May 19:38 PDT 2020, Jonathan Marek wrote:
+>> >
+>> > > Add the apps_smmu node for sm8150. Note that adding the iommus field for
+>> > > UFS is required because initializing the iommu removes the bypass mapping
+>> > > that created by the bootloader.
+>> > >
+>> >
+>> > Unrelated to the patch itself; how do you disable the splash screen on
+>> > 8150? "fastboot oem select-display-panel none" doesn't seem to work for
+>> > me on the MTP - and hence this would prevent my device from booting.
+>> >
+>> > Thanks,
+>> > Bjorn
+>> >
+>> 
+>> I don't have a MTP, but on HDK855, "fastboot oem select-display-panel 
+>> none"
+>> combined with setting the physical switch to HDMI mode (which switches 
+>> off
+>> the 1440x2560 panel) gets it to not setup the display at all (just the
+>> fastboot command isn't enough).
+>> 
 > 
-> [2] [Patch v3] mmc: sdhci-msm: Fix error handling
-> for dev_pm_opp_of_add_table()
-> (https://lkml.org/lkml/2020/5/5/491)
-
-sry didn't notice ^^ earlier
-you might want to place these
-comments and dependencies similar
-to the following patch.
-https://patchwork.kernel.org/patch/11573903/
-
+> Okay, I don't think we have anything equivalent on the MTP, but good to
+> know.
 > 
-> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
-> ---
->  drivers/mmc/host/sdhci-msm.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c 
-> b/drivers/mmc/host/sdhci-msm.c
-> index b277dd7..a945e84 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -14,6 +14,7 @@
->  #include <linux/slab.h>
->  #include <linux/iopoll.h>
->  #include <linux/regulator/consumer.h>
-> +#include <linux/interconnect.h>
-> 
->  #include "sdhci-pltfm.h"
->  #include "cqhci.h"
-> @@ -2070,6 +2071,13 @@ static int sdhci_msm_probe(struct 
-> platform_device *pdev)
->  	}
->  	msm_host->bulk_clks[0].clk = clk;
-> 
-> +	/* Make sure that ICC driver is ready for interconnect bandwdith
 
-typo /s/bandwdith/bandwidth
+Actually I tried out this in SM8150 MTP and it works fine for me,
 
-> +	 * scaling before registering the device for OPP.
-> +	 */
+"fastboot set_active a; fastboot set_active b; fastboot set_active a; 
+fastboot oem select-display-panel none; fastboot reboot bootloader; 
+fastboot boot boot-sm8150.img"
 
-/* Check for optional interconnect paths */
-Maybe using ^^ would suffice since
-that's what we are actually doing
+Also I need to switch slots everytime like above, otherwise I always see 
+some error
+while loading the boot image.
 
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
-
-> +	ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
-> +	if (ret)
-> +		goto bus_clk_disable;
-> +
->  	msm_host->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
->  	if (IS_ERR(msm_host->opp_table)) {
->  		ret = PTR_ERR(msm_host->opp_table);
-
+Thanks,
+Sai
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
