@@ -2,135 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 161851EF9FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 16:10:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68F991EFA2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 16:14:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727813AbgFEOKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 10:10:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47310 "EHLO
+        id S1727889AbgFEOOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jun 2020 10:14:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727097AbgFEOKI (ORCPT
+        with ESMTP id S1726553AbgFEOOt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 10:10:08 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37FE2C08C5C3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2020 07:10:08 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id f18so9776399qkh.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2020 07:10:08 -0700 (PDT)
+        Fri, 5 Jun 2020 10:14:49 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8838C08C5C2;
+        Fri,  5 Jun 2020 07:14:48 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id c1so5655904vsc.11;
+        Fri, 05 Jun 2020 07:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=I0/WSfj2SyN/DyoKU5g8TSVdYEPxsYEHqAcc64RrQhU=;
-        b=RXROPFih1qODR8nENLKP9JMQxe/2o43hmY/yGapZPyol/NnvoY62UsOWy+S7zmCZW0
-         TMOVUkZHubrGkwKq1Xw9mhAPG9LcV5oRK0niv6Aiow7e7ZgmEYvDn/plIEuY1nCT1aOa
-         aGXPv5b/huLViIIhT8WMuTT5K0qOSo+ykUx/MH9VtwURHW83KH4GCJXtVs0GdlR7YBSL
-         8FmjDVPbACcF1Biph0ZodVdEtB622+nM9K1ELqUlZ4z9ixo4f3uEJGzKXl/eb3lzO3x2
-         2Rkqm+/hVpRa8Nt5CSAg9Tv+ghkkI2Ewi3aBmWYvvBCGBfS5gvJNrwgbyHuigBY2b+5+
-         WydA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=92tfzhWVlr2aeqK6HzMd7FHEFDVr/SwIXq1vTN+sBsE=;
+        b=slC13LUI63Z1B/lBFeHzqxfKXgHGu+NWsOaWx/VY3tEIMAz36JD2glQbgAOqnCdXbr
+         vcJoMUqM1fMC4H4ja7kjAkGBV8O28unPretRpywWtW9KDU3RkUc15rSc7Onpivvqzdfw
+         SVboV6cjc7XBfCVbQKKB8foHRY2gSgkTSfYs68RQmE69KBrm6rbOBrM+p03DAe3omKG2
+         GsAjLEuDzhg8NN7ew4JTjebwu69A/Y8G5Zwd3lpuczD/gi8N+9ovP4AUZoCqoQIwjsc0
+         CpGc3tKy8ZoDo3NHDt4K5McRKhuNv1DkmxfHtPQM45sWoMsaF3nBj3QOf6ex3gX2zoAo
+         F2dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=I0/WSfj2SyN/DyoKU5g8TSVdYEPxsYEHqAcc64RrQhU=;
-        b=TQczujlGCtAeQQPznURKj0hTHVquQRTse10Pb/2thTHjauMOZ4/wEozsHTyvxsOqzf
-         BCQ6JdO8daP8Zs7BDJvyFF6XpEWQNgAE9Ly31zk99pTOOiA2eHyVD5a2jg0oWJPbTIGS
-         evVbGSfVRIqAKTpvaez8oFe8r8o7i2dxOit9pMI8BCdZIKz3vGgPRd2y5IMAqsVWaFST
-         d59MVnzfKk+aSZUVlf8qmazBroBb39MBK7JFVO1g4RtwFe/jFjJwaVM7QZSZhsMmpfd5
-         EZr67Nf+kLN9P/VZ6Jj9nY2EAccI3j1Ts/5KKpUse9gQebaLcwK/j+kdYiioUILi9hou
-         jxfw==
-X-Gm-Message-State: AOAM532edMxWc4qCQ0myWAZOJbCCF1mHFO8T0I5q1r19llDdAgo4GnFG
-        B3lie5h3bwajgjSvojYUkgmgAg==
-X-Google-Smtp-Source: ABdhPJwVy4BwZQ6cvWCnxoX8YJIsDQhVvQPsH1HgtDJtg+RGPnkkV5AL921wK/IkdVN4k1dMoBjVDA==
-X-Received: by 2002:a37:c20c:: with SMTP id i12mr10527895qkm.167.1591366207162;
-        Fri, 05 Jun 2020 07:10:07 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id b4sm6449846qka.133.2020.06.05.07.10.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jun 2020 07:10:06 -0700 (PDT)
-Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8150: add apps_smmu node
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        devicetree-owner@vger.kernel.org
-References: <20200524023815.21789-1-jonathan@marek.ca>
- <20200524023815.21789-2-jonathan@marek.ca>
- <20200529025246.GV279327@builder.lan>
- <d0908f34-a698-3449-35b9-7a98e9641295@marek.ca>
- <20200529031520.GA1799770@builder.lan>
- <91eb7ee0e549b10724c724aebfd91996@codeaurora.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <8cf134f0-381f-7765-2496-e5abd77f3087@marek.ca>
-Date:   Fri, 5 Jun 2020 10:10:29 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=92tfzhWVlr2aeqK6HzMd7FHEFDVr/SwIXq1vTN+sBsE=;
+        b=ZxH/tY2zuX5fWVfInWuwC0oiwsQM9PcCO6oSalDlHG1tt7xuuICzCyNf4tP9Y9cMYX
+         RZZKXC8PPVzuGCZMRE88/5cD6AqB7jw7qztmDBBQJd/e4QhnF67UFtcVkJMRjTeRjxqR
+         PcYXGP35PjcWPyEgdPHG9AQSbdUVyLeFkb9z1qBZCz8tiZiVUeMQwOoG+9DR+AuzsIEX
+         eDuIpt6gZNyk8PGHDOPGn9cDn/1ntxUvH+VFBWxQBg6623gBut6CS3zZ+QiUHzsCpPLz
+         hFByCgzN/EElpdcT6nG370+A6ep69FKY/eYCNOux4B423489sLvxngPzauuKNdGHzh15
+         +Y9A==
+X-Gm-Message-State: AOAM531c8z0Nl2XM4HJ489OXQkgdWugeZurM71BhQkUiUlzO/QhauNdr
+        gSTr04isaE9U1omtX302D+zHw5c5+S5SD7KTisM=
+X-Google-Smtp-Source: ABdhPJxwwCSalJFjI5Abuw6mc/isptPZeXUnUU8oFM57642z1EvQWUDOIZOqC/bjcW+INW9fkNsyYq792j8ZcgxWh/k=
+X-Received: by 2002:a67:b149:: with SMTP id z9mr6882548vsl.85.1591366487388;
+ Fri, 05 Jun 2020 07:14:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <91eb7ee0e549b10724c724aebfd91996@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1591009402-681-1-git-send-email-mkrishn@codeaurora.org>
+ <CACvgo50eb5_jp_6B5tkV9cX_X2_y2Xnavu+wvUUhHN5FsV9hiw@mail.gmail.com>
+ <cd61dd742e73b89794fc1b812d9fdcd9@codeaurora.org> <CACvgo50b+m2+onak=AZfgihkBXEP9POjMR52087v==-puLdkQQ@mail.gmail.com>
+ <8742ac6fbd498fdc22dcd469c3a2d52a@codeaurora.org>
+In-Reply-To: <8742ac6fbd498fdc22dcd469c3a2d52a@codeaurora.org>
+From:   Emil Velikov <emil.l.velikov@gmail.com>
+Date:   Fri, 5 Jun 2020 15:11:24 +0100
+Message-ID: <CACvgo52Rz+QzA4k7ttg6Gh124fZBAfaX0nrPpaMTECvr_8D2zw@mail.gmail.com>
+Subject: Re: [v2] drm/msm: add shutdown support for display platform_driver
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        ML dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno@lists.freedesktop.org,
+        devicetree <devicetree@vger.kernel.org>,
+        "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>, kalyan_t@codeaurora.org,
+        "Kristian H . Kristensen" <hoegsberg@chromium.org>,
+        mka@chromium.org, devicetree-owner@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/5/20 10:03 AM, Sai Prakash Ranjan wrote:
-> On 2020-05-29 08:45, Bjorn Andersson wrote:
->> On Thu 28 May 20:02 PDT 2020, Jonathan Marek wrote:
->>
->>>
->>>
->>> On 5/28/20 10:52 PM, Bjorn Andersson wrote:
->>> > On Sat 23 May 19:38 PDT 2020, Jonathan Marek wrote:
->>> >
->>> > > Add the apps_smmu node for sm8150. Note that adding the iommus 
->>> field for
->>> > > UFS is required because initializing the iommu removes the bypass 
->>> mapping
->>> > > that created by the bootloader.
->>> > >
->>> >
->>> > Unrelated to the patch itself; how do you disable the splash screen on
->>> > 8150? "fastboot oem select-display-panel none" doesn't seem to work 
->>> for
->>> > me on the MTP - and hence this would prevent my device from booting.
->>> >
->>> > Thanks,
->>> > Bjorn
->>> >
->>>
->>> I don't have a MTP, but on HDK855, "fastboot oem select-display-panel 
->>> none"
->>> combined with setting the physical switch to HDMI mode (which 
->>> switches off
->>> the 1440x2560 panel) gets it to not setup the display at all (just the
->>> fastboot command isn't enough).
->>>
->>
->> Okay, I don't think we have anything equivalent on the MTP, but good to
->> know.
->>
-> 
-> Actually I tried out this in SM8150 MTP and it works fine for me,
-> 
-> "fastboot set_active a; fastboot set_active b; fastboot set_active a; 
-> fastboot oem select-display-panel none; fastboot reboot bootloader; 
-> fastboot boot boot-sm8150.img"
-> 
-> Also I need to switch slots everytime like above, otherwise I always see 
-> some error
-> while loading the boot image.
-> 
+On Tue, 2 Jun 2020 at 17:10, Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Hi Emil,
+>
+> On 2020-06-02 21:09, Emil Velikov wrote:
+> > On Tue, 2 Jun 2020 at 15:49, Sai Prakash Ranjan
+> > <saiprakash.ranjan@codeaurora.org> wrote:
+> >>
+> >> Hi Emil,
+> >>
+> >> On 2020-06-02 19:43, Emil Velikov wrote:
+> >> > Hi Krishna,
+> >> >
+> >> > On Tue, 2 Jun 2020 at 08:17, Krishna Manikandan
+> >> > <mkrishn@codeaurora.org> wrote:
+> >> >>
+> >> >> Define shutdown callback for display drm driver,
+> >> >> so as to disable all the CRTCS when shutdown
+> >> >> notification is received by the driver.
+> >> >>
+> >> >> This change will turn off the timing engine so
+> >> >> that no display transactions are requested
+> >> >> while mmu translations are getting disabled
+> >> >> during reboot sequence.
+> >> >>
+> >> >> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+> >> >>
+> >> > AFAICT atomics is setup in msm_drm_ops::bind and shutdown in
+> >> > msm_drm_ops::unbind.
+> >> >
+> >> > Are you saying that unbind never triggers? If so, then we should
+> >> > really fix that instead, since this patch seems more like a
+> >> > workaround.
+> >> >
+> >>
+> >> Which path do you suppose that the unbind should be called from,
+> >> remove
+> >> callback? Here we are talking about the drivers which are builtin,
+> >> where
+> >> remove callbacks are not called from the driver core during
+> >> reboot/shutdown,
+> >> instead shutdown callbacks are called which needs to be defined in
+> >> order
+> >> to
+> >> trigger unbind. So AFAICS there is nothing to be fixed.
+> >>
+> > Interesting - in drm effectively only drm panels implement .shutdown.
+> > So my naive assumption was that .remove was used implicitly by core,
+> > as part of the shutdown process. Yet that's not the case, so it seems
+> > that many drivers could use some fixes.
+> >
+> > Then again, that's an existing problem which is irrelevant for msm.
+> > -Emil
+>
+> To give more context, we are actually targeting the clients/consumers
+> of SMMU/IOMMU here because we have to make sure that before the supplier
+> (SMMU) shuts down, its consumers/clients need to be shutdown properly.
+> Now the ordering of this is taken care in the SMMU driver via
+> device_link
+> which makes sure that consumer shutdown callbacks are called first, but
+> we
+> need to define shutdown callbacks for all its consumers to make sure we
+> actually shutdown the clients or else it would invite the crashes during
+> reboot
+> which in this case was seen for display.
+>
+Thank you very much for the extra details. I think other DRM drivers
+will be safe as-is.
 
-What is the error? If it is "FAILED (remote: Failed to load/authenticate 
-boot image: Load Error)" then flashing/erasing boot_a will make it go 
-away ("fastboot erase boot_a") for the next 6 or so "failed" boots.
-
-> Thanks,
-> Sai
-> 
+-Emil
