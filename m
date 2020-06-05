@@ -2,139 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEA521EFB8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 16:38:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BA3B1EFB93
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2020 16:39:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727813AbgFEOiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 10:38:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52088 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726553AbgFEOiH (ORCPT
+        id S1728050AbgFEOjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Jun 2020 10:39:54 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:21674 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728048AbgFEOjy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 10:38:07 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BE77C08C5C2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2020 07:38:07 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id v17so7793406ote.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2020 07:38:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=A+OB10W2CaV6t6N6JaU5zy1XJv7tjxdyLrdhOyng/2E=;
-        b=SRwmWgMxUFeppgdZq354pQ61S0xZF7Qqv46jP4rQFAxhyC0o7wbgDUxhIwiholkPw9
-         ovPQgKZQ/l50wiGYxbAV1sqGN/35IuoM7GiJtn+HpWLNgrUlfY+lPXFzhFemC2wV/MR2
-         Vkayj8rhfqsDD/8smWNYghfe1JHzGGAKXcmX5SRBW2e4ouWfbUt4yXLRg2BSMDaG3rHM
-         YuJzi/Ngv3SMIGvsEAHctHmXz+XpHIS7ZQ65iDR6bHLFj9RJV+YTiwVFkaiqVM6Wb+ow
-         iLHcQDHLfpCIM+DooeijKk1kC63X2wA1bHJHH1cNGySOYWKDnmw6WI97p75z574Wh3KB
-         bXbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=A+OB10W2CaV6t6N6JaU5zy1XJv7tjxdyLrdhOyng/2E=;
-        b=a6ZWMkE8tnaFZkquPQDg46yHB+dhWELhocfYoKfG+DSvd2sR8MbzGsyr2WRfB8kVVs
-         iDfqdhJDvEpe7QGfg9m+oLJ/t0CuiIqQJtFWyP6SrImYTnUcJ7u0pvLu2yIwbsOsCMZe
-         j6YgfsadUzKCej7rq9cgWIsWO3BSHr+tgILziKBLDTczs3ZOIbK0C5nrss4yKgjPMQLI
-         gKV05taHfx17WlKMbAj5weM46DpvGGpZaGvM/m51ZKYfuZZTjVlJEZlBhzhS0sNIizOM
-         V6TOmOwCQ014ZX2tigD8ndtuYMF3UU2jCVEKr4cOAgwwHMvIMeSiJtBTTaiLelgWJ1Rv
-         e7Qg==
-X-Gm-Message-State: AOAM531S6xnnabWt1I+kRtGctl0SKuNl6DVAfWAtQSFYW4/f6LdvMp/X
-        /mFLQAJQL/KT4W9rQlTqw0EJpJ7M+77o8X/m+QgXOg==
-X-Google-Smtp-Source: ABdhPJz1bXcYrT5I716R8D3/WRRZ1Ia8a5cpyngYb1x11O+qdW71tPq+kiv5YGMfY26UCBDhdO4H2NS0ZXdC+U0UykA=
-X-Received: by 2002:a05:6830:1082:: with SMTP id y2mr7624352oto.368.1591367886559;
- Fri, 05 Jun 2020 07:38:06 -0700 (PDT)
+        Fri, 5 Jun 2020 10:39:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591367993; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=KTWUDLwRGa0tY+A1+UTpe+rQGvhwB5yp5lNO+CrBQH4=;
+ b=G3e2FjAfnhra2IZc2SDOswxFVKXy42uM4LHjy+39KV33Q8ieGIvKS0O17STNoZjD2bP3YggG
+ 30l3BquChXRrJOphAXszfO9r5IZTo5YHu3sgqWcsEOj8cGFSA0j1Uy6Umc6aOj/9giJfOrsP
+ rWhtziGM1GCouwovG6TjH6JoyNs=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5eda593646d39fc0a28680ca (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 05 Jun 2020 14:39:50
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 13945C43387; Fri,  5 Jun 2020 14:39:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 91E91C433CA;
+        Fri,  5 Jun 2020 14:39:49 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200604004331.669936-1-dmitry.baryshkov@linaro.org>
- <20200604004331.669936-5-dmitry.baryshkov@linaro.org> <20200604104701.GG3521@vkoul-mobl>
- <8df3fe11-867f-b6a3-fe29-5a8ab988e006@linaro.org> <20200605043955.GJ3521@vkoul-mobl>
-In-Reply-To: <20200605043955.GJ3521@vkoul-mobl>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 5 Jun 2020 17:37:55 +0300
-Message-ID: <CAA8EJppWY-OBzbDTsLTZasYzi4Nju-XBxhYbYx+eM-3EAwv5hw@mail.gmail.com>
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: pm8150x: add thermal alarms and
- thermal zones
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 05 Jun 2020 20:09:49 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Nicolas Dechesne <nicolas.dechesne@linaro.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Patch Tracking <patches@linaro.org>,
-        linaro-kernel@lists.linaro.org
-Content-Type: text/plain; charset="UTF-8"
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        devicetree-owner@vger.kernel.org
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8150: add apps_smmu node
+In-Reply-To: <CAP71WjwjZgD=msK_2W8eBBk6axZ_uMNurEm9F76u6aHscXPf9Q@mail.gmail.com>
+References: <20200524023815.21789-1-jonathan@marek.ca>
+ <20200524023815.21789-2-jonathan@marek.ca>
+ <20200529025246.GV279327@builder.lan>
+ <d0908f34-a698-3449-35b9-7a98e9641295@marek.ca>
+ <20200529031520.GA1799770@builder.lan>
+ <91eb7ee0e549b10724c724aebfd91996@codeaurora.org>
+ <8cf134f0-381f-7765-2496-e5abd77f3087@marek.ca>
+ <e9800dbb6531c9b57a855f41f68753bd@codeaurora.org>
+ <CAP71WjwjZgD=msK_2W8eBBk6axZ_uMNurEm9F76u6aHscXPf9Q@mail.gmail.com>
+Message-ID: <81a9d07c0c8d76abf0ef734963788884@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Hi Nico,
 
-On Fri, 5 Jun 2020 at 07:40, Vinod Koul <vkoul@kernel.org> wrote:
->
->
-> Sorry missed ccing Amit, done now.
->
-> On 04-06-20, 18:03, Dmitry Baryshkov wrote:
-> > On 04/06/2020 13:47, Vinod Koul wrote:
-> > > On 04-06-20, 03:43, Dmitry Baryshkov wrote:
->
-> > > >                   pm8150_adc: adc@3100 {
-> > > >                           compatible = "qcom,spmi-adc5";
-> > > >                           reg = <0x3100>;
-> > > > @@ -38,8 +47,6 @@ pm8150_adc: adc@3100 {
-> > > >                           #io-channel-cells = <1>;
-> > > >                           interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-> > > > -                 status = "disabled";
-> > > > -
-> > >
-> > > This should not be removed, rather than this please add enabled in you
-> > > board dts file
+On 2020-06-05 20:01, Nicolas Dechesne wrote:
+> On Fri, Jun 5, 2020 at 4:14 PM Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> On 2020-06-05 19:40, Jonathan Marek wrote:
+>> > On 6/5/20 10:03 AM, Sai Prakash Ranjan wrote:
+>> >> On 2020-05-29 08:45, Bjorn Andersson wrote:
+>> >>> On Thu 28 May 20:02 PDT 2020, Jonathan Marek wrote:
+>> >>>
+>> >>>>
+>> >>>>
+>> >>>> On 5/28/20 10:52 PM, Bjorn Andersson wrote:
+>> >>>> > On Sat 23 May 19:38 PDT 2020, Jonathan Marek wrote:
+>> >>>> >
+>> >>>> > > Add the apps_smmu node for sm8150. Note that adding the iommus field for
+>> >>>> > > UFS is required because initializing the iommu removes the bypass mapping
+>> >>>> > > that created by the bootloader.
+>> >>>> > >
+>> >>>> >
+>> >>>> > Unrelated to the patch itself; how do you disable the splash screen on
+>> >>>> > 8150? "fastboot oem select-display-panel none" doesn't seem to work for
+>> >>>> > me on the MTP - and hence this would prevent my device from booting.
+>> >>>> >
+>> >>>> > Thanks,
+>> >>>> > Bjorn
+>> >>>> >
+>> >>>>
+>> >>>> I don't have a MTP, but on HDK855, "fastboot oem
+>> >>>> select-display-panel none"
+>> >>>> combined with setting the physical switch to HDMI mode (which
+>> >>>> switches off
+>> >>>> the 1440x2560 panel) gets it to not setup the display at all (just
+>> >>>> the
+>> >>>> fastboot command isn't enough).
+>> >>>>
+>> >>>
+>> >>> Okay, I don't think we have anything equivalent on the MTP, but good
+>> >>> to
+>> >>> know.
+>> >>>
+>> >>
+>> >> Actually I tried out this in SM8150 MTP and it works fine for me,
+>> >>
+>> >> "fastboot set_active a; fastboot set_active b; fastboot set_active a;
+>> >> fastboot oem select-display-panel none; fastboot reboot bootloader;
+>> >> fastboot boot boot-sm8150.img"
+>> >>
+>> >> Also I need to switch slots everytime like above, otherwise I always
+>> >> see some error
+>> >> while loading the boot image.
+>> >>
+>> >
+>> > What is the error? If it is "FAILED (remote: Failed to
+>> > load/authenticate boot image: Load Error)" then flashing/erasing
+>> > boot_a will make it go away ("fastboot erase boot_a") for the next 6
+>> > or so "failed" boots.
+>> >
+>> 
+>> Yes this exact error.
+> 
+> The bootloader maintains a 'boot status' in one of the partition
+> attributes. After a certain amount of 'failed' boot , it will switch
+> to the other boot partition. It's the same thing on RB3/DB845c. In our
+> release for DB845c, we are patching the bootloader so that this
+> behavior is bypassed. On typical 'product' there is a user space
+> application that will come and set the partition attribute to indicate
+> the boot was successful.
+> 
+> For the record, this is the patch we use on 845c:
+> https://git.linaro.org/landing-teams/working/qualcomm/abl.git/commit/?h=release/LE.UM.2.3.7-09200-sda845.0&id=e3dc60213234ed626161a568ba587ddac63c5158
+> 
+> rebuilding EDK2/ABL requires access to signing tools.. so it might not
+> be possible for everyone. but in case you can, it should be
+> straightforward to reuse this patch.
+> 
 
-Compare this with pm8998.dtsi. It has all nodes enabled by default.
+Thank you for these details and the patch, it's very useful.
+I do have access to ABL code and the signing tools and can build one.
 
-> > > > +&thermal_zones {
-> > > > + pm8150_temp {
-> > > > +         polling-delay-passive = <0>;
-> > > > +         polling-delay = <0>;
-> > > > +
-> > > > +         thermal-sensors = <&pm8150_temp>;
-> > > > +
-> > > > +         trips {
-> > > > +                 trip0 {
-> > > > +                         temperature = <95000>;
-> > > > +                         hysteresis = <0>;
-> > > > +                         type = "passive";
-> > > > +                 };
-> > > > +
-> > > > +                 trip1 {
-> > > > +                         temperature = <115000>;
-> > > > +                         hysteresis = <0>;
-> > > > +                         type = "passive";
-> > > > +                 };
-> > > > +
-> > > > +                 trip2 {
-> > > > +                         temperature = <145000>;
-> > > > +                         hysteresis = <0>;
-> > > > +                         type = "passive";
-> > > > +                 };
-> > > > +         };
-> > > > +
-> > > > + };
-> > >
-> > > Not sure about this, Amit..? Should this also not be in board dts?
-> > >
-> > > Similar comments on similar ones for rest of the patch as well..
-> >
-> > I'm not so sure. This part of the configuration seems generic to me. Unlike
-> > adc-tm config, which definitely goes to the board file.
->
-> I think the temperature values may be board specific, Amit can confirm
-> that. If that is the case then this belongs to board dts, otherwise here :)
-
-Again, pm8998 has these thermal values in the dtsi file. In V2 I will
-update these three files to follow pm8998.dtsi.
+Thanks,
+Sai
 
 -- 
-With best wishes
-Dmitry
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
