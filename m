@@ -2,85 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 285E41F0466
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 05:20:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 567671F04CB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 06:26:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728533AbgFFDUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Jun 2020 23:20:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58172 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728523AbgFFDUR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Jun 2020 23:20:17 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2CE4C08C5C2;
-        Fri,  5 Jun 2020 20:20:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=QCHbUkMYkrQJAPIqPlZ6VLNz3QmvlT+5Bsoz5d+kZkc=; b=HrDnOjP8lxTV2gp0+5S/V/+6Fe
-        TJRoS3b62IqjQPH+Zb5/opZi+c4jc1QX24zhotF/L58RfchUFUuIGkNIlD9CbsM98qcbucS/ae8bB
-        wMiWijV5Dl1Cpo3BzYy6ptUO5/P8TVIg7LXzYl7GTSLgsP9bSReADMpSbfCCf+8sFx/j92lJhM870
-        +2YkvOm2FukwHVomLONhTQdt7rzMaK8wCbonT+O+IbtaVvC9HBtlRbGpCskkxDG+iR6N7fKSJzAfa
-        Df6OTAVzzn2VTbeklQUgl8LO6FiQPsUBExeD1fuZHBrmv8RRRxtKy7MUbpguf6N/UtXwTMlkil0lB
-        B59V0GAQ==;
-Received: from willy by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jhPNT-0001pB-IT; Sat, 06 Jun 2020 03:20:11 +0000
-Date:   Fri, 5 Jun 2020 20:20:11 -0700
-From:   Matthew Wilcox <willy@infradead.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Mimi Zohar <zohar@linux.ibm.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        linux-integrity@vger.kernel.org,
-        linux-security-module@vger.kernel.org
-Subject: Re: [PATCH v6 1/8] fs: introduce kernel_pread_file* support
-Message-ID: <20200606032011.GM19604@bombadil.infradead.org>
-References: <20200605225959.12424-1-scott.branden@broadcom.com>
- <20200605225959.12424-2-scott.branden@broadcom.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200605225959.12424-2-scott.branden@broadcom.com>
+        id S1726131AbgFFE0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Jun 2020 00:26:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:41148 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725911AbgFFE0I (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 6 Jun 2020 00:26:08 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591417567; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=YqewpJCTCgOSHaknK0YZKVZ9UVuX5fbD5L5BBxceloE=; b=eIyH5PxaAyiwp/Se6X/o/PDZoxT1BdYMEG3GmNn/AnRKqgmpxf2FvY6ycg2/gxLSw8XEvrc+
+ M5fTgVD5xlEjnqgMmh2Lwl3FjSTHiLAS3N1aL65sOVd/ftqqZZwNRkl9buVDOIQVYTSZvcaw
+ /rUKEnigkarKia6ma6trSBFKYKM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5edb1adf583b2d42d5f1728e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 06 Jun 2020 04:26:07
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E34FCC433C6; Sat,  6 Jun 2020 04:26:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld559.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: smasetty)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5E76EC433C6;
+        Sat,  6 Jun 2020 04:26:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5E76EC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
+From:   Sharat Masetty <smasetty@codeaurora.org>
+To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
+        mka@chromium.org, sibis@codeaurora.org, saravanak@google.com,
+        viresh.kumar@linaro.org, robdclark@gmail.com,
+        Sharat Masetty <smasetty@codeaurora.org>
+Subject: [PATCH v3 0/6] Add support for GPU DDR BW scaling
+Date:   Sat,  6 Jun 2020 09:55:45 +0530
+Message-Id: <1591417551-38051-1-git-send-email-smasetty@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 05, 2020 at 03:59:52PM -0700, Scott Branden wrote:
-> -int kernel_read_file(struct file *file, void **buf, loff_t *size,
-> -		     loff_t max_size, enum kernel_read_file_id id)
-> -{
-> -	loff_t i_size, pos;
-> +int kernel_pread_file(struct file *file, void **buf, loff_t *size,
-> +		      loff_t pos, loff_t max_size,
-> +		      enum kernel_pread_opt opt,
-> +		      enum kernel_read_file_id id)
+This is a respin of [1]. Incorported review feedback and fixed issues observed
+during testing. Picked up the Georgi's series from opp/linux-next [2], and this
+series is also dependent on a helper function needed to set and clear ddr
+bandwidth vote [3]. Patch number 4 in the series adds support for SDM845 as well
+but its not tested yet(WIP), but the SC7180 patches are well tested now.
 
-What is this 'kernel_pread_opt' foolishness?  Why not just pass in
-~0UL as max_size if you want the entire file?
+[1] https://patchwork.freedesktop.org/series/75291/
+[2] https://kernel.googlesource.com/pub/scm/linux/kernel/git/vireshk/pm/+log/opp/linux-next/
+[3] https://patchwork.kernel.org/patch/11590563/
 
-> -int kernel_read_file_from_path_initns(const char *path, void **buf,
-> -				      loff_t *size, loff_t max_size,
-> -				      enum kernel_read_file_id id)
-> +extern int kernel_pread_file_from_path_initns(const char *path, void **buf,
+Sharat Masetty (6):
+  dt-bindings: drm/msm/gpu: Document gpu opp table
+  drm: msm: a6xx: send opp instead of a frequency
+  drm: msm: a6xx: use dev_pm_opp_set_bw to scale DDR
+  arm64: dts: qcom: SDM845: Enable GPU DDR bw scaling
+  arm64: dts: qcom: sc7180: Add interconnects property for GPU
+  arm64: dts: qcom: sc7180: Add opp-peak-kBps to GPU opp
 
-extern?  really?  i'm shocked gcc doesn't vomit on that.
+ .../devicetree/bindings/display/msm/gpu.txt        | 28 +++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |  9 +++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |  9 +++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 85 +++++++++++++---------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  2 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  8 --
+ drivers/gpu/drm/msm/msm_gpu.c                      |  3 +-
+ drivers/gpu/drm/msm/msm_gpu.h                      |  5 +-
+ 8 files changed, 100 insertions(+), 49 deletions(-)
+
+--
+2.7.4
 
