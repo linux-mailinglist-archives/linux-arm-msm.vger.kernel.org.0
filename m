@@ -2,142 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73B671F07EA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 18:30:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF02C1F0847
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 21:16:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbgFFQah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Jun 2020 12:30:37 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:44861 "EHLO extserv.mm-sol.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726968AbgFFQah (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Jun 2020 12:30:37 -0400
-Received: from [192.168.1.9] (hst-208-212.medicom.bg [84.238.208.212])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id 83EB6CFCE;
-        Sat,  6 Jun 2020 19:30:33 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1591461033; bh=9Jbiod1vB7zOrB+Jk7X53N7PxKajryvdgLEigxtjI4s=;
-        h=Subject:To:Cc:From:Date:From;
-        b=Vypu7//tMZa9tpCbHL1Ji6VLjIFz9l8PJtA/ehTMfAnRvO4uAcQfwY79lq3e5Fwch
-         4rmpKpGcm+EJs6gL4yMeDuyy3oAD++xm7GMZlnvoQnvtIUHNAYq34yYyAkXP3lOKuT
-         UATDVvO1+KWvaS/TPQlavw0RK5u4glJTkTWL3ynu4PTbjomzb1jisW9lViFz96HAGS
-         ai87vqIUSdYp+cU8ptRD4geRFAQXGLMX2wh0Cy2w1LsU5xPvVq1S4Wr63ZDYzYnDHr
-         zEpb2eanVKJAg/9pOIF4PsjOILDA6vAKrQyTz62cAHVrV4g1le3GJdynBuaoi+Qjgf
-         6NMu8VIxXg/+g==
-Subject: Re: [PATCH v5 07/11] PCI: qcom: Define some PARF params needed for
- ipq8064 SoC
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     stable@vger.kernel.org, Rob Herring <robh@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1728884AbgFFTQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Jun 2020 15:16:21 -0400
+Received: from smtprelay0209.hostedemail.com ([216.40.44.209]:46804 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728873AbgFFTQV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 6 Jun 2020 15:16:21 -0400
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay04.hostedemail.com (Postfix) with ESMTP id 1E063180A7FE5;
+        Sat,  6 Jun 2020 19:16:20 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:334:355:368:369:379:800:960:973:982:988:989:1260:1277:1311:1313:1314:1345:1437:1515:1516:1518:1534:1540:1593:1594:1711:1714:1730:1747:1777:1792:2393:2559:2562:2828:3138:3139:3140:3141:3142:3351:3865:3870:3871:3872:3874:4250:4605:5007:7903:10004:10400:10848:11026:11232:11473:11658:11914:12043:12114:12296:12297:12438:12555:12760:13069:13311:13357:13439:14096:14097:14181:14659:14721:21080:21627:30054:30070:30089,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
+X-HE-Tag: hour66_0a10d3c26dab
+X-Filterd-Recvd-Size: 1803
+Received: from XPS-9350.home (unknown [47.151.136.130])
+        (Authenticated sender: joe@perches.com)
+        by omf17.hostedemail.com (Postfix) with ESMTPA;
+        Sat,  6 Jun 2020 19:16:18 +0000 (UTC)
+Message-ID: <5a663096b489b86472fe3bfbd5138c411d669bad.camel@perches.com>
+Subject: [Possible PATCH] iommu/qcom: Change CONFIG_BIG_ENDIAN to
+ CONFIG_CPU_BIG_ENDIAN
+From:   Joe Perches <joe@perches.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200602115353.20143-1-ansuelsmth@gmail.com>
- <20200602115353.20143-8-ansuelsmth@gmail.com>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <f0f86fd3-c6ad-94f6-5256-8089e2b8af65@mm-sol.com>
-Date:   Sat, 6 Jun 2020 19:30:26 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Joerg Roedel <joro@8bytes.org>, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Andrew Morton <akpm@linux-foundation.org>
+Date:   Sat, 06 Jun 2020 12:16:17 -0700
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.36.2-0ubuntu1 
 MIME-Version: 1.0
-In-Reply-To: <20200602115353.20143-8-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+CONFIG_BIG_ENDIAN does not exist as a Kconfig symbol.
 
-On 6/2/20 2:53 PM, Ansuel Smith wrote:
-> Set some specific value for Tx De-Emphasis, Tx Swing and Rx equalization
-> needed on some ipq8064 based device (Netgear R7800 for example). Without
-> this the system locks on kernel load.
-> 
-> Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> Cc: stable@vger.kernel.org # v4.5+
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 27 ++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index f2ea1ab6f584..f5398b0d270c 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -46,6 +46,9 @@
->  
->  #define PCIE20_PARF_PHY_CTRL			0x40
->  #define PCIE20_PARF_PHY_REFCLK			0x4C
-> +#define PHY_REFCLK_SSP_EN			BIT(16)
-> +#define PHY_REFCLK_USE_PAD			BIT(12)
+Signed-off-by: Joe Perches <joe@perches.com>
+---
 
-These two are not used in the patch, please move it in 08/11.
+I don't have the hardware, so I can't tell if this is a
+correct change, but it is a logical one.
 
-> +
->  #define PCIE20_PARF_DBI_BASE_ADDR		0x168
->  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
->  #define PCIE20_PARF_MHI_CLOCK_RESET_CTRL	0x174
-> @@ -77,6 +80,18 @@
->  #define DBI_RO_WR_EN				1
->  
->  #define PERST_DELAY_US				1000
-> +/* PARF registers */
-> +#define PCIE20_PARF_PCS_DEEMPH			0x34
-> +#define PCS_DEEMPH_TX_DEEMPH_GEN1(x)		((x) << 16)
-> +#define PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(x)	((x) << 8)
-> +#define PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(x)	((x) << 0)
-> +
-> +#define PCIE20_PARF_PCS_SWING			0x38
-> +#define PCS_SWING_TX_SWING_FULL(x)		((x) << 8)
-> +#define PCS_SWING_TX_SWING_LOW(x)		((x) << 0)
-> +
-> +#define PCIE20_PARF_CONFIG_BITS		0x50
-> +#define PHY_RX0_EQ(x)				((x) << 24)
->  
->  #define PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE	0x358
->  #define SLV_ADDR_SPACE_SZ			0x10000000
-> @@ -293,6 +308,7 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
->  	struct qcom_pcie_resources_2_1_0 *res = &pcie->res.v2_1_0;
->  	struct dw_pcie *pci = pcie->pci;
->  	struct device *dev = pci->dev;
-> +	struct device_node *node = dev->of_node;
->  	u32 val;
->  	int ret;
->  
-> @@ -347,6 +363,17 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
->  	val &= ~BIT(0);
->  	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
->  
-> +	if (of_device_is_compatible(node, "qcom,pcie-ipq8064")) {
-> +		writel(PCS_DEEMPH_TX_DEEMPH_GEN1(24) |
-> +			       PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(24) |
-> +			       PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(34),
-> +		       pcie->parf + PCIE20_PARF_PCS_DEEMPH);
-> +		writel(PCS_SWING_TX_SWING_FULL(120) |
-> +			       PCS_SWING_TX_SWING_LOW(120),
-> +		       pcie->parf + PCIE20_PARF_PCS_SWING);
+Found by a test script that looks for IS_ENABLED(FOO)
+where FOO must also exist in Kconfig files.
 
-Please fix the indentations above.
+ drivers/iommu/qcom_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +		writel(PHY_RX0_EQ(4), pcie->parf + PCIE20_PARF_CONFIG_BITS);
-> +	}
-> +
->  	/* enable external reference clock */
->  	val = readl(pcie->parf + PCIE20_PARF_PHY_REFCLK);
->  	val |= BIT(16);
-> 
+diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
+index c3e1fbd1988c..69e113471ecb 100644
+--- a/drivers/iommu/qcom_iommu.c
++++ b/drivers/iommu/qcom_iommu.c
+@@ -304,7 +304,7 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 		      ARM_SMMU_SCTLR_M | ARM_SMMU_SCTLR_S1_ASIDPNE |
+ 		      ARM_SMMU_SCTLR_CFCFG;
+ 
+-		if (IS_ENABLED(CONFIG_BIG_ENDIAN))
++		if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
+ 			reg |= ARM_SMMU_SCTLR_E;
+ 
+ 		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, reg);
 
--- 
-regards,
-Stan
