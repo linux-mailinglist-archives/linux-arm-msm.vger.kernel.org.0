@@ -2,130 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BA981F07BD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 17:52:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73B671F07EA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 18:30:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbgFFPw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Jun 2020 11:52:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33154 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727100AbgFFPw3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Jun 2020 11:52:29 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E378C03E96A;
-        Sat,  6 Jun 2020 08:52:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=9Knot+Lv+Z0XYiseAFBiA62c5+NhkBbKX/gLTI08qrs=; b=BIkLwIVPjTQ4Z6dLUSwN9BNF2d
-        jF6fhDw7QKtkUY0qVUNSVq9AuL8hjm+dtqFVaVANc6f6TM0lnrILTlyCzv0Zn5AN1XdlGt9cdBwHi
-        zD4X30KKbBKG0kzETQ6drLgJ3Xm5yfjabYFhl168BExjPSZP8wck4zfkTJ/uEj0mPlieD9rGrnMG6
-        oHS20QVWiOO4dubZEecydxU8HQa8CKlZjNY5CeOYhnFTWlNFS18HJHQ5PEw6bzRyrREoU/dHDX3lo
-        5nr4gMAxgOOu45lOty30n8+bLPrmT9YJXIxJAyFMEXFkjOBDaMyZrsiHZP9xz4cTJdqHnZJglVMc5
-        Y9vIXEPQ==;
-Received: from willy by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jhb7I-0001SV-JG; Sat, 06 Jun 2020 15:52:16 +0000
-Date:   Sat, 6 Jun 2020 08:52:16 -0700
-From:   Matthew Wilcox <willy@infradead.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Mimi Zohar <zohar@linux.ibm.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        id S1728078AbgFFQah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Jun 2020 12:30:37 -0400
+Received: from ns.mm-sol.com ([37.157.136.199]:44861 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726968AbgFFQah (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 6 Jun 2020 12:30:37 -0400
+Received: from [192.168.1.9] (hst-208-212.medicom.bg [84.238.208.212])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 83EB6CFCE;
+        Sat,  6 Jun 2020 19:30:33 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1591461033; bh=9Jbiod1vB7zOrB+Jk7X53N7PxKajryvdgLEigxtjI4s=;
+        h=Subject:To:Cc:From:Date:From;
+        b=Vypu7//tMZa9tpCbHL1Ji6VLjIFz9l8PJtA/ehTMfAnRvO4uAcQfwY79lq3e5Fwch
+         4rmpKpGcm+EJs6gL4yMeDuyy3oAD++xm7GMZlnvoQnvtIUHNAYq34yYyAkXP3lOKuT
+         UATDVvO1+KWvaS/TPQlavw0RK5u4glJTkTWL3ynu4PTbjomzb1jisW9lViFz96HAGS
+         ai87vqIUSdYp+cU8ptRD4geRFAQXGLMX2wh0Cy2w1LsU5xPvVq1S4Wr63ZDYzYnDHr
+         zEpb2eanVKJAg/9pOIF4PsjOILDA6vAKrQyTz62cAHVrV4g1le3GJdynBuaoi+Qjgf
+         6NMu8VIxXg/+g==
+Subject: Re: [PATCH v5 07/11] PCI: qcom: Define some PARF params needed for
+ ipq8064 SoC
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     stable@vger.kernel.org, Rob Herring <robh@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        linux-integrity@vger.kernel.org,
-        linux-security-module@vger.kernel.org,
-        Christoph Hellwig <hch@infradead.org>
-Subject: Re: [PATCH v7 1/8] fs: introduce kernel_pread_file* support
-Message-ID: <20200606155216.GP19604@bombadil.infradead.org>
-References: <20200606050458.17281-1-scott.branden@broadcom.com>
- <20200606050458.17281-2-scott.branden@broadcom.com>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200602115353.20143-1-ansuelsmth@gmail.com>
+ <20200602115353.20143-8-ansuelsmth@gmail.com>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <f0f86fd3-c6ad-94f6-5256-8089e2b8af65@mm-sol.com>
+Date:   Sat, 6 Jun 2020 19:30:26 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200606050458.17281-2-scott.branden@broadcom.com>
+In-Reply-To: <20200602115353.20143-8-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 05, 2020 at 10:04:51PM -0700, Scott Branden wrote:
-> -int kernel_read_file(struct file *file, void **buf, loff_t *size,
-> -		     loff_t max_size, enum kernel_read_file_id id)
-> -{
-> -	loff_t i_size, pos;
-> +int kernel_pread_file(struct file *file, void **buf, loff_t *size,
-> +		      loff_t pos, loff_t max_size,
-> +		      enum kernel_pread_opt opt,
-> +		      enum kernel_read_file_id id)
-> +{
-> +	loff_t alloc_size;
-> +	loff_t buf_pos;
-> +	loff_t read_end;
-> +	loff_t i_size;
->  	ssize_t bytes = 0;
+Hi,
+
+On 6/2/20 2:53 PM, Ansuel Smith wrote:
+> Set some specific value for Tx De-Emphasis, Tx Swing and Rx equalization
+> needed on some ipq8064 based device (Netgear R7800 for example). Without
+> this the system locks on kernel load.
+> 
+> Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Cc: stable@vger.kernel.org # v4.5+
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 27 ++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index f2ea1ab6f584..f5398b0d270c 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -46,6 +46,9 @@
+>  
+>  #define PCIE20_PARF_PHY_CTRL			0x40
+>  #define PCIE20_PARF_PHY_REFCLK			0x4C
+> +#define PHY_REFCLK_SSP_EN			BIT(16)
+> +#define PHY_REFCLK_USE_PAD			BIT(12)
+
+These two are not used in the patch, please move it in 08/11.
+
+> +
+>  #define PCIE20_PARF_DBI_BASE_ADDR		0x168
+>  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
+>  #define PCIE20_PARF_MHI_CLOCK_RESET_CTRL	0x174
+> @@ -77,6 +80,18 @@
+>  #define DBI_RO_WR_EN				1
+>  
+>  #define PERST_DELAY_US				1000
+> +/* PARF registers */
+> +#define PCIE20_PARF_PCS_DEEMPH			0x34
+> +#define PCS_DEEMPH_TX_DEEMPH_GEN1(x)		((x) << 16)
+> +#define PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(x)	((x) << 8)
+> +#define PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(x)	((x) << 0)
+> +
+> +#define PCIE20_PARF_PCS_SWING			0x38
+> +#define PCS_SWING_TX_SWING_FULL(x)		((x) << 8)
+> +#define PCS_SWING_TX_SWING_LOW(x)		((x) << 0)
+> +
+> +#define PCIE20_PARF_CONFIG_BITS		0x50
+> +#define PHY_RX0_EQ(x)				((x) << 24)
+>  
+>  #define PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE	0x358
+>  #define SLV_ADDR_SPACE_SZ			0x10000000
+> @@ -293,6 +308,7 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	struct qcom_pcie_resources_2_1_0 *res = &pcie->res.v2_1_0;
+>  	struct dw_pcie *pci = pcie->pci;
+>  	struct device *dev = pci->dev;
+> +	struct device_node *node = dev->of_node;
+>  	u32 val;
 >  	int ret;
 >  
+> @@ -347,6 +363,17 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	val &= ~BIT(0);
+>  	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+>  
+> +	if (of_device_is_compatible(node, "qcom,pcie-ipq8064")) {
+> +		writel(PCS_DEEMPH_TX_DEEMPH_GEN1(24) |
+> +			       PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(24) |
+> +			       PCS_DEEMPH_TX_DEEMPH_GEN2_6DB(34),
+> +		       pcie->parf + PCIE20_PARF_PCS_DEEMPH);
+> +		writel(PCS_SWING_TX_SWING_FULL(120) |
+> +			       PCS_SWING_TX_SWING_LOW(120),
+> +		       pcie->parf + PCIE20_PARF_PCS_SWING);
 
-Look, it's not your fault, but this is a great example of how we end
-up with atrocious interfaces.  Someone comes along and implements a
-simple DWIM interface that solves their problem.  Then somebody else
-adds a slight variant that solves their problem, and so on and so on,
-and we end up with this bonkers API where the arguments literally change
-meaning depending on other arguments.
+Please fix the indentations above.
 
-> @@ -950,21 +955,31 @@ int kernel_read_file(struct file *file, void **buf, loff_t *size,
->  		ret = -EINVAL;
->  		goto out;
->  	}
-> -	if (i_size > SIZE_MAX || (max_size > 0 && i_size > max_size)) {
+> +		writel(PHY_RX0_EQ(4), pcie->parf + PCIE20_PARF_CONFIG_BITS);
+> +	}
 > +
-> +	/* Default read to end of file */
-> +	read_end = i_size;
-> +
-> +	/* Allow reading partial portion of file */
-> +	if ((opt == KERNEL_PREAD_PART) &&
-> +	    (i_size > (pos + max_size)))
-> +		read_end = pos + max_size;
-> +
-> +	alloc_size = read_end - pos;
-> +	if (i_size > SIZE_MAX || (max_size > 0 && alloc_size > max_size)) {
->  		ret = -EFBIG;
->  		goto out;
+>  	/* enable external reference clock */
+>  	val = readl(pcie->parf + PCIE20_PARF_PHY_REFCLK);
+>  	val |= BIT(16);
+> 
 
-... like that.
-
-I think what we actually want is:
-
-ssize_t vmap_file_range(struct file *, loff_t start, loff_t end, void **bufp);
-void vunmap_file_range(struct file *, void *buf);
-
-If end > i_size, limit the allocation to i_size.  Returns the number
-of bytes allocated, or a negative errno.  Writes the pointer allocated
-to *bufp.  Internally, it should use the page cache to read in the pages
-(taking appropriate reference counts).  Then it maps them using vmap()
-instead of copying them to a private vmalloc() array.
-
-kernel_read_file() can be converted to use this API.  The users will
-need to be changed to call kernel_read_end(struct file *file, void *buf)
-instead of vfree() so it can call allow_write_access() for them.
-
-vmap_file_range() has a lot of potential uses.  I'm surprised we don't
-have it already, to be honest.
+-- 
+regards,
+Stan
