@@ -2,122 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64CF91F04EA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 06:26:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB0AA1F0503
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 06:57:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728566AbgFFE0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Jun 2020 00:26:55 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:55641 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728549AbgFFE0z (ORCPT
+        id S1726358AbgFFE5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Jun 2020 00:57:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44844 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726203AbgFFE5O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Jun 2020 00:26:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591417614; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=3Tbq314xTu2mZgk8XZHCKH3g0sEpANHcL/rn9MNYhE0=; b=gqQMTSX6TtTZVjnHErw2jfxaGjGrOvYIKTVsE/PdHc6I9vu3iQzrs5RrDRa5128NTldbaINt
- NIcM3DnOMYr6gZimpSStCaTJzVO9vM80e4Y0RHUkcEhMJTcFjFXLq820w8MvBB5GXLc48jZ2
- Xh0Cmuvj8azuZ6GDgFzS6BuX3oM=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5edb1afc583b2d42d5f18334 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 06 Jun 2020 04:26:36
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 25785C433B2; Sat,  6 Jun 2020 04:26:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld559.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 11E84C433C6;
-        Sat,  6 Jun 2020 04:26:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 11E84C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-From:   Sharat Masetty <smasetty@codeaurora.org>
-To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
-        mka@chromium.org, sibis@codeaurora.org, saravanak@google.com,
-        viresh.kumar@linaro.org, robdclark@gmail.com,
-        Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH v3 6/6] arm64: dts: qcom: sc7180: Add opp-peak-kBps to GPU opp
-Date:   Sat,  6 Jun 2020 09:55:51 +0530
-Message-Id: <1591417551-38051-7-git-send-email-smasetty@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1591417551-38051-1-git-send-email-smasetty@codeaurora.org>
-References: <1591417551-38051-1-git-send-email-smasetty@codeaurora.org>
+        Sat, 6 Jun 2020 00:57:14 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE93C08C5C3
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2020 21:57:14 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id b201so5943279pfb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2020 21:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=AEeRqD/NorCUJBTa2b+IUYMUvQuNtNDzhJImkhNUMwE=;
+        b=SvoXuSTIYbKCNLm3Rf+7U72DNelud+4d639oZBnjG8U23K7zlLH+w3p8CEs0PTD2dU
+         Ja/nHOz6XUh0DjZ6xs6ZDwhhVtT0L8oSWdBRiKcSbDENa6K2+KVDoCZHJi5Hkz1nc1ai
+         gDR8glzNryBj5xK1fylPWU9yiBhf+Lc+RZRZY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=AEeRqD/NorCUJBTa2b+IUYMUvQuNtNDzhJImkhNUMwE=;
+        b=nw6mzmeyE/MlMSlsb+g2S+jgqayInFTVBrctgYsZGIZHM6NwWLCrW/WhlkSk1iiLSb
+         +t8/n2eq7eizoA8jf5atCna5QUMRgmGEZh8jMskunxr+lD5HcZjmml6KPj/S9VzVXJl5
+         9vQjwyPUySYb4ECqNXjunUj8eYVyz7xTazt+knmSscMPQTWWvRc74UpPo8ML+TpYgIi5
+         DURViZqdF5dyOXv45BzGejOxGsk1+mqycXEJaOcKWK+vpZynG21fMF90a/1ns0/680hW
+         5nCJc8ulcjii6DGFKfAAXi/Z8BvkY+CAPBi2X8xnh/i0XVO64aTgkdFpYWq3S0OnYkq+
+         MEqw==
+X-Gm-Message-State: AOAM530scJPa3qINMENp7dbLkjAZFihCAcZppSl55qYmItZfx2vWN0sh
+        KHZLqRABep6VId6OgfIirhxppw==
+X-Google-Smtp-Source: ABdhPJy1OnrZSXjJCECuXBSjTznNT2AEnf7+8B0WVOWyttYt253hWfCVsp/i4j2CztKv6MOa13rY4Q==
+X-Received: by 2002:a63:ce0d:: with SMTP id y13mr12145554pgf.90.1591419433926;
+        Fri, 05 Jun 2020 21:57:13 -0700 (PDT)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id k126sm1088049pfd.129.2020.06.05.21.57.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jun 2020 21:57:12 -0700 (PDT)
+Subject: Re: [PATCH v6 1/8] fs: introduce kernel_pread_file* support
+To:     Matthew Wilcox <willy@infradead.org>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        linux-integrity@vger.kernel.org,
+        linux-security-module@vger.kernel.org
+References: <20200605225959.12424-1-scott.branden@broadcom.com>
+ <20200605225959.12424-2-scott.branden@broadcom.com>
+ <20200606032011.GM19604@bombadil.infradead.org>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <4ca91507-90a5-1a99-ab19-c6782423e870@broadcom.com>
+Date:   Fri, 5 Jun 2020 21:56:57 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+MIME-Version: 1.0
+In-Reply-To: <20200606032011.GM19604@bombadil.infradead.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add opp-peak-kBps bindings to the GPU opp table, listing the peak
-GPU -> DDR bandwidth requirement for each opp level. This will be
-used to scale the DDR bandwidth along with the GPU frequency dynamically.
+Hi Matthew,
 
-Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 34004ad..7bef42b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1505,36 +1505,43 @@
- 				opp-800000000 {
- 					opp-hz = /bits/ 64 <800000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-+					opp-peak-kBps = <8532000>;
- 				};
-
- 				opp-650000000 {
- 					opp-hz = /bits/ 64 <650000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					opp-peak-kBps = <7216000>;
- 				};
-
- 				opp-565000000 {
- 					opp-hz = /bits/ 64 <565000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					opp-peak-kBps = <5412000>;
- 				};
-
- 				opp-430000000 {
- 					opp-hz = /bits/ 64 <430000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-peak-kBps = <5412000>;
- 				};
-
- 				opp-355000000 {
- 					opp-hz = /bits/ 64 <355000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					opp-peak-kBps = <3072000>;
- 				};
-
- 				opp-267000000 {
- 					opp-hz = /bits/ 64 <267000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					opp-peak-kBps = <3072000>;
- 				};
-
- 				opp-180000000 {
- 					opp-hz = /bits/ 64 <180000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+					opp-peak-kBps = <1804000>;
- 				};
- 			};
- 		};
---
-2.7.4
+On 2020-06-05 8:20 p.m., Matthew Wilcox wrote:
+> On Fri, Jun 05, 2020 at 03:59:52PM -0700, Scott Branden wrote:
+>> -int kernel_read_file(struct file *file, void **buf, loff_t *size,
+>> -		     loff_t max_size, enum kernel_read_file_id id)
+>> -{
+>> -	loff_t i_size, pos;
+>> +int kernel_pread_file(struct file *file, void **buf, loff_t *size,
+>> +		      loff_t pos, loff_t max_size,
+>> +		      enum kernel_pread_opt opt,
+>> +		      enum kernel_read_file_id id)
+> What is this 'kernel_pread_opt' foolishness?  Why not just pass in
+> ~0UL as max_size if you want the entire file?
+That is not how existing kernel_read_file api works - max_size is specified.
+I guess not everyone has unlimited memory to read a file on any size.
+>
+>> -int kernel_read_file_from_path_initns(const char *path, void **buf,
+>> -				      loff_t *size, loff_t max_size,
+>> -				      enum kernel_read_file_id id)
+>> +extern int kernel_pread_file_from_path_initns(const char *path, void **buf,
+> extern?  really?  i'm shocked gcc doesn't vomit on that.
+A typo.  thanks.  You'll have to ask the compiler gods about your shock.
 
