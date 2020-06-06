@@ -2,200 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 772F91F0535
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 07:07:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7BC81F062A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 12:55:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728667AbgFFFHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Jun 2020 01:07:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728658AbgFFFHa (ORCPT
+        id S1728727AbgFFKzQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Jun 2020 06:55:16 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:60628 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728161AbgFFKzP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Jun 2020 01:07:30 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A9FC08C5C3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2020 22:07:30 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id o6so6161360pgh.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2020 22:07:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7w1pN6TotzpiP8sLo1RA7p/wzGRtcCXptjHTFNygcBg=;
-        b=NGT8PX7IuxdZvUvnE+9nljMW33phBXq08GFl7NiLdp4D93EXGgpos4K81h9NlWK1hG
-         5PutkZ1ZGL8Z2Xu66AFY4+EPs9Lbba6aYdHNZaivUor0C1sSPBh88zP98A52Et54gs9S
-         is1pzLGrQffKx6ad6j5zvcZtMjhFcK+uh0CdE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=7w1pN6TotzpiP8sLo1RA7p/wzGRtcCXptjHTFNygcBg=;
-        b=QdJrsuJ2D0rCVWNPm/HPuZQJlUcX6QYiIpzSsYW9KSDyUud+/mg3iPkoc1pc3jrd6E
-         ssrKSXq/3jJM+frZiuK2YSknwuYcPotMmIfqKx2/lLQ+Dgh7Zm0NJU8S5ZDE0KP2f3iv
-         KRa3VhPVa9cDjfRipj+o/paXlZA26VRpZZL1e8qRnRowKWH6t8YBmK+oEr6JsqJP3d0d
-         f/gOD+gh+yELLYhTURIOSKgtFh2Pnos2/L2inN0I/9c3pLizgloKMurqBMXzU311b4Ws
-         mas/UlqgsmCfLRiLxZgPCTmPDaHRMPmKhea8B3lzadDdI7G8pm2W1fFTIS2r1Rf5oOWF
-         gobg==
-X-Gm-Message-State: AOAM533ewKc/qQ3Ya2MRl88eff7YihS6APdizU2LqGHRSBP36ZXmTWs8
-        ovUKmwrBekjMVhGdYM1Iuz/C6Q==
-X-Google-Smtp-Source: ABdhPJzkBAIGqCS+lOJr2U5KizL/ys0e8zYXSUIMTRAJ2mZmzJHn6qNrXl0+JbIGw2l5Kkz3LAyhDg==
-X-Received: by 2002:a62:8454:: with SMTP id k81mr12522487pfd.140.1591420049341;
-        Fri, 05 Jun 2020 22:07:29 -0700 (PDT)
-Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id v8sm1057636pfn.217.2020.06.05.22.07.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2020 22:07:28 -0700 (PDT)
-From:   Scott Branden <scott.branden@broadcom.com>
-To:     Luis Chamberlain <mcgrof@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     Mimi Zohar <zohar@linux.ibm.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        linux-integrity@vger.kernel.org,
-        linux-security-module@vger.kernel.org,
-        Scott Branden <scott.branden@broadcom.com>
-Subject: [PATCH v7 8/8] ima: add FIRMWARE_PARTIAL_READ support
-Date:   Fri,  5 Jun 2020 22:04:58 -0700
-Message-Id: <20200606050458.17281-9-scott.branden@broadcom.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200606050458.17281-1-scott.branden@broadcom.com>
-References: <20200606050458.17281-1-scott.branden@broadcom.com>
+        Sat, 6 Jun 2020 06:55:15 -0400
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Jun 2020 03:55:14 -0700
+Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 06 Jun 2020 03:55:10 -0700
+Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
+        id D14862147A; Sat,  6 Jun 2020 16:25:08 +0530 (IST)
+From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        sivaprak@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH V7 0/4] Add APSS clock controller support for IPQ6018
+Date:   Sat,  6 Jun 2020 16:25:03 +0530
+Message-Id: <1591440907-20021-1-git-send-email-sivaprak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add FIRMWARE_PARTIAL_READ support for integrity
-measurement on partial reads of firmware files.
+The CPU on Qualcomm's IPQ6018 devices are primarily fed by APSS PLL and XO,
+these are connected to a clock mux and enable block.
 
-Signed-off-by: Scott Branden <scott.branden@broadcom.com>
----
- drivers/base/firmware_loader/main.c |  6 +++++-
- fs/exec.c                           |  6 ++++--
- include/linux/fs.h                  |  1 +
- security/integrity/ima/ima_main.c   | 24 +++++++++++++++++++++++-
- 4 files changed, 33 insertions(+), 4 deletions(-)
+This patch series adds support for these clocks and inturn enables clocks
+required for CPU freq.
 
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 93e7fee42cd4..d0c42194af17 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -483,7 +483,11 @@ fw_get_filesystem_firmware(struct device *device, struct fw_priv *fw_priv,
- 	/* Already populated data member means we're loading into a buffer */
- 	if (!decompress && fw_priv->data) {
- 		buffer = fw_priv->data;
--		id = READING_FIRMWARE_PREALLOC_BUFFER;
-+		if (fw_priv->opt == KERNEL_PREAD_PART)
-+			id = READING_FIRMWARE_PARTIAL_READ;
-+		else
-+			id = READING_FIRMWARE_PREALLOC_BUFFER;
-+
- 		msize = fw_priv->allocated_size;
- 	}
- 
-diff --git a/fs/exec.c b/fs/exec.c
-index 751f5ddc7538..06e2465d8d40 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -970,7 +970,8 @@ int kernel_pread_file(struct file *file, void **buf, loff_t *size,
- 		goto out;
- 	}
- 
--	if (id != READING_FIRMWARE_PREALLOC_BUFFER)
-+	if ((id != READING_FIRMWARE_PARTIAL_READ) &&
-+	    (id != READING_FIRMWARE_PREALLOC_BUFFER))
- 		*buf = vmalloc(alloc_size);
- 	if (!*buf) {
- 		ret = -ENOMEM;
-@@ -1002,7 +1003,8 @@ int kernel_pread_file(struct file *file, void **buf, loff_t *size,
- 
- out_free:
- 	if (ret < 0) {
--		if (id != READING_FIRMWARE_PREALLOC_BUFFER) {
-+		if ((id != READING_FIRMWARE_PARTIAL_READ) &&
-+		    (id != READING_FIRMWARE_PREALLOC_BUFFER)) {
- 			vfree(*buf);
- 			*buf = NULL;
- 		}
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index aee7600958ef..1180091d704d 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3020,6 +3020,7 @@ extern int do_pipe_flags(int *, int);
- #define __kernel_read_file_id(id) \
- 	id(UNKNOWN, unknown)		\
- 	id(FIRMWARE, firmware)		\
-+	id(FIRMWARE_PARTIAL_READ, firmware)	\
- 	id(FIRMWARE_PREALLOC_BUFFER, firmware)	\
- 	id(FIRMWARE_EFI_EMBEDDED, firmware)	\
- 	id(MODULE, kernel-module)		\
-diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
-index 800fb3bba418..fc5134807acf 100644
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -609,6 +609,9 @@ void ima_post_path_mknod(struct dentry *dentry)
-  */
- int ima_read_file(struct file *file, enum kernel_read_file_id read_id)
- {
-+	enum ima_hooks func;
-+	u32 secid;
-+
- 	/*
- 	 * READING_FIRMWARE_PREALLOC_BUFFER
- 	 *
-@@ -617,11 +620,27 @@ int ima_read_file(struct file *file, enum kernel_read_file_id read_id)
- 	 * of IMA's signature verification any more than when using two
- 	 * buffers?
- 	 */
--	return 0;
-+	if (read_id != READING_FIRMWARE_PARTIAL_READ)
-+		return 0;
-+
-+	if (!file) {
-+		if ((ima_appraise & IMA_APPRAISE_FIRMWARE) &&
-+		    (ima_appraise & IMA_APPRAISE_ENFORCE)) {
-+			pr_err("Prevent firmware loading_store.\n");
-+			return -EACCES;	/* INTEGRITY_UNKNOWN */
-+		}
-+		return 0;
-+	}
-+
-+	func = read_idmap[read_id] ?: FILE_CHECK;
-+	security_task_getsecid(current, &secid);
-+	return process_measurement(file, current_cred(), secid, NULL,
-+				   0, MAY_READ, func);
- }
- 
- const int read_idmap[READING_MAX_ID] = {
- 	[READING_FIRMWARE] = FIRMWARE_CHECK,
-+	[READING_FIRMWARE_PARTIAL_READ] = FIRMWARE_CHECK,
- 	[READING_FIRMWARE_PREALLOC_BUFFER] = FIRMWARE_CHECK,
- 	[READING_MODULE] = MODULE_CHECK,
- 	[READING_KEXEC_IMAGE] = KEXEC_KERNEL_CHECK,
-@@ -648,6 +667,9 @@ int ima_post_read_file(struct file *file, void *buf, loff_t size,
- 	enum ima_hooks func;
- 	u32 secid;
- 
-+	if (read_id == READING_FIRMWARE_PARTIAL_READ)
-+		return 0;
-+
- 	if (!file && read_id == READING_FIRMWARE) {
- 		if ((ima_appraise & IMA_APPRAISE_FIRMWARE) &&
- 		    (ima_appraise & IMA_APPRAISE_ENFORCE)) {
+[V7]
+ * Removed dts patch from this series, will send that separately
+ * Addressed Rob's minor comment on the binding
+ * Patch 1 depends on a53 pll bindings
+   https://lkml.org/lkml/2020/5/4/60
+[V6]
+ * Split mailbox driver from this series, mailbox changes will sent as a
+   separate series
+ * Addressed review comments from Stephen
+[V5]
+ * Addressed Bjorn comments on apss clk and dt-bindings
+ * Patch 2 depends on a53 pll dt-bindings
+   https://www.spinics.net/lists/linux-clk/msg48358.html  
+[V4]
+ * Re-written PLL found on IPQ platforms as a separate driver
+ * Addressed stephen's comments on apss clock controller and pll
+ * Addressed Rob's review comments on bindings
+ * moved a53 pll binding from this series as it is not applicable, will send
+   it separately.
+[V3]
+ * Fixed dt binding check error in patch2
+   dt-bindings: clock: Add YAML schemas for QCOM A53 PLL
+[V2]
+ * Restructred the patch series as there are two different HW blocks,
+   the mux and enable belongs to the apcs block and PLL has a separate HW
+   block.
+ * Converted qcom mailbox and qcom a53 pll documentation to yaml.
+ * Addressed review comments from Stephen, Rob and Sibi where it is applicable.
+ * Changed this cover letter to state the purpose of this patch series
+
+Sivaprakash Murugesan (4):
+  dt-bindings: clock: add ipq6018 a53 pll compatible
+  clk: qcom: Add ipq apss pll driver
+  clk: qcom: Add DT bindings for ipq6018 apss clock controller
+  clk: qcom: Add ipq6018 apss clock controller
+
+ .../devicetree/bindings/clock/qcom,a53pll.yaml     |  18 ++++
+ drivers/clk/qcom/Kconfig                           |  19 ++++
+ drivers/clk/qcom/Makefile                          |   2 +
+ drivers/clk/qcom/apss-ipq-pll.c                    |  95 ++++++++++++++++++
+ drivers/clk/qcom/apss-ipq6018.c                    | 106 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,apss-ipq.h          |  12 +++
+ 6 files changed, 252 insertions(+)
+ create mode 100644 drivers/clk/qcom/apss-ipq-pll.c
+ create mode 100644 drivers/clk/qcom/apss-ipq6018.c
+ create mode 100644 include/dt-bindings/clock/qcom,apss-ipq.h
+
 -- 
-2.17.1
+2.7.4
 
