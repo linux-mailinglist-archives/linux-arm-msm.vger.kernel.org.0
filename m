@@ -2,57 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C64791F0AD8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2020 13:09:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEDB91F0C1A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2020 16:46:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726455AbgFGLJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Jun 2020 07:09:46 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:24768 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726452AbgFGLJq (ORCPT
+        id S1726595AbgFGOpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 Jun 2020 10:45:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbgFGOpS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Jun 2020 07:09:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591528185; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=/hsbFOuqSBY+VZzRO8uUfNPtY30KTsN27zx5uQIR8g0=; b=qTNJgXIIJHvdm3JLCgZaVZdNAVUHCLHAitZc4UI2kMUGnasVN3ZBoQvtK9/L73D/Z2CvCxf1
- Cl3yaJHl6KDsZmcyXNBtPdSmDVSLG9pMMBziWGwZFqBgEvCERHsKB8RM0Rf27XCFhmfEZkbJ
- MG0wGZeTzGQtJi39l6eWZVzCA4Q=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5edccae8f1889e857a9ad788 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 07 Jun 2020 11:09:28
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EEC45C43395; Sun,  7 Jun 2020 11:09:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BEA0BC433CA;
-        Sun,  7 Jun 2020 11:09:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BEA0BC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [RFC PATCH] iommu/arm-smmu: Remove shutdown callback
-Date:   Sun,  7 Jun 2020 16:39:18 +0530
-Message-Id: <20200607110918.1733-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
+        Sun, 7 Jun 2020 10:45:18 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F080FC08C5C3;
+        Sun,  7 Jun 2020 07:45:17 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id s1so17335037ljo.0;
+        Sun, 07 Jun 2020 07:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5JDGZPQi2Yj5A7V6cJ2keqxjpiTi3mSoci6fXsl7qJY=;
+        b=FBIyeUUzxRMOFRkVpP6z1gOqpoV/QrLzbk+0oiY0Esh+5vMnsYn2P30RnnHTXE8tlg
+         14tMU7OLypG+lf6j8AbtZCwWflAX5Xj6AwkCVQg525NbVBoZf60puaLPqU+Y+A/87kOh
+         uko51NBbuPqpBzDI6ws8h9JoqIZE9G/w6mAsQ76MlbXyaaSn1spg3Aoeh/OIg4TKcfoU
+         gCkaHLNm7Sltsm0I9gcKiopojTzu8MXTYFbPLMaBpQCKaJE75lsqIy1sDi8BNb37pTOF
+         7QIELX3AX9cu5AzgKCHl+W0B18V+tfCd4LWESbk4YgtWanR3hfbuMKRDx7400+4VDXbi
+         gTYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5JDGZPQi2Yj5A7V6cJ2keqxjpiTi3mSoci6fXsl7qJY=;
+        b=c4ezmzU2YQcX8KdYh5tAwaVUWLwQfZHsCqlI6qI/tflpGoIf8rPeOBB0AJNi312YDH
+         Qop8ePrcPqVGvUgUMyNmO0qH4o1BQHHzqOdibubBs7rwnOJ0/SIGt1IUSF1lisuR6XBv
+         vFzrt6vncwMpjxh89fcBlV0q4iRkDbdFfVPRaVZAKMFT5pvA7TWKam5J/lOzd44zAo13
+         ZQV6T4I8SFEXSUg3m62AUHvLcxbu50+t8suEUhwY9QheEgADqoc1kpPw9UJZ8TgtAHO4
+         t4EYU3U3jT8TjNgd57jHl6BU+jcMKqYqFlCieFrJMjPWJK5PN+3odCix7zTXyEUbwLUs
+         JNcw==
+X-Gm-Message-State: AOAM532YxDnbnX6e6Y00unE1IYK1SwmiQzYBjg1kUHnyH+ASLemZmECA
+        Z/+iQhpc2oW2FQPLpqAyNuE=
+X-Google-Smtp-Source: ABdhPJwg2H9+0okiFAhVICFLPP0sO3PmoCwOwLNNevTmOJR+dTOjD3Vqqvmwm1i2kjfJ1Q0Njto5kg==
+X-Received: by 2002:a2e:9dc7:: with SMTP id x7mr4455843ljj.132.1591541116251;
+        Sun, 07 Jun 2020 07:45:16 -0700 (PDT)
+Received: from localhost.localdomain (79-139-237-54.dynamic.spd-mgts.ru. [79.139.237.54])
+        by smtp.gmail.com with ESMTPSA id g24sm4059724lfh.90.2020.06.07.07.45.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Jun 2020 07:45:15 -0700 (PDT)
+From:   Dmitry Osipenko <digetx@gmail.com>
+To:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Heidelberg <david@ixit.cz>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Jonghwa Lee <jonghwa3.lee@samsung.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Vinay Simha BN <simhavcs@gmail.com>
+Subject: [PATCH v2 0/9] Summit SMB3xx driver & device-tree
+Date:   Sun,  7 Jun 2020 17:41:04 +0300
+Message-Id: <20200607144113.10202-1-digetx@gmail.com>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -60,80 +70,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove SMMU shutdown callback since it seems to cause more
-problems than benefits. With this callback, we need to make
-sure that all clients/consumers of SMMU do not perform any
-DMA activity once the SMMU is shutdown and translation is
-disabled. In other words we need to add shutdown callbacks
-for all those clients to make sure they do not perform any
-DMA or else we see all kinds of weird crashes during reboot
-or shutdown. This is clearly not scalable as the number of
-clients of SMMU would vary across SoCs and we would need to
-add shutdown callbacks to almost all drivers eventually.
-This callback was added for kexec usecase where it was known
-to cause memory corruptions when SMMU was not shutdown but
-that does not directly relate to SMMU because the memory
-corruption could be because of the client of SMMU which is
-not shutdown properly before booting into new kernel. So in
-that case, we need to identify the client of SMMU causing
-the memory corruption and add appropriate shutdown callback
-to the client rather than to the SMMU.
+We gathered existing patches, fixed and improved what we could and
+final result is an working charging driver with device-tree support
+for Nexus 7.
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/iommu/arm-smmu-v3.c | 6 ------
- drivers/iommu/arm-smmu.c    | 6 ------
- 2 files changed, 12 deletions(-)
+At this moment charging works with:
+ - Nexus 7 2012 (grouper and tilapia)
+ - Nexus 7 2013 (flo and deb)
+ - ... and there are more devices equipped with these chargers.
 
-diff --git a/drivers/iommu/arm-smmu-v3.c b/drivers/iommu/arm-smmu-v3.c
-index 8a908c50c306..634da02fef78 100644
---- a/drivers/iommu/arm-smmu-v3.c
-+++ b/drivers/iommu/arm-smmu-v3.c
-@@ -4142,11 +4142,6 @@ static int arm_smmu_device_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--static void arm_smmu_device_shutdown(struct platform_device *pdev)
--{
--	arm_smmu_device_remove(pdev);
--}
--
- static const struct of_device_id arm_smmu_of_match[] = {
- 	{ .compatible = "arm,smmu-v3", },
- 	{ },
-@@ -4161,7 +4156,6 @@ static struct platform_driver arm_smmu_driver = {
- 	},
- 	.probe	= arm_smmu_device_probe,
- 	.remove	= arm_smmu_device_remove,
--	.shutdown = arm_smmu_device_shutdown,
- };
- module_platform_driver(arm_smmu_driver);
- 
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index 243bc4cb2705..4d80516c789f 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -2276,11 +2276,6 @@ static int arm_smmu_device_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--static void arm_smmu_device_shutdown(struct platform_device *pdev)
--{
--	arm_smmu_device_remove(pdev);
--}
--
- static int __maybe_unused arm_smmu_runtime_resume(struct device *dev)
- {
- 	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
-@@ -2335,7 +2330,6 @@ static struct platform_driver arm_smmu_driver = {
- 	},
- 	.probe	= arm_smmu_device_probe,
- 	.remove	= arm_smmu_device_remove,
--	.shutdown = arm_smmu_device_shutdown,
- };
- module_platform_driver(arm_smmu_driver);
- 
+Changelog:
+
+v2: - Addressed v1 review comments from Rob Herring and Sebastian Reichel
+      by moving out common battery properties from the charger node into the
+      battery-cell node.
+
+    - power_supply_register() of the SMB driver converted to resource-managed
+      API variant.
+
+    - Improved DT property names of the SMB binding by making them to follow
+      the generic power-supply naming scheme (-microvolts at the end, etc).
+
+David Heidelberg (6):
+  dt-bindings: power: supply: Add device-tree binding for Summit SMB3xx
+  power: supply: smb347-charger: Use resource-managed API
+  power: supply: smb347-charger: Implement device-tree support
+  power: supply: smb347-charger: Support SMB345 and SMB358
+  power: supply: smb347-charger: Remove virtual smb347-battery
+  ARM: dts: qcom: apq8064-nexus7: Add SMB345 charger node
+
+Dmitry Osipenko (3):
+  dt-bindings: battery: Add temperature properties
+  power: supply: Support battery temperature device-tree properties
+  power: supply: smb347-charger: Replace mutex with IRQ disable/enable
+
+ .../bindings/power/supply/battery.txt         |  10 +
+ .../power/supply/summit,smb347-charger.yaml   | 165 +++++
+ .../boot/dts/qcom-apq8064-asus-nexus7-flo.dts |  23 +
+ drivers/power/supply/Kconfig                  |   6 +-
+ drivers/power/supply/power_supply_core.c      |  18 +
+ drivers/power/supply/smb347-charger.c         | 565 +++++++++---------
+ .../dt-bindings/power/summit,smb347-charger.h |  19 +
+ include/linux/power_supply.h                  |   6 +
+ 8 files changed, 542 insertions(+), 270 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/power/supply/summit,smb347-charger.yaml
+ create mode 100644 include/dt-bindings/power/summit,smb347-charger.h
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.0
 
