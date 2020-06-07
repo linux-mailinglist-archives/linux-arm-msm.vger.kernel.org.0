@@ -2,106 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8DAD1F0872
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2020 22:01:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C64791F0AD8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2020 13:09:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728902AbgFFUBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Jun 2020 16:01:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43540 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728229AbgFFUBm (ORCPT
+        id S1726455AbgFGLJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 Jun 2020 07:09:46 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:24768 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726452AbgFGLJq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Jun 2020 16:01:42 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5FB6C03E96A;
-        Sat,  6 Jun 2020 13:01:41 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id g1so10176158edv.6;
-        Sat, 06 Jun 2020 13:01:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gfDYgYWWxAJkhuooZJo8FujLn97cONbso3rrCXc9f20=;
-        b=bu5U9oAZ2jARjpmZA6hTFVFeLL7tj7VWCyExyfPooRuVwhvPZbFCNsNmAQsbYUR+RH
-         hufagq6aobUco9EOjt6bNN3QWktKTMnigHMAVxR/uihFRfqb2JkYCMfs9Pj5QZpb+IR7
-         NiVLOTBGkCGPVtiK7llT82HhjMAXBlqc2gpYTbEEbDrJ0VWf5DQaVSlk1LzWVm1E/Xez
-         bMOOZ/Hh/jcq+qEuqwF08Qo2rGg95xROkA93XMrV32GPRvPu7Q015Nb+i4bZAu2xrGnU
-         J2fRR9lfLHVX3Zr90OFGlSvw6sJKvaTK1/k94Pf/NB6zyqbT55A0P8IKdKgiw51j+nWu
-         eN/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gfDYgYWWxAJkhuooZJo8FujLn97cONbso3rrCXc9f20=;
-        b=GpD5pplSM+w8yZ/tRr+zT9J2sQnkPO+RaKNgR+p2fLrGpabEs55yj4y5xLwyx1sUdd
-         6GUiohjHLEHLT/bObIKm1/m8f2HMlImk1z1XZEg4DdndJ5XTlvwnxzNfVLwEMOWwKv9G
-         Vqe1BAabWZVMsIHzErUroYLI1SwHpsdd32/FaUpNqb2IDVjoFVZYNJEkrOx5MQktfFs0
-         4VV0yR5k/Sh7+xiDDTDoyHPf7lemIHCOzuSYXCNU1xQwTHEaZZLSUhgRMybkBHkRwKmV
-         SE574CrEQ3Fm7gmHe76sjfI+y9o6EsHXxPE72nwa/WxTUkMq4ec6Z1/GMVa00r8Y+WmO
-         1OUw==
-X-Gm-Message-State: AOAM5321/8Tyt1swlenlGoD4rm7eXvwhn5LL0Q7VWEgysLyVCWoxID5L
-        HgrrTBiSKaqXufioLDPiQowMEcyewrlG4pS2+nA=
-X-Google-Smtp-Source: ABdhPJzuK37hwXZ07Js5fDY8Fkv33sx1ZVKV3+QYhH8xXee99VgutbGekCi2YmJBeYfXFRtNbl5FcVF45jO7Uu1jeU8=
-X-Received: by 2002:a50:c017:: with SMTP id r23mr15868263edb.120.1591473700459;
- Sat, 06 Jun 2020 13:01:40 -0700 (PDT)
+        Sun, 7 Jun 2020 07:09:46 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591528185; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=/hsbFOuqSBY+VZzRO8uUfNPtY30KTsN27zx5uQIR8g0=; b=qTNJgXIIJHvdm3JLCgZaVZdNAVUHCLHAitZc4UI2kMUGnasVN3ZBoQvtK9/L73D/Z2CvCxf1
+ Cl3yaJHl6KDsZmcyXNBtPdSmDVSLG9pMMBziWGwZFqBgEvCERHsKB8RM0Rf27XCFhmfEZkbJ
+ MG0wGZeTzGQtJi39l6eWZVzCA4Q=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5edccae8f1889e857a9ad788 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 07 Jun 2020 11:09:28
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EEC45C43395; Sun,  7 Jun 2020 11:09:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BEA0BC433CA;
+        Sun,  7 Jun 2020 11:09:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BEA0BC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [RFC PATCH] iommu/arm-smmu: Remove shutdown callback
+Date:   Sun,  7 Jun 2020 16:39:18 +0530
+Message-Id: <20200607110918.1733-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-References: <5a663096b489b86472fe3bfbd5138c411d669bad.camel@perches.com>
-In-Reply-To: <5a663096b489b86472fe3bfbd5138c411d669bad.camel@perches.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sat, 6 Jun 2020 13:02:05 -0700
-Message-ID: <CAF6AEGsqoei_uDQgNFdRF2ZA47YzWEvV7noVmjxLaa=VB-QL5A@mail.gmail.com>
-Subject: Re: [Possible PATCH] iommu/qcom: Change CONFIG_BIG_ENDIAN to CONFIG_CPU_BIG_ENDIAN
-To:     Joe Perches <joe@perches.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 6, 2020 at 12:16 PM Joe Perches <joe@perches.com> wrote:
->
-> CONFIG_BIG_ENDIAN does not exist as a Kconfig symbol.
->
-> Signed-off-by: Joe Perches <joe@perches.com>
-> ---
->
-> I don't have the hardware, so I can't tell if this is a
-> correct change, but it is a logical one.
+Remove SMMU shutdown callback since it seems to cause more
+problems than benefits. With this callback, we need to make
+sure that all clients/consumers of SMMU do not perform any
+DMA activity once the SMMU is shutdown and translation is
+disabled. In other words we need to add shutdown callbacks
+for all those clients to make sure they do not perform any
+DMA or else we see all kinds of weird crashes during reboot
+or shutdown. This is clearly not scalable as the number of
+clients of SMMU would vary across SoCs and we would need to
+add shutdown callbacks to almost all drivers eventually.
+This callback was added for kexec usecase where it was known
+to cause memory corruptions when SMMU was not shutdown but
+that does not directly relate to SMMU because the memory
+corruption could be because of the client of SMMU which is
+not shutdown properly before booting into new kernel. So in
+that case, we need to identify the client of SMMU causing
+the memory corruption and add appropriate shutdown callback
+to the client rather than to the SMMU.
 
-I'm not sure *anyone* has a working snapdragon big-endian setup these
-days.. sboyd used to tinker with that ages ago.
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/iommu/arm-smmu-v3.c | 6 ------
+ drivers/iommu/arm-smmu.c    | 6 ------
+ 2 files changed, 12 deletions(-)
 
-But, SCTLR.E is the bit to set for big-endian, so this looks like the
-right thing to do.
+diff --git a/drivers/iommu/arm-smmu-v3.c b/drivers/iommu/arm-smmu-v3.c
+index 8a908c50c306..634da02fef78 100644
+--- a/drivers/iommu/arm-smmu-v3.c
++++ b/drivers/iommu/arm-smmu-v3.c
+@@ -4142,11 +4142,6 @@ static int arm_smmu_device_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static void arm_smmu_device_shutdown(struct platform_device *pdev)
+-{
+-	arm_smmu_device_remove(pdev);
+-}
+-
+ static const struct of_device_id arm_smmu_of_match[] = {
+ 	{ .compatible = "arm,smmu-v3", },
+ 	{ },
+@@ -4161,7 +4156,6 @@ static struct platform_driver arm_smmu_driver = {
+ 	},
+ 	.probe	= arm_smmu_device_probe,
+ 	.remove	= arm_smmu_device_remove,
+-	.shutdown = arm_smmu_device_shutdown,
+ };
+ module_platform_driver(arm_smmu_driver);
+ 
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 243bc4cb2705..4d80516c789f 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -2276,11 +2276,6 @@ static int arm_smmu_device_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static void arm_smmu_device_shutdown(struct platform_device *pdev)
+-{
+-	arm_smmu_device_remove(pdev);
+-}
+-
+ static int __maybe_unused arm_smmu_runtime_resume(struct device *dev)
+ {
+ 	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
+@@ -2335,7 +2330,6 @@ static struct platform_driver arm_smmu_driver = {
+ 	},
+ 	.probe	= arm_smmu_device_probe,
+ 	.remove	= arm_smmu_device_remove,
+-	.shutdown = arm_smmu_device_shutdown,
+ };
+ module_platform_driver(arm_smmu_driver);
+ 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-
-> Found by a test script that looks for IS_ENABLED(FOO)
-> where FOO must also exist in Kconfig files.
->
->  drivers/iommu/qcom_iommu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-> index c3e1fbd1988c..69e113471ecb 100644
-> --- a/drivers/iommu/qcom_iommu.c
-> +++ b/drivers/iommu/qcom_iommu.c
-> @@ -304,7 +304,7 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
->                       ARM_SMMU_SCTLR_M | ARM_SMMU_SCTLR_S1_ASIDPNE |
->                       ARM_SMMU_SCTLR_CFCFG;
->
-> -               if (IS_ENABLED(CONFIG_BIG_ENDIAN))
-> +               if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
->                         reg |= ARM_SMMU_SCTLR_E;
->
->                 iommu_writel(ctx, ARM_SMMU_CB_SCTLR, reg);
->
