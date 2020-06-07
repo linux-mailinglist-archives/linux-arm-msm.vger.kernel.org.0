@@ -2,138 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 561401F0C04
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2020 16:45:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88FC01F0FE1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2020 22:45:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726784AbgFGOpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Jun 2020 10:45:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46086 "EHLO
+        id S1727829AbgFGUpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 Jun 2020 16:45:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbgFGOp2 (ORCPT
+        with ESMTP id S1726093AbgFGUpM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Jun 2020 10:45:28 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1543FC08C5C3;
-        Sun,  7 Jun 2020 07:45:28 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id a9so13751195ljn.6;
-        Sun, 07 Jun 2020 07:45:27 -0700 (PDT)
+        Sun, 7 Jun 2020 16:45:12 -0400
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AC37C08C5C3;
+        Sun,  7 Jun 2020 13:45:12 -0700 (PDT)
+Received: by mail-io1-xd44.google.com with SMTP id i25so1762811iog.0;
+        Sun, 07 Jun 2020 13:45:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lfL/r1htdP9PiIBaZcQxVZ6voLKiwdEQ8IbCOeWza6A=;
-        b=F2mKAwuzjxAgedp/+YsmHWSd/69jzNNmCqJbuVTXk5OZFvOBQ2uxLjW/SdgzELRfaH
-         8onq9IUyf6hOkjsCWURnrDfC/ltXl8Qv3iwoa98AN3eSueCbgWOGhmA4X4p0tN478dXX
-         U+m8CwOZmLhPmjzwqA17KZn+h1whAaB+5zOYIV4UM7y9zLbbf45naMpbpIEkq5KD10xQ
-         0TcMRj88h/2OFul3mbMqqcRXrBR17F7YnqUGg17E79Q+y3rEjcP5vFyQPqvvwPFSVun/
-         3o1oexIGGbz0YElqBWWLvov52XuwsRFuEvKToCOAgSyufte5awTv2jkVTW19oUc9UMCQ
-         J0iw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=k/YnB5fzP1XicKiRcAe2Q8LuxjHO0CMYG9cBtnOKMh4=;
+        b=GxGqwPhkkOGRxOBl7vka/S+zbKecUhkFDra1dJfBpBqCyWgA47XutunWnavtjHUHM6
+         WoYPyQSIKvsbcMWJJDjIhJOvGhItrkPo/ml6UedBAtjjJeOisKgKVmglPgY+ye0MUQJK
+         4QEMRMiFAA21c4zgetYQ0b+Jz4ZD7Dtc1L1PZpZXx4yKmcGpbESP/4BLG5K8P8Ue+WKI
+         q/+1Gy0NG7V9wpvE7HGX6FU2ih2pnWv8QNHJl6CfRWLz/EEg7Kb8iNgVjTGQTwmr7O7C
+         xQ53yO8+6NXnq6meoVOEd9yRkIV/vl6XeZKCWczaZgE+roIXjLECAkXnF+zgfLv5PmN2
+         yVnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lfL/r1htdP9PiIBaZcQxVZ6voLKiwdEQ8IbCOeWza6A=;
-        b=b4EAnJgnYuta7t/Lfz6303qPuQX/orkfYHBNLa4OfOE770zQJHh5img4+TGENTARIQ
-         TnymuUmSvpdetfv8itFk+YWhD7KDHWLV/8qq5mPeWhAYdI9MRcl3+MZB548SN4WclcE2
-         /9xaKY85g4JnFLpNTzuGExxdWuUh/d8MAXaVx4chaqWWckrSfFn7BcoCQb4nj4AMXcsJ
-         5cxx53ejD8WdntN0k+f0QIOsuRxQQVnatzfpdZolZuhe1fhIBEJihIB4Werpy4F10vQL
-         jEKyiDKl6mG8QsoxNepWjSNNNR1dwDQ/QE/BfDJ+r8p6ZNrADHDQfUJMk7LrLGcaxjNF
-         80qw==
-X-Gm-Message-State: AOAM5322i3uXs6GYOnwPfKxXr55ND7oQq80JOWHZ+vs4w4cI6NQzC715
-        zTDNZBsW9+1yAXsxpvUIKzE=
-X-Google-Smtp-Source: ABdhPJw2hnkRZpEz3xvP42UA6MOStGsDyxqyIF/rxMxPa659kz9A/8+dqsknHvl1DT4uiVe2y6zzeA==
-X-Received: by 2002:a05:651c:233:: with SMTP id z19mr9481431ljn.428.1591541126619;
-        Sun, 07 Jun 2020 07:45:26 -0700 (PDT)
-Received: from localhost.localdomain (79-139-237-54.dynamic.spd-mgts.ru. [79.139.237.54])
-        by smtp.gmail.com with ESMTPSA id g24sm4059724lfh.90.2020.06.07.07.45.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2020 07:45:26 -0700 (PDT)
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Heidelberg <david@ixit.cz>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jonghwa Lee <jonghwa3.lee@samsung.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Vinay Simha BN <simhavcs@gmail.com>
-Subject: [PATCH v2 9/9] ARM: dts: qcom: apq8064-nexus7: Add SMB345 charger node
-Date:   Sun,  7 Jun 2020 17:41:13 +0300
-Message-Id: <20200607144113.10202-10-digetx@gmail.com>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200607144113.10202-1-digetx@gmail.com>
-References: <20200607144113.10202-1-digetx@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=k/YnB5fzP1XicKiRcAe2Q8LuxjHO0CMYG9cBtnOKMh4=;
+        b=SnvsJY0k37Ur7FYa9chKvSk0V+78jweUCsmvicf9R6MAb2Mk6CH0TFFImhrsLWAyvn
+         FBgKtqkeyOsXtzp5ReLAjmXmKAV8gyifGquWv3bKaSLK+Ms0zLkI2OIW9fMYfkPd6eoa
+         4TnU5GK2INt3GbZz5irbQEnbcEHhWsKFCH6Dw7ZT1Ng8EqktX68LErUhVBpGxHyOiTL7
+         qNEmj8nBvQmbbzs1gdD3XorCxBi73iCR1OK/AvCQNfTnfJObfnEg7SfQyArVMzAY4nRe
+         xo1AVDs4/Jnhbmj9djSKYG892Bzvzss98jyw0l1shcwfavL2YB/xZACJlQa3ibF8ACSO
+         7+lA==
+X-Gm-Message-State: AOAM532l7xtupFCHuLiYg0PNshchaJBLRRZolKCbP61mOGEGM00P5xXa
+        rbgcxAk7eStqeL6KcQHcfbsrgzD53hbba4Em6FHHP8vB
+X-Google-Smtp-Source: ABdhPJx8YH0LXzFYGcRU9BI+IR83rM6pbwtkKlIoHSeUClRsZq3D2mgrW0vUmYRP3mkH6A0GPwzANQOxW3Syq3lOEDU=
+X-Received: by 2002:a05:6602:2c45:: with SMTP id x5mr18232285iov.80.1591562711809;
+ Sun, 07 Jun 2020 13:45:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1591441171-20341-1-git-send-email-sivaprak@codeaurora.org> <1591441171-20341-4-git-send-email-sivaprak@codeaurora.org>
+In-Reply-To: <1591441171-20341-4-git-send-email-sivaprak@codeaurora.org>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Sun, 7 Jun 2020 15:45:00 -0500
+Message-ID: <CABb+yY2HhHSbP7UX_r1bGgpxzQKfC9aS8r9nxX5AOt8ENG5ACQ@mail.gmail.com>
+Subject: Re: [PATCH V2 3/3] mailbox: qcom: Add ipq6018 apcs compatible
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Heidelberg <david@ixit.cz>
+On Sat, Jun 6, 2020 at 5:59 AM Sivaprakash Murugesan
+<sivaprak@codeaurora.org> wrote:
+>
+> The Qualcomm ipq6018 has apcs block, add compatible for the same.
+> Also, the apcs provides a clock controller functionality similar
+> to msm8916 but the clock driver is different.
+>
+> Create a child platform device based on the apcs compatible for the
+> clock controller functionality.
+>
+> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> ---
+> [V2]
+>  * created a new structur for driver data.
+>  * re-arranged compatible strings in sorted order
+>
+Please break this into two patches, first reorganise and then add new
+ipq6018 of_match.
 
-Add SMB345 charger node to Nexus 7 2013 DTS.
-Proper charger configuration prevents battery from overcharging.
-
-Original author: Vinay Simha BN <simhavcs@gmail.com>
-
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../boot/dts/qcom-apq8064-asus-nexus7-flo.dts | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
-
-diff --git a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-index a701d4bac320..7a7784206dd8 100644
---- a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-+++ b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-@@ -3,6 +3,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/power/summit,smb347-charger.h>
- / {
- 	model = "Asus Nexus7(flo)";
- 	compatible = "asus,nexus7-flo", "qcom,apq8064";
-@@ -56,6 +57,11 @@ volume_down {
- 		};
- 	};
- 
-+	battery_cell: battery-cell {
-+		compatible = "simple-battery";
-+		constant-charge-current-max-microamp = <1800000>;
-+	};
-+
- 	soc {
- 		rpm@108000 {
- 			regulators {
-@@ -296,8 +302,25 @@ eeprom@52 {
- 				bq27541@55 {
- 					compatible = "ti,bq27541";
- 					reg = <0x55>;
-+					power-supplies = <&power_supply>;
-+					monitored-battery = <&battery_cell>;
- 				};
- 
-+				power_supply: charger@6a {
-+					compatible = "summit,smb345";
-+					reg = <0x6a>;
-+
-+					interrupt-parent = <&tlmm_pinmux>;
-+					interrupts = <23 IRQ_TYPE_EDGE_BOTH>;
-+
-+					summit,chip-temperature-threshold-celsius = <110>;
-+					summit,usb-current-limit-microamp = <500000>;
-+					summit,enable-charge-control = <SMB3XX_CHG_ENABLE_SW>;
-+					summit,enable-usb-charging;
-+					summit,enable-otg-charging;
-+
-+					monitored-battery = <&battery_cell>;
-+				};
- 			};
- 		};
- 
--- 
-2.26.0
-
+thanks.
