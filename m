@@ -2,106 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D106A1F20DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 22:45:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32FA61F2111
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 22:58:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726897AbgFHUog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 16:44:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43968 "EHLO
+        id S1726227AbgFHU6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 16:58:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726879AbgFHUo2 (ORCPT
+        with ESMTP id S1726756AbgFHU6G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 16:44:28 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7105C08C5D1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 13:44:17 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id e20so9059071qvu.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 13:44:17 -0700 (PDT)
+        Mon, 8 Jun 2020 16:58:06 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E85EFC08C5C3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 13:58:04 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id c12so18716377qkk.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 13:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=acHevj3wQIcryhB7O2ZRO4PATF9eIWbo+G1WRkznV+0=;
-        b=SJTSV2+Z6VNkFlhdlnWtITIVaf5vYoqSYKr/f34664q6R+QXXEV+tgRZ1FHi/+E000
-         Me6yk+QNbCBGelQ4P8PI20FbKZAZLoNFWmZ3HZE4EqK4iuDEH60ryY2dISsf9y3argHu
-         UMPAB4Swt6oUhedie/XcWLz2KkFOcXE+6wCHKUGd2O9Tq444VcZvSUQc8hYhHY1pn3NX
-         GQ/Crp3r1oq3LYlCpjCS9HmMuxEiEK9ZKef+xUVC+ih5B+N98Y8rB9YafCduk4sQKpit
-         m1kjz5WQ6UsujVM0dfRYbpOYlCQLsp+Ps7L+DqkjqhiCv+PUA2Fc3tPXduqWNHZnTe7s
-         ExJw==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gAhxsPhFzj8ko5Ff5RM8OuwLL2KNe1g6ry7IsPK4YPM=;
+        b=16CZH6v6kmNHVqda0GleO/jK9emlQUk0HrH+pniwLB19gv2DmUZedX1TBvRssaAQi6
+         FGLFcjSQVlbS8QQ2KtMP2HBxTZ7HnxctjxHPpdhwsW40BsmSTmMCHVfVeXtdWN4Bi6Ju
+         s+mVt/z45r8Mr7kJ6O0XzcviuZmsZireLMRgl7efhjzxbZmm+hf8KRPbS+jgUqo9MVjn
+         3Rg3QTG2S6ZhEVm+RMyhY+gsy5ErZOIcQxerJHb/KfJJtY+0M3R//ych0Dy5ctAu0GIc
+         87PQeTQSEoRWGK8v6p/MG7KKuVW+ITxTJv7h828VKy28xF/sgTJebb9iesq6h7mzki59
+         WG6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=acHevj3wQIcryhB7O2ZRO4PATF9eIWbo+G1WRkznV+0=;
-        b=Gx4ilKryddLc+f724RmaBNqxWHHsmAFmGLGLDVcLOiAGC2vc/okrN/SJodINaaT/V5
-         Vz3PJC1NXwuflUbJSG2KfHdjGxynpHI/61tr9hQfF+ijo/zCPRgnZR9wkCvlw5ZPZyXT
-         0Omz0zXiXNMgN9G55z4AOgNWU0R32fcGGsh84dEfGSmBsXdfAD4tFdZEunijfLfuXqas
-         +bHxdfsFbcNdXXunZ6rVpigmgJ6EREZ4wwOos2vNIM+5D7+VosrjWOijVFyuESwEsnQd
-         9OE/2aPZM4Fd0jbULv5HBGeZSgjJLoxQ/YWZ27rHLldcnaClkdCDcjmF2LMErswuOHPy
-         /y7w==
-X-Gm-Message-State: AOAM532HqryckqsgkB8W9m3D2PvOjbH3h8ojRWyHypjDi4bgSKZJxY9Y
-        p42vXpFLgNFMLr1wDMqCdMWTQw==
-X-Google-Smtp-Source: ABdhPJzOla+D8EOOeekqVt/wBj46R/nJoH0uM20TvTKVjJNwP4MBDNiTWp7yPIFrDtsJ9VawFCxsyA==
-X-Received: by 2002:ad4:5668:: with SMTP id bm8mr549681qvb.248.1591649056614;
-        Mon, 08 Jun 2020 13:44:16 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id y16sm8895565qty.1.2020.06.08.13.44.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 13:44:16 -0700 (PDT)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gAhxsPhFzj8ko5Ff5RM8OuwLL2KNe1g6ry7IsPK4YPM=;
+        b=DKWJAffX4dIUXM5gb8YSq86CBQOJfIZbFQg9V8sdMTf5ZB4FnVRVlbwxIG0fopCSnB
+         XrADiJ+5AXbdxGqhzT4FH+I+yx/W53REVPLNQ1F9TLUn3c2k8zmq/gjVL4TuhjWTwdZc
+         WJ4sg3DT/+hvmSTJqCoDaEzRm/rDrE0oBz7f0ZhNE31i5eO5psPcMikN8m05UZVHMLbN
+         im/bTvRcGDeYCrIwNghL8VuWbCiO3ixDUJ8lp4jJlaywyGu6A4WaFbosgufUiOQkShYr
+         dLgFLHQHUyp1QfLSifbatdm33cnVAXk/ERxTrZxxG/7RM+FyKblm1OHzPn28Af1zBKCX
+         9qWA==
+X-Gm-Message-State: AOAM533ngSCgvmSnl0JCrMk9CTzBpePL/IFxGh6m16OFN1yIcIujeFF0
+        L14moSQjrt+74G/Nkn83VvT9b2l0n5o=
+X-Google-Smtp-Source: ABdhPJxI8g/kaTI+YUdB4Xk1DMGdnAx4W0tVDym/m03YVgr8CP0pb9duFQuz7lWNGN7rE3IPJPeIXw==
+X-Received: by 2002:a37:ac03:: with SMTP id e3mr24122797qkm.350.1591649883869;
+        Mon, 08 Jun 2020 13:58:03 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id d193sm7950035qke.124.2020.06.08.13.58.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2020 13:58:03 -0700 (PDT)
+Subject: Re: [PATCH 4/5] soundwire: qcom: avoid dependency on CONFIG_SLIMBUS
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     alsa-devel@alsa-project.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Sanyog Kale <sanyog.r.kale@intel.com>,
         Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 5/5] soundwire: qcom: enable CPU interrupts for mmio devices
-Date:   Mon,  8 Jun 2020 16:43:46 -0400
-Message-Id: <20200608204347.19685-6-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20200608204347.19685-1-jonathan@marek.ca>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
 References: <20200608204347.19685-1-jonathan@marek.ca>
+ <20200608204347.19685-5-jonathan@marek.ca>
+Message-ID: <931e8e36-63b5-2a29-1b0c-ee7f8ffbea64@marek.ca>
+Date:   Mon, 8 Jun 2020 16:58:25 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200608204347.19685-5-jonathan@marek.ca>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This allows the CPU to receive interrupts.
+On 6/8/20 4:43 PM, Jonathan Marek wrote:
+> The driver may be used without slimbus, so don't depend on slimbus.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>   drivers/soundwire/Kconfig | 1 -
+>   drivers/soundwire/qcom.c  | 5 +++++
+>   2 files changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soundwire/Kconfig b/drivers/soundwire/Kconfig
+> index fa2b4ab92ed9..d121cf739090 100644
+> --- a/drivers/soundwire/Kconfig
+> +++ b/drivers/soundwire/Kconfig
+> @@ -33,7 +33,6 @@ config SOUNDWIRE_INTEL
+>   
+>   config SOUNDWIRE_QCOM
+>   	tristate "Qualcomm SoundWire Master driver"
+> -	depends on SLIMBUS
+>   	depends on SND_SOC
+>   	help
+>   	  SoundWire Qualcomm Master driver.
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index 14334442615f..ac81c64768ea 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -769,13 +769,18 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>   	if (!ctrl)
+>   		return -ENOMEM;
+>   
+> +#ifdef CONFIG_SLIMBUS
+>   	if (dev->parent->bus == &slimbus_bus) {
+> +#else
+> +	if (false) {
+> +#endif
+>   		ctrl->reg_read = qcom_swrm_ahb_reg_read;
+>   		ctrl->reg_write = qcom_swrm_ahb_reg_write;
+>   		ctrl->regmap = dev_get_regmap(dev->parent, NULL);
+>   		if (!ctrl->regmap)
+>   			return -EINVAL;
+>   	} else {
+> +
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/soundwire/qcom.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Oops, ended up with a stray whitespace here, will fix for v2.
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index ac81c64768ea..58ffb46e0d64 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -34,6 +34,7 @@
- #define SWRM_INTERRUPT_STATUS_SPECIAL_CMD_ID_FINISHED		BIT(10)
- #define SWRM_INTERRUPT_MASK_ADDR				0x204
- #define SWRM_INTERRUPT_CLEAR					0x208
-+#define SWRM_INTERRUPT_CPU_EN					0x210
- #define SWRM_CMD_FIFO_WR_CMD					0x300
- #define SWRM_CMD_FIFO_RD_CMD					0x304
- #define SWRM_CMD_FIFO_CMD					0x308
-@@ -325,6 +326,12 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
- 	ctrl->reg_write(ctrl, SWRM_COMP_CFG_ADDR,
- 			SWRM_COMP_CFG_IRQ_LEVEL_OR_PULSE_MSK |
- 			SWRM_COMP_CFG_ENABLE_MSK);
-+
-+	/* enable CPU IRQs */
-+	if (ctrl->mmio) {
-+		ctrl->reg_write(ctrl, SWRM_INTERRUPT_CPU_EN,
-+				SWRM_INTERRUPT_STATUS_RMSK);
-+	}
- 	return 0;
- }
- 
--- 
-2.26.1
-
+>   		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>   
+>   		ctrl->reg_read = qcom_swrm_cpu_reg_read;
+> 
