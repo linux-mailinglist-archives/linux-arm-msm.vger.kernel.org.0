@@ -2,42 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5049B1F2D4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:33:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6129F1F2EEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:46:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733127AbgFIAcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 20:32:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36014 "EHLO mail.kernel.org"
+        id S1728538AbgFHXLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 19:11:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58442 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728576AbgFHXPP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 19:15:15 -0400
+        id S1728025AbgFHXLb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 19:11:31 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2C84321531;
-        Mon,  8 Jun 2020 23:15:13 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0F7312100A;
+        Mon,  8 Jun 2020 23:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591658114;
-        bh=U4a716t1zfB5zL2gtGQ6ceowiQ4YOsRO6zDnhNKNyKQ=;
+        s=default; t=1591657890;
+        bh=EnRmq9zh4Y6NmpMblMq2iXljdkShGO0VJYzbMq6hjsk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=H9T0ycRFoGB813INPHrl1lodbv8tLA1ucqGA4UzV9rwFXyfdG/YOzkEHIhpn4bO8g
-         JNiOnsjX9wD5pc91Hyx55MqflMAg8fclz+f5sN3h1Ic2Tb/7oXVM5CAUMGh4/wxDxH
-         4XfNErw9HDAmU1RlXry/VbRukcw/TffSt+FuqNqc=
+        b=Ed4XYjuISYG5bn5+kayhiq1cD1jwbGJEnmtq9nRFkkJlnWLeAyatgxaiNaWs9/rtv
+         nvWO9ItxdHS0Erb/1zioo/Z8Y4MkvsFJZAGcdIYOJc39q+O11DAzy2tZ2OzcF5pLYa
+         mTrsn56l1rkhKbnzaDk9A18+/hZlb/zE1vHFyL1c=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 152/606] pinctrl: qcom: Add affinity callbacks to msmgpio IRQ chip
-Date:   Mon,  8 Jun 2020 19:04:37 -0400
-Message-Id: <20200608231211.3363633-152-sashal@kernel.org>
+Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 246/274] mmc: sdhci-msm: Set SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12 quirk
+Date:   Mon,  8 Jun 2020 19:05:39 -0400
+Message-Id: <20200608230607.3361041-246-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200608231211.3363633-1-sashal@kernel.org>
-References: <20200608231211.3363633-1-sashal@kernel.org>
+In-Reply-To: <20200608230607.3361041-1-sashal@kernel.org>
+References: <20200608230607.3361041-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -47,70 +45,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+From: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-commit dca4f40742e09ec5d908a7fc2862498e6cf9d911 upstream.
+[ Upstream commit d863cb03fb2aac07f017b2a1d923cdbc35021280 ]
 
-Wakeup capable GPIO IRQs routed via PDC are not being migrated when a CPU
-is hotplugged. Add affinity callbacks to msmgpio IRQ chip to update the
-affinity of wakeup capable IRQs.
+sdhci-msm can support auto cmd12.
+So enable SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12 quirk.
 
-Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-[mkshah: updated commit text and minor code fixes]
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/1588314617-4556-1-git-send-email-mkshah@codeaurora.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/1587363626-20413-3-git-send-email-vbadigan@codeaurora.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/mmc/host/sdhci-msm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 9f1c9951949e..14a8f8fa0ea3 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1010,6 +1010,29 @@ static void msm_gpio_irq_relres(struct irq_data *d)
- 	module_put(gc->owner);
- }
- 
-+static int msm_gpio_irq_set_affinity(struct irq_data *d,
-+				const struct cpumask *dest, bool force)
-+{
-+	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-+	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index a8bcb3f16aa4..11139d7d394a 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1882,7 +1882,9 @@ static const struct sdhci_ops sdhci_msm_ops = {
+ static const struct sdhci_pltfm_data sdhci_msm_pdata = {
+ 	.quirks = SDHCI_QUIRK_BROKEN_CARD_DETECTION |
+ 		  SDHCI_QUIRK_SINGLE_POWER_WRITE |
+-		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
++		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN |
++		  SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
 +
-+	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
-+		return irq_chip_set_affinity_parent(d, dest, force);
-+
-+	return 0;
-+}
-+
-+static int msm_gpio_irq_set_vcpu_affinity(struct irq_data *d, void *vcpu_info)
-+{
-+	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-+	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-+
-+	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
-+		return irq_chip_set_vcpu_affinity_parent(d, vcpu_info);
-+
-+	return 0;
-+}
-+
- static void msm_gpio_irq_handler(struct irq_desc *desc)
- {
- 	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
-@@ -1108,6 +1131,8 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
- 	pctrl->irq_chip.irq_set_wake = msm_gpio_irq_set_wake;
- 	pctrl->irq_chip.irq_request_resources = msm_gpio_irq_reqres;
- 	pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
-+	pctrl->irq_chip.irq_set_affinity = msm_gpio_irq_set_affinity;
-+	pctrl->irq_chip.irq_set_vcpu_affinity = msm_gpio_irq_set_vcpu_affinity;
- 
- 	np = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
- 	if (np) {
+ 	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
+ 	.ops = &sdhci_msm_ops,
+ };
 -- 
 2.25.1
 
