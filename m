@@ -2,170 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D0981F1980
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 14:59:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECB1E1F199B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 15:04:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729087AbgFHM7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 08:59:30 -0400
-Received: from foss.arm.com ([217.140.110.172]:52534 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728799AbgFHM73 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 08:59:29 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EAD0631B;
-        Mon,  8 Jun 2020 05:59:28 -0700 (PDT)
-Received: from [10.37.12.95] (unknown [10.37.12.95])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 73C403F52E;
-        Mon,  8 Jun 2020 05:59:25 -0700 (PDT)
-Subject: Re: [PATCH v8 4/8] PM / EM: add support for other devices than CPUs
- in Energy Model
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     kbuild@lists.01.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, lkp@intel.com,
-        Dan Carpenter <error27@gmail.com>, kbuild-all@lists.01.org,
-        Dietmar.Eggemann@arm.com, cw00.choi@samsung.com
-References: <20200608115155.GY30374@kadam>
- <b347fb60-46d3-e59c-59fa-a2b10932fc49@arm.com> <20200608125127.GN22511@kadam>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <da0debe1-73da-33f1-c24e-154c2123c522@arm.com>
-Date:   Mon, 8 Jun 2020 13:59:23 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20200608125127.GN22511@kadam>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1729053AbgFHNER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 09:04:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5]:5900 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728245AbgFHNEQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 09:04:16 -0400
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 058D2YcI132229;
+        Mon, 8 Jun 2020 09:03:31 -0400
+Received: from ppma05fra.de.ibm.com (6c.4a.5195.ip4.static.sl-reverse.com [149.81.74.108])
+        by mx0a-001b2d01.pphosted.com with ESMTP id 31g74t587m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 08 Jun 2020 09:03:31 -0400
+Received: from pps.filterd (ppma05fra.de.ibm.com [127.0.0.1])
+        by ppma05fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 058D0A9Z031429;
+        Mon, 8 Jun 2020 13:03:28 GMT
+Received: from b06avi18878370.portsmouth.uk.ibm.com (b06avi18878370.portsmouth.uk.ibm.com [9.149.26.194])
+        by ppma05fra.de.ibm.com with ESMTP id 31g2s7smar-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 08 Jun 2020 13:03:28 +0000
+Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com [9.149.105.62])
+        by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 058D3P2666584966
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Mon, 8 Jun 2020 13:03:25 GMT
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id CFE7FAE055;
+        Mon,  8 Jun 2020 13:03:25 +0000 (GMT)
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 80897AE051;
+        Mon,  8 Jun 2020 13:03:22 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.85.178.150])
+        by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+        Mon,  8 Jun 2020 13:03:22 +0000 (GMT)
+Message-ID: <1591621401.4638.59.camel@linux.ibm.com>
+Subject: Re: [PATCH v7 1/8] fs: introduce kernel_pread_file* support
+From:   Mimi Zohar <zohar@linux.ibm.com>
+To:     Matthew Wilcox <willy@infradead.org>,
+        Scott Branden <scott.branden@broadcom.com>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        linux-integrity@vger.kernel.org,
+        linux-security-module@vger.kernel.org,
+        Christoph Hellwig <hch@infradead.org>
+Date:   Mon, 08 Jun 2020 09:03:21 -0400
+In-Reply-To: <20200606155216.GP19604@bombadil.infradead.org>
+References: <20200606050458.17281-1-scott.branden@broadcom.com>
+         <20200606050458.17281-2-scott.branden@broadcom.com>
+         <20200606155216.GP19604@bombadil.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216,18.0.687
+ definitions=2020-06-08_12:2020-06-08,2020-06-08 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ mlxlogscore=999 spamscore=0 clxscore=1011 mlxscore=0 lowpriorityscore=0
+ cotscore=-2147483648 adultscore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2006080094
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/8/20 1:51 PM, Dan Carpenter wrote:
-> On Mon, Jun 08, 2020 at 01:34:37PM +0100, Lukasz Luba wrote:
->> Hi Dan,
->>
->> Thank you for your analyzes.
->>
->> On 6/8/20 12:51 PM, Dan Carpenter wrote:
->>> Hi Lukasz,
->>>
->>> I love your patch! Perhaps something to improve:
->>>
->>> url:    https://github.com/0day-ci/linux/commits/Lukasz-Luba/Add-support-for-devices-in-the-Energy-Model/20200527-180614
->>> base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git linux-next
->>>
->>> config: i386-randconfig-m021-20200605 (attached as .config)
->>> compiler: gcc-9 (Debian 9.3.0-13) 9.3.0
->>>
->>> If you fix the issue, kindly add following tag as appropriate
->>> Reported-by: kernel test robot <lkp@intel.com>
->>> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
->>>
->>> smatch warnings:
->>> kernel/power/energy_model.c:316 em_dev_register_perf_domain() error: we previously assumed 'dev->em_pd' could be null (see line 277)
->>>
->>> # https://github.com/0day-ci/linux/commit/110d050cb7ba1c96e63ada498979d1fd99529be2
->>> git remote add linux-review https://github.com/0day-ci/linux
->>> git remote update linux-review
->>> git checkout 110d050cb7ba1c96e63ada498979d1fd99529be2
->>> vim +316 kernel/power/energy_model.c
->>>
->>> 0e294e607adaf3 Lukasz Luba     2020-05-27  262  int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  263  				struct em_data_callback *cb, cpumask_t *cpus)
->>> 27871f7a8a341e Quentin Perret  2018-12-03  264  {
->>> 27871f7a8a341e Quentin Perret  2018-12-03  265  	unsigned long cap, prev_cap = 0;
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  266  	int cpu, ret;
->>> 27871f7a8a341e Quentin Perret  2018-12-03  267
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  268  	if (!dev || !nr_states || !cb)
->>> 27871f7a8a341e Quentin Perret  2018-12-03  269  		return -EINVAL;
->>> 27871f7a8a341e Quentin Perret  2018-12-03  270
->>> 27871f7a8a341e Quentin Perret  2018-12-03  271  	/*
->>> 27871f7a8a341e Quentin Perret  2018-12-03  272  	 * Use a mutex to serialize the registration of performance domains and
->>> 27871f7a8a341e Quentin Perret  2018-12-03  273  	 * let the driver-defined callback functions sleep.
->>> 27871f7a8a341e Quentin Perret  2018-12-03  274  	 */
->>> 27871f7a8a341e Quentin Perret  2018-12-03  275  	mutex_lock(&em_pd_mutex);
->>> 27871f7a8a341e Quentin Perret  2018-12-03  276
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27 @277  	if (dev->em_pd) {
->>>                                                               ^^^^^^^^^^
->>> Check for NULL.
->>>
->>> 27871f7a8a341e Quentin Perret  2018-12-03  278  		ret = -EEXIST;
->>> 27871f7a8a341e Quentin Perret  2018-12-03  279  		goto unlock;
->>> 27871f7a8a341e Quentin Perret  2018-12-03  280  	}
->>> 27871f7a8a341e Quentin Perret  2018-12-03  281
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  282  	if (_is_cpu_device(dev)) {
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  283  		if (!cpus) {
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  284  			dev_err(dev, "EM: invalid CPU mask\n");
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  285  			ret = -EINVAL;
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  286  			goto unlock;
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  287  		}
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  288
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  289  		for_each_cpu(cpu, cpus) {
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  290  			if (em_cpu_get(cpu)) {
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  291  				dev_err(dev, "EM: exists for CPU%d\n", cpu);
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  292  				ret = -EEXIST;
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  293  				goto unlock;
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  294  			}
->>> 27871f7a8a341e Quentin Perret  2018-12-03  295  			/*
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  296  			 * All CPUs of a domain must have the same
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  297  			 * micro-architecture since they all share the same
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  298  			 * table.
->>> 27871f7a8a341e Quentin Perret  2018-12-03  299  			 */
->>> 8ec59c0f5f4966 Vincent Guittot 2019-06-17  300  			cap = arch_scale_cpu_capacity(cpu);
->>> 27871f7a8a341e Quentin Perret  2018-12-03  301  			if (prev_cap && prev_cap != cap) {
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  302  				dev_err(dev, "EM: CPUs of %*pbl must have the same capacity\n",
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  303  					cpumask_pr_args(cpus));
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  304
->>> 27871f7a8a341e Quentin Perret  2018-12-03  305  				ret = -EINVAL;
->>> 27871f7a8a341e Quentin Perret  2018-12-03  306  				goto unlock;
->>> 27871f7a8a341e Quentin Perret  2018-12-03  307  			}
->>> 27871f7a8a341e Quentin Perret  2018-12-03  308  			prev_cap = cap;
->>> 27871f7a8a341e Quentin Perret  2018-12-03  309  		}
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  310  	}
->>> 27871f7a8a341e Quentin Perret  2018-12-03  311
->>> 110d050cb7ba1c Lukasz Luba     2020-05-27  312  	ret = em_create_pd(dev, nr_states, cb, cpus);
->>>
->>>
->>> If it's a _is_cpu_device() then it iterates through a bunch of devices
->>> and sets up cpu_dev->em_pd for each.  Presumably one of the devices is
->>> "dev" or this would crash pretty early on in testing?
->>
->> Yes, all of the devices taken from 'cpus' mask will get the em_pd set
->> including the suspected @dev.
->> To calm down this static analyzer I can remove the 'else'
->> in line 204 to make 'dev->em_pd = pd' set always.
->> 199         if (_is_cpu_device(dev))
->> 200                 for_each_cpu(cpu, cpus) {
->> 201                         cpu_dev = get_cpu_device(cpu);
->> 202                         cpu_dev->em_pd = pd;
->> 203                 }
->> 204         else
->> 205                 dev->em_pd = pd;
->>
->>
->> Do you think it's a good solution and will work for this tool?
+On Sat, 2020-06-06 at 08:52 -0700, Matthew Wilcox wrote:
+> On Fri, Jun 05, 2020 at 10:04:51PM -0700, Scott Branden wrote:
+> > -int kernel_read_file(struct file *file, void **buf, loff_t *size,
+> > -		     loff_t max_size, enum kernel_read_file_id id)
+> > -{
+> > -	loff_t i_size, pos;
+> > +int kernel_pread_file(struct file *file, void **buf, loff_t *size,
+> > +		      loff_t pos, loff_t max_size,
+> > +		      enum kernel_pread_opt opt,
+> > +		      enum kernel_read_file_id id)
+> > +{
+> > +	loff_t alloc_size;
+> > +	loff_t buf_pos;
+> > +	loff_t read_end;
+> > +	loff_t i_size;
+> >  	ssize_t bytes = 0;
+> >  	int ret;
+> >  
 > 
-> It's not about the tool...  Ignore the tool when it's wrong.  But I do
-> think the code is slightly more clear without the else statement.
+> Look, it's not your fault, but this is a great example of how we end
+> up with atrocious interfaces.  Someone comes along and implements a
+> simple DWIM interface that solves their problem.  Then somebody else
+> adds a slight variant that solves their problem, and so on and so on,
+> and we end up with this bonkers API where the arguments literally change
+> meaning depending on other arguments.
 > 
-> Arguments could be made either way.  Removing the else statement means
-> we set dev->em_pd twice...  But I *personally* lean vaguely towards
-> removing the else statement.  :P
+> > @@ -950,21 +955,31 @@ int kernel_read_file(struct file *file, void **buf, loff_t *size,
+> >  		ret = -EINVAL;
+> >  		goto out;
+> >  	}
+> > -	if (i_size > SIZE_MAX || (max_size > 0 && i_size > max_size)) {
+> > +
+> > +	/* Default read to end of file */
+> > +	read_end = i_size;
+> > +
+> > +	/* Allow reading partial portion of file */
+> > +	if ((opt == KERNEL_PREAD_PART) &&
+> > +	    (i_size > (pos + max_size)))
+> > +		read_end = pos + max_size;
+> > +
+> > +	alloc_size = read_end - pos;
+> > +	if (i_size > SIZE_MAX || (max_size > 0 && alloc_size > max_size)) {
+> >  		ret = -EFBIG;
+> >  		goto out;
+> 
+> ... like that.
+> 
+> I think what we actually want is:
+> 
+> ssize_t vmap_file_range(struct file *, loff_t start, loff_t end, void **bufp);
+> void vunmap_file_range(struct file *, void *buf);
+> 
+> If end > i_size, limit the allocation to i_size.  Returns the number
+> of bytes allocated, or a negative errno.  Writes the pointer allocated
+> to *bufp.  Internally, it should use the page cache to read in the pages
+> (taking appropriate reference counts).  Then it maps them using vmap()
+> instead of copying them to a private vmalloc() array.
+> 
+> kernel_read_file() can be converted to use this API.  The users will
+> need to be changed to call kernel_read_end(struct file *file, void *buf)
+> instead of vfree() so it can call allow_write_access() for them.
+> 
+> vmap_file_range() has a lot of potential uses.  I'm surprised we don't
+> have it already, to be honest.
 
-Thanks, I will remove the else statement and add your 'Reported-by'
+Prior to kernel_read_file() the same or verify similar code existed in
+multiple places in the kernel.  The kernel_read_file() API
+consolidated the existing code adding the pre and post security hooks.
 
-Regards,
-Lukasz
+With this new design of not using a private vmalloc, will the file
+data be accessible prior to the post security hooks?  From an IMA
+perspective, the hooks are used for measuring and/or verifying the
+integrity of the file.
 
-> 
-> That would make the warning go away as well.
-> 
-> regards,
-> dan carpenter
-> 
+Mimi
