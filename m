@@ -2,73 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DE6E1F158E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 11:38:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92ED81F159D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 11:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729230AbgFHJhg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 05:37:36 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:37165 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729167AbgFHJhg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 05:37:36 -0400
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Jun 2020 02:37:33 -0700
-Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 08 Jun 2020 02:37:31 -0700
-Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id B47E921812; Mon,  8 Jun 2020 15:07:29 +0530 (IST)
+        id S1729227AbgFHJk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 05:40:27 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:63845 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729217AbgFHJk1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 05:40:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591609226; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=H5MuWLiGAPcb/as9k1D9LJqte98VlPM02vFdUe95LKc=; b=n95v2Wx3nrwE8KQIMZVcY2RwGSzDVlmSrcrUc7REWDf0CElxTfzXzBxijiWo/yPABZh0NH9z
+ rRQbdbC1hwP5WtTlW/l/Bfk2Qgtd7MbczjLtTlNTi+ATS329LpRiYXJEDnySbuuIPogb5CVh
+ Iq/NDgwZMDOn+XE7gDoa7DLDABo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5ede0774754b690164661909 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Jun 2020 09:40:04
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9057AC43387; Mon,  8 Jun 2020 09:40:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.105] (unknown [183.83.153.101])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sivaprak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DFB87C433CA;
+        Mon,  8 Jun 2020 09:40:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DFB87C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
+Subject: Re: [PATCH V2 3/3] mailbox: qcom: Add ipq6018 apcs compatible
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <1591441171-20341-1-git-send-email-sivaprak@codeaurora.org>
+ <1591441171-20341-4-git-send-email-sivaprak@codeaurora.org>
+ <CABb+yY2HhHSbP7UX_r1bGgpxzQKfC9aS8r9nxX5AOt8ENG5ACQ@mail.gmail.com>
 From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        jassisinghbrar@gmail.com, sivaprak@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH V3 4/4] mailbox: qcom: Add ipq6018 apcs compatible
-Date:   Mon,  8 Jun 2020 15:07:27 +0530
-Message-Id: <1591609047-29995-5-git-send-email-sivaprak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1591609047-29995-1-git-send-email-sivaprak@codeaurora.org>
-References: <1591609047-29995-1-git-send-email-sivaprak@codeaurora.org>
+Message-ID: <0ee184f4-bc8d-09f5-d756-c87498e64777@codeaurora.org>
+Date:   Mon, 8 Jun 2020 15:09:58 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
+MIME-Version: 1.0
+In-Reply-To: <CABb+yY2HhHSbP7UX_r1bGgpxzQKfC9aS8r9nxX5AOt8ENG5ACQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm ipq6018 has apcs block, add compatible for the same. Also,
-the ipq6018 apcs provides a clock functionality similar to msm8916 but
-the clock driver is different.
+Hi Jassi,
 
-Create a child device based on the apcs compatible for the clock
-controller functionality.
-
-Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
----
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index 49eebb5..cec34f0 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -29,6 +29,10 @@ struct qcom_apcs_ipc_data {
- 	char *clk_name;
- };
- 
-+static const struct qcom_apcs_ipc_data ipq6018_apcs_data = {
-+	.offset = 8, .clk_name = "qcom,apss-ipq6018-clk"
-+};
-+
- static const struct qcom_apcs_ipc_data ipq8074_apcs_data = {
- 	.offset = 8, .clk_name = NULL
- };
-@@ -139,6 +143,7 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
- 
- /* .data is the offset of the ipc register within the global block */
- static const struct of_device_id qcom_apcs_ipc_of_match[] = {
-+	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
- 	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
- 	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
- 	{ .compatible = "qcom,msm8996-apcs-hmss-global", .data = &msm8996_apcs_data },
--- 
-2.7.4
-
+On 6/8/2020 2:15 AM, Jassi Brar wrote:
+> On Sat, Jun 6, 2020 at 5:59 AM Sivaprakash Murugesan
+> <sivaprak@codeaurora.org> wrote:
+>> The Qualcomm ipq6018 has apcs block, add compatible for the same.
+>> Also, the apcs provides a clock controller functionality similar
+>> to msm8916 but the clock driver is different.
+>>
+>> Create a child platform device based on the apcs compatible for the
+>> clock controller functionality.
+>>
+>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>> ---
+>> [V2]
+>>   * created a new structur for driver data.
+>>   * re-arranged compatible strings in sorted order
+>>
+> Please break this into two patches, first reorganise and then add new
+> ipq6018 of_match.
+have sent an updated patch series addressing the comments, thanks for 
+your time.
+>
+> thanks.
