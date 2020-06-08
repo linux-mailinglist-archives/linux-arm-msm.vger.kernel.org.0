@@ -2,35 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5F9C1F2A90
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:12:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 512621F2997
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:05:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730476AbgFIAJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 20:09:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43866 "EHLO mail.kernel.org"
+        id S1732249AbgFIACN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 20:02:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46594 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729578AbgFHXUV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 19:20:21 -0400
+        id S1728842AbgFHXWJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 19:22:09 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 77C0620842;
-        Mon,  8 Jun 2020 23:20:20 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DD89E2086A;
+        Mon,  8 Jun 2020 23:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591658421;
-        bh=aabELFPpLNSTh/+hI9W6tY2XbTcKlJNwu4snZepzc7Q=;
+        s=default; t=1591658529;
+        bh=ZcVpFMnNya8jE2nq81tFcyYpizXtVtOzYmsv2lw/vwI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SHLetaPTwpEiWu1MEvNrs2mps8EN5TeRHZVxKSWqar+hA/Pu8P4QdEGxISoQ9jf88
-         IWoQaeUoa5lbcjJ9h42xXMdY0x7CaogTubP5zsUSFxO9SZjvFYZxIV1T5zZDUrSHil
-         l9FeFKIEQt+c0Ahg0IKXs9GYqI1JK7TM6ZQsPUG0=
+        b=zHyzShWy8sWM2C9ytOISmDCo+4nY4L5Nj6+I1jwaZGOizoHG2VgqG2JGpb6jVC6Jk
+         kB3zSFYnP5DheMnzc07d6WP82WRRk6DFpfWowHT4g/GrYDImtgvhUoNNdTTCO+cFoN
+         jqUvJt2gBi5qc6ZKOG/scwGJELIv/OSceA/W66ZA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 068/175] regulator: qcom-rpmh: Fix typos in pm8150 and pm8150l
-Date:   Mon,  8 Jun 2020 19:17:01 -0400
-Message-Id: <20200608231848.3366970-68-sashal@kernel.org>
+Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 154/175] mmc: sdhci-msm: Set SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12 quirk
+Date:   Mon,  8 Jun 2020 19:18:27 -0400
+Message-Id: <20200608231848.3366970-154-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200608231848.3366970-1-sashal@kernel.org>
 References: <20200608231848.3366970-1-sashal@kernel.org>
@@ -43,51 +45,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-[ Upstream commit 906746ba26d0b45688f4c3b730c35f765dc958ba ]
+[ Upstream commit d863cb03fb2aac07f017b2a1d923cdbc35021280 ]
 
-Fix typos in pm8150 l13/l16/l17 and pm8150l ldo8 supplies.
+sdhci-msm can support auto cmd12.
+So enable SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12 quirk.
 
-Fixes: 06369bcc15a1 ("regulator: qcom-rpmh: Add support for SM8150")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Tested-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20200415053708.717623-1-bjorn.andersson@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/1587363626-20413-3-git-send-email-vbadigan@codeaurora.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/qcom-rpmh-regulator.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci-msm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 0246b6f99fb5..f11e4bfbc91b 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -832,11 +832,11 @@ static const struct rpmh_vreg_init_data pm8150_vreg_data[] = {
- 	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l2-l10"),
- 	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo,      "vdd-l1-l8-l11"),
- 	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
--	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,      "vdd-l13-l6-l17"),
-+	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,      "vdd-l13-l16-l17"),
- 	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
- 	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
--	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,      "vdd-l13-l6-l17"),
--	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,      "vdd-l13-l6-l17"),
-+	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,      "vdd-l13-l16-l17"),
-+	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,      "vdd-l13-l16-l17"),
- 	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_nldo,      "vdd-l3-l4-l5-l18"),
- 	{},
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 0148f8e6bb37..fe7e9028f767 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1736,7 +1736,9 @@ static const struct sdhci_ops sdhci_msm_ops = {
+ static const struct sdhci_pltfm_data sdhci_msm_pdata = {
+ 	.quirks = SDHCI_QUIRK_BROKEN_CARD_DETECTION |
+ 		  SDHCI_QUIRK_SINGLE_POWER_WRITE |
+-		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
++		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN |
++		  SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
++
+ 	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
+ 	.ops = &sdhci_msm_ops,
  };
-@@ -857,7 +857,7 @@ static const struct rpmh_vreg_init_data pm8150l_vreg_data[] = {
- 	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,      "vdd-l4-l5-l6"),
- 	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo,      "vdd-l4-l5-l6"),
- 	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l7-l11"),
--	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv,   "vdd-l1-l8-l11"),
-+	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv,   "vdd-l1-l8"),
- 	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,      "vdd-l9-l10"),
- 	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l9-l10"),
- 	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,      "vdd-l7-l11"),
 -- 
 2.25.1
 
