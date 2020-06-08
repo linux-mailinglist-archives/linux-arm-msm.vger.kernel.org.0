@@ -2,164 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BA3A1F1505
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 11:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3B3C1F151B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 11:13:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729133AbgFHJHK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 05:07:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbgFHJHI (ORCPT
+        id S1728902AbgFHJNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 05:13:08 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:31243 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728939AbgFHJNG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 05:07:08 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B0CBC08C5C3;
-        Mon,  8 Jun 2020 02:07:08 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id 69so13038301otv.2;
-        Mon, 08 Jun 2020 02:07:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kyMIQpiaSrHfD4wH9LTT6NvRIK3724cSEnBCBR1wvMQ=;
-        b=nABDCeEM3dzF7JQ9SMjPCtyx8TOKskfVB23RcOSPnUPwT8/GfvHd9n+ZEw5F1DZgmu
-         7WWFv3bfQ32q/E+YN6aYblJubrvGiDgMSyXq6RaJqb21GX7laPv6JAMoUEzN5U86MMWE
-         A2zP50eucFkg+sNPrvxNlBzgTGitwPpfFqzLl8PmG50EDU5dyoegJfEGzrMgaRKPQwLD
-         aKeNkZGngsjPIYm8HAxy4ziHHrLMLAQ+zg6kLRqyfj6aC2dJhsYpAaXBoyiLL/bYevRl
-         zylJs/rqttS4ir4ZgvOEn2cjFw90wfxKWhd4+TNBRvJscAeF/jOL3a/0+OG9CWJ6rfQq
-         wiLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kyMIQpiaSrHfD4wH9LTT6NvRIK3724cSEnBCBR1wvMQ=;
-        b=k0Xd47rLjeyTcQ60/AnyZTTNXQ/B3DjmGRHwjtlBBMJjiXpESya9EUD6U55xUt8fFt
-         aqvfN4vTqMaM+EV5c0pZ0tqi7OVZ+3jODUq5o6MvZ+0bv2HEry55GixRpkW9QXUdWru9
-         3k/8EC3vii1zaTm/WGQ88V8uPDKPrstx8x/cz4xOAQgaQO5vMl5sYyu/j4KFfN+Y15kb
-         shixRnRgdLLg6qUHmI+/5TydQOvj75xwFpf9SHr6T+JMTyHzjbfh1C/P9tkK4OpPL1ca
-         oTj5sZEinSVqNMxMpGCiLFmVYUfdavZZ1BxNWNlB0/4puhDRkRbTT9aGuhsdl+ryNnVd
-         Snfg==
-X-Gm-Message-State: AOAM532uVl8SaL3mZ9T1P7+2Slby8OKsxWRhMdLA9FZQ2DUy5una9jgI
-        zUupnTvHdOr9x6Q1YcCABrs=
-X-Google-Smtp-Source: ABdhPJzZBL4OC4tz51uUlNYWA7nD++LRVVOJG2JdpduPG2MOljQMNsMDudsDIyeFZ1NJdJboq2kslQ==
-X-Received: by 2002:a9d:27a3:: with SMTP id c32mr17871531otb.233.1591607227454;
-        Mon, 08 Jun 2020 02:07:07 -0700 (PDT)
-Received: from ubuntu-n2-xlarge-x86 ([2604:1380:4111:8b00::3])
-        by smtp.gmail.com with ESMTPSA id 126sm2321493oii.39.2020.06.08.02.07.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 02:07:06 -0700 (PDT)
-Date:   Mon, 8 Jun 2020 02:07:05 -0700
-From:   Nathan Chancellor <natechancellor@gmail.com>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     kernel test robot <lkp@intel.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>, sboyd@kernel.org,
-        Abhishek Sahu <absahu@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
-        Christian Lamparter <chunkeey@gmail.com>,
-        John Crispin <john@phrozen.org>
-Subject: Re: [PATCH] clk: qcom: ipq4019: fix apss cpu overclocking
-Message-ID: <20200608090705.GA1597633@ubuntu-n2-xlarge-x86>
-References: <20200604120905.1344074-1-robert.marko@sartura.hr>
- <202006050445.tiQi7ZvY%lkp@intel.com>
- <CA+HBbNFpHugbM6LDGAtJHj4ZAz-K5ojkovaVZ04V3QJS-hytUw@mail.gmail.com>
+        Mon, 8 Jun 2020 05:13:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591607586; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=GhhsEMufI8UvffSMZZKH6Z/KWhXYBPW2V1EIJtJ4Olg=;
+ b=wO/iGHUX+sTS4l5Sp4KwZzQ8g5auhlFofiGaeNrz5OP1St2QGyl4C9ZaMSazskRKlFoiXoyk
+ 1p4oIhj9Kic64RypnmfUXBg8HyMdtuM136AtHaDVyuUJoQuBxeenSuGCTs1GcFtnKXY4HRHh
+ RrahoCVHFib32RHyFYvclA/bJ7E=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5ede01205c89e47d73b0aef1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Jun 2020 09:13:04
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DDC5BC433CB; Mon,  8 Jun 2020 09:13:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 219B3C433C6;
+        Mon,  8 Jun 2020 09:13:03 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+HBbNFpHugbM6LDGAtJHj4ZAz-K5ojkovaVZ04V3QJS-hytUw@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 08 Jun 2020 14:43:03 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC PATCH] iommu/arm-smmu: Remove shutdown callback
+In-Reply-To: <20200608081846.GA1542@willie-the-truck>
+References: <20200607110918.1733-1-saiprakash.ranjan@codeaurora.org>
+ <20200608081846.GA1542@willie-the-truck>
+Message-ID: <08c293eefc20bc2c67f2d2639b93f0a5@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 08, 2020 at 10:54:34AM +0200, Robert Marko wrote:
-> On Thu, Jun 4, 2020 at 10:25 PM kernel test robot <lkp@intel.com> wrote:
-> >
-> > Hi Robert,
-> >
-> > I love your patch! Perhaps something to improve:
-> >
-> > [auto build test WARNING on clk/clk-next]
-> > [also build test WARNING on v5.7 next-20200604]
-> > [if your patch is applied to the wrong git tree, please drop us a note to help
-> > improve the system. BTW, we also suggest to use '--base' option to specify the
-> > base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
-> >
-> > url:    https://github.com/0day-ci/linux/commits/Robert-Marko/clk-qcom-ipq4019-fix-apss-cpu-overclocking/20200605-002859
-> > base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-> > config: x86_64-allyesconfig (attached as .config)
-> > compiler: clang version 11.0.0 (https://github.com/llvm/llvm-project ac47588bc4ff5927a01ed6fcd269ce86aba52a7c)
-> > reproduce (this is a W=1 build):
-> >         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-> >         chmod +x ~/bin/make.cross
-> >         # install x86_64 cross compiling tool for clang build
-> >         # apt-get install binutils-x86-64-linux-gnu
-> >         # save the attached .config to linux build tree
-> >         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross ARCH=x86_64
-> >
-> > If you fix the issue, kindly add following tag as appropriate
-> > Reported-by: kernel test robot <lkp@intel.com>
-> >
-> > All warnings (new ones prefixed by >>, old ones prefixed by <<):
-> >
-> > >> drivers/clk/qcom/gcc-ipq4019.c:1247:24: warning: no previous prototype for function 'qcom_find_freq_close' [-Wmissing-prototypes]
-> > const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
-> > ^
-> > drivers/clk/qcom/gcc-ipq4019.c:1247:7: note: declare 'static' if the function is not intended to be used outside of this translation unit
-> > const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
-> > ^
-> > static
-> > 1 warning generated.
-> >
-> > vim +/qcom_find_freq_close +1247 drivers/clk/qcom/gcc-ipq4019.c
-> >
-> >   1245
-> >   1246
-> > > 1247  const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
-> >   1248                                               unsigned long rate)
-> >   1249  {
-> >   1250          const struct freq_tbl *last = NULL;
-> >   1251
-> >   1252          for ( ; f->freq; f++) {
-> >   1253                  if (rate == f->freq)
-> >   1254                          return f;
-> >   1255
-> >   1256                  if (f->freq > rate) {
-> >   1257                          if (!last ||
-> >   1258                             (f->freq - rate) < (rate - last->freq))
-> >   1259                                  return f;
-> >   1260                          else
-> >   1261                                  return last;
-> >   1262                  }
-> >   1263                  last = f;
-> >   1264          }
-> >   1265
-> >   1266          return last;
-> >   1267  }
-> >   1268
-> >
-> > ---
-> > 0-DAY CI Kernel Test Service, Intel Corporation
-> > https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Hi Will,
+
+On 2020-06-08 13:48, Will Deacon wrote:
+> On Sun, Jun 07, 2020 at 04:39:18PM +0530, Sai Prakash Ranjan wrote:
+>> Remove SMMU shutdown callback since it seems to cause more
+>> problems than benefits. With this callback, we need to make
+>> sure that all clients/consumers of SMMU do not perform any
+>> DMA activity once the SMMU is shutdown and translation is
+>> disabled. In other words we need to add shutdown callbacks
+>> for all those clients to make sure they do not perform any
+>> DMA or else we see all kinds of weird crashes during reboot
+>> or shutdown. This is clearly not scalable as the number of
+>> clients of SMMU would vary across SoCs and we would need to
+>> add shutdown callbacks to almost all drivers eventually.
+>> This callback was added for kexec usecase where it was known
+>> to cause memory corruptions when SMMU was not shutdown but
+>> that does not directly relate to SMMU because the memory
+>> corruption could be because of the client of SMMU which is
+>> not shutdown properly before booting into new kernel. So in
+>> that case, we need to identify the client of SMMU causing
+>> the memory corruption and add appropriate shutdown callback
+>> to the client rather than to the SMMU.
+>> 
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>>  drivers/iommu/arm-smmu-v3.c | 6 ------
+>>  drivers/iommu/arm-smmu.c    | 6 ------
+>>  2 files changed, 12 deletions(-)
+> 
+> This feels like a giant bodge to me and I think that any driver which
+> continues to perform DMA after its ->shutdown() function has been 
+> invoked
+> is buggy. Wouldn't that cause problems with kexec(), for example?
 > 
 
-<moved post to the bottom>
+Yes it is definitely a bug in the client driver if DMA is performed
+after shutdown callback of that respective driver is invoked and it must
+be fixed in that driver. But here the problem I was describing is not 
+that,
+most of the drivers do not have a shutdown callback to begin with and 
+adding
+it just because of shutdown dependency on SMMU doesn't seem so well 
+because
+we can have many more such clients in the future and then we have to 
+just go
+on adding the shutdown callbacks everywhere.
 
-> Sorry for asking, but are these warnings relevant?
-> GCC9.3 does not throw them
+> There's a clear shutdown dependency ordering, where the clients of the
+> SMMU need to shutdown before the SMMU itself, but that's not really
+> the SMMU driver's problem to solve.
 > 
-> Regards
-> Robert
-> 
 
-It should if you are using make W=1, this is not a clang specific
-warning (it just happens that clang was the compiler for this report).
+The problem with kexec may not be directly related to SMMU as you said
+above if DMA is performed after the client shutdown callback, then its a
+bug in the client driver, so that needs to be fixed in the client 
+driver,
+not the SMMU. So is there any point in having the SMMU shutdown 
+callback?
+As you see, with this SMMU shutdown callback, we need to add shutdown
+callbacks in all the client drivers.
 
-It looks like qcom_find_freq_close is only used in
-drivers/clk/qcom/gcc-ipq4019.c, in which case it should be marked
-static.
+Thanks,
+Sai
 
-Cheers,
-Nathan
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
