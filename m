@@ -2,61 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F3C71F170C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 12:55:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7A481F17CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 13:26:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729467AbgFHKzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 06:55:49 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:7636 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726202AbgFHKzt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 06:55:49 -0400
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Jun 2020 03:55:49 -0700
-Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 08 Jun 2020 03:55:46 -0700
-Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id 590C021761; Mon,  8 Jun 2020 16:25:44 +0530 (IST)
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linus.walleij@linaro.org, speriaka@codeaurora.org,
-        sricharan@codeaurora.org, arajkuma@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Subject: [PATCH] pinctrl: qcom: ipq6018 Add missing pins in qpic pin group
-Date:   Mon,  8 Jun 2020 16:25:42 +0530
-Message-Id: <1591613742-1768-1-git-send-email-sivaprak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1729561AbgFHL0y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 07:26:54 -0400
+Received: from foss.arm.com ([217.140.110.172]:51570 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729310AbgFHL0y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 07:26:54 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 915C01FB;
+        Mon,  8 Jun 2020 04:26:53 -0700 (PDT)
+Received: from [10.57.9.113] (unknown [10.57.9.113])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7FFEC3F73D;
+        Mon,  8 Jun 2020 04:26:52 -0700 (PDT)
+Subject: Re: [RFC PATCH] iommu/arm-smmu: Remove shutdown callback
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20200607110918.1733-1-saiprakash.ranjan@codeaurora.org>
+ <20200608081846.GA1542@willie-the-truck>
+ <08c293eefc20bc2c67f2d2639b93f0a5@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <e072f61a-d6cf-2e34-efd5-c1db38c5c622@arm.com>
+Date:   Mon, 8 Jun 2020 12:26:46 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+MIME-Version: 1.0
+In-Reply-To: <08c293eefc20bc2c67f2d2639b93f0a5@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch adds missing qpic data pins to qpic pingroup. These pins are
-necessary for the qpic nand to work.
+On 2020-06-08 10:13, Sai Prakash Ranjan wrote:
+> Hi Will,
+> 
+> On 2020-06-08 13:48, Will Deacon wrote:
+>> On Sun, Jun 07, 2020 at 04:39:18PM +0530, Sai Prakash Ranjan wrote:
+>>> Remove SMMU shutdown callback since it seems to cause more
+>>> problems than benefits. With this callback, we need to make
+>>> sure that all clients/consumers of SMMU do not perform any
+>>> DMA activity once the SMMU is shutdown and translation is
+>>> disabled. In other words we need to add shutdown callbacks
+>>> for all those clients to make sure they do not perform any
+>>> DMA or else we see all kinds of weird crashes during reboot
+>>> or shutdown. This is clearly not scalable as the number of
+>>> clients of SMMU would vary across SoCs and we would need to
+>>> add shutdown callbacks to almost all drivers eventually.
+>>> This callback was added for kexec usecase where it was known
+>>> to cause memory corruptions when SMMU was not shutdown but
+>>> that does not directly relate to SMMU because the memory
+>>> corruption could be because of the client of SMMU which is
+>>> not shutdown properly before booting into new kernel. So in
+>>> that case, we need to identify the client of SMMU causing
+>>> the memory corruption and add appropriate shutdown callback
+>>> to the client rather than to the SMMU.
+>>>
+>>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>> ---
+>>>  drivers/iommu/arm-smmu-v3.c | 6 ------
+>>>  drivers/iommu/arm-smmu.c    | 6 ------
+>>>  2 files changed, 12 deletions(-)
+>>
+>> This feels like a giant bodge to me and I think that any driver which
+>> continues to perform DMA after its ->shutdown() function has been invoked
+>> is buggy. Wouldn't that cause problems with kexec(), for example?
+>>
+> 
+> Yes it is definitely a bug in the client driver if DMA is performed
+> after shutdown callback of that respective driver is invoked and it must
+> be fixed in that driver. But here the problem I was describing is not that,
+> most of the drivers do not have a shutdown callback to begin with and 
+> adding
+> it just because of shutdown dependency on SMMU doesn't seem so well because
+> we can have many more such clients in the future and then we have to 
+> just go
+> on adding the shutdown callbacks everywhere.
 
-Fixes: ef1ea54 (pinctrl: qcom: Add ipq6018 pinctrl driver)
-Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
----
- drivers/pinctrl/qcom/pinctrl-ipq6018.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Yes, indeed we do. Like it or not, kexec is a thing, and about 98% of 
+drivers will have been written without considering it.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq6018.c b/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-index 38c33a7..ec50a3b 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-@@ -367,7 +367,8 @@ static const char * const wci20_groups[] = {
- 
- static const char * const qpic_pad_groups[] = {
- 	"gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio9", "gpio10",
--	"gpio11", "gpio17",
-+	"gpio11", "gpio17", "gpio15", "gpio12", "gpio13", "gpio14", "gpio5",
-+	"gpio6", "gpio7", "gpio8",
- };
- 
- static const char * const burn0_groups[] = {
--- 
-2.7.4
+If fixing one problem exposes lots of other problems, can you honestly 
+say that the best solution is to go back and re-break the original thing?
 
+>> There's a clear shutdown dependency ordering, where the clients of the
+>> SMMU need to shutdown before the SMMU itself, but that's not really
+>> the SMMU driver's problem to solve.
+>>
+> 
+> The problem with kexec may not be directly related to SMMU as you said
+> above if DMA is performed after the client shutdown callback, then its a
+> bug in the client driver, so that needs to be fixed in the client driver,
+> not the SMMU. So is there any point in having the SMMU shutdown callback?
+
+The point is that kexec needs to return the system to a state as close 
+to reset as possible. The SMMU is at least as relevant as any other 
+device in that regard, if not far more so - consider if the first kernel 
+*did* leave it enabled with whatever left-over translations in place, 
+and kexec'ed into another OS that wasn't SMMU-aware...
+
+> As you see, with this SMMU shutdown callback, we need to add shutdown
+> callbacks in all the client drivers.
+
+Yes. And if you really want to argue against that, then at least be 
+consistent and propose removing shutdown from *all* the IOMMU drivers. 
+And then probably propose removing kexec support from all their 
+respective architectures... ;)
+
+Robin.
