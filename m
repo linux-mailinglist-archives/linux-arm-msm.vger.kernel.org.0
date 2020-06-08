@@ -2,40 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 490CB1F2BAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:18:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5F9C1F2A90
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:12:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728908AbgFIASG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 20:18:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41036 "EHLO mail.kernel.org"
+        id S1730476AbgFIAJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 20:09:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43866 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729622AbgFHXSm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 19:18:42 -0400
+        id S1729578AbgFHXUV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 19:20:21 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9E0082086A;
-        Mon,  8 Jun 2020 23:18:41 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 77C0620842;
+        Mon,  8 Jun 2020 23:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591658322;
-        bh=Y/PQsvmcP7ojJNDQ/LzfHMFXOeqcGVLKs741dczTlTk=;
+        s=default; t=1591658421;
+        bh=aabELFPpLNSTh/+hI9W6tY2XbTcKlJNwu4snZepzc7Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rHnuhcwXPMaAVD6F19ef99kkKlo6ZR2PrYSn80TFtIzNiHuFdedahGDtBViPuyO8n
-         V6Jh2XebFagKnbye70NlIOUab69VkRGpLd83Qv38BLpihj4152qXQA/DSWWTo+7t0Q
-         Zy02KdjPmZ4zhV0HQ1+KhD0NwFnOi/k2SM4NqRNs=
+        b=SHLetaPTwpEiWu1MEvNrs2mps8EN5TeRHZVxKSWqar+hA/Pu8P4QdEGxISoQ9jf88
+         IWoQaeUoa5lbcjJ9h42xXMdY0x7CaogTubP5zsUSFxO9SZjvFYZxIV1T5zZDUrSHil
+         l9FeFKIEQt+c0Ahg0IKXs9GYqI1JK7TM6ZQsPUG0=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Vinod Koul <vkoul@kernel.org>, Jonathan Marek <jonathan@marek.ca>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 322/606] clk: qcom: gcc: Fix parent for gpll0_out_even
-Date:   Mon,  8 Jun 2020 19:07:27 -0400
-Message-Id: <20200608231211.3363633-322-sashal@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 068/175] regulator: qcom-rpmh: Fix typos in pm8150 and pm8150l
+Date:   Mon,  8 Jun 2020 19:17:01 -0400
+Message-Id: <20200608231848.3366970-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200608231211.3363633-1-sashal@kernel.org>
-References: <20200608231211.3363633-1-sashal@kernel.org>
+In-Reply-To: <20200608231848.3366970-1-sashal@kernel.org>
+References: <20200608231848.3366970-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -45,38 +43,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vinod Koul <vkoul@kernel.org>
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-[ Upstream commit a76f274182f054481182c81cd62bb8794a5450a6 ]
+[ Upstream commit 906746ba26d0b45688f4c3b730c35f765dc958ba ]
 
-Documentation says that gpll0 is parent of gpll0_out_even, somehow
-driver coded that as bi_tcxo, so fix it
+Fix typos in pm8150 l13/l16/l17 and pm8150l ldo8 supplies.
 
-Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
-Reported-by: Jonathan Marek <jonathan@marek.ca>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lkml.kernel.org/r/20200521052728.2141377-1-vkoul@kernel.org
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 06369bcc15a1 ("regulator: qcom-rpmh: Add support for SM8150")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Tested-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20200415053708.717623-1-bjorn.andersson@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8150.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 20877214acff..e3959ff5cb55 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -75,8 +75,7 @@ static struct clk_alpha_pll_postdiv gpll0_out_even = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "gpll0_out_even",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "bi_tcxo",
--			.name = "bi_tcxo",
-+			.hw = &gpll0.clkr.hw,
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_trion_pll_postdiv_ops,
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 0246b6f99fb5..f11e4bfbc91b 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -832,11 +832,11 @@ static const struct rpmh_vreg_init_data pm8150_vreg_data[] = {
+ 	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l2-l10"),
+ 	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo,      "vdd-l1-l8-l11"),
+ 	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
+-	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,      "vdd-l13-l6-l17"),
++	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,      "vdd-l13-l16-l17"),
+ 	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
+ 	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
+-	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,      "vdd-l13-l6-l17"),
+-	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,      "vdd-l13-l6-l17"),
++	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,      "vdd-l13-l16-l17"),
++	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,      "vdd-l13-l16-l17"),
+ 	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_nldo,      "vdd-l3-l4-l5-l18"),
+ 	{},
+ };
+@@ -857,7 +857,7 @@ static const struct rpmh_vreg_init_data pm8150l_vreg_data[] = {
+ 	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,      "vdd-l4-l5-l6"),
+ 	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo,      "vdd-l4-l5-l6"),
+ 	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l7-l11"),
+-	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv,   "vdd-l1-l8-l11"),
++	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv,   "vdd-l1-l8"),
+ 	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,      "vdd-l9-l10"),
+ 	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l9-l10"),
+ 	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,      "vdd-l7-l11"),
 -- 
 2.25.1
 
