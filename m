@@ -2,91 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92ED81F159D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 11:40:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 969411F15B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 11:43:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729227AbgFHJk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 05:40:27 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:63845 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729217AbgFHJk1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 05:40:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591609226; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=H5MuWLiGAPcb/as9k1D9LJqte98VlPM02vFdUe95LKc=; b=n95v2Wx3nrwE8KQIMZVcY2RwGSzDVlmSrcrUc7REWDf0CElxTfzXzBxijiWo/yPABZh0NH9z
- rRQbdbC1hwP5WtTlW/l/Bfk2Qgtd7MbczjLtTlNTi+ATS329LpRiYXJEDnySbuuIPogb5CVh
- Iq/NDgwZMDOn+XE7gDoa7DLDABo=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5ede0774754b690164661909 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Jun 2020 09:40:04
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9057AC43387; Mon,  8 Jun 2020 09:40:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.105] (unknown [183.83.153.101])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sivaprak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DFB87C433CA;
-        Mon,  8 Jun 2020 09:40:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DFB87C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
-Subject: Re: [PATCH V2 3/3] mailbox: qcom: Add ipq6018 apcs compatible
-To:     Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <1591441171-20341-1-git-send-email-sivaprak@codeaurora.org>
- <1591441171-20341-4-git-send-email-sivaprak@codeaurora.org>
- <CABb+yY2HhHSbP7UX_r1bGgpxzQKfC9aS8r9nxX5AOt8ENG5ACQ@mail.gmail.com>
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Message-ID: <0ee184f4-bc8d-09f5-d756-c87498e64777@codeaurora.org>
-Date:   Mon, 8 Jun 2020 15:09:58 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+        id S1729255AbgFHJna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 05:43:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54590 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728745AbgFHJn3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 05:43:29 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4C6C08C5C4
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 02:43:28 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id s13so13090396otd.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 02:43:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TYEy+8z/tFUxcc58fN1UDywpoBpG6q97Kp55SPoLlFQ=;
+        b=mx5PE7c9S7yIQQey9oDYYV9HhPDwCCObLL9zMXO5gI1cq1fvp8xBoTeX/bB9/tcr94
+         xvd46Fe5pNQ0KZgTlZt6KqIbH4Ba8t0gt616S9V9UoeG3GZaL5Nqv1clWU+GCJ6/hUK6
+         6kgZhSKtE5KQo498/9wTDNy3FdRqcBrQVdMmaj2ktDgYvHLq7vNmGMZCukXeqxXlk0tQ
+         cs02Wh3rUj0F0kdy17AJyVtg2hgl6N++aPUkgwKJTAGCq4nhtk4+O+j0c+bnhSas4ZvO
+         sfmJvEaew56pHY9q+yfgTM7xGRCkr1OrTzu4+T4NRW/5r8Yq7jx7vWvjBaas3JsWWyP0
+         7nIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TYEy+8z/tFUxcc58fN1UDywpoBpG6q97Kp55SPoLlFQ=;
+        b=CAgXxFsM8DUntHCu/SJnqTFOFqTeDuEVq4zCSlElvaDl6wzZ7uehjyhbzfJXKPkC7m
+         7VJo0SgPKDcAW1/0knKoXSAbynM5ncuMXTzhFGfUFL3+TcSarQziSPnS/OY70q20INd3
+         i8bDYS3j87u2fmLe48dmSo/aE7R3ljITCXfa2SC+WfGLkdkslv1NVTXR7LlC1XdvKFwZ
+         lro172zRe39XE9Zf5P4V0JqvgsGj6+Oi7yDVwfuaNO5bqz+2DnOVEd4fBhsA9cESsL9C
+         yNaLnoeXkkF9bgAxZ2qASISJFJjyPtg6dczywKlQOEmsFvAASQU4I4QcZHsJihGhcNlH
+         XeWA==
+X-Gm-Message-State: AOAM530gBLIt1eeoGxMSbfcdT0C/Z8oFqiMOG9ZbSdfg+ZOHewnHCDkq
+        tjVCuGITMm6JY1lrHRG7gMG9Warw/1afwxzyi0tkzg==
+X-Google-Smtp-Source: ABdhPJzch/7ONQ8ZPK1KBOpA7Dst9zDuZ3FJ4djIcjndSpwGsnxcucHOb/OqZROcfPYD8G+gcU9sU93ZNxGx5tHguyQ=
+X-Received: by 2002:a05:6830:60d:: with SMTP id w13mr16894582oti.243.1591609407458;
+ Mon, 08 Jun 2020 02:43:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CABb+yY2HhHSbP7UX_r1bGgpxzQKfC9aS8r9nxX5AOt8ENG5ACQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20200604120905.1344074-1-robert.marko@sartura.hr>
+ <202006050445.tiQi7ZvY%lkp@intel.com> <CA+HBbNFpHugbM6LDGAtJHj4ZAz-K5ojkovaVZ04V3QJS-hytUw@mail.gmail.com>
+ <20200608090705.GA1597633@ubuntu-n2-xlarge-x86>
+In-Reply-To: <20200608090705.GA1597633@ubuntu-n2-xlarge-x86>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Mon, 8 Jun 2020 11:43:16 +0200
+Message-ID: <CA+HBbNFPtHK3AJBnY3TOG67tciW01rEoYaaAu+A7GP0pdcTsvw@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: ipq4019: fix apss cpu overclocking
+To:     Nathan Chancellor <natechancellor@gmail.com>
+Cc:     kernel test robot <lkp@intel.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>, sboyd@kernel.org,
+        Abhishek Sahu <absahu@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
+        Christian Lamparter <chunkeey@gmail.com>,
+        John Crispin <john@phrozen.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jassi,
-
-On 6/8/2020 2:15 AM, Jassi Brar wrote:
-> On Sat, Jun 6, 2020 at 5:59 AM Sivaprakash Murugesan
-> <sivaprak@codeaurora.org> wrote:
->> The Qualcomm ipq6018 has apcs block, add compatible for the same.
->> Also, the apcs provides a clock controller functionality similar
->> to msm8916 but the clock driver is different.
->>
->> Create a child platform device based on the apcs compatible for the
->> clock controller functionality.
->>
->> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->> ---
->> [V2]
->>   * created a new structur for driver data.
->>   * re-arranged compatible strings in sorted order
->>
-> Please break this into two patches, first reorganise and then add new
-> ipq6018 of_match.
-have sent an updated patch series addressing the comments, thanks for 
-your time.
+On Mon, Jun 8, 2020 at 11:07 AM Nathan Chancellor
+<natechancellor@gmail.com> wrote:
 >
-> thanks.
+> On Mon, Jun 08, 2020 at 10:54:34AM +0200, Robert Marko wrote:
+> > On Thu, Jun 4, 2020 at 10:25 PM kernel test robot <lkp@intel.com> wrote:
+> > >
+> > > Hi Robert,
+> > >
+> > > I love your patch! Perhaps something to improve:
+> > >
+> > > [auto build test WARNING on clk/clk-next]
+> > > [also build test WARNING on v5.7 next-20200604]
+> > > [if your patch is applied to the wrong git tree, please drop us a note to help
+> > > improve the system. BTW, we also suggest to use '--base' option to specify the
+> > > base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
+> > >
+> > > url:    https://github.com/0day-ci/linux/commits/Robert-Marko/clk-qcom-ipq4019-fix-apss-cpu-overclocking/20200605-002859
+> > > base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
+> > > config: x86_64-allyesconfig (attached as .config)
+> > > compiler: clang version 11.0.0 (https://github.com/llvm/llvm-project ac47588bc4ff5927a01ed6fcd269ce86aba52a7c)
+> > > reproduce (this is a W=1 build):
+> > >         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+> > >         chmod +x ~/bin/make.cross
+> > >         # install x86_64 cross compiling tool for clang build
+> > >         # apt-get install binutils-x86-64-linux-gnu
+> > >         # save the attached .config to linux build tree
+> > >         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross ARCH=x86_64
+> > >
+> > > If you fix the issue, kindly add following tag as appropriate
+> > > Reported-by: kernel test robot <lkp@intel.com>
+> > >
+> > > All warnings (new ones prefixed by >>, old ones prefixed by <<):
+> > >
+> > > >> drivers/clk/qcom/gcc-ipq4019.c:1247:24: warning: no previous prototype for function 'qcom_find_freq_close' [-Wmissing-prototypes]
+> > > const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
+> > > ^
+> > > drivers/clk/qcom/gcc-ipq4019.c:1247:7: note: declare 'static' if the function is not intended to be used outside of this translation unit
+> > > const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
+> > > ^
+> > > static
+> > > 1 warning generated.
+> > >
+> > > vim +/qcom_find_freq_close +1247 drivers/clk/qcom/gcc-ipq4019.c
+> > >
+> > >   1245
+> > >   1246
+> > > > 1247  const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
+> > >   1248                                               unsigned long rate)
+> > >   1249  {
+> > >   1250          const struct freq_tbl *last = NULL;
+> > >   1251
+> > >   1252          for ( ; f->freq; f++) {
+> > >   1253                  if (rate == f->freq)
+> > >   1254                          return f;
+> > >   1255
+> > >   1256                  if (f->freq > rate) {
+> > >   1257                          if (!last ||
+> > >   1258                             (f->freq - rate) < (rate - last->freq))
+> > >   1259                                  return f;
+> > >   1260                          else
+> > >   1261                                  return last;
+> > >   1262                  }
+> > >   1263                  last = f;
+> > >   1264          }
+> > >   1265
+> > >   1266          return last;
+> > >   1267  }
+> > >   1268
+> > >
+> > > ---
+> > > 0-DAY CI Kernel Test Service, Intel Corporation
+> > > https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> >
+>
+> <moved post to the bottom>
+>
+> > Sorry for asking, but are these warnings relevant?
+> > GCC9.3 does not throw them
+> >
+> > Regards
+> > Robert
+> >
+>
+> It should if you are using make W=1, this is not a clang specific
+> warning (it just happens that clang was the compiler for this report).
+
+Thanks, W=1 does indeed show the warning along with a not evaluated return.
+>
+> It looks like qcom_find_freq_close is only used in
+> drivers/clk/qcom/gcc-ipq4019.c, in which case it should be marked
+> static.
+Thanks, it does indeed solve the warning.
+I will send a v2 today.
+
+Regards,
+Robert
+>
+> Cheers,
+> Nathan
