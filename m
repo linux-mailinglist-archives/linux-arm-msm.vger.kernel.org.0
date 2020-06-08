@@ -2,39 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8AF31F2FE6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:54:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5049B1F2D4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 02:33:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728707AbgFIAym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 20:54:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55248 "EHLO mail.kernel.org"
+        id S1733127AbgFIAcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 20:32:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36014 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728423AbgFHXJb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 19:09:31 -0400
+        id S1728576AbgFHXPP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 19:15:15 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F352E208C3;
-        Mon,  8 Jun 2020 23:09:30 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2C84321531;
+        Mon,  8 Jun 2020 23:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591657771;
-        bh=Sl/PYpXNg++EVQUk+AQqR0ej8vbmve0/ub7u9lPRBMY=;
+        s=default; t=1591658114;
+        bh=U4a716t1zfB5zL2gtGQ6ceowiQ4YOsRO6zDnhNKNyKQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NeELp2pjl36MzAMRdPZaZKHlcTTbpu2DLTvfPnWfEZrRxfB53jd7a75gmj0kXPSwV
-         JzVwRlM6M90BJLtUvEnloFpG9Ehv9Ey4ejcQsWEZVzRi+UAvNSss5H5QXLU+WsKHI1
-         BHMP6d4s2OTrddoC/lLpGx+YLPRDtbi3x/SMAFTI=
+        b=H9T0ycRFoGB813INPHrl1lodbv8tLA1ucqGA4UzV9rwFXyfdG/YOzkEHIhpn4bO8g
+         JNiOnsjX9wD5pc91Hyx55MqflMAg8fclz+f5sN3h1Ic2Tb/7oXVM5CAUMGh4/wxDxH
+         4XfNErw9HDAmU1RlXry/VbRukcw/TffSt+FuqNqc=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 155/274] cpufreq: qcom: fix wrong compatible binding
-Date:   Mon,  8 Jun 2020 19:04:08 -0400
-Message-Id: <20200608230607.3361041-155-sashal@kernel.org>
+Cc:     Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 152/606] pinctrl: qcom: Add affinity callbacks to msmgpio IRQ chip
+Date:   Mon,  8 Jun 2020 19:04:37 -0400
+Message-Id: <20200608231211.3363633-152-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200608230607.3361041-1-sashal@kernel.org>
-References: <20200608230607.3361041-1-sashal@kernel.org>
+In-Reply-To: <20200608231211.3363633-1-sashal@kernel.org>
+References: <20200608231211.3363633-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,34 +47,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ansuel Smith <ansuelsmth@gmail.com>
+From: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
 
-[ Upstream commit 2dea651680cea1f3a29925de51002f33d1f55711 ]
+commit dca4f40742e09ec5d908a7fc2862498e6cf9d911 upstream.
 
-Binding in Documentation is still "operating-points-v2-kryo-cpu".
-Restore the old binding to fix the compatibility problem.
+Wakeup capable GPIO IRQs routed via PDC are not being migrated when a CPU
+is hotplugged. Add affinity callbacks to msmgpio IRQ chip to update the
+affinity of wakeup capable IRQs.
 
-Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+[mkshah: updated commit text and minor code fixes]
+Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/1588314617-4556-1-git-send-email-mkshah@codeaurora.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index a1b8238872a2..d06b37822c3d 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -277,7 +277,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
- 	if (!np)
- 		return -ENOENT;
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 9f1c9951949e..14a8f8fa0ea3 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1010,6 +1010,29 @@ static void msm_gpio_irq_relres(struct irq_data *d)
+ 	module_put(gc->owner);
+ }
  
--	ret = of_device_is_compatible(np, "operating-points-v2-qcom-cpu");
-+	ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu");
- 	if (!ret) {
- 		of_node_put(np);
- 		return -ENOENT;
++static int msm_gpio_irq_set_affinity(struct irq_data *d,
++				const struct cpumask *dest, bool force)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++
++	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
++		return irq_chip_set_affinity_parent(d, dest, force);
++
++	return 0;
++}
++
++static int msm_gpio_irq_set_vcpu_affinity(struct irq_data *d, void *vcpu_info)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++
++	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
++		return irq_chip_set_vcpu_affinity_parent(d, vcpu_info);
++
++	return 0;
++}
++
+ static void msm_gpio_irq_handler(struct irq_desc *desc)
+ {
+ 	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
+@@ -1108,6 +1131,8 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+ 	pctrl->irq_chip.irq_set_wake = msm_gpio_irq_set_wake;
+ 	pctrl->irq_chip.irq_request_resources = msm_gpio_irq_reqres;
+ 	pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
++	pctrl->irq_chip.irq_set_affinity = msm_gpio_irq_set_affinity;
++	pctrl->irq_chip.irq_set_vcpu_affinity = msm_gpio_irq_set_vcpu_affinity;
+ 
+ 	np = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
+ 	if (np) {
 -- 
 2.25.1
 
