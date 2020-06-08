@@ -2,201 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3C491F15E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 11:50:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A611F16A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 12:28:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729265AbgFHJuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 05:50:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55598 "EHLO
+        id S1729222AbgFHK2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 06:28:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729264AbgFHJuA (ORCPT
+        with ESMTP id S1726202AbgFHK2B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 05:50:00 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9EA9C08C5C3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 02:49:59 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id q19so17546407eja.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 02:49:59 -0700 (PDT)
+        Mon, 8 Jun 2020 06:28:01 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8216C08C5C5
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 03:28:01 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id d8so3311004plo.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 03:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bowu5S2kLRuujMs4c7peqMpp/j0/TN2F5Fz+wpb7ydQ=;
-        b=hkDyJPIWslLC9m9KSdfkJN50IY+SjmiZM6B4D1trkHnzwxFSKZBby522cIEJnmrIBb
-         lotbEeWNLZQBjUnqQ1+N2eeJ5NeqInEGrM73s5a2BdseJH2JZ/dhW2LZWGLMQmT/H63V
-         l6s9HGAL4H6Xe0oKLIMQliPy6K0gF96V+4oPH6qmzlUPNu+cQLrUN8E/VswoeMCGy0Vx
-         XaAGKzPyOYww2P8na1SvJb459iEWK8wc59bhuue+Q17YP0zUdHTyE0JtO+BN+F2jZrJg
-         BbJAPn7OGTjP+p5oFpIjc/8k4MNv9cT9Xv8q1ZASOgbqVN2yO/4vJ7s5uATSgbKghbRK
-         784Q==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=39m+2LLbv6DmBKnk5P51Aj/s0CDKaXKRY6RVZpmO47k=;
+        b=WAGe9EfgYRXcs6oNuDgg+A5B5DLZKzh4sjoqPNRbHSPYUsD654Ef1u0NL1YTyBQJbH
+         3AAQHDRAFqZYQHcRUlc7swh6QESQXgVdWti12n2MKx0W1qMmCYiJOf3wVNg3llo5qVzU
+         jeLX7I4WOEoskkTxzZilOnuhERrqKx2CArW9Ay9eBSsErMEDyjfiinrbF1tbnOIfRVKT
+         zYqOwFTR6JxFVjVfjYdV1Ozd+PV88T94fYPeucXCSGHFqpmfTc6v3FhZUeqIRJwyqwLC
+         6pGwNOxhVFiddns9nUl45WEcBbvoHqPVAC2h8E95E+7t447c4eMegnPjx9xnAmolpzvJ
+         4j4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bowu5S2kLRuujMs4c7peqMpp/j0/TN2F5Fz+wpb7ydQ=;
-        b=Zn0rdSEUMnpYRiJ2f71xpkiD+3GX50JwQtthWzmV9rquB2Qb6TGki8Axo+49DyNoNd
-         C6zTKfYjyOJyb0xXASH0mBEknRuPSsfmNxIMdpjqJi4Zzjmcs0uzEU9eC8eVLzbnHe8t
-         oJQg6QaTxf7677/I5GKgG/Ds+OW6omfDy2+QOMnYb2FymE8kbQLCLI0JyIuseSDu9l8q
-         zbg2NI54PKLvKREb4+FoLW5n5h5lGtcgyGnMpMLHJ8sWwhH6qYxl1ztuAQPWXrZpR3bp
-         e/aMYJRF7xl+rZ8mBtudMpmx7vSIxG908Tme0B3ul75iHVstt5iTEkboLOALIF5Jxqh6
-         Fovg==
-X-Gm-Message-State: AOAM5301JnINVHLJpvHFP3hu/I6rr4z4gnh49e3zJD6zf2Oc6GX6H0d6
-        r2jB4Fq7+Pj74yyFmJjFy3MuQA==
-X-Google-Smtp-Source: ABdhPJw6zPYO7Ns1y9ZYS2jdqo5E8/ZXxETtL5izFfAKlRPo2xWy2hfeIyBsJJhlo1e/0t5i5zbFCw==
-X-Received: by 2002:a17:906:6c82:: with SMTP id s2mr19815065ejr.215.1591609798352;
-        Mon, 08 Jun 2020 02:49:58 -0700 (PDT)
-Received: from localhost.localdomain (dh207-96-217.xnet.hr. [88.207.96.217])
-        by smtp.googlemail.com with ESMTPSA id d11sm7354549edy.79.2020.06.08.02.49.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 02:49:57 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Christian Lamparter <chunkeey@gmail.com>,
-        John Crispin <john@phrozen.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH] clk: qcom: ipq4019: fix apss cpu overclocking
-Date:   Mon,  8 Jun 2020 11:47:15 +0200
-Message-Id: <20200608094714.382149-1-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=39m+2LLbv6DmBKnk5P51Aj/s0CDKaXKRY6RVZpmO47k=;
+        b=kwYY32TkMfMcSJqAfKfvMsCpcah2J61T0hspv5HEkUSeMmPeDMMZGPcRUrBC7OAY/2
+         UCY+A03sm0QDc+ya6fzOr1x3TADU390KdbtEOeFsnMhqqBG2MzDdGmPYWY0EtmRlZood
+         iTBr1lE/3KonkZlVCWN6Xo89bgGUzuW59VXIX6fBKpJhHCupr9O5y067TlYJiyvtmwXp
+         m5ttch9jocMvn4jfS1PINRZaE753IZDgHi2LHGB9rE5EdZYQaf4M6nNM7d4GPOwbjuNq
+         I+rOK76Mqdn+4zV0CyLRtceyO4S4K9jZvmpTIIqsKCqmJ3W8X51RvEudNHW2TwjMj+iW
+         jtug==
+X-Gm-Message-State: AOAM53247YiJmja4m1ct5zsTzSiaqDvdxDr1Dr3JU4IgHaFxG7xmk075
+        6r8iN7q4IMgZo1sgki08MvcBJw==
+X-Google-Smtp-Source: ABdhPJy7tUDmw7E2+N2dP4+jFgxDi565u5EZbJy/npJ1/aTQhfV9kSuAXl9CPg0tBQD4hXT6yfe9gg==
+X-Received: by 2002:a17:902:6bc8:: with SMTP id m8mr20467004plt.138.1591612080996;
+        Mon, 08 Jun 2020 03:28:00 -0700 (PDT)
+Received: from localhost ([122.172.62.209])
+        by smtp.gmail.com with ESMTPSA id n24sm14806270pjt.47.2020.06.08.03.27.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jun 2020 03:28:00 -0700 (PDT)
+Date:   Mon, 8 Jun 2020 15:57:58 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
+        mka@chromium.org, nm@ti.com, bjorn.andersson@linaro.org,
+        agross@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org
+Subject: Re: [PATCH v6 0/5] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+Message-ID: <20200608102758.54vdswjievx3cc7l@vireshk-i7>
+References: <20200605213332.609-1-sibis@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200605213332.609-1-sibis@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Christian Lamparter <chunkeey@gmail.com>
+On 06-06-20, 03:03, Sibi Sankar wrote:
+> This patch series aims to extend cpu based scaling support to L3/DDR on
+> SDM845 and SC7180 SoCs.
+> 
+> Patches [1-2] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
+> Patches [3-5] - Update bw levels based on cpu frequency change
+> 
+> Based on Viresh's opp-next:
+> https://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git/log/?h=opp/linux-next
+> 
+> V6:
+>  * Add global flag to distinguish between voltage update and opp add.
+>    Use the same flag before trying to scale ddr/l3 bw [Viresh]
+>  * Use dev_pm_opp_find_freq_ceil to grab all opps [Viresh] 
+>  * Move dev_pm_opp_of_find_icc_paths into probe [Viresh]
 
-There's an interaction issue between the clk changes:"
-clk: qcom: ipq4019: Add the apss cpu pll divider clock node
-clk: qcom: ipq4019: remove fixed clocks and add pll clocks
-" and the cpufreq-dt.
+Picked for 5.9, will push to my branch after rc1 is out.
 
-cpufreq-dt is now spamming the kernel-log with the following:
-
-[ 1099.190658] cpu cpu0: dev_pm_opp_set_rate: failed to find current OPP
-for freq 761142857 (-34)
-
-This only happens on certain devices like the Compex WPJ428
-and AVM FritzBox!4040. However, other devices like the Asus
-RT-AC58U and Meraki MR33 work just fine.
-
-The issue stem from the fact that all higher CPU-Clocks
-are achieved by switching the clock-parent to the P_DDRPLLAPSS
-(ddrpllapss). Which is set by Qualcomm's proprietary bootcode
-as part of the DDR calibration.
-
-For example, the FB4040 uses 256 MiB Nanya NT5CC128M16IP clocked
-at round 533 MHz (ddrpllsdcc = 190285714 Hz).
-
-whereas the 128 MiB Nanya NT5CC64M16GP-DI in the ASUS RT-AC58U is
-clocked at a slightly higher 537 MHz ( ddrpllsdcc = 192000000 Hz).
-
-This patch attempts to fix the issue by modifying
-clk_cpu_div_round_rate(), clk_cpu_div_set_rate(), clk_cpu_div_recalc_rate()
-to use a new qcom_find_freq_close() function, which returns the closest
-matching frequency, instead of the next higher. This way, the SoC in
-the FB4040 (with its max clock speed of 710.4 MHz) will no longer
-try to overclock to 761 MHz.
-
-Fixes: d83dcacea18 ("clk: qcom: ipq4019: Add the apss cpu pll divider clock node")
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Signed-off-by: John Crispin <john@phrozen.org>
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
----
-Changes from v1 to v2:
-* Resolve warnings discovered by the kbot
-* Return the return of regmap_update_bits instead of not using it at all
-
- drivers/clk/qcom/gcc-ipq4019.c | 36 ++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-ipq4019.c b/drivers/clk/qcom/gcc-ipq4019.c
-index ef5137fd50f3..62fa17a4291c 100644
---- a/drivers/clk/qcom/gcc-ipq4019.c
-+++ b/drivers/clk/qcom/gcc-ipq4019.c
-@@ -1243,6 +1243,29 @@ static const struct clk_fepll_vco gcc_fepll_vco = {
- 	.reg = 0x2f020,
- };
- 
-+
-+static const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl *f,
-+					     unsigned long rate)
-+{
-+	const struct freq_tbl *last = NULL;
-+
-+	for ( ; f->freq; f++) {
-+		if (rate == f->freq)
-+			return f;
-+
-+		if (f->freq > rate) {
-+			if (!last ||
-+			   (f->freq - rate) < (rate - last->freq))
-+				return f;
-+			else
-+				return last;
-+		}
-+		last = f;
-+	}
-+
-+	return last;
-+}
-+
- /*
-  * Round rate function for APSS CPU PLL Clock divider.
-  * It looks up the frequency table and returns the next higher frequency
-@@ -1255,7 +1278,7 @@ static long clk_cpu_div_round_rate(struct clk_hw *hw, unsigned long rate,
- 	struct clk_hw *p_hw;
- 	const struct freq_tbl *f;
- 
--	f = qcom_find_freq(pll->freq_tbl, rate);
-+	f = qcom_find_freq_close(pll->freq_tbl, rate);
- 	if (!f)
- 		return -EINVAL;
- 
-@@ -1278,7 +1301,7 @@ static int clk_cpu_div_set_rate(struct clk_hw *hw, unsigned long rate,
- 	u32 mask;
- 	int ret;
- 
--	f = qcom_find_freq(pll->freq_tbl, rate);
-+	f = qcom_find_freq_close(pll->freq_tbl, rate);
- 	if (!f)
- 		return -EINVAL;
- 
-@@ -1292,7 +1315,7 @@ static int clk_cpu_div_set_rate(struct clk_hw *hw, unsigned long rate,
- 	 */
- 	udelay(1);
- 
--	return 0;
-+	return ret;
- };
- 
- /*
-@@ -1305,6 +1328,7 @@ static unsigned long
- clk_cpu_div_recalc_rate(struct clk_hw *hw,
- 			unsigned long parent_rate)
- {
-+	const struct freq_tbl *f;
- 	struct clk_fepll *pll = to_clk_fepll(hw);
- 	u32 cdiv, pre_div;
- 	u64 rate;
-@@ -1325,7 +1349,11 @@ clk_cpu_div_recalc_rate(struct clk_hw *hw,
- 	rate = clk_fepll_vco_calc_rate(pll, parent_rate) * 2;
- 	do_div(rate, pre_div);
- 
--	return rate;
-+	f = qcom_find_freq_close(pll->freq_tbl, rate);
-+	if (!f)
-+		return rate;
-+
-+	return f->freq;
- };
- 
- static const struct clk_ops clk_regmap_cpu_div_ops = {
 -- 
-2.26.2
-
+viresh
