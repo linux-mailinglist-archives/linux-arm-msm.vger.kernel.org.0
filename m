@@ -2,100 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F03FE1F1A23
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 15:33:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36B751F1A5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 15:50:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729855AbgFHNcy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 09:32:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33560 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729179AbgFHNcx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 09:32:53 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF981C08C5C2;
-        Mon,  8 Jun 2020 06:32:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Transfer-Encoding
-        :Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-        Sender:Reply-To:Content-ID:Content-Description;
-        bh=ObZ22oOgYNGbVd4Cp8pB6DVUyibIVTQNw5PapcI68nk=; b=a5taWeGUX4HtnKc/RAOz5WhgUz
-        q6JBnbH3JTiA0cXFU9kiCQWCXW/ILe82YRWyyJCFX/BccSHPnnjG1RJ6fzG56MfIi0KikIvn0P9nf
-        mSUvR/7yJhmJEjL6YHLbAviatSAnH4qTUW0bZBTaepq+d1h02hdnqQwrHGin2OYMxi/uH2q6I2CFE
-        Bmf2dgwgtuy4ue+pK94M55DxD5NmhDOJiqDCKv4agDJrK2TlRU50paxHDYtrUgdGEJVwJptb7wL36
-        BMBtG7PyeI/lJRa1zCDx0cj4FHW1VWU83+4CkoMg/YVIb/7CHlo624nM17uJ2flQPUeEY+5R/1ZIc
-        7xPFI5/w==;
-Received: from willy by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jiHtR-0001E9-NY; Mon, 08 Jun 2020 13:32:49 +0000
-Date:   Mon, 8 Jun 2020 06:32:49 -0700
-From:   Matthew Wilcox <willy@infradead.org>
-To:     Mimi Zohar <zohar@linux.ibm.com>
-Cc:     Scott Branden <scott.branden@broadcom.com>,
-        Luis Chamberlain <mcgrof@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        linux-integrity@vger.kernel.org,
-        linux-security-module@vger.kernel.org,
-        Christoph Hellwig <hch@infradead.org>
-Subject: Re: [PATCH v7 1/8] fs: introduce kernel_pread_file* support
-Message-ID: <20200608133249.GW19604@bombadil.infradead.org>
-References: <20200606050458.17281-1-scott.branden@broadcom.com>
- <20200606050458.17281-2-scott.branden@broadcom.com>
- <20200606155216.GP19604@bombadil.infradead.org>
- <1591621401.4638.59.camel@linux.ibm.com>
- <20200608131630.GV19604@bombadil.infradead.org>
- <1591622526.4638.71.camel@linux.ibm.com>
+        id S1729843AbgFHNuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 09:50:00 -0400
+Received: from foss.arm.com ([217.140.110.172]:53158 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729051AbgFHNuA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Jun 2020 09:50:00 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E896831B;
+        Mon,  8 Jun 2020 06:49:59 -0700 (PDT)
+Received: from [10.37.12.95] (unknown [10.37.12.95])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9A53A3F52E;
+        Mon,  8 Jun 2020 06:49:56 -0700 (PDT)
+Subject: Re: [PATCH v8 4/8] PM / EM: add support for other devices than CPUs
+ in Energy Model
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     kbuild@lists.01.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com, lkp@intel.com,
+        Dan Carpenter <error27@gmail.com>, kbuild-all@lists.01.org,
+        Dietmar.Eggemann@arm.com, cw00.choi@samsung.com
+References: <20200608115155.GY30374@kadam>
+ <b347fb60-46d3-e59c-59fa-a2b10932fc49@arm.com> <20200608125127.GN22511@kadam>
+ <da0debe1-73da-33f1-c24e-154c2123c522@arm.com> <20200608132507.GP22511@kadam>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <f52c83d1-8968-25a2-2d6f-f3eeceae15cb@arm.com>
+Date:   Mon, 8 Jun 2020 14:49:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1591622526.4638.71.camel@linux.ibm.com>
+In-Reply-To: <20200608132507.GP22511@kadam>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 08, 2020 at 09:22:06AM -0400, Mimi Zohar wrote:
-> On Mon, 2020-06-08 at 06:16 -0700, Matthew Wilcox wrote:
-> > On Mon, Jun 08, 2020 at 09:03:21AM -0400, Mimi Zohar wrote:
-> > > With this new design of not using a private vmalloc, will the file
-> > > data be accessible prior to the post security hooks?  From an IMA
-> > > perspective, the hooks are used for measuring and/or verifying the
-> > > integrity of the file.
-> > 
-> > File data is already accessible prior to the post security hooks.
-> > Look how kernel_read_file works:
-> > 
-> >         ret = deny_write_access(file);
-> >         ret = security_kernel_read_file(file, id);
-> >                 *buf = vmalloc(i_size);
-> >                 bytes = kernel_read(file, *buf + pos, i_size - pos, &pos);
-> >         ret = security_kernel_post_read_file(file, *buf, i_size, id);
-> > 
-> > kernel_read() will read the data into the page cache and then copy it
-> > into the vmalloc'd buffer.  There's nothing here to prevent read accesses
-> > to the file.
-> 
-> The post security hook needs to access to the file data in order to
-> calculate the file hash.  The question is whether prior to returning
-> from kernel_read_file() the caller can access the file data.
 
-Whether you copy the data (as today) or map it (as I'm proposing),
-the data goes into the page cache.  It's up to the security system to
-block access to the page cache until it's been verified.
+
+On 6/8/20 2:25 PM, Dan Carpenter wrote:
+> It's not really a proper bug report so it doesn't deserve a reported-by.
+> 
+> Thanks, though!
+> 
+> regards,
+> dan carpenter
+> 
+
+Thank you Dan for your work. This is very much appreciated!
+
+Lukasz
