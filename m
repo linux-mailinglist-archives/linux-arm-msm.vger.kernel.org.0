@@ -2,124 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32FA61F2111
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 22:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E7391F2130
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 23:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726227AbgFHU6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Jun 2020 16:58:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        id S1726606AbgFHVFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Jun 2020 17:05:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726756AbgFHU6G (ORCPT
+        with ESMTP id S1726566AbgFHVFp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Jun 2020 16:58:06 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E85EFC08C5C3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 13:58:04 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id c12so18716377qkk.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 13:58:04 -0700 (PDT)
+        Mon, 8 Jun 2020 17:05:45 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7F9BC08C5C2
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 14:05:45 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id g18so15892676qtu.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 14:05:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gAhxsPhFzj8ko5Ff5RM8OuwLL2KNe1g6ry7IsPK4YPM=;
-        b=16CZH6v6kmNHVqda0GleO/jK9emlQUk0HrH+pniwLB19gv2DmUZedX1TBvRssaAQi6
-         FGLFcjSQVlbS8QQ2KtMP2HBxTZ7HnxctjxHPpdhwsW40BsmSTmMCHVfVeXtdWN4Bi6Ju
-         s+mVt/z45r8Mr7kJ6O0XzcviuZmsZireLMRgl7efhjzxbZmm+hf8KRPbS+jgUqo9MVjn
-         3Rg3QTG2S6ZhEVm+RMyhY+gsy5ErZOIcQxerJHb/KfJJtY+0M3R//ych0Dy5ctAu0GIc
-         87PQeTQSEoRWGK8v6p/MG7KKuVW+ITxTJv7h828VKy28xF/sgTJebb9iesq6h7mzki59
-         WG6A==
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=l260Oczt5NYvBAM8JWGWfwlC6xbJl17o2VEf10AzS44=;
+        b=CseeuErBEfArFH/qvOm2e4aOzEu/535Sq9CuJsWO1Q85F5s0ZS6M7UdDa5H4jhBgGa
+         mYOopnpofEfIk8y1bVHZIwXOVLbImEkLkXO3i6I8C9ZoZgeRZKZxaigphcgOXPBTEm6e
+         GTMuVEQV35zYYmlj2g+7ofAGHlHaNf7z9t4NgGFjBtQmJW1LPjapU5eyBeyw1NX4SoJ6
+         7oCK5TGSqKR3jgn6fDhvNkX+YFV9xSIRKs1rpLc6/DvOV3A4ebbC3ZpAYqvuw3wFZcB2
+         S0XR8qMXnZ6WDHwEw9SUOxjQq3IOaA90FyIleE5dHV5Sp/aSVA445nB2Cw+X2J2Akfs+
+         VozQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gAhxsPhFzj8ko5Ff5RM8OuwLL2KNe1g6ry7IsPK4YPM=;
-        b=DKWJAffX4dIUXM5gb8YSq86CBQOJfIZbFQg9V8sdMTf5ZB4FnVRVlbwxIG0fopCSnB
-         XrADiJ+5AXbdxGqhzT4FH+I+yx/W53REVPLNQ1F9TLUn3c2k8zmq/gjVL4TuhjWTwdZc
-         WJ4sg3DT/+hvmSTJqCoDaEzRm/rDrE0oBz7f0ZhNE31i5eO5psPcMikN8m05UZVHMLbN
-         im/bTvRcGDeYCrIwNghL8VuWbCiO3ixDUJ8lp4jJlaywyGu6A4WaFbosgufUiOQkShYr
-         dLgFLHQHUyp1QfLSifbatdm33cnVAXk/ERxTrZxxG/7RM+FyKblm1OHzPn28Af1zBKCX
-         9qWA==
-X-Gm-Message-State: AOAM533ngSCgvmSnl0JCrMk9CTzBpePL/IFxGh6m16OFN1yIcIujeFF0
-        L14moSQjrt+74G/Nkn83VvT9b2l0n5o=
-X-Google-Smtp-Source: ABdhPJxI8g/kaTI+YUdB4Xk1DMGdnAx4W0tVDym/m03YVgr8CP0pb9duFQuz7lWNGN7rE3IPJPeIXw==
-X-Received: by 2002:a37:ac03:: with SMTP id e3mr24122797qkm.350.1591649883869;
-        Mon, 08 Jun 2020 13:58:03 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id d193sm7950035qke.124.2020.06.08.13.58.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jun 2020 13:58:03 -0700 (PDT)
-Subject: Re: [PATCH 4/5] soundwire: qcom: avoid dependency on CONFIG_SLIMBUS
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     alsa-devel@alsa-project.org
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-References: <20200608204347.19685-1-jonathan@marek.ca>
- <20200608204347.19685-5-jonathan@marek.ca>
-Message-ID: <931e8e36-63b5-2a29-1b0c-ee7f8ffbea64@marek.ca>
-Date:   Mon, 8 Jun 2020 16:58:25 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
-MIME-Version: 1.0
-In-Reply-To: <20200608204347.19685-5-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=l260Oczt5NYvBAM8JWGWfwlC6xbJl17o2VEf10AzS44=;
+        b=CC+MZWEa+HOXFEOAnA9bemZPcFmWOoSCFDa/qMVYRsD8yabH9IpJRpdkUWCN8Zos4l
+         1av2gMz9hIdAmhK6x9I+AdGFiT5mlJ0YHIaJSkeEYaTtEg3Vt3ZjzrIW+sh0kyE+lHqL
+         QfrTlp5IDaaocRXlko9sfjXLV8TOfJ6Jodr7VxEjxxtvPXh8ThZDzLuvrFDY40VVyhs0
+         xpBBi40NlcSrpFjEcalKbCm86hyTlvzOvRWiWc78mGlPTfhtykwdoMC3vUeotJmzABMV
+         VGGNP4fldakO96qrKpI/1A+268YYXRHUwnFEtmUNdP5nMcu+hrC6u7RVZQQ1261CN64s
+         d0lQ==
+X-Gm-Message-State: AOAM533TZzqZGzloQZoiSc8SkhfBwctxMuct3c0Pu9hXE4/MWd2z7mvT
+        OfLbpgZ3Y6lBOgaKBG1JTy5lrA==
+X-Google-Smtp-Source: ABdhPJz+V6uEQOV6V65xXTa5fOfwbjDQhqzzFkU5HU0ppoPhtj/oZgEmG1jcwSwRc3m01YVKe+vcTA==
+X-Received: by 2002:ac8:342b:: with SMTP id u40mr24513501qtb.59.1591650344787;
+        Mon, 08 Jun 2020 14:05:44 -0700 (PDT)
+Received: from localhost (mobile-166-173-249-24.mycingular.net. [166.173.249.24])
+        by smtp.gmail.com with ESMTPSA id z19sm9028902qtz.81.2020.06.08.14.05.44
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Jun 2020 14:05:44 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     dri-devel@lists.freedesktop.org
+Cc:     daniel.vetter@ffwll.ch, airlied@gmail.com, ppaalanen@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v5 04/13] drm/msm/dpu: Replace definitions for dpu debug macros
+Date:   Mon,  8 Jun 2020 17:04:54 -0400
+Message-Id: <20200608210505.48519-5-sean@poorly.run>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200608210505.48519-1-sean@poorly.run>
+References: <20200608210505.48519-1-sean@poorly.run>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/8/20 4:43 PM, Jonathan Marek wrote:
-> The driver may be used without slimbus, so don't depend on slimbus.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->   drivers/soundwire/Kconfig | 1 -
->   drivers/soundwire/qcom.c  | 5 +++++
->   2 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soundwire/Kconfig b/drivers/soundwire/Kconfig
-> index fa2b4ab92ed9..d121cf739090 100644
-> --- a/drivers/soundwire/Kconfig
-> +++ b/drivers/soundwire/Kconfig
-> @@ -33,7 +33,6 @@ config SOUNDWIRE_INTEL
->   
->   config SOUNDWIRE_QCOM
->   	tristate "Qualcomm SoundWire Master driver"
-> -	depends on SLIMBUS
->   	depends on SND_SOC
->   	help
->   	  SoundWire Qualcomm Master driver.
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index 14334442615f..ac81c64768ea 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -769,13 +769,18 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->   	if (!ctrl)
->   		return -ENOMEM;
->   
-> +#ifdef CONFIG_SLIMBUS
->   	if (dev->parent->bus == &slimbus_bus) {
-> +#else
-> +	if (false) {
-> +#endif
->   		ctrl->reg_read = qcom_swrm_ahb_reg_read;
->   		ctrl->reg_write = qcom_swrm_ahb_reg_write;
->   		ctrl->regmap = dev_get_regmap(dev->parent, NULL);
->   		if (!ctrl->regmap)
->   			return -EINVAL;
->   	} else {
-> +
+From: Sean Paul <seanpaul@chromium.org>
 
-Oops, ended up with a stray whitespace here, will fix for v2.
+The debug messages shouldn't be logged as errors when debug categories
+are enabled. Use the drm logging helpers to do the right thing
 
->   		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
->   
->   		ctrl->reg_read = qcom_swrm_cpu_reg_read;
-> 
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+
+Changes in v5:
+-Added to the set
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 4e32d040f1e6..89c444ec3bb8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -29,27 +29,15 @@
+  * DPU_DEBUG - macro for kms/plane/crtc/encoder/connector logs
+  * @fmt: Pointer to format string
+  */
+-#define DPU_DEBUG(fmt, ...)                                                \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_KMS))                         \
+-			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++#define DPU_DEBUG(fmt, ...) DRM_DEBUG_KMS(fmt, ##__VA_ARGS__)
+ 
+ /**
+  * DPU_DEBUG_DRIVER - macro for hardware driver logging
+  * @fmt: Pointer to format string
+  */
+-#define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+-			DRM_ERROR(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
+-
+-#define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
++#define DPU_DEBUG_DRIVER(fmt, ...) DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
++
++#define DPU_ERROR(fmt, ...) DRM_ERROR(fmt, ##__VA_ARGS__)
+ 
+ /**
+  * ktime_compare_safe - compare two ktime structures
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
+
