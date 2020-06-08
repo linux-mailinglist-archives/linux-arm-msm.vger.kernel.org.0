@@ -2,84 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88FC01F0FE1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2020 22:45:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39E211F112C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 03:50:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727829AbgFGUpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Jun 2020 16:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45492 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726093AbgFGUpM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Jun 2020 16:45:12 -0400
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AC37C08C5C3;
-        Sun,  7 Jun 2020 13:45:12 -0700 (PDT)
-Received: by mail-io1-xd44.google.com with SMTP id i25so1762811iog.0;
-        Sun, 07 Jun 2020 13:45:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=k/YnB5fzP1XicKiRcAe2Q8LuxjHO0CMYG9cBtnOKMh4=;
-        b=GxGqwPhkkOGRxOBl7vka/S+zbKecUhkFDra1dJfBpBqCyWgA47XutunWnavtjHUHM6
-         WoYPyQSIKvsbcMWJJDjIhJOvGhItrkPo/ml6UedBAtjjJeOisKgKVmglPgY+ye0MUQJK
-         4QEMRMiFAA21c4zgetYQ0b+Jz4ZD7Dtc1L1PZpZXx4yKmcGpbESP/4BLG5K8P8Ue+WKI
-         q/+1Gy0NG7V9wpvE7HGX6FU2ih2pnWv8QNHJl6CfRWLz/EEg7Kb8iNgVjTGQTwmr7O7C
-         xQ53yO8+6NXnq6meoVOEd9yRkIV/vl6XeZKCWczaZgE+roIXjLECAkXnF+zgfLv5PmN2
-         yVnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=k/YnB5fzP1XicKiRcAe2Q8LuxjHO0CMYG9cBtnOKMh4=;
-        b=SnvsJY0k37Ur7FYa9chKvSk0V+78jweUCsmvicf9R6MAb2Mk6CH0TFFImhrsLWAyvn
-         FBgKtqkeyOsXtzp5ReLAjmXmKAV8gyifGquWv3bKaSLK+Ms0zLkI2OIW9fMYfkPd6eoa
-         4TnU5GK2INt3GbZz5irbQEnbcEHhWsKFCH6Dw7ZT1Ng8EqktX68LErUhVBpGxHyOiTL7
-         qNEmj8nBvQmbbzs1gdD3XorCxBi73iCR1OK/AvCQNfTnfJObfnEg7SfQyArVMzAY4nRe
-         xo1AVDs4/Jnhbmj9djSKYG892Bzvzss98jyw0l1shcwfavL2YB/xZACJlQa3ibF8ACSO
-         7+lA==
-X-Gm-Message-State: AOAM532l7xtupFCHuLiYg0PNshchaJBLRRZolKCbP61mOGEGM00P5xXa
-        rbgcxAk7eStqeL6KcQHcfbsrgzD53hbba4Em6FHHP8vB
-X-Google-Smtp-Source: ABdhPJx8YH0LXzFYGcRU9BI+IR83rM6pbwtkKlIoHSeUClRsZq3D2mgrW0vUmYRP3mkH6A0GPwzANQOxW3Syq3lOEDU=
-X-Received: by 2002:a05:6602:2c45:: with SMTP id x5mr18232285iov.80.1591562711809;
- Sun, 07 Jun 2020 13:45:11 -0700 (PDT)
+        id S1728367AbgFHBuU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 Jun 2020 21:50:20 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32]:55584 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728106AbgFHBuS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 7 Jun 2020 21:50:18 -0400
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id 9167966CFE953DFC9BB7;
+        Mon,  8 Jun 2020 09:50:13 +0800 (CST)
+Received: from huawei.com (10.67.174.156) by DGGEMS406-HUB.china.huawei.com
+ (10.3.19.206) with Microsoft SMTP Server id 14.3.487.0; Mon, 8 Jun 2020
+ 09:50:02 +0800
+From:   Chen Tao <chentao107@huawei.com>
+To:     <sean@poorly.run>, <airlied@linux.ie>, <daniel@ffwll.ch>
+CC:     <ddavenport@chromium.org>, <zhengbin13@huawei.com>,
+        <sam@ravnborg.org>, <kalyan_t@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <chentao107@huawei.com>
+Subject: [PATCH] drm/msm/dpu: fix error return code in dpu_encoder_init
+Date:   Mon, 8 Jun 2020 09:48:59 +0800
+Message-ID: <20200608014859.120021-1-chentao107@huawei.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <1591441171-20341-1-git-send-email-sivaprak@codeaurora.org> <1591441171-20341-4-git-send-email-sivaprak@codeaurora.org>
-In-Reply-To: <1591441171-20341-4-git-send-email-sivaprak@codeaurora.org>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Sun, 7 Jun 2020 15:45:00 -0500
-Message-ID: <CABb+yY2HhHSbP7UX_r1bGgpxzQKfC9aS8r9nxX5AOt8ENG5ACQ@mail.gmail.com>
-Subject: Re: [PATCH V2 3/3] mailbox: qcom: Add ipq6018 apcs compatible
-To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Devicetree List <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.67.174.156]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 6, 2020 at 5:59 AM Sivaprakash Murugesan
-<sivaprak@codeaurora.org> wrote:
->
-> The Qualcomm ipq6018 has apcs block, add compatible for the same.
-> Also, the apcs provides a clock controller functionality similar
-> to msm8916 but the clock driver is different.
->
-> Create a child platform device based on the apcs compatible for the
-> clock controller functionality.
->
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> ---
-> [V2]
->  * created a new structur for driver data.
->  * re-arranged compatible strings in sorted order
->
-Please break this into two patches, first reorganise and then add new
-ipq6018 of_match.
+Fix to return negative error code -ENOMEM with the use of
+ERR_PTR from dpu_encoder_init.
 
-thanks.
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Chen Tao <chentao107@huawei.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index a1b79ee2bd9d..a2f6b688a976 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2173,7 +2173,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+ 
+ 	dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
+ 	if (!dpu_enc)
+-		return ERR_PTR(ENOMEM);
++		return ERR_PTR(-ENOMEM);
+ 
+ 	rc = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
+ 			drm_enc_mode, NULL);
+-- 
+2.22.0
+
