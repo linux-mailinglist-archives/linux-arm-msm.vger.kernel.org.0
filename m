@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39E211F112C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 03:50:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C390C1F11CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2020 05:39:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbgFHBuU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Jun 2020 21:50:20 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32]:55584 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728106AbgFHBuS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Jun 2020 21:50:18 -0400
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id 9167966CFE953DFC9BB7;
-        Mon,  8 Jun 2020 09:50:13 +0800 (CST)
-Received: from huawei.com (10.67.174.156) by DGGEMS406-HUB.china.huawei.com
- (10.3.19.206) with Microsoft SMTP Server id 14.3.487.0; Mon, 8 Jun 2020
- 09:50:02 +0800
-From:   Chen Tao <chentao107@huawei.com>
-To:     <sean@poorly.run>, <airlied@linux.ie>, <daniel@ffwll.ch>
-CC:     <ddavenport@chromium.org>, <zhengbin13@huawei.com>,
-        <sam@ravnborg.org>, <kalyan_t@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <chentao107@huawei.com>
-Subject: [PATCH] drm/msm/dpu: fix error return code in dpu_encoder_init
-Date:   Mon, 8 Jun 2020 09:48:59 +0800
-Message-ID: <20200608014859.120021-1-chentao107@huawei.com>
-X-Mailer: git-send-email 2.22.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.67.174.156]
-X-CFilter-Loop: Reflected
+        id S1728782AbgFHDjI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 Jun 2020 23:39:08 -0400
+Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130]:58664 "EHLO
+        out30-130.freemail.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728773AbgFHDjI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 7 Jun 2020 23:39:08 -0400
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R211e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01e07484;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=20;SR=0;TI=SMTPD_---0U-sW8OL_1591587543;
+Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0U-sW8OL_1591587543)
+          by smtp.aliyun-inc.com(127.0.0.1);
+          Mon, 08 Jun 2020 11:39:03 +0800
+From:   Baolin Wang <baolin.wang@linux.alibaba.com>
+To:     joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        matthias.bgg@gmail.com, robdclark@gmail.com, robh@kernel.org,
+        tomeu.vizoso@collabora.com, steven.price@arm.com,
+        alyssa.rosenzweig@collabora.com, airlied@linux.ie, daniel@ffwll.ch
+Cc:     baolin.wang@linux.alibaba.com,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Subject: [PATCH 0/2] Some improvements for iommu
+Date:   Mon,  8 Jun 2020 11:38:39 +0800
+Message-Id: <cover.1591587029.git.baolin.wang@linux.alibaba.com>
+X-Mailer: git-send-email 1.8.3.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix to return negative error code -ENOMEM with the use of
-ERR_PTR from dpu_encoder_init.
+Hi,
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Chen Tao <chentao107@huawei.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The first patch masks some functions as static, and the second patch
+changes to use the gfp parameter from iommu_ops->map() to allocate
+ARM page pages. Any comments are welcome. Thanks.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index a1b79ee2bd9d..a2f6b688a976 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2173,7 +2173,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
- 
- 	dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
- 	if (!dpu_enc)
--		return ERR_PTR(ENOMEM);
-+		return ERR_PTR(-ENOMEM);
- 
- 	rc = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
- 			drm_enc_mode, NULL);
+Baolin Wang (2):
+  iommu: Mark __iommu_map/__iommu_map_sg as static
+  iommu: Add gfp parameter to io_pgtable_ops->map()
+
+ drivers/gpu/drm/panfrost/panfrost_mmu.c |  2 +-
+ drivers/iommu/arm-smmu-v3.c             |  2 +-
+ drivers/iommu/arm-smmu.c                |  2 +-
+ drivers/iommu/io-pgtable-arm-v7s.c      | 10 +++++-----
+ drivers/iommu/io-pgtable-arm.c          | 10 +++++-----
+ drivers/iommu/iommu.c                   | 10 +++++-----
+ drivers/iommu/ipmmu-vmsa.c              |  2 +-
+ drivers/iommu/msm_iommu.c               |  2 +-
+ drivers/iommu/mtk_iommu.c               |  2 +-
+ drivers/iommu/qcom_iommu.c              |  2 +-
+ include/linux/io-pgtable.h              |  2 +-
+ 11 files changed, 23 insertions(+), 23 deletions(-)
+
 -- 
-2.22.0
+1.8.3.1
 
