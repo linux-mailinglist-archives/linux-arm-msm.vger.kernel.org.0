@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 119F91F343A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 08:45:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECA801F343D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 08:45:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727920AbgFIGpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 02:45:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51572 "EHLO
+        id S1727939AbgFIGpW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 02:45:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727844AbgFIGpM (ORCPT
+        with ESMTP id S1727850AbgFIGpQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 02:45:12 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD95C08C5C2
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 23:45:10 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id o8so9871254pgm.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 23:45:10 -0700 (PDT)
+        Tue, 9 Jun 2020 02:45:16 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B98C03E97C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2020 23:45:15 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id d6so970179pjs.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2020 23:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3FM0jTh+f0fagu0TwDs25v1/b6DR8k6EWdiSxrZn+kM=;
-        b=x5bUfaHjs6kULupEwXarZXTSOm8rimAG6gf210Guu/06SF/U5yJGI0/f7iBk13qW8e
-         iKgy76n8+LgXq1HDZiOlJvc5yZDAqtd7ns2oTD/gNIsdO9xrWsQ7f5pMD2chdbcJgFWm
-         XBm/qFDkpm8uS4I1vF9en34ycOBArC6YG8Q60wbPV8ZDz3Aj2rZv8yHaVW/g2XM3ZQen
-         XxJJclKxge8pwuoMVAPp+ZjDFS4GyUyEnhJvAjIuYGXfF8MzxDjLJbWtdN4F5q9/26jT
-         wNHs2iBFmuGQmT1zTen5za8wWx+UP6VT0/BUeKT6E3Di0RSdsVyakdYjzIBmHmOYinMR
-         qQRw==
+        bh=ITWTOrDE2qnu+hYFGxPbT5tYQTcFJCZ81Bm4uoJ/1kA=;
+        b=TlItvcnadwc9NGfN9Y7ZtSMYhS//57h+AQmZif9K4KeRgGBzjq27Uugo/oI4Q0TEw0
+         R8BeJjSGgYJ2x1XhhhCAzK2O3IeY+EPvTdKdOJ6CWSn4N69ZPGYCf1pRRBsL71Wv6+ST
+         oe+fwweAubmdtsgr+6MJkgP9prRHbBtXdgRB47+Xaxb62tHSjFlEXIPoVfIiD6ld2vzF
+         cwPzK0uK9JTScQfTuueUORoANvs4SqP4vCwfUUAaOTcOXLu1ZF/jeIgfNQGI50ekqV5Y
+         KrG1Bj0kyK2Fg9bvPQdwl6OrLUWm2omwyxd+qmRztRCIZnv2jwLB1m99UsWxuC2Dj1O0
+         frIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3FM0jTh+f0fagu0TwDs25v1/b6DR8k6EWdiSxrZn+kM=;
-        b=BokWUCLa9+otipjnapTA+LpGgi26yk8xJBH80b7kmwsc3EF3oibqEjeKJ/p0mJFgXy
-         T3OHlxdKxCnreZ2Conuz6GIWc0kAcqee+DJevffVlYgjBmWM5hGzJVTz4n0bmKVjujLQ
-         2LAqX0goU5z18y4UMs4LqhYbId1GhecrWtpX4XKzF/XpB2mg0yn6ZRMAmROq9qfYomV0
-         QfhID9W7NMgmVbZGIU6eM1xpcDARhoJWRjLgX5cbI3SKkBtdSX6td47JGXL3DNReEn6c
-         IoR1O/kbLrv9LNhGRE4WZJsa6t2nEMP7juDPn6aKj+GEGsE1gX1JghtvYyl6VRrbydEv
-         NY0A==
-X-Gm-Message-State: AOAM530+djIStJa9Co/2Jk8WVgiyZoeiREYXmgNY5CvlHkleMoIrsXvb
-        RTd2Ku89j40MV/1IWTFwlYexUg==
-X-Google-Smtp-Source: ABdhPJz/ZB0MYrVmd9iwzfRNtCaUPzWHzYjCMwVdliE4254Eh4ZHoWcsUz4xwi+srJB/vvxqqxkmkA==
-X-Received: by 2002:a65:46cc:: with SMTP id n12mr23627811pgr.80.1591685110288;
-        Mon, 08 Jun 2020 23:45:10 -0700 (PDT)
+        bh=ITWTOrDE2qnu+hYFGxPbT5tYQTcFJCZ81Bm4uoJ/1kA=;
+        b=mwUlIgTHxo7Q/ZPPhVSLrEl6IxjaDus9muSELYr/6kfI541fau7YZe8mmxflcuuOgL
+         SMYejA8snCbpmABH7Sy6mV67YrBBjv+bGLwJ9pgpVl8cpgsSHBGikOPLUHzhIBnstOIM
+         /uJftf2RSagel7j4CUulZqz/u6uMCftLsdP4pkqR1IjVV8tIJ4H2O7YUPjt9pL/PVKO2
+         TYrN/RQMxI+RPobNHZBRpwvWq0R5urUEgG8fOAsp9F2ySWTEZ8jyJatxvjxGySesbzoA
+         ASXEhcgW526Vtc1DO5zYCV434qfkHmADHuEfSDZD914ouMavSJyDkjzxLEXfqb0Z0s/E
+         TCoQ==
+X-Gm-Message-State: AOAM530UULL4DpljG7LciIG9+2D13vgG/TS5rfINNzO9FOdjyqrmcnOC
+        fbXhxxHJDwpXo8BKjbB0vXbN8Q==
+X-Google-Smtp-Source: ABdhPJx8PCQb5XPadDrxrmygr/+Yr6q3SsiwW0HzTTtYcGyzkvvj+QwnjBShjt29A16EBuoEe8anng==
+X-Received: by 2002:a17:90a:a897:: with SMTP id h23mr3156081pjq.90.1591685114745;
+        Mon, 08 Jun 2020 23:45:14 -0700 (PDT)
 Received: from localhost ([45.127.45.147])
-        by smtp.gmail.com with ESMTPSA id i26sm9064296pfo.0.2020.06.08.23.45.08
+        by smtp.gmail.com with ESMTPSA id e12sm7847268pgk.9.2020.06.08.23.45.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 23:45:09 -0700 (PDT)
+        Mon, 08 Jun 2020 23:45:13 -0700 (PDT)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org, sibis@codeaurora.org,
@@ -55,10 +55,11 @@ To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
         Zhang Rui <rui.zhang@intel.com>
-Cc:     devicetree@vger.kernel.org
-Subject: [PATCH 2/3] arm64: dts: qcom: sm8150: Add thermal zones and throttling support
-Date:   Tue,  9 Jun 2020 12:14:55 +0530
-Message-Id: <1cdbebe6f7f69ccd8468a4138b56e8a200289d95.1591684754.git.amit.kucheria@linaro.org>
+Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH 3/3] arm64: dts: qcom: sm8250: Add thermal zones and throttling support
+Date:   Tue,  9 Jun 2020 12:14:56 +0530
+Message-Id: <bf5ca7777fbb6f5e2d374a9a72d1e17d485bd8ea.1591684754.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1591684754.git.amit.kucheria@linaro.org>
 References: <cover.1591684754.git.amit.kucheria@linaro.org>
@@ -69,97 +70,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-sm8150 has 27 thermal sensors split across two tsens controllers. Add
-the thermal zones to expose them and wireup the cpus to throttle their
-frequencies on crossing passive temperature thresholds.
+sm8250 has 24 thermal sensors split across two tsens controllers. Add
+the thermal zones to expose them and wireup the cpus to throttle on
+crossing passive temperature thresholds.
+
+Update the comment in the drivers to list the SoCs it supports.
 
 Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 811 +++++++++++++++++++++++++++
- 1 file changed, 811 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 766 +++++++++++++++++++++++++++
+ drivers/thermal/qcom/tsens-v2.c      |   2 +-
+ 2 files changed, 767 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 141c21dfa68c0..bbbbe3658711e 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -10,6 +10,7 @@
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index deaa8415c7b72..5cd18cd8a675b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -8,6 +8,7 @@
  #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,gcc-sm8150.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
 +#include <dt-bindings/thermal/thermal.h>
  
  / {
  	interrupt-parent = <&intc>;
-@@ -46,6 +47,7 @@ CPU0: cpu@0 {
+@@ -86,6 +87,7 @@ CPU0: cpu@0 {
  			enable-method = "psci";
  			next-level-cache = <&L2_0>;
  			qcom,freq-domain = <&cpufreq_hw 0>;
 +			#cooling-cells = <2>;
  			L2_0: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -62,6 +64,7 @@ CPU1: cpu@100 {
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -102,6 +104,7 @@ CPU1: cpu@100 {
  			enable-method = "psci";
  			next-level-cache = <&L2_100>;
  			qcom,freq-domain = <&cpufreq_hw 0>;
 +			#cooling-cells = <2>;
  			L2_100: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -76,6 +79,7 @@ CPU2: cpu@200 {
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -115,6 +118,7 @@ CPU2: cpu@200 {
  			enable-method = "psci";
  			next-level-cache = <&L2_200>;
  			qcom,freq-domain = <&cpufreq_hw 0>;
 +			#cooling-cells = <2>;
  			L2_200: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -89,6 +93,7 @@ CPU3: cpu@300 {
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -128,6 +132,7 @@ CPU3: cpu@300 {
  			enable-method = "psci";
  			next-level-cache = <&L2_300>;
  			qcom,freq-domain = <&cpufreq_hw 0>;
 +			#cooling-cells = <2>;
  			L2_300: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -102,6 +107,7 @@ CPU4: cpu@400 {
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -141,6 +146,7 @@ CPU4: cpu@400 {
  			enable-method = "psci";
  			next-level-cache = <&L2_400>;
  			qcom,freq-domain = <&cpufreq_hw 1>;
 +			#cooling-cells = <2>;
  			L2_400: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -115,6 +121,7 @@ CPU5: cpu@500 {
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -154,6 +160,7 @@ CPU5: cpu@500 {
  			enable-method = "psci";
  			next-level-cache = <&L2_500>;
  			qcom,freq-domain = <&cpufreq_hw 1>;
 +			#cooling-cells = <2>;
  			L2_500: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -128,6 +135,7 @@ CPU6: cpu@600 {
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -168,6 +175,7 @@ CPU6: cpu@600 {
  			enable-method = "psci";
  			next-level-cache = <&L2_600>;
  			qcom,freq-domain = <&cpufreq_hw 1>;
 +			#cooling-cells = <2>;
  			L2_600: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -141,6 +149,7 @@ CPU7: cpu@700 {
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -181,6 +189,7 @@ CPU7: cpu@700 {
  			enable-method = "psci";
  			next-level-cache = <&L2_700>;
  			qcom,freq-domain = <&cpufreq_hw 2>;
 +			#cooling-cells = <2>;
  			L2_700: l2-cache {
- 				compatible = "cache";
- 				next-level-cache = <&L3_0>;
-@@ -631,6 +640,28 @@ aoss_qmp: power-controller@c300000 {
- 			#power-domain-cells = <1>;
+ 			      compatible = "cache";
+ 			      next-level-cache = <&L3_0>;
+@@ -991,6 +1000,28 @@ pdc: interrupt-controller@b220000 {
+ 			interrupt-controller;
  		};
  
 +		tsens0: thermal-sensor@c263000 {
-+			compatible = "qcom,sm8150-tsens", "qcom,tsens-v2";
++			compatible = "qcom,sm8250-tsens", "qcom,tsens-v2";
 +			reg = <0 0x0c263000 0 0x1ff>, /* TM */
 +			      <0 0x0c222000 0 0x1ff>; /* SROT */
 +			#qcom,sensors = <16>;
@@ -170,22 +174,22 @@ index 141c21dfa68c0..bbbbe3658711e 100644
 +		};
 +
 +		tsens1: thermal-sensor@c265000 {
-+			compatible = "qcom,sm8150-tsens", "qcom,tsens-v2";
++			compatible = "qcom,sm8250-tsens", "qcom,tsens-v2";
 +			reg = <0 0x0c265000 0 0x1ff>, /* TM */
 +			      <0 0x0c223000 0 0x1ff>; /* SROT */
-+			#qcom,sensors = <8>;
++			#qcom,sensors = <9>;
 +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
 +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
 +			interrupt-names = "uplow", "critical";
 +			#thermal-sensor-cells = <1>;
 +		};
 +
- 		spmi_bus: spmi@c440000 {
+ 		spmi_bus: qcom,spmi@c440000 {
  			compatible = "qcom,spmi-pmic-arb";
  			reg = <0x0 0x0c440000 0x0 0x0001100>,
-@@ -864,4 +895,784 @@ timer {
- 			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
- 			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
+@@ -1753,4 +1784,739 @@ timer {
+ 			     <GIC_PPI 12
+ 				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
  	};
 +
 +	thermal-zones {
@@ -892,59 +896,14 @@ index 141c21dfa68c0..bbbbe3658711e 100644
 +			};
 +		};
 +
-+		modem-thermal {
++		npu-thermal {
 +			polling-delay-passive = <250>;
 +			polling-delay = <1000>;
 +
 +			thermal-sensors = <&tsens1 7>;
 +
 +			trips {
-+				modem_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		npu-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens1 8>;
-+
-+			trips {
 +				npu_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		modem-vec-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens1 9>;
-+
-+			trips {
-+				modem_vec_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+			};
-+		};
-+
-+		modem-scl-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens1 10>;
-+
-+			trips {
-+				modem_scl_alert0: trip-point0 {
 +					temperature = <90000>;
 +					hysteresis = <2000>;
 +					type = "hot";
@@ -956,7 +915,7 @@ index 141c21dfa68c0..bbbbe3658711e 100644
 +			polling-delay-passive = <250>;
 +			polling-delay = <1000>;
 +
-+			thermal-sensors = <&tsens1 11>;
++			thermal-sensors = <&tsens1 8>;
 +
 +			trips {
 +				gpu2_alert0: trip-point0 {
@@ -968,6 +927,19 @@ index 141c21dfa68c0..bbbbe3658711e 100644
 +		};
 +	};
  };
+diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+index b293ed32174b5..58cac8f2a358c 100644
+--- a/drivers/thermal/qcom/tsens-v2.c
++++ b/drivers/thermal/qcom/tsens-v2.c
+@@ -26,7 +26,7 @@
+ #define TM_TRDY_OFF			0x00e4
+ #define TM_WDOG_LOG_OFF		0x013c
+ 
+-/* v2.x: 8996, 8998, sdm845 */
++/* v2.x: 8996, 8998, sc7180, sdm845, sm8150, sm8250 */
+ 
+ static struct tsens_features tsens_v2_feat = {
+ 	.ver_major	= VER_2_X,
 -- 
 2.25.1
 
