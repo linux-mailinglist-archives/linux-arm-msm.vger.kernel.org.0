@@ -2,94 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BA811F3D87
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 16:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2D901F3E4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 16:35:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729644AbgFIOE3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 10:04:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34678 "EHLO
+        id S1729894AbgFIOev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 10:34:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730359AbgFIOEY (ORCPT
+        with ESMTP id S1726803AbgFIOev (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 10:04:24 -0400
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DEAC03E97C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2020 07:04:22 -0700 (PDT)
-Received: by mail-io1-xd42.google.com with SMTP id r2so22885495ioo.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2020 07:04:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=M11TlZ8BCkkiyM14zjB6SRMJjOFPdi0sycPDLMDZtzg=;
-        b=WcKt86PI06koGDiMZklr+HDKxwBnBrf72EEYGJhlLB2eLfI7DuOgfRzmxlQpnDf3P+
-         xcqPS5N2kWZzPQLjpuC6LQTeBJYkCixcYSwseGmp3ZHoktGwLwjZDAryXzofcxVTm7tI
-         +ZeDAoYJLmTSokrxd3haNf0dUpgnAdHtIhxPA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=M11TlZ8BCkkiyM14zjB6SRMJjOFPdi0sycPDLMDZtzg=;
-        b=jn8qmJmwB9K5PQ8H576N2y6lcrpEhf/XVilh66L+mDfcOAiDG9lXVe4j+ogo3i8vwp
-         oBKz35Lq6+SfcKxRgoTgKT5gpWFNr1BmjSZIoknVsnDlzEot1PEZKev6A5Za4OzOfXUq
-         iUT1EgDt5WggW2mEG6lLq/fGE0SNTaqrx84oU8AmRSCgw9w0tUWg0LROLtpSuQnBb+x/
-         xZ8QanmSo9+N2rVQy9y8tl1qbauRCK5ntqakO3K9R7NgCPiXZOcYbzxDIjJcMv8ObOTr
-         oNdHIhkQhrLSC1p17/rNN2iQP0vPqVgFIj/FQJ4IR5VTwYYufUrQO36v8L4Ha+fDiG5W
-         jn3w==
-X-Gm-Message-State: AOAM5331ON/z1CXwh3uWqy/M9lD2buzgb6XDdZwMakt9C/zM455yB8PO
-        CccLlYk/1+BEvL8kLdZAV+OGLuMWdXHOewhUVQkYwg==
-X-Google-Smtp-Source: ABdhPJyG91jHkheJimS86A26g34xw4jYgUCjF+/j9VS/jduQO60MV/ip1Uo+HQrXE9vAcZ0eYj2cAUokFLTwKjv6VUk=
-X-Received: by 2002:a5d:858a:: with SMTP id f10mr27458957ioj.184.1591711462114;
- Tue, 09 Jun 2020 07:04:22 -0700 (PDT)
+        Tue, 9 Jun 2020 10:34:51 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 240C7C05BD1E;
+        Tue,  9 Jun 2020 07:34:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=BS61t3scD5rhsvldmGOJtyXVG6rDl8HEmiFZUjqsT1Q=; b=pFZbRjVutesuWvEsLEcOIckCTU
+        B3HEtPGVpCN39H/vjxliXrmai3D//DgWvJMqaAaECUbY+uGMZ6/JoDe8HSpPKCIOxjdSsdO01gL4k
+        jOfpF4lX6pW0QRPLyuOg22AAoBgA/FbpiiAOEc6nvbB1s1puwqnevV0HVIEy8unMbIITqwStbo958
+        ORwKmICUrKdJ9Jpq/dlDO2GdCh36CSzheEAvMA4TxREBhMXFw8Dc31l+wFd++VFwgYc2Ytzeuu8FI
+        3Xhapr9ybl4wIdCXPbVFVt5XN4bcA0++9e/Y7RYBFDK6bTxa5Fju3SlXupYEV1qkJZRkRZmY0V66L
+        gazISSMA==;
+Received: from willy by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1jifKv-0008Vl-NS; Tue, 09 Jun 2020 14:34:45 +0000
+Date:   Tue, 9 Jun 2020 07:34:45 -0700
+From:   Matthew Wilcox <willy@infradead.org>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        linux-integrity@vger.kernel.org,
+        linux-security-module@vger.kernel.org
+Subject: Re: [PATCH v7 2/8] firmware: add offset to request_firmware_into_buf
+Message-ID: <20200609143445.GD19604@bombadil.infradead.org>
+References: <20200606050458.17281-1-scott.branden@broadcom.com>
+ <20200606050458.17281-3-scott.branden@broadcom.com>
 MIME-Version: 1.0
-References: <20200408191458.1260397-1-arnd@arndb.de> <CACRpkdYQJocN_-i07J0fFC16pDUfb9o0mzRF0YRO8UMrE=Suxw@mail.gmail.com>
- <CACRpkdYUTujUX7FdwFjehFVAOLz_w6epXRzYc8e8yB=zDsRCyw@mail.gmail.com>
-In-Reply-To: <CACRpkdYUTujUX7FdwFjehFVAOLz_w6epXRzYc8e8yB=zDsRCyw@mail.gmail.com>
-From:   Rob Clark <robdclark@chromium.org>
-Date:   Tue, 9 Jun 2020 07:04:49 -0700
-Message-ID: <CAJs_Fx4V9JkwATGeY8eV=Z1khr6z=OVd+B=YRJ1RY7xxxM47_Q@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: fix link error without CONFIG_DEBUG_FS
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        "Kristian H. Kristensen" <hoegsberg@gmail.com>,
-        Allison Randal <allison@lohutok.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200606050458.17281-3-scott.branden@broadcom.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 9, 2020 at 5:48 AM Linus Walleij <linus.walleij@linaro.org> wrote:
->
-> On Tue, May 5, 2020 at 10:27 AM Linus Walleij <linus.walleij@linaro.org> wrote:
-> > On Wed, Apr 8, 2020 at 9:15 PM Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > > I ran into a randconfig link error with debugfs disabled:
-> > >
-> > > arm-linux-gnueabi-ld:
-> > > drivers/gpu/drm/msm/msm_gpu.o: in function `should_dump': msm_gpu.c:(.text+0x1cc): undefined reference to `rd_full'
-> > >
-> > > Change the helper to only look at this variable if debugfs is present.
-> > >
-> > > Fixes: e515af8d4a6f ("drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP buffers")
-> > > Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> >
-> > This fixes a compilation error for me on the APQ8060.
-> > Tested-by: Linus Walleij <linus.walleij@linaro.org>
->
-> Could someone be so kind and apply this fix to the MSM DRM tree?
->
+On Fri, Jun 05, 2020 at 10:04:52PM -0700, Scott Branden wrote:
+>  static struct fw_priv *__allocate_fw_priv(const char *fw_name,
+>  					  struct firmware_cache *fwc,
+> -					  void *dbuf, size_t size)
+> +					  void *dbuf, size_t size,
+> +					  size_t offset,
+> +					  enum kernel_pread_opt opt)
+>  {
 
-This should be fixed by 20aebe83698feb107d5a66b6cfd1d54459ccdfcf in
-msm-next/drm-next, are you still seeing this issue?
+Your types are screwed up.  size_t is the size of something in memory.
+loff_t is an offset in a file.  This should be an loff_t.  One of the
+other patches has the opposite problem.
 
-BR,
--R
+(this is kind of a minor problem compared to all the complexity
+problems, but it's worth mentioning)
