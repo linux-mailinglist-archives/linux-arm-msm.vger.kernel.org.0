@@ -2,101 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E89BD1F4484
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 20:05:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5FF71F44CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 20:09:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388089AbgFISFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 14:05:30 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:43699 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732714AbgFISF3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 14:05:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591725928; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=x01+HksEUfPnnuAjrfKal7kG0NEwAm/phbFVlSCT2kQ=; b=DQrRrqm+4bhIiIgMgW99AccW4K3FTJETn9MytE+4xGQZ3qSgEKyOy9YklT39UE9DYwJ4JO1T
- 79tn50ijTFRw4pGSFOiERLytw8jzCyg1FtUlChVLj7Vv+pwaY0tGaDi7oGnGgxenyQ5We46T
- SDxlbiFLymR/hbw+UfK1mDMMZzc=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 5edfcf61c4bb4f886d289708 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Jun 2020 18:05:21
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EF512C4339C; Tue,  9 Jun 2020 18:05:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2388091AbgFISIi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 14:08:38 -0400
+Received: from dispatch1-us1.ppe-hosted.com ([67.231.154.164]:50580 "EHLO
+        dispatch1-us1.ppe-hosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731294AbgFISIg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Jun 2020 14:08:36 -0400
+Received: from mx1-us1.ppe-hosted.com (unknown [10.110.50.137])
+        by dispatch1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id F2C0B20093;
+        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
+Received: from us4-mdac16-21.at1.mdlocal (unknown [10.110.49.203])
+        by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id F03EA6009B;
+        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
+X-Virus-Scanned: Proofpoint Essentials engine
+Received: from mx1-us1.ppe-hosted.com (unknown [10.110.49.106])
+        by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTPS id 88AD022007A;
+        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
+Received: from webmail.solarflare.com (uk.solarflare.com [193.34.186.16])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1AD1EC43387;
-        Tue,  9 Jun 2020 18:05:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1AD1EC43387
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Patrick Daly <pdaly@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] iommu/arm-smmu: Don't bypass pinned stream mappings
-Date:   Tue,  9 Jun 2020 12:05:16 -0600
-Message-Id: <20200609180516.14362-1-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTPS id 27A57B4007C;
+        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
+Received: from [10.17.20.203] (10.17.20.203) by ukex01.SolarFlarecom.com
+ (10.17.10.4) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 9 Jun 2020
+ 19:08:25 +0100
+Subject: Re: [PATCH v3 1/7] Documentation: dynamic-debug: Add description of
+ level bitmask
+To:     Joe Perches <joe@perches.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-btrfs@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
+        <netdev@vger.kernel.org>, Jason Baron <jbaron@akamai.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jim Cromie <jim.cromie@gmail.com>
+References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
+ <20200609104604.1594-2-stanimir.varbanov@linaro.org>
+ <20200609111615.GD780233@kroah.com>
+ <ba32bfa93ac2e147c2e0d3a4724815a7bbf41c59.camel@perches.com>
+ <727b31a0-543b-3dc5-aa91-0d78dc77df9c@solarflare.com>
+ <2b291c34e10b3b3d9d6e01f8201ec0942e39575f.camel@perches.com>
+From:   Edward Cree <ecree@solarflare.com>
+Message-ID: <e91223b2-3b31-6564-00c9-bda9a2aeffe5@solarflare.com>
+Date:   Tue, 9 Jun 2020 19:08:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
+MIME-Version: 1.0
+In-Reply-To: <2b291c34e10b3b3d9d6e01f8201ec0942e39575f.camel@perches.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-Originating-IP: [10.17.20.203]
+X-ClientProxiedBy: ocex03.SolarFlarecom.com (10.20.40.36) To
+ ukex01.SolarFlarecom.com (10.17.10.4)
+X-TM-AS-Product-Ver: SMEX-12.5.0.1300-8.5.1020-25470.003
+X-TM-AS-Result: No-10.210900-8.000000-10
+X-TMASE-MatchedRID: 7ySqCuYCpfjsYbGmK/WYxvZvT2zYoYOwC/ExpXrHizyMUViaYYbK3JYv
+        /wbpWcIKq5ewd0UPS9hdKS1gReph0aH2g9syPs88A9lly13c/gEg/CIfleX9D0hcmj54ab4UNP+
+        2kwiBPOV5DzCqPSy3yOKHzP0BuUCDNyl1nd9CIt2DGx/OQ1GV8hFMgtPIAD6i+gtHj7OwNO2Ohz
+        Oa6g8KrdL6UoKG2HjArEiGVSydaXgrmmLgt5BrqsqcASyOtFdbnkXNoeOrXbw=
+X-TM-AS-User-Approved-Sender: Yes
+X-TM-AS-User-Blocked-Sender: No
+X-TMASE-Result: 10--10.210900-8.000000
+X-TMASE-Version: SMEX-12.5.0.1300-8.5.1020-25470.003
+X-MDID: 1591726113-WCvvrqNr18jp
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit 0e764a01015d ("iommu/arm-smmu: Allow client devices to select
-direct mapping") sets the initial domain type to SMMU_DOMAIN_IDENTITY
-for devices that select direct mapping. This ends up setting the domain
-as ARM_SMMU_DOMAIN_BYPASS which causes the stream ID mappings
-for the device to be programmed to S2CR_TYPE_BYPASS.
+On 09/06/2020 18:56, Joe Perches wrote:
+> These are _not_ netif_<level> control flags. Some are though.
+> For instance:
+>
+> $ git grep "MODULE_PARM.*\bdebug\b" drivers/net | head -10
+> [...]
+>
+> These are all level/class output controls.
+TIL, thanks!  I should have looked deeperrather than assuming
+ they were all like ours.
 
-This causes a problem for stream mappings that are inherited from
-the bootloader since rewriting the stream to BYPASS will disrupt the
-display controller access to DDR.
+Though judging just by that grep output, it also looks like
+ quite a lot of those won't fit into 5 groups either, so some
+ rethink may still be needed...
 
-This is an extension to ("iommu/arm-smmu: Allow inheriting stream mapping
-from bootloader") [1] that identifies streams that are already configured
- and marked them as pinned. This patch extends that to not re-write pinned
-stream mappings for ARM_SMMU_DOMAIN_BYPASS domains.
-
-[1] https://lore.kernel.org/r/20191226221709.3844244-4-bjorn.andersson@linaro.org
-
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
-
- drivers/iommu/arm-smmu.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index c7add09f11c1..9c1e5ba948a7 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -1143,6 +1143,10 @@ static int arm_smmu_domain_add_master(struct arm_smmu_domain *smmu_domain,
- 		if (type == s2cr[idx].type && cbndx == s2cr[idx].cbndx)
- 			continue;
- 
-+		/* Don't bypasss pinned streams; leave them as they are */
-+		if (type == S2CR_TYPE_BYPASS && s2cr[idx].pinned)
-+			continue;
-+
- 		s2cr[idx].type = type;
- 		s2cr[idx].privcfg = S2CR_PRIVCFG_DEFAULT;
- 		s2cr[idx].cbndx = cbndx;
--- 
-2.17.1
-
+-ed
