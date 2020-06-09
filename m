@@ -2,70 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60D941F3709
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 11:26:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AFF01F374A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 11:52:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728424AbgFIJ0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 05:26:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48276 "EHLO
+        id S1725950AbgFIJw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 05:52:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728024AbgFIJ0b (ORCPT
+        with ESMTP id S1727098AbgFIJwv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 05:26:31 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36280C05BD1E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2020 02:26:30 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id l10so20441394wrr.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2020 02:26:30 -0700 (PDT)
+        Tue, 9 Jun 2020 05:52:51 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE59C03E97C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2020 02:52:50 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id c71so2184640wmd.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2020 02:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=OYOer7lO0HMljBOHZ7VovGKXhgNnImZ/DWlp+lLXDhQ=;
-        b=lwGlA9aFiWXoQo1DkoldN6nVQ6xfAmPPpEBNreQ/NY8mCy1e5jYCYL4LzarPPBhOPj
-         psuNkcGRcO69SKRqTAcHPKoBP9vvtaeMvXgBuYaL5TcCATeNIuFJZ0iUOguVCImoPCdK
-         SBGq19n2APiuvZPfc+IVAggLo1ys2yio/nm5ml6EnIqYvlHBj9TZsz3bVSoXVwsH4ZEN
-         aoCmQl4YzjUoDr8hMwazPRvBOgPbUUDa3+GPOdEI85rbMxuXuHoizvwN4dInjJHY//xM
-         PVrN6ZiLu2DQ5p4B5S1SQvL4nuO/gskTnkuE5KVpW0yOWQBuNejazQzZ4uReaCAv7tVC
-         zXuA==
+        bh=gYYo/WlElneMeWBB8UHZIKhrIY/hMj30GM+8GeLsDwY=;
+        b=Cvo97F31BblpJKGnrH8wOAnOYwgXCbZcqTLbN7s+1z3ImAIxF2dcrT65rOumoqx4p+
+         6KMbuQbzAHwNc4IUtCdWLGNIbOJAphFeYAm+XDoUQtK+GIA3iNYZV2cBMoRAWJXc9ZaK
+         MFkBmAoPKaPShKwNzB+joHpNujEeCRh1FGJAVdpUgwlfzTrv7eoV5gVkxMbBTFv6MRcD
+         1eBMAI1WEwGAfnOczR9b+rwxjLecZgroxhEd/RxKBS/yD958wJ1WZBonJ0cwNT2WQ2oH
+         4t2vZMKd/60Uj2c82NyXlvZNmkbOwKbtd+Wmsk6KynZzG6ljZFWQR1eYJ1oAYZomh41I
+         /rmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=OYOer7lO0HMljBOHZ7VovGKXhgNnImZ/DWlp+lLXDhQ=;
-        b=ITf83zjM0Hoxe23TzwlE4EeXe5AnbxlxzUoZ1lr/An3/8ifCKyDXlTEY00/5DACIiS
-         0YRyj2FnkS39IHFppP0WjFoiGTBbXYzGuTeK5Xjo+yQvZTZOeQmSRpe4uKWHNkFKV9nW
-         VyL1skQdm70nJwCc1B+0U4tB5l/4maoXY56YSbocRN5NHEBEFGhOoUfmrcqdQWjyvhft
-         yziDeTzPFoZIZE30d4+4XIPTNshdCVRGo7Ph1kG6xjhDt1Hkj7jxgk0dsx+1SjCQkd4t
-         M8hDc9+QZtetHZhWB1e+mogIqgiyaDh9D4ZIdNN72bdKvd8AxuQTE3VbKuWJVlhE2VDT
-         Pf4w==
-X-Gm-Message-State: AOAM533bRbbo4qSi4Av97SFMm0phVlXjHfXu+DEj9i8miL9wKRhmE4HV
-        3ybPcL3sZX+QKqfoZ4Z/SGWcsnPQfQI=
-X-Google-Smtp-Source: ABdhPJxWMvDjtTmVzjIvQ5bnpDEp9HTCwOBamTqcDavKulml7UlPJ+hGq9M6TEK4ho5i4CsMZThnYw==
-X-Received: by 2002:a5d:4c4b:: with SMTP id n11mr3170101wrt.381.1591694788647;
-        Tue, 09 Jun 2020 02:26:28 -0700 (PDT)
+        bh=gYYo/WlElneMeWBB8UHZIKhrIY/hMj30GM+8GeLsDwY=;
+        b=c8cDpWzLe3SHhgNpzEdVDrFUSynTweRhotoFGb0+QwW5GZq+HCnwUDVs9cGGm9Ka+9
+         NNM4zMD3lYCM+JvcR0XSxubWsmJgmP2DLT2x0l3FzcQdfn6pFxCUuQF+qHRNTWKxlCW6
+         I6RH57q5Mw0NlR4nLm7oXyGF+QL6T6RRumH0ORhZrpl9mYgeK8BjYC7SYV0r9o3d+A+u
+         4ORw8bHJ/0CKDn+9eMNeli82GjY+WYDWpbus+BTYebmmolXw5i09e/01nBGU9K10yfsP
+         pItNWz38rH3kQvhwoZSj1ey1arh+cklgTMeGI0T7oOZAOlhUcYgp6339AB3OrEYWSOKK
+         CSkA==
+X-Gm-Message-State: AOAM5331cBZeQilDKpJ04kXp0FFeGUzLqHkf2vZQvgF/BEIpHi6mP2LS
+        xUDd+qepm5FfXHz+Noka0qbxj0euPKc=
+X-Google-Smtp-Source: ABdhPJyy9cb6qWZPWEOh5nUzAGMVdRs60ufD+FnSfzck2902IUU+s1FQjoSxQLRK29F2An8hWu/8qw==
+X-Received: by 2002:a1c:2082:: with SMTP id g124mr3252885wmg.21.1591696369288;
+        Tue, 09 Jun 2020 02:52:49 -0700 (PDT)
 Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id b8sm2862295wrs.36.2020.06.09.02.26.27
+        by smtp.googlemail.com with ESMTPSA id h27sm3206966wrb.18.2020.06.09.02.52.47
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jun 2020 02:26:28 -0700 (PDT)
-Subject: Re: [PATCH 0/5] soundwire: qcom: add mmio support
+        Tue, 09 Jun 2020 02:52:48 -0700 (PDT)
+Subject: Re: [PATCH 4/5] soundwire: qcom: avoid dependency on CONFIG_SLIMBUS
 To:     Jonathan Marek <jonathan@marek.ca>, alsa-devel@alsa-project.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Sanyog Kale <sanyog.r.kale@intel.com>,
-        Vinod Koul <vkoul@kernel.org>
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
 References: <20200608204347.19685-1-jonathan@marek.ca>
+ <20200608204347.19685-5-jonathan@marek.ca>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <7fc23e7d-b6ef-b97d-0252-8b6fafae64ac@linaro.org>
-Date:   Tue, 9 Jun 2020 10:26:27 +0100
+Message-ID: <f3eabdb9-da43-9502-352a-1696babc114d@linaro.org>
+Date:   Tue, 9 Jun 2020 10:52:47 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20200608204347.19685-1-jonathan@marek.ca>
+In-Reply-To: <20200608204347.19685-5-jonathan@marek.ca>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -74,34 +75,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Jonathan for the patches,
+
 
 On 08/06/2020 21:43, Jonathan Marek wrote:
-> This adds initial support for soundwire device on sm8250.
+> The driver may be used without slimbus, so don't depend on slimbus.
 > 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>   drivers/soundwire/Kconfig | 1 -
+>   drivers/soundwire/qcom.c  | 5 +++++
+>   2 files changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soundwire/Kconfig b/drivers/soundwire/Kconfig
+> index fa2b4ab92ed9..d121cf739090 100644
+> --- a/drivers/soundwire/Kconfig
+> +++ b/drivers/soundwire/Kconfig
+> @@ -33,7 +33,6 @@ config SOUNDWIRE_INTEL
+>   
+>   config SOUNDWIRE_QCOM
+>   	tristate "Qualcomm SoundWire Master driver"
+> -	depends on SLIMBUS
+>   	depends on SND_SOC
 
-One thing off my list!!
+Why not move this to imply SLIMBUS this will give more flexibility!
 
-> Tested with the "wsa" sdw device, which is simpler than the others.
 
-WSA881x?
+>   	help
+>   	  SoundWire Qualcomm Master driver.
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index 14334442615f..ac81c64768ea 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -769,13 +769,18 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>   	if (!ctrl)
+>   		return -ENOMEM;
+>   
+> +#ifdef CONFIG_SLIMBUS
+>   	if (dev->parent->bus == &slimbus_bus) {
+> +#else
+> +	if (false) {
+> +#endif
 
-did you test both enumeration and streaming?
+May be you can do bit more cleanup here, which could endup like:
 
-Are you planing to add any new WSA or WCD codec support for this SoC?
+
+ctrl->regmap = dev_get_regmap(dev->parent, NULL);
+if (!ctrl->regmap) {
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	if (res) {
+		ctrl->mmio = devm_ioremap_resource(dev, res);
+		if (IS_ERR(ctrl->mmio)) {
+			dev_err(dev, "No valid mem resource found\n");
+			return PTR_ERR(ctrl->mmio);
+		}
+
+		ctrl->reg_read = qcom_swrm_cpu_reg_read;
+		ctrl->reg_write = qcom_swrm_cpu_reg_write;
+	} else {
+		dev_err(dev, "No valid slim resource found\n");
+		return -EINVAL;
+	}
+} else {
+	ctrl->reg_read = qcom_swrm_ahb_reg_read;
+	ctrl->reg_write = qcom_swrm_ahb_reg_write;
+}
+
+
 
 thanks,
 srini
-
-> 
-> Jonathan Marek (5):
->    soundwire: qcom: fix abh/ahb typo
->    soundwire: qcom: add support for mmio soundwire devices
->    soundwire: qcom: add v1.5.1 compatible
->    soundwire: qcom: avoid dependency on CONFIG_SLIMBUS
->    soundwire: qcom: enable CPU interrupts for mmio devices
-> 
->   drivers/soundwire/Kconfig |  1 -
->   drivers/soundwire/qcom.c  | 42 +++++++++++++++++++++++++++++++++++----
->   2 files changed, 38 insertions(+), 5 deletions(-)
+>   		ctrl->reg_read = qcom_swrm_ahb_reg_read;
+>   		ctrl->reg_write = qcom_swrm_ahb_reg_write;
+>   		ctrl->regmap = dev_get_regmap(dev->parent, NULL);
+>   		if (!ctrl->regmap)
+>   			return -EINVAL;
+>   	} else {
+> +
+>   		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>   
+>   		ctrl->reg_read = qcom_swrm_cpu_reg_read;
 > 
