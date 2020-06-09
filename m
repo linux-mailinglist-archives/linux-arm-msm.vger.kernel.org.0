@@ -2,78 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86FED1F402C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 18:03:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B1F81F4084
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 18:19:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731202AbgFIQDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 12:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53188 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731060AbgFIQDo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 12:03:44 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB3FC05BD1E;
-        Tue,  9 Jun 2020 09:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
-        Subject:Sender:Reply-To:Content-ID:Content-Description;
-        bh=EbgramDsClABbRh6SAXFCh3bxBrc0kj7IkVo3KuqmtM=; b=cO3c2Jp4wSWBSIYCVjEGfETKzB
-        4MHEl3u1W+06LuzU/RiQYyNfWUdfKzFf+nCoV7IeleFAke6LnGCTwuJTCXkaXvbmtz3YJs6YjjkNb
-        +CENmEnwphZ/uA3zSIpXHyhbSlOE4t2OK9oaLPsXeetUZPBXY1FqbofhwGy3ZEJi2lc7+X9oF1S9t
-        u1A3Xc1S3aATO+IvvejggzFh1mhDM3IL1b3MgxgQNcevdtGZVJcg8ZyTqr7O1kwAg9zkGGB7S8irq
-        xq++b5wewuMW2HpxmZ3e0CMJOt8qzDnyA2IZQaUtBigSEV7HiEldcvXSPDWqlxAd7zy2HxXG/vpSt
-        wCdAlmPg==;
-Received: from [2601:1c0:6280:3f0:897c:6038:c71d:ecac]
-        by bombadil.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jigiz-0001ZX-OG; Tue, 09 Jun 2020 16:03:41 +0000
-Subject: Re: [PATCH v3 0/7] Venus dynamic debug
-To:     Matthew Wilcox <willy@infradead.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, linux-acpi@vger.kernel.org,
-        netdev@vger.kernel.org, Joe Perches <joe@perches.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jason Baron <jbaron@akamai.com>
-References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
- <20200609111323.GA19604@bombadil.infradead.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <c239d5df-e069-2091-589e-30f341c2cbd3@infradead.org>
-Date:   Tue, 9 Jun 2020 09:03:39 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1727814AbgFIQTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 12:19:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40380 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725894AbgFIQTH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Jun 2020 12:19:07 -0400
+Received: from localhost (unknown [122.171.156.216])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AA8DC20774;
+        Tue,  9 Jun 2020 16:19:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591719547;
+        bh=rvAHvEibYz1tZdQIA/llKxglupAm3AZPm3CtQ+GmM/4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FdoAj2OTopFQLxflu9h3hiqwerW2jivX6kpyV1x6Po4yqJnoJ6otofXs0/ayMvUGG
+         Gli4HUPBGzNsHxgfvEuCuTx6E4ZcfAaK44dt1qfKnljwiFRnwMORyM0oWP2mkLBDK9
+         hmnc06FkZ1h3DdrwWYUu7P8PaBrb3KgnlnbN8XiU=
+Date:   Tue, 9 Jun 2020 21:49:03 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Robert Marko <robert.marko@sartura.hr>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        robh+dt@kernel.org, Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, John Crispin <john@phrozen.org>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: Re: [PATCH v7 3/3] ARM: dts: qcom: ipq4019: add USB devicetree nodes
+Message-ID: <20200609161903.GE1084979@vkoul-mobl>
+References: <20200503201823.531757-1-robert.marko@sartura.hr>
+ <20200503201823.531757-3-robert.marko@sartura.hr>
+ <20200504073914.GQ1375924@vkoul-mobl>
+ <CA+HBbNEiB+o4KxonAu4-ra+P11Yb649v6AFaPjFc8JQDQ8T=CA@mail.gmail.com>
+ <CA+HBbNFsZ-v_2cMhDNGnQXTFaqsjGzB+1rAS3=_CLQhd0N4OKQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200609111323.GA19604@bombadil.infradead.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+HBbNFsZ-v_2cMhDNGnQXTFaqsjGzB+1rAS3=_CLQhd0N4OKQ@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/9/20 4:13 AM, Matthew Wilcox wrote:
-> On Tue, Jun 09, 2020 at 01:45:57PM +0300, Stanimir Varbanov wrote:
->> Here is the third version of dynamic debug improvements in Venus
->> driver.  As has been suggested on previous version by Joe [1] I've
->> made the relevant changes in dynamic debug core to handle leveling
->> as more generic way and not open-code/workaround it in the driver.
->>
->> About changes:
->>  - added change in the dynamic_debug and in documentation
->>  - added respective pr_debug_level and dev_dbg_level
-> 
-> Honestly, this seems like you want to use tracepoints, not dynamic debug.
-> 
+Hi Robert,
 
-Also see this patch series:
-https://lore.kernel.org/lkml/20200605162645.289174-1-jim.cromie@gmail.com/
-[PATCH 00/16] dynamic_debug: cleanups, 2 features
+On 09-06-20, 16:45, Robert Marko wrote:
+> HI,
+> Vinod can you maybe pick this?
 
-It adds/expands dynamic debug flags quite a bit.
+Sorry can't do.. this needs to go thru Bjorn..
+
+We are in merge window so it is too late for that.
+Bjorn can pick this for 5.9...
+
+> 
+> It would be great to have nodes in 5.8 along the driver
+> 
+> Thank
+> Robert
+> 
+> On Fri, May 29, 2020 at 11:36 AM Robert Marko <robert.marko@sartura.hr> wrote:
+> >
+> > On Mon, May 4, 2020 at 9:39 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > >
+> > > On 03-05-20, 22:18, Robert Marko wrote:
+> > > > From: John Crispin <john@phrozen.org>
+> > > >
+> > > > Since we now have driver for the USB PHY, lets add the necessary nodes to DTSI.
+> > >
+> > > Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> > >
+> > > Bjorn, I have picked the phy and dt binding, feel free to apply this one
+> > >
+> > > Thanks
+> > > --
+> > > ~Vinod
+> >
+> > Any chance of this landing into 5.7?
+> > Driver and bindings have been merged, but I don't see DT nodes queued.
+> >
+> > Regards,
+> > Robert
 
 -- 
-~Randy
-
+~Vinod
