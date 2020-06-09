@@ -2,117 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84EFC1F3A9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 14:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DE4E1F3B1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 14:49:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728184AbgFIM2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 08:28:01 -0400
-Received: from mx2.suse.de ([195.135.220.15]:51012 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726903AbgFIM2A (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 08:28:00 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 851C3AAC6;
-        Tue,  9 Jun 2020 12:28:00 +0000 (UTC)
-Date:   Tue, 9 Jun 2020 14:27:55 +0200
-From:   Petr Mladek <pmladek@suse.com>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, linux-acpi@vger.kernel.org,
-        netdev@vger.kernel.org, Joe Perches <joe@perches.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jason Baron <jbaron@akamai.com>, Chris Mason <clm@fb.com>,
-        Josef Bacik <josef@toxicpanda.com>,
-        David Sterba <dsterba@suse.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Len Brown <lenb@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Sergey Senozhatsky <sergey.senozhatsky@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>
-Subject: Re: [PATCH v3 2/7] dynamic_debug: Group debug messages by level
- bitmask
-Message-ID: <20200609122755.GE23752@linux-b0ei>
-References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
- <20200609104604.1594-3-stanimir.varbanov@linaro.org>
+        id S1727906AbgFIMso (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 08:48:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51208 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727047AbgFIMsl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Jun 2020 08:48:41 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12C60C08C5C2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2020 05:48:40 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id z9so24837786ljh.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2020 05:48:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PCNDWi4W86xASW8FtuEfEJaeXXXa1muCZ0DikS2IxmI=;
+        b=mPvH/CmSSgHpsp6C/uqGy+AZnrwq9ay/aD+xL69u0ckBRA03GUU6MFGxmh+3CM1tav
+         AfWDP7Q9/kw8uNorr4dLbJuH/FugHOrbW0L1kLqWhDSSadhfoReraccYGm4jgU7kawd8
+         RGjIDKBu5LhPtGQKJgD/ULY4bXazpgO9iA14JBJv66Y3rQpom722EcFJrvzFlju4+PPd
+         63XOl+NUFcOXugFmtxpKQxHGSYD0dz7w2Cx82vNQ64DciwKJ7UBf4oAtnd9ez4db6tPv
+         EbJNPf78cg6H1YxzFFexQgQPzILS0+t7j4K95pw+fRVIfPDJAVT7HG2C9pHJDGj5daVO
+         vuyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PCNDWi4W86xASW8FtuEfEJaeXXXa1muCZ0DikS2IxmI=;
+        b=Nb/JCxRXz08PSQIm2AbCD4hVKUJFghbO16NkwLgS+tTJE9sIzv60Nhk7GtY2y4SJF2
+         XjnvTDYfDRf8sdRkHN46Z65dZYZK8XCdo2NCuzvD0n0wRrOb1O0AYKKy33IbNsc7Dqyh
+         9/ZeN7dgWsdmn269v0eM6z+1jDjuKx6YBCwoEJbG7i+v6okzTc2YOIu22F5WwaFOSP+y
+         +195gGyQOoUq37ohpP6gLdxYYfvhZam7Scu5TtQ7EdUcz8hJdScUobWyxEy6+d5jMvrg
+         gb6By9VMO6g24Bph80yKAt+/8fZaQUmkOoUTxNm/kLz/qyNdAvO/tOEw0g37iRPBtS2/
+         i4dw==
+X-Gm-Message-State: AOAM531s2xRRy4BeSUGMA3lidmFe4W1yq2idTy2oEOtBWW2nKEJa0aZc
+        8pzCeBLbd1QFNg9iyt/i8s6+9l8LkiAD1dTHs9rZSw==
+X-Google-Smtp-Source: ABdhPJy/jDW/k8Iu7wTAdiTg2q3uE99N0IA6oABBl2JcyK9DT3ERhQ6uhNzdJoff9mYZXt3GW+4EBXl7qqFZLpBxRpQ=
+X-Received: by 2002:a2e:a40f:: with SMTP id p15mr14419265ljn.286.1591706918718;
+ Tue, 09 Jun 2020 05:48:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200609104604.1594-3-stanimir.varbanov@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200408191458.1260397-1-arnd@arndb.de> <CACRpkdYQJocN_-i07J0fFC16pDUfb9o0mzRF0YRO8UMrE=Suxw@mail.gmail.com>
+In-Reply-To: <CACRpkdYQJocN_-i07J0fFC16pDUfb9o0mzRF0YRO8UMrE=Suxw@mail.gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 9 Jun 2020 14:48:27 +0200
+Message-ID: <CACRpkdYUTujUX7FdwFjehFVAOLz_w6epXRzYc8e8yB=zDsRCyw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: fix link error without CONFIG_DEBUG_FS
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@gmail.com>,
+        Allison Randal <allison@lohutok.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 2020-06-09 13:45:59, Stanimir Varbanov wrote:
-> This will allow dynamic debug users and driver writers to group
-> debug messages by level bitmask.  The level bitmask should be a
-> hex number.
-> 
-> Done this functionality by extending dynamic debug metadata with
-> new level member and propagate it over all the users.  Also
-> introduce new dynamic_pr_debug_level and dynamic_dev_dbg_level
-> macros to be used by the drivers.
+On Tue, May 5, 2020 at 10:27 AM Linus Walleij <linus.walleij@linaro.org> wrote:
+> On Wed, Apr 8, 2020 at 9:15 PM Arnd Bergmann <arnd@arndb.de> wrote:
+>
+> > I ran into a randconfig link error with debugfs disabled:
+> >
+> > arm-linux-gnueabi-ld:
+> > drivers/gpu/drm/msm/msm_gpu.o: in function `should_dump': msm_gpu.c:(.text+0x1cc): undefined reference to `rd_full'
+> >
+> > Change the helper to only look at this variable if debugfs is present.
+> >
+> > Fixes: e515af8d4a6f ("drm/msm: devcoredump should dump MSM_SUBMIT_BO_DUMP buffers")
+> > Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+>
+> This fixes a compilation error for me on the APQ8060.
+> Tested-by: Linus Walleij <linus.walleij@linaro.org>
 
-Could you please provide more details?
+Could someone be so kind and apply this fix to the MSM DRM tree?
 
-What is the use case?
-What is the exact meaning of the level value?
-How the levels will get defined?
-
-Dynamic debug is used for messages with KERN_DEBUG log level.
-Is this another dimension of the message leveling?
-
-Given that the filter is defined by bits, it is rather grouping
-by context or so.
-
-
-> diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-> index 8f199f403ab5..5d28d388f6dd 100644
-> --- a/lib/dynamic_debug.c
-> +++ b/lib/dynamic_debug.c
-> @@ -55,6 +55,7 @@ struct ddebug_query {
->  	const char *function;
->  	const char *format;
->  	unsigned int first_lineno, last_lineno;
-> +	unsigned int level;
->  };
->  
->  struct ddebug_iter {
-> @@ -187,6 +188,18 @@ static int ddebug_change(const struct ddebug_query *query,
->  
->  			nfound++;
->  
-> +#ifdef CONFIG_JUMP_LABEL
-> +			if (query->level && query->level & dp->level) {
-> +				if (flags & _DPRINTK_FLAGS_PRINT)
-> +					static_branch_enable(&dp->key.dd_key_true);
-> +				else
-> +					static_branch_disable(&dp->key.dd_key_true);
-> +			} else if (query->level &&
-> +				   flags & _DPRINTK_FLAGS_PRINT) {
-> +				static_branch_disable(&dp->key.dd_key_true);
-> +				continue;
-> +			}
-> +#endif
-
-This looks like a hack in the existing code:
-
-  + It is suspicious that "continue" is only in one branch. It means
-    that static_branch_enable/disable() might get called 2nd time
-    by the code below. Or newflags are not stored when there is a change.
-
-  + It changes the behavior and the below vpr_info("changed ...")
-    is not called.
-
-Or do I miss anything?
-
->			newflags = (dp->flags & mask) | flags;
->  			if (newflags == dp->flags)
->  				continue;
-
-Best Regards,
-Petr
+Yours,
+Linus Walleij
