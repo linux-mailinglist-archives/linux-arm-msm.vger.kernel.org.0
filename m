@@ -2,165 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B6511F48AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 23:15:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D4411F48B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 23:20:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726888AbgFIVPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 17:15:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38444 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726395AbgFIVPi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 17:15:38 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B4410206D5;
-        Tue,  9 Jun 2020 21:15:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591737337;
-        bh=SxQV2Ugt3zKyDWzjvtu7SIHBUY5zdgcRwPzOteTbB8I=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=zVbV7IZfMHOC5Q3MDct9SsP4YHZHXvS2i6yQS9lpdNllBBaEqi/NtLf5V83PXjy1u
-         WdbGM+hQ+pwOo/U3rwCTMLbKoty3V84TugkrK9PhV3umD+TB3GkaD3S0rsoaxGhmeg
-         8oPia7m7TbB1ZQCEMWObMBnIXgEBo4bAyIul2RmI=
-Content-Type: text/plain; charset="utf-8"
+        id S1727021AbgFIVUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 17:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45832 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725894AbgFIVUq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Jun 2020 17:20:46 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D78CC05BD1E;
+        Tue,  9 Jun 2020 14:20:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
+        Subject:Sender:Reply-To:Content-ID:Content-Description;
+        bh=WgXhjIqEqe9lN7cFLebCYyX1j2EEIGbyPRJp6OZ6StQ=; b=iSOClD/EGXDodqQYh/GGg1ldvf
+        B/CzvYN9Pgtsa0yKoS9s7lW+6UDa6tGzRZVAxbH9SrAeVARY6GXh1dRohebMA4KOqTeoUOuFgaLZ2
+        G0QiBniW0Es2UJ5F2ugqsg3pvLpOvcpuA5h0v4JH3s5ePhRj6P8v+idH//lEKaCYJK50Xh9AZni58
+        I1M+YP5qklkWX7Jik2hAAFYSdYHPVroVObYvDm2DnYqfuQcWEk6853RKYz3cp/qPW/yQNdbpZUCiV
+        C/nyYLJhRZ44KyBC2PpdNeIwnFRnG/YTELzFECYgmRptcrIPeLw5ZOqHv7QASji7/ll7k63JIvjaI
+        b6CAzXgQ==;
+Received: from [2601:1c0:6280:3f0:897c:6038:c71d:ecac]
+        by bombadil.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1jilfk-0006Hi-7j; Tue, 09 Jun 2020 21:20:40 +0000
+Subject: Re: [PATCH 1/3] usb: typec: Add QCOM PMIC typec detection driver
+To:     Wesley Cheng <wcheng@codeaurora.org>,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+        jackp@codeaurora.org, bryan.odonoghue@linaro.org
+References: <20200609205851.30113-1-wcheng@codeaurora.org>
+ <20200609205851.30113-2-wcheng@codeaurora.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <ccfc3e7c-d1ce-27bd-b24c-df5fbc468449@infradead.org>
+Date:   Tue, 9 Jun 2020 14:20:37 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200608094714.382149-1-robert.marko@sartura.hr>
-References: <20200608094714.382149-1-robert.marko@sartura.hr>
-Subject: Re: [PATCH] clk: qcom: ipq4019: fix apss cpu overclocking
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Christian Lamparter <chunkeey@gmail.com>,
-        John Crispin <john@phrozen.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-To:     Robert Marko <robert.marko@sartura.hr>, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mturquette@baylibre.com
-Date:   Tue, 09 Jun 2020 14:15:36 -0700
-Message-ID: <159173733699.242598.1278531930794428520@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+In-Reply-To: <20200609205851.30113-2-wcheng@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Robert Marko (2020-06-08 02:47:15)
-> From: Christian Lamparter <chunkeey@gmail.com>
->=20
-> There's an interaction issue between the clk changes:"
-> clk: qcom: ipq4019: Add the apss cpu pll divider clock node
-> clk: qcom: ipq4019: remove fixed clocks and add pll clocks
-> " and the cpufreq-dt.
->=20
-> cpufreq-dt is now spamming the kernel-log with the following:
->=20
-> [ 1099.190658] cpu cpu0: dev_pm_opp_set_rate: failed to find current OPP
-> for freq 761142857 (-34)
->=20
-> This only happens on certain devices like the Compex WPJ428
-> and AVM FritzBox!4040. However, other devices like the Asus
-> RT-AC58U and Meraki MR33 work just fine.
->=20
-> The issue stem from the fact that all higher CPU-Clocks
-> are achieved by switching the clock-parent to the P_DDRPLLAPSS
-> (ddrpllapss). Which is set by Qualcomm's proprietary bootcode
-> as part of the DDR calibration.
->=20
-> For example, the FB4040 uses 256 MiB Nanya NT5CC128M16IP clocked
-> at round 533 MHz (ddrpllsdcc =3D 190285714 Hz).
->=20
-> whereas the 128 MiB Nanya NT5CC64M16GP-DI in the ASUS RT-AC58U is
-> clocked at a slightly higher 537 MHz ( ddrpllsdcc =3D 192000000 Hz).
->=20
-> This patch attempts to fix the issue by modifying
-> clk_cpu_div_round_rate(), clk_cpu_div_set_rate(), clk_cpu_div_recalc_rate=
-()
-> to use a new qcom_find_freq_close() function, which returns the closest
-> matching frequency, instead of the next higher. This way, the SoC in
-> the FB4040 (with its max clock speed of 710.4 MHz) will no longer
-> try to overclock to 761 MHz.
+On 6/9/20 1:58 PM, Wesley Cheng wrote:
+> diff --git a/drivers/usb/typec/Kconfig b/drivers/usb/typec/Kconfig
+> index 559dd06..8de2520 100644
+> --- a/drivers/usb/typec/Kconfig
+> +++ b/drivers/usb/typec/Kconfig
+> @@ -73,6 +73,17 @@ config TYPEC_TPS6598X
+>  	  If you choose to build this driver as a dynamically linked module, the
+>  	  module will be called tps6598x.ko.
+> 
 
-Why are the OPP tables not properly indicating the frequencies that
-should be chosen? The rounding policy should presumably be matching the
-frequency exactly vs. relying on some sort of rounding policy to fix it.
+Hi,
+Please spell "Type-C" like all of the other drivers do.
 
->=20
-> Fixes: d83dcacea18 ("clk: qcom: ipq4019: Add the apss cpu pll divider clo=
-ck node")
-> Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-> Signed-off-by: John Crispin <john@phrozen.org>
-> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> Cc: Luka Perkov <luka.perkov@sartura.hr>
-> ---
-> Changes from v1 to v2:
-
-Please update subject of the patch to indicate patch version (i.e.
-PATCHv2 and next time PATCHv3, not just PATCH).
-
-> * Resolve warnings discovered by the kbot
-> * Return the return of regmap_update_bits instead of not using it at all
->=20
->  drivers/clk/qcom/gcc-ipq4019.c | 36 ++++++++++++++++++++++++++++++----
->  1 file changed, 32 insertions(+), 4 deletions(-)
->=20
-> diff --git a/drivers/clk/qcom/gcc-ipq4019.c b/drivers/clk/qcom/gcc-ipq401=
-9.c
-> index ef5137fd50f3..62fa17a4291c 100644
-> --- a/drivers/clk/qcom/gcc-ipq4019.c
-> +++ b/drivers/clk/qcom/gcc-ipq4019.c
-> @@ -1243,6 +1243,29 @@ static const struct clk_fepll_vco gcc_fepll_vco =
-=3D {
->         .reg =3D 0x2f020,
->  };
-> =20
+> +config TYPEC_QCOM_PMIC
+> +	tristate "Qualcomm PMIC USB typec driver"
+> +	depends on ARCH_QCOM
+> +	help
+> +	  Driver for supporting role switch over the Qualcomm PMIC.  This will
+> +	  handle the type C role and orientation detection reported by the QCOM
+> +	  PMIC if the PMIC has the capability to handle type C detection.
 > +
-> +static const struct freq_tbl *qcom_find_freq_close(const struct freq_tbl=
- *f,
-
-Please call it qcom_find_freq_closest() instead.
-
-> +                                            unsigned long rate)
-> +{
-> +       const struct freq_tbl *last =3D NULL;
+> +	  It will also enable the VBUS output to connected devices when a
+> +	  DFP connection is made.
 > +
-> +       for ( ; f->freq; f++) {
-> +               if (rate =3D=3D f->freq)
-> +                       return f;
-> +
-> +               if (f->freq > rate) {
-> +                       if (!last ||
-> +                          (f->freq - rate) < (rate - last->freq))
+>  source "drivers/usb/typec/mux/Kconfig"
+>  
+>  source "drivers/usb/typec/altmodes/Kconfig"
 
-> +                               return f;
-> +                       else
-> +                               return last;
 
-	if (...)
-		return ...;
-	else
+-- 
+~Randy
 
-should be replaced with
-
-	if (...)
-		return ...;
-
-	...
-
-but I also wonder if it would be clearer with some sort of 'break' and
-then 'return f' type of logic.
-
-> +               }
-> +               last =3D f;
-> +       }
-> +
-> +       return last;
-> +}
-
-Please relocate this to common.c in the qcom directory.
-
-> +
->  /*
->   * Round rate function for APSS CPU PLL Clock divider.
->   * It looks up the frequency table and returns the next higher frequency
