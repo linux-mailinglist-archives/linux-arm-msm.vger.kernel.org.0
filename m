@@ -2,81 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9A401F3A29
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 13:55:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AF661F3A5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 14:05:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729151AbgFILza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 07:55:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56328 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726911AbgFILz3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 07:55:29 -0400
-Received: from localhost (unknown [122.171.156.216])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9277720814;
-        Tue,  9 Jun 2020 11:55:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591703729;
-        bh=DZZhGzI+zYbVwAglBZbNEPnQrJ7dihjeI/FOUkhIb4k=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=2iLIT+qfuXefaCTB6NGgnXlaQ9kNKUrCXOe2fdo2ImwNm/o+nUFsHDKMzihTxBNB3
-         jJ++fFj5/tYq5RTz5SGC8GP6evZRU5ysoXx0Kz943WE8tiXdwCv14fJVDOhJGOE8pX
-         L3uFLHzuZNySy55RhcaZhTV/Pb/P1iPOa/DUO8g0=
-Date:   Tue, 9 Jun 2020 17:25:25 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Jonathan McDowell <noodles@earth.li>
-Cc:     ansuelsmth@gmail.com,
-        'Bjorn Andersson' <bjorn.andersson@linaro.org>,
-        'Andy Gross' <agross@codeaurora.org>,
-        'Andy Gross' <agross@kernel.org>,
-        'Kishon Vijay Abraham I' <kishon@ti.com>,
-        'Rob Herring' <robh+dt@kernel.org>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: R: [PATCH v6 1/2] phy: qualcomm: add qcom ipq806x dwc usb phy
- driver
-Message-ID: <20200609115525.GD1084979@vkoul-mobl>
-References: <20200603132237.6036-1-ansuelsmth@gmail.com>
- <20200604161942.GK311@earth.li>
- <017001d63b5a$c3807740$4a8165c0$@gmail.com>
- <20200609114148.GS311@earth.li>
+        id S1729130AbgFIMF1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 08:05:27 -0400
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:42521 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728051AbgFIMF0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Jun 2020 08:05:26 -0400
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 09 Jun 2020 17:35:23 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 09 Jun 2020 17:35:01 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id 3D1C82055; Tue,  9 Jun 2020 17:35:01 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org, sam@ravnborg.org
+Subject: [v3] drm/bridge: ti-sn65dsi86: ensure bridge suspend happens during PM sleep
+Date:   Tue,  9 Jun 2020 17:34:55 +0530
+Message-Id: <20200609120455.20458-1-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200609114148.GS311@earth.li>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-06-20, 12:41, Jonathan McDowell wrote:
-> On Fri, Jun 05, 2020 at 07:00:04PM +0200, ansuelsmth@gmail.com wrote:
-> > > On Wed, Jun 03, 2020 at 03:22:34PM +0200, Ansuel Smith wrote:
-> > > > This has lost in the original push for the dwc3 qcom driver.
-> > > > This is needed for ipq806x SoC as without this the usb ports
-> > > > doesn't work at all.
-> > > 
-> > > FWIW I tested this on my RB3011 so feel free to add:
-> > > 
-> > > Tested-by: Jonathan McDowell <noodles@earth.li>
-> > > 
-> > > One minor comment; would PHY_QCOM_USB_IPQ806X not be a better
-> > > choice than PHY_QCOM_IPQ806X_USB given the existing naming?
-> > > 
-> >
-> > Thanks for the feedback. About naming I'm following the sata ipq806x
-> > naming.  I really hope someone gets this and reviews it since usb is
-> > broken for a long time now.
-> 
-> Doesn't seem to have made the 5.8 merge window; I note Vinod has done a
-> bunch of the recent commits to phy/qualcomm/ so adding him to the CC in
-> addition to Kishon.
+ti-sn65dsi86 bridge is enumerated as a runtime device. When
+suspend is triggered, PM core adds a refcount on all the
+devices and calls device suspend, since usage count is
+already incremented, runtime suspend will not be called
+and it kept the bridge regulators and gpios ON which resulted
+in platform not entering into XO shutdown.
 
-It is too late for 5.8 now, please rebase and resend it after rc1 is
-tagged
+Add changes to force suspend on the runtime device during pm sleep.
 
-Thanks
+Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+---
+
+Changes in v2:
+	- Include bridge name in the commit message and 
+	remove dependent patchwork link from the commit
+	text as bridge is independent of OEM(Stephen Boyd)
+
+Changes in v3:
+	- Updating changelog to explain the need for patch
+
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 6ad688b320ae..2eef755b2917 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -159,6 +159,8 @@ static int __maybe_unused ti_sn_bridge_suspend(struct device *dev)
+ 
+ static const struct dev_pm_ops ti_sn_bridge_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(ti_sn_bridge_suspend, ti_sn_bridge_resume, NULL)
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ };
+ 
+ static int status_show(struct seq_file *s, void *data)
 -- 
-~Vinod
+2.27.0
+
