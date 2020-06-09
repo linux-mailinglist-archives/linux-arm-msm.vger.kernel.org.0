@@ -2,151 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C61641F3F24
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 17:21:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C1AC1F3F3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 17:27:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730769AbgFIPV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 11:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46652 "EHLO
+        id S1729318AbgFIP1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 11:27:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729678AbgFIPV2 (ORCPT
+        with ESMTP id S1728944AbgFIP1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 11:21:28 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FA9CC08C5C3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2020 08:21:28 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id t7so10464901pgt.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2020 08:21:28 -0700 (PDT)
+        Tue, 9 Jun 2020 11:27:12 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D068DC03E97C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2020 08:27:12 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id cv17so10234548qvb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2020 08:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uwvFGjyGkvShem51AX2k8l39E+uinZbFtzIiRAp08Pk=;
-        b=Tqsz7mN0ZQ/Ebtwuuhlz2Aj5Nxp7ZH2E32VDTotEwsEFHfoCIcICryte8znwPwr/ML
-         rJGLk5Don0hvRBsPIb38oIrdDDbG5L4Ob6CtN/+bzblcvgk0eAlGkyw9/JzYg5JF7rpH
-         AXZ4YKev82m2zvwOymfK78TMabY5wSKQSzWgk=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RvlMT/V7LdXyffx3XNyHPxoXrKOJiaM6774rBZHZc5M=;
+        b=RQ75T/FBBH2SzmhTcazD+7GUT2ZOpp2wbvDJaTXomaPDcv+laZ/z4aBoF6pPnG0wfX
+         /8POirPQAMawWOjzxXyFFUh9dL8IrK5SVyP6PPkckuLddw6JI72c7/6HoA3rV0ztUJwp
+         BUaeWxih0rZjgX9KrZIX/oMVtjyUMDYjBTXLPEtWvQA9SskPwkzW3mmb3YgFVz3H9itv
+         cL3PVLt3jD18+Ca5e9AStPHg+FIDotho19bnTZo/MiqrK/U4Q2j0EoeKqzbRv4eyBNz8
+         IvcSzHy3z7lXoPvcZxXx6d0arvumrvAb05dSNa0j0iaPImnrsSYgZpkSl3y08VYltg+d
+         GW9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uwvFGjyGkvShem51AX2k8l39E+uinZbFtzIiRAp08Pk=;
-        b=hk4QxpQyuMHaERGKNQwdUjWvKnII3X+MVoVkPl4UF6BN8ARPKq9XF7L6yTiJ9vom/M
-         8LPf1JID3dwrDkkuT9MDOwtZCXdDs7Cx0tJ7uCm07XbXNLJ3Wa39B4l6kvSVIcOE/KwD
-         daFzoGdMWYr6KWf25U+4IW08i8ZgFO2IXTStx1I7suh7Yma+hahYzRPqqFbLg38qn90a
-         IX6toxCBNJcHo5IpIxcC9y006cgvqHmBrKDm3Oi4mXaqugiJcBvX+oCLRv+OfgGK1lUF
-         sVvH/HyeGvFTP0PRwbNkAhoznLkkD0Uqwv7/GEuzu+5pAYOPqOoBLTrJOLSntRLZp+2i
-         WOHg==
-X-Gm-Message-State: AOAM532u1z1PZClB8amgZ3CUBi9JXFUcD2pJ9BvqPlW3lazIdDEOueWL
-        L/jbOGmMZQWHJ72/tzBS11yK1w==
-X-Google-Smtp-Source: ABdhPJxfhZlV3Xjw60pqAdeCuYbdjB53klCTzNpy+pv6huQHBaXZLmLMb8qM09KF80pvp6RVg0iY4g==
-X-Received: by 2002:a62:b402:: with SMTP id h2mr27157063pfn.221.1591716087205;
-        Tue, 09 Jun 2020 08:21:27 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id c2sm10383572pfi.71.2020.06.09.08.21.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2020 08:21:26 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     kvalo@codeaurora.org
-Cc:     kuabhs@google.com, pillair@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, ath10k@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: [PATCH] ath10k: Wait until copy complete is actually done before completing
-Date:   Tue,  9 Jun 2020 08:20:58 -0700
-Message-Id: <20200609082015.1.Ife398994e5a0a6830e4d4a16306ef36e0144e7ba@changeid>
-X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RvlMT/V7LdXyffx3XNyHPxoXrKOJiaM6774rBZHZc5M=;
+        b=M80JFz4uMzB4NvePmx9UN4zuU7C8ZudAk13DAeHAUWVSCfwEZn9zu2BN/AGojstCkV
+         RqXTOs0qZN2M7Sb6uUXTrBbGfKR3v4iOeLEGGTIbb3XF/iE5Nahdop130iuovwfYoq9x
+         hyNtIpBqiNX3k75fj4ScrHmS1IkBfEMnl1ZvocR5NAHyUc5W1LGSkqi+7zysGgt80qfT
+         PyY5slJUdLa72ep1tBkXlxzwbRvbshbcyE41VcrastrkCyKQ2mHeT1ALEb3v4LWXm2ew
+         cODCopM4M2VZiJRqUAW6oXxPYLS2pR0y1VoauVd5P/qf/wDKjayM43PO20X3cPGMxuCn
+         riZw==
+X-Gm-Message-State: AOAM530ErPhqcGaEKVgKnX+jkXFEYf/BSepvdfztC8DV0J9LElBS79AT
+        dTVZMSLC6f38TgovY1lb42heMKtOZy72G7Ul1euZ/R0w
+X-Google-Smtp-Source: ABdhPJyxXqgCvFmvIhfW2kfVHAp7ILUJuPskbEjZV9ZlNXRLGLzjbSaJyRmiJWTfi9MW9GWAkQPQ7WaFX+Dv3tT/ELU=
+X-Received: by 2002:a05:6214:72a:: with SMTP id c10mr4364967qvz.189.1591716431832;
+ Tue, 09 Jun 2020 08:27:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1590947174.git.saiprakash.ranjan@codeaurora.org>
+ <28123d1e19f235f97555ee36a5ed8b52d20cbdea.1590947174.git.saiprakash.ranjan@codeaurora.org>
+ <20200601212858.GB24287@xps15> <6d759cc28628ea72767c1304883630eb@codeaurora.org>
+ <CAJ9a7VhMbdqVBHxEXGYxFkgPnnQqNnDAz=wkHP3s7Ntw0iLmKA@mail.gmail.com>
+ <f0357072de96970b641bbd0da98c1d61@codeaurora.org> <CAJ9a7Vj9STJw4jBxWU_9wHftj4Q7+k8o1nTc8tr21KjYi0RkpQ@mail.gmail.com>
+ <4a09cd2e054836d85f2e024ca4435e91@codeaurora.org> <CAJ9a7VgCFeHNbY_9Gwvu6uT9MFBeY=_GCaN4N1dwmm+iNpfJOw@mail.gmail.com>
+ <1a5a6a6d-b86d-df45-cf91-7081e70d88a3@arm.com> <20200603174426.GA23165@xps15>
+ <da1fdf765ea29cfe7a44145b17431721@codeaurora.org> <dfa6aa626f075f49d9ba1ae8ffa3d384@codeaurora.org>
+In-Reply-To: <dfa6aa626f075f49d9ba1ae8ffa3d384@codeaurora.org>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Tue, 9 Jun 2020 09:27:00 -0600
+Message-ID: <CANLsYkzqmMZNY=N+x7tVFppGHPp6GviQsDMLqoQ36mnL2aRBLA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] coresight: tmc: Add shutdown callback for TMC ETR/ETF
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Mike Leach <mike.leach@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Coresight ML <coresight@lists.linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On wcn3990 we have "per_ce_irq = true".  That makes the
-ath10k_ce_interrupt_summary() function always return 0xfff. The
-ath10k_ce_per_engine_service_any() function will see this and think
-that _all_ copy engines have an interrupt.  Without checking, the
-ath10k_ce_per_engine_service() assumes that if it's called that the
-"copy complete" (cc) interrupt fired.  This combination seems bad.
+On Mon, 8 Jun 2020 at 08:07, Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Hi Mathieu, Mike
+>
+> On 2020-06-04 12:57, Sai Prakash Ranjan wrote:
+> >
+>
+> [...]
+>
+> >>
+> >> Robin has a point - user space is long gone at this time.  As such the
+> >> first
+> >> question to ask is what kind of CS session was running at the time the
+> >> system
+> >> was shutting down.  Was it a perf session of a sysfs session?
+> >>
+> >> I'm guessing it was a sysfs session because user space has been blown
+> >> away a
+> >> while back and part of that process should have killed all perf
+> >> sessions.
+> >
+> > I was enabling trace via sysfs.
+> >
+> >>
+> >> If I am correct then simply switching off the ETR HW in the shutdown()
+> >> amba bus
+> >> callback should be fine - otherwise Mike's approach is mandatory.
+> >> There is
+> >> also the exchange between Robin and Sai about removing the SMMU
+> >> shutdown
+> >> callback, but that thread is still incomplete.
+> >>
+> >
+> > If Robin is hinting at removing SMMU shutdown callback, then I think
+> > adding
+> > all these shutdown callbacks to all clients of SMMU can be avoided. Git
+> > blaming
+> > the thing shows it was added to avoid some kexec memory corruption.
+> >
+>
+> I think I misread the cryptic hint from Robin and it is not right to
+> remove
+> SMMU shutdown callback. For more details on why that was a bad idea and
+> would
+> break kexec, please refer to [1].
+>
+> As for the coresight, can I disable the ETR only in the tmc shutdown
+> callback
+> or are we still concerned about the userspace coming into picture?
 
-Let's add a check to make sure that the "copy complete" interrupt
-actually fired in ath10k_ce_per_engine_service().
+User space isn't a concern, especially after you've confirmed the
+problem occured during an ongoing sysfs session.
 
-This might fix a hard-to-reproduce failure where it appears that the
-copy complete handlers run before the copy is really complete.
-Specifically a symptom was that we were seeing this on a Qualcomm
-sc7180 board:
-  arm-smmu 15000000.iommu: Unhandled context fault:
-  fsr=0x402, iova=0x7fdd45780, fsynr=0x30003, cbfrsynra=0xc1, cb=10
-
-Even on platforms that don't have wcn3990 this still seems like it
-would be a sane thing to do.  Specifically the current IRQ handler
-comments indicate that there might be other misc interrupt sources
-firing that need to be cleared.  If one of those sources was the one
-that caused the IRQ handler to be called it would also be important to
-double-check that the interrupt we cared about actually fired.
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/net/wireless/ath/ath10k/ce.c | 30 +++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/net/wireless/ath/ath10k/ce.c b/drivers/net/wireless/ath/ath10k/ce.c
-index 294fbc1e89ab..ffdd4b995f33 100644
---- a/drivers/net/wireless/ath/ath10k/ce.c
-+++ b/drivers/net/wireless/ath/ath10k/ce.c
-@@ -481,6 +481,15 @@ static inline void ath10k_ce_engine_int_status_clear(struct ath10k *ar,
- 	ath10k_ce_write32(ar, ce_ctrl_addr + wm_regs->addr, mask);
- }
- 
-+static inline bool ath10k_ce_engine_int_status_check(struct ath10k *ar,
-+						     u32 ce_ctrl_addr,
-+						     unsigned int mask)
-+{
-+	struct ath10k_hw_ce_host_wm_regs *wm_regs = ar->hw_ce_regs->wm_regs;
-+
-+	return ath10k_ce_read32(ar, ce_ctrl_addr + wm_regs->addr) & mask;
-+}
-+
- /*
-  * Guts of ath10k_ce_send.
-  * The caller takes responsibility for any needed locking.
-@@ -1301,19 +1310,22 @@ void ath10k_ce_per_engine_service(struct ath10k *ar, unsigned int ce_id)
- 
- 	spin_lock_bh(&ce->ce_lock);
- 
--	/* Clear the copy-complete interrupts that will be handled here. */
--	ath10k_ce_engine_int_status_clear(ar, ctrl_addr,
--					  wm_regs->cc_mask);
-+	if (ath10k_ce_engine_int_status_check(ar, ctrl_addr,
-+					      wm_regs->cc_mask)) {
-+		/* Clear before handling */
-+		ath10k_ce_engine_int_status_clear(ar, ctrl_addr,
-+						  wm_regs->cc_mask);
- 
--	spin_unlock_bh(&ce->ce_lock);
-+		spin_unlock_bh(&ce->ce_lock);
- 
--	if (ce_state->recv_cb)
--		ce_state->recv_cb(ce_state);
-+		if (ce_state->recv_cb)
-+			ce_state->recv_cb(ce_state);
- 
--	if (ce_state->send_cb)
--		ce_state->send_cb(ce_state);
-+		if (ce_state->send_cb)
-+			ce_state->send_cb(ce_state);
- 
--	spin_lock_bh(&ce->ce_lock);
-+		spin_lock_bh(&ce->ce_lock);
-+	}
- 
- 	/*
- 	 * Misc CE interrupts are not being handled, but still need
--- 
-2.27.0.278.ge193c7cf3a9-goog
-
+>
+> [1] https://lore.kernel.org/patchwork/patch/1253131/
+>
+> Thanks,
+> Sai
+>
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> member
+> of Code Aurora Forum, hosted by The Linux Foundation
