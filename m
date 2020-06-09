@@ -2,93 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5FF71F44CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 20:09:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF1671F472B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 21:40:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388091AbgFISIi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 14:08:38 -0400
-Received: from dispatch1-us1.ppe-hosted.com ([67.231.154.164]:50580 "EHLO
-        dispatch1-us1.ppe-hosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731294AbgFISIg (ORCPT
+        id S2389288AbgFITkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 15:40:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728328AbgFITke (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 14:08:36 -0400
-Received: from mx1-us1.ppe-hosted.com (unknown [10.110.50.137])
-        by dispatch1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id F2C0B20093;
-        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
-Received: from us4-mdac16-21.at1.mdlocal (unknown [10.110.49.203])
-        by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id F03EA6009B;
-        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
-X-Virus-Scanned: Proofpoint Essentials engine
-Received: from mx1-us1.ppe-hosted.com (unknown [10.110.49.106])
-        by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTPS id 88AD022007A;
-        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
-Received: from webmail.solarflare.com (uk.solarflare.com [193.34.186.16])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTPS id 27A57B4007C;
-        Tue,  9 Jun 2020 18:08:33 +0000 (UTC)
-Received: from [10.17.20.203] (10.17.20.203) by ukex01.SolarFlarecom.com
- (10.17.10.4) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 9 Jun 2020
- 19:08:25 +0100
-Subject: Re: [PATCH v3 1/7] Documentation: dynamic-debug: Add description of
- level bitmask
-To:     Joe Perches <joe@perches.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-btrfs@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
-        <netdev@vger.kernel.org>, Jason Baron <jbaron@akamai.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jim Cromie <jim.cromie@gmail.com>
-References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
- <20200609104604.1594-2-stanimir.varbanov@linaro.org>
- <20200609111615.GD780233@kroah.com>
- <ba32bfa93ac2e147c2e0d3a4724815a7bbf41c59.camel@perches.com>
- <727b31a0-543b-3dc5-aa91-0d78dc77df9c@solarflare.com>
- <2b291c34e10b3b3d9d6e01f8201ec0942e39575f.camel@perches.com>
-From:   Edward Cree <ecree@solarflare.com>
-Message-ID: <e91223b2-3b31-6564-00c9-bda9a2aeffe5@solarflare.com>
-Date:   Tue, 9 Jun 2020 19:08:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Tue, 9 Jun 2020 15:40:34 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09E0C03E97C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2020 12:40:34 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id b27so22020974qka.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2020 12:40:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fooRxBUyxBVZY7kJJL8VBy6grxiTlxx+OOYM9dBJ/2A=;
+        b=M8PvEfs14mubrLj1XaXYuw77/9Sq33tjev7K9cNSQaxOHDR6yrSRTFwfmH4RdcsptN
+         clItDCqBLGzhMO6BQxz8iY+SD7ORaFgogN0+hGx3LhLx2U5if5zrUtze9Cvuqx2wWmyf
+         rVWn2umVU71LVwdc9Y1ADjYiP3GYlZBhLhBYHkT9ZvvGyzJj/7/lKO1Qfa3N/42fl1hk
+         wj9BQXiP3HLYmgLp0xcIf6ahnjNgYmYP2y2OzCIQKvx3vfjKou6iKGKCX6eZFp5CVQoa
+         bnB0dIKg22iA7Iv6XuLQCJATB1ao2T2Nm3oZNEVNKJDKHvUSmTPUMgV7nCcwWSdoExnm
+         BmVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fooRxBUyxBVZY7kJJL8VBy6grxiTlxx+OOYM9dBJ/2A=;
+        b=IJu2T5nG4gC4aj7qSwGN3YpgR7s/9cA3/PH5jg6fWTvzqDFqOM39weXwrFUANt8BiC
+         bEJuB9IGRSp6hsULBs6HRen0PYYvABhBiqA+Lf7B24N1beQ6K2blvze2JDaCmlxpamTN
+         dMr4XaquAQsucnqqxnTwun4Me7nEQAXUdGtsRCg8mhy26FyYcxrObjXY5vfNiwQjfY7X
+         c6v1lTWYqOItc/iFySk5OQja/UAus7vNXaX5Q2/c563piRfpwrC4ofdinGXYPx1SuBiK
+         PdGm89EueWMTNkuq3hU31HkANW0m1sLKW9DhGlOJo4YkTHI6I0o0LGaFniLQI/EpuHI2
+         laGw==
+X-Gm-Message-State: AOAM531qjp9beWoICZE4WZnfEiKDGl3JJQyoHDifjUeCVHoHK81/qj5Q
+        +MCG3KdzqvWiG1ReuX+FhL5WG/QF2zTEvw==
+X-Google-Smtp-Source: ABdhPJyBKbeiX6PPFfn4v6iP/rDxW8LkNd+ZfOa5pftTCgh+62D/kuaiIKUv+4K4cVgbFk/e+K0MsA==
+X-Received: by 2002:a05:620a:153c:: with SMTP id n28mr29203054qkk.457.1591731633704;
+        Tue, 09 Jun 2020 12:40:33 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id v8sm10513181qto.21.2020.06.09.12.40.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jun 2020 12:40:32 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS),
+        iommu@lists.linux-foundation.org (open list:IOMMU DRIVERS),
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+        linux-kernel@vger.kernel.org (open list),
+        Rob Herring <robh+dt@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>
+Subject: [PATCH v2 0/8] arm64: dts: qcom: smmu/USB nodes and HDK855/HDK865 dts
+Date:   Tue,  9 Jun 2020 15:40:18 -0400
+Message-Id: <20200609194030.17756-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-In-Reply-To: <2b291c34e10b3b3d9d6e01f8201ec0942e39575f.camel@perches.com>
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-Originating-IP: [10.17.20.203]
-X-ClientProxiedBy: ocex03.SolarFlarecom.com (10.20.40.36) To
- ukex01.SolarFlarecom.com (10.17.10.4)
-X-TM-AS-Product-Ver: SMEX-12.5.0.1300-8.5.1020-25470.003
-X-TM-AS-Result: No-10.210900-8.000000-10
-X-TMASE-MatchedRID: 7ySqCuYCpfjsYbGmK/WYxvZvT2zYoYOwC/ExpXrHizyMUViaYYbK3JYv
-        /wbpWcIKq5ewd0UPS9hdKS1gReph0aH2g9syPs88A9lly13c/gEg/CIfleX9D0hcmj54ab4UNP+
-        2kwiBPOV5DzCqPSy3yOKHzP0BuUCDNyl1nd9CIt2DGx/OQ1GV8hFMgtPIAD6i+gtHj7OwNO2Ohz
-        Oa6g8KrdL6UoKG2HjArEiGVSydaXgrmmLgt5BrqsqcASyOtFdbnkXNoeOrXbw=
-X-TM-AS-User-Approved-Sender: Yes
-X-TM-AS-User-Blocked-Sender: No
-X-TMASE-Result: 10--10.210900-8.000000
-X-TMASE-Version: SMEX-12.5.0.1300-8.5.1020-25470.003
-X-MDID: 1591726113-WCvvrqNr18jp
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/06/2020 18:56, Joe Perches wrote:
-> These are _not_ netif_<level> control flags. Some are though.
-> For instance:
->
-> $ git grep "MODULE_PARM.*\bdebug\b" drivers/net | head -10
-> [...]
->
-> These are all level/class output controls.
-TIL, thanks!  I should have looked deeperrather than assuming
- they were all like ours.
+Add dts nodes for apps_smmu and USB for both sm8150 and sm8250.
 
-Though judging just by that grep output, it also looks like
- quite a lot of those won't fit into 5 groups either, so some
- rethink may still be needed...
+Also add initial dts files for HDK855 and HDK865, based on mtp dts, with a
+few changes. Notably, the HDK865 dts has regulator config changed a bit based
+on downstream (I think sm8250-mtp.dts is wrong and copied too much from sm8150).
 
--ed
+V2 changes:
+* Added two patches for sm8150 and sm8250 iommu compatibles
+* Changed apps_smmu node patches to use new compatibles
+* Updated commit messages for apps_smmu patches to be more correct
+* Updated HDK dts patches based on Bjorn's comments
+
+Jonathan Marek (8):
+  dt-bindings: arm-smmu: Add sm8150 and sm8250 compatible strings
+  iommu: arm-smmu-impl: Use qcom impl for sm8150 and sm8250 compatibles
+  arm64: dts: qcom: sm8150: add apps_smmu node
+  arm64: dts: qcom: sm8250: add apps_smmu node
+  arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes
+  arm64: dts: qcom: sm8250: Add USB and PHY device nodes
+  arm64: dts: qcom: add sm8150 hdk dts
+  arm64: dts: qcom: add sm8250 hdk dts
+
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ arch/arm64/boot/dts/qcom/sm8150-hdk.dts       | 463 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 180 +++++++
+ arch/arm64/boot/dts/qcom/sm8250-hdk.dts       | 454 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 287 +++++++++++
+ drivers/iommu/arm-smmu-impl.c                 |   4 +-
+ 7 files changed, 1391 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8150-hdk.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250-hdk.dts
+
+-- 
+2.26.1
+
