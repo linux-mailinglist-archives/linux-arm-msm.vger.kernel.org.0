@@ -2,513 +2,790 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73B9E1F39EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 13:41:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3946C1F39FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 13:42:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729076AbgFILkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 07:40:49 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:53408 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728902AbgFILks (ORCPT
+        id S1728995AbgFILly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 07:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40934 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726116AbgFILlx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 07:40:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591702847; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=+UGRQoOwBERu2zKIIAlIPKPWCL9327VwkFms0xPlYEQ=; b=SVKXB/iclJYHGu6LMlJn+4hgyiWUdcxD8uT7zTKYk0A6yOWgximWMq5cLqY4eINUSaKd7Guz
- jJesVq3EuGdup70i4XmQieS4FjT6jTonKSQ/fqRbB6t6E8qNS1IGv8W/c9C9N8PnUavnyVU5
- DP92YsJKH69xgR08HcKLILfasAA=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n14.prod.us-west-2.postgun.com with SMTP id
- 5edf753f3b3439f23ae37ca7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Jun 2020 11:40:47
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 11C2BC433CB; Tue,  9 Jun 2020 11:40:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from deesin-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ABDB2C43391;
-        Tue,  9 Jun 2020 11:40:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ABDB2C43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=deesin@codeaurora.org
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org,
-        aneela@codeaurora.org
-Cc:     Deepak Kumar Singh <deesin@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH V1 2/2] soc: qcom: smem: map only partitions used by local HOST
-Date:   Tue,  9 Jun 2020 17:10:04 +0530
-Message-Id: <1591702804-26223-3-git-send-email-deesin@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1591702804-26223-1-git-send-email-deesin@codeaurora.org>
-References: <1591702804-26223-1-git-send-email-deesin@codeaurora.org>
+        Tue, 9 Jun 2020 07:41:53 -0400
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C269C05BD1E;
+        Tue,  9 Jun 2020 04:41:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+        :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=c4xwJaDrX3pZ0d/KYN9KnjvLaHyYFBxAj4minICbqMc=; b=huo+boRqd5Plb0oAIfc/neuFiI
+        AKfP9Y/00UXwdK5ITJV0L14plkDfp4wDRDr/qaLrI4gVimb8sqCEMC3l07IGOZFQ++mmCksJZaGAI
+        ikp9WK092rHxp0cTQRSG1U1lH7fJ/KttY6rd2FeWnE6ckk1CznoPLiFDvJmlfoKqUhirECgmmu928
+        BfBgtFisq+obJ6uzCZYWczPMWyr/9+rs5oHJoC5wm89euW8GFEvQbHdcbwpHaoCOxcVU52ak3quUi
+        O+kPbI8ElbN5DoVCGBdPX6E3GgCsCkR1GP3DBFH5XpA+6LjeKFei6ghu9T4iOKLdORlNl9dK4BUTu
+        s1OgSCgQ==;
+Received: from noodles by the.earth.li with local (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1jicdY-0005X6-JM; Tue, 09 Jun 2020 12:41:48 +0100
+Date:   Tue, 9 Jun 2020 12:41:48 +0100
+From:   Jonathan McDowell <noodles@earth.li>
+To:     ansuelsmth@gmail.com
+Cc:     'Bjorn Andersson' <bjorn.andersson@linaro.org>,
+        'Andy Gross' <agross@codeaurora.org>,
+        'Andy Gross' <agross@kernel.org>,
+        'Kishon Vijay Abraham I' <kishon@ti.com>,
+        'Rob Herring' <robh+dt@kernel.org>,
+        'Mark Rutland' <mark.rutland@arm.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: R: [PATCH v6 1/2] phy: qualcomm: add qcom ipq806x dwc usb phy
+ driver
+Message-ID: <20200609114148.GS311@earth.li>
+References: <20200603132237.6036-1-ansuelsmth@gmail.com>
+ <20200604161942.GK311@earth.li>
+ <017001d63b5a$c3807740$4a8165c0$@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <017001d63b5a$c3807740$4a8165c0$@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SMEM driver is IO mapping complete region and CPU is doing a speculative
-read into a partition where local HOST does not have permission resulting
-in a NOC error.
+On Fri, Jun 05, 2020 at 07:00:04PM +0200, ansuelsmth@gmail.com wrote:
+> > On Wed, Jun 03, 2020 at 03:22:34PM +0200, Ansuel Smith wrote:
+> > > This has lost in the original push for the dwc3 qcom driver.
+> > > This is needed for ipq806x SoC as without this the usb ports
+> > > doesn't work at all.
+> > 
+> > FWIW I tested this on my RB3011 so feel free to add:
+> > 
+> > Tested-by: Jonathan McDowell <noodles@earth.li>
+> > 
+> > One minor comment; would PHY_QCOM_USB_IPQ806X not be a better
+> > choice than PHY_QCOM_IPQ806X_USB given the existing naming?
+> > 
+>
+> Thanks for the feedback. About naming I'm following the sata ipq806x
+> naming.  I really hope someone gets this and reviews it since usb is
+> broken for a long time now.
 
-Map only those partitions which are accessibly to local HOST.
+Doesn't seem to have made the 5.8 merge window; I note Vinod has done a
+bunch of the recent commits to phy/qualcomm/ so adding him to the CC in
+addition to Kishon.
 
-Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
----
- drivers/soc/qcom/smem.c | 226 +++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 167 insertions(+), 59 deletions(-)
+> > > Signed-off-by: Andy Gross <agross@codeaurora.org>
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > ---
+> > > v6:
+> > > * Use GENMASK instead of hex value
+> > > v4:
+> > > * Add qcom to specific bindings
+> > > v3:
+> > > * Use reg instead of regmap phandle
+> > > v2:
+> > > * Renamed config from PHY_QCOM_DWC3 to PHY_QCOM_IPQ806X_USB
+> > > * Rename inline function to generic name to reduce length
+> > > * Fix check reported by checkpatch --strict
+> > > * Rename compatible to qcom,ipq806x-usb-phy-(hs/ss)
+> > >
+> > >  drivers/phy/qualcomm/Kconfig                |  12 +
+> > >  drivers/phy/qualcomm/Makefile               |   1 +
+> > >  drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c | 593
+> > ++++++++++++++++++++
+> > >  3 files changed, 606 insertions(+)
+> > >  create mode 100644 drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+> > >
+> > > diff --git a/drivers/phy/qualcomm/Kconfig
+> > b/drivers/phy/qualcomm/Kconfig
+> > > index e46824da29f6..9d41c3d12800 100644
+> > > --- a/drivers/phy/qualcomm/Kconfig
+> > > +++ b/drivers/phy/qualcomm/Kconfig
+> > > @@ -91,3 +91,15 @@ config PHY_QCOM_USB_HSIC
+> > >  	select GENERIC_PHY
+> > >  	help
+> > >  	  Support for the USB HSIC ULPI compliant PHY on QCOM chipsets.
+> > > +
+> > > +config PHY_QCOM_IPQ806X_USB
+> > > +	tristate "Qualcomm IPQ806x DWC3 USB PHY driver"
+> > > +	depends on ARCH_QCOM
+> > > +	depends on HAS_IOMEM
+> > > +	depends on OF
+> > > +	select GENERIC_PHY
+> > > +	help
+> > > +	  This option enables support for the Synopsis PHYs present inside
+> > the
+> > > +	  Qualcomm USB3.0 DWC3 controller on ipq806x SoC. This driver
+> > supports
+> > > +	  both HS and SS PHY controllers.
+> > > +
+> > > diff --git a/drivers/phy/qualcomm/Makefile
+> > b/drivers/phy/qualcomm/Makefile
+> > > index 283251d6a5d9..8629299c1495 100644
+> > > --- a/drivers/phy/qualcomm/Makefile
+> > > +++ b/drivers/phy/qualcomm/Makefile
+> > > @@ -10,3 +10,4 @@ obj-$(CONFIG_PHY_QCOM_UFS_14NM)
+> > 	+= phy-qcom-ufs-qmp-14nm.o
+> > >  obj-$(CONFIG_PHY_QCOM_UFS_20NM)		+= phy-qcom-ufs-
+> > qmp-20nm.o
+> > >  obj-$(CONFIG_PHY_QCOM_USB_HS) 		+= phy-qcom-usb-hs.o
+> > >  obj-$(CONFIG_PHY_QCOM_USB_HSIC) 	+= phy-qcom-usb-hsic.o
+> > > +obj-$(CONFIG_PHY_QCOM_IPQ806X_USB)		+= phy-qcom-
+> > ipq806x-usb.o
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+> > b/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+> > > new file mode 100644
+> > > index 000000000000..f37cd8760118
+> > > --- /dev/null
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+> > > @@ -0,0 +1,593 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/* Copyright (c) 2014-2015, Code Aurora Forum. All rights reserved.
+> > > + *
+> > > + * This program is free software; you can redistribute it and/or modify
+> > > + * it under the terms of the GNU General Public License version 2 and
+> > > + * only version 2 as published by the Free Software Foundation.
+> > > + *
+> > > + * This program is distributed in the hope that it will be useful,
+> > > + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> > > + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> > > + * GNU General Public License for more details.
+> > > + */
+> > > +
+> > > +#include <linux/clk.h>
+> > > +#include <linux/err.h>
+> > > +#include <linux/io.h>
+> > > +#include <linux/module.h>
+> > > +#include <linux/of.h>
+> > > +#include <linux/phy/phy.h>
+> > > +#include <linux/platform_device.h>
+> > > +#include <linux/delay.h>
+> > > +#include <linux/regmap.h>
+> > > +#include <linux/mfd/syscon.h>
+> > > +
+> > > +/* USB QSCRATCH Hardware registers */
+> > > +#define QSCRATCH_GENERAL_CFG		(0x08)
+> > > +#define HSUSB_PHY_CTRL_REG		(0x10)
+> > > +
+> > > +/* PHY_CTRL_REG */
+> > > +#define HSUSB_CTRL_DMSEHV_CLAMP		BIT(24)
+> > > +#define HSUSB_CTRL_USB2_SUSPEND		BIT(23)
+> > > +#define HSUSB_CTRL_UTMI_CLK_EN		BIT(21)
+> > > +#define HSUSB_CTRL_UTMI_OTG_VBUS_VALID	BIT(20)
+> > > +#define HSUSB_CTRL_USE_CLKCORE		BIT(18)
+> > > +#define HSUSB_CTRL_DPSEHV_CLAMP		BIT(17)
+> > > +#define HSUSB_CTRL_COMMONONN		BIT(11)
+> > > +#define HSUSB_CTRL_ID_HV_CLAMP		BIT(9)
+> > > +#define HSUSB_CTRL_OTGSESSVLD_CLAMP	BIT(8)
+> > > +#define HSUSB_CTRL_CLAMP_EN		BIT(7)
+> > > +#define HSUSB_CTRL_RETENABLEN		BIT(1)
+> > > +#define HSUSB_CTRL_POR			BIT(0)
+> > > +
+> > > +/* QSCRATCH_GENERAL_CFG */
+> > > +#define HSUSB_GCFG_XHCI_REV		BIT(2)
+> > > +
+> > > +/* USB QSCRATCH Hardware registers */
+> > > +#define SSUSB_PHY_CTRL_REG		(0x00)
+> > > +#define SSUSB_PHY_PARAM_CTRL_1		(0x04)
+> > > +#define SSUSB_PHY_PARAM_CTRL_2		(0x08)
+> > > +#define CR_PROTOCOL_DATA_IN_REG		(0x0c)
+> > > +#define CR_PROTOCOL_DATA_OUT_REG	(0x10)
+> > > +#define CR_PROTOCOL_CAP_ADDR_REG	(0x14)
+> > > +#define CR_PROTOCOL_CAP_DATA_REG	(0x18)
+> > > +#define CR_PROTOCOL_READ_REG		(0x1c)
+> > > +#define CR_PROTOCOL_WRITE_REG		(0x20)
+> > > +
+> > > +/* PHY_CTRL_REG */
+> > > +#define SSUSB_CTRL_REF_USE_PAD		BIT(28)
+> > > +#define SSUSB_CTRL_TEST_POWERDOWN	BIT(27)
+> > > +#define SSUSB_CTRL_LANE0_PWR_PRESENT	BIT(24)
+> > > +#define SSUSB_CTRL_SS_PHY_EN		BIT(8)
+> > > +#define SSUSB_CTRL_SS_PHY_RESET		BIT(7)
+> > > +
+> > > +/* SSPHY control registers - Does this need 0x30? */
+> > > +#define SSPHY_CTRL_RX_OVRD_IN_HI(lane)	(0x1006 + 0x100 *
+> > (lane))
+> > > +#define SSPHY_CTRL_TX_OVRD_DRV_LO(lane)	(0x1002 + 0x100 *
+> > (lane))
+> > > +
+> > > +/* SSPHY SoC version specific values */
+> > > +#define SSPHY_RX_EQ_VALUE		4 /* Override value for rx_eq
+> > */
+> > > +/* Override value for transmit preemphasis */
+> > > +#define SSPHY_TX_DEEMPH_3_5DB		23
+> > > +/* Override value for mpll */
+> > > +#define SSPHY_MPLL_VALUE		0
+> > > +
+> > > +/* QSCRATCH PHY_PARAM_CTRL1 fields */
+> > > +#define PHY_PARAM_CTRL1_TX_FULL_SWING_MASK	GENMASK(26,
+> > 19)
+> > > +#define PHY_PARAM_CTRL1_TX_DEEMPH_6DB_MASK	GENMASK(19,
+> > 13)
+> > > +#define PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB_MASK	GENMASK(13,
+> > 7)
+> > > +#define PHY_PARAM_CTRL1_LOS_BIAS_MASK		GENMASK(7,
+> > 2)
+> > > +
+> > > +#define PHY_PARAM_CTRL1_MASK				\
+> > > +		(PHY_PARAM_CTRL1_TX_FULL_SWING_MASK |	\
+> > > +		 PHY_PARAM_CTRL1_TX_DEEMPH_6DB_MASK |	\
+> > > +		 PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB_MASK |	\
+> > > +		 PHY_PARAM_CTRL1_LOS_BIAS_MASK)
+> > > +
+> > > +#define PHY_PARAM_CTRL1_TX_FULL_SWING(x)	\
+> > > +		(((x) << 20) & PHY_PARAM_CTRL1_TX_FULL_SWING_MASK)
+> > > +#define PHY_PARAM_CTRL1_TX_DEEMPH_6DB(x)	\
+> > > +		(((x) << 14) &
+> > PHY_PARAM_CTRL1_TX_DEEMPH_6DB_MASK)
+> > > +#define PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB(x)	\
+> > > +		(((x) <<  8) &
+> > PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB_MASK)
+> > > +#define PHY_PARAM_CTRL1_LOS_BIAS(x)	\
+> > > +		(((x) <<  3) & PHY_PARAM_CTRL1_LOS_BIAS_MASK)
+> > > +
+> > > +/* RX OVRD IN HI bits */
+> > > +#define RX_OVRD_IN_HI_RX_RESET_OVRD		BIT(13)
+> > > +#define RX_OVRD_IN_HI_RX_RX_RESET		BIT(12)
+> > > +#define RX_OVRD_IN_HI_RX_EQ_OVRD		BIT(11)
+> > > +#define RX_OVRD_IN_HI_RX_EQ_MASK		GENMASK(10, 7)
+> > > +#define RX_OVRD_IN_HI_RX_EQ(x)			((x) << 8)
+> > > +#define RX_OVRD_IN_HI_RX_EQ_EN_OVRD		BIT(7)
+> > > +#define RX_OVRD_IN_HI_RX_EQ_EN			BIT(6)
+> > > +#define RX_OVRD_IN_HI_RX_LOS_FILTER_OVRD	BIT(5)
+> > > +#define RX_OVRD_IN_HI_RX_LOS_FILTER_MASK	GENMASK(4, 2)
+> > > +#define RX_OVRD_IN_HI_RX_RATE_OVRD		BIT(2)
+> > > +#define RX_OVRD_IN_HI_RX_RATE_MASK		GENMASK(2, 0)
+> > > +
+> > > +/* TX OVRD DRV LO register bits */
+> > > +#define TX_OVRD_DRV_LO_AMPLITUDE_MASK		GENMASK(6,
+> > 0)
+> > > +#define TX_OVRD_DRV_LO_PREEMPH_MASK		GENMASK(13,
+> > 6)
+> > > +#define TX_OVRD_DRV_LO_PREEMPH(x)		((x) << 7)
+> > > +#define TX_OVRD_DRV_LO_EN			BIT(14)
+> > > +
+> > > +/* MPLL bits */
+> > > +#define SSPHY_MPLL_MASK				GENMASK(8,
+> > 5)
+> > > +#define SSPHY_MPLL(x)				((x) << 5)
+> > > +
+> > > +/* SS CAP register bits */
+> > > +#define SS_CR_CAP_ADDR_REG			BIT(0)
+> > > +#define SS_CR_CAP_DATA_REG			BIT(0)
+> > > +#define SS_CR_READ_REG				BIT(0)
+> > > +#define SS_CR_WRITE_REG				BIT(0)
+> > > +
+> > > +struct usb_phy {
+> > > +	void __iomem		*base;
+> > > +	struct device		*dev;
+> > > +	struct clk		*xo_clk;
+> > > +	struct clk		*ref_clk;
+> > > +	u32			rx_eq;
+> > > +	u32			tx_deamp_3_5db;
+> > > +	u32			mpll;
+> > > +};
+> > > +
+> > > +struct phy_drvdata {
+> > > +	struct phy_ops	ops;
+> > > +	u32		clk_rate;
+> > > +};
+> > > +
+> > > +/**
+> > > + * Write register and read back masked value to confirm it is written
+> > > + *
+> > > + * @base - QCOM DWC3 PHY base virtual address.
+> > > + * @offset - register offset.
+> > > + * @mask - register bitmask specifying what should be updated
+> > > + * @val - value to write.
+> > > + */
+> > > +static inline void usb_phy_write_readback(struct usb_phy *phy_dwc3,
+> > > +					  u32 offset,
+> > > +					  const u32 mask, u32 val)
+> > > +{
+> > > +	u32 write_val, tmp = readl(phy_dwc3->base + offset);
+> > > +
+> > > +	tmp &= ~mask;		/* retain other bits */
+> > > +	write_val = tmp | val;
+> > > +
+> > > +	writel(write_val, phy_dwc3->base + offset);
+> > > +
+> > > +	/* Read back to see if val was written */
+> > > +	tmp = readl(phy_dwc3->base + offset);
+> > > +	tmp &= mask;		/* clear other bits */
+> > > +
+> > > +	if (tmp != val)
+> > > +		dev_err(phy_dwc3->dev, "write: %x to QSCRATCH: %x
+> > FAILED\n",
+> > > +			val, offset);
+> > > +}
+> > > +
+> > > +static int wait_for_latch(void __iomem *addr)
+> > > +{
+> > > +	u32 retry = 10;
+> > > +
+> > > +	while (true) {
+> > > +		if (!readl(addr))
+> > > +			break;
+> > > +
+> > > +		if (--retry == 0)
+> > > +			return -ETIMEDOUT;
+> > > +
+> > > +		usleep_range(10, 20);
+> > > +	}
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > > +/**
+> > > + * Write SSPHY register
+> > > + *
+> > > + * @base - QCOM DWC3 PHY base virtual address.
+> > > + * @addr - SSPHY address to write.
+> > > + * @val - value to write.
+> > > + */
+> > > +static int usb_ss_write_phycreg(struct usb_phy *phy_dwc3,
+> > > +				u32 addr, u32 val)
+> > > +{
+> > > +	int ret;
+> > > +
+> > > +	writel(addr, phy_dwc3->base + CR_PROTOCOL_DATA_IN_REG);
+> > > +	writel(SS_CR_CAP_ADDR_REG,
+> > > +	       phy_dwc3->base + CR_PROTOCOL_CAP_ADDR_REG);
+> > > +
+> > > +	ret = wait_for_latch(phy_dwc3->base +
+> > CR_PROTOCOL_CAP_ADDR_REG);
+> > > +	if (ret)
+> > > +		goto err_wait;
+> > > +
+> > > +	writel(val, phy_dwc3->base + CR_PROTOCOL_DATA_IN_REG);
+> > > +	writel(SS_CR_CAP_DATA_REG,
+> > > +	       phy_dwc3->base + CR_PROTOCOL_CAP_DATA_REG);
+> > > +
+> > > +	ret = wait_for_latch(phy_dwc3->base +
+> > CR_PROTOCOL_CAP_DATA_REG);
+> > > +	if (ret)
+> > > +		goto err_wait;
+> > > +
+> > > +	writel(SS_CR_WRITE_REG, phy_dwc3->base +
+> > CR_PROTOCOL_WRITE_REG);
+> > > +
+> > > +	ret = wait_for_latch(phy_dwc3->base +
+> > CR_PROTOCOL_WRITE_REG);
+> > > +
+> > > +err_wait:
+> > > +	if (ret)
+> > > +		dev_err(phy_dwc3->dev, "timeout waiting for latch\n");
+> > > +	return ret;
+> > > +}
+> > > +
+> > > +/**
+> > > + * Read SSPHY register.
+> > > + *
+> > > + * @base - QCOM DWC3 PHY base virtual address.
+> > > + * @addr - SSPHY address to read.
+> > > + */
+> > > +static int usb_ss_read_phycreg(struct usb_phy *phy_dwc3,
+> > > +			       u32 addr, u32 *val)
+> > > +{
+> > > +	int ret;
+> > > +
+> > > +	writel(addr, phy_dwc3->base + CR_PROTOCOL_DATA_IN_REG);
+> > > +	writel(SS_CR_CAP_ADDR_REG,
+> > > +	       phy_dwc3->base + CR_PROTOCOL_CAP_ADDR_REG);
+> > > +
+> > > +	ret = wait_for_latch(phy_dwc3->base +
+> > CR_PROTOCOL_CAP_ADDR_REG);
+> > > +	if (ret)
+> > > +		goto err_wait;
+> > > +
+> > > +	/*
+> > > +	 * Due to hardware bug, first read of SSPHY register might be
+> > > +	 * incorrect. Hence as workaround, SW should perform SSPHY
+> > register
+> > > +	 * read twice, but use only second read and ignore first read.
+> > > +	 */
+> > > +	writel(SS_CR_READ_REG, phy_dwc3->base +
+> > CR_PROTOCOL_READ_REG);
+> > > +
+> > > +	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_READ_REG);
+> > > +	if (ret)
+> > > +		goto err_wait;
+> > > +
+> > > +	/* throwaway read */
+> > > +	readl(phy_dwc3->base + CR_PROTOCOL_DATA_OUT_REG);
+> > > +
+> > > +	writel(SS_CR_READ_REG, phy_dwc3->base +
+> > CR_PROTOCOL_READ_REG);
+> > > +
+> > > +	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_READ_REG);
+> > > +	if (ret)
+> > > +		goto err_wait;
+> > > +
+> > > +	*val = readl(phy_dwc3->base + CR_PROTOCOL_DATA_OUT_REG);
+> > > +
+> > > +err_wait:
+> > > +	return ret;
+> > > +}
+> > > +
+> > > +static int qcom_ipq806x_usb_hs_phy_init(struct phy *phy)
+> > > +{
+> > > +	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
+> > > +	int ret;
+> > > +	u32 val;
+> > > +
+> > > +	ret = clk_prepare_enable(phy_dwc3->xo_clk);
+> > > +	if (ret)
+> > > +		return ret;
+> > > +
+> > > +	ret = clk_prepare_enable(phy_dwc3->ref_clk);
+> > > +	if (ret) {
+> > > +		clk_disable_unprepare(phy_dwc3->xo_clk);
+> > > +		return ret;
+> > > +	}
+> > > +
+> > > +	/*
+> > > +	 * HSPHY Initialization: Enable UTMI clock, select 19.2MHz fsel
+> > > +	 * enable clamping, and disable RETENTION (power-on default is
+> > ENABLED)
+> > > +	 */
+> > > +	val = HSUSB_CTRL_DPSEHV_CLAMP |
+> > HSUSB_CTRL_DMSEHV_CLAMP |
+> > > +		HSUSB_CTRL_RETENABLEN  | HSUSB_CTRL_COMMONONN |
+> > > +		HSUSB_CTRL_OTGSESSVLD_CLAMP |
+> > HSUSB_CTRL_ID_HV_CLAMP |
+> > > +		HSUSB_CTRL_DPSEHV_CLAMP |
+> > HSUSB_CTRL_UTMI_OTG_VBUS_VALID |
+> > > +		HSUSB_CTRL_UTMI_CLK_EN | HSUSB_CTRL_CLAMP_EN |
+> > 0x70;
+> > > +
+> > > +	/* use core clock if external reference is not present */
+> > > +	if (!phy_dwc3->xo_clk)
+> > > +		val |= HSUSB_CTRL_USE_CLKCORE;
+> > > +
+> > > +	writel(val, phy_dwc3->base + HSUSB_PHY_CTRL_REG);
+> > > +	usleep_range(2000, 2200);
+> > > +
+> > > +	/* Disable (bypass) VBUS and ID filters */
+> > > +	writel(HSUSB_GCFG_XHCI_REV, phy_dwc3->base +
+> > QSCRATCH_GENERAL_CFG);
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > > +static int qcom_ipq806x_usb_hs_phy_exit(struct phy *phy)
+> > > +{
+> > > +	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
+> > > +
+> > > +	clk_disable_unprepare(phy_dwc3->ref_clk);
+> > > +	clk_disable_unprepare(phy_dwc3->xo_clk);
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > > +static int qcom_ipq806x_usb_ss_phy_init(struct phy *phy)
+> > > +{
+> > > +	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
+> > > +	int ret;
+> > > +	u32 data = 0;
+> > > +
+> > > +	ret = clk_prepare_enable(phy_dwc3->xo_clk);
+> > > +	if (ret)
+> > > +		return ret;
+> > > +
+> > > +	ret = clk_prepare_enable(phy_dwc3->ref_clk);
+> > > +	if (ret) {
+> > > +		clk_disable_unprepare(phy_dwc3->xo_clk);
+> > > +		return ret;
+> > > +	}
+> > > +
+> > > +	/* reset phy */
+> > > +	data = readl(phy_dwc3->base + SSUSB_PHY_CTRL_REG);
+> > > +	writel(data | SSUSB_CTRL_SS_PHY_RESET,
+> > > +	       phy_dwc3->base + SSUSB_PHY_CTRL_REG);
+> > > +	usleep_range(2000, 2200);
+> > > +	writel(data, phy_dwc3->base + SSUSB_PHY_CTRL_REG);
+> > > +
+> > > +	/* clear REF_PAD if we don't have XO clk */
+> > > +	if (!phy_dwc3->xo_clk)
+> > > +		data &= ~SSUSB_CTRL_REF_USE_PAD;
+> > > +	else
+> > > +		data |= SSUSB_CTRL_REF_USE_PAD;
+> > > +
+> > > +	writel(data, phy_dwc3->base + SSUSB_PHY_CTRL_REG);
+> > > +
+> > > +	/* wait for ref clk to become stable, this can take up to 30ms */
+> > > +	msleep(30);
+> > > +
+> > > +	data |= SSUSB_CTRL_SS_PHY_EN |
+> > SSUSB_CTRL_LANE0_PWR_PRESENT;
+> > > +	writel(data, phy_dwc3->base + SSUSB_PHY_CTRL_REG);
+> > > +
+> > > +	/*
+> > > +	 * WORKAROUND: There is SSPHY suspend bug due to which USB
+> > enumerates
+> > > +	 * in HS mode instead of SS mode. Workaround it by asserting
+> > > +	 * LANE0.TX_ALT_BLOCK.EN_ALT_BUS to enable TX to use alt bus
+> > mode
+> > > +	 */
+> > > +	ret = usb_ss_read_phycreg(phy_dwc3, 0x102D, &data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	data |= (1 << 7);
+> > > +	ret = usb_ss_write_phycreg(phy_dwc3, 0x102D, data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	ret = usb_ss_read_phycreg(phy_dwc3, 0x1010, &data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	data &= ~0xff0;
+> > > +	data |= 0x20;
+> > > +	ret = usb_ss_write_phycreg(phy_dwc3, 0x1010, data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	/*
+> > > +	 * Fix RX Equalization setting as follows
+> > > +	 * LANE0.RX_OVRD_IN_HI. RX_EQ_EN set to 0
+> > > +	 * LANE0.RX_OVRD_IN_HI.RX_EQ_EN_OVRD set to 1
+> > > +	 * LANE0.RX_OVRD_IN_HI.RX_EQ set based on SoC version
+> > > +	 * LANE0.RX_OVRD_IN_HI.RX_EQ_OVRD set to 1
+> > > +	 */
+> > > +	ret = usb_ss_read_phycreg(phy_dwc3,
+> > > +				  SSPHY_CTRL_RX_OVRD_IN_HI(0), &data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	data &= ~RX_OVRD_IN_HI_RX_EQ_EN;
+> > > +	data |= RX_OVRD_IN_HI_RX_EQ_EN_OVRD;
+> > > +	data &= ~RX_OVRD_IN_HI_RX_EQ_MASK;
+> > > +	data |= RX_OVRD_IN_HI_RX_EQ(phy_dwc3->rx_eq);
+> > > +	data |= RX_OVRD_IN_HI_RX_EQ_OVRD;
+> > > +	ret = usb_ss_write_phycreg(phy_dwc3,
+> > > +				   SSPHY_CTRL_RX_OVRD_IN_HI(0), data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	/*
+> > > +	 * Set EQ and TX launch amplitudes as follows
+> > > +	 * LANE0.TX_OVRD_DRV_LO.PREEMPH set based on SoC version
+> > > +	 * LANE0.TX_OVRD_DRV_LO.AMPLITUDE set to 110
+> > > +	 * LANE0.TX_OVRD_DRV_LO.EN set to 1.
+> > > +	 */
+> > > +	ret = usb_ss_read_phycreg(phy_dwc3,
+> > > +				  SSPHY_CTRL_TX_OVRD_DRV_LO(0), &data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	data &= ~TX_OVRD_DRV_LO_PREEMPH_MASK;
+> > > +	data |= TX_OVRD_DRV_LO_PREEMPH(phy_dwc3-
+> > >tx_deamp_3_5db);
+> > > +	data &= ~TX_OVRD_DRV_LO_AMPLITUDE_MASK;
+> > > +	data |= 0x6E;
+> > > +	data |= TX_OVRD_DRV_LO_EN;
+> > > +	ret = usb_ss_write_phycreg(phy_dwc3,
+> > > +				   SSPHY_CTRL_TX_OVRD_DRV_LO(0), data);
+> > > +	if (ret)
+> > > +		goto err_phy_trans;
+> > > +
+> > > +	data = 0;
+> > > +	data &= ~SSPHY_MPLL_MASK;
+> > > +	data |= SSPHY_MPLL(phy_dwc3->mpll);
+> > > +	usb_ss_write_phycreg(phy_dwc3, 0x30, data);
+> > > +
+> > > +	/*
+> > > +	 * Set the QSCRATCH PHY_PARAM_CTRL1 parameters as follows
+> > > +	 * TX_FULL_SWING [26:20] amplitude to 110
+> > > +	 * TX_DEEMPH_6DB [19:14] to 32
+> > > +	 * TX_DEEMPH_3_5DB [13:8] set based on SoC version
+> > > +	 * LOS_BIAS [7:3] to 9
+> > > +	 */
+> > > +	data = readl(phy_dwc3->base + SSUSB_PHY_PARAM_CTRL_1);
+> > > +
+> > > +	data &= ~PHY_PARAM_CTRL1_MASK;
+> > > +
+> > > +	data |= PHY_PARAM_CTRL1_TX_FULL_SWING(0x6e) |
+> > > +		PHY_PARAM_CTRL1_TX_DEEMPH_6DB(0x20) |
+> > > +		PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB(phy_dwc3-
+> > >tx_deamp_3_5db) |
+> > > +		PHY_PARAM_CTRL1_LOS_BIAS(0x9);
+> > > +
+> > > +	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_PARAM_CTRL_1,
+> > > +			       PHY_PARAM_CTRL1_MASK, data);
+> > > +
+> > > +err_phy_trans:
+> > > +	return ret;
+> > > +}
+> > > +
+> > > +static int qcom_ipq806x_usb_ss_phy_exit(struct phy *phy)
+> > > +{
+> > > +	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
+> > > +
+> > > +	/* Sequence to put SSPHY in low power state:
+> > > +	 * 1. Clear REF_PHY_EN in PHY_CTRL_REG
+> > > +	 * 2. Clear REF_USE_PAD in PHY_CTRL_REG
+> > > +	 * 3. Set TEST_POWERED_DOWN in PHY_CTRL_REG to enable PHY
+> > retention
+> > > +	 */
+> > > +	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_CTRL_REG,
+> > > +			       SSUSB_CTRL_SS_PHY_EN, 0x0);
+> > > +	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_CTRL_REG,
+> > > +			       SSUSB_CTRL_REF_USE_PAD, 0x0);
+> > > +	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_CTRL_REG,
+> > > +			       SSUSB_CTRL_TEST_POWERDOWN, 0x0);
+> > > +
+> > > +	clk_disable_unprepare(phy_dwc3->ref_clk);
+> > > +	clk_disable_unprepare(phy_dwc3->xo_clk);
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > > +static const struct phy_drvdata qcom_ipq806x_usb_hs_drvdata = {
+> > > +	.ops = {
+> > > +		.init		= qcom_ipq806x_usb_hs_phy_init,
+> > > +		.exit		= qcom_ipq806x_usb_hs_phy_exit,
+> > > +		.owner		= THIS_MODULE,
+> > > +	},
+> > > +	.clk_rate = 60000000,
+> > > +};
+> > > +
+> > > +static const struct phy_drvdata qcom_ipq806x_usb_ss_drvdata = {
+> > > +	.ops = {
+> > > +		.init		= qcom_ipq806x_usb_ss_phy_init,
+> > > +		.exit		= qcom_ipq806x_usb_ss_phy_exit,
+> > > +		.owner		= THIS_MODULE,
+> > > +	},
+> > > +	.clk_rate = 125000000,
+> > > +};
+> > > +
+> > > +static const struct of_device_id qcom_ipq806x_usb_phy_table[] = {
+> > > +	{ .compatible = "qcom,ipq806x-usb-phy-hs",
+> > > +	  .data = &qcom_ipq806x_usb_hs_drvdata },
+> > > +	{ .compatible = "qcom,ipq806x-usb-phy-ss",
+> > > +	  .data = &qcom_ipq806x_usb_ss_drvdata },
+> > > +	{ /* Sentinel */ }
+> > > +};
+> > > +MODULE_DEVICE_TABLE(of, qcom_ipq806x_usb_phy_table);
+> > > +
+> > > +static int qcom_ipq806x_usb_phy_probe(struct platform_device *pdev)
+> > > +{
+> > > +	struct usb_phy	*phy_dwc3;
+> > > +	struct phy_provider		*phy_provider;
+> > > +	struct phy			*generic_phy;
+> > > +	const struct of_device_id *match;
+> > > +	const struct phy_drvdata *data;
+> > > +	struct resource			*res;
+> > > +	resource_size_t			size;
+> > > +	struct device_node *np;
+> > > +
+> > > +	phy_dwc3 = devm_kzalloc(&pdev->dev, sizeof(*phy_dwc3),
+> > GFP_KERNEL);
+> > > +	if (!phy_dwc3)
+> > > +		return -ENOMEM;
+> > > +
+> > > +	match = of_match_node(qcom_ipq806x_usb_phy_table, pdev-
+> > >dev.of_node);
+> > > +	data = match->data;
+> > > +
+> > > +	phy_dwc3->dev = &pdev->dev;
+> > > +
+> > > +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> > > +	if (!res)
+> > > +		return -EINVAL;
+> > > +	size = resource_size(res);
+> > > +	phy_dwc3->base = devm_ioremap(phy_dwc3->dev, res->start,
+> > size);
+> > > +
+> > > +	if (IS_ERR(phy_dwc3->base)) {
+> > > +		dev_err(phy_dwc3->dev, "failed to map reg\n");
+> > > +		return PTR_ERR(phy_dwc3->base);
+> > > +	}
+> > > +
+> > > +	phy_dwc3->ref_clk = devm_clk_get(phy_dwc3->dev, "ref");
+> > > +	if (IS_ERR(phy_dwc3->ref_clk)) {
+> > > +		dev_dbg(phy_dwc3->dev, "cannot get reference clock\n");
+> > > +		return PTR_ERR(phy_dwc3->ref_clk);
+> > > +	}
+> > > +
+> > > +	clk_set_rate(phy_dwc3->ref_clk, data->clk_rate);
+> > > +
+> > > +	phy_dwc3->xo_clk = devm_clk_get(phy_dwc3->dev, "xo");
+> > > +	if (IS_ERR(phy_dwc3->xo_clk)) {
+> > > +		dev_dbg(phy_dwc3->dev, "cannot get TCXO clock\n");
+> > > +		phy_dwc3->xo_clk = NULL;
+> > > +	}
+> > > +
+> > > +	/* Parse device node to probe HSIO settings */
+> > > +	np = of_node_get(pdev->dev.of_node);
+> > > +	if (!of_compat_cmp(match->compatible, "qcom,ipq806x-usb-phy-
+> > ss",
+> > > +			   strlen(match->compatible))) {
+> > > +		if (of_property_read_u32(np, "qcom,rx-eq", &phy_dwc3-
+> > >rx_eq) ||
+> > > +		    of_property_read_u32(np, "qcom,tx-deamp_3_5db",
+> > > +					 &phy_dwc3->tx_deamp_3_5db) ||
+> > > +		    of_property_read_u32(np, "qcom,mpll", &phy_dwc3-
+> > >mpll)) {
+> > > +			dev_err(phy_dwc3->dev, "cannot get HSIO settings
+> > from device node, using default values\n");
+> > > +
+> > > +			/* Default HSIO settings */
+> > > +			phy_dwc3->rx_eq = SSPHY_RX_EQ_VALUE;
+> > > +			phy_dwc3->tx_deamp_3_5db =
+> > SSPHY_TX_DEEMPH_3_5DB;
+> > > +			phy_dwc3->mpll = SSPHY_MPLL_VALUE;
+> > > +		}
+> > > +	}
+> > > +
+> > > +	generic_phy = devm_phy_create(phy_dwc3->dev, pdev-
+> > >dev.of_node,
+> > > +				      &data->ops);
+> > > +
+> > > +	if (IS_ERR(generic_phy))
+> > > +		return PTR_ERR(generic_phy);
+> > > +
+> > > +	phy_set_drvdata(generic_phy, phy_dwc3);
+> > > +	platform_set_drvdata(pdev, phy_dwc3);
+> > > +
+> > > +	phy_provider = devm_of_phy_provider_register(phy_dwc3->dev,
+> > > +						     of_phy_simple_xlate);
+> > > +
+> > > +	if (IS_ERR(phy_provider))
+> > > +		return PTR_ERR(phy_provider);
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > > +static struct platform_driver qcom_ipq806x_usb_phy_driver = {
+> > > +	.probe		= qcom_ipq806x_usb_phy_probe,
+> > > +	.driver		= {
+> > > +		.name	= "qcom-ipq806x-usb-phy",
+> > > +		.owner	= THIS_MODULE,
+> > > +		.of_match_table = qcom_ipq806x_usb_phy_table,
+> > > +	},
+> > > +};
+> > > +
+> > > +module_platform_driver(qcom_ipq806x_usb_phy_driver);
+> > > +
+> > > +MODULE_ALIAS("platform:phy-qcom-ipq806x-usb");
+> > > +MODULE_LICENSE("GPL v2");
+> > > +MODULE_AUTHOR("Andy Gross <agross@codeaurora.org>");
+> > > +MODULE_AUTHOR("Ivan T. Ivanov <iivanov@mm-sol.com>");
+> > > +MODULE_DESCRIPTION("DesignWare USB3 QCOM PHY driver");
+> > > --
+> > > 2.25.1
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index c1bd310..4a152d6 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -193,6 +193,19 @@ struct smem_partition_header {
- 	__le32 offset_free_cached;
- 	__le32 reserved[3];
- };
-+/**
-+ * struct smem_partition_desc - descriptor for partition
-+ * @virt_base:	starting virtual address of partition
-+ * @phys_base:	starting physical address of partition
-+ * @cacheline:	alignment for "cached" entries
-+ * @size:	size of partition
-+ */
-+struct smem_partition_desc {
-+	void __iomem *virt_base;
-+	u32 phys_base;
-+	u32 cacheline;
-+	u32 size;
-+};
- 
- static const u8 SMEM_PART_MAGIC[] = { 0x24, 0x50, 0x52, 0x54 };
- 
-@@ -249,9 +262,9 @@ struct smem_region {
-  * struct qcom_smem - device data for the smem device
-  * @dev:	device pointer
-  * @hwlock:	reference to a hwspinlock
-- * @global_partition_entry: pointer to global partition entry when in use
-- * @ptable_entries: list of pointers to partitions table entry of current
-- *		processor/host
-+ * @ptable_base: virtual base of partition table
-+ * @global_partition_desc: descriptor for global partition when in use
-+ * @partition_desc: list of partition descriptor of current processor/host
-  * @item_count: max accepted item number
-  * @num_regions: number of @regions
-  * @regions:	list of the memory regions defining the shared memory
-@@ -261,9 +274,11 @@ struct qcom_smem {
- 
- 	struct hwspinlock *hwlock;
- 
--	struct smem_ptable_entry *global_partition_entry;
--	struct smem_ptable_entry *ptable_entries[SMEM_HOST_COUNT];
- 	u32 item_count;
-+	struct smem_ptable *ptable_base;
-+	struct smem_partition_desc global_partition_desc;
-+	struct smem_partition_desc partition_desc[SMEM_HOST_COUNT];
-+
- 	struct platform_device *socinfo;
- 
- 	unsigned num_regions;
-@@ -276,12 +291,6 @@ static struct qcom_smem *__smem;
- /* Timeout (ms) for the trylock of remote spinlocks */
- #define HWSPINLOCK_TIMEOUT     1000
- 
--static struct smem_partition_header *
--ptable_entry_to_phdr(struct smem_ptable_entry *entry)
--{
--	return __smem->regions[0].virt_base + le32_to_cpu(entry->offset);
--}
--
- static struct smem_private_entry *
- phdr_to_last_uncached_entry(struct smem_partition_header *phdr)
- {
-@@ -348,7 +357,7 @@ static void *cached_entry_to_item(struct smem_private_entry *e)
- }
- 
- static int qcom_smem_alloc_private(struct qcom_smem *smem,
--				   struct smem_ptable_entry *entry,
-+				   struct smem_partition_desc *p_desc,
- 				   unsigned item,
- 				   size_t size)
- {
-@@ -358,8 +367,8 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
- 	void *cached;
- 	void *p_end;
- 
--	phdr = ptable_entry_to_phdr(entry);
--	p_end = (void *)phdr + le32_to_cpu(entry->size);
-+	phdr = p_desc->virt_base;
-+	p_end = (void *)phdr + p_desc->size;
- 
- 	hdr = phdr_to_first_uncached_entry(phdr);
- 	end = phdr_to_last_uncached_entry(phdr);
-@@ -452,7 +461,7 @@ static int qcom_smem_alloc_global(struct qcom_smem *smem,
-  */
- int qcom_smem_alloc(unsigned host, unsigned item, size_t size)
- {
--	struct smem_ptable_entry *entry;
-+	struct smem_partition_desc *p_desc;
- 	unsigned long flags;
- 	int ret;
- 
-@@ -474,12 +483,12 @@ int qcom_smem_alloc(unsigned host, unsigned item, size_t size)
- 	if (ret)
- 		return ret;
- 
--	if (host < SMEM_HOST_COUNT && __smem->ptable_entries[host]) {
--		entry = __smem->ptable_entries[host];
--		ret = qcom_smem_alloc_private(__smem, entry, item, size);
--	} else if (__smem->global_partition_entry) {
--		entry = __smem->global_partition_entry;
--		ret = qcom_smem_alloc_private(__smem, entry, item, size);
-+	if (host < SMEM_HOST_COUNT && __smem->partition_desc[host].virt_base) {
-+		p_desc = &__smem->partition_desc[host];
-+		ret = qcom_smem_alloc_private(__smem, p_desc, item, size);
-+	} else if (__smem->global_partition_desc.virt_base) {
-+		p_desc = &__smem->global_partition_desc;
-+		ret = qcom_smem_alloc_private(__smem, p_desc, item, size);
- 	} else {
- 		ret = qcom_smem_alloc_global(__smem, item, size);
- 	}
-@@ -530,22 +539,20 @@ static void *qcom_smem_get_global(struct qcom_smem *smem,
- }
- 
- static void *qcom_smem_get_private(struct qcom_smem *smem,
--				   struct smem_ptable_entry *entry,
-+				   struct smem_partition_desc *p_desc,
- 				   unsigned item,
- 				   size_t *size)
- {
- 	struct smem_private_entry *e, *end;
- 	struct smem_partition_header *phdr;
- 	void *item_ptr, *p_end;
--	u32 partition_size;
- 	size_t cacheline;
- 	u32 padding_data;
- 	u32 e_size;
- 
--	phdr = ptable_entry_to_phdr(entry);
--	partition_size = le32_to_cpu(entry->size);
--	p_end = (void *)phdr + partition_size;
--	cacheline = le32_to_cpu(entry->cacheline);
-+	phdr = p_desc->virt_base;
-+	p_end = (void *)phdr + p_desc->size;
-+	cacheline = p_desc->cacheline;
- 
- 	e = phdr_to_first_uncached_entry(phdr);
- 	end = phdr_to_last_uncached_entry(phdr);
-@@ -562,7 +569,7 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
- 				e_size = le32_to_cpu(e->size);
- 				padding_data = le16_to_cpu(e->padding_data);
- 
--				if (e_size < partition_size
-+				if (e_size < p_desc->size
- 				    && padding_data < e_size)
- 					*size = e_size - padding_data;
- 				else
-@@ -598,7 +605,7 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
- 				e_size = le32_to_cpu(e->size);
- 				padding_data = le16_to_cpu(e->padding_data);
- 
--				if (e_size < partition_size
-+				if (e_size < p_desc->size
- 				    && padding_data < e_size)
- 					*size = e_size - padding_data;
- 				else
-@@ -637,7 +644,7 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
-  */
- void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
- {
--	struct smem_ptable_entry *entry;
-+	struct smem_partition_desc *p_desc;
- 	unsigned long flags;
- 	int ret;
- 	void *ptr = ERR_PTR(-EPROBE_DEFER);
-@@ -654,12 +661,12 @@ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
- 	if (ret)
- 		return ERR_PTR(ret);
- 
--	if (host < SMEM_HOST_COUNT && __smem->ptable_entries[host]) {
--		entry = __smem->ptable_entries[host];
--		ptr = qcom_smem_get_private(__smem, entry, item, size);
--	} else if (__smem->global_partition_entry) {
--		entry = __smem->global_partition_entry;
--		ptr = qcom_smem_get_private(__smem, entry, item, size);
-+	if (host < SMEM_HOST_COUNT && __smem->partition_desc[host].virt_base) {
-+		p_desc = &__smem->partition_desc[host];
-+		ptr = qcom_smem_get_private(__smem, p_desc, item, size);
-+	} else if (__smem->global_partition_desc.virt_base) {
-+		p_desc = &__smem->global_partition_desc;
-+		ptr = qcom_smem_get_private(__smem, p_desc, item, size);
- 	} else {
- 		ptr = qcom_smem_get_global(__smem, item, size);
- 	}
-@@ -681,30 +688,30 @@ EXPORT_SYMBOL(qcom_smem_get);
- int qcom_smem_get_free_space(unsigned host)
- {
- 	struct smem_partition_header *phdr;
--	struct smem_ptable_entry *entry;
-+	struct smem_partition_desc *p_desc;
- 	struct smem_header *header;
- 	unsigned ret;
- 
- 	if (!__smem)
- 		return -EPROBE_DEFER;
- 
--	if (host < SMEM_HOST_COUNT && __smem->ptable_entries[host]) {
--		entry = __smem->ptable_entries[host];
--		phdr = ptable_entry_to_phdr(entry);
-+	if (host < SMEM_HOST_COUNT && __smem->partition_desc[host].virt_base) {
-+		p_desc = &__smem->partition_desc[host];
-+		phdr = p_desc->virt_base;
- 
- 		ret = le32_to_cpu(phdr->offset_free_cached) -
- 		      le32_to_cpu(phdr->offset_free_uncached);
- 
--		if (ret > le32_to_cpu(entry->size))
-+		if (ret > p_desc->size)
- 			return -EINVAL;
--	} else if (__smem->global_partition_entry) {
--		entry = __smem->global_partition_entry;
--		phdr = ptable_entry_to_phdr(entry);
-+	} else if (__smem->global_partition_desc.virt_base) {
-+		p_desc = &__smem->global_partition_desc;
-+		phdr = p_desc->virt_base;
- 
- 		ret = le32_to_cpu(phdr->offset_free_cached) -
- 		      le32_to_cpu(phdr->offset_free_uncached);
- 
--		if (ret > le32_to_cpu(entry->size))
-+		if (ret > p_desc->size)
- 			return -EINVAL;
- 	} else {
- 		header = __smem->regions[0].virt_base;
-@@ -718,6 +725,15 @@ int qcom_smem_get_free_space(unsigned host)
- }
- EXPORT_SYMBOL(qcom_smem_get_free_space);
- 
-+static int addr_in_range(void *virt_base, unsigned int size, void *addr)
-+{
-+	if (virt_base && addr >= virt_base &&
-+			addr < virt_base + size)
-+		return 1;
-+
-+	return 0;
-+}
-+
- /**
-  * qcom_smem_virt_to_phys() - return the physical address associated
-  * with an smem item pointer (previously returned by qcom_smem_get()
-@@ -727,17 +743,36 @@ EXPORT_SYMBOL(qcom_smem_get_free_space);
-  */
- phys_addr_t qcom_smem_virt_to_phys(void *p)
- {
--	unsigned i;
-+	struct smem_partition_desc *p_desc;
-+	struct smem_region *area;
-+	u64 offset;
-+	u32 i;
-+
-+	for (i = 0; i < SMEM_HOST_COUNT; i++) {
-+		p_desc = &__smem->partition_desc[i];
-+
-+		if (addr_in_range(p_desc->virt_base, p_desc->size, p)) {
-+			offset = p - p_desc->virt_base;
-+
-+			return (phys_addr_t)p_desc->phys_base + offset;
-+		}
-+	}
-+
-+	p_desc = &__smem->global_partition_desc;
-+
-+	if (addr_in_range(p_desc->virt_base, p_desc->size, p)) {
-+		offset = p - p_desc->virt_base;
-+
-+		return (phys_addr_t)p_desc->phys_base + offset;
-+	}
- 
- 	for (i = 0; i < __smem->num_regions; i++) {
--		struct smem_region *region = &__smem->regions[i];
-+		area = &__smem->regions[i];
- 
--		if (p < region->virt_base)
--			continue;
--		if (p < region->virt_base + region->size) {
--			u64 offset = p - region->virt_base;
-+		if (addr_in_range(area->virt_base, area->size, p)) {
-+			offset = p - area->virt_base;
- 
--			return (phys_addr_t)region->aux_base + offset;
-+			return (phys_addr_t)area->aux_base + offset;
- 		}
- 	}
- 
-@@ -761,7 +796,7 @@ static struct smem_ptable *qcom_smem_get_ptable(struct qcom_smem *smem)
- 	struct smem_ptable *ptable;
- 	u32 version;
- 
--	ptable = smem->regions[0].virt_base + smem->regions[0].size - SZ_4K;
-+	ptable = smem->ptable_base;
- 	if (memcmp(ptable->magic, SMEM_PTABLE_MAGIC, sizeof(ptable->magic)))
- 		return ERR_PTR(-ENOENT);
- 
-@@ -800,9 +835,15 @@ qcom_smem_partition_header(struct qcom_smem *smem,
- 		struct smem_ptable_entry *entry, u16 host0, u16 host1)
- {
- 	struct smem_partition_header *header;
-+	u32 phys_addr;
- 	u32 size;
- 
--	header = smem->regions[0].virt_base + le32_to_cpu(entry->offset);
-+	phys_addr = smem->regions[0].aux_base + le32_to_cpu(entry->offset);
-+	header = devm_ioremap_wc(smem->dev,
-+                                  phys_addr, le32_to_cpu(entry->size));
-+
-+	if (!header)
-+		return NULL;
- 
- 	if (memcmp(header->magic, SMEM_PART_MAGIC, sizeof(header->magic))) {
- 		dev_err(smem->dev, "bad partition magic %02x %02x %02x %02x\n",
-@@ -846,7 +887,7 @@ static int qcom_smem_set_global_partition(struct qcom_smem *smem)
- 	bool found = false;
- 	int i;
- 
--	if (smem->global_partition_entry) {
-+	if (smem->global_partition_desc.virt_base) {
- 		dev_err(smem->dev, "Already found the global partition\n");
- 		return -EINVAL;
- 	}
-@@ -881,7 +922,11 @@ static int qcom_smem_set_global_partition(struct qcom_smem *smem)
- 	if (!header)
- 		return -EINVAL;
- 
--	smem->global_partition_entry = entry;
-+	smem->global_partition_desc.virt_base = (void __iomem *)header;
-+	smem->global_partition_desc.phys_base = smem->regions[0].aux_base +
-+						 le32_to_cpu(entry->offset);
-+	smem->global_partition_desc.size = le32_to_cpu(entry->size);
-+	smem->global_partition_desc.cacheline = le32_to_cpu(entry->cacheline);
- 
- 	return 0;
- }
-@@ -921,7 +966,7 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
- 			return -EINVAL;
- 		}
- 
--		if (smem->ptable_entries[remote_host]) {
-+		if (smem->partition_desc[remote_host].virt_base) {
- 			dev_err(smem->dev, "duplicate host %hu\n", remote_host);
- 			return -EINVAL;
- 		}
-@@ -930,7 +975,14 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
- 		if (!header)
- 			return -EINVAL;
- 
--		smem->ptable_entries[remote_host] = entry;
-+		smem->partition_desc[remote_host].virt_base =
-+						(void __iomem *)header;
-+		smem->partition_desc[remote_host].phys_base =
-+			smem->regions[0].aux_base + le32_to_cpu(entry->offset);
-+		smem->partition_desc[remote_host].size =
-+						le32_to_cpu(entry->size);
-+		smem->partition_desc[remote_host].cacheline =
-+						le32_to_cpu(entry->cacheline);
- 	}
- 
- 	return 0;
-@@ -965,6 +1017,61 @@ static int qcom_smem_map_memory(struct qcom_smem *smem, struct device *dev,
- 	return 0;
- }
- 
-+static int qcom_smem_map_toc(struct qcom_smem *smem, struct device *dev,
-+				const char *name, int i)
-+{
-+	struct device_node *np;
-+	struct resource r;
-+	int ret;
-+
-+	np = of_parse_phandle(dev->of_node, name, 0);
-+	if (!np) {
-+		dev_err(dev, "No %s specified\n", name);
-+		return -EINVAL;
-+	}
-+
-+	ret = of_address_to_resource(np, 0, &r);
-+	of_node_put(np);
-+	if (ret)
-+		return ret;
-+
-+	smem->regions[i].aux_base = (u32)r.start;
-+	smem->regions[i].size = resource_size(&r);
-+	/* map starting 4K for smem header */
-+	smem->regions[i].virt_base = devm_ioremap_wc(dev, r.start, SZ_4K);
-+	/* map last 4k for toc */
-+	smem->ptable_base = devm_ioremap_wc(dev,
-+				r.start + resource_size(&r) - SZ_4K, SZ_4K);
-+
-+	if (!smem->regions[i].virt_base || !smem->ptable_base)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
-+static int qcom_smem_mamp_legacy(struct qcom_smem *smem)
-+{
-+	struct smem_header *header;
-+	u32 phys_addr;
-+	u32 p_size;
-+
-+	phys_addr = smem->regions[0].aux_base;
-+	header = smem->regions[0].virt_base;
-+	p_size = header->available;
-+
-+	/* unmap previously mapped starting 4k for smem header */
-+	devm_iounmap(smem->dev, smem->regions[0].virt_base);
-+
-+	smem->regions[0].size = p_size;
-+	smem->regions[0].virt_base = devm_ioremap_wc(smem->dev,
-+						      phys_addr, p_size);
-+
-+	if (!smem->regions[0].virt_base)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
- static int qcom_smem_probe(struct platform_device *pdev)
- {
- 	struct smem_header *header;
-@@ -987,7 +1094,7 @@ static int qcom_smem_probe(struct platform_device *pdev)
- 	smem->dev = &pdev->dev;
- 	smem->num_regions = num_regions;
- 
--	ret = qcom_smem_map_memory(smem, &pdev->dev, "memory-region", 0);
-+	ret = qcom_smem_map_toc(smem, &pdev->dev, "memory-region", 0);
- 	if (ret)
- 		return ret;
- 
-@@ -1011,6 +1118,7 @@ static int qcom_smem_probe(struct platform_device *pdev)
- 		smem->item_count = qcom_smem_get_item_count(smem);
- 		break;
- 	case SMEM_GLOBAL_HEAP_VERSION:
-+		qcom_smem_mamp_legacy(smem);
- 		smem->item_count = SMEM_ITEM_COUNT;
- 		break;
- 	default:
+J.
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+] https://www.earth.li/~noodles/ []   101 things you can't have too    [
+]  PGP/GPG Key @ the.earth.li    []      much of : 34 - Beaches.       [
+] via keyserver, web or email.   []                                    [
+] RSA: 4096/0x94FA372B2DA8B985   []                                    [
