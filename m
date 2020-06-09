@@ -2,106 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 24C741F49E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 01:00:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE10F1F49E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 01:02:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728193AbgFIXAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 19:00:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728108AbgFIXAn (ORCPT
+        id S1728775AbgFIXCU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 19:02:20 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:45345 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728108AbgFIXCT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 19:00:43 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD83C05BD1E;
-        Tue,  9 Jun 2020 16:00:39 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id n24so87904lji.10;
-        Tue, 09 Jun 2020 16:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=s8uiAmqlfKhbNS8zB94at4653DA3vsfFnLuxtD8Ft50=;
-        b=uWX8PhxX5ck/fIgnf6AhjoNGa9v1kr5t35QzGp2u2JIVCjZ0+WiYHj4q9+GAG4lrp7
-         BVyECS9oPaynGxiySyf0LfbYxB9FMTctWW/NS2cXpcN3mGFgjRLCQaYmRd6Y7QStPRQT
-         dI3JV5gwgO8alapw4DfHWnl+jk1s2Wfolr8Ek+/bwobQXHRcjzLabkRyYWAU/tY2lPQ8
-         I/M25+6IxYgMvCDSQIRLznO3jJ1QlJGAo07ltgjwKMJYFxsG2oQve6YoEfVWq9wCSRd1
-         MuGl7isbbfFue0V2H6NUqHDsMhjZ/R8+ZM9pMy30iALOYfyar/kuf0V4ch6JD04gozaH
-         dfxg==
+        Tue, 9 Jun 2020 19:02:19 -0400
+Received: by mail-io1-f65.google.com with SMTP id y5so27438iob.12;
+        Tue, 09 Jun 2020 16:02:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=s8uiAmqlfKhbNS8zB94at4653DA3vsfFnLuxtD8Ft50=;
-        b=G1lprtOvpO0boT/5IX/1GtRGyi+stQQTofaVkqL4ttevq21ZpWff/S1R+pioSIGJSq
-         pBhBZXHlytJvP85SkBqB6WgI+4LCRiFS79Te7DbsJ2NC1Jv1ajGBJ4Qf/CvLDnwZDFWc
-         wwpJjrPgbj/ScRypXp3AY6In4Wnaq/7W84CIDQljQytWD8N5K5PwPpbVL5sTzs0iSXNS
-         UYLy43gl8JB0RVpFIErG3649r7OWmsCCp52/Cq9NEo+QlitQqAtBynaXlz1KsqUH3nvl
-         ShhZSbQSXuHLwCZtWNIpGmphdtlfYFQg/8SHRAGDupJSBhoSudj+iFzPIn5njBQ+h/l2
-         90Bw==
-X-Gm-Message-State: AOAM532oQUZh2aevolwUTMBMe6MLMoTtwfc5CN20DvZwaANFcY9Tzd+c
-        ST/fllRgO+HiNC9wpFnckho=
-X-Google-Smtp-Source: ABdhPJwcuwJBEnfuj2h/lT/fcSUcFngGefHGqO+wURSYU5P9LQf6N3Rt2gy0UEdq2la9dxghMEP3gw==
-X-Received: by 2002:a2e:95d9:: with SMTP id y25mr264828ljh.167.1591743637017;
-        Tue, 09 Jun 2020 16:00:37 -0700 (PDT)
-Received: from localhost.localdomain (h-82-196-111-136.NA.cust.bahnhof.se. [82.196.111.136])
-        by smtp.gmail.com with ESMTPSA id b15sm5306278lfa.74.2020.06.09.16.00.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9UAjDcGkiv4VYRf/6C6V6G9cxQr/lplrc3OR9Y4YnTY=;
+        b=gLh5b/Mzx82dvgT9FDtczaQdpF0KgOSUHi1oup2Oa0mYMxOSTwgSy0/vzr0pBoQpB7
+         ciGTjXnjxoBXTEPCmZSmljkiqmYHor9SYubXvECIVZBSzmoDFOiM8X5A4/EBR2KPCrV6
+         X9Bpv5q2v/iyndwOt+ZyF6rEt6nN2jH3P/yMVF/sb9xozlJfTnR8OXYs6ZQLM8YOcOIZ
+         MC7pKOWBZHZWHie3nSSsvEca1I5+GZLk7tvx7zU9tPspSCe+gtsxIJdiUymsznANOpFH
+         Aa3HNA74JgpzrvBNuFMufcTEN6QWMfi5EgX/kM19ACGIhHJ/CTjE2uYgOokScAomBLFC
+         7Lmg==
+X-Gm-Message-State: AOAM531FWlCScH9s/fatIeF9jBJh4njLQFBtjsqh8mYSDjRiy0mLaGKz
+        UDW7f/QMkAvXICLKjheJyA==
+X-Google-Smtp-Source: ABdhPJw3B/5yrBt/y3dpRloQGYK8NgxRmXYSpins8OjJRCa8Nz5fGw8lZcOgcw38BCyDDNJuKrHPCA==
+X-Received: by 2002:a02:a46:: with SMTP id 67mr481777jaw.144.1591743738577;
+        Tue, 09 Jun 2020 16:02:18 -0700 (PDT)
+Received: from xps15 ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id r19sm8035022ioj.12.2020.06.09.16.02.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2020 16:00:36 -0700 (PDT)
-From:   Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org,
-        sanyog.r.kale@intel.com, pierre-louis.bossart@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Subject: [PATCH] soundwire: qcom: Constify static structs
-Date:   Wed, 10 Jun 2020 01:00:29 +0200
-Message-Id: <20200609230029.69802-1-rikard.falkeborn@gmail.com>
-X-Mailer: git-send-email 2.27.0
+        Tue, 09 Jun 2020 16:02:17 -0700 (PDT)
+Received: (nullmailer pid 1670237 invoked by uid 1000);
+        Tue, 09 Jun 2020 23:02:16 -0000
+Date:   Tue, 9 Jun 2020 17:02:16 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, broonie@kernel.org
+Subject: Re: [PATCH V3 1/3] dt-bindings: mmc: Supply max load for mmc supplies
+Message-ID: <20200609230216.GA1655591@bogus>
+References: <1589541535-8523-1-git-send-email-vbadigan@codeaurora.org>
+ <1591094883-11674-1-git-send-email-vbadigan@codeaurora.org>
+ <1591094883-11674-2-git-send-email-vbadigan@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1591094883-11674-2-git-send-email-vbadigan@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qcom_swrm_port_ops and qcom_swrm_ops are not modified and can be made
-const to allow the compiler to put them in read-only memory.
++Mark B
 
-Before:
-   text    data     bss     dec     hex filename
-  18266    3056     256   21578    544a drivers/soundwire/qcom.o
+On Tue, Jun 02, 2020 at 04:17:54PM +0530, Veerabhadrarao Badiganti wrote:
+> Supply the max load needed for driving the mmc supplies.
+> 
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/mmc/mmc-controller.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+> index acc9f10871d4..d95219721fa1 100644
+> --- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+> @@ -290,6 +290,12 @@ properties:
+>      description:
+>        Supply for the bus IO line power
+>  
+> +  vmmc-supply-max-microamp:
+> +    description: Maximum load for the card power.
+> +
+> +  vqmmc-supply-max-microamp:
+> +    description: Maximum load for the bus IO line power.
 
-After:
-   text    data     bss     dec     hex filename
-  18426    2896     256   21578    544a drivers/soundwire/qcom.o
+By a 'common regulator property' I meant documented with regulator 
+binding like *-supply, not common to MMC. How is MMC special?
 
-Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
----
- drivers/soundwire/qcom.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thinking about this some more, what's wrong with the max current in the 
+regulator nodes? I suppose you could have more than one load and need to 
+define the loads separately?
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index a1c2a44a3b4d..915c2cf0c274 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -406,13 +406,13 @@ static int qcom_swrm_port_enable(struct sdw_bus *bus,
- 	return ctrl->reg_write(ctrl, reg, val);
- }
- 
--static struct sdw_master_port_ops qcom_swrm_port_ops = {
-+static const struct sdw_master_port_ops qcom_swrm_port_ops = {
- 	.dpn_set_port_params = qcom_swrm_port_params,
- 	.dpn_set_port_transport_params = qcom_swrm_transport_params,
- 	.dpn_port_enable_ch = qcom_swrm_port_enable,
- };
- 
--static struct sdw_master_ops qcom_swrm_ops = {
-+static const struct sdw_master_ops qcom_swrm_ops = {
- 	.xfer_msg = qcom_swrm_xfer_msg,
- 	.pre_bank_switch = qcom_swrm_pre_bank_switch,
- };
--- 
-2.27.0
-
+Rob
