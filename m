@@ -2,163 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDB3C1F3C32
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 15:22:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37BA11F3C88
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2020 15:31:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728373AbgFINWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 09:22:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56394 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728082AbgFINV6 (ORCPT
+        id S1728803AbgFINbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 09:31:21 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:31991 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728694AbgFINbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 09:21:58 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C464AC05BD1E;
-        Tue,  9 Jun 2020 06:21:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Transfer-Encoding
-        :Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-        Sender:Reply-To:Content-ID:Content-Description;
-        bh=V3d421xQlXEJCML3wEa7LbtDgAd0pPCbPZf0itcOVZ8=; b=VuQsL7ABDfE4mueZRE489uDo1M
-        eM4Y9jTz9gyCzJYdzmiTdSNVyu5pjPS5CXs09Wknm2mH5UOFrqyk0xrX5l9H/cklBqVT9ykRBV7C3
-        IWhoIkgrYD2Z19w9mu1XA81RLZNh9R5A+ECNnKPjJWWE+fQRDKjuGbRrTxpYH+4fXq/APDQPul2fj
-        K1xei6kJzZlH8DNagtemxgNhvyzuKJnGcBjbP4gos3FLszISbop9vUZMawb8rdI6f8W5+bWJT+8xT
-        ss0Xmb5GpKQ8vqysTU1ndMnkyw5LHcveHtKtKWo9pu6wtW3oiqIr3oyHD91t8ghef9wbBg0O+qxaY
-        GeHEHHEg==;
-Received: from willy by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jieCN-0007n5-3Y; Tue, 09 Jun 2020 13:21:51 +0000
-Date:   Tue, 9 Jun 2020 06:21:51 -0700
-From:   Matthew Wilcox <willy@infradead.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Mimi Zohar <zohar@linux.ibm.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        linux-integrity@vger.kernel.org,
-        linux-security-module@vger.kernel.org,
-        Christoph Hellwig <hch@infradead.org>
-Subject: Re: [PATCH v7 1/8] fs: introduce kernel_pread_file* support
-Message-ID: <20200609132151.GC19604@bombadil.infradead.org>
-References: <20200606050458.17281-1-scott.branden@broadcom.com>
- <20200606050458.17281-2-scott.branden@broadcom.com>
- <20200606155216.GP19604@bombadil.infradead.org>
- <ea16c19e-bd60-82ec-4825-05e233667f9f@broadcom.com>
+        Tue, 9 Jun 2020 09:31:20 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591709480; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=XYMKF86CVQR23J6gZ8goT411lJqXYpDzWo8S/WlnSa4=; b=Ws0j/a2Sd9O3xsTHSJcgCagKTu0ajxdlp1NUQVtw0Ndjlv1G7RIEnkC53YJaSBnslNsbwG+x
+ z0k/MQaGEwBpkcf3x8F0o2w/yCUMB1dIXKwEbF8ms0Wrfd8x7P3ukiYRoD6mw8m9/x2LarI5
+ w4ylhF7UMNt0O5d3VC8OCZpenzU=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5edf8f05a3d8a44743cbe70a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Jun 2020 13:30:45
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E20B1C4339C; Tue,  9 Jun 2020 13:30:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D8A61C433C6;
+        Tue,  9 Jun 2020 13:30:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D8A61C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        mike.leach@linaro.org, Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 0/4] Add coresight support for SM8150 and few changes to SC7180 
+Date:   Tue,  9 Jun 2020 19:00:27 +0530
+Message-Id: <cover.1591708204.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ea16c19e-bd60-82ec-4825-05e233667f9f@broadcom.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 08, 2020 at 03:29:22PM -0700, Scott Branden wrote:
-> Hi Matthew,
-> 
-> I am requesting the experts in the filesystem subsystem to come to a
-> consensus here.
-> This is not my area of expertise at all but every time I have addressed all
-> of the
-> outstanding concerns someone else comes along and raises another one.
+This series adds coresight support for SM8150 SoC and some coresight
+DT changes to SC7180 SoC.
 
-I appreciate it's frustrating for you, but this is the nature of
-patch review.  I haven't even read the first five or so submissions.
-I can see them in my inbox and they look like long threads.  I'm not
-particularly inclined to read them.  I happened to read v6, and reacted
-to the API being ugly.
+Patch 1 depends on coresight etm driver change:
+ - https://git.linaro.org/kernel/coresight.git/commit/?h=next-v5.8-rc1&id=159e248e75b1b548276b6571d7740a35cab1f5be
 
-> Please see me comments below.
-> 
-> On 2020-06-06 8:52 a.m., Matthew Wilcox wrote:
-> > On Fri, Jun 05, 2020 at 10:04:51PM -0700, Scott Branden wrote:
-> > > -int kernel_read_file(struct file *file, void **buf, loff_t *size,
-> > > -		     loff_t max_size, enum kernel_read_file_id id)
-> > > -{
-> > > -	loff_t i_size, pos;
-> Please note that how checkpatch generated the diff here.  The code
-> modifications
-> below are for a new function kernel_pread_file, they do not modify the
-> existing API
-> kernel_read_file.  kernel_read_file requests the ENTIRE file is read.  So we
-> need to be
-> able to differentiate whether it is ok to read just a portion of the file or
-> not.
+Patch 3 depends on coresight replicator driver change:
+ - https://git.linaro.org/kernel/coresight.git/commit/?h=next-v5.8-rc1&id=1b6cddfb7ebb5ed293124698f147e914b15315a1
+ 
+Patch 4 depends on following coresight driver changes and SMMU DT node for SM8150
+ - https://git.linaro.org/kernel/coresight.git/commit/?h=next-v5.8-rc1&id=159e248e75b1b548276b6571d7740a35cab1f5be
+ - https://git.linaro.org/kernel/coresight.git/commit/?h=next-v5.8-rc1&id=1b6cddfb7ebb5ed293124698f147e914b15315a1
+ - https://lore.kernel.org/lkml/20200524023815.21789-2-jonathan@marek.ca/
 
-You've gone about this in entirely the wrong way though.  This enum to
-read the entire file or a partial is just bad design.
+Tested this series on SM8150 and SC7180.
 
-> > > +int kernel_pread_file(struct file *file, void **buf, loff_t *size,
-> > > +		      loff_t pos, loff_t max_size,
-> > > +		      enum kernel_pread_opt opt,
-> > > +		      enum kernel_read_file_id id)
-> So, to share common code a new kernel_pread_opt needed to be added in order
-> to specify whether
-> it was ok to read a partial file or not, and provide an offset into the file
-> where to begin reading.
-> The meaning of parameters doesn't change in the bonkers API. max_size still
-> means max size, etc.
-> These options are needed so common code can be shared with kernel_read_file
-> api.
+Sai Prakash Ranjan (4):
+  arm64: dts: qcom: sc7180: Add support to skip powering up of ETM
+  arm64: dts: qcom: sc7180: Add iommus property to ETR
+  arm64: dts: qcom: sc7180: Add support for context losing replicator
+  arm64: dts: qcom: sm8150: Add Coresight support
 
-Does pread() in userspace take seven parameters?  No.  It takes four.
-What you're doing is taking all the complexity of all of the interfaces
-and stuffing it all down into the bottom function instead of handling
-some of the complexity in the wrapper functions.  For example, you
-could support the functionality of 'max_size' in kernel_read_file()
-and leave it out of the kernel_pread_file() interface.
+ arch/arm64/boot/dts/qcom/sc7180.dtsi |  10 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 591 +++++++++++++++++++++++++++
+ 2 files changed, 601 insertions(+)
 
-> > I think what we actually want is:
-> > 
-> > ssize_t vmap_file_range(struct file *, loff_t start, loff_t end, void **bufp);
-> > void vunmap_file_range(struct file *, void *buf);
-> > 
-> > If end > i_size, limit the allocation to i_size.  Returns the number
-> > of bytes allocated, or a negative errno.  Writes the pointer allocated
-> > to *bufp.  Internally, it should use the page cache to read in the pages
-> > (taking appropriate reference counts).  Then it maps them using vmap()
-> > instead of copying them to a private vmalloc() array.
-> > kernel_read_file() can be converted to use this API.  The users will
-> > need to be changed to call kernel_read_end(struct file *file, void *buf)
-> > instead of vfree() so it can call allow_write_access() for them.
-> > 
-> > vmap_file_range() has a lot of potential uses.  I'm surprised we don't
-> > have it already, to be honest.
-> Such a change sounds like it could be done in a later patch series.
-> It's an incomplete solution.  It would work for some of the needed
-> operations but not others.
-> For kernel_read_file, I don't see how in your new API it indicates if the
-> end of the file was reached or not.
 
-That's the point.  It doesn't.  If a caller needs that, then they can
-figure that out themselves.
+base-commit: 98cfcf1a9c542d6bec7b29915d838caaf72da737
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-> Also, please note that buffers may be preallocated  and shouldn't be freed
-> by the kernel in some cases and
-> allocated and freed by the kernel in others.
-
-You're trying to build the swiss army knife of functions.  Swiss army
-knives are useful, but they're no good for carving a steak.
-
-> I would like the experts here to decide on what needs to be done so we can
-> move forward
-> and get kernel_pread_file support added soon.
-
-You know, you haven't even said _why_ you want this.  The cover letter
-just says "I want this", and doesn't say why it's needed.
