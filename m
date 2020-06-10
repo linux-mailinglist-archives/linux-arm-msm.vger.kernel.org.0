@@ -2,68 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9BD91F5C35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 21:50:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1F471F5CF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 22:18:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730298AbgFJTuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jun 2020 15:50:02 -0400
-Received: from smtprelay0193.hostedemail.com ([216.40.44.193]:34158 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730085AbgFJTuC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jun 2020 15:50:02 -0400
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay05.hostedemail.com (Postfix) with ESMTP id 700B5180295B8;
-        Wed, 10 Jun 2020 19:50:00 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1539:1593:1594:1711:1714:1730:1747:1777:1792:2393:2559:2562:2828:3138:3139:3140:3141:3142:3351:3622:3865:3866:3867:3868:3872:3874:4321:5007:6119:6691:7903:10004:10400:10848:11232:11658:11914:12297:12740:12760:12895:13069:13172:13229:13311:13357:13439:14659:14721:21080:21433:21627:21740:30045:30054:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:2,LUA_SUMMARY:none
-X-HE-Tag: blade08_160868726dcd
-X-Filterd-Recvd-Size: 1819
-Received: from XPS-9350.home (unknown [47.151.136.130])
-        (Authenticated sender: joe@perches.com)
-        by omf16.hostedemail.com (Postfix) with ESMTPA;
-        Wed, 10 Jun 2020 19:49:58 +0000 (UTC)
-Message-ID: <31e1aa72b41f9ff19094476033511442bb6ccda0.camel@perches.com>
-Subject: Re: [PATCH v3 6/7] venus: Make debug infrastructure more flexible
-From:   Joe Perches <joe@perches.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, linux-acpi@vger.kernel.org,
-        netdev@vger.kernel.org, Jason Baron <jbaron@akamai.com>
-Date:   Wed, 10 Jun 2020 12:49:57 -0700
-In-Reply-To: <20200610133717.GB1906670@kroah.com>
-References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
-         <20200609104604.1594-7-stanimir.varbanov@linaro.org>
-         <20200609111414.GC780233@kroah.com>
-         <dc85bf9e-e3a6-15a1-afaa-0add3e878573@linaro.org>
-         <20200610133717.GB1906670@kroah.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.36.2-0ubuntu1 
+        id S1727080AbgFJUSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jun 2020 16:18:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59058 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726081AbgFJUSm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Jun 2020 16:18:42 -0400
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B3795207C3;
+        Wed, 10 Jun 2020 20:18:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591820321;
+        bh=lZD7Sa+lOxkbDXZoiCEaR5gV4LQiphLbs7wsQ+7OUGA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=2MY6RsEg8AE2qbI2zGFtH4+jGHVA0PEHwFVAhqnqr9RkbYkjLxIpCyCtDV6SV7+vV
+         mXSnExBwV41CziZyJhWMpMidhxWu7mp0XB2T/xpXaaa0dOkBzpTsCT5zpN/Z2y4ogO
+         Xa9AXfDHzWrEjqKC+eQuaGE8Arh20givzxJRc0Sw=
+Received: by mail-ot1-f52.google.com with SMTP id g7so2747971oti.13;
+        Wed, 10 Jun 2020 13:18:41 -0700 (PDT)
+X-Gm-Message-State: AOAM5308XZJlwzfGOpLJkM0ANd54ZYOVsyhWPitoSOmYqVsHxwP0J/fR
+        gGYrD5H0T+0h2En2efkneTaMcMo/SvtN+VAXEg==
+X-Google-Smtp-Source: ABdhPJwyNrli2IyO7NvXxO4E/Ji/aw1Bh37+jXYs5prN7IoJzLfRj7nt48qp5876ykVDiZ4z1KCiN3+jvukHbLzH6gE=
+X-Received: by 2002:a05:6830:3104:: with SMTP id b4mr4180042ots.192.1591820321058;
+ Wed, 10 Jun 2020 13:18:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <20200602200837.321712-1-konradybcio@gmail.com>
+In-Reply-To: <20200602200837.321712-1-konradybcio@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 10 Jun 2020 14:18:30 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJ-eHd5yfQ=qg+SSTd6a=xr8C2mGWKMKutDQBfY9XoH+g@mail.gmail.com>
+Message-ID: <CAL_JsqJ-eHd5yfQ=qg+SSTd6a=xr8C2mGWKMKutDQBfY9XoH+g@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Documentation: Document an existing qcom,rpm-msm8996 compatible
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2020-06-10 at 15:37 +0200, Greg Kroah-Hartman wrote:
-> Please work with the infrastructure we have, we have spent a lot of time
-> and effort to make it uniform to make it easier for users and
-> developers.
+On Tue, Jun 2, 2020 at 2:08 PM Konrad Dybcio <konradybcio@gmail.com> wrote:
+>
+> This compatible has been included in the driver for
+> some time, but it has been overlooked in documentation.
+>
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
+> index 25541a475ead..4b916d67064a 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
+> @@ -24,6 +24,7 @@ resources.
+>                     "qcom,rpm-msm8974"
+>                     "qcom,rpm-msm8976"
+>                     "qcom,rpm-msm8994"
+> +                   "qcom,rpm-msm8996"
 
-Not quite.
+This is dependent on your patch adding 8994. Send them as a series
+please (or at least mention the dependency).
 
-This lack of debug grouping by type has been a
-_long_ standing issue with drivers.
+And use consistent subjects. Run 'git log --oneline' on the path a
+patch touches to find the pattern used. ('dt-bindings: soc: qcom: ...'
+here).
 
-> Don't regress and try to make driver-specific ways of doing
-> things, that way lies madness...
-
-It's not driver specific, it allows driver developers to
-better isolate various debug states instead of keeping
-lists of specific debug messages and enabling them
-individually.
-
-
+>                     "qcom,rpm-msm8998"
+>                     "qcom,rpm-sdm660"
+>                     "qcom,rpm-qcs404"
+> --
+> 2.26.2
+>
