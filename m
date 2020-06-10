@@ -2,109 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B39361F54C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 14:27:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A65A21F55CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 15:29:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729081AbgFJM0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jun 2020 08:26:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38506 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729077AbgFJM0s (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jun 2020 08:26:48 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A8D02206F4;
-        Wed, 10 Jun 2020 12:26:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591792007;
-        bh=PBnbsD1r4hBJSwpcdPlA8plwD/kWkJiD61twepTwXNE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jJpTTwI4BcRIVrN10ZRmWWQHb9uLqvUrrTbyJC1G5ckdCzOCEOBlPdgX2dMouNv0y
-         YAgEbPCewSSW4UUxn4RQtfuCNeuAdQ/VXQBBn5Ha87ZqsZt+1tcxAPrnMH0pHm3w0F
-         EFkHX/7w+geTl3Np545ZBkOWixSYUU12SBQ6Y3Ls=
-Date:   Wed, 10 Jun 2020 14:26:41 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+        id S1726418AbgFJN3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jun 2020 09:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54344 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726448AbgFJN3c (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Jun 2020 09:29:32 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 818AEC08C5C3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2020 06:29:31 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id e12so1403718eds.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2020 06:29:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3e8bC/Ax9BOA2Qqmdvlceg2Mrom20tLBb9FMDRoA6eo=;
+        b=EqyUKU7po/7+hPZYV1Dj3uiGUPJ5ITBTEk/rMgp6ak0CGVbHBllGnUD5h/aqefJnxj
+         /fIenwtADhXRg1T8lK0QzyOetyHvPME+edY3lZDbqiiddexxk7FqSyrB6KT3Qz+LL9tv
+         CEG3hyWmOtXRTyiK8VrNvo0sde7JNe1hyGs3nxdvvFhkhah1MlEnqi8R3OElWDeKgQiv
+         jrkDOtnAiou8e0oZMOgOJrJVRgD049QpA+kMw5tIZfGt2xfbCLsVJPy3VmBYZjQPDNXE
+         X2uJTGCrp2u13QWmsHWxc5x3UMBmW9+ewZ+bPoMzvBOfVh2qsrSkuR3v6bv7bgw1mvqW
+         mgLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3e8bC/Ax9BOA2Qqmdvlceg2Mrom20tLBb9FMDRoA6eo=;
+        b=pXFxr5M991rfC5BtchfrMxze8huh4DGs0fGJXGcn7YGlG9soKLd4d9zj5Eq2drlpES
+         qEw/RRPlTX1pTWMrZqGt9g58Ew0rVNv+0U0U5weBsQF8zloNBnuDyRVADyrF7tl5Oy4w
+         wKKALg7zeSiPS8xXyhSGMWx+A/0suu9aVnTCZ1h4Y+ApRbcwMQzf/vkJNJv27Snx5yzm
+         /9iMhNcMoA5vBMhijfa0AjLA6co8ZfwLRVPa7Ub9XlQy4zYdXHLmvTfAvZ3db1nA2mhp
+         Wq9gltLy+R8s/3rgoQ5qt0fD40qI2ympRHVx94Vt+BTYv+lYLRhtN9yxWuGCkYZeSTlY
+         qh5w==
+X-Gm-Message-State: AOAM532mnsNGGX75pWh5xU3+ZAWMQ3n5rrkLjmvaQxbeZVmAFcjwF5Cn
+        m8lba9ltRGDdU5UrRR6OVXZBpQ==
+X-Google-Smtp-Source: ABdhPJzVyANva+fJza2/Sfu3EJMVyNZvktU+OpnQzj6FWgSjEETySHwTT+qPdA8idoQZQ2NiKDwjVQ==
+X-Received: by 2002:a50:f9cc:: with SMTP id a12mr2492130edq.227.1591795769805;
+        Wed, 10 Jun 2020 06:29:29 -0700 (PDT)
+Received: from [192.168.1.5] (212-5-158-114.ip.btc-net.bg. [212.5.158.114])
+        by smtp.googlemail.com with ESMTPSA id b14sm15221126ejq.105.2020.06.10.06.29.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2020 06:29:29 -0700 (PDT)
+Subject: Re: [PATCH v3 6/7] venus: Make debug infrastructure more flexible
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-btrfs@vger.kernel.org, linux-acpi@vger.kernel.org,
         netdev@vger.kernel.org, Joe Perches <joe@perches.com>,
-        Jason Baron <jbaron@akamai.com>,
-        Jonathan Corbet <corbet@lwn.net>
-Subject: Re: [PATCH v3 1/7] Documentation: dynamic-debug: Add description of
- level bitmask
-Message-ID: <20200610122641.GB1900758@kroah.com>
+        Jason Baron <jbaron@akamai.com>
 References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
- <20200609104604.1594-2-stanimir.varbanov@linaro.org>
- <20200609111615.GD780233@kroah.com>
- <0830ba57-d416-4788-351a-6d1b2ca5b7d8@linaro.org>
+ <20200609104604.1594-7-stanimir.varbanov@linaro.org>
+ <20200609111414.GC780233@kroah.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <dc85bf9e-e3a6-15a1-afaa-0add3e878573@linaro.org>
+Date:   Wed, 10 Jun 2020 16:29:27 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0830ba57-d416-4788-351a-6d1b2ca5b7d8@linaro.org>
+In-Reply-To: <20200609111414.GC780233@kroah.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 10, 2020 at 01:29:20PM +0300, Stanimir Varbanov wrote:
-> Hi Greg,
+
+
+On 6/9/20 2:14 PM, Greg Kroah-Hartman wrote:
+> On Tue, Jun 09, 2020 at 01:46:03PM +0300, Stanimir Varbanov wrote:
+>> Here we introduce few debug macros with levels (low, medium and
+>> high) and debug macro for firmware. Enabling the particular level
+>> will be done by dynamic debug with levels.
+>>
+>> For example to enable debug messages with low level:
+>> echo 'module venus_dec level 0x01 +p' > debugfs/dynamic_debug/control
+>>
+>> If you want to enable all levels:
+>> echo 'module venus_dec level 0x07 +p' > debugfs/dynamic_debug/control
+>>
+>> All the features which dynamic debugging provide are preserved.
+>>
+>> And finaly all dev_dbg are translated to VDBGX with appropriate
+>> debug levels.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.h      |  5 ++
+>>  drivers/media/platform/qcom/venus/helpers.c   |  2 +-
+>>  drivers/media/platform/qcom/venus/hfi_msgs.c  | 30 ++++-----
+>>  drivers/media/platform/qcom/venus/hfi_venus.c | 20 ++++--
+>>  .../media/platform/qcom/venus/pm_helpers.c    |  3 +-
+>>  drivers/media/platform/qcom/venus/vdec.c      | 63 +++++++++++++++++--
+>>  drivers/media/platform/qcom/venus/venc.c      |  4 ++
+>>  7 files changed, 96 insertions(+), 31 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>> index b48782f9aa95..63eabf5ff96d 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -15,6 +15,11 @@
+>>  #include "dbgfs.h"
+>>  #include "hfi.h"
+>>  
+>> +#define VDBGL(fmt, args...)	pr_debug_level(0x01, fmt, ##args)
+>> +#define VDBGM(fmt, args...)	pr_debug_level(0x02, fmt, ##args)
+>> +#define VDBGH(fmt, args...)	pr_debug_level(0x04, fmt, ##args)
+>> +#define VDBGFW(fmt, args...)	pr_debug_level(0x08, fmt, ##args)
+>> +
+>>  #define VIDC_CLKS_NUM_MAX		4
+>>  #define VIDC_VCODEC_CLKS_NUM_MAX	2
+>>  #define VIDC_PMDOMAINS_NUM_MAX		3
+>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+>> index 0143af7822b2..115a9a2af1d6 100644
+>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>> @@ -396,7 +396,7 @@ put_ts_metadata(struct venus_inst *inst, struct vb2_v4l2_buffer *vbuf)
+>>  	}
+>>  
+>>  	if (slot == -1) {
+>> -		dev_dbg(inst->core->dev, "%s: no free slot\n", __func__);
+>> +		VDBGH("no free slot for timestamp\n");
 > 
-> On 6/9/20 2:16 PM, Greg Kroah-Hartman wrote:
-> > On Tue, Jun 09, 2020 at 01:45:58PM +0300, Stanimir Varbanov wrote:
-> >> This adds description of the level bitmask feature.
-> >>
-> >> Cc: Jonathan Corbet <corbet@lwn.net> (maintainer:DOCUMENTATION)
-> >>
-> >> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> >> ---
-> >>  Documentation/admin-guide/dynamic-debug-howto.rst | 10 ++++++++++
-> >>  1 file changed, 10 insertions(+)
-> >>
-> >> diff --git a/Documentation/admin-guide/dynamic-debug-howto.rst b/Documentation/admin-guide/dynamic-debug-howto.rst
-> >> index 0dc2eb8e44e5..c2b751fc8a17 100644
-> >> --- a/Documentation/admin-guide/dynamic-debug-howto.rst
-> >> +++ b/Documentation/admin-guide/dynamic-debug-howto.rst
-> >> @@ -208,6 +208,12 @@ line
-> >>  	line -1605          // the 1605 lines from line 1 to line 1605
-> >>  	line 1600-          // all lines from line 1600 to the end of the file
-> >>  
-> >> +level
-> >> +    The given level will be a bitmask ANDed with the level of the each ``pr_debug()``
-> >> +    callsite. This will allow to group debug messages and show only those of the
-> >> +    same level.  The -p flag takes precedence over the given level. Note that we can
-> >> +    have up to five groups of debug messages.
-> > 
-> > As was pointed out, this isn't a "level", it's some arbitrary type of
-> > "grouping".
+> So you just lost the information that dev_dbg() gave you with regards to
+> the device/driver/instance creating that message?
+
+No, I don't lose anything.  When I do debug I know that all debug
+messages comes from my driver.  dev_dbg will give me few device
+identifiers which I don't care so much. IMO, the device information
+makes more sense to dev_err/warn/err variants.  On the other side we
+will have dev_dbg_level(group) if still someone needs the device
+information.
+
 > 
-> Yes, it is grouping of KERN_DEBUG level messages by importance (my
-> fault, I put incorrect name).  What is important is driver author
-> decision.  Usually when the driver is huge and has a lot of debug
-> messages it is not practical to enable all of them to chasing a
-> particular bug or issue.  You know that debugging (printk) add delays
-> which could hide or rise additional issue(s) which would complicate
-> debug and waste time.
-
-That is why it is possible to turn on and off debugging messages on a
-function/line basis already.  Why not just use that instead?
-
-> For the Venus driver I have defined three groups of KERN_DEBUG - low,
-> medium and high (again the driver author(s) will decide what the
-> importance is depending on his past experience).
+> Ick, no, don't do that.
 > 
-> There is another point where the debugging is made by person who is not
-> familiar with the driver code. In that case he/she cannot enable lines
-> or range of lines because he don't know the details. Here the grouping
-> by importance could help.
+> And why is this driver somehow "special" compared to all the rest of
 
-And they will really know what "low/medium/high" are?
+Of course it is special ... to me ;-)
 
-Anyway, that makes a bit more sense, but the documentation could use a
-lot more in order to describe this type of behavior, and what is
-expected by both driver authors, and users of the interface.
+> the kernel?  Why is the current dev_dbg() control not sufficient that
+> you need to change the core for just this tiny thing?
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-thanks,
-
-greg k-h
+-- 
+regards,
+Stan
