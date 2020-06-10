@@ -2,105 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0EFC1F4BB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 05:11:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C94C61F4BD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 05:36:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbgFJDKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 23:10:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43434 "EHLO
+        id S1726130AbgFJDgj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Jun 2020 23:36:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726030AbgFJDKp (ORCPT
+        with ESMTP id S1725988AbgFJDgh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 23:10:45 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46A8AC05BD1E;
-        Tue,  9 Jun 2020 20:10:43 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id e1so228946vkd.1;
-        Tue, 09 Jun 2020 20:10:43 -0700 (PDT)
+        Tue, 9 Jun 2020 23:36:37 -0400
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7927DC05BD1E;
+        Tue,  9 Jun 2020 20:36:36 -0700 (PDT)
+Received: by mail-vk1-xa44.google.com with SMTP id s192so233476vkh.3;
+        Tue, 09 Jun 2020 20:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KZBhwJpe3f99/5LDVB8Bc5/cCcPk7wAvZ6DTVQ9hBQo=;
-        b=avSeW6EdipkgvBtqfFwap8GyOTxynTVR7JqrquqYKuotU0/nUvlM7xlHlJ1tAitGDu
-         QUYLYb87xZef7qj3qeDE1k4EmFE1cbYmQBfwIp09ULfRs+wYjiabO06Gibetk1NLU5gJ
-         rz5CnO6egYTloKqDOFWswZX+Qro6lyuXdsGra+adGQtRrNeqz0rCxNlGxP7ZObqx4AUF
-         stvyFWZSCqViy5vTX6NLyPyMg06O5duxH5cDOYMXNueL8NZbQl9UJrPYb9l3LdrILH6E
-         mdsSwmmV1rLAh1NQeFdUB2r7ptxXppY9s3qS69KO4aMfegJuLl9rYGsN+J8hVyUg8zJP
-         qYFw==
+        bh=rtx/ri9gwjpUSoBaV9ZRHZGtBga6dLCRzzoB3qYcsG8=;
+        b=YFfzJMw6CEHy6iYS376b/KrMjw0qQOTW+nCJ4XkQpANdnQc9Ym8WsRlhboJMu9kVMV
+         pe5Jt9hA5VvDDGhTfwtkIB6ueUbW1918gu26533cSKHOmpaxEw/QgIyCiDVwqRQURDGn
+         oWg+OEAlrUYVVBjuK2lBEzN68QwZzGjLbZMyx7Vd7hPewbqk/HYa+2v+hk3nNBQIfmSm
+         PqYVS5xGe2GotvVwmtLo/0juJbNbq71gQ/M+bK8hs28pZA0qOYnnuPFFC6h0qJW8XqMq
+         pRNrlBY4HxtQOvjaZSYtJUUYTVwQHf2HOkrmm9wEwVnrKberVUPobmKkjcybi+a7q6hd
+         uvJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KZBhwJpe3f99/5LDVB8Bc5/cCcPk7wAvZ6DTVQ9hBQo=;
-        b=DWA14aZkwaQ44lR6kIP/BMdQn4DL4eG6pG7wJnebWakrj9MO9orf8XJX+UG8M0BpgG
-         S3C/EObVpyMUfau8z9puNbItd7aMAav0hZcBdcF4Ol+rEuJ0kU/sqB5rjO0mv4dMV0A+
-         3FjC1LJWCDCyw68s/RTa6DrRXby8dc1ige7lg9XPj45QlHBw5tdkIHuOvi5T1GKanGbU
-         nx2BjSqqiE5xQp/3QeP9AmvwTCb/+aVvqLe50B0ZArdkRbu0mIpzpDVB8uIpf3o1JiiP
-         DtXdOGNCOXeyolQoavxa/7o8QdQsoW5EPVLTTub2KGpz7OnFHyLaWGU0+IFVMXRyTGyr
-         IHFA==
-X-Gm-Message-State: AOAM533ajg6jBaBWKQ/YfLn6b5quzMNkN8X9ME5uK5DMTUz/4jdVOShM
-        OzOXjOR5uKdvDbKHtOKT5kxF7sqpINDNxldHZFI=
-X-Google-Smtp-Source: ABdhPJwhJJbrVDdVhPbiFe8woY8RZS6gzI8WAuQcnLKqPCqx6QB1rkMVrPvxE9COyN4yin3SLa4xOGD0F8W2ftqaENc=
-X-Received: by 2002:a1f:9094:: with SMTP id s142mr886695vkd.6.1591758642398;
- Tue, 09 Jun 2020 20:10:42 -0700 (PDT)
+        bh=rtx/ri9gwjpUSoBaV9ZRHZGtBga6dLCRzzoB3qYcsG8=;
+        b=NZUCe1SteOWJgGKjkWwN5XXr5QV0Xkl/BjTp1Y1A8tS7zYqCvbccQ3AGbLOeC7qaha
+         PLK+cfS3c5ZRF+mTgVN1gbdsWeADOswha6gKdydhtAUaqDKzb3vlt/e9/+tN82+jHZUt
+         VWQK89bn8EcSvYBLf6xDJz37FbMnQ9gRAPm1DGnaU2piXptfXNeEmfYi3T8eEq6Reiv+
+         A8+Ta0aYU4P70JVkLRpwOOXZEWm7G7cLycaRSDJO2o6QMbIMmwNR1P9ZLyjsGJ2rXo2O
+         dZ1vsxdFsge9J4h5t0uRTgCRgNvL0aqpddZEvI51QDQfjgYP8q4UD2r+YYzd8hffrIiy
+         bnMA==
+X-Gm-Message-State: AOAM531SVqYLTlAXAF2NJ691iMyUQmTnswTCvs2x3OXE2Im8dZhMSGOX
+        Mi1fECJMbXkG/HoydNhfITIcLMWQTGMmHkHXihg=
+X-Google-Smtp-Source: ABdhPJxGHm16dEC5JJMhDXsdFVIDQUW2MIT15A11XgThFQis58lrynuF9GiRAHrOwsEGSqo0JTdqb83g1T7v1yBEhdo=
+X-Received: by 2002:ac5:c94b:: with SMTP id s11mr932901vkm.8.1591760195582;
+ Tue, 09 Jun 2020 20:36:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
- <20200609111323.GA19604@bombadil.infradead.org> <c239d5df-e069-2091-589e-30f341c2cbd3@infradead.org>
- <9a79aded6981ec47f1f8b317b784e6e44158ac61.camel@perches.com>
- <CAJfuBxwyDysP30cMWDusw4CsSQitchA5hOKkpk1PktbsbCKTSw@mail.gmail.com> <6115b15ced02686f7408417411ff758445b42421.camel@perches.com>
-In-Reply-To: <6115b15ced02686f7408417411ff758445b42421.camel@perches.com>
-From:   jim.cromie@gmail.com
-Date:   Tue, 9 Jun 2020 21:10:15 -0600
-Message-ID: <CAJfuBxzd1Jmd726_zYxfjPy1YgTpcLzLU_fh=pd5FEBaVFCWrw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] Venus dynamic debug
-To:     Joe Perches <joe@perches.com>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Matthew Wilcox <willy@infradead.org>,
-        Linux Documentation List <linux-doc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        linux-acpi@vger.kernel.org, netdev@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jason Baron <jbaron@akamai.com>
+References: <20200604063559.18080-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20200604063559.18080-1-manivannan.sadhasivam@linaro.org>
+From:   Alim Akhtar <alim.akhtar@gmail.com>
+Date:   Wed, 10 Jun 2020 09:05:59 +0530
+Message-ID: <CAGOxZ505Zq=VDhG-S2h5yVRSqpUQmzYi=iYGTGgHAqZm0uOqRQ@mail.gmail.com>
+Subject: Re: [PATCH] scsi: ufs: Bump supported UFS HCI version to 3.0
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-scsi@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, amit.kucheria@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 9, 2020 at 4:23 PM Joe Perches <joe@perches.com> wrote:
+HI Manivannan
+
+On Thu, Jun 4, 2020 at 12:08 PM Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
 >
-> On Tue, 2020-06-09 at 15:21 -0600, jim.cromie@gmail.com wrote:
-> >
-> > As Joe noted, there is a lot of ad-hockery to possibly clean up,
-> > but I dont grok how these levels should be distinguished from
-> > KERN_(WARN|INFO|DEBUG) constants.
+> UFS HCI 3.0 versions are being used in Qcom SM8250 based boards. Hence,
+> adding it to the list of supported versions.
 >
-> These are not KERN_<LEVEL> at all, all are emitted at KERN_DEBUG
+> I don't have the exact information of the additional registers supported
+> in version 3.0. Hence the change just adds 0x300 to the list of supported
+> versions to remove the below warning:
+>
+> "ufshcd-qcom 1d84000.ufshc: invalid UFS version 0x300"
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/scsi/ufs/ufshci.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/scsi/ufs/ufshci.h b/drivers/scsi/ufs/ufshci.h
+> index c2961d37cc1c..f2ee81669b00 100644
+> --- a/drivers/scsi/ufs/ufshci.h
+> +++ b/drivers/scsi/ufs/ufshci.h
+> @@ -104,6 +104,7 @@ enum {
+>         UFSHCI_VERSION_11 = 0x00010100, /* 1.1 */
+>         UFSHCI_VERSION_20 = 0x00000200, /* 2.0 */
+>         UFSHCI_VERSION_21 = 0x00000210, /* 2.1 */
+> +       UFSHCI_VERSION_30 = 0x00000300, /* 3.0 */
 
-yes indeed.  but they are chosen by programmer, fixed by compiler.  not dynamic.
-<pmladek@suse.com> also noted the conceptual adjacency (ambiguity),
-and referenced KERN_<lvl>
+See the current discussion on this https://lkml.org/lkml/2020/4/27/192
+
+>  };
+>
+>  /*
+> --
+> 2.17.1
+>
 
 
-
-If we need this extra query-term, lets call it   mbits / mflags /
-module_flags / module_bits
-it needs to be module specific, so also requiring "module foo" search
-term in the query.
-( "modflags" is no good, cuz "mod" also means "modified" - just mflags
-is better )
-
-Already, we have function, file, module, all of which convey semantic
-structure of the code,
-and they also match wildcards, so " function foo_*_* " is an effective grouping.
-Id think this would cover most cases.
-
-Finally, all "module venus +p " callsites could be explicitly
-specified individually in
-universe=`grep venus control | wc -l`
-lines, likely a small set.
-Using the semantic structure exposed by `grep venus control`, it would
-likely be far less.
+-- 
+Regards,
+Alim
