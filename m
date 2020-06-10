@@ -2,189 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C9D61F53C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 13:47:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B8641F5431
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 14:06:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728584AbgFJLrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jun 2020 07:47:20 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24850 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728471AbgFJLrT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jun 2020 07:47:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591789637; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=P6IvvgfhO1WLSM0phj/YTWH+58FwnIzn495ez/bhLdU=; b=Mn1YzjSQ034WQNSlAb+gz8U0cjk4PoHVHVaZ1+gs6j6I5mbS2C502s4VZN7wjYRNgMf9bTv/
- tDpkj0lOWBESZFL9XTbb9LKxpiuPzFXQ+0P70nt0feq+EMCrmdfBOSxOQWs64tk+Min4LXW2
- rnVM3pCiEYEqbDQqdDDO3Wr9AP4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5ee0c83ea3d8a44743fc4078 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Jun 2020 11:47:10
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 80A5DC433A1; Wed, 10 Jun 2020 11:47:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.9] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CA58AC433CB;
-        Wed, 10 Jun 2020 11:47:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CA58AC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V7 RESEND 0/7] Add interconnect support to QSPI and QUP
- drivers
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de, broonie@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, dianders@chromium.org,
-        evgreen@chromium.org, msavaliy@codeaurora.org
-References: <1591682194-32388-1-git-send-email-akashast@codeaurora.org>
- <20200609153802.GS4525@google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <24d41d90-9bb8-28ec-e6b5-0b5a770bba21@codeaurora.org>
-Date:   Wed, 10 Jun 2020 17:16:59 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+        id S1728547AbgFJMGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jun 2020 08:06:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41410 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728950AbgFJMF7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Jun 2020 08:05:59 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 058A0C03E96B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2020 05:05:59 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id d27so1479443qtg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2020 05:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=jnTMkAZSSNPoToK/f86wPehzYJ/sCSz3yq728TnkvEg=;
+        b=Ts3jLdavVWjQhbJuq+ajUxq6RscOkbjE8Nn9kxzW2cMsG7+nfMr6Ei8XTmAWSB9b2u
+         dJTmKW85O+IRTZgba3VHXa0oi12kkh+RY4Vzub9Tt+j/w8A9krznHxc/MtYHJuzMm8cn
+         mZCIBs0Kqi2F4tYx5OzV+05qrjFdYjmE9KrhnX6DTAgA9zs7viTZlTA4opRT1lJ1Sfzq
+         YJtXLqvpjoonPZl7BKXcz2TOZ5He+qGBZhixLrTCNkYMF5tWakKM774BzsXtVXh8J7qg
+         AeE+FLqXCKt92B1eLwITvgO/n6f/65dMSjlNKHILNirgLdXxVvYGmmuo/GlG4vkVyLfe
+         1m+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=jnTMkAZSSNPoToK/f86wPehzYJ/sCSz3yq728TnkvEg=;
+        b=XlP9Sr+UXg+AJN0vhM6Y+oqdBRdiBSEapqHhm+RbDJfZKuSNK+BNsdqyXZf8jge8XB
+         MdXBBeqv6gCGgMr8b/K+eSjQgFOCG9EWRQXymlsAEYO74X48xVb/IOTKuXAlmH08n8RF
+         sPE3nhcIoMX2J4fqbsDVT5JtKR+EOJyQdAwuxa4ANjebflBhCc/BxCBmsZCVZUd2EP0/
+         PsWS3d/6M5mDsjRPbXYJ08Y5uqSzuYW/a4dkpRDnXjfM3Acda2PM9JOUNd2Vt3klO0+u
+         rvWu7cVyk+son0KL4LqFOjdyf4+BPgDyrok9xpVIncAfsKSgI11US6i4afvuILHkaKr7
+         vnHQ==
+X-Gm-Message-State: AOAM530ibeFAO4etccuFR2GQTTIBAFoKZ9NNPZVE6KhfgppMM/F1+1/X
+        nPP5uR5MfdVhZOLco6/p2dWPKoNqlbyHRA==
+X-Google-Smtp-Source: ABdhPJxWirUTLUvqjo1fyyrdz/Te/YiqzLsdatsUJVAiIGX24L/VcL9MTw6j7oIDNsfJdfeSoKpj9w==
+X-Received: by 2002:aed:3fa4:: with SMTP id s33mr2871077qth.148.1591790757071;
+        Wed, 10 Jun 2020 05:05:57 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id m6sm11779279qkk.4.2020.06.10.05.05.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2020 05:05:56 -0700 (PDT)
+Subject: Re: [PATCH 4/5] soundwire: qcom: avoid dependency on CONFIG_SLIMBUS
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        alsa-devel@alsa-project.org
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+References: <20200608204347.19685-1-jonathan@marek.ca>
+ <20200608204347.19685-5-jonathan@marek.ca>
+ <f3eabdb9-da43-9502-352a-1696babc114d@linaro.org>
+ <dc8f59c6-2fa9-f3a3-6d77-2d03a6d2776b@marek.ca>
+ <29a216a7-a76f-a4de-b62d-3043e7e25c18@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <d7ccf640-f493-4f08-a391-7b36bf6966a6@marek.ca>
+Date:   Wed, 10 Jun 2020 08:06:17 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <20200609153802.GS4525@google.com>
+In-Reply-To: <29a216a7-a76f-a4de-b62d-3043e7e25c18@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On 6/10/20 6:36 AM, Srinivas Kandagatla wrote:
+> 
+> 
+> On 09/06/2020 12:33, Jonathan Marek wrote:
+>> On 6/9/20 5:52 AM, Srinivas Kandagatla wrote:
+>>>
+>>>
+>>> On 08/06/2020 21:43, Jonathan Marek wrote:
+>>>> The driver may be used without slimbus, so don't depend on slimbus.
+>>>>
+>>>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>>>> ---
+>>>>   drivers/soundwire/Kconfig | 1 -
+>>>>   drivers/soundwire/qcom.c  | 5 +++++
+>>>>   2 files changed, 5 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/soundwire/Kconfig b/drivers/soundwire/Kconfig
+>>>> index fa2b4ab92ed9..d121cf739090 100644
+>>>> --- a/drivers/soundwire/Kconfig
+>>>> +++ b/drivers/soundwire/Kconfig
+>>>> @@ -33,7 +33,6 @@ config SOUNDWIRE_INTEL
+>>>>   config SOUNDWIRE_QCOM
+>>>>       tristate "Qualcomm SoundWire Master driver"
+>>>> -    depends on SLIMBUS
+>>>>       depends on SND_SOC
+>>>
+>>> Why not move this to imply SLIMBUS this will give more flexibility!
+>>>
+>>>
+>>
+>> If you mean to change it to "select SLIMBUS", I'd prefer not to, 
+>> because this would increase code size unnecessarily in my kernel.
+> 
+> imply is week select, which means that this driver can be built without 
+> SLIMBus selected. So removing reference to slimbus_bus is necessary in 
+> this case.
+> 
 
-On 6/9/2020 9:08 PM, Matthias Kaehlcke wrote:
-> Hi Akash,
->
-> On Tue, Jun 09, 2020 at 11:26:27AM +0530, Akash Asthana wrote:
->> This patch series is based on tag "next-20200608" of linux-next tree.
-> Great, I was concerned there would be conflicts without a rebase.
->
->> Resending V7 patch with minor change in patch 6/7 (QSPI).
-> It's not a pure resend, since it has changes in "spi:
-> spi-qcom-qspi: Add interconnect support":
->
->    Changes in Resend V7:
->     - As per Matthias comment removed "unsigned int avg_bw_cpu" from
->        struct qcom_qspi as we are using that variable only once.
->
-> Please increase the version number whenever you make changes or rebase.
-Ok sure.
->
-> Maintainers tend to be busy, before doing actual resends folks often
-> send a ping/inquiry on the original patch/series, and only resend it when
-> they didn't receive a response after some time.
+Will change it to "imply", I wasn't aware of this keyword.
 
-Ok, I was under impression that resending patches is always a better 
-approach@https://lore.kernel.org/patchwork/patch/1235198/.
+> On the other hand, SLIMBus is going to be used sm8250 for BT audio, so 
+> this would not be unnecessary. Also mostly these are build as modules, 
+> so not sure why kernel size will increase here!
+> 
 
-Although it vary for every subsystem, I resend the series here to get 
-approvals on SPI patches.
+Not everyone uses modules. I am using a config with CONFIG_MODULES=n and 
+only relevant drivers enabled.
 
-Regards,
+> Am not 100% sure if SLIMBus will be kept on all SoCs, but keeping 
+> depends or imply in place would enforce or spell out some level of 
+> dependency on this.
+> 
+>>
+>>>>       help
+>>>>         SoundWire Qualcomm Master driver.
+>>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>>>> index 14334442615f..ac81c64768ea 100644
+>>>> --- a/drivers/soundwire/qcom.c
+>>>> +++ b/drivers/soundwire/qcom.c
+>>>> @@ -769,13 +769,18 @@ static int qcom_swrm_probe(struct 
+>>>> platform_device *pdev)
+>>>>       if (!ctrl)
+>>>>           return -ENOMEM;
+>>>> +#ifdef CONFIG_SLIMBUS
+>>>>       if (dev->parent->bus == &slimbus_bus) {
+>>>> +#else
+>>>> +    if (false) {
+>>>> +#endif
+>>>
+>>> May be you can do bit more cleanup here, which could endup like:
+>>>
+>>>
+>>> ctrl->regmap = dev_get_regmap(dev->parent, NULL);
+>>> if (!ctrl->regmap) {
+>>>      res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>>>      if (res) {
+>>>          ctrl->mmio = devm_ioremap_resource(dev, res);
+>>>          if (IS_ERR(ctrl->mmio)) {
+>>>              dev_err(dev, "No valid mem resource found\n");
+>>>              return PTR_ERR(ctrl->mmio);
+>>>          }
+>>>
+>>>          ctrl->reg_read = qcom_swrm_cpu_reg_read;
+>>>          ctrl->reg_write = qcom_swrm_cpu_reg_write;
+>>>      } else {
+>>>          dev_err(dev, "No valid slim resource found\n");
+>>>          return -EINVAL;
+>>>      }
+>>> } else {
+>>>      ctrl->reg_read = qcom_swrm_ahb_reg_read;
+>>>      ctrl->reg_write = qcom_swrm_ahb_reg_write;
+>>> }
+>>>
+>>>
+>>>
+>>> thanks,
+>>> srini
+>>
+>> I don't think this is better, it feels more obfuscated, and I think 
+>> its possible we may end up with the mmio sdw having a parent with a 
+>> regmap. (it is not how I did things up in my upstream stack, but in 
+>> downstream the sdw nodes are inside the "macro" codec nodes)
+>>
+>> I understand the '#ifdef CONFIG_SLIMBUS'/'dev->parent->bus == 
+>> &slimbus_bus' is ugly, but at least its clear what's going on. Unless 
+>> you have a better suggestion?
+> 
+> Other suggestion I had in my mind was to use compatible strings to get 
+> reg_read, reg_write callbacks + some flags like (if_type) populated. 
+> This can help looking up resources correctly.
+> 
 
-Akash
+This is better than the previous suggestion, but is it safe to say that 
+specific versions will always be used with MMIO or slimbus? (I guess the 
+answer is yes, but I want to confirm)
 
->
-> Thanks
->
-> Matthias
->
->> dt-binding patch for QUP drivers.
->>   - https://patchwork.kernel.org/patch/11534149/ [Convert QUP bindings
->>          to YAML and add ICC, pin swap doc]
+> Thanks,
+> srini
+> 
 >>
->> High level design:
->>   - QUP wrapper/common driver.
->>     Vote for QUP core on behalf of earlycon from probe.
->>     Remove BW vote during earlycon exit call
->>
->>   - SERIAL driver.
->>     Vote only for CPU/CORE path because driver is in FIFO mode only
->>     Vote/unvote from qcom_geni_serial_pm func.
->>     Bump up the CPU vote from set_termios call based on real time need
->>
->>   - I2C driver.
->>     Vote for CORE/CPU/DDR path
->>     Vote/unvote from runtime resume/suspend callback
->>     As bus speed for I2C is fixed from probe itself no need for bump up.
->>
->>   - SPI QUP driver.
->>     Vote only for CPU/CORE path because driver is in FIFO mode only
->>     Vote/unvote from runtime resume/suspend callback
->>     Bump up CPU vote based on real time need per transfer.
->>
->>   - QSPI driver.
->>     Vote only for CPU path
->>     Vote/unvote from runtime resume/suspend callback
->>     Bump up CPU vote based on real time need per transfer.
->>
->> Changes in V2:
->>   - Add devm_of_icc_get() API interconnect core.
->>   - Add ICC support to common driver to fix earlyconsole crash.
->>
->> Changes in V3:
->>   - Define common ICC APIs in geni-se driver and use it across geni based
->>     I2C,SPI and UART driver.
->>
->> Changes in V4:
->>   - Add a patch to ICC core to scale peak requirement
->>     as twice of average if it is not mentioned explicilty.
->>
->> Changes in V5:
->>   - As per Georgi's suggestion removed patch from ICC core for assuming
->>     peak_bw as twice of average when it's not mentioned, instead assume it
->>     equall to avg_bw and keep this assumption in ICC client itself.
->>   - As per Matthias suggestion use enum for GENI QUP ICC paths.
->>
->> Changes in V6:
->>   - No Major change
->>
->> Changes in V7:
->>   - As per Matthias's comment removed usage of peak_bw variable because we don't
->>     have explicit peak requirement, we were voting peak = avg and this can be
->>     tracked using single variable for avg bw.
->>   - As per Matthias's comment improved print log.
->>
->> Akash Asthana (7):
->>    soc: qcom: geni: Support for ICC voting
->>    soc: qcom-geni-se: Add interconnect support to fix earlycon crash
->>    i2c: i2c-qcom-geni: Add interconnect support
->>    spi: spi-geni-qcom: Add interconnect support
->>    tty: serial: qcom_geni_serial: Add interconnect support
->>    spi: spi-qcom-qspi: Add interconnect support
->>    arm64: dts: sc7180: Add interconnect for QUP and QSPI
->>
->>   arch/arm64/boot/dts/qcom/sc7180.dtsi  | 127 ++++++++++++++++++++++++++++
->>   drivers/i2c/busses/i2c-qcom-geni.c    |  26 +++++-
->>   drivers/soc/qcom/qcom-geni-se.c       | 150 ++++++++++++++++++++++++++++++++++
->>   drivers/spi/spi-geni-qcom.c           |  29 ++++++-
->>   drivers/spi/spi-qcom-qspi.c           |  56 ++++++++++++-
->>   drivers/tty/serial/qcom_geni_serial.c |  38 ++++++++-
->>   include/linux/qcom-geni-se.h          |  40 +++++++++
->>   7 files changed, 460 insertions(+), 6 deletions(-)
->>
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
->>
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-
+>>>>           ctrl->reg_read = qcom_swrm_ahb_reg_read;
+>>>>           ctrl->reg_write = qcom_swrm_ahb_reg_write;
+>>>>           ctrl->regmap = dev_get_regmap(dev->parent, NULL);
+>>>>           if (!ctrl->regmap)
+>>>>               return -EINVAL;
+>>>>       } else {
+>>>> +
+>>>>           res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>>>>           ctrl->reg_read = qcom_swrm_cpu_reg_read;
+>>>>
