@@ -2,108 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C94C61F4BD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 05:36:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 737951F4E3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 08:31:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726130AbgFJDgj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Jun 2020 23:36:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbgFJDgh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Jun 2020 23:36:37 -0400
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7927DC05BD1E;
-        Tue,  9 Jun 2020 20:36:36 -0700 (PDT)
-Received: by mail-vk1-xa44.google.com with SMTP id s192so233476vkh.3;
-        Tue, 09 Jun 2020 20:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rtx/ri9gwjpUSoBaV9ZRHZGtBga6dLCRzzoB3qYcsG8=;
-        b=YFfzJMw6CEHy6iYS376b/KrMjw0qQOTW+nCJ4XkQpANdnQc9Ym8WsRlhboJMu9kVMV
-         pe5Jt9hA5VvDDGhTfwtkIB6ueUbW1918gu26533cSKHOmpaxEw/QgIyCiDVwqRQURDGn
-         oWg+OEAlrUYVVBjuK2lBEzN68QwZzGjLbZMyx7Vd7hPewbqk/HYa+2v+hk3nNBQIfmSm
-         PqYVS5xGe2GotvVwmtLo/0juJbNbq71gQ/M+bK8hs28pZA0qOYnnuPFFC6h0qJW8XqMq
-         pRNrlBY4HxtQOvjaZSYtJUUYTVwQHf2HOkrmm9wEwVnrKberVUPobmKkjcybi+a7q6hd
-         uvJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rtx/ri9gwjpUSoBaV9ZRHZGtBga6dLCRzzoB3qYcsG8=;
-        b=NZUCe1SteOWJgGKjkWwN5XXr5QV0Xkl/BjTp1Y1A8tS7zYqCvbccQ3AGbLOeC7qaha
-         PLK+cfS3c5ZRF+mTgVN1gbdsWeADOswha6gKdydhtAUaqDKzb3vlt/e9/+tN82+jHZUt
-         VWQK89bn8EcSvYBLf6xDJz37FbMnQ9gRAPm1DGnaU2piXptfXNeEmfYi3T8eEq6Reiv+
-         A8+Ta0aYU4P70JVkLRpwOOXZEWm7G7cLycaRSDJO2o6QMbIMmwNR1P9ZLyjsGJ2rXo2O
-         dZ1vsxdFsge9J4h5t0uRTgCRgNvL0aqpddZEvI51QDQfjgYP8q4UD2r+YYzd8hffrIiy
-         bnMA==
-X-Gm-Message-State: AOAM531SVqYLTlAXAF2NJ691iMyUQmTnswTCvs2x3OXE2Im8dZhMSGOX
-        Mi1fECJMbXkG/HoydNhfITIcLMWQTGMmHkHXihg=
-X-Google-Smtp-Source: ABdhPJxGHm16dEC5JJMhDXsdFVIDQUW2MIT15A11XgThFQis58lrynuF9GiRAHrOwsEGSqo0JTdqb83g1T7v1yBEhdo=
-X-Received: by 2002:ac5:c94b:: with SMTP id s11mr932901vkm.8.1591760195582;
- Tue, 09 Jun 2020 20:36:35 -0700 (PDT)
+        id S1726105AbgFJGbH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jun 2020 02:31:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46980 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725988AbgFJGbG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Jun 2020 02:31:06 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 77AC320760;
+        Wed, 10 Jun 2020 06:31:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591770666;
+        bh=HWqfOjSKZShVNILAl4Rwx3P52sNZxPeoQVKJIj6dIEU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=E8Cvgegk66cCXmlxVRnTbOP7DpmPu5rN+pO2KqHRyhnv/CabF0fwKFwbWzu+l0hYQ
+         IM90rm9VemBskzD0IvXHXOA9jewhU/xl7ji+nePWuDVYBIvD//3KQwBdgJHupS60Cb
+         Mp4tTOCmUlP2s0Dvu08GFR/RNf9CfM/iCqVNvE2o=
+Date:   Wed, 10 Jun 2020 08:31:03 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Joe Perches <joe@perches.com>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-btrfs@vger.kernel.org, linux-acpi@vger.kernel.org,
+        netdev@vger.kernel.org, Jason Baron <jbaron@akamai.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jim Cromie <jim.cromie@gmail.com>
+Subject: Re: [PATCH v3 1/7] Documentation: dynamic-debug: Add description of
+ level bitmask
+Message-ID: <20200610063103.GD1907120@kroah.com>
+References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
+ <20200609104604.1594-2-stanimir.varbanov@linaro.org>
+ <20200609111615.GD780233@kroah.com>
+ <ba32bfa93ac2e147c2e0d3a4724815a7bbf41c59.camel@perches.com>
 MIME-Version: 1.0
-References: <20200604063559.18080-1-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20200604063559.18080-1-manivannan.sadhasivam@linaro.org>
-From:   Alim Akhtar <alim.akhtar@gmail.com>
-Date:   Wed, 10 Jun 2020 09:05:59 +0530
-Message-ID: <CAGOxZ505Zq=VDhG-S2h5yVRSqpUQmzYi=iYGTGgHAqZm0uOqRQ@mail.gmail.com>
-Subject: Re: [PATCH] scsi: ufs: Bump supported UFS HCI version to 3.0
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-scsi@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, amit.kucheria@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba32bfa93ac2e147c2e0d3a4724815a7bbf41c59.camel@perches.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-HI Manivannan
+On Tue, Jun 09, 2020 at 09:58:07AM -0700, Joe Perches wrote:
+> On Tue, 2020-06-09 at 13:16 +0200, Greg Kroah-Hartman wrote:
+> > What is wrong with the existing control of dynamic
+> > debug messages that you want to add another type of arbitrary grouping
+> > to it? 
+> 
+> There is no existing grouping mechanism.
 
-On Thu, Jun 4, 2020 at 12:08 PM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> UFS HCI 3.0 versions are being used in Qcom SM8250 based boards. Hence,
-> adding it to the list of supported versions.
->
-> I don't have the exact information of the additional registers supported
-> in version 3.0. Hence the change just adds 0x300 to the list of supported
-> versions to remove the below warning:
->
-> "ufshcd-qcom 1d84000.ufshc: invalid UFS version 0x300"
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/scsi/ufs/ufshci.h | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/scsi/ufs/ufshci.h b/drivers/scsi/ufs/ufshci.h
-> index c2961d37cc1c..f2ee81669b00 100644
-> --- a/drivers/scsi/ufs/ufshci.h
-> +++ b/drivers/scsi/ufs/ufshci.h
-> @@ -104,6 +104,7 @@ enum {
->         UFSHCI_VERSION_11 = 0x00010100, /* 1.1 */
->         UFSHCI_VERSION_20 = 0x00000200, /* 2.0 */
->         UFSHCI_VERSION_21 = 0x00000210, /* 2.1 */
-> +       UFSHCI_VERSION_30 = 0x00000300, /* 3.0 */
+info/warn/err/dbg is what I am referring to.
 
-See the current discussion on this https://lkml.org/lkml/2020/4/27/192
+> Many drivers and some subsystems used an internal one
+> before dynamic debug.
+> 
+> $ git grep "MODULE_PARM.*\bdebug\b"|wc -l
+> 501
 
->  };
->
->  /*
-> --
-> 2.17.1
->
+Yes, and it's horrid and needs to be cleaned up, not added to.
 
+In the beginning, yes, adding loads of different types of debugging
+options to a driver is needed by the author, but by the time it is added
+to the kernel, all of that should be able to be removed and only a
+single "enable debug" should be all that is needed.
 
--- 
-Regards,
-Alim
+We do not need each individual driver thinking it needs to have some
+sort of special classification of each type of debug message.  Just use
+the framework that we have, you can enable/disable them on a
+line-by-line basis as needed.
+
+> This is an attempt to unify those homebrew mechanisms.
+
+All of those should just be removed.
+
+> Stanimir attempted to add one for his driver via a
+> driver specific standardized format substring for level.
+> 
+> > And who defines that grouping?
+> 
+> Individual driver authors
+
+That way lies madness, let's try to fix all of that up.
+
+greg k-h
