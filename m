@@ -2,80 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D34E91F5640
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 15:53:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B37B01F571D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 16:55:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729564AbgFJNxi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jun 2020 09:53:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45484 "EHLO mail.kernel.org"
+        id S1727776AbgFJOzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jun 2020 10:55:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44328 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726520AbgFJNxi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jun 2020 09:53:38 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        id S1726908AbgFJOzA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Jun 2020 10:55:00 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 31183206F4;
-        Wed, 10 Jun 2020 13:53:37 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1B3B72072F;
+        Wed, 10 Jun 2020 14:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1591797217;
-        bh=s1vPJ4Oq4k32bys2o6uXySw3TErrUiu1W9fi1VFwHmc=;
+        s=default; t=1591800899;
+        bh=gjvlNmhpOseNaDKedcB9GHU7iTHrdoxsgDi+ecT5hyM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qreQMkrwj+CumutUh7nwPxQ3ljG79JcA1ghbj5W2wDJ145RY55Wlaip8KId3A9cr6
-         cHL9NI66U3QiEbpuD46atfCRf9LV7e7bugfnfNuUXSbPzPdRkMZ4BOY2Zwgdx6hmXx
-         JrB0bpYW08T283+OkQGmaobvjgrpvxlaeL6sAnsU=
-Date:   Wed, 10 Jun 2020 14:53:35 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org, evgreen@chromium.org,
-        msavaliy@codeaurora.org
-Subject: Re: [PATCH V7 RESEND 4/7] spi: spi-geni-qcom: Add interconnect
- support
-Message-ID: <20200610135335.GG5005@sirena.org.uk>
-References: <1591682194-32388-1-git-send-email-akashast@codeaurora.org>
- <1591682194-32388-5-git-send-email-akashast@codeaurora.org>
+        b=eaeuDZE9aPFGn7KUakOuZK2k1QhfcTOZLuINf4/XMi0YBL2klsbQOOY/l8bGW+4cz
+         xp8VmKc3npL/FqyHiYEsi9FrCqkVBqhg2nuXSwGlsN/uPAw9BC+i5XucyjYDMT6Z/p
+         TngvQfYG7+VgaLUpoauO2RAJo+iYFHoVAzhSxWPA=
+Date:   Wed, 10 Jun 2020 16:54:53 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Markus Elfring <Markus.Elfring@web.de>
+Cc:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        hemantg@codeaurora.org, Johan Hedberg <johan.hedberg@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Claire Chang <tientzu@chromium.org>, yshavit@google.com,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] Bluetooth: hci_qca: Fix double free during SSR timeout
+Message-ID: <20200610145453.GC2102023@kroah.com>
+References: <d3444be6-28e6-bef5-08cf-6038620f65c6@web.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="DWg365Y4B18r8evw"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1591682194-32388-5-git-send-email-akashast@codeaurora.org>
-X-Cookie: fortune: No such file or directory
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d3444be6-28e6-bef5-08cf-6038620f65c6@web.de>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Jun 04, 2020 at 08:24:34PM +0200, Markus Elfring wrote:
+> > Due to race conditions between qca_hw_error and qca_controller_memdump
+> > during SSR timeout,the same pointer is freed twice.
+> 
+> This is an unfortunate software situation.
+> 
+> 
+> > Which results to double free error.
+> 
+> How do you think about to omit this sentence from the change description?
+> 
+> 
+> > Now a lock is acquired while SSR state moved to timeout.
+> 
+> I suggest to convert this information into an imperative wording.
+> 
+> Would you like to add the tag “Fixes” to the commit message?
+> 
+> Regards,
+> Markus
 
---DWg365Y4B18r8evw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi,
 
-On Tue, Jun 09, 2020 at 11:26:31AM +0530, Akash Asthana wrote:
-> Get the interconnect paths for SPI based Serial Engine device
-> and vote according to the current bus speed of the driver.
+This is the semi-friendly patch-bot of Greg Kroah-Hartman.
 
-Acked-by: Mark Brown <broonie@kernel.org>
+Markus, you seem to have sent a nonsensical or otherwise pointless
+review comment to a patch submission on a Linux kernel developer mailing
+list.  I strongly suggest that you not do this anymore.  Please do not
+bother developers who are actively working to produce patches and
+features with comments that, in the end, are a waste of time.
 
---DWg365Y4B18r8evw
-Content-Type: application/pgp-signature; name="signature.asc"
+Patch submitter, please ignore Markus's suggestion; you do not need to
+follow it at all.  The person/bot/AI that sent it is being ignored by
+almost all Linux kernel maintainers for having a persistent pattern of
+behavior of producing distracting and pointless commentary, and
+inability to adapt to feedback.  Please feel free to also ignore emails
+from them.
 
------BEGIN PGP SIGNATURE-----
+thanks,
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7g5d4ACgkQJNaLcl1U
-h9BKIQf/Q3VWEhsUfEymHtm5vEhv+ze1U2uQE7g2uwUQ9YZY8QFHJCWB9ASndc5g
-QgChce69MVl8+qsbwJ+hkrWRwtOKe00vqt+lqkAYGWTaKscEAIN+/kcTBAc6sDjx
-AnvBT9QeybB3i4xBtemJoPyPKLC3H1Ez2wZuez5FrqYcdThqiHIuewkCxAUgjg2a
-ovBeeDZ8GrBKfU0c/2HzilwrkovLlc0nuDwWn0xQhKdn9AynKB6UT/JJEhXbi0q6
-EpDqZNEHbv/itTQI0lyAQbcy3QelIcbfwj7rX3rHZN1hDbQ29lFSGSIg0nNQE1iX
-wq9EC6v/TcmPGMnddSvy091y7FAW7g==
-=bZPH
------END PGP SIGNATURE-----
-
---DWg365Y4B18r8evw--
+greg k-h's patch email bot
