@@ -2,80 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49B341F52FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 13:20:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0EF31F531F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 13:27:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728264AbgFJLUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jun 2020 07:20:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34272 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728436AbgFJLUc (ORCPT
+        id S1728482AbgFJL1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jun 2020 07:27:40 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:17260 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728406AbgFJL1i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jun 2020 07:20:32 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 710EBC08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2020 04:20:30 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id a9so1976790ljn.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2020 04:20:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UA+t1x4Dga/tMDaCbSxJN+1nIvqIM3JZf6UcWWk8kmo=;
-        b=gdtWK/yZABe0lUpJ9U8mFFE3Vs9yTGzaV1EhCsTzgd6NW5ObciUND4+CGf6z+1Mhql
-         ejC5k2E9P7hIBYCtO7+zwlizHH/ra6rBpu/f2+mYyopLdcKVMfCNqFFeXvYBktYpZrOw
-         55IjwAx8lXD4cI+nBbGNO6z1BBPSXX1bg0/VY2B+E02NbGWCtvboe9shxa7jw+9mvPM+
-         cBgrsVEHN6uDCmEsOYGB1y/Qt4xwKGNWApiJCZWnRJTNZll8OoHtA1bd8qapY0N2DADZ
-         gl6sHho/qt+wg5HvTpnAoaxJS/qjNIaMKtc1jI1hoa2K6cdjVOmJeUVS4s+yQDSFPHDX
-         dcVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UA+t1x4Dga/tMDaCbSxJN+1nIvqIM3JZf6UcWWk8kmo=;
-        b=X9GP96dAmA6MyenT6j83U/PQb9XH36z+I914EXljj3LKSGqWH3GWloeMJx8isCwKtO
-         y4QtfMlde8o/EuR6EsZVskk5/I8ylBs9T2KeXuQ7eAS6UQfP7g0VG8+dVIGwRYpGadRt
-         7enuAFK5R27QNIoiH9lCwBq+bk0e1FObXkiSPo5FRAkSM+1Wxfgx8S4zGFTk0kA8h3zz
-         vM61otRSke/95ZXcwuDF6V0G1Pq5b/mslDdj5U3GSEwZ/BQzt4mvgHR+u+wZUez8iG4u
-         yGAsniYqj3LFm4yvmj+hGlSKKtVF56AgCEmRED4O8HRNj/cI7SVOeOuH608so1gH2FMf
-         fz9Q==
-X-Gm-Message-State: AOAM530GyFRR8YWJM+pClG4woibuI2+uKGlzhAG5UNpOj6VHxQ6AkGIh
-        yTzfs5sc+garhbD+zOkxg/eOAqupm0wRLsGYL2vq2w==
-X-Google-Smtp-Source: ABdhPJy6Tchl7ysZwtNi/eEjUPSPNVDD0sa3t6qjCUJamnzcansK7rEyXEHMuknf3B1HTdYvZcf8nmN0ZGLtKe6NFvQ=
-X-Received: by 2002:a2e:350a:: with SMTP id z10mr1473467ljz.104.1591788028702;
- Wed, 10 Jun 2020 04:20:28 -0700 (PDT)
+        Wed, 10 Jun 2020 07:27:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591788457; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=dWdoa6IGDMC+hQP5CWL1tHbKfDBsdtRuzoBnhaz53/I=; b=P3M35IdBAK+ZviAVWLmVhiSb1dNB8k3NYMQ9BAGTpU59WE92zMveiwASwKFbJVaFK4AjHUh9
+ Hls2DExDDYL9PDDZl7Ox4kUBBXVqduok8w6Ss4P4GdSODkgOM7EDIpOFIv92a8zPAjAo98Yd
+ wN6LhbIBZpMT/5JUxCMcnm19vdE=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5ee0c3a8117610c7ff02135d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Jun 2020 11:27:36
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E7277C433A0; Wed, 10 Jun 2020 11:27:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.9] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 50705C433CB;
+        Wed, 10 Jun 2020 11:27:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 50705C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH V7 RESEND 4/7] spi: spi-geni-qcom: Add interconnect
+ support
+To:     Mark Brown <broonie@kernel.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        mark.rutland@arm.com, robh+dt@kernel.org,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@chromium.org,
+        msavaliy@codeaurora.org
+References: <1591682194-32388-1-git-send-email-akashast@codeaurora.org>
+ <1591682194-32388-5-git-send-email-akashast@codeaurora.org>
+ <20200609134112.GI4583@sirena.org.uk>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <5a6a25e1-b22d-6960-2377-d7bc32d37b51@codeaurora.org>
+Date:   Wed, 10 Jun 2020 16:57:27 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-References: <1591613742-1768-1-git-send-email-sivaprak@codeaurora.org>
-In-Reply-To: <1591613742-1768-1-git-send-email-sivaprak@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 10 Jun 2020 13:20:17 +0200
-Message-ID: <CACRpkda7DEr7H4FzP95L_GYeigg1upGd+A0Yx+b4u+MD-mJVCg@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: ipq6018 Add missing pins in qpic pin group
-To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        Rajkumar Ayyasamy <arajkuma@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200609134112.GI4583@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 8, 2020 at 12:55 PM Sivaprakash Murugesan
-<sivaprak@codeaurora.org> wrote:
+Hi Mark,
 
-> The patch adds missing qpic data pins to qpic pingroup. These pins are
-> necessary for the qpic nand to work.
+On 6/9/2020 7:11 PM, Mark Brown wrote:
+> On Tue, Jun 09, 2020 at 11:26:31AM +0530, Akash Asthana wrote:
+>> Get the interconnect paths for SPI based Serial Engine device
+>> and vote according to the current bus speed of the driver.
+>>
+>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>> ---
+> I've repeatedly acked this patch but my ack never seems to get carried
+> forward :(
+
+I carry acks from previous patches if nothing is changed in current 
+patch wrt previous version, I did that in 
+V6@http://patchwork.ozlabs.org/project/linux-i2c/patch/1590049764-20912-5-git-send-email-akashast@codeaurora.org/
+
+But since there was change from V6 to V7 so, I didn't carried ack from 
+V6 to V7, because I thought I'll need your approvals on additional changes.
+
+V7@http://patchwork.ozlabs.org/project/linux-i2c/patch/1590497690-29035-5-git-send-email-akashast@codeaurora.org/
+
+================================================
+
+Changes in V7:
+  - As per Matthias's comment removed usage of peak_bw variable because we don't
+    have explicit peak requirement, we were voting peak = avg and this can be
+    tracked using single variable for avg bw.
+==========================================================
+
 >
-> Fixes: ef1ea54 (pinctrl: qcom: Add ipq6018 pinctrl driver)
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>> +	/* Set the bus quota to a reasonable value for register access */
+>> +	mas->se.icc_paths[GENI_TO_CORE].avg_bw = Bps_to_icc(CORE_2X_50_MHZ);
+>> +	mas->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
+> Why are these asymmetric?
 
-Patch applied for fixes unless someone has objections it goes in after v5.8-rc1.
+These are asymmetric because we want to start by putting minimal vote on 
+CPU_TO_GENI path for register access and later based on per transfer's 
+need we scale it at runtime.
 
-Yours,
-Linus Walleij
+However, for GENI_TO_CORE path we are trying to keep fixed vote from 
+probe itself that can support max bus speed, we are not scaling it per 
+transfer's need because FW runs on core clock and core behaves a bit 
+different than other NOCs.
+
+We don't have any functional relation which mapping btw actual 
+throughput requirement to core frequency need. In the past we have faced 
+few latency issues because of core slowness (Although it was running 
+much higher than actual throughput requirement). To avoid such scenario 
+we are using tested and recommended value from HW team.
+
+Thankyou for review.
+
+regards,
+
+Akash
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+
