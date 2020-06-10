@@ -2,94 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B8491F5D13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 22:24:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CDD21F5D22
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2020 22:26:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbgFJUYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Jun 2020 16:24:01 -0400
-Received: from smtprelay0047.hostedemail.com ([216.40.44.47]:59744 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726277AbgFJUYA (ORCPT
+        id S1726134AbgFJU0m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Jun 2020 16:26:42 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:37607 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbgFJU0m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Jun 2020 16:24:00 -0400
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay04.hostedemail.com (Postfix) with ESMTP id 3B0161828F22B;
-        Wed, 10 Jun 2020 20:23:59 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1541:1593:1594:1711:1730:1747:1777:1792:2393:2559:2562:2693:2828:3138:3139:3140:3141:3142:3352:3622:3865:3866:3867:3868:3870:3872:3874:4250:4321:5007:6119:6691:7903:10004:10400:11026:11232:11473:11658:11914:12043:12296:12297:12740:12760:12895:13069:13311:13357:13439:14659:14721:21080:21433:21611:21627:21740:21939:21990:30012:30045:30054:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
-X-HE-Tag: way23_5c0de7b26dce
-X-Filterd-Recvd-Size: 2982
-Received: from XPS-9350.home (unknown [47.151.136.130])
-        (Authenticated sender: joe@perches.com)
-        by omf05.hostedemail.com (Postfix) with ESMTPA;
-        Wed, 10 Jun 2020 20:23:57 +0000 (UTC)
-Message-ID: <2fab7f999a6b5e5354b23d06aea31c5018b9ce18.camel@perches.com>
-Subject: Re: [PATCH v3 6/7] venus: Make debug infrastructure more flexible
-From:   Joe Perches <joe@perches.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, linux-acpi@vger.kernel.org,
-        netdev@vger.kernel.org, Jason Baron <jbaron@akamai.com>
-Date:   Wed, 10 Jun 2020 13:23:56 -0700
-In-Reply-To: <31e1aa72b41f9ff19094476033511442bb6ccda0.camel@perches.com>
-References: <20200609104604.1594-1-stanimir.varbanov@linaro.org>
-         <20200609104604.1594-7-stanimir.varbanov@linaro.org>
-         <20200609111414.GC780233@kroah.com>
-         <dc85bf9e-e3a6-15a1-afaa-0add3e878573@linaro.org>
-         <20200610133717.GB1906670@kroah.com>
-         <31e1aa72b41f9ff19094476033511442bb6ccda0.camel@perches.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.36.2-0ubuntu1 
+        Wed, 10 Jun 2020 16:26:42 -0400
+Received: by mail-io1-f67.google.com with SMTP id r2so3838750ioo.4;
+        Wed, 10 Jun 2020 13:26:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dLb7+PK/r7ZuXzs/JmtPoYfJOAKaZP0F2k4snoGnWsU=;
+        b=k+c8qYuPb25cGW4peDqRuSLPhG8c1ugseYt1knsjVyCpHHAohFnoUXXVSrrss+/KhJ
+         klBbGFksueffg1H7P/KlWzFkA2bpjR3wW+TDdqnPpWKan+6PtHeHGrdicSdwH/h1Jrhx
+         934o3wdOZ9Pq7gP2xETitp1p2QCZwbeSbDMaI6aNkN4yteo05tYT2JTfRKOpifBMdyGd
+         /LYtB+Kf9UUyjuq7pGqPCuHufIoWewysa+bq5oBYDofbk4uWfA/0YFunBMaeA7wsECX6
+         0fIrF5HHErTZjiRnRAJaMTp/4e4YuCbvnaq28vfRruFqcK6XagC/Zyli2QqnqmHOOmQz
+         ve8w==
+X-Gm-Message-State: AOAM531ISWY+AFZqD5yIVlV5XDUIXezVHaQZ+ZeHHMeT9P2CKjGGlZzj
+        aXmr0bQOIID9VV4LlcEAKw==
+X-Google-Smtp-Source: ABdhPJyAmUHIBz4O89zykUj+XKP55VbFK+EU3Y8jWd5wfBs0TJ/1pGP+ZZc0aZlh3G9jL0gzne9Igg==
+X-Received: by 2002:a6b:ab82:: with SMTP id u124mr3783659ioe.137.1591820800305;
+        Wed, 10 Jun 2020 13:26:40 -0700 (PDT)
+Received: from xps15 ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id y12sm414686ili.83.2020.06.10.13.26.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2020 13:26:39 -0700 (PDT)
+Received: (nullmailer pid 3654596 invoked by uid 1000);
+        Wed, 10 Jun 2020 20:26:38 -0000
+Date:   Wed, 10 Jun 2020 14:26:38 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] devicetree: bindings: phy: Document ipq806x dwc3
+ qcom phy
+Message-ID: <20200610202638.GA3649967@bogus>
+References: <20200603132237.6036-1-ansuelsmth@gmail.com>
+ <20200603132237.6036-2-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200603132237.6036-2-ansuelsmth@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2020-06-10 at 12:49 -0700, Joe Perches wrote:
-> On Wed, 2020-06-10 at 15:37 +0200, Greg Kroah-Hartman wrote:
-> > Please work with the infrastructure we have, we have spent a lot of time
-> > and effort to make it uniform to make it easier for users and
-> > developers.
+On Wed, Jun 03, 2020 at 03:22:35PM +0200, Ansuel Smith wrote:
+> Document dwc3 qcom phy hs and ss phy bindings needed to correctly
+> inizialize and use usb on ipq806x SoC.
 > 
-> Not quite.
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+> v6:
+> * Add maximum value
+> v5:
+> * Fix dt_binding_check error
+> v4:
+> * Add qcom to specific bindings
+> v3:
+> * Use explicit reg instead of regmap
 > 
-> This lack of debug grouping by type has been a
-> _long_ standing issue with drivers.
+>  .../bindings/phy/qcom,ipq806x-usb-phy-hs.yaml | 58 ++++++++++++++
+>  .../bindings/phy/qcom,ipq806x-usb-phy-ss.yaml | 76 +++++++++++++++++++
+>  2 files changed, 134 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
 > 
-> > Don't regress and try to make driver-specific ways of doing
-> > things, that way lies madness...
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
+> new file mode 100644
+> index 000000000000..c019de7478e3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
+> @@ -0,0 +1,58 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-hs.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm ipq806x usb DWC3 HS PHY CONTROLLER
+> +
+> +maintainers:
+> +  - Ansuel Smith <ansuelsmth@gmail.com>
+> +
+> +description:
+> +  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
+> +  controllers used in ipq806x. Each DWC3 PHY controller should have its
+> +  own node.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,ipq806x-usb-phy-hs
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 2
+> +    description: |
+> +      - "ref" Is required
+> +      - "xo"	Optional external reference clock
+
+This is just saying what the schema says. Drop it.
+
+> +    items:
+> +      - const: ref
+> +      - const: xo
+> +
+> +required:
+> +  - compatible
+> +  - "#phy-cells"
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
+> +
+> +    hs_phy_0: phy@110f8800 {
+> +      compatible = "qcom,ipq806x-usb-phy-hs";
+> +      reg = <0x110f8800 0x30>;
+> +      clocks = <&gcc USB30_0_UTMI_CLK>;
+> +      clock-names = "ref";
+> +      #phy-cells = <0>;
+> +    };
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
+> new file mode 100644
+> index 000000000000..3696a8d7a5c7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-ss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm ipq806x usb DWC3 SS PHY CONTROLLER
+> +
+> +maintainers:
+> +  - Ansuel Smith <ansuelsmth@gmail.com>
+> +
+> +description:
+> +  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
+> +  controllers used in ipq806x. Each DWC3 PHY controller should have its
+> +  own node.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,ipq806x-usb-phy-ss
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 2
+> +    items:
+> +      - const: ref
+> +      - const: xo
+> +
+> +  qcom,rx-eq:
+> +    description: Override value for rx_eq.
+> +    default: 4
+> +    maximum: 7
+> +    allOf:
+
+You can drop 'allOf' now and just do $ref directly.
+
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +  qcom,tx-deamp-3_5db:
+> +    description: Override value for transmit preemphasis.
+> +    default: 23
+> +    maximum: 63
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +  qcom,mpll:
+> +    description: Override value for mpll.
+> +    default: 0
+> +    maximum: 7
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +required:
+> +  - compatible
+> +  - "#phy-cells"
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
+> +
+> +    ss_phy_0: phy@110f8830 {
+> +      compatible = "qcom,ipq806x-usb-phy-ss";
+> +      reg = <0x110f8830 0x30>;
+> +      clocks = <&gcc USB30_0_MASTER_CLK>;
+> +      clock-names = "ref";
+> +      #phy-cells = <0>;
+> +    };
+> -- 
+> 2.25.1
 > 
-> It's not driver specific, it allows driver developers to
-> better isolate various debug states instead of keeping
-> lists of specific debug messages and enabling them
-> individually.
-
-For instance, look at the homebrew content in
-drivers/gpu/drm/drm_print.c that does _not_ use
-dynamic_debug.
-
-MODULE_PARM_DESC(debug, "Enable debug output, where each bit enables a debug category.\n"
-"\t\tBit 0 (0x01)  will enable CORE messages (drm core code)\n"
-"\t\tBit 1 (0x02)  will enable DRIVER messages (drm controller code)\n"
-"\t\tBit 2 (0x04)  will enable KMS messages (modesetting code)\n"
-"\t\tBit 3 (0x08)  will enable PRIME messages (prime code)\n"
-"\t\tBit 4 (0x10)  will enable ATOMIC messages (atomic code)\n"
-"\t\tBit 5 (0x20)  will enable VBL messages (vblank code)\n"
-"\t\tBit 7 (0x80)  will enable LEASE messages (leasing code)\n"
-"\t\tBit 8 (0x100) will enable DP messages (displayport code)");
-module_param_named(debug, __drm_debug, int, 0600);
-
-void drm_dev_dbg(const struct device *dev, enum drm_debug_category category,
-		 const char *format, ...)
-{
-	struct va_format vaf;
-	va_list args;
-
-	if (!drm_debug_enabled(category))
-		return;
-
-
