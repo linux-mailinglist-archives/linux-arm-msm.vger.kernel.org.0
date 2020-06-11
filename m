@@ -2,113 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E32531F70B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 01:05:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0737A1F70D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 01:21:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbgFKXFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 19:05:33 -0400
-Received: from sonic315-55.consmr.mail.gq1.yahoo.com ([98.137.65.31]:35280
-        "EHLO sonic315-55.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726306AbgFKXFc (ORCPT
+        id S1726391AbgFKXV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jun 2020 19:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57432 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726327AbgFKXV5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 19:05:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048; t=1591916728; bh=4YUy2dnKX+aLfXhIKF01g98COCeJaRGO0uIb0VS79Kk=; h=Date:From:Subject:To:Cc:References:From:Subject; b=ksY/536Vx4+k7UgUuK7sU+hVBThfiszI09Iuz1pRDsEDzIekIw49uYjp7ORgIcNYz0f6DNDzfy6/4yfZrOHqInTp/7Z/HcyjmMMLgeZWuD8TRAwOaMMkENqEBRHmRUuLAghQQjihayEfj8L20m6zZMfg23tNVn0w4aye3VB6XxwcQwPiMIHahzYpkJItzHEI+CmtRNoS45OeF8pkyYlQXTj5rda13IOwNMLzMGJ8ZXmNJM+2AQJKKYg2covwyMtdvSqzYCtGIcWITwCXA8hKPZtr12KvBVm1CK0E2O6h8qR/7PTGpw4okY+ctPIvnNIDw3ffcEEgwvbMVoGH5mEvNw==
-X-YMail-OSG: VeI5KAIVM1l8FZBKKOcgI77XPMQpX1yRxgEuJkG2HwGiwftSWlMzUhg.wI9RpCO
- 0m9mb_xDfGj9T2zqhX.uH.ouvYYHvpDFZhv1pWFL5y1aS4v9hb1LGwKsLcCxtdjVmrndIAxlrgTz
- 8LO3W4t7Y60g_t0QstSujZEh68oL_wRlHCSB5Td_M.HVxGsUQjqWM2qr_3.AkhSA0yutg5qcke8K
- Tv4I9pYJd9awi6FeCBU8.AW0hdjLa6mwHM8hm8SCtmWxN5P9kgX8HCxAaSA2wWYE5BgfOiUDY0eN
- 8SdF4xfPgafkYHgez7VCD9nxGHLJtR8PsxeXciMIqqC1F9E63fd4UIcXYfSp5mCCnXf1pW2oA0VZ
- eHnF2Lf5MUvy0KsxA7VkbSJfJnhx72DN4PMW15_Pqypq2CTc5FOh7t_XE2x5gmqPfv8aAgem9Z6S
- G754j7JvVIvxR16NyP1NJHKbTMsWHNX0qPQnbyQSB5vpRmVwkBOq_AHkSPmPavoJRKp4qbzy6bBO
- Bgl5ef0LdH1w0IGoNwlRH.UR8MrIAnwak32wCqG5lf.SwS9m.j1yNpS4_5D0o_3_e09XXbmbVT87
- JydTvntH.WypWlGKDwbEeflUZOlJnJ07XyPmONgYYP36533AICJBEt96Va3.mhtjhlFw3.29ZciX
- DUnx7ZrUMS58v2ROWoMShz.kIsuifGl.62rbZy_X8r4vO.Uxo5XJwzW4msMSwsvTqaOqT_X2DSbr
- LLj_UnAnYi2D4y9bOLYthO6rgknJsjH5NNK_yfRdTmQy.0mTEM7K9s8uzcE9CTS8fKfsDaVPyVxh
- xVmmJFX.A8jqmra2IrNsfF8nyaPIwxTRtGkfxuk34ZNH.5c0amNlvLcBd8.CT2wpn_WASLVEIrIT
- lDlihOCfti987bgw5CyoUnMPwNm0_HyhWtZkakVcpPqyn4HsvO_sGZRdcb0.0tEu_C025pvdxswN
- rmgxGP8nc8FxFl_ewO1mGzIfh.LwtPgP6qxJHGwfAB.8sgV6oyaOcpklbPCK0mtb2TNuawY.gM1Y
- 4EIewDISpLaEHGybdY02ejlYI9grt4UFGP66cBLM98U9eaSs476RtjcbgJDnZF0_b5o12Ivh3yDE
- .RRrOjKXttZUE3n3qAJp9VaVUkrJ1tU13bF05OPpKcgEydjxVzV7vX1CE71IihUl_3XGlg_spYT1
- ddNGRuEIqFA0z2RSjAXwv25g7eOX4gy.2PVQRZ6tqkn.PDou7IfhlVk8_1frFp5r3OUVYDW2Om7X
- b38HOjsBTSMFQLSdrTiz56K7c1Ygr8lUnUMCqgmgaJUxAZUUchMUduSb9Ii8mcXGP569B9NwAMAc
- y3hNB5BRs5SQzb2xm6fsFam.vFlKXVBiNz6MHR.jitsw1wi_Lt0BaPaD8ibirje_yAw4-
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic315.consmr.mail.gq1.yahoo.com with HTTP; Thu, 11 Jun 2020 23:05:28 +0000
-Received: by smtp422.mail.gq1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA ID 385a77de6a3948fc2d5a9f83b3566fac;
-          Thu, 11 Jun 2020 23:05:25 +0000 (UTC)
-Date:   Thu, 11 Jun 2020 19:05:21 -0400
-From:   "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
-Subject: AMD IOMMU + SME + amdgpu regression
-To:     Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org,
-        David Rientjes <rientjes@google.com>,
-        Christoph Hellwig <hch@lst.de>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Daniel Drake <drake@endlessm.com>, jonathan.derrick@intel.com,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Joerg Roedel <jroedel@suse.de>
+        Thu, 11 Jun 2020 19:21:57 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA48BC08C5C5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2020 16:21:56 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id k2so2840727pjs.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2020 16:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=Mx1BJS+F5RobWjcFE5t60E3qsaoq0yype8aHumba4AY=;
+        b=RXgoilEj3158/D81CyzqcOUTZGSWHs9fozqqHDzPcxAklVjRdy3hZHjcRNjda1AfcN
+         MWh8NjVKFFD6uqQ06STzWf+p07V+jMqx60Slct7LfhtNx8i3FESb0eHAl0Rzjg1hft3B
+         ++DDeyiqrKN7JopuxQxvASgSkFdlE740/jr9E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=Mx1BJS+F5RobWjcFE5t60E3qsaoq0yype8aHumba4AY=;
+        b=h1KcoX7YVIcK1zlb6SSp2QRtQmCIQQN9ogVrPVHI8NebERnMouvPfuaVeolXBgJ13y
+         AqJDGm9aaXdOmuVcHr5LozVEcA3JFATfhFVYHxPTH9TTQl1CIbOMzzB7Wrn97kHI/iWX
+         HlOQBT+63nJAF6e3MjJRL1Hc8kGbo4oYZT5C9QRYt8Rsczl/zSZQZWyjcFoK13QmWPDq
+         K1YyHBzl76XiW/P6uiCdYJzRFUwF0A8Ua02RNRsrmHXyGaYXEdoaYg3Ws6RDjOjfyLrW
+         XUc7U6glY+bUMThlew6ICQ5X4LeF9xwEroNEf/V+dDPYDSc00n4bseUAa1Y+1mwiC708
+         M5KQ==
+X-Gm-Message-State: AOAM531GO02fktPAJjTF05if3ck6UH/Ma6x8fopzNQ1IQX6FcSMHZogE
+        vIA6dY1oFqNsFw2SseaYCGx8OMTC4bE=
+X-Google-Smtp-Source: ABdhPJwdz2sTBkJb9s0f/hzOItcMgoPC81y0CH/eE7gR25jQYxuS18l1pPBiz49y8/WC7LrnNm8i4Q==
+X-Received: by 2002:a17:90a:70c6:: with SMTP id a6mr9302299pjm.16.1591917716068;
+        Thu, 11 Jun 2020 16:21:56 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id b7sm4036787pfo.202.2020.06.11.16.21.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2020 16:21:55 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Message-Id: <1591915710.rakbpzst8h.none@localhost>
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-References: <1591915710.rakbpzst8h.none.ref@localhost>
-X-Mailer: WebService/1.1.16072 hermes_yahoo Apache-HttpAsyncClient/4.1.4 (Java/11.0.6)
+In-Reply-To: <1591885683-29514-3-git-send-email-sanm@codeaurora.org>
+References: <1591885683-29514-1-git-send-email-sanm@codeaurora.org> <1591885683-29514-3-git-send-email-sanm@codeaurora.org>
+Subject: Re: [PATCH 2/2] usb: dwc3: Host wake up support from system suspend
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Date:   Thu, 11 Jun 2020 16:21:54 -0700
+Message-ID: <159191771455.242598.12826819292508436205@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Quoting Sandeep Maheswaram (2020-06-11 07:28:03)
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index 25c686a7..8370350 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -31,15 +31,19 @@
+>  #include <linux/usb/gadget.h>
+>  #include <linux/usb/of.h>
+>  #include <linux/usb/otg.h>
+> +#include <linux/usb/hcd.h>
+> =20
+>  #include "core.h"
+>  #include "gadget.h"
+>  #include "io.h"
+> =20
+>  #include "debug.h"
+> +#include "../host/xhci.h"
+> =20
+>  #define DWC3_DEFAULT_AUTOSUSPEND_DELAY 5000 /* ms */
+> =20
+> +bool need_phy_for_wakeup;
 
-amdgpu + IOMMU + SME is now working for me on 5.7, yay! But, it is=20
-broken on torvalds master, boo. On boot, depending on which exact commit=20
-I test, it either hangs immediately (with built-in driver, before=20
-starting initramfs), displays some errors then hangs, or spams the=20
-screen with many amdgpu errors.
+static? But why isn't it part of 'struct dwc3'? There could be multiple
+dwc3 instances that may or may not be wakeup capable.
 
-I bisected the black screen hang to:
+> +
+>  /**
+>   * dwc3_get_dr_mode - Validates and sets dr_mode
+>   * @dwc: pointer to our context structure
+> @@ -1627,10 +1631,36 @@ static int dwc3_core_init_for_resume(struct dwc3 =
+*dwc)
+>         return ret;
+>  }
+> =20
+> +static void dwc3_set_phy_speed_flags(struct dwc3 *dwc)
+> +{
+> +
+> +       int i, num_ports;
+> +       u32 reg;
+> +       struct usb_hcd  *hcd =3D platform_get_drvdata(dwc->xhci);
+> +       struct xhci_hcd *xhci_hcd =3D hcd_to_xhci(hcd);
+> +
+> +       dwc->hs_phy_flags &=3D ~(PHY_MODE_USB_HOST_HS | PHY_MODE_USB_HOST=
+_LS);
+> +
+> +       reg =3D readl(&xhci_hcd->cap_regs->hcs_params1);
+> +
+> +       num_ports =3D HCS_MAX_PORTS(reg);
+> +       for (i =3D 0; i < num_ports; i++) {
+> +               reg =3D readl(&xhci_hcd->op_regs->port_status_base + i*0x=
+10);
 
-commit dce8d6964ebdb333383bacf5e7ab8c27df151218
-Author: Joerg Roedel <jroedel@suse.de>
-Date:   Wed Apr 29 15:36:53 2020 +0200
+Please format this as 'port_status_base + i * 0x10'
 
-    iommu/amd: Convert to probe/release_device() call-backs
+> +               if (reg & PORT_PE) {
+> +                       if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
+> +                               dwc->hs_phy_flags |=3D PHY_MODE_USB_HOST_=
+HS;
+> +                       else if (DEV_LOWSPEED(reg))
+> +                               dwc->hs_phy_flags |=3D PHY_MODE_USB_HOST_=
+LS;
+> +               }
+> +       }
+> +       phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_flags);
+> +}
+> +
+>  static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>  {
+>         unsigned long   flags;
+>         u32 reg;
+> +       struct usb_hcd  *hcd =3D platform_get_drvdata(dwc->xhci);
+> =20
+>         switch (dwc->current_dr_role) {
+>         case DWC3_GCTL_PRTCAP_DEVICE:
+> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> index 013f42a..ff02d41 100644
+> --- a/drivers/usb/dwc3/core.h
+> +++ b/drivers/usb/dwc3/core.h
+> @@ -1094,6 +1094,7 @@ struct dwc3 {
+>         struct phy              *usb3_generic_phy;
+> =20
+>         bool                    phys_ready;
+> +       int                     hs_phy_flags;
 
-    Convert the AMD IOMMU Driver to use the probe_device() and
-    release_device() call-backs of iommu_ops, so that the iommu core code
-    does the group and sysfs setup.
+Does it need to be signed? Why not unsigned int or unsigned long?
 
-    Signed-off-by: Joerg Roedel <jroedel@suse.de>
-    Link: https://lore.kernel.org/r/20200429133712.31431-16-joro@8bytes.org
-    Signed-off-by: Joerg Roedel <jroedel@suse.de>
+> =20
+>         struct ulpi             *ulpi;
+>         bool                    ulpi_ready;
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 1dfd024..ec183646 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/usb/of.h>
+>  #include <linux/reset.h>
+>  #include <linux/iopoll.h>
+> +#include <linux/usb/hcd.h>
+> =20
+>  #include "core.h"
+> =20
+> @@ -192,21 +193,34 @@ static int dwc3_qcom_register_extcon(struct dwc3_qc=
+om *qcom)
+> =20
+>  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+>  {
+> +       struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
+> +
+>         if (qcom->hs_phy_irq) {
+>                 disable_irq_wake(qcom->hs_phy_irq);
+>                 disable_irq_nosync(qcom->hs_phy_irq);
+>         }
+> +       if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
+> +               if (qcom->dp_hs_phy_irq) {
+> +                       disable_irq_wake(qcom->dp_hs_phy_irq);
+> +                       disable_irq_nosync(qcom->dp_hs_phy_irq);
+> +               }
+> +       } else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
+> +               if (qcom->dm_hs_phy_irq) {
+> +                       disable_irq_wake(qcom->dm_hs_phy_irq);
+> +                       disable_irq_nosync(qcom->dm_hs_phy_irq);
+> +               }
+> +       } else {
+> =20
+> -       if (qcom->dp_hs_phy_irq) {
+> -               disable_irq_wake(qcom->dp_hs_phy_irq);
+> -               disable_irq_nosync(qcom->dp_hs_phy_irq);
+> -       }
+> +               if (qcom->dp_hs_phy_irq) {
+> +                       disable_irq_wake(qcom->dp_hs_phy_irq);
+> +                       disable_irq_nosync(qcom->dp_hs_phy_irq);
+> +               }
+> =20
+> -       if (qcom->dm_hs_phy_irq) {
+> -               disable_irq_wake(qcom->dm_hs_phy_irq);
+> -               disable_irq_nosync(qcom->dm_hs_phy_irq);
+> +               if (qcom->dm_hs_phy_irq) {
+> +                       disable_irq_wake(qcom->dm_hs_phy_irq);
+> +                       disable_irq_nosync(qcom->dm_hs_phy_irq);
+> +               }
+>         }
+> -
+>         if (qcom->ss_phy_irq) {
+>                 disable_irq_wake(qcom->ss_phy_irq);
+>                 disable_irq_nosync(qcom->ss_phy_irq);
+> @@ -215,21 +229,34 @@ static void dwc3_qcom_disable_interrupts(struct dwc=
+3_qcom *qcom)
+> =20
+>  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+>  {
+> +       struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
+> +
+>         if (qcom->hs_phy_irq) {
+>                 enable_irq(qcom->hs_phy_irq);
+>                 enable_irq_wake(qcom->hs_phy_irq);
+>         }
+> +       if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
+> +               if (qcom->dp_hs_phy_irq) {
+> +                       enable_irq(qcom->dp_hs_phy_irq);
+> +                       enable_irq_wake(qcom->dp_hs_phy_irq);
+> +               }
+> +       } else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
+> +               if (qcom->dm_hs_phy_irq) {
+> +                       enable_irq(qcom->dm_hs_phy_irq);
+> +                       enable_irq_wake(qcom->dm_hs_phy_irq);
+> +               }
+> +       } else {
+> =20
+> -       if (qcom->dp_hs_phy_irq) {
+> -               enable_irq(qcom->dp_hs_phy_irq);
+> -               enable_irq_wake(qcom->dp_hs_phy_irq);
+> -       }
+> +               if (qcom->dp_hs_phy_irq) {
+> +                       enable_irq(qcom->dp_hs_phy_irq);
+> +                       enable_irq_wake(qcom->dp_hs_phy_irq);
+> +               }
+> =20
+> -       if (qcom->dm_hs_phy_irq) {
+> -               enable_irq(qcom->dm_hs_phy_irq);
+> -               enable_irq_wake(qcom->dm_hs_phy_irq);
+> +               if (qcom->dm_hs_phy_irq) {
+> +                       enable_irq(qcom->dm_hs_phy_irq);
+> +                       enable_irq_wake(qcom->dm_hs_phy_irq);
+> +               }
+>         }
+> -
+>         if (qcom->ss_phy_irq) {
+>                 enable_irq(qcom->ss_phy_irq);
+>                 enable_irq_wake(qcom->ss_phy_irq);
 
-Testing torvalds master (623f6dc593) with the containing merge=20
-(98bdc74b36) plus the DMA mapping merge (4e94d08734) reverted allows=20
-amdgpu + IOMMU + SME to once again work.
+Is it possible to move this code to use the wakeirq library? I believe
+only one irq can be the "wakeup" irq in that case but maybe that is
+possible if we know what mode that phy is in? Or does the superspeed and
+some sort of high speed irq need to be enabled for wakeup in case a usb2
+or usb3 device wants to wakeup?
 
-I think that nobody is really working on amdgpu + SME, but it would be a=20
-shame if it was supported and then incidentally broken by a small=20
-change.
+> @@ -240,6 +267,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+>  {
+>         u32 val;
+>         int i;
+> +       struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
+> +       struct usb_hcd  *hcd =3D platform_get_drvdata(dwc->xhci);
 
-I am using an ASRock B450 Pro4 with Ryzen 1600 and ASUS RX 480. I don't=20
-understand this code at all, but let me know what I can do to=20
-troubleshoot.
+Weird spacing here   ---^
 
-Thanks,
-Alex.
+> +
+> +       if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
+> +               device_init_wakeup(qcom->dev, 1);
+> =20
+>         if (qcom->is_suspended)
+>                 return 0;
+> @@ -262,6 +294,8 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+>         int ret;
+>         int i;
+> =20
+> +       device_init_wakeup(qcom->dev, 0);
+
+Usually device_init_wakeup() is called once during probe and then the
+wakeup enable state for a device is controlled from userspace.  Calling
+this here will be semi-disastrous in the sense that we're going to be
+creating and destroying a wakeup sysfs object each time we suspend. I
+see that dwc3 core code has this pattern of calling device_init_wakeup()
+from the suspend/resume path too, which looks wrong.
+
+Shouldn't we be forwarding the wakeup request from the root hub to the
+controller? I'm not super clear on how USB PM is supposed to work but
+this doesn't look right.
