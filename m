@@ -2,171 +2,286 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 186991F6D9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2020 20:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66F221F6E70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2020 22:07:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726180AbgFKSu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 14:50:58 -0400
-Received: from zimbra2.kalray.eu ([92.103.151.219]:51870 "EHLO
-        zimbra2.kalray.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726531AbgFKSu5 (ORCPT
+        id S1726563AbgFKUHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jun 2020 16:07:13 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:17578 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725824AbgFKUHN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 14:50:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra2.kalray.eu (Postfix) with ESMTP id DF09327E0839;
-        Thu, 11 Jun 2020 20:50:55 +0200 (CEST)
-Received: from zimbra2.kalray.eu ([127.0.0.1])
-        by localhost (zimbra2.kalray.eu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id n-Caf7a-VzZg; Thu, 11 Jun 2020 20:50:55 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra2.kalray.eu (Postfix) with ESMTP id 730AC27E082F;
-        Thu, 11 Jun 2020 20:50:55 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra2.kalray.eu 730AC27E082F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalray.eu;
-        s=32AE1B44-9502-11E5-BA35-3734643DEF29; t=1591901455;
-        bh=eIVTjMZkPCllcNhF64IckkXf+qBbunAsTJvT/KJioIg=;
-        h=From:To:Date:Message-Id;
-        b=M5HSITPBqIhn/T5rqBWlfHaglhbVKAmeQdsWLNLqukR5DftE5t43HFhLG0A1gJZRN
-         AKFBk3OvkDk0fYrVyCDxp/Nga+1uY49DgXx2vCRXMFJP+EzCz2LWNPpy+i+LXPPjad
-         hIY54L4ezvdN4uTH+b/Knl+9AA/oYgzx44/Se51A=
-X-Virus-Scanned: amavisd-new at zimbra2.kalray.eu
-Received: from zimbra2.kalray.eu ([127.0.0.1])
-        by localhost (zimbra2.kalray.eu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id dTLu1IoVhv5Z; Thu, 11 Jun 2020 20:50:55 +0200 (CEST)
-Received: from triton.lin.mbt.kalray.eu (unknown [192.168.37.25])
-        by zimbra2.kalray.eu (Postfix) with ESMTPSA id 5CC5527E06CB;
-        Thu, 11 Jun 2020 20:50:55 +0200 (CEST)
-From:   Clement Leger <cleger@kalray.eu>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Clement Leger <cleger@kalray.eu>
-Subject: [PATCH] rpmsg: fix driver_override memory leak
-Date:   Thu, 11 Jun 2020 20:50:12 +0200
-Message-Id: <20200611185012.23815-1-cleger@kalray.eu>
-X-Mailer: git-send-email 2.17.1
+        Thu, 11 Jun 2020 16:07:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591906031; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Gt4Yl17uHxeVszwUdwoN2Kua/oUvLPKVV3l9/jcWrV0=;
+ b=B5cJfyYckiVEpPX0TWmPFQs5eM6StZ9QC+derUo2KtFQWw0bAM8+vk/ZP6fS/X47FB5rs6fY
+ 93aJMO28M/TCHxmXpWoU2P4Dqii2sd2cIffbJK3L/F5AG+W4EI3pRHMb6LPO81uuycOORdDx
+ 1na2hjVu7YfEfGijUW0jDoBN0SQ=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5ee28eef0206ad41d192e747 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Jun 2020 20:07:11
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8E695C43395; Thu, 11 Jun 2020 20:07:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tanmay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70E5BC433C8;
+        Thu, 11 Jun 2020 20:07:09 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 11 Jun 2020 13:07:09 -0700
+From:   tanmay@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     devicetree@vger.kernel.org, sam@ravnborg.org,
+        seanpaul@chromium.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, chandanu@codeaurora.org,
+        robdclark@gmail.com, abhinavk@codeaurora.org,
+        nganji@codeaurora.org, dri-devel@lists.freedesktop.org,
+        linux-clk@vger.kernel.org, Vara Reddy <varar@codeaurora.org>
+Subject: Re: [PATCH v6 1/5] dt-bindings: msm/dp: add bindings of DP/DP-PLL
+ driver for Snapdragon
+In-Reply-To: <159175530931.242598.4696487926885071106@swboyd.mtv.corp.google.com>
+References: <20200609033818.9028-1-tanmay@codeaurora.org>
+ <159175530931.242598.4696487926885071106@swboyd.mtv.corp.google.com>
+Message-ID: <d6db52a33ac787c0fe6134ca32c06007@codeaurora.org>
+X-Sender: tanmay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-rpmsg_core allows to override driver using driver_override sysfs
-attribute. When used, the sysfs store function will duplicate the user
-provided string using kstrndup. However, when the rpdev is released,
-the driver_override attribute is not freed. In order to have a
-consistent allocation and release, use kstrdup in
-rpmsg_chrdev_register_device and move it in rpmsg_core.c to avoid
-header dependencies. Moreover, add a rpmsg_release_device function to
-be called in device release. Drivers using rpmsg have been modified to
-use this function and ensure there will be no more memory leak when
-releasing rpmsg devices.
-This was found with kmemleak while using remoteproc and virtio.
+On 2020-06-09 19:15, Stephen Boyd wrote:
+> Quoting Tanmay Shah (2020-06-08 20:38:18)
+>> diff --git 
+>> a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml 
+>> b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+>> new file mode 100644
+>> index 0000000..5fdb915
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
+> 
+> Typically the file name matches the compatible string. But the
+> compatible string is just qcom,dp-display. Maybe the compatible string
+> should be qcom,sc7180-dp? Notice that the SoC number comes first as is
+> preferred.
+> 
+These bindings will be similar for upcoming SOC as well.
+So just for understanding, when we add new SOC do we create new file 
+with same bidings
+with SOC number in new file name?
+Instead we can keep this file's name as qcom,dp-display.yaml (same as 
+compatible const) and we can include SOC number in compatible enum ?
+some examples:
+https://patchwork.kernel.org/patch/11448357/
+https://patchwork.kernel.org/patch/11164619/
+> 
+>> @@ -0,0 +1,142 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only  OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/display/msm/dp-sc7180.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Display Port Controller.
+>> +
+>> +maintainers:
+>> +  - Chandan Uddaraju <chandanu@codeaurora.org>
+>> +  - Vara Reddy <varar@codeaurora.org>
+>> +  - Tanmay Shah <tanmay@codeaurora.org>
+>> +
+>> +description: |
+>> +  Device tree bindings for MSM Display Port which supports DP host 
+>> controllers
+>> +  that are compatible with VESA Display Port interface specification.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - const: qcom,dp-display
+>> +
+>> +  cell-index:
+>> +    description: Specifies the controller instance.
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: DP controller registers
+>> +
+>> +  interrupts:
+>> +    description: The interrupt signal from the DP block.
+>> +
+>> +  clocks:
+>> +    description: List of clock specifiers for clocks needed by the 
+>> device.
+>> +    items:
+>> +      - description: Display Port AUX clock
+>> +      - description: Display Port Link clock
+>> +      - description: Link interface clock between DP and PHY
+>> +      - description: Display Port Pixel clock
+>> +      - description: Root clock generator for pixel clock
+>> +
+>> +  clock-names:
+>> +    description: |
+>> +      Device clock names in the same order as mentioned in clocks 
+>> property.
+>> +      The required clocks are mentioned below.
+>> +    items:
+>> +      - const: core_aux
+>> +      - const: ctrl_link
+>> +      - const: ctrl_link_iface
+>> +      - const: stream_pixel
+>> +      - const: pixel_rcg
+> 
+> Why not just 'pixel'? And why is the root clk generator important? It
+> looks like this binding should be using the assigned clock parents
+> property instead so that it doesn't have to call clk_set_parent()
+> explicitly.
+> 
+Are we talking about renaming stream_pixel to pixel only?
+We divide clocks in categories: core, control and stream clock.
+Similar terminology will be used in subsequent driver patches as well.
 
-Signed-off-by: Clement Leger <cleger@kalray.eu>
----
- drivers/rpmsg/qcom_glink_native.c |  1 +
- drivers/rpmsg/qcom_smd.c          |  1 +
- drivers/rpmsg/rpmsg_core.c        | 22 ++++++++++++++++++++++
- drivers/rpmsg/rpmsg_internal.h    | 15 ++-------------
- drivers/rpmsg/virtio_rpmsg_bus.c  |  1 +
- 5 files changed, 27 insertions(+), 13 deletions(-)
+We can remove pixel_rcg use assigned clock parents property and remove 
+clk_set_parent
+from driver.
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 1995f5b3ea67..076997afc638 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1373,6 +1373,7 @@ static void qcom_glink_rpdev_release(struct device *dev)
- 	struct glink_channel *channel = to_glink_channel(rpdev->ept);
- 
- 	channel->rpdev = NULL;
-+	rpmsg_release_device(rpdev);
- 	kfree(rpdev);
- }
- 
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 4abbeea782fa..f01174d0d4d9 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1047,6 +1047,7 @@ static void qcom_smd_release_device(struct device *dev)
- 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
- 	struct qcom_smd_device *qsdev = to_smd_device(rpdev);
- 
-+	rpmsg_release_device(rpdev);
- 	kfree(qsdev);
- }
- 
-diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-index a6361cad608b..31de89c81b27 100644
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -554,6 +554,28 @@ int rpmsg_unregister_device(struct device *parent,
- }
- EXPORT_SYMBOL(rpmsg_unregister_device);
- 
-+void rpmsg_release_device(struct rpmsg_device *rpdev)
-+{
-+	kfree(rpdev->driver_override);
-+}
-+EXPORT_SYMBOL(rpmsg_release_device);
-+
-+/**
-+ * rpmsg_chrdev_register_device() - register chrdev device based on rpdev
-+ * @rpdev:	prepared rpdev to be used for creating endpoints
-+ *
-+ * This function wraps rpmsg_register_device() preparing the rpdev for use as
-+ * basis for the rpmsg chrdev.
-+ */
-+int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
-+{
-+	strcpy(rpdev->id.name, "rpmsg_chrdev");
-+	rpdev->driver_override = kstrdup("rpmsg_chrdev", GFP_KERNEL);
-+
-+	return rpmsg_register_device(rpdev);
-+}
-+EXPORT_SYMBOL(rpmsg_chrdev_register_device);
-+
- /**
-  * __register_rpmsg_driver() - register an rpmsg driver with the rpmsg bus
-  * @rpdrv: pointer to a struct rpmsg_driver
-diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-index 3fc83cd50e98..043b28f912fd 100644
---- a/drivers/rpmsg/rpmsg_internal.h
-+++ b/drivers/rpmsg/rpmsg_internal.h
-@@ -75,19 +75,8 @@ int rpmsg_unregister_device(struct device *parent,
- struct device *rpmsg_find_device(struct device *parent,
- 				 struct rpmsg_channel_info *chinfo);
- 
--/**
-- * rpmsg_chrdev_register_device() - register chrdev device based on rpdev
-- * @rpdev:	prepared rpdev to be used for creating endpoints
-- *
-- * This function wraps rpmsg_register_device() preparing the rpdev for use as
-- * basis for the rpmsg chrdev.
-- */
--static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
--{
--	strcpy(rpdev->id.name, "rpmsg_chrdev");
--	rpdev->driver_override = "rpmsg_chrdev";
-+int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev);
- 
--	return rpmsg_register_device(rpdev);
--}
-+void rpmsg_release_device(struct rpmsg_device *rpdev);
- 
- #endif
-diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-index 07d4f3374098..af4ea6170f89 100644
---- a/drivers/rpmsg/virtio_rpmsg_bus.c
-+++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-@@ -381,6 +381,7 @@ static void virtio_rpmsg_release_device(struct device *dev)
- 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
- 	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
- 
-+	rpmsg_release_device(rpdev);
- 	kfree(vch);
- }
- 
--- 
-2.17.1
+>> +  "#clock-cells":
+>> +    const: 1
+>> +
+>> +  vdda-1p2-supply:
+>> +    description: phandle to vdda 1.2V regulator node.
+>> +
+>> +  vdda-0p9-supply:
+>> +    description: phandle to vdda 0.9V regulator node.
+>> +
+>> +  data-lanes = <0 1>:
+> 
+> Is this correct? We can have = <value> in the property name? Also feels
+> generic and possibly should come from the phy binding instead of from
+> the controller binding.
+> 
+We are using this property in DP controller programming sequence such as 
+link training.
+So I think we can keep this here.
+You are right about <value>. <0 1> part should be in example only. It 
+was passing through dt_binding_check though.
+Here it should be like:
+data-lanes:
+minItems:1
+maxItems:4
 
+>> +    type: object
+>> +    description: Maximum number of lanes that can be used for Display 
+>> port.
+>> +
+>> +  ports:
+>> +    description: |
+>> +       Contains display port controller endpoint subnode.
+>> +       remote-endpoint: |
+>> +         For port@0, set to phandle of the connected panel/bridge's
+>> +         input endpoint. For port@1, set to the DPU interface output.
+>> +         Documentation/devicetree/bindings/graph.txt and
+>> +         
+>> Documentation/devicetree/bindings/media/video-interfaces.txt.
+>> +
+>> +patternProperties:
+>> +  "^aux-cfg([0-9])-settings$":
+>> +    type: object
+>> +    description: |
+>> +      Specifies the DP AUX configuration [0-9] settings.
+>> +      The first entry in this array corresponds to the register 
+>> offset
+>> +      within DP AUX, while the remaining entries indicate the
+>> +      programmable values.
+> 
+> I'd prefer this was removed from the binding and hardcoded in the 
+> driver
+> until we can understand what the values are. If they're not
+> understandable then they most likely don't change and should be done in
+> the driver.
+> 
+Typically customers tune these values by working with vendor. So for 
+different boards it can be different. Even though it is hard for 
+customers to do this themselves, these are still board specific and 
+belong to dts. As requested earlier, we have added default values 
+already and made these properties optional but, we would like to keep it 
+in bindings so we can have option to tune them as required.
+>> +
+>> +required:
+>> +  - compatible
+>> +  - cell-index
+>> +  - reg
+>> +  - interrupts
+>> +  - clocks
+>> +  - clock-names
+>> +  - vdda-1p2-supply
+>> +  - vdda-0p9-supply
+>> +  - data-lanes
+>> +  - ports
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +    #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+>> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+>> +    msm_dp: displayport-controller@ae90000{
+>> +        compatible = "qcom,dp-display";
+>> +        cell-index = <0>;
+>> +        reg = <0 0xae90000 0 0x1400>;
+>> +        reg-names = "dp_controller";
+>> +
+>> +        interrupt-parent = <&display_subsystem>;
+>> +        interrupts = <12 0>;
+>> +
+>> +        clocks = <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+>> +                 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+>> +                 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+>> +                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>,
+>> +                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+>> +        clock-names = "core_aux",
+>> +                      "ctrl_link",
+>> +                      "ctrl_link_iface", "stream_pixel",
+>> +                      "pixel_rcg";
+>> +        #clock-cells = <1>;
+>> +
+>> +        vdda-1p2-supply = <&vreg_l3c_1p2>;
+>> +        vdda-0p9-supply = <&vreg_l4a_0p8>;
+>> +
+>> +        data-lanes = <0 1>;
+>> +
+>> +        ports {
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            port@0 {
+>> +                reg = <0>;
+>> +                dp_in: endpoint {
+>> +                    remote-endpoint = <&dpu_intf0_out>;
+>> +                };
+>> +            };
+>> +
+>> +            port@1 {
+>> +                reg = <1>;
+>> +                dp_out: endpoint {
+>> +                };
+>> +            };
+>> +        };
+>> +    };
+> 
+> I believe there should be a '...' here.
+I think you mean signature is missing? If not could you please explain?
