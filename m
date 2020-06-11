@@ -2,123 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 245B51F704C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 00:34:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E3F81F7057
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 00:37:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726288AbgFKWdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 18:33:51 -0400
-Received: from smtprelay0239.hostedemail.com ([216.40.44.239]:43012 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726270AbgFKWdu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 18:33:50 -0400
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay05.hostedemail.com (Postfix) with ESMTP id D65CC18029123;
-        Thu, 11 Jun 2020 22:33:48 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:800:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1542:1593:1594:1711:1730:1747:1777:1792:2110:2393:2559:2562:2691:2828:3138:3139:3140:3141:3142:3355:3622:3865:3866:3867:3868:3870:3871:3872:3873:3874:4321:4605:5007:6119:7514:7875:7903:8526:9040:10004:10400:10848:11026:11232:11473:11658:11914:12296:12297:12740:12760:12895:13095:13141:13142:13161:13229:13230:13439:14096:14097:14180:14181:14659:14721:21060:21080:21324:21433:21627:21740:21795:21972:21990:30012:30034:30051:30054:30070:30083:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
-X-HE-Tag: cakes14_3209fc126dd7
-X-Filterd-Recvd-Size: 4066
-Received: from XPS-9350.home (unknown [47.151.136.130])
-        (Authenticated sender: joe@perches.com)
-        by omf14.hostedemail.com (Postfix) with ESMTPA;
-        Thu, 11 Jun 2020 22:33:46 +0000 (UTC)
-Message-ID: <3518483f1836bdfbc193292dc1639509ac33fe7c.camel@perches.com>
-Subject: Re: [PATCH v3 6/7] venus: Make debug infrastructure more flexible
-From:   Joe Perches <joe@perches.com>
-To:     Jason Baron <jbaron@akamai.com>, jim.cromie@gmail.com,
-        Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Linux Documentation List <linux-doc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-btrfs@vger.kernel.org,
-        linux-acpi@vger.kernel.org, netdev@vger.kernel.org
-Date:   Thu, 11 Jun 2020 15:33:45 -0700
-In-Reply-To: <e65d2c81-6d0b-3c1e-582c-56d707c0d1f1@akamai.com>
-References: <20200609104604.1594-7-stanimir.varbanov@linaro.org>
-         <20200609111414.GC780233@kroah.com>
-         <dc85bf9e-e3a6-15a1-afaa-0add3e878573@linaro.org>
-         <20200610133717.GB1906670@kroah.com>
-         <31e1aa72b41f9ff19094476033511442bb6ccda0.camel@perches.com>
-         <2fab7f999a6b5e5354b23d06aea31c5018b9ce18.camel@perches.com>
-         <20200611062648.GA2529349@kroah.com>
-         <bc92ee5948c3e71b8f1de1930336bbe162d00b34.camel@perches.com>
-         <20200611105217.73xwkd2yczqotkyo@holly.lan>
-         <ed7dd5b4-aace-7558-d012-fb16ce8c92d6@linaro.org>
-         <20200611121817.narzkqf5x7cvl6hp@holly.lan>
-         <CAJfuBxzE=A0vzsjNai_jU_16R_P0haYA-FHnjZcaHOR_3fy__A@mail.gmail.com>
-         <e65d2c81-6d0b-3c1e-582c-56d707c0d1f1@akamai.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.36.2-0ubuntu1 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1726277AbgFKWhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jun 2020 18:37:06 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60372 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726159AbgFKWhG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Jun 2020 18:37:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591915025; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=6xUaMfKJXxXcIBGJIgKiTLhHa7NBz100vUpvyY8Yq5A=; b=Bd6SrStS5oA6q/W0udywvUSn7/afWm6Ex7esWdyqz26g3OhapwkBoq3ZfLbpJvZhVUcdjp3S
+ OffUJG0EFxualenCj51AatA9sqDbdgS1YuUtLOukytgbOuW4YXmZdOA4NjQlvZjIPL1popqc
+ h2qOzUVQaouDLmhRl/kfOs5sq6g=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5ee2b2108fe116ddd99d1178 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Jun 2020 22:37:04
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 76D68C43391; Thu, 11 Jun 2020 22:37:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B01C4C433C8;
+        Thu, 11 Jun 2020 22:37:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B01C4C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>, freedreno@lists.freedesktop.org,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] iommu/arm-smmu: Add a init_context_bank implementation hook
+Date:   Thu, 11 Jun 2020 16:36:56 -0600
+Message-Id: <20200611223656.4724-1-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2020-06-11 at 17:59 -0400, Jason Baron wrote:
-> 
-> On 6/11/20 5:19 PM, jim.cromie@gmail.com wrote:
-> > trimmed..
-> > 
-> > > > > Currently I think there not enough "levels" to map something like
-> > > > > drm.debug to the new dyn dbg feature. I don't think it is intrinsic
-> > > > > but I couldn't find the bit of the code where the 5-bit level in struct
-> > > > > _ddebug is converted from a mask to a bit number and vice-versa.
-> > > > 
-> > > > Here [1] is Joe's initial suggestion. But I decided that bitmask is a
-> > > > good start for the discussion.
-> > > > 
-> > > > I guess we can add new member uint "level" in struct _ddebug so that we
-> > > > can cover more "levels" (types, groups).
-> > > 
-> > > I don't think it is allocating only 5 bits that is the problem!
+Add a new implementation hook to allow the implementation specific code
+to tweek the context bank configuration just before it gets written.
+The first user will be the Adreno GPU implementation to turn on
+SCTLR.HUPCF to ensure that a page fault doesn't terminating pending
+transactions. Doing so could hang the GPU if one of the terminated
+transactions is a CP read.
 
-There were 6 unused bits in struct _ddebug;
+This depends on the arm-smmu adreno SMMU implementation [1].
 
-The original idea was to avoid expanding the already somewhat
-large struct _ddebug uses and the __verbose/__dyndbg section
-that can have quite a lot of these structs.
+[1] https://patchwork.kernel.org/patch/11600943/
 
-I imagine adding another int or long wouldn't be too bad.
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
-> > > The problem is that those 5 bits need not be encoded as a bitmask by
-> > > dyndbg, that can simply be the category code for the message. They only
-> > > need be converted into a mask when we compare them to the mask provided
-> > > by the user.
-> > > 
+ drivers/iommu/arm-smmu-qcom.c | 13 +++++++++++++
+ drivers/iommu/arm-smmu.c      | 28 +++++++++++++---------------
+ drivers/iommu/arm-smmu.h      | 11 +++++++++++
+ 3 files changed, 37 insertions(+), 15 deletions(-)
 
-I also suggested adding a pointer to whatever is provided
-by the developer so the address of something like
-MODULE_PARM_DESC(variable, ...) can be also be used.
-
-> > heres what I have in mind.  whats described here is working.
-> > I'll send it out soon
-> 
-> Cool. thanks for working on this!
-
-Truly, thank you both Jim and Stanimir.
-
-Please remember that dynamic_debug is not required and
-pr_debug should still work.
-
-> >     API:
-> > 
-> >     - change pr_debug(...)  -->  pr_debug_typed(type_id=0, ...)
-> >     - all existing uses have type_id=0
-> >     - developer creates exclusive types of log messages with type_id>0
-> >       1, 2, 3 are disjoint groups, for example: hi, mid, low
-
-You could have a u8 for type if there are to be 3 classes
-
-	bitmask
-	level
-	group by value
-
-though I believe group by value might as well just be bitmask
-and bool is_bitmask is enough (!is_bitmask would be level)
-
-cheers, Joe
+diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
+index 6d0ab4865fc7..e5c6345da6fc 100644
+--- a/drivers/iommu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm-smmu-qcom.c
+@@ -17,6 +17,18 @@ static bool qcom_adreno_smmu_is_gpu_device(struct arm_smmu_domain *smmu_domain)
+ 	return of_device_is_compatible(smmu_domain->dev.of_node, "qcom,adreno");
+ }
+ 
++static void qcom_adreno_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
++		struct arm_smmu_cb *cb)
++{
++	/*
++	 * On the GPU device we want to process subsequent transactions after a
++	 * fault to keep the GPU from hanging
++	 */
++
++	if (qcom_adreno_smmu_is_gpu_device(smmu_domain))
++		cb->sctlr |= ARM_SMMU_SCTLR_HUPCF;
++}
++
+ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+ 		struct io_pgtable_cfg *pgtbl_cfg)
+ {
+@@ -92,6 +104,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
+ 	.init_context = qcom_adreno_smmu_init_context,
+ 	.def_domain_type = qcom_smmu_def_domain_type,
+ 	.reset = qcom_smmu500_reset,
++	.init_context_bank = qcom_adreno_smmu_init_context_bank,
+ };
+ 
+ 
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index a06cbcaec247..f0f201ece3a0 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -86,13 +86,6 @@ struct arm_smmu_smr {
+ 	bool				valid;
+ };
+ 
+-struct arm_smmu_cb {
+-	u64				ttbr[2];
+-	u32				tcr[2];
+-	u32				mair[2];
+-	struct arm_smmu_cfg		*cfg;
+-};
+-
+ struct arm_smmu_master_cfg {
+ 	struct arm_smmu_device		*smmu;
+ 	s16				smendx[];
+@@ -579,6 +572,18 @@ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
+ 			cb->mair[1] = pgtbl_cfg->arm_lpae_s1_cfg.mair >> 32;
+ 		}
+ 	}
++
++	cb->sctlr = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE | ARM_SMMU_SCTLR_AFE |
++		ARM_SMMU_SCTLR_TRE | ARM_SMMU_SCTLR_M;
++
++	if (stage1)
++		cb->sctlr |= ARM_SMMU_SCTLR_S1_ASIDPNE;
++	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
++		cb->sctlr |= ARM_SMMU_SCTLR_E;
++
++	/* Give the implementation a chance to adjust the configuration */
++	if (smmu_domain->smmu->impl && smmu_domain->smmu->impl->init_context_bank)
++		smmu_domain->smmu->impl->init_context_bank(smmu_domain, cb);
+ }
+ 
+ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
+@@ -657,14 +662,7 @@ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
+ 	}
+ 
+ 	/* SCTLR */
+-	reg = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE | ARM_SMMU_SCTLR_AFE |
+-	      ARM_SMMU_SCTLR_TRE | ARM_SMMU_SCTLR_M;
+-	if (stage1)
+-		reg |= ARM_SMMU_SCTLR_S1_ASIDPNE;
+-	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
+-		reg |= ARM_SMMU_SCTLR_E;
+-
+-	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
++	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, cb->sctlr);
+ }
+ 
+ /*
+diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+index 79d441024043..9b539820997b 100644
+--- a/drivers/iommu/arm-smmu.h
++++ b/drivers/iommu/arm-smmu.h
+@@ -142,6 +142,7 @@ enum arm_smmu_cbar_type {
+ 
+ #define ARM_SMMU_CB_SCTLR		0x0
+ #define ARM_SMMU_SCTLR_S1_ASIDPNE	BIT(12)
++#define ARM_SMMU_SCTLR_HUPCF		BIT(8)
+ #define ARM_SMMU_SCTLR_CFCFG		BIT(7)
+ #define ARM_SMMU_SCTLR_CFIE		BIT(6)
+ #define ARM_SMMU_SCTLR_CFRE		BIT(5)
+@@ -349,6 +350,14 @@ struct arm_smmu_domain {
+ 	bool				aux;
+ };
+ 
++struct arm_smmu_cb {
++	u64			ttbr[2];
++	u32			tcr[2];
++	u32			mair[2];
++	u32			sctlr;
++	struct arm_smmu_cfg	*cfg;
++};
++
+ static inline u32 arm_smmu_lpae_tcr(struct io_pgtable_cfg *cfg)
+ {
+ 	u32 tcr = FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
+@@ -403,6 +412,8 @@ struct arm_smmu_impl {
+ 	void (*tlb_sync)(struct arm_smmu_device *smmu, int page, int sync,
+ 			 int status);
+ 	int (*def_domain_type)(struct device *dev);
++	void (*init_context_bank)(struct arm_smmu_domain *smmu_domain,
++			struct arm_smmu_cb *cb);
+ };
+ 
+ static inline void __iomem *arm_smmu_page(struct arm_smmu_device *smmu, int n)
+-- 
+2.17.1
 
