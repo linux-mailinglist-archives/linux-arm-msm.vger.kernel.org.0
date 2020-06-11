@@ -2,285 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ED561F69FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2020 16:29:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 949721F6A27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2020 16:37:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728312AbgFKO2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 10:28:51 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:25936 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726657AbgFKO2v (ORCPT
+        id S1728118AbgFKOh4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jun 2020 10:37:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33072 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728104AbgFKOh4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 10:28:51 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 Jun 2020 19:58:44 +0530
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 11 Jun 2020 19:58:18 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id 7135F2AC7; Thu, 11 Jun 2020 19:58:17 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
+        Thu, 11 Jun 2020 10:37:56 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A13C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2020 07:37:55 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id y11so7193566ljm.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2020 07:37:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=W8JuzWgGQJqJMJ7NStV0+vrbD8KPYxNrC1ErgrGwRP8=;
+        b=LP7lYKyBcJ0c/zsKM7VsENoVZuu4RxJoAHYyk5amgZL8KHIqFHSHcYDWO4bwokeqDm
+         1yoxQG/GNOsK1bnJCWXa0n4OEOPy9qpPpou5AB7dkzaT5c8Gd+f/bBbHD+ol5B0+hSdQ
+         MWRarKhSKjVRSBCKJZrJyi5P/51je+mbvTysRKXD1qx5mtDbzovfC5ZgW1oxUJCAHwY2
+         G0aWXUvZdMH9olr6zHtvBFoUvqsE+G65j+lgCRT+JKC1r0bSCoawClyD+XLmOydn/aZD
+         0IduyObRb+ErjnUjGesbWMuux2FXMcbNWrsA0/qsyRtr7v67lhWpDwFSZ1NzWbPVfBf+
+         mGCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=W8JuzWgGQJqJMJ7NStV0+vrbD8KPYxNrC1ErgrGwRP8=;
+        b=Qs288cyKaoXGBqvmX95XmYS1cech59kePfhXJ9E0u4marUsEFKJm6/hUYx6F/PC3bb
+         C2BDHYKFRxhTKE/OieiwfIA59i7LuBJr2+xksfIBy7ziaBZjZDknTEnyyRIFQzw/73p6
+         90MnxxqynY2HP8cFai9i4feWUpKnQ2Fd02l/lv1q2nGxL7kDwI+yr1ZoVIyRuyMdhcfS
+         uVU8rrBib/ETVQ6gnWKaC9wzshy1tDePhGFnvDSC5RR3zos6O1CIeykTQ/355zrwBQaT
+         VQP6FaUYy2HF3RZkm6oTmGAqzZcQ7oiMbEwlREMpDiog9BDk6NBBUWitGdm2xKIesB+x
+         zIow==
+X-Gm-Message-State: AOAM531DMtcBLMBvHaR7Fzftl0E/65aU7IUhdO2uMFEl7tbnAfP8j+P5
+        GrUxv+sbddjKQPZnuDqd0Y8h4Q==
+X-Google-Smtp-Source: ABdhPJwbWAFtv28FnS27QIotAn5zL/uv6fdd2W4GB2WhoiUk/5Sup8589qE/tLC4x6jv6a1uVVLiLw==
+X-Received: by 2002:a2e:8e82:: with SMTP id z2mr4314872ljk.71.1591886274014;
+        Thu, 11 Jun 2020 07:37:54 -0700 (PDT)
+Received: from [10.0.0.100] ([94.25.228.141])
+        by smtp.gmail.com with ESMTPSA id o4sm844112lfb.75.2020.06.11.07.37.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jun 2020 07:37:53 -0700 (PDT)
+Subject: Re: [PATCH 7/8] drm/msm/dpu: add SM8150 to hw catalog
+To:     Jonathan Marek <jonathan@marek.ca>, freedreno@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Shubhashree Dhar <dhar@codeaurora.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH 2/2] usb: dwc3: Host wake up support from system suspend
-Date:   Thu, 11 Jun 2020 19:58:03 +0530
-Message-Id: <1591885683-29514-3-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1591885683-29514-1-git-send-email-sanm@codeaurora.org>
-References: <1591885683-29514-1-git-send-email-sanm@codeaurora.org>
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Allison Randal <allison@lohutok.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200526032235.21930-1-jonathan@marek.ca>
+ <20200526032235.21930-8-jonathan@marek.ca>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <ce713ed0-5f11-e92f-0ef4-c87690b67090@linaro.org>
+Date:   Thu, 11 Jun 2020 17:37:51 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
+MIME-Version: 1.0
+In-Reply-To: <20200526032235.21930-8-jonathan@marek.ca>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Avoiding phy powerdown in host mode so that it can be wake up by devices.
-Set usb controller wakeup capable when wakeup capable devices are
-connected to the host.
+On 26/05/2020 06:22, Jonathan Marek wrote:
+> This brings up basic video mode functionality for SM8150 DPU. Command mode
+> and dual mixer/intf configurations are not working, future patches will
+> address this. Scaler functionality and multiple planes is also untested.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 147 ++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   2 +
+>   2 files changed, 149 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 1e64fa08c219..f99622870676 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -90,6 +90,23 @@ static const struct dpu_caps sc7180_dpu_caps = {
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+>   
+> +static const struct dpu_caps sm8150_dpu_caps = {
+> +	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+> +	.max_mixer_blendstages = 0xb,
+> +	.max_linewidth = 4096,
+> +	.qseed_type = DPU_SSPP_SCALER_QSEED3,
+> +	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2_5,
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
----
- drivers/usb/dwc3/core.c      | 47 ++++++++++++++++++++++++++-----
- drivers/usb/dwc3/core.h      |  1 +
- drivers/usb/dwc3/dwc3-qcom.c | 66 +++++++++++++++++++++++++++++++++-----------
- 3 files changed, 91 insertions(+), 23 deletions(-)
+It seems you missed sending a patch adding support for 
+DPU_SSPP_SMART_DMA_V2_5. Could you please point to it?
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 25c686a7..8370350 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -31,15 +31,19 @@
- #include <linux/usb/gadget.h>
- #include <linux/usb/of.h>
- #include <linux/usb/otg.h>
-+#include <linux/usb/hcd.h>
- 
- #include "core.h"
- #include "gadget.h"
- #include "io.h"
- 
- #include "debug.h"
-+#include "../host/xhci.h"
- 
- #define DWC3_DEFAULT_AUTOSUSPEND_DELAY	5000 /* ms */
- 
-+bool need_phy_for_wakeup;
-+
- /**
-  * dwc3_get_dr_mode - Validates and sets dr_mode
-  * @dwc: pointer to our context structure
-@@ -1627,10 +1631,36 @@ static int dwc3_core_init_for_resume(struct dwc3 *dwc)
- 	return ret;
- }
- 
-+static void dwc3_set_phy_speed_flags(struct dwc3 *dwc)
-+{
-+
-+	int i, num_ports;
-+	u32 reg;
-+	struct usb_hcd	*hcd = platform_get_drvdata(dwc->xhci);
-+	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
-+
-+	dwc->hs_phy_flags &= ~(PHY_MODE_USB_HOST_HS | PHY_MODE_USB_HOST_LS);
-+
-+	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
-+
-+	num_ports = HCS_MAX_PORTS(reg);
-+	for (i = 0; i < num_ports; i++) {
-+		reg = readl(&xhci_hcd->op_regs->port_status_base + i*0x10);
-+		if (reg & PORT_PE) {
-+			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
-+				dwc->hs_phy_flags |= PHY_MODE_USB_HOST_HS;
-+			else if (DEV_LOWSPEED(reg))
-+				dwc->hs_phy_flags |= PHY_MODE_USB_HOST_LS;
-+		}
-+	}
-+	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_flags);
-+}
-+
- static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- {
- 	unsigned long	flags;
- 	u32 reg;
-+	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
- 
- 	switch (dwc->current_dr_role) {
- 	case DWC3_GCTL_PRTCAP_DEVICE:
-@@ -1643,9 +1673,10 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- 		dwc3_core_exit(dwc);
- 		break;
- 	case DWC3_GCTL_PRTCAP_HOST:
-+		dwc3_set_phy_speed_flags(dwc);
- 		if (!PMSG_IS_AUTO(msg)) {
--			dwc3_core_exit(dwc);
--			break;
-+			if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
-+				need_phy_for_wakeup = true;
- 		}
- 
- 		/* Let controller to suspend HSPHY before PHY driver suspends */
-@@ -1705,11 +1736,13 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
- 		break;
- 	case DWC3_GCTL_PRTCAP_HOST:
- 		if (!PMSG_IS_AUTO(msg)) {
--			ret = dwc3_core_init_for_resume(dwc);
--			if (ret)
--				return ret;
--			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
--			break;
-+			if (!need_phy_for_wakeup) {
-+				ret = dwc3_core_init_for_resume(dwc);
-+				if (ret)
-+					return ret;
-+				dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
-+				break;
-+			}
- 		}
- 		/* Restore GUSB2PHYCFG bits that were modified in suspend */
- 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 013f42a..ff02d41 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1094,6 +1094,7 @@ struct dwc3 {
- 	struct phy		*usb3_generic_phy;
- 
- 	bool			phys_ready;
-+	int			hs_phy_flags;
- 
- 	struct ulpi		*ulpi;
- 	bool			ulpi_ready;
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 1dfd024..ec183646 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -19,6 +19,7 @@
- #include <linux/usb/of.h>
- #include <linux/reset.h>
- #include <linux/iopoll.h>
-+#include <linux/usb/hcd.h>
- 
- #include "core.h"
- 
-@@ -192,21 +193,34 @@ static int dwc3_qcom_register_extcon(struct dwc3_qcom *qcom)
- 
- static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
- {
-+	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-+
- 	if (qcom->hs_phy_irq) {
- 		disable_irq_wake(qcom->hs_phy_irq);
- 		disable_irq_nosync(qcom->hs_phy_irq);
- 	}
-+	if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
-+		if (qcom->dp_hs_phy_irq) {
-+			disable_irq_wake(qcom->dp_hs_phy_irq);
-+			disable_irq_nosync(qcom->dp_hs_phy_irq);
-+		}
-+	} else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
-+		if (qcom->dm_hs_phy_irq) {
-+			disable_irq_wake(qcom->dm_hs_phy_irq);
-+			disable_irq_nosync(qcom->dm_hs_phy_irq);
-+		}
-+	} else {
- 
--	if (qcom->dp_hs_phy_irq) {
--		disable_irq_wake(qcom->dp_hs_phy_irq);
--		disable_irq_nosync(qcom->dp_hs_phy_irq);
--	}
-+		if (qcom->dp_hs_phy_irq) {
-+			disable_irq_wake(qcom->dp_hs_phy_irq);
-+			disable_irq_nosync(qcom->dp_hs_phy_irq);
-+		}
- 
--	if (qcom->dm_hs_phy_irq) {
--		disable_irq_wake(qcom->dm_hs_phy_irq);
--		disable_irq_nosync(qcom->dm_hs_phy_irq);
-+		if (qcom->dm_hs_phy_irq) {
-+			disable_irq_wake(qcom->dm_hs_phy_irq);
-+			disable_irq_nosync(qcom->dm_hs_phy_irq);
-+		}
- 	}
--
- 	if (qcom->ss_phy_irq) {
- 		disable_irq_wake(qcom->ss_phy_irq);
- 		disable_irq_nosync(qcom->ss_phy_irq);
-@@ -215,21 +229,34 @@ static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
- 
- static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
- {
-+	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-+
- 	if (qcom->hs_phy_irq) {
- 		enable_irq(qcom->hs_phy_irq);
- 		enable_irq_wake(qcom->hs_phy_irq);
- 	}
-+	if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
-+		if (qcom->dp_hs_phy_irq) {
-+			enable_irq(qcom->dp_hs_phy_irq);
-+			enable_irq_wake(qcom->dp_hs_phy_irq);
-+		}
-+	} else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
-+		if (qcom->dm_hs_phy_irq) {
-+			enable_irq(qcom->dm_hs_phy_irq);
-+			enable_irq_wake(qcom->dm_hs_phy_irq);
-+		}
-+	} else {
- 
--	if (qcom->dp_hs_phy_irq) {
--		enable_irq(qcom->dp_hs_phy_irq);
--		enable_irq_wake(qcom->dp_hs_phy_irq);
--	}
-+		if (qcom->dp_hs_phy_irq) {
-+			enable_irq(qcom->dp_hs_phy_irq);
-+			enable_irq_wake(qcom->dp_hs_phy_irq);
-+		}
- 
--	if (qcom->dm_hs_phy_irq) {
--		enable_irq(qcom->dm_hs_phy_irq);
--		enable_irq_wake(qcom->dm_hs_phy_irq);
-+		if (qcom->dm_hs_phy_irq) {
-+			enable_irq(qcom->dm_hs_phy_irq);
-+			enable_irq_wake(qcom->dm_hs_phy_irq);
-+		}
- 	}
--
- 	if (qcom->ss_phy_irq) {
- 		enable_irq(qcom->ss_phy_irq);
- 		enable_irq_wake(qcom->ss_phy_irq);
-@@ -240,6 +267,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
- {
- 	u32 val;
- 	int i;
-+	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-+	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
-+
-+	if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
-+		device_init_wakeup(qcom->dev, 1);
- 
- 	if (qcom->is_suspended)
- 		return 0;
-@@ -262,6 +294,8 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
- 	int ret;
- 	int i;
- 
-+	device_init_wakeup(qcom->dev, 0);
-+
- 	if (!qcom->is_suspended)
- 		return 0;
- 
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+With best wishes
+Dmitry
