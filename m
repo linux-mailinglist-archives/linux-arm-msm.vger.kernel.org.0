@@ -2,199 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E3F81F7057
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 00:37:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5E151F7089
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 00:47:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726277AbgFKWhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 18:37:06 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:60372 "EHLO m43-7.mailgun.net"
+        id S1726285AbgFKWrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jun 2020 18:47:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33104 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726159AbgFKWhG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 18:37:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591915025; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=6xUaMfKJXxXcIBGJIgKiTLhHa7NBz100vUpvyY8Yq5A=; b=Bd6SrStS5oA6q/W0udywvUSn7/afWm6Ex7esWdyqz26g3OhapwkBoq3ZfLbpJvZhVUcdjp3S
- OffUJG0EFxualenCj51AatA9sqDbdgS1YuUtLOukytgbOuW4YXmZdOA4NjQlvZjIPL1popqc
- h2qOzUVQaouDLmhRl/kfOs5sq6g=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5ee2b2108fe116ddd99d1178 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Jun 2020 22:37:04
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 76D68C43391; Thu, 11 Jun 2020 22:37:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726254AbgFKWrA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Jun 2020 18:47:00 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B01C4C433C8;
-        Thu, 11 Jun 2020 22:37:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B01C4C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>, freedreno@lists.freedesktop.org,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] iommu/arm-smmu: Add a init_context_bank implementation hook
-Date:   Thu, 11 Jun 2020 16:36:56 -0600
-Message-Id: <20200611223656.4724-1-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        by mail.kernel.org (Postfix) with ESMTPSA id 7139B206D7;
+        Thu, 11 Jun 2020 22:46:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591915619;
+        bh=y7oaSm/JNOPNtYb74UFjDdhC6kjkYhvWO/e2LzL1J44=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=TpDbc7FE6CrHoiBB2bYYJ9QQFAMPOoV3kRxP6n/lICap+9fQUPgMYZVaNpDKFMj3q
+         FW1wgsvfCl+nJS+R7QC+YD393eLiV5Q3RrVxlGJt3CWjf6Hub1OtjVk5kp3JjycTTs
+         RXz1iXbVH6Dd1RFs5i2AFdTZHHwQ1ZE0WuQlZ3Q4=
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1591885683-29514-2-git-send-email-sanm@codeaurora.org>
+References: <1591885683-29514-1-git-send-email-sanm@codeaurora.org> <1591885683-29514-2-git-send-email-sanm@codeaurora.org>
+Subject: Re: [PATCH 1/2] clk: qcom: gcc: Add genpd active wakeup flag for sc7180
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Date:   Thu, 11 Jun 2020 15:46:58 -0700
+Message-ID: <159191561875.242598.18326727418245335996@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a new implementation hook to allow the implementation specific code
-to tweek the context bank configuration just before it gets written.
-The first user will be the Adreno GPU implementation to turn on
-SCTLR.HUPCF to ensure that a page fault doesn't terminating pending
-transactions. Doing so could hang the GPU if one of the terminated
-transactions is a CP read.
+Quoting Sandeep Maheswaram (2020-06-11 07:28:02)
+> From: Taniya Das <tdas@codeaurora.org>
+>=20
+> The USB client requires the usb30_prim gdsc to be kept active for
+> certain use cases, thus add the GENPD_FLAG_ACTIVE_WAKEUP flag.
 
-This depends on the arm-smmu adreno SMMU implementation [1].
+Can you please describe more of what this is for? Once sentence doesn't
+tell me much at all. I guess that sometimes we want to wakeup from USB
+and so the usb gdsc should be marked as "maybe keep on for wakeups" with
+the GENPD_FLAG_ACTIVE_WAKEUP flag if the USB controller is wakeup
+enabled?
 
-[1] https://patchwork.kernel.org/patch/11600943/
+>=20
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+Add a Fixes: tag too? And I assume we need to do this for all USB gdscs
+on various SoCs and maybe other GDSCs like PCIe. Any plans to fix those
+GDSCs?
 
- drivers/iommu/arm-smmu-qcom.c | 13 +++++++++++++
- drivers/iommu/arm-smmu.c      | 28 +++++++++++++---------------
- drivers/iommu/arm-smmu.h      | 11 +++++++++++
- 3 files changed, 37 insertions(+), 15 deletions(-)
-
-diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-index 6d0ab4865fc7..e5c6345da6fc 100644
---- a/drivers/iommu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm-smmu-qcom.c
-@@ -17,6 +17,18 @@ static bool qcom_adreno_smmu_is_gpu_device(struct arm_smmu_domain *smmu_domain)
- 	return of_device_is_compatible(smmu_domain->dev.of_node, "qcom,adreno");
- }
- 
-+static void qcom_adreno_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
-+		struct arm_smmu_cb *cb)
-+{
-+	/*
-+	 * On the GPU device we want to process subsequent transactions after a
-+	 * fault to keep the GPU from hanging
-+	 */
-+
-+	if (qcom_adreno_smmu_is_gpu_device(smmu_domain))
-+		cb->sctlr |= ARM_SMMU_SCTLR_HUPCF;
-+}
-+
- static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- 		struct io_pgtable_cfg *pgtbl_cfg)
- {
-@@ -92,6 +104,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
- 	.init_context = qcom_adreno_smmu_init_context,
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.reset = qcom_smmu500_reset,
-+	.init_context_bank = qcom_adreno_smmu_init_context_bank,
- };
- 
- 
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index a06cbcaec247..f0f201ece3a0 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -86,13 +86,6 @@ struct arm_smmu_smr {
- 	bool				valid;
- };
- 
--struct arm_smmu_cb {
--	u64				ttbr[2];
--	u32				tcr[2];
--	u32				mair[2];
--	struct arm_smmu_cfg		*cfg;
--};
--
- struct arm_smmu_master_cfg {
- 	struct arm_smmu_device		*smmu;
- 	s16				smendx[];
-@@ -579,6 +572,18 @@ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
- 			cb->mair[1] = pgtbl_cfg->arm_lpae_s1_cfg.mair >> 32;
- 		}
- 	}
-+
-+	cb->sctlr = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE | ARM_SMMU_SCTLR_AFE |
-+		ARM_SMMU_SCTLR_TRE | ARM_SMMU_SCTLR_M;
-+
-+	if (stage1)
-+		cb->sctlr |= ARM_SMMU_SCTLR_S1_ASIDPNE;
-+	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
-+		cb->sctlr |= ARM_SMMU_SCTLR_E;
-+
-+	/* Give the implementation a chance to adjust the configuration */
-+	if (smmu_domain->smmu->impl && smmu_domain->smmu->impl->init_context_bank)
-+		smmu_domain->smmu->impl->init_context_bank(smmu_domain, cb);
- }
- 
- static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
-@@ -657,14 +662,7 @@ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
- 	}
- 
- 	/* SCTLR */
--	reg = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE | ARM_SMMU_SCTLR_AFE |
--	      ARM_SMMU_SCTLR_TRE | ARM_SMMU_SCTLR_M;
--	if (stage1)
--		reg |= ARM_SMMU_SCTLR_S1_ASIDPNE;
--	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
--		reg |= ARM_SMMU_SCTLR_E;
--
--	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
-+	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, cb->sctlr);
- }
- 
- /*
-diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-index 79d441024043..9b539820997b 100644
---- a/drivers/iommu/arm-smmu.h
-+++ b/drivers/iommu/arm-smmu.h
-@@ -142,6 +142,7 @@ enum arm_smmu_cbar_type {
- 
- #define ARM_SMMU_CB_SCTLR		0x0
- #define ARM_SMMU_SCTLR_S1_ASIDPNE	BIT(12)
-+#define ARM_SMMU_SCTLR_HUPCF		BIT(8)
- #define ARM_SMMU_SCTLR_CFCFG		BIT(7)
- #define ARM_SMMU_SCTLR_CFIE		BIT(6)
- #define ARM_SMMU_SCTLR_CFRE		BIT(5)
-@@ -349,6 +350,14 @@ struct arm_smmu_domain {
- 	bool				aux;
- };
- 
-+struct arm_smmu_cb {
-+	u64			ttbr[2];
-+	u32			tcr[2];
-+	u32			mair[2];
-+	u32			sctlr;
-+	struct arm_smmu_cfg	*cfg;
-+};
-+
- static inline u32 arm_smmu_lpae_tcr(struct io_pgtable_cfg *cfg)
- {
- 	u32 tcr = FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
-@@ -403,6 +412,8 @@ struct arm_smmu_impl {
- 	void (*tlb_sync)(struct arm_smmu_device *smmu, int page, int sync,
- 			 int status);
- 	int (*def_domain_type)(struct device *dev);
-+	void (*init_context_bank)(struct arm_smmu_domain *smmu_domain,
-+			struct arm_smmu_cb *cb);
- };
- 
- static inline void __iomem *arm_smmu_page(struct arm_smmu_device *smmu, int n)
--- 
-2.17.1
-
+>  drivers/clk/qcom/gcc-sc7180.c | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+> index ca4383e..2b3dd4e 100644
+> --- a/drivers/clk/qcom/gcc-sc7180.c
+> +++ b/drivers/clk/qcom/gcc-sc7180.c
+> @@ -2263,6 +2263,7 @@ static struct gdsc usb30_prim_gdsc =3D {
+>         .gdscr =3D 0x0f004,
+>         .pd =3D {
+>                 .name =3D "usb30_prim_gdsc",
+> +               .flags =3D GENPD_FLAG_ACTIVE_WAKEUP,
+>         },
+>         .pwrsts =3D PWRSTS_OFF_ON,
+>  };
