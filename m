@@ -2,95 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A6C51F73DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 08:23:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A26711F74AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 09:36:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbgFLGXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Jun 2020 02:23:17 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:50651 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726300AbgFLGXR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Jun 2020 02:23:17 -0400
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 12 Jun 2020 11:53:13 +0530
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 12 Jun 2020 11:52:47 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id 6C8B047A6; Fri, 12 Jun 2020 11:52:46 +0530 (IST)
-From:   Krishna Manikandan <mkrishn@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        nganji@codeaurora.org, mka@chromium.org, john.stultz@linaro.org,
-        dianders@chromium.org, abhinavk@codeaurora.org,
-        mkrishn@codeaurora.org
-Subject: [v2] drm/msm/dpu: request for display color blocks based on hw catalog entry
-Date:   Fri, 12 Jun 2020 11:52:37 +0530
-Message-Id: <1591942957-18410-1-git-send-email-mkrishn@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        id S1726327AbgFLHgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jun 2020 03:36:33 -0400
+Received: from mout.web.de ([212.227.17.12]:33721 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726292AbgFLHgc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Jun 2020 03:36:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1591947378;
+        bh=h5ZPMHTuTFfrSkrmMG5IcppBLQvvPKTCErPFDyibaIU=;
+        h=X-UI-Sender-Class:To:Cc:Subject:From:Date;
+        b=Af0NH3lNwEeUA533gNNhlZpeb/YT8RO6yRE822dFwX3E3A5KKLmxrk755XYmdlePc
+         8DGG1c8F3Cwr+PvPwJTyv21rKAerMOXI0vQuf33RH8mMXcRneWO6QbIiNqRDDa40MS
+         MrnAzj19sHqVzG2Im2XGaxDqG+EcUUGRO5Hyj5lw=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.1.2] ([93.131.95.40]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MduMb-1jZXTD0jZl-00PcZZ; Fri, 12
+ Jun 2020 09:36:18 +0200
+To:     Bernard Zhao <bernard@vivo.com>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        opensource.kernel@vivo.com
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Subject: Re: [PATCH] drm/msm: Improve exception handling in
+ msm_gpu_crashstate_capture()
+From:   Markus Elfring <Markus.Elfring@web.de>
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ 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 FEE=
+Message-ID: <56a615b6-9881-ff01-fa0f-8ea070fc03e7@web.de>
+Date:   Fri, 12 Jun 2020 09:36:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:de8Lnx6+IBoUWlDadcLQfDWQBbTUgx3M1EpzL9s+sqP4ZHhiHxG
+ RiMmk/9ZsayD4zFAZRuOv7flpCtes1V1Ccb0bV5HWrz/OoubMtgxoF6C/bAJHkYYf7foWrk
+ z4qBW2vWmFxXBHgIN3Qm3nviG8nzpXf50ZVd0vtV33uJcnFiXwKLoiP31Qb16umqRzZdRTE
+ ZP7iogJYGSZ2YavcIMdxQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mwThrUYpLl8=:w+irajj0GB4nRreNUwZqSq
+ aS4V9V94V9rfq0TChZM/LXx5jXTHcQkywWmzH0gakrYnykjl8LrsXPvegLZJHed8SKK/YKlrS
+ yTpsRUTm+sofsVsGlJZYNeiLHUISQjclQz5Vt5q8sHAtxPneYax3IgdOKsiJkA4Gd94fB+e6t
+ GdFET6GRETpEU1XpXGBZ4JtESAlQIFvJ0ATdStnnCpBePz8jn+8f10IQ5ElGWcapauWqSB5aW
+ S3T28t99CSCyhOFxNgNNG4qBcR9/JHQAlLuuBUPuL3cAgd7bkaufgrbjUvOEIVxiVKDWWbcff
+ BxKVMdRR1Mq8LQ0CsVjt4EguXVdWI8iPQbf0W1d1dcTSR3/Xl4FyPv78cJitx5DU4sbG5imMP
+ K/57XDvJA6zH9MshUdoKIX6+5/cAj/6uVHeNRHoHlG8XXkZXayicZ65ryb4k1+j1NihaiwSso
+ gCTU0a5XWVBR33js3pFbt0jJzC/PKcwp7jxeHEZafY9BSv8U2pE2eiGDYzS/v5hSEPPeuz+y1
+ TpxCNyz/87soHwA5g865hIRGmlehBgFSknaT34PItU6y8JZ1L2dFNueVLucgu7VYdKfJtOtPo
+ uUOYiwfNK6SZsKX8MKY1Rfouqm2eyDMg+jmVZ/sH/huOXFj5nXptyJp6jSiFxQ/9OagIRHCx4
+ 3A/biJlUPX5komcJwKwoHPDkGwf9fY4rdxR4yceAzG30exOfe3RhJWk1DIDue7NQ0vimK1g9t
+ qdmIdOfJR82oFRbvPzG78FfeGpRYvlZQnXjseMF5AWD8SYbVA0/XRB/i/CC8EtN4JjRwHgxem
+ 9BQqsLVnFn3fZ2WcAKAsInx6wM/7mfAxod2PkH+yGtygb3sYn300fTuCuqZsNfANi42ALD1hL
+ fvCjqfVC4ByhIb3mRzygJArzHjG7g2CGszQgd2KEzoa6MpLk2fSM0HBn4JfM1KnlLJHBfi3/A
+ BE6j5Ve/D3Pov5E/mxUthRxtXJriqCT2K8s0cwtOsN1vucTq9SYtW/NUHPDEhyxhv3lHDpTfO
+ 1dY4V8cxNEp2YVwVZLmg8gOMBaUu3lJvtq1F65tCseowodJHoDGGnjXQUET23etIBDSth4sTq
+ OMUXEGge2CgAN/GB/jfW1/VAReriI2NM/wreYlsFR7Bn1zB1got6WoRRvSOFGyZdStIBJqLy0
+ 0mqvWQJ10qYL0Z+HAWh8ys2sXCZ2MMEnmJmymatBA398qiOf7dfJo2R72+M3r3tkGaKX3Uhxo
+ aACe46nmP6Z4dGeOu
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Kalyan Thota <kalyan_t@codeaurora.org>
+> Function msm_gpu_crashstate_capture maybe called for several
+> times, and then the state->bos is a potential memleak. Also
+> the state->pos maybe alloc failed, but now without any handle.
+> This change is to fix some potential memleak and add error
+> handle when alloc failed.
 
-Request for color processing blocks only if they are
-available in the display hw catalog and they are
-sufficient in number for the selection.
+I suggest to improve the provided information.
+How do you think about a wording variant like the following?
 
-Changes in v2:
-	- Include Fixes tag in commit message (Rob Clark)
-	- Adding the Tested by tag as there are no code
-	  changes in v2
+   The function =E2=80=9Cmsm_gpu_crashstate_capture=E2=80=9D can be called=
+ multiple times.
+   The members =E2=80=9Ccomm=E2=80=9D, =E2=80=9Ccmd=E2=80=9D and =E2=80=9C=
+bos=E2=80=9D of the data structure =E2=80=9Cmsm_gpu_state=E2=80=9D
+   are reassigned with pointers according to dynamic memory allocations
+   if the preprocessor symbol =E2=80=9CCONFIG_DEV_COREDUMP=E2=80=9D was de=
+fined.
+   But the function =E2=80=9Ckfree=E2=80=9D was not called for them before=
+.
 
-Fixes: e47616df008b ("drm/msm/dpu: add support for color processing blocks in dpu driver")
-Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
-Tested-by: John Stultz <john.stultz@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+   Thus add missing actions.
+   * Release previous objects.
+   * Use further null pointer checks.
+   * Complete the corresponding exception handling.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 63976dc..9f8de77 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -521,7 +521,7 @@ static struct msm_display_topology dpu_encoder_get_topology(
- 			struct dpu_kms *dpu_kms,
- 			struct drm_display_mode *mode)
- {
--	struct msm_display_topology topology;
-+	struct msm_display_topology topology = {0};
- 	int i, intf_count = 0;
- 
- 	for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
-@@ -537,7 +537,8 @@ static struct msm_display_topology dpu_encoder_get_topology(
- 	 * 1 LM, 1 INTF
- 	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
- 	 *
--	 * Adding color blocks only to primary interface
-+	 * Adding color blocks only to primary interface if available in
-+	 * sufficient number
- 	 */
- 	if (intf_count == 2)
- 		topology.num_lm = 2;
-@@ -546,8 +547,11 @@ static struct msm_display_topology dpu_encoder_get_topology(
- 	else
- 		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
- 
--	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI)
--		topology.num_dspp = topology.num_lm;
-+	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
-+		if (dpu_kms->catalog->dspp &&
-+			(dpu_kms->catalog->dspp_count >= topology.num_lm))
-+			topology.num_dspp = topology.num_lm;
-+	}
- 
- 	topology.num_enc = 0;
- 	topology.num_intf = intf_count;
--- 
-1.9.1
 
+Would you like to add the tag =E2=80=9CFixes=E2=80=9D to the commit messag=
+e?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?id=3Db791d1bdf9212d944d749a5c7f=
+f6febdba241771#n183
+
+
+=E2=80=A6
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -366,8 +366,11 @@  static void msm_gpu_crashstate_capture(struct msm_=
+gpu *gpu,
+>  			if (!should_dump(submit, submit->cmd[i].idx))
+>  				nr++;
+>
+> +		kfree(state->bos);
+>  		state->bos =3D kcalloc(nr,
+>  			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
+> +		if (!state->bos)
+> +			return;
+=E2=80=A6
+
+Will there be a need to reconsider the indentation for function call param=
+eters
+in such source files?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/coding-style.rst?id=3Db791d1bdf9212d944d749a5c7ff6febd=
+ba241771#n93
+
+Regards,
+Markus
