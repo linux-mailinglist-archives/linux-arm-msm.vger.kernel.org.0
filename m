@@ -2,249 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E97E21F7C6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 19:22:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 329221F7CBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 20:04:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726263AbgFLRWC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Jun 2020 13:22:02 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:41921 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726085AbgFLRWC (ORCPT
+        id S1726085AbgFLSEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jun 2020 14:04:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60838 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726219AbgFLSEh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Jun 2020 13:22:02 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591982520; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=fWknkGYfbRq73n5akkvEQmXOR+Mhuj3iaaByL0gFj24=; b=sf9LAlea2z7ecL+/2NDZsk1FrgGPb6xNVHQEmdUcK8w5AI78zw4ucu1VLZ2skfXpIquJuwm2
- v7mAYWv8Y67GMz8xdId5sOrtNQ3gT1FsuhKKdqJ9IEGk5QNMnGWhtDr1J+56waJQtt6PUyDn
- I/2yqoasluk4JK5yDZu9M+PReWU=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5ee3b9b5a3d8a447431a6887 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Jun 2020 17:21:57
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 18D73C433AD; Fri, 12 Jun 2020 17:21:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D60C1C43391;
-        Fri, 12 Jun 2020 17:21:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D60C1C43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Fri, 12 Jun 2020 11:21:51 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 6/6] drm/msm/a6xx: Add support for per-instance pagetables
-Message-ID: <20200612172151.GA12783@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
-        Eric Anholt <eric@anholt.net>, Jonathan Marek <jonathan@marek.ca>,
-        Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20200611222921.464-1-jcrouse@codeaurora.org>
- <20200611222921.464-7-jcrouse@codeaurora.org>
- <CAF6AEGuyqgYKZsnBPCii4W=jxPcFU7JYKn4NBd8JVq7Pt1kR_Q@mail.gmail.com>
+        Fri, 12 Jun 2020 14:04:37 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28B75C03E96F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jun 2020 11:04:37 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id a3so9503007oid.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jun 2020 11:04:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=C2JVbomNdU20rKNp8HqRg4cB8xPBeKRwrKV7atfiB90=;
+        b=EGWTlEbUPecTWcU1DtFitXJ8IW4qpiS4AK2f62xdDbiJVJsLU2+B8GP9qBACvNj418
+         Lx0z65tzMSDl+9cetAt7f2UzCc7d+f4IwWjOjX2II3e0bMdk94q0tuQ7wdV+n77+QUpZ
+         yOxB+AmCckAh3oSrExh4yEIWebhExUmqe6q/1U8+2GuJvnUXbFlY86W2tx0FdtLyLruk
+         d77CJzn/pVIriGbbvwYlXXtyNXQ2WbVJftKfXYScRdQ5unl0w9slodrmGOWdswxUr+K/
+         B07pwC8iA1Cf2jOW9P6jBmygaFTyDYzOLX7bJC35mBGlbZ3dRsCn9J94EtZIZ0pZ//Pj
+         rj6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=C2JVbomNdU20rKNp8HqRg4cB8xPBeKRwrKV7atfiB90=;
+        b=tASPx7r7Sc1s+mzLaBRS7tUfgaAcqB5gV42DkxNIgUP97Sj33o5yR08TtZX2AN51hh
+         IMQALxOUu3EN70B7R0xMcBDWmjuY8mzWdNUhQPazTJFk2nt2KLKZZQWmDIA3NHdBdt13
+         nT9Jy8ht/NQd0ux5zEchf+ca8BMfxb3PoDeNQmJTJDR3+zOAFDZHfwbPGYEyr+Pb4f2t
+         2bx8qvv+q6uiM/7iX7SidVGaoqLqnWYNwzmJqSJeQu8hP7wCQZ8gtmZ++80enVvl/yq7
+         h39R3x+0mWJPFyrsEy+P9fegXEtSC3f41xV1JsJqtpOoDdJTI36GHv2Of78dtUG9INaa
+         oQ5w==
+X-Gm-Message-State: AOAM530ygl/fKxzTfF9elsXyN8OMsyf/q7Av9LqiZPbAHFV10+rQVkL+
+        KLJn+35IYyZZV2g4+BgVbVjLGw==
+X-Google-Smtp-Source: ABdhPJx4zAiM/pQwXDriFT+tjCkvYSEFghRPGBHeIUcuheSsw+Ou+mhIgm/nlsl4kW57khKcPjtz0g==
+X-Received: by 2002:aca:498f:: with SMTP id w137mr153788oia.28.1591985076448;
+        Fri, 12 Jun 2020 11:04:36 -0700 (PDT)
+Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
+        by smtp.gmail.com with ESMTPSA id m9sm1538830oon.14.2020.06.12.11.04.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Jun 2020 11:04:35 -0700 (PDT)
+Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
+ support
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>
+References: <20200501045111.665881-1-ebiggers@kernel.org>
+ <20200501045111.665881-5-ebiggers@kernel.org>
+ <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
+ <20200507180435.GB236103@gmail.com> <20200507180838.GC236103@gmail.com>
+ <150ddaaf-12ec-231e-271a-c65b1d88d30f@kali.org>
+ <20200508202513.GA233206@gmail.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <1aa17b19-0ca7-1ff1-b945-442e56ef942a@kali.org>
+Date:   Fri, 12 Jun 2020 13:04:33 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGuyqgYKZsnBPCii4W=jxPcFU7JYKn4NBd8JVq7Pt1kR_Q@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20200508202513.GA233206@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 11, 2020 at 08:22:29PM -0700, Rob Clark wrote:
-> On Thu, Jun 11, 2020 at 3:29 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
-> >
-> > Add support for using per-instance pagetables if all the dependencies are
-> > available.
-> >
-> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > ---
-> >
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 69 ++++++++++++++++++++++++++-
-> >  drivers/gpu/drm/msm/msm_ringbuffer.h  |  1 +
-> >  2 files changed, 69 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > index a1589e040c57..5e82b85d4d55 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > @@ -79,6 +79,58 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
-> >         OUT_RING(ring, upper_32_bits(iova));
-> >  }
-> >
-> > +static void a6xx_set_pagetable(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
-> > +               struct msm_file_private *ctx)
-> > +{
-> > +       phys_addr_t ttbr;
-> > +       u32 asid;
-> > +
-> > +       if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
-> > +               return;
-> > +
-> > +       OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
-> > +       OUT_RING(ring, 0);
-> > +
-> > +       /* Turn on APIV mode to access critical regions */
-> > +       OUT_PKT4(ring, REG_A6XX_CP_MISC_CNTL, 1);
-> > +       OUT_RING(ring, 1);
-> > +
-> > +       /* Make sure the ME is synchronized before staring the update */
-> > +       OUT_PKT7(ring, CP_WAIT_FOR_ME, 0);
-> > +
-> > +       /* Execute the table update */
-> > +       OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 4);
-> > +       OUT_RING(ring, lower_32_bits(ttbr));
-> > +       OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
-> > +       /* CONTEXTIDR is currently unused */
-> > +       OUT_RING(ring, 0);
-> > +       /* CONTEXTBANK is currently unused */
-> > +       OUT_RING(ring, 0);
-> 
-> I can add this to xml (on userspace side, we've been describing packet
-> payload in xml and using the generated builders), and update generated
-> headers, if you agree to not add more open-coded pkt7 building ;-)
 
-But open coding opcode is so much fun! :)  Its fine to put this in the XML. It
-can only be executed from the ringbuffer FWIW.
+On 5/8/20 3:25 PM, Eric Biggers wrote:
+> On Fri, May 08, 2020 at 03:18:23PM -0500, Steev Klimaszewski wrote:
+>> On 5/7/20 1:08 PM, Eric Biggers wrote:
+>>> On Thu, May 07, 2020 at 11:04:35AM -0700, Eric Biggers wrote:
+>>>> Hi Thara,
+>>>>
+>>>> On Thu, May 07, 2020 at 08:36:58AM -0400, Thara Gopinath wrote:
+>>>>> On 5/1/20 12:51 AM, Eric Biggers wrote:
+>>>>>> From: Eric Biggers <ebiggers@google.com>
+>>>>>>
+>>>>>> Add support for Qualcomm Inline Crypto Engine (ICE) to ufs-qcom.
+>>>>>>
+>>>>>> The standards-compliant parts, such as querying the crypto capabilities
+>>>>>> and enabling crypto for individual UFS requests, are already handled by
+>>>>>> ufshcd-crypto.c, which itself is wired into the blk-crypto framework.
+>>>>>> However, ICE requires vendor-specific init, enable, and resume logic,
+>>>>>> and it requires that keys be programmed and evicted by vendor-specific
+>>>>>> SMC calls.  Make the ufs-qcom driver handle these details.
+>>>>>>
+>>>>>> I tested this on Dragonboard 845c, which is a publicly available
+>>>>>> development board that uses the Snapdragon 845 SoC and runs the upstream
+>>>>>> Linux kernel.  This is the same SoC used in the Pixel 3 and Pixel 3 XL
+>>>>>> phones.  This testing included (among other things) verifying that the
+>>>>>> expected ciphertext was produced, both manually using ext4 encryption
+>>>>>> and automatically using a block layer self-test I've written.
+>>>>> Hello Eric,
+>>>>>
+>>>>> I am interested in testing out this series on 845, 855 and if possile on 865
+>>>>> platforms. Can you give me some more details about your testing please.
+>>>>>
+>>>> Great!  You can test this with fscrypt, a.k.a. ext4 or f2fs encryption.
+>>>>
+>>>> A basic manual test would be:
+>>>>
+>>>> 1. Build a kernel with:
+>>>>
+>>>> 	CONFIG_BLK_INLINE_ENCRYPTION=y
+>>>> 	CONFIG_FS_ENCRYPTION=y
+>>>> 	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+>>> Sorry, I forgot: 'CONFIG_SCSI_UFS_CRYPTO=y' is needed too.
+>>>
+>>> - Eric
+>>
+> The original patchset is at
+> https://lkml.kernel.org/r/20200430115959.238073-1-satyat@google.com/
+>
+> Yes, v12 is the latest version, and yes that's a bug.  The export needs double
+> underscores.  Satya will fix it when he sends out v13.
+>
+> - Eric
 
-> > +
-> > +       /*
-> > +        * Write the new TTBR0 to the memstore. This is good for debugging.
-> > +        */
-> > +       OUT_PKT7(ring, CP_MEM_WRITE, 4);
-> > +       OUT_RING(ring, lower_32_bits(rbmemptr(ring, ttbr0)));
-> > +       OUT_RING(ring, upper_32_bits(rbmemptr(ring, ttbr0)));
-> > +       OUT_RING(ring, lower_32_bits(ttbr));
-> > +       OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
-> > +
-> > +       /* Invalidate the draw state so we start off fresh */
-> > +       OUT_PKT7(ring, CP_SET_DRAW_STATE, 3);
-> > +       OUT_RING(ring, 0x40000);
-> > +       OUT_RING(ring, 1);
-> > +       OUT_RING(ring, 0);
-> 
-> Ie, this would look like:
-> 
->     OUT_PKT7(ring, CP_SET_DRAW_STATE, 3);
->     OUT_RING(ring, CP_SET_DRAW_STATE__0_COUNT(0) |
->             CP_SET_DRAW_STATE__0_DISABLE_ALL_GROUPS |
->             CP_SET_DRAW_STATE__0_GROUP_ID(0));
->     OUT_RING(ring, CP_SET_DRAW_STATE__1_ADDR_LO(1));
->     OUT_RING(ring, CP_SET_DRAW_STATE__2_ADDR_HI(0));
-> 
-> .. but written that way, I think you meant ADDR_LO to be zero?
-> 
-> (it is possible we need to regen headers for that to work, the kernel
-> headers are somewhat out of date by now)
+Hi Eric,
 
-As we discussed on IRC this bit isn't needed because the CP_SMMU_TABLE_UPDATE
-handles it for us.  I'll remove that.
 
-> BR,
-> -R
+I've been testing this on a Lenovo Yoga C630 installed to a partition on
+the UFS drive, using a 5.7(ish) kernel with fscrypt/inline-encryption
+and a few patches on top that are still in flux for c630 support.  The
+sources I use can be found at
+https://github.com/steev/linux/tree/linux-5.7.y-c630-fscrypt and the
+config I'm using can be found at
+https://dev.gentoo.org/~steev/files/lenovo-yoga-c630-5.7.0-rc7-fs-inline-encryption.config.
 
-Jordan
 
-> > +
-> > +       /* Turn off APRIV */
-> > +       OUT_PKT4(ring, REG_A6XX_CP_MISC_CNTL, 1);
-> > +       OUT_RING(ring, 0);
-> > +
-> > +       /* Turn off protected mode */
-> > +       OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
-> > +       OUT_RING(ring, 1);
-> > +}
-> > +
-> >  static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
-> >         struct msm_file_private *ctx)
-> >  {
-> > @@ -89,6 +141,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
-> >         struct msm_ringbuffer *ring = submit->ring;
-> >         unsigned int i;
-> >
-> > +       a6xx_set_pagetable(gpu, ring, ctx);
-> > +
-> >         get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
-> >                 rbmemptr_stats(ring, index, cpcycles_start));
-> >
-> > @@ -872,6 +926,18 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
-> >         return (unsigned long)busy_time;
-> >  }
-> >
-> > +struct msm_gem_address_space *a6xx_address_space_instance(struct msm_gpu *gpu)
-> > +{
-> > +       struct msm_mmu *mmu;
-> > +
-> > +       mmu = msm_iommu_pagetable_create(gpu->aspace->mmu);
-> > +       if (IS_ERR(mmu))
-> > +               return msm_gem_address_space_get(gpu->aspace);
-> > +
-> > +       return msm_gem_address_space_create(mmu,
-> > +               "gpu", 0x100000000ULL, 0x1ffffffffULL);
-> > +}
-> > +
-> >  static const struct adreno_gpu_funcs funcs = {
-> >         .base = {
-> >                 .get_param = adreno_get_param,
-> > @@ -893,8 +959,9 @@ static const struct adreno_gpu_funcs funcs = {
-> >  #if defined(CONFIG_DRM_MSM_GPU_STATE)
-> >                 .gpu_state_get = a6xx_gpu_state_get,
-> >                 .gpu_state_put = a6xx_gpu_state_put,
-> > -               .create_address_space = adreno_iommu_create_address_space,
-> >  #endif
-> > +               .create_address_space = adreno_iommu_create_address_space,
-> > +               .address_space_instance = a6xx_address_space_instance,
-> >         },
-> >         .get_timestamp = a6xx_get_timestamp,
-> >  };
-> > diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-> > index 7764373d0ed2..0987d6bf848c 100644
-> > --- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-> > +++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-> > @@ -31,6 +31,7 @@ struct msm_rbmemptrs {
-> >         volatile uint32_t fence;
-> >
-> >         volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
-> > +       volatile u64 ttbr0;
-> >  };
-> >
-> >  struct msm_ringbuffer {
-> > --
-> > 2.17.1
-> >
+Everything seems to be working here.  I've run the tests you've
+mentioned and haven't seen any issues.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+
+-- Steev
+
