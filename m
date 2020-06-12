@@ -2,304 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0737A1F70D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 01:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 603741F712D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 02:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726391AbgFKXV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 19:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57432 "EHLO
+        id S1726336AbgFLAJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jun 2020 20:09:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726327AbgFKXV5 (ORCPT
+        with ESMTP id S1726285AbgFLAJR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 19:21:57 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA48BC08C5C5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2020 16:21:56 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id k2so2840727pjs.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2020 16:21:56 -0700 (PDT)
+        Thu, 11 Jun 2020 20:09:17 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0C0C08C5C1;
+        Thu, 11 Jun 2020 17:09:16 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id y123so4376330vsb.6;
+        Thu, 11 Jun 2020 17:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=Mx1BJS+F5RobWjcFE5t60E3qsaoq0yype8aHumba4AY=;
-        b=RXgoilEj3158/D81CyzqcOUTZGSWHs9fozqqHDzPcxAklVjRdy3hZHjcRNjda1AfcN
-         MWh8NjVKFFD6uqQ06STzWf+p07V+jMqx60Slct7LfhtNx8i3FESb0eHAl0Rzjg1hft3B
-         ++DDeyiqrKN7JopuxQxvASgSkFdlE740/jr9E=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dQ0wVuVD5mbnL9oat3E9xbZZtGvABVpYY6zoc/gC/as=;
+        b=SM9Ay2c/2xgFdaM32eJi+cNPWo3yB3m6cBPUuiHhkD3ji1sb4saRSL6ZbZzg4xzfzC
+         Ego6OC6WRzAMugcreC7TNtKgVF2EXQj5tjsLBlWwGNxQd3g+pQo1WSDsHq8gLQPslSb3
+         qYCUJmIec6mluqiRWzPf7jmgb+UcRBbbgiD+kkwOSmXamFlGeqv4rRicZwBjhtddJv8N
+         hxYqaMTbKHEVg/CCboYR7XW4a4Mnh8K11q8r45irojfEgdFCz0TStwMS5vbQsV1yQuJY
+         XpiGeICTU6PeKdq0oLyX0cd2FXsHe8XhKZDRY8wtP+TxgbhYLu4/yAGowrLOVRya4fhn
+         VDdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=Mx1BJS+F5RobWjcFE5t60E3qsaoq0yype8aHumba4AY=;
-        b=h1KcoX7YVIcK1zlb6SSp2QRtQmCIQQN9ogVrPVHI8NebERnMouvPfuaVeolXBgJ13y
-         AqJDGm9aaXdOmuVcHr5LozVEcA3JFATfhFVYHxPTH9TTQl1CIbOMzzB7Wrn97kHI/iWX
-         HlOQBT+63nJAF6e3MjJRL1Hc8kGbo4oYZT5C9QRYt8Rsczl/zSZQZWyjcFoK13QmWPDq
-         K1YyHBzl76XiW/P6uiCdYJzRFUwF0A8Ua02RNRsrmHXyGaYXEdoaYg3Ws6RDjOjfyLrW
-         XUc7U6glY+bUMThlew6ICQ5X4LeF9xwEroNEf/V+dDPYDSc00n4bseUAa1Y+1mwiC708
-         M5KQ==
-X-Gm-Message-State: AOAM531GO02fktPAJjTF05if3ck6UH/Ma6x8fopzNQ1IQX6FcSMHZogE
-        vIA6dY1oFqNsFw2SseaYCGx8OMTC4bE=
-X-Google-Smtp-Source: ABdhPJwdz2sTBkJb9s0f/hzOItcMgoPC81y0CH/eE7gR25jQYxuS18l1pPBiz49y8/WC7LrnNm8i4Q==
-X-Received: by 2002:a17:90a:70c6:: with SMTP id a6mr9302299pjm.16.1591917716068;
-        Thu, 11 Jun 2020 16:21:56 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id b7sm4036787pfo.202.2020.06.11.16.21.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2020 16:21:55 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dQ0wVuVD5mbnL9oat3E9xbZZtGvABVpYY6zoc/gC/as=;
+        b=KxVcX1WSjbFHFxzJsNjm66+1Nd8fZIjUBOxWAqCjBfSZtvAr2lYizKv4e8yHS8Pn2B
+         CBfj8hpvuoQAnr64xhYDZYFPiiPjWczM+DXEq4iRYFxTMxWUFyulST957AqmE3Vu7O/o
+         QJ6J14ZTaDCLHmJFGFL+zYxuxlFN2ucjvQgk/UisurfWDFETR9WHIu/BZxin5adIqLdJ
+         ECbusvOyIaJl2Iwr0R5jcZLbWMIAf9C3STo7J0AN9edJGCNnUk6IwVjX85AbOU133g4l
+         IYRRp2et5mQ9mbxbUZanVsTDbukPslQMqHZdHUldjXomyAFV4awQLe1DadD1AQN2NFb9
+         3r9g==
+X-Gm-Message-State: AOAM5338trVPdixgOYMt+U9XtV2SoiQxdJBkqn04IAv/+1Pji2z1D+sg
+        WRDH9EU/fscAkwkgyrU39rEx9PZRJcUGybdCBU0Yn2zJ
+X-Google-Smtp-Source: ABdhPJxKR4zwGXMlhODAP+l4ncod5fB9+ttu3+isDcOuBHeikejSU3l6mGXzKvhEiYWPJ02PLPMfcY/lN2W1EhnbQIk=
+X-Received: by 2002:a67:f918:: with SMTP id t24mr8872355vsq.18.1591920554784;
+ Thu, 11 Jun 2020 17:09:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1591885683-29514-3-git-send-email-sanm@codeaurora.org>
-References: <1591885683-29514-1-git-send-email-sanm@codeaurora.org> <1591885683-29514-3-git-send-email-sanm@codeaurora.org>
-Subject: Re: [PATCH 2/2] usb: dwc3: Host wake up support from system suspend
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-clk@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Felipe Balbi <balbi@kernel.org>,
+References: <20200609104604.1594-7-stanimir.varbanov@linaro.org>
+ <20200609111414.GC780233@kroah.com> <dc85bf9e-e3a6-15a1-afaa-0add3e878573@linaro.org>
+ <20200610133717.GB1906670@kroah.com> <31e1aa72b41f9ff19094476033511442bb6ccda0.camel@perches.com>
+ <2fab7f999a6b5e5354b23d06aea31c5018b9ce18.camel@perches.com>
+ <20200611062648.GA2529349@kroah.com> <bc92ee5948c3e71b8f1de1930336bbe162d00b34.camel@perches.com>
+ <20200611105217.73xwkd2yczqotkyo@holly.lan> <ed7dd5b4-aace-7558-d012-fb16ce8c92d6@linaro.org>
+ <20200611121817.narzkqf5x7cvl6hp@holly.lan> <CAJfuBxzE=A0vzsjNai_jU_16R_P0haYA-FHnjZcaHOR_3fy__A@mail.gmail.com>
+In-Reply-To: <CAJfuBxzE=A0vzsjNai_jU_16R_P0haYA-FHnjZcaHOR_3fy__A@mail.gmail.com>
+From:   jim.cromie@gmail.com
+Date:   Thu, 11 Jun 2020 18:08:48 -0600
+Message-ID: <CAJfuBxyUfzM-Jmf_39YJHgfy0jLXdRjhdsNLuUacZbJA2unjcg@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] venus: Make debug infrastructure more flexible
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Joe Perches <joe@perches.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Date:   Thu, 11 Jun 2020 16:21:54 -0700
-Message-ID: <159191771455.242598.12826819292508436205@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Linux Documentation List <linux-doc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        linux-acpi@vger.kernel.org, netdev@vger.kernel.org,
+        Jason Baron <jbaron@akamai.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sandeep Maheswaram (2020-06-11 07:28:03)
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index 25c686a7..8370350 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -31,15 +31,19 @@
->  #include <linux/usb/gadget.h>
->  #include <linux/usb/of.h>
->  #include <linux/usb/otg.h>
-> +#include <linux/usb/hcd.h>
-> =20
->  #include "core.h"
->  #include "gadget.h"
->  #include "io.h"
-> =20
->  #include "debug.h"
-> +#include "../host/xhci.h"
-> =20
->  #define DWC3_DEFAULT_AUTOSUSPEND_DELAY 5000 /* ms */
-> =20
-> +bool need_phy_for_wakeup;
+calling out some thinkos
 
-static? But why isn't it part of 'struct dwc3'? There could be multiple
-dwc3 instances that may or may not be wakeup capable.
+On Thu, Jun 11, 2020 at 3:19 PM <jim.cromie@gmail.com> wrote:
+>
+> heres what I have in mind.  whats described here is working.
+> I'll send it out soon
+>
+> commit 20298ec88cc2ed64269c8be7b287a24e60a5347e
+> Author: Jim Cromie <jim.cromie@gmail.com>
+> Date:   Wed Jun 10 12:55:08 2020 -0600
+>
+>     dyndbg: WIP towards module->debugflags based callsite controls
+>
+>     There are *lots* of ad-hoc debug printing solutions in kernel,
+>     this is a 1st attempt at providing a common mechanism for many of them.
+>
+>     Basically, there are 2 styles of debug printing:
+>     - levels, with increasing verbosity, 1-10 forex
+>     - bits/flags, independently controlling separate groups of dprints
+>
+>     This patch does bits/flags (with no distinction made yet between 2)
+>
+>     API:
+>
+>     - change pr_debug(...)  -->  pr_debug_typed(type_id=0, ...)
 
-> +
->  /**
->   * dwc3_get_dr_mode - Validates and sets dr_mode
->   * @dwc: pointer to our context structure
-> @@ -1627,10 +1631,36 @@ static int dwc3_core_init_for_resume(struct dwc3 =
-*dwc)
->         return ret;
->  }
-> =20
-> +static void dwc3_set_phy_speed_flags(struct dwc3 *dwc)
-> +{
-> +
-> +       int i, num_ports;
-> +       u32 reg;
-> +       struct usb_hcd  *hcd =3D platform_get_drvdata(dwc->xhci);
-> +       struct xhci_hcd *xhci_hcd =3D hcd_to_xhci(hcd);
-> +
-> +       dwc->hs_phy_flags &=3D ~(PHY_MODE_USB_HOST_HS | PHY_MODE_USB_HOST=
-_LS);
-> +
-> +       reg =3D readl(&xhci_hcd->cap_regs->hcs_params1);
-> +
-> +       num_ports =3D HCS_MAX_PORTS(reg);
-> +       for (i =3D 0; i < num_ports; i++) {
-> +               reg =3D readl(&xhci_hcd->op_regs->port_status_base + i*0x=
-10);
+pr_debug, pr_debug_n now in printk.h
 
-Please format this as 'port_status_base + i * 0x10'
+_?_?dynamic_.+_cl  adaptations in dynamic_debug.h
 
-> +               if (reg & PORT_PE) {
-> +                       if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
-> +                               dwc->hs_phy_flags |=3D PHY_MODE_USB_HOST_=
-HS;
-> +                       else if (DEV_LOWSPEED(reg))
-> +                               dwc->hs_phy_flags |=3D PHY_MODE_USB_HOST_=
-LS;
-> +               }
-> +       }
-> +       phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_flags);
-> +}
-> +
->  static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->  {
->         unsigned long   flags;
->         u32 reg;
-> +       struct usb_hcd  *hcd =3D platform_get_drvdata(dwc->xhci);
-> =20
->         switch (dwc->current_dr_role) {
->         case DWC3_GCTL_PRTCAP_DEVICE:
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 013f42a..ff02d41 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -1094,6 +1094,7 @@ struct dwc3 {
->         struct phy              *usb3_generic_phy;
-> =20
->         bool                    phys_ready;
-> +       int                     hs_phy_flags;
+>     - all existing uses have type_id=0
+>     - developer creates exclusive types of log messages with type_id>0
+>       1, 2, 3 are disjoint groups, for example: hi, mid, low
+>
+>     - !!type_id is just an additional callsite selection criterion
+>
+>       Qfoo() { echo module foo $* >/proc/dynamic_debug/control }
+>       Qfoo +p               # all groups, including default 0
+>       Qfoo mflags 1 +p      # only group 1
+>       Qfoo mflags 12 +p     # TBD[1]: groups 1 or 2
+>       Qfoo mflags 0 +p      # ignored atm TBD[2]
+>       Qfoo mflags af +p     # TBD[3]: groups a or f (10 or 15)
+>
+>     so patch does:
+>
+>     - add u32 debugflags to struct module. Each bit is a separate print-class.
 
-Does it need to be signed? Why not unsigned int or unsigned long?
+this is feeling wrong now.
+setting these bits would have to trigger an update via ddebug_exec_query
+kinda like setting a bit would trigger
+       echo module $foo mflags $bitpos +p > control
 
-> =20
->         struct ulpi             *ulpi;
->         bool                    ulpi_ready;
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 1dfd024..ec183646 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -19,6 +19,7 @@
->  #include <linux/usb/of.h>
->  #include <linux/reset.h>
->  #include <linux/iopoll.h>
-> +#include <linux/usb/hcd.h>
-> =20
->  #include "core.h"
-> =20
-> @@ -192,21 +193,34 @@ static int dwc3_qcom_register_extcon(struct dwc3_qc=
-om *qcom)
-> =20
->  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
->  {
-> +       struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
-> +
->         if (qcom->hs_phy_irq) {
->                 disable_irq_wake(qcom->hs_phy_irq);
->                 disable_irq_nosync(qcom->hs_phy_irq);
->         }
-> +       if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
-> +               if (qcom->dp_hs_phy_irq) {
-> +                       disable_irq_wake(qcom->dp_hs_phy_irq);
-> +                       disable_irq_nosync(qcom->dp_hs_phy_irq);
-> +               }
-> +       } else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
-> +               if (qcom->dm_hs_phy_irq) {
-> +                       disable_irq_wake(qcom->dm_hs_phy_irq);
-> +                       disable_irq_nosync(qcom->dm_hs_phy_irq);
-> +               }
-> +       } else {
-> =20
-> -       if (qcom->dp_hs_phy_irq) {
-> -               disable_irq_wake(qcom->dp_hs_phy_irq);
-> -               disable_irq_nosync(qcom->dp_hs_phy_irq);
-> -       }
-> +               if (qcom->dp_hs_phy_irq) {
-> +                       disable_irq_wake(qcom->dp_hs_phy_irq);
-> +                       disable_irq_nosync(qcom->dp_hs_phy_irq);
-> +               }
-> =20
-> -       if (qcom->dm_hs_phy_irq) {
-> -               disable_irq_wake(qcom->dm_hs_phy_irq);
-> -               disable_irq_nosync(qcom->dm_hs_phy_irq);
-> +               if (qcom->dm_hs_phy_irq) {
-> +                       disable_irq_wake(qcom->dm_hs_phy_irq);
-> +                       disable_irq_nosync(qcom->dm_hs_phy_irq);
-> +               }
->         }
-> -
->         if (qcom->ss_phy_irq) {
->                 disable_irq_wake(qcom->ss_phy_irq);
->                 disable_irq_nosync(qcom->ss_phy_irq);
-> @@ -215,21 +229,34 @@ static void dwc3_qcom_disable_interrupts(struct dwc=
-3_qcom *qcom)
-> =20
->  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  {
-> +       struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
-> +
->         if (qcom->hs_phy_irq) {
->                 enable_irq(qcom->hs_phy_irq);
->                 enable_irq_wake(qcom->hs_phy_irq);
->         }
-> +       if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
-> +               if (qcom->dp_hs_phy_irq) {
-> +                       enable_irq(qcom->dp_hs_phy_irq);
-> +                       enable_irq_wake(qcom->dp_hs_phy_irq);
-> +               }
-> +       } else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
-> +               if (qcom->dm_hs_phy_irq) {
-> +                       enable_irq(qcom->dm_hs_phy_irq);
-> +                       enable_irq_wake(qcom->dm_hs_phy_irq);
-> +               }
-> +       } else {
-> =20
-> -       if (qcom->dp_hs_phy_irq) {
-> -               enable_irq(qcom->dp_hs_phy_irq);
-> -               enable_irq_wake(qcom->dp_hs_phy_irq);
-> -       }
-> +               if (qcom->dp_hs_phy_irq) {
-> +                       enable_irq(qcom->dp_hs_phy_irq);
-> +                       enable_irq_wake(qcom->dp_hs_phy_irq);
-> +               }
-> =20
-> -       if (qcom->dm_hs_phy_irq) {
-> -               enable_irq(qcom->dm_hs_phy_irq);
-> -               enable_irq_wake(qcom->dm_hs_phy_irq);
-> +               if (qcom->dm_hs_phy_irq) {
-> +                       enable_irq(qcom->dm_hs_phy_irq);
-> +                       enable_irq_wake(qcom->dm_hs_phy_irq);
-> +               }
->         }
-> -
->         if (qcom->ss_phy_irq) {
->                 enable_irq(qcom->ss_phy_irq);
->                 enable_irq_wake(qcom->ss_phy_irq);
+its possible, but not 1st, or 2nd perhaps.
+In general Im quite leery of rigging up some callback to do it.
 
-Is it possible to move this code to use the wakeirq library? I believe
-only one irq can be the "wakeup" irq in that case but maybe that is
-possible if we know what mode that phy is in? Or does the superspeed and
-some sort of high speed irq need to be enabled for wakeup in case a usb2
-or usb3 device wants to wakeup?
+its prudent to effect all debug changes via >control
 
-> @@ -240,6 +267,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
->  {
->         u32 val;
->         int i;
-> +       struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
-> +       struct usb_hcd  *hcd =3D platform_get_drvdata(dwc->xhci);
+>     - in ddebug_change()
+>       filter on !! module->debugflags,
+>       IFF query->module is given, and matches dt->mod_name
+>       and query->mflags is given, and bitmatches module->debugflags
 
-Weird spacing here   ---^
+wrong, ddebug_change cannot respond to changes of debugflags,
+most it could do is consult it on queries
 
-> +
-> +       if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
-> +               device_init_wakeup(qcom->dev, 1);
-> =20
->         if (qcom->is_suspended)
->                 return 0;
-> @@ -262,6 +294,8 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
->         int ret;
->         int i;
-> =20
-> +       device_init_wakeup(qcom->dev, 0);
 
-Usually device_init_wakeup() is called once during probe and then the
-wakeup enable state for a device is controlled from userspace.  Calling
-this here will be semi-disastrous in the sense that we're going to be
-creating and destroying a wakeup sysfs object each time we suspend. I
-see that dwc3 core code has this pattern of calling device_init_wakeup()
-from the suspend/resume path too, which looks wrong.
+>     - in parse_query()
+>       accept new query term: mflags $arg
+>       populate query->mflags
+>       arg-type needs some attention, but basic plumbing is there
+>
+>     WIP: not included:
+>
+>     - pr_debug_typed( bitpos=0, ....)'
 
-Shouldn't we be forwarding the wakeup request from the root hub to the
-controller? I'm not super clear on how USB PM is supposed to work but
-this doesn't look right.
+now done, as pr_debug_n, pr_debug in printk.h
+
+Ive adapted the macros with a "_cl(cl, " insertion,
+
+also added trailing prcls to control output
+
+>
+>     - no way to exersize new code in ddebug_change
+>       need pr_debug_typed() to make a (not-null) typed callsite.
+>       also no way to set module->debugflags
+
+close enough to see the thinkos
