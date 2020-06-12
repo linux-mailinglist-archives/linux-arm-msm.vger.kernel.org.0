@@ -2,221 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BE901F71ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 03:53:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FB7B1F726B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 05:22:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726535AbgFLBw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 21:52:58 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:22426 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726511AbgFLBw5 (ORCPT
+        id S1726349AbgFLDWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Jun 2020 23:22:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37894 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726321AbgFLDWG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 21:52:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1591926776; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=/aZaIYLpDRo9Jmnv3uRBjAFuGehCfPcRUaFTYev5WAs=; b=opossAnfMG5tbmdG0nayMFZqgU8SihBBi0eu3O+IaQ6vhTYOthZGqH6kNuocMb2E4RyVrAhX
- Ia+q6cc1ZCMb5VKCwHCMzRMV5d9QPLyDp48DdX17b3I4MEf8xXUrcpKUlvcA7JXttEGJ1VoH
- HbCA/nfnKL/FD+eXO3e7T38DwT0=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n14.prod.us-east-1.postgun.com with SMTP id
- 5ee2dfde0206ad41d11e0345 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Jun 2020 01:52:30
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E7E0FC433AD; Fri, 12 Jun 2020 01:52:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from linuxdisplay-lab-04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tanmay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 92D23C433CB;
-        Fri, 12 Jun 2020 01:52:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 92D23C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tanmay@codeaurora.org
-From:   Tanmay Shah <tanmay@codeaurora.org>
-To:     sam@ravnborg.org, robh+dt@kernel.org, swboyd@chromium.org
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, seanpaul@chromium.org,
-        robdclark@gmail.com, aravindh@codeaurora.org,
-        abhinavk@codeaurora.org, Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>
-Subject: [PATCH v6 5/5] drm/msm/dpu: add display port support in DPU
-Date:   Thu, 11 Jun 2020 18:50:30 -0700
-Message-Id: <20200612015030.16072-6-tanmay@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200612015030.16072-1-tanmay@codeaurora.org>
-References: <20200612015030.16072-1-tanmay@codeaurora.org>
+        Thu, 11 Jun 2020 23:22:06 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B10BFC03E96F;
+        Thu, 11 Jun 2020 20:22:04 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id mb16so8641679ejb.4;
+        Thu, 11 Jun 2020 20:22:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B4Mrm1gIXHBqQrJzDMxE7hny1sPLrSiwXYO/60LCrf4=;
+        b=hPVYoqh8jPs/l54Gc1r4kVaNzjMB73wKzEjspttHVKjphYyFYBNLvFvhAQHgCVuMXD
+         UrW+7t7+BjCCRAb619IpW+4HHRVsgemrpBPTZgHjC/3gzR+obgnFNZvECSNXA9/pCqXz
+         HhQmCLyRPV4bDpj/WbkqT06lRQ5NGJDrYyClx7y0Pw1u1IrVuE89/OQi/G/Xfxj2P6/A
+         q50xVFJ9qf09Fj3gXSwSGq/TCkNbFQz1FMxOxyxexgyiUDja4LM8/ZfhMrlDakdtj+7B
+         mLQMDgcvIZWW4w4wgQpH4a5uPbkhNBMMS2LzQSmi1fC6hyZj/87JizBAF+eT4jMoDrjk
+         jv8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B4Mrm1gIXHBqQrJzDMxE7hny1sPLrSiwXYO/60LCrf4=;
+        b=HXWtGI/tJK1qM+zTGlmFOHpesYKYSogma80wl7UCfnvHQnNMlX5bZsrVxb5sZMhxge
+         oYz1fT8eENDeWGDd3MLzymdlaQ56iUVIkVVnDi1XkVUBSVTDDzi/x126pMWu5f5il1LW
+         vwq6PJSLpzUYHit1w8UhlKDrKM+PdUL5ShyJfitEYMbmKXP8tMdbA2L8utFQeS28KUIP
+         9UfIZWPJwfKw+Lz0Cl1wzrKI/TL9kQnNShF/1unR1P1M08HzqeM5ggW417U0VV/5KxK6
+         lb3RjjN3r8jW+r+Z3LURCD+Qiv9bf+rSh2OQY5kJak0ijB2RdDQM9uIX2ANtAS9xRCwB
+         MOcA==
+X-Gm-Message-State: AOAM531fznmuSqhRFC2FQowPFa64TR9JUBtavo/ZkpEz485gI1IRdwYQ
+        Fc6xTgXwKF6PV36WMDHZ5So07Ywfn++fQUjMP5k=
+X-Google-Smtp-Source: ABdhPJyzNHPsnPsZMtc0S9NLfKpqe1fzAhLdA7GvVWT23D3A2fUYLq5KDR2bpDt/AdIyu5RKOlbarT8SJfsSUirryUA=
+X-Received: by 2002:a17:906:1088:: with SMTP id u8mr11881278eju.428.1591932123108;
+ Thu, 11 Jun 2020 20:22:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200611222921.464-1-jcrouse@codeaurora.org> <20200611222921.464-7-jcrouse@codeaurora.org>
+In-Reply-To: <20200611222921.464-7-jcrouse@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 11 Jun 2020 20:22:29 -0700
+Message-ID: <CAF6AEGuyqgYKZsnBPCii4W=jxPcFU7JYKn4NBd8JVq7Pt1kR_Q@mail.gmail.com>
+Subject: Re: [PATCH 6/6] drm/msm/a6xx: Add support for per-instance pagetables
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeykumar Sankaran <jsanka@codeaurora.org>
+On Thu, Jun 11, 2020 at 3:29 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+>
+> Add support for using per-instance pagetables if all the dependencies are
+> available.
+>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> ---
+>
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 69 ++++++++++++++++++++++++++-
+>  drivers/gpu/drm/msm/msm_ringbuffer.h  |  1 +
+>  2 files changed, 69 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index a1589e040c57..5e82b85d4d55 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -79,6 +79,58 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
+>         OUT_RING(ring, upper_32_bits(iova));
+>  }
+>
+> +static void a6xx_set_pagetable(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+> +               struct msm_file_private *ctx)
+> +{
+> +       phys_addr_t ttbr;
+> +       u32 asid;
+> +
+> +       if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
+> +               return;
+> +
+> +       OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
+> +       OUT_RING(ring, 0);
+> +
+> +       /* Turn on APIV mode to access critical regions */
+> +       OUT_PKT4(ring, REG_A6XX_CP_MISC_CNTL, 1);
+> +       OUT_RING(ring, 1);
+> +
+> +       /* Make sure the ME is synchronized before staring the update */
+> +       OUT_PKT7(ring, CP_WAIT_FOR_ME, 0);
+> +
+> +       /* Execute the table update */
+> +       OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 4);
+> +       OUT_RING(ring, lower_32_bits(ttbr));
+> +       OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
+> +       /* CONTEXTIDR is currently unused */
+> +       OUT_RING(ring, 0);
+> +       /* CONTEXTBANK is currently unused */
+> +       OUT_RING(ring, 0);
 
-Add display port support in DPU by creating hooks
-for DP encoder enumeration and encoder mode
-initialization.
+I can add this to xml (on userspace side, we've been describing packet
+payload in xml and using the generated builders), and update generated
+headers, if you agree to not add more open-coded pkt7 building ;-)
 
-This change is based on the Snapdragon Display port
-driver changes[1].
+> +
+> +       /*
+> +        * Write the new TTBR0 to the memstore. This is good for debugging.
+> +        */
+> +       OUT_PKT7(ring, CP_MEM_WRITE, 4);
+> +       OUT_RING(ring, lower_32_bits(rbmemptr(ring, ttbr0)));
+> +       OUT_RING(ring, upper_32_bits(rbmemptr(ring, ttbr0)));
+> +       OUT_RING(ring, lower_32_bits(ttbr));
+> +       OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
+> +
+> +       /* Invalidate the draw state so we start off fresh */
+> +       OUT_PKT7(ring, CP_SET_DRAW_STATE, 3);
+> +       OUT_RING(ring, 0x40000);
+> +       OUT_RING(ring, 1);
+> +       OUT_RING(ring, 0);
 
-changes in v2:
-	- rebase on [2] (Sean Paul)
-	- remove unwanted error checks and
-	  switch cases (Jordan Crouse)
+Ie, this would look like:
 
-[1] https://lwn.net/Articles/768265/
-[2] https://lkml.org/lkml/2018/11/17/87
+    OUT_PKT7(ring, CP_SET_DRAW_STATE, 3);
+    OUT_RING(ring, CP_SET_DRAW_STATE__0_COUNT(0) |
+            CP_SET_DRAW_STATE__0_DISABLE_ALL_GROUPS |
+            CP_SET_DRAW_STATE__0_GROUP_ID(0));
+    OUT_RING(ring, CP_SET_DRAW_STATE__1_ADDR_LO(1));
+    OUT_RING(ring, CP_SET_DRAW_STATE__2_ADDR_HI(0));
 
-changes in V3:
--- Moved this change as part of the DP driver changes.
--- Addressed compilation issues on the latest code base.
+.. but written that way, I think you meant ADDR_LO to be zero?
 
-Changes in v6:
--- Fix checkpatch.pl warning
+(it is possible we need to regen headers for that to work, the kernel
+headers are somewhat out of date by now)
 
-Signed-off-by: Jeykumar Sankaran <jsanka@codeaurora.org>
-Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
-Signed-off-by: Vara Reddy <varar@codeaurora.org>
-Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  8 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 65 +++++++++++++++++----
- 2 files changed, 58 insertions(+), 15 deletions(-)
+BR,
+-R
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index d796710ff4aa..745d5ce7e821 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2017,7 +2017,7 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
- {
- 	int ret = 0;
- 	int i = 0;
--	enum dpu_intf_type intf_type;
-+	enum dpu_intf_type intf_type = INTF_NONE;
- 	struct dpu_enc_phys_init_params phys_params;
- 
- 	if (!dpu_enc) {
-@@ -2039,9 +2039,9 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
- 	case DRM_MODE_ENCODER_DSI:
- 		intf_type = INTF_DSI;
- 		break;
--	default:
--		DPU_ERROR_ENC(dpu_enc, "unsupported display interface type\n");
--		return -EINVAL;
-+	case DRM_MODE_ENCODER_TMDS:
-+		intf_type = INTF_DP;
-+		break;
- 	}
- 
- 	WARN_ON(disp_info->num_of_h_tiles < 1);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index b8615d4fe8a3..f6c219f875db 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -492,6 +492,33 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
- 	return rc;
- }
- 
-+static int _dpu_kms_initialize_displayport(struct drm_device *dev,
-+					    struct msm_drm_private *priv,
-+					    struct dpu_kms *dpu_kms)
-+{
-+	struct drm_encoder *encoder = NULL;
-+	int rc = 0;
-+
-+	if (!priv->dp)
-+		return rc;
-+
-+	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS);
-+	if (IS_ERR(encoder)) {
-+		DPU_ERROR("encoder init failed for dsi display\n");
-+		return PTR_ERR(encoder);
-+	}
-+
-+	rc = msm_dp_modeset_init(priv->dp, dev, encoder);
-+	if (rc) {
-+		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
-+		drm_encoder_cleanup(encoder);
-+		return rc;
-+	}
-+
-+	priv->encoders[priv->num_encoders++] = encoder;
-+	return rc;
-+}
-+
- /**
-  * _dpu_kms_setup_displays - create encoders, bridges and connectors
-  *                           for underlying displays
-@@ -504,12 +531,21 @@ static int _dpu_kms_setup_displays(struct drm_device *dev,
- 				    struct msm_drm_private *priv,
- 				    struct dpu_kms *dpu_kms)
- {
--	/**
--	 * Extend this function to initialize other
--	 * types of displays
--	 */
-+	int rc = 0;
-+
-+	rc = _dpu_kms_initialize_dsi(dev, priv, dpu_kms);
-+	if (rc) {
-+		DPU_ERROR("initialize_dsi failed, rc = %d\n", rc);
-+		return rc;
-+	}
- 
--	return _dpu_kms_initialize_dsi(dev, priv, dpu_kms);
-+	rc = _dpu_kms_initialize_displayport(dev, priv, dpu_kms);
-+	if (rc) {
-+		DPU_ERROR("initialize_DP failed, rc = %d\n", rc);
-+		return rc;
-+	}
-+
-+	return rc;
- }
- 
- static void _dpu_kms_drm_obj_destroy(struct dpu_kms *dpu_kms)
-@@ -694,13 +730,20 @@ static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
- 	info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
- 			MSM_DISPLAY_CAP_VID_MODE;
- 
--	/* TODO: No support for DSI swap */
--	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
--		if (priv->dsi[i]) {
--			info.h_tile_instance[info.num_of_h_tiles] = i;
--			info.num_of_h_tiles++;
-+	switch (info.intf_type) {
-+	case DRM_MODE_ENCODER_DSI:
-+		/* TODO: No support for DSI swap */
-+		for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
-+			if (priv->dsi[i]) {
-+				info.h_tile_instance[info.num_of_h_tiles] = i;
-+				info.num_of_h_tiles++;
-+			}
- 		}
--	}
-+		break;
-+	case DRM_MODE_ENCODER_TMDS:
-+		info.num_of_h_tiles = 1;
-+		break;
-+	};
- 
- 	rc = dpu_encoder_setup(encoder->dev, encoder, &info);
- 	if (rc)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> +
+> +       /* Turn off APRIV */
+> +       OUT_PKT4(ring, REG_A6XX_CP_MISC_CNTL, 1);
+> +       OUT_RING(ring, 0);
+> +
+> +       /* Turn off protected mode */
+> +       OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
+> +       OUT_RING(ring, 1);
+> +}
+> +
+>  static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+>         struct msm_file_private *ctx)
+>  {
+> @@ -89,6 +141,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+>         struct msm_ringbuffer *ring = submit->ring;
+>         unsigned int i;
+>
+> +       a6xx_set_pagetable(gpu, ring, ctx);
+> +
+>         get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
+>                 rbmemptr_stats(ring, index, cpcycles_start));
+>
+> @@ -872,6 +926,18 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
+>         return (unsigned long)busy_time;
+>  }
+>
+> +struct msm_gem_address_space *a6xx_address_space_instance(struct msm_gpu *gpu)
+> +{
+> +       struct msm_mmu *mmu;
+> +
+> +       mmu = msm_iommu_pagetable_create(gpu->aspace->mmu);
+> +       if (IS_ERR(mmu))
+> +               return msm_gem_address_space_get(gpu->aspace);
+> +
+> +       return msm_gem_address_space_create(mmu,
+> +               "gpu", 0x100000000ULL, 0x1ffffffffULL);
+> +}
+> +
+>  static const struct adreno_gpu_funcs funcs = {
+>         .base = {
+>                 .get_param = adreno_get_param,
+> @@ -893,8 +959,9 @@ static const struct adreno_gpu_funcs funcs = {
+>  #if defined(CONFIG_DRM_MSM_GPU_STATE)
+>                 .gpu_state_get = a6xx_gpu_state_get,
+>                 .gpu_state_put = a6xx_gpu_state_put,
+> -               .create_address_space = adreno_iommu_create_address_space,
+>  #endif
+> +               .create_address_space = adreno_iommu_create_address_space,
+> +               .address_space_instance = a6xx_address_space_instance,
+>         },
+>         .get_timestamp = a6xx_get_timestamp,
+>  };
+> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
+> index 7764373d0ed2..0987d6bf848c 100644
+> --- a/drivers/gpu/drm/msm/msm_ringbuffer.h
+> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
+> @@ -31,6 +31,7 @@ struct msm_rbmemptrs {
+>         volatile uint32_t fence;
+>
+>         volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
+> +       volatile u64 ttbr0;
+>  };
+>
+>  struct msm_ringbuffer {
+> --
+> 2.17.1
+>
