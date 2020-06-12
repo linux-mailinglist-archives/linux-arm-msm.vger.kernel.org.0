@@ -2,329 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1346D1F7289
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 05:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D55141F72C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 06:15:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbgFLDkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Jun 2020 23:40:24 -0400
-Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130]:38061 "EHLO
-        out30-130.freemail.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726520AbgFLDkX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Jun 2020 23:40:23 -0400
-X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R151e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01f04427;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=21;SR=0;TI=SMTPD_---0U.K0.DD_1591933215;
-Received: from localhost(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0U.K0.DD_1591933215)
-          by smtp.aliyun-inc.com(127.0.0.1);
-          Fri, 12 Jun 2020 11:40:15 +0800
-From:   Baolin Wang <baolin.wang@linux.alibaba.com>
-To:     joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        matthias.bgg@gmail.com, robdclark@gmail.com, robh@kernel.org,
-        tomeu.vizoso@collabora.com, steven.price@arm.com,
-        alyssa.rosenzweig@collabora.com, airlied@linux.ie, daniel@ffwll.ch
-Cc:     baolin.wang@linux.alibaba.com, baolin.wang7@gmail.com,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-Subject: [PATCH v2 2/2] iommu: Add gfp parameter to io_pgtable_ops->map()
-Date:   Fri, 12 Jun 2020 11:39:55 +0800
-Message-Id: <3093df4cb95497aaf713fca623ce4ecebb197c2e.1591930156.git.baolin.wang@linux.alibaba.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <cover.1591930156.git.baolin.wang@linux.alibaba.com>
-References: <cover.1591930156.git.baolin.wang@linux.alibaba.com>
-In-Reply-To: <cover.1591930156.git.baolin.wang@linux.alibaba.com>
-References: <cover.1591930156.git.baolin.wang@linux.alibaba.com>
+        id S1726387AbgFLEPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jun 2020 00:15:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:26622 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725845AbgFLEPs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Jun 2020 00:15:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591935347; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=qOBjRzQMndVJEIv6uF7Wx6Dgh2zeX7Iww1fuxfR2S3I=; b=d+1yXJrMGA3GTsrMeQxj9ehn1rDROWmgWRHtufDYo9WFKveqHwSfdG4v8rRcKst3CHBG7UZf
+ Wd46JNU3Mc2aQo+itBcdBaHKwkYgmkffrFjnR6DN1Q7RFl26ppvYJvya771C7jPPCsruiMtx
+ cQu3J1zt8iPtiUfrmc01BnlAJDo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
+ 5ee301595866879c7691efbc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Jun 2020 04:15:21
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8B986C43395; Fri, 12 Jun 2020 04:15:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.17.171] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3145FC433CB;
+        Fri, 12 Jun 2020 04:15:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3145FC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [PATCH 1/3] usb: typec: Add QCOM PMIC typec detection driver
+To:     Randy Dunlap <rdunlap@infradead.org>,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+        jackp@codeaurora.org, bryan.odonoghue@linaro.org
+References: <20200609205851.30113-1-wcheng@codeaurora.org>
+ <20200609205851.30113-2-wcheng@codeaurora.org>
+ <ccfc3e7c-d1ce-27bd-b24c-df5fbc468449@infradead.org>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <47651298-f94c-c487-d346-41abfb8a80a7@codeaurora.org>
+Date:   Thu, 11 Jun 2020 21:15:19 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+MIME-Version: 1.0
+In-Reply-To: <ccfc3e7c-d1ce-27bd-b24c-df5fbc468449@infradead.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now the ARM page tables are always allocated by GFP_ATOMIC parameter,
-but the iommu_ops->map() function has been added a gfp_t parameter by
-commit 781ca2de89ba ("iommu: Add gfp parameter to iommu_ops::map"),
-thus io_pgtable_ops->map() should use the gfp parameter passed from
-iommu_ops->map() to allocate page pages, which can avoid wasting the
-memory allocators atomic pools for some non-atomic contexts.
 
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
----
- drivers/gpu/drm/panfrost/panfrost_mmu.c |  2 +-
- drivers/iommu/arm-smmu-v3.c             |  2 +-
- drivers/iommu/arm-smmu.c                |  2 +-
- drivers/iommu/io-pgtable-arm-v7s.c      | 18 +++++++++---------
- drivers/iommu/io-pgtable-arm.c          | 18 +++++++++---------
- drivers/iommu/ipmmu-vmsa.c              |  2 +-
- drivers/iommu/msm_iommu.c               |  2 +-
- drivers/iommu/mtk_iommu.c               |  2 +-
- drivers/iommu/qcom_iommu.c              |  2 +-
- include/linux/io-pgtable.h              |  2 +-
- 10 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-index ed28aeb..5a39eee 100644
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -262,7 +262,7 @@ static int mmu_map_sg(struct panfrost_device *pfdev, struct panfrost_mmu *mmu,
- 		while (len) {
- 			size_t pgsize = get_pgsize(iova | paddr, len);
- 
--			ops->map(ops, iova, paddr, pgsize, prot);
-+			ops->map(ops, iova, paddr, pgsize, prot, GFP_KERNEL);
- 			iova += pgsize;
- 			paddr += pgsize;
- 			len -= pgsize;
-diff --git a/drivers/iommu/arm-smmu-v3.c b/drivers/iommu/arm-smmu-v3.c
-index f578677..7b59f06 100644
---- a/drivers/iommu/arm-smmu-v3.c
-+++ b/drivers/iommu/arm-smmu-v3.c
-@@ -2850,7 +2850,7 @@ static int arm_smmu_map(struct iommu_domain *domain, unsigned long iova,
- 	if (!ops)
- 		return -ENODEV;
- 
--	return ops->map(ops, iova, paddr, size, prot);
-+	return ops->map(ops, iova, paddr, size, prot, gfp);
- }
- 
- static size_t arm_smmu_unmap(struct iommu_domain *domain, unsigned long iova,
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index 243bc4c..dc1d253 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -1227,7 +1227,7 @@ static int arm_smmu_map(struct iommu_domain *domain, unsigned long iova,
- 		return -ENODEV;
- 
- 	arm_smmu_rpm_get(smmu);
--	ret = ops->map(ops, iova, paddr, size, prot);
-+	ret = ops->map(ops, iova, paddr, size, prot, gfp);
- 	arm_smmu_rpm_put(smmu);
- 
- 	return ret;
-diff --git a/drivers/iommu/io-pgtable-arm-v7s.c b/drivers/iommu/io-pgtable-arm-v7s.c
-index 4272fe4..a688f22 100644
---- a/drivers/iommu/io-pgtable-arm-v7s.c
-+++ b/drivers/iommu/io-pgtable-arm-v7s.c
-@@ -470,7 +470,7 @@ static arm_v7s_iopte arm_v7s_install_table(arm_v7s_iopte *table,
- 
- static int __arm_v7s_map(struct arm_v7s_io_pgtable *data, unsigned long iova,
- 			 phys_addr_t paddr, size_t size, int prot,
--			 int lvl, arm_v7s_iopte *ptep)
-+			 int lvl, arm_v7s_iopte *ptep, gfp_t gfp)
- {
- 	struct io_pgtable_cfg *cfg = &data->iop.cfg;
- 	arm_v7s_iopte pte, *cptep;
-@@ -491,7 +491,7 @@ static int __arm_v7s_map(struct arm_v7s_io_pgtable *data, unsigned long iova,
- 	/* Grab a pointer to the next level */
- 	pte = READ_ONCE(*ptep);
- 	if (!pte) {
--		cptep = __arm_v7s_alloc_table(lvl + 1, GFP_ATOMIC, data);
-+		cptep = __arm_v7s_alloc_table(lvl + 1, gfp, data);
- 		if (!cptep)
- 			return -ENOMEM;
- 
-@@ -512,11 +512,11 @@ static int __arm_v7s_map(struct arm_v7s_io_pgtable *data, unsigned long iova,
- 	}
- 
- 	/* Rinse, repeat */
--	return __arm_v7s_map(data, iova, paddr, size, prot, lvl + 1, cptep);
-+	return __arm_v7s_map(data, iova, paddr, size, prot, lvl + 1, cptep, gfp);
- }
- 
- static int arm_v7s_map(struct io_pgtable_ops *ops, unsigned long iova,
--			phys_addr_t paddr, size_t size, int prot)
-+			phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
- {
- 	struct arm_v7s_io_pgtable *data = io_pgtable_ops_to_data(ops);
- 	struct io_pgtable *iop = &data->iop;
-@@ -530,7 +530,7 @@ static int arm_v7s_map(struct io_pgtable_ops *ops, unsigned long iova,
- 		    paddr >= (1ULL << data->iop.cfg.oas)))
- 		return -ERANGE;
- 
--	ret = __arm_v7s_map(data, iova, paddr, size, prot, 1, data->pgd);
-+	ret = __arm_v7s_map(data, iova, paddr, size, prot, 1, data->pgd, gfp);
- 	/*
- 	 * Synchronise all PTE updates for the new mapping before there's
- 	 * a chance for anything to kick off a table walk for the new iova.
-@@ -922,12 +922,12 @@ static int __init arm_v7s_do_selftests(void)
- 		if (ops->map(ops, iova, iova, size, IOMMU_READ |
- 						    IOMMU_WRITE |
- 						    IOMMU_NOEXEC |
--						    IOMMU_CACHE))
-+						    IOMMU_CACHE, GFP_KERNEL))
- 			return __FAIL(ops);
- 
- 		/* Overlapping mappings */
- 		if (!ops->map(ops, iova, iova + size, size,
--			      IOMMU_READ | IOMMU_NOEXEC))
-+			      IOMMU_READ | IOMMU_NOEXEC, GFP_KERNEL))
- 			return __FAIL(ops);
- 
- 		if (ops->iova_to_phys(ops, iova + 42) != (iova + 42))
-@@ -946,7 +946,7 @@ static int __init arm_v7s_do_selftests(void)
- 			return __FAIL(ops);
- 
- 		/* Remap of partial unmap */
--		if (ops->map(ops, iova_start + size, size, size, IOMMU_READ))
-+		if (ops->map(ops, iova_start + size, size, size, IOMMU_READ, GFP_KERNEL))
- 			return __FAIL(ops);
- 
- 		if (ops->iova_to_phys(ops, iova_start + size + 42)
-@@ -967,7 +967,7 @@ static int __init arm_v7s_do_selftests(void)
- 			return __FAIL(ops);
- 
- 		/* Remap full block */
--		if (ops->map(ops, iova, iova, size, IOMMU_WRITE))
-+		if (ops->map(ops, iova, iova, size, IOMMU_WRITE, GFP_KERNEL))
- 			return __FAIL(ops);
- 
- 		if (ops->iova_to_phys(ops, iova + 42) != (iova + 42))
-diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-index 04fbd4b..4a5a7b0 100644
---- a/drivers/iommu/io-pgtable-arm.c
-+++ b/drivers/iommu/io-pgtable-arm.c
-@@ -355,7 +355,7 @@ static arm_lpae_iopte arm_lpae_install_table(arm_lpae_iopte *table,
- 
- static int __arm_lpae_map(struct arm_lpae_io_pgtable *data, unsigned long iova,
- 			  phys_addr_t paddr, size_t size, arm_lpae_iopte prot,
--			  int lvl, arm_lpae_iopte *ptep)
-+			  int lvl, arm_lpae_iopte *ptep, gfp_t gfp)
- {
- 	arm_lpae_iopte *cptep, pte;
- 	size_t block_size = ARM_LPAE_BLOCK_SIZE(lvl, data);
-@@ -376,7 +376,7 @@ static int __arm_lpae_map(struct arm_lpae_io_pgtable *data, unsigned long iova,
- 	/* Grab a pointer to the next level */
- 	pte = READ_ONCE(*ptep);
- 	if (!pte) {
--		cptep = __arm_lpae_alloc_pages(tblsz, GFP_ATOMIC, cfg);
-+		cptep = __arm_lpae_alloc_pages(tblsz, gfp, cfg);
- 		if (!cptep)
- 			return -ENOMEM;
- 
-@@ -396,7 +396,7 @@ static int __arm_lpae_map(struct arm_lpae_io_pgtable *data, unsigned long iova,
- 	}
- 
- 	/* Rinse, repeat */
--	return __arm_lpae_map(data, iova, paddr, size, prot, lvl + 1, cptep);
-+	return __arm_lpae_map(data, iova, paddr, size, prot, lvl + 1, cptep, gfp);
- }
- 
- static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
-@@ -461,7 +461,7 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
- }
- 
- static int arm_lpae_map(struct io_pgtable_ops *ops, unsigned long iova,
--			phys_addr_t paddr, size_t size, int iommu_prot)
-+			phys_addr_t paddr, size_t size, int iommu_prot, gfp_t gfp)
- {
- 	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
- 	struct io_pgtable_cfg *cfg = &data->iop.cfg;
-@@ -483,7 +483,7 @@ static int arm_lpae_map(struct io_pgtable_ops *ops, unsigned long iova,
- 		return -ERANGE;
- 
- 	prot = arm_lpae_prot_to_pte(data, iommu_prot);
--	ret = __arm_lpae_map(data, iova, paddr, size, prot, lvl, ptep);
-+	ret = __arm_lpae_map(data, iova, paddr, size, prot, lvl, ptep, gfp);
- 	/*
- 	 * Synchronise all PTE updates for the new mapping before there's
- 	 * a chance for anything to kick off a table walk for the new iova.
-@@ -1178,12 +1178,12 @@ static int __init arm_lpae_run_tests(struct io_pgtable_cfg *cfg)
- 			if (ops->map(ops, iova, iova, size, IOMMU_READ |
- 							    IOMMU_WRITE |
- 							    IOMMU_NOEXEC |
--							    IOMMU_CACHE))
-+							    IOMMU_CACHE, GFP_KERNEL))
- 				return __FAIL(ops, i);
- 
- 			/* Overlapping mappings */
- 			if (!ops->map(ops, iova, iova + size, size,
--				      IOMMU_READ | IOMMU_NOEXEC))
-+				      IOMMU_READ | IOMMU_NOEXEC, GFP_KERNEL))
- 				return __FAIL(ops, i);
- 
- 			if (ops->iova_to_phys(ops, iova + 42) != (iova + 42))
-@@ -1198,7 +1198,7 @@ static int __init arm_lpae_run_tests(struct io_pgtable_cfg *cfg)
- 			return __FAIL(ops, i);
- 
- 		/* Remap of partial unmap */
--		if (ops->map(ops, SZ_1G + size, size, size, IOMMU_READ))
-+		if (ops->map(ops, SZ_1G + size, size, size, IOMMU_READ, GFP_KERNEL))
- 			return __FAIL(ops, i);
- 
- 		if (ops->iova_to_phys(ops, SZ_1G + size + 42) != (size + 42))
-@@ -1216,7 +1216,7 @@ static int __init arm_lpae_run_tests(struct io_pgtable_cfg *cfg)
- 				return __FAIL(ops, i);
- 
- 			/* Remap full block */
--			if (ops->map(ops, iova, iova, size, IOMMU_WRITE))
-+			if (ops->map(ops, iova, iova, size, IOMMU_WRITE, GFP_KERNEL))
- 				return __FAIL(ops, i);
- 
- 			if (ops->iova_to_phys(ops, iova + 42) != (iova + 42))
-diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
-index 4c2972f..87475b2 100644
---- a/drivers/iommu/ipmmu-vmsa.c
-+++ b/drivers/iommu/ipmmu-vmsa.c
-@@ -687,7 +687,7 @@ static int ipmmu_map(struct iommu_domain *io_domain, unsigned long iova,
- 	if (!domain)
- 		return -ENODEV;
- 
--	return domain->iop->map(domain->iop, iova, paddr, size, prot);
-+	return domain->iop->map(domain->iop, iova, paddr, size, prot, gfp);
- }
- 
- static size_t ipmmu_unmap(struct iommu_domain *io_domain, unsigned long iova,
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 3d8a635..12ce685 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -491,7 +491,7 @@ static int msm_iommu_map(struct iommu_domain *domain, unsigned long iova,
- 	int ret;
- 
- 	spin_lock_irqsave(&priv->pgtlock, flags);
--	ret = priv->iop->map(priv->iop, iova, pa, len, prot);
-+	ret = priv->iop->map(priv->iop, iova, pa, len, prot, GFP_ATOMIC);
- 	spin_unlock_irqrestore(&priv->pgtlock, flags);
- 
- 	return ret;
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 2be96f1..b7b1641 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -397,7 +397,7 @@ static int mtk_iommu_map(struct iommu_domain *domain, unsigned long iova,
- 		paddr |= BIT_ULL(32);
- 
- 	/* Synchronize with the tlb_lock */
--	return dom->iop->map(dom->iop, iova, paddr, size, prot);
-+	return dom->iop->map(dom->iop, iova, paddr, size, prot, gfp);
- }
- 
- static size_t mtk_iommu_unmap(struct iommu_domain *domain,
-diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index c3e1fbd..cfcfd75 100644
---- a/drivers/iommu/qcom_iommu.c
-+++ b/drivers/iommu/qcom_iommu.c
-@@ -441,7 +441,7 @@ static int qcom_iommu_map(struct iommu_domain *domain, unsigned long iova,
- 		return -ENODEV;
- 
- 	spin_lock_irqsave(&qcom_domain->pgtbl_lock, flags);
--	ret = ops->map(ops, iova, paddr, size, prot);
-+	ret = ops->map(ops, iova, paddr, size, prot, GFP_ATOMIC);
- 	spin_unlock_irqrestore(&qcom_domain->pgtbl_lock, flags);
- 	return ret;
- }
-diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
-index 53d53c6..23285ba 100644
---- a/include/linux/io-pgtable.h
-+++ b/include/linux/io-pgtable.h
-@@ -155,7 +155,7 @@ struct io_pgtable_cfg {
-  */
- struct io_pgtable_ops {
- 	int (*map)(struct io_pgtable_ops *ops, unsigned long iova,
--		   phys_addr_t paddr, size_t size, int prot);
-+		   phys_addr_t paddr, size_t size, int prot, gfp_t gfp);
- 	size_t (*unmap)(struct io_pgtable_ops *ops, unsigned long iova,
- 			size_t size, struct iommu_iotlb_gather *gather);
- 	phys_addr_t (*iova_to_phys)(struct io_pgtable_ops *ops,
+On 6/9/2020 2:20 PM, Randy Dunlap wrote:
+> On 6/9/20 1:58 PM, Wesley Cheng wrote:
+>> diff --git a/drivers/usb/typec/Kconfig b/drivers/usb/typec/Kconfig
+>> index 559dd06..8de2520 100644
+>> --- a/drivers/usb/typec/Kconfig
+>> +++ b/drivers/usb/typec/Kconfig
+>> @@ -73,6 +73,17 @@ config TYPEC_TPS6598X
+>>  	  If you choose to build this driver as a dynamically linked module, the
+>>  	  module will be called tps6598x.ko.
+>>
+> 
+> Hi,
+> Please spell "Type-C" like all of the other drivers do.
+> 
+>> +config TYPEC_QCOM_PMIC
+>> +	tristate "Qualcomm PMIC USB typec driver"
+>> +	depends on ARCH_QCOM
+>> +	help
+>> +	  Driver for supporting role switch over the Qualcomm PMIC.  This will
+>> +	  handle the type C role and orientation detection reported by the QCOM
+>> +	  PMIC if the PMIC has the capability to handle type C detection.
+>> +
+>> +	  It will also enable the VBUS output to connected devices when a
+>> +	  DFP connection is made.
+>> +
+>>  source "drivers/usb/typec/mux/Kconfig"
+>>  
+>>  source "drivers/usb/typec/altmodes/Kconfig"
+
+Hi Randy,
+
+Will do.
+
+Thanks
+> 
+> 
+
 -- 
-1.8.3.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
