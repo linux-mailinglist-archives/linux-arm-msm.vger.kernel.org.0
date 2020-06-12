@@ -2,58 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35B311F78B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 15:19:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9934C1F79BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2020 16:25:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726317AbgFLNTn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Jun 2020 09:19:43 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:59379 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726255AbgFLNTm (ORCPT
+        id S1726338AbgFLOZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Jun 2020 10:25:44 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:37169 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726449AbgFLOZn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Jun 2020 09:19:42 -0400
-Received: from marcel-macbook.fritz.box (ip-109-41-64-170.web.vodafone.de [109.41.64.170])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 5CF69CED05;
-        Fri, 12 Jun 2020 15:29:28 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: Disable SoC debug logging for
- WCN3991
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1591964428-9607-1-git-send-email-bgodavar@codeaurora.org>
-Date:   Fri, 12 Jun 2020 15:19:35 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        abhishekpandit@chromium.org, rjliao@codeaurora.org,
-        gubbaven@codeaurora.org
+        Fri, 12 Jun 2020 10:25:43 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1591971942; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=6TkXm7WIXe6JmUlAyDwjFnbArqNv0j3TvAXTAuTgCHs=;
+ b=qlCcKbiFOr1R4TSz+yplSwpSImJxI/7LfNWFmF+So13XXdvDVL5un9oSqe7rlYiZn78wN/iA
+ xqi7H/x+QflTYqS8mc/iwQFlwjlXrEbVrt17Urpe/KuMUMfF0Armqf3HLj+zU0XjDzGKzQip
+ kxCe7glkqjY3+ITWol2ygvIM14Y=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n11.prod.us-east-1.postgun.com with SMTP id
+ 5ee39060356bcc26abfe7864 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 12 Jun 2020 14:25:36
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2E5F2C433CB; Fri, 12 Jun 2020 14:25:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62898C433CA;
+        Fri, 12 Jun 2020 14:25:35 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <BF82F217-1BD4-48B6-AC9E-AF94A20EE7C9@holtmann.org>
-References: <1591964428-9607-1-git-send-email-bgodavar@codeaurora.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+Date:   Fri, 12 Jun 2020 19:55:35 +0530
+From:   pillair@codeaurora.org
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     kvalo@codeaurora.org, kuabhs@google.com,
+        saiprakash.ranjan@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, ath10k@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: Re: [PATCH] ath10k: Wait until copy complete is actually done before
+ completing
+In-Reply-To: <20200609082015.1.Ife398994e5a0a6830e4d4a16306ef36e0144e7ba@changeid>
+References: <20200609082015.1.Ife398994e5a0a6830e4d4a16306ef36e0144e7ba@changeid>
+Message-ID: <775536279e60ccc833c481ad6ab6dab2@codeaurora.org>
+X-Sender: pillair@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Balakrishna,
+Hi Doug,
 
-> By default, WCN3991 sent debug packets to HOST via ACL packet
-> with header 0xDC2E. This logging is not required on commercial
-> devices. With this patch SoC logging is disabled post fw
-> download.
+The send callback for the CEs do check for hw_index/SRRI before trying 
+to free the buffer.
+But adding a check for copy-complete (before calling the individual CE 
+callbacks) seems to be the better approach. Hence I agree that this 
+patch should be added.
+
+Thanks,
+Rakesh Pillai.
+
+On 2020-06-09 20:50, Douglas Anderson wrote:
+> On wcn3990 we have "per_ce_irq = true".  That makes the
+> ath10k_ce_interrupt_summary() function always return 0xfff. The
+> ath10k_ce_per_engine_service_any() function will see this and think
+> that _all_ copy engines have an interrupt.  Without checking, the
+> ath10k_ce_per_engine_service() assumes that if it's called that the
+> "copy complete" (cc) interrupt fired.  This combination seems bad.
 > 
-> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+> Let's add a check to make sure that the "copy complete" interrupt
+> actually fired in ath10k_ce_per_engine_service().
+> 
+> This might fix a hard-to-reproduce failure where it appears that the
+> copy complete handlers run before the copy is really complete.
+> Specifically a symptom was that we were seeing this on a Qualcomm
+> sc7180 board:
+>   arm-smmu 15000000.iommu: Unhandled context fault:
+>   fsr=0x402, iova=0x7fdd45780, fsynr=0x30003, cbfrsynra=0xc1, cb=10
+> 
+> Even on platforms that don't have wcn3990 this still seems like it
+> would be a sane thing to do.  Specifically the current IRQ handler
+> comments indicate that there might be other misc interrupt sources
+> firing that need to be cleared.  If one of those sources was the one
+> that caused the IRQ handler to be called it would also be important to
+> double-check that the interrupt we cared about actually fired.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+
+Reviewed-by: Rakesh Pillai <pillair@codeaurora.org>
+
+
 > ---
-> drivers/bluetooth/btqca.c | 27 +++++++++++++++++++++++++++
-> drivers/bluetooth/btqca.h |  2 ++
-> 2 files changed, 29 insertions(+)
-
-patch has been applied to bluetooth-next tree.
-
-Regareds
-
-Marcel
-
+> 
+>  drivers/net/wireless/ath/ath10k/ce.c | 30 +++++++++++++++++++---------
+>  1 file changed, 21 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/ath/ath10k/ce.c
+> b/drivers/net/wireless/ath/ath10k/ce.c
+> index 294fbc1e89ab..ffdd4b995f33 100644
+> --- a/drivers/net/wireless/ath/ath10k/ce.c
+> +++ b/drivers/net/wireless/ath/ath10k/ce.c
+> @@ -481,6 +481,15 @@ static inline void
+> ath10k_ce_engine_int_status_clear(struct ath10k *ar,
+>  	ath10k_ce_write32(ar, ce_ctrl_addr + wm_regs->addr, mask);
+>  }
+> 
+> +static inline bool ath10k_ce_engine_int_status_check(struct ath10k 
+> *ar,
+> +						     u32 ce_ctrl_addr,
+> +						     unsigned int mask)
+> +{
+> +	struct ath10k_hw_ce_host_wm_regs *wm_regs = ar->hw_ce_regs->wm_regs;
+> +
+> +	return ath10k_ce_read32(ar, ce_ctrl_addr + wm_regs->addr) & mask;
+> +}
+> +
+>  /*
+>   * Guts of ath10k_ce_send.
+>   * The caller takes responsibility for any needed locking.
+> @@ -1301,19 +1310,22 @@ void ath10k_ce_per_engine_service(struct
+> ath10k *ar, unsigned int ce_id)
+> 
+>  	spin_lock_bh(&ce->ce_lock);
+> 
+> -	/* Clear the copy-complete interrupts that will be handled here. */
+> -	ath10k_ce_engine_int_status_clear(ar, ctrl_addr,
+> -					  wm_regs->cc_mask);
+> +	if (ath10k_ce_engine_int_status_check(ar, ctrl_addr,
+> +					      wm_regs->cc_mask)) {
+> +		/* Clear before handling */
+> +		ath10k_ce_engine_int_status_clear(ar, ctrl_addr,
+> +						  wm_regs->cc_mask);
+> 
+> -	spin_unlock_bh(&ce->ce_lock);
+> +		spin_unlock_bh(&ce->ce_lock);
+> 
+> -	if (ce_state->recv_cb)
+> -		ce_state->recv_cb(ce_state);
+> +		if (ce_state->recv_cb)
+> +			ce_state->recv_cb(ce_state);
+> 
+> -	if (ce_state->send_cb)
+> -		ce_state->send_cb(ce_state);
+> +		if (ce_state->send_cb)
+> +			ce_state->send_cb(ce_state);
+> 
+> -	spin_lock_bh(&ce->ce_lock);
+> +		spin_lock_bh(&ce->ce_lock);
+> +	}
+> 
+>  	/*
+>  	 * Misc CE interrupts are not being handled, but still need
