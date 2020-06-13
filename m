@@ -2,54 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E7D41F8748
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2020 08:37:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 207611F8805
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2020 11:23:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726785AbgFNGhN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Jun 2020 02:37:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51654 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725265AbgFNGhN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Jun 2020 02:37:13 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 50ABA206D7;
-        Sun, 14 Jun 2020 06:37:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592116632;
-        bh=CqiJHndOITylQyFknB3HhhThYqsFY4mizwwhaZKhX9c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=t8qGhmZXyUXTysKPfZlfnxvnfqki9d8pMh36+YwV+2ej10UvPg6aDcG7syfXe7LUq
-         9TnSRL3HtZkBDxO3x32XOlo34CEyES3hlBEyID88x6l6IINlKPKCRPEbRHyruqb+0K
-         bUc3A5qnbnlpqFU/D7pm2zTTLWEahRGzMaSl6p48=
-Date:   Sun, 14 Jun 2020 08:37:10 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] venus: Make debug infrastructure more flexible
-Message-ID: <20200614063710.GB2611869@kroah.com>
-References: <20200613223919.7038-1-stanimir.varbanov@linaro.org>
- <20200613223919.7038-3-stanimir.varbanov@linaro.org>
+        id S1726099AbgFNJXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Jun 2020 05:23:39 -0400
+Received: from dns.tdjhs.tyc.edu.tw ([163.30.27.129]:47489 "EHLO
+        host.tdjhs.tyc.edu.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725265AbgFNJXj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 14 Jun 2020 05:23:39 -0400
+X-Greylist: delayed 7493 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Jun 2020 05:23:39 EDT
+Received: from www.tdjhs.tyc.edu.tw (localhost.tdjhs.tyc.edu.tw [127.0.0.1])
+        by host.tdjhs.tyc.edu.tw (8.14.5/8.14.5) with ESMTP id 05DKxkPg024411;
+        Sun, 14 Jun 2020 04:59:47 +0800 (CST)
+        (envelope-from ldhlupz@gmail.com)
+From:   "L.D Holt" <ldhlupz@gmail.com>
+Reply-To: ldhlupz@gmail.com
+Subject: Re: Lucrative Proposal.
+Date:   Sun, 14 Jun 2020 04:59:46 +0800
+Message-Id: <20200613205831.M17989@gmail.com>
+X-Mailer: OpenWebMail 2.53 
+X-OriginatingIP: 212.103.50.217 (whitedove)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200613223919.7038-3-stanimir.varbanov@linaro.org>
+Content-Type: text/plain;
+        charset=utf-8
+To:     undisclosed-recipients:;
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 14, 2020 at 01:39:18AM +0300, Stanimir Varbanov wrote:
->  	if (slot == -1) {
-> -		dev_dbg(inst->core->dev, "%s: no free slot\n", __func__);
-> +		VDBGH("no free slot for timestamp\n");
+Hello,
 
-Again, no, you just lost a lot of valuable information by changing to a
-different format (like driver, specific device, etc.).  Please don't do
-this, it just makes the information less than before.
+Good day.I am a banker and I have a lucrative business proposal of mutual 
+benefit. Please contact me on my email: ldhlupz@gmail.com
 
-thanks,
-
-greg k-h
+Sincerely,
+L.D Holt.
