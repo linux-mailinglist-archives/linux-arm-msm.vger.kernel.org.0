@@ -2,120 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B05311F85BC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2020 00:40:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87BB71F85E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2020 01:27:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726618AbgFMWjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Jun 2020 18:39:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39856 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726834AbgFMWjn (ORCPT
+        id S1726524AbgFMX1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Jun 2020 19:27:21 -0400
+Received: from mta-p8.oit.umn.edu ([134.84.196.208]:34086 "EHLO
+        mta-p8.oit.umn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726507AbgFMX1U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Jun 2020 18:39:43 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A170C08C5C5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2020 15:39:42 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id o15so13585284ejm.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2020 15:39:42 -0700 (PDT)
+        Sat, 13 Jun 2020 19:27:20 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by mta-p8.oit.umn.edu (Postfix) with ESMTP id 49ktzX0VMxz9vKYX
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2020 23:27:20 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at umn.edu
+Received: from mta-p8.oit.umn.edu ([127.0.0.1])
+        by localhost (mta-p8.oit.umn.edu [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id L2Sqcfc6IBng for <linux-arm-msm@vger.kernel.org>;
+        Sat, 13 Jun 2020 18:27:19 -0500 (CDT)
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com [209.85.166.197])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mta-p8.oit.umn.edu (Postfix) with ESMTPS id 49ktzW5xfQz9vKYf
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2020 18:27:19 -0500 (CDT)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mta-p8.oit.umn.edu 49ktzW5xfQz9vKYf
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-p8.oit.umn.edu 49ktzW5xfQz9vKYf
+Received: by mail-il1-f197.google.com with SMTP id g8so9337149ilr.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2020 16:27:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AUdOHKBSFKpTj40WJgkPwcDzGagUihc/mu7zxNsYZ+k=;
-        b=OhMh8QdAKsM/LD7FzRgfTPN/VXAc/bfcsd/Jg+yegVvqkiw0ZQQ1ZFUpO1z6Zg3f3c
-         3umiBiw5vRmNhJvxwIv2BRS0N6QIiCUm2YkZMvE4edfNg/wTRNBGQ93PnmylKJTlouGd
-         2G4q2igvurJXoQLCJNFkq1onnfm80LAH68015hanO/XNpStK/wI7ro/50FJCncYabfzE
-         br3OOrcsNlw+g075/h01a9KB12j2L7sQameavQ1HCT4M6rF4/XhSlB9LgjBo0SESuPiw
-         /PvzHHSDjvc2E3cMDocR2Nsl9PGw+veeI72B2UYxioKOz0PfNaJ9DK1OwLr38YvMV92A
-         CiOQ==
+        d=umn.edu; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=MpamanQ4MpDumyihZoEEj0ayN/iNuyeJtVs/CuktPVA=;
+        b=Csp8fRs7Uy+StTI+645mbkSC0XK86N68GqBqTuxWDPZaAXjTNTcW+33Yu5pnbzsUst
+         2zAfG8qr16PkqUFCE5wUUSBarQFwevUXvqBNc/dEEzheHfbRxAL5wDsL6R+0fneX9z9v
+         5kYteIDPnpYvILOAW9D8B+I39r+Zr+FmAiN6sI/hicPLn9k30kd54geM9NkMxnaSml9j
+         5/VkPJxfcp23M59MYVMbyf9D6H0RbvUWb+olfVFljhjPD/hYLzLftYL3k3m8ahDNL2Nv
+         z7hP8f3jLX4RgmHoIgpHcE8P22bCZBNuz1te4NQamwJRcRk0+DPO1ZqHouH/OfmdkRVA
+         8Xxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=AUdOHKBSFKpTj40WJgkPwcDzGagUihc/mu7zxNsYZ+k=;
-        b=gJReqLd5wSyMcOKgSJLGIQOCUXhYyqfLe9HjCB5bOsAB5QxmpOriq8uCOpgS5amK0i
-         VTctRA1/P7M0y/D7/9vVRPGTy/O1iUYtU4i8iROxTWXZPUFDq5nS/+I0YABjN2lN8kFP
-         fZlRH4YXSeQuTg+JFNHMfT8RfC/4mOXhx4B5GoleUc5Y5OwosPyU7U6qJJa5bXA49YIC
-         zoz7L+NBWBiyfnjS2k+g+q+7QknPRdy+qyMjCX/URh16LV+KKfVAZ6zdGMiYdX6AAaib
-         pSd1secq0EXX3sb6ksbAj4+4T2S/U/fQ1yyy3ONi38oFIGyHZXL5g8oEpKF2AdJlVoYE
-         2snQ==
-X-Gm-Message-State: AOAM5334E1ASqjvmecmKTSCw6wEwv5wiO0Y0dhrb700YaUlMjycKpg8U
-        JCzybJ8GPC1vqFICxeuZS+z29Q==
-X-Google-Smtp-Source: ABdhPJzxj8C/3hik/vFIz1gDDlvyUI4ojVSG5W2uxMyvgh/o8BwnQmqSRtEzHERwF/L+vXseZu70oQ==
-X-Received: by 2002:a17:906:6d3:: with SMTP id v19mr6626238ejb.306.1592087980907;
-        Sat, 13 Jun 2020 15:39:40 -0700 (PDT)
-Received: from localhost.localdomain (212-5-158-38.ip.btc-net.bg. [212.5.158.38])
-        by smtp.gmail.com with ESMTPSA id u3sm5581606edx.25.2020.06.13.15.39.39
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=MpamanQ4MpDumyihZoEEj0ayN/iNuyeJtVs/CuktPVA=;
+        b=B+D3QGOzt5kKnctwkmcGoqatVba0RpGcuUglKeb4/TX5fkpjgjN/HbMv7WaiUNzdz3
+         znutMF2gqwF4L1S7fdGyDZhEhIyLG9hqXZUTRsItXrM2AIaBlmPo72Jo1SrNk2w9+rPB
+         JSeXG1POR+irFYEKttFwmDGZGSX7/8aqYKmyb8BY3PnecduTrrxZLEQGCGvOtYVYRptY
+         qOOv/Ch9uzKUQc2D4BQ1qu5qG5gG8/7jB4cL7J8ye+C8/7jjEJ5Dncn+XW+Wsi0DVJgl
+         J9rtLdbV6KQ/W7HErvqRVoIjIbpdRqkclPfKXxcJq6kJFGY8/34VdWX9MIkfWo7kyvBA
+         pcMQ==
+X-Gm-Message-State: AOAM530n828TXftLJqBffCLqoPMeo6C07syg3udh6iYhO6O1acgJJNX3
+        nPwGwqmAHPVueQ0CQfdrP2LyqQiCdiDQv9Hz+Bc2MRG651h8UYb3iY6nR6SGDNfCNbqeKjq/ff3
+        qmlrqn11DrcYBxDTrZRvoGNlqyXZuMw==
+X-Received: by 2002:a92:2515:: with SMTP id l21mr19014215ill.64.1592090839135;
+        Sat, 13 Jun 2020 16:27:19 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwMEDlkkWxdPrIuB4rfOhbAimbKN1+ipCveYxCE39nD1rekM86PtxYYKuvjgZnzaG6VylvRuQ==
+X-Received: by 2002:a92:2515:: with SMTP id l21mr19014197ill.64.1592090838889;
+        Sat, 13 Jun 2020 16:27:18 -0700 (PDT)
+Received: from qiushi.cs.umn.edu ([2607:ea00:101:3c74:4874:45:bcb4:df60])
+        by smtp.gmail.com with ESMTPSA id a10sm5441544ilb.31.2020.06.13.16.27.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jun 2020 15:39:40 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v4 3/3] venus: Add a debugfs file for SSR trigger
-Date:   Sun, 14 Jun 2020 01:39:19 +0300
-Message-Id: <20200613223919.7038-4-stanimir.varbanov@linaro.org>
+        Sat, 13 Jun 2020 16:27:18 -0700 (PDT)
+From:   wu000273@umn.edu
+To:     kjlu@umn.edu
+Cc:     wu000273@umn.edu, Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hansverk@cisco.com>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] media: camss: Fix a reference count leak.
+Date:   Sat, 13 Jun 2020 18:27:12 -0500
+Message-Id: <20200613232713.19174-1-wu000273@umn.edu>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200613223919.7038-1-stanimir.varbanov@linaro.org>
-References: <20200613223919.7038-1-stanimir.varbanov@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SSR (SubSystem Restart) is used to simulate an error on FW
-side of Venus. We support following type of triggers - fatal error,
-div by zero and watchdog IRQ.
+From: Qiushi Wu <wu000273@umn.edu>
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+pm_runtime_get_sync() increments the runtime PM usage counter even
+when it returns an error code, causing incorrect ref count if
+PM runtime put is not called in error handling paths.
+Thus call pm_runtime_put_sync() if pm_runtime_get_sync() fails.
+
+Fixes: 02afa816dbbf ("media: camss: Add basic runtime PM support")
+Signed-off-by: Qiushi Wu <wu000273@umn.edu>
 ---
- drivers/media/platform/qcom/venus/dbgfs.c | 30 +++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/dbgfs.c b/drivers/media/platform/qcom/venus/dbgfs.c
-index 782d54ac1b8f..f95b7b1febe5 100644
---- a/drivers/media/platform/qcom/venus/dbgfs.c
-+++ b/drivers/media/platform/qcom/venus/dbgfs.c
-@@ -9,10 +9,40 @@
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 008afb85023b..3c5b9082ad72 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -176,8 +176,10 @@ static int csiphy_set_power(struct v4l2_subdev *sd, int on)
+ 		int ret;
  
- extern int venus_fw_debug;
+ 		ret = pm_runtime_get_sync(dev);
+-		if (ret < 0)
++		if (ret < 0) {
++			pm_runtime_put_sync(dev);
+ 			return ret;
++		}
  
-+static int trigger_ssr_open(struct inode *inode, struct file *file)
-+{
-+	file->private_data = inode->i_private;
-+	return 0;
-+}
-+
-+static ssize_t trigger_ssr_write(struct file *filp, const char __user *buf,
-+				 size_t count, loff_t *ppos)
-+{
-+	struct venus_core *core = filp->private_data;
-+	u32 ssr_type;
-+	int ret;
-+
-+	ret = kstrtou32_from_user(buf, count, 4, &ssr_type);
-+	if (ret)
-+		return ret;
-+
-+	ret = hfi_core_trigger_ssr(core, ssr_type);
-+	if (ret < 0)
-+		return ret;
-+
-+	return count;
-+}
-+
-+static const struct file_operations ssr_fops = {
-+	.open = trigger_ssr_open,
-+	.write = trigger_ssr_write,
-+};
-+
- void venus_dbgfs_init(struct venus_core *core)
- {
- 	core->root = debugfs_create_dir("venus", NULL);
- 	debugfs_create_x32("fw_level", 0644, core->root, &venus_fw_debug);
-+	debugfs_create_file("trigger_ssr", 0200, core->root, core, &ssr_fops);
- }
- 
- void venus_dbgfs_deinit(struct venus_core *core)
+ 		ret = csiphy_set_clock_rates(csiphy);
+ 		if (ret < 0) {
 -- 
 2.17.1
 
