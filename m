@@ -2,168 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB0291F960C
+	by mail.lfdr.de (Postfix) with ESMTP id 5D93B1F960B
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 14:04:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729905AbgFOMEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jun 2020 08:04:02 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:49963 "EHLO m43-7.mailgun.net"
+        id S1729870AbgFOMDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jun 2020 08:03:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33582 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729880AbgFOMEB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jun 2020 08:04:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592222640; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=0oEnZf+dbIRFYY1AXQ+STVkTXjmn+D3bQjmyAN94nSo=; b=cGue99GCm2ALfqgnRs2hQL4sejJK0JrK+Hx2iJKjs+lo1IfZlpvAL2qladXZWwmkREGl/vPA
- CEzPn/fN64OzwgP8oxVa9BTQmjCLJzBUzLASVyuc2iQbfF2XHTkvqtbHcZX114cyfDStqxB1
- Br5+BR22IuqqbMnzXN6TOL9c51o=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5ee76397c76a4e7a2a064721 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Jun 2020 12:03:35
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BFA20C43387; Mon, 15 Jun 2020 12:03:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1729868AbgFOMDv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Jun 2020 08:03:51 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1BE08C433CB;
-        Mon, 15 Jun 2020 12:03:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1BE08C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org, robdclark@gmail.com,
-        robdclark@chromium.org, stanimir.varbanov@linaro.org
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-spi@vger.kernel.org
-Subject: [PATCH v6 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf state
-Date:   Mon, 15 Jun 2020 17:32:44 +0530
-Message-Id: <1592222564-13556-7-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id A4B6A20707;
+        Mon, 15 Jun 2020 12:03:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592222631;
+        bh=XoBnvNL3IwkQfinlN0LrO1MNHrk5mCT79HFTYI53ohk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=0wIy0VF1JN/2qnd7BSCw6Nk50NGZg/5E2YaZDEAVVbtQvQWZzkVFAq+17gq90X7k2
+         lQ2S1MuhzKk15zA072FNS8nVofGmED+3kyS419EOBYOfTsMGUNkSJABo+RzITXvFOE
+         knJ/AZB9eo3vBs9jTXzoLVRmtkbqggIj9JtpVj5c=
+Date:   Mon, 15 Jun 2020 14:03:37 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] venus: Make debug infrastructure more flexible
+Message-ID: <20200615120337.GA511582@kroah.com>
+References: <20200613223919.7038-1-stanimir.varbanov@linaro.org>
+ <20200613223919.7038-3-stanimir.varbanov@linaro.org>
+ <20200614063710.GB2611869@kroah.com>
+ <c54a12a2-7f92-105c-a01c-8e85730f36bb@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c54a12a2-7f92-105c-a01c-8e85730f36bb@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QSPI needs to vote on a performance state of a power domain depending on
-the clock rate. Add support for it by specifying the perf state/clock rate
-as an OPP table in device tree.
+On Mon, Jun 15, 2020 at 12:55:29PM +0300, Stanimir Varbanov wrote:
+> Hi Greg,
+> 
+> On 6/14/20 9:37 AM, Greg KH wrote:
+> > On Sun, Jun 14, 2020 at 01:39:18AM +0300, Stanimir Varbanov wrote:
+> >>  	if (slot == -1) {
+> >> -		dev_dbg(inst->core->dev, "%s: no free slot\n", __func__);
+> >> +		VDBGH("no free slot for timestamp\n");
+> > 
+> > Again, no, you just lost a lot of valuable information by changing to a
+> > different format (like driver, specific device, etc.).  Please don't do
+> > this, it just makes the information less than before.
+> 
+> OK, one of the reasons to use pr_debug inside VDBGH macro is to avoid
+> having struct device *dev variable in every function with dev_dbg even
+> when the function doesn't use it.
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-Acked-by: Mark Brown <broonie@kernel.org>
-Cc: Alok Chauhan <alokc@codeaurora.org>
-Cc: Akash Asthana <akashast@codeaurora.org>
-Cc: linux-spi@vger.kernel.org
----
-No functional change in v6, rebased over 5.8-rc1
+But the function _is_ using it, as you are referring to the device that
+is being controlled by the driver.  That's the point, you are stripping
+off that very valuable information for no reason.
 
- drivers/spi/spi-qcom-qspi.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+Which means to me that you never really actually _NEED_ these debugging
+messages, as you have not used them to see if it provides you with
+something that can tell you something about something.
 
-diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
-index 3c4f83b..ef51982 100644
---- a/drivers/spi/spi-qcom-qspi.c
-+++ b/drivers/spi/spi-qcom-qspi.c
-@@ -8,6 +8,7 @@
- #include <linux/of.h>
- #include <linux/of_platform.h>
- #include <linux/pm_runtime.h>
-+#include <linux/pm_opp.h>
- #include <linux/spi/spi.h>
- #include <linux/spi/spi-mem.h>
- 
-@@ -139,6 +140,8 @@ struct qcom_qspi {
- 	struct device *dev;
- 	struct clk_bulk_data *clks;
- 	struct qspi_xfer xfer;
-+	struct opp_table *opp_table;
-+	bool has_opp_table;
- 	/* Lock to protect xfer and IRQ accessed registers */
- 	spinlock_t lock;
- };
-@@ -235,7 +238,7 @@ static int qcom_qspi_transfer_one(struct spi_master *master,
- 		speed_hz = xfer->speed_hz;
- 
- 	/* In regular operation (SBL_EN=1) core must be 4x transfer clock */
--	ret = clk_set_rate(ctrl->clks[QSPI_CLK_CORE].clk, speed_hz * 4);
-+	ret = dev_pm_opp_set_rate(ctrl->dev, speed_hz * 4);
- 	if (ret) {
- 		dev_err(ctrl->dev, "Failed to set core clk %d\n", ret);
- 		return ret;
-@@ -481,6 +484,20 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- 	master->handle_err = qcom_qspi_handle_err;
- 	master->auto_runtime_pm = true;
- 
-+	ctrl->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
-+	if (IS_ERR(ctrl->opp_table)) {
-+		ret = PTR_ERR(ctrl->opp_table);
-+		goto exit_probe_master_put;
-+	}
-+	/* OPP table is optional */
-+	ret = dev_pm_opp_of_add_table(&pdev->dev);
-+	if (!ret) {
-+		ctrl->has_opp_table = true;
-+	} else if (ret != -ENODEV) {
-+		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
-+		goto exit_probe_master_put;
-+	}
-+
- 	pm_runtime_enable(dev);
- 
- 	ret = spi_register_master(master);
-@@ -488,6 +505,9 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- 		return 0;
- 
- 	pm_runtime_disable(dev);
-+	if (ctrl->has_opp_table)
-+		dev_pm_opp_of_remove_table(&pdev->dev);
-+	dev_pm_opp_put_clkname(ctrl->opp_table);
- 
- exit_probe_master_put:
- 	spi_master_put(master);
-@@ -498,11 +518,15 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- static int qcom_qspi_remove(struct platform_device *pdev)
- {
- 	struct spi_master *master = platform_get_drvdata(pdev);
-+	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
- 
- 	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
- 	spi_unregister_master(master);
- 
- 	pm_runtime_disable(&pdev->dev);
-+	if (ctrl->has_opp_table)
-+		dev_pm_opp_of_remove_table(&pdev->dev);
-+	dev_pm_opp_put_clkname(ctrl->opp_table);
- 
- 	return 0;
- }
-@@ -512,6 +536,8 @@ static int __maybe_unused qcom_qspi_runtime_suspend(struct device *dev)
- 	struct spi_master *master = dev_get_drvdata(dev);
- 	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
- 
-+	/* Drop the performance state vote */
-+	dev_pm_opp_set_rate(dev, 0);
- 	clk_bulk_disable_unprepare(QSPI_NUM_CLKS, ctrl->clks);
- 
- 	return 0;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+So, let me push harder, why do you even want this message at all?  What
+can it provide you now that the driver is up and working properly?
 
+> Are you fine with s/pr_debug/dev_dbg in VDBGX macros?
+
+I would be a bit happier yes, but the fact that you didn't use it means
+you aren't even looking at these messages, which implies that it isn't
+even needed.
+
+So, how about just stripping all of these debugging messages out
+entirely?  What do they provide that you don't already know?  Who would
+use them?
+
+thanks,
+
+greg k-h
