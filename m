@@ -2,131 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8B281F904A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 09:48:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFCEB1F93FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 11:55:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728738AbgFOHsZ convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jun 2020 03:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60608 "EHLO
+        id S1729317AbgFOJzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jun 2020 05:55:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728729AbgFOHsY (ORCPT
+        with ESMTP id S1729318AbgFOJzd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jun 2020 03:48:24 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6D3C061A0E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 00:48:23 -0700 (PDT)
-Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1jkjqg-0006Gk-PF; Mon, 15 Jun 2020 09:48:06 +0200
-Received: from pza by lupine with local (Exim 4.92)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1jkjqe-000242-Ti; Mon, 15 Jun 2020 09:48:04 +0200
-Message-ID: <c544bcb8ea20dadcea68e22d33c160a713c7fe02.camel@pengutronix.de>
-Subject: Re: [PATCH 14/29] dt: Fix broken references to renamed docs
-From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Linux Doc Mailing List <linux-doc@vger.kernel.org>
-Cc:     linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org
-Date:   Mon, 15 Jun 2020 09:48:04 +0200
-In-Reply-To: <6866c0d6d10ce36bb151c2d3752a20eb5122c532.1592203542.git.mchehab+huawei@kernel.org>
-References: <cover.1592203542.git.mchehab+huawei@kernel.org>
-         <6866c0d6d10ce36bb151c2d3752a20eb5122c532.1592203542.git.mchehab+huawei@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.30.5-1.1 
+        Mon, 15 Jun 2020 05:55:33 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B9DEC05BD1E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 02:55:33 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id p20so16705250ejd.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 02:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=F2y9Crm4EpXrgojd+CYn/r/xzpbyjoctnZnKUBxxPGw=;
+        b=bH52eZn08gxvWDKX63J+WIukX0j2P3n7HyPqonmets/vbXsOXhi81yedn4gWFeKKgc
+         Nd97MdUX3wiXsdSQY3wQdUIPnAluBFWXhcBZ8BAQwlpAWUjchBVrXbGAlWp20KVUVUXY
+         R/uBSQemQsvtwxH9SOV1pTp2yySw61Y07GninWtBfjDu5VIqdDzmfqe2jAhgIzT2Bz1B
+         NRLp3I+nPXlIzSfhf1A1+gXtK0CLD4Q5Z4U/oY6RpQ2lyQkkt0yCU7eU1FiFl5kwZpMC
+         zfXaocuA8lqIJ+rdIQpyAevnwQQC3rmI1YX9RyC/i/QgJ/IyrqlSl9gZkH4Fx+RfDPXN
+         begA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=F2y9Crm4EpXrgojd+CYn/r/xzpbyjoctnZnKUBxxPGw=;
+        b=frGIGd0Q6/vKBaIE9/DpS/wZ9AWYpFXgXtyc2jTEwY/cDFc6bJ4aXaDOE2p7XC/r/i
+         SkWOgWpmdqxKP9SCwjJIdB+jwbWBK4yA7BddOLIwQ3mxN5hKG1Z+xLwTkZmvKqIGcccU
+         //vaiI9tZVolJ/EKDIilQxCXrdQYsOKyFdbdeQRxa7a3F6wRmFK1Xt9Yg1IwDT01QUeP
+         n2axXrQ3mLFRzyQ48sjKbCykeNrXECMBfB1RlMLVfoFZPopAUvBgBYnyEKWuoTxwaoUk
+         qLdE9CSQAvTBt9t3eh0+60dDRDoW/71N9KODIdGnNy7OnD1pbhcpVowxqXu4ydWpU9St
+         7SmA==
+X-Gm-Message-State: AOAM530pb6/L6ThK4zCviEdk1EG/aFzIMEXzp3XE/pgpwLDGzc7Mrjtf
+        5uA4HaqqgpR94/RQ7nzPBeae2hwO/VsaBg==
+X-Google-Smtp-Source: ABdhPJz6cNXf6sv5+78+bDzU/EfsCLMtxsclb4N1u2KcEBfpSY9J/kaEdBCn6renQCfjvKPO06pKAA==
+X-Received: by 2002:a17:906:d78a:: with SMTP id pj10mr25691244ejb.50.1592214931572;
+        Mon, 15 Jun 2020 02:55:31 -0700 (PDT)
+Received: from [192.168.1.3] (212-5-158-38.ip.btc-net.bg. [212.5.158.38])
+        by smtp.googlemail.com with ESMTPSA id lx26sm8665063ejb.112.2020.06.15.02.55.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jun 2020 02:55:30 -0700 (PDT)
+Subject: Re: [PATCH v4 2/3] venus: Make debug infrastructure more flexible
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20200613223919.7038-1-stanimir.varbanov@linaro.org>
+ <20200613223919.7038-3-stanimir.varbanov@linaro.org>
+ <20200614063710.GB2611869@kroah.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <c54a12a2-7f92-105c-a01c-8e85730f36bb@linaro.org>
+Date:   Mon, 15 Jun 2020 12:55:29 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+In-Reply-To: <20200614063710.GB2611869@kroah.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2020-06-15 at 08:46 +0200, Mauro Carvalho Chehab wrote:
-> Some files got renamed. Those were all fixed automatically by
-> 
-> 	./scripts/documentation-file-ref-check --fix
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  Documentation/devicetree/bindings/arm/freescale/fsl,scu.txt   | 2 +-
->  Documentation/devicetree/bindings/display/imx/fsl-imx-drm.txt | 4 ++--
->  Documentation/devicetree/bindings/display/imx/ldb.txt         | 4 ++--
->  Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt  | 2 +-
->  MAINTAINERS                                                   | 4 ++--
->  5 files changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/freescale/fsl,scu.txt b/Documentation/devicetree/bindings/arm/freescale/fsl,scu.txt
-> index 715047444391..10b8459e49f8 100644
-> --- a/Documentation/devicetree/bindings/arm/freescale/fsl,scu.txt
-> +++ b/Documentation/devicetree/bindings/arm/freescale/fsl,scu.txt
-> @@ -47,7 +47,7 @@ Required properties:
->  			  &lsio_mu1 1 2
->  			  &lsio_mu1 1 3
->  			  &lsio_mu1 3 3>;
-> -		See Documentation/devicetree/bindings/mailbox/fsl,mu.txt
-> +		See Documentation/devicetree/bindings/mailbox/fsl,mu.yaml
->  		for detailed mailbox binding.
->  
->  Note: Each mu which supports general interrupt should have an alias correctly
-> diff --git a/Documentation/devicetree/bindings/display/imx/fsl-imx-drm.txt b/Documentation/devicetree/bindings/display/imx/fsl-imx-drm.txt
-> index 5bf77f6dd19d..5a99490c17b9 100644
-> --- a/Documentation/devicetree/bindings/display/imx/fsl-imx-drm.txt
-> +++ b/Documentation/devicetree/bindings/display/imx/fsl-imx-drm.txt
-> @@ -68,7 +68,7 @@ Required properties:
->    datasheet
->  - clocks : phandle to the PRE axi clock input, as described
->    in Documentation/devicetree/bindings/clock/clock-bindings.txt and
-> -  Documentation/devicetree/bindings/clock/imx6q-clock.txt.
-> +  Documentation/devicetree/bindings/clock/imx6q-clock.yaml.
->  - clock-names: should be "axi"
->  - interrupts: should contain the PRE interrupt
->  - fsl,iram: phandle pointing to the mmio-sram device node, that should be
-> @@ -94,7 +94,7 @@ Required properties:
->    datasheet
->  - clocks : phandles to the PRG ipg and axi clock inputs, as described
->    in Documentation/devicetree/bindings/clock/clock-bindings.txt and
-> -  Documentation/devicetree/bindings/clock/imx6q-clock.txt.
-> +  Documentation/devicetree/bindings/clock/imx6q-clock.yaml.
->  - clock-names: should be "ipg" and "axi"
->  - fsl,pres: phandles to the PRE units attached to this PRG, with the fixed
->    PRE as the first entry and the muxable PREs following.
-> diff --git a/Documentation/devicetree/bindings/display/imx/ldb.txt b/Documentation/devicetree/bindings/display/imx/ldb.txt
-> index 38c637fa39dd..8e6e7d797943 100644
-> --- a/Documentation/devicetree/bindings/display/imx/ldb.txt
-> +++ b/Documentation/devicetree/bindings/display/imx/ldb.txt
-> @@ -30,8 +30,8 @@ Required properties:
->                  "di2_sel" - IPU2 DI0 mux
->                  "di3_sel" - IPU2 DI1 mux
->          The needed clock numbers for each are documented in
-> -        Documentation/devicetree/bindings/clock/imx5-clock.txt, and in
-> -        Documentation/devicetree/bindings/clock/imx6q-clock.txt.
-> +        Documentation/devicetree/bindings/clock/imx5-clock.yaml, and in
-> +        Documentation/devicetree/bindings/clock/imx6q-clock.yaml.
->  
->  Optional properties:
->   - pinctrl-names : should be "default" on i.MX53, not used on i.MX6q
+Hi Greg,
 
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+On 6/14/20 9:37 AM, Greg KH wrote:
+> On Sun, Jun 14, 2020 at 01:39:18AM +0300, Stanimir Varbanov wrote:
+>>  	if (slot == -1) {
+>> -		dev_dbg(inst->core->dev, "%s: no free slot\n", __func__);
+>> +		VDBGH("no free slot for timestamp\n");
+> 
+> Again, no, you just lost a lot of valuable information by changing to a
+> different format (like driver, specific device, etc.).  Please don't do
+> this, it just makes the information less than before.
 
-regards
-Philipp
+OK, one of the reasons to use pr_debug inside VDBGH macro is to avoid
+having struct device *dev variable in every function with dev_dbg even
+when the function doesn't use it.
+
+Are you fine with s/pr_debug/dev_dbg in VDBGX macros?
+
+-- 
+regards,
+Stan
