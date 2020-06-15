@@ -2,89 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A08191F9858
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 15:24:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24AA11F9A43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 16:32:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730065AbgFONYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jun 2020 09:24:04 -0400
-Received: from sauhun.de ([88.99.104.3]:38016 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730058AbgFONYD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jun 2020 09:24:03 -0400
-Received: from localhost (p54b333b6.dip0.t-ipconnect.de [84.179.51.182])
-        by pokefinder.org (Postfix) with ESMTPSA id ACD7C2C1F6B;
-        Mon, 15 Jun 2020 15:24:01 +0200 (CEST)
-Date:   Mon, 15 Jun 2020 15:24:01 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     vkoul@kernel.org, robert.foss@linaro.org,
-        bjorn.andersson@linaro.org, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>
-Subject: Re: [PATCH v7 1/3] i2c: Add Qualcomm CCI I2C driver
-Message-ID: <20200615132401.GF4423@kunai>
-References: <1586248382-9058-1-git-send-email-loic.poulain@linaro.org>
- <20200418213913.GB1293@ninjato>
+        id S1730117AbgFOOcp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jun 2020 10:32:45 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:59123 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728304AbgFOOco (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Jun 2020 10:32:44 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592231564; h=Date: Message-Id: Cc: To: References:
+ In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
+ Content-Type: Sender; bh=NiCtl85ChNfUXhzwxk3UF9iEXH37Z4GqUz58aNsMDy0=;
+ b=P3eOaK141XOuMFmuPCrnDx2A/fsb28VH1Sm3Zf+laIro/ejBNF4KFIGCURx2t9bg1mqwtf9e
+ +//lvsxD7HdysvvDJmWB6/Zc8/HEHJFboI+7QE91Tq/Majougy0DwYDC7bpdEMcxvTQDW56w
+ ki2zxjvLXTKa+JTKzsHnmPVWoag=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5ee78685e144dd5115a48e6a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Jun 2020 14:32:37
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 519F3C433C8; Mon, 15 Jun 2020 14:32:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=0.5 required=2.0 tests=ALL_TRUSTED,MISSING_DATE,
+        MISSING_MID,SPF_NONE autolearn=no autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F8D2C4339C;
+        Mon, 15 Jun 2020 14:32:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8F8D2C4339C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="udcq9yAoWb9A4FsZ"
-Content-Disposition: inline
-In-Reply-To: <20200418213913.GB1293@ninjato>
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] ath10k: Wait until copy complete is actually done before
+ completing
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20200609082015.1.Ife398994e5a0a6830e4d4a16306ef36e0144e7ba@changeid>
+References: <20200609082015.1.Ife398994e5a0a6830e4d4a16306ef36e0144e7ba@changeid>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     kuabhs@google.com, pillair@codeaurora.org,
+        saiprakash.ranjan@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, ath10k@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.5.2
+Message-Id: <20200615143237.519F3C433C8@smtp.codeaurora.org>
+Date:   Mon, 15 Jun 2020 14:32:37 +0000 (UTC)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Douglas Anderson <dianders@chromium.org> wrote:
 
---udcq9yAoWb9A4FsZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On wcn3990 we have "per_ce_irq = true".  That makes the
+> ath10k_ce_interrupt_summary() function always return 0xfff. The
+> ath10k_ce_per_engine_service_any() function will see this and think
+> that _all_ copy engines have an interrupt.  Without checking, the
+> ath10k_ce_per_engine_service() assumes that if it's called that the
+> "copy complete" (cc) interrupt fired.  This combination seems bad.
+> 
+> Let's add a check to make sure that the "copy complete" interrupt
+> actually fired in ath10k_ce_per_engine_service().
+> 
+> This might fix a hard-to-reproduce failure where it appears that the
+> copy complete handlers run before the copy is really complete.
+> Specifically a symptom was that we were seeing this on a Qualcomm
+> sc7180 board:
+>   arm-smmu 15000000.iommu: Unhandled context fault:
+>   fsr=0x402, iova=0x7fdd45780, fsynr=0x30003, cbfrsynra=0xc1, cb=10
+> 
+> Even on platforms that don't have wcn3990 this still seems like it
+> would be a sane thing to do.  Specifically the current IRQ handler
+> comments indicate that there might be other misc interrupt sources
+> firing that need to be cleared.  If one of those sources was the one
+> that caused the IRQ handler to be called it would also be important to
+> double-check that the interrupt we cared about actually fired.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-On Sat, Apr 18, 2020 at 11:39:13PM +0200, Wolfram Sang wrote:
-> On Tue, Apr 07, 2020 at 10:33:00AM +0200, Loic Poulain wrote:
-> > This commit adds I2C bus support for the Camera Control Interface
-> > (CCI) I2C controller found on the Qualcomm SoC processors. This I2C
-> > controller supports two masters and they are registered to the core.
-> >=20
-> > CCI versions supported in the driver are msm8916, msm8996 and sdm845.
-> >=20
-> > This is a rework of the patch posted by Vinod:
-> > https://patchwork.kernel.org/patch/10569961/
-> >=20
-> > With additional fixes + most of the comments addressed.
-> >=20
-> > Signed-off-by: Todor Tomov <todor.tomov@linaro.org>
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > Tested-by: Robert Foss <robert.foss@linaro.org>
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->=20
-> Removed the err msg after platform_get_irq and applied to for-next,
-> thanks!
+ath10k firmwares work very differently, on what hardware and firmware did you
+test this? I'll add that information to the commit log.
 
-BTW is one of the authors interested in being the maintainer for this
-driver? If so, a patch adding that to MAINTAINERS would be much
-appreciated!
+-- 
+https://patchwork.kernel.org/patch/11595887/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
---udcq9yAoWb9A4FsZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl7ndm0ACgkQFA3kzBSg
-KbYBHg//V9/dBjvEQyUt6uzn3OIya7fvhzjAj5erN43CB1T7cu3rec1chbFbl+KP
-m6La8joTJhuO7hacitxZ+l4FwFPmABFjPRiHoEfGxaZMKBHeaBabRYNNc0FhmYy6
-OBDR/IEaqWLAo9XL0cL+9ObzDlPZkJ7uhjj3l25Go/0gtaCeI8BM9eARutLE5Fp3
-IlD5eeNXmg7Ul6l9HXCQ2DiqyxGcnlFg5T5fNiBzKsK+DOSkLKbxaATsa4rwbbYN
-SS9GnlXaukwZPfUkliSvZrkRUWPl65hWAdxzKM99pYXNRjQaOv9zpnQS0Xybileb
-yc/qP40KPd0Idr+KarPdNuQDudbugCI9qHI+6qnDwd5k+MVpTWE12U6yjq8G+OIW
-FT5ci/nkBIWg4ysxf4YaIOWc+WM88U/QsSSZ37PUhXcaS3M9X0gq/rblP8lNTI/m
-cHpGzPUjf09OzS73stv3fFZHJ9mkLdsGeIq4C1s82bckyJ0hhn1E8eNV3EPAeUpm
-COeZAsQBswpA25kKRdq4BNJASx/e4pLEZRE534TGjAXvf1Rz5d3cEFCdzcrvXCNR
-Oaru+SwXgraF0fsFtIHiGxa2jzIgS1sHiSiDgtUYtSWsPvkaTNgdua7jN2T+qVa5
-dApjCANy3CmuOJfUCwoY3UbYHOcYUJ4v+8iKY6lXx54A7tJyd38=
-=hSzi
------END PGP SIGNATURE-----
-
---udcq9yAoWb9A4FsZ--
