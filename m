@@ -2,90 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD3BF1F96CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 14:42:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A08191F9858
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 15:24:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728773AbgFOMmf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jun 2020 08:42:35 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:31470 "EHLO m43-7.mailgun.net"
+        id S1730065AbgFONYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jun 2020 09:24:04 -0400
+Received: from sauhun.de ([88.99.104.3]:38016 "EHLO pokefinder.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728285AbgFOMmf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jun 2020 08:42:35 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592224955; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=IcH9ie83cqyX2wRpW4LqU8OPLSE6vdIbgqFcdhJpvVk=; b=ncapYoML2lndb38pf3Ds67Q17LKtmLHSTKxHm9w2lIMwa4gxhbwoaGuUQl1cKhNClVKVVGIC
- CTvLiuhAiwEclf5tFKaz08gVWbtN7BnnkDLq7+pPtEibTsW31BLVp7hD8muQOK1RJ++2DF4j
- h0NdyOelNif6mh52HxSJ3Q/pT1w=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5ee76cb2567385e8e76d0811 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Jun 2020 12:42:26
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4D7E5C433CA; Mon, 15 Jun 2020 12:42:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0B53DC433C8;
-        Mon, 15 Jun 2020 12:42:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0B53DC433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linus.walleij@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mkshah@codeaurora.org,
-        ilina@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH] pinctrl: qcom: sc7180: Make gpio28 non wakeup capable
-Date:   Mon, 15 Jun 2020 18:12:07 +0530
-Message-Id: <1592224927-28576-1-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1730058AbgFONYD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Jun 2020 09:24:03 -0400
+Received: from localhost (p54b333b6.dip0.t-ipconnect.de [84.179.51.182])
+        by pokefinder.org (Postfix) with ESMTPSA id ACD7C2C1F6B;
+        Mon, 15 Jun 2020 15:24:01 +0200 (CEST)
+Date:   Mon, 15 Jun 2020 15:24:01 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     vkoul@kernel.org, robert.foss@linaro.org,
+        bjorn.andersson@linaro.org, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>
+Subject: Re: [PATCH v7 1/3] i2c: Add Qualcomm CCI I2C driver
+Message-ID: <20200615132401.GF4423@kunai>
+References: <1586248382-9058-1-git-send-email-loic.poulain@linaro.org>
+ <20200418213913.GB1293@ninjato>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="udcq9yAoWb9A4FsZ"
+Content-Disposition: inline
+In-Reply-To: <20200418213913.GB1293@ninjato>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PDC irqchip driver currently does not handle dual-edge interrupts,
-and we have atleast one board with sc7180 designed to configure gpio28
-as a dual-edge interrupt. This interrupt is however not expected to be
-wakeup capable, so an easy way to fix this, seems to be to make this
-gpio non wakeup capable and let TLMM handle it.
 
-It would have been nice to be able to do this only for the particular
-board with this design, however this change of removing gpio28 from the
-pinctrl SoC file means we end up with one less wakeup capable gpio for
-the entire SoC.
+--udcq9yAoWb9A4FsZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Reported-by: Jimmy Cheng-Yi Chiang <cychiang@google.com>
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
----
- drivers/pinctrl/qcom/pinctrl-sc7180.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Sat, Apr 18, 2020 at 11:39:13PM +0200, Wolfram Sang wrote:
+> On Tue, Apr 07, 2020 at 10:33:00AM +0200, Loic Poulain wrote:
+> > This commit adds I2C bus support for the Camera Control Interface
+> > (CCI) I2C controller found on the Qualcomm SoC processors. This I2C
+> > controller supports two masters and they are registered to the core.
+> >=20
+> > CCI versions supported in the driver are msm8916, msm8996 and sdm845.
+> >=20
+> > This is a rework of the patch posted by Vinod:
+> > https://patchwork.kernel.org/patch/10569961/
+> >=20
+> > With additional fixes + most of the comments addressed.
+> >=20
+> > Signed-off-by: Todor Tomov <todor.tomov@linaro.org>
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Tested-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>=20
+> Removed the err msg after platform_get_irq and applied to for-next,
+> thanks!
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-index 1b6465a..3afcc01 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-@@ -1122,7 +1122,7 @@ static const struct msm_pingroup sc7180_groups[] = {
- static const struct msm_gpio_wakeirq_map sc7180_pdc_map[] = {
- 	{0, 40}, {3, 50}, {4, 42}, {5, 70}, {6, 41}, {9, 35},
- 	{10, 80}, {11, 51}, {16, 20}, {21, 55}, {22, 90}, {23, 21},
--	{24, 61}, {26, 52}, {28, 36}, {30, 100}, {31, 33}, {32, 81},
-+	{24, 61}, {26, 52}, {30, 100}, {31, 33}, {32, 81},
- 	{33, 62}, {34, 43}, {36, 91}, {37, 53}, {38, 63}, {39, 72},
- 	{41, 101}, {42, 7}, {43, 34}, {45, 73}, {47, 82}, {49, 17},
- 	{52, 109}, {53, 102}, {55, 92}, {56, 56}, {57, 57}, {58, 83},
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+BTW is one of the authors interested in being the maintainer for this
+driver? If so, a patch adding that to MAINTAINERS would be much
+appreciated!
 
+
+--udcq9yAoWb9A4FsZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl7ndm0ACgkQFA3kzBSg
+KbYBHg//V9/dBjvEQyUt6uzn3OIya7fvhzjAj5erN43CB1T7cu3rec1chbFbl+KP
+m6La8joTJhuO7hacitxZ+l4FwFPmABFjPRiHoEfGxaZMKBHeaBabRYNNc0FhmYy6
+OBDR/IEaqWLAo9XL0cL+9ObzDlPZkJ7uhjj3l25Go/0gtaCeI8BM9eARutLE5Fp3
+IlD5eeNXmg7Ul6l9HXCQ2DiqyxGcnlFg5T5fNiBzKsK+DOSkLKbxaATsa4rwbbYN
+SS9GnlXaukwZPfUkliSvZrkRUWPl65hWAdxzKM99pYXNRjQaOv9zpnQS0Xybileb
+yc/qP40KPd0Idr+KarPdNuQDudbugCI9qHI+6qnDwd5k+MVpTWE12U6yjq8G+OIW
+FT5ci/nkBIWg4ysxf4YaIOWc+WM88U/QsSSZ37PUhXcaS3M9X0gq/rblP8lNTI/m
+cHpGzPUjf09OzS73stv3fFZHJ9mkLdsGeIq4C1s82bckyJ0hhn1E8eNV3EPAeUpm
+COeZAsQBswpA25kKRdq4BNJASx/e4pLEZRE534TGjAXvf1Rz5d3cEFCdzcrvXCNR
+Oaru+SwXgraF0fsFtIHiGxa2jzIgS1sHiSiDgtUYtSWsPvkaTNgdua7jN2T+qVa5
+dApjCANy3CmuOJfUCwoY3UbYHOcYUJ4v+8iKY6lXx54A7tJyd38=
+=hSzi
+-----END PGP SIGNATURE-----
+
+--udcq9yAoWb9A4FsZ--
