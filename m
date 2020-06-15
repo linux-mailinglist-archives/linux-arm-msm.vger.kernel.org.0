@@ -2,133 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 455911FA3D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 01:05:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 293431FA3ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 01:12:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726408AbgFOXFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jun 2020 19:05:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33086 "EHLO
+        id S1726673AbgFOXML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jun 2020 19:12:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725960AbgFOXFL (ORCPT
+        with ESMTP id S1726408AbgFOXMK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jun 2020 19:05:11 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2394DC061A0E;
-        Mon, 15 Jun 2020 16:05:10 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id p20so948226iop.11;
-        Mon, 15 Jun 2020 16:05:10 -0700 (PDT)
+        Mon, 15 Jun 2020 19:12:10 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D0DDC061A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 16:12:10 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id s88so604222pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 16:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VFv24iOZv9KF5trz0flSTD/rWAv9Y05l58tQASHoWIg=;
-        b=kQD+05pHpznMTPV9+Two/R6GytrwdxDxzKo83oW+1gco16CFz/ug3zBMKAMho0aCXF
-         yIYAiej8OhyU5LxyzDZnHLNreRRCbGmeMXu0FqiJ02acS/T/sH7g8D2fDQ0O0xagtkFY
-         i7bMk0V3Joke5vnlkHnT+L5Ws9NJgcMlK4aDU03riyPjmKoQpAiwcY6g0EKEUp6vk8j5
-         mqhXM0Sk5iJqgW3AylowHf9G5p1VrFRuNRrVTfSJhTr9mL6npN4W0fYEkW3eS33S445p
-         4TfIJHUu2GOE2wHAyZ7AQvuYz9u4Dy9bYacQ3HjJMO2tP0QEc32I4Ux9N/iy/Yh3srnW
-         eVNQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=brcjvLKF1tqBCWFby3z+8MOldV/7mW3P5ikqS7XALSA=;
+        b=a/H1lS9d3FYn9UhSPXJsrr9Ixza6PpJjH8tSHUvh/CVDtcrK+HwLEfl5AcfQGKk7Yt
+         DgkSjxwNcl1kly5pAN0wEFgD8B08fUExsWnorPyLFmvpIBj+R/zkm9nzMFoDzMIv7hC6
+         We3UEU2NIbpxqEVOI2R78klemetd7V15D0qk4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VFv24iOZv9KF5trz0flSTD/rWAv9Y05l58tQASHoWIg=;
-        b=APEvz8ei4bTLMCAF/Rx6NHA8erG5LKEgwqR4tJGz6+amDF4rmIzl6kvbSh2gb3WYKX
-         UaqziihEfW3j4FtJ8e7tfpJryWsH73ScbqBrvoHZUggvNEn1NkdMLquD6DCU1kX1UaUo
-         VBKAR54A8ArPhZYpaDh8ybXV4SKEmIP7+Pnx4EG6FLziMbP7ADNrwsZrkfNV/YNAJTp3
-         LZPOG0LnY7R5jm03N1nEbMJsC5rF16kwctdy+UanHVy+IqFe3CVqwoOGxWGzEiJquUUl
-         3H42jTlALvnQemqIdwib088IHHVNwINpKfLoSxXYTYSGSGjbGl10MZclKLXcaCQSIj91
-         +5nA==
-X-Gm-Message-State: AOAM530X2m/8o1rvHIkGugfBL3U6IorcvuJPuYehyUdBQv4VFkY25Ucb
-        aG5LiBwRB0bNlsBRYvTr646hLsV8KgCZiWUJqe8=
-X-Google-Smtp-Source: ABdhPJyo/ojNDoI/BEqlvGOGeUOvo9mXeqcYNWw009OTq0g74atntpiKvyM0XDPNO+z656j1sxQZkGIM5rT+4fO5hiI=
-X-Received: by 2002:a6b:8b12:: with SMTP id n18mr227575iod.160.1592262309281;
- Mon, 15 Jun 2020 16:05:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=brcjvLKF1tqBCWFby3z+8MOldV/7mW3P5ikqS7XALSA=;
+        b=LECM4NG7Qn67I+lV+LMB1e++X70KAHpyLXwCeBxVNwdAT9ryG7Pkf7Eq1vxTkHpH2a
+         5cvRsvAnwT6mkICbHFIYfElszF1mPEiTC2zYqPln2NmUex80wNloqmyfSkJMl+v8jnH9
+         NGsAK64iPb6QHclHukUodnVXAC9D+wXTwzrSiPAejx9eZoOL6vBxUoHBpoYhsd/sCumi
+         v1rH/5ZrsXFItEUXqAwt5v94aA+AWCkF2djS6GSGYwwS8vsMQv8HbzV2MWIAhR2dIjhM
+         qPO6TyrvMoyIrR2E6XcM9AmD4E5WFcOwx3cOhTlmqrHjNnH8BNsgMW74BBvrSYVzugky
+         YOuQ==
+X-Gm-Message-State: AOAM5315CdOoymduJlpu+vJL5+1U1frU7EsSd1D1zUBDUlSJT0OXV32J
+        OqReKgAYXk/7epZs+V+4LULg6g==
+X-Google-Smtp-Source: ABdhPJyyci+2oQlVyjby51mYZoyBYZiTzI2eRXhAYx5ofJPrOzIloyTJpVXRIiOsGGjwxvfH9O22kg==
+X-Received: by 2002:a17:90b:3004:: with SMTP id hg4mr266813pjb.208.1592262729649;
+        Mon, 15 Jun 2020 16:12:09 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id h3sm513401pje.28.2020.06.15.16.12.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jun 2020 16:12:08 -0700 (PDT)
+Date:   Mon, 15 Jun 2020 16:12:07 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Pradeep P V K <ppvk@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, adrian.hunter@intel.com,
+        robh+dt@kernel.org, ulf.hansson@linaro.org,
+        vbadigan@codeaurora.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-mmc-owner@vger.kernel.org,
+        rnayak@codeaurora.org, sibis@codeaurora.org, matthias@chromium.org
+Subject: Re: [PATCH V4 1/2] mmc: sdhci-msm: Add interconnect bandwidth
+ scaling support
+Message-ID: <20200615231207.GX4525@google.com>
+References: <1591691846-7578-1-git-send-email-ppvk@codeaurora.org>
+ <1591691846-7578-2-git-send-email-ppvk@codeaurora.org>
 MIME-Version: 1.0
-References: <20200612015030.16072-1-tanmay@codeaurora.org> <159200440578.62212.5195358467251573190@swboyd.mtv.corp.google.com>
- <1eda01da33b620ddee5162be3326853f@codeaurora.org>
-In-Reply-To: <1eda01da33b620ddee5162be3326853f@codeaurora.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 15 Jun 2020 17:04:57 -0600
-Message-ID: <CAOCk7NrX9Lk6GQKXcFMd1CHHu7CjVg7hUAwt1LyNFdVHHGPO-g@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v6 0/5] Add support for DisplayPort driver on
-To:     tanmay@codeaurora.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        DTML <devicetree@vger.kernel.org>, aravindh@codeaurora.org,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sam Ravnborg <sam@ravnborg.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1591691846-7578-2-git-send-email-ppvk@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 15, 2020 at 4:51 PM <tanmay@codeaurora.org> wrote:
->
-> On 2020-06-12 16:26, Stephen Boyd wrote:
->
-> Thanks for reviews Stephen.
->
-> > Quoting Tanmay Shah (2020-06-11 18:50:25)
-> >> These patches add support for Display-Port driver on SnapDragon
-> >> hardware. It adds
-> >> DP driver and DP PLL driver files along with the needed device-tree
-> >> bindings.
-> >>
-> >> The block diagram of DP driver is shown below:
-> >>
-> >>
-> >>                  +-------------+
-> >>                  |DRM FRAMEWORK|
-> >>                  +------+------+
-> >>                         |
-> >>                    +----v----+
-> >>                    | DP DRM  |
-> >>                    +----+----+
-> >>                         |
-> >>                    +----v----+
-> >>      +------------+|   DP    +----------++------+
-> >>      +        +---+| DISPLAY |+---+      |      |
-> >>      |        +    +-+-----+-+    |      |      |
-> >>      |        |      |     |      |      |      |
-> >>      |        |      |     |      |      |      |
-> >>      |        |      |     |      |      |      |
-> >>      v        v      v     v      v      v      v
-> >>  +------+ +------+ +---+ +----+ +----+ +---+ +-----+
-> >>  |  DP  | |  DP  | |DP | | DP | | DP | |DP | | DP  |
-> >>  |PARSER| | HPD  | |AUX| |LINK| |CTRL| |PHY| |POWER|
-> >>  +--+---+ +---+--+ +---+ +----+ +--+-+ +-+-+ +-----+
-> >>     |                              |     |
-> >>  +--v---+                         +v-----v+
-> >>  |DEVICE|                         |  DP   |
-> >>  | TREE |                         |CATALOG|
-> >>  +------+                         +---+---+
-> >>                                       |
-> >>                                   +---v----+
-> >>                                   |CTRL/PHY|
-> >>                                   |   HW   |
-> >>                                   +--------+
-> >>
-> >
-> > I've never seen a block diagram for a driver before...
-> >
-> It is here for v5. https://patchwork.freedesktop.org/series/74312/
+On Tue, Jun 09, 2020 at 02:07:25PM +0530, Pradeep P V K wrote:
+> Interconnect bandwidth scaling support is now added as a
+> part of OPP. So, make sure interconnect driver is ready
+> before handling interconnect scaling.
+> 
+> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+> Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
 
-I think Stephen is nitpicking your wording, and you seem to not be
-understanding his comment.  I'm sorry if I am mistaken.
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
-The "DP driver" would seem to refer to the linux software driver you
-are proposing patches for, however this diagram looks like a hardware
-diagram of the various hardware blocks that the Linux driver code (the
-"DP driver") is expected to interact with.  I believe you should
-re-word "The block diagram of DP driver is shown below:" to be more
-specific of what you are describing with your figure.  IE your words
-say this is a block diagram of the software, when it looks like it is
-a block diagram of the hardware.
+Do you plan to send also patches that add the necessary DT entries?
+I'm particularly interested in SC7180.
