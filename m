@@ -2,113 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D7E61F9FE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 21:07:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 380EF1FA077
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2020 21:42:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731433AbgFOTHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jun 2020 15:07:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52796 "EHLO
+        id S1729836AbgFOTmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jun 2020 15:42:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731427AbgFOTH2 (ORCPT
+        with ESMTP id S1729839AbgFOTmC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jun 2020 15:07:28 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF943C05BD43
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 12:07:27 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id 97so13999183otg.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 12:07:27 -0700 (PDT)
+        Mon, 15 Jun 2020 15:42:02 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED06DC08C5C3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 12:42:01 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id s88so298249pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 12:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=gkisYoqPUHl9LL0bMseRIRvV+9UIa3Tr6nRZ75os/94=;
-        b=WNJIIb/LEdiABSPWau+fuOw7xHs2zDQrgqhRIJqIcPdHFpFDXr/7kVCm6XFrZYNotm
-         9x69N7NIXg6LueAOyHhTUs3Q8bI5Yfv4Cz6dJSP2upRHyQUgb3i3opKO/7ZRNTwlsjt9
-         AdF6N+T9WDDaBaVhGjx5C5GGkc/um765axhNEADTEDRPHwWiIIUY0VwyqyOc9Y0Ip+su
-         mq/XWN0vU+gX+2JLCiqqEroKy55EkDL2CeaaPpd+y+fMYSu2NzB2tpcTwJ3Hzx2o634c
-         jBCCtc6J3EgGtpmNxMpR9+LW6CZzbwiMSlJLx8RQ2+XI1KXKhpD29fZL3ibYbBZkSqxY
-         8KwQ==
+        d=broadcom.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=HYEguIgCbs72qU3RQvrxRYIXfQehsVQ9xr9hBAlsIv0=;
+        b=dkbPpsjDjU6G8ru0ttn46RPKVPgFK19yRuH9PgkL25/VkhONVT6d1SRaSawFEkIh3P
+         q2G9dK2MaZXWR8pk5Y2Y1Mt/EV6grY8Q7bXEvq8BPnQgIoE3kerT+l+D6ATbDm2I1+nO
+         Ua7wjPbwO7pX5wW8J0wsCoA2UyrRPH+drXvz8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=gkisYoqPUHl9LL0bMseRIRvV+9UIa3Tr6nRZ75os/94=;
-        b=eyfUmS7Re/vimM9Ycr5YxexstOY2OXZUSfQNAnUF76EbEA5OVt7c81ick9SHJ7/kaP
-         xIaDyghtru3UcsUEM6lAcENyEGNAB0gHuFUk3xnd41VAudxDHDTNh3Y2r8Gsbow1TYHq
-         P5lI1djhjq12viWYVKjykfWC6lHxcmnBIUkyjJS1Eau51r/2S1ujZ6aJDcJW/WgahqNU
-         lIB+qdgM3fFmn6ESRRT1r1RkZspv4j+InTppvgEft2OwmyZuHWzhANGO9YAb0KnfMZrV
-         /lqwlaswUQLXbT+kAqJCQ9Rzwx4ELT+eJXNBD9wBc9RyhpCqpXtyiaDuXFdCv7n7upPi
-         Zjqw==
-X-Gm-Message-State: AOAM530G4yHp6muFy42cqB2ukP13OnFo/nxJYgpwn5NruuoCBNfC97tV
-        8zaobsvOgFFGUqTjoZzFp5vQow==
-X-Google-Smtp-Source: ABdhPJwfv5W3EVhFyjfklabyBQ0AqghguZeeODyksn4WYKzWBKXJnT04Z0JIf4XQp9S7QAPcJb+NnA==
-X-Received: by 2002:a9d:a14:: with SMTP id 20mr23869540otg.292.1592248047094;
-        Mon, 15 Jun 2020 12:07:27 -0700 (PDT)
-Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
-        by smtp.gmail.com with ESMTPSA id z7sm3484098oto.2.2020.06.15.12.07.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2020 12:07:26 -0700 (PDT)
-Subject: Re: [RFC PATCH v4 4/4] scsi: ufs-qcom: add Inline Crypto Engine
- support
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=HYEguIgCbs72qU3RQvrxRYIXfQehsVQ9xr9hBAlsIv0=;
+        b=IxyZ8r41rEMrgGlgMZxCS23r+1LY/NaCfDsw/DrcfL+W+Xeeq28MKmSq6//Sk9Y9oi
+         i8X4NMblgSJsoFgr0ipZLKoiGiheGaO2pPcwKj/MWhO2pq+8907XvZ5YOysqmAPBJi7B
+         zcgSlefRhQBjnuf5IfweGubdFrdA9E8GlRp5k2Lc2Ou1YlkdshMxSrClwyjZrjUb4V4x
+         XvCCa3Mom3xFeJRdqfDVJ5/s7EdzOxfNTBaQPil63pndDT/g9UQ6Rf1EFN8nIvsNdXA3
+         tKvKsWfrnq07ljokvpwRVEFCI7RS5Ebihqd11wJMzCXEYLUVEPQVN//bZhDm6cKMTaMK
+         A3gg==
+X-Gm-Message-State: AOAM533+Mr65uBzsWN9jBREGd4Xj3x3Pb/xesM9LsEtG9pNSXPk3N1TP
+        KBKerO3LFM0JqCcgcE6qk25DUA==
+X-Google-Smtp-Source: ABdhPJxlw3cBZEDOlyThQIHDpnQsA/kqwh3v+wvEHfOnz+hY04zT6ELbTDVN9pSlaag4HAinH9avGg==
+X-Received: by 2002:a17:902:b411:: with SMTP id x17mr22579249plr.272.1592250120762;
+        Mon, 15 Jun 2020 12:42:00 -0700 (PDT)
+Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id gq8sm293663pjb.14.2020.06.15.12.41.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2020 12:42:00 -0700 (PDT)
+From:   Scott Branden <scott.branden@broadcom.com>
+To:     Luis Chamberlain <mcgrof@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     Mimi Zohar <zohar@linux.ibm.com>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>
-References: <20200501045111.665881-1-ebiggers@kernel.org>
- <20200501045111.665881-5-ebiggers@kernel.org>
- <31fa95e5-7757-96ae-2e86-1f54959e3a6c@linaro.org>
- <20200507180435.GB236103@gmail.com> <20200507180838.GC236103@gmail.com>
- <150ddaaf-12ec-231e-271a-c65b1d88d30f@kali.org>
- <20200508202513.GA233206@gmail.com>
- <1aa17b19-0ca7-1ff1-b945-442e56ef942a@kali.org>
- <20200615185806.GC85413@gmail.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <dc735157-77a2-34a3-12c2-5fe060afa153@kali.org>
-Date:   Mon, 15 Jun 2020 14:07:25 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.9.0
-MIME-Version: 1.0
-In-Reply-To: <20200615185806.GC85413@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+        linux-integrity@vger.kernel.org,
+        linux-security-module@vger.kernel.org,
+        Scott Branden <scott.branden@broadcom.com>
+Subject: [PATCH v9 0/8] firmware: add request_partial_firmware_into_buf
+Date:   Mon, 15 Jun 2020 12:41:43 -0700
+Message-Id: <20200615194151.7011-1-scott.branden@broadcom.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch series adds partial read support via a new call
+request_partial_firmware_into_buf.
+Such support is needed when the whole file is not needed and/or
+only a smaller portion of the file will fit into allocated memory
+at any one time.
+In order to accept the enhanced API it has been requested that kernel
+selftests and upstreamed driver utilize the API enhancement and so
+are included in this patch series.
 
-On 6/15/20 1:58 PM, Eric Biggers wrote:
->
->> Hi Eric,
->>
->>
->> I've been testing this on a Lenovo Yoga C630 installed to a partition on
->> the UFS drive, using a 5.7(ish) kernel with fscrypt/inline-encryption
->> and a few patches on top that are still in flux for c630 support.  The
->> sources I use can be found at
->> https://github.com/steev/linux/tree/linux-5.7.y-c630-fscrypt and the
->> config I'm using can be found at
->> https://dev.gentoo.org/~steev/files/lenovo-yoga-c630-5.7.0-rc7-fs-inline-encryption.config.
->>
->>
->> Everything seems to be working here.  I've run the tests you've
->> mentioned and haven't seen any issues.
->>
-> Great!  Can I add your Tested-by when I send out this patchset again?
->
-> - Eric
+Also in this patch series is the addition of a new Broadcom VK driver
+utilizing the new request_firmware_into_buf enhanced API.
 
+Further comment followed to add IMA support of the partial reads
+originating from request_firmware_into_buf calls.
 
-Absolutely.  Tested-By: Steev Klimaszewski <steev@kali.org> is preferred
+Changes from v8:
+ - correct compilation error when CONFIG_FW_LOADER not defined
+Changes from v7:
+ - removed swiss army knife kernel_pread_* style approach
+   and simply add offset parameter in addition to those needed
+   in kernel_read_* functions thus removing need for kernel_pread enum
+Changes from v6:
+ - update ima_post_read_file check on IMA_FIRMWARE_PARTIAL_READ
+ - adjust new driver i2c-slave-eeprom.c use of request_firmware_into_buf
+ - remove an extern
+Changes from v5:
+ - add IMA FIRMWARE_PARTIAL_READ support
+ - change kernel pread flags to enum
+ - removed legacy support from driver
+ - driver fixes
+Changes from v4:
+ - handle reset issues if card crashes
+ - allow driver to have min required msix
+ - add card utilization information
+Changes from v3:
+ - fix sparse warnings
+ - fix printf format specifiers for size_t
+ - fix 32-bit cross-compiling reports 32-bit shifts
+ - use readl/writel,_relaxed to access pci ioremap memory,
+  removed memory barriers and volatile keyword with such change
+ - driver optimizations for interrupt/poll functionalities
+Changes from v2:
+ - remove unnecessary code and mutex locks in lib/test_firmware.c
+ - remove VK_IOCTL_ACCESS_BAR support from driver and use pci sysfs instead
+ - remove bitfields
+ - remove Kconfig default m
+ - adjust formatting and some naming based on feedback
+ - fix error handling conditions
+ - use appropriate return codes
+ - use memcpy_toio instead of direct access to PCIE bar
+
+Scott Branden (8):
+  fs: introduce kernel_pread_file* support
+  firmware: add request_partial_firmware_into_buf
+  test_firmware: add partial read support for request_firmware_into_buf
+  firmware: test partial file reads of request_partial_firmware_into_buf
+  bcm-vk: add bcm_vk UAPI
+  misc: bcm-vk: add Broadcom VK driver
+  MAINTAINERS: bcm-vk: add maintainer for Broadcom VK Driver
+  ima: add FIRMWARE_PARTIAL_READ support
+
+ MAINTAINERS                                   |    7 +
+ drivers/base/firmware_loader/firmware.h       |    5 +
+ drivers/base/firmware_loader/main.c           |   79 +-
+ drivers/misc/Kconfig                          |    1 +
+ drivers/misc/Makefile                         |    1 +
+ drivers/misc/bcm-vk/Kconfig                   |   29 +
+ drivers/misc/bcm-vk/Makefile                  |   11 +
+ drivers/misc/bcm-vk/bcm_vk.h                  |  407 +++++
+ drivers/misc/bcm-vk/bcm_vk_dev.c              | 1310 +++++++++++++++
+ drivers/misc/bcm-vk/bcm_vk_msg.c              | 1440 +++++++++++++++++
+ drivers/misc/bcm-vk/bcm_vk_msg.h              |  202 +++
+ drivers/misc/bcm-vk/bcm_vk_sg.c               |  271 ++++
+ drivers/misc/bcm-vk/bcm_vk_sg.h               |   60 +
+ drivers/misc/bcm-vk/bcm_vk_tty.c              |  352 ++++
+ fs/exec.c                                     |   93 +-
+ include/linux/firmware.h                      |   12 +
+ include/linux/fs.h                            |   15 +
+ include/uapi/linux/misc/bcm_vk.h              |   99 ++
+ lib/test_firmware.c                           |  154 +-
+ security/integrity/ima/ima_main.c             |   24 +-
+ .../selftests/firmware/fw_filesystem.sh       |   80 +
+ 21 files changed, 4599 insertions(+), 53 deletions(-)
+ create mode 100644 drivers/misc/bcm-vk/Kconfig
+ create mode 100644 drivers/misc/bcm-vk/Makefile
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk.h
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_dev.c
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_msg.c
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_msg.h
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_sg.c
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_sg.h
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_tty.c
+ create mode 100644 include/uapi/linux/misc/bcm_vk.h
+
+-- 
+2.17.1
 
