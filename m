@@ -2,104 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A80C41FC044
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 22:53:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF4871FC0A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 23:06:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728144AbgFPUws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 16:52:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726805AbgFPUwq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 16:52:46 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081F9C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 13:52:46 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id g5so17066479otg.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 13:52:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1mDaBoAYNlImmGKdCyzs30Ab2CK6GaNdKX0Jt8lvk4Q=;
-        b=NlfyTdXcuRk+bHqUw+iSQlY+Yp1tZiUjSeOcpP040ruHIUtzEyafQn2O0GlSn7gYeL
-         7zHVQjG9C9jWGTbTF3esb4X57Pwk4YUnUyCBcQkM53dx293ZwGNIXK+ItM/IYIuYFfwi
-         Tgh+QD873HT3EHOdSG6ryAhurDSG7jATKMwanI5nOGb4ckZpJDg+8gUZ5AtbgIsACytK
-         za71wGu8CC+u6oCoxiGLOUpgt5E91RAOhdv90F6y9lE1VYMGnZ34mU6D9A5ODCBpMhl/
-         +wSeCnpZeuB4NhP2YYyHpXgVNoZi6FdoAdKqdqF8ZOxCxXiNu5ob8xDBytu9hCeMnQ9o
-         qU+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1mDaBoAYNlImmGKdCyzs30Ab2CK6GaNdKX0Jt8lvk4Q=;
-        b=MgiSRgw0Gm31Mh/TyvXOgKPmkiqeJ9AK80P8JSCuMguLi0K0ykOwKXEJZfy2rEL6DB
-         hOQG6Ft1wP7RNaCRlvi/CDIkOPLWnleBLu13uEiQfmmjZsq1Bkj8gCvh/aDpR/O9iUGm
-         ZyAENCRfn8JmY+abz6Jws3BjPPuakeq72rATUDyXJmoH//EBacaVhUTJWZI+BQBombuo
-         RBy59CRj6RXEBbkSiGAOTUmAUgy6FB8APb5DYHKr7NTZCIKoMd1G1LTv5ZZA7D/7WeOx
-         WvThdmXFzgJEFBRxI9+vm73Enm1cLcHANq2g/TjVWWxjPRIPYgfv7qRIUh2FLJV46Mt9
-         p25A==
-X-Gm-Message-State: AOAM533mTCzGWiYnJtDdsoxGa0MnpR76Z9y0SERfoiEz8WLLEtcQJ/z2
-        4x1zNfkuxR/M/oShNIvPV5qD+51ixtXeN35+lG1Mfg==
-X-Google-Smtp-Source: ABdhPJwZnDuYF1+ScqyNsWThdN1UjAZVIPE//LsOe27AsBQ3nI7GPtgCaXGfrrPsASezMO6Zgd4KdSIOrpniIxtDmiQ=
-X-Received: by 2002:a9d:1296:: with SMTP id g22mr4304025otg.102.1592340765193;
- Tue, 16 Jun 2020 13:52:45 -0700 (PDT)
+        id S1726630AbgFPVFG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 17:05:06 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:24483 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726804AbgFPVFF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Jun 2020 17:05:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592341503; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=IMNNo1BqQ1o0gHuNsl/LI5YBXnEGtDooQJTtyr/egAU=;
+ b=LRhOqzs+hf7mIx2TKYkMazvdBnjKrW8sXK0hpvFuomO8sI6tn0ZZXL/vWToabGrCxaAWqooE
+ XcxpccOPJVoyfvqboZyyFINgJo2udn54Z1i9WG6pmU7HSgc1RyokMlehkKWWASHGq8JIRoO2
+ ndG05gq3Ygn7pUWfWs3C1+0B3Pw=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5ee933fd117610c7ff2678e5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Jun 2020 21:05:01
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 77EDEC43395; Tue, 16 Jun 2020 21:05:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3197CC433C9;
+        Tue, 16 Jun 2020 21:05:00 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200616061338.109499-1-john.stultz@linaro.org>
- <20200616061338.109499-6-john.stultz@linaro.org> <0be86735238a0f8b0c25934e2ed39eee@kernel.org>
-In-Reply-To: <0be86735238a0f8b0c25934e2ed39eee@kernel.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Tue, 16 Jun 2020 13:52:32 -0700
-Message-ID: <CALAqxLUZBdiLBRcp1GW9rGxt1KhgNVQ86MuPXZcXdx2wFLZk6w@mail.gmail.com>
-Subject: Re: [RFC][PATCH 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org,
-        Will Deacon <will@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 17 Jun 2020 02:35:00 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
+        bjorn.andersson@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v6 4/5] cpufreq: qcom: Update the bandwidth levels on
+ frequency change
+In-Reply-To: <20200615172553.GU4525@google.com>
+References: <20200605213332.609-1-sibis@codeaurora.org>
+ <20200605213332.609-5-sibis@codeaurora.org>
+ <20200615172553.GU4525@google.com>
+Message-ID: <e21f85d64d72ec637c10dae93e8323bb@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 16, 2020 at 12:55 AM Marc Zyngier <maz@kernel.org> wrote:
-> On 2020-06-16 07:13, John Stultz wrote:
-> > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> > index b510f67dfa49..714893535dd2 100644
-> > --- a/drivers/iommu/Kconfig
-> > +++ b/drivers/iommu/Kconfig
-> > @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
-> >  config ARM_SMMU
-> >       tristate "ARM Ltd. System MMU (SMMU) Support"
-> >       depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) &&
-> > MMU
-> > +     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
->
-> This looks a bit ugly. Could you explain why we need this at the SMMU
-> level? I'd have expected the dependency to flow the other way around...
+Hey Matthias,
+Thanks for taking time to review
+the series.
 
-Yea, so the arm-smmu-qcom.c file calls directly into the qcom-scm code
-via qcom_scm_qsmmu500_wait_safe_toggle()
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/arm-smmu-qcom.c?h=v5.8-rc1#n44
+On 2020-06-15 22:55, Matthias Kaehlcke wrote:
+> Hi Sibi,
+> 
+> On Sat, Jun 06, 2020 at 03:03:31AM +0530, Sibi Sankar wrote:
+>> Add support to parse optional OPP table attached to the cpu node when
+>> the OPP bandwidth values are populated. This allows for scaling of
+>> DDR/L3 bandwidth levels with frequency change.
+>> 
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+>> 
+>> v6:
+>>  * Add global flag to distinguish between voltage update and opp add.
+>>    Use the same flag before trying to scale ddr/l3 bw [Viresh]
+>>  * Use dev_pm_opp_find_freq_ceil to grab all opps [Viresh]
+>>  * Move dev_pm_opp_of_find_icc_paths into probe [Viresh]
+>> 
+>> v5:
+>>  * Use dev_pm_opp_adjust_voltage instead [Viresh]
+>>  * Misc cleanup
+>> 
+>> v4:
+>>  * Split fast switch disable into another patch [Lukasz]
+>> 
+>>  drivers/cpufreq/qcom-cpufreq-hw.c | 82 
+>> ++++++++++++++++++++++++++++++-
+>>  1 file changed, 80 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c 
+>> b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> index fc92a8842e252..8fa6ab6e0e4b6 100644
+>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> @@ -6,6 +6,7 @@
+>>  #include <linux/bitfield.h>
+>>  #include <linux/cpufreq.h>
+>>  #include <linux/init.h>
+>> +#include <linux/interconnect.h>
+>>  #include <linux/kernel.h>
+>>  #include <linux/module.h>
+>>  #include <linux/of_address.h>
+>> @@ -30,6 +31,48 @@
+>> 
+>>  static unsigned long cpu_hw_rate, xo_rate;
+>>  static struct platform_device *global_pdev;
+>> +static bool icc_scaling_enabled;
+> 
+> It seem you rely on 'icc_scaling_enabled' to be initialized to 'false'.
+> This works during the first initialization, but not if the 'device' is
+> unbound/rebound. In theory things shouldn't be different in a succesive
 
-So if ARM_SMMU=y and QCOM_SCM=m we get:
-drivers/iommu/arm-smmu-qcom.o: In function `qcom_smmu500_reset':
-arm-smmu-qcom.c:(.text+0xb4): undefined reference to
-`qcom_scm_qsmmu500_wait_safe_toggle'
+yes it shouldn't but sure I'll set
+it to false along the way.
 
-Do you have a suggestion for an alternative approach?
+> initialization, however for robustness the variable should be 
+> explicitly
+> set to 'false' somewhere in the code path (_probe(), _read_lut(), ...).
 
-thanks
--john
+> 
+>> +static int qcom_cpufreq_set_bw(struct cpufreq_policy *policy,
+>> +			       unsigned long freq_khz)
+>> +{
+>> +	unsigned long freq_hz = freq_khz * 1000;
+>> +	struct dev_pm_opp *opp;
+>> +	struct device *dev;
+>> +	int ret;
+>> +
+>> +	dev = get_cpu_device(policy->cpu);
+>> +	if (!dev)
+>> +		return -ENODEV;
+>> +
+>> +	opp = dev_pm_opp_find_freq_exact(dev, freq_hz, true);
+>> +	if (IS_ERR(opp))
+>> +		return PTR_ERR(opp);
+>> +
+>> +	ret = dev_pm_opp_set_bw(dev, opp);
+>> +	dev_pm_opp_put(opp);
+>> +	return ret;
+>> +}
+>> +
+>> +static int qcom_cpufreq_update_opp(struct device *cpu_dev,
+>> +				   unsigned long freq_khz,
+>> +				   unsigned long volt)
+>> +{
+>> +	unsigned long freq_hz = freq_khz * 1000;
+>> +	int ret;
+>> +
+>> +	/* Skip voltage update if the opp table is not available */
+>> +	if (!icc_scaling_enabled)
+>> +		return dev_pm_opp_add(cpu_dev, freq_hz, volt);
+>> +
+>> +	ret = dev_pm_opp_adjust_voltage(cpu_dev, freq_hz, volt, volt, volt);
+>> +	if (ret) {
+>> +		dev_err(cpu_dev, "Voltage update failed freq=%ld\n", freq_khz);
+>> +		return ret;
+>> +	}
+>> +
+>> +	return dev_pm_opp_enable(cpu_dev, freq_hz);
+>> +}
+>> 
+>>  static int qcom_cpufreq_hw_target_index(struct cpufreq_policy 
+>> *policy,
+>>  					unsigned int index)
+>> @@ -39,6 +82,9 @@ static int qcom_cpufreq_hw_target_index(struct 
+>> cpufreq_policy *policy,
+>> 
+>>  	writel_relaxed(index, perf_state_reg);
+>> 
+>> +	if (icc_scaling_enabled)
+>> +		qcom_cpufreq_set_bw(policy, freq);
+>> +
+>>  	arch_set_freq_scale(policy->related_cpus, freq,
+>>  			    policy->cpuinfo.max_freq);
+>>  	return 0;
+>> @@ -89,11 +135,31 @@ static int qcom_cpufreq_hw_read_lut(struct device 
+>> *cpu_dev,
+>>  	u32 data, src, lval, i, core_count, prev_freq = 0, freq;
+>>  	u32 volt;
+>>  	struct cpufreq_frequency_table	*table;
+>> +	struct dev_pm_opp *opp;
+>> +	unsigned long rate;
+>> +	int ret;
+>> 
+>>  	table = kcalloc(LUT_MAX_ENTRIES + 1, sizeof(*table), GFP_KERNEL);
+>>  	if (!table)
+>>  		return -ENOMEM;
+>> 
+>> +	ret = dev_pm_opp_of_add_table(cpu_dev);
+>> +	if (!ret) {
+>> +		/* Disable all opps and cross-validate against LUT */
+> 
+> nit: IIUC the cross-validation doesn't happen in this branch, so the
+> comment is a bit misleading. Maybe change it to "Disable all opps to
+> cross-validate against the LUT {below,later}".
+
+sure will re-word it.
+
+> 
+>> +		icc_scaling_enabled = true;
+>> +		for (rate = 0; ; rate++) {
+>> +			opp = dev_pm_opp_find_freq_ceil(cpu_dev, &rate);
+>> +			if (IS_ERR(opp))
+>> +				break;
+>> +
+>> +			dev_pm_opp_put(opp);
+>> +			dev_pm_opp_disable(cpu_dev, rate);
+>> +		}
+>> +	} else if (ret != -ENODEV) {
+>> +		dev_err(cpu_dev, "Invalid opp table in device tree\n");
+>> +		return ret;
+>> +	}
+>> +
+>>  	for (i = 0; i < LUT_MAX_ENTRIES; i++) {
+>>  		data = readl_relaxed(base + REG_FREQ_LUT +
+>>  				      i * LUT_ROW_SIZE);
+>> @@ -112,7 +178,7 @@ static int qcom_cpufreq_hw_read_lut(struct device 
+>> *cpu_dev,
+>> 
+>>  		if (freq != prev_freq && core_count != LUT_TURBO_IND) {
+>>  			table[i].frequency = freq;
+>> -			dev_pm_opp_add(cpu_dev, freq * 1000, volt);
+>> +			qcom_cpufreq_update_opp(cpu_dev, freq, volt);
+> 
+> This is the cross-validation mentioned above, right? Shouldn't it 
+> include
+> a check of the return value?
+
+Yes, this is the cross-validation step,
+we adjust the voltage if opp-tables are
+present/added successfully and enable
+them, else we would just do a add opp.
+We don't want to exit early on a single
+opp failure. We will error out a bit
+later if the opp-count ends up to be
+zero.
+
+> 
+>>  			dev_dbg(cpu_dev, "index=%d freq=%d, core_count %d\n", i,
+>>  				freq, core_count);
+>>  		} else if (core_count == LUT_TURBO_IND) {
+>> @@ -133,7 +199,8 @@ static int qcom_cpufreq_hw_read_lut(struct device 
+>> *cpu_dev,
+>>  			if (prev->frequency == CPUFREQ_ENTRY_INVALID) {
+>>  				prev->frequency = prev_freq;
+>>  				prev->flags = CPUFREQ_BOOST_FREQ;
+>> -				dev_pm_opp_add(cpu_dev,	prev_freq * 1000, volt);
+>> +				qcom_cpufreq_update_opp(cpu_dev, prev_freq,
+>> +							volt);
+> 
+> ditto
+> 
+> nit: with the updated max line length it isn't necessary anymore to 
+> break
+> this into multiple lines
+> (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/checkpatch.pl?h=v5.8-rc1#n54),
+> though the coding style still has the old limit.
+
+yeah I'll expand it.
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
