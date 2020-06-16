@@ -2,184 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D83F21FAF2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 13:30:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C3661FAF55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 13:34:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbgFPLaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 07:30:23 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:16582 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726306AbgFPLaW (ORCPT
+        id S1728761AbgFPLeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 07:34:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728250AbgFPLcz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 07:30:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592307021; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=RTLcSYYKGCznp62vlVdfOr6g6s60R3IwkNGZ7WpqjjY=; b=dJgM7oRJQu/bA+aq7hrmk4WJFtwMslSGyMmWx7EXieOMs5QROhArHddDrWUG0zpd2jBJ249Q
- HVrKnDtUiSP+5iH2efP4DnOApw5/8X4Ho9vRAM2jJxHKGBJvck7ptFK1zyt0FVv7weoSc5zL
- /4Jj5fBYVBsgqwqs5ZWhf6vVeOk=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n14.prod.us-east-1.postgun.com with SMTP id
- 5ee8ad43567385e8e7c150fd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Jun 2020 11:30:11
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 65EC4C433A1; Tue, 16 Jun 2020 11:30:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.129] (unknown [106.222.0.113])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A225C433C9;
-        Tue, 16 Jun 2020 11:30:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3A225C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [RFC][PATCH 3/5] irqchip: Allow QCOM_PDC to be loadable as a
- perment module
-To:     John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-References: <20200616061338.109499-1-john.stultz@linaro.org>
- <20200616061338.109499-4-john.stultz@linaro.org>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <55e5982a-1e73-7013-e02d-5d1d30815fba@codeaurora.org>
-Date:   Tue, 16 Jun 2020 16:59:58 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        Tue, 16 Jun 2020 07:32:55 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C78EC08C5C6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:32:52 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id m25so11227971vsp.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:32:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sot87bVdSsP/TMan7IAvrnTcCMriHtu18eIiUhQ78Qg=;
+        b=CoYSUcHNt/515MdFb+hId5Mr7muoIms7ZGnrlq6d/WiCBnGeBKMHVbCXKQBxNNH2T9
+         h5JWbF7sLq1SY5iw96WYIUr/8O2Io1HhxohjNCuQ3rEx087b57aVYkyQIAIFNtUiA+cy
+         PDTXiHN9LJMQ4ZyIkgE4e/EEnnpN/lXdu8IIGckumZ8oTWoP0ahVuCt8qCWZB8eVugu3
+         DKqttflCFH4XqIQDc25lsXZ6m1Y/dsET6LzYgLU4TVFACpqpABVRhmyqRadstioYflHL
+         NDL64bWs87bbgAysJz/g0iMDgPjiZxfosMUvC+5ZlqhmaaQHlTIijUOPaqlCifq7LASJ
+         KZzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sot87bVdSsP/TMan7IAvrnTcCMriHtu18eIiUhQ78Qg=;
+        b=rZ8qktcO/ZTz+eh3dkwDOWj+XV6bfLCb2rpS2OrfGSMCfa1QQstlcia7WBOYvbD5Cr
+         YPC29zWZwJYeCM67rIm1oDKW2UQowiquQ/3T1nNZUQiNN8C138k+qWhwugu0uBcpK1k8
+         x7Bx0euyc+XmL7oszRVVECZ5utkF3ucXSH2yZl9gGz4VB7fIZ/d86zg6Cxtak/Nr6ZsW
+         IdEUf2jvjFbuhSJ6iCUVxYzFhQPIly3sGxFMNUdOHVutrqzSdjpxuK2GR6lgFZoL9Tok
+         PsGv7KQDs8hbVLuOZEextVVH8MukeRA025U/ziR/pmTMzNkxlou2TLH4Zfl4yX0dJiBD
+         xoew==
+X-Gm-Message-State: AOAM533wPhUZ3skkT/UfwdgscHMISg0n1eLaS0YoUitrgn056qhWcePX
+        52lyfpW70huULReIibqQKksWucAN9HriAhQmI0680g==
+X-Google-Smtp-Source: ABdhPJx59T2Wps/nTk8kgN0o8VuzLM1bJSBOfHHK/JljmBTGCoe5QO6mrlabaGH6LSEdZ72YSS9AROzrMGNoviWY6+k=
+X-Received: by 2002:a67:903:: with SMTP id 3mr1154481vsj.191.1592307168732;
+ Tue, 16 Jun 2020 04:32:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200616061338.109499-4-john.stultz@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+References: <1591691846-7578-1-git-send-email-ppvk@codeaurora.org> <1591691846-7578-2-git-send-email-ppvk@codeaurora.org>
+In-Reply-To: <1591691846-7578-2-git-send-email-ppvk@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 16 Jun 2020 13:32:11 +0200
+Message-ID: <CAPDyKFpqk7bvv9pWR63maqfxvquQ5QHUq7ACswLj78qmsBkyqQ@mail.gmail.com>
+Subject: Re: [PATCH V4 1/2] mmc: sdhci-msm: Add interconnect bandwidth scaling support
+To:     Pradeep P V K <ppvk@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-mmc-owner@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>, sibis@codeaurora.org,
+        matthias@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 6/16/2020 11:43 AM, John Stultz wrote:
-> Allows qcom-pdc driver to be loaded as a permenent module
-
-typo: permanent
-
-> Also, due to the fact that IRQCHIP_DECLARE becomes a no-op when
-> building as a module, we have to add the platform driver hooks
-> explicitly.
+On Tue, 9 Jun 2020 at 10:38, Pradeep P V K <ppvk@codeaurora.org> wrote:
 >
-> Thanks to Saravana for his help on pointing out the
-> IRQCHIP_DECLARE issue and guidance on a solution.
+> Interconnect bandwidth scaling support is now added as a
+> part of OPP. So, make sure interconnect driver is ready
+> before handling interconnect scaling.
 >
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Joerg Roedel <joro@8bytes.org>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Jason Cooper <jason@lakedaemon.net>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Lina Iyer <ilina@codeaurora.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: iommu@lists.linux-foundation.org
-> Cc: linux-gpio@vger.kernel.org
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+> Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+
+Applied for next, thanks!
+
+Kind regards
+Uffe
+
+
 > ---
->   drivers/irqchip/Kconfig    |  2 +-
->   drivers/irqchip/qcom-pdc.c | 30 ++++++++++++++++++++++++++++++
->   2 files changed, 31 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-> index 29fead208cad..12765bed08f9 100644
-> --- a/drivers/irqchip/Kconfig
-> +++ b/drivers/irqchip/Kconfig
-> @@ -425,7 +425,7 @@ config GOLDFISH_PIC
->            for Goldfish based virtual platforms.
->   
->   config QCOM_PDC
-> -	bool "QCOM PDC"
-> +	tristate "QCOM PDC"
->   	depends on ARCH_QCOM
->   	select IRQ_DOMAIN_HIERARCHY
->   	help
-> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-> index 6ae9e1f0819d..98d74160afcd 100644
-> --- a/drivers/irqchip/qcom-pdc.c
-> +++ b/drivers/irqchip/qcom-pdc.c
-> @@ -11,7 +11,9 @@
->   #include <linux/irqdomain.h>
->   #include <linux/io.h>
->   #include <linux/kernel.h>
-> +#include <linux/module.h>
->   #include <linux/of.h>
-> +#include <linux/of_irq.h>
-please move this include in order after of_device.h
->   #include <linux/of_address.h>
->   #include <linux/of_device.h>
->   #include <linux/soc/qcom/irq.h>
-> @@ -430,4 +432,32 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
->   	return ret;
->   }
->   
-> +#ifdef MODULE
-> +static int qcom_pdc_probe(struct platform_device *pdev)
-> +{
-> +	struct device_node *np = pdev->dev.of_node;
-> +	struct device_node *parent = of_irq_find_parent(np);
+> This change is based on
+> [1] [Patch v8] Introduce OPP bandwidth bindings
+> (https://lkml.org/lkml/2020/5/12/493)
+>
+> [2] [Patch v3] mmc: sdhci-msm: Fix error handling
+> for dev_pm_opp_of_add_table()
+> (https://lkml.org/lkml/2020/5/5/491)
+>
+>  drivers/mmc/host/sdhci-msm.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index b277dd7..15c42b0 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/slab.h>
+>  #include <linux/iopoll.h>
+>  #include <linux/regulator/consumer.h>
+> +#include <linux/interconnect.h>
+>
+>  #include "sdhci-pltfm.h"
+>  #include "cqhci.h"
+> @@ -2070,6 +2071,11 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>         }
+>         msm_host->bulk_clks[0].clk = clk;
+>
+> +        /* Check for optional interconnect paths */
+> +       ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
+> +       if (ret)
+> +               goto bus_clk_disable;
 > +
-> +	return qcom_pdc_init(np, parent);
-> +}
-> +
-> +static const struct of_device_id qcom_pdc_match_table[] = {
-> +	{ .compatible = "qcom,pdc" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_pdc_match_table);
-> +
-> +static struct platform_driver qcom_pdc_driver = {
-> +	.probe = qcom_pdc_probe,
-> +	.driver = {
-> +		.name = "qcom-pdc",
-> +		.of_match_table = qcom_pdc_match_table,
-
-can you please set .suppress_bind_attrs = true,
-
-This is to prevent bind/unbind using sysfs. Once irqchip driver module 
-is loaded, it shouldn't get unbind at runtime.
-
-Thanks,
-Maulik
-> +	},
-> +};
-> +module_platform_driver(qcom_pdc_driver);
-> +#else
->   IRQCHIP_DECLARE(qcom_pdc, "qcom,pdc", qcom_pdc_init);
-> +#endif
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
-> +MODULE_LICENSE("GPL v2");
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+>         msm_host->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
+>         if (IS_ERR(msm_host->opp_table)) {
+>                 ret = PTR_ERR(msm_host->opp_table);
+> --
+> 1.9.1
+>
