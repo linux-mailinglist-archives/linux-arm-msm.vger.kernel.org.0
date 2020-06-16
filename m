@@ -2,164 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD7B11FAF09
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 13:23:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D83F21FAF2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 13:30:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728306AbgFPLXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 07:23:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33606 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbgFPLXv (ORCPT
+        id S1728367AbgFPLaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 07:30:23 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:16582 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726306AbgFPLaW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 07:23:51 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0653C08C5C4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:23:48 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id gl26so21044533ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Qpexp3RkjxitjYyax71XJ65xkJqK+VpFeUkVzeKS31U=;
-        b=CzcrJ5qYmxaryGHdthk67cFgCecZH0CWdPJ5g60Tbk7urXTr3nTLDwfmB5s1698gNp
-         2W8xKL96xH4IMnKONF0VYAjsOIKLyXp7eo5uqkRsmdTf+MPQTQTTLfbUsp7/iu6uP3VQ
-         6cCMPgG5TQeczkuPQgzlJjgGcYYBTbJmi0nxT+pe5/KADtzhPDdLdIQcjcedQhXho4Bq
-         Lb4Xx2PzbJ5XDcT8p0pdhf253Rr+exgxegmp4Of5dpkqmnftSt5JI4nSn1U5ooXhJZio
-         5jm8Br0wcEJCMYBGptdMm09o9IQC/DMQYNcRRNDOGYpmY5HMe0Obx7OZieVR0aeIQ9qG
-         A9xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Qpexp3RkjxitjYyax71XJ65xkJqK+VpFeUkVzeKS31U=;
-        b=HbHJ/2bw6hvaTUmvyPpSzCRfqbrP8HUXBCb3W85JSCn00RaFzf5c6WLdXAwOaewO+D
-         n1Wo127B0EyKQWlQkzy6M6eNlwuZFl2xIUAvopHqjbvzBE+oR+a6IxiNlG/LBkae8JKQ
-         Cboh7FgW7WmxQy8pdMA4wgiEQJCBxvUtkW8MRG/QbHgZLIZwmbDE8OhTm+3kBMpinjb5
-         L3bVwUjKtSVPJk+aTBlB/bJBb0kxkGw14asQ4WrXvfTOwxRyhyNzZoExj9XYs7hwdEnQ
-         9qxw7xVK6eVrB5KDS/vevsj2vQCFxzcqv8MoszaJV8OGQYcu0Bg3zazHLzHhTz7fHVjN
-         s0Rw==
-X-Gm-Message-State: AOAM5313wtm4I9LwfUzL2CF9Yp38uwxlt6jkrUX2DnGnyfj57ACXYeJI
-        XfjL4qbQV3W2OlYug9JbhapR388ZTHvFnA==
-X-Google-Smtp-Source: ABdhPJwKr4leC7r3LIVJk23t6Nm5edH3moLqFl/zFOX/DcPhAXaJAtmXjP54cSGsZ1INulzT27bARA==
-X-Received: by 2002:a17:906:3951:: with SMTP id g17mr2368423eje.414.1592306626719;
-        Tue, 16 Jun 2020 04:23:46 -0700 (PDT)
-Received: from [192.168.1.3] (212-5-158-38.ip.btc-net.bg. [212.5.158.38])
-        by smtp.googlemail.com with ESMTPSA id y12sm7638412edj.37.2020.06.16.04.23.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2020 04:23:46 -0700 (PDT)
-Subject: Re: [PATCH v4 2/3] venus: Make debug infrastructure more flexible
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20200613223919.7038-1-stanimir.varbanov@linaro.org>
- <20200613223919.7038-3-stanimir.varbanov@linaro.org>
- <20200614063710.GB2611869@kroah.com>
- <c54a12a2-7f92-105c-a01c-8e85730f36bb@linaro.org>
- <20200615120337.GA511582@kroah.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <0f53eb20-6f52-e76e-3957-f7af38b88d35@linaro.org>
-Date:   Tue, 16 Jun 2020 14:23:44 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Tue, 16 Jun 2020 07:30:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592307021; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=RTLcSYYKGCznp62vlVdfOr6g6s60R3IwkNGZ7WpqjjY=; b=dJgM7oRJQu/bA+aq7hrmk4WJFtwMslSGyMmWx7EXieOMs5QROhArHddDrWUG0zpd2jBJ249Q
+ HVrKnDtUiSP+5iH2efP4DnOApw5/8X4Ho9vRAM2jJxHKGBJvck7ptFK1zyt0FVv7weoSc5zL
+ /4Jj5fBYVBsgqwqs5ZWhf6vVeOk=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n14.prod.us-east-1.postgun.com with SMTP id
+ 5ee8ad43567385e8e7c150fd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Jun 2020 11:30:11
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 65EC4C433A1; Tue, 16 Jun 2020 11:30:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.129] (unknown [106.222.0.113])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A225C433C9;
+        Tue, 16 Jun 2020 11:30:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3A225C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [RFC][PATCH 3/5] irqchip: Allow QCOM_PDC to be loadable as a
+ perment module
+To:     John Stultz <john.stultz@linaro.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-gpio@vger.kernel.org
+References: <20200616061338.109499-1-john.stultz@linaro.org>
+ <20200616061338.109499-4-john.stultz@linaro.org>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <55e5982a-1e73-7013-e02d-5d1d30815fba@codeaurora.org>
+Date:   Tue, 16 Jun 2020 16:59:58 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200615120337.GA511582@kroah.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <20200616061338.109499-4-john.stultz@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+Hi,
 
-On 6/15/20 3:03 PM, Greg KH wrote:
-> On Mon, Jun 15, 2020 at 12:55:29PM +0300, Stanimir Varbanov wrote:
->> Hi Greg,
->>
->> On 6/14/20 9:37 AM, Greg KH wrote:
->>> On Sun, Jun 14, 2020 at 01:39:18AM +0300, Stanimir Varbanov wrote:
->>>>  	if (slot == -1) {
->>>> -		dev_dbg(inst->core->dev, "%s: no free slot\n", __func__);
->>>> +		VDBGH("no free slot for timestamp\n");
->>>
->>> Again, no, you just lost a lot of valuable information by changing to a
->>> different format (like driver, specific device, etc.).  Please don't do
->>> this, it just makes the information less than before.
->>
->> OK, one of the reasons to use pr_debug inside VDBGH macro is to avoid
->> having struct device *dev variable in every function with dev_dbg even
->> when the function doesn't use it.
-> 
-> But the function _is_ using it, as you are referring to the device that
-> is being controlled by the driver.  That's the point, you are stripping
-> off that very valuable information for no git grep dev_dbg | wc -lreason.
-> 
-> Which means to me that you never really actually _NEED_ these debugging
-> messages, as you have not used them to see if it provides you with
-> something that can tell you something about something.
-> 
-> So, let me push harder, why do you even want this message at all?  What
-> can it provide you now that the driver is up and working properly?
+On 6/16/2020 11:43 AM, John Stultz wrote:
+> Allows qcom-pdc driver to be loaded as a permenent module
 
-I will delete that message.
+typo: permanent
 
-> 
->> Are you fine with s/pr_debug/dev_dbg in VDBGX macros?
-> 
-> I would be a bit happier yes, but the fact that you didn't use it means
-> you aren't even looking at these messages, which implies that it isn't
-> even needed.
-> 
-> So, how about just stripping all of these debugging messages out
+> Also, due to the fact that IRQCHIP_DECLARE becomes a no-op when
+> building as a module, we have to add the platform driver hooks
+> explicitly.
+>
+> Thanks to Saravana for his help on pointing out the
+> IRQCHIP_DECLARE issue and guidance on a solution.
+>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Jason Cooper <jason@lakedaemon.net>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: iommu@lists.linux-foundation.org
+> Cc: linux-gpio@vger.kernel.org
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> ---
+>   drivers/irqchip/Kconfig    |  2 +-
+>   drivers/irqchip/qcom-pdc.c | 30 ++++++++++++++++++++++++++++++
+>   2 files changed, 31 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+> index 29fead208cad..12765bed08f9 100644
+> --- a/drivers/irqchip/Kconfig
+> +++ b/drivers/irqchip/Kconfig
+> @@ -425,7 +425,7 @@ config GOLDFISH_PIC
+>            for Goldfish based virtual platforms.
+>   
+>   config QCOM_PDC
+> -	bool "QCOM PDC"
+> +	tristate "QCOM PDC"
+>   	depends on ARCH_QCOM
+>   	select IRQ_DOMAIN_HIERARCHY
+>   	help
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index 6ae9e1f0819d..98d74160afcd 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> @@ -11,7 +11,9 @@
+>   #include <linux/irqdomain.h>
+>   #include <linux/io.h>
+>   #include <linux/kernel.h>
+> +#include <linux/module.h>
+>   #include <linux/of.h>
+> +#include <linux/of_irq.h>
+please move this include in order after of_device.h
+>   #include <linux/of_address.h>
+>   #include <linux/of_device.h>
+>   #include <linux/soc/qcom/irq.h>
+> @@ -430,4 +432,32 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+>   	return ret;
+>   }
+>   
+> +#ifdef MODULE
+> +static int qcom_pdc_probe(struct platform_device *pdev)
+> +{
+> +	struct device_node *np = pdev->dev.of_node;
+> +	struct device_node *parent = of_irq_find_parent(np);
+> +
+> +	return qcom_pdc_init(np, parent);
+> +}
+> +
+> +static const struct of_device_id qcom_pdc_match_table[] = {
+> +	{ .compatible = "qcom,pdc" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_pdc_match_table);
+> +
+> +static struct platform_driver qcom_pdc_driver = {
+> +	.probe = qcom_pdc_probe,
+> +	.driver = {
+> +		.name = "qcom-pdc",
+> +		.of_match_table = qcom_pdc_match_table,
 
-I'm not sure for which messages you are talking. The messages added by
-this patch or the messages which currently exist?
+can you please set .suppress_bind_attrs = true,
 
-> entirely?  What do they provide that you don't already know?  Who would
-> use them?
+This is to prevent bind/unbind using sysfs. Once irqchip driver module 
+is loaded, it shouldn't get unbind at runtime.
 
-Presently in 5.8-rc1 debug messages count for similar (encoder/decoder)
-drivers compared with Venus one:
-
-Venus
-$git grep dev_dbg | wc -l
-15
-
-Coda
-$git grep coda_dbg | wc -l
-56
-
-Mtk-vcodec
-$git grep mtk_v4l2_debug | wc -l
-95
-
-Mfc
-$git grep mfc_debug | wc -l
-227
-
-As you can see Venus driver is the one with smallest count of debug
-messages. It is smallest because I also don't want to overload the code
-with so many debugs and thus make it unreadable.
-
-I personally don't need so much debug messages. I can add them to debug
-some particular issue and drop them before sending the fix. But now when
-the driver is going to be used more widely I've been asked to "improve"
-debug infrastructure. That will help to unfamiliar with the driver
-persons to enable debug messages and send bug reports to help them to
-diagnose the problem.
-
-What messages are needed and where is a subjective question. I'm relying
-on my experience with the driver and issues I had previously.
-
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Thanks,
+Maulik
+> +	},
+> +};
+> +module_platform_driver(qcom_pdc_driver);
+> +#else
+>   IRQCHIP_DECLARE(qcom_pdc, "qcom,pdc", qcom_pdc_init);
+> +#endif
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
+> +MODULE_LICENSE("GPL v2");
 
 -- 
-regards,
-Stan
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+
