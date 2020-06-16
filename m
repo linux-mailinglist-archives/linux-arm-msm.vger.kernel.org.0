@@ -2,169 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D22691FA89B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 08:13:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E66BB1FA8D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 08:36:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbgFPGNz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 02:13:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42168 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726909AbgFPGNt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 02:13:49 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDAC6C03E97C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 23:13:48 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id n9so7930362plk.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2020 23:13:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sjkuZIHgOGWNn0NM6WxaSWNlrL5TYHvrP2K4MQU57Qs=;
-        b=z0Ya8NgIc7JGqkE+pEiQxFdlLb1wI+YIdEhjbg63klsr9SrNdiWfoslKkTEk6he3qf
-         dTUbIL6TJWmiUS0mE3JJ680pY6mwbVwm9fG095z+akltQXiIt/Tm5YyuCKRkSwJXGNid
-         ueARo5vX67GhC0jJKeiZ2O+xPlAIi7b5zjFyw/jrwW3EbNRMWWSbx4GCMJKpWzAcY6s3
-         Y8m3moUHonrenxnBYqM8BdukDS/D1MI63FiKaoqHeoenLKaFkHzd09/PJzgJghFTgGx8
-         D2F/uagbw34y3bfQlXcZWfvjzd1pHQlziWnls/d601EqJCI2KUVag4SNPvTdFblJyVbx
-         GVxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=sjkuZIHgOGWNn0NM6WxaSWNlrL5TYHvrP2K4MQU57Qs=;
-        b=RulyNXvYb1M2k0hjt2WMyfzouRrSFq7WYf0B1I9zhkfwPXlm3jjOTHGyvFo6qUeRWQ
-         foHc14sKipP45kdjiwXv6p0BtxHkKpsIfC447i16i8at/0iaOpK9t36xV6Nigf41Yh4U
-         kp/22zzvqjnBWsrCQADFoP24ha5B03WgQESJoVq+o2SMEKkQt++w2bobF2GxA35cAi9O
-         cYwvPf7l62ISR0VAxPwmPq4etzuP7Lh6JLRdXB3cK/189QJkUqn4QGsOVxstJOCuj4uh
-         57VPY9klUr5NqvbEi/RBnXvBLQYPXNZKeEKy7yebos56qRkPUlJ2R4eeqSt2CrfeKXoS
-         0BRQ==
-X-Gm-Message-State: AOAM5302FiN4znWf+PVUZxWZv/PLZ3Mov8bD/jDq4mW371ZEnLq3xu99
-        s8s4lJDESb1KhAuICxNB+zwLjg==
-X-Google-Smtp-Source: ABdhPJwYhjtOBdx0zxRParoCjvCJBIOPOU1zn3RHlSdNmeSw/AbOBT8/4UQJOQjCCNZqxbJatymuaQ==
-X-Received: by 2002:a17:90b:3004:: with SMTP id hg4mr1670052pjb.208.1592288028324;
-        Mon, 15 Jun 2020 23:13:48 -0700 (PDT)
-Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id i26sm15642032pfo.0.2020.06.15.23.13.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 23:13:47 -0700 (PDT)
-From:   John Stultz <john.stultz@linaro.org>
-To:     lkml <linux-kernel@vger.kernel.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: [RFC][PATCH 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable as a permenent module
-Date:   Tue, 16 Jun 2020 06:13:38 +0000
-Message-Id: <20200616061338.109499-6-john.stultz@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200616061338.109499-1-john.stultz@linaro.org>
-References: <20200616061338.109499-1-john.stultz@linaro.org>
+        id S1725911AbgFPGgw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 02:36:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44932 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725775AbgFPGgw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Jun 2020 02:36:52 -0400
+Received: from localhost (unknown [171.61.66.58])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5EB0920734;
+        Tue, 16 Jun 2020 06:36:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592289411;
+        bh=MiClSic9tiH3exzOAeHVb53Fy19wA+P/5nm1SXYHs4s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kUfxqYU6EGRPw1vd/VF4GAq4hpIDKPjfgIB0rXIUBWVI1jAPy2RAFf/M3GUll85cn
+         wIRDUz9ONdpzSFRrBBiSsM2Dcj1XSKsxxu74uuRm5BIlkuF9RMr+mUmbM2uZMrWALl
+         /zsp/DImZPBu7SgAT/dlqTZ4+Io8PiIIXXSPfZZI=
+Date:   Tue, 16 Jun 2020 12:06:44 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jack Pham <jackp@codeaurora.org>
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: sm8150: Add USB and PHY device
+ nodes
+Message-ID: <20200616063644.GA2324254@vkoul-mobl>
+References: <1586566362-21450-1-git-send-email-wcheng@codeaurora.org>
+ <1586566362-21450-3-git-send-email-wcheng@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1586566362-21450-3-git-send-email-wcheng@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow the qcom_scm driver to be loadable as a
-permenent module.
+On 10-04-20, 17:52, Wesley Cheng wrote:
+> From: Jack Pham <jackp@codeaurora.org>
+> 
+> Add device nodes for the USB3 controller, QMP SS PHY and
+> SNPS HS PHY.
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Jason Cooper <jason@lakedaemon.net>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Lina Iyer <ilina@codeaurora.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: iommu@lists.linux-foundation.org
-Cc: linux-gpio@vger.kernel.org
-Signed-off-by: John Stultz <john.stultz@linaro.org>
----
- drivers/firmware/Kconfig    | 2 +-
- drivers/firmware/Makefile   | 3 ++-
- drivers/firmware/qcom_scm.c | 4 ++++
- drivers/iommu/Kconfig       | 2 ++
- 4 files changed, 9 insertions(+), 2 deletions(-)
+Bjorn, can you please review/pick this.. I dont see this in -rc1
 
-diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-index fbd785dd0513..9e533a462bf4 100644
---- a/drivers/firmware/Kconfig
-+++ b/drivers/firmware/Kconfig
-@@ -236,7 +236,7 @@ config INTEL_STRATIX10_RSU
- 	  Say Y here if you want Intel RSU support.
- 
- config QCOM_SCM
--	bool
-+	tristate "Qcom SCM driver"
- 	depends on ARM || ARM64
- 	select RESET_CONTROLLER
- 
-diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-index 99510be9f5ed..cf24d674216b 100644
---- a/drivers/firmware/Makefile
-+++ b/drivers/firmware/Makefile
-@@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
- obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
- obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
- obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
--obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-+obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
-+qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
- obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
- obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
- obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 0e7233a20f34..b5e88bf66975 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -1155,6 +1155,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
- 	{ .compatible = "qcom,scm" },
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
- 
- static struct platform_driver qcom_scm_driver = {
- 	.driver = {
-@@ -1170,3 +1171,6 @@ static int __init qcom_scm_init(void)
- 	return platform_driver_register(&qcom_scm_driver);
- }
- subsys_initcall(qcom_scm_init);
-+
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
-+MODULE_LICENSE("GPL v2");
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index b510f67dfa49..714893535dd2 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
- config ARM_SMMU
- 	tristate "ARM Ltd. System MMU (SMMU) Support"
- 	depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) && MMU
-+	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_LPAE
- 	select ARM_DMA_USE_IOMMU if ARM
-@@ -500,6 +501,7 @@ config QCOM_IOMMU
- 	# Note: iommu drivers cannot (yet?) be built as modules
- 	bool "Qualcomm IOMMU Support"
- 	depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-+	depends on QCOM_SCM=y
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_LPAE
- 	select ARM_DMA_USE_IOMMU
+> 
+> Signed-off-by: Jack Pham <jackp@codeaurora.org>
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Tested-by: Vinod Koul <vinod.koul@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 21 ++++++++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 92 +++++++++++++++++++++++++++++++++
+>  2 files changed, 113 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> index 8ab1661..6c6325c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> @@ -408,3 +408,24 @@
+>  	vdda-pll-supply = <&vreg_l3c_1p2>;
+>  	vdda-pll-max-microamp = <19000>;
+>  };
+> +
+> +&usb_1_hsphy {
+> +	status = "okay";
+> +	vdda-pll-supply = <&vdd_usb_hs_core>;
+> +	vdda33-supply = <&vdda_usb_hs_3p1>;
+> +	vdda18-supply = <&vdda_usb_hs_1p8>;
+> +};
+> +
+> +&usb_1_qmpphy {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l3c_1p2>;
+> +	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
+> +};
+> +
+> +&usb_1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +	dr_mode = "peripheral";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 141c21d..a36512d 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -621,6 +621,98 @@
+>  			};
+>  		};
+>  
+> +		usb_1_hsphy: phy@88e2000 {
+> +			compatible = "qcom,sm8150-usb-hs-phy",
+> +							"qcom,usb-snps-hs-7nm-phy";
+> +			reg = <0 0x088e2000 0 0x400>;
+> +			status = "disabled";
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "ref";
+> +
+> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +		};
+> +
+> +		usb_1_qmpphy: phy@88e9000 {
+> +			compatible = "qcom,sm8150-qmp-usb3-phy";
+> +			reg = <0 0x088e9000 0 0x18c>,
+> +			      <0 0x088e8000 0 0x10>;
+> +			reg-names = "reg-base", "dp_com";
+> +			status = "disabled";
+> +			#clock-cells = <1>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+> +			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
+> +
+> +			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+> +				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+> +			reset-names = "phy", "common";
+> +
+> +			usb_1_ssphy: lanes@88e9200 {
+> +				reg = <0 0x088e9200 0 0x200>,
+> +				      <0 0x088e9400 0 0x200>,
+> +				      <0 0x088e9c00 0 0x218>,
+> +				      <0 0x088e9600 0 0x200>,
+> +				      <0 0x088e9800 0 0x200>,
+> +				      <0 0x088e9a00 0 0x100>;
+> +				#phy-cells = <0>;
+> +				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +				clock-names = "pipe0";
+> +				clock-output-names = "usb3_phy_pipe_clk_src";
+> +			};
+> +		};
+> +
+> +		usb_1: usb@a6f8800 {
+> +			compatible = "qcom,sm8150-dwc3", "qcom,dwc3";
+> +			reg = <0 0x0a6f8800 0 0x400>;
+> +			status = "disabled";
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +			dma-ranges;
+> +
+> +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
+> +				 <&gcc GCC_USB3_SEC_CLKREF_CLK>;
+> +			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
+> +				      "sleep", "xo";
+> +
+> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <150000000>;
+> +
+> +			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+> +					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+> +
+> +			power-domains = <&gcc USB30_PRIM_GDSC>;
+> +
+> +			resets = <&gcc GCC_USB30_PRIM_BCR>;
+> +
+> +			usb_1_dwc3: dwc3@a600000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0 0x0a600000 0 0xcd00>;
+> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_enblslpm_quirk;
+> +				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+> +				phy-names = "usb2-phy", "usb3-phy";
+> +			};
+> +		};
+> +
+>  		aoss_qmp: power-controller@c300000 {
+>  			compatible = "qcom,sm8150-aoss-qmp";
+>  			reg = <0x0 0x0c300000 0x0 0x100000>;
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+
 -- 
-2.17.1
-
+~Vinod
