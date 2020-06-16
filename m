@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3661FAF55
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 13:34:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA6921FAF4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 13:33:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728761AbgFPLeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 07:34:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35026 "EHLO
+        id S1728667AbgFPLdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 07:33:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728250AbgFPLcz (ORCPT
+        with ESMTP id S1728332AbgFPLc5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 07:32:55 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C78EC08C5C6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:32:52 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id m25so11227971vsp.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:32:52 -0700 (PDT)
+        Tue, 16 Jun 2020 07:32:57 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEBF8C08C5C3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:32:53 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id u17so11226149vsu.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 04:32:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=sot87bVdSsP/TMan7IAvrnTcCMriHtu18eIiUhQ78Qg=;
-        b=CoYSUcHNt/515MdFb+hId5Mr7muoIms7ZGnrlq6d/WiCBnGeBKMHVbCXKQBxNNH2T9
-         h5JWbF7sLq1SY5iw96WYIUr/8O2Io1HhxohjNCuQ3rEx087b57aVYkyQIAIFNtUiA+cy
-         PDTXiHN9LJMQ4ZyIkgE4e/EEnnpN/lXdu8IIGckumZ8oTWoP0ahVuCt8qCWZB8eVugu3
-         DKqttflCFH4XqIQDc25lsXZ6m1Y/dsET6LzYgLU4TVFACpqpABVRhmyqRadstioYflHL
-         NDL64bWs87bbgAysJz/g0iMDgPjiZxfosMUvC+5ZlqhmaaQHlTIijUOPaqlCifq7LASJ
-         KZzA==
+        bh=1C4xlbOuF8hLryefQXY445HSGUPqVPlV2H+ODb1eYxA=;
+        b=ceofJhQisogT8djGC+30R6rH9kr18j8pEGv0o3E7GDSHGgQsSPhVHRc6HbNfK958xu
+         Itwe4tAW3ORMqnAngeF8gkzFFaOMZ+PuMRuNbeq1hm9SVEJcJNck70qMbwnLCKDIMlNK
+         /jgfIu08OHf/QouS/AlteiIEFOgmx33pDwImiI0lLCz+ZVTubelWtLR6UiwyA/uYTrPL
+         56pr8YjveJBuLa0t/dg3sUzoeT7Pms0qMYcEYTQvVfjf7+kznUMrxFnXAwL3Mvy4ajRD
+         ZW/bUsx8bXFvw78umR4r3LHiGZaV/Rg2LKkR8p3RWfvImjI/zmJOBvmLpVJxu6zHMuJ0
+         f0hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=sot87bVdSsP/TMan7IAvrnTcCMriHtu18eIiUhQ78Qg=;
-        b=rZ8qktcO/ZTz+eh3dkwDOWj+XV6bfLCb2rpS2OrfGSMCfa1QQstlcia7WBOYvbD5Cr
-         YPC29zWZwJYeCM67rIm1oDKW2UQowiquQ/3T1nNZUQiNN8C138k+qWhwugu0uBcpK1k8
-         x7Bx0euyc+XmL7oszRVVECZ5utkF3ucXSH2yZl9gGz4VB7fIZ/d86zg6Cxtak/Nr6ZsW
-         IdEUf2jvjFbuhSJ6iCUVxYzFhQPIly3sGxFMNUdOHVutrqzSdjpxuK2GR6lgFZoL9Tok
-         PsGv7KQDs8hbVLuOZEextVVH8MukeRA025U/ziR/pmTMzNkxlou2TLH4Zfl4yX0dJiBD
-         xoew==
-X-Gm-Message-State: AOAM533wPhUZ3skkT/UfwdgscHMISg0n1eLaS0YoUitrgn056qhWcePX
-        52lyfpW70huULReIibqQKksWucAN9HriAhQmI0680g==
-X-Google-Smtp-Source: ABdhPJx59T2Wps/nTk8kgN0o8VuzLM1bJSBOfHHK/JljmBTGCoe5QO6mrlabaGH6LSEdZ72YSS9AROzrMGNoviWY6+k=
-X-Received: by 2002:a67:903:: with SMTP id 3mr1154481vsj.191.1592307168732;
- Tue, 16 Jun 2020 04:32:48 -0700 (PDT)
+        bh=1C4xlbOuF8hLryefQXY445HSGUPqVPlV2H+ODb1eYxA=;
+        b=qI+r6Lw7rG4f8ZIpavWLlkg5iuH/SlIsd1e/LcmE3iuhq5ZqAQfEMptzhPIpK3UGRA
+         /BmTpk2BMMQYTryMwKd1SXT1awIXmixZDfxEFsvokGvIAiorKmA+3z0p+cBHyPcDrHsW
+         G2KD1t5PgGFTNMi07DUnUCbeMVz6PEj44W8iLAHeTbSYBlu8Jd2/wj06NART7BJZ88Ye
+         VBfuZNGNXyBnEqsFTGPv3dJqCYd8jjh1bi0hQTkh7g/t9sa5oewu6qZ6utGwoCmZ3vgM
+         Q9SAICkbmgK759O+sBJxAleWotPs2NLcrnCV1/ADniN6bfQHcuIhMPgd5DHFDjQ243TV
+         lkkA==
+X-Gm-Message-State: AOAM531e5LQfy8gcuOeTW1Ja7IgzF2TuERpvbLX/rDLAC0KfASQNq3II
+        SF5WUF5EGC8v3IvQQ/8iDc05/1//GNE3QZ0UrXzw6EDLMWU=
+X-Google-Smtp-Source: ABdhPJw63noGBljzHWsWI4sYYIst23+5lAqRC5OLkTcOQ4G7Dp0cAbxMHpwylGBv2AxyVk8ZHK1Du/uSYKkWqtndx84=
+X-Received: by 2002:a67:db88:: with SMTP id f8mr1115288vsk.165.1592307171958;
+ Tue, 16 Jun 2020 04:32:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <1591691846-7578-1-git-send-email-ppvk@codeaurora.org> <1591691846-7578-2-git-send-email-ppvk@codeaurora.org>
-In-Reply-To: <1591691846-7578-2-git-send-email-ppvk@codeaurora.org>
+References: <1591691846-7578-1-git-send-email-ppvk@codeaurora.org> <1591691846-7578-3-git-send-email-ppvk@codeaurora.org>
+In-Reply-To: <1591691846-7578-3-git-send-email-ppvk@codeaurora.org>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 16 Jun 2020 13:32:11 +0200
-Message-ID: <CAPDyKFpqk7bvv9pWR63maqfxvquQ5QHUq7ACswLj78qmsBkyqQ@mail.gmail.com>
-Subject: Re: [PATCH V4 1/2] mmc: sdhci-msm: Add interconnect bandwidth scaling support
+Date:   Tue, 16 Jun 2020 13:32:15 +0200
+Message-ID: <CAPDyKFr8Ge617QchXG1cMgZUvPZ+fRUpJamv173h1faz7-0baw@mail.gmail.com>
+Subject: Re: [PATCH V4 2/2] dt-bindings: mmc: sdhci-msm: Add interconnect BW
+ scaling strings
 To:     Pradeep P V K <ppvk@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Adrian Hunter <adrian.hunter@intel.com>,
@@ -74,12 +75,12 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 9 Jun 2020 at 10:38, Pradeep P V K <ppvk@codeaurora.org> wrote:
 >
-> Interconnect bandwidth scaling support is now added as a
-> part of OPP. So, make sure interconnect driver is ready
-> before handling interconnect scaling.
+> Add interconnect bandwidth scaling supported strings for qcom-sdhci
+> controller.
 >
 > Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
-> Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Applied for next, thanks!
 
@@ -88,42 +89,45 @@ Uffe
 
 
 > ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 >
-> This change is based on
-> [1] [Patch v8] Introduce OPP bandwidth bindings
-> (https://lkml.org/lkml/2020/5/12/493)
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> index b8e1d2b..3b602fd 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> @@ -54,6 +54,21 @@ Required properties:
+>  - qcom,dll-config: Chipset and Platform specific value. Use this field to
+>         specify the DLL_CONFIG register value as per Hardware Programming Guide.
 >
-> [2] [Patch v3] mmc: sdhci-msm: Fix error handling
-> for dev_pm_opp_of_add_table()
-> (https://lkml.org/lkml/2020/5/5/491)
->
->  drivers/mmc/host/sdhci-msm.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index b277dd7..15c42b0 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -14,6 +14,7 @@
->  #include <linux/slab.h>
->  #include <linux/iopoll.h>
->  #include <linux/regulator/consumer.h>
-> +#include <linux/interconnect.h>
->
->  #include "sdhci-pltfm.h"
->  #include "cqhci.h"
-> @@ -2070,6 +2071,11 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->         }
->         msm_host->bulk_clks[0].clk = clk;
->
-> +        /* Check for optional interconnect paths */
-> +       ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
-> +       if (ret)
-> +               goto bus_clk_disable;
+> +Optional Properties:
+> +* Following bus parameters are required for interconnect bandwidth scaling:
+> +- interconnects: Pairs of phandles and interconnect provider specifier
+> +                to denote the edge source and destination ports of
+> +                the interconnect path.
 > +
->         msm_host->opp_table = dev_pm_opp_set_clkname(&pdev->dev, "core");
->         if (IS_ERR(msm_host->opp_table)) {
->                 ret = PTR_ERR(msm_host->opp_table);
+> +- interconnect-names: For sdhc, we have two main paths.
+> +               1. Data path : sdhc to ddr
+> +               2. Config path : cpu to sdhc
+> +               For Data interconnect path the name supposed to be
+> +               is "sdhc-ddr" and for config interconnect path it is
+> +               "cpu-sdhc".
+> +               Please refer to Documentation/devicetree/bindings/
+> +               interconnect/ for more details.
+> +
+>  Example:
+>
+>         sdhc_1: sdhci@f9824900 {
+> @@ -71,6 +86,9 @@ Example:
+>
+>                 clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>;
+>                 clock-names = "core", "iface";
+> +               interconnects = <&qnoc MASTER_SDCC_ID &qnoc SLAVE_DDR_ID>,
+> +                               <&qnoc MASTER_CPU_ID &qnoc SLAVE_SDCC_ID>;
+> +               interconnect-names = "sdhc-ddr","cpu-sdhc";
+>
+>                 qcom,dll-config = <0x000f642c>;
+>                 qcom,ddr-config = <0x80040868>;
 > --
 > 1.9.1
 >
