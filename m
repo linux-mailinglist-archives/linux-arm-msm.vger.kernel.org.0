@@ -2,174 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1B9B1FC0F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 23:22:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B49921FC170
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 00:12:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726312AbgFPVWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 17:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42088 "EHLO
+        id S1726044AbgFPWMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 18:12:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726464AbgFPVWJ (ORCPT
+        with ESMTP id S1725964AbgFPWMA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 17:22:09 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E2DC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 14:22:09 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id y45so4373670ooi.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 14:22:09 -0700 (PDT)
+        Tue, 16 Jun 2020 18:12:00 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1290C061573
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 15:11:59 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id h22so26285pjf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 15:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1WTjVtVQHawTUGhoVtzUqLBrhOe6FD5mLMeqvgfDzVg=;
-        b=M4fPpFWneE9bnyXRYRY3Mn84h60xJrEkkF9vFW3Q9pcy/KKGQ5UrPvuZ4lWrZQ8/4G
-         9miARSs02wr9PKZWhq0Vw6Rq72C5RFpxZHumND2rpKJZiRdxXHDsjl2FqMZid6dfz/UR
-         ZTqF6NiyURgd0q+jR3JyBuFd2e7ixojyPqdz7rfY80U0YB0fiS/dBO9rk5IowumDz5NU
-         b8B7GPvsbqH982dU9YW502JFqOwRVTIfs6DlxbTEr/k/c2fKUDh8W+7OHH6ZGAb5JG93
-         DvToRR1Ge0+fj/RBUEOI35BkFGq8T2tn8aW5tN5iacF3Fi0xZPbHN0D5ACToeRxVulJ9
-         vusQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IAntcGVr69jG+2U9Kg/0cnUckvFxjteOolkcxbeRc9Y=;
+        b=K+ndqAaPDXsilMqepmXfCMFmGehmMghRgs/uYLROhyx6CasKx/nZUoyOyDLdqq2piY
+         C/V3d1JkmyubwTahebBr/V7/usnD6QdgIQXr35pyGRbVh4GWwwV8dAs7yvQIDrSWKDAc
+         ZHAVHA9KluaJyFPwX8WCoEpPL0TWDallcZXXU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1WTjVtVQHawTUGhoVtzUqLBrhOe6FD5mLMeqvgfDzVg=;
-        b=f/UDPM9+rbTRMPGiN8SZFVZodd8/xvfa47UgLwGGNHc5A+rG16UUAKbeW2ZRcoe7J3
-         EvIRxmkbIapuI58JigKn5EW/NKhy91/W++7Ps2Umj6VwkD+7joEPdds1dRovEp5UthgF
-         nd5K7f6HoJe38hzRlFhyo1tepPn0j6iQ4/a71mZ3PwLDFuaeO7ZA+nJ+ZqTWIiuJnaoc
-         4zJvXd4K/OFfWIwYCpCEfoUdkdSvWIM5oOS5adJn4o1R4ykgbuFu8cFwWBeSVeSMUt7L
-         hueIgu1CSfTpbfp8pOEPgF143yoI9ECLr8t3HTCtoqY8taxgCrTnTvbKD7w068vxHS1K
-         duDA==
-X-Gm-Message-State: AOAM530Ne5LhlMuD0xDUIeG0Vn0NQXi5a8ZXqqemNiPwZZhU5NFZFnkw
-        r8I+NCKm9SSEpgMAVQoQtc0u2hyj5aMui5QNgzgZwg==
-X-Google-Smtp-Source: ABdhPJzIgCP4J42f64sJb6GXSPJX1olg9X9JFjeVFC4T8jGcQXs1ijKnE/J6hxJaHOZoWyhr9TFaRSdMWjuhuHGnjIg=
-X-Received: by 2002:a4a:94d1:: with SMTP id l17mr4120054ooi.88.1592342528795;
- Tue, 16 Jun 2020 14:22:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IAntcGVr69jG+2U9Kg/0cnUckvFxjteOolkcxbeRc9Y=;
+        b=NyB0gACKF2GS0g8S0Hng5sGwGu6c71UiQ/eLDu5jXHRgoutG3U/QbEoN65P9mv/7cE
+         BCkntACAOE1AjShXJOK+S2vxy5Wr29C3Aq6LcXQC9LPE3qmHEAWUM0ZhJs7VTs62xqdK
+         urZQEsFt3KDWMPYSkx0Rz0Ni+1f/C3/nOG52Ihy4EF/MGpmIzR2jtMPeoxmBEwNO20oy
+         se8yo5IweO4wlDvXyF9zx9Ry9HyWXV7mG3XCguAU88zu0Qn0kXo/vLchGgpTBGEYQ9KS
+         zGjg562nx7n+cTlMuwFwi5L9oe5h36anvNbcwfeBC5WpQzYDUie0YUwtsry0HZT3aAOh
+         +A9Q==
+X-Gm-Message-State: AOAM533hTUdmaM6JuySYjn2evx4SEvtLvA38PzuXglkEtvDz6M1eBs4k
+        t2zmVB0HmjLk0sKSgQMEJGll2w==
+X-Google-Smtp-Source: ABdhPJzSnCJjDw+p1Ezp/HhEv4OF149xFwUoopIq0eaTwuT98NS0ayzkV4ddBqNuQJGzJMA3vaFiHQ==
+X-Received: by 2002:a17:90b:19c4:: with SMTP id nm4mr4994217pjb.66.1592345519448;
+        Tue, 16 Jun 2020 15:11:59 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 73sm15563491pge.15.2020.06.16.15.11.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jun 2020 15:11:58 -0700 (PDT)
+Date:   Tue, 16 Jun 2020 15:11:57 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
+        bjorn.andersson@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v6 4/5] cpufreq: qcom: Update the bandwidth levels on
+ frequency change
+Message-ID: <20200616221157.GA4525@google.com>
+References: <20200605213332.609-1-sibis@codeaurora.org>
+ <20200605213332.609-5-sibis@codeaurora.org>
+ <20200615172553.GU4525@google.com>
+ <e21f85d64d72ec637c10dae93e8323bb@codeaurora.org>
 MIME-Version: 1.0
-References: <20200616061338.109499-1-john.stultz@linaro.org>
- <20200616061338.109499-4-john.stultz@linaro.org> <55e5982a-1e73-7013-e02d-5d1d30815fba@codeaurora.org>
-In-Reply-To: <55e5982a-1e73-7013-e02d-5d1d30815fba@codeaurora.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Tue, 16 Jun 2020 14:21:55 -0700
-Message-ID: <CALAqxLUvnhgL98T3LPaaCPq3w9b1notu=1a8ZhcRJNCkF3dXrQ@mail.gmail.com>
-Subject: Re: [RFC][PATCH 3/5] irqchip: Allow QCOM_PDC to be loadable as a
- perment module
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e21f85d64d72ec637c10dae93e8323bb@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 16, 2020 at 4:30 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> Hi,
->
-> On 6/16/2020 11:43 AM, John Stultz wrote:
-> > Allows qcom-pdc driver to be loaded as a permenent module
->
-> typo: permanent
->
-> > Also, due to the fact that IRQCHIP_DECLARE becomes a no-op when
-> > building as a module, we have to add the platform driver hooks
-> > explicitly.
-> >
-> > Thanks to Saravana for his help on pointing out the
-> > IRQCHIP_DECLARE issue and guidance on a solution.
-> >
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Joerg Roedel <joro@8bytes.org>
-> > Cc: Thomas Gleixner <tglx@linutronix.de>
-> > Cc: Jason Cooper <jason@lakedaemon.net>
-> > Cc: Marc Zyngier <maz@kernel.org>
-> > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > Cc: Lina Iyer <ilina@codeaurora.org>
-> > Cc: Saravana Kannan <saravanak@google.com>
-> > Cc: Todd Kjos <tkjos@google.com>
-> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: iommu@lists.linux-foundation.org
-> > Cc: linux-gpio@vger.kernel.org
-> > Signed-off-by: John Stultz <john.stultz@linaro.org>
-> > ---
-> >   drivers/irqchip/Kconfig    |  2 +-
-> >   drivers/irqchip/qcom-pdc.c | 30 ++++++++++++++++++++++++++++++
-> >   2 files changed, 31 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-> > index 29fead208cad..12765bed08f9 100644
-> > --- a/drivers/irqchip/Kconfig
-> > +++ b/drivers/irqchip/Kconfig
-> > @@ -425,7 +425,7 @@ config GOLDFISH_PIC
-> >            for Goldfish based virtual platforms.
-> >
-> >   config QCOM_PDC
-> > -     bool "QCOM PDC"
-> > +     tristate "QCOM PDC"
-> >       depends on ARCH_QCOM
-> >       select IRQ_DOMAIN_HIERARCHY
-> >       help
-> > diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-> > index 6ae9e1f0819d..98d74160afcd 100644
-> > --- a/drivers/irqchip/qcom-pdc.c
-> > +++ b/drivers/irqchip/qcom-pdc.c
-> > @@ -11,7 +11,9 @@
-> >   #include <linux/irqdomain.h>
-> >   #include <linux/io.h>
-> >   #include <linux/kernel.h>
-> > +#include <linux/module.h>
-> >   #include <linux/of.h>
-> > +#include <linux/of_irq.h>
-> please move this include in order after of_device.h
-> >   #include <linux/of_address.h>
-> >   #include <linux/of_device.h>
-> >   #include <linux/soc/qcom/irq.h>
-> > @@ -430,4 +432,32 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
-> >       return ret;
-> >   }
-> >
-> > +#ifdef MODULE
-> > +static int qcom_pdc_probe(struct platform_device *pdev)
-> > +{
-> > +     struct device_node *np = pdev->dev.of_node;
-> > +     struct device_node *parent = of_irq_find_parent(np);
-> > +
-> > +     return qcom_pdc_init(np, parent);
-> > +}
-> > +
-> > +static const struct of_device_id qcom_pdc_match_table[] = {
-> > +     { .compatible = "qcom,pdc" },
-> > +     {}
-> > +};
-> > +MODULE_DEVICE_TABLE(of, qcom_pdc_match_table);
-> > +
-> > +static struct platform_driver qcom_pdc_driver = {
-> > +     .probe = qcom_pdc_probe,
-> > +     .driver = {
-> > +             .name = "qcom-pdc",
-> > +             .of_match_table = qcom_pdc_match_table,
->
-> can you please set .suppress_bind_attrs = true,
->
-> This is to prevent bind/unbind using sysfs. Once irqchip driver module
-> is loaded, it shouldn't get unbind at runtime.
+Hi Sibi,
 
-Thanks, I really appreciate the review! I've made these changes on my
-side and they'll be included in v2.
+after doing the review I noticed that Viresh replied on the cover letter
+that he picked the series up for v5.9, so I'm not sure if it makes sense
+to send a v7.
 
-thanks
--john
+On Wed, Jun 17, 2020 at 02:35:00AM +0530, Sibi Sankar wrote:
+
+> > > @@ -112,7 +178,7 @@ static int qcom_cpufreq_hw_read_lut(struct
+> > > device *cpu_dev,
+> > > 
+> > >  		if (freq != prev_freq && core_count != LUT_TURBO_IND) {
+> > >  			table[i].frequency = freq;
+> > > -			dev_pm_opp_add(cpu_dev, freq * 1000, volt);
+> > > +			qcom_cpufreq_update_opp(cpu_dev, freq, volt);
+> > 
+> > This is the cross-validation mentioned above, right? Shouldn't it
+> > include
+> > a check of the return value?
+> 
+> Yes, this is the cross-validation step,
+> we adjust the voltage if opp-tables are
+> present/added successfully and enable
+> them, else we would just do a add opp.
+> We don't want to exit early on a single
+> opp failure. We will error out a bit
+> later if the opp-count ends up to be
+> zero.
+
+At least an error/warning message would seem convenient when adjusting/adding
+an OPP fails, otherwise you would only notice by looking at the sysfs
+attributes (if you'd even spot a single/few OPPs to be missing).
+
