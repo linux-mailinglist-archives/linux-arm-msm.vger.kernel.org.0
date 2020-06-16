@@ -2,151 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1F9C1FA470
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 01:37:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17C241FA504
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 02:22:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726839AbgFOXhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Jun 2020 19:37:09 -0400
-Received: from mail27.static.mailgun.info ([104.130.122.27]:23258 "EHLO
+        id S1725960AbgFPAWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Jun 2020 20:22:40 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:26325 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726867AbgFOXhH (ORCPT
+        by vger.kernel.org with ESMTP id S1726327AbgFPAWh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Jun 2020 19:37:07 -0400
+        Mon, 15 Jun 2020 20:22:37 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592264226; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=2DtTXOmQcCDu/XLc8Y9feTA+UARZggV+DWpANCHY8bY=;
- b=D6j+VkgRO6Zw3P42rsuM8K8QwuZlUpAihA2niwq/vD5ZP/jgiDSTlD/Fp6Bmi/pYdZQ+jvh+
- RYztHw1Bvz8zNGqMCkr/w5tm/cVyvO/dbnjerCPRzMPCd+X2KFREKL3ZY+oHPnek4QWaTHdn
- P/Ooj+SKd4E1ezYF4li5OnPsNf0=
+ s=smtp; t=1592266956; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=Mx3uyslVkwrYk9S4RNuEP4zAhRekk8MfjkBR3eyltiE=; b=O7ZcDqNUKZ7OunISyx0dfV91rVVWczmhnDGtAjlo9iM5A8WWIvSqkjyqTCVAeBVxgLmtEiAe
+ fAeR4ymPziPiJQ+wj//9AG9oxu5Pznx00nB1sicRmiFIXljRz45paOc+8ZcxwrOZU9ldd7F/
+ 63XbQQ2TEPAN07boyv4Ve688q0E=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5ee806153a8a8b20b85e3ef0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Jun 2020 23:36:53
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5ee810cbe144dd5115e9e34c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Jun 2020 00:22:35
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 390BCC43391; Mon, 15 Jun 2020 23:36:53 +0000 (UTC)
+        id 61AE9C433CB; Tue, 16 Jun 2020 00:22:35 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from linuxdisplay-lab-04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tanmay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 650E9C433CA;
-        Mon, 15 Jun 2020 23:36:52 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4BBD9C433CA;
+        Tue, 16 Jun 2020 00:22:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4BBD9C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tanmay@codeaurora.org
+From:   Tanmay Shah <tanmay@codeaurora.org>
+To:     swboyd@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        sam@ravnborg.org, seanpaul@chromium.org, robdclark@gmail.com,
+        aravindh@codeaurora.org, abhinavk@codeaurora.org
+Subject: [PATCH v1] arm64: dts: qcom: sc7180: Add Display Port dt node
+Date:   Mon, 15 Jun 2020 17:22:15 -0700
+Message-Id: <20200616002215.32207-1-tanmay@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 15 Jun 2020 16:36:52 -0700
-From:   tanmay@codeaurora.org
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        DTML <devicetree@vger.kernel.org>, aravindh@codeaurora.org,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: [Freedreno] [PATCH v6 0/5] Add support for DisplayPort driver on
-In-Reply-To: <CAOCk7NrX9Lk6GQKXcFMd1CHHu7CjVg7hUAwt1LyNFdVHHGPO-g@mail.gmail.com>
-References: <20200612015030.16072-1-tanmay@codeaurora.org>
- <159200440578.62212.5195358467251573190@swboyd.mtv.corp.google.com>
- <1eda01da33b620ddee5162be3326853f@codeaurora.org>
- <CAOCk7NrX9Lk6GQKXcFMd1CHHu7CjVg7hUAwt1LyNFdVHHGPO-g@mail.gmail.com>
-Message-ID: <fa12d16e7aeda5971b2a65ac5414f18c@codeaurora.org>
-X-Sender: tanmay@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-06-15 16:04, Jeffrey Hugo wrote:
-> On Mon, Jun 15, 2020 at 4:51 PM <tanmay@codeaurora.org> wrote:
->> 
->> On 2020-06-12 16:26, Stephen Boyd wrote:
->> 
->> Thanks for reviews Stephen.
->> 
->> > Quoting Tanmay Shah (2020-06-11 18:50:25)
->> >> These patches add support for Display-Port driver on SnapDragon
->> >> hardware. It adds
->> >> DP driver and DP PLL driver files along with the needed device-tree
->> >> bindings.
->> >>
->> >> The block diagram of DP driver is shown below:
->> >>
->> >>
->> >>                  +-------------+
->> >>                  |DRM FRAMEWORK|
->> >>                  +------+------+
->> >>                         |
->> >>                    +----v----+
->> >>                    | DP DRM  |
->> >>                    +----+----+
->> >>                         |
->> >>                    +----v----+
->> >>      +------------+|   DP    +----------++------+
->> >>      +        +---+| DISPLAY |+---+      |      |
->> >>      |        +    +-+-----+-+    |      |      |
->> >>      |        |      |     |      |      |      |
->> >>      |        |      |     |      |      |      |
->> >>      |        |      |     |      |      |      |
->> >>      v        v      v     v      v      v      v
->> >>  +------+ +------+ +---+ +----+ +----+ +---+ +-----+
->> >>  |  DP  | |  DP  | |DP | | DP | | DP | |DP | | DP  |
->> >>  |PARSER| | HPD  | |AUX| |LINK| |CTRL| |PHY| |POWER|
->> >>  +--+---+ +---+--+ +---+ +----+ +--+-+ +-+-+ +-----+
->> >>     |                              |     |
->> >>  +--v---+                         +v-----v+
->> >>  |DEVICE|                         |  DP   |
->> >>  | TREE |                         |CATALOG|
->> >>  +------+                         +---+---+
->> >>                                       |
->> >>                                   +---v----+
->> >>                                   |CTRL/PHY|
->> >>                                   |   HW   |
->> >>                                   +--------+
->> >>
->> >
->> > I've never seen a block diagram for a driver before...
->> >
->> It is here for v5. https://patchwork.freedesktop.org/series/74312/
-> 
-> I think Stephen is nitpicking your wording, and you seem to not be
-> understanding his comment.  I'm sorry if I am mistaken.
-> 
-> The "DP driver" would seem to refer to the linux software driver you
-> are proposing patches for, however this diagram looks like a hardware
-> diagram of the various hardware blocks that the Linux driver code (the
-> "DP driver") is expected to interact with.  I believe you should
-> re-word "The block diagram of DP driver is shown below:" to be more
-> specific of what you are describing with your figure.  IE your words
-> say this is a block diagram of the software, when it looks like it is
-> a block diagram of the hardware.
+Enable DP driver for sc7180.
 
-Thanks for reviews.
+This change depends-on following series:
+https://patchwork.freedesktop.org/series/78247/
+and https://patchwork.freedesktop.org/patch/351990/
 
-I am not sure what Stephen meant, but this diagram was available before.
+Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 58 ++++++++++++++++++++++++++--
+ 1 file changed, 54 insertions(+), 4 deletions(-)
 
-Just for clarification this is not hardware diagram at all.
-This is modeling of DP driver for msm.
-Each box name above except "DRM framework", is file name in driver i.e. 
-software module.
-Each line and arrow shows how modules interact with each other.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 998f101ad623..989960d2200b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1557,10 +1557,19 @@ ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
++					port@1 {
++						reg = <1>;
++						dpu_intf1_out: endpoint {
++							remote-endpoint =
++								 <&dsi0_in>;
++						};
++					};
++
+ 					port@0 {
+ 						reg = <0>;
+-						dpu_intf1_out: endpoint {
+-							remote-endpoint = <&dsi0_in>;
++						dpu_intf0_out: endpoint {
++							remote-endpoint =
++								 <&dp_in>;
+ 						};
+ 					};
+ 				};
+@@ -1634,6 +1643,47 @@ dsi_phy: dsi-phy@ae94400 {
+ 			};
+ 		};
+ 
++		msm_dp: displayport-controller@ae90000{
++			status = "ok";
++			cell-index = <0>;
++			compatible = "qcom,dp-display";
++
++			reg = <0 0xae90000 0 0x1400>;
++			reg-names = "dp_controller";
++
++			interrupt-parent = <&mdss>;
++			interrupts = <12 0>;
++
++			clocks = <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
++				 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
++				 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
++				 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>,
++				 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
++			clock-names = "core_aux", "ctrl_link",
++				      "ctrl_link_iface", "stream_pixel",
++				      "pixel_rcg";
++			#clock-cells = <1>;
++
++			data-lanes = <0 1>;
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				port@0 {
++					reg = <0>;
++					dp_in: endpoint {
++						remote-endpoint =
++							 <&dpu_intf0_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++					dp_out: endpoint { };
++				};
++			};
++		};
++
+ 		dispcc: clock-controller@af00000 {
+ 			compatible = "qcom,sc7180-dispcc";
+ 			reg = <0 0x0af00000 0 0x200000>;
+@@ -1641,8 +1691,8 @@ dispcc: clock-controller@af00000 {
+ 				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+ 				 <&dsi_phy 0>,
+ 				 <&dsi_phy 1>,
+-				 <0>,
+-				 <0>;
++				 <&msm_dp 0>,
++				 <&msm_dp 1>;
+ 			clock-names = "bi_tcxo",
+ 				      "gcc_disp_gpll0_clk_src",
+ 				      "dsi0_phy_pll_out_byteclk",
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-For example, "DP PARSER" Box is pointing towards "DEVICE TREE" Box, that 
-means
-dp_parser.c file contains functions which are parsing device tree 
-properties and so on...
