@@ -2,117 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABD231FAC42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 11:22:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 656671FADEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 12:27:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728199AbgFPJWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 05:22:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728014AbgFPJWQ (ORCPT
+        id S1728131AbgFPK11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 06:27:27 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:19195 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728175AbgFPK1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 05:22:16 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A0C9C03E96A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 02:22:15 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id r9so6675547ual.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 02:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5DT2283QGSeLmNfRYosxvl4RnLSyjJEL1/ZqFVdUOJQ=;
-        b=gbiR7iJELkxNmdiFG9i0jMjxFEi2lb7SY5/bBgrWh11d1mz9Ty/etYm5giSxwegNQs
-         MRha2ZX2nS+57DDDxKnsIeqIUAysnFBvEJ9g2NrznEp48uFKw6y317kN/4oI2nbvfoYP
-         MtpvaX3EAU4PXUqz5tyr3CCTvZwrAorztgU7Ynwe/RHsDvnAMl27sI4cq70yGcCN6VLD
-         W1huILgMFI7IjGXsotocJGfn09BwBxuS8F7ihs1sLR4Jo7297v0roOgWxgcXMUY9tD6U
-         qgq0K68V23qnMt+3xvffDoPhJ3oXeEXabuKD5+bEV8SusiKKV0nZK4zXGiCgy5ggNkoE
-         Ozew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5DT2283QGSeLmNfRYosxvl4RnLSyjJEL1/ZqFVdUOJQ=;
-        b=YnqsTkiNWCKF2M0PaWdkbrHceM3DQYMGekRm6Zjv6n/icvLW12nPlfU8ShC3vTgw2f
-         pMNVgpuWgySaYPXnEA7HUFhFshOUTq3usB29KnFR7zsD6cJ0kb4XhCVEAw/uwflUoESZ
-         H99erOImLBgXFqGQh/Tz+NzMz7S8npMpLRWaoh6/E2eQYwyiTxCuQPQR0Y3YSjz7lB+z
-         jqBx1XdVKWUsrCrCkRql3VC9ZxemqRyO0edwh3CxqAcsW3QLwCsmJ+uzZY8KfVBD8DM8
-         8Do4tkxqjC1wxij3dfsFdLYDSeDXsCkJMf2TRbLNquBih/pf3+9clGPM0Bwas80mWy/F
-         NfWA==
-X-Gm-Message-State: AOAM530oAatUL70x9AxFjbb88qX16LvswHFQDhOhpC0T3R225hwq2Mbv
-        V9zJDMjNA+zsM0Vzo36Hteu1g8EEwjPL2WTe4EH49A==
-X-Google-Smtp-Source: ABdhPJy0PnwHfzauVDw+Ug2b7tLfbgXqklE/dFIs6uKXZxsoJFcNcg5IvQkTzE3BVQgmfzvG6L2U8lbITGbUSMKo/AA=
-X-Received: by 2002:ab0:186d:: with SMTP id j45mr1143930uag.104.1592299334487;
- Tue, 16 Jun 2020 02:22:14 -0700 (PDT)
+        Tue, 16 Jun 2020 06:27:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592303230; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=VgA3gFmeWcxzruBJ9AzJv71j3OzPukEsifDVgoIXzv4=; b=G/qvd/eV6j637ValtlExd8BvX3oy7/VI8j/ogmR8XAKUSQ6ny9ev2K2f6hPHKxYl+so5/OAY
+ dO62YO1/c+f0tG6NFKUPzb2wTZ+9mPNuF3bGWdEiZ0k2lV9klqyGoYhVYnnOM1jpX4gCL9YQ
+ gPdaBPXGpJwczCp0aeXhytz3ovo=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5ee89e7ce144dd511590f0db (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Jun 2020 10:27:08
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D4F17C433C8; Tue, 16 Jun 2020 10:27:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.100] (unknown [49.207.137.108])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sivaprak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BB32FC433C8;
+        Tue, 16 Jun 2020 10:27:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BB32FC433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
+Subject: Re: [PATCH V3 0/5] Enable USB support in IPQ8074
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        vkoul@kernel.org, robh+dt@kernel.org, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <1591625479-4483-1-git-send-email-sivaprak@codeaurora.org>
+From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Message-ID: <5e392fe0-c8aa-4cef-d04b-0209b504c75d@codeaurora.org>
+Date:   Tue, 16 Jun 2020 15:57:02 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <20200604015317.31389-1-thara.gopinath@linaro.org> <20200604015317.31389-6-thara.gopinath@linaro.org>
-In-Reply-To: <20200604015317.31389-6-thara.gopinath@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 16 Jun 2020 11:21:38 +0200
-Message-ID: <CAPDyKFrBYx1dDK2UNvaZR1swB-9WiOy4V62hFU2-Ud_xm6gOoA@mail.gmail.com>
-Subject: Re: [PATCH v6 5/6] dt-bindings: power: Extend RPMh power controller
- binding to describe thermal warming device
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Rob Herring <robh@kernel.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1591625479-4483-1-git-send-email-sivaprak@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 4 Jun 2020 at 03:53, Thara Gopinath <thara.gopinath@linaro.org> wrote:
->
-> RPMh power controller hosts mx domain that can be used as thermal warming
-> device. Add #cooling-cells property to the power domain provider node to
-> indicate this.
->
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+Ping!
 
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Hi Vinod,
 
-Kind regards
-Uffe
+can you please review this patch series?
 
-
-> ---
+On 6/8/2020 7:41 PM, Sivaprakash Murugesan wrote:
+> IPQ8074 has two super speed USB ports, with QMP and QUSB2 PHYs.
+> This patch set enables the USB PHYs and USB dwc3 in IPQ8074.
 >
-> v3->v4:
->         - Removed subnode to indicate that mx power domain is a warming
->           device. Instead #cooling-cells is used as a power domain
->           provider property to indicate if the provider hosts a power
->           domain that can be used as a warming device.
+> [V3]
+>   * Rebased patch 3 on 5.7 and linux-next tag next-20200608
+> [V2]
+>   * Added new device compatible qcom,ipq8074-qusb2-phy for qusb2
+>   * Addressed Bjorn's review comments on dts and binding
 >
-> v4->v5:
->         Moved the property from .txt format to .yaml format.
+> Sivaprakash Murugesan (5):
+>    dt-bindings: phy: qcom,qmp: Add ipq8074 usb dt bindings
+>    dt-bindings: phy: qcom,qusb2: Add ipq8074 device compatible
+>    phy: qcom-qmp: Add USB QMP PHY support for IPQ8074
+>    phy: qcom-qusb2: Add ipq8074 device compatible
+>    arm64: dts: ipq8074: enable USB support
 >
->  Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> index 8058955fb3b9..a4fbbd88ce18 100644
-> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> @@ -28,6 +28,9 @@ properties:
->    '#power-domain-cells':
->      const: 1
->
-> +  '#cooling-cells':
-> +    const: 2
-> +
->    operating-points-v2: true
->
->    opp-table:
-> --
-> 2.20.1
+>   .../devicetree/bindings/phy/qcom,qmp-phy.yaml      |   2 +
+>   .../devicetree/bindings/phy/qcom,qusb2-phy.yaml    |   1 +
+>   arch/arm64/boot/dts/qcom/ipq8074-hk01.dts          |  24 +++
+>   arch/arm64/boot/dts/qcom/ipq8074.dtsi              | 167 +++++++++++++++++++++
+>   drivers/phy/qualcomm/phy-qcom-qmp.c                | 102 +++++++++++++
+>   drivers/phy/qualcomm/phy-qcom-qusb2.c              |   3 +
+>   6 files changed, 299 insertions(+)
 >
