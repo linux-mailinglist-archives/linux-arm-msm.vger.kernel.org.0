@@ -2,118 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93CDA1FC0D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 23:17:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1B9B1FC0F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 23:22:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726044AbgFPVRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 17:17:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56276 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725967AbgFPVRO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 17:17:14 -0400
-Received: from localhost (mobile-166-170-222-206.mycingular.net [166.170.222.206])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4BE502085B;
-        Tue, 16 Jun 2020 21:17:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592342233;
-        bh=djiXrU2UPs1VBTk8L8oL0srNfH1ZR8zahiqBoVs5Upc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=a+tDMaEm6a4kfqMC1/7x10y7SE1HmbTW08nc4ko60pujKNkpY630kwdrIJAv7+JEu
-         bgl+ed9bLJ4cS7+QiHCabve3wfLL/SzcGetnrF4VniXIUSDUirCRPrLfuHWbogfZLm
-         QAxqzGcW6hprLyp4+g0rBOsntCFdQVJ73ckv50RI=
-Date:   Tue, 16 Jun 2020 16:17:11 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     svarbanov@mm-sol.com, bjorn.andersson@linaro.org, vkoul@kernel.org,
-        sanm@codeaurora.org, mgautam@codeaurora.org, agross@kernel.org,
-        bhelgaas@google.com, robh@kernel.org, lorenzo.pieralisi@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom: Disable power management for uPD720201 USB3
- controller
-Message-ID: <20200616211711.GA1981914@bjorn-Precision-5520>
+        id S1726312AbgFPVWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 17:22:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42088 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726464AbgFPVWJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Jun 2020 17:22:09 -0400
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E2DC061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 14:22:09 -0700 (PDT)
+Received: by mail-oo1-xc41.google.com with SMTP id y45so4373670ooi.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 14:22:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1WTjVtVQHawTUGhoVtzUqLBrhOe6FD5mLMeqvgfDzVg=;
+        b=M4fPpFWneE9bnyXRYRY3Mn84h60xJrEkkF9vFW3Q9pcy/KKGQ5UrPvuZ4lWrZQ8/4G
+         9miARSs02wr9PKZWhq0Vw6Rq72C5RFpxZHumND2rpKJZiRdxXHDsjl2FqMZid6dfz/UR
+         ZTqF6NiyURgd0q+jR3JyBuFd2e7ixojyPqdz7rfY80U0YB0fiS/dBO9rk5IowumDz5NU
+         b8B7GPvsbqH982dU9YW502JFqOwRVTIfs6DlxbTEr/k/c2fKUDh8W+7OHH6ZGAb5JG93
+         DvToRR1Ge0+fj/RBUEOI35BkFGq8T2tn8aW5tN5iacF3Fi0xZPbHN0D5ACToeRxVulJ9
+         vusQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1WTjVtVQHawTUGhoVtzUqLBrhOe6FD5mLMeqvgfDzVg=;
+        b=f/UDPM9+rbTRMPGiN8SZFVZodd8/xvfa47UgLwGGNHc5A+rG16UUAKbeW2ZRcoe7J3
+         EvIRxmkbIapuI58JigKn5EW/NKhy91/W++7Ps2Umj6VwkD+7joEPdds1dRovEp5UthgF
+         nd5K7f6HoJe38hzRlFhyo1tepPn0j6iQ4/a71mZ3PwLDFuaeO7ZA+nJ+ZqTWIiuJnaoc
+         4zJvXd4K/OFfWIwYCpCEfoUdkdSvWIM5oOS5adJn4o1R4ykgbuFu8cFwWBeSVeSMUt7L
+         hueIgu1CSfTpbfp8pOEPgF143yoI9ECLr8t3HTCtoqY8taxgCrTnTvbKD7w068vxHS1K
+         duDA==
+X-Gm-Message-State: AOAM530Ne5LhlMuD0xDUIeG0Vn0NQXi5a8ZXqqemNiPwZZhU5NFZFnkw
+        r8I+NCKm9SSEpgMAVQoQtc0u2hyj5aMui5QNgzgZwg==
+X-Google-Smtp-Source: ABdhPJzIgCP4J42f64sJb6GXSPJX1olg9X9JFjeVFC4T8jGcQXs1ijKnE/J6hxJaHOZoWyhr9TFaRSdMWjuhuHGnjIg=
+X-Received: by 2002:a4a:94d1:: with SMTP id l17mr4120054ooi.88.1592342528795;
+ Tue, 16 Jun 2020 14:22:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200615182413.15649-1-georgi.djakov@linaro.org>
+References: <20200616061338.109499-1-john.stultz@linaro.org>
+ <20200616061338.109499-4-john.stultz@linaro.org> <55e5982a-1e73-7013-e02d-5d1d30815fba@codeaurora.org>
+In-Reply-To: <55e5982a-1e73-7013-e02d-5d1d30815fba@codeaurora.org>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Tue, 16 Jun 2020 14:21:55 -0700
+Message-ID: <CALAqxLUvnhgL98T3LPaaCPq3w9b1notu=1a8ZhcRJNCkF3dXrQ@mail.gmail.com>
+Subject: Re: [RFC][PATCH 3/5] irqchip: Allow QCOM_PDC to be loadable as a
+ perment module
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+cc Rafael, linux-pm]
+On Tue, Jun 16, 2020 at 4:30 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+> Hi,
+>
+> On 6/16/2020 11:43 AM, John Stultz wrote:
+> > Allows qcom-pdc driver to be loaded as a permenent module
+>
+> typo: permanent
+>
+> > Also, due to the fact that IRQCHIP_DECLARE becomes a no-op when
+> > building as a module, we have to add the platform driver hooks
+> > explicitly.
+> >
+> > Thanks to Saravana for his help on pointing out the
+> > IRQCHIP_DECLARE issue and guidance on a solution.
+> >
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Joerg Roedel <joro@8bytes.org>
+> > Cc: Thomas Gleixner <tglx@linutronix.de>
+> > Cc: Jason Cooper <jason@lakedaemon.net>
+> > Cc: Marc Zyngier <maz@kernel.org>
+> > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > Cc: Lina Iyer <ilina@codeaurora.org>
+> > Cc: Saravana Kannan <saravanak@google.com>
+> > Cc: Todd Kjos <tkjos@google.com>
+> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Cc: iommu@lists.linux-foundation.org
+> > Cc: linux-gpio@vger.kernel.org
+> > Signed-off-by: John Stultz <john.stultz@linaro.org>
+> > ---
+> >   drivers/irqchip/Kconfig    |  2 +-
+> >   drivers/irqchip/qcom-pdc.c | 30 ++++++++++++++++++++++++++++++
+> >   2 files changed, 31 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+> > index 29fead208cad..12765bed08f9 100644
+> > --- a/drivers/irqchip/Kconfig
+> > +++ b/drivers/irqchip/Kconfig
+> > @@ -425,7 +425,7 @@ config GOLDFISH_PIC
+> >            for Goldfish based virtual platforms.
+> >
+> >   config QCOM_PDC
+> > -     bool "QCOM PDC"
+> > +     tristate "QCOM PDC"
+> >       depends on ARCH_QCOM
+> >       select IRQ_DOMAIN_HIERARCHY
+> >       help
+> > diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> > index 6ae9e1f0819d..98d74160afcd 100644
+> > --- a/drivers/irqchip/qcom-pdc.c
+> > +++ b/drivers/irqchip/qcom-pdc.c
+> > @@ -11,7 +11,9 @@
+> >   #include <linux/irqdomain.h>
+> >   #include <linux/io.h>
+> >   #include <linux/kernel.h>
+> > +#include <linux/module.h>
+> >   #include <linux/of.h>
+> > +#include <linux/of_irq.h>
+> please move this include in order after of_device.h
+> >   #include <linux/of_address.h>
+> >   #include <linux/of_device.h>
+> >   #include <linux/soc/qcom/irq.h>
+> > @@ -430,4 +432,32 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+> >       return ret;
+> >   }
+> >
+> > +#ifdef MODULE
+> > +static int qcom_pdc_probe(struct platform_device *pdev)
+> > +{
+> > +     struct device_node *np = pdev->dev.of_node;
+> > +     struct device_node *parent = of_irq_find_parent(np);
+> > +
+> > +     return qcom_pdc_init(np, parent);
+> > +}
+> > +
+> > +static const struct of_device_id qcom_pdc_match_table[] = {
+> > +     { .compatible = "qcom,pdc" },
+> > +     {}
+> > +};
+> > +MODULE_DEVICE_TABLE(of, qcom_pdc_match_table);
+> > +
+> > +static struct platform_driver qcom_pdc_driver = {
+> > +     .probe = qcom_pdc_probe,
+> > +     .driver = {
+> > +             .name = "qcom-pdc",
+> > +             .of_match_table = qcom_pdc_match_table,
+>
+> can you please set .suppress_bind_attrs = true,
+>
+> This is to prevent bind/unbind using sysfs. Once irqchip driver module
+> is loaded, it shouldn't get unbind at runtime.
 
-On Mon, Jun 15, 2020 at 09:24:13PM +0300, Georgi Djakov wrote:
-> The uPD720201 USB3 host controller (connected to PCIe) on the Dragonboard
-> 845c is often failing during suspend and resume. The following messages
-> are seen over the console:
-> 
->   PM: suspend entry (s2idle)
->   Filesystems sync: 0.000 seconds
->   Freezing user space processes ... (elapsed 0.001 seconds) done.
->   OOM killer disabled.
->   Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
->   printk: Suspending console(s) (use no_console_suspend to debug)
->   dwc3-qcom a8f8800.usb: HS-PHY not in L2
->   dwc3-qcom a6f8800.usb: HS-PHY not in L2
->   xhci_hcd 0000:01:00.0: can't change power state from D3hot to D0 (config
->   space inaccessible)
->   xhci_hcd 0000:01:00.0: can't change power state from D3hot to D0 (config
->   space inaccessible)
->   xhci_hcd 0000:01:00.0: Controller not ready at resume -19
->   xhci_hcd 0000:01:00.0: PCI post-resume error -19!
->   xhci_hcd 0000:01:00.0: HC died; cleaning up
-> 
-> Then the USB devices are not functional anymore. Let's disable the PM of
-> the controller for now, as this will at least keep USB devices working
-> even after suspend and resume.
+Thanks, I really appreciate the review! I've made these changes on my
+side and they'll be included in v2.
 
-This seems like we're just covering up a deeper problem here.  I think
-it would be better to fix the underlying problem.
-
-The quirk you're adding is specific to the Renesas 0x0014 device.  Is
-there some reason to think the problem is specific to that device, or
-might other devices have the same problem?
-
-Maybe we're missing something in pcie-qcom.c?  Is there any
-suspend/resume support required in that driver?  It doesn't look like
-it has anything except that it calls pm_runtime_enable().
-
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 138e1a2d21cc..c1f502682a19 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1439,6 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
->  {
->  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
->  }
-> +
-> +static void qcom_fixup_nopm(struct pci_dev *dev)
-> +{
-> +	dev->pm_cap = 0;
-> +	dev_info(&dev->dev, "Disabling PCI power management\n");
-> +}
-> +
->  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
->  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
->  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
-> @@ -1446,6 +1453,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
->  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
->  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
->  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
-> +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_RENESAS, 0x0014, qcom_fixup_nopm);
-
-The convention is that DECLARE_PCI_FIXUP_*() comes immediately after
-the quirk function itself, so the whole patch would be a single diff
-hunk.  See drivers/pci/quirks.c for many examples.
-
->  static struct platform_driver qcom_pcie_driver = {
->  	.probe = qcom_pcie_probe,
+thanks
+-john
