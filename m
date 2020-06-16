@@ -2,32 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A8E81FBB79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 18:22:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F9F41FBB55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 18:18:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731156AbgFPQTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 12:19:08 -0400
+        id S1731267AbgFPQSx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 12:18:53 -0400
 Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:42744 "EHLO
         alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730312AbgFPPhc (ORCPT
+        by vger.kernel.org with ESMTP id S1730337AbgFPPhi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 11:37:32 -0400
+        Tue, 16 Jun 2020 11:37:38 -0400
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Jun 2020 21:06:55 +0530
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Jun 2020 21:06:56 +0530
 Received: from vbadigan-linux.qualcomm.com ([10.206.24.109])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 16 Jun 2020 21:06:47 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 16 Jun 2020 21:06:53 +0530
 Received: by vbadigan-linux.qualcomm.com (Postfix, from userid 76677)
-        id 7EE834C6C; Tue, 16 Jun 2020 21:06:46 +0530 (IST)
+        id 4AC854C6C; Tue, 16 Jun 2020 21:06:52 +0530 (IST)
 From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
         bjorn.andersson@linaro.org
 Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
         Vijay Viswanath <vviswana@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Subject: [PATCH V4 1/2] mmc: sdhci: Allow platform controlled voltage switching
-Date:   Tue, 16 Jun 2020 21:06:18 +0530
-Message-Id: <1592321779-28556-2-git-send-email-vbadigan@codeaurora.org>
+        Andy Gross <agross@kernel.org>
+Subject: [PATCH V4 2/2] mmc: sdhci-msm: Use internal voltage control
+Date:   Tue, 16 Jun 2020 21:06:19 +0530
+Message-Id: <1592321779-28556-3-git-send-email-vbadigan@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1592321779-28556-1-git-send-email-vbadigan@codeaurora.org>
 References: <1589541535-8523-1-git-send-email-vbadigan@codeaurora.org>
@@ -37,117 +39,334 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vijay Viswanath <vviswana@codeaurora.org>
+On qcom SD host controllers voltage switching be done after the HW
+is ready for it. The HW informs its readiness through power irq.
+The voltage switching should happen only then.
 
-If vendor platform drivers are controlling whole logic of voltage
-switching, then sdhci driver no need control vqmmc regulator.
-So skip enabling/disable vqmmc from SDHC driver.
+Use the internal voltage switching and then control the voltage
+switching using power irq.
 
+IO-bus supply of eMMC would be kept always-on. So set the load
+for this supply to configure it in LPM when eMMC is suspend state
+ and in HPM when eMMC is active.
+
+Co-developed-by: Asutosh Das <asutoshd@codeaurora.org>
+Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+Co-developed-by: Vijay Viswanath <vviswana@codeaurora.org>
 Signed-off-by: Vijay Viswanath <vviswana@codeaurora.org>
+Co-developed-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 ---
- drivers/mmc/host/sdhci.c | 32 +++++++++++++++++++-------------
- drivers/mmc/host/sdhci.h |  1 +
- 2 files changed, 20 insertions(+), 13 deletions(-)
+ drivers/mmc/host/sdhci-msm.c | 208 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 199 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 37b1158c1c0c..e6275c2202b0 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4105,6 +4105,7 @@ int sdhci_setup_host(struct sdhci_host *host)
- 	unsigned int override_timeout_clk;
- 	u32 max_clk;
- 	int ret;
-+	bool enable_vqmmc = false;
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 15c42b059240..8297b2142748 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -37,7 +37,9 @@
+ #define CORE_PWRCTL_IO_LOW	BIT(2)
+ #define CORE_PWRCTL_IO_HIGH	BIT(3)
+ #define CORE_PWRCTL_BUS_SUCCESS BIT(0)
++#define CORE_PWRCTL_BUS_FAIL    BIT(1)
+ #define CORE_PWRCTL_IO_SUCCESS	BIT(2)
++#define CORE_PWRCTL_IO_FAIL     BIT(3)
+ #define REQ_BUS_OFF		BIT(0)
+ #define REQ_BUS_ON		BIT(1)
+ #define REQ_IO_LOW		BIT(2)
+@@ -127,6 +129,9 @@
+ /* Timeout value to avoid infinite waiting for pwr_irq */
+ #define MSM_PWR_IRQ_TIMEOUT_MS 5000
  
- 	WARN_ON(host == NULL);
- 	if (host == NULL)
-@@ -4118,9 +4119,12 @@ int sdhci_setup_host(struct sdhci_host *host)
- 	 * the host can take the appropriate action if regulators are not
- 	 * available.
- 	 */
--	ret = mmc_regulator_get_supply(mmc);
--	if (ret)
--		return ret;
-+	if (!mmc->supply.vqmmc) {
-+		ret = mmc_regulator_get_supply(mmc);
-+		if (ret)
-+			return ret;
-+		enable_vqmmc  = true;
-+	}
++/* Max load for eMMC Vdd-io supply */
++#define MMC_VQMMC_MAX_LOAD_UA	325000
++
+ #define msm_host_readl(msm_host, host, offset) \
+ 	msm_host->var_ops->msm_readl_relaxed(host, offset)
  
- 	DBG("Version:   0x%08x | Present:  0x%08x\n",
- 	    sdhci_readw(host, SDHCI_HOST_VERSION),
-@@ -4377,7 +4381,15 @@ int sdhci_setup_host(struct sdhci_host *host)
- 		mmc->caps |= MMC_CAP_NEEDS_POLL;
+@@ -278,6 +283,7 @@ struct sdhci_msm_host {
+ 	bool uses_tassadar_dll;
+ 	u32 dll_config;
+ 	u32 ddr_config;
++	bool vqmmc_enabled;
+ };
  
- 	if (!IS_ERR(mmc->supply.vqmmc)) {
--		ret = regulator_enable(mmc->supply.vqmmc);
-+		if (enable_vqmmc) {
-+			ret = regulator_enable(mmc->supply.vqmmc);
-+			if (ret) {
-+				pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
+ static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+@@ -1346,6 +1352,88 @@ static void sdhci_msm_set_uhs_signaling(struct sdhci_host *host,
+ 		sdhci_msm_hs400(host, &mmc->ios);
+ }
+ 
++static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
++{
++	if (IS_ERR(mmc->supply.vmmc))
++		return 0;
++
++	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
++}
++
++static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
++			      struct mmc_host *mmc, bool level)
++{
++	int ret;
++	struct mmc_ios ios;
++
++	if (msm_host->vqmmc_enabled == level)
++		return 0;
++
++	if (level) {
++		/* Set the IO voltage regulator to default voltage level */
++		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
++			ios.signal_voltage = MMC_SIGNAL_VOLTAGE_330;
++		else if (msm_host->caps_0 & CORE_1_8V_SUPPORT)
++			ios.signal_voltage = MMC_SIGNAL_VOLTAGE_180;
++
++		if (msm_host->caps_0 & CORE_VOLT_SUPPORT) {
++			ret = mmc_regulator_set_vqmmc(mmc, &ios);
++			if (ret < 0) {
++				dev_err(mmc_dev(mmc), "%s: vqmmc set volgate failed: %d\n",
 +					mmc_hostname(mmc), ret);
-+				mmc->supply.vqmmc = ERR_PTR(-EINVAL);
++				goto out;
 +			}
-+			host->sdhci_core_to_disable_vqmmc = !ret;
 +		}
- 
- 		/* If vqmmc provides no 1.8V signalling, then there's no UHS */
- 		if (!regulator_is_supported_voltage(mmc->supply.vqmmc, 1700000,
-@@ -4390,12 +4402,6 @@ int sdhci_setup_host(struct sdhci_host *host)
- 		if (!regulator_is_supported_voltage(mmc->supply.vqmmc, 2700000,
- 						    3600000))
- 			host->flags &= ~SDHCI_SIGNALING_330;
--
--		if (ret) {
--			pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
--				mmc_hostname(mmc), ret);
--			mmc->supply.vqmmc = ERR_PTR(-EINVAL);
--		}
++		ret = regulator_enable(mmc->supply.vqmmc);
++	} else {
++		ret = regulator_disable(mmc->supply.vqmmc);
++	}
++
++	if (ret)
++		dev_err(mmc_dev(mmc), "%s: vqmm %sable failed: %d\n",
++			mmc_hostname(mmc), level ? "en":"dis", ret);
++	else
++		msm_host->vqmmc_enabled = level;
++out:
++	return ret;
++}
++
++static int msm_config_vqmmc_mode(struct sdhci_msm_host *msm_host,
++			      struct mmc_host *mmc, bool hpm)
++{
++	int load, ret;
++
++	load = hpm ? MMC_VQMMC_MAX_LOAD_UA : 0;
++	ret = regulator_set_load(mmc->supply.vqmmc, load);
++	if (ret)
++		dev_err(mmc_dev(mmc), "%s: vqmmc set load failed: %d\n",
++			mmc_hostname(mmc), ret);
++	return ret;
++}
++
++static int sdhci_msm_set_vqmmc(struct sdhci_msm_host *msm_host,
++			      struct mmc_host *mmc, bool level)
++{
++	int ret;
++	bool always_on;
++
++	if (IS_ERR(mmc->supply.vqmmc)		||
++	    (mmc->ios.power_mode == MMC_POWER_UNDEFINED))
++		return 0;
++	/*
++	 * For eMMC don't turn off Vqmmc, Instead just configure it in LPM
++	 * and HPM modes by setting the right amonut of load.
++	 */
++	always_on = mmc->card && mmc_card_mmc(mmc->card);
++
++	if (always_on)
++		ret = msm_config_vqmmc_mode(msm_host, mmc, level);
++	else
++		ret = msm_toggle_vqmmc(msm_host, mmc, level);
++
++	return ret;
++}
++
+ static inline void sdhci_msm_init_pwr_irq_wait(struct sdhci_msm_host *msm_host)
+ {
+ 	init_waitqueue_head(&msm_host->pwr_irq_wait);
+@@ -1449,8 +1537,9 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	struct mmc_host *mmc = host->mmc;
+ 	u32 irq_status, irq_ack = 0;
+-	int retry = 10;
++	int retry = 10, ret;
+ 	u32 pwr_state = 0, io_level = 0;
+ 	u32 config;
+ 	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
+@@ -1488,21 +1577,42 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 	if (irq_status & CORE_PWRCTL_BUS_ON) {
+ 		pwr_state = REQ_BUS_ON;
+ 		io_level = REQ_IO_HIGH;
+-		irq_ack |= CORE_PWRCTL_BUS_SUCCESS;
+ 	}
+ 	if (irq_status & CORE_PWRCTL_BUS_OFF) {
+ 		pwr_state = REQ_BUS_OFF;
+ 		io_level = REQ_IO_LOW;
+-		irq_ack |= CORE_PWRCTL_BUS_SUCCESS;
+ 	}
++
++	if (pwr_state) {
++		ret = sdhci_msm_set_vmmc(mmc);
++		if (!ret)
++			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
++					pwr_state & REQ_BUS_ON);
++		if (!ret)
++			irq_ack |= CORE_PWRCTL_BUS_SUCCESS;
++		else
++			irq_ack |= CORE_PWRCTL_BUS_FAIL;
++	}
++
+ 	/* Handle IO LOW/HIGH */
+-	if (irq_status & CORE_PWRCTL_IO_LOW) {
++	if (irq_status & CORE_PWRCTL_IO_LOW)
+ 		io_level = REQ_IO_LOW;
+-		irq_ack |= CORE_PWRCTL_IO_SUCCESS;
+-	}
+-	if (irq_status & CORE_PWRCTL_IO_HIGH) {
++
++	if (irq_status & CORE_PWRCTL_IO_HIGH)
+ 		io_level = REQ_IO_HIGH;
++
++	if (io_level)
+ 		irq_ack |= CORE_PWRCTL_IO_SUCCESS;
++
++	if (io_level && !IS_ERR(mmc->supply.vqmmc) && !pwr_state) {
++		ret = mmc_regulator_set_vqmmc(mmc, &mmc->ios);
++		if (ret < 0) {
++			dev_err(mmc_dev(mmc), "%s: IO_level setting failed(%d). signal_voltage: %d, vdd: %d irq_status: 0x%08x\n",
++					mmc_hostname(mmc), ret,
++					mmc->ios.signal_voltage, mmc->ios.vdd,
++					irq_status);
++			irq_ack |= CORE_PWRCTL_IO_FAIL;
++		}
  	}
  
- 	if (host->quirks2 & SDHCI_QUIRK2_NO_1_8_V) {
-@@ -4626,7 +4632,7 @@ int sdhci_setup_host(struct sdhci_host *host)
- 	return 0;
+ 	/*
+@@ -1551,7 +1661,7 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 	if (io_level)
+ 		msm_host->curr_io_level = io_level;
  
- unreg:
--	if (!IS_ERR(mmc->supply.vqmmc))
-+	if (host->sdhci_core_to_disable_vqmmc)
- 		regulator_disable(mmc->supply.vqmmc);
- undma:
- 	if (host->align_buffer)
-@@ -4644,7 +4650,7 @@ void sdhci_cleanup_host(struct sdhci_host *host)
- {
- 	struct mmc_host *mmc = host->mmc;
+-	pr_debug("%s: %s: Handled IRQ(%d), irq_status=0x%x, ack=0x%x\n",
++	dev_dbg(mmc_dev(mmc), "%s: %s: Handled IRQ(%d), irq_status=0x%x, ack=0x%x\n",
+ 		mmc_hostname(msm_host->mmc), __func__, irq, irq_status,
+ 		irq_ack);
+ }
+@@ -1881,6 +1991,80 @@ static void sdhci_msm_reset(struct sdhci_host *host, u8 mask)
+ 	sdhci_reset(host, mask);
+ }
  
--	if (!IS_ERR(mmc->supply.vqmmc))
-+	if (host->sdhci_core_to_disable_vqmmc)
- 		regulator_disable(mmc->supply.vqmmc);
++static int sdhci_msm_register_vreg(struct sdhci_msm_host *msm_host)
++{
++	int ret;
++	struct mmc_host *mmc = msm_host->mmc;
++
++	ret = mmc_regulator_get_supply(msm_host->mmc);
++	if (ret)
++		return ret;
++
++	sdhci_msm_set_regulator_caps(msm_host);
++	mmc->ios.power_mode = MMC_POWER_UNDEFINED;
++
++	return 0;
++}
++
++static int sdhci_msm_start_signal_voltage_switch(struct mmc_host *mmc,
++				      struct mmc_ios *ios)
++{
++	struct sdhci_host *host = mmc_priv(mmc);
++	u16 ctrl, status;
++
++	/*
++	 * Signal Voltage Switching is only applicable for Host Controllers
++	 * v3.00 and above.
++	 */
++	if (host->version < SDHCI_SPEC_300)
++		return 0;
++
++	ctrl = sdhci_readw(host, SDHCI_HOST_CONTROL2);
++
++	switch (ios->signal_voltage) {
++	case MMC_SIGNAL_VOLTAGE_330:
++		if (!(host->flags & SDHCI_SIGNALING_330))
++			return -EINVAL;
++
++		/* Set 1.8V Signal Enable in the Host Control2 register to 0 */
++		ctrl &= ~SDHCI_CTRL_VDD_180;
++		break;
++	case MMC_SIGNAL_VOLTAGE_180:
++		if (!(host->flags & SDHCI_SIGNALING_180))
++			return -EINVAL;
++
++		/*
++		 * Enable 1.8V Signal Enable in the Host Control2
++		 * register
++		 */
++		ctrl |= SDHCI_CTRL_VDD_180;
++		break;
++	case MMC_SIGNAL_VOLTAGE_120:
++		if (!(host->flags & SDHCI_SIGNALING_120))
++			return -EINVAL;
++		return 0;
++	default:
++		/* No signal voltage switch required */
++		return 0;
++	}
++
++	sdhci_writew(host, ctrl, SDHCI_HOST_CONTROL2);
++
++	/* Wait for 5ms */
++	usleep_range(5000, 5500);
++
++	/* regulator output should be stable within 5 ms */
++	status = ctrl & SDHCI_CTRL_VDD_180;
++	ctrl = sdhci_readw(host, SDHCI_HOST_CONTROL2);
++	if ((ctrl & SDHCI_CTRL_VDD_180) == status)
++		return 0;
++
++	dev_warn(mmc_dev(mmc), "%s: Regulator output did not became stable\n",
++		mmc_hostname(mmc));
++
++	return -EAGAIN;
++}
++
+ #define DRIVER_NAME "sdhci_msm"
+ #define SDHCI_MSM_DUMP(f, x...) \
+ 	pr_err("%s: " DRIVER_NAME ": " f, mmc_hostname(host->mmc), ## x)
+@@ -1967,6 +2151,7 @@ void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
+ 	.write_b = sdhci_msm_writeb,
+ 	.irq	= sdhci_msm_cqe_irq,
+ 	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
++	.set_power = sdhci_set_power_noreg,
+ };
  
- 	if (host->align_buffer)
-@@ -4787,7 +4793,7 @@ void sdhci_remove_host(struct sdhci_host *host, int dead)
+ static const struct sdhci_pltfm_data sdhci_msm_pdata = {
+@@ -2181,6 +2366,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+ 	if (core_major == 1 && core_minor >= 0x49)
+ 		msm_host->updated_ddr_cfg = true;
  
- 	destroy_workqueue(host->complete_wq);
++	ret = sdhci_msm_register_vreg(msm_host);
++	if (ret)
++		goto clk_disable;
++
+ 	/*
+ 	 * Power on reset state may trigger power irq if previous status of
+ 	 * PWRCTL was either BUS_ON or IO_HIGH_V. So before enabling pwr irq
+@@ -2225,6 +2414,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+ 					 MSM_MMC_AUTOSUSPEND_DELAY_MS);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
  
--	if (!IS_ERR(mmc->supply.vqmmc))
-+	if (host->sdhci_core_to_disable_vqmmc)
- 		regulator_disable(mmc->supply.vqmmc);
++	host->mmc_host_ops.start_signal_voltage_switch =
++		sdhci_msm_start_signal_voltage_switch;
+ 	host->mmc_host_ops.execute_tuning = sdhci_msm_execute_tuning;
+ 	if (of_property_read_bool(node, "supports-cqe"))
+ 		ret = sdhci_msm_cqe_add_host(host, pdev);
+@@ -2232,7 +2423,6 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+ 		ret = sdhci_add_host(host);
+ 	if (ret)
+ 		goto pm_runtime_disable;
+-	sdhci_msm_set_regulator_caps(msm_host);
  
- 	if (host->align_buffer)
-diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index 0008bbd27127..0770c036e2ff 100644
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -567,6 +567,7 @@ struct sdhci_host {
- 	u32 caps1;		/* CAPABILITY_1 */
- 	bool read_caps;		/* Capability flags have been read */
- 
-+	bool sdhci_core_to_disable_vqmmc;  /* sdhci core can disable vqmmc */
- 	unsigned int            ocr_avail_sdio;	/* OCR bit masks */
- 	unsigned int            ocr_avail_sd;
- 	unsigned int            ocr_avail_mmc;
+ 	pm_runtime_mark_last_busy(&pdev->dev);
+ 	pm_runtime_put_autosuspend(&pdev->dev);
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
 
